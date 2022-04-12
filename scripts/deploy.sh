@@ -2,7 +2,7 @@
 
 . ./scripts/try.sh
 
-APP_NAME="myapp"
+APP_NAME="emudevz"
 
 USERNAME="$1"
 TOKEN="$2"

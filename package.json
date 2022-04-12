@@ -1,5 +1,5 @@
 {
-  "name": "myapp",
+  "name": "emudevz",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -22,12 +22,12 @@
     "test": "react-scripts test",
     "electron": "electron",
     "react-scripts": "react-scripts",
-    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/myapp react-scripts build",
+    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/emudevz react-scripts build",
     "build:electron": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=./ react-scripts build"
   },
   "main": "desktop.js",
   "build": {
-    "productName": "myapp",
+    "productName": "emudevz",
     "extends": null,
     "extraFiles": [
       "icons/icon-512x512.png"

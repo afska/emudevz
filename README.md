@@ -1,7 +1,7 @@
-# myapp
+# emudevz
 
 ```js
-// TODO: Replace `myapp` with the app name
+// TODO: Replace `emudevz` with the app name
 ```
 
 ## Install
