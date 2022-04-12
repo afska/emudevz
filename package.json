@@ -12,6 +12,7 @@
     "react-scripts": "^4.0.1"
   },
   "scripts": {
+    "dev": "npm run web",
     "web": "react-scripts start",
     "desktop": "concurrently \"cross-env BROWSER=none react-scripts start\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
     "deploy": "bash ./scripts/deploy.sh",
