@@ -19,14 +19,18 @@ const commands = {
 };
 
 export default class MainScreen extends PureComponent {
+	state = { selected: "left", lastVerticalSelection: "bottom" };
+
 	render() {
+		const { selected } = this.state;
+
 		return (
 			<div className={styles.container}>
 				<div
 					className={classNames(
 						styles.leftColumn,
 						styles.column,
-						styles.selected
+						selected === "left" && styles.selected
 					)}
 				>
 					<CodeMirror
@@ -49,17 +53,30 @@ return function() {
 						theme={oneDark}
 						extensions={[javascript({})]}
 						onChange={(value, viewUpdate) => {
-							console.log("value:", value);
+							// console.log("value:", value);
 						}}
 						autoFocus
 					/>
 				</div>
 
 				<div className={classNames(styles.rightColumn, styles.column)}>
-					<div className={classNames(styles.topRow, styles.row)} id="preview">
+					<div
+						className={classNames(
+							styles.topRow,
+							styles.row,
+							selected === "top" && styles.selected
+						)}
+						id="preview"
+					>
 						<TVNoise />
 					</div>
-					<div className={classNames(styles.bottomRow, styles.row)}>
+					<div
+						className={classNames(
+							styles.bottomRow,
+							styles.row,
+							selected === "bottom" && styles.selected
+						)}
+					>
 						<Terminal
 							commands={commands}
 							welcomeMessage={"Welcome to the React terminal!"}
@@ -78,7 +95,48 @@ return function() {
 		);
 	}
 
+	onKeyDown = (e) => {
+		// TODO: Prevent passing events to CodeMirror
+
+		if (e.key === "ArrowRight" && e.altKey) {
+			if (this.state.selected === "left") {
+				this.setState({ selected: this.state.lastVerticalSelection });
+			}
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+		if (e.key === "ArrowLeft" && e.altKey) {
+			if (this.state.selected !== "left") {
+				this.setState({
+					selected: "left",
+					lastVerticalSelection: this.state.selected,
+				});
+			}
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+		if (e.key === "ArrowUp" && e.altKey) {
+			if (this.state.selected === "bottom") {
+				this.setState({ selected: "top" });
+			}
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+		if (e.key === "ArrowDown" && e.altKey) {
+			if (this.state.selected === "top") {
+				this.setState({ selected: "bottom" });
+			}
+			e.preventDefault();
+			e.stopPropagation();
+		}
+	};
+
 	componentDidMount() {
+		window.addEventListener("keydown", this.onKeyDown);
+
 		return;
 		const preview = document.querySelector("#preview");
 
@@ -104,5 +162,9 @@ return function() {
 				preview.appendChild(app.view);
 			}
 		}, 1);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("keydown", this.onKeyDown);
 	}
 }
