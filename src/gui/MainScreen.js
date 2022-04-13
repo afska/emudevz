@@ -62,6 +62,7 @@ return function() {
 								backgroundColor: "#424242",
 								width: "100%",
 								height: "100%",
+								borderRadius: 0,
 							}}
 							contentStyle={{ height: "5vh" }}
 						/>
