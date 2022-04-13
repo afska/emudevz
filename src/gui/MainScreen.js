@@ -4,6 +4,7 @@ import Terminal from "react-console-emulator";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
+import TVNoise from "./TVNoise";
 import styles from "./MainScreen.module.css";
 
 const commands = {
@@ -48,7 +49,9 @@ return function() {
 				</div>
 
 				<div className={styles.column}>
-					<div className={styles.row} id="preview"></div>
+					<div className={styles.row} id="preview">
+						<TVNoise />
+					</div>
 					<div className={styles.row}>
 						<Terminal
 							commands={commands}
@@ -64,6 +67,7 @@ return function() {
 	}
 
 	componentDidMount() {
+		return;
 		const preview = document.querySelector("#preview");
 
 		const $interval = setInterval(() => {

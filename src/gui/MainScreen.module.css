@@ -10,13 +10,9 @@
 }
 
 .column {
-	display: flex;
-	flex: 1;
-	flex-direction: column;
+	width: 50%;
 }
 
 .row {
-	display: flex;
-	flex: 1;
-	padding: 2px;
+	height: 50%;
 }
