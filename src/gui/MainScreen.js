@@ -5,6 +5,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import TVNoise from "./TVNoise";
+import classNames from "classnames";
 import styles from "./MainScreen.module.css";
 
 const commands = {
@@ -21,7 +22,7 @@ export default class MainScreen extends PureComponent {
 	render() {
 		return (
 			<div className={styles.container}>
-				<div className={styles.column}>
+				<div className={classNames(styles.leftColumn, styles.column)}>
 					<CodeMirror
 						className={styles.editor}
 						value={`// Describes a CPU
@@ -48,7 +49,7 @@ return function() {
 					/>
 				</div>
 
-				<div className={styles.column}>
+				<div className={classNames(styles.rightColumn, styles.column)}>
 					<div className={styles.row} id="preview">
 						<TVNoise />
 					</div>
@@ -57,7 +58,11 @@ return function() {
 							commands={commands}
 							welcomeMessage={"Welcome to the React terminal!"}
 							promptLabel={"me@emudevz:~$"}
-							style={{ backgroundColor: "#42424277", width: "100%" }}
+							style={{
+								backgroundColor: "#424242",
+								width: "100%",
+								height: "100%",
+							}}
 							contentStyle={{ height: "5vh" }}
 						/>
 					</div>
@@ -89,7 +94,6 @@ return function() {
 					}
 				});
 
-				app.view.style.borderRadius = "8px";
 				preview.appendChild(app.view);
 			}
 		}, 1);
