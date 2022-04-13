@@ -83,14 +83,14 @@ return function() {
 		const graphics = new PIXI.Graphics();
 		app.stage.addChild(graphics);
 
-		let a = 1;
 		app.ticker.add(function (delta) {
 			graphics.clear();
 
-			// Rectangle
-			graphics.beginFill(0xff0000);
-			graphics.drawRect(50 + ++a, 50, 100, 100);
-			graphics.endFill();
+			for (let x = 0; x < app.renderer.width; x++) {
+				graphics.beginFill(0xff0000);
+				graphics.drawRect(x, 10, 1, 1);
+				graphics.endFill();
+			}
 		});
 
 		// The application will create a canvas element for you that you
