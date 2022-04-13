@@ -12,6 +12,7 @@
     "pixi.js": "^6.3.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
+    "react-console-emulator": "^5.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "^5.0.1"
   },

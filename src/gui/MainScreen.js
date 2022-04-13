@@ -1,28 +1,59 @@
 import React, { PureComponent } from "react";
 import * as PIXI from "pixi.js";
+import Terminal from "react-console-emulator";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
 import classNames from "classnames";
 import styles from "./MainScreen.module.css";
 
+const commands = {
+	echo: {
+		description: "Echo a passed string.",
+		usage: "echo <string>",
+		fn: function () {
+			return `${Array.from(arguments).join(" ")}`;
+		},
+	},
+};
+
 export default class MainScreen extends PureComponent {
 	render() {
 		return (
 			<div className={styles.container}>
-				<CodeMirror
-					className={styles.pane}
-					value="console.log('hello world!');"
-					width="100%"
-					height="50vh"
-					theme={oneDark}
-					extensions={[javascript({})]}
-					onChange={(value, viewUpdate) => {
-						console.log("value:", value);
-					}}
-					autoFocus
-				/>
-				<div id="preview" className={classNames(styles.pane, styles.preview)} />
+				<div className={styles.row}>
+					<CodeMirror
+						className={styles.pane}
+						value="console.log('hello world!');"
+						width="100%"
+						height="50vh"
+						theme={oneDark}
+						extensions={[javascript({})]}
+						onChange={(value, viewUpdate) => {
+							console.log("value:", value);
+						}}
+						autoFocus
+					/>
+					<div
+						id="preview"
+						className={classNames(styles.pane, styles.preview)}
+					/>
+				</div>
+
+				<div className={styles.pane}>
+					<Terminal
+						commands={commands}
+						welcomeMessage={"Welcome to the React terminal!"}
+						promptLabel={"me@emudevz:~$"}
+						style={{ backgroundColor: "#42424277", width: "100%" }}
+						contentStyle={{ height: "5vh" }}
+						inputAreaStyle={{ fontFamily: "monospace" }}
+						promptLabelStyle={{ fontFamily: "monospace" }}
+						inputStyle={{ fontFamily: "monospace" }}
+						inputTextStyle={{ fontFamily: "monospace", height: "inherit" }}
+						messageStyle={{ fontFamily: "monospace" }}
+					/>
+				</div>
 			</div>
 		);
 	}
