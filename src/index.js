@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "./gui/theme/crt.css";
-import "./index.css";
+import "./gui/theme/theme.css";
 
 // Render the React app
 ReactDOM.render(<App />, document.getElementById("root"));

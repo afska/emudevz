@@ -38,7 +38,6 @@ return function() {
 	}
 }`}
 						width="100%"
-						height="50vh"
 						theme={oneDark}
 						extensions={[javascript({})]}
 						onChange={(value, viewUpdate) => {
@@ -59,11 +58,6 @@ return function() {
 						promptLabel={"me@emudevz:~$"}
 						style={{ backgroundColor: "#42424277", width: "100%" }}
 						contentStyle={{ height: "5vh" }}
-						inputAreaStyle={{ fontFamily: "monospace" }}
-						promptLabelStyle={{ fontFamily: "monospace" }}
-						inputStyle={{ fontFamily: "monospace" }}
-						inputTextStyle={{ fontFamily: "monospace", height: "inherit" }}
-						messageStyle={{ fontFamily: "monospace" }}
 					/>
 				</div>
 			</div>
@@ -73,12 +67,9 @@ return function() {
 	componentDidMount() {
 		document.querySelector("#root").classList.add("crt");
 
-		// The application will create a renderer using WebGL, if possible,
-		// with a fallback to a canvas render. It will also setup the ticker
-		// and the root stage PIXI.Container
 		const app = new PIXI.Application({
 			resizeTo: window,
-			backgroundAlpha: 0.5,
+			backgroundColor: "black",
 		});
 		const graphics = new PIXI.Graphics();
 		app.stage.addChild(graphics);
@@ -93,8 +84,7 @@ return function() {
 			}
 		});
 
-		// The application will create a canvas element for you that you
-		// can then insert into the DOM
+		app.view.style.borderRadius = "8px";
 		document.querySelector("#preview").appendChild(app.view);
 	}
 }
