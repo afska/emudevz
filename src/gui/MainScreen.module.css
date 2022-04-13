@@ -40,3 +40,7 @@
 	border-style: solid;
 	border-color: darkgray;
 }
+
+.selected {
+	filter: brightness(150%);
+}

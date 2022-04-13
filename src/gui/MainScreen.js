@@ -22,7 +22,13 @@ export default class MainScreen extends PureComponent {
 	render() {
 		return (
 			<div className={styles.container}>
-				<div className={classNames(styles.leftColumn, styles.column)}>
+				<div
+					className={classNames(
+						styles.leftColumn,
+						styles.column,
+						styles.selected
+					)}
+				>
 					<CodeMirror
 						className={styles.editor}
 						value={`// Describes a CPU
