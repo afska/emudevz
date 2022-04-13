@@ -6,12 +6,10 @@
     "@codemirror/lang-javascript": "^0.19.7",
     "@codemirror/theme-one-dark": "^0.19.1",
     "@uiw/react-codemirror": "^4.6.0",
-    "bootstrap": "^4.6.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.20",
     "pixi.js": "^6.3.0",
     "react": "^17.0.1",
-    "react-bootstrap": "^1.4.3",
     "react-console-emulator": "^5.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "^5.0.1"
