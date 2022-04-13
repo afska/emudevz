@@ -55,6 +55,16 @@ return function() {
 						onChange={(value, viewUpdate) => {
 							// console.log("value:", value);
 						}}
+						onKeyDownCapture={(e) => {
+							if (
+								(e.code === "ArrowLeft" ||
+									e.code === "ArrowRight" ||
+									e.code === "ArrowUp" ||
+									e.code === "ArrowDown") &&
+								e.altKey
+							)
+								e.preventDefault();
+						}}
 						autoFocus
 					/>
 				</div>
