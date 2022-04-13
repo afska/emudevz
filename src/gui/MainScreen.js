@@ -20,6 +20,7 @@ export default class MainScreen extends PureComponent {
 					onChange={(value, viewUpdate) => {
 						console.log("value:", value);
 					}}
+					autoFocus
 				/>
 				<div id="preview" className={classNames(styles.pane, styles.preview)} />
 			</div>
