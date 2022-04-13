@@ -80,7 +80,7 @@ return function() {
 						<Terminal
 							commands={commands}
 							welcomeMessage={"Welcome to the React terminal!"}
-							promptLabel={"me@emudevz:~$"}
+							promptLabel={"me@consoletest:~$"}
 							style={{
 								backgroundColor: "#424242",
 								width: "100%",

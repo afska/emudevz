@@ -43,4 +43,17 @@
 
 .selected {
 	filter: brightness(150%);
+
+	animation-duration: 0.5s;
+	animation-name: select;
+}
+
+@keyframes select {
+	from {
+		filter: brightness(100%);
+	}
+
+	to {
+		filter: brightness(150%);
+	}
 }
