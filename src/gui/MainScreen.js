@@ -71,6 +71,8 @@ return function() {
 	}
 
 	componentDidMount() {
+		document.querySelector("#root").classList.add("crt");
+
 		// The application will create a renderer using WebGL, if possible,
 		// with a fallback to a canvas render. It will also setup the ticker
 		// and the root stage PIXI.Container
