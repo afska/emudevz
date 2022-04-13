@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@codemirror/lang-javascript": "^0.19.7",
+    "@uiw/react-codemirror": "^4.6.0",
     "bootstrap": "^4.6.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
-    "react-scripts": "^4.0.1"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "dev": "npm run web",
