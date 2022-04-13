@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@codemirror/lang-javascript": "^0.19.7",
+    "@codemirror/theme-one-dark": "^0.19.1",
     "@uiw/react-codemirror": "^4.6.0",
     "bootstrap": "^4.6.0",
     "classnames": "^2.2.6",
