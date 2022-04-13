@@ -24,7 +24,19 @@ export default class MainScreen extends PureComponent {
 				<div className={styles.row}>
 					<CodeMirror
 						className={styles.pane}
-						value="console.log('hello world!');"
+						value={`// Describes a CPU
+
+return function() {
+	return {
+		cycle: 0,
+		memory: new Array(1024),
+		registers: {
+			A: 0,
+			Z: 0,
+			N: 0
+		}
+	}
+}`}
 						width="100%"
 						height="50vh"
 						theme={oneDark}
