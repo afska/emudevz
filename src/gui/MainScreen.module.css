@@ -1,20 +1,22 @@
+.container,
+.editor,
+.column {
+	height: 100%;
+}
+
 .container {
+	display: flex;
+	flex-direction: row;
+}
+
+.column {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
 }
 
 .row {
 	display: flex;
-	flex-direction: row;
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-
-.pane {
-	display: flex;
 	flex: 1;
-	margin-right: 10px;
-	margin-left: 10px;
-}
-
-.preview {
-	height: 50vh;
+	padding: 2px;
 }

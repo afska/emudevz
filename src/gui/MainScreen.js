@@ -4,7 +4,6 @@ import Terminal from "react-console-emulator";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
-import classNames from "classnames";
 import styles from "./MainScreen.module.css";
 
 const commands = {
@@ -21,9 +20,9 @@ export default class MainScreen extends PureComponent {
 	render() {
 		return (
 			<div className={styles.container}>
-				<div className={styles.row}>
+				<div className={styles.column}>
 					<CodeMirror
-						className={styles.pane}
+						className={styles.editor}
 						value={`// Describes a CPU
 
 return function() {
@@ -38,6 +37,7 @@ return function() {
 	}
 }`}
 						width="100%"
+						height="100%"
 						theme={oneDark}
 						extensions={[javascript({})]}
 						onChange={(value, viewUpdate) => {
@@ -45,46 +45,49 @@ return function() {
 						}}
 						autoFocus
 					/>
-					<div
-						id="preview"
-						className={classNames(styles.pane, styles.preview)}
-					/>
 				</div>
 
-				<div className={styles.pane}>
-					<Terminal
-						commands={commands}
-						welcomeMessage={"Welcome to the React terminal!"}
-						promptLabel={"me@emudevz:~$"}
-						style={{ backgroundColor: "#42424277", width: "100%" }}
-						contentStyle={{ height: "5vh" }}
-					/>
+				<div className={styles.column}>
+					<div className={styles.row} id="preview"></div>
+					<div className={styles.row}>
+						<Terminal
+							commands={commands}
+							welcomeMessage={"Welcome to the React terminal!"}
+							promptLabel={"me@emudevz:~$"}
+							style={{ backgroundColor: "#42424277", width: "100%" }}
+							contentStyle={{ height: "5vh" }}
+						/>
+					</div>
 				</div>
 			</div>
 		);
 	}
 
 	componentDidMount() {
-		document.querySelector("#root").classList.add("crt");
+		const preview = document.querySelector("#preview");
 
-		const app = new PIXI.Application({
-			resizeTo: window,
-			backgroundColor: "black",
-		});
-		const graphics = new PIXI.Graphics();
-		app.stage.addChild(graphics);
+		const $interval = setInterval(() => {
+			if (preview.clientWidth > 0) {
+				clearInterval($interval);
 
-		app.ticker.add(function (delta) {
-			graphics.clear();
+				const app = new PIXI.Application({
+					resizeTo: preview,
+					backgroundColor: 0x333333,
+				});
+				const graphics = new PIXI.Graphics();
+				app.stage.addChild(graphics);
+				app.ticker.add(function (delta) {
+					graphics.clear();
+					for (let x = 0; x < app.renderer.width; x++) {
+						graphics.beginFill(0xff0000);
+						graphics.drawRect(x, 10, 1, 1);
+						graphics.endFill();
+					}
+				});
 
-			for (let x = 0; x < app.renderer.width; x++) {
-				graphics.beginFill(0xff0000);
-				graphics.drawRect(x, 10, 1, 1);
-				graphics.endFill();
+				app.view.style.borderRadius = "8px";
+				preview.appendChild(app.view);
 			}
-		});
-
-		app.view.style.borderRadius = "8px";
-		document.querySelector("#preview").appendChild(app.view);
+		}, 1);
 	}
 }

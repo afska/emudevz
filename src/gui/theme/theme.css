@@ -6,6 +6,16 @@ body {
 	height: 100%;
 	margin: 0;
 	overflow: hidden;
+
 	background-color: black;
 	color: white;
+}
+
+#container,
+#root {
+	height: 100%;
+}
+
+.cm-theme {
+	width: 100%;
 }
