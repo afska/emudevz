@@ -7,7 +7,12 @@ export default class TVNoise extends Component {
 	render() {
 		return (
 			<canvas
-				style={{ width: "100%", height: "100%", borderRadius: 8 }}
+				style={{
+					width: "100%",
+					height: "100%",
+					borderRadius: 8,
+					backgroundColor: "#333333",
+				}}
 				width={SCREEN_WIDTH}
 				height={SCREEN_HEIGHT}
 				ref={(canvas) => {
