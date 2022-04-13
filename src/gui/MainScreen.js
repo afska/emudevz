@@ -50,10 +50,10 @@ return function() {
 				</div>
 
 				<div className={classNames(styles.rightColumn, styles.column)}>
-					<div className={styles.row} id="preview">
+					<div className={classNames(styles.topRow, styles.row)} id="preview">
 						<TVNoise />
 					</div>
-					<div className={styles.row}>
+					<div className={classNames(styles.bottomRow, styles.row)}>
 						<Terminal
 							commands={commands}
 							welcomeMessage={"Welcome to the React terminal!"}

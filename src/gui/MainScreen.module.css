@@ -9,22 +9,34 @@
 	flex-direction: row;
 }
 
-.leftColumn {
-	border-width: 0 1px 0 0;
-	border-style: solid;
-	border-color: gray;
-}
-
-.rightColumn {
-	border-width: 0 0 0 1px;
-	border-style: solid;
-	border-color: gray;
-}
-
 .column {
 	width: 50%;
 }
 
 .row {
 	height: 50%;
+}
+
+.leftColumn {
+	border-width: 0 1px 0 0;
+	border-style: solid;
+	border-color: darkgray;
+}
+
+.rightColumn {
+	border-width: 0 0 0 1px;
+	border-style: solid;
+	border-color: darkgray;
+}
+
+.topRow {
+	border-width: 0 0 1px 0;
+	border-style: solid;
+	border-color: darkgray;
+}
+
+.bottomRow {
+	border-width: 1px 0 0 0;
+	border-style: solid;
+	border-color: darkgray;
 }
