@@ -32,6 +32,9 @@ export default class MainScreen extends PureComponent {
 						styles.column,
 						selected === "left" && styles.selected
 					)}
+					onMouseDown={(e) => {
+						this.setState({ selected: "left" });
+					}}
 				>
 					<CodeMirror
 						className={styles.editor}
@@ -77,6 +80,9 @@ return function() {
 							selected === "top" && styles.selected
 						)}
 						id="preview"
+						onMouseDown={(e) => {
+							this.setState({ selected: "top" });
+						}}
 					>
 						<TVNoise />
 					</div>
@@ -86,6 +92,9 @@ return function() {
 							styles.row,
 							selected === "bottom" && styles.selected
 						)}
+						onMouseDown={(e) => {
+							this.setState({ selected: "bottom" });
+						}}
 					>
 						<Terminal
 							commands={commands}
