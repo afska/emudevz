@@ -20,6 +20,5 @@ export default class Terminal extends PureComponent {
 	componentDidMount() {
 		this.ref.terminal.writeln("\x1b[31;1mWelcome!\x1b[0m");
 		this.ref.terminal.write("me@consoletest:~$ ");
-		console.log(this.ref.terminal.prompt);
 	}
 }

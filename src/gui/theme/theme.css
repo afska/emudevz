@@ -19,3 +19,7 @@ body {
 .cm-theme {
 	width: 100%;
 }
+
+.xterm {
+	padding: 8px;
+}
