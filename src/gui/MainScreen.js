@@ -6,7 +6,13 @@ import styles from "./MainScreen.module.css";
 export default class MainScreen extends PureComponent {
 	state = { selected: "left", lastVerticalSelection: "bottom" };
 
+	get isReady() {
+		return document.querySelector("body").clientWidth > 0;
+	}
+
 	render() {
+		if (!this.isReady) return false;
+
 		const { selected } = this.state;
 
 		return (
@@ -90,6 +96,13 @@ export default class MainScreen extends PureComponent {
 	};
 
 	componentDidMount() {
+		const $interval = setInterval(() => {
+			if (this.isReady) {
+				clearInterval($interval);
+				this.forceUpdate();
+			}
+		}, 1);
+
 		window.addEventListener("keydown", this.onKeyDown);
 	}
 

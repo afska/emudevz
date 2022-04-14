@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
+import "xterm/css/xterm.css";
 
 // Render the React app
 ReactDOM.render(<App />, document.getElementById("root"));
