@@ -42,7 +42,7 @@ export default class MainScreen extends PureComponent {
 							this.setState({ selected: "top" });
 						}}
 					>
-						<TV />
+						<Terminal />
 					</div>
 
 					<div
@@ -55,7 +55,7 @@ export default class MainScreen extends PureComponent {
 							this.setState({ selected: "bottom" });
 						}}
 					>
-						<Terminal />
+						<TV />
 					</div>
 				</div>
 			</div>
