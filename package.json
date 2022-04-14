@@ -10,9 +10,9 @@
     "lodash": "^4.17.20",
     "pixi.js": "^6.3.0",
     "react": "^17.0.1",
-    "react-console-emulator": "^5.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "xterm-for-react": "^1.0.4"
   },
   "scripts": {
     "dev": "npm run web",

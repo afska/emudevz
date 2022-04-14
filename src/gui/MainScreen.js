@@ -60,36 +60,30 @@ export default class MainScreen extends PureComponent {
 		const { selected, lastVerticalSelection } = this.state;
 
 		if (e.key === "ArrowRight" && e.altKey) {
-			if (selected === "left") {
+			if (selected === "left")
 				this.setState({ selected: lastVerticalSelection });
-			}
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowLeft" && e.altKey) {
-			if (selected !== "left") {
+			if (selected !== "left")
 				this.setState({
 					selected: "left",
 					lastVerticalSelection: selected,
 				});
-			}
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowUp" && e.altKey) {
-			if (selected === "bottom") {
-				this.setState({ selected: "top" });
-			}
+			if (selected === "bottom") this.setState({ selected: "top" });
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowDown" && e.altKey) {
-			if (selected === "top") {
-				this.setState({ selected: "bottom" });
-			}
+			if (selected === "top") this.setState({ selected: "bottom" });
 			e.preventDefault();
 			e.stopPropagation();
 		}

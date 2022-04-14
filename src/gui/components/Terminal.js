@@ -1,31 +1,25 @@
 import React, { PureComponent } from "react";
-import ConsoleEmulator from "react-console-emulator";
-
-const commands = {
-	echo: {
-		description: "Echo a passed string.",
-		usage: "echo <string>",
-		fn: function () {
-			return `${Array.from(arguments).join(" ")}`;
-		},
-	},
-};
+import { XTerm } from "xterm-for-react";
 
 export default class Terminal extends PureComponent {
 	render() {
 		return (
-			<ConsoleEmulator
-				commands={commands}
-				welcomeMessage={"Welcome to the React terminal!"}
-				promptLabel={"me@consoletest:~$"}
-				style={{
-					backgroundColor: "#424242",
-					width: "100%",
-					height: "100%",
-					borderRadius: 0,
+			<XTerm
+				options={{
+					cursorBlink: true,
+					theme: { background: "#111111" },
 				}}
-				contentStyle={{ height: "5vh" }}
+				ref={(ref) => {
+					if (!ref) return;
+					this.ref = ref;
+				}}
 			/>
 		);
+	}
+
+	componentDidMount() {
+		this.ref.terminal.writeln("Welcome!");
+		this.ref.terminal.write("me@consoletest:~$ ");
+		console.log(this.ref.terminal.prompt);
 	}
 }
