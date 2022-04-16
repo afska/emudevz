@@ -100,7 +100,7 @@ export default class ThreePaneLayout extends PureComponent {
 		}
 
 		if (e.key === "ArrowUp" && e.altKey) {
-			if (selected === "bottom") {
+			if (selected !== "top") {
 				this.setState({ selected: "top" });
 				this.top.focus();
 			}
@@ -109,7 +109,7 @@ export default class ThreePaneLayout extends PureComponent {
 		}
 
 		if (e.key === "ArrowDown" && e.altKey) {
-			if (selected === "top") {
+			if (selected !== "bottom") {
 				this.setState({ selected: "bottom" });
 				this.bottom.focus();
 			}
