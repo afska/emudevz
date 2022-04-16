@@ -8,17 +8,19 @@ export default class Terminal extends PureComponent {
 
 	render() {
 		return (
-			<XTerm
-				className={styles.xtermContainer}
-				options={{
-					cursorBlink: true,
-					theme: { background: "#111111" },
-				}}
-				addons={[this.fitAddon]}
-				ref={(ref) => {
-					this.ref = ref;
-				}}
-			/>
+			<div className={styles.xtermContainer}>
+				<XTerm
+					className={styles.xtermContainer}
+					options={{
+						cursorBlink: true,
+						theme: { background: "#111111" },
+					}}
+					addons={[this.fitAddon]}
+					ref={(ref) => {
+						this.ref = ref;
+					}}
+				/>
+			</div>
 		);
 	}
 
@@ -42,11 +44,17 @@ export default class Terminal extends PureComponent {
 			term.write("\r\n$ ");
 		};
 
-		// TODO: Use a nicer default font
 		term.writeln(["Jeje"].join("\n\r"));
 
 		let command;
 		const commands = {
+			clear: {
+				f: () => {
+					term.clear();
+					prompt(term);
+				},
+				description: "Clears everything",
+			},
 			help: {
 				f: () => {
 					term.writeln(

@@ -46,7 +46,11 @@ export default class MainScreen extends PureComponent {
 							this.setState({ selected: "top" });
 						}}
 					>
-						<TV />
+						<TV
+							ref={(tv) => {
+								this.tv = tv;
+							}}
+						/>
 					</div>
 
 					<div
@@ -76,7 +80,8 @@ export default class MainScreen extends PureComponent {
 		if (e.key === "ArrowRight" && e.altKey) {
 			if (selected === "left") {
 				this.setState({ selected: lastVerticalSelection });
-				if (lastVerticalSelection === "bottom") this.terminal.focus();
+				if (lastVerticalSelection === "top") this.tv.focus();
+				else this.terminal.focus();
 			}
 			e.preventDefault();
 			e.stopPropagation();
@@ -95,7 +100,10 @@ export default class MainScreen extends PureComponent {
 		}
 
 		if (e.key === "ArrowUp" && e.altKey) {
-			if (selected === "bottom") this.setState({ selected: "top" });
+			if (selected === "bottom") {
+				this.setState({ selected: "top" });
+				this.tv.focus();
+			}
 			e.preventDefault();
 			e.stopPropagation();
 		}

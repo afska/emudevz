@@ -1,11 +1,26 @@
 import React, { PureComponent } from "react";
 // import * as PIXI from "pixi.js";
 import TVNoise from "./TVNoise";
+import styles from "./TV.module.css";
 
 export default class TV extends PureComponent {
 	render() {
-		return <TVNoise />;
+		return (
+			<div
+				className={styles.tvContainer}
+				tabIndex={0}
+				ref={(ref) => {
+					this.ref = ref;
+				}}
+			>
+				<TVNoise />
+			</div>
+		);
 	}
+
+	focus = () => {
+		this.ref.focus();
+	};
 
 	componentDidMount() {
 		// const preview = document.querySelector("#preview"); // TODO: USE REF
