@@ -23,3 +23,7 @@ body {
 .xterm {
 	padding: 8px;
 }
+
+.xterm-viewport {
+	overflow-y: hidden !important;
+}
