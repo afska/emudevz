@@ -31,9 +31,16 @@ return function() {
 				}}
 				onKeyDownCapture={this.onKeyDownCapture}
 				autoFocus
+				ref={(ref) => {
+					this.ref = ref;
+				}}
 			/>
 		);
 	}
+
+	focus = () => {
+		this.ref.view.focus();
+	};
 
 	onKeyDownCapture = (e) => {
 		if (

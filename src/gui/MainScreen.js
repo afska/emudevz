@@ -27,7 +27,11 @@ export default class MainScreen extends PureComponent {
 						this.setState({ selected: "left" });
 					}}
 				>
-					<CodeEditor />
+					<CodeEditor
+						ref={(codeEditor) => {
+							this.codeEditor = codeEditor;
+						}}
+					/>
 				</div>
 
 				<div className={classNames(styles.rightColumn, styles.column)}>
@@ -55,7 +59,11 @@ export default class MainScreen extends PureComponent {
 							this.setState({ selected: "bottom" });
 						}}
 					>
-						<Terminal />
+						<Terminal
+							ref={(terminal) => {
+								this.terminal = terminal;
+							}}
+						/>
 					</div>
 				</div>
 			</div>
@@ -66,18 +74,22 @@ export default class MainScreen extends PureComponent {
 		const { selected, lastVerticalSelection } = this.state;
 
 		if (e.key === "ArrowRight" && e.altKey) {
-			if (selected === "left")
+			if (selected === "left") {
 				this.setState({ selected: lastVerticalSelection });
+				if (lastVerticalSelection === "bottom") this.terminal.focus();
+			}
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowLeft" && e.altKey) {
-			if (selected !== "left")
+			if (selected !== "left") {
 				this.setState({
 					selected: "left",
 					lastVerticalSelection: selected,
 				});
+				this.codeEditor.focus();
+			}
 			e.preventDefault();
 			e.stopPropagation();
 		}
@@ -89,7 +101,10 @@ export default class MainScreen extends PureComponent {
 		}
 
 		if (e.key === "ArrowDown" && e.altKey) {
-			if (selected === "top") this.setState({ selected: "bottom" });
+			if (selected === "top") {
+				this.setState({ selected: "bottom" });
+				this.terminal.focus();
+			}
 			e.preventDefault();
 			e.stopPropagation();
 		}

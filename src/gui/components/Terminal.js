@@ -16,12 +16,15 @@ export default class Terminal extends PureComponent {
 				}}
 				addons={[this.fitAddon]}
 				ref={(ref) => {
-					if (!ref) return;
 					this.ref = ref;
 				}}
 			/>
 		);
 	}
+
+	focus = () => {
+		this.ref.terminal.focus();
+	};
 
 	onResize = () => {
 		this.fitAddon.fit();
