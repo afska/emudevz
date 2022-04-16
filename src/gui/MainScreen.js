@@ -16,7 +16,7 @@ export default class MainScreen extends PureComponent {
 		const { selected } = this.state;
 
 		return (
-			<div className={styles.container}>
+			<div className={styles.container} onKeyDownCapture={this.onKeyDown}>
 				<div
 					className={classNames(
 						styles.leftColumn,
@@ -125,11 +125,5 @@ export default class MainScreen extends PureComponent {
 				this.forceUpdate();
 			}
 		}, 1);
-
-		window.addEventListener("keydown", this.onKeyDown);
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener("keydown", this.onKeyDown);
 	}
 }

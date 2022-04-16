@@ -29,7 +29,6 @@ return function() {
 				onChange={(value, viewUpdate) => {
 					// console.log("value:", value);
 				}}
-				onKeyDownCapture={this.onKeyDownCapture}
 				autoFocus
 				ref={(ref) => {
 					this.ref = ref;
@@ -40,16 +39,5 @@ return function() {
 
 	focus = () => {
 		this.ref.view.focus();
-	};
-
-	onKeyDownCapture = (e) => {
-		if (
-			(e.code === "ArrowLeft" ||
-				e.code === "ArrowRight" ||
-				e.code === "ArrowUp" ||
-				e.code === "ArrowDown") &&
-			e.altKey
-		)
-			e.preventDefault();
 	};
 }

@@ -8,7 +8,10 @@ export default class Terminal extends PureComponent {
 
 	render() {
 		return (
-			<div className={styles.xtermContainer}>
+			<div
+				className={styles.xtermContainer}
+				onKeyDownCapture={this.onKeyDownCapture}
+			>
 				<XTerm
 					className={styles.xtermContainer}
 					options={{
@@ -30,6 +33,19 @@ export default class Terminal extends PureComponent {
 
 	onResize = () => {
 		this.fitAddon.fit();
+	};
+
+	onKeyDownCapture = (e) => {
+		if (
+			(e.code === "ArrowLeft" ||
+				e.code === "ArrowRight" ||
+				e.code === "ArrowUp" ||
+				e.code === "ArrowDown") &&
+			e.altKey
+		) {
+			alert("PUMBA");
+			e.preventDefault();
+		}
 	};
 
 	componentDidMount() {
