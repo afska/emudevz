@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { XTerm } from "xterm-for-react";
 import { FitAddon } from "xterm-addon-fit";
+import styles from "./Terminal.module.css";
 
 export default class Terminal extends PureComponent {
 	fitAddon = new FitAddon();
@@ -8,6 +9,7 @@ export default class Terminal extends PureComponent {
 	render() {
 		return (
 			<XTerm
+				className={styles.xtermContainer}
 				options={{
 					cursorBlink: true,
 					theme: { background: "#111111" },
@@ -21,11 +23,17 @@ export default class Terminal extends PureComponent {
 		);
 	}
 
+	onResize = () => {
+		this.fitAddon.fit();
+	};
+
 	componentDidMount() {
+		window.addEventListener("resize", this.onResize);
+		this.onResize();
+
 		const term = this.ref.terminal;
 		// term.writeln("\x1b[31;1mWelcome!\x1b[0m");
 		// term.write("me@consoletest:~$ ");
-		this.fitAddon.fit();
 
 		term.prompt = () => {
 			term.write("\r\n$ ");
@@ -112,5 +120,9 @@ export default class Terminal extends PureComponent {
 					}
 			}
 		});
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.resize);
 	}
 }
