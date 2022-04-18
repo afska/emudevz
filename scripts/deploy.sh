@@ -2,7 +2,7 @@
 
 . ./scripts/try.sh
 
-APP_NAME="emudevz"
+APP_NAME="codide"
 
 USERNAME="$1"
 TOKEN="$2"

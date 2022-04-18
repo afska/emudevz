@@ -1,7 +1,7 @@
-# emudevz
+# codide
 
 ```js
-// TODO: Replace `emudevz` with the app name
+// TODO: Replace `codide` with the app name
 ```
 
 ## Install

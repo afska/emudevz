@@ -1,5 +1,5 @@
 {
-  "name": "emudevz",
+  "name": "codide",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -27,12 +27,12 @@
     "test": "react-scripts test",
     "electron": "electron",
     "react-scripts": "react-scripts",
-    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/emudevz react-scripts build",
+    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/codide react-scripts build",
     "build:electron": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=./ react-scripts build"
   },
   "main": "desktop.js",
   "build": {
-    "productName": "emudevz",
+    "productName": "codide",
     "extends": null,
     "extraFiles": [
       "icons/icon-512x512.png"
