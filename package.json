@@ -8,6 +8,7 @@
     "@uiw/react-codemirror": "^4.6.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.20",
+    "phaser": "^3.55.2",
     "pixi.js": "^6.3.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
