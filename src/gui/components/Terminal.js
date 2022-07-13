@@ -54,7 +54,7 @@ export default class Terminal extends PureComponent {
 
 		const term = this.ref.terminal;
 		// term.writeln("\x1b[31;1mWelcome!\x1b[0m");
-		// term.write("me@codide:~$ ");
+		// term.write("me@emudevz:~$ ");
 
 		term.prompt = () => {
 			term.write("\r\n$ ");
