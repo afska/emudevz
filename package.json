@@ -16,6 +16,7 @@
     "xterm-for-react": "^1.0.4"
   },
   "scripts": {
+    "start": "npm run web",
     "dev": "npm run web",
     "web": "react-scripts start",
     "desktop": "concurrently \"cross-env BROWSER=none react-scripts start\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
