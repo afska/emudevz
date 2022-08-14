@@ -76,6 +76,7 @@ export default class ThreePaneLayout extends Layout {
 		if (e.key === "ArrowRight" && e.altKey) {
 			if (selected === "left") {
 				this.setState({ selected: lastVerticalSelection });
+
 				if (lastVerticalSelection === "top") this.top.focus();
 				else this.bottom.focus();
 			}
