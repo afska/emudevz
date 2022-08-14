@@ -42,10 +42,8 @@ export default class Terminal extends PureComponent {
 				e.code === "ArrowUp" ||
 				e.code === "ArrowDown") &&
 			e.altKey
-		) {
-			alert("PUMBA");
+		)
 			e.preventDefault();
-		}
 	};
 
 	componentDidMount() {

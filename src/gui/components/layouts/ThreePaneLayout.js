@@ -1,13 +1,10 @@
-import React, { PureComponent } from "react";
+import React from "react";
+import Layout from "./Layout";
 import classNames from "classnames";
-import styles from "./ThreePaneLayout.module.css";
+import styles from "./Layout.module.css";
 
-export default class ThreePaneLayout extends PureComponent {
+export default class ThreePaneLayout extends Layout {
 	state = { selected: "left", lastVerticalSelection: "bottom" };
-
-	get isReady() {
-		return document.querySelector("body").clientWidth > 0;
-	}
 
 	render() {
 		if (!this.isReady) return false;
@@ -41,7 +38,6 @@ export default class ThreePaneLayout extends PureComponent {
 							styles.row,
 							selected === "top" && styles.selected
 						)}
-						id="preview"
 						onMouseDown={(e) => {
 							this.setState({ selected: "top" });
 						}}
@@ -118,20 +114,11 @@ export default class ThreePaneLayout extends PureComponent {
 		}
 	};
 
-	componentDidMount() {
-		const $interval = setInterval(() => {
-			if (this.isReady) {
-				clearInterval($interval);
-
-				this.forceUpdate(() => {
-					if (this.props.onReady)
-						this.props.onReady({
-							left: this.left,
-							top: this.top,
-							bottom: this.bottom,
-						});
-				});
-			}
-		}, 1);
+	_callOnReady() {
+		this.props.onReady({
+			left: this.left,
+			top: this.top,
+			bottom: this.bottom,
+		});
 	}
 }

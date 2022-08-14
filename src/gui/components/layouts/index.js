@@ -1,3 +1,4 @@
+import DualLayout from "./DualLayout";
 import ThreePaneLayout from "./ThreePaneLayout";
 
-export { ThreePaneLayout };
+export { DualLayout, ThreePaneLayout };
