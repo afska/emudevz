@@ -10,7 +10,7 @@ export default class Terminal extends PureComponent {
 		return (
 			<div
 				className={styles.xtermContainer}
-				onKeyDownCapture={this.onKeyDownCapture}
+				onKeyDownCapture={this._onKeyDownCapture}
 			>
 				<XTerm
 					className={styles.xtermContainer}
@@ -31,11 +31,11 @@ export default class Terminal extends PureComponent {
 		this.ref.terminal.focus();
 	};
 
-	onResize = () => {
+	_onResize = () => {
 		this.fitAddon.fit();
 	};
 
-	onKeyDownCapture = (e) => {
+	_onKeyDownCapture = (e) => {
 		if (
 			(e.code === "ArrowLeft" ||
 				e.code === "ArrowRight" ||
@@ -49,8 +49,8 @@ export default class Terminal extends PureComponent {
 	};
 
 	componentDidMount() {
-		window.addEventListener("resize", this.onResize);
-		this.onResize();
+		window.addEventListener("resize", this._onResize);
+		this._onResize();
 
 		const term = this.ref.terminal;
 		// term.writeln("\x1b[31;1mWelcome!\x1b[0m");
