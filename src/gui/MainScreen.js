@@ -1,17 +1,10 @@
 import React, { PureComponent } from "react";
-import { ThreePaneLayout } from "./components/layouts";
+import { MonoLayout } from "./components/layouts";
 import { CodeEditor, Terminal, TV } from "./components";
 
 export default class MainScreen extends PureComponent {
 	render() {
-		return (
-			<ThreePaneLayout
-				Left={CodeEditor}
-				Top={TV}
-				Bottom={Terminal}
-				onReady={this.onReady}
-			/>
-		);
+		return <MonoLayout Component={Terminal} onReady={this.onReady} />;
 	}
 
 	onReady = ({ left, top, bottom }) => {

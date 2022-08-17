@@ -58,10 +58,39 @@ export default class Terminal extends PureComponent {
 			term.write("\r\n$ ");
 		};
 
-		term.writeln(["Jeje"].join("\n\r"));
+		const msg = (text) =>
+			"\u001b[38;5;180m" + ">> " + text + "\u001b[38;5;255m";
+		const newline = "\n\r";
+		term.writeln(
+			[
+				msg("hey"),
+				msg("you around?"),
+				msg("I think I found some really helpful docs about the NEEES") +
+					newline +
+					newline +
+					"\u001b[38;5;14m" +
+					"Choose an answer:" +
+					"\u001b[38;5;255m",
+				"1) what did you found?",
+				"2) first of all, why is it called 'NEEES'?",
+			].join(newline)
+		);
 
 		let command;
 		const commands = {
+			2: {
+				f: () => {
+					term.writeln(
+						[
+							msg(
+								'I believe that it stands for <"No Entiendo" Enigmatic Enjoyment Solution>'
+							),
+						].join(newline)
+					);
+					prompt(term);
+				},
+				description: "Clears everything",
+			},
 			clear: {
 				f: () => {
 					term.clear();
@@ -111,7 +140,7 @@ export default class Terminal extends PureComponent {
 			prompt(term);
 		};
 
-		term.writeln("Below is a simple emulated backend, try running `help`.");
+		// term.writeln("Below is a simple emulated backend, try running `help`.");
 		prompt(term);
 
 		term.onData((e) => {
