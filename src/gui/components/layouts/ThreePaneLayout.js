@@ -9,6 +9,7 @@ export default class ThreePaneLayout extends Layout {
 	render() {
 		if (!this.isReady) return false;
 
+		this.require("Left", "Top", "Bottom");
 		const { Left, Top, Bottom } = this.props;
 		const { selected } = this.state;
 

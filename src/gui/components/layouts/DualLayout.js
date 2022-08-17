@@ -9,6 +9,7 @@ export default class DualLayout extends Layout {
 	render() {
 		if (!this.isReady) return false;
 
+		this.require("Left", "Right");
 		const { Left, Right } = this.props;
 		const { selected } = this.state;
 
