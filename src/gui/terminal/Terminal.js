@@ -1,10 +1,12 @@
 import Shell from "./Shell";
 import PendingInput from "./PendingInput";
 
-const CTRL_C = "\u0003";
-const BACKSPACE = "\u007F";
-const ENTER = "\r";
+const KEY_CTRL_C = "\u0003";
+const KEY_BACKSPACE = "\u007F";
+const KEY_ENTER = "\r";
 const NEWLINE = "\r\n";
+const BACKSPACE = "\b \b";
+const PROMPT = "$ ";
 
 export default class Terminal {
 	constructor(xterm) {
@@ -32,7 +34,7 @@ export default class Terminal {
 	prompt() {
 		return new Promise((resolve, reject) => {
 			this._input = new PendingInput(resolve, reject);
-			this._xterm.write(NEWLINE + "$ ");
+			this._xterm.write(NEWLINE + PROMPT);
 		});
 	}
 
@@ -64,24 +66,21 @@ export default class Terminal {
 
 	_onData(data) {
 		switch (data) {
-			case CTRL_C: {
+			case KEY_CTRL_C: {
 				this.cancelPrompt();
 				this._currentProgram.onStop();
 				break;
 			}
-			case ENTER: {
+			case KEY_ENTER: {
 				if (this.confirmPrompt()) this._xterm.writeln(NEWLINE);
 
 				break;
 			}
-			case BACKSPACE:
-				// // (do not delete the prompt)
-				// if (this._xterm._core.buffer.x > 2) {
-				// 	term.write("\b \b");
-				// 	if (command.length > 0) {
-				// 		command = command.substr(0, command.length - 1);
-				// 	}
-				// }
+			case KEY_BACKSPACE:
+				if (this._xterm._core.buffer.x > PROMPT.length) {
+					this._xterm.write(BACKSPACE);
+					if (this._input != null) this._input.backspace();
+				}
 				break;
 			default:
 				if (this._input != null && this._isValidInput(data)) {

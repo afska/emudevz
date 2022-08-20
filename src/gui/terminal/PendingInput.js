@@ -1,16 +1,20 @@
 export default class PendingInput {
 	constructor(resolve, reject) {
-		this._input = "";
+		this._text = "";
 		this._resolve = resolve;
 		this._reject = reject;
 	}
 
-	append(data) {
-		this._input += data;
+	append(text) {
+		this._text += text;
+	}
+
+	backspace() {
+		this._text = this._text.substring(0, this._text.length - 1);
 	}
 
 	confirm() {
-		this._resolve(this._input);
+		this._resolve(this._text);
 	}
 
 	cancel() {
