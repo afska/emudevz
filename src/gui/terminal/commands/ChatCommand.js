@@ -1,18 +1,10 @@
-import locales from "../../locales";
+import Command from "./Command";
 
-export default class ChatCommand {
+export default class ChatCommand extends Command {
 	static get name() {
 		return "chat";
 	}
 
-	static get description() {
-		return locales.get("command_chat_description");
-	}
-
-	constructor(terminal) {
-		this._terminal = terminal;
-	}
-
 	// TODO: ASD
-	run(args) {}
+	async execute(args) {}
 }

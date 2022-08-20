@@ -14,7 +14,13 @@ export default class PendingInput {
 	}
 
 	confirm() {
-		this._resolve(this._text);
+		if (this._text.length > 0) {
+			this._resolve(this._text);
+			return true;
+		} else {
+			this._reject();
+			return false;
+		}
 	}
 
 	cancel() {

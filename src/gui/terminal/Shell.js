@@ -1,4 +1,5 @@
-/*import commands from "./commands";*/
+import commands from "./commands";
+import locales from "../locales";
 import theme from "./theme";
 
 export default class Shell {
@@ -7,25 +8,33 @@ export default class Shell {
 	}
 
 	async run() {
-		this._terminal.writeln("Hi.", theme.SYSTEM);
-		this._terminal.writeln("What's your name?");
+		const commandLine = await this._getNextCommandLine();
+		const commandParts = commandLine.trim().split(" ");
+		const commandName = commandParts[0];
 
-		let name = null;
-		while (name == null) {
-			try {
-				name = await this._terminal.prompt();
-			} catch (e) {}
+		const Command = commands.find((it) => it.name === commandName);
+		if (!Command) {
+			this._terminal.writeln(`${commandName}: command not found`);
+			this.run();
+			return;
 		}
-		this._terminal.writeln("Hi " + name + "!");
-		this._terminal.newline();
 
-		this.run();
+		this._terminal.run(new Command(this._terminal));
 	}
 
 	onStop() {
-		this._terminal.newline();
-		this._terminal.writeln("You cannot stop me. I'm the fucking shell!");
-
 		return false;
+	}
+
+	async _getNextCommandLine() {
+		let commandLine = null;
+
+		while (commandLine == null) {
+			try {
+				commandLine = await this._terminal.prompt();
+			} catch (e) {}
+		}
+
+		return commandLine;
 	}
 }

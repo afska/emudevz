@@ -1,5 +1,6 @@
 import Shell from "./Shell";
 import PendingInput from "./PendingInput";
+import locales from "../locales";
 import theme from "./theme";
 
 const KEY_CTRL_C = "\u0003";
@@ -20,7 +21,8 @@ export default class Terminal {
 	}
 
 	start() {
-		this.run(this._shell);
+		this.writeln(locales.get("terminal_welcome"), theme.SYSTEM);
+		this.restart();
 
 		this._xterm.onData((e) => {
 			this._onData(e);
@@ -29,9 +31,13 @@ export default class Terminal {
 		return this;
 	}
 
-	run(program) {
+	async run(program) {
 		this._currentProgram = program;
-		this._currentProgram.run();
+		await this._currentProgram.run();
+	}
+
+	async restart() {
+		await this.run(this._shell);
 	}
 
 	writeln(text, style = theme.NORMAL) {
@@ -56,10 +62,10 @@ export default class Terminal {
 
 	confirmPrompt() {
 		if (this._input != null) {
-			this._input.confirm();
+			const isConfirmed = this._input.confirm();
 			this._input = null;
 
-			return true;
+			return isConfirmed;
 		}
 
 		return false;
@@ -84,7 +90,7 @@ export default class Terminal {
 		switch (data) {
 			case KEY_CTRL_C: {
 				if (this.cancelPrompt()) this.write(CTRL_C);
-				if (this._currentProgram.onStop()) this.run(this._shell);
+				if (this._currentProgram.onStop()) this.restart();
 
 				break;
 			}
