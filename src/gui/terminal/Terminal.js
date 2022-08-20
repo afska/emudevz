@@ -16,17 +16,22 @@ export default class Terminal {
 		this._input = null;
 
 		this._shell = new Shell(this);
-		this._currentProgram = this._shell;
+		this._currentProgram = null;
 	}
 
 	start() {
-		this._currentProgram.run();
+		this.run(this._shell);
 
 		this._xterm.onData((e) => {
 			this._onData(e);
 		});
 
 		return this;
+	}
+
+	run(program) {
+		this._currentProgram = program;
+		this._currentProgram.run();
 	}
 
 	writeln(text, style = theme.NORMAL) {
@@ -78,11 +83,9 @@ export default class Terminal {
 	_onData(data) {
 		switch (data) {
 			case KEY_CTRL_C: {
-				if (this.cancelPrompt()) {
-					this.write(CTRL_C);
-					this.newline();
-				}
-				this._currentProgram.onStop();
+				if (this.cancelPrompt()) this.write(CTRL_C);
+				if (this._currentProgram.onStop()) this.run(this._shell);
+
 				break;
 			}
 			case KEY_ENTER: {
