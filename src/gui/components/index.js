@@ -1,5 +1,5 @@
 import CodeEditor from "./CodeEditor";
-import Terminal from "./Terminal";
+import Console from "./Console";
 import TV from "./TV";
 
-export { CodeEditor, Terminal, TV };
+export { CodeEditor, Console, TV };
