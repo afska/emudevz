@@ -6,6 +6,7 @@ export default class ClearCommand extends Command {
 	}
 
 	async execute(args) {
+		this._terminal.newline();
 		this._terminal.clear();
 	}
 }
