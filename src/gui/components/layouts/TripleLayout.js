@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import classNames from "classnames";
 import styles from "./Layout.module.css";
 
-export default class ThreePaneLayout extends Layout {
+export default class TripleLayout extends Layout {
 	state = { selected: "left", lastVerticalSelection: "bottom" };
 
 	render() {
