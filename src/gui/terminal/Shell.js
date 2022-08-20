@@ -11,8 +11,9 @@ export default class Shell {
 
 		const nombre = await this._terminal.prompt();
 		this._terminal.writeln("Hi " + nombre + "!");
+		this._terminal.newline();
 
-		// this.run();
+		this.run();
 	}
 
 	onStop() {

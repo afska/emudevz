@@ -27,14 +27,23 @@ export default class Terminal {
 		return this;
 	}
 
-	writeln(text, style = this.styles.NORMAL) {
+	writeln(text, style = this.styles.NONE) {
 		this._xterm.writeln(style(text));
+	}
+
+	write(text, style = this.styles.NONE) {
+		this._xterm.write(style(text));
+	}
+
+	newline() {
+		this.write(NEWLINE);
 	}
 
 	prompt() {
 		return new Promise((resolve, reject) => {
 			this._input = new PendingInput(resolve, reject);
-			this._xterm.write(NEWLINE + PROMPT);
+			this.newline();
+			this.write(PROMPT);
 		});
 	}
 
@@ -72,20 +81,20 @@ export default class Terminal {
 				break;
 			}
 			case KEY_ENTER: {
-				if (this.confirmPrompt()) this._xterm.writeln(NEWLINE);
+				if (this.confirmPrompt()) this.newline();
 
 				break;
 			}
 			case KEY_BACKSPACE:
 				if (this._xterm._core.buffer.x > PROMPT.length) {
-					this._xterm.write(BACKSPACE);
+					this.write(BACKSPACE);
 					if (this._input != null) this._input.backspace();
 				}
 				break;
 			default:
 				if (this._input != null && this._isValidInput(data)) {
 					this._input.append(data);
-					this._xterm.write(data);
+					this.write(data);
 				}
 		}
 	}
@@ -99,6 +108,6 @@ export default class Terminal {
 	}
 
 	styles = {
-		NORMAL: (x) => x,
+		NONE: (x) => x,
 	};
 }
