@@ -5,6 +5,7 @@ export default class ClearCommand extends Command {
 		return "clear";
 	}
 
-	// TODO: ASD
-	async execute(args) {}
+	async execute(args) {
+		this._terminal.clear();
+	}
 }
