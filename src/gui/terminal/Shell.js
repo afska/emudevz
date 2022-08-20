@@ -1,4 +1,5 @@
 import commands from "./commands";
+import theme from "./theme";
 
 export default class Shell {
 	constructor(terminal) {
@@ -6,7 +7,7 @@ export default class Shell {
 	}
 
 	async run() {
-		this._terminal.writeln("Hi.");
+		this._terminal.writeln("Hi.", theme.SYSTEM);
 		this._terminal.writeln("What's your name?");
 
 		const nombre = await this._terminal.prompt();

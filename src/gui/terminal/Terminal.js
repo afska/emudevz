@@ -1,10 +1,12 @@
 import Shell from "./Shell";
 import PendingInput from "./PendingInput";
+import theme from "./theme";
 
 const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
 const KEY_ENTER = "\r";
 const NEWLINE = "\r\n";
+const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
 const PROMPT = "$ ";
 
@@ -27,11 +29,11 @@ export default class Terminal {
 		return this;
 	}
 
-	writeln(text, style = this.styles.NONE) {
+	writeln(text, style = theme.NORMAL) {
 		this._xterm.writeln(style(text));
 	}
 
-	write(text, style = this.styles.NONE) {
+	write(text, style = theme.NORMAL) {
 		this._xterm.write(style(text));
 	}
 
@@ -76,7 +78,10 @@ export default class Terminal {
 	_onData(data) {
 		switch (data) {
 			case KEY_CTRL_C: {
-				this.cancelPrompt();
+				if (this.cancelPrompt()) {
+					this.write(CTRL_C);
+					this.newline();
+				}
 				this._currentProgram.onStop();
 				break;
 			}
@@ -106,8 +111,4 @@ export default class Terminal {
 			data >= "\u00a0"
 		);
 	}
-
-	styles = {
-		NONE: (x) => x,
-	};
 }
