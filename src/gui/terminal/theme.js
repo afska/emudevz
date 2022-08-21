@@ -6,7 +6,6 @@ const color = (id) => (text) =>
 
 export default {
 	NORMAL: color(DEFAULT_COLOR_ID),
-	MESSAGE: color(180),
-	CALL_TO_ACTION: color(14),
+	ACCENT: color(180),
 	SYSTEM: color(45),
 };

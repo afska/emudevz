@@ -56,7 +56,7 @@ export default class Terminal {
 		return new Promise((resolve, reject) => {
 			this._input = new PendingInput(resolve, reject);
 			this.newline();
-			this.write(PROMPT);
+			this.write(PROMPT, theme.ACCENT);
 		});
 	}
 
