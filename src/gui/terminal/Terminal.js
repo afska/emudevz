@@ -71,21 +71,21 @@ export default class Terminal {
 		await this.write(NEWLINE);
 	}
 
-	prompt(indicator = "$ ", style = theme.ACCENT) {
+	prompt(indicator = "$ ", isValid = (x) => x !== "", style = theme.ACCENT) {
 		this._interruptIfNeeded();
 
 		return new Promise((resolve, reject) => {
-			this._input = new PendingInput(indicator, resolve, reject);
+			this._input = new PendingInput(indicator, isValid, resolve, reject);
 			this.newline().then(() => this.write(indicator, style));
 		});
 	}
 
 	async confirmPrompt() {
 		if (this._input != null) {
-			const text = this._input.confirm();
+			const isValid = this._input.confirm();
 			this._input = null;
 
-			if (text.length > 0) await this.newline();
+			if (isValid) await this.newline();
 		}
 	}
 

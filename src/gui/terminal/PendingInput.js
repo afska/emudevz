@@ -1,8 +1,9 @@
 export default class PendingInput {
-	constructor(indicator, resolve, reject) {
+	constructor(indicator, isValid, resolve, reject) {
 		this.indicator = indicator;
 
 		this._text = "";
+		this._isValid = isValid;
 		this._resolve = resolve;
 		this._reject = reject;
 	}
@@ -18,7 +19,7 @@ export default class PendingInput {
 	confirm() {
 		this._resolve(this._text);
 
-		return this._text;
+		return this._isValid(this._text);
 	}
 
 	cancel(reason) {

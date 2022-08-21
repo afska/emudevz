@@ -2,7 +2,7 @@ import Command from "./Command";
 import locales from "../../locales";
 import { theme } from "../style";
 
-const SPEED = 10;
+const SPEED = 30;
 
 export default class ChatCommand extends Command {
 	static get name() {
@@ -39,10 +39,16 @@ export default class ChatCommand extends Command {
 
 			let selectedOption = null;
 			while (selectedOption == null) {
-				const response = await this._terminal.prompt("?? ", theme.INPUT);
-				selectedOption = options.find(
-					(it) => it.number.toString() === response
+				const getOption = (x) =>
+					options.find((it) => it.number.toString() === x);
+
+				const response = await this._terminal.prompt(
+					"?? ",
+					(x) => getOption(x) != null,
+					theme.INPUT
 				);
+
+				selectedOption = getOption(response);
 			}
 
 			state = selectedOption.responseLink;
