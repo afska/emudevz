@@ -2,6 +2,7 @@ import Shell from "./Shell";
 import PendingInput from "./PendingInput";
 import locales from "../locales";
 import theme from "./theme";
+import { async } from "../utils";
 
 const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
@@ -10,6 +11,10 @@ const NEWLINE = "\r\n";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
 const PROMPT = "$ ";
+
+// Program interface:
+// - async run(args) -> void
+// - onStop() -> Boolean
 
 export default class Terminal {
 	constructor(xterm) {
@@ -20,8 +25,8 @@ export default class Terminal {
 		this._currentProgram = null;
 	}
 
-	start() {
-		this.writeln(locales.get("terminal_welcome"), theme.SYSTEM);
+	async start() {
+		await this.writeln(locales.get("terminal_welcome"), theme.SYSTEM);
 		this.restart();
 
 		this._xterm.onData((e) => {
@@ -40,23 +45,32 @@ export default class Terminal {
 		await this.run(this._shell);
 	}
 
-	writeln(text, style = theme.NORMAL) {
-		this._xterm.writeln(style(text));
+	async writeln(text, style, interval) {
+		await this.write(text, style, interval);
+		await this.newline();
 	}
 
-	write(text, style = theme.NORMAL) {
-		this._xterm.write(style(text));
+	async write(text, style = theme.NORMAL, interval = 0) {
+		if (interval === 0) {
+			this._xterm.write(style(text));
+		} else {
+			const characters = [...text];
+
+			for (let i = 0; i < characters.length; i++) {
+				this._xterm.write(style(characters[i]));
+				await async.sleep(interval);
+			}
+		}
 	}
 
-	newline() {
-		this.write(NEWLINE);
+	async newline() {
+		await this.write(NEWLINE);
 	}
 
 	prompt() {
 		return new Promise((resolve, reject) => {
 			this._input = new PendingInput(resolve, reject);
-			this.newline();
-			this.write(PROMPT, theme.ACCENT);
+			this.newline().then(() => this.write(PROMPT, theme.ACCENT));
 		});
 	}
 
@@ -86,29 +100,29 @@ export default class Terminal {
 		this._xterm.clear();
 	}
 
-	_onData(data) {
+	async _onData(data) {
 		switch (data) {
 			case KEY_CTRL_C: {
-				if (this.cancelPrompt()) this.write(CTRL_C);
+				if (this.cancelPrompt()) await this.write(CTRL_C);
 				if (this._currentProgram.onStop()) this.restart();
 
 				break;
 			}
 			case KEY_ENTER: {
-				if (this.confirmPrompt()) this.newline();
+				if (this.confirmPrompt()) await this.newline();
 
 				break;
 			}
 			case KEY_BACKSPACE:
 				if (this._xterm._core.buffer.x > PROMPT.length) {
-					this.write(BACKSPACE);
+					await this.write(BACKSPACE);
 					if (this._input != null) this._input.backspace();
 				}
 				break;
 			default:
 				if (this._input != null && this._isValidInput(data)) {
 					this._input.append(data);
-					this.write(data);
+					await this.write(data);
 				}
 		}
 	}

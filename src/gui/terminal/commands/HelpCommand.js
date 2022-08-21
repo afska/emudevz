@@ -11,7 +11,7 @@ export default class HelpCommand extends Command {
 	}
 
 	async execute(args) {
-		this._terminal.writeln(
+		await this._terminal.writeln(
 			commands
 				.map(
 					(it) => it.name.padEnd(SPACING) + theme.ACCENT(":: ") + it.description

@@ -1,6 +1,5 @@
 import commands from "./commands";
 import locales from "../locales";
-import theme from "./theme";
 
 export default class Shell {
 	constructor(terminal) {
@@ -14,7 +13,9 @@ export default class Shell {
 
 		const Command = commands.find((it) => it.name === commandName);
 		if (!Command) {
-			this._terminal.writeln(`${commandName}: command not found`);
+			await this._terminal.writeln(
+				`${commandName}: ${locales.get("shell_command_not_found")}`
+			);
 			this.run();
 			return;
 		}
