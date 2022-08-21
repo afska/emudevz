@@ -1,0 +1,148 @@
+{
+	"main": {
+		"en": {
+			"messages": [
+				"hey",
+				"are you there? 👀👀"
+			],
+			"responses": [
+				"who are you? [who]",
+				"what is this? [what]"
+			]
+		},
+		"es": {
+			"messages": [
+				"ey",
+				"¿estás? 👀👀"
+			],
+			"responses": [
+				"¿quién eres? [who]",
+				"¿qué es esto? [what]"
+			]
+		}
+	},
+	"what": {
+		"en": {
+			"messages": [
+				"it's `chat`",
+				"the best instant messaging app we have 🤷"
+			],
+			"responses": [
+				"and you are...? [who]"
+			]
+		},
+		"es": {
+			"messages": [
+				"es `chat`",
+				"la mejor app de mensajería instantánea que tenemos 🤷"
+			],
+			"responses": [
+				"y tú eres... [who]"
+			]
+		}
+	},
+	"who": {
+		"en": {
+			"messages": [
+				"let's say your assistant",
+				"we are going to build a NEEES emulator, remember?"
+			],
+			"responses": [
+				"first of all, but why is it called \"NEEES\"? [name]",
+				"but I don't know how to build an emulator 😳 [idontknow]"
+			]
+		},
+		"es": {
+			"messages": [
+				"digamos que soy tu asistente",
+				"vamos a armar un emulador de NEEES, ¿recuerdas?"
+			],
+			"responses": [
+				"antes que nada, pero ¿por qué se llama \"NEEES\"? [name]",
+				"pero yo no sé nada de emuladores 😳 [idontknow]"
+			]
+		}
+	},
+	"name": {
+		"en": {
+			"messages": [
+				"I think it stands for <\"No Entiendo\" Enigmatic Enjoyment Solution>, but I'm not sure"
+			],
+			"responses": [
+				"oh, I see - how did you find that? [namehow]",
+				"I don't think I'll be able to build that emulator 😳 [idontknow]"
+			]
+		},
+		"es": {
+			"messages": [
+				"creo que significa <No Entiendo El Entretenimiento Saludable>, pero no estoy seguro"
+			],
+			"responses": [
+				"ah, ya veo - ¿y cómo encontraste eso? [namehow]",
+				"no creo que pueda ayudarte a construir ese emulador 😳 [idontknow]"
+			]
+		}
+	},
+	"namehow": {
+		"en": {
+			"messages": [
+				"in a secret docs file!"
+			],
+			"responses": [
+				"I have no clue about how to build that emulator [idontknow]"
+			]
+		},
+		"es": {
+			"messages": [
+				"en un archivo de documentación secreto!"
+			],
+			"responses": [
+				"no tengo idea de cómo construir ese emulador [idontknow]"
+			]
+		}
+	},
+	"idontknow": {
+		"en": {
+			"messages": [
+				"don't worry, we're gonna figure it out together...",
+				"you do know how to program, right?",
+				"...right? 🤔"
+			],
+			"responses": [
+				"I can write some JavaScript [javascript]"
+			]
+		},
+		"es": {
+			"messages": [
+				"no te preocupes, lo vamos a resolver...",
+				"sí sabes cómo programar, ¿no?",
+				"...¿no? 🤔"
+			],
+			"responses": [
+				"puedo escribir algo de JavaScript [javascript]"
+			]
+		}
+	},
+	"javascript": {
+		"en": {
+			"messages": [
+				"that'll work perfect",
+				"you only need to know a bit about object-oriented programming",
+				"and that's it"
+			],
+			"responses": [
+				"ok [end]"
+			]
+		},
+		"es": {
+			"messages": [
+				"eso va a funcionar",
+				"solo necesitas saber algo de programación orientada a objetos",
+				"y ya está"
+			],
+			"responses": [
+				"bueno [end]"
+			]
+		}
+	}
+}

@@ -13,11 +13,12 @@ export default class MainScreen extends PureComponent {
 		// this.tv = top;
 		// this.console = bottom;
 
-		fetch("levels/level0.txt")
-			.then((req) => req.text())
+		fetch("levels/level0.json")
+			.then((req) => req.json())
 			.then((script) => {
 				window.scr = script;
 				const chatScript = new ChatScript(script);
+				chatScript.validate();
 			});
 	};
 }
