@@ -10,6 +10,7 @@ const KEY_ENTER = "\r";
 const NEWLINE = "\r\n";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
+const INTERRUPTED = "interrupted";
 
 // Program interface:
 // - async run(args) -> void
@@ -19,6 +20,7 @@ export default class Terminal {
 	constructor(xterm) {
 		this._xterm = xterm;
 		this._input = null;
+		this._stopFlag = false;
 
 		this._shell = new Shell(this);
 		this._currentProgram = null;
@@ -51,11 +53,14 @@ export default class Terminal {
 
 	async write(text, style = theme.NORMAL, interval = 0) {
 		if (interval === 0) {
+			this._interruptIfNeeded();
 			this._xterm.write(style(text));
 		} else {
 			const characters = [...text];
 
 			for (let i = 0; i < characters.length; i++) {
+				this._interruptIfNeeded();
+
 				this._xterm.write(style(characters[i]));
 				await async.sleep(interval);
 			}
@@ -67,32 +72,28 @@ export default class Terminal {
 	}
 
 	prompt(indicator = "$ ", style = theme.ACCENT) {
+		this._interruptIfNeeded();
+
 		return new Promise((resolve, reject) => {
 			this._input = new PendingInput(indicator, resolve, reject);
 			this.newline().then(() => this.write(indicator, style));
 		});
 	}
 
-	confirmPrompt() {
+	async confirmPrompt() {
 		if (this._input != null) {
-			const isConfirmed = this._input.confirm();
+			const text = this._input.confirm();
 			this._input = null;
 
-			return isConfirmed;
+			if (text.length > 0) await this.newline();
 		}
-
-		return false;
 	}
 
 	cancelPrompt() {
 		if (this._input != null) {
-			this._input.cancel();
+			this._input.cancel(INTERRUPTED);
 			this._input = null;
-
-			return true;
 		}
-
-		return false;
 	}
 
 	clear() {
@@ -102,22 +103,23 @@ export default class Terminal {
 	async _onData(data) {
 		switch (data) {
 			case KEY_CTRL_C: {
-				if (this.cancelPrompt()) {
-					await this.write(CTRL_C);
-					if (this._currentProgram.onStop()) {
-						await this.newline();
-						this.restart();
-					}
+				const wasExpectingInput = this._input != null;
+				this.cancelPrompt();
+
+				await this.write(CTRL_C);
+				if (this._currentProgram.onStop()) {
+					await this.newline();
+					if (!wasExpectingInput) this._requestInterrupt();
 				}
 
 				break;
 			}
 			case KEY_ENTER: {
-				if (this.confirmPrompt()) await this.newline();
+				await this.confirmPrompt();
 
 				break;
 			}
-			case KEY_BACKSPACE:
+			case KEY_BACKSPACE: {
 				if (
 					this._input != null &&
 					this._xterm._core.buffer.x > this._input.indicator.length
@@ -126,11 +128,24 @@ export default class Terminal {
 					this._input.backspace();
 				}
 				break;
-			default:
+			}
+			default: {
 				if (this._input != null && this._isValidInput(data)) {
 					this._input.append(data);
 					await this.write(data);
 				}
+			}
+		}
+	}
+
+	_requestInterrupt() {
+		this._stopFlag = true;
+	}
+
+	_interruptIfNeeded() {
+		if (this._stopFlag) {
+			this._stopFlag = false;
+			throw INTERRUPTED;
 		}
 	}
 

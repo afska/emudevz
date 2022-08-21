@@ -1,6 +1,6 @@
 export default class PendingInput {
-	constructor(prompt, resolve, reject) {
-		this.prompt = prompt;
+	constructor(indicator, resolve, reject) {
+		this.indicator = indicator;
 
 		this._text = "";
 		this._resolve = resolve;
@@ -16,16 +16,12 @@ export default class PendingInput {
 	}
 
 	confirm() {
-		if (this._text.length > 0) {
-			this._resolve(this._text);
-			return true;
-		} else {
-			this._reject();
-			return false;
-		}
+		this._resolve(this._text);
+
+		return this._text;
 	}
 
-	cancel() {
-		this._reject();
+	cancel(reason) {
+		this._reject(reason);
 	}
 }

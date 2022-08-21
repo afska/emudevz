@@ -14,7 +14,12 @@ export default class Command {
 	}
 
 	async run(args) {
-		await this.execute(args);
+		try {
+			await this.execute(args);
+		} catch (e) {
+			if (e !== "interrupted") throw e;
+		}
+
 		this._terminal.restart();
 	}
 
