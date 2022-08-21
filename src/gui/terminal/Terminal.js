@@ -10,7 +10,6 @@ const KEY_ENTER = "\r";
 const NEWLINE = "\r\n";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
-const PROMPT = "$ ";
 
 // Program interface:
 // - async run(args) -> void
@@ -67,10 +66,10 @@ export default class Terminal {
 		await this.write(NEWLINE);
 	}
 
-	prompt() {
+	prompt(indicator = "$ ", style = theme.ACCENT) {
 		return new Promise((resolve, reject) => {
-			this._input = new PendingInput(resolve, reject);
-			this.newline().then(() => this.write(PROMPT, theme.ACCENT));
+			this._input = new PendingInput(indicator, resolve, reject);
+			this.newline().then(() => this.write(indicator, style));
 		});
 	}
 
@@ -103,8 +102,13 @@ export default class Terminal {
 	async _onData(data) {
 		switch (data) {
 			case KEY_CTRL_C: {
-				if (this.cancelPrompt()) await this.write(CTRL_C);
-				if (this._currentProgram.onStop()) this.restart();
+				if (this.cancelPrompt()) {
+					await this.write(CTRL_C);
+					if (this._currentProgram.onStop()) {
+						await this.newline();
+						this.restart();
+					}
+				}
 
 				break;
 			}
@@ -114,9 +118,12 @@ export default class Terminal {
 				break;
 			}
 			case KEY_BACKSPACE:
-				if (this._xterm._core.buffer.x > PROMPT.length) {
+				if (
+					this._input != null &&
+					this._xterm._core.buffer.x > this._input.indicator.length
+				) {
 					await this.write(BACKSPACE);
-					if (this._input != null) this._input.backspace();
+					this._input.backspace();
 				}
 				break;
 			default:

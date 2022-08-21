@@ -1,5 +1,7 @@
 export default class PendingInput {
-	constructor(resolve, reject) {
+	constructor(prompt, resolve, reject) {
+		this.prompt = prompt;
+
 		this._text = "";
 		this._resolve = resolve;
 		this._reject = reject;
