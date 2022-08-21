@@ -1,7 +1,7 @@
 import Shell from "./Shell";
 import PendingInput from "./PendingInput";
 import locales from "../locales";
-import theme from "./theme";
+import { theme } from "./style";
 import { async } from "../utils";
 
 const KEY_CTRL_C = "\u0003";

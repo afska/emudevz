@@ -1,5 +1,5 @@
 import Command from "./Command";
-import theme from "../theme";
+import { theme } from "../style";
 
 const SPEED = 10;
 
