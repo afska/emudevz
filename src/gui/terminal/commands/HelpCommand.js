@@ -1,5 +1,9 @@
 import Command from "./Command";
 import commands from ".";
+import theme from "../theme";
+
+const NEWLINE = "\r\n";
+const SPACING = 10;
 
 export default class HelpCommand extends Command {
 	static get name() {
@@ -7,6 +11,12 @@ export default class HelpCommand extends Command {
 	}
 
 	async execute(args) {
-		this._terminal.writeln("Ayudín!");
+		this._terminal.writeln(
+			commands
+				.map(
+					(it) => it.name.padEnd(SPACING) + theme.ACCENT(":: ") + it.description
+				)
+				.join(NEWLINE)
+		);
 	}
 }

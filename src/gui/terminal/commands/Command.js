@@ -6,7 +6,7 @@ export default class Command {
 	}
 
 	static get description() {
-		return locales.get(`command_${this.name()}_description`);
+		return locales.get(`command_${this.name}_description`);
 	}
 
 	constructor(terminal) {

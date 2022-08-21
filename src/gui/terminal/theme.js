@@ -5,7 +5,7 @@ const color = (id) => (text) =>
 	colorTag(id) + text + colorTag(DEFAULT_COLOR_ID);
 
 export default {
-	NORMAL: color(DEFAULT_COLOR_ID),
+	NORMAL: (x) => x,
 	ACCENT: color(180),
 	SYSTEM: color(45),
 };

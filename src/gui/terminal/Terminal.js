@@ -21,7 +21,7 @@ export default class Terminal {
 	}
 
 	start() {
-		this.clear();
+		this.writeln(locales.get("terminal_welcome"), theme.SYSTEM);
 		this.restart();
 
 		this._xterm.onData((e) => {
@@ -83,7 +83,6 @@ export default class Terminal {
 	}
 
 	clear() {
-		this.writeln(locales.get("terminal_welcome"), theme.SYSTEM);
 		this._xterm.clear();
 	}
 
