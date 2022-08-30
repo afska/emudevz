@@ -140,10 +140,10 @@ export default class QuadLayout extends Layout {
 
 	_callOnReady() {
 		this.props.onReady({
-			topLeft: this.topLeft,
-			bottomLeft: this.bottomLeft,
-			topRight: this.topRight,
-			bottomRight: this.bottomRight,
+			TopLeft: this.topLeft,
+			BottomLeft: this.bottomLeft,
+			TopRight: this.topRight,
+			BottomRight: this.bottomRight,
 		});
 	}
 }

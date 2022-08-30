@@ -118,9 +118,9 @@ export default class TripleLayout extends Layout {
 
 	_callOnReady() {
 		this.props.onReady({
-			left: this.left,
-			top: this.top,
-			bottom: this.bottom,
+			Left: this.left,
+			Top: this.top,
+			Bottom: this.bottom,
 		});
 	}
 }

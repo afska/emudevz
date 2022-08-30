@@ -22,7 +22,7 @@ export default class MonoLayout extends Layout {
 
 	_callOnReady() {
 		this.props.onReady({
-			main: this.main,
+			Main: this.main,
 		});
 	}
 }

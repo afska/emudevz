@@ -76,8 +76,8 @@ export default class DualLayout extends Layout {
 
 	_callOnReady() {
 		this.props.onReady({
-			left: this.left,
-			right: this.right,
+			Left: this.left,
+			Right: this.right,
 		});
 	}
 }

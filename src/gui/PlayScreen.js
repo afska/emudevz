@@ -47,7 +47,7 @@ class PlayScreen extends PureComponent {
 	onReady = async (runningComponents) => {
 		const { levelData } = this.props;
 
-		const console = runningComponents[levelData.ui.console.toLowerCase()];
+		const console = runningComponents[levelData.ui.console];
 		await console.terminal.start(levelData.welcomeMessage.en);
 	};
 }
