@@ -4,6 +4,7 @@ import { theme } from "../style";
 
 const SPEED = 30;
 
+// TODO: REFACTOR
 export default class ChatCommand extends Command {
 	static get name() {
 		return "chat";

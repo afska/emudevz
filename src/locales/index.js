@@ -1,14 +1,15 @@
-import locales from "./locales";
+import en from "./en";
+import es from "./es";
 
 const DEFAULT_LANGUAGE = "en";
 
+const locales = { en, es };
+
 export default {
 	get(key) {
-		const translations = locales[key] ?? {};
+		const strings = locales[this.language] ?? {};
 
-		return (
-			translations[this.language] ?? translations[DEFAULT_LANGUAGE] ?? "[?]"
-		);
+		return strings[key] ?? locales[DEFAULT_LANGUAGE][key] ?? "[?]";
 	},
 
 	language: "en",
