@@ -60,7 +60,7 @@ class PlayScreen extends PureComponent {
 
 const mapStateToProps = ({ savedata, level }) => ({
 	levelId: savedata.levelId,
-	level: level.level,
+	level: level.instance,
 });
 const mapDispatchToProps = ({ level }) => ({ setLevel: level.setLevel });
 

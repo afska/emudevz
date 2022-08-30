@@ -1,6 +1,7 @@
 import ChatScript from "./chat/ChatScript";
 import layouts from "../gui/components/layouts";
 import components from "../gui/components";
+import store from "../store";
 import _ from "lodash";
 
 export default class Level {
@@ -8,6 +9,10 @@ export default class Level {
 		_.extend(this, content);
 
 		this.chatScript = new ChatScript(this.chat);
+	}
+
+	static current() {
+		return store.getState().level.instance;
 	}
 
 	validate() {
