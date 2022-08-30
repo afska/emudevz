@@ -1,11 +1,39 @@
+import ChatScript from "./chat/ChatScript";
+import layouts from "../gui/components/layouts";
+import components from "../gui/components";
 import _ from "lodash";
 
 export default class Level {
 	constructor(content) {
 		_.extend(this, content);
+
+		this.chatScript = new ChatScript(this.chat);
 	}
 
 	validate() {
-		// TODO: CODE
+		if (this.ui == null) throw new Error("Missing `ui` key");
+
+		const layout = layouts[this.ui.layout];
+		if (!layout) throw new Error(`Missing layout: ${this.ui.layout}`);
+
+		layout.componentNames().forEach((requiredComponentName) => {
+			const componentDefinition = this.ui.components[requiredComponentName];
+
+			if (
+				!Array.isArray(componentDefinition) ||
+				componentDefinition.length !== 2
+			)
+				throw new Error(
+					`Component ${requiredComponentName} must be an array of two elements ([name, args])`
+				);
+
+			const [componentName, args] = componentDefinition;
+			const component = components[componentName];
+			if (!component) throw new Error(`Missing component: ${componentName}`);
+			if (!args)
+				throw new Error(`Missing args for component: ${componentName}`);
+		});
+
+		this.chatScript.validate();
 	}
 }

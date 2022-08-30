@@ -3,10 +3,14 @@ import Layout from "./Layout";
 import styles from "./Layout.module.css";
 
 export default class MonoLayout extends Layout {
+	static componentNames() {
+		return ["Main"];
+	}
+
 	render() {
 		if (!this.isReady) return false;
 
-		this.require("Main");
+		this.requireComponents();
 		const { Main } = this.props;
 
 		return (

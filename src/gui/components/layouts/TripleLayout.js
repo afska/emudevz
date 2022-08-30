@@ -4,12 +4,16 @@ import classNames from "classnames";
 import styles from "./Layout.module.css";
 
 export default class TripleLayout extends Layout {
+	static componentNames() {
+		return ["Left", "Top", "Bottom"];
+	}
+
 	state = { selected: "left", lastVerticalSelection: "bottom" };
 
 	render() {
 		if (!this.isReady) return false;
 
-		this.require("Left", "Top", "Bottom");
+		this.requireComponents();
 		const { Left, Top, Bottom } = this.props;
 		const { selected } = this.state;
 

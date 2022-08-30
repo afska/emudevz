@@ -5,8 +5,8 @@ export default class Layout extends PureComponent {
 		return document.querySelector("body").clientWidth > 0;
 	}
 
-	require(...componentNames) {
-		componentNames.forEach((componentName) => {
+	requireComponents() {
+		this.constructor.componentNames().forEach((componentName) => {
 			if (this.props[componentName] == null)
 				throw new Error(`Missing required component: ${componentName}`);
 		});

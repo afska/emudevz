@@ -4,6 +4,8 @@ import TVNoise from "./TVNoise";
 import styles from "./TV.module.css";
 
 export default class TV extends PureComponent {
+	async initialize(args) {}
+
 	render() {
 		return (
 			<div

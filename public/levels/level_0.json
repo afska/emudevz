@@ -1,10 +1,15 @@
 {
 	"ui": {
 		"layout": "mono",
-		"console": "Main",
-		"components": {}
+		"components": {
+			"Main": [
+				"console",
+				{
+					"availableCommands": ["chat", "help", "clear"]
+				}
+			]
+		}
 	},
-	"availableCommands": ["chat", "help", "clear"],
 
 	"chat": {
 		"main": {

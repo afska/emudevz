@@ -7,8 +7,9 @@ import locales from "../locales";
 import styles from "./PlayScreen.module.css";
 import _ from "lodash";
 
-// TODO: REFACTOR
 class PlayScreen extends PureComponent {
+	state = { error: null };
+
 	componentDidMount() {
 		const { levelId, level, setLevel } = this.props;
 
@@ -18,26 +19,30 @@ class PlayScreen extends PureComponent {
 				.then((levelData) => {
 					window.scr = levelData.chat; // TODO: REMOVE
 
-					const level = new Level(levelData);
-					level.validate();
-					setLevel(level);
+					try {
+						const level = new Level(levelData);
+						level.validate();
+						setLevel(level);
+					} catch (e) {
+						this.setState({ error: e.message });
+					}
 				});
 		}
 	}
 
 	render() {
+		const { error } = this.state;
 		const { level } = this.props;
 
+		if (error) return <div className={styles.message}>❌ {error}</div>;
+
 		if (!level)
-			return <div className={styles.loading}>{locales.get("loading")}</div>;
+			return <div className={styles.message}>⌛ {locales.get("loading")}</div>;
 
 		const Layout = layouts[level.ui.layout];
 		const Components = _.mapValues(
-			{
-				[level.ui.console]: "console",
-				...level.ui.components,
-			},
-			(v) => components[v]
+			level.ui.components,
+			([name]) => components[name]
 		);
 
 		return <Layout {...Components} onReady={this.onReady} />;
@@ -46,11 +51,10 @@ class PlayScreen extends PureComponent {
 	onReady = async (runningComponents) => {
 		const { level } = this.props;
 
-		const console = runningComponents[level.ui.console];
-		await console.terminal.start(
-			level.welcomeMessage?.en, // TODO: LOCALIZE
-			level.availableCommands
-		);
+		_.forEach(runningComponents, async (runningComponent, name) => {
+			const args = level.ui.components[name][1];
+			await runningComponent.initialize(args);
+		});
 	};
 }
 

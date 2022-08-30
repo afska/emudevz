@@ -4,12 +4,16 @@ import classNames from "classnames";
 import styles from "./Layout.module.css";
 
 export default class DualLayout extends Layout {
+	static componentNames() {
+		return ["Left", "Right"];
+	}
+
 	state = { selected: "left" };
 
 	render() {
 		if (!this.isReady) return false;
 
-		this.require("Left", "Right");
+		this.requireComponents();
 		const { Left, Right } = this.props;
 		const { selected } = this.state;
 

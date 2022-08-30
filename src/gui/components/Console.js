@@ -7,6 +7,13 @@ import styles from "./Console.module.css";
 export default class Console extends PureComponent {
 	fitAddon = new FitAddon();
 
+	async initialize(args) {
+		await this.terminal.start(
+			args.welcomeMessage?.en, // TODO: LOCALIZE
+			args.availableCommands
+		);
+	}
+
 	render() {
 		return (
 			<div
@@ -32,6 +39,18 @@ export default class Console extends PureComponent {
 		this.ref.terminal.focus();
 	};
 
+	componentDidMount() {
+		window.addEventListener("resize", this._onResize);
+		this._onResize();
+
+		const xterm = this.ref.terminal;
+		this.terminal = new Terminal(xterm);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.resize);
+	}
+
 	_onResize = () => {
 		this.fitAddon.fit();
 	};
@@ -46,16 +65,4 @@ export default class Console extends PureComponent {
 		)
 			e.preventDefault();
 	};
-
-	componentDidMount() {
-		window.addEventListener("resize", this._onResize);
-		this._onResize();
-
-		const xterm = this.ref.terminal;
-		this.terminal = new Terminal(xterm);
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener("resize", this.resize);
-	}
 }

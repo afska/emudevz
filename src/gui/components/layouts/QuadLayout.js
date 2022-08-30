@@ -4,12 +4,16 @@ import classNames from "classnames";
 import styles from "./Layout.module.css";
 
 export default class QuadLayout extends Layout {
+	static componentNames() {
+		return ["TopLeft", "BottomLeft", "TopLeft", "BottomRight"];
+	}
+
 	state = { selectedY: "top", selectedX: "left" };
 
 	render() {
 		if (!this.isReady) return false;
 
-		this.require("TopLeft", "BottomLeft", "TopLeft", "BottomRight");
+		this.requireComponents();
 		const { TopLeft, BottomLeft, TopRight, BottomRight } = this.props;
 		const { selectedX, selectedY } = this.state;
 
