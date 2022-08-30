@@ -29,6 +29,9 @@ export default class ChatScript {
 
 				if (localizedSection.responses.some((it) => typeof it !== "string"))
 					throw new Error(`Invalid responses: ${slug}`);
+
+				// TODO: Check all response links
+				// TODO: Check at least one response
 			}
 		}
 	}

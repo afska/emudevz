@@ -1,13 +1,13 @@
 {
 	"name": "Intro",
-	"level": 0,
 	"welcomeMessage": {
-		"en": "*** Level 0 ***\n*Type `help` to see available commands *",
+		"en": "*** Level 0 ***\n* Type `help` to see available commands *",
 		"es": "*** Nivel 0 ***\n* Escribe `help` para ver los comandos disponibles *"
 	},
 	"ui": {
 		"layout": "mono",
-		"components": { "main": "console" }
+		"console": "Main",
+		"components": {}
 	},
 	"availableCommands": ["chat", "help", "clear"],
 

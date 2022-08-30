@@ -1,0 +1,26 @@
+{
+	"name": "Basics",
+	"welcomeMessage": {
+		"en": "*** Level 1 ***\nStart coding...",
+		"es": "*** Nivel 1 ***\nEmpezá a laburar..."
+	},
+	"ui": {
+		"layout": "dual",
+		"console": "Right",
+		"components": { "Left": "code" }
+	},
+	"availableCommands": ["chat"],
+
+	"chat": {
+		"main": {
+			"en": {
+				"messages": ["coming soon!"],
+				"responses": ["ok [end]"]
+			},
+			"es": {
+				"messages": ["¡próximamente!"],
+				"responses": ["bueno [end]"]
+			}
+		}
+	}
+}

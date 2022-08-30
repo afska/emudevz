@@ -3,4 +3,9 @@ import DualLayout from "./DualLayout";
 import TripleLayout from "./TripleLayout";
 import QuadLayout from "./QuadLayout";
 
-export { MonoLayout, DualLayout, TripleLayout, QuadLayout };
+export default {
+	mono: MonoLayout,
+	dual: DualLayout,
+	triple: TripleLayout,
+	quad: QuadLayout,
+};

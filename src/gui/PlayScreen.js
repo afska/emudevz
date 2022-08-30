@@ -1,17 +1,18 @@
 import React, { PureComponent } from "react";
-import { MonoLayout } from "./components/layouts";
-import { /*CodeEditor, */ Console /*, TV*/ } from "./components";
+import layouts from "./components/layouts";
+import components from "./components";
 import ChatScript from "../chat/ChatScript";
 import { connect } from "react-redux";
 import locales from "../locales";
 import styles from "./PlayScreen.module.css";
+import _ from "lodash";
 
 class PlayScreen extends PureComponent {
 	componentDidMount() {
 		const { level, levelData, setLevelData } = this.props;
 
 		if (!levelData) {
-			fetch(`levels/level${level}.json`)
+			fetch(`levels/level_${level}.json`)
 				.then((req) => req.json())
 				.then((levelData) => {
 					window.scr = levelData.chat; // TODO: REMOVE
@@ -30,7 +31,16 @@ class PlayScreen extends PureComponent {
 		if (!levelData)
 			return <div className={styles.loading}>{locales.get("loading")}</div>;
 
-		return <MonoLayout Main={Console} onReady={this.onReady} />;
+		const Layout = layouts[levelData.ui.layout];
+		const Components = _.mapValues(
+			{
+				[levelData.ui.console]: "console",
+				...levelData.ui.components,
+			},
+			(v) => components[v]
+		);
+
+		return <Layout {...Components} onReady={this.onReady} />;
 	}
 
 	onReady = ({ main }) => {
