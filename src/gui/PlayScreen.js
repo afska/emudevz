@@ -3,32 +3,45 @@ import { MonoLayout } from "./components/layouts";
 import { /*CodeEditor, */ Console /*, TV*/ } from "./components";
 import ChatScript from "../chat/ChatScript";
 import { connect } from "react-redux";
+import locales from "../locales";
+import styles from "./PlayScreen.module.css";
 
 class PlayScreen extends PureComponent {
-	render() {
-		return <MonoLayout Component={Console} onReady={this.onReady} />;
+	componentDidMount() {
+		const { level, levelData, setLevelData } = this.props;
+
+		if (!levelData) {
+			fetch(`levels/level${level}.json`)
+				.then((req) => req.json())
+				.then((levelData) => {
+					window.scr = levelData.chat; // TODO: REMOVE
+
+					// TODO: VALIDATE LEVEL
+					const chatScript = new ChatScript(levelData.chat);
+					chatScript.validate();
+					setLevelData(levelData);
+				});
+		}
 	}
 
-	onReady = ({ component, left, top, bottom }) => {
-		// this.codeEditor = left;
-		// this.tv = top;
-		// this.console = bottom;
+	render() {
+		const { levelData } = this.props;
 
-		console.log("LEVEL", this.props.level);
+		if (!levelData)
+			return <div className={styles.loading}>{locales.get("loading")}</div>;
 
-		fetch("levels/level0.json")
-			.then((req) => req.json())
-			.then((script) => {
-				window.scr = script;
-				const chatScript = new ChatScript(script);
-				chatScript.validate();
-			});
+		return <MonoLayout Main={Console} onReady={this.onReady} />;
+	}
+
+	onReady = ({ main }) => {
+		// TODO: USE main
 	};
 }
 
-const mapStateToProps = ({ savedata }) => ({
+const mapStateToProps = ({ savedata, level }) => ({
 	level: savedata.level,
+	levelData: level.data,
 });
-const mapDispatchToProps = ({ savedata }) => ({ setLevel: savedata.setLevel });
+const mapDispatchToProps = ({ level }) => ({ setLevelData: level.setData });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);

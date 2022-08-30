@@ -1,4 +1,8 @@
 export default {
+	loading: {
+		en: "Loading...",
+		es: "Cargando...",
+	},
 	terminal_welcome: {
 		en: "* Type `help` to see available commands *",
 		es: "* Escribe `help` para ver los comandos disponibles *",
@@ -7,7 +11,6 @@ export default {
 		en: "command not found",
 		es: "comando no encontrado",
 	},
-
 	command_chat_description: {
 		en: "Runs the chat app.",
 		es: "Ejecuta la app de chat.",

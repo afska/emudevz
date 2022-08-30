@@ -6,14 +6,14 @@ export default class MonoLayout extends Layout {
 	render() {
 		if (!this.isReady) return false;
 
-		this.require("Component");
-		const { Component } = this.props;
+		this.require("Main");
+		const { Main } = this.props;
 
 		return (
 			<div className={styles.container}>
-				<Component
-					ref={(component) => {
-						this.component = component;
+				<Main
+					ref={(main) => {
+						this.main = main;
 					}}
 				/>
 			</div>
@@ -22,7 +22,7 @@ export default class MonoLayout extends Layout {
 
 	_callOnReady() {
 		this.props.onReady({
-			component: this.component,
+			main: this.main,
 		});
 	}
 }

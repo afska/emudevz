@@ -1,3 +1,4 @@
 import savedata from "./savedata";
+import level from "./level";
 
-export default { savedata };
+export default { savedata, level };
