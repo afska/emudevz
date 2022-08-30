@@ -24,17 +24,15 @@ export default class Terminal {
 
 		this._shell = new Shell(this);
 		this._currentProgram = null;
-	}
-
-	async start() {
-		await this.writeln(locales.get("terminal_welcome"), theme.SYSTEM);
-		this.restart();
 
 		this._xterm.onData((e) => {
 			this._onData(e);
 		});
+	}
 
-		return this;
+	async start(welcomeMessage = locales.get("terminal_welcome")) {
+		await this.writeln(welcomeMessage, theme.SYSTEM);
+		this.restart();
 	}
 
 	async run(program) {

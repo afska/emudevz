@@ -7,6 +7,7 @@ import locales from "../locales";
 import styles from "./PlayScreen.module.css";
 import _ from "lodash";
 
+// TODO: REFACTOR
 class PlayScreen extends PureComponent {
 	componentDidMount() {
 		const { level, levelData, setLevelData } = this.props;
@@ -43,8 +44,11 @@ class PlayScreen extends PureComponent {
 		return <Layout {...Components} onReady={this.onReady} />;
 	}
 
-	onReady = ({ main }) => {
-		// TODO: USE main
+	onReady = async (runningComponents) => {
+		const { levelData } = this.props;
+
+		const console = runningComponents[levelData.ui.console.toLowerCase()];
+		await console.terminal.start(levelData.welcomeMessage.en);
 	};
 }
 

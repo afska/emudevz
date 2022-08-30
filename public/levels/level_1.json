@@ -1,8 +1,7 @@
 {
-	"name": "Basics",
 	"welcomeMessage": {
-		"en": "*** Level 1 ***\nStart coding...",
-		"es": "*** Nivel 1 ***\nEmpezá a laburar..."
+		"en": "*** Level 1 ***\r\nStart coding...",
+		"es": "*** Nivel 1 ***\r\nEmpezá a laburar..."
 	},
 	"ui": {
 		"layout": "dual",

@@ -52,7 +52,7 @@ export default class Console extends PureComponent {
 		this._onResize();
 
 		const xterm = this.ref.terminal;
-		this.terminal = new Terminal(xterm).start();
+		this.terminal = new Terminal(xterm);
 	}
 
 	componentWillUnmount() {
