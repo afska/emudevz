@@ -1,9 +1,5 @@
 # emudevz
 
-```js
-// TODO: Replace `emudevz` with the app name
-```
-
 ## Install
 
 ```bash
