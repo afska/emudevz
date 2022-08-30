@@ -13,11 +13,20 @@ export default class Level {
 	validate() {
 		if (this.ui == null) throw new Error("Missing `ui` key");
 
+		if (this.ui.layout == null) throw new Error("Missing `ui.layout` key");
+		if (this.ui.components == null)
+			throw new Error("Missing `ui.components` key");
+
 		const layout = layouts[this.ui.layout];
 		if (!layout) throw new Error(`Missing layout: ${this.ui.layout}`);
 
-		layout.componentNames().forEach((requiredComponentName) => {
+		layout.requiredComponentNames().forEach((requiredComponentName) => {
 			const componentDefinition = this.ui.components[requiredComponentName];
+
+			if (componentDefinition == null)
+				throw new Error(
+					`Missing component definition: ${requiredComponentName}`
+				);
 
 			if (
 				!Array.isArray(componentDefinition) ||

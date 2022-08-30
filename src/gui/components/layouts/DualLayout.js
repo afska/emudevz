@@ -4,7 +4,7 @@ import classNames from "classnames";
 import styles from "./Layout.module.css";
 
 export default class DualLayout extends Layout {
-	static componentNames() {
+	static requiredComponentNames() {
 		return ["Left", "Right"];
 	}
 
