@@ -1,14 +1,20 @@
 {
-	"welcomeMessage": {
-		"en": "[Level 1]\r\nStart coding...",
-		"es": "[Nivel 1]\r\nEmpezá a laburar..."
-	},
 	"ui": {
 		"layout": "dual",
-		"console": "Right",
-		"components": { "Left": "code" }
+		"components": {
+			"Left": ["code", {}],
+			"Right": [
+				"console",
+				{
+					"welcomeMessage": {
+						"en": "[Level 1]\r\nStart coding...",
+						"es": "[Nivel 1]\r\nEmpezá a laburar..."
+					},
+					"availableCommands": ["chat"]
+				}
+			]
+		}
 	},
-	"availableCommands": ["chat"],
 
 	"chat": {
 		"main": {
