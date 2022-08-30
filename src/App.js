@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
-import MainScreen from "./gui/MainScreen";
+import PlayScreen from "./gui/PlayScreen";
 
 export default class App extends PureComponent {
 	render() {
-		return <MainScreen />;
+		return <PlayScreen />;
 	}
 }

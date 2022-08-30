@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { XTerm } from "xterm-for-react";
 import { FitAddon } from "xterm-addon-fit";
-import Terminal from "../terminal/Terminal";
+import Terminal from "../../terminal/Terminal";
 import styles from "./Console.module.css";
 
 export default class Console extends PureComponent {

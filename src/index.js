@@ -1,12 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/lib/integration/react";
+import { getPersistor } from "@rematch/persist";
 import App from "./App";
+import store from "./store";
 import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
 import "xterm/css/xterm.css";
 
+// Set up the Rematch context
+const persistor = getPersistor();
+const app = (
+	<PersistGate persistor={persistor}>
+		<Provider store={store}>
+			<App />
+		</Provider>
+	</PersistGate>
+);
+
 // Render the React app
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(app, document.getElementById("root"));
 
 // Make the page visible once everything loaded
 window.addEventListener(
