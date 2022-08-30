@@ -9,7 +9,7 @@ export default class ChatCommand extends Command {
 		return "chat";
 	}
 
-	async execute(args) {
+	async execute() {
 		let state = "main";
 
 		while (state !== "end") {

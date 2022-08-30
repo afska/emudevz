@@ -3,7 +3,8 @@ import locales from "../locales";
 
 export default class Shell {
 	constructor(terminal) {
-		this._terminal = terminal;
+		this.terminal = terminal;
+		this.availableCommands = [];
 	}
 
 	async run() {
@@ -11,17 +12,20 @@ export default class Shell {
 			const commandLine = await this._getNextCommandLine();
 			const commandParts = commandLine.trim().split(" ");
 			const commandName = commandParts[0];
+			const args = commandParts.slice(1);
 
 			const Command = commands.find((it) => it.name === commandName);
-			if (!Command) {
-				await this._terminal.writeln(
+			const isAvailable = this.availableCommands.includes(commandName);
+
+			if (!Command || !isAvailable) {
+				await this.terminal.writeln(
 					`${commandName}: ${locales.get("shell_command_not_found")}`
 				);
 				this.run();
 				return;
 			}
 
-			this._terminal.run(new Command(this._terminal));
+			this.terminal.run(new Command(args, this));
 		} catch (e) {
 			if (e !== "interrupted") throw e;
 			this.run();
@@ -31,7 +35,7 @@ export default class Shell {
 	async _getNextCommandLine() {
 		let commandLine = "";
 
-		while (commandLine === "") commandLine = await this._terminal.prompt();
+		while (commandLine === "") commandLine = await this.terminal.prompt();
 
 		return commandLine;
 	}

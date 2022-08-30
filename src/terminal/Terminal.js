@@ -30,8 +30,12 @@ export default class Terminal {
 		});
 	}
 
-	async start(welcomeMessage = locales.get("terminal_welcome")) {
+	async start(
+		welcomeMessage = locales.get("terminal_welcome"),
+		availableCommands = []
+	) {
 		await this.writeln(welcomeMessage, theme.SYSTEM);
+		this._shell.availableCommands = availableCommands;
 		this.restart();
 	}
 

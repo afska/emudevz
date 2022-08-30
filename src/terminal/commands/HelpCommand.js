@@ -10,9 +10,10 @@ export default class HelpCommand extends Command {
 		return "help";
 	}
 
-	async execute(args) {
+	async execute(args, shell) {
 		await this._terminal.writeln(
 			commands
+				.filter((it) => shell.availableCommands.includes(it.name))
 				.map(
 					(it) => it.name.padEnd(SPACING) + theme.ACCENT(":: ") + it.description
 				)

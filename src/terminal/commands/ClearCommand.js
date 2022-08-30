@@ -5,7 +5,7 @@ export default class ClearCommand extends Command {
 		return "clear";
 	}
 
-	async execute(args) {
+	async execute() {
 		setTimeout(() => this._terminal.clear());
 	}
 }

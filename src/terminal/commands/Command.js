@@ -9,13 +9,14 @@ export default class Command {
 		return locales.get(`command_${this.name}_description`);
 	}
 
-	constructor(terminal) {
-		this._terminal = terminal;
+	constructor(args, shell) {
+		this._args = args;
+		this._shell = shell;
 	}
 
-	async run(args) {
+	async run() {
 		try {
-			await this.execute(args);
+			await this.execute(this._args, this._shell);
 		} catch (e) {
 			if (e !== "interrupted") throw e;
 		}
@@ -29,5 +30,9 @@ export default class Command {
 
 	onStop() {
 		return true;
+	}
+
+	get _terminal() {
+		return this._shell.terminal;
 	}
 }

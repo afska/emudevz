@@ -18,7 +18,7 @@ class PlayScreen extends PureComponent {
 				.then((levelData) => {
 					window.scr = levelData.chat; // TODO: REMOVE
 
-					// TODO: VALIDATE LEVEL
+					// TODO: VALIDATE LEVEL (availableCommands, etc)
 					const chatScript = new ChatScript(levelData.chat);
 					chatScript.validate();
 					setLevelData(levelData);
@@ -48,7 +48,10 @@ class PlayScreen extends PureComponent {
 		const { levelData } = this.props;
 
 		const console = runningComponents[levelData.ui.console];
-		await console.terminal.start(levelData.welcomeMessage.en);
+		await console.terminal.start(
+			levelData.welcomeMessage.en, // TODO: LOCALIZE
+			levelData.availableCommands
+		);
 	};
 }
 
