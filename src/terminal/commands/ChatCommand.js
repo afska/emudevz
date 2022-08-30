@@ -2,9 +2,10 @@ import Command from "./Command";
 import locales from "../../locales";
 import { theme } from "../style";
 
+const MESSAGE_SYMBOL = ">> ";
+const PROMPT_SYMBOL = "?? ";
 const SPEED = 30;
 
-// TODO: REFACTOR
 export default class ChatCommand extends Command {
 	static get name() {
 		return "chat";
@@ -17,10 +18,17 @@ export default class ChatCommand extends Command {
 			const content = window.scr[state][locales.language];
 
 			for (let message of content.messages)
-				await this._terminal.writeln(`>> ${message}`, theme.MESSAGE, SPEED);
+				await this._terminal.writeln(
+					MESSAGE_SYMBOL + message,
+					theme.MESSAGE,
+					SPEED
+				);
 
 			await this._terminal.newline();
-			await this._terminal.writeln("Choose an answer.", theme.SYSTEM);
+			await this._terminal.writeln(
+				locales.get("command_chat_choose_an_answer"),
+				theme.SYSTEM
+			);
 
 			const options = content.responses.map((rawResponse, responseId) => {
 				const number = parseInt(responseId) + 1;
@@ -44,7 +52,7 @@ export default class ChatCommand extends Command {
 					options.find((it) => it.number.toString() === x);
 
 				const response = await this._terminal.prompt(
-					"?? ",
+					PROMPT_SYMBOL,
 					(x) => getOption(x) != null,
 					theme.INPUT
 				);
