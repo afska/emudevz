@@ -1,13 +1,13 @@
 const KEY = "level";
 const INITIAL_STATE = () => ({
-	data: null,
+	level: null,
 });
 
 export default {
 	state: INITIAL_STATE(),
 	reducers: {
-		setData(state, data) {
-			return { ...state, data };
+		setLevel(state, level) {
+			return { ...state, level };
 		},
 		reset() {
 			return INITIAL_STATE();

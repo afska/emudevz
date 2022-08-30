@@ -1,4 +1,4 @@
-import { LANGUAGES } from "../locales";
+import { LANGUAGES } from "../../locales";
 
 export default class ChatScript {
 	constructor(content) {

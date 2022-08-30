@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import layouts from "./components/layouts";
 import components from "./components";
-import ChatScript from "../chat/ChatScript";
+import Level from "../level/Level";
 import { connect } from "react-redux";
 import locales from "../locales";
 import styles from "./PlayScreen.module.css";
@@ -10,33 +10,32 @@ import _ from "lodash";
 // TODO: REFACTOR
 class PlayScreen extends PureComponent {
 	componentDidMount() {
-		const { level, levelData, setLevelData } = this.props;
+		const { levelId, level, setLevel } = this.props;
 
-		if (!levelData) {
-			fetch(`levels/level_${level}.json`)
+		if (!level) {
+			fetch(`levels/level_${levelId}.json`)
 				.then((req) => req.json())
 				.then((levelData) => {
 					window.scr = levelData.chat; // TODO: REMOVE
 
-					// TODO: VALIDATE LEVEL (availableCommands, etc)
-					const chatScript = new ChatScript(levelData.chat);
-					chatScript.validate();
-					setLevelData(levelData);
+					const level = new Level(levelData);
+					level.validate();
+					setLevel(level);
 				});
 		}
 	}
 
 	render() {
-		const { levelData } = this.props;
+		const { level } = this.props;
 
-		if (!levelData)
+		if (!level)
 			return <div className={styles.loading}>{locales.get("loading")}</div>;
 
-		const Layout = layouts[levelData.ui.layout];
+		const Layout = layouts[level.ui.layout];
 		const Components = _.mapValues(
 			{
-				[levelData.ui.console]: "console",
-				...levelData.ui.components,
+				[level.ui.console]: "console",
+				...level.ui.components,
 			},
 			(v) => components[v]
 		);
@@ -45,20 +44,20 @@ class PlayScreen extends PureComponent {
 	}
 
 	onReady = async (runningComponents) => {
-		const { levelData } = this.props;
+		const { level } = this.props;
 
-		const console = runningComponents[levelData.ui.console];
+		const console = runningComponents[level.ui.console];
 		await console.terminal.start(
-			levelData.welcomeMessage.en, // TODO: LOCALIZE
-			levelData.availableCommands
+			level.welcomeMessage?.en, // TODO: LOCALIZE
+			level.availableCommands
 		);
 	};
 }
 
 const mapStateToProps = ({ savedata, level }) => ({
-	level: savedata.level,
-	levelData: level.data,
+	levelId: savedata.levelId,
+	level: level.level,
 });
-const mapDispatchToProps = ({ level }) => ({ setLevelData: level.setData });
+const mapDispatchToProps = ({ level }) => ({ setLevel: level.setLevel });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);

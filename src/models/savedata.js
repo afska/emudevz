@@ -1,13 +1,13 @@
 const KEY = "savedata";
 const INITIAL_STATE = () => ({
-	level: 0,
+	levelId: 0,
 });
 
 export default {
 	state: INITIAL_STATE(),
 	reducers: {
-		setLevel(state, level) {
-			return { ...state, level };
+		setLevelId(state, levelId) {
+			return { ...state, levelId };
 		},
 		reset() {
 			return INITIAL_STATE();

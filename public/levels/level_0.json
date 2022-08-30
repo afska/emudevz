@@ -1,8 +1,4 @@
 {
-	"welcomeMessage": {
-		"en": "[Level 0]\r\n* Type `help` to see available commands *",
-		"es": "[Nivel 0]\r\n* Escribe `help` para ver los comandos disponibles *"
-	},
 	"ui": {
 		"layout": "mono",
 		"console": "Main",
