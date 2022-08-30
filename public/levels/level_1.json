@@ -10,7 +10,8 @@
 						"en": "[Level 1]\r\nStart coding...",
 						"es": "[Nivel 1]\r\nEmpezá a laburar..."
 					},
-					"availableCommands": ["chat"]
+					"availableCommands": ["chat"],
+					"startup": "chat"
 				}
 			]
 		}

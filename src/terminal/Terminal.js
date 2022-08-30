@@ -32,11 +32,16 @@ export default class Terminal {
 
 	async start(
 		welcomeMessage = locales.get("terminal_welcome"),
-		availableCommands = []
+		availableCommands = [],
+		startup = null
 	) {
 		await this.writeln(welcomeMessage, theme.SYSTEM);
 		this._shell.availableCommands = availableCommands;
-		this.restart();
+
+		if (startup != null) {
+			await this.newline();
+			this._shell.runLine(startup);
+		} else this.restart();
 	}
 
 	async run(program) {

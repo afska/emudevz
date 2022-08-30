@@ -10,7 +10,8 @@ export default class Console extends PureComponent {
 	async initialize(args) {
 		await this.terminal.start(
 			args.welcomeMessage?.en, // TODO: LOCALIZE
-			args.availableCommands
+			args.availableCommands,
+			args.startup
 		);
 	}
 
