@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import styles from "./Layout.module.css";
 
 export default class MonoLayout extends Layout {
-	static requiredComponentNames() {
+	static get requiredComponentNames() {
 		return ["Main"];
 	}
 

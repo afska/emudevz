@@ -11,7 +11,7 @@ export default class Level {
 		this.chatScript = new ChatScript(this.chat);
 	}
 
-	static current() {
+	static get current() {
 		return store.getState().level.instance;
 	}
 
@@ -25,7 +25,7 @@ export default class Level {
 		const layout = layouts[this.ui.layout];
 		if (!layout) throw new Error(`Missing layout: ${this.ui.layout}`);
 
-		layout.requiredComponentNames().forEach((requiredComponentName) => {
+		layout.requiredComponentNames.forEach((requiredComponentName) => {
 			const componentDefinition = this.ui.components[requiredComponentName];
 
 			if (componentDefinition == null)

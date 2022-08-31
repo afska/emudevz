@@ -1,6 +1,7 @@
 const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	levelId: 0,
+	language: "en",
 });
 
 export default {
@@ -8,6 +9,9 @@ export default {
 	reducers: {
 		setLevelId(state, levelId) {
 			return { ...state, levelId };
+		},
+		setLanguage(state, language) {
+			return { ...state, language };
 		},
 		reset() {
 			return INITIAL_STATE();

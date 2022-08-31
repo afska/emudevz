@@ -1,4 +1,5 @@
 import Command from "./Command";
+import Level from "../../level/Level";
 import locales from "../../locales";
 import { theme } from "../style";
 
@@ -15,7 +16,7 @@ export default class ChatCommand extends Command {
 		let state = "main";
 
 		while (state !== "end") {
-			const content = window.scr[state][locales.language];
+			const content = Level.current.chat[state][locales.language];
 
 			for (let message of content.messages)
 				await this._terminal.writeln(

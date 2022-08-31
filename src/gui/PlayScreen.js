@@ -17,8 +17,6 @@ class PlayScreen extends PureComponent {
 			fetch(`levels/level_${levelId}.json`)
 				.then((req) => req.json())
 				.then((levelData) => {
-					window.scr = levelData.chat; // TODO: REMOVE
-
 					try {
 						const level = new Level(levelData);
 						level.validate();

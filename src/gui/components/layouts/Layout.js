@@ -6,14 +6,10 @@ export default class Layout extends PureComponent {
 	}
 
 	requireComponents() {
-		this.constructor
-			.requiredComponentNames()
-			.forEach((requiredComponentName) => {
-				if (this.props[requiredComponentName] == null)
-					throw new Error(
-						`Missing required component: ${requiredComponentName}`
-					);
-			});
+		this.constructor.requiredComponentNames.forEach((requiredComponentName) => {
+			if (this.props[requiredComponentName] == null)
+				throw new Error(`Missing required component: ${requiredComponentName}`);
+		});
 	}
 
 	componentDidMount() {
