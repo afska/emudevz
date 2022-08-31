@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { XTerm } from "xterm-for-react";
 import { FitAddon } from "xterm-addon-fit";
 import Terminal from "../../terminal/Terminal";
+import locales from "../../locales";
 import styles from "./Console.module.css";
 
 export default class Console extends PureComponent {
@@ -9,7 +10,7 @@ export default class Console extends PureComponent {
 
 	async initialize(args) {
 		await this.terminal.start(
-			args.welcomeMessage?.en, // TODO: LOCALIZE
+			args.welcomeMessage && args.welcomeMessage[locales.language],
 			args.availableCommands,
 			args.startup
 		);
