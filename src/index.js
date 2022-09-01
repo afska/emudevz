@@ -5,6 +5,7 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 import { getPersistor } from "@rematch/persist";
 import App from "./App";
 import store from "./store";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
 import "xterm/css/xterm.css";

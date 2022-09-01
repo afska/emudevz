@@ -1,5 +1,5 @@
 .navbar {
-	height: 32px; /* (tied to PlayScreen.module.css) */
+	height: 40px; /* (tied to PlayScreen.module.css) */
 	position: fixed;
 	width: 100%;
 	border-width: 1px 0 0;
