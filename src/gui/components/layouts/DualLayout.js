@@ -8,7 +8,7 @@ export default class DualLayout extends Layout {
 		return ["Left", "Right"];
 	}
 
-	state = { selected: "left" };
+	state = { selected: "Left" };
 
 	render() {
 		if (!this.isReady) return false;
@@ -23,15 +23,15 @@ export default class DualLayout extends Layout {
 					className={classNames(
 						styles.leftColumn,
 						styles.column,
-						selected === "left" && styles.selected
+						selected === "Left" && styles.selected
 					)}
 					onMouseDown={(e) => {
-						this.setState({ selected: "left" });
+						this.setState({ selected: "Left" });
 					}}
 				>
 					<Left
-						ref={(left) => {
-							this.left = left;
+						ref={(ref) => {
+							this.instances.Left = ref;
 						}}
 					/>
 				</div>
@@ -40,15 +40,15 @@ export default class DualLayout extends Layout {
 					className={classNames(
 						styles.rightColumn,
 						styles.column,
-						selected === "right" && styles.selected
+						selected === "Right" && styles.selected
 					)}
 					onMouseDown={(e) => {
-						this.setState({ selected: "right" });
+						this.setState({ selected: "Right" });
 					}}
 				>
 					<Right
-						ref={(right) => {
-							this.right = right;
+						ref={(ref) => {
+							this.instances.Right = ref;
 						}}
 					/>
 				</div>
@@ -56,32 +56,25 @@ export default class DualLayout extends Layout {
 		);
 	}
 
+	focus(instanceName) {
+		this.setState({ selected: instanceName });
+
+		super.focus(instanceName);
+	}
+
 	onKeyDown = (e) => {
 		const { selected } = this.state;
 
 		if (e.key === "ArrowRight" && e.altKey) {
-			if (selected === "left") {
-				this.setState({ selected: "right" });
-				this.right.focus();
-			}
+			if (selected === "Left") this.focus("Right");
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowLeft" && e.altKey) {
-			if (selected === "right") {
-				this.setState({ selected: "left" });
-				this.left.focus();
-			}
+			if (selected === "Right") this.focus("Left");
 			e.preventDefault();
 			e.stopPropagation();
 		}
 	};
-
-	_callOnReady() {
-		this.props.onReady({
-			Left: this.left,
-			Right: this.right,
-		});
-	}
 }

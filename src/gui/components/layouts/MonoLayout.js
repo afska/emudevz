@@ -16,17 +16,11 @@ export default class MonoLayout extends Layout {
 		return (
 			<div className={styles.container}>
 				<Main
-					ref={(main) => {
-						this.main = main;
+					ref={(ref) => {
+						this.instances.Main = ref;
 					}}
 				/>
 			</div>
 		);
-	}
-
-	_callOnReady() {
-		this.props.onReady({
-			Main: this.main,
-		});
 	}
 }

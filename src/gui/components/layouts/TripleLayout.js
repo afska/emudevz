@@ -8,7 +8,7 @@ export default class TripleLayout extends Layout {
 		return ["Left", "Top", "Bottom"];
 	}
 
-	state = { selected: "left", lastVerticalSelection: "bottom" };
+	state = { selected: "Left", lastVerticalSelection: "Bottom" };
 
 	render() {
 		if (!this.isReady) return false;
@@ -23,15 +23,15 @@ export default class TripleLayout extends Layout {
 					className={classNames(
 						styles.leftColumn,
 						styles.column,
-						selected === "left" && styles.selected
+						selected === "Left" && styles.selected
 					)}
 					onMouseDown={(e) => {
-						this.setState({ selected: "left" });
+						this.setState({ selected: "Left" });
 					}}
 				>
 					<Left
-						ref={(left) => {
-							this.left = left;
+						ref={(ref) => {
+							this.instances.Left = ref;
 						}}
 					/>
 				</div>
@@ -41,15 +41,15 @@ export default class TripleLayout extends Layout {
 						className={classNames(
 							styles.topRow,
 							styles.row,
-							selected === "top" && styles.selected
+							selected === "Top" && styles.selected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selected: "top" });
+							this.setState({ selected: "Top" });
 						}}
 					>
 						<Top
-							ref={(top) => {
-								this.top = top;
+							ref={(ref) => {
+								this.instances.Top = ref;
 							}}
 						/>
 					</div>
@@ -58,15 +58,15 @@ export default class TripleLayout extends Layout {
 						className={classNames(
 							styles.bottomRow,
 							styles.row,
-							selected === "bottom" && styles.selected
+							selected === "Bottom" && styles.selected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selected: "bottom" });
+							this.setState({ selected: "Bottom" });
 						}}
 					>
 						<Bottom
-							ref={(bottom) => {
-								this.bottom = bottom;
+							ref={(ref) => {
+								this.instances.Bottom = ref;
 							}}
 						/>
 					</div>
@@ -75,56 +75,40 @@ export default class TripleLayout extends Layout {
 		);
 	}
 
+	focus(instanceName) {
+		this.setState({ selected: instanceName });
+
+		super.focus(instanceName);
+	}
+
 	onKeyDown = (e) => {
 		const { selected, lastVerticalSelection } = this.state;
 
 		if (e.key === "ArrowRight" && e.altKey) {
-			if (selected === "left") {
-				this.setState({ selected: lastVerticalSelection });
-
-				if (lastVerticalSelection === "top") this.top.focus();
-				else this.bottom.focus();
-			}
+			if (selected === "Left") this.focus(lastVerticalSelection);
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowLeft" && e.altKey) {
-			if (selected !== "left") {
-				this.setState({
-					selected: "left",
-					lastVerticalSelection: selected,
-				});
-				this.left.focus();
+			if (selected !== "Left") {
+				this.setState({ lastVerticalSelection: selected });
+				this.focus("Left");
 			}
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowUp" && e.altKey) {
-			if (selected !== "top") {
-				this.setState({ selected: "top" });
-				this.top.focus();
-			}
+			if (selected !== "Top") this.focus("Top");
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowDown" && e.altKey) {
-			if (selected !== "bottom") {
-				this.setState({ selected: "bottom" });
-				this.bottom.focus();
-			}
+			if (selected !== "Bottom") this.focus("Bottom");
 			e.preventDefault();
 			e.stopPropagation();
 		}
 	};
-
-	_callOnReady() {
-		this.props.onReady({
-			Left: this.left,
-			Top: this.top,
-			Bottom: this.bottom,
-		});
-	}
 }

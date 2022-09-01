@@ -5,10 +5,10 @@ import styles from "./Layout.module.css";
 
 export default class QuadLayout extends Layout {
 	static get requiredComponentNames() {
-		return ["TopLeft", "BottomLeft", "TopLeft", "BottomRight"];
+		return ["TopLeft", "BottomLeft", "TopRight", "BottomRight"];
 	}
 
-	state = { selectedY: "top", selectedX: "left" };
+	state = { selectedY: "Top", selectedX: "Left" };
 
 	render() {
 		if (!this.isReady) return false;
@@ -24,15 +24,15 @@ export default class QuadLayout extends Layout {
 						className={classNames(
 							styles.topRow,
 							styles.row,
-							selectedY === "top" && selectedX === "left" && styles.selected
+							selectedY === "Top" && selectedX === "Left" && styles.selected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selectedY: "top", selectedX: "left" });
+							this.setState({ selectedY: "Top", selectedX: "Left" });
 						}}
 					>
 						<TopLeft
-							ref={(topLeft) => {
-								this.topLeft = topLeft;
+							ref={(ref) => {
+								this.instances.TopLeft = ref;
 							}}
 						/>
 					</div>
@@ -41,15 +41,15 @@ export default class QuadLayout extends Layout {
 						className={classNames(
 							styles.bottomRow,
 							styles.row,
-							selectedY === "bottom" && selectedX === "left" && styles.selected
+							selectedY === "bottom" && selectedX === "Left" && styles.selected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selectedY: "bottom", selectedX: "left" });
+							this.setState({ selectedY: "bottom", selectedX: "Left" });
 						}}
 					>
 						<BottomLeft
-							ref={(bottomLeft) => {
-								this.bottomLeft = bottomLeft;
+							ref={(ref) => {
+								this.instances.BottomLeft = ref;
 							}}
 						/>
 					</div>
@@ -60,15 +60,15 @@ export default class QuadLayout extends Layout {
 						className={classNames(
 							styles.topRow,
 							styles.row,
-							selectedY === "top" && selectedX === "right" && styles.selected
+							selectedY === "Top" && selectedX === "Right" && styles.selected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selectedY: "top", selectedX: "right" });
+							this.setState({ selectedY: "Top", selectedX: "Right" });
 						}}
 					>
 						<TopRight
-							ref={(topRight) => {
-								this.topRight = topRight;
+							ref={(ref) => {
+								this.instances.TopRight = ref;
 							}}
 						/>
 					</div>
@@ -77,15 +77,15 @@ export default class QuadLayout extends Layout {
 						className={classNames(
 							styles.bottomRow,
 							styles.row,
-							selectedY === "bottom" && selectedX === "right" && styles.selected
+							selectedY === "bottom" && selectedX === "Right" && styles.selected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selectedY: "bottom", selectedX: "right" });
+							this.setState({ selectedY: "bottom", selectedX: "Right" });
 						}}
 					>
 						<BottomRight
-							ref={(bottomRight) => {
-								this.bottomRight = bottomRight;
+							ref={(ref) => {
+								this.instances.BottomRight = ref;
 							}}
 						/>
 					</div>
@@ -94,26 +94,45 @@ export default class QuadLayout extends Layout {
 		);
 	}
 
+	focus(instanceName) {
+		switch (instanceName) {
+			case "TopLeft": {
+				this.setState({ selectedY: "Top", selectedX: "Left" });
+				break;
+			}
+			case "BottomLeft": {
+				this.setState({ selectedY: "Bottom", selectedX: "Left" });
+				break;
+			}
+			case "TopRight": {
+				this.setState({ selectedY: "Top", selectedX: "Right" });
+				break;
+			}
+			case "BottomRight": {
+				this.setState({ selectedY: "Bottom", selectedX: "Right" });
+				break;
+			}
+		}
+
+		super.focus(instanceName);
+	}
+
 	onKeyDown = (e) => {
 		const { selectedX, selectedY } = this.state;
 
 		if (e.key === "ArrowRight" && e.altKey) {
-			if (selectedX === "left") {
-				this.setState({ selectedX: "right" });
-
-				if (selectedY === "top") this.topRight.focus();
-				else this.bottomRight.focus();
+			if (selectedX === "Left") {
+				if (selectedY === "Top") this.focus("TopRight");
+				else this.focus("BottomRight");
 			}
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowLeft" && e.altKey) {
-			if (selectedX === "right") {
-				this.setState({ selectedX: "left" });
-
-				if (selectedY === "top") this.topLeft.focus();
-				else this.bottomLeft.focus();
+			if (selectedX === "Right") {
+				if (selectedY === "Top") this.focus("TopLeft");
+				else this.focus("BottomLeft");
 			}
 			e.preventDefault();
 			e.stopPropagation();
@@ -121,33 +140,20 @@ export default class QuadLayout extends Layout {
 
 		if (e.key === "ArrowUp" && e.altKey) {
 			if (selectedY === "bottom") {
-				this.setState({ selectedY: "top" });
-
-				if (selectedX === "left") this.topLeft.focus();
-				else this.topRight.focus();
+				if (selectedX === "Left") this.focus("TopLeft");
+				else this.focus("TopRight");
 			}
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowDown" && e.altKey) {
-			if (selectedY === "top") {
-				this.setState({ selectedY: "bottom" });
-
-				if (selectedX === "left") this.bottomLeft.focus();
-				else this.bottomRight.focus();
+			if (selectedY === "Top") {
+				if (selectedX === "Left") this.focus("BottomLeft");
+				else this.focus("BottomRight");
 			}
 			e.preventDefault();
 			e.stopPropagation();
 		}
 	};
-
-	_callOnReady() {
-		this.props.onReady({
-			TopLeft: this.topLeft,
-			BottomLeft: this.bottomLeft,
-			TopRight: this.topRight,
-			BottomRight: this.bottomRight,
-		});
-	}
 }
