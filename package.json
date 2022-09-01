@@ -16,6 +16,7 @@
     "react": "^17.0.1",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.4.0",
     "react-redux": "^8.0.2",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",

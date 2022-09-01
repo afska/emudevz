@@ -11,7 +11,7 @@ export default class ProgressList extends PureComponent {
 				<OverlayTrigger
 					placement="top"
 					overlay={
-						<Tooltip id={`tooltip-1`}>
+						<Tooltip>
 							Tooltip on <strong>top</strong>.
 						</Tooltip>
 					}
