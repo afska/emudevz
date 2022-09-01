@@ -5,6 +5,8 @@ import { theme } from "./style";
 import { async } from "../utils";
 
 const KEY_FULLSCREEN = "[23~";
+const KEY_REFRESH_1 = "[15~";
+const KEY_REFRESH_2 = "";
 const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
 const KEY_ENTER = "\r";
@@ -109,6 +111,11 @@ export default class Terminal {
 	}
 
 	async _onData(data) {
+		if (data === KEY_REFRESH_1 || data === KEY_REFRESH_2) {
+			window.location.reload();
+			return;
+		}
+
 		if (data === KEY_FULLSCREEN) {
 			document.body.requestFullscreen();
 			return;
