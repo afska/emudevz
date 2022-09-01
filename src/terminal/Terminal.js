@@ -111,15 +111,7 @@ export default class Terminal {
 	}
 
 	async _onData(data) {
-		if (data === KEY_REFRESH_1 || data === KEY_REFRESH_2) {
-			window.location.reload();
-			return;
-		}
-
-		if (data === KEY_FULLSCREEN) {
-			document.body.requestFullscreen();
-			return;
-		}
+		if (this._processCommonBrowserKeys(data)) return;
 
 		switch (data) {
 			case KEY_CTRL_C: {
@@ -175,5 +167,17 @@ export default class Terminal {
 				data <= String.fromCharCode(0x7b)) ||
 			data >= "\u00a0"
 		);
+	}
+
+	_processCommonBrowserKeys(data) {
+		if (data === KEY_REFRESH_1 || data === KEY_REFRESH_2) {
+			window.location.reload();
+			return true;
+		}
+
+		if (data === KEY_FULLSCREEN) {
+			document.body.requestFullscreen();
+			return true;
+		}
 	}
 }
