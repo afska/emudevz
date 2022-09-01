@@ -8,6 +8,11 @@ import locales from "../locales";
 import styles from "./PlayScreen.module.css";
 import _ from "lodash";
 
+import JSZip from "jszip"; // TODO: MOVE
+
+const LEVEL_ID_LENGTH = 3;
+const STATUS_OK = 200;
+
 class PlayScreen extends PureComponent {
 	state = { error: null };
 
@@ -15,16 +20,23 @@ class PlayScreen extends PureComponent {
 		const { levelId, level, setLevel } = this.props;
 
 		if (!level) {
-			fetch(`levels/level_${levelId}.json`)
-				.then((req) => req.json())
-				.then((levelData) => {
-					try {
-						const level = new Level(levelData);
-						level.validate();
-						setLevel(level);
-					} catch (e) {
-						this.setState({ error: e.message });
-					}
+			const formattedLevelId = levelId.toString().padStart(LEVEL_ID_LENGTH, 0);
+			const levelPath = `levels/level_${formattedLevelId}.zip`;
+
+			fetch(levelPath)
+				.then((req) => {
+					if (req.status !== STATUS_OK) throw new Error("Level not found.");
+					return req.arrayBuffer();
+				})
+				.then((levelData) => JSZip.loadAsync(levelData))
+				.then((zip) => {
+					console.log(zip);
+					// const level = new Level(levelData);
+					// level.validate();
+					// setLevel(level);
+				})
+				.catch((e) => {
+					this.setState({ error: e.message });
 				});
 		}
 	}
