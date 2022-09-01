@@ -2,14 +2,11 @@ import React, { PureComponent } from "react";
 import layouts from "./components/layouts";
 import components from "./components";
 import NavBar from "./components/widgets/NavBar";
-import Level from "../level/Level";
+import LevelLoader from "../level/LevelLoader";
 import { connect } from "react-redux";
 import locales from "../locales";
 import styles from "./PlayScreen.module.css";
 import _ from "lodash";
-
-import JSZip from "jszip"; // TODO: MOVE
-import YAML from "yaml";
 
 const LEVEL_ID_LENGTH = 3;
 const STATUS_OK = 200;
@@ -29,17 +26,8 @@ class PlayScreen extends PureComponent {
 					if (req.status !== STATUS_OK) throw new Error("Level not found.");
 					return req.arrayBuffer();
 				})
-				.then((levelData) => JSZip.loadAsync(levelData))
-				.then((zip) => {
-					return zip.file("chat/en.yml").async("string");
-					// const level = new Level(levelData);
-					// level.validate();
-					// setLevel(level);
-				})
-				.then((yml) => {
-					const chat = YAML.parse(yml);
-					console.log(chat);
-				})
+				.then((levelData) => new LevelLoader(levelData).load())
+				.then(setLevel)
 				.catch((e) => {
 					this.setState({ error: e.message });
 				});
