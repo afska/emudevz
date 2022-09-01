@@ -9,6 +9,7 @@ import styles from "./PlayScreen.module.css";
 import _ from "lodash";
 
 import JSZip from "jszip"; // TODO: MOVE
+import YAML from "yaml";
 
 const LEVEL_ID_LENGTH = 3;
 const STATUS_OK = 200;
@@ -30,10 +31,14 @@ class PlayScreen extends PureComponent {
 				})
 				.then((levelData) => JSZip.loadAsync(levelData))
 				.then((zip) => {
-					console.log(zip);
+					return zip.file("chat/en.yml").async("string");
 					// const level = new Level(levelData);
 					// level.validate();
 					// setLevel(level);
+				})
+				.then((yml) => {
+					const chat = YAML.parse(yml);
+					console.log(chat);
 				})
 				.catch((e) => {
 					this.setState({ error: e.message });
