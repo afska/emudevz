@@ -21,6 +21,7 @@ export default class Level {
 		if (this.ui.layout == null) throw new Error("Missing `ui.layout` key");
 		if (this.ui.components == null)
 			throw new Error("Missing `ui.components` key");
+		if (this.ui.focus == null) throw new Error("Missing `ui.focus` key");
 
 		const layout = layouts[this.ui.layout];
 		if (!layout) throw new Error(`Missing layout: ${this.ui.layout}`);
@@ -47,6 +48,9 @@ export default class Level {
 			if (!args)
 				throw new Error(`Missing args for component: ${componentName}`);
 		});
+
+		if (!layout.requiredComponentNames.includes(this.ui.focus))
+			throw new Error(`Invalid focus: ${this.ui.focus}`);
 
 		this.chatScript.validate();
 	}

@@ -62,11 +62,11 @@ class PlayScreen extends PureComponent {
 		const { level } = this.props;
 
 		_.forEach(runningComponents, async (runningComponent, name) => {
-			if (name === level.ui.focus) this.layout.focus(name);
-
 			const args = level.ui.components[name][1]; // TODO: Extract method
 			await runningComponent.initialize(args);
 		});
+
+		this.layout.focus(level.ui.focus);
 	};
 }
 
