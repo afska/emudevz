@@ -1,0 +1,13 @@
+.navbar {
+	height: 32px; /* (tied to PlayScreen.module.css) */
+	position: fixed;
+	width: 100%;
+	border-width: 1px 0 0;
+	border-style: solid;
+	border-color: darkgray;
+	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
+		0 0 8px rgba(200, 200, 200, 0.6);
+	font-family: "Roboto Mono";
+	user-select: none;
+	padding: 4px 8px 4px 8px;
+}

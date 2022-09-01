@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import layouts from "./components/layouts";
 import components from "./components";
+import NavBar from "./components/widgets/NavBar";
 import Level from "../level/Level";
 import { connect } from "react-redux";
 import locales from "../locales";
@@ -43,7 +44,12 @@ class PlayScreen extends PureComponent {
 			([name]) => components[name]
 		);
 
-		return <Layout {...Components} onReady={this.onReady} />;
+		return (
+			<div className={styles.container}>
+				<Layout {...Components} onReady={this.onReady} />
+				<NavBar />
+			</div>
+		);
 	}
 
 	onReady = async (runningComponents) => {

@@ -1,3 +1,7 @@
+.container {
+	height: calc(100% - 32px); /* (tied to NavBar.module.css) */
+}
+
 .message {
 	position: absolute;
 	left: 50%;
