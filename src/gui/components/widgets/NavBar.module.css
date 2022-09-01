@@ -9,5 +9,7 @@
 		0 0 8px rgba(200, 200, 200, 0.6);
 	font-family: "Roboto Mono";
 	user-select: none;
-	padding: 4px 8px 4px 8px;
+
+	display: flex;
+	align-items: center;
 }

@@ -1,0 +1,25 @@
+.progressList {
+	display: flex;
+	justify-content: space-between;
+	flex: 1;
+	margin: 0 8px 0 8px;
+}
+
+.level {
+	border-width: 1px;
+	border-color: white;
+	border-style: solid;
+	width: 100%;
+	height: 8px;
+	background-color: #ecf0f1;
+	text-align: center;
+	margin: 0 1px 0 1px;
+}
+
+.success {
+	background-color: #5cb85c;
+}
+
+.failure {
+	background-color: #d9534f;
+}
