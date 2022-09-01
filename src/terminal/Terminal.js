@@ -4,6 +4,7 @@ import locales from "../locales";
 import { theme } from "./style";
 import { async } from "../utils";
 
+const KEY_FULLSCREEN = "[23~";
 const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
 const KEY_ENTER = "\r";
@@ -108,6 +109,11 @@ export default class Terminal {
 	}
 
 	async _onData(data) {
+		if (data === KEY_FULLSCREEN) {
+			document.body.requestFullscreen();
+			return;
+		}
+
 		switch (data) {
 			case KEY_CTRL_C: {
 				const wasExpectingInput = this._input != null;
