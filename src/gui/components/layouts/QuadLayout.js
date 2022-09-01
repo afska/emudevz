@@ -112,6 +112,7 @@ export default class QuadLayout extends Layout {
 				this.setState({ selectedY: "Bottom", selectedX: "Right" });
 				break;
 			}
+			default:
 		}
 
 		super.focus(instanceName);

@@ -72,7 +72,8 @@
           "**/*.js?(x)"
         ],
         "rules": {
-          "import/no-anonymous-default-export": "off"
+          "import/no-anonymous-default-export": "off",
+          "jsx-a11y/anchor-has-content": "off"
         }
       }
     ]
