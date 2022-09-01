@@ -38,10 +38,10 @@ class PlayScreen extends PureComponent {
 		if (!level)
 			return <div className={styles.message}>⌛ {locales.get("loading")}</div>;
 
-		const Layout = layouts[level.ui.layout];
+		const Layout = layouts[level.ui.layout]; // TODO: Extract method
 		const Components = _.mapValues(
 			level.ui.components,
-			([name]) => components[name]
+			([name]) => components[name] // TODO: Extract method
 		);
 
 		return (
@@ -56,7 +56,7 @@ class PlayScreen extends PureComponent {
 		const { level } = this.props;
 
 		_.forEach(runningComponents, async (runningComponent, name) => {
-			const args = level.ui.components[name][1];
+			const args = level.ui.components[name][1]; // TODO: Extract method
 			await runningComponent.initialize(args);
 		});
 	};

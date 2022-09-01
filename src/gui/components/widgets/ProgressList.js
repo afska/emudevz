@@ -31,7 +31,10 @@ export default class ProgressList extends PureComponent {
 				<a href="https://google.com" className={classNames(styles.level)} />
 				<a href="https://google.com" className={classNames(styles.level)} />
 				<a href="https://google.com" className={classNames(styles.level)} />
-				<a href="https://google.com" className={classNames(styles.level)} />
+				<a
+					href="https://google.com"
+					className={classNames(styles.level, styles.success)}
+				/>
 			</div>
 		);
 	}
