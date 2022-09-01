@@ -1,4 +1,5 @@
 const fs = require("fs");
+const mkdirp = require("mkdirp");
 const archiver = require("archiver");
 const $path = require("path");
 
@@ -8,6 +9,7 @@ const EXTENSION = ".zip";
 const FORMAT = "zip";
 const COMPRESSION_LEVEL = 9;
 
+mkdirp.sync(OUTPUT_PATH);
 const levelFolders = fs.readdirSync(LEVELS_PATH);
 
 levelFolders.forEach((levelFolder) => {
