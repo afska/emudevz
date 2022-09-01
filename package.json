@@ -28,6 +28,7 @@
     "dev": "npm run web",
     "web": "react-scripts start",
     "desktop": "concurrently \"cross-env BROWSER=none react-scripts start\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
+    "package": "node ./scripts/package-levels.js",
     "deploy": "bash ./scripts/deploy.sh",
     "build:web": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "build:windows": "bash ./scripts/build-desktop-windows.sh",
@@ -90,6 +91,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "archiver": "^5.3.1",
     "chai": "^4.2.0",
     "concurrently": "^5.3.0",
     "cross-env": "^7.0.3",
