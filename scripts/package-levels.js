@@ -1,4 +1,5 @@
 const fs = require("fs");
+const rimraf = require("rimraf");
 const mkdirp = require("mkdirp");
 const archiver = require("archiver");
 const $path = require("path");
@@ -11,7 +12,9 @@ const EXTENSION = ".zip";
 const FORMAT = "zip";
 const COMPRESSION_LEVEL = 9;
 
+rimraf.sync(OUTPUT_PATH);
 mkdirp.sync(OUTPUT_PATH);
+
 const levelFolders = fs.readdirSync(LEVELS_PATH);
 
 levelFolders.forEach((levelFolder) => {
