@@ -67,6 +67,11 @@ class PlayScreen extends PureComponent {
 		return this.props.levelId.toString().padStart(LEVEL_ID_LENGTH, 0);
 	}
 
+	get currentChapter() {
+		const { book, levelId } = this.props;
+		return book.getChapterOf(levelId);
+	}
+
 	_onError = (e) => {
 		this.setState({ error: e.message });
 		console.error(e);
@@ -82,6 +87,10 @@ class PlayScreen extends PureComponent {
 			})
 			.then((book) => new Book(book))
 			.then(setBook)
+			.then(() => {
+				if (!this.currentChapter)
+					throw new Error(`Unexisting level: ${this.props.levelId}`);
+			})
 			.catch(this._onError);
 	}
 
