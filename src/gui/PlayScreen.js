@@ -47,7 +47,7 @@ class PlayScreen extends PureComponent {
 						this.layout = ref;
 					}}
 				/>
-				<NavBar />
+				<NavBar chapter={this.currentChapter} />
 			</div>
 		);
 	}
