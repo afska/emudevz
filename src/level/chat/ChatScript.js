@@ -1,5 +1,3 @@
-import { LANGUAGES } from "../../locales";
-
 export default class ChatScript {
 	constructor(content) {
 		this.content = content;
@@ -11,25 +9,17 @@ export default class ChatScript {
 		for (let sectionName in this.content) {
 			const section = this.content[sectionName];
 
-			for (let language of LANGUAGES) {
-				const localizedSection = section[language];
-				const slug = `${sectionName}/${language}`;
+			if (!Array.isArray(section.messages))
+				throw new Error(`Missing messages: ${sectionName}`);
 
-				if (localizedSection == null)
-					throw new Error(`Missing language: ${slug}`);
+			if (section.messages.some((it) => typeof it !== "string"))
+				throw new Error(`Invalid messages: ${sectionName}`);
 
-				if (!Array.isArray(localizedSection.messages))
-					throw new Error(`Missing messages: ${slug}`);
+			if (!Array.isArray(section.responses))
+				throw new Error(`Missing responses: ${sectionName}`);
 
-				if (localizedSection.messages.some((it) => typeof it !== "string"))
-					throw new Error(`Invalid messages: ${slug}`);
-
-				if (!Array.isArray(localizedSection.responses))
-					throw new Error(`Missing responses: ${slug}`);
-
-				if (localizedSection.responses.some((it) => typeof it !== "string"))
-					throw new Error(`Invalid responses: ${slug}`);
-			}
+			if (section.responses.some((it) => typeof it !== "string"))
+				throw new Error(`Invalid responses: ${sectionName}`);
 		}
 	}
 }

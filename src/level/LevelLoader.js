@@ -10,7 +10,7 @@ export default class LevelLoader {
 	async load() {
 		const zip = await JSZip.loadAsync(this.zipContent);
 		const rawMeta = await zip.file("meta.json").async("string");
-		const rawChat = await zip.file("chat/en.yml").async("string");
+		const rawChat = await zip.file("chat/en.yml").async("string"); // TODO: LOCALIZE
 
 		const meta = JSON.parse(rawMeta);
 		const chat = YAML.parse(rawChat);

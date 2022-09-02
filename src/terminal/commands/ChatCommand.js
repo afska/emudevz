@@ -16,7 +16,7 @@ export default class ChatCommand extends Command {
 		let state = "main";
 
 		while (state !== "end") {
-			const content = Level.current.chat[state][locales.language];
+			const content = Level.current.chat[state];
 
 			for (let message of content.messages)
 				await this._terminal.writeln(
@@ -62,6 +62,7 @@ export default class ChatCommand extends Command {
 			}
 
 			state = selectedOption.responseLink;
+			// TODO: FIX 'end'
 		}
 	}
 }

@@ -2,7 +2,7 @@
 main:
   messages:
   - hey
-  - are you there? 👀👀
+  - are you there? 👀 👀
   responses:
   - who are you? [who]
   - what is this? [what]
