@@ -1,13 +1,15 @@
+import _ from "lodash";
+
 export default class ChatScript {
 	constructor(content) {
-		this.content = content;
+		_.extend(this, content);
 	}
 
 	validate() {
-		if (this.content.main == null) throw new Error("No main section");
+		if (this.main == null) throw new Error("No main section");
 
-		for (let sectionName in this.content) {
-			const section = this.content[sectionName];
+		for (let sectionName in this) {
+			const section = this[sectionName];
 
 			if (!Array.isArray(section.messages))
 				throw new Error(`Missing messages: ${sectionName}`);

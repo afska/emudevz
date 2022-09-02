@@ -1,6 +1,12 @@
 import Level from "./Level";
+import ChatScript from "./chat/ChatScript";
+import { LANGUAGES } from "../locales";
 import JSZip from "jszip";
 import YAML from "yaml";
+
+const META_FILE = "meta.json";
+const CHAT_FOLDER = "chat";
+const CHAT_EXTENSION = "yml";
 
 export default class LevelLoader {
 	constructor(zipContent) {
@@ -9,16 +15,27 @@ export default class LevelLoader {
 
 	async load() {
 		const zip = await JSZip.loadAsync(this.zipContent);
-		const rawMeta = await zip.file("meta.json").async("string");
-		const rawChat = await zip.file("chat/en.yml").async("string"); // TODO: LOCALIZE
 
+		const metaFile = zip.file(META_FILE);
+		if (!metaFile) throw new Error(`Missing file: ${META_FILE}`);
+		const rawMeta = await metaFile.async("string");
 		const meta = JSON.parse(rawMeta);
-		const chat = YAML.parse(rawChat);
 
-		meta.chat = chat;
+		const chatScripts = {};
+		LANGUAGES.forEach(async (language) => {
+			const chatFilePath = `${CHAT_FOLDER}/${language}.${CHAT_EXTENSION}`;
+			const chatFile = zip.file(chatFilePath);
+			if (!chatFile) throw new Error(`Missing file: ${chatFilePath}`);
+			const rawChat = await chatFile.async("string");
+			const chat = YAML.parse(rawChat);
+			const chatScript = new ChatScript(chat);
+			chatScript.validate();
+			chatScripts[language] = chatScript;
+		});
 
-		const level = new Level(meta);
+		const level = new Level(meta, chatScripts);
 		level.validate();
+
 		return level;
 	}
 }

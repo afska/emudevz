@@ -16,7 +16,7 @@ export default class ChatCommand extends Command {
 		let state = "main";
 
 		while (state !== "end") {
-			const content = Level.current.chat[state];
+			const content = Level.current.chatScripts[locales.language][state];
 
 			for (let message of content.messages)
 				await this._terminal.writeln(

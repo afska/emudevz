@@ -1,14 +1,13 @@
-import ChatScript from "./chat/ChatScript";
 import layouts from "../gui/components/layouts";
 import components from "../gui/components";
 import store from "../store";
 import _ from "lodash";
 
 export default class Level {
-	constructor(content) {
-		_.extend(this, content);
+	constructor(metadata, chatScripts) {
+		_.extend(this, metadata);
 
-		this.chatScript = new ChatScript(this.chat);
+		this.chatScripts = chatScripts;
 	}
 
 	static get current() {
@@ -51,7 +50,5 @@ export default class Level {
 
 		if (!layout.requiredComponentNames.includes(this.ui.focus))
 			throw new Error(`Invalid focus: ${this.ui.focus}`);
-
-		this.chatScript.validate();
 	}
 }
