@@ -2,7 +2,12 @@ import { init } from "@rematch/core";
 import createLoadingPlugin from "@rematch/loading";
 import createRematchPersist from "@rematch/persist";
 import storage from "redux-persist/lib/storage";
+import { connectRouter, routerMiddleware } from "connected-react-router";
+import { createBrowserHistory } from "history";
 import models from "./models";
+
+export const history = createBrowserHistory();
+const reducers = { router: connectRouter(history) };
 
 const store = init({
 	models,
@@ -15,6 +20,11 @@ const store = init({
 			whitelist: ["savedata"],
 		}),
 	],
+	redux: {
+		reducers,
+		middlewares: [routerMiddleware(history)],
+		devtoolOptions: {},
+	},
 });
 
 export default store;

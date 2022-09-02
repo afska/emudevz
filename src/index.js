@@ -3,19 +3,25 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import { getPersistor } from "@rematch/persist";
+import { ConnectedRouter } from "connected-react-router";
+import { Route, Switch } from "react-router-dom";
 import App from "./App";
-import store from "./store";
+import store, { history } from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
 import "xterm/css/xterm.css";
 
-// Set up the Rematch context
+// Set up store and navigation
 const persistor = getPersistor();
 const app = (
 	<PersistGate persistor={persistor}>
 		<Provider store={store}>
-			<App />
+			<ConnectedRouter history={history}>
+				<Switch>
+					<Route exact path="/" render={() => <App />} />
+				</Switch>
+			</ConnectedRouter>
 		</Provider>
 	</PersistGate>
 );
