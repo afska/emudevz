@@ -1,5 +1,5 @@
 .navbar {
-	height: 40px; /* (tied to PlayScreen.module.css) */
+	height: 48px; /* (tied to PlayScreen.module.css) */
 	position: fixed;
 	width: 100%;
 	border-width: 1px 0 0;
@@ -18,7 +18,7 @@
 
 .item {
 	display: flex;
-	margin: 1px 8px 1px 8px;
+	margin: 4px 8px 4px 8px;
 	align-items: center;
 }
 

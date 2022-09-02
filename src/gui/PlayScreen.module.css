@@ -1,5 +1,5 @@
 .container {
-	height: calc(100% - 40px); /* (tied to NavBar.module.css) */
+	height: calc(100% - 48px); /* (tied to NavBar.module.css) */
 }
 
 .message {
