@@ -1,11 +1,15 @@
 const KEY = "level";
 const INITIAL_STATE = () => ({
+	book: null,
 	instance: null,
 });
 
 export default {
 	state: INITIAL_STATE(),
 	reducers: {
+		setBook(state, book) {
+			return { ...state, book };
+		},
 		setLevel(state, instance) {
 			return { ...state, instance };
 		},
