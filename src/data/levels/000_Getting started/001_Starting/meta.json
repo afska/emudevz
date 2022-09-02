@@ -1,4 +1,8 @@
 {
+	"name": {
+		"en": "Starting",
+		"es": "Empezando"
+	},
 	"ui": {
 		"layout": "dual",
 		"components": {

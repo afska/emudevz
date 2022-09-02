@@ -1,4 +1,8 @@
 {
+	"name": {
+		"en": "CPU one",
+		"es": "CPU uno"
+	},
 	"ui": {
 		"layout": "mono",
 		"components": {

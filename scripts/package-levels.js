@@ -6,6 +6,8 @@ const _ = require("lodash");
 
 const LEVELS_PATH = "src/data/levels";
 const OUTPUT_PATH = "public/levels";
+const CHAPTER_METADATA_FILE = "chapter.json";
+const LEVEL_METADATA_FILE = "meta.json";
 const BOOK_FILE = "book.json";
 const ID_LENGTH = 3;
 const PREFIX = "level_";
@@ -41,17 +43,27 @@ async function package() {
 
 	const chapterFolders = readDirs(LEVELS_PATH);
 	for (let chapterFolder of chapterFolders) {
+		const chapterPath = $path.join(LEVELS_PATH, chapterFolder);
 		const [chapterId, chapterName] = chapterFolder.split("_");
 		if (!isIdValid(chapterId) || !isNameValid(chapterName))
 			throw new Error(`Invalid chapter folder name: ${chapterFolder}`);
 
+		let chapterMetadata;
+		try {
+			const chapterJSON = fs
+				.readFileSync($path.join(chapterPath, CHAPTER_METADATA_FILE))
+				.toString();
+			chapterMetadata = JSON.parse(chapterJSON);
+		} catch (e) {
+			throw new Error(`Invalid chapter metadata: ${chapterFolder}`);
+		}
+
 		const chapter = {
-			name: chapterName,
+			name: chapterMetadata.name,
 			levels: [],
 		};
 		book.chapters.push(chapter);
 
-		const chapterPath = $path.join(LEVELS_PATH, chapterFolder);
 		const levelFolders = readDirs(chapterPath);
 		for (let levelFolder of levelFolders) {
 			const levelPath = $path.join(chapterPath, levelFolder);
@@ -59,9 +71,19 @@ async function package() {
 			if (!isIdValid(levelId) || !isNameValid(levelName))
 				throw new Error(`Invalid level folder name: ${levelFolder}`);
 
+			let levelMetadata;
+			try {
+				const levelJSON = fs
+					.readFileSync($path.join(levelPath, LEVEL_METADATA_FILE))
+					.toString();
+				levelMetadata = JSON.parse(levelJSON);
+			} catch (e) {
+				throw new Error(`Invalid level metadata: ${chapterFolder}`);
+			}
+
 			chapter.levels.push({
 				id: globalLevelId,
-				name: levelName,
+				name: levelMetadata.name,
 			});
 
 			const outputPath = $path.join(

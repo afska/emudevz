@@ -1,4 +1,8 @@
 {
+	"name": {
+		"en": "CPU two",
+		"es": "CPU dos"
+	},
 	"ui": {
 		"layout": "dual",
 		"components": {

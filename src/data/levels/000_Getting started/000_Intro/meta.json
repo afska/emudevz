@@ -1,4 +1,8 @@
 {
+	"name": {
+		"en": "Introduction",
+		"es": "Introducción"
+	},
 	"ui": {
 		"layout": "mono",
 		"components": {
