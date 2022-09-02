@@ -1,0 +1,16 @@
+{
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": ["code", {}],
+			"Right": [
+				"console",
+				{
+					"startup": "chat",
+					"availableCommands": ["chat", "help", "clear"]
+				}
+			]
+		},
+		"focus": "Right"
+	}
+}

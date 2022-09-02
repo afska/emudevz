@@ -1,0 +1,55 @@
+---
+main:
+  messages:
+  - hey
+  - are you there? 👀 👀
+  responses:
+  - who are you? [who]
+  - what is this? [what]
+
+what:
+  onStart: |
+    const name = prompt("¿Cómo te llamás?");
+    alert("Hola " + name);
+
+  messages:
+  - it's `chat`
+  - the best instant messaging app we have 🤷
+  responses:
+  - and you are...? [who]
+
+who:
+  messages:
+  - let's say I'm your assistant
+  - we are going to build a NEEES emulator, remember?
+  responses:
+  - first of all, why is it called "NEEES"? [name]"
+  - but I don't know how to build an emulator 😳 [idontknow]
+
+name:
+  messages:
+  - I think it stands for <"No Entiendo" Enigmatic Enjoyment Solution>, but I'm not sure
+  responses:
+  - oh, I see - how did you find that? [namehow]
+  - I don't think I'll be able to build that emulator 😳 [idontknow]
+
+namehow:
+  messages:
+  - in a secret file!
+  responses:
+  - ok but I have no clue about how to build that emulator [idontknow]
+
+idontknow:
+  messages:
+  - don't worry, re're gonna figure it out together...
+  - you do know how to program, right?
+  - ...right? 🤔
+  responses:
+  - I can write some JavaScript
+
+javascript:
+  messages:
+  - that'll work perfect
+  - you only need to know a bit about object-oriented programming
+  responses:
+  - ok, let's do this [end]

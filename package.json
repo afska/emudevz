@@ -30,7 +30,7 @@
     "dev": "npm run web",
     "web": "react-scripts start",
     "desktop": "concurrently \"cross-env BROWSER=none react-scripts start\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
-    "package": "node ./scripts/package-levels.js",
+    "package": "rm -rf public/levels && node ./scripts/package-levels.js",
     "deploy": "bash ./scripts/deploy.sh",
     "build:web": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "build:windows": "bash ./scripts/build-desktop-windows.sh",
@@ -102,7 +102,6 @@
     "husky": "^1.3.1",
     "mkdirp": "^1.0.4",
     "prettier": "2.2.1",
-    "pretty-quick": "^1.10.0",
-    "rimraf": "^3.0.2"
+    "pretty-quick": "^1.10.0"
   }
 }

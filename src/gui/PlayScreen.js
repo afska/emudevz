@@ -15,11 +15,10 @@ class PlayScreen extends PureComponent {
 	state = { error: null };
 
 	componentDidMount() {
-		const { levelId, level, setLevel } = this.props;
+		const { level, setLevel } = this.props;
 
 		if (!level) {
-			const formattedLevelId = levelId.toString().padStart(LEVEL_ID_LENGTH, 0);
-			const levelPath = `levels/level_${formattedLevelId}.zip`;
+			const levelPath = `levels/level_${this.formattedLevelId}.zip`;
 
 			fetch(levelPath)
 				.then((req) => {
@@ -73,6 +72,10 @@ class PlayScreen extends PureComponent {
 
 		this.layout.focus(level.ui.focus);
 	};
+
+	get formattedLevelId() {
+		return this.props.levelId.toString().padStart(LEVEL_ID_LENGTH, 0);
+	}
 }
 
 const mapStateToProps = ({ savedata, level }) => ({
