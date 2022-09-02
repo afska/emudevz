@@ -1,4 +1,4 @@
-const KEY = "level";
+const KEY = "book";
 const INITIAL_STATE = () => ({
 	instance: null,
 });
@@ -6,7 +6,7 @@ const INITIAL_STATE = () => ({
 export default {
 	state: INITIAL_STATE(),
 	reducers: {
-		setLevel(state, instance) {
+		setBook(state, instance) {
 			return { ...state, instance };
 		},
 		reset() {

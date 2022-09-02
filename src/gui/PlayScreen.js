@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import layouts from "./components/layouts";
 import components from "./components";
 import NavBar from "./components/widgets/NavBar";
+import Book from "../level/Book";
 import LevelLoader from "../level/LevelLoader";
 import { connect } from "react-redux";
 import locales from "../locales";
@@ -79,6 +80,7 @@ class PlayScreen extends PureComponent {
 				if (req.status !== STATUS_OK) throw new Error("Book not found.");
 				return req.json();
 			})
+			.then((book) => new Book(book))
 			.then(setBook)
 			.catch(this._onError);
 	}
@@ -99,13 +101,13 @@ class PlayScreen extends PureComponent {
 	}
 }
 
-const mapStateToProps = ({ savedata, level }) => ({
+const mapStateToProps = ({ savedata, book, level }) => ({
 	levelId: savedata.levelId,
-	book: level.book,
+	book: book.instance,
 	level: level.instance,
 });
-const mapDispatchToProps = ({ level }) => ({
-	setBook: level.setBook,
+const mapDispatchToProps = ({ book, level }) => ({
+	setBook: book.setBook,
 	setLevel: level.setLevel,
 });
 
