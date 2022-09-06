@@ -16,12 +16,12 @@ class HomeScreen extends PureComponent {
 		const loader = PIXI.Loader.shared;
 		loader.reset();
 		loader.add("logo", "assets/logo.png");
-		loader.add("background", "assets/background.png");
+		loader.add("background", "assets/tiling-background.png");
 
 		const sprites = {};
 		loader.load((loader, resources) => {
 			sprites.logo = new PIXI.Sprite(resources.logo.texture);
-			sprites.background = new PIXI.Sprite(resources.background.texture);
+			sprites.background = new PIXI.TilingSprite(resources.background.texture);
 		});
 
 		let error = false;
@@ -35,6 +35,7 @@ class HomeScreen extends PureComponent {
 				return;
 			}
 
+			sprites.background.tilePosition.y = 60;
 			sprites.background.alpha = 0.35;
 
 			sprites.logo.x = 0;
@@ -75,6 +76,9 @@ class HomeScreen extends PureComponent {
 			);
 
 			app.ticker.add(function (delta) {
+				sprites.background.width = app.renderer.width;
+				sprites.background.height = app.renderer.height;
+
 				sprites.logo.position.x =
 					app.renderer.width / 2 - sprites.logo.width / 2;
 				sprites.logo.position.y =
@@ -83,6 +87,8 @@ class HomeScreen extends PureComponent {
 				light.y = sprites.logo.y + 30;
 
 				crtFilter.time += delta * 0.25;
+
+				sprites.background.tilePosition.x -= delta * 2;
 			});
 
 			div.appendChild(app.view);
