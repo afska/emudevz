@@ -9,7 +9,8 @@ import locales from "../locales";
 import styles from "./PlayScreen.module.css";
 import _ from "lodash";
 
-const BOOK_PATH = "levels/book.json";
+const LEVELS_PATH = "/levels";
+const BOOK_PATH = `${LEVELS_PATH}/book.json`;
 const LEVEL_ID_LENGTH = 3;
 const STATUS_OK = 200;
 
@@ -97,7 +98,7 @@ class PlayScreen extends PureComponent {
 	_loadLevel() {
 		const { setLevel } = this.props;
 
-		const levelPath = `levels/level_${this.formattedLevelId}.zip`;
+		const levelPath = `${LEVELS_PATH}/level_${this.formattedLevelId}.zip`;
 
 		fetch(levelPath)
 			.then((req) => {
