@@ -11,8 +11,16 @@ class HomeScreen extends PureComponent {
 		return (
 			<>
 				<div className={styles.container} ref={this.onReady} />
-				<div id="description" className={styles.description}>
-					{locales.get("plot")}
+
+				<div id="ui" className={styles.ui}>
+					<div className={styles.box}>{locales.get("plot")}</div>
+
+					<div className={styles.buttons}>
+						<div className={styles.button}>Play</div>
+						<div className={styles.button}>Chapter selection</div>
+						<div className={styles.button}>Settings</div>
+						<div className={styles.button}>Quit</div>
+					</div>
 				</div>
 			</>
 		);
@@ -94,9 +102,9 @@ class HomeScreen extends PureComponent {
 				light.x = sprites.logo.x + 160;
 				light.y = sprites.logo.y + 30;
 
-				const description = document.querySelector("#description");
-				if (description) {
-					description.style.top = `${
+				const ui = document.querySelector("#ui");
+				if (ui) {
+					ui.style.top = `${
 						sprites.logo.position.y + sprites.logo.height + 16
 					}px`;
 				}
