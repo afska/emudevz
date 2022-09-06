@@ -10,7 +10,7 @@ import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
 	render() {
-		const { chapter, goBack } = this.props;
+		const { maxLevelId, chapter, goBack } = this.props;
 
 		return (
 			<div className={styles.navbar}>
@@ -23,7 +23,7 @@ class NavBar extends PureComponent {
 					<span>{chapter.name[locales.language]}</span>
 				</div>
 				<div className={styles.item}>
-					<ProgressList levels={chapter.levels} />
+					<ProgressList maxLevelId={maxLevelId} levels={chapter.levels} />
 				</div>
 			</div>
 		);

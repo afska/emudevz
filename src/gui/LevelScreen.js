@@ -6,7 +6,7 @@ import _ from "lodash";
 
 class LevelScreen extends PureComponent {
 	render() {
-		const { chapter, level } = this.props;
+		const { maxLevelId, chapter, level } = this.props;
 
 		const Layout = layouts[level.ui.layout];
 		const Components = _.mapValues(
@@ -23,7 +23,7 @@ class LevelScreen extends PureComponent {
 						this.layout = ref;
 					}}
 				/>
-				<NavBar chapter={chapter} />
+				<NavBar maxLevelId={maxLevelId} chapter={chapter} />
 			</>
 		);
 	}

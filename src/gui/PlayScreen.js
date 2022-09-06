@@ -13,7 +13,7 @@ const LEVEL_ID_LENGTH = 3;
 const STATUS_OK = 200;
 
 class PlayScreen extends PureComponent {
-	state = { currentLevelId: null, error: null };
+	state = { path: null, error: null };
 
 	componentDidMount() {
 		const { currentLevelId, validateSavedata } = this.props;
@@ -24,11 +24,11 @@ class PlayScreen extends PureComponent {
 	}
 
 	componentDidUpdate() {
-		const { currentLevelId, resetLevel, validateSavedata } = this.props;
+		const { path, currentLevelId, resetLevel, validateSavedata } = this.props;
 		if (!validateSavedata(currentLevelId)) return;
 
-		if (currentLevelId !== this.state.currentLevelId) {
-			this.setState({ currentLevelId, error: null });
+		if (path !== this.state.path) {
+			this.setState({ path, error: null });
 			resetLevel();
 			this._loadLevel();
 		}
@@ -36,7 +36,7 @@ class PlayScreen extends PureComponent {
 
 	render() {
 		const { error } = this.state;
-		const { book, level } = this.props;
+		const { maxLevelId, book, level } = this.props;
 
 		if (error) return <div className={styles.message}>❌ {error}</div>;
 
@@ -45,7 +45,11 @@ class PlayScreen extends PureComponent {
 
 		return (
 			<div className={styles.container}>
-				<LevelScreen chapter={this.currentChapter} level={level} />
+				<LevelScreen
+					maxLevelId={maxLevelId}
+					chapter={this.currentChapter}
+					level={level}
+				/>
 			</div>
 		);
 	}
@@ -98,10 +102,12 @@ class PlayScreen extends PureComponent {
 }
 
 const mapStateToProps = ({ router, savedata, book, level }) => {
-	let currentLevelId = parseInt(_.last(router.location.pathname.split("/")));
+	const path = router.location.pathname;
+	let currentLevelId = parseInt(_.last(path.split("/")));
 	if (!isFinite(currentLevelId)) currentLevelId = 0;
 
 	return {
+		path: path + router.location.search,
 		currentLevelId,
 		maxLevelId: savedata.levelId,
 		book: book.instance,

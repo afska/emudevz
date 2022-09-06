@@ -9,7 +9,7 @@ import styles from "./ProgressList.module.css";
 
 class ProgressList extends PureComponent {
 	render() {
-		const { levels, goTo } = this.props;
+		const { maxLevelId, levels, goTo } = this.props;
 
 		return (
 			<div className={styles.progressList}>
@@ -24,13 +24,18 @@ class ProgressList extends PureComponent {
 								</Tooltip>
 							}
 						>
-							<a
-								href="#"
-								onClick={(e) => {
-									e.preventDefault();
-									goTo(level.id);
+							<div
+								onClick={() => {
+									if (level.id <= maxLevelId) goTo(level.id);
 								}}
-								className={classNames(styles.level /*, styles.success*/)}
+								className={classNames(
+									styles.level,
+									level.id < maxLevelId
+										? styles.success
+										: level.id > maxLevelId
+										? styles.locked
+										: styles.highlight
+								)}
 							/>
 						</OverlayTrigger>
 					);
@@ -42,7 +47,7 @@ class ProgressList extends PureComponent {
 
 const mapDispatchToProps = (dispatch) => ({
 	goTo(levelId) {
-		dispatch(push(`/levels/${levelId}`));
+		dispatch(push(`/levels/${levelId}?r=${Math.random()}`));
 	},
 });
 
