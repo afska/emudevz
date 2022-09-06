@@ -83,7 +83,7 @@ class HomeScreen extends PureComponent {
 					app.renderer.width / 2 - sprites.logo.width / 2;
 				sprites.logo.position.y =
 					app.renderer.height / 3 - sprites.logo.height / 2;
-				light.x = sprites.logo.x + 155;
+				light.x = sprites.logo.x + 160;
 				light.y = sprites.logo.y + 30;
 
 				crtFilter.time += delta * 0.25;
