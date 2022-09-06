@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import * as PIXI from "pixi.js";
 import { Layer, Stage } from "@pixi/layers";
 import { PointLight, lightGroup } from "pixi-lights";
+import { CRTFilter, RGBSplitFilter } from "pixi-filters";
 import styles from "./HomeScreen.module.css";
 
 class HomeScreen extends PureComponent {
@@ -27,6 +28,11 @@ class HomeScreen extends PureComponent {
 		}); // (called once per errored file)
 
 		loader.onComplete.add(() => {
+			if (error) {
+				alert("Error loading assets.");
+				return;
+			}
+
 			sprites.logo.x = 0;
 			sprites.logo.y = 0;
 			sprites.logo.scale.x = 0.5;
@@ -38,11 +44,29 @@ class HomeScreen extends PureComponent {
 			});
 
 			app.stage = new Stage();
+			const rgbSplitFilter = new RGBSplitFilter([0, 0], [0, 0], [0, 0]);
+			app.stage.filters = [
+				new CRTFilter({
+					curvature: 5,
+					lineWidth: 5,
+					lineContrast: 0.25,
+					noise: 0.2,
+					noiseSize: 1,
+					vignetting: 0.3,
+					vignettingAlpha: 1,
+					vignettingBlur: 0.3,
+					seed: 0,
+					time: 10,
+				}),
+				rgbSplitFilter,
+			];
+			app.stage.filterArea = app.screen;
 
-			const background = new PIXI.Container();
+			const lightContainer = new PIXI.Container();
 			const light = new PointLight(0x854dff, 1.5);
-			background.addChild(light);
-			app.stage.addChild(sprites.logo, new Layer(lightGroup), background);
+			lightContainer.addChild(light);
+
+			app.stage.addChild(sprites.logo, new Layer(lightGroup), lightContainer);
 
 			app.ticker.add(function (delta) {
 				sprites.logo.position.x =
@@ -50,8 +74,14 @@ class HomeScreen extends PureComponent {
 				sprites.logo.position.y =
 					app.renderer.height / 2 - sprites.logo.height / 2;
 				light.x = sprites.logo.x + 181;
-				light.y = sprites.logo.y + 55;
+				light.y = sprites.logo.y + 56;
+
+				const offset = Math.random() * 1;
+				rgbSplitFilter.red = [offset, offset];
+				rgbSplitFilter.green = [-offset, offset];
+				rgbSplitFilter.blue = [offset, -offset];
 			});
+
 			div.appendChild(app.view);
 		});
 	};
