@@ -1,3 +1,5 @@
+import { replace } from "connected-react-router";
+
 const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	levelId: 0,
@@ -21,6 +23,17 @@ export default {
 		// eslint-disable-next-line
 		const dispatch = _dispatch_[KEY];
 
-		return {};
+		return {
+			validate(levelId, _state_) {
+				const state = _state_[KEY];
+
+				if (levelId > state.levelId) {
+					_dispatch_(replace(`/levels/${state.levelId}`));
+					return false;
+				}
+
+				return true;
+			},
+		};
 	},
 };

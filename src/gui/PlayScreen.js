@@ -18,12 +18,16 @@ class PlayScreen extends PureComponent {
 	state = { currentLevelId: null, error: null };
 
 	componentDidMount() {
+		const { currentLevelId, validateSavedata } = this.props;
+		if (!validateSavedata(currentLevelId)) return;
+
 		this._loadBook();
 		this._loadLevel();
 	}
 
 	componentDidUpdate() {
-		const { currentLevelId, resetLevel } = this.props;
+		const { currentLevelId, resetLevel, validateSavedata } = this.props;
+		if (!validateSavedata(currentLevelId)) return;
 
 		if (currentLevelId !== this.state.currentLevelId) {
 			this.setState({ currentLevelId, error: null });
@@ -38,7 +42,7 @@ class PlayScreen extends PureComponent {
 
 		if (error) return <div className={styles.message}>❌ {error}</div>;
 
-		if (!book || !level)
+		if (!book || !level || !this.currentChapter)
 			return <div className={styles.message}>⌛ {locales.get("loading")}</div>;
 
 		const Layout = layouts[level.ui.layout];
@@ -130,10 +134,11 @@ const mapStateToProps = ({ router, savedata, book, level }) => {
 		level: level.instance,
 	};
 };
-const mapDispatchToProps = ({ book, level }) => ({
+const mapDispatchToProps = ({ book, savedata, level }) => ({
 	setBook: book.setBook,
 	setLevel: level.setLevel,
 	resetLevel: level.reset,
+	validateSavedata: savedata.validate,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);
