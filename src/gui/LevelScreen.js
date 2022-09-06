@@ -16,27 +16,26 @@ class LevelScreen extends PureComponent {
 
 		return (
 			<>
-				<Layout
-					{...Components}
-					onReady={this.onReady}
-					ref={(ref) => {
-						this.layout = ref;
-					}}
-				/>
+				<Layout {...Components} ref={this.onReady} />
 				<NavBar maxLevelId={maxLevelId} chapter={chapter} />
 			</>
 		);
 	}
 
-	onReady = async (runningComponents) => {
-		const { level } = this.props;
+	onReady = async (layout) => {
+		this.layout = layout;
 
-		_.forEach(runningComponents, async (runningComponent, name) => {
-			const [, args] = level.ui.components[name];
-			await runningComponent.initialize(args, level);
+		setTimeout(() => {
+			const runningComponents = layout.instances;
+			const { level } = this.props;
+
+			_.forEach(runningComponents, async (runningComponent, name) => {
+				const [, args] = level.ui.components[name];
+				await runningComponent.initialize(args, level);
+			});
+
+			layout.focus(level.ui.focus);
 		});
-
-		this.layout.focus(level.ui.focus);
 	};
 }
 

@@ -3,31 +3,14 @@ import * as PIXI from "pixi.js";
 import styles from "./HomeScreen.module.css";
 
 class HomeScreen extends PureComponent {
-	get isReady() {
-		// TODO: REMOVE HACK
-		return document.querySelector("body").clientWidth > 0;
-	}
-
 	render() {
-		if (!this.isReady) return false;
-
 		return <div id="home" className={styles.container} />;
 	}
 
 	componentDidMount() {
-		const $interval = setInterval(() => {
-			if (this.isReady) {
-				clearInterval($interval);
-
-				this.forceUpdate(() => {
-					this.onReady();
-				});
-			}
-		}, 1);
-	}
-
-	onReady = () => {
 		const loader = PIXI.Loader.shared;
+		loader.reset();
+
 		loader.add("logo", "logo/logo.png");
 		const sprites = {};
 		loader.load((loader, resources) => {
@@ -72,7 +55,7 @@ class HomeScreen extends PureComponent {
 			});
 			preview.appendChild(app.view);
 		}); // called once when the queued resources all load.
-	};
+	}
 }
 
 export default HomeScreen;

@@ -11,8 +11,6 @@ export default class DualLayout extends Layout {
 	state = { selected: "Left" };
 
 	render() {
-		if (!this.isReady) return false;
-
 		this.requireComponents();
 		const { Left, Right } = this.props;
 		const { selected } = this.state;

@@ -8,8 +8,6 @@ export default class MonoLayout extends Layout {
 	}
 
 	render() {
-		if (!this.isReady) return false;
-
 		this.requireComponents();
 		const { Main } = this.props;
 

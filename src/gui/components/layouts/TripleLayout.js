@@ -11,8 +11,6 @@ export default class TripleLayout extends Layout {
 	state = { selected: "Left", lastVerticalSelection: "Bottom" };
 
 	render() {
-		if (!this.isReady) return false;
-
 		this.requireComponents();
 		const { Left, Top, Bottom } = this.props;
 		const { selected } = this.state;

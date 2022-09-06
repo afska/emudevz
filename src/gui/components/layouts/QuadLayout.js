@@ -11,8 +11,6 @@ export default class QuadLayout extends Layout {
 	state = { selectedY: "Top", selectedX: "Left" };
 
 	render() {
-		if (!this.isReady) return false;
-
 		this.requireComponents();
 		const { TopLeft, BottomLeft, TopRight, BottomRight } = this.props;
 		const { selectedX, selectedY } = this.state;
