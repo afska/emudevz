@@ -15,13 +15,21 @@ const LEVEL_ID_LENGTH = 3;
 const STATUS_OK = 200;
 
 class PlayScreen extends PureComponent {
-	state = { error: null };
+	state = { currentLevelId: null, error: null };
 
 	componentDidMount() {
-		const { book, level } = this.props;
+		this._loadBook();
+		this._loadLevel();
+	}
 
-		if (!book) this._loadBook();
-		if (!level) this._loadLevel();
+	componentDidUpdate() {
+		const { currentLevelId, resetLevel } = this.props;
+
+		if (currentLevelId !== this.state.currentLevelId) {
+			this.setState({ currentLevelId, error: null });
+			resetLevel();
+			this._loadLevel();
+		}
 	}
 
 	render() {
@@ -125,6 +133,7 @@ const mapStateToProps = ({ router, savedata, book, level }) => {
 const mapDispatchToProps = ({ book, level }) => ({
 	setBook: book.setBook,
 	setLevel: level.setLevel,
+	resetLevel: level.reset,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);
