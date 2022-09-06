@@ -15,11 +15,13 @@ class HomeScreen extends PureComponent {
 
 		const loader = PIXI.Loader.shared;
 		loader.reset();
-		loader.add("logo", "logo/logo.png");
+		loader.add("logo", "assets/logo.png");
+		loader.add("background", "assets/background.png");
 
 		const sprites = {};
 		loader.load((loader, resources) => {
 			sprites.logo = new PIXI.Sprite(resources.logo.texture);
+			sprites.background = new PIXI.Sprite(resources.background.texture);
 		});
 
 		let error = false;
@@ -33,10 +35,12 @@ class HomeScreen extends PureComponent {
 				return;
 			}
 
+			sprites.background.alpha = 0.35;
+
 			sprites.logo.x = 0;
 			sprites.logo.y = 0;
-			sprites.logo.scale.x = 0.5;
-			sprites.logo.scale.y = 0.5;
+			sprites.logo.scale.x = 0.4;
+			sprites.logo.scale.y = 0.4;
 
 			const app = new PIXI.Application({
 				resizeTo: div,
@@ -63,15 +67,20 @@ class HomeScreen extends PureComponent {
 			const light = new PointLight(0x854dff, 1.5);
 			lightContainer.addChild(light);
 
-			app.stage.addChild(sprites.logo, new Layer(lightGroup), lightContainer);
+			app.stage.addChild(
+				sprites.background,
+				sprites.logo,
+				new Layer(lightGroup),
+				lightContainer
+			);
 
 			app.ticker.add(function (delta) {
 				sprites.logo.position.x =
 					app.renderer.width / 2 - sprites.logo.width / 2;
 				sprites.logo.position.y =
-					app.renderer.height / 2 - sprites.logo.height / 2;
-				light.x = sprites.logo.x + 181;
-				light.y = sprites.logo.y + 56;
+					app.renderer.height / 3 - sprites.logo.height / 2;
+				light.x = sprites.logo.x + 155;
+				light.y = sprites.logo.y + 30;
 
 				crtFilter.time += delta * 0.25;
 			});
