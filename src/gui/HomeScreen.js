@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import * as PIXI from "pixi.js";
 import { Layer, Stage } from "@pixi/layers";
 import { PointLight, lightGroup } from "pixi-lights";
-import { CRTFilter, RGBSplitFilter } from "pixi-filters";
+import { CRTFilter } from "pixi-filters";
 import styles from "./HomeScreen.module.css";
 
 class HomeScreen extends PureComponent {
@@ -44,22 +44,19 @@ class HomeScreen extends PureComponent {
 			});
 
 			app.stage = new Stage();
-			const rgbSplitFilter = new RGBSplitFilter([0, 0], [0, 0], [0, 0]);
-			app.stage.filters = [
-				new CRTFilter({
-					curvature: 5,
-					lineWidth: 5,
-					lineContrast: 0.25,
-					noise: 0.2,
-					noiseSize: 1,
-					vignetting: 0.3,
-					vignettingAlpha: 1,
-					vignettingBlur: 0.3,
-					seed: 0,
-					time: 10,
-				}),
-				rgbSplitFilter,
-			];
+			const crtFilter = new CRTFilter({
+				curvature: 5,
+				lineWidth: 5,
+				lineContrast: 0.25,
+				noise: 0.2,
+				noiseSize: 1,
+				vignetting: 0.3,
+				vignettingAlpha: 1,
+				vignettingBlur: 0.3,
+				seed: 0,
+				time: 10,
+			});
+			app.stage.filters = [crtFilter];
 			app.stage.filterArea = app.screen;
 
 			const lightContainer = new PIXI.Container();
@@ -76,10 +73,7 @@ class HomeScreen extends PureComponent {
 				light.x = sprites.logo.x + 181;
 				light.y = sprites.logo.y + 56;
 
-				const offset = Math.random() * 1;
-				rgbSplitFilter.red = [offset, offset];
-				rgbSplitFilter.green = [-offset, offset];
-				rgbSplitFilter.blue = [offset, -offset];
+				crtFilter.time += delta * 0.25;
 			});
 
 			div.appendChild(app.view);
