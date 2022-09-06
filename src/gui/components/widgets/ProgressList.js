@@ -1,13 +1,15 @@
 import React, { PureComponent } from "react";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
 import locales from "../../../locales";
 import classNames from "classnames";
 import styles from "./ProgressList.module.css";
 
-export default class ProgressList extends PureComponent {
+class ProgressList extends PureComponent {
 	render() {
-		const { levels } = this.props;
+		const { levels, goTo } = this.props;
 
 		return (
 			<div className={styles.progressList}>
@@ -23,7 +25,11 @@ export default class ProgressList extends PureComponent {
 							}
 						>
 							<a
-								href="https://google.com"
+								href="#"
+								onClick={(e) => {
+									e.preventDefault();
+									goTo(level.id);
+								}}
 								className={classNames(styles.level /*, styles.success*/)}
 							/>
 						</OverlayTrigger>
@@ -33,3 +39,11 @@ export default class ProgressList extends PureComponent {
 		);
 	}
 }
+
+const mapDispatchToProps = (dispatch) => ({
+	goTo(levelId) {
+		dispatch(push(`/levels/${levelId}`));
+	},
+});
+
+export default connect(undefined, mapDispatchToProps)(ProgressList);

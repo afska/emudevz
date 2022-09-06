@@ -79,7 +79,8 @@
         ],
         "rules": {
           "import/no-anonymous-default-export": "off",
-          "jsx-a11y/anchor-has-content": "off"
+          "jsx-a11y/anchor-has-content": "off",
+          "jsx-a11y/anchor-is-valid": "off"
         }
       }
     ]
