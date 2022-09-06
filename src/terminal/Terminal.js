@@ -1,6 +1,5 @@
 import Shell from "./Shell";
 import PendingInput from "./PendingInput";
-import locales from "../locales";
 import { theme } from "./style";
 import { async } from "../utils";
 
@@ -33,11 +32,7 @@ export default class Terminal {
 		});
 	}
 
-	async start(
-		welcomeMessage = locales.get("terminal_welcome"),
-		availableCommands = [],
-		startup = null
-	) {
+	async start(welcomeMessage, availableCommands = [], startup = null) {
 		await this.writeln(welcomeMessage, theme.SYSTEM);
 		this._shell.availableCommands = availableCommands;
 

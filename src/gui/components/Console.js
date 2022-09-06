@@ -8,9 +8,14 @@ import styles from "./Console.module.css";
 export default class Console extends PureComponent {
 	fitAddon = new FitAddon();
 
-	async initialize(args) {
+	async initialize(args, level) {
+		const welcomeMessage =
+			(args.welcomeMessage && args.welcomeMessage[locales.language]) ||
+			`---${level.name[locales.language]}---` ||
+			"?";
+
 		await this.terminal.start(
-			args.welcomeMessage && args.welcomeMessage[locales.language],
+			welcomeMessage,
 			args.availableCommands,
 			args.startup
 		);

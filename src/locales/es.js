@@ -1,6 +1,5 @@
 export default {
 	loading: "Cargando...",
-	terminal_welcome: "* Escribe `help` para listar los comandos disponibles *",
 	shell_command_not_found: "comando no encontrado",
 	command_chat_description: "Ejecuta la app de chat.",
 	command_chat_choose_an_answer: "Elige una respuesta.",
