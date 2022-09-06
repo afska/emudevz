@@ -20,7 +20,7 @@ const app = (
 			<ConnectedRouter history={history}>
 				<Switch>
 					<Route exact path="/" render={() => <div>home</div>} />
-					<Route path="/level/:levelId" render={() => <PlayScreen />} />
+					<Route path="/levels/:levelId" render={() => <PlayScreen />} />
 					<Route path="*" render={() => <div>Page not found.</div>} />
 				</Switch>
 			</ConnectedRouter>

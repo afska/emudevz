@@ -65,12 +65,12 @@ class PlayScreen extends PureComponent {
 	};
 
 	get formattedLevelId() {
-		return this.props.levelId.toString().padStart(LEVEL_ID_LENGTH, 0);
+		return this.props.currentLevelId.toString().padStart(LEVEL_ID_LENGTH, 0);
 	}
 
 	get currentChapter() {
-		const { book, levelId } = this.props;
-		return book.getChapterOf(levelId);
+		const { book, currentLevelId } = this.props;
+		return book.getChapterOf(currentLevelId);
 	}
 
 	_onError = (e) => {
@@ -90,7 +90,7 @@ class PlayScreen extends PureComponent {
 			.then(setBook)
 			.then(() => {
 				if (!this.currentChapter)
-					throw new Error(`Unexisting level: ${this.props.levelId}`);
+					throw new Error(`Unexisting level: ${this.props.currentLevelId}`);
 			})
 			.catch(this._onError);
 	}
@@ -111,11 +111,17 @@ class PlayScreen extends PureComponent {
 	}
 }
 
-const mapStateToProps = ({ savedata, book, level }) => ({
-	levelId: savedata.levelId,
-	book: book.instance,
-	level: level.instance,
-});
+const mapStateToProps = ({ router, savedata, book, level }) => {
+	let currentLevelId = parseInt(_.last(router.location.pathname.split("/")));
+	if (!isFinite(currentLevelId)) currentLevelId = 0;
+
+	return {
+		currentLevelId,
+		maxLevelId: savedata.levelId,
+		book: book.instance,
+		level: level.instance,
+	};
+};
 const mapDispatchToProps = ({ book, level }) => ({
 	setBook: book.setBook,
 	setLevel: level.setLevel,
