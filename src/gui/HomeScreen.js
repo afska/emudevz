@@ -1,5 +1,7 @@
 import React, { PureComponent } from "react";
 import * as PIXI from "pixi.js";
+import { Layer, Stage } from "@pixi/layers";
+import { PointLight, lightGroup } from "pixi-lights";
 import styles from "./HomeScreen.module.css";
 
 class HomeScreen extends PureComponent {
@@ -8,6 +10,8 @@ class HomeScreen extends PureComponent {
 	}
 
 	onReady = (div) => {
+		if (div == null) return;
+
 		const loader = PIXI.Loader.shared;
 		loader.reset();
 		loader.add("logo", "logo/logo.png");
@@ -32,13 +36,21 @@ class HomeScreen extends PureComponent {
 				resizeTo: div,
 				backgroundColor: 0x000000,
 			});
-			app.stage.addChild(sprites.logo);
+
+			app.stage = new Stage();
+
+			const background = new PIXI.Container();
+			const light = new PointLight(0x854dff, 1.5);
+			background.addChild(light);
+			app.stage.addChild(sprites.logo, new Layer(lightGroup), background);
 
 			app.ticker.add(function (delta) {
 				sprites.logo.position.x =
 					app.renderer.width / 2 - sprites.logo.width / 2;
 				sprites.logo.position.y =
 					app.renderer.height / 2 - sprites.logo.height / 2;
+				light.x = sprites.logo.x + 181;
+				light.y = sprites.logo.y + 55;
 			});
 			div.appendChild(app.view);
 		});
