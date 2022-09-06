@@ -1,9 +1,7 @@
 import React, { PureComponent } from "react";
-import layouts from "./components/layouts";
-import components from "./components";
-import NavBar from "./components/widgets/NavBar";
 import Book from "../level/Book";
 import LevelLoader from "../level/LevelLoader";
+import LevelScreen from "./LevelScreen";
 import { connect } from "react-redux";
 import locales from "../locales";
 import styles from "./PlayScreen.module.css";
@@ -45,36 +43,12 @@ class PlayScreen extends PureComponent {
 		if (!book || !level || !this.currentChapter)
 			return <div className={styles.message}>⌛ {locales.get("loading")}</div>;
 
-		const Layout = layouts[level.ui.layout];
-		const Components = _.mapValues(
-			level.ui.components,
-			([name]) => components[name]
-		);
-
 		return (
 			<div className={styles.container}>
-				<Layout
-					{...Components}
-					onReady={this.onReady}
-					ref={(ref) => {
-						this.layout = ref;
-					}}
-				/>
-				<NavBar chapter={this.currentChapter} />
+				<LevelScreen chapter={this.currentChapter} level={level} />
 			</div>
 		);
 	}
-
-	onReady = async (runningComponents) => {
-		const { level } = this.props;
-
-		_.forEach(runningComponents, async (runningComponent, name) => {
-			const [, args] = level.ui.components[name];
-			await runningComponent.initialize(args, level);
-		});
-
-		this.layout.focus(level.ui.focus);
-	};
 
 	get formattedLevelId() {
 		return this.props.currentLevelId.toString().padStart(LEVEL_ID_LENGTH, 0);
