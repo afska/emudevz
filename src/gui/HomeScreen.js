@@ -3,11 +3,19 @@ import * as PIXI from "pixi.js";
 import { Layer, Stage } from "@pixi/layers";
 import { PointLight, lightGroup } from "pixi-lights";
 import { CRTFilter } from "pixi-filters";
+import locales from "../locales";
 import styles from "./HomeScreen.module.css";
 
 class HomeScreen extends PureComponent {
 	render() {
-		return <div className={styles.container} ref={this.onReady} />;
+		return (
+			<>
+				<div className={styles.container} ref={this.onReady} />
+				<div id="description" className={styles.description}>
+					{locales.get("plot")}
+				</div>
+			</>
+		);
 	}
 
 	onReady = (div) => {
@@ -85,6 +93,13 @@ class HomeScreen extends PureComponent {
 					app.renderer.height / 3 - sprites.logo.height / 2;
 				light.x = sprites.logo.x + 160;
 				light.y = sprites.logo.y + 30;
+
+				const description = document.querySelector("#description");
+				if (description) {
+					description.style.top = `${
+						sprites.logo.position.y + sprites.logo.height + 16
+					}px`;
+				}
 
 				crtFilter.time += delta * 0.25;
 

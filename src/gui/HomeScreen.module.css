@@ -1,3 +1,17 @@
 .container {
 	height: 100%;
 }
+
+.description {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
+	user-select: none;
+	font-size: x-small;
+	background: rgba(0, 0, 0, 0.5);
+	padding: 12px;
+	border-radius: 16px;
+	border: solid 1px gray;
+	font-family: "Open Sans"
+}

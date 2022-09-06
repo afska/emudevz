@@ -5,5 +5,7 @@ export default {
 	command_help_description: "Shows this help.",
 	goBack: "Go back",
 	loading: "Loading...",
+	plot:
+		"In the year 2300, the world suffered a massive cyber attack which destroyed the entire Internet. Since then, you and a friend from an online chat app are trying to understand the shattered pieces of documentation about the NEEES, an ancient game console released in 1983. With your programming skills, you'll have to build an emulator	that runs those old games, helping preserve the video game history.",
 	shell_command_not_found: "command not found",
 };
