@@ -5,6 +5,7 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 import { getPersistor } from "@rematch/persist";
 import { ConnectedRouter } from "connected-react-router";
 import { Route, Switch } from "react-router-dom";
+import HomeScreen from "./gui/HomeScreen";
 import PlayScreen from "./gui/PlayScreen";
 import store, { history } from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,7 +20,7 @@ const app = (
 		<Provider store={store}>
 			<ConnectedRouter history={history}>
 				<Switch>
-					<Route exact path="/" render={() => <div>home</div>} />
+					<Route exact path="/" render={() => <HomeScreen />} />
 					<Route path="/levels/:levelId" render={() => <PlayScreen />} />
 					<Route path="*" render={() => <div>Page not found.</div>} />
 				</Switch>
