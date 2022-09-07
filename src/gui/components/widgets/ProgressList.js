@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { connect } from "react-redux";
-import { push } from "connected-react-router";
 import locales from "../../../locales";
 import classNames from "classnames";
 import styles from "./ProgressList.module.css";
@@ -45,10 +44,8 @@ class ProgressList extends PureComponent {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => ({
-	goTo(levelId) {
-		dispatch(push(`/levels/${levelId}?r=${Math.random()}`));
-	},
+const mapDispatchToProps = ({ level }) => ({
+	goTo: level.goTo,
 });
 
 export default connect(undefined, mapDispatchToProps)(ProgressList);

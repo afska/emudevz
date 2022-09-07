@@ -23,7 +23,7 @@
 }
 
 .box {
-	background: rgba(0, 0, 0, 0.5);
+	background: rgba(30, 30, 30, 0.5);
 	padding: 12px;
 	border: solid 1px gray;
 	border-radius: 16px;

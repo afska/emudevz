@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import { Layer, Stage } from "@pixi/layers";
 import { PointLight, lightGroup } from "pixi-lights";
 import { CRTFilter } from "pixi-filters";
+import { connect } from "react-redux";
 import locales from "../locales";
 import styles from "./HomeScreen.module.css";
 
@@ -25,6 +26,8 @@ const MIN_HEIGHT = 256;
 
 class HomeScreen extends PureComponent {
 	render() {
+		const { play } = this.props;
+
 		return (
 			<>
 				<div className={styles.container} ref={this.onReady} />
@@ -33,7 +36,7 @@ class HomeScreen extends PureComponent {
 					<div className={styles.box}>{locales.get("plot")}</div>
 
 					<div className={styles.buttons}>
-						<div className={styles.button} onClick={this._play}>
+						<div className={styles.button} onClick={play}>
 							{locales.get("button_play")}
 						</div>
 						<div className={styles.button}>
@@ -144,10 +147,6 @@ class HomeScreen extends PureComponent {
 		});
 	};
 
-	_play() {
-		window.location.href = "/#/levels/1";
-	}
-
 	_createCRTFilter() {
 		return new CRTFilter({
 			curvature: 5,
@@ -164,4 +163,8 @@ class HomeScreen extends PureComponent {
 	}
 }
 
-export default HomeScreen;
+const mapDispatchToProps = ({ level }) => ({
+	play: level.goToLastUnlockedLevel,
+});
+
+export default connect(undefined, mapDispatchToProps)(HomeScreen);

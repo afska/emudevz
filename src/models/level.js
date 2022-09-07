@@ -1,3 +1,5 @@
+import { push } from "connected-react-router";
+
 const KEY = "level";
 const INITIAL_STATE = () => ({
 	instance: null,
@@ -17,6 +19,15 @@ export default {
 		// eslint-disable-next-line
 		const dispatch = _dispatch_[KEY];
 
-		return {};
+		return {
+			goTo(levelId) {
+				_dispatch_(push(`/levels/${levelId}?r=${Math.random()}`));
+			},
+
+			goToLastUnlockedLevel(__, _state_) {
+				const levelId = _state_.savedata.levelId;
+				this.goTo(levelId);
+			},
+		};
 	},
 };
