@@ -1,6 +1,33 @@
 ---
 main:
   messages:
-  - coming soon
+  - before starting, let's review how to use the terminal
+  - what do you want to know?
   responses:
-  - ok [end]
+  - tell me about this app [app]
+  - tell me about other apps [otherapps]
+  - how do I scroll in the terminal? [scroll]
+  - gotcha [end]
+
+app:
+  messages:
+  - you're now running the `chat` app
+  - you can close it with `Ctrl+C`
+  - and open it again by simply typing `chat`, and then `Enter`
+  - (not all the apps can be closed)
+  responses:
+  - ...main
+
+otherapps:
+  messages:
+  - to see what commands are available, run the `help` app
+  - it will list them all along with a brief explanation of what they do
+  responses:
+  - ...main
+
+scroll:
+  messages:
+  - you can use `Ctrl+Shift+PageDown` and `Ctrl+Shift+PageUp`
+  - or your mouse wheel
+  responses:
+  - ...main
