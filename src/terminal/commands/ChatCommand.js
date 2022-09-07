@@ -14,8 +14,6 @@ export default class ChatCommand extends Command {
 	}
 
 	async execute() {
-		console.log("ARGS", this._args); // TODO: PARSE -f
-
 		const chatScript = Level.current.chatScripts[locales.language];
 
 		const history = [];
@@ -64,5 +62,9 @@ export default class ChatCommand extends Command {
 			sectionName = selectedOption.link;
 			history.push(sectionName);
 		}
+	}
+
+	onStop() {
+		return !this._args.includes("-f");
 	}
 }

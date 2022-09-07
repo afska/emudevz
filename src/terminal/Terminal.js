@@ -119,10 +119,10 @@ export default class Terminal {
 		switch (data) {
 			case KEY_CTRL_C: {
 				const wasExpectingInput = this._input != null;
-				this.cancelPrompt();
 
-				await this.write(CTRL_C);
 				if (this._currentProgram.onStop()) {
+					this.cancelPrompt();
+					await this.write(CTRL_C);
 					await this.newline();
 					if (!wasExpectingInput) this._requestInterrupt();
 				}
