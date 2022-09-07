@@ -3,7 +3,6 @@ import ProgressList from "./ProgressList";
 import IconButton from "./IconButton";
 import { FaChevronLeft } from "react-icons/fa";
 import { connect } from "react-redux";
-import { push } from "connected-react-router";
 import locales from "../../../locales";
 import classNames from "classnames";
 import styles from "./NavBar.module.css";
@@ -30,10 +29,8 @@ class NavBar extends PureComponent {
 	}
 }
 
-const mapDispatchToProps = (dispatch) => ({
-	goBack() {
-		dispatch(push("/"));
-	},
+const mapDispatchToProps = ({ level }) => ({
+	goBack: level.goHome,
 });
 
 export default connect(undefined, mapDispatchToProps)(NavBar);

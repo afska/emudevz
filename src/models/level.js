@@ -28,6 +28,11 @@ export default {
 				const levelId = _state_.savedata.levelId;
 				this.goTo(levelId);
 			},
+
+			goHome() {
+				this.reset();
+				_dispatch_(push("/"));
+			},
 		};
 	},
 };
