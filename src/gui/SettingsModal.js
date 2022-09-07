@@ -5,11 +5,11 @@ import styles from "./SettingsModal.module.css";
 
 export default class SettingsModal extends PureComponent {
 	render() {
-		const { show } = this.props;
+		const { open } = this.props;
 
 		return (
 			<Modal
-				show={show}
+				show={open}
 				onHide={this.onClose}
 				centered
 				contentClassName={styles.modalContent}
@@ -26,15 +26,11 @@ export default class SettingsModal extends PureComponent {
 		);
 	}
 
-	onShow = () => {
-		this.setState({ show: true });
-	};
-
 	onSave = () => {
-		this.setState({ show: false });
+		this.props.setSettingsOpen(false);
 	};
 
 	onClose = () => {
-		this.setState({ show: false });
+		this.props.setSettingsOpen(false);
 	};
 }

@@ -3,6 +3,7 @@ import { push } from "connected-react-router";
 const KEY = "level";
 const INITIAL_STATE = () => ({
 	instance: null,
+	isSettingsOpen: false,
 });
 
 export default {
@@ -10,6 +11,9 @@ export default {
 	reducers: {
 		setLevel(state, instance) {
 			return { ...state, instance };
+		},
+		setSettingsOpen(state, isSettingsOpen) {
+			return { ...state, isSettingsOpen };
 		},
 		reset() {
 			return INITIAL_STATE();

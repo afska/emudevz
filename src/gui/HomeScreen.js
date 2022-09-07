@@ -28,13 +28,16 @@ const MIN_HEIGHT = 256;
 
 class HomeScreen extends PureComponent {
 	render() {
-		const { play } = this.props;
+		const { isSettingsOpen, play, setSettingsOpen } = this.props;
 
 		return (
 			<>
 				<div className={styles.container} ref={this.onReady} />
 
-				<SettingsModal show />
+				<SettingsModal
+					open={isSettingsOpen}
+					setSettingsOpen={setSettingsOpen}
+				/>
 
 				<div id="ui" className={styles.ui}>
 					<div className={styles.box}>{locales.get("plot")}</div>
@@ -42,7 +45,9 @@ class HomeScreen extends PureComponent {
 					<div className={styles.buttons}>
 						<Button onClick={play}>{locales.get("button_play")}</Button>
 						<Button>{locales.get("button_chapter_selection")}</Button>
-						<Button>{locales.get("button_settings")}</Button>
+						<Button onClick={this._openSettings}>
+							{locales.get("button_settings")}
+						</Button>
 						<Button>{locales.get("button_quit")}</Button>
 					</div>
 				</div>
@@ -159,10 +164,18 @@ class HomeScreen extends PureComponent {
 			time: 10,
 		});
 	}
+
+	_openSettings = () => {
+		this.props.setSettingsOpen(true);
+	};
 }
 
+const mapStateToProps = ({ level }) => ({
+	isSettingsOpen: level.isSettingsOpen,
+});
 const mapDispatchToProps = ({ level }) => ({
 	play: level.goToLastUnlockedLevel,
+	setSettingsOpen: level.setSettingsOpen,
 });
 
-export default connect(undefined, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
