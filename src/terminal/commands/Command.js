@@ -24,7 +24,7 @@ export default class Command {
 		this._terminal.restart();
 	}
 
-	async execute(args, shell) {
+	async execute() {
 		throw new Error("not_implemented");
 	}
 

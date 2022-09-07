@@ -13,8 +13,8 @@ export default class ChatCommand extends Command {
 		return "chat";
 	}
 
-	async execute(args) {
-		console.log("ARGS", args); // TODO: PARSE -f
+	async execute() {
+		console.log("ARGS", this._args); // TODO: PARSE -f
 
 		const chatScript = Level.current.chatScripts[locales.language];
 
