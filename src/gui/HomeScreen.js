@@ -6,6 +6,20 @@ import { CRTFilter } from "pixi-filters";
 import locales from "../locales";
 import styles from "./HomeScreen.module.css";
 
+const ASSET_LOGO = "/assets/logo.png";
+const ASSET_BACKGROUND = "/assets/tiling-background.png";
+const UI_SELECTOR = "#ui";
+const BACKGROUND_COLOR = 0x000000;
+const BACKGROUND_TILE_Y = 60;
+const BACKGROUND_ALPHA = 0.35;
+const BACKGROUND_SPEED = 2;
+const LIGHT_COLOR = 0x854dff;
+const LIGHT_LUMINOSITY = 1.5;
+const LIGHT_X = 400;
+const LIGHT_Y = 50;
+const UI_MARGIN = 16;
+const SCALE_FACTOR = 0.5;
+const CRT_SPEED = 0.25;
 const MIN_WIDTH = 512;
 const MIN_HEIGHT = 256;
 
@@ -19,17 +33,16 @@ class HomeScreen extends PureComponent {
 					<div className={styles.box}>{locales.get("plot")}</div>
 
 					<div className={styles.buttons}>
-						<div
-							className={styles.button}
-							onClick={() => {
-								window.location.href = "/#/levels/1";
-							}}
-						>
-							Play
+						<div className={styles.button} onClick={this._play}>
+							{locales.get("button_play")}
 						</div>
-						<div className={styles.button}>Chapter selection</div>
-						<div className={styles.button}>Settings</div>
-						<div className={styles.button}>Quit</div>
+						<div className={styles.button}>
+							{locales.get("button_chapter_selection")}
+						</div>
+						<div className={styles.button}>
+							{locales.get("button_settings")}
+						</div>
+						<div className={styles.button}>{locales.get("button_quit")}</div>
 					</div>
 				</div>
 			</>
@@ -41,8 +54,8 @@ class HomeScreen extends PureComponent {
 
 		const loader = PIXI.Loader.shared;
 		loader.reset();
-		loader.add("logo", "assets/logo.png");
-		loader.add("background", "assets/tiling-background.png");
+		loader.add("logo", ASSET_LOGO);
+		loader.add("background", ASSET_BACKGROUND);
 
 		const sprites = {};
 		let logoHeight = 0;
@@ -55,7 +68,7 @@ class HomeScreen extends PureComponent {
 		let error = false;
 		loader.onError.add(() => {
 			error = true;
-		}); // (called once per errored file)
+		});
 
 		loader.onComplete.add(() => {
 			if (error) {
@@ -63,32 +76,21 @@ class HomeScreen extends PureComponent {
 				return;
 			}
 
-			sprites.background.tilePosition.y = 60;
-			sprites.background.alpha = 0.35;
+			sprites.background.tilePosition.y = BACKGROUND_TILE_Y;
+			sprites.background.alpha = BACKGROUND_ALPHA;
 
 			const app = new PIXI.Application({
 				resizeTo: div,
-				backgroundColor: 0x000000,
+				backgroundColor: BACKGROUND_COLOR,
 			});
 
 			app.stage = new Stage();
-			const crtFilter = new CRTFilter({
-				curvature: 5,
-				lineWidth: 5,
-				lineContrast: 0.25,
-				noise: 0.2,
-				noiseSize: 1,
-				vignetting: 0.3,
-				vignettingAlpha: 1,
-				vignettingBlur: 0.3,
-				seed: 0,
-				time: 10,
-			});
+			const crtFilter = this._createCRTFilter();
 			app.stage.filters = [crtFilter];
 			app.stage.filterArea = app.screen;
 
 			const lightContainer = new PIXI.Container();
-			const light = new PointLight(0x854dff, 1.5);
+			const light = new PointLight(LIGHT_COLOR, LIGHT_LUMINOSITY);
 			lightContainer.addChild(light);
 
 			app.stage.addChild(
@@ -102,11 +104,11 @@ class HomeScreen extends PureComponent {
 				sprites.background.width = app.renderer.width;
 				sprites.background.height = app.renderer.height;
 
-				const logoScale = (app.renderer.height / logoHeight) * 0.5;
+				const logoScale = (app.renderer.height / logoHeight) * SCALE_FACTOR;
 				sprites.logo.scale.x = logoScale;
 				sprites.logo.scale.y = logoScale;
 
-				const ui = document.querySelector("#ui");
+				const ui = document.querySelector(UI_SELECTOR);
 				if (ui) {
 					ui.style.display =
 						app.renderer.width >= MIN_WIDTH && app.renderer.height >= MIN_HEIGHT
@@ -114,8 +116,8 @@ class HomeScreen extends PureComponent {
 							: "none";
 
 					const uiScale = Math.min(
-						(app.renderer.width / ui.clientWidth) * 0.5,
-						(app.renderer.height / ui.clientHeight) * 0.5,
+						(app.renderer.width / ui.clientWidth) * SCALE_FACTOR,
+						(app.renderer.height / ui.clientHeight) * SCALE_FACTOR,
 						1
 					);
 					ui.style.transform = `translate(-50%, 0) scale(${uiScale})`;
@@ -126,21 +128,40 @@ class HomeScreen extends PureComponent {
 					sprites.logo.position.y =
 						app.renderer.height / 2 -
 						(sprites.logo.height + ui.clientHeight * uiScale) / 2;
-					light.x = sprites.logo.x + 400 * logoScale;
-					light.y = sprites.logo.y + 50 * logoScale;
+					light.x = sprites.logo.x + LIGHT_X * logoScale;
+					light.y = sprites.logo.y + LIGHT_Y * logoScale;
 
 					ui.style.top = `${
-						sprites.logo.position.y + sprites.logo.height + 16
+						sprites.logo.position.y + sprites.logo.height + UI_MARGIN
 					}px`;
 				}
 
-				crtFilter.time += delta * 0.25;
-				sprites.background.tilePosition.x -= delta * 2;
+				crtFilter.time += delta * CRT_SPEED;
+				sprites.background.tilePosition.x -= delta * BACKGROUND_SPEED;
 			});
 
 			div.appendChild(app.view);
 		});
 	};
+
+	_play() {
+		window.location.href = "/#/levels/1";
+	}
+
+	_createCRTFilter() {
+		return new CRTFilter({
+			curvature: 5,
+			lineWidth: 5,
+			lineContrast: 0.25,
+			noise: 0.2,
+			noiseSize: 1,
+			vignetting: 0.3,
+			vignettingAlpha: 1,
+			vignettingBlur: 0.3,
+			seed: 0,
+			time: 10,
+		});
+	}
 }
 
 export default HomeScreen;
