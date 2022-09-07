@@ -17,7 +17,7 @@ class PlayScreen extends PureComponent {
 
 	componentDidMount() {
 		const { currentLevelId, validateSavedata } = this.props;
-		if (!validateSavedata(currentLevelId)) return;
+		validateSavedata(currentLevelId);
 
 		this._loadBook();
 	}

@@ -1,4 +1,4 @@
-import { push } from "connected-react-router";
+import { push, replace } from "connected-react-router";
 
 const KEY = "level";
 const INITIAL_STATE = () => ({
@@ -26,6 +26,10 @@ export default {
 		return {
 			goTo(levelId) {
 				_dispatch_(push(`/levels/${levelId}?r=${Math.random()}`));
+			},
+
+			goToReplacing(levelId) {
+				_dispatch_(replace(`/levels/${levelId}?r=${Math.random()}`));
 			},
 
 			goToLastUnlockedLevel(__, _state_) {

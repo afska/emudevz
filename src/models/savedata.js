@@ -1,5 +1,3 @@
-import { replace } from "connected-react-router";
-
 const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	levelId: 0,
@@ -28,7 +26,7 @@ export default {
 				const state = _state_[KEY];
 
 				if (levelId > state.levelId) {
-					_dispatch_(replace(`/levels/${state.levelId}`));
+					_dispatch_.level.goToReplacing(state.levelId);
 					return false;
 				}
 
