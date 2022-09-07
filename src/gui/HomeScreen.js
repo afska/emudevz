@@ -6,6 +6,9 @@ import { CRTFilter } from "pixi-filters";
 import locales from "../locales";
 import styles from "./HomeScreen.module.css";
 
+const MIN_WIDTH = 512;
+const MIN_HEIGHT = 256;
+
 class HomeScreen extends PureComponent {
 	render() {
 		return (
@@ -105,13 +108,24 @@ class HomeScreen extends PureComponent {
 
 				const ui = document.querySelector("#ui");
 				if (ui) {
-					ui.style.display = "flex";
+					ui.style.display =
+						app.renderer.width >= MIN_WIDTH && app.renderer.height >= MIN_HEIGHT
+							? "flex"
+							: "none";
+
+					const uiScale = Math.min(
+						(app.renderer.width / ui.clientWidth) * 0.5,
+						(app.renderer.height / ui.clientHeight) * 0.5,
+						1
+					);
+					ui.style.transform = `translate(-50%, 0) scale(${uiScale})`;
+					window.app = app;
 
 					sprites.logo.position.x =
 						app.renderer.width / 2 - sprites.logo.width / 2;
 					sprites.logo.position.y =
 						app.renderer.height / 2 -
-						(sprites.logo.height + ui.clientHeight) / 2;
+						(sprites.logo.height + ui.clientHeight * uiScale) / 2;
 					light.x = sprites.logo.x + 400 * logoScale;
 					light.y = sprites.logo.y + 50 * logoScale;
 
@@ -121,7 +135,6 @@ class HomeScreen extends PureComponent {
 				}
 
 				crtFilter.time += delta * 0.25;
-
 				sprites.background.tilePosition.x -= delta * 2;
 			});
 

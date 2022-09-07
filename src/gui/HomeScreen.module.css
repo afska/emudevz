@@ -7,6 +7,7 @@
 	top: 0;
 	left: 50%;
 	transform: translate(-50%, 0);
+	transform-origin: top center;
 	user-select: none;
 	display: none;
 	flex-direction: column;
