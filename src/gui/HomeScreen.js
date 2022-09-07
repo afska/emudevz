@@ -16,7 +16,14 @@ class HomeScreen extends PureComponent {
 					<div className={styles.box}>{locales.get("plot")}</div>
 
 					<div className={styles.buttons}>
-						<div className={styles.button}>Play</div>
+						<div
+							className={styles.button}
+							onClick={() => {
+								window.location.href = "/#/levels/1";
+							}}
+						>
+							Play
+						</div>
 						<div className={styles.button}>Chapter selection</div>
 						<div className={styles.button}>Settings</div>
 						<div className={styles.button}>Quit</div>
@@ -35,9 +42,11 @@ class HomeScreen extends PureComponent {
 		loader.add("background", "assets/tiling-background.png");
 
 		const sprites = {};
+		let logoHeight = 0;
 		loader.load((loader, resources) => {
 			sprites.logo = new PIXI.Sprite(resources.logo.texture);
 			sprites.background = new PIXI.TilingSprite(resources.background.texture);
+			logoHeight = resources.logo.texture.height;
 		});
 
 		let error = false;
@@ -53,11 +62,6 @@ class HomeScreen extends PureComponent {
 
 			sprites.background.tilePosition.y = 60;
 			sprites.background.alpha = 0.35;
-
-			sprites.logo.x = 0;
-			sprites.logo.y = 0;
-			sprites.logo.scale.x = 0.4;
-			sprites.logo.scale.y = 0.4;
 
 			const app = new PIXI.Application({
 				resizeTo: div,
@@ -95,15 +99,22 @@ class HomeScreen extends PureComponent {
 				sprites.background.width = app.renderer.width;
 				sprites.background.height = app.renderer.height;
 
-				sprites.logo.position.x =
-					app.renderer.width / 2 - sprites.logo.width / 2;
-				sprites.logo.position.y =
-					app.renderer.height / 3 - sprites.logo.height / 2;
-				light.x = sprites.logo.x + 160;
-				light.y = sprites.logo.y + 30;
+				const logoScale = (app.renderer.height / logoHeight) * 0.5;
+				sprites.logo.scale.x = logoScale;
+				sprites.logo.scale.y = logoScale;
 
 				const ui = document.querySelector("#ui");
 				if (ui) {
+					ui.style.display = "flex";
+
+					sprites.logo.position.x =
+						app.renderer.width / 2 - sprites.logo.width / 2;
+					sprites.logo.position.y =
+						app.renderer.height / 2 -
+						(sprites.logo.height + ui.clientHeight) / 2;
+					light.x = sprites.logo.x + 400 * logoScale;
+					light.y = sprites.logo.y + 50 * logoScale;
+
 					ui.style.top = `${
 						sprites.logo.position.y + sprites.logo.height + 16
 					}px`;

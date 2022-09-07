@@ -8,7 +8,7 @@
 	left: 50%;
 	transform: translate(-50%, 0);
 	user-select: none;
-	display: flex;
+	display: none;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
@@ -43,8 +43,13 @@
 	border: solid 1px gray;
 	border-radius: 16px;
 	font-family: "Open Sans";
-	font-size: x-small;
+	font-size: small;
 	text-align: center;
 	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
 		0 0 8px rgba(200, 200, 200, 0.6);
+	cursor: pointer;
+}
+
+.button:hover {
+	background: rgba(100, 41, 176, 0.5);
 }
