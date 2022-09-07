@@ -1,0 +1,20 @@
+.button {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
+	margin-left: 8px;
+	margin-right: 8px;
+	background: rgba(0, 0, 0, 0.5);
+	padding: 12px;
+	border: solid 1px gray;
+	border-radius: 16px;
+	font-size: small;
+	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
+		0 0 8px rgba(200, 200, 200, 0.6);
+	cursor: pointer;
+}
+
+.button:hover {
+	background: rgba(100, 41, 176, 0.5);
+}

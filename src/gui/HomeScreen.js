@@ -4,6 +4,7 @@ import { Layer, Stage } from "@pixi/layers";
 import { PointLight, lightGroup } from "pixi-lights";
 import { CRTFilter } from "pixi-filters";
 import SettingsModal from "./SettingsModal";
+import Button from "./components/widgets/Button";
 import { connect } from "react-redux";
 import locales from "../locales";
 import styles from "./HomeScreen.module.css";
@@ -39,16 +40,10 @@ class HomeScreen extends PureComponent {
 					<div className={styles.box}>{locales.get("plot")}</div>
 
 					<div className={styles.buttons}>
-						<div className={styles.button} onClick={play}>
-							{locales.get("button_play")}
-						</div>
-						<div className={styles.button}>
-							{locales.get("button_chapter_selection")}
-						</div>
-						<div className={styles.button}>
-							{locales.get("button_settings")}
-						</div>
-						<div className={styles.button}>{locales.get("button_quit")}</div>
+						<Button onClick={play}>{locales.get("button_play")}</Button>
+						<Button>{locales.get("button_chapter_selection")}</Button>
+						<Button>{locales.get("button_settings")}</Button>
+						<Button>{locales.get("button_quit")}</Button>
 					</div>
 				</div>
 			</>

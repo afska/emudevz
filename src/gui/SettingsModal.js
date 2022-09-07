@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Button from "./components/widgets/Button";
 import styles from "./SettingsModal.module.css";
 
 export default class SettingsModal extends PureComponent {
@@ -19,12 +19,8 @@ export default class SettingsModal extends PureComponent {
 				</Modal.Header>
 				<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
 				<Modal.Footer>
-					<Button variant="secondary" onClick={this.onClose}>
-						Cancel
-					</Button>
-					<Button variant="primary" onClick={this.onSave}>
-						Save
-					</Button>
+					<Button onClick={this.onClose}>Cancel</Button>
+					<Button onClick={this.onSave}>Save</Button>
 				</Modal.Footer>
 			</Modal>
 		);
