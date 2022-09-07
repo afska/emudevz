@@ -42,8 +42,15 @@ export default class ChatCommand extends Command {
 
 			let selectedOption = null;
 			while (selectedOption == null) {
-				const getOption = (x) =>
-					options.find((it) => it.number.toString() === x);
+				const getOption = (x) => {
+					if (isFinite(parseInt(x)))
+						return options.find((it) => it.number.toString() === x);
+
+					const candidates = options.filter((it) =>
+						it.response.toLowerCase().includes(x.toLowerCase())
+					);
+					if (candidates.length === 1) return candidates[0];
+				};
 
 				const response = await this._terminal.prompt(
 					PROMPT_SYMBOL,
