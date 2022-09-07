@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import { Layer, Stage } from "@pixi/layers";
 import { PointLight, lightGroup } from "pixi-lights";
 import { CRTFilter } from "pixi-filters";
+import SettingsModal from "./SettingsModal";
 import { connect } from "react-redux";
 import locales from "../locales";
 import styles from "./HomeScreen.module.css";
@@ -31,6 +32,8 @@ class HomeScreen extends PureComponent {
 		return (
 			<>
 				<div className={styles.container} ref={this.onReady} />
+
+				<SettingsModal show />
 
 				<div id="ui" className={styles.ui}>
 					<div className={styles.box}>{locales.get("plot")}</div>

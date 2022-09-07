@@ -27,7 +27,6 @@
 	padding: 12px;
 	border: solid 1px gray;
 	border-radius: 16px;
-	font-family: "Open Sans";
 	font-size: x-small;
 	text-align: center;
 	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
@@ -43,7 +42,6 @@
 	padding: 12px;
 	border: solid 1px gray;
 	border-radius: 16px;
-	font-family: "Open Sans";
 	font-size: small;
 	text-align: center;
 	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
