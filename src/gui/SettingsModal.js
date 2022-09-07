@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 import Button from "./components/widgets/Button";
+import locales, { LANGUAGES } from "../locales";
 import styles from "./SettingsModal.module.css";
 
 export default class SettingsModal extends PureComponent {
@@ -12,16 +14,34 @@ export default class SettingsModal extends PureComponent {
 				show={open}
 				onHide={this.onClose}
 				centered
-				contentClassName={styles.modalContent}
+				contentClassName={"crt " + styles.modalContent}
 			>
 				<Modal.Header>
-					<Modal.Title>Settings</Modal.Title>
+					<Modal.Title>{locales.get("settings")}</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+				<Modal.Body>
+					<Form>
+						<Form.Group>
+							<Form.Label>{locales.get("language")}</Form.Label>
+							<div className={styles.language}>
+								{LANGUAGES.map((language) => (
+									<div key={`language-${language}`}>
+										<Form.Check
+											type="radio"
+											id={`language-${language}`}
+											label={locales.get(`language_${language}`)}
+											checked={language === "en"}
+										/>
+									</div>
+								))}
+							</div>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={this.onClose}>Cancel</Button>
+					<Button onClick={this.onClose}>{locales.get("cancel")}</Button>
 					<Button onClick={this.onSave} primary>
-						Save
+						{locales.get("save")}
 					</Button>
 				</Modal.Footer>
 			</Modal>
