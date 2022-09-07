@@ -20,7 +20,9 @@ export default class SettingsModal extends PureComponent {
 				<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
 				<Modal.Footer>
 					<Button onClick={this.onClose}>Cancel</Button>
-					<Button onClick={this.onSave}>Save</Button>
+					<Button onClick={this.onSave} primary>
+						Save
+					</Button>
 				</Modal.Footer>
 			</Modal>
 		);

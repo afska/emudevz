@@ -11,11 +11,21 @@
 	border: solid 1px gray;
 	border-radius: 16px;
 	font-size: small;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
 		0 0 8px rgba(200, 200, 200, 0.6);
 	cursor: pointer;
 }
 
 .button:hover {
+	background: #e6e6e699;
+}
+
+.primary {
 	background: rgba(100, 41, 176, 0.5);
+}
+
+.primary:hover {
+	background: rgba(144, 81, 227, 0.5);
 }

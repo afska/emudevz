@@ -10,6 +10,6 @@ export default {
 	goBack: "Go back",
 	loading: "Loading...",
 	plot:
-		"In the year 2300, the world suffered a massive cyber attack which destroyed the entire Internet. Since then, you and an online friend are trying to understand the sparse pieces of documentation about the NEEES, an ancient game console released in 1983. With your programming skills, you'll have to build an emulator	that runs those old games, helping preserve the video game history.",
+		"In the year 2300, the world suffered a massive cyber attack which destroyed the entire Internet. Since then, you and an online friend are trying to understand the sparse pieces of documentation about the NEEES, an ancient game console released in 1983. With your programming skills, you'll have to build an emulator that runs those old games, helping preserve the video game history.",
 	shell_command_not_found: "command not found",
 };

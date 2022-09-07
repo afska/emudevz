@@ -4,10 +4,17 @@ import styles from "./Button.module.css";
 
 export default class Button extends PureComponent {
 	render() {
-		const { className, ...rest } = this.props;
+		const { className, primary = false, ...rest } = this.props;
 
 		return (
-			<button className={classNames(styles.button, className)} {...rest} />
+			<button
+				className={classNames(
+					styles.button,
+					primary && styles.primary,
+					className
+				)}
+				{...rest}
+			/>
 		);
 	}
 }
