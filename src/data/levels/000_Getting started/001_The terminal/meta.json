@@ -1,0 +1,23 @@
+{
+	"name": {
+		"en": "The terminal",
+		"es": "La terminal"
+	},
+	"ui": {
+		"layout": "mono",
+		"components": {
+			"Main": [
+				"console",
+				{
+					"startup": "chat",
+					"availableCommands": [
+						"chat",
+						"clear",
+						"help"
+					]
+				}
+			]
+		},
+		"focus": "Main"
+	}
+}

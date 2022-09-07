@@ -6,12 +6,19 @@
 	"ui": {
 		"layout": "dual",
 		"components": {
-			"Left": ["code", {}],
+			"Left": [
+				"code",
+				{}
+			],
 			"Right": [
 				"console",
 				{
 					"startup": "chat",
-					"availableCommands": ["chat", "help", "clear"]
+					"availableCommands": [
+						"chat",
+						"help",
+						"clear"
+					]
 				}
 			]
 		},
