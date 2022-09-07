@@ -1,5 +1,6 @@
 import Command from "./Command";
 import Level from "../../level/Level";
+import ChatScript from "../../level/chat/ChatScript";
 import locales from "../../locales";
 import { theme } from "../style";
 
@@ -12,13 +13,17 @@ export default class ChatCommand extends Command {
 		return "chat";
 	}
 
-	async execute() {
-		let state = "main";
+	async execute(args) {
+		console.log("ARGS", args); // TODO: PARSE -f
 
-		while (state !== "end") {
-			const content = Level.current.chatScripts[locales.language][state];
+		const chatScript = Level.current.chatScripts[locales.language];
 
-			for (let message of content.messages)
+		const history = [];
+		let sectionName = ChatScript.INITIAL_SECTION;
+
+		while (sectionName !== ChatScript.END_SECTION) {
+			const messages = chatScript.getMessagesOf(sectionName, history);
+			for (let message of messages)
 				await this._terminal.writeln(
 					MESSAGE_SYMBOL + message,
 					theme.MESSAGE,
@@ -31,19 +36,7 @@ export default class ChatCommand extends Command {
 				theme.SYSTEM
 			);
 
-			const options = content.responses.map((rawResponse, responseId) => {
-				const number = parseInt(responseId) + 1;
-				const responseParts = rawResponse.split(/\[(\w+)\]/);
-				const response = responseParts[0];
-				const responseLink = responseParts[1];
-
-				return {
-					number,
-					response,
-					responseLink,
-				};
-			});
-
+			const options = chatScript.getOptionsOf(sectionName, history);
 			for (let option of options)
 				await this._terminal.writeln(`${option.number}) ${option.response}`);
 
@@ -61,8 +54,8 @@ export default class ChatCommand extends Command {
 				selectedOption = getOption(response);
 			}
 
-			state = selectedOption.responseLink;
-			// TODO: FIX 'end'
+			sectionName = selectedOption.link;
+			history.push(sectionName);
 		}
 	}
 }

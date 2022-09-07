@@ -2,54 +2,75 @@
 main:
   messages:
   - ey
-  - ¿estás? 👀👀
+  - ¿empezamos? 👀 👀
   responses:
-  - ¿quién eres? [who]
-  - ¿qué es esto? [what]
+  - ¿empezamos qué? [forwhat]
+  - (*) ¿qué es esto? [what]
 
 what:
-  onStart: |
-    const name = prompt("¿Cómo te llamás?");
-    alert("Hola " + name);
-
   messages:
-  - it's `chat`
-  - the best instant messaging app we have 🤷
+  - es `chat`
+  - la mejor app de mensajería instantánea que tenemos 🤷
   responses:
-  - and you are...? [who]
+  - ...main
 
-who:
+forwhat:
   messages:
-  - let's say I'm your assistant
-  - we are going to build a NEEES emulator, remember?
+  - vamos a armar un emulador de NEEES, ¿recuerdas?
   responses:
-  - first of all, why is it called "NEEES"? [name]"
-  - but I don't know how to build an emulator 😳 [idontknow]
+  - (*) antes que nada, ¿por qué se llama \"NEEES\"? [name]
+  - pero yo no sé nada de emuladores 😳 [idontknow]
 
 name:
   messages:
-  - I think it stands for <"No Entiendo" Enigmatic Enjoyment Solution>, but I'm not sure
+  - creo que significa <No Entiendo El Entretenimiento Saludable>, pero no estoy seguro
   responses:
-  - oh, I see - how did you find that? [namehow]
-  - I don't think I'll be able to build that emulator 😳 [idontknow]
+  - ah, ya veo - ¿y dónde encontraste eso? [namehow]
+  - ...forwhat
 
 namehow:
   messages:
-  - in a secret file!
+  - en un archivo secreto
+  - ¡esta documentación es muy difícil de encontrar!
+  - pero con lo que encontré, voy a poder enseñarte todo lo importante
   responses:
-  - ok but I have no clue about how to build that emulator [idontknow]
+  - ...forwhat
 
 idontknow:
   messages:
-  - don't worry, re're gonna figure it out together...
-  - you do know how to program, right?
-  - ...right? 🤔
+  - no te preocupes, lo vamos a resolver...
+  - sabes cómo programar, ¿no?
+  - ¿no? 🤔
   responses:
-  - I can write some JavaScript
+  - puedo escribir algo de JavaScript [javascript]
+  - mmm... [hmm]
+
+hmm:
+  messages:
+  - bueno, no puedo enseñarte cómo programar
+  - busca ayuda, y vuelve cuando puedas hacerlo
+  responses:
+  - bueno, bueno, ahora sí [ready]
+
+ready:
+  messages:
+  - eso fue MUY rápido
+  - ¿ya sabes JavaScript ahora?
+  - pruébalo, escribe algo de código
+  responses:
+  - console.log("hello world") [woo]
+  - alert("foo bar baz") [woo]
+
+woo:
+  messages:
+  - fah! 💡
+  - ...javascript
+  responses:
+  - ...javascript
 
 javascript:
   messages:
-  - that'll work perfect
-  - you only need to know a bit about object-oriented programming
+  - eso va a funcionar
+  - solo necesitas saber algo de programación orientada a objetos
   responses:
-  - ok, let's do this [end]
+  - ok, hagámoslo [end]

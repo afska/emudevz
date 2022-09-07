@@ -29,7 +29,8 @@ export default class LevelLoader {
 				if (!chatFile) throw new Error(`Missing file: ${chatFilePath}`);
 				const rawChat = await chatFile.async("string");
 				const chat = YAML.parse(rawChat);
-				const chatScript = new ChatScript(chat);
+				const chatScript = new ChatScript(chat, language);
+
 				chatScript.validate();
 				chatScripts[language] = chatScript;
 			})

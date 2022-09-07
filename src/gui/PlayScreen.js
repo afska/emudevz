@@ -20,7 +20,6 @@ class PlayScreen extends PureComponent {
 		if (!validateSavedata(currentLevelId)) return;
 
 		this._loadBook();
-		this._loadLevel();
 	}
 
 	componentDidUpdate() {

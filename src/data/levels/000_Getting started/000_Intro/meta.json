@@ -9,7 +9,10 @@
 			"Main": [
 				"console",
 				{
-					"availableCommands": ["chat", "help", "clear"]
+					"startup": "chat -f",
+					"availableCommands": [
+						"chat"
+					]
 				}
 			]
 		},

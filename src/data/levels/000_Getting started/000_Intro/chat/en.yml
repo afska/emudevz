@@ -2,50 +2,71 @@
 main:
   messages:
   - hey
-  - are you there? 👀 👀
+  - are you ready? 👀 👀
   responses:
-  - who are you? [who]
-  - what is this? [what]
+  - ready for what? [forwhat]
+  - (*) what is this? [what]
 
 what:
-  onStart: |
-    const name = prompt("¿Cómo te llamás?");
-    alert("Hola " + name);
-
   messages:
   - it's `chat`
   - the best instant messaging app we have 🤷
   responses:
-  - and you are...? [who]
+  - ...main
 
-who:
+forwhat:
   messages:
-  - let's say I'm your assistant
   - we are going to build a NEEES emulator, remember?
   responses:
-  - first of all, why is it called "NEEES"? [name]"
+  - (*) first of all, why is it called "NEEES"? [name]
   - but I don't know how to build an emulator 😳 [idontknow]
 
 name:
   messages:
   - I think it stands for <"No Entiendo" Enigmatic Enjoyment Solution>, but I'm not sure
   responses:
-  - oh, I see - how did you find that? [namehow]
-  - I don't think I'll be able to build that emulator 😳 [idontknow]
+  - oh, I see - where did you find that? [namehow]
+  - ...forwhat
 
 namehow:
   messages:
-  - in a secret file!
+  - in a secret file
+  - these docs are too damn hard to find!
+  - but with what I found, I'll be able to teach you all the important stuff
   responses:
-  - ok but I have no clue about how to build that emulator [idontknow]
+  - ...forwhat
 
 idontknow:
   messages:
-  - don't worry, re're gonna figure it out together...
-  - you do know how to program, right?
-  - ...right? 🤔
+  - don't worry, we're gonna figure it out together...
+  - you know how to program, right?
+  - right? 🤔
   responses:
-  - I can write some JavaScript
+  - I can write some JavaScript [javascript]
+  - hmm... [hmm]
+
+hmm:
+  messages:
+  - well, I cannot teach you how to code
+  - seek help, and come back when you're ready
+  responses:
+  - ok, ok, I'm ready [ready]
+
+ready:
+  messages:
+  - that was REALLY fast
+  - do you know JavaScript now?
+  - prove it, write some code
+  responses:
+  - console.log("hello world") [woo]
+  - alert("foo bar baz") [woo]
+
+woo:
+  messages:
+  - whoa! 💡
+  - ...javascript
+  responses:
+  - ...javascript
 
 javascript:
   messages:
