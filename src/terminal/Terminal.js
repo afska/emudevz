@@ -22,6 +22,9 @@ export default class Terminal {
 	constructor(xterm) {
 		this._xterm = xterm;
 		this._input = null;
+
+		this._isWriting = false;
+		this._speedFlag = false;
 		this._stopFlag = false;
 
 		this._shell = new Shell(this);
@@ -57,6 +60,8 @@ export default class Terminal {
 	}
 
 	async write(text, style = theme.NORMAL, interval = 0) {
+		this._isWriting = true;
+
 		if (interval === 0) {
 			this._interruptIfNeeded();
 			this._xterm.write(style(text));
@@ -67,9 +72,11 @@ export default class Terminal {
 				this._interruptIfNeeded();
 
 				this._xterm.write(style(characters[i]));
-				await async.sleep(interval);
+				if (!this._speedFlag) await async.sleep(interval);
 			}
 		}
+
+		this._isWriting = false;
 	}
 
 	async newline() {
@@ -77,6 +84,7 @@ export default class Terminal {
 	}
 
 	prompt(indicator = "$ ", isValid = (x) => x !== "", style = theme.ACCENT) {
+		this._speedFlag = false;
 		this._interruptIfNeeded();
 
 		return new Promise((resolve, reject) => {
@@ -122,6 +130,7 @@ export default class Terminal {
 				break;
 			}
 			case KEY_ENTER: {
+				if (this._isWriting) this._speedFlag = true;
 				await this.confirmPrompt();
 
 				break;
