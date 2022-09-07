@@ -18,14 +18,14 @@ forwhat:
   messages:
   - vamos a armar un emulador de NEEES, ¿recuerdas?
   responses:
-  - (*) antes que nada, ¿por qué se llama \"NEEES\"? [name]
+  - (*) antes que nada, ¿por qué se llama "NEEES"? [name]
   - pero yo no sé nada de emuladores 😳 [idontknow]
 
 name:
   messages:
   - creo que significa <No Entiendo El Entretenimiento Saludable>, pero no estoy seguro
   responses:
-  - ah, ya veo - ¿y dónde encontraste eso? [namehow]
+  - ah, ya veo - ¿dónde encontraste eso? [namehow]
   - ...forwhat
 
 namehow:
@@ -47,7 +47,7 @@ idontknow:
 
 hmm:
   messages:
-  - bueno, no puedo enseñarte cómo programar
+  - bueno, no puedo enseñarte a programar
   - busca ayuda, y vuelve cuando puedas hacerlo
   responses:
   - bueno, bueno, ahora sí [ready]
