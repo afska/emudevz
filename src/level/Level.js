@@ -12,6 +12,7 @@ export default class Level {
 		this.chatScripts = chatScripts;
 		this.memory = {
 			chat: {
+				isOpen: false,
 				sectionName: ChatScript.INITIAL_SECTION,
 				history: [],
 			},

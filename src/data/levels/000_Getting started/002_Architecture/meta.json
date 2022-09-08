@@ -1,0 +1,35 @@
+{
+	"name": {
+		"en": "Architecture",
+		"es": "Arquitectura"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat -f",
+					"availableCommands": [
+						"chat"
+					]
+				}
+			],
+			"Right": [
+				"console",
+				{
+					"welcomeMessage": {
+						"en": "Type `help` to list all available commands.",
+						"es": "Escribe `help` para listar todos los comandos disponibles."
+					},
+					"availableCommands": [
+						"chat",
+						"help",
+						"clear"
+					]
+				}
+			]
+		},
+		"focus": "Left"
+	}
+}

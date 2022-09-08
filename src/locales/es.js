@@ -4,6 +4,7 @@ export default {
 	button_quit: "Salir",
 	button_settings: "Opciones",
 	cancel: "Cancelar",
+	command_chat_already_open: "Ya abierto.",
 	command_chat_description: "Ejecuta la app de chat.",
 	command_chat_choose_an_answer: "Elige una respuesta.",
 	command_clear_description: "Limpia la terminal.",

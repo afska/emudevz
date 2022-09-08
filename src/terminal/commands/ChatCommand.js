@@ -18,6 +18,16 @@ export default class ChatCommand extends Command {
 		const chatScript = level.chatScripts[locales.language];
 		const memory = level.memory.chat;
 
+		if (memory.isOpen) {
+			await this._terminal.writeln(
+				locales.get("command_chat_already_open"),
+				theme.SYSTEM
+			);
+			return;
+		}
+
+		memory.isOpen = true;
+
 		while (memory.sectionName !== ChatScript.END_SECTION) {
 			const messages = chatScript.getMessagesOf(
 				memory.sectionName,
@@ -72,6 +82,9 @@ export default class ChatCommand extends Command {
 	}
 
 	onStop() {
-		return !this._args.includes("-f");
+		if (this._args.includes("-f")) return false;
+
+		Level.current.memory.chat.isOpen = false;
+		return true;
 	}
 }
