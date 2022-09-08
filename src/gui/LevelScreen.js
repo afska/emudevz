@@ -17,7 +17,7 @@ class LevelScreen extends PureComponent {
 		return (
 			<>
 				<Layout {...Components} ref={this.onReady} />
-				<NavBar maxLevelId={maxLevelId} chapter={chapter} />
+				<NavBar maxLevelId={maxLevelId} chapter={chapter} level={level} />
 			</>
 		);
 	}

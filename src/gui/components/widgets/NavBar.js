@@ -6,10 +6,13 @@ import { connect } from "react-redux";
 import locales from "../../../locales";
 import classNames from "classnames";
 import styles from "./NavBar.module.css";
+import _ from "lodash";
 
 class NavBar extends PureComponent {
 	render() {
-		const { maxLevelId, chapter, goBack } = this.props;
+		const { maxLevelId, chapter, level, goBack } = this.props;
+
+		const levelIndex = _.findIndex(chapter.levels, (it) => it.id === level.id);
 
 		return (
 			<div className={styles.navbar}>
@@ -19,10 +22,17 @@ class NavBar extends PureComponent {
 						tooltip={locales.get("goBack")}
 						onClick={goBack}
 					/>
-					<span>{chapter.name[locales.language]}</span>
+					<span>
+						{chapter.number}.{levelIndex + 1} / {chapter.name[locales.language]}{" "}
+						/ {level.name[locales.language]}
+					</span>
 				</div>
 				<div className={styles.item}>
-					<ProgressList maxLevelId={maxLevelId} levels={chapter.levels} />
+					<ProgressList
+						selectedLevelId={level.id}
+						maxLevelId={maxLevelId}
+						levelDefinitions={chapter.levels}
+					/>
 				</div>
 			</div>
 		);

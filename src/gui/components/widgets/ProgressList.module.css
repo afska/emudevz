@@ -29,6 +29,10 @@
 	cursor: not-allowed;
 }
 
+.selected {
+	filter: brightness(2);
+}
+
 .highlight {
 	background-color: #27afd7;
 }

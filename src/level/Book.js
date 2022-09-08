@@ -11,8 +11,11 @@ export default class Book {
 	}
 
 	getChapterOf(levelId) {
-		return _.find(this.chapters, (chapter) => {
+		const index = _.findIndex(this.chapters, (chapter) => {
 			return _.some(chapter.levels, (level) => level.id === levelId);
 		});
+		const chapter = this.chapters[index];
+		chapter.number = index + 1;
+		return chapter;
 	}
 }

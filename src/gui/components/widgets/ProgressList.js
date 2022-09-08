@@ -8,32 +8,34 @@ import styles from "./ProgressList.module.css";
 
 class ProgressList extends PureComponent {
 	render() {
-		const { maxLevelId, levels, goTo } = this.props;
+		const { selectedLevelId, maxLevelId, levelDefinitions, goTo } = this.props;
 
 		return (
 			<div className={styles.progressList}>
-				{levels.map((level, i) => {
+				{levelDefinitions.map((levelDefinition, i) => {
 					return (
 						<OverlayTrigger
-							key={level.id}
+							key={levelDefinition.id}
 							placement="top"
 							overlay={
 								<Tooltip>
-									{i + 1}. {level.name[locales.language]}
+									{i + 1}. {levelDefinition.name[locales.language]}
 								</Tooltip>
 							}
 						>
 							<div
 								onClick={() => {
-									if (level.id <= maxLevelId) goTo(level.id);
+									if (levelDefinition.id <= maxLevelId)
+										goTo(levelDefinition.id);
 								}}
 								className={classNames(
 									styles.level,
-									level.id < maxLevelId
+									levelDefinition.id < maxLevelId
 										? styles.success
-										: level.id > maxLevelId
+										: levelDefinition.id > maxLevelId
 										? styles.locked
-										: styles.highlight
+										: styles.highlight,
+									levelDefinition.id === selectedLevelId && styles.selected
 								)}
 							/>
 						</OverlayTrigger>
