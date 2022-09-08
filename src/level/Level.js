@@ -1,3 +1,4 @@
+import ChatScript from "./chat/ChatScript";
 import layouts from "../gui/components/layouts";
 import components from "../gui/components";
 import store from "../store";
@@ -8,6 +9,12 @@ export default class Level {
 		_.extend(this, metadata);
 
 		this.chatScripts = chatScripts;
+		this.memory = {
+			chat: {
+				sectionName: ChatScript.INITIAL_SECTION,
+				history: [],
+			},
+		};
 	}
 
 	static get current() {

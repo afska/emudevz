@@ -14,13 +14,15 @@ export default class ChatCommand extends Command {
 	}
 
 	async execute() {
-		const chatScript = Level.current.chatScripts[locales.language];
+		const level = Level.current;
+		const chatScript = level.chatScripts[locales.language];
+		const memory = level.memory.chat;
 
-		const history = [];
-		let sectionName = ChatScript.INITIAL_SECTION;
-
-		while (sectionName !== ChatScript.END_SECTION) {
-			const messages = chatScript.getMessagesOf(sectionName, history);
+		while (memory.sectionName !== ChatScript.END_SECTION) {
+			const messages = chatScript.getMessagesOf(
+				memory.sectionName,
+				memory.history
+			);
 			for (let message of messages)
 				await this._terminal.writeln(
 					MESSAGE_SYMBOL + message,
@@ -34,7 +36,10 @@ export default class ChatCommand extends Command {
 				theme.SYSTEM
 			);
 
-			const options = chatScript.getOptionsOf(sectionName, history);
+			const options = chatScript.getOptionsOf(
+				memory.sectionName,
+				memory.history
+			);
 			for (let option of options)
 				await this._terminal.writeln(`${option.number}) ${option.response}`);
 
@@ -59,8 +64,8 @@ export default class ChatCommand extends Command {
 				selectedOption = getOption(response);
 			}
 
-			sectionName = selectedOption.link;
-			history.push(sectionName);
+			memory.sectionName = selectedOption.link;
+			memory.history.push(memory.sectionName);
 		}
 	}
 
