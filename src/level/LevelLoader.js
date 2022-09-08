@@ -9,8 +9,9 @@ const CHAT_FOLDER = "chat";
 const CHAT_EXTENSION = "yml";
 
 export default class LevelLoader {
-	constructor(zipContent) {
+	constructor(zipContent, levelId) {
 		this.zipContent = zipContent;
+		this.levelId = levelId;
 	}
 
 	async load() {
@@ -36,7 +37,7 @@ export default class LevelLoader {
 			})
 		);
 
-		const level = new Level(meta, chatScripts);
+		const level = new Level(this.levelId, meta, chatScripts);
 		level.validate();
 
 		return level;

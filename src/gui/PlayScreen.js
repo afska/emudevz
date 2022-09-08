@@ -85,7 +85,7 @@ class PlayScreen extends PureComponent {
 	}
 
 	_loadLevel() {
-		const { setLevel } = this.props;
+		const { currentLevelId, setLevel } = this.props;
 
 		const levelPath = `${LEVELS_PATH}/level_${this.formattedLevelId}.zip`;
 
@@ -94,7 +94,7 @@ class PlayScreen extends PureComponent {
 				if (req.status !== STATUS_OK) throw new Error("Level not found.");
 				return req.arrayBuffer();
 			})
-			.then((levelData) => new LevelLoader(levelData).load())
+			.then((levelData) => new LevelLoader(levelData, currentLevelId).load())
 			.then(setLevel)
 			.catch(this._onError);
 	}

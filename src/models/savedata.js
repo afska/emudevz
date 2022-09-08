@@ -22,6 +22,14 @@ export default {
 		const dispatch = _dispatch_[KEY];
 
 		return {
+			advance(levelId, _state_) {
+				const state = _state_[KEY];
+
+				const nextLevelId = levelId + 1;
+				if (nextLevelId > state.levelId) dispatch.setLevelId(nextLevelId);
+
+				_dispatch_.level.goTo(nextLevelId);
+			},
 			validate(levelId, _state_) {
 				const state = _state_[KEY];
 

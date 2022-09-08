@@ -67,6 +67,8 @@ export default class ChatCommand extends Command {
 			memory.sectionName = selectedOption.link;
 			memory.history.push(memory.sectionName);
 		}
+
+		level.advance();
 	}
 
 	onStop() {

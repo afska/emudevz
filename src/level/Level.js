@@ -5,9 +5,10 @@ import store from "../store";
 import _ from "lodash";
 
 export default class Level {
-	constructor(metadata, chatScripts) {
+	constructor(id, metadata, chatScripts) {
 		_.extend(this, metadata);
 
+		this.id = id;
 		this.chatScripts = chatScripts;
 		this.memory = {
 			chat: {
@@ -19,6 +20,10 @@ export default class Level {
 
 	static get current() {
 		return store.getState().level.instance;
+	}
+
+	advance() {
+		store.dispatch.savedata.advance(this.id);
 	}
 
 	validate() {
