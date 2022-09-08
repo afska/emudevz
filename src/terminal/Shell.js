@@ -45,6 +45,8 @@ export default class Shell {
 	}
 
 	onStop() {
+		this.terminal.cancelPrompt();
+		this.terminal.break();
 		return false;
 	}
 }

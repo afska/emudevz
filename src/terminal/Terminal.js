@@ -81,7 +81,6 @@ export default class Terminal {
 
 	async break() {
 		await this.write(CTRL_C);
-		await this.newline();
 	}
 
 	async newline() {
@@ -128,6 +127,7 @@ export default class Terminal {
 				if (this._currentProgram.onStop()) {
 					this.cancelPrompt();
 					await this.break();
+					await this.newline();
 					if (!wasExpectingInput) this._requestInterrupt();
 				}
 
