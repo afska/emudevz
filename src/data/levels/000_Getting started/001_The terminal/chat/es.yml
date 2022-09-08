@@ -1,6 +1,53 @@
 ---
 main:
   messages:
-  - coming soon
+  - antes de empezar, revisemos cómo usar la terminal
+  responses:
+  - la... ¿qué? [terminal]
+  - ya sé cómo usarla [iknow]
+
+iknow:
+  messages:
+  - bueno, solo ejecutá `help` si necesitás listar todos los comandos disponibles
+  - ¿ok?
   responses:
   - ok [end]
+  - quizás necesito un poco más de ayuda [morehelp]
+
+morehelp:
+  messages:
+  - ¿qué te gustaría saber?
+  responses:
+  - ...terminal
+
+terminal:
+  messages:
+  - me refiero a esta interfaz de línea de comandos
+  - puedes lanzar multiples apps desde aquí
+  responses:
+  - cuéntame sobre esta app [app]
+  - cuéntame sobre otras apps [otherapps]
+  - ¿cómo scrolleo en la terminal? [scroll]
+  - ok, entendido [end]
+
+app:
+  messages:
+  - ahora estás ejecutando la app `chat`
+  - puedes cerrarla con `Ctrl+C`
+  - y abrirla de nuevo simplemente escribiendo `chat`, luego `Enter`
+  responses:
+  - ...terminal
+
+otherapps:
+  messages:
+  - para ver qué comandos están disponibles, ejecutá la app `help`
+  - listará todos ellos junto a una breve explicación de lo que hacen
+  responses:
+  - ...terminal
+
+scroll:
+  messages:
+  - puedes usar `Ctrl+Shift+PageUp` y `Ctrl+Shift+PageDown`
+  - o la rueda de tu mouse
+  responses:
+  - ...terminal
