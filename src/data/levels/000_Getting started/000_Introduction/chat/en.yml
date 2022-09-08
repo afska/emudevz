@@ -71,6 +71,9 @@ woo:
 javascript:
   messages:
   - that'll work perfect
-  - you only need to know a bit about object-oriented programming
+  - "but you also need basic understanding of:"
+  - "  - bit arithmetic"
+  - "  - binary and hexadecimal numeral systems"
+  - "  - object oriented programming"
   responses:
   - ok, let's do this [end]
