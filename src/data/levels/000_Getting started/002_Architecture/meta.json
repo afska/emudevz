@@ -4,7 +4,7 @@
 		"es": "Arquitectura"
 	},
 	"ui": {
-		"layout": "dual",
+		"layout": "triple",
 		"components": {
 			"Left": [
 				"console",
@@ -15,7 +15,7 @@
 					]
 				}
 			],
-			"Right": [
+			"Bottom": [
 				"console",
 				{
 					"welcomeMessage": {
@@ -28,6 +28,10 @@
 						"clear"
 					]
 				}
+			],
+			"Top": [
+				"tv",
+				{}
 			]
 		},
 		"focus": "Left"

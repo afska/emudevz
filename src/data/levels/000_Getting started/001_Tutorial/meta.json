@@ -1,12 +1,12 @@
 {
 	"name": {
-		"en": "The terminal",
-		"es": "La terminal"
+		"en": "Tutorial",
+		"es": "Tutorial"
 	},
 	"ui": {
-		"layout": "mono",
+		"layout": "dual",
 		"components": {
-			"Main": [
+			"Left": [
 				"console",
 				{
 					"startup": "chat",
@@ -16,8 +16,12 @@
 						"help"
 					]
 				}
+			],
+			"Right": [
+				"tv",
+				{}
 			]
 		},
-		"focus": "Main"
+		"focus": "Left"
 	}
 }

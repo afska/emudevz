@@ -1,0 +1,57 @@
+---
+main:
+  messages:
+  - before starting, let's review how to use the computer
+  - you can launch several apps from this terminal
+  responses:
+  - 💬  tell me about this app [app]
+  - 💬  tell me about other apps [otherapps]
+  - 💬  what's in the other half on the screen? [tv]
+  - 💬  how can I scroll in the terminal? [scroll]
+  - 💬  how can I navigate between panes? [panes]
+  - 👌  ok, gotcha [end]
+
+app:
+  messages:
+  - you're now running the `chat` app
+  - you can close it with `Ctrl+C`
+  - and open it again by simply typing `chat`, then `Enter`
+  responses:
+  - ...main
+
+otherapps:
+  messages:
+  - to see what commands are available, run the `help` app
+  - it will list them all along with a brief explanation of what they do
+  responses:
+  - ...main
+
+tv:
+  messages:
+  - that's the TV
+  - it'll be of great help for opening multimedia files
+  - or running our emulator 👀
+  responses:
+  - can you turn it on? 🤔 [turnontv]
+
+turnontv:
+  messages:
+  - there you go...
+  - "a video of a popular NEEES game: Darío"
+  - a weird story about a plumber, and mushrooms 🤨
+  responses:
+  - ...main
+
+scroll:
+  messages:
+  - you can use `Ctrl+Shift+PageUp` and `Ctrl+Shift+PageDown`
+  - or your mouse wheel
+  responses:
+  - ...main
+
+panes:
+  messages:
+  - you can use `Alt` + any directional key
+  - or just click on the pane you want to focus
+  responses:
+  - ...main
