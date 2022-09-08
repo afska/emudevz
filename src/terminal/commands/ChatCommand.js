@@ -62,7 +62,7 @@ export default class ChatCommand extends Command {
 					const candidates = options.filter((it) =>
 						it.response.toLowerCase().includes(x.toLowerCase())
 					);
-					if (candidates.length === 1) return candidates[0];
+					if (x.length > 0 && candidates.length === 1) return candidates[0];
 				};
 
 				const response = await this._terminal.prompt(
