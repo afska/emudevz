@@ -23,7 +23,7 @@ class LevelScreen extends PureComponent {
 	}
 
 	onReady = async (layout) => {
-		if (layout == null) return;
+		if (!layout) return;
 		this.layout = layout;
 
 		setTimeout(() => {

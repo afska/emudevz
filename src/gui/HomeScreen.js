@@ -56,7 +56,7 @@ class HomeScreen extends PureComponent {
 	}
 
 	onReady = (div) => {
-		if (div == null) return;
+		if (!div) return;
 
 		const loader = PIXI.Loader.shared;
 		loader.reset();

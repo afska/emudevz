@@ -42,6 +42,8 @@ whatelse:
   - ...main
 
 turnontv:
+  run: |
+    {{Right}}.load("monkey-conga.webp")
   messages:
   - ahí tienes...
   - "un video de un juego popular de NEEES: Monkey Conga"
