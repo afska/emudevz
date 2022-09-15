@@ -33,49 +33,16 @@ export default class ChatCommand extends Command {
 				memory.sectionName,
 				memory.history
 			);
-			for (let message of messages)
-				await this._terminal.writeln(
-					MESSAGE_SYMBOL + message,
-					theme.MESSAGE,
-					SPEED
-				);
-
-			await this._terminal.newline();
-			await this._terminal.writeln(
-				locales.get("command_chat_choose_an_answer"),
-				theme.SYSTEM
-			);
-
 			const options = chatScript.getOptionsOf(
 				memory.sectionName,
 				memory.history
 			);
-			for (let option of options)
-				await this._terminal.writeln(`${option.number}) ${option.response}`);
 
-			let selectedOption = null;
-			while (selectedOption == null) {
-				const getOption = (x) => {
-					if (isFinite(parseInt(x)))
-						return options.find((it) => it.number.toString() === x);
-
-					const candidates = options.filter((it) =>
-						it.response.toLowerCase().includes(x.toLowerCase())
-					);
-					if (x.length > 0 && candidates.length === 1) return candidates[0];
-				};
-
-				const response = await this._terminal.prompt(
-					PROMPT_SYMBOL,
-					(x) => getOption(x) != null,
-					theme.INPUT
-				);
-
-				selectedOption = getOption(response);
-			}
-
-			memory.sectionName = selectedOption.link;
-			memory.history.push(memory.sectionName);
+			await this._showMessages(messages);
+			await this._showChooseAnAnswer();
+			await this._showOptions(options);
+			const selectedOption = await this._getSelectedOption(options);
+			this._goTo(selectedOption, memory);
 		}
 
 		level.advance();
@@ -86,5 +53,58 @@ export default class ChatCommand extends Command {
 
 		Level.current.memory.chat.isOpen = false;
 		return true;
+	}
+
+	async _showMessages(messages) {
+		for (let message of messages)
+			await this._terminal.writeln(
+				MESSAGE_SYMBOL + message,
+				theme.MESSAGE,
+				SPEED
+			);
+	}
+
+	async _showChooseAnAnswer() {
+		await this._terminal.newline();
+		await this._terminal.writeln(
+			locales.get("command_chat_choose_an_answer"),
+			theme.SYSTEM
+		);
+	}
+
+	async _showOptions(options) {
+		for (let option of options)
+			await this._terminal.writeln(`${option.number}) ${option.response}`);
+	}
+
+	async _getSelectedOption(options) {
+		let selectedOption = null;
+
+		while (selectedOption == null) {
+			const getOption = (x) => {
+				if (isFinite(parseInt(x)))
+					return options.find((it) => it.number.toString() === x);
+
+				const candidates = options.filter((it) =>
+					it.response.toLowerCase().includes(x.toLowerCase())
+				);
+				if (x.length > 0 && candidates.length === 1) return candidates[0];
+			};
+
+			const response = await this._terminal.prompt(
+				PROMPT_SYMBOL,
+				(x) => getOption(x) != null,
+				theme.INPUT
+			);
+
+			selectedOption = getOption(response);
+		}
+
+		return selectedOption;
+	}
+
+	_goTo(selectedOption, memory) {
+		memory.sectionName = selectedOption.link;
+		memory.history.push(memory.sectionName);
 	}
 }
