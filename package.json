@@ -5,6 +5,7 @@
   "dependencies": {
     "@codemirror/lang-javascript": "^0.19.7",
     "@codemirror/theme-one-dark": "^0.19.1",
+    "@fancyapps/fancybox": "^3.5.7",
     "@pixi/layers": "^1.0.11",
     "@rematch/core": "^2.2.0",
     "@rematch/loading": "^2.1.2",
@@ -15,7 +16,7 @@
     "connected-react-router": "^6.9.3",
     "history": "^4.10.1",
     "jszip": "^3.10.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "pixi-filters": "^4.2.0",
     "pixi-lights": "^3.0.0",
     "pixi.js": "^6.3.0",
