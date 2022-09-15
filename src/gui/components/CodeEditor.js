@@ -5,7 +5,9 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import styles from "./CodeEditor.module.css";
 
 export default class CodeEditor extends PureComponent {
-	async initialize(args) {}
+	async initialize(args, level) {
+		this._level = level;
+	}
 
 	render() {
 		return (

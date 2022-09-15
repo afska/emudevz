@@ -6,9 +6,14 @@ import styles from "./TV.module.css";
 export default class TV extends PureComponent {
 	state = { image: null };
 
-	async initialize(args) {}
+	async initialize(args, level) {
+		this._level = level;
+	}
 
-	load(image) {
+	load(fileName) {
+		const image = this._level?.media[fileName];
+		if (!image) throw new Error(`Image not found: ${fileName}`);
+
 		this.setState({ image });
 	}
 

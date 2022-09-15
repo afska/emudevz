@@ -76,6 +76,13 @@ export default class ChatScript {
 			});
 	}
 
+	getStartUpCodeOf(sectionName) {
+		const section = this.content[sectionName];
+		if (!section) throw new Error(`Section not found: ${sectionName}`);
+
+		return section.run || null;
+	}
+
 	validate() {
 		if (this.content.main == null) throw new Error("No main section");
 

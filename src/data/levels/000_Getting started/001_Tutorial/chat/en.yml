@@ -32,14 +32,7 @@ tv:
   - it'll be of great help for opening multimedia files
   - or running our emulator 👀
   responses:
-  - cool [whatelse]
-  - can you turn it on? 🤔 [turnontv]
-
-whatelse:
-  messages:
-  - what else would you like to know?
-  responses:
-  - ...main
+  - can you turn it on? 😮 [turnontv]
 
 turnontv:
   run: |

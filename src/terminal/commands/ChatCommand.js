@@ -3,6 +3,7 @@ import Level from "../../level/Level";
 import ChatScript from "../../level/chat/ChatScript";
 import locales from "../../locales";
 import { theme } from "../style";
+import _ from "lodash";
 
 const MESSAGE_SYMBOL = ">> ";
 const PROMPT_SYMBOL = "?? ";
@@ -29,6 +30,7 @@ export default class ChatCommand extends Command {
 		memory.isOpen = true;
 
 		while (memory.sectionName !== ChatScript.END_SECTION) {
+			const startUpCode = chatScript.getStartUpCodeOf(memory.sectionName);
 			const messages = chatScript.getMessagesOf(
 				memory.sectionName,
 				memory.history
@@ -38,6 +40,7 @@ export default class ChatCommand extends Command {
 				memory.history
 			);
 
+			await this._runStartUpCode(startUpCode);
 			await this._showMessages(messages);
 			await this._showChooseAnAnswer();
 			await this._showOptions(options);
@@ -53,6 +56,22 @@ export default class ChatCommand extends Command {
 
 		Level.current.memory.chat.isOpen = false;
 		return true;
+	}
+
+	async _runStartUpCode(startUpCode) {
+		if (startUpCode == null) return;
+
+		const layout = Level.current.$layout;
+
+		let evalCode = startUpCode;
+		_.forEach(layout.instances, async (__, name) => {
+			evalCode = evalCode.replace(
+				new RegExp(`{{${name}}}`, "g"),
+				`layout.instances["${name}"]`
+			);
+		});
+
+		eval(evalCode);
 	}
 
 	async _showMessages(messages) {

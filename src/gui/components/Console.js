@@ -9,6 +9,8 @@ export default class Console extends PureComponent {
 	fitAddon = new FitAddon();
 
 	async initialize(args, level) {
+		this._level = level;
+
 		const welcomeMessage =
 			(args.welcomeMessage && args.welcomeMessage[locales.language]) ||
 			`---${level.name[locales.language]}---` ||

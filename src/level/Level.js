@@ -11,6 +11,7 @@ export default class Level {
 		this.id = id;
 		this.chatScripts = chatScripts;
 		this.media = media;
+
 		this.memory = {
 			chat: {
 				isOpen: false,
@@ -18,6 +19,7 @@ export default class Level {
 				history: [],
 			},
 		};
+		this.$layout = null;
 	}
 
 	static get current() {

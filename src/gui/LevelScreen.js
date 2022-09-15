@@ -24,7 +24,9 @@ class LevelScreen extends PureComponent {
 
 	onReady = async (layout) => {
 		if (!layout) return;
-		this.layout = layout;
+
+		const { level } = this.props;
+		level.$layout = layout;
 
 		setTimeout(() => {
 			const runningComponents = layout.instances;
