@@ -5,11 +5,12 @@ import store from "../store";
 import _ from "lodash";
 
 export default class Level {
-	constructor(id, metadata, chatScripts) {
+	constructor(id, metadata, chatScripts, media) {
 		_.extend(this, metadata);
 
 		this.id = id;
 		this.chatScripts = chatScripts;
+		this.media = media;
 		this.memory = {
 			chat: {
 				isOpen: false,
