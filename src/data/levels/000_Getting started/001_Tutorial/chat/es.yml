@@ -32,7 +32,14 @@ tv:
   - va a ser de gran ayuda para abrir archivos multimedia
   - o correr nuestro emulador 👀
   responses:
+  - genial [whatelse]
   - ¿puedes encenderla? 🤔 [turnontv]
+
+whatelse:
+  messages:
+  - ¿qué más te gustaría saber?
+  responses:
+  - ...main
 
 turnontv:
   messages:
