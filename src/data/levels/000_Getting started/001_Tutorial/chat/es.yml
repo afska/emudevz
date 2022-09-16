@@ -9,7 +9,7 @@ main:
   - 💬  ¿qué hay en la otra mitad de la pantalla? [tv]
   - 💬  ¿cómo puedo scrollear en la terminal? [scroll]
   - 💬  ¿cómo puedo navegar entre los paneles? [panes]
-  - 👌  ok, entendido [end]
+  - 👌  entendido [end]
 
 app:
   messages:

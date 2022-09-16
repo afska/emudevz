@@ -9,7 +9,7 @@ main:
   - 💬  what's in the other half on the screen? [tv]
   - 💬  how can I scroll in the terminal? [scroll]
   - 💬  how can I navigate between panes? [panes]
-  - 👌  ok, gotcha [end]
+  - 👌  gotcha [end]
 
 app:
   messages:

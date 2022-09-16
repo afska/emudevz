@@ -82,7 +82,8 @@
           "**/*.js?(x)"
         ],
         "rules": {
-          "import/no-anonymous-default-export": "off"
+          "import/no-anonymous-default-export": "off",
+          "no-eval": "off"
         }
       }
     ]
