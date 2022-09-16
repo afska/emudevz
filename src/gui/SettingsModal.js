@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
-import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import Button from "./components/widgets/Button";
+import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales, { LANGUAGES } from "../locales";
+import Button from "./components/widgets/Button";
 import styles from "./SettingsModal.module.css";
 
 class SettingsModal extends PureComponent {

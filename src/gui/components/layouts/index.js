@@ -1,11 +1,11 @@
-import MonoLayout from "./MonoLayout";
 import DualLayout from "./DualLayout";
-import TripleLayout from "./TripleLayout";
+import MonoLayout from "./MonoLayout";
 import QuadLayout from "./QuadLayout";
+import TripleLayout from "./TripleLayout";
 
 export default {
-	mono: MonoLayout,
 	dual: DualLayout,
-	triple: TripleLayout,
+	mono: MonoLayout,
 	quad: QuadLayout,
+	triple: TripleLayout,
 };

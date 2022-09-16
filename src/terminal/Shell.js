@@ -1,5 +1,5 @@
-import commands from "./commands";
 import locales from "../locales";
+import commands from "./commands";
 
 export default class Shell {
 	constructor(terminal) {
@@ -47,6 +47,7 @@ export default class Shell {
 	onStop() {
 		this.terminal.cancelPrompt();
 		this.terminal.break();
+
 		return false;
 	}
 }

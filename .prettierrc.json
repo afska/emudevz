@@ -1,5 +1,21 @@
 {
 	"printWidth": 80,
 	"useTabs": true,
-	"arrowParens": "always"
+	"arrowParens": "always",
+	"importOrder": [
+		"^react$",
+		"<THIRD_PARTY_MODULES>",
+		"^classnames$",
+		"^lodash$",
+		"^\\.\\.(?!.*\\.css).*$",
+		"^[./](?!.*\\.css).*$",
+		"bootstrap\\.min\\.css$",
+		"\\.css$"
+	],
+	"importOrderExplanation": {
+		"^\\.\\.(?!.*\\.css).*$": "any non-css local file from parent folder (ex: ../locales)",
+		"^[./](?!.*\\.css).*$": "any non-css local file from current folder (ex: ./Something)"
+	},
+	"importOrderSeparation": false,
+	"importOrderSortSpecifiers": true
 }

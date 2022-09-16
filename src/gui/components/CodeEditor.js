@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
-import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
+import CodeMirror from "@uiw/react-codemirror";
 import styles from "./CodeEditor.module.css";
 
 export default class CodeEditor extends PureComponent {

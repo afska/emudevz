@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
-import layouts from "./components/layouts";
-import components from "./components";
-import NavBar from "./components/widgets/NavBar";
 import _ from "lodash";
+import components from "./components";
+import layouts from "./components/layouts";
+import NavBar from "./components/widgets/NavBar";
 
 class LevelScreen extends PureComponent {
 	render() {

@@ -1,10 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/lib/integration/react";
 import { getPersistor } from "@rematch/persist";
 import { ConnectedRouter } from "connected-react-router";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import { Route, Switch } from "react-router-dom";
+import { PersistGate } from "redux-persist/lib/integration/react";
 import HomeScreen from "./gui/HomeScreen";
 import PlayScreen from "./gui/PlayScreen";
 import store, { history } from "./store";

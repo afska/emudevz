@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import ProgressList from "./ProgressList";
-import IconButton from "./IconButton";
 import { FaChevronLeft } from "react-icons/fa";
 import { connect } from "react-redux";
-import locales from "../../../locales";
 import classNames from "classnames";
-import styles from "./NavBar.module.css";
 import _ from "lodash";
+import locales from "../../../locales";
+import IconButton from "./IconButton";
+import ProgressList from "./ProgressList";
+import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
 	render() {

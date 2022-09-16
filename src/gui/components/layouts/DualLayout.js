@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "./Layout";
 import classNames from "classnames";
+import Layout from "./Layout";
 import styles from "./Layout.module.css";
 
 export default class DualLayout extends Layout {

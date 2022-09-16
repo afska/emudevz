@@ -1,4 +1,4 @@
-import theme from "./theme";
 import speed from "./speed";
+import theme from "./theme";
 
-export { theme, speed };
+export { speed, theme };

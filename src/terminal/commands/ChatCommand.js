@@ -1,9 +1,9 @@
-import Command from "./Command";
+import _ from "lodash";
 import Level from "../../level/Level";
 import ChatScript from "../../level/chat/ChatScript";
 import locales from "../../locales";
 import { theme } from "../style";
-import _ from "lodash";
+import Command from "./Command";
 
 const MESSAGE_SYMBOL = ">> ";
 const PROMPT_SYMBOL = "?? ";
@@ -55,6 +55,7 @@ export default class ChatCommand extends Command {
 		if (this._args.includes("-f")) return false;
 
 		Level.current.memory.chat.isOpen = false;
+
 		return true;
 	}
 

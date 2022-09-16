@@ -1,9 +1,9 @@
-import Level from "./Level";
-import ChatScript from "./chat/ChatScript";
-import { LANGUAGES } from "../locales";
 import JSZip from "jszip";
 import YAML from "yaml";
+import { LANGUAGES } from "../locales";
 import { blob as blobUtils } from "../utils";
+import Level from "./Level";
+import ChatScript from "./chat/ChatScript";
 
 const META_FILE = "meta.json";
 const CHAT_FOLDER = "chat";
@@ -32,6 +32,7 @@ export default class LevelLoader {
 	async _loadMeta(zip) {
 		const metaFile = zip.file(META_FILE);
 		if (!metaFile) throw new Error(`Missing file: ${META_FILE}`);
+
 		const rawMeta = await metaFile.async("string");
 		return JSON.parse(rawMeta);
 	}

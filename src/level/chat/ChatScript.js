@@ -27,12 +27,14 @@ export default class ChatScript {
 	static getInheritanceOf(string) {
 		const parts = string.split(ChatScript.INHERITANCE_REGEXP);
 		if (parts.length !== 2) return null;
+
 		return parts[1] || null;
 	}
 
 	static getLinkOf(string) {
 		const parts = string.split(ChatScript.LINK_REGEXP);
 		if (parts.length !== 3) return null;
+
 		return parts[1] || null;
 	}
 

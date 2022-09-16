@@ -2,8 +2,8 @@ import React, { PureComponent } from "react";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import { connect } from "react-redux";
-import locales from "../../../locales";
 import classNames from "classnames";
+import locales from "../../../locales";
 import styles from "./ProgressList.module.css";
 
 class ProgressList extends PureComponent {

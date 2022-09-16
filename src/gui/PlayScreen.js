@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import _ from "lodash";
 import Book from "../level/Book";
 import LevelLoader from "../level/LevelLoader";
-import LevelScreen from "./LevelScreen";
-import { connect } from "react-redux";
 import locales from "../locales";
+import LevelScreen from "./LevelScreen";
 import styles from "./PlayScreen.module.css";
-import _ from "lodash";
 
 const LEVELS_PATH = "/levels";
 const BOOK_PATH = `${LEVELS_PATH}/book.json`;

@@ -1,5 +1,5 @@
-import store from "../store";
 import _ from "lodash";
+import store from "../store";
 
 export default class Book {
 	constructor(metadata) {

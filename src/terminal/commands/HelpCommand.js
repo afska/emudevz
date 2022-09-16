@@ -1,6 +1,6 @@
-import Command from "./Command";
-import commands from ".";
 import { theme } from "../style";
+import commands from ".";
+import Command from "./Command";
 
 const NEWLINE = "\r\n";
 const SPACING = 10;

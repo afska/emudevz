@@ -1,5 +1,5 @@
-import savedata from "./savedata";
 import book from "./book";
 import level from "./level";
+import savedata from "./savedata";
 
-export default { savedata, book, level };
+export default { book, level, savedata };

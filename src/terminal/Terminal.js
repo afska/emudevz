@@ -1,7 +1,7 @@
-import Shell from "./Shell";
-import PendingInput from "./PendingInput";
-import { theme } from "./style";
 import { async } from "../utils";
+import PendingInput from "./PendingInput";
+import Shell from "./Shell";
+import { theme } from "./style";
 
 const KEY_FULLSCREEN = "[23~";
 const KEY_REFRESH_1 = "[15~";

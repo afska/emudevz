@@ -1,6 +1,7 @@
+import _ from "lodash";
+import store from "../store";
 import en from "./en";
 import es from "./es";
-import store from "../store";
 
 const DEFAULT_LANGUAGE = "en";
 
@@ -18,4 +19,4 @@ export default {
 	},
 };
 
-export const LANGUAGES = ["en", "es"];
+export const LANGUAGES = _.keys(locales);

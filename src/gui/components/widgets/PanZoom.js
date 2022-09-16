@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Panzoom as NativePanzoom } from "@fancyapps/ui/dist/panzoom.esm.js";
-import "@fancyapps/ui/dist/panzoom.css";
 import "@fancyapps/ui/dist/panzoom.controls.css";
+import "@fancyapps/ui/dist/panzoom.css";
 
 // DISABLED: Controls
 // import { Controls } from "@fancyapps/ui/dist/panzoom.controls.esm.js";

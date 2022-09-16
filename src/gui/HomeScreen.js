@@ -1,12 +1,12 @@
 import React, { PureComponent } from "react";
-import * as PIXI from "pixi.js";
 import { Layer, Stage } from "@pixi/layers";
-import { PointLight, lightGroup } from "pixi-lights";
 import { CRTFilter } from "pixi-filters";
-import SettingsModal from "./SettingsModal";
-import Button from "./components/widgets/Button";
+import { PointLight, lightGroup } from "pixi-lights";
+import * as PIXI from "pixi.js";
 import { connect } from "react-redux";
 import locales from "../locales";
+import SettingsModal from "./SettingsModal";
+import Button from "./components/widgets/Button";
 import styles from "./HomeScreen.module.css";
 
 const ASSET_LOGO = "/assets/logo.png";

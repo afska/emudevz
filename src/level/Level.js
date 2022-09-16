@@ -1,8 +1,8 @@
-import ChatScript from "./chat/ChatScript";
-import layouts from "../gui/components/layouts";
-import components from "../gui/components";
-import store from "../store";
 import _ from "lodash";
+import components from "../gui/components";
+import layouts from "../gui/components/layouts";
+import store from "../store";
+import ChatScript from "./chat/ChatScript";
 
 export default class Level {
 	constructor(id, metadata, chatScripts, media) {
