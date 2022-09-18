@@ -1,0 +1,39 @@
+{
+	"name": {
+		"en": "The magic number",
+		"es": "El número mágico"
+	},
+	"ui": {
+		"layout": "triple",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat -f",
+					"availableCommands": [
+						"chat"
+					]
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"welcomeMessage": {
+						"en": "Type `help` to list all available commands.",
+						"es": "Escribe `help` para listar todos los comandos disponibles."
+					},
+					"availableCommands": [
+						"chat",
+						"help",
+						"clear"
+					]
+				}
+			],
+			"Top": [
+				"tv",
+				{}
+			]
+		},
+		"focus": "Left"
+	}
+}

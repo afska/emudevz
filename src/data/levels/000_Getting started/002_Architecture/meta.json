@@ -4,32 +4,20 @@
 		"es": "Arquitectura"
 	},
 	"ui": {
-		"layout": "triple",
+		"layout": "dual",
 		"components": {
 			"Left": [
 				"console",
 				{
-					"startup": "chat -f",
-					"availableCommands": [
-						"chat"
-					]
-				}
-			],
-			"Bottom": [
-				"console",
-				{
-					"welcomeMessage": {
-						"en": "Type `help` to list all available commands.",
-						"es": "Escribe `help` para listar todos los comandos disponibles."
-					},
+					"startup": "chat",
 					"availableCommands": [
 						"chat",
-						"help",
-						"clear"
+						"clear",
+						"help"
 					]
 				}
 			],
-			"Top": [
+			"Right": [
 				"tv",
 				{}
 			]

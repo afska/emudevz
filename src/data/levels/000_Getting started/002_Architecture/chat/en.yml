@@ -1,8 +1,15 @@
 ---
 main:
   run: |
-    {{Top}}.load("architecture.png")
+    {{Right}}.load("architecture.png")
   messages:
-  - coming soon
+  - so... apparently, this thing has 3 main components that work pretty much independently from each other
+  - "these are: 💻  CPU, 🖥️  PPU, and 🔊  APU"
+  - in order to play games, you must connect two pieces of hardware
+  - a cartridge (the game itself!) and a 8-button gamepad
   responses:
+  - 💻  tell me about the CPU [end]
+  - 🖥️  tell me about the PPU [end]
+  - 🔊  tell me about the APU [end]
+  - 💾  tell me about the cartridges [end]
   - ok [end]
