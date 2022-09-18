@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    {{Top}}.load("architecture.png")
   messages:
   - coming soon
   responses:
