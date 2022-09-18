@@ -12,8 +12,20 @@ export default class ChatScript {
 		return "end";
 	}
 
+	static get MODIFIER_REGEXP() {
+		return /^\(.\) /;
+	}
+
 	static get CONSUMABLE_REGEXP() {
 		return /^\(\*\) /;
+	}
+
+	static get KEY_REGEXP() {
+		return /^\(k\) /;
+	}
+
+	static get DOOR_REGEXP() {
+		return /^\(d\) /;
 	}
 
 	static get INHERITANCE_REGEXP() {
@@ -61,17 +73,27 @@ export default class ChatScript {
 
 				const [response, link] = rawResponse.split(ChatScript.LINK_REGEXP);
 				const isConsumable = ChatScript.CONSUMABLE_REGEXP.test(rawResponse);
+				const isKey = ChatScript.KEY_REGEXP.test(rawResponse);
+				const isDoor = ChatScript.DOOR_REGEXP.test(rawResponse);
 
 				return [
 					{
-						response: response.replace(ChatScript.CONSUMABLE_REGEXP, ""),
+						response: response.replace(ChatScript.MODIFIER_REGEXP, ""),
 						link,
 						isConsumable,
+						isKey,
+						isDoor,
 					},
 				];
 			})
-			.filter((it) => {
-				return !it.isConsumable || !history.includes(it.link);
+			.filter((it, __, responses) => {
+				if (it.isConsumable) return !history.includes(it.link);
+				if (it.isDoor) {
+					const keyResponses = responses.filter((r) => r.isKey);
+					return keyResponses.every((r) => history.includes(r.link));
+				}
+
+				return true;
 			})
 			.map((it, responseId) => {
 				return { ...it, number: parseInt(responseId) + 1 };

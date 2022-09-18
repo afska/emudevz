@@ -1,8 +1,62 @@
 ---
 main:
   run: |
-    {{Top}}.load("architecture.png")
+    {{Right}}.load("architecture.png")
   messages:
-  - coming soon
+  - bueno, aparentemente, esta cosa tiene 3 componentes principales, bastante independientes uno del otro
+  - "estos son: 💻  CPU, 🖥️  PPU y 🔊  APU"
+  - para poder jugar juegos, tienes que conectar dos piezas de hardware
+  - un cartucho (¡el juego mismo!) y un mando de 8 botones
   responses:
-  - ok [end]
+  - (k) 💻  cuéntame sobre la CPU [cpu]
+  - (k) 🖥️  cuéntame sobre la PPU [ppu]
+  - (k) 🔊  cuéntame sobre la APU [apu]
+  - (d) ¿cuál es la mejor forma de empezar? [start]
+
+cpu:
+  messages:
+  - es la Unidad Central de Procesamiento
+  - lee el código de los juegos y ejecuta sus instrucciones
+  - como la de tu computadora, pero *muchas* veces más lenta
+  - tiene acceso a un banco de 2KiB de WRAM (Work RAM)
+  responses:
+  - ¿y dónde está el código del juego? [thecode]
+  - ...main
+
+thecode:
+  messages:
+  - ¡en el cartucho!
+  - específicamente, en un chip llamado PRG-ROM (Program ROM)
+  responses:
+  - ...main
+
+ppu:
+  messages:
+  - es la Unidad de Procesamiento de Imagen
+  - dibuja gráficos poniendo pixeles en la pantalla
+  - y tiene acceso a un banco de 2KiB de VRAM (Video RAM)
+  responses:
+  - ¿y dónde están almacenados esos gráficos? [thegraphics]
+  - ...main
+
+thegraphics:
+  messages:
+  - ¡en el cartucho! :)
+  - específicamente, en un chip llamado CHR-ROM (Character ROM)
+  responses:
+  - ...main
+
+apu:
+  messages:
+  - es la Unidad de Procesamiento de Audio
+  - maneja el sonido, produciendo ondas de audio
+  - todavía estoy aprendiendo sobre ésta
+  responses:
+  - ...main
+
+start:
+  messages:
+  - primero vamos a estudiar los cartuchos
+  - ¿vamos?
+  responses:
+  - vamos [end]
