@@ -11,7 +11,7 @@ main:
   - (k) 💻  cuéntame sobre la CPU [cpu]
   - (k) 🖥️  cuéntame sobre la PPU [ppu]
   - (k) 🔊  cuéntame sobre la APU [apu]
-  - (d) ¿cuál es la mejor forma de empezar? [start]
+  - (l) ¿cuál es la mejor forma de empezar? [start]
 
 cpu:
   messages:

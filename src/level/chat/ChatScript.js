@@ -24,8 +24,8 @@ export default class ChatScript {
 		return /^\(k\) /;
 	}
 
-	static get DOOR_REGEXP() {
-		return /^\(d\) /;
+	static get LOCK_REGEXP() {
+		return /^\(l\) /;
 	}
 
 	static get INHERITANCE_REGEXP() {
@@ -74,7 +74,7 @@ export default class ChatScript {
 				const [response, link] = rawResponse.split(ChatScript.LINK_REGEXP);
 				const isConsumable = ChatScript.CONSUMABLE_REGEXP.test(rawResponse);
 				const isKey = ChatScript.KEY_REGEXP.test(rawResponse);
-				const isDoor = ChatScript.DOOR_REGEXP.test(rawResponse);
+				const isLock = ChatScript.LOCK_REGEXP.test(rawResponse);
 
 				return [
 					{
@@ -82,13 +82,13 @@ export default class ChatScript {
 						link,
 						isConsumable,
 						isKey,
-						isDoor,
+						isLock,
 					},
 				];
 			})
 			.filter((it, __, responses) => {
 				if (it.isConsumable) return !history.includes(it.link);
-				if (it.isDoor) {
+				if (it.isLock) {
 					const keyResponses = responses.filter((r) => r.isKey);
 					return keyResponses.every((r) => history.includes(r.link));
 				}

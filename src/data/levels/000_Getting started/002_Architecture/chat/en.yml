@@ -11,7 +11,7 @@ main:
   - (k) 💻  tell me about the CPU [cpu]
   - (k) 🖥️  tell me about the PPU [ppu]
   - (k) 🔊  tell me about the APU [apu]
-  - (d) what's the best way to start? [start]
+  - (l) what's the best way to start? [start]
 
 cpu:
   messages:
