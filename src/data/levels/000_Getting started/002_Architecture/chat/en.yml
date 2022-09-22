@@ -56,7 +56,7 @@ apu:
 
 start:
   messages:
-  - we'll first study the cartridges
+  - we'll first study the assembly language
   - are you ready?
   responses:
   - let's go [end]

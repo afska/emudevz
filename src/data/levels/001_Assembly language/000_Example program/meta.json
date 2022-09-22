@@ -1,0 +1,26 @@
+{
+	"name": {
+		"en": "Example program",
+		"es": "Programa de ejemplo"
+	},
+	"ui": {
+		"layout": "triple",
+		"components": {
+			"Left": [
+				"code",
+				{
+					"language": "asm"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat",
+					"availableCommands": ["chat", "help", "clear"]
+				}
+			],
+			"Top": ["tv", {}]
+		},
+		"focus": "Bottom"
+	}
+}

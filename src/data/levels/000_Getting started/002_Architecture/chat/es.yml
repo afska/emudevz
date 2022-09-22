@@ -56,7 +56,7 @@ apu:
 
 start:
   messages:
-  - primero vamos a estudiar los cartuchos
+  - primero vamos a estudiar el lenguaje ensamblador
   - ¿vamos?
   responses:
   - vamos [end]
