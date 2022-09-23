@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import FlashChange from "@avinlab/react-flash-change";
 import Table from "react-bootstrap/Table";
+import classNames from "classnames";
 import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
@@ -12,7 +13,9 @@ const Value = ({ value }) => {
 			style={{ transform: "rotate(-360deg)" }}
 			flashStyle={{
 				transform: "rotate(0deg)",
-				transition: "transform 200ms, background 200ms",
+				boxShadow:
+					"inset 8px 8px 8px rgb(0 0 0 / 8%), 0 0 8px rgb(200 200 200 / 60%)",
+				transition: "transform 200ms, box-shadow 200ms",
 			}}
 			compare={(prevProps, nextProps) => {
 				return nextProps.value !== prevProps.value;
@@ -23,69 +26,53 @@ const Value = ({ value }) => {
 	);
 };
 
+const Viewer = (props) => (
+	<Table striped bordered size="sm" variant="dark" {...props} />
+);
+
 export default class CPUDebugger extends PureComponent {
-	state = { A: 0 };
+	state = {
+		A: 0x0,
+		X: 0x0,
+		Y: 0x0,
+		SP: 0xff,
+		PC: 0x0600,
+		F_N: 0,
+		F_V: 0,
+		"F_-": 0,
+		F_B: 0,
+		F_D: 0,
+		F_I: 0,
+		F_Z: 0,
+		F_C: 0,
+	};
 
 	async initialize(args, level) {
 		this._level = level;
 	}
 
 	render() {
-		const { A } = this.state;
-
 		return (
 			<div className={styles.container} ref={this._onRef}>
 				<div className={styles.column}>
-					<Table
-						striped
-						bordered
-						size="sm"
-						variant="dark"
-						className={styles.registers}
-					>
+					<Viewer className={styles.registers}>
 						<tbody>
-							<tr>
-								<td className={styles.name}>
-									<strong>A</strong>
-								</td>
-								<td>
-									<Value value={A} />
-								</td>
-							</tr>
-							<tr>
-								<td className={styles.name}>
-									<strong>X</strong>
-								</td>
-								<td>$00</td>
-							</tr>
-							<tr>
-								<td className={styles.name}>
-									<strong>Y</strong>
-								</td>
-								<td>$00</td>
-							</tr>
-							<tr>
-								<td className={styles.name}>
-									<strong>SP</strong>
-								</td>
-								<td>$FF</td>
-							</tr>
-							<tr>
-								<td className={styles.name}>
-									<strong>PC</strong>
-								</td>
-								<td>$0621</td>
-							</tr>
+							{["A", "X", "Y", "SP", "PC"].map((name) => {
+								return (
+									<tr key={name}>
+										<td className={styles.name}>
+											<strong>{name}</strong>
+										</td>
+										<td>
+											<Value value={this.state[name]} />
+										</td>
+									</tr>
+								);
+							})}
 						</tbody>
-					</Table>
+					</Viewer>
 
-					<Table
-						striped
-						bordered
-						size="sm"
-						variant="dark"
-						className={styles.registers}
-					>
+					<Viewer className={styles.registers}>
 						<thead>
 							<tr className={styles.name}>
 								<th>N</th>
@@ -100,27 +87,20 @@ export default class CPUDebugger extends PureComponent {
 						</thead>
 						<tbody>
 							<tr>
-								<td>0</td>
-								<td>0</td>
-								<td>1</td>
-								<td>1</td>
-								<td>0</td>
-								<td>0</td>
-								<td>1</td>
-								<td>1</td>
+								{["N", "V", "-", "B", "D", "I", "Z", "C"].map((name) => {
+									return (
+										<td key={name}>
+											<Value value={this.state[`F_${name}`]} />
+										</td>
+									);
+								})}
 							</tr>
 						</tbody>
-					</Table>
+					</Viewer>
 				</div>
 
 				<div className={styles.column}>
-					<Table
-						striped
-						bordered
-						size="sm"
-						variant="dark"
-						className={styles.memory}
-					>
+					<Viewer className={styles.memory}>
 						<tbody>
 							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((it, i) => {
 								return (
@@ -133,7 +113,7 @@ export default class CPUDebugger extends PureComponent {
 								);
 							})}
 						</tbody>
-					</Table>
+					</Viewer>
 				</div>
 			</div>
 		);
