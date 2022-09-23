@@ -25,3 +25,6 @@ indent_style = space
 
 [*.yml]
 indent_style = space
+
+[*.asm]
+insert_final_newline = false

@@ -5,11 +5,12 @@ import store from "../store";
 import ChatScript from "./chat/ChatScript";
 
 export default class Level {
-	constructor(id, metadata, chatScripts, media) {
+	constructor(id, metadata, chatScripts, code, media) {
 		_.extend(this, metadata);
 
 		this.id = id;
 		this.chatScripts = chatScripts;
+		this.code = code;
 		this.media = media;
 
 		this.memory = {

@@ -11,30 +11,29 @@ const LANGUAGES = {
 };
 
 export default class CodeEditor extends PureComponent {
+	state = { language: "javascript", code: "" };
+
 	async initialize(args, level) {
 		this._level = level;
+
+		const { language, initialCodeFile } = args;
+		if (LANGUAGES[language]) this.setState({ language });
+
+		const initialCode = this._level?.code[initialCodeFile];
+		if (initialCode) this.setState({ code: initialCode });
 	}
 
 	render() {
+		const { language, code } = this.state;
+
 		return (
 			<CodeMirror
 				className={styles.editor}
-				value={`// Describes a CPU
-return function() {
-	return {
-		cycle: 0,
-		memory: new Array(1024),
-		registers: {
-			A: 0,
-			Z: 0,
-			N: 0
-		}
-	}
-}`}
+				value={code}
 				width="100%"
 				height="100%"
 				theme={oneDark}
-				extensions={[LANGUAGES["javascript"]()]}
+				extensions={[LANGUAGES[language]()]}
 				onChange={(value, viewUpdate) => {
 					console.log("value:", value);
 				}}

@@ -8,6 +8,7 @@ import ChatScript from "./chat/ChatScript";
 const META_FILE = "meta.json";
 const CHAT_FOLDER = "chat";
 const CHAT_EXTENSION = "yml";
+const CODE_FOLDER = "code";
 const MEDIA_FOLDER = "media";
 
 export default class LevelLoader {
@@ -21,9 +22,10 @@ export default class LevelLoader {
 
 		const meta = await this._loadMeta(zip);
 		const chatScripts = await this._loadChatScripts(zip);
+		const code = await this._loadCode(zip);
 		const media = await this._loadMedia(zip);
 
-		const level = new Level(this.levelId, meta, chatScripts, media);
+		const level = new Level(this.levelId, meta, chatScripts, code, media);
 		level.validate();
 
 		return level;
@@ -56,18 +58,30 @@ export default class LevelLoader {
 		return chatScripts;
 	}
 
+	async _loadCode(zip) {
+		return await this._forEachFile(zip, CODE_FOLDER, async (filePath) => {
+			return await zip.file(filePath).async("string");
+		});
+	}
+
 	async _loadMedia(zip) {
-		const media = {};
-		const prefix = `${MEDIA_FOLDER}/`;
+		return await this._forEachFile(zip, MEDIA_FOLDER, async (filePath) => {
+			const blob = await zip.file(filePath).async("blob");
+			return await blobUtils.toBase64(blob);
+		});
+	}
+
+	async _forEachFile(zip, folder, read) {
+		const files = {};
+		const prefix = `${folder}/`;
 
 		for (let filePath in zip.files) {
 			if (!zip.files[filePath].dir && filePath.startsWith(prefix)) {
 				const fileName = filePath.replace(prefix, "");
-				const blob = await zip.file(filePath).async("blob");
-				media[fileName] = await blobUtils.toBase64(blob);
+				files[fileName] = await read(filePath);
 			}
 		}
 
-		return media;
+		return files;
 	}
 }
