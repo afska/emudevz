@@ -1,27 +1,28 @@
 import React, { PureComponent } from "react";
 import FlashChange from "@avinlab/react-flash-change";
 import Table from "react-bootstrap/Table";
-import classNames from "classnames";
 import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
 
-const Value = ({ value }) => {
+const Value = ({ value, prefix = "", digits = 2 }) => {
 	return (
 		<FlashChange
 			value={value}
+			flashDuration={500}
 			style={{ transform: "rotate(-360deg)" }}
 			flashStyle={{
 				transform: "rotate(0deg)",
 				boxShadow:
 					"inset 8px 8px 8px rgb(0 0 0 / 8%), 0 0 8px rgb(200 200 200 / 60%)",
-				transition: "transform 200ms, box-shadow 200ms",
+				transition: "transform 500ms, box-shadow 500ms",
 			}}
 			compare={(prevProps, nextProps) => {
 				return nextProps.value !== prevProps.value;
 			}}
 		>
-			{value}
+			{prefix}
+			{value.toString(16).toUpperCase().padStart(digits, 0)}
 		</FlashChange>
 	);
 };
@@ -39,8 +40,8 @@ export default class CPUDebugger extends PureComponent {
 		PC: 0x0600,
 		F_N: 0,
 		F_V: 0,
-		"F_-": 0,
 		F_B: 0,
+		F_b: 0,
 		F_D: 0,
 		F_I: 0,
 		F_Z: 0,
@@ -64,7 +65,11 @@ export default class CPUDebugger extends PureComponent {
 											<strong>{name}</strong>
 										</td>
 										<td>
-											<Value value={this.state[name]} />
+											<Value
+												value={this.state[name]}
+												prefix="$"
+												digits={name === "PC" ? 4 : 2}
+											/>
 										</td>
 									</tr>
 								);
@@ -78,7 +83,7 @@ export default class CPUDebugger extends PureComponent {
 								<th>N</th>
 								<th>V</th>
 								<th>-</th>
-								<th>B</th>
+								<th>-</th>
 								<th>D</th>
 								<th>I</th>
 								<th>Z</th>
@@ -87,10 +92,10 @@ export default class CPUDebugger extends PureComponent {
 						</thead>
 						<tbody>
 							<tr>
-								{["N", "V", "-", "B", "D", "I", "Z", "C"].map((name) => {
+								{["N", "V", "B", "b", "D", "I", "Z", "C"].map((name) => {
 									return (
 										<td key={name}>
-											<Value value={this.state[`F_${name}`]} />
+											<Value value={this.state[`F_${name}`]} digits={1} />
 										</td>
 									);
 								})}
