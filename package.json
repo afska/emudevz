@@ -5,19 +5,19 @@
   "scripts": {
     "start": "npm run web",
     "dev": "npm run web",
-    "web": "react-scripts start",
-    "desktop": "concurrently \"cross-env BROWSER=none react-scripts start\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
+    "web": "react-app-rewired start",
+    "desktop": "concurrently \"cross-env BROWSER=none react-app-rewired start\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
     "package": "rm -rf public/levels && node ./scripts/package-levels.js",
     "deploy": "bash ./scripts/deploy.sh",
-    "build:web": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
+    "build:web": "cross-env GENERATE_SOURCEMAP=false react-app-rewired build",
     "build:windows": "bash ./scripts/build-desktop-windows.sh",
     "build:linux": "bash ./scripts/build-desktop-linux.sh",
     "___": "___",
-    "test": "react-scripts test",
+    "test": "react-app-rewired test",
     "electron": "electron",
-    "react-scripts": "react-scripts",
-    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/emudevz react-scripts build",
-    "build:electron": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=./ react-scripts build"
+    "react-app-rewired": "react-app-rewired",
+    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/emudevz react-app-rewired build",
+    "build:electron": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=./ react-app-rewired build"
   },
   "//": [
     "[!] Packages with fixed versions are conflictive. Do not update them."
@@ -27,6 +27,7 @@
     "@codemirror/language": "6.1.0",
     "@codemirror/theme-one-dark": "6.1.0",
     "@fancyapps/ui": "^4.0.31",
+    "@neshacker/6502-tools": "^0.1.0",
     "@pixi/layers": "^1.0.11",
     "@rematch/core": "^2.2.0",
     "@rematch/loading": "^2.1.2",
@@ -115,6 +116,8 @@
     "husky": "^1.3.1",
     "mkdirp": "^1.0.4",
     "prettier": "2.2.1",
-    "pretty-quick": "^1.10.0"
+    "pretty-quick": "^1.10.0",
+    "process": "^0.11.10",
+    "react-app-rewired": "^2.2.1"
   }
 }

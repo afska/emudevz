@@ -1,10 +1,15 @@
 import React, { PureComponent } from "react";
 import FlashChange from "@avinlab/react-flash-change";
+import tools6502 from "@neshacker/6502-tools";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Table from "react-bootstrap/Table";
 import Tooltip from "react-bootstrap/Tooltip";
 import locales from "../../locales";
 import styles from "./CPUDebugger.module.css";
+
+// TODO: REMOVE
+console.log(tools6502);
+window.tools = tools6502;
 
 const HEIGHT = 300;
 
