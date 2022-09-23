@@ -1,0 +1,16 @@
+.container {
+	height: 100%;
+	user-select: none;
+	color: white;
+	font-family: "Courier New", Courier, monospace;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 16px;
+}
+
+.registers {
+	width: 125px !important;
+	border-radius: 8px;
+	text-align: center;
+}
