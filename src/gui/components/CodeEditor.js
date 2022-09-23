@@ -4,7 +4,7 @@ import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
 import { FaStepForward } from "react-icons/fa";
 import locales from "../../locales";
-import asm6502 from "../../utils/codemirror/asm6502";
+import { asm6502, highlighter } from "../../utils/codemirror";
 import IconButton from "./widgets/IconButton";
 import styles from "./CodeEditor.module.css";
 
@@ -14,7 +14,7 @@ const LANGUAGES = {
 };
 
 export default class CodeEditor extends PureComponent {
-	state = { language: "javascript", code: "" };
+	state = { language: "javascript", code: "", isReadOnly: false };
 
 	async initialize(args, level) {
 		this._level = level;
@@ -24,10 +24,17 @@ export default class CodeEditor extends PureComponent {
 
 		const initialCode = this._level?.code[initialCodeFile];
 		if (initialCode) this.setState({ code: initialCode });
+
+		this.setState({ isReadOnly: !!args.readOnly });
+		window.a = this;
+	}
+
+	test(from, to) {
+		highlighter.highlight(this.ref, from, to);
 	}
 
 	render() {
-		const { language, code } = this.state;
+		const { language, code, isReadOnly } = this.state;
 
 		return (
 			<div className={styles.container}>
@@ -48,9 +55,10 @@ export default class CodeEditor extends PureComponent {
 					width="100%"
 					height="100%"
 					theme={oneDark}
+					readOnly={isReadOnly}
 					extensions={[LANGUAGES[language]()]}
 					onChange={(value, viewUpdate) => {
-						console.log("value:", value);
+						this.setState({ code: value });
 					}}
 					autoFocus
 					ref={(ref) => {

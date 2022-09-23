@@ -18,7 +18,8 @@
 				"code",
 				{
 					"language": "asm",
-					"initialCodeFile": "content.asm"
+					"initialCodeFile": "content.asm",
+					"readOnly": true
 				}
 			]
 		},
