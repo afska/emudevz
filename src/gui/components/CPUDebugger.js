@@ -7,37 +7,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 import locales from "../../locales";
 import styles from "./CPUDebugger.module.css";
 
-// TODO: REMOVE
-console.log(tools6502);
-window.tools = tools6502;
-
 const HEIGHT = 300;
-
-const Value = ({ value, prefix = "", digits = 2 }) => {
-	return (
-		<FlashChange
-			value={value}
-			flashDuration={500}
-			style={{ transform: "rotate(-360deg)" }}
-			flashStyle={{
-				transform: "rotate(0deg)",
-				boxShadow:
-					"inset 8px 8px 8px rgb(0 0 0 / 8%), 0 0 8px rgb(200 200 200 / 60%)",
-				transition: "transform 500ms, box-shadow 500ms",
-			}}
-			compare={(prevProps, nextProps) => {
-				return nextProps.value !== prevProps.value;
-			}}
-		>
-			{prefix}
-			{value.toString(16).toUpperCase().padStart(digits, 0)}
-		</FlashChange>
-	);
-};
-
-const Viewer = (props) => (
-	<Table striped hover bordered size="sm" variant="dark" {...props} />
-);
 
 export default class CPUDebugger extends PureComponent {
 	state = {
@@ -241,4 +211,36 @@ export default class CPUDebugger extends PureComponent {
 		const scale = Math.min(this._div.clientHeight / HEIGHT, 1);
 		this._div.style.transform = `scale(${scale})`;
 	};
+
+	_compile(asm) {
+		return tools6502.Assembler.toHexString(asm)
+			.match(/.{1,2}/g)
+			.map((it) => parseInt(it, 16));
+	}
 }
+
+const Value = ({ value, prefix = "", digits = 2 }) => {
+	return (
+		<FlashChange
+			value={value}
+			flashDuration={500}
+			style={{ transform: "rotate(-360deg)" }}
+			flashStyle={{
+				transform: "rotate(0deg)",
+				boxShadow:
+					"inset 8px 8px 8px rgb(0 0 0 / 8%), 0 0 8px rgb(200 200 200 / 60%)",
+				transition: "transform 500ms, box-shadow 500ms",
+			}}
+			compare={(prevProps, nextProps) => {
+				return nextProps.value !== prevProps.value;
+			}}
+		>
+			{prefix}
+			{value.toString(16).toUpperCase().padStart(digits, 0)}
+		</FlashChange>
+	);
+};
+
+const Viewer = (props) => (
+	<Table striped hover bordered size="sm" variant="dark" {...props} />
+);
