@@ -137,7 +137,6 @@ export default class CPUDebugger extends PureComponent {
 	_onRef = (ref) => {
 		this._div = ref;
 		this._onResize();
-		window.a = this;
 	};
 
 	_onResize = () => {

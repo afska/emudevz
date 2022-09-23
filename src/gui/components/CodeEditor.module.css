@@ -1,3 +1,15 @@
+.container {
+	height: 100%;
+	position: relative;
+}
+
 .editor {
 	height: 100%;
+}
+
+.debugger {
+	position: absolute;
+	bottom: 28px;
+	right: 16px;
+	z-index: 1;
 }

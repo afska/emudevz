@@ -19,4 +19,5 @@ export default {
 	save: "Guardar",
 	settings: "Opciones",
 	shell_command_not_found: "comando no encontrado",
+	stepForward: "Avanzar",
 };
