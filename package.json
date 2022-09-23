@@ -23,6 +23,7 @@
     "[!] Packages with fixed versions are conflictive. Do not update them."
   ],
   "dependencies": {
+    "@avinlab/react-flash-change": "^1.2.0",
     "@codemirror/language": "6.1.0",
     "@codemirror/theme-one-dark": "6.1.0",
     "@fancyapps/ui": "^4.0.31",

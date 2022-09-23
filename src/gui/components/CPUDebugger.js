@@ -1,18 +1,37 @@
 import React, { PureComponent } from "react";
+import FlashChange from "@avinlab/react-flash-change";
 import Table from "react-bootstrap/Table";
 import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
 
+const Value = ({ value }) => {
+	return (
+		<FlashChange
+			value={value}
+			style={{ transform: "rotate(-360deg)" }}
+			flashStyle={{
+				transform: "rotate(0deg)",
+				transition: "transform 200ms, background 200ms",
+			}}
+			compare={(prevProps, nextProps) => {
+				return nextProps.value !== prevProps.value;
+			}}
+		>
+			{value}
+		</FlashChange>
+	);
+};
+
 export default class CPUDebugger extends PureComponent {
-	state = {};
+	state = { A: 0 };
 
 	async initialize(args, level) {
 		this._level = level;
 	}
 
 	render() {
-		const {} = this.state;
+		const { A } = this.state;
 
 		return (
 			<div className={styles.container} ref={this._onRef}>
@@ -29,7 +48,9 @@ export default class CPUDebugger extends PureComponent {
 								<td className={styles.name}>
 									<strong>A</strong>
 								</td>
-								<td>$00</td>
+								<td>
+									<Value value={A} />
+								</td>
 							</tr>
 							<tr>
 								<td className={styles.name}>
@@ -101,9 +122,9 @@ export default class CPUDebugger extends PureComponent {
 						className={styles.memory}
 					>
 						<tbody>
-							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((it) => {
+							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((it, i) => {
 								return (
-									<tr>
+									<tr key={i}>
 										<td className={styles.name}>
 											<strong>{`$00${it}0`}</strong>
 										</td>
@@ -131,6 +152,7 @@ export default class CPUDebugger extends PureComponent {
 	_onRef = (ref) => {
 		this._div = ref;
 		this._onResize();
+		window.a = this;
 	};
 
 	_onResize = () => {
