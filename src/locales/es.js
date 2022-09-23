@@ -14,6 +14,7 @@ export default {
 	language_en: "Inglés",
 	language_es: "Español",
 	loading: "Cargando...",
+	memory_viewer: "Visor de Memoria",
 	plot:
 		"En el año 2300, el mundo sufrió un ciberataque masivo que destruyó toda la Internet. Desde entonces, tu amigo online y tú están intentando entender las escasas piezas de documentación sobre la NEEES, una consola de videojuegos antigua lanzada en 1983. Con tus habilidades de programación, deberás crear un emulador que corra esos juegos viejos, ayudando a preservar la historia de los videojuegos.",
 	register_A: "Registro Acumulador",

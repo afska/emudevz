@@ -127,6 +127,41 @@ export default class CPUDebugger extends PureComponent {
 
 				<div className={styles.column}>
 					<Viewer className={styles.memory}>
+						<thead>
+							<tr className={styles.name}>
+								{[
+									"#",
+									"0",
+									"1",
+									"2",
+									"3",
+									"4",
+									"5",
+									"6",
+									"7",
+									"8",
+									"9",
+									"A",
+									"B",
+									"C",
+									"D",
+									"E",
+									"F",
+								].map((name, i) => {
+									return (
+										<OverlayTrigger
+											key={i}
+											placement="top"
+											overlay={
+												<Tooltip>{locales.get("memory_viewer")}</Tooltip>
+											}
+										>
+											<th>{name}</th>
+										</OverlayTrigger>
+									);
+								})}
+							</tr>
+						</thead>
 						<tbody>
 							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((it, i) => {
 								return (
@@ -134,7 +169,42 @@ export default class CPUDebugger extends PureComponent {
 										<td className={styles.name}>
 											<strong>{`$00${it}0`}</strong>
 										</td>
-										<td>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</td>
+										{[
+											0,
+											1,
+											2,
+											3,
+											4,
+											5,
+											6,
+											7,
+											8,
+											9,
+											0xa,
+											0xb,
+											0xc,
+											0xd,
+											0xe,
+											0xf,
+										].map((d, i) => {
+											return (
+												<OverlayTrigger
+													key={i}
+													placement="top"
+													overlay={
+														<Tooltip>
+															$
+															{(parseInt(`00${it}0`, 16) + d)
+																.toString(16)
+																.toUpperCase()
+																.padStart(4, 0)}
+														</Tooltip>
+													}
+												>
+													<th>00</th>
+												</OverlayTrigger>
+											);
+										})}
 									</tr>
 								);
 							})}
