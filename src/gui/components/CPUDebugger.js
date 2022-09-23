@@ -13,7 +13,12 @@ export default class CPUDebugger extends PureComponent {
 		const {} = this.state;
 
 		return (
-			<div className={styles.container}>
+			<div
+				className={styles.container}
+				ref={(ref) => {
+					this._div = ref;
+				}}
+			>
 				<Table
 					striped
 					bordered
@@ -23,23 +28,33 @@ export default class CPUDebugger extends PureComponent {
 				>
 					<tbody>
 						<tr>
-							<td>A</td>
+							<td className={styles.name}>
+								<strong>A</strong>
+							</td>
 							<td>$00</td>
 						</tr>
 						<tr>
-							<td>X</td>
+							<td className={styles.name}>
+								<strong>X</strong>
+							</td>
 							<td>$00</td>
 						</tr>
 						<tr>
-							<td>Y</td>
+							<td className={styles.name}>
+								<strong>Y</strong>
+							</td>
 							<td>$00</td>
 						</tr>
 						<tr>
-							<td>SP</td>
+							<td className={styles.name}>
+								<strong>SP</strong>
+							</td>
 							<td>$FF</td>
 						</tr>
 						<tr>
-							<td>PC</td>
+							<td className={styles.name}>
+								<strong>PC</strong>
+							</td>
 							<td>$0621</td>
 						</tr>
 					</tbody>
@@ -53,7 +68,7 @@ export default class CPUDebugger extends PureComponent {
 					className={styles.registers}
 				>
 					<thead>
-						<tr>
+						<tr className={styles.name}>
 							<th>N</th>
 							<th>V</th>
 							<th>-</th>
@@ -82,4 +97,19 @@ export default class CPUDebugger extends PureComponent {
 	}
 
 	focus = () => {};
+
+	componentDidMount() {
+		window.addEventListener("resize", this._onResize);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("resize", this._onResize);
+	}
+
+	_onResize = (e) => {
+		if (!this._div) return;
+
+		const scale = Math.min(this._div.clientHeight / 300, 1);
+		this._div.style.transform = `scale(${scale})`;
+	};
 }
