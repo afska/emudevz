@@ -21,6 +21,20 @@ const removeHighlight = StateEffect.define({
 	}),
 });
 
+function cutRange(ranges, r) {
+	let leftover = [];
+	ranges.between(r.from, r.to, (from, to, deco) => {
+		if (from < r.from) leftover.push(deco.range(from, r.from));
+		if (to > r.to) leftover.push(deco.range(r.to, to));
+	});
+	return ranges.update({
+		filterFrom: r.from,
+		filterTo: r.to,
+		filter: () => false,
+		add: leftover,
+	});
+}
+
 const highlightField = StateField.define({
 	create() {
 		return Decoration.none;
@@ -32,7 +46,8 @@ const highlightField = StateField.define({
 				highlights = highlights.update({
 					add: [highlightMark.range(e.value.from, e.value.to)],
 				});
-			} else if (e.is(removeHighlight)); // TODO: IMPLEMENT
+			} else if (e.is(removeHighlight))
+				highlights = cutRange(highlights, e.value);
 		return highlights;
 	},
 	provide: (f) => EditorView.decorations.from(f),
@@ -50,7 +65,16 @@ export default {
 		view.dispatch({ effects });
 	},
 
-	clear({ view }) {
-		view.state.field(highlightField, false);
+	unhighlight({ view }, from, to) {
+		const effects = [removeHighlight.of({ from, to })];
+
+		if (!view.state.field(highlightField, false))
+			effects.push(
+				StateEffect.appendConfig.of([highlightField, highlightTheme])
+			);
+
+		view.dispatch({ effects });
 	},
+
+	clear({ view }) {},
 };

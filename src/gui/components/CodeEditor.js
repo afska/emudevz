@@ -33,6 +33,10 @@ export default class CodeEditor extends PureComponent {
 		highlighter.highlight(this.ref, from, to);
 	}
 
+	testo(from, to) {
+		highlighter.unhighlight(this.ref, from, to);
+	}
+
 	render() {
 		const { language, code, isReadOnly } = this.state;
 
