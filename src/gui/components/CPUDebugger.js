@@ -213,9 +213,11 @@ export default class CPUDebugger extends PureComponent {
 	};
 
 	_compile(asm) {
-		return tools6502.Assembler.toHexString(asm)
-			.match(/.{1,2}/g)
-			.map((it) => parseInt(it, 16));
+		return new Uint8Array(
+			tools6502.Assembler.toHexString(asm)
+				.match(/.{1,2}/g)
+				.map((it) => parseInt(it, 16))
+		);
 	}
 }
 
