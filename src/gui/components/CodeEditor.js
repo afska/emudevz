@@ -1,8 +1,14 @@
 import React, { PureComponent } from "react";
-import { javascript } from "@codemirror/lang-javascript";
 import { oneDark } from "@codemirror/theme-one-dark";
+import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
+import asm6502 from "../../utils/codemirror/asm6502";
 import styles from "./CodeEditor.module.css";
+
+const LANGUAGES = {
+	javascript: () => langs.javascript(),
+	asm: () => asm6502(),
+};
 
 export default class CodeEditor extends PureComponent {
 	async initialize(args, level) {
@@ -14,7 +20,6 @@ export default class CodeEditor extends PureComponent {
 			<CodeMirror
 				className={styles.editor}
 				value={`// Describes a CPU
-
 return function() {
 	return {
 		cycle: 0,
@@ -29,9 +34,9 @@ return function() {
 				width="100%"
 				height="100%"
 				theme={oneDark}
-				extensions={[javascript({})]}
+				extensions={[LANGUAGES["javascript"]()]}
 				onChange={(value, viewUpdate) => {
-					// console.log("value:", value);
+					console.log("value:", value);
 				}}
 				autoFocus
 				ref={(ref) => {
