@@ -8,10 +8,10 @@ const DEFAULT_LANGUAGE = "en";
 const locales = { en, es };
 
 export default {
-	get(key) {
+	get(key, defaultValue = "[?]") {
 		const strings = locales[this.language] ?? {};
 
-		return strings[key] ?? locales[DEFAULT_LANGUAGE][key] ?? "[?]";
+		return strings[key] ?? locales[DEFAULT_LANGUAGE][key] ?? defaultValue;
 	},
 
 	get language() {

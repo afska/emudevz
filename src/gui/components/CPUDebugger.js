@@ -1,6 +1,9 @@
 import React, { PureComponent } from "react";
 import FlashChange from "@avinlab/react-flash-change";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Table from "react-bootstrap/Table";
+import Tooltip from "react-bootstrap/Tooltip";
+import locales from "../../locales";
 import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
@@ -28,7 +31,7 @@ const Value = ({ value, prefix = "", digits = 2 }) => {
 };
 
 const Viewer = (props) => (
-	<Table striped bordered size="sm" variant="dark" {...props} />
+	<Table striped hover bordered size="sm" variant="dark" {...props} />
 );
 
 export default class CPUDebugger extends PureComponent {
@@ -58,20 +61,28 @@ export default class CPUDebugger extends PureComponent {
 				<div className={styles.column}>
 					<Viewer className={styles.registers}>
 						<tbody>
-							{["A", "X", "Y", "SP", "PC"].map((name) => {
+							{["A", "X", "Y", "SP", "PC"].map((name, i) => {
 								return (
-									<tr key={name}>
-										<td className={styles.name}>
-											<strong>{name}</strong>
-										</td>
-										<td>
-											<Value
-												value={this.state[name]}
-												prefix="$"
-												digits={name === "PC" ? 4 : 2}
-											/>
-										</td>
-									</tr>
+									<OverlayTrigger
+										key={i}
+										placement="top"
+										overlay={
+											<Tooltip>{locales.get(`register_${name}`)}</Tooltip>
+										}
+									>
+										<tr>
+											<td className={styles.name}>
+												<strong>{name}</strong>
+											</td>
+											<td>
+												<Value
+													value={this.state[name]}
+													prefix="$"
+													digits={name === "PC" ? 4 : 2}
+												/>
+											</td>
+										</tr>
+									</OverlayTrigger>
 								);
 							})}
 						</tbody>
@@ -80,14 +91,24 @@ export default class CPUDebugger extends PureComponent {
 					<Viewer className={styles.registers}>
 						<thead>
 							<tr className={styles.name}>
-								<th>N</th>
-								<th>V</th>
-								<th>-</th>
-								<th>-</th>
-								<th>D</th>
-								<th>I</th>
-								<th>Z</th>
-								<th>C</th>
+								{["N", "V", "-", "-", "-", "I", "Z", "C"].map((name, i) => {
+									return (
+										<OverlayTrigger
+											key={i}
+											placement="top"
+											overlay={
+												<Tooltip>
+													{locales.get(
+														`register_flags_${name}`,
+														locales.get("register_flags_U")
+													)}
+												</Tooltip>
+											}
+										>
+											<th>{name}</th>
+										</OverlayTrigger>
+									);
+								})}
 							</tr>
 						</thead>
 						<tbody>
