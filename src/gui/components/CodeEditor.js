@@ -24,7 +24,7 @@ export default class CodeEditor extends PureComponent {
 		if (LANGUAGES[language]) this.setState({ language });
 
 		const initialCode = this._level?.code[initialCodeFile];
-		if (initialCode) this.setState({ code: initialCode });
+		if (initialCode) this._setCode(initialCode);
 
 		this.setState({ isReadOnly: !!args.readOnly });
 	}
@@ -53,9 +53,7 @@ export default class CodeEditor extends PureComponent {
 					theme={oneDark}
 					readOnly={isReadOnly}
 					extensions={[LANGUAGES[language]()]}
-					onChange={(value, viewUpdate) => {
-						this.setState({ code: value });
-					}}
+					onChange={this._setCode}
 					autoFocus
 					ref={(ref) => {
 						this.ref = ref;
@@ -71,5 +69,10 @@ export default class CodeEditor extends PureComponent {
 
 	highlight = (line) => {
 		highlighter.highlightLine(this.ref, this.state.code, line);
+	};
+
+	_setCode = (code) => {
+		this.setState({ code });
+		bus.emit("code", code);
 	};
 }
