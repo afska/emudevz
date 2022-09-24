@@ -1,10 +1,10 @@
 import { StateEffect, StateField } from "@codemirror/state";
 import { Decoration, EditorView } from "@codemirror/view";
 
-const highlightMark = Decoration.mark({ class: "cm-highlight" });
+const highlightMark = Decoration.line({ class: "cm-highlight" });
 
 const highlightTheme = EditorView.baseTheme({
-	".cm-highlight": { background: "rgba(98, 112, 128, 0.5)" },
+	".cm-highlight": { background: "rgba(98, 112, 128, 0.5) !important" },
 });
 
 const createEffect = () =>
@@ -20,7 +20,8 @@ const removeHighlight = createEffect();
 
 function addRange(ranges, r) {
 	return ranges.update({
-		add: [highlightMark.range(r.from, r.to)],
+		add: [highlightMark.range(r.from, r.from)],
+		// (ignore `to` for full line highlight)
 	});
 }
 
