@@ -11,10 +11,11 @@ import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
 const FLASH_DURATION = 500;
+const MEMORY_ROWS = 10;
 
 export default class CPUDebugger extends PureComponent {
 	state = {
-		_memoryStart: 0,
+		_memoryStart: 0x4020,
 		_mappings: [],
 		A: 0x0,
 		X: 0x0,
@@ -29,7 +30,7 @@ export default class CPUDebugger extends PureComponent {
 		F_I: 0,
 		F_Z: 0,
 		F_C: 0,
-		memory: new Uint8Array(16 * 10),
+		memory: new Uint8Array(MEMORY_ROWS * 16),
 	};
 
 	async initialize(args, level) {
@@ -216,6 +217,8 @@ export default class CPUDebugger extends PureComponent {
 	focus = () => {};
 
 	_onCode = (code) => {
+		// TODO: HANDLE COMPILE ERRORS
+
 		const bytes = assembler.compile(code);
 		const mappings = assembler.inspect(code);
 		this._cpu = runner.create(bytes);
@@ -248,6 +251,11 @@ export default class CPUDebugger extends PureComponent {
 	};
 
 	_updateState() {
+		const memory = new Uint8Array(MEMORY_ROWS * 16);
+		for (let i = 0; i < MEMORY_ROWS * 16; i++) {
+			memory[i] = this._cpu.memory.readAt(this.state._memoryStart + i);
+		}
+
 		this.setState({
 			A: this._cpu.registers.a.value,
 			X: this._cpu.registers.x.value,
@@ -262,6 +270,7 @@ export default class CPUDebugger extends PureComponent {
 			F_I: +this._cpu.flags.i,
 			F_Z: +this._cpu.flags.z,
 			F_C: +this._cpu.flags.c,
+			memory,
 		});
 
 		const lineNumber = this.state._mappings.find(
