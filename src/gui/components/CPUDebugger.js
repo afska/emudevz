@@ -1,11 +1,10 @@
 import React, { PureComponent } from "react";
 import FlashChange from "@avinlab/react-flash-change";
-import tools6502 from "@neshacker/6502-tools";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Table from "react-bootstrap/Table";
 import Tooltip from "react-bootstrap/Tooltip";
 import locales from "../../locales";
-import { bus } from "../../utils";
+import { bus, hex, nesAssembler } from "../../utils";
 import CodeEditor from "./CodeEditor";
 import styles from "./CPUDebugger.module.css";
 
@@ -180,11 +179,7 @@ export default class CPUDebugger extends PureComponent {
 													placement="top"
 													overlay={
 														<Tooltip>
-															$
-															{(parseInt(`00${it}0`, 16) + d)
-																.toString(16)
-																.toUpperCase()
-																.padStart(4, 0)}
+															${hex.format(parseInt(`00${it}0`, 16) + d, 4)}
 														</Tooltip>
 													}
 												>
@@ -215,6 +210,15 @@ export default class CPUDebugger extends PureComponent {
 	focus = () => {};
 
 	_onPlay = () => {
+		console.log(
+			nesAssembler.inspect(`LDA #$01
+			LDX #$fa
+			LDA #$05
+			LDY #$ab
+			LDA #$08
+			LDA #$19`)
+		);
+
 		if (Date.now() - (this._lastStep || 0) < FLASH_DURATION) return;
 		this._lastStep = Date.now();
 
@@ -250,14 +254,6 @@ export default class CPUDebugger extends PureComponent {
 		this._div.style.transform = `scale(${scale})`;
 	};
 
-	_compile(asm) {
-		return new Uint8Array(
-			tools6502.Assembler.toHexString(asm)
-				.match(/.{1,2}/g)
-				.map((it) => parseInt(it, 16))
-		);
-	}
-
 	_highlightLine() {
 		this._codeEditor.highlight(this.state._line);
 	}
@@ -281,7 +277,7 @@ const Value = ({ value, prefix = "", digits = 2 }) => {
 			}}
 		>
 			{prefix}
-			{value.toString(16).toUpperCase().padStart(digits, 0)}
+			{hex.format(value, digits)}
 		</FlashChange>
 	);
 };
