@@ -263,7 +263,12 @@ export default class CPUDebugger extends PureComponent {
 			F_Z: +this._cpu.flags.z,
 			F_C: +this._cpu.flags.c,
 		});
-		this._codeEditor.highlight(0);
+
+		const lineNumber = this.state._mappings.find(
+			(it) => runner.CODE_ADDRESS + it.address === this._cpu.pc.value
+		)?.lineNumber;
+
+		this._codeEditor.highlight(lineNumber);
 	}
 }
 
