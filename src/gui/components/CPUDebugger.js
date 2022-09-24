@@ -5,6 +5,8 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Table from "react-bootstrap/Table";
 import Tooltip from "react-bootstrap/Tooltip";
 import locales from "../../locales";
+import { bus } from "../../utils";
+import CodeEditor from "./CodeEditor";
 import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
@@ -28,6 +30,14 @@ export default class CPUDebugger extends PureComponent {
 
 	async initialize(args, level) {
 		this._level = level;
+		this._codeEditor = level.$layout.instances[args.codeEditor];
+
+		if (!(this._codeEditor instanceof CodeEditor))
+			throw new Error(`Missing \`codeEditor\`: ${args.codeEditor}`);
+
+		setTimeout(() => {
+			this._codeEditor.highlight(0);
+		});
 	}
 
 	render() {
@@ -194,11 +204,18 @@ export default class CPUDebugger extends PureComponent {
 
 	componentDidMount() {
 		window.addEventListener("resize", this._onResize);
+		bus.on("play", this._onPlay);
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener("resize", this._onResize);
+		bus.removeListener("play", this._onPlay);
 	}
+
+	_onPlay = () => {
+		// TODO: ASD
+		console.log("Next line");
+	};
 
 	_onRef = (ref) => {
 		this._div = ref;

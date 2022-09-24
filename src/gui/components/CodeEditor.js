@@ -4,6 +4,7 @@ import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
 import { FaStepForward } from "react-icons/fa";
 import locales from "../../locales";
+import { bus } from "../../utils";
 import { asm6502, highlighter } from "../../utils/codemirror";
 import IconButton from "./widgets/IconButton";
 import styles from "./CodeEditor.module.css";
@@ -39,7 +40,7 @@ export default class CodeEditor extends PureComponent {
 						tooltip={locales.get("stepForward")}
 						kind="rounded"
 						onClick={(e) => {
-							// TODO: IMPLEMENT
+							bus.emit("play");
 						}}
 					/>
 				</div>

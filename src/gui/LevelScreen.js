@@ -30,7 +30,6 @@ class LevelScreen extends PureComponent {
 
 		setTimeout(() => {
 			const runningComponents = layout.instances;
-			const { level } = this.props;
 
 			_.forEach(runningComponents, async (runningComponent, name) => {
 				const [, args] = level.ui.components[name];
