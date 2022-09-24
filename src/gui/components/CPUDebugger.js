@@ -74,7 +74,7 @@ export default class CPUDebugger extends PureComponent {
 						</tbody>
 					</Viewer>
 
-					<Viewer className={styles.registers}>
+					<Viewer className={styles.flags}>
 						<thead>
 							<tr className={styles.name}>
 								{["N", "V", "-", "-", "-", "I", "Z", "C"].map((name, i) => {

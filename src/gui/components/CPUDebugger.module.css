@@ -18,13 +18,18 @@
 	align-items: center;
 }
 
+.name {
+	color: #9bc0e9 !important;
+}
+
 .registers {
 	width: 125px !important;
 	text-align: center;
 }
 
-.name {
-	color: #9bc0e9 !important;
+.flags {
+	text-align: center;
+	margin-bottom: 0 !important;
 }
 
 .memory {
@@ -33,4 +38,5 @@
 	font-size: x-small;
 	white-space: nowrap;
 	text-align: center;
+	margin-bottom: 0 !important;
 }
