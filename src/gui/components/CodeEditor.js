@@ -26,15 +26,6 @@ export default class CodeEditor extends PureComponent {
 		if (initialCode) this.setState({ code: initialCode });
 
 		this.setState({ isReadOnly: !!args.readOnly });
-		window.a = this;
-	}
-
-	test(from, to) {
-		highlighter.highlight(this.ref, from, to);
-	}
-
-	testo(from, to) {
-		highlighter.unhighlight(this.ref, from, to);
 	}
 
 	render() {
@@ -75,5 +66,9 @@ export default class CodeEditor extends PureComponent {
 
 	focus = () => {
 		this.ref.view.focus();
+	};
+
+	highlight = (line) => {
+		highlighter.highlightLine(this.ref, this.state.code, line);
 	};
 }
