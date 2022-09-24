@@ -14,6 +14,7 @@ const FLASH_DURATION = 500;
 export default class CPUDebugger extends PureComponent {
 	state = {
 		_line: 0,
+		_memoryStart: 0,
 		A: 0x0,
 		X: 0x0,
 		Y: 0x0,
@@ -27,6 +28,7 @@ export default class CPUDebugger extends PureComponent {
 		F_I: 0,
 		F_Z: 0,
 		F_C: 0,
+		memory: new Uint8Array(16 * 10),
 	};
 
 	async initialize(args, level) {
@@ -149,11 +151,13 @@ export default class CPUDebugger extends PureComponent {
 							</tr>
 						</thead>
 						<tbody>
-							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((it, i) => {
+							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((line, i) => {
+								const lineStart = this.state._memoryStart + line * 16;
+
 								return (
 									<tr key={i}>
 										<td className={styles.name}>
-											<strong>{`$00${it}0`}</strong>
+											<strong>${hex.format(lineStart, 4)}</strong>
 										</td>
 										{[
 											0,
@@ -178,12 +182,15 @@ export default class CPUDebugger extends PureComponent {
 													key={i}
 													placement="top"
 													overlay={
-														<Tooltip>
-															${hex.format(parseInt(`00${it}0`, 16) + d, 4)}
-														</Tooltip>
+														<Tooltip>${hex.format(lineStart + d, 4)}</Tooltip>
 													}
 												>
-													<th>00</th>
+													<th>
+														<Value
+															value={this.state.memory[line * 16 + d]}
+															digits={2}
+														/>
+													</th>
 												</OverlayTrigger>
 											);
 										})}
