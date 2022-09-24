@@ -10,6 +10,7 @@ import CodeEditor from "./CodeEditor";
 import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
+const FLASH_DURATION = 500;
 
 export default class CPUDebugger extends PureComponent {
 	state = {
@@ -214,8 +215,26 @@ export default class CPUDebugger extends PureComponent {
 	focus = () => {};
 
 	_onPlay = () => {
+		if (Date.now() - (this._lastStep || 0) < FLASH_DURATION) return;
+		this._lastStep = Date.now();
+
 		this.setState({ _line: this.state._line + 1 }, () => {
 			this._highlightLine();
+
+			// TODO: UNHARDCODE
+			if (this.state._line === 1) {
+				this.setState({ A: 0x1 });
+			} else if (this.state._line === 2) {
+				this.setState({ X: 0xfa });
+			} else if (this.state._line === 3) {
+				this.setState({ A: 0x5 });
+			} else if (this.state._line === 4) {
+				this.setState({ Y: 0xab });
+			} else if (this.state._line === 5) {
+				this.setState({ A: 0x8 });
+			} else if (this.state._line === 6) {
+				this.setState({ A: 0x19 });
+			}
 		});
 	};
 
@@ -248,13 +267,14 @@ const Value = ({ value, prefix = "", digits = 2 }) => {
 	return (
 		<FlashChange
 			value={value}
-			flashDuration={500}
+			flashDuration={FLASH_DURATION}
 			style={{ transform: "rotate(-360deg)" }}
 			flashStyle={{
 				transform: "rotate(0deg)",
+				background: "rgba(98, 112, 128, 0.5)",
 				boxShadow:
 					"inset 8px 8px 8px rgb(0 0 0 / 8%), 0 0 8px rgb(200 200 200 / 60%)",
-				transition: "transform 500ms, box-shadow 500ms",
+				transition: `transform ${FLASH_DURATION}ms, box-shadow ${FLASH_DURATION}ms`,
 			}}
 			compare={(prevProps, nextProps) => {
 				return nextProps.value !== prevProps.value;

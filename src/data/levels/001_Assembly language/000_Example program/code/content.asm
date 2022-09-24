@@ -1,6 +1,6 @@
 LDA #$01
-STA $0200
+LDX #$fa
 LDA #$05
-STA $0201
+LDY #$ab
 LDA #$08
-STA $0202
+LDA #$19
