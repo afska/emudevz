@@ -13,6 +13,7 @@ const HEIGHT = 300;
 
 export default class CPUDebugger extends PureComponent {
 	state = {
+		_line: 0,
 		A: 0x0,
 		X: 0x0,
 		Y: 0x0,
@@ -36,7 +37,7 @@ export default class CPUDebugger extends PureComponent {
 			throw new Error(`Missing \`codeEditor\`: ${args.codeEditor}`);
 
 		setTimeout(() => {
-			this._codeEditor.highlight(0);
+			this._highlightLine();
 		});
 	}
 
@@ -200,8 +201,6 @@ export default class CPUDebugger extends PureComponent {
 		);
 	}
 
-	focus = () => {};
-
 	componentDidMount() {
 		window.addEventListener("resize", this._onResize);
 		bus.on("play", this._onPlay);
@@ -212,9 +211,12 @@ export default class CPUDebugger extends PureComponent {
 		bus.removeListener("play", this._onPlay);
 	}
 
+	focus = () => {};
+
 	_onPlay = () => {
-		// TODO: ASD
-		console.log("Next line");
+		this.setState({ _line: this.state._line + 1 }, () => {
+			this._highlightLine();
+		});
 	};
 
 	_onRef = (ref) => {
@@ -235,6 +237,10 @@ export default class CPUDebugger extends PureComponent {
 				.match(/.{1,2}/g)
 				.map((it) => parseInt(it, 16))
 		);
+	}
+
+	_highlightLine() {
+		this._codeEditor.highlight(this.state._line);
 	}
 }
 
