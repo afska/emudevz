@@ -14,13 +14,13 @@ const FLASH_DURATION = 500;
 
 export default class CPUDebugger extends PureComponent {
 	state = {
-		_line: 0,
 		_memoryStart: 0,
+		_mappings: [],
 		A: 0x0,
 		X: 0x0,
 		Y: 0x0,
-		SP: 0xff,
-		PC: 0x0600,
+		SP: 0x0,
+		PC: 0x0,
 		F_N: 0,
 		F_V: 0,
 		F_B: 0,
@@ -35,14 +35,9 @@ export default class CPUDebugger extends PureComponent {
 	async initialize(args, level) {
 		this._level = level;
 		this._codeEditor = level.$layout.instances[args.codeEditor];
-		this._cpu = null;
 
 		if (!(this._codeEditor instanceof CodeEditor))
 			throw new Error(`Missing \`codeEditor\`: ${args.codeEditor}`);
-
-		setTimeout(() => {
-			this._highlightLine();
-		});
 	}
 
 	render() {
@@ -222,40 +217,22 @@ export default class CPUDebugger extends PureComponent {
 
 	_onCode = (code) => {
 		const bytes = assembler.compile(code);
+		const mappings = assembler.inspect(code);
 		this._cpu = runner.create(bytes);
+
+		this.setState({ _mappings: mappings }, () => {
+			setTimeout(() => {
+				this._updateState();
+			});
+		});
 	};
 
 	_onPlay = () => {
-		console.log(
-			assembler.inspect(`LDA #$01
-			LDX #$fa
-			LDA #$05
-			LDY #$ab
-			LDA #$08
-			LDA #$19`)
-		);
-
 		if (Date.now() - (this._lastStep || 0) < FLASH_DURATION) return;
 		this._lastStep = Date.now();
 
-		this.setState({ _line: this.state._line + 1 }, () => {
-			this._highlightLine();
-
-			// TODO: UNHARDCODE
-			if (this.state._line === 1) {
-				this.setState({ A: 0x1 });
-			} else if (this.state._line === 2) {
-				this.setState({ X: 0xfa });
-			} else if (this.state._line === 3) {
-				this.setState({ A: 0x5 });
-			} else if (this.state._line === 4) {
-				this.setState({ Y: 0xab });
-			} else if (this.state._line === 5) {
-				this.setState({ A: 0x8 });
-			} else if (this.state._line === 6) {
-				this.setState({ A: 0x19 });
-			}
-		});
+		this._cpu.step();
+		this._updateState();
 	};
 
 	_onRef = (ref) => {
@@ -270,8 +247,23 @@ export default class CPUDebugger extends PureComponent {
 		this._div.style.transform = `scale(${scale})`;
 	};
 
-	_highlightLine() {
-		this._codeEditor.highlight(this.state._line);
+	_updateState() {
+		this.setState({
+			A: this._cpu.registers.a.value,
+			X: this._cpu.registers.x.value,
+			Y: this._cpu.registers.y.value,
+			SP: this._cpu.sp.value,
+			PC: this._cpu.pc.value,
+			F_N: +this._cpu.flags.n,
+			F_V: +this._cpu.flags.v,
+			F_B: 1,
+			F_b: 0,
+			F_D: +this._cpu.flags.d,
+			F_I: +this._cpu.flags.i,
+			F_Z: +this._cpu.flags.z,
+			F_C: +this._cpu.flags.c,
+		});
+		this._codeEditor.highlight(0);
 	}
 }
 

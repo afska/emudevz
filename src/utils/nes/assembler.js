@@ -23,6 +23,7 @@ export default {
 			const address = lir.address;
 
 			if (lir instanceof Instruction) {
+				console.log(lir);
 				instructions.push({
 					address,
 					line: lir.source,

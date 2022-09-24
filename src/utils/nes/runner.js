@@ -1,6 +1,10 @@
 import NES from "nes-emu";
 
+const CODE_ADDRESS = 0x4020;
+
 export default {
+	CODE_ADDRESS,
+
 	create(code) {
 		const cpu = new NES().cpu;
 
@@ -27,9 +31,9 @@ export default {
 		cpu.memory = memory;
 		cpu.context = context;
 		cpu.stack.context = context;
-		cpu.pc.value = 0x4020;
+		cpu.pc.value = CODE_ADDRESS;
 
-		code.forEach((byte, i) => memory.writeAt(0x4020 + i, byte));
+		code.forEach((byte, i) => memory.writeAt(CODE_ADDRESS + i, byte));
 
 		return cpu;
 	},
