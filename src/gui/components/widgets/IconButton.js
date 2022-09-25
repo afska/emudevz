@@ -9,6 +9,7 @@ export default class IconButton extends PureComponent {
 		const {
 			Icon,
 			tooltip,
+			onClick,
 			kind = "inline",
 			disabled = false,
 			...rest
@@ -22,6 +23,10 @@ export default class IconButton extends PureComponent {
 						this._getStyle(kind),
 						disabled && styles.disabled
 					)}
+					onClick={() => {
+						if (disabled) return;
+						onClick();
+					}}
 					{...rest}
 				>
 					<Icon />

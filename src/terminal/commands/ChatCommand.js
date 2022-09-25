@@ -2,6 +2,7 @@ import _ from "lodash";
 import Level from "../../level/Level";
 import ChatScript from "../../level/chat/ChatScript";
 import locales from "../../locales";
+import { bus as _bus } from "../../utils";
 import { theme } from "../style";
 import Command from "./Command";
 
@@ -67,6 +68,9 @@ export default class ChatCommand extends Command {
 		if (startUpCode == null) return;
 
 		const layout = Level.current.$layout;
+
+		// eslint-disable-next-line
+		const bus = _bus; // (can be used inside eval)
 
 		let evalCode = startUpCode;
 		_.forEach(layout.instances, async (__, name) => {

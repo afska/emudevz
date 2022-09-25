@@ -1,7 +1,9 @@
 ---
 main:
+  run: |
+    // bus.emit("run-enabled", false)
   on-play: |
-    goTo("lda");
+    goTo("lda")
   messages:
   - well, now press the play button...
   responses: []
