@@ -286,7 +286,10 @@ const Value = ({ value, prefix = "", digits = 2 }) => {
 		<FlashChange
 			value={value}
 			flashDuration={FLASH_DURATION}
-			style={{ transform: "rotate(-360deg)" }}
+			style={{
+				transform: "rotate(-360deg)",
+				color: value !== 0 ? "#e5c07b" : "#ffffff",
+			}}
 			flashStyle={{
 				transform: "rotate(0deg)",
 				background: "rgba(98, 112, 128, 0.5)",
