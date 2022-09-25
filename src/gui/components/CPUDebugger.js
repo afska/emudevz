@@ -12,6 +12,7 @@ import styles from "./CPUDebugger.module.css";
 const HEIGHT = 300;
 const FLASH_DURATION = 500;
 const MEMORY_ROWS = 10;
+const PC_STYLE = { textDecoration: "underline" };
 
 export default class CPUDebugger extends PureComponent {
 	state = {
@@ -58,7 +59,9 @@ export default class CPUDebugger extends PureComponent {
 									>
 										<tr>
 											<td className={styles.name}>
-												<strong>{name}</strong>
+												<strong style={name === "PC" ? PC_STYLE : {}}>
+													{name}
+												</strong>
 											</td>
 											<td>
 												<Value
@@ -199,6 +202,9 @@ export default class CPUDebugger extends PureComponent {
 													<th>
 														<Value
 															value={this.state.memory[line * 16 + d]}
+															style={
+																lineStart + d === this.state.PC ? PC_STYLE : {}
+															}
 															digits={2}
 														/>
 													</th>
@@ -294,7 +300,7 @@ export default class CPUDebugger extends PureComponent {
 	}
 }
 
-const Value = ({ value, prefix = "", digits = 2 }) => {
+const Value = ({ value, style = {}, prefix = "", digits = 2 }) => {
 	return (
 		<FlashChange
 			value={value}
@@ -302,6 +308,7 @@ const Value = ({ value, prefix = "", digits = 2 }) => {
 			style={{
 				transform: "rotate(-360deg)",
 				color: value !== 0 ? "#e5c07b" : "#ffffff",
+				...style,
 			}}
 			flashStyle={{
 				transform: "rotate(0deg)",
