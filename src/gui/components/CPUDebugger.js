@@ -180,7 +180,20 @@ export default class CPUDebugger extends PureComponent {
 													key={i}
 													placement="top"
 													overlay={
-														<Tooltip>${hex.format(lineStart + d, 4)}</Tooltip>
+														<Tooltip>
+															${hex.format(lineStart + d, 4)}
+															{(() => {
+																const line = this.state._mappings.find(
+																	(it) =>
+																		runner.CODE_ADDRESS + it.address ===
+																		lineStart + d
+																)?.line;
+
+																return line != null ? (
+																	<div className={styles.sentence}>${line}</div>
+																) : null;
+															})()}
+														</Tooltip>
 													}
 												>
 													<th>
