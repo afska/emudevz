@@ -1,6 +1,12 @@
 ---
 main:
+  on-play: |
+    goTo("lda");
   messages:
-  - coming soon
-  responses:
-  - ok [end]
+  - well, now press the play button...
+  responses: []
+
+lda:
+  messages:
+  - see? re piola
+  responses: []

@@ -42,10 +42,14 @@ export default class ChatCommand extends Command {
 
 			await this._runStartUpCode(startUpCode);
 			await this._showMessages(messages);
-			await this._showChooseAnAnswer();
-			await this._showOptions(options);
-			const selectedOption = await this._getSelectedOption(options);
-			this._goTo(selectedOption, memory);
+			if (!_.isEmpty(options)) {
+				await this._showChooseAnAnswer();
+				await this._showOptions(options);
+				const selectedOption = await this._getSelectedOption(options);
+				this._goTo(selectedOption, memory);
+			} else {
+				// TODO: WAIT FOR BUS EVENTS
+			}
 		}
 
 		level.advance();
