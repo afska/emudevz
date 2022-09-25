@@ -16,6 +16,7 @@ const PC_STYLE = { textDecoration: "underline" };
 
 export default class CPUDebugger extends PureComponent {
 	state = {
+		_lastCode: "",
 		_memoryStart: 0x4020,
 		_mappings: [],
 		A: 0x0,
@@ -228,12 +229,14 @@ export default class CPUDebugger extends PureComponent {
 		window.addEventListener("resize", this._onResize);
 		bus.on("code", this._onCode);
 		bus.on("play", this._onPlay);
+		bus.on("reset", this._onReset);
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener("resize", this._onResize);
 		bus.removeListener("code", this._onCode);
 		bus.removeListener("play", this._onPlay);
+		bus.removeListener("reset", this._onReset);
 	}
 
 	focus = () => {};
@@ -245,7 +248,7 @@ export default class CPUDebugger extends PureComponent {
 		const mappings = assembler.inspect(code);
 		this._cpu = runner.create(bytes);
 
-		this.setState({ _mappings: mappings }, () => {
+		this.setState({ _lastCode: code, _mappings: mappings }, () => {
 			setTimeout(() => {
 				this._updateState();
 			});
@@ -258,6 +261,10 @@ export default class CPUDebugger extends PureComponent {
 
 		this._cpu.step();
 		this._updateState();
+	};
+
+	_onReset = () => {
+		this._onCode(this.state._lastCode);
 	};
 
 	_onRef = (ref) => {
@@ -300,6 +307,7 @@ export default class CPUDebugger extends PureComponent {
 		)?.lineNumber;
 
 		this._codeEditor.highlight(lineNumber);
+		if (lineNumber == null) bus.emit("end");
 	}
 }
 

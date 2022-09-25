@@ -16,7 +16,33 @@ const LANGUAGES = {
 };
 
 export default class CodeEditor extends PureComponent {
-	state = { language: "javascript", code: "", isReadOnly: false };
+	state = {
+		language: "javascript",
+		code: "",
+		isReadOnly: false,
+		actionName: "step",
+	};
+
+	actions = {
+		step: {
+			icon: FaStepForward,
+			tooltip: locales.get("stepForward"),
+			run: () => bus.emit("play"),
+		},
+		reset: {
+			icon: FaFastBackward,
+			tooltip: locales.get("stepReset"),
+			run: () => {
+				bus.emit("reset");
+				this.setState({ actionName: "step" });
+			},
+		},
+		unknown: {
+			icon: () => false,
+			tooltip: "?",
+			run: () => {},
+		},
+	};
 
 	async initialize(args, level) {
 		this._level = level;
@@ -33,16 +59,16 @@ export default class CodeEditor extends PureComponent {
 	render() {
 		const { language, code, isReadOnly } = this.state;
 
+		const action = this._getAction();
+
 		return (
 			<div className={styles.container}>
 				<div className={styles.debugger}>
 					<IconButton
-						Icon={FaStepForward}
-						tooltip={locales.get("stepForward")}
+						Icon={action.icon}
+						tooltip={action.tooltip}
+						onClick={action.run}
 						kind="rounded"
-						onClick={(e) => {
-							bus.emit("play");
-						}}
 					/>
 				</div>
 
@@ -64,6 +90,14 @@ export default class CodeEditor extends PureComponent {
 		);
 	}
 
+	componentDidMount() {
+		bus.on("end", this._onEnd);
+	}
+
+	componentWillUnmount() {
+		bus.removeListener("end", this._onEnd);
+	}
+
 	focus = () => {
 		this.ref.view.focus();
 	};
@@ -72,8 +106,18 @@ export default class CodeEditor extends PureComponent {
 		highlighter.highlightLine(this.ref, this.state.code, line);
 	};
 
+	_onEnd = () => {
+		this.setState({ actionName: "reset" });
+	};
+
 	_setCode = (code) => {
 		this.setState({ code });
 		bus.emit("code", code);
 	};
+
+	_getAction() {
+		const { actionName } = this.state;
+
+		return this.actions[actionName] || this.actions.unknown;
+	}
 }

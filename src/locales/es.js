@@ -32,4 +32,5 @@ export default {
 	settings: "Opciones",
 	shell_command_not_found: "comando no encontrado",
 	stepForward: "Avanzar",
+	stepReset: "Reiniciar",
 };
