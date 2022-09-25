@@ -13,12 +13,7 @@
 					"availableCommands": ["chat", "help", "clear"]
 				}
 			],
-			"Bottom": [
-				"cpu",
-				{
-					"codeEditor": "Top"
-				}
-			],
+			"Bottom": ["cpu", {}],
 			"Top": [
 				"code",
 				{

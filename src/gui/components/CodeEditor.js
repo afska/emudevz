@@ -19,7 +19,9 @@ export default class CodeEditor extends PureComponent {
 	state = {
 		language: "javascript",
 		code: "",
+		highlightedLine: -1,
 		isReadOnly: false,
+		isDisabled: false,
 		actionName: "step",
 	};
 
@@ -57,7 +59,7 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	render() {
-		const { language, code, isReadOnly } = this.state;
+		const { language, code, isReadOnly, isDisabled } = this.state;
 
 		const action = this._getAction();
 
@@ -68,6 +70,7 @@ export default class CodeEditor extends PureComponent {
 						Icon={action.icon}
 						tooltip={action.tooltip}
 						onClick={action.run}
+						disabled={isDisabled}
 						kind="rounded"
 					/>
 				</div>
@@ -92,22 +95,35 @@ export default class CodeEditor extends PureComponent {
 
 	componentDidMount() {
 		bus.on("end", this._onEnd);
+		bus.on("run-enabled", this._onRunEnabled);
+		bus.on("highlight", this._onHighlight);
 	}
 
 	componentWillUnmount() {
 		bus.removeListener("end", this._onEnd);
+		bus.removeListener("run-enabled", this._onRunEnabled);
+		bus.removeListener("highlight", this._onHighlight);
+	}
+
+	componentDidUpdate() {
+		const { highlightedLine } = this.state;
+		this._highlight(highlightedLine);
 	}
 
 	focus = () => {
 		this.ref.view.focus();
 	};
 
-	highlight = (line) => {
-		highlighter.highlightLine(this.ref, this.state.code, line);
-	};
-
 	_onEnd = () => {
 		this.setState({ actionName: "reset" });
+	};
+
+	_onRunEnabled = (isEnabled) => {
+		this.setState({ isDisabled: !isEnabled });
+	};
+
+	_onHighlight = (line) => {
+		this.setState({ highlightedLine: line });
 	};
 
 	_setCode = (code) => {
@@ -119,5 +135,13 @@ export default class CodeEditor extends PureComponent {
 		const { actionName } = this.state;
 
 		return this.actions[actionName] || this.actions.unknown;
+	}
+
+	_highlight(line) {
+		if (!this.ref) return;
+
+		setTimeout(() => {
+			highlighter.highlightLine(this.ref, this.state.code, line);
+		});
 	}
 }

@@ -6,7 +6,6 @@ import Tooltip from "react-bootstrap/Tooltip";
 import locales from "../../locales";
 import { bus, hex } from "../../utils";
 import { assembler, runner } from "../../utils/nes";
-import CodeEditor from "./CodeEditor";
 import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
@@ -37,10 +36,6 @@ export default class CPUDebugger extends PureComponent {
 
 	async initialize(args, level) {
 		this._level = level;
-		this._codeEditor = level.$layout.instances[args.codeEditor];
-
-		if (!(this._codeEditor instanceof CodeEditor))
-			throw new Error(`Missing \`codeEditor\`: ${args.codeEditor}`);
 	}
 
 	render() {
@@ -256,8 +251,10 @@ export default class CPUDebugger extends PureComponent {
 	};
 
 	_onPlay = () => {
-		if (Date.now() - (this._lastStep || 0) < FLASH_DURATION) return;
-		this._lastStep = Date.now();
+		bus.emit("run-enabled", false);
+		setTimeout(() => {
+			bus.emit("run-enabled", true);
+		}, FLASH_DURATION);
 
 		this._cpu.step();
 		this._updateState();
@@ -306,7 +303,7 @@ export default class CPUDebugger extends PureComponent {
 			(it) => runner.CODE_ADDRESS + it.address === this._cpu.pc.value
 		)?.lineNumber;
 
-		this._codeEditor.highlight(lineNumber);
+		bus.emit("highlight", lineNumber);
 		if (lineNumber == null) bus.emit("end");
 	}
 }

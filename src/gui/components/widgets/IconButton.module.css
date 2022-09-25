@@ -7,6 +7,11 @@
 	margin-right: 8px;
 }
 
+.disabled {
+	background: #929292 !important;
+	cursor: not-allowed;
+}
+
 .rounded {
 	background: #7792b2;
 	color: #252525;
