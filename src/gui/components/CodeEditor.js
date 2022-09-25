@@ -3,6 +3,7 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
 import { FaStepForward } from "react-icons/fa";
+import { FaFastBackward } from "react-icons/fa";
 import locales from "../../locales";
 import { bus } from "../../utils";
 import { asm6502, highlighter } from "../../utils/codemirror";

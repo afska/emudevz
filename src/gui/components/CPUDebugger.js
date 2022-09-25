@@ -182,6 +182,9 @@ export default class CPUDebugger extends PureComponent {
 												<OverlayTrigger
 													key={i}
 													placement="top"
+													show={
+														lineStart + d === this.state.PC ? true : undefined
+													}
 													overlay={
 														<Tooltip>
 															${hex.format(lineStart + d, 4)}
