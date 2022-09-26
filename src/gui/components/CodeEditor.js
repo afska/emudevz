@@ -120,17 +120,16 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	componentDidMount() {
-		bus.on("end", this._onEnd);
-		bus.on("run-enabled", this._onRunEnabled);
-		bus.on("highlight", this._onHighlight);
-		bus.on("level-memory-changed", this._onLevelMemoryChanged);
+		this._subscriber = bus.subscribe({
+			end: this._onEnd,
+			"run-enabled": this._onRunEnabled,
+			highlight: this._onHighlight,
+			"level-memory-changed": this._onLevelMemoryChanged,
+		});
 	}
 
 	componentWillUnmount() {
-		bus.removeListener("end", this._onEnd);
-		bus.removeListener("run-enabled", this._onRunEnabled);
-		bus.removeListener("highlight", this._onHighlight);
-		bus.removeListener("level-memory-changed", this._onLevelMemoryChanged);
+		this._subscriber.release();
 	}
 
 	componentDidUpdate() {

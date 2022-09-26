@@ -222,16 +222,16 @@ export default class CPUDebugger extends PureComponent {
 
 	componentDidMount() {
 		window.addEventListener("resize", this._onResize);
-		bus.on("code", this._onCode);
-		bus.on("play", this._onPlay);
-		bus.on("reset", this._onReset);
+		this._subscriber = bus.subscribe({
+			code: this._onCode,
+			play: this._onPlay,
+			reset: this._onReset,
+		});
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener("resize", this._onResize);
-		bus.removeListener("code", this._onCode);
-		bus.removeListener("play", this._onPlay);
-		bus.removeListener("reset", this._onReset);
+		this._subscriber.release();
 	}
 
 	focus = () => {};
