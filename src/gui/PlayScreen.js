@@ -4,6 +4,7 @@ import _ from "lodash";
 import Book from "../level/Book";
 import LevelLoader from "../level/LevelLoader";
 import locales from "../locales";
+import { bus } from "../utils";
 import LevelScreen from "./LevelScreen";
 import styles from "./PlayScreen.module.css";
 
@@ -27,8 +28,10 @@ class PlayScreen extends PureComponent {
 		if (!validateSavedata(currentLevelId)) return;
 
 		if (path !== this.state.path) {
+			bus.removeAllListeners();
 			this.setState({ path, error: null });
 			resetLevel();
+
 			this._loadLevel();
 		}
 	}
