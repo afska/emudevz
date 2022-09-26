@@ -62,11 +62,20 @@ export default class ChatScript {
 		});
 	}
 
-	getOptionsOf(sectionName, history = []) {
+	getResponsesOf(sectionName, history) {
+		return this.getOptionsOf("responses", sectionName, history);
+	}
+
+	getEventsOf(sectionName, history) {
+		return this.getOptionsOf("events", sectionName, history);
+	}
+
+	getOptionsOf(field, sectionName, history = []) {
 		const section = this.content[sectionName];
 		if (!section) throw new Error(`Section not found: ${sectionName}`);
+		if (!Array.isArray(section[field])) return [];
 
-		return section.responses
+		return section[field]
 			.flatMap((rawResponse) => {
 				const inheritance = ChatScript.getInheritanceOf(rawResponse);
 				if (inheritance) return this.getOptionsOf(inheritance, history);
@@ -119,11 +128,22 @@ export default class ChatScript {
 			if (section.messages.some(this._isMessageInvalid))
 				throw new Error(`Invalid messages: ${this.language}/${sectionName}`);
 
-			if (!Array.isArray(section.responses))
-				throw new Error(`Missing responses: ${this.language}/${sectionName}`);
+			if (!Array.isArray(section.responses) && !Array.isArray(section.events))
+				throw new Error(
+					`Missing responses/events: ${this.language}/${sectionName}`
+				);
 
-			if (section.responses.some(this._isResponseInvalid))
+			if (
+				Array.isArray(section.responses) &&
+				section.responses.some(this._isResponseOrEventInvalid)
+			)
 				throw new Error(`Invalid responses: ${this.language}/${sectionName}`);
+
+			if (
+				Array.isArray(section.events) &&
+				section.events.some(this._isResponseOrEventInvalid)
+			)
+				throw new Error(`Invalid events: ${this.language}/${sectionName}`);
 		}
 	}
 
@@ -136,13 +156,13 @@ export default class ChatScript {
 		return false;
 	};
 
-	_isResponseInvalid = (response) => {
-		if (typeof response !== "string") return true;
+	_isResponseOrEventInvalid = (responseOrEvent) => {
+		if (typeof responseOrEvent !== "string") return true;
 
-		const inheritance = ChatScript.getInheritanceOf(response);
+		const inheritance = ChatScript.getInheritanceOf(responseOrEvent);
 		if (inheritance) return !this.content[inheritance];
 
-		const link = ChatScript.getLinkOf(response);
+		const link = ChatScript.getLinkOf(responseOrEvent);
 		if (!link || (link !== "end" && !this.content[link])) return true;
 
 		return false;

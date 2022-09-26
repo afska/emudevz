@@ -38,20 +38,22 @@ export default class ChatCommand extends Command {
 				memory.sectionName,
 				memory.history
 			);
-			const options = chatScript.getOptionsOf(
+			const responses = chatScript.getResponsesOf(
 				memory.sectionName,
 				memory.history
 			);
+			const events = chatScript.getEventsOf(memory.sectionName, memory.history);
 
 			await this._runStartUpCode(startUpCode);
 			await this._showMessages(messages);
-			if (!_.isEmpty(options)) {
+			if (!_.isEmpty(responses)) {
 				await this._showChooseAnAnswer();
-				await this._showOptions(options);
-				const selectedOption = await this._getSelectedOption(options);
+				await this._showOptions(responses);
+				const selectedOption = await this._getSelectedOption(responses);
 				this._goTo(selectedOption, level);
 			} else {
 				// TODO: WAIT FOR BUS EVENTS
+				console.log("WAITING FOR", events);
 			}
 		}
 
@@ -74,9 +76,14 @@ export default class ChatCommand extends Command {
 		const level = Level.current;
 		const layout = level.$layout;
 
+		// eval scope:
 		// eslint-disable-next-line
-		const bus = _bus; // (can be used inside eval)
+		const set = (name, value) =>
+			level.setMemory((memory) => (memory[name] = value));
+		// eslint-disable-next-line
+		const bus = _bus;
 
+		// TODO: Replace with bus?
 		let evalCode = startUpCode;
 		_.forEach(layout.instances, async (__, name) => {
 			evalCode = evalCode.replace(

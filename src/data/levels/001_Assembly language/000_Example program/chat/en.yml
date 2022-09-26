@@ -1,7 +1,7 @@
 ---
 main:
   run: |
-    level.setMemory((memory) => memory.$canRun = false)
+    set("$canRun", false)
   messages:
   - asdasd
   responses:
@@ -9,10 +9,14 @@ main:
 
 aver:
   run: |
-    level.setMemory((memory) => memory.$canRun = true)
-  on_play: |
-    goTo("lda")
+    set("$canRun", true)
   messages:
-  - see? re piola
+  - asdasdasd
+  events:
+  - play [lda]
+
+lda:
+  messages:
+  - GOOD
   responses:
-    - piola [end]
+    - woohoh [end]
