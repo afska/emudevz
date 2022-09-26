@@ -1,7 +1,10 @@
 ---
 main:
   run: |
-    set("$canRun", false)
+    set((m) => {
+      m.chat.stopBlock = "Not now!";
+      m.$canRun = false;
+    });
   messages:
   - asdasd
   responses:
@@ -9,7 +12,7 @@ main:
 
 aver:
   run: |
-    set("$canRun", true)
+    set((m) => m.$canRun = true);
   messages:
   - asdasdasd
   events:

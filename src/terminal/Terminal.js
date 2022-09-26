@@ -98,7 +98,7 @@ export default class Terminal {
 	}
 
 	async confirmPrompt() {
-		if (this._input != null) {
+		if (this.isExpectingInput) {
 			const isValid = this._input.confirm();
 			this._input = null;
 
@@ -107,7 +107,7 @@ export default class Terminal {
 	}
 
 	cancelPrompt() {
-		if (this._input != null) {
+		if (this.isExpectingInput) {
 			this._input.cancel(INTERRUPTED);
 			this._input = null;
 		}
@@ -117,12 +117,16 @@ export default class Terminal {
 		this._xterm.clear();
 	}
 
+	get isExpectingInput() {
+		return this._input != null;
+	}
+
 	async _onData(data) {
 		if (this._processCommonBrowserKeys(data)) return;
 
 		switch (data) {
 			case KEY_CTRL_C: {
-				const wasExpectingInput = this._input != null;
+				const wasExpectingInput = this.isExpectingInput;
 
 				if (this._currentProgram.onStop()) {
 					this.cancelPrompt();
@@ -141,7 +145,7 @@ export default class Terminal {
 			}
 			case KEY_BACKSPACE: {
 				if (
-					this._input != null &&
+					this.isExpectingInput &&
 					this._xterm._core.buffer.x > this._input.indicator.length
 				) {
 					await this.write(BACKSPACE);
@@ -150,7 +154,7 @@ export default class Terminal {
 				break;
 			}
 			default: {
-				if (this._input != null && this._isValidInput(data)) {
+				if (this.isExpectingInput && this._isValidInput(data)) {
 					this._input.append(data);
 					await this.write(data);
 				}

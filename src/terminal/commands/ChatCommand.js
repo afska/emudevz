@@ -61,6 +61,14 @@ export default class ChatCommand extends Command {
 	}
 
 	onStop() {
+		const { stopBlock } = Level.current.memory.chat;
+		if (stopBlock != null) {
+			if (this._terminal.isExpectingInput)
+				this._terminal.write(stopBlock, theme.ACCENT);
+			this._terminal.cancelPrompt();
+			return false;
+		}
+
 		if (this._args.includes("-f")) return false;
 
 		Level.current.setMemory(({ chat }) => {
@@ -78,8 +86,7 @@ export default class ChatCommand extends Command {
 
 		// eval scope:
 		// eslint-disable-next-line
-		const set = (name, value) =>
-			level.setMemory((memory) => (memory[name] = value));
+		const set = (action) => level.setMemory(action);
 		// eslint-disable-next-line
 		const bus = _bus;
 
@@ -131,13 +138,16 @@ export default class ChatCommand extends Command {
 				if (x.length > 0 && candidates.length === 1) return candidates[0];
 			};
 
-			const response = await this._terminal.prompt(
-				PROMPT_SYMBOL,
-				(x) => getOption(x) != null,
-				theme.INPUT
-			);
-
-			selectedOption = getOption(response);
+			try {
+				const response = await this._terminal.prompt(
+					PROMPT_SYMBOL,
+					(x) => getOption(x) != null,
+					theme.INPUT
+				);
+				selectedOption = getOption(response);
+			} catch (e) {
+				if (e !== "interrupted") throw e;
+			}
 		}
 
 		return selectedOption;
