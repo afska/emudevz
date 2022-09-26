@@ -76,18 +76,18 @@ export default class ChatScript {
 		if (!Array.isArray(section[field])) return [];
 
 		return section[field]
-			.flatMap((rawResponse) => {
-				const inheritance = ChatScript.getInheritanceOf(rawResponse);
+			.flatMap((rawContent) => {
+				const inheritance = ChatScript.getInheritanceOf(rawContent);
 				if (inheritance) return this.getOptionsOf(inheritance, history);
 
-				const [response, link] = rawResponse.split(ChatScript.LINK_REGEXP);
-				const isConsumable = ChatScript.CONSUMABLE_REGEXP.test(rawResponse);
-				const isKey = ChatScript.KEY_REGEXP.test(rawResponse);
-				const isLock = ChatScript.LOCK_REGEXP.test(rawResponse);
+				const [content, link] = rawContent.split(ChatScript.LINK_REGEXP);
+				const isConsumable = ChatScript.CONSUMABLE_REGEXP.test(rawContent);
+				const isKey = ChatScript.KEY_REGEXP.test(rawContent);
+				const isLock = ChatScript.LOCK_REGEXP.test(rawContent);
 
 				return [
 					{
-						response: response.replace(ChatScript.MODIFIER_REGEXP, ""),
+						content: content.replace(ChatScript.MODIFIER_REGEXP, ""),
 						link,
 						isConsumable,
 						isKey,

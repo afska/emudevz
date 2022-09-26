@@ -48,12 +48,33 @@ export default class ChatCommand extends Command {
 			await this._showMessages(messages);
 			if (!_.isEmpty(responses)) {
 				await this._showChooseAnAnswer();
-				await this._showOptions(responses);
-				const selectedOption = await this._getSelectedOption(responses);
-				this._goTo(selectedOption, level);
+				await this._showResponses(responses);
+				const response = await this._getSelectedResponse(responses);
+				this._goTo(response, level);
 			} else {
-				// TODO: WAIT FOR BUS EVENTS
-				console.log("WAITING FOR", events);
+				let $resolve = null;
+				const listeners = events.map((event) => () => {
+					$resolve(event);
+				});
+
+				const removeListeners = () => {
+					events.forEach((event, i) => {
+						_bus.removeListener(event.content, listeners[i]);
+					});
+				};
+
+				const event = await Promise.any(
+					events.map(
+						(event, i) =>
+							new Promise((resolve) => {
+								$resolve = resolve;
+								_bus.on(event.content, listeners[i]);
+							})
+					)
+				);
+
+				removeListeners();
+				this._goTo(event, level);
 			}
 		}
 
@@ -119,21 +140,21 @@ export default class ChatCommand extends Command {
 		);
 	}
 
-	async _showOptions(options) {
-		for (let option of options)
-			await this._terminal.writeln(`${option.number}) ${option.response}`);
+	async _showResponses(responses) {
+		for (let response of responses)
+			await this._terminal.writeln(`${response.number}) ${response.content}`);
 	}
 
-	async _getSelectedOption(options) {
-		let selectedOption = null;
+	async _getSelectedResponse(responses) {
+		let selectedResponse = null;
 
-		while (selectedOption == null) {
-			const getOption = (x) => {
+		while (selectedResponse == null) {
+			const getResponse = (x) => {
 				if (isFinite(parseInt(x)))
-					return options.find((it) => it.number.toString() === x);
+					return responses.find((it) => it.number.toString() === x);
 
-				const candidates = options.filter((it) =>
-					it.response.toLowerCase().includes(x.toLowerCase())
+				const candidates = responses.filter((it) =>
+					it.content.toLowerCase().includes(x.toLowerCase())
 				);
 				if (x.length > 0 && candidates.length === 1) return candidates[0];
 			};
@@ -141,16 +162,16 @@ export default class ChatCommand extends Command {
 			try {
 				const response = await this._terminal.prompt(
 					PROMPT_SYMBOL,
-					(x) => getOption(x) != null,
+					(x) => getResponse(x) != null,
 					theme.INPUT
 				);
-				selectedOption = getOption(response);
+				selectedResponse = getResponse(response);
 			} catch (e) {
 				if (e !== "interrupted") throw e;
 			}
 		}
 
-		return selectedOption;
+		return selectedResponse;
 	}
 
 	_goTo(selectedOption, level) {
