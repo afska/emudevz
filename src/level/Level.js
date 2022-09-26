@@ -2,6 +2,7 @@ import _ from "lodash";
 import components from "../gui/components";
 import layouts from "../gui/components/layouts";
 import store from "../store";
+import bus from "../utils/bus";
 import ChatScript from "./chat/ChatScript";
 
 export default class Level {
@@ -25,6 +26,15 @@ export default class Level {
 
 	static get current() {
 		return store.getState().level.instance;
+	}
+
+	getMemory(path) {
+		return _.get(this.memory, path);
+	}
+
+	setMemory(change) {
+		change(this.memory);
+		bus.emit("level-memory-changed");
 	}
 
 	advance() {

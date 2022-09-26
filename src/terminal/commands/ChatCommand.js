@@ -28,7 +28,9 @@ export default class ChatCommand extends Command {
 			return;
 		}
 
-		memory.isOpen = true;
+		level.setMemory(({ chat }) => {
+			chat.isOpen = true;
+		});
 
 		while (memory.sectionName !== ChatScript.END_SECTION) {
 			const startUpCode = chatScript.getStartUpCodeOf(memory.sectionName);
@@ -47,7 +49,7 @@ export default class ChatCommand extends Command {
 				await this._showChooseAnAnswer();
 				await this._showOptions(options);
 				const selectedOption = await this._getSelectedOption(options);
-				this._goTo(selectedOption, memory);
+				this._goTo(selectedOption, level);
 			} else {
 				// TODO: WAIT FOR BUS EVENTS
 			}
@@ -59,7 +61,9 @@ export default class ChatCommand extends Command {
 	onStop() {
 		if (this._args.includes("-f")) return false;
 
-		Level.current.memory.chat.isOpen = false;
+		Level.current.setMemory(({ chat }) => {
+			chat.isOpen = false;
+		});
 
 		return true;
 	}
@@ -67,7 +71,8 @@ export default class ChatCommand extends Command {
 	async _runStartUpCode(startUpCode) {
 		if (startUpCode == null) return;
 
-		const layout = Level.current.$layout;
+		const level = Level.current;
+		const layout = level.$layout;
 
 		// eslint-disable-next-line
 		const bus = _bus; // (can be used inside eval)
@@ -131,8 +136,10 @@ export default class ChatCommand extends Command {
 		return selectedOption;
 	}
 
-	_goTo(selectedOption, memory) {
-		memory.sectionName = selectedOption.link;
-		memory.history.push(memory.sectionName);
+	_goTo(selectedOption, level) {
+		level.setMemory(({ chat }) => {
+			chat.sectionName = selectedOption.link;
+			chat.history.push(chat.sectionName);
+		});
 	}
 }

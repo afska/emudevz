@@ -1,14 +1,18 @@
 ---
 main:
   run: |
-    // bus.emit("run-enabled", false)
-  on-play: |
+    level.setMemory((memory) => memory.$canRun = false)
+  messages:
+  - asdasd
+  responses:
+    - test [aver]
+
+aver:
+  run: |
+    level.setMemory((memory) => memory.$canRun = true)
+  on_play: |
     goTo("lda")
   messages:
-  - well, now press the play button...
-  responses: []
-
-lda:
-  messages:
   - see? re piola
-  responses: []
+  responses:
+    - piola [end]

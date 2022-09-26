@@ -4,6 +4,7 @@ import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
 import { FaStepForward } from "react-icons/fa";
 import { FaFastBackward } from "react-icons/fa";
+import Level from "../../level/Level";
 import locales from "../../locales";
 import { bus } from "../../utils";
 import { asm6502, highlighter } from "../../utils/codemirror";
@@ -22,6 +23,7 @@ export default class CodeEditor extends PureComponent {
 		highlightedLine: -1,
 		isReadOnly: false,
 		isDisabled: false,
+		onlyPlayIf: null,
 		actionName: "step",
 	};
 
@@ -55,13 +57,19 @@ export default class CodeEditor extends PureComponent {
 		const initialCode = this._level?.code[initialCodeFile];
 		if (initialCode) this._setCode(initialCode);
 
-		this.setState({ isReadOnly: !!args.readOnly });
+		this.setState({
+			isReadOnly: !!args.readOnly,
+			onlyPlayIf: args.onlyPlayIf || null,
+		});
 	}
 
 	render() {
-		const { language, code, isReadOnly, isDisabled } = this.state;
+		const { language, code, isReadOnly, isDisabled, onlyPlayIf } = this.state;
 
 		const action = this._getAction();
+		const canRun =
+			!isDisabled &&
+			(onlyPlayIf == null || Level.current.getMemory(onlyPlayIf));
 
 		return (
 			<div className={styles.container}>
@@ -70,7 +78,7 @@ export default class CodeEditor extends PureComponent {
 						Icon={action.icon}
 						tooltip={action.tooltip}
 						onClick={action.run}
-						disabled={isDisabled}
+						disabled={!canRun}
 						kind="rounded"
 					/>
 				</div>
@@ -97,12 +105,14 @@ export default class CodeEditor extends PureComponent {
 		bus.on("end", this._onEnd);
 		bus.on("run-enabled", this._onRunEnabled);
 		bus.on("highlight", this._onHighlight);
+		bus.on("level-memory-changed", this._onLevelMemoryChanged);
 	}
 
 	componentWillUnmount() {
 		bus.removeListener("end", this._onEnd);
 		bus.removeListener("run-enabled", this._onRunEnabled);
 		bus.removeListener("highlight", this._onHighlight);
+		bus.removeListener("level-memory-changed", this._onLevelMemoryChanged);
 	}
 
 	componentDidUpdate() {
@@ -124,6 +134,10 @@ export default class CodeEditor extends PureComponent {
 
 	_onHighlight = (line) => {
 		this.setState({ highlightedLine: line });
+	};
+
+	_onLevelMemoryChanged = () => {
+		this.forceUpdate();
 	};
 
 	_setCode = (code) => {

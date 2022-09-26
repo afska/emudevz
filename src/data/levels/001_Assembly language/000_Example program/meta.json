@@ -19,7 +19,8 @@
 				{
 					"language": "asm",
 					"initialCodeFile": "content.asm",
-					"readOnly": true
+					"readOnly": true,
+					"onlyPlayIf": "$canRun"
 				}
 			]
 		},
