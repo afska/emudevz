@@ -18,12 +18,14 @@ const LANGUAGES = {
 
 export default class CodeEditor extends PureComponent {
 	state = {
+		isInitialized: false,
 		language: "javascript",
 		code: "",
 		highlightedLine: -1,
 		isReadOnly: false,
 		isDisabled: false,
-		onlyPlayIf: null,
+		onlyShowPlayWhen: null,
+		onlyEnablePlayWhen: null,
 		actionName: "step",
 	};
 
@@ -58,30 +60,46 @@ export default class CodeEditor extends PureComponent {
 		if (initialCode) this._setCode(initialCode);
 
 		this.setState({
+			isInitialized: true,
 			isReadOnly: !!args.readOnly,
-			onlyPlayIf: args.onlyPlayIf || null,
+			onlyShowPlayWhen: args.onlyShowPlayWhen || null,
+			onlyEnablePlayWhen: args.onlyEnablePlayWhen || null,
 		});
 	}
 
 	render() {
-		const { language, code, isReadOnly, isDisabled, onlyPlayIf } = this.state;
+		const {
+			isInitialized,
+			language,
+			code,
+			isReadOnly,
+			isDisabled,
+			onlyShowPlayWhen,
+			onlyEnablePlayWhen,
+		} = this.state;
+		if (!isInitialized) return false;
 
 		const action = this._getAction();
-		const canRun =
+		const isPlayShown =
+			onlyShowPlayWhen == null || Level.current.getMemory(onlyShowPlayWhen);
+		const isPlayEnabled =
 			!isDisabled &&
-			(onlyPlayIf == null || Level.current.getMemory(onlyPlayIf));
+			(onlyEnablePlayWhen == null ||
+				Level.current.getMemory(onlyEnablePlayWhen));
 
 		return (
 			<div className={styles.container}>
-				<div className={styles.debugger}>
-					<IconButton
-						Icon={action.icon}
-						tooltip={action.tooltip}
-						onClick={action.run}
-						disabled={!canRun}
-						kind="rounded"
-					/>
-				</div>
+				{isPlayShown && (
+					<div className={styles.debugger}>
+						<IconButton
+							Icon={action.icon}
+							tooltip={action.tooltip}
+							onClick={action.run}
+							disabled={!isPlayEnabled}
+							kind="rounded"
+						/>
+					</div>
+				)}
 
 				<CodeMirror
 					className={styles.editor}
