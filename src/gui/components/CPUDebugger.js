@@ -207,22 +207,61 @@ export default class CPUDebugger extends PureComponent {
 						<strong>${hex.format(rowStart, 4)}</strong>
 					</td>
 					{_.range(0, BASE).map((column, i) => {
-						return (
-							<MemoryCell
-								key={i}
-								rowStart={rowStart}
-								row={row}
-								column={column}
-								memory={this.state.memory}
-								PC={this.state.PC}
-								mappings={this.state._mappings}
-								flashDuration={this.state._delay}
-							/>
-						);
+						return this._renderMemoryCell({
+							key: i,
+							rowStart,
+							row,
+							column,
+						});
 					})}
 				</tr>
 			);
 		});
+	}
+
+	_renderMemoryCell({ key, rowStart, row, column }) {
+		const { memory, PC, _mappings, _delay } = this.state;
+		const address = rowStart + column;
+		const isPC = address === PC;
+
+		return (
+			<OverlayTrigger
+				key={key}
+				placement="top"
+				show={isPC ? true : undefined}
+				overlay={
+					<Tooltip>
+						{isPC && (
+							<span>
+								<strong className={styles.name} style={PC_STYLE}>
+									PC
+								</strong>{" "}
+								={" "}
+							</span>
+						)}
+						${hex.format(address, 4)}
+						{(() => {
+							const line = _mappings.find(
+								(it) => runner.CODE_ADDRESS + it.address === address
+							)?.line;
+
+							return line != null ? (
+								<div className={styles.sentence}>${line}</div>
+							) : null;
+						})()}
+					</Tooltip>
+				}
+			>
+				<th>
+					<Value
+						value={memory[row * BASE + column]}
+						flashDuration={_delay}
+						style={isPC ? PC_STYLE : {}}
+						digits={2}
+					/>
+				</th>
+			</OverlayTrigger>
+		);
 	}
 
 	_onCode = (code) => {
@@ -308,57 +347,6 @@ export default class CPUDebugger extends PureComponent {
 		if (lineNumber == null) bus.emit("end");
 	}
 }
-
-const MemoryCell = ({
-	rowStart,
-	row,
-	column,
-	memory,
-	PC,
-	mappings,
-	flashDuration,
-}) => {
-	const address = rowStart + column;
-	const isPC = address === PC;
-
-	return (
-		<OverlayTrigger
-			placement="top"
-			show={isPC ? true : undefined}
-			overlay={
-				<Tooltip>
-					{isPC && (
-						<span>
-							<strong className={styles.name} style={PC_STYLE}>
-								PC
-							</strong>{" "}
-							={" "}
-						</span>
-					)}
-					${hex.format(address, 4)}
-					{(() => {
-						const line = mappings.find(
-							(it) => runner.CODE_ADDRESS + it.address === address
-						)?.line;
-
-						return line != null ? (
-							<div className={styles.sentence}>${line}</div>
-						) : null;
-					})()}
-				</Tooltip>
-			}
-		>
-			<th>
-				<Value
-					value={memory[row * BASE + column]}
-					flashDuration={flashDuration}
-					style={isPC ? PC_STYLE : {}}
-					digits={2}
-				/>
-			</th>
-		</OverlayTrigger>
-	);
-};
 
 const Value = ({
 	value,

@@ -1,8 +1,9 @@
 import _ from "lodash";
 import Level from "../../level/Level";
 import ChatScript from "../../level/chat/ChatScript";
+import codeEval from "../../level/codeEval";
 import locales from "../../locales";
-import { bus as _bus } from "../../utils";
+import { bus } from "../../utils";
 import { theme } from "../style";
 import Command from "./Command";
 
@@ -43,7 +44,7 @@ export default class ChatCommand extends Command {
 			);
 			const events = chatScript.getEventsOf(memory.sectionName, memory.history);
 
-			await this._runCode(chatScript.getStartUpCodeOf(memory.sectionName));
+			codeEval.eval(chatScript.getStartUpCodeOf(memory.sectionName));
 			await this._showMessages(messages);
 
 			if (!_.isEmpty(responses)) {
@@ -54,9 +55,7 @@ export default class ChatCommand extends Command {
 			} else {
 				await this._terminal.newline();
 				this._terminal.cancelSpeedFlag();
-				await this._runCode(
-					chatScript.getBeforeEventsCodeOf(memory.sectionName)
-				);
+				codeEval.eval(chatScript.getBeforeEventsCodeOf(memory.sectionName));
 				const link = await this._getEventLink(events);
 				this._goTo(link, level);
 			}
@@ -81,30 +80,6 @@ export default class ChatCommand extends Command {
 		});
 
 		return true;
-	}
-
-	async _runCode(code) {
-		if (code == null) return;
-
-		const level = Level.current;
-		const layout = level.$layout;
-
-		// eval scope:
-		// eslint-disable-next-line
-		const set = (action) => level.setMemory(action);
-		// eslint-disable-next-line
-		const bus = _bus;
-
-		// TODO: Replace with bus?
-		let evalCode = code;
-		_.forEach(layout.instances, async (__, name) => {
-			evalCode = evalCode.replace(
-				new RegExp(`{{${name}}}`, "g"),
-				`layout.instances["${name}"]`
-			);
-		});
-
-		eval(evalCode);
 	}
 
 	async _showMessages(messages) {
@@ -161,7 +136,7 @@ export default class ChatCommand extends Command {
 	async _getEventLink(events) {
 		let subscriber;
 		const link = await new Promise((resolve) => {
-			subscriber = _bus.subscribe(
+			subscriber = bus.subscribe(
 				_(events)
 					.keyBy("content")
 					.mapValues((event, k) => () => {

@@ -64,6 +64,8 @@ lda:
   - what's the purpose of each register? [registers]
 
 registers:
+  run: |
+    set((m) => m.$others = true);
   messages:
   - well, [A] means Accumulator and its use depends on the program
   - "[PC] always points to the next instruction to execute"
