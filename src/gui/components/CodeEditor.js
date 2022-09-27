@@ -18,7 +18,7 @@ const LANGUAGES = {
 
 export default class CodeEditor extends PureComponent {
 	state = {
-		isInitialized: false,
+		_isInitialized: false,
 		language: "javascript",
 		code: "",
 		highlightedLine: -1,
@@ -60,7 +60,7 @@ export default class CodeEditor extends PureComponent {
 		if (initialCode) this._setCode(initialCode);
 
 		this.setState({
-			isInitialized: true,
+			_isInitialized: true,
 			isReadOnly: !!args.readOnly,
 			onlyShowPlayWhen: args.onlyShowPlayWhen || null,
 			onlyEnablePlayWhen: args.onlyEnablePlayWhen || null,
@@ -69,7 +69,7 @@ export default class CodeEditor extends PureComponent {
 
 	render() {
 		const {
-			isInitialized,
+			_isInitialized,
 			language,
 			code,
 			isReadOnly,
@@ -77,7 +77,7 @@ export default class CodeEditor extends PureComponent {
 			onlyShowPlayWhen,
 			onlyEnablePlayWhen,
 		} = this.state;
-		if (!isInitialized) return false;
+		if (!_isInitialized) return false;
 
 		const action = this._getAction();
 		const isPlayShown =

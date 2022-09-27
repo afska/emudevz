@@ -68,10 +68,10 @@ registers:
   - well, [A] means Accumulator and its use depends on the program
   - "[PC] always points to the next instruction to execute"
   responses:
-  - "so, with `LDA #$01` you just told the processor to store the number $01 on [A]? [ldaexplanation]"
+  - "so, with `LDA #$01` you just told the processor to store the number $01 in [A]? [ldaexplanation]"
 
 ldaexplanation:
-  run: |
+  run-before-events: |
     set((m) => m.$canRun = true);
   messages:
   - exactly

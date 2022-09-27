@@ -14,6 +14,8 @@ const PC_STYLE = { textDecoration: "underline" };
 
 export default class CPUDebugger extends PureComponent {
 	state = {
+		_isInitialized: false,
+		_hideFlags: false,
 		_delay: 500,
 		_lastCode: "",
 		_memoryStart: 0x4020,
@@ -38,9 +40,13 @@ export default class CPUDebugger extends PureComponent {
 		this._level = level;
 
 		if (Number.isFinite(args.delay)) this.setState({ _delay: args.delay });
+
+		this.setState({ _isInitialized: true, _hideFlags: !!args.hideFlags });
 	}
 
 	render() {
+		if (!this.state._isInitialized) return false;
+
 		return (
 			<div className={styles.container} ref={this._onRef}>
 				<div className={styles.column}>
@@ -76,45 +82,47 @@ export default class CPUDebugger extends PureComponent {
 						</tbody>
 					</Viewer>
 
-					<Viewer className={styles.flags}>
-						<thead>
-							<tr className={styles.name}>
-								{["N", "V", "-", "-", "-", "I", "Z", "C"].map((name, i) => {
-									return (
-										<OverlayTrigger
-											key={i}
-											placement="top"
-											overlay={
-												<Tooltip>
-													{locales.get(
-														`register_flags_${name}`,
-														locales.get("register_flags_U")
-													)}
-												</Tooltip>
-											}
-										>
-											<th>{name}</th>
-										</OverlayTrigger>
-									);
-								})}
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								{["N", "V", "B", "b", "D", "I", "Z", "C"].map((name) => {
-									return (
-										<td key={name}>
-											<Value
-												value={this.state[`F_${name}`]}
-												flashDuration={this.state._delay}
-												digits={1}
-											/>
-										</td>
-									);
-								})}
-							</tr>
-						</tbody>
-					</Viewer>
+					{!this.state._hideFlags && (
+						<Viewer className={styles.flags}>
+							<thead>
+								<tr className={styles.name}>
+									{["N", "V", "-", "-", "-", "I", "Z", "C"].map((name, i) => {
+										return (
+											<OverlayTrigger
+												key={i}
+												placement="top"
+												overlay={
+													<Tooltip>
+														{locales.get(
+															`register_flags_${name}`,
+															locales.get("register_flags_U")
+														)}
+													</Tooltip>
+												}
+											>
+												<th>{name}</th>
+											</OverlayTrigger>
+										);
+									})}
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									{["N", "V", "B", "b", "D", "I", "Z", "C"].map((name) => {
+										return (
+											<td key={name}>
+												<Value
+													value={this.state[`F_${name}`]}
+													flashDuration={this.state._delay}
+													digits={1}
+												/>
+											</td>
+										);
+									})}
+								</tr>
+							</tbody>
+						</Viewer>
+					)}
 				</div>
 
 				<div className={styles.column}>
