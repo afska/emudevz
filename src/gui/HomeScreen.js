@@ -9,8 +9,8 @@ import SettingsModal from "./SettingsModal";
 import Button from "./components/widgets/Button";
 import styles from "./HomeScreen.module.css";
 
-const ASSET_LOGO = "/assets/logo.png";
-const ASSET_BACKGROUND = "/assets/tiling-background.png";
+const ASSET_LOGO = "assets/logo.png";
+const ASSET_BACKGROUND = "assets/tiling-background.png";
 const UI_SELECTOR = "#ui";
 const BACKGROUND_COLOR = 0x000000;
 const BACKGROUND_TILE_Y = 60;

@@ -8,7 +8,7 @@ import { bus } from "../utils";
 import LevelScreen from "./LevelScreen";
 import styles from "./PlayScreen.module.css";
 
-const LEVELS_PATH = "/levels";
+const LEVELS_PATH = "levels";
 const BOOK_PATH = `${LEVELS_PATH}/book.json`;
 const LEVEL_ID_LENGTH = 3;
 const STATUS_OK = 200;
