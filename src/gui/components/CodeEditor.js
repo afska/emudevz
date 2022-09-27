@@ -24,6 +24,7 @@ export default class CodeEditor extends PureComponent {
 		language: "javascript",
 		code: "",
 		highlightedLine: -1,
+		isReady: false,
 		errorStart: -1,
 		errorEnd: -1,
 		isReadOnly: false,
@@ -76,6 +77,7 @@ export default class CodeEditor extends PureComponent {
 			_isInitialized,
 			language,
 			code,
+			isReady,
 			isReadOnly,
 			isDisabled,
 			onlyShowPlayWhen,
@@ -88,6 +90,7 @@ export default class CodeEditor extends PureComponent {
 			onlyShowPlayWhen == null || Level.current.getMemory(onlyShowPlayWhen);
 		const isPlayEnabled =
 			!isDisabled &&
+			isReady &&
 			(onlyEnablePlayWhen == null ||
 				Level.current.getMemory(onlyEnablePlayWhen));
 
@@ -170,8 +173,10 @@ export default class CodeEditor extends PureComponent {
 	_compile = _.debounce((code) => {
 		try {
 			bus.emit("code", code);
-			this.setState({ errorStart: -1, errorEnd: -1 });
+			this.setState({ isReady: true, errorStart: -1, errorEnd: -1 });
 		} catch (e) {
+			this.setState({ isReady: false });
+
 			if (e.err?.name === "SyntaxError") {
 				this.setState({
 					errorStart: e.err.location.start.offset,
