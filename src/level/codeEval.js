@@ -1,4 +1,5 @@
 import _ from "lodash";
+import $locales from "../locales";
 import { bus as $bus } from "../utils";
 import $Level from "./Level";
 
@@ -9,13 +10,14 @@ export default {
 		// eval scope:
 		const level = $Level.current;
 		const layout = level.$layout;
-
 		// eslint-disable-next-line
 		const m = level.memory;
 		// eslint-disable-next-line
 		const set = (action) => level.setMemory(action);
 		// eslint-disable-next-line
 		const bus = $bus;
+		// eslint-disable-next-line
+		const locales = $locales;
 
 		let evalCode = code;
 		_.forEach(layout.instances, async (__, name) => {
