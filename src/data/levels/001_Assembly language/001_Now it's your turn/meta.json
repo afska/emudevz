@@ -1,0 +1,32 @@
+{
+	"name": {
+		"en": "Now it's your turn",
+		"es": "Ahora es tu turno"
+	},
+	"ui": {
+		"layout": "triple",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat",
+					"availableCommands": ["chat", "help", "clear"]
+				}
+			],
+			"Bottom": [
+				"cpu",
+				{
+					"delay": 500,
+					"hideFlags": true
+				}
+			],
+			"Top": [
+				"code",
+				{
+					"language": "asm"
+				}
+			]
+		},
+		"focus": "Left"
+	}
+}

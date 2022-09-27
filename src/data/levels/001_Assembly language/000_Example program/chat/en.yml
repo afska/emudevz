@@ -99,7 +99,7 @@ sta:
     set((m) => m.$canRun = true);
   messages:
   - STA means "STore Accumulator"
-  - and as you can see, it writes the contents of [A] on a memory location
+  - and as you can see, it writes the contents of [A] to a memory location
   - in this example, on the address $4070
   - so now the $4070 cell of the Memory Viewer has a $01
   - try running the remaining instructions 😊
