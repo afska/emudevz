@@ -4,9 +4,19 @@ main:
   - now it's your turn 😛
   - make a program that writes the number $7C to the addresses $4055 and $4072
   - then, the number $18 to the address $40B8
-  - when you're ready, press the ▶️  button
+  - test your program with the ⏩  button
+  - when you're ready, close the chat and run the `test` command
   responses:
   - no, I need help 😔 [help]
+  - (*) can you tell me again how to run the other command? [othercommands]
+
+othercommands:
+  messages:
+  - sure
+  - press `Ctrl+C`
+  - type `test`, then Enter
+  responses:
+  - gotcha [main]
 
 help:
   messages:
