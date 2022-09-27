@@ -34,7 +34,7 @@ machinecode:
   messages:
   - correct
   - you're actually seeing the compiled code, right now
-  - look at the memory viewer on the bottom of the screen
+  - look at the Memory Viewer on the bottom of the screen
   - the code starts from the $4020 memory address
   - if you place your mouse pointer over one of these addresses, it'll show where each instruction starts
   responses:
@@ -110,7 +110,7 @@ finish:
   run: |
     {{Bottom}}.setDelay(500);
   messages:
-  - awesome, so now you know the basic workings of a CPU
+  - awesome, now you know the basic workings of a CPU
   - click the ⏮  button and run the simulation as many times as you need
   - when you are ready, we can go to the next level
   responses:
