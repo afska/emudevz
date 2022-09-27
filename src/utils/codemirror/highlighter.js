@@ -62,8 +62,9 @@ export default (
 	});
 
 	return {
-		highlight({ view }, from, to) {
-			if (view == null) return;
+		highlight(ref, from, to) {
+			if (ref == null) return;
+			const { view } = ref;
 			const effects = [addHighlight.of({ from, to })];
 
 			if (!view.state.field(highlightField, false))
@@ -74,8 +75,9 @@ export default (
 			view.dispatch({ effects });
 		},
 
-		unhighlight({ view }, from, to) {
-			if (view == null) return;
+		unhighlight(ref, from, to) {
+			if (ref == null) return;
+			const { view } = ref;
 			const effects = [removeHighlight.of({ from, to })];
 
 			if (!view.state.field(highlightField, false))
