@@ -6,7 +6,7 @@ main:
   responses:
   - 💬  tell me about this app [app]
   - 💬  tell me about other apps [otherapps]
-  - 💬  what's in the other half on the screen? [tv]
+  - 💬  what's in the other half of the screen? [tv]
   - 💬  how can I scroll in the terminal? [scroll]
   - 💬  how can I navigate between panes? [panes]
   - 👌  gotcha [end]

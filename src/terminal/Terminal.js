@@ -12,6 +12,7 @@ const KEY_ENTER = "\r";
 const NEWLINE = "\r\n";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
+const CANCELED = "canceled";
 const INTERRUPTED = "interrupted";
 
 // Program interface:
@@ -106,9 +107,9 @@ export default class Terminal {
 		}
 	}
 
-	cancelPrompt() {
+	cancelPrompt(reason = CANCELED) {
 		if (this.isExpectingInput) {
-			this._input.cancel(INTERRUPTED);
+			this._input.cancel(reason);
 			this._input = null;
 		}
 	}
@@ -133,7 +134,7 @@ export default class Terminal {
 				const wasExpectingInput = this.isExpectingInput;
 
 				if (this._currentProgram.onStop()) {
-					this.cancelPrompt();
+					this.cancelPrompt(INTERRUPTED);
 					await this.break();
 					await this.newline();
 					if (!wasExpectingInput) this._requestInterrupt();

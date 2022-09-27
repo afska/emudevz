@@ -28,13 +28,13 @@ language:
   - the lowest level of abstraction in computers 💻
   - it translates directly to the bytes that are executed by the CPU
   responses:
-  - so, after compiling, it'll become just a weird chunk of bytes? [machinecode]
+  - so, after compiling, it'll become just a chunk of bytes? [machinecode]
 
 machinecode:
   messages:
   - correct
   - you're actually seeing the compiled code, right now
-  - look at the Memory Viewer on the bottom of the screen
+  - look at the Memory Viewer at the bottom of the screen
   - the code starts from the $4020 memory address
   - if you place your mouse pointer over one of these addresses, it'll show where each instruction starts
   responses:

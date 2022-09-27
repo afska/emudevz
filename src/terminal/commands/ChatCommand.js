@@ -151,7 +151,7 @@ export default class ChatCommand extends Command {
 				);
 				selectedResponse = getResponse(response);
 			} catch (e) {
-				if (e !== "interrupted") throw e;
+				if (e !== "canceled") throw e;
 			}
 		}
 
