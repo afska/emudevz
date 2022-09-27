@@ -34,6 +34,7 @@ export default class ChatCommand extends Command {
 		});
 
 		while (memory.sectionName !== ChatScript.END_SECTION) {
+			const sectionName = memory.sectionName;
 			const messages = chatScript.getMessagesOf(
 				memory.sectionName,
 				memory.history
@@ -44,20 +45,21 @@ export default class ChatCommand extends Command {
 			);
 			const events = chatScript.getEventsOf(memory.sectionName, memory.history);
 
-			codeEval.eval(chatScript.getStartUpCodeOf(memory.sectionName));
+			this._eval(chatScript.getStartUpCodeOf(memory.sectionName));
 			await this._showMessages(messages);
+			this._eval(chatScript.getAfterMessagesCodeOf(memory.sectionName));
+			if (memory.sectionName !== sectionName) continue;
 
 			if (!_.isEmpty(responses)) {
 				await this._showChooseAnAnswer();
 				await this._showResponses(responses);
 				const response = await this._getSelectedResponse(responses);
-				this._goTo(response.link, level);
+				this._goTo(response.link);
 			} else {
 				await this._terminal.newline();
 				this._terminal.cancelSpeedFlag();
-				codeEval.eval(chatScript.getBeforeEventsCodeOf(memory.sectionName));
 				const link = await this._getEventLink(events);
-				this._goTo(link, level);
+				this._goTo(link);
 			}
 		}
 
@@ -150,8 +152,14 @@ export default class ChatCommand extends Command {
 		return link;
 	}
 
-	_goTo(sectionName, level) {
-		level.setMemory(({ chat }) => {
+	_eval(code) {
+		return codeEval.eval(code, {
+			goTo: this._goTo,
+		});
+	}
+
+	_goTo(sectionName) {
+		Level.current.setMemory(({ chat }) => {
 			chat.sectionName = sectionName;
 			chat.history.push(chat.sectionName);
 		});

@@ -3,7 +3,7 @@ import { bus as $bus } from "../utils";
 import $Level from "./Level";
 
 export default {
-	eval(code) {
+	eval(code, $ = {}) {
 		if (code == null) return;
 
 		// eval scope:

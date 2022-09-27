@@ -41,7 +41,7 @@ machinecode:
   - what are the other numbers? 👀 [otherthings]
 
 otherthings:
-  run-before-events: |
+  run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
   - let's run the code and discover it
@@ -64,8 +64,6 @@ lda:
   - what's the purpose of each register? [registers]
 
 registers:
-  run: |
-    set((m) => m.$others = true);
   messages:
   - well, [A] means Accumulator and its use depends on the program
   - "[PC] always points to the next instruction to execute"
@@ -74,16 +72,19 @@ registers:
   - "(*) I'm curious about the others: [X], [Y], and [SP] [theothers]"
 
 theothers:
+  run: |
+    set((m) => m.$others = true);
   messages:
   - I'll talk about that later, but basically
   - "[X] and [Y] can store any value, just like [A]"
   - they have a special meaning when working with memory addresses 🐏
   - "and [SP] is the Stack Pointer"
   responses:
-  - ...registers
+  - <!m.$hasEnded> ...registers
+  - <m.$hasEnded> ...finish
 
 ldaexplanation:
-  run-before-events: |
+  run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
   - exactly, LDA means "LoaD Accumulator"
@@ -97,7 +98,7 @@ ldaexplanation:
 sta:
   run: |
     set((m) => m.$canRun = false);
-  run-before-events: |
+  run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
   - STA means "STore Accumulator"
@@ -110,6 +111,7 @@ sta:
 
 finish:
   run: |
+    set((m) => m.$hasEnded = true);
     {{Bottom}}.setDelay(500);
   messages:
   - awesome, now you know the basic workings of a CPU
@@ -117,3 +119,4 @@ finish:
   - when you are ready, we can go to the next level
   responses:
   - 💪  I think I'm ready [end]
+  - <!m.$others> (*) what about [X], [Y], and [SP]? [theothers]

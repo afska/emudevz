@@ -1,3 +1,5 @@
+import codeEval from "../codeEval";
+
 export default class ChatScript {
 	constructor(content, language) {
 		this.content = content;
@@ -10,6 +12,10 @@ export default class ChatScript {
 
 	static get END_SECTION() {
 		return "end";
+	}
+
+	static get IF_REGEXP() {
+		return /^<(.+)> /;
 	}
 
 	static get MODIFIER_REGEXP() {
@@ -54,7 +60,7 @@ export default class ChatScript {
 		const section = this.content[sectionName];
 		if (!section) throw new Error(`Section not found: ${sectionName}`);
 
-		return section.messages.flatMap((rawMessage) => {
+		return this._processIfs(section.messages).flatMap((rawMessage) => {
 			const inheritance = ChatScript.getInheritanceOf(rawMessage);
 			if (inheritance) return this.getMessagesOf(inheritance, history);
 
@@ -75,7 +81,7 @@ export default class ChatScript {
 		if (!section) throw new Error(`Section not found: ${sectionName}`);
 		if (!Array.isArray(section[field])) return [];
 
-		return section[field]
+		return this._processIfs(section[field])
 			.flatMap((rawContent) => {
 				const inheritance = ChatScript.getInheritanceOf(rawContent);
 				if (inheritance) return this.getOptionsOf(field, inheritance, history);
@@ -116,11 +122,11 @@ export default class ChatScript {
 		return section.run || null;
 	}
 
-	getBeforeEventsCodeOf(sectionName) {
+	getAfterMessagesCodeOf(sectionName) {
 		const section = this.content[sectionName];
 		if (!section) throw new Error(`Section not found: ${sectionName}`);
 
-		return section["run-before-events"] || null;
+		return section["run-after-messages"] || null;
 	}
 
 	validate() {
@@ -162,6 +168,7 @@ export default class ChatScript {
 	_isMessageInvalid = (message) => {
 		if (typeof message !== "string") return true;
 
+		message = this._stripIf(message);
 		const inheritance = ChatScript.getInheritanceOf(message);
 		if (inheritance && !this.content[inheritance]) return true;
 
@@ -171,6 +178,7 @@ export default class ChatScript {
 	_isResponseOrEventInvalid = (responseOrEvent) => {
 		if (typeof responseOrEvent !== "string") return true;
 
+		responseOrEvent = this._stripIf(responseOrEvent);
 		const inheritance = ChatScript.getInheritanceOf(responseOrEvent);
 		if (inheritance) return !this.content[inheritance];
 
@@ -180,4 +188,18 @@ export default class ChatScript {
 
 		return false;
 	};
+
+	_processIfs = (strings) => {
+		return strings
+			.filter((string) => {
+				const hasIf = ChatScript.IF_REGEXP.test(string);
+				if (!hasIf) return true;
+
+				const condition = string.match(ChatScript.IF_REGEXP)[1];
+				return !!codeEval.eval(condition);
+			})
+			.map(this._stripIf);
+	};
+
+	_stripIf = (string) => string.replace(ChatScript.IF_REGEXP, "");
 }

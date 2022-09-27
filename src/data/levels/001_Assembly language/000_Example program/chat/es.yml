@@ -41,7 +41,7 @@ machinecode:
   - ¿qué son los otros números? 👀 [otherthings]
 
 otherthings:
-  run-before-events: |
+  run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
   - vamos a ejecutar el código y descubrirlo
@@ -72,16 +72,19 @@ registers:
   - "(*) me dan curiosidad los otros: [X], [Y] y [SP] [theothers]"
 
 theothers:
+  run: |
+    set((m) => m.$others = true);
   messages:
   - más adelante voy a hablar de eso, pero básicamente
   - "[X] e [Y] pueden almacenar cualquier valor, al igual que [A]"
   - tienen un significado especial cuando trabajas con direcciones de memoria 🐏
   - y [SP] es el "Stack Pointer"
   responses:
-  - ...registers
+  - <!m.$hasEnded> ...registers
+  - <m.$hasEnded> ...finish
 
 ldaexplanation:
-  run-before-events: |
+  run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
   - exactamente, LDA significa "LoaD Accumulator"
@@ -95,7 +98,7 @@ ldaexplanation:
 sta:
   run: |
     set((m) => m.$canRun = false);
-  run-before-events: |
+  run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
   - STA significa "STore Accumulator"
@@ -108,6 +111,7 @@ sta:
 
 finish:
   run: |
+    set((m) => m.$hasEnded = true);
     {{Bottom}}.setDelay(500);
   messages:
   - increíble, ahora conoces el funcionamiento básico de una CPU
@@ -115,3 +119,4 @@ finish:
   - cuando quieras, podemos ir al siguiente nivel
   responses:
   - 💪  creo que ya entendí todo [end]
+  - <!m.$others> (*) ¿y qué onda con [X], [Y], and [SP]? [theothers]
