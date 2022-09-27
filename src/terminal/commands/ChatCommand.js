@@ -53,6 +53,7 @@ export default class ChatCommand extends Command {
 				this._goTo(response.link, level);
 			} else {
 				await this._terminal.newline();
+				this._terminal.cancelSpeedFlag();
 				await this._runCode(
 					chatScript.getBeforeEventsCodeOf(memory.sectionName)
 				);

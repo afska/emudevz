@@ -88,7 +88,7 @@ export default class Terminal {
 	}
 
 	prompt(indicator = "$ ", isValid = (x) => x !== "", style = theme.ACCENT) {
-		this._speedFlag = false;
+		this.cancelSpeedFlag();
 		this._interruptIfNeeded();
 
 		return new Promise((resolve, reject) => {
@@ -111,6 +111,10 @@ export default class Terminal {
 			this._input.cancel(INTERRUPTED);
 			this._input = null;
 		}
+	}
+
+	cancelSpeedFlag() {
+		this._speedFlag = false;
 	}
 
 	clear() {
