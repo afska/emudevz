@@ -6,6 +6,7 @@ import { FaStepForward } from "react-icons/fa";
 import { FaFastBackward } from "react-icons/fa";
 import _ from "lodash";
 import Level from "../../level/Level";
+import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import { bus } from "../../utils";
 import { asm6502, errorMarker, lineHighlighter } from "../../utils/codemirror";
@@ -87,12 +88,11 @@ export default class CodeEditor extends PureComponent {
 
 		const action = this._getAction();
 		const isPlayShown =
-			onlyShowPlayWhen == null || Level.current.getMemory(onlyShowPlayWhen);
+			onlyShowPlayWhen == null || codeEval.eval(onlyShowPlayWhen);
 		const isPlayEnabled =
 			!isDisabled &&
 			isReady &&
-			(onlyEnablePlayWhen == null ||
-				Level.current.getMemory(onlyEnablePlayWhen));
+			(onlyEnablePlayWhen == null || codeEval.eval(onlyEnablePlayWhen));
 
 		return (
 			<div className={styles.container}>

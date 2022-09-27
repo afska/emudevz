@@ -26,7 +26,7 @@
 					"language": "asm",
 					"initialCodeFile": "content.asm",
 					"readOnly": true,
-					"onlyShowPlayWhen": "$canRun"
+					"onlyShowPlayWhen": "m.$canRun"
 				}
 			]
 		},

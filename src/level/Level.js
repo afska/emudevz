@@ -29,10 +29,6 @@ export default class Level {
 		return store.getState().level.instance;
 	}
 
-	getMemory(path) {
-		return _.get(this.memory, path);
-	}
-
 	setMemory(change) {
 		change(this.memory);
 		bus.emit("level-memory-changed");

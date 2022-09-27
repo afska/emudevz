@@ -9,6 +9,9 @@ export default {
 		// eval scope:
 		const level = $Level.current;
 		const layout = level.$layout;
+
+		// eslint-disable-next-line
+		const m = level.memory;
 		// eslint-disable-next-line
 		const set = (action) => level.setMemory(action);
 		// eslint-disable-next-line
@@ -23,7 +26,7 @@ export default {
 		});
 
 		try {
-			eval(evalCode);
+			return eval(evalCode);
 		} catch (e) {
 			const error = new Error(`Code eval failed: ${e}`);
 			error.code = evalCode;
