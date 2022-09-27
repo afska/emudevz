@@ -6,20 +6,87 @@ main:
       m.$canRun = false;
     });
   messages:
-  - asdasd
+  - let me introduce you to the code editor
+  - well, it's not an <editor> yet
+  - just a viewer
+  - it has an example of a basic NEEES program
   responses:
-    - test [aver]
+  - (*) the viewer doesn't scare me, what it does is the weird looking numbers at the bottom [debugger]
+  - what language is this? [language]
 
-aver:
-  run: |
+debugger:
+  messages:
+  - the CPU debugger?
+  - don't you worry
+  - I'll explain everything!
+  responses:
+  - ...main
+
+language:
+  messages:
+  - it's assembly language!
+  - the lowest level of abstraction in computers
+  - it translates directly to the bytes that are executed by the CPU
+  responses:
+  - so, after compiling, it'll become just a weird chunk of bytes? [machinecode]
+
+machinecode:
+  messages:
+  - correct
+  - you're actually seeing the compiled code
+  - look at the memory viewer on the bottom of the screen
+  - the code starts from the $4020 memory address
+  - if you place your mouse pointer over one of these addresses, it'll show where each instruction starts
+  responses:
+  - what are the other things? [otherthings]
+
+otherthings:
+  run-before-events: |
     set((m) => m.$canRun = true);
   messages:
-  - asdasdasd
+  - let's run the code and discover it
+  - I enabled you a play button in the code section
+  - "can you click it?"
   events:
   - play [lda]
 
 lda:
+  run: |
+    set((m) => m.$canRun = false);
   messages:
-  - GOOD
+  - great!
+  - if you were watching carefully, you'll have noticed that [A] changed from $00 to $01
+  - and [PC] changed from $4020 to $4022
+  - those are CPU registers, quickly accessible locations
+  - each of these registers can hold a single byte (8 bits) of data
+  - with the exception of [PC] (Program Counter) which is 2 bytes wide
   responses:
-    - woohoh [end]
+  - what's the purpose of each register? [registers]
+
+registers:
+  messages:
+  - well, [A] means Accumulator and its use depends on the program
+  - "[PC] always points to the next instruction to execute"
+  responses:
+  - "so, with `LDA #$01` you just told the processor to store the number $01 on [A]? [ldaexplanation]"
+
+ldaexplanation:
+  run: |
+    set((m) => m.$canRun = true);
+  messages:
+  - exactly
+  - any numbers prefixed with $ are in hexadecimal notation
+  - "and anything prefixed with # is a literal number value"
+  - any other number refers to a memory location
+  - run the next instruction!
+  events:
+  - play [sta]
+
+sta:
+  run: |
+    set((m) => m.$canRun = true);
+  messages:
+  - asdasd
+  events:
+  - play [end]
+

@@ -116,6 +116,13 @@ export default class ChatScript {
 		return section.run || null;
 	}
 
+	getBeforeEventsCodeOf(sectionName) {
+		const section = this.content[sectionName];
+		if (!section) throw new Error(`Section not found: ${sectionName}`);
+
+		return section["run-before-events"] || null;
+	}
+
 	validate() {
 		if (this.content.main == null) throw new Error("No main section");
 

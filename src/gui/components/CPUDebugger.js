@@ -183,6 +183,17 @@ export default class CPUDebugger extends PureComponent {
 													}
 													overlay={
 														<Tooltip>
+															{lineStart + d === this.state.PC && (
+																<span>
+																	<strong
+																		className={styles.name}
+																		style={PC_STYLE}
+																	>
+																		PC
+																	</strong>{" "}
+																	={" "}
+																</span>
+															)}
 															${hex.format(lineStart + d, 4)}
 															{(() => {
 																const line = this.state._mappings.find(

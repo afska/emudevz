@@ -1,7 +1,7 @@
 ---
 main:
   run: |
-    {{Right}}.load("architecture.png")
+    {{Right}}.load("architecture.png");
   messages:
   - bueno, aparentemente, esta cosa tiene 3 componentes principales, bastante independientes uno del otro
   - "estos son: 💻  CPU, 🖥️  PPU y 🔊  APU"

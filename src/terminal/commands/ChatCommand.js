@@ -33,7 +33,6 @@ export default class ChatCommand extends Command {
 		});
 
 		while (memory.sectionName !== ChatScript.END_SECTION) {
-			const startUpCode = chatScript.getStartUpCodeOf(memory.sectionName);
 			const messages = chatScript.getMessagesOf(
 				memory.sectionName,
 				memory.history
@@ -44,14 +43,19 @@ export default class ChatCommand extends Command {
 			);
 			const events = chatScript.getEventsOf(memory.sectionName, memory.history);
 
-			await this._runStartUpCode(startUpCode);
+			await this._runCode(chatScript.getStartUpCodeOf(memory.sectionName));
 			await this._showMessages(messages);
+
 			if (!_.isEmpty(responses)) {
 				await this._showChooseAnAnswer();
 				await this._showResponses(responses);
 				const response = await this._getSelectedResponse(responses);
 				this._goTo(response.link, level);
 			} else {
+				await this._terminal.newline();
+				await this._runCode(
+					chatScript.getBeforeEventsCodeOf(memory.sectionName)
+				);
 				const link = await this._getEventLink(events);
 				this._goTo(link, level);
 			}
@@ -78,8 +82,8 @@ export default class ChatCommand extends Command {
 		return true;
 	}
 
-	async _runStartUpCode(startUpCode) {
-		if (startUpCode == null) return;
+	async _runCode(code) {
+		if (code == null) return;
 
 		const level = Level.current;
 		const layout = level.$layout;
@@ -91,7 +95,7 @@ export default class ChatCommand extends Command {
 		const bus = _bus;
 
 		// TODO: Replace with bus?
-		let evalCode = startUpCode;
+		let evalCode = code;
 		_.forEach(layout.instances, async (__, name) => {
 			evalCode = evalCode.replace(
 				new RegExp(`{{${name}}}`, "g"),
