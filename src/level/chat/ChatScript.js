@@ -175,7 +175,8 @@ export default class ChatScript {
 		if (inheritance) return !this.content[inheritance];
 
 		const link = ChatScript.getLinkOf(responseOrEvent);
-		if (!link || (link !== "end" && !this.content[link])) return true;
+		if (!link || (link !== ChatScript.END_SECTION && !this.content[link]))
+			return true;
 
 		return false;
 	};
