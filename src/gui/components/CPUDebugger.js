@@ -9,12 +9,12 @@ import { assembler, runner } from "../../utils/nes";
 import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
-const FLASH_DURATION = 500;
 const MEMORY_ROWS = 10;
 const PC_STYLE = { textDecoration: "underline" };
 
 export default class CPUDebugger extends PureComponent {
 	state = {
+		_delay: 500,
 		_lastCode: "",
 		_memoryStart: 0x4020,
 		_mappings: [],
@@ -36,6 +36,8 @@ export default class CPUDebugger extends PureComponent {
 
 	async initialize(args, level) {
 		this._level = level;
+
+		if (Number.isFinite(args.delay)) this.setState({ _delay: args.delay });
 	}
 
 	render() {
@@ -62,6 +64,7 @@ export default class CPUDebugger extends PureComponent {
 											<td>
 												<Value
 													value={this.state[name]}
+													flashDuration={this.state._delay}
 													prefix="$"
 													digits={name === "PC" ? 4 : 2}
 												/>
@@ -101,7 +104,11 @@ export default class CPUDebugger extends PureComponent {
 								{["N", "V", "B", "b", "D", "I", "Z", "C"].map((name) => {
 									return (
 										<td key={name}>
-											<Value value={this.state[`F_${name}`]} digits={1} />
+											<Value
+												value={this.state[`F_${name}`]}
+												flashDuration={this.state._delay}
+												digits={1}
+											/>
 										</td>
 									);
 								})}
@@ -212,6 +219,7 @@ export default class CPUDebugger extends PureComponent {
 													<th>
 														<Value
 															value={this.state.memory[line * 16 + d]}
+															flashDuration={this.state._delay}
 															style={
 																lineStart + d === this.state.PC ? PC_STYLE : {}
 															}
@@ -265,7 +273,7 @@ export default class CPUDebugger extends PureComponent {
 		bus.emit("run-enabled", false);
 		setTimeout(() => {
 			bus.emit("run-enabled", true);
-		}, FLASH_DURATION);
+		}, this.state._delay);
 
 		this._cpu.step();
 		this._updateState();
@@ -319,11 +327,17 @@ export default class CPUDebugger extends PureComponent {
 	}
 }
 
-const Value = ({ value, style = {}, prefix = "", digits = 2 }) => {
+const Value = ({
+	value,
+	flashDuration = 500,
+	style = {},
+	prefix = "",
+	digits = 2,
+}) => {
 	return (
 		<FlashChange
 			value={value}
-			flashDuration={FLASH_DURATION}
+			flashDuration={flashDuration}
 			style={{
 				transform: "rotate(-360deg)",
 				color: value !== 0 ? "#e5c07b" : "#ffffff",
@@ -334,7 +348,7 @@ const Value = ({ value, style = {}, prefix = "", digits = 2 }) => {
 				background: "rgba(98, 112, 128, 0.5)",
 				boxShadow:
 					"inset 8px 8px 8px rgb(0 0 0 / 8%), 0 0 8px rgb(200 200 200 / 60%)",
-				transition: `transform ${FLASH_DURATION}ms, box-shadow ${FLASH_DURATION}ms`,
+				transition: `transform ${flashDuration}ms, box-shadow ${flashDuration}ms`,
 			}}
 			compare={(prevProps, nextProps) => {
 				return nextProps.value !== prevProps.value;

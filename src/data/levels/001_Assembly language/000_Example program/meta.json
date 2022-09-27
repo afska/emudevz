@@ -13,7 +13,12 @@
 					"availableCommands": ["chat", "help", "clear"]
 				}
 			],
-			"Bottom": ["cpu", {}],
+			"Bottom": [
+				"cpu",
+				{
+					"delay": 1500
+				}
+			],
 			"Top": [
 				"code",
 				{
