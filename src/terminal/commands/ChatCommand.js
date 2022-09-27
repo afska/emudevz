@@ -50,31 +50,10 @@ export default class ChatCommand extends Command {
 				await this._showChooseAnAnswer();
 				await this._showResponses(responses);
 				const response = await this._getSelectedResponse(responses);
-				this._goTo(response, level);
+				this._goTo(response.link, level);
 			} else {
-				let $resolve = null;
-				const listeners = events.map((event) => () => {
-					$resolve(event);
-				});
-
-				const removeListeners = () => {
-					events.forEach((event, i) => {
-						_bus.removeListener(event.content, listeners[i]);
-					});
-				};
-
-				const event = await Promise.any(
-					events.map(
-						(event, i) =>
-							new Promise((resolve) => {
-								$resolve = resolve;
-								_bus.on(event.content, listeners[i]);
-							})
-					)
-				);
-
-				removeListeners();
-				this._goTo(event, level);
+				const link = await this._getEventLink(events);
+				this._goTo(link, level);
 			}
 		}
 
@@ -174,9 +153,26 @@ export default class ChatCommand extends Command {
 		return selectedResponse;
 	}
 
-	_goTo(selectedOption, level) {
+	async _getEventLink(events) {
+		let subscriber;
+		const link = await new Promise((resolve) => {
+			subscriber = _bus.subscribe(
+				_(events)
+					.keyBy("content")
+					.mapValues((event, k) => () => {
+						resolve(event.link);
+					})
+					.value()
+			);
+		});
+		subscriber.release();
+
+		return link;
+	}
+
+	_goTo(sectionName, level) {
 		level.setMemory(({ chat }) => {
-			chat.sectionName = selectedOption.link;
+			chat.sectionName = sectionName;
 			chat.history.push(chat.sectionName);
 		});
 	}

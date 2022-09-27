@@ -133,6 +133,11 @@ export default class ChatScript {
 					`Missing responses/events: ${this.language}/${sectionName}`
 				);
 
+			if (Array.isArray(section.responses) && Array.isArray(section.events))
+				throw new Error(
+					`Invalid section with responses AND events: ${this.language}/${sectionName}`
+				);
+
 			if (
 				Array.isArray(section.responses) &&
 				section.responses.some(this._isResponseOrEventInvalid)
