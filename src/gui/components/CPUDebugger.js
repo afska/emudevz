@@ -220,8 +220,7 @@ export default class CPUDebugger extends PureComponent {
 
 	_onCode = (code) => {
 		try {
-			const mappings = assembler.inspect(code);
-			const bytes = assembler.compile(code);
+			const { instructions: mappings, bytes } = assembler.compile(code);
 			this._cpu = runner.create(bytes);
 
 			this.setState(

@@ -1,10 +1,8 @@
-import tools6502 from "@neshacker/6502-tools";
-
+const { ParseLine, ParseError } = require("@neshacker/6502-tools/src/parser");
 const { assemble } = require("@neshacker/6502-tools/src/assembler/assemble");
 const {
 	Instruction,
 } = require("@neshacker/6502-tools/src/assembler/Instruction");
-const { ParseLine, ParseError } = require("@neshacker/6502-tools/src/parser");
 const ParseNode = require("@neshacker/6502-tools/src/parser/ParseNode");
 const lineParser = require("@neshacker/6502-tools/src/parser/lineParser");
 
@@ -15,19 +13,12 @@ function setNodeLine(line, node) {
 
 export default {
 	compile(asm) {
-		const string = tools6502.Assembler.toHexString(asm);
-		if (string.length === 0) return;
-
-		return new Uint8Array(
-			string.match(/.{1,2}/g).map((it) => parseInt(it, 16))
-		);
-	},
-
-	inspect(asm) {
 		const root = this._parse(asm);
-		const instructions = [];
+		const lir = assemble(root);
 
-		assemble(root).forEach((lir) => {
+		// instructions
+		const instructions = [];
+		lir.forEach((lir) => {
 			const address = lir.address;
 
 			if (lir instanceof Instruction) {
@@ -39,7 +30,24 @@ export default {
 			}
 		});
 
-		return instructions;
+		// bytes
+		const hex = [];
+		const nonLabels = lir.filter(
+			(v) => v instanceof Instruction || v instanceof Uint8Array
+		);
+		nonLabels.forEach((nonLabel) => {
+			if (!nonLabel.bytes || nonLabel.bytes.length === 0) {
+				const { lineNumber } = nonLabel.line;
+				const { source } = nonLabel;
+				throw new Error(
+					`Unable to generate hex for line ${lineNumber} "${source}".`
+				);
+			}
+			for (let byte of nonLabel._bytes) hex.push(byte);
+		});
+		const bytes = new Uint8Array(hex);
+
+		return { bytes, instructions };
 	},
 
 	_parse(source) {
