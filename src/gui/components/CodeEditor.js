@@ -7,7 +7,7 @@ import { FaFastBackward } from "react-icons/fa";
 import Level from "../../level/Level";
 import locales from "../../locales";
 import { bus } from "../../utils";
-import { asm6502, highlighter } from "../../utils/codemirror";
+import { asm6502, errorMarker, lineHighlighter } from "../../utils/codemirror";
 import IconButton from "./widgets/IconButton";
 import styles from "./CodeEditor.module.css";
 
@@ -159,7 +159,15 @@ export default class CodeEditor extends PureComponent {
 
 	_setCode = (code) => {
 		this.setState({ code });
-		bus.emit("code", code);
+
+		try {
+			bus.emit("code", code);
+		} catch (e) {
+			if (e.err?.name === "SyntaxError") {
+				this._markError(e.err.location.start.offset, e.err.location.end.offset);
+			}
+			// (throwing errors inside `onChange` can mess up updates)
+		}
 	};
 
 	_getAction() {
@@ -168,11 +176,19 @@ export default class CodeEditor extends PureComponent {
 		return this.actions[actionName] || this.actions.unknown;
 	}
 
+	_markError(start, end) {
+		if (!this.ref) return;
+
+		setTimeout(() => {
+			errorMarker.markError(this.ref, this.state.code, start, end);
+		});
+	}
+
 	_highlight(line) {
 		if (!this.ref) return;
 
 		setTimeout(() => {
-			highlighter.highlightLine(this.ref, this.state.code, line);
+			lineHighlighter.highlightLine(this.ref, this.state.code, line);
 		});
 	}
 }

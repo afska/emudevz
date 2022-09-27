@@ -218,10 +218,9 @@ export default class CPUDebugger extends PureComponent {
 	}
 
 	_onCode = (code) => {
-		// TODO: HANDLE COMPILE ERRORS
-
-		const bytes = assembler.compile(code);
+		// try {
 		const mappings = assembler.inspect(code);
+		const bytes = assembler.compile(code);
 		this._cpu = runner.create(bytes);
 
 		this.setState({ _lastCode: code, _mappings: mappings }, () => {
@@ -229,6 +228,9 @@ export default class CPUDebugger extends PureComponent {
 				this._updateState();
 			});
 		});
+		// } catch (e) {
+		// 	debugger;
+		// }
 	};
 
 	_onPlay = () => {

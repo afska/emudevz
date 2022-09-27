@@ -1,4 +1,5 @@
 import asm6502 from "./asm6502";
-import highlighter from "./highlighter";
+import errorMarker from "./errorMarker";
+import lineHighlighter from "./lineHighlighter";
 
-export { asm6502, highlighter };
+export { asm6502, errorMarker, lineHighlighter };

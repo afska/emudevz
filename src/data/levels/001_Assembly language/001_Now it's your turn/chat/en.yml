@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - now it's your turn
+  - now it's your turn 😛
   - make a program that writes the number $7C to the addresses $4055 and $4072
   - then, the number $18 to the address $40B8
   - when you're ready, press the ▶️  button

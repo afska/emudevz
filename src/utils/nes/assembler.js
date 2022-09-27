@@ -4,7 +4,13 @@ const { assemble } = require("@neshacker/6502-tools/src/assembler/assemble");
 const {
 	Instruction,
 } = require("@neshacker/6502-tools/src/assembler/Instruction");
-const { parse } = require("@neshacker/6502-tools/src/parser");
+const { ParseLine, ParseError } = require("@neshacker/6502-tools/src/parser");
+const lineParser = require("@neshacker/6502-tools/src/parser/lineParser");
+
+function setNodeLine(line, node) {
+	node.line = line;
+	node.children.forEach((child) => setNodeLine(line, child));
+}
 
 export default {
 	compile(asm) {
@@ -16,7 +22,7 @@ export default {
 	},
 
 	inspect(asm) {
-		const root = parse(asm);
+		const root = this._parse(asm);
 		const instructions = [];
 
 		assemble(root).forEach((lir) => {
@@ -32,5 +38,44 @@ export default {
 		});
 
 		return instructions;
+	},
+
+	_parse(source) {
+		const parsed = [];
+
+		const lines = source
+			.split("\n")
+			.map(
+				(sourceLine, index) =>
+					new ParseLine({
+						original: sourceLine + "\n",
+						lineNumber: index + 1,
+						assembly: sourceLine
+							.replace(/^\s+/, "")
+							.replace(/;.*/, "")
+							.replace(/\s+$/, ""),
+					})
+			)
+			.filter((line) => line.assembly.length > 0);
+
+		for (const line of lines) {
+			try {
+				const node = lineParser.parse(line.assembly);
+				if (Array.isArray(node)) {
+					node.forEach((n) => {
+						n.line = line;
+						setNodeLine(line, n);
+						parsed.push(n);
+					});
+				} else {
+					setNodeLine(line, node);
+					parsed.push(node);
+				}
+			} catch (err) {
+				const parserError = new ParseError(err, line);
+				parserError.err = err;
+				throw parserError;
+			}
+		}
 	},
 };
