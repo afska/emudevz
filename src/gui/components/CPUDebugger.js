@@ -25,6 +25,7 @@ export default class CPUDebugger extends PureComponent {
 		_lastCode: "",
 		_memoryStart: 0x4020,
 		_mappings: [],
+		_error: null,
 		A: 0x0,
 		X: 0x0,
 		Y: 0x0,
@@ -218,19 +219,30 @@ export default class CPUDebugger extends PureComponent {
 	}
 
 	_onCode = (code) => {
-		// try {
-		const mappings = assembler.inspect(code);
-		const bytes = assembler.compile(code);
-		this._cpu = runner.create(bytes);
+		try {
+			const mappings = assembler.inspect(code);
+			const bytes = assembler.compile(code);
+			this._cpu = runner.create(bytes);
 
-		this.setState({ _lastCode: code, _mappings: mappings }, () => {
-			setTimeout(() => {
-				this._updateState();
-			});
-		});
-		// } catch (e) {
-		// 	debugger;
-		// }
+			this.setState(
+				{ _lastCode: code, _mappings: mappings, _error: null },
+				() => {
+					setTimeout(() => {
+						this._updateState();
+					});
+				}
+			);
+		} catch (e) {
+			if (
+				e.message.startsWith("Parse Error") ||
+				e.message.startsWith("Assembly Error")
+			) {
+				e.handled = true;
+				this.setState({ _error: e.message });
+			}
+
+			throw e;
+		}
 	};
 
 	_onPlay = () => {

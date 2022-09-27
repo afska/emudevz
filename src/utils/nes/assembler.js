@@ -5,6 +5,7 @@ const {
 	Instruction,
 } = require("@neshacker/6502-tools/src/assembler/Instruction");
 const { ParseLine, ParseError } = require("@neshacker/6502-tools/src/parser");
+const ParseNode = require("@neshacker/6502-tools/src/parser/ParseNode");
 const lineParser = require("@neshacker/6502-tools/src/parser/lineParser");
 
 function setNodeLine(line, node) {
@@ -14,10 +15,11 @@ function setNodeLine(line, node) {
 
 export default {
 	compile(asm) {
+		const string = tools6502.Assembler.toHexString(asm);
+		if (string.length === 0) return;
+
 		return new Uint8Array(
-			tools6502.Assembler.toHexString(asm)
-				.match(/.{1,2}/g)
-				.map((it) => parseInt(it, 16))
+			string.match(/.{1,2}/g).map((it) => parseInt(it, 16))
 		);
 	},
 
@@ -77,5 +79,7 @@ export default {
 				throw parserError;
 			}
 		}
+
+		return ParseNode.statementList(parsed);
 	},
 };

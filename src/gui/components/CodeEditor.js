@@ -165,8 +165,10 @@ export default class CodeEditor extends PureComponent {
 		} catch (e) {
 			if (e.err?.name === "SyntaxError") {
 				this._markError(e.err.location.start.offset, e.err.location.end.offset);
+			} else if (!e.handled) {
+				// (throwing errors inside `onChange` can mess up updates)
+				console.error(e, code);
 			}
-			// (throwing errors inside `onChange` can mess up updates)
 		}
 	};
 
