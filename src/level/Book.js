@@ -15,6 +15,8 @@ export default class Book {
 			return _.some(chapter.levels, (level) => level.id === levelId);
 		});
 		const chapter = this.chapters[index];
+		if (!chapter) return null;
+
 		chapter.number = index + 1;
 		return chapter;
 	}

@@ -26,6 +26,7 @@ class PlayScreen extends PureComponent {
 	componentDidUpdate() {
 		const { path, currentLevelId, resetLevel, validateSavedata } = this.props;
 		if (!validateSavedata(currentLevelId)) return;
+		if (!this.currentChapter) return;
 
 		if (path !== this.state.path) {
 			bus.removeAllListeners();
