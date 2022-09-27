@@ -3,13 +3,18 @@ import FlashChange from "@avinlab/react-flash-change";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Table from "react-bootstrap/Table";
 import Tooltip from "react-bootstrap/Tooltip";
+import _ from "lodash";
 import locales from "../../locales";
 import { bus, hex } from "../../utils";
 import { assembler, runner } from "../../utils/nes";
 import styles from "./CPUDebugger.module.css";
 
 const HEIGHT = 300;
+const REGISTERS = ["A", "X", "Y", "SP", "PC"];
+const FLAGS_TEXT = ["N", "V", "-", "-", "-", "I", "Z", "C"];
+const FLAGS_KEYS = ["N", "V", "B", "b", "D", "I", "Z", "C"];
 const MEMORY_ROWS = 10;
+const BASE = 16;
 const PC_STYLE = { textDecoration: "underline" };
 
 export default class CPUDebugger extends PureComponent {
@@ -33,7 +38,7 @@ export default class CPUDebugger extends PureComponent {
 		F_I: 0,
 		F_Z: 0,
 		F_C: 0,
-		memory: new Uint8Array(MEMORY_ROWS * 16),
+		memory: new Uint8Array(MEMORY_ROWS * BASE),
 	};
 
 	async initialize(args, level) {
@@ -54,197 +59,14 @@ export default class CPUDebugger extends PureComponent {
 		return (
 			<div className={styles.container} ref={this._onRef}>
 				<div className={styles.column}>
-					<Viewer className={styles.registers}>
-						<tbody>
-							{["A", "X", "Y", "SP", "PC"].map((name, i) => {
-								return (
-									<OverlayTrigger
-										key={i}
-										placement="top"
-										overlay={
-											<Tooltip>{locales.get(`register_${name}`)}</Tooltip>
-										}
-									>
-										<tr>
-											<td className={styles.name}>
-												<strong style={name === "PC" ? PC_STYLE : {}}>
-													{name}
-												</strong>
-											</td>
-											<td>
-												<Value
-													value={this.state[name]}
-													flashDuration={this.state._delay}
-													prefix="$"
-													digits={name === "PC" ? 4 : 2}
-												/>
-											</td>
-										</tr>
-									</OverlayTrigger>
-								);
-							})}
-						</tbody>
-					</Viewer>
-
-					{!this.state._hideFlags && (
-						<Viewer className={styles.flags}>
-							<thead>
-								<tr className={styles.name}>
-									{["N", "V", "-", "-", "-", "I", "Z", "C"].map((name, i) => {
-										return (
-											<OverlayTrigger
-												key={i}
-												placement="top"
-												overlay={
-													<Tooltip>
-														{locales.get(
-															`register_flags_${name}`,
-															locales.get("register_flags_U")
-														)}
-													</Tooltip>
-												}
-											>
-												<th>{name}</th>
-											</OverlayTrigger>
-										);
-									})}
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									{["N", "V", "B", "b", "D", "I", "Z", "C"].map((name) => {
-										return (
-											<td key={name}>
-												<Value
-													value={this.state[`F_${name}`]}
-													flashDuration={this.state._delay}
-													digits={1}
-												/>
-											</td>
-										);
-									})}
-								</tr>
-							</tbody>
-						</Viewer>
-					)}
+					{this._renderRegisters()}
+					{this._renderFlags()}
 				</div>
 
 				<div className={styles.column}>
 					<Viewer className={styles.memory}>
-						<thead>
-							<tr className={styles.name}>
-								{[
-									"#",
-									"0",
-									"1",
-									"2",
-									"3",
-									"4",
-									"5",
-									"6",
-									"7",
-									"8",
-									"9",
-									"A",
-									"B",
-									"C",
-									"D",
-									"E",
-									"F",
-								].map((name, i) => {
-									return (
-										<OverlayTrigger
-											key={i}
-											placement="top"
-											overlay={
-												<Tooltip>{locales.get("memory_viewer")}</Tooltip>
-											}
-										>
-											<th>{name}</th>
-										</OverlayTrigger>
-									);
-								})}
-							</tr>
-						</thead>
-						<tbody>
-							{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((line, i) => {
-								const lineStart = this.state._memoryStart + line * 16;
-
-								return (
-									<tr key={i}>
-										<td className={styles.name}>
-											<strong>${hex.format(lineStart, 4)}</strong>
-										</td>
-										{[
-											0,
-											1,
-											2,
-											3,
-											4,
-											5,
-											6,
-											7,
-											8,
-											9,
-											0xa,
-											0xb,
-											0xc,
-											0xd,
-											0xe,
-											0xf,
-										].map((d, i) => {
-											return (
-												<OverlayTrigger
-													key={i}
-													placement="top"
-													show={
-														lineStart + d === this.state.PC ? true : undefined
-													}
-													overlay={
-														<Tooltip>
-															{lineStart + d === this.state.PC && (
-																<span>
-																	<strong
-																		className={styles.name}
-																		style={PC_STYLE}
-																	>
-																		PC
-																	</strong>{" "}
-																	={" "}
-																</span>
-															)}
-															${hex.format(lineStart + d, 4)}
-															{(() => {
-																const line = this.state._mappings.find(
-																	(it) =>
-																		runner.CODE_ADDRESS + it.address ===
-																		lineStart + d
-																)?.line;
-
-																return line != null ? (
-																	<div className={styles.sentence}>${line}</div>
-																) : null;
-															})()}
-														</Tooltip>
-													}
-												>
-													<th>
-														<Value
-															value={this.state.memory[line * 16 + d]}
-															flashDuration={this.state._delay}
-															style={
-																lineStart + d === this.state.PC ? PC_STYLE : {}
-															}
-															digits={2}
-														/>
-													</th>
-												</OverlayTrigger>
-											);
-										})}
-									</tr>
-								);
-							})}
-						</tbody>
+						<thead>{this._renderMemoryViewerHead()}</thead>
+						<tbody>{this._renderMemoryViewerContent()}</tbody>
 					</Viewer>
 				</div>
 			</div>
@@ -266,6 +88,134 @@ export default class CPUDebugger extends PureComponent {
 	}
 
 	focus = () => {};
+
+	_renderRegisters() {
+		return (
+			<Viewer className={styles.registers}>
+				<tbody>
+					{REGISTERS.map((name, i) => {
+						return (
+							<OverlayTrigger
+								key={i}
+								placement="top"
+								overlay={<Tooltip>{locales.get(`register_${name}`)}</Tooltip>}
+							>
+								<tr>
+									<td className={styles.name}>
+										<strong style={name === "PC" ? PC_STYLE : {}}>
+											{name}
+										</strong>
+									</td>
+									<td>
+										<Value
+											value={this.state[name]}
+											flashDuration={this.state._delay}
+											prefix="$"
+											digits={name === "PC" ? 4 : 2}
+										/>
+									</td>
+								</tr>
+							</OverlayTrigger>
+						);
+					})}
+				</tbody>
+			</Viewer>
+		);
+	}
+
+	_renderFlags() {
+		if (this.state._hideFlags) return false;
+
+		return (
+			<Viewer className={styles.flags}>
+				<thead>
+					<tr className={styles.name}>
+						{FLAGS_TEXT.map((name, i) => {
+							return (
+								<OverlayTrigger
+									key={i}
+									placement="top"
+									overlay={
+										<Tooltip>
+											{locales.get(
+												`register_flags_${name}`,
+												locales.get("register_flags_U")
+											)}
+										</Tooltip>
+									}
+								>
+									<th>{name}</th>
+								</OverlayTrigger>
+							);
+						})}
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						{FLAGS_KEYS.map((name) => {
+							return (
+								<td key={name}>
+									<Value
+										value={this.state[`F_${name}`]}
+										flashDuration={this.state._delay}
+										digits={1}
+									/>
+								</td>
+							);
+						})}
+					</tr>
+				</tbody>
+			</Viewer>
+		);
+	}
+
+	_renderMemoryViewerHead() {
+		return (
+			<tr className={styles.name}>
+				{["#"]
+					.concat(_.range(0, BASE).map((it) => it.toString(BASE).toUpperCase()))
+					.map((name, i) => {
+						return (
+							<OverlayTrigger
+								key={i}
+								placement="top"
+								overlay={<Tooltip>{locales.get("memory_viewer")}</Tooltip>}
+							>
+								<th>{name}</th>
+							</OverlayTrigger>
+						);
+					})}
+			</tr>
+		);
+	}
+
+	_renderMemoryViewerContent() {
+		return _.range(0, MEMORY_ROWS).map((row, i) => {
+			const rowStart = this.state._memoryStart + row * BASE;
+
+			return (
+				<tr key={i}>
+					<td className={styles.name}>
+						<strong>${hex.format(rowStart, 4)}</strong>
+					</td>
+					{_.range(0, BASE).map((column, i) => {
+						return (
+							<MemoryCell
+								key={i}
+								rowStart={rowStart}
+								row={row}
+								column={column}
+								memory={this.state.memory}
+								PC={this.state.PC}
+								mappings={this.state._mappings}
+								flashDuration={this.state._delay}
+							/>
+						);
+					})}
+				</tr>
+			);
+		});
+	}
 
 	_onCode = (code) => {
 		// TODO: HANDLE COMPILE ERRORS
@@ -308,8 +258,8 @@ export default class CPUDebugger extends PureComponent {
 	};
 
 	_updateState() {
-		const memory = new Uint8Array(MEMORY_ROWS * 16);
-		for (let i = 0; i < MEMORY_ROWS * 16; i++) {
+		const memory = new Uint8Array(MEMORY_ROWS * BASE);
+		for (let i = 0; i < MEMORY_ROWS * BASE; i++) {
 			memory[i] = this._cpu.memory.readAt(this.state._memoryStart + i);
 		}
 
@@ -338,6 +288,57 @@ export default class CPUDebugger extends PureComponent {
 		if (lineNumber == null) bus.emit("end");
 	}
 }
+
+const MemoryCell = ({
+	rowStart,
+	row,
+	column,
+	memory,
+	PC,
+	mappings,
+	flashDuration,
+}) => {
+	const address = rowStart + column;
+	const isPC = address === PC;
+
+	return (
+		<OverlayTrigger
+			placement="top"
+			show={isPC ? true : undefined}
+			overlay={
+				<Tooltip>
+					{isPC && (
+						<span>
+							<strong className={styles.name} style={PC_STYLE}>
+								PC
+							</strong>{" "}
+							={" "}
+						</span>
+					)}
+					${hex.format(address, 4)}
+					{(() => {
+						const line = mappings.find(
+							(it) => runner.CODE_ADDRESS + it.address === address
+						)?.line;
+
+						return line != null ? (
+							<div className={styles.sentence}>${line}</div>
+						) : null;
+					})()}
+				</Tooltip>
+			}
+		>
+			<th>
+				<Value
+					value={memory[row * BASE + column]}
+					flashDuration={flashDuration}
+					style={isPC ? PC_STYLE : {}}
+					digits={2}
+				/>
+			</th>
+		</OverlayTrigger>
+	);
+};
 
 const Value = ({
 	value,
