@@ -5,7 +5,6 @@ import CodeMirror from "@uiw/react-codemirror";
 import { FaStepForward } from "react-icons/fa";
 import { FaFastBackward } from "react-icons/fa";
 import _ from "lodash";
-import Level from "../../level/Level";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import { bus } from "../../utils";
@@ -176,9 +175,12 @@ export default class CodeEditor extends PureComponent {
 			this.setState({ isReady: false });
 
 			if (e.err?.name === "SyntaxError") {
+				const lineNumber = e.lineNumber - 1;
+				const { index: lineStart } = errorMarker.findLine(code, lineNumber);
+
 				this.setState({
-					errorStart: e.err.location.start.offset,
-					errorEnd: e.err.location.end.offset,
+					errorStart: lineStart + e.err.location.start.offset,
+					errorEnd: lineStart + e.err.location.end.offset,
 				});
 			} else if (!e.handled) {
 				// (throwing errors inside `onChange` can mess up updates)

@@ -84,6 +84,7 @@ export default {
 			} catch (err) {
 				const parserError = new ParseError(err, line);
 				parserError.err = err;
+				parserError.lineNumber = line.lineNumber;
 				throw parserError;
 			}
 		}

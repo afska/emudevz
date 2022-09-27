@@ -88,6 +88,17 @@ export default (
 			view.dispatch({ effects });
 		},
 
+		findLine(code, lineNumber) {
+			const lines = code.split("\n");
+			const line = lines[lineNumber];
+			if (line == null) return { index: -1, line: "" };
+
+			let index = 0;
+			for (let l of lines.slice(0, lineNumber)) index += l.length + 1;
+
+			return { line, index };
+		},
+
 		clear(ref, code) {
 			this.unhighlight(ref, 0, code.length);
 		},

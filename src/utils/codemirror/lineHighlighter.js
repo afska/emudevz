@@ -4,13 +4,7 @@ export default {
 	highlightLine(ref, code, lineNumber) {
 		this.clear(ref, code);
 
-		const lines = code.split("\n");
-		const line = lines[lineNumber];
-		if (line == null) return;
-
-		let index = 0;
-		for (let l of lines.slice(0, lineNumber)) index += l.length + 1;
-
+		const { line, index } = this.findLine(code, lineNumber);
 		this.highlight(ref, index, index + line.length);
 	},
 
