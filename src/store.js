@@ -17,7 +17,7 @@ const store = init({
 			version: 1,
 			storage,
 			key: "emudevz",
-			whitelist: ["savedata"],
+			whitelist: ["savedata", "files"],
 		}),
 	],
 	redux: {
