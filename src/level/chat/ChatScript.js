@@ -78,7 +78,7 @@ export default class ChatScript {
 		return section[field]
 			.flatMap((rawContent) => {
 				const inheritance = ChatScript.getInheritanceOf(rawContent);
-				if (inheritance) return this.getOptionsOf(inheritance, history);
+				if (inheritance) return this.getOptionsOf(field, inheritance, history);
 
 				const [content, link] = rawContent.split(ChatScript.LINK_REGEXP);
 				const isConsumable = ChatScript.CONSUMABLE_REGEXP.test(rawContent);
