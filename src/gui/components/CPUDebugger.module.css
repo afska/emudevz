@@ -44,3 +44,16 @@
 .sentence {
 	color: #c678dd;
 }
+
+.message {
+	width: 100%;
+	height: 100%;
+	font-family: monospace;
+	font-size: x-large;
+	user-select: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-left: 32px;
+	padding-right: 32px;
+}

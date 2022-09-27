@@ -57,6 +57,13 @@ export default class CPUDebugger extends PureComponent {
 	render() {
 		if (!this.state._isInitialized) return false;
 
+		if (this.state._error)
+			return (
+				<div className={styles.message}>
+					<span>❌ {this.state._error}</span>
+				</div>
+			);
+
 		return (
 			<div className={styles.container} ref={this._onRef}>
 				<div className={styles.column}>

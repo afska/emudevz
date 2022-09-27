@@ -4,6 +4,7 @@ import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
 import { FaStepForward } from "react-icons/fa";
 import { FaFastBackward } from "react-icons/fa";
+import _ from "lodash";
 import Level from "../../level/Level";
 import locales from "../../locales";
 import { bus } from "../../utils";
@@ -11,6 +12,7 @@ import { asm6502, errorMarker, lineHighlighter } from "../../utils/codemirror";
 import IconButton from "./widgets/IconButton";
 import styles from "./CodeEditor.module.css";
 
+const COMPILE_DEBOUNCE_MS = 500;
 const LANGUAGES = {
 	javascript: () => langs.javascript(),
 	asm: () => asm6502(),
@@ -22,6 +24,8 @@ export default class CodeEditor extends PureComponent {
 		language: "javascript",
 		code: "",
 		highlightedLine: -1,
+		errorStart: -1,
+		errorEnd: -1,
 		isReadOnly: false,
 		isDisabled: false,
 		onlyShowPlayWhen: null,
@@ -133,8 +137,9 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	componentDidUpdate() {
-		const { highlightedLine } = this.state;
+		const { highlightedLine, errorStart, errorEnd } = this.state;
 		this._highlight(highlightedLine);
+		this._markError(errorStart, errorEnd);
 	}
 
 	focus = () => {
@@ -159,18 +164,25 @@ export default class CodeEditor extends PureComponent {
 
 	_setCode = (code) => {
 		this.setState({ code });
+		this._compile(code);
+	};
 
+	_compile = _.debounce((code) => {
 		try {
 			bus.emit("code", code);
+			this.setState({ errorStart: -1, errorEnd: -1 });
 		} catch (e) {
 			if (e.err?.name === "SyntaxError") {
-				this._markError(e.err.location.start.offset, e.err.location.end.offset);
+				this.setState({
+					errorStart: e.err.location.start.offset,
+					errorEnd: e.err.location.end.offset,
+				});
 			} else if (!e.handled) {
 				// (throwing errors inside `onChange` can mess up updates)
 				console.error(e, code);
 			}
 		}
-	};
+	}, COMPILE_DEBOUNCE_MS);
 
 	_getAction() {
 		const { actionName } = this.state;

@@ -63,6 +63,7 @@ export default (
 
 	return {
 		highlight({ view }, from, to) {
+			if (view == null) return;
 			const effects = [addHighlight.of({ from, to })];
 
 			if (!view.state.field(highlightField, false))
@@ -74,6 +75,7 @@ export default (
 		},
 
 		unhighlight({ view }, from, to) {
+			if (view == null) return;
 			const effects = [removeHighlight.of({ from, to })];
 
 			if (!view.state.field(highlightField, false))
