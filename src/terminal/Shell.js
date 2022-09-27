@@ -12,7 +12,7 @@ export default class Shell {
 			const commandLine = await this._getNextCommandLine();
 			await this.runLine(commandLine);
 		} catch (e) {
-			if (e !== "interrupted") throw e;
+			if (e !== "interrupted" && e !== "canceled") throw e;
 			this.run();
 		}
 	}

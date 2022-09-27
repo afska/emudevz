@@ -62,7 +62,7 @@ export default class CodeEditor extends PureComponent {
 		if (LANGUAGES[language]) this.setState({ language });
 
 		const initialCode = this._level?.code[initialCodeFile];
-		if (initialCode) this._setCode(initialCode);
+		this._setCode(initialCode || "");
 
 		this.setState({
 			_isInitialized: true,
@@ -128,7 +128,6 @@ export default class CodeEditor extends PureComponent {
 
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
-			end: this._onEnd,
 			"run-enabled": this._onRunEnabled,
 			highlight: this._onHighlight,
 			"level-memory-changed": this._onLevelMemoryChanged,
@@ -149,16 +148,15 @@ export default class CodeEditor extends PureComponent {
 		this.ref.view.focus();
 	};
 
-	_onEnd = () => {
-		this.setState({ actionName: "reset" });
-	};
-
 	_onRunEnabled = (isEnabled) => {
 		this.setState({ isDisabled: !isEnabled });
 	};
 
 	_onHighlight = (line) => {
-		this.setState({ highlightedLine: line });
+		this.setState({
+			highlightedLine: line,
+			actionName: line == null ? "reset" : "step",
+		});
 	};
 
 	_onLevelMemoryChanged = () => {
