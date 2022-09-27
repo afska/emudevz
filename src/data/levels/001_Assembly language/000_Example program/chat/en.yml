@@ -7,12 +7,12 @@ main:
     });
   messages:
   - let me introduce you to the code editor
-  - well, it's not an <editor> yet
+  - well, it's not an <editor> yet 😅
   - just a viewer
   - it has an example of a basic NEEES program
   responses:
   - (*) the viewer doesn't scare me, what it does is the weird looking numbers at the bottom [debugger]
-  - what language is this? [language]
+  - what language is this? 😮 [language]
 
 debugger:
   messages:
@@ -25,7 +25,7 @@ debugger:
 language:
   messages:
   - it's assembly language!
-  - the lowest level of abstraction in computers
+  - the lowest level of abstraction in computers 💻
   - it translates directly to the bytes that are executed by the CPU
   responses:
   - so, after compiling, it'll become just a weird chunk of bytes? [machinecode]
@@ -33,20 +33,20 @@ language:
 machinecode:
   messages:
   - correct
-  - you're actually seeing the compiled code
+  - you're actually seeing the compiled code, right now
   - look at the memory viewer on the bottom of the screen
   - the code starts from the $4020 memory address
   - if you place your mouse pointer over one of these addresses, it'll show where each instruction starts
   responses:
-  - what are the other things? [otherthings]
+  - what are the other numbers? 👀 [otherthings]
 
 otherthings:
   run-before-events: |
     set((m) => m.$canRun = true);
   messages:
   - let's run the code and discover it
-  - I enabled you a play button in the code section
-  - "can you click it?"
+  - I've added a ⏩  button to the code section
+  - "can you click it? 🙏"
   events:
   - play [lda]
 
@@ -56,9 +56,9 @@ lda:
   messages:
   - great!
   - if you were watching carefully, you'll have noticed that [A] changed from $00 to $01
-  - and [PC] changed from $4020 to $4022
+  - and [PC] changed from $4020 to $4022 🤯
   - those are CPU registers, quickly accessible locations
-  - each of these registers can hold a single byte (8 bits) of data
+  - each register can hold a single byte (8 bits) of data
   - with the exception of [PC] (Program Counter) which is 2 bytes wide
   responses:
   - what's the purpose of each register? [registers]
@@ -68,25 +68,50 @@ registers:
   - well, [A] means Accumulator and its use depends on the program
   - "[PC] always points to the next instruction to execute"
   responses:
-  - "so, with `LDA #$01` you just told the processor to store the number $01 in [A]? [ldaexplanation]"
+  - "so, with `LDA #$01` you just told the processor to store the number $01 in [A]? 😲 [ldaexplanation]"
+  - "(*) I'm curious about the others: [X], [Y], and [SP] [theothers]"
+
+theothers:
+  messages:
+  - I'll talk about that later, but basically
+  - "[X] and [Y] can store any value, just like [A]"
+  - they have a special meaning when working with memory addresses 🐏
+  - "and [SP] is the Stack Pointer"
+  responses:
+  - ...registers
 
 ldaexplanation:
   run-before-events: |
     set((m) => m.$canRun = true);
   messages:
-  - exactly
-  - any numbers prefixed with $ are in hexadecimal notation
-  - "and anything prefixed with # is a literal number value"
-  - any other number refers to a memory location
-  - run the next instruction!
+  - exactly, LDA means "LoaD Accumulator"
+  - 💸  any numbers prefixed with $ are in hexadecimal notation
+  - "🔢  anything prefixed with # is a literal number value"
+  - 🐏  any other number refers to a memory location
+  - now run the next instruction!
   events:
   - play [sta]
 
 sta:
   run: |
+    set((m) => m.$canRun = false);
+  run-before-events: |
     set((m) => m.$canRun = true);
   messages:
-  - asdasd
+  - STA means "STore Accumulator"
+  - and as you can see, it writes the contents of [A] on a memory location
+  - in this example, on the address $4070
+  - so now the $4070 cell of the Memory Viewer has a $01
+  - try running the remaining instructions 😊
   events:
-  - play [end]
+  - end [finish]
 
+finish:
+  run: |
+    {{Bottom}}.setDelay(500);
+  messages:
+  - awesome, so now you know the basic workings of a CPU
+  - click the ⏮  button and run the simulation as many times as you need
+  - when you are ready, we can go to the next level
+  responses:
+  - 💪  I think I'm ready [end]

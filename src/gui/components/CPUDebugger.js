@@ -44,6 +44,10 @@ export default class CPUDebugger extends PureComponent {
 		this.setState({ _isInitialized: true, _hideFlags: !!args.hideFlags });
 	}
 
+	setDelay(delay) {
+		this.setState({ _delay: delay });
+	}
+
 	render() {
 		if (!this.state._isInitialized) return false;
 
