@@ -12,7 +12,7 @@ main:
   - tiene un ejemplo de un programa básico de NEEES
   responses:
   - (*) el visor no me asusta, lo que sí lo hace son los números raros de abajo [debugger]
-  - ¿qué lenguaje es este? 😮 [language]
+  - ¿qué lenguaje es éste? 😮 [language]
 
 debugger:
   messages:
