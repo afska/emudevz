@@ -9,6 +9,7 @@ export default {
 	command_chat_choose_an_answer: "Choose an answer.",
 	command_clear_description: "Clears the terminal.",
 	command_help_description: "Shows this help.",
+	command_test_description: "Tests your solution.",
 	goBack: "Go back",
 	language: "Language",
 	language_en: "English",

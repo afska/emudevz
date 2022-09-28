@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = false);
   messages:
   - now it's your turn 😛
   - make a program that writes the number $7C to the addresses $4055 and $4072
@@ -25,10 +27,4 @@ help:
   - "e.g. if you want to load a $99, it's `LDA #$99` instead of `LDA $99`"
   - "(the latter would load into [A] whatever value is in the memory address $0099)"
   responses:
-  - thanks, I'll try [thanks]
-
-thanks:
-  messages:
-  - :)
-  events:
-  - ___ [end]
+  - thanks, I'll try [end]

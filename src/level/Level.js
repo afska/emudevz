@@ -20,6 +20,7 @@ export default class Level {
 				sectionName: ChatScript.INITIAL_SECTION,
 				history: [],
 				stopBlock: null,
+				winOnEnd: true,
 			},
 		};
 		this.$layout = null;

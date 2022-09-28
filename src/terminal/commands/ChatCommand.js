@@ -55,7 +55,7 @@ export default class ChatCommand extends Command {
 				await this._showResponses(responses);
 				const response = await this._getSelectedResponse(responses);
 				this._goTo(response.link);
-			} else {
+			} else if (!_.isEmpty(events)) {
 				await this._terminal.newline();
 				this._terminal.cancelSpeedFlag();
 				const link = await this._getEventLink(events);
@@ -63,7 +63,15 @@ export default class ChatCommand extends Command {
 			}
 		}
 
-		level.advance();
+		if (memory.winOnEnd) {
+			level.advance();
+			return;
+		}
+
+		this._goTo(ChatScript.INITIAL_SECTION);
+		level.setMemory(({ chat }) => {
+			chat.isOpen = false;
+		});
 	}
 
 	onStop() {
