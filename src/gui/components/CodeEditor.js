@@ -3,10 +3,10 @@ import { oneDark } from "@codemirror/theme-one-dark";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
 import { FaStepForward } from "react-icons/fa";
+import { FaSpinner } from "react-icons/fa";
 import { FaFastBackward } from "react-icons/fa";
 import { connect } from "react-redux";
 import _ from "lodash";
-import Level from "../../level/Level";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import { bus } from "../../utils";
@@ -30,6 +30,7 @@ class CodeEditor extends PureComponent {
 		errorEnd: -1,
 		isReadOnly: false,
 		isDisabled: false,
+		isCompiling: false,
 		onlyShowPlayWhen: null,
 		onlyEnablePlayWhen: null,
 		actionName: "step",
@@ -82,6 +83,7 @@ class CodeEditor extends PureComponent {
 			isReady,
 			isReadOnly,
 			isDisabled,
+			isCompiling,
 			onlyShowPlayWhen,
 			onlyEnablePlayWhen,
 		} = this.state;
@@ -89,7 +91,8 @@ class CodeEditor extends PureComponent {
 
 		const action = this._getAction();
 		const isPlayShown =
-			onlyShowPlayWhen == null || codeEval.eval(onlyShowPlayWhen);
+			!isCompiling &&
+			(onlyShowPlayWhen == null || codeEval.eval(onlyShowPlayWhen));
 		const isPlayEnabled =
 			!isDisabled &&
 			isReady &&
@@ -97,6 +100,11 @@ class CodeEditor extends PureComponent {
 
 		return (
 			<div className={styles.container}>
+				{isCompiling && (
+					<div className={styles.spinner}>
+						<FaSpinner size={24} />
+					</div>
+				)}
 				{isPlayShown && (
 					<div className={styles.debugger}>
 						<IconButton
@@ -166,11 +174,14 @@ class CodeEditor extends PureComponent {
 
 	_setCode = (code) => {
 		this.props.setCode(code);
+
+		this.setState({ isCompiling: true });
 		this._compile(code);
 	};
 
 	_compile = _.debounce((code) => {
 		try {
+			this.setState({ isCompiling: false });
 			bus.emit("code", code);
 			this.setState({ isReady: true, errorStart: -1, errorEnd: -1 });
 		} catch (e) {
@@ -209,6 +220,7 @@ class CodeEditor extends PureComponent {
 		if (!this.ref) return;
 
 		setTimeout(() => {
+			window.yata = true;
 			lineHighlighter.highlightLine(this.ref, this.props.code, line);
 		});
 	}

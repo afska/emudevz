@@ -13,3 +13,17 @@
 	right: 16px;
 	z-index: 1;
 }
+
+.spinner {
+	position: absolute;
+	bottom: 28px;
+	right: 36px;
+	z-index: 1;
+	animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}
