@@ -1,13 +1,7 @@
 import Level from "../../level/Level";
+import cliHighlighter from "../../utils/cli/cliHighlighter";
 import Command from "./Command";
 import framework from "./test/framework";
-
-const cliHighlight = require("cli-highlight");
-cliHighlight.DEFAULT_THEME.keyword = (a) => `pio${a}la`;
-const result = cliHighlight.highlight("function() { return 2 * 3 + 'jeje'; }", {
-	language: "javascript",
-});
-console.log(result);
 
 export default class TestCommand extends Command {
 	static get name() {
@@ -18,7 +12,7 @@ export default class TestCommand extends Command {
 		const level = Level.current;
 
 		await this._terminal.writeln(
-			cliHighlight.highlight("function() { return 2 * 3 + 'jeje'; }", {
+			cliHighlighter.highlight("function() { return 2 * 3 + 'jeje'; }", {
 				language: "javascript",
 			})
 		);
