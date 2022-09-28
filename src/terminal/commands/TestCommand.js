@@ -52,8 +52,8 @@ export default class TestCommand extends Command {
 
 		if (allGreen) {
 			await this._terminal.writeln(locales.get("tests_success"));
-			await new Promise(() => {});
-			// level.advance();
+			await this._terminal.waitForKey();
+			level.advance();
 		} else {
 			await this._terminal.writeln(locales.get("tests_failure"));
 		}

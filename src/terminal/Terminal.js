@@ -24,6 +24,7 @@ export default class Terminal {
 	constructor(xterm) {
 		this._xterm = xterm;
 		this._input = null;
+		this._keyInput = null;
 
 		this._isWriting = false;
 		this._speedFlag = false;
@@ -91,6 +92,12 @@ export default class Terminal {
 		await this.write(NEWLINE);
 	}
 
+	waitForKey() {
+		return new Promise((resolve) => {
+			this._keyInput = resolve;
+		});
+	}
+
 	prompt(indicator = "$ ", isValid = (x) => x !== "", style = theme.ACCENT) {
 		this.cancelSpeedFlag();
 		this._interruptIfNeeded();
@@ -131,6 +138,11 @@ export default class Terminal {
 
 	async _onData(data) {
 		if (this._processCommonBrowserKeys(data)) return;
+
+		if (this._keyInput) {
+			this._keyInput();
+			this._keyInput = null;
+		}
 
 		switch (data) {
 			case KEY_CTRL_C: {
