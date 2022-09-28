@@ -2,9 +2,9 @@ import _ from "lodash";
 import Level from "../../level/Level";
 import locales from "../../locales";
 import cliHighlighter from "../../utils/cli/cliHighlighter";
-import { assembler, runner } from "../../utils/nes";
 import theme from "../style/theme";
 import Command from "./Command";
+import testContext from "./test/context";
 import framework from "./test/framework";
 
 export default class TestCommand extends Command {
@@ -15,12 +15,8 @@ export default class TestCommand extends Command {
 	async execute() {
 		const level = Level.current;
 
-		const $ = {
-			code: level.content,
-			asm6502: {
-				assembler,
-				runner,
-			},
+		const $ = testContext[level.test?.context]?.prepare(level) || {
+			level,
 		};
 
 		let allGreen = true;

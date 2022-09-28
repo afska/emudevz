@@ -28,5 +28,8 @@
 			]
 		},
 		"focus": "Left"
+	},
+	"test": {
+		"context": "asm"
 	}
 }

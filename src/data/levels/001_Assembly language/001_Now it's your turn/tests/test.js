@@ -1,26 +1,14 @@
-const { code, asm6502 } = $;
-const { assembler, runner } = asm6502;
+const { compile } = $;
 
-let instructions, bytes, cpu;
-
+let cpu;
 beforeEach(() => {
-	const compilation = assembler.compile(code);
-	instructions = compilation.instructions;
-	bytes = compilation.bytes;
-	cpu = asm6502.runner.create(bytes);
-
-	while (true) {
-		cpu.step();
-
-		const lineNumber = instructions.find(
-			(it) => runner.CODE_ADDRESS + it.address === cpu.pc.value
-		)?.lineNumber;
-		if (!lineNumber) break;
-	}
+	cpu = compile().cpu;
 });
 
 it("the address $4055 contains $7C", () => {
 	cpu.memory.readAt(0x4055).should.equal(0x7c);
+	cpu.memory.writeAt(0x4072, 99);
+	cpu.memory.writeAt(0x40b8, 92);
 });
 
 it("the address $4072 also contains $7C", () => {

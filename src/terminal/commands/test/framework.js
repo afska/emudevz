@@ -27,23 +27,22 @@ export default {
 
 		eval(code);
 
-		const results = await Promise.all(
-			_tests_.map(async ({ name, test }) => {
-				try {
-					if (_before_) await _before_();
-					await test();
-					if (_after_) await _after_();
-					return { name, passed: true };
-				} catch (e) {
-					return {
-						name,
-						passed: false,
-						testCode: test.toString(),
-						reason: e.message,
-					};
-				}
-			})
-		);
+		let results = [];
+		for (let { name, test } of _tests_) {
+			try {
+				if (_before_) await _before_();
+				await test();
+				if (_after_) await _after_();
+				results.push({ name, passed: true });
+			} catch (e) {
+				results.push({
+					name,
+					passed: false,
+					testCode: test.toString(),
+					reason: e.message,
+				});
+			}
+		}
 
 		return _.orderBy(results, "passed", "desc");
 	},
