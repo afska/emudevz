@@ -2,7 +2,7 @@ module.exports = function override(config) {
 	const fallback = config.resolve.fallback || {};
 	Object.assign(fallback, {
 		fs: require.resolve("./polyfills/fs"),
-		"process/browser": require.resolve("process/browser"),
+		process: require.resolve("process/browser"),
 	});
 	config.resolve.fallback = fallback;
 
