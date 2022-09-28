@@ -175,7 +175,7 @@ class CodeEditor extends PureComponent {
 	_setCode = (code) => {
 		this.props.setCode(code);
 
-		this.setState({ isCompiling: true });
+		this.setState({ isCompiling: true, highlightedLine: -1 });
 		this._compile(code);
 	};
 
