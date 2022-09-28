@@ -10,6 +10,10 @@ export default class Book {
 		return store.getState().book.instance;
 	}
 
+	get maxLevelId() {
+		return _(this.chapters).flatMap("levels").map("id").max();
+	}
+
 	getChapterOf(levelId) {
 		const index = _.findIndex(this.chapters, (chapter) => {
 			return _.some(chapter.levels, (level) => level.id === levelId);

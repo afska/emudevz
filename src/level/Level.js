@@ -41,7 +41,10 @@ export default class Level {
 	}
 
 	advance() {
-		store.dispatch.savedata.advance(this.id);
+		if (!store.dispatch.savedata.advance(this.id)) {
+			alert("That's all I got 😅");
+			store.dispatch.level.goHome();
+		}
 	}
 
 	validate() {
