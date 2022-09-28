@@ -5,6 +5,7 @@ import { connectRouter, routerMiddleware } from "connected-react-router";
 import { createHashHistory } from "history";
 import storage from "redux-persist/lib/storage";
 import models from "./models";
+import transforms from "./models/transforms";
 
 export const history = createHashHistory();
 const reducers = { router: connectRouter(history) };
@@ -18,6 +19,7 @@ const store = init({
 			storage,
 			key: "emudevz",
 			whitelist: ["savedata", "files"],
+			transforms,
 		}),
 	],
 	redux: {
