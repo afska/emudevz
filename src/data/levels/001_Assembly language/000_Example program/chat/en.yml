@@ -2,6 +2,7 @@
 main:
   run: |
     set((m) => {
+      m.chat.winOnEnd = true;
       m.chat.stopBlock = locales.get("not_now");
       m.$canRun = false;
     });

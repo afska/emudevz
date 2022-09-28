@@ -1,7 +1,5 @@
 ---
 main:
-  run: |
-    set((m) => m.chat.winOnEnd = false);
   messages:
   - now it's your turn 😛
   - make a program that writes the number $7C to the addresses $4055 and $4072

@@ -63,7 +63,7 @@ class PlayScreen extends PureComponent {
 
 	get currentChapter() {
 		const { book, currentLevelId } = this.props;
-		return book.getChapterOf(currentLevelId);
+		return book?.getChapterOf(currentLevelId);
 	}
 
 	_onError = (e) => {

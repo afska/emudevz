@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
   - ey
   - ¿empezamos? 👀 👀

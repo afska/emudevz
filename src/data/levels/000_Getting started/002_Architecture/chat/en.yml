@@ -1,6 +1,7 @@
 ---
 main:
   run: |
+    set((m) => m.chat.winOnEnd = true);
     {{Right}}.load("architecture.png");
   messages:
   - so... apparently, this thing has 3 main components that work pretty much independently from each other

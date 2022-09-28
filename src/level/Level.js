@@ -19,8 +19,8 @@ export default class Level {
 				isOpen: false,
 				sectionName: ChatScript.INITIAL_SECTION,
 				history: [],
+				winOnEnd: false,
 				stopBlock: null,
-				winOnEnd: true,
 			},
 		};
 		this.$layout = null;
@@ -28,6 +28,10 @@ export default class Level {
 
 	static get current() {
 		return store.getState().level.instance;
+	}
+
+	get content() {
+		return store.getState().files.levels[this.id];
 	}
 
 	setMemory(change) {

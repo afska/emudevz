@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
   - before starting, let's review how to use the computer
   - you can launch several apps from this terminal

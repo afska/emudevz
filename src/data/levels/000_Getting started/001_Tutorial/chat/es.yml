@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
   - antes de empezar, revisemos cómo usar la computadora
   - puedes lanzar multiples apps desde esta terminal
