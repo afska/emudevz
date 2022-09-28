@@ -2,6 +2,7 @@ import _ from "lodash";
 import Level from "../../level/Level";
 import locales from "../../locales";
 import cliHighlighter from "../../utils/cli/cliHighlighter";
+import { assembler, runner } from "../../utils/nes";
 import theme from "../style/theme";
 import Command from "./Command";
 import framework from "./test/framework";
@@ -14,6 +15,14 @@ export default class TestCommand extends Command {
 	async execute() {
 		const level = Level.current;
 
+		const $ = {
+			code: level.content,
+			asm6502: {
+				assembler,
+				runner,
+			},
+		};
+
 		let allGreen = true;
 		const hasMultipleTests = _.keys(level.tests).length > 1;
 
@@ -25,13 +34,13 @@ export default class TestCommand extends Command {
 					locales.get("testing") + theme.MESSAGE(fileName) + "..."
 				);
 
-			const results = await framework.test(test);
+			const results = await framework.test(test, $);
 
 			for (let result of results) {
 				const emoji = result.passed ? "✔️ " : "❌ ";
 
 				if (!result.passed) {
-					if (allGreen) await this._terminal.newline();
+					await this._terminal.newline();
 					allGreen = false;
 				}
 

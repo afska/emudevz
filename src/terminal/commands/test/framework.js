@@ -35,13 +35,11 @@ export default {
 					if (_after_) await _after_();
 					return { name, passed: true };
 				} catch (e) {
-					const operator = e.operator != null ? `${e.operator} - ` : "";
-
 					return {
 						name,
 						passed: false,
 						testCode: test.toString(),
-						reason: operator + e.message,
+						reason: e.message,
 					};
 				}
 			})

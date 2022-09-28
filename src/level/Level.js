@@ -42,7 +42,7 @@ export default class Level {
 
 	advance() {
 		if (!store.dispatch.savedata.advance(this.id)) {
-			alert("That's all I got 😅");
+			alert("That's all I have 😅");
 			store.dispatch.level.goHome();
 		}
 	}
