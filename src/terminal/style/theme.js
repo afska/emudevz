@@ -8,6 +8,7 @@ export default {
 	NORMAL: (x) => x,
 	ACCENT: color(180),
 	SYSTEM: color(45),
+	ERROR: color(202),
 
 	MESSAGE: color(111),
 	INPUT: color(207),

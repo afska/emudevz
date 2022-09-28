@@ -10,6 +10,7 @@ const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
 const KEY_ENTER = "\r";
 const NEWLINE = "\r\n";
+const TABULATION = "  ";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
 const CANCELED = "canceled";
@@ -62,6 +63,8 @@ export default class Terminal {
 
 	async write(text, style = theme.NORMAL, interval = 0) {
 		this._isWriting = true;
+
+		text = text.replace(/\n/g, NEWLINE).replace(/\t/g, TABULATION);
 
 		if (interval === 0) {
 			this._interruptIfNeeded();

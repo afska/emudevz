@@ -6,12 +6,13 @@ import bus from "../utils/bus";
 import ChatScript from "./chat/ChatScript";
 
 export default class Level {
-	constructor(id, metadata, chatScripts, code, media) {
+	constructor(id, metadata, chatScripts, code, tests, media) {
 		_.extend(this, metadata);
 
 		this.id = id;
 		this.chatScripts = chatScripts;
 		this.code = code;
+		this.tests = tests;
 		this.media = media;
 
 		this.memory = {

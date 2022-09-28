@@ -9,6 +9,7 @@ export default {
 	command_chat_choose_an_answer: "Elige una respuesta.",
 	command_clear_description: "Limpia la terminal.",
 	command_help_description: "Muestra esta ayuda.",
+	command_test_description: "Prueba tu solución.",
 	goBack: "Volver",
 	language: "Idioma",
 	language_en: "Inglés",
@@ -34,4 +35,8 @@ export default {
 	shell_command_not_found: "comando no encontrado",
 	stepForward: "Avanzar",
 	stepReset: "Reiniciar",
+	testing: "Probando: ",
+	tests_success:
+		"🎉  Todas las pruebas pasaron. Presiona cualquier tecla para continuar.",
+	tests_failure: "💥  Algunas pruebas fallaron. Arregla tu código.",
 };

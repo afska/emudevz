@@ -9,6 +9,7 @@ const META_FILE = "meta.json";
 const CHAT_FOLDER = "chat";
 const CHAT_EXTENSION = "yml";
 const CODE_FOLDER = "code";
+const TESTS_FOLDER = "tests";
 const MEDIA_FOLDER = "media";
 
 export default class LevelLoader {
@@ -22,10 +23,18 @@ export default class LevelLoader {
 
 		const meta = await this._loadMeta(zip);
 		const chatScripts = await this._loadChatScripts(zip);
-		const code = await this._loadCode(zip);
-		const media = await this._loadMedia(zip);
+		const code = await this._loadTextFolder(zip, CODE_FOLDER);
+		const tests = await this._loadTextFolder(zip, TESTS_FOLDER);
+		const media = await this._loadMediaFolder(zip);
 
-		const level = new Level(this.levelId, meta, chatScripts, code, media);
+		const level = new Level(
+			this.levelId,
+			meta,
+			chatScripts,
+			code,
+			tests,
+			media
+		);
 		level.validate();
 
 		return level;
@@ -58,13 +67,13 @@ export default class LevelLoader {
 		return chatScripts;
 	}
 
-	async _loadCode(zip) {
-		return await this._forEachFile(zip, CODE_FOLDER, async (filePath) => {
+	async _loadTextFolder(zip, folder) {
+		return await this._forEachFile(zip, folder, async (filePath) => {
 			return await zip.file(filePath).async("string");
 		});
 	}
 
-	async _loadMedia(zip) {
+	async _loadMediaFolder(zip) {
 		return await this._forEachFile(zip, MEDIA_FOLDER, async (filePath) => {
 			const blob = await zip.file(filePath).async("blob");
 			return await blobUtils.toBase64(blob);

@@ -35,4 +35,7 @@ export default {
 	shell_command_not_found: "command not found",
 	stepForward: "Step",
 	stepReset: "Reset",
+	testing: "Testing: ",
+	tests_success: "🎉  All tests passed. Press any key to continue.",
+	tests_failure: "💥  Some tests are broken. Fix your code.",
 };
