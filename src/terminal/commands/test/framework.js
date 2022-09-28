@@ -2,7 +2,7 @@ import chai from "chai";
 import _ from "lodash";
 
 export default {
-	async test(code, $ = {}) {
+	async test(_code_, $ = {}) {
 		let _before_ = null;
 		let _after_ = null;
 		const _tests_ = [];
@@ -25,7 +25,7 @@ export default {
 		// eslint-disable-next-line
 		const should = chai.should();
 
-		eval(code);
+		eval(_code_);
 
 		let results = [];
 		for (let { name, test } of _tests_) {

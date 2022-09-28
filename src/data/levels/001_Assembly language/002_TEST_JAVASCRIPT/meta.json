@@ -1,0 +1,28 @@
+{
+	"name": {
+		"en": "TEST JAVASCRIPT!!!",
+		"es": "TEST DE JAVASCRIPT!!!"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat",
+					"availableCommands": ["chat", "test", "help", "clear"]
+				}
+			],
+			"Right": [
+				"code",
+				{
+					"language": "javascript"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript"
+	}
+}

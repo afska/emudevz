@@ -1,0 +1,10 @@
+---
+main:
+  messages:
+  - test level!
+  - make a function with no arguments that returns the string "hello world"
+  - the current implementation of runners is buggy
+  - so you need to wrap the function like this
+  - (function() { return "something"; })
+  responses:
+  - ok [end]
