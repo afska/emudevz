@@ -20,7 +20,7 @@ export default {
 		const locales = $locales;
 
 		let evalCode = code;
-		_.forEach(layout.instances, async (__, name) => {
+		_.forEach(layout.instances, (__, name) => {
 			evalCode = evalCode.replace(
 				new RegExp(`{{${name}}}`, "g"),
 				`layout.instances["${name}"]`

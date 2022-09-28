@@ -22,7 +22,7 @@ class LevelScreen extends PureComponent {
 		);
 	}
 
-	onReady = async (layout) => {
+	onReady = (layout) => {
 		if (!layout) return;
 
 		const { level } = this.props;
@@ -31,12 +31,14 @@ class LevelScreen extends PureComponent {
 		setTimeout(() => {
 			const runningComponents = layout.instances;
 
-			_.forEach(runningComponents, async (runningComponent, name) => {
+			_.forEach(runningComponents, (runningComponent, name) => {
 				const [, args] = level.ui.components[name];
-				await runningComponent.initialize(args, level);
+				runningComponent.initialize(args, level);
 			});
 
-			layout.focus(level.ui.focus);
+			setTimeout(() => {
+				layout.focus(level.ui.focus);
+			});
 		});
 	};
 }
