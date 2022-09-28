@@ -4,7 +4,9 @@ import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
 import { FaStepForward } from "react-icons/fa";
 import { FaFastBackward } from "react-icons/fa";
+import { connect } from "react-redux";
 import _ from "lodash";
+import Level from "../../level/Level";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import { bus } from "../../utils";
@@ -18,11 +20,10 @@ const LANGUAGES = {
 	asm: () => asm6502(),
 };
 
-export default class CodeEditor extends PureComponent {
+class CodeEditor extends PureComponent {
 	state = {
 		_isInitialized: false,
 		language: "javascript",
-		code: "",
 		highlightedLine: -1,
 		isReady: false,
 		errorStart: -1,
@@ -62,7 +63,8 @@ export default class CodeEditor extends PureComponent {
 		if (LANGUAGES[language]) this.setState({ language });
 
 		const initialCode = this._level?.code[initialCodeFile];
-		this._setCode(initialCode || "");
+		if (initialCode != null) this._setCode(initialCode || "");
+		else this._compile(this.props.code);
 
 		this.setState({
 			_isInitialized: true,
@@ -73,10 +75,10 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	render() {
+		const { code } = this.props;
 		const {
 			_isInitialized,
 			language,
-			code,
 			isReady,
 			isReadOnly,
 			isDisabled,
@@ -163,7 +165,7 @@ export default class CodeEditor extends PureComponent {
 	};
 
 	_setCode = (code) => {
-		this.setState({ code });
+		this.props.setCode(code);
 		this._compile(code);
 	};
 
@@ -199,7 +201,7 @@ export default class CodeEditor extends PureComponent {
 		if (!this.ref) return;
 
 		setTimeout(() => {
-			errorMarker.markError(this.ref, this.state.code, start, end);
+			errorMarker.markError(this.ref, this.props.code, start, end);
 		});
 	}
 
@@ -207,7 +209,18 @@ export default class CodeEditor extends PureComponent {
 		if (!this.ref) return;
 
 		setTimeout(() => {
-			lineHighlighter.highlightLine(this.ref, this.state.code, line);
+			lineHighlighter.highlightLine(this.ref, this.props.code, line);
 		});
 	}
 }
+
+const mapStateToProps = ({ files, level }) => {
+	return { code: files.levels[level.instance.id] || "" };
+};
+const mapDispatchToProps = ({ files }) => ({
+	setCode: files.setCurrentLevelContent,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, null, {
+	forwardRef: true,
+})(CodeEditor);

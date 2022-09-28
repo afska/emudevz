@@ -17,6 +17,10 @@ export default {
 		// eslint-disable-next-line
 		const dispatch = _dispatch_[KEY];
 
-		return {};
+		return {
+			setCurrentLevelContent(content, _state_) {
+				this.setLevelContent({ levelId: _state_.level.instance.id, content });
+			},
+		};
 	},
 };
