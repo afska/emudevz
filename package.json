@@ -36,6 +36,7 @@
     "@uiw/react-codemirror": "4.11.6",
     "bootstrap": "^5.2.0",
     "classnames": "^2.2.6",
+    "cli-highlight": "^2.1.11",
     "connected-react-router": "^6.9.3",
     "eventemitter3": "^4.0.7",
     "history": "^4.10.1",
