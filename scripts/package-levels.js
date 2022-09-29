@@ -35,7 +35,7 @@ function formattedId(id) {
 	return id.toString().padStart(ID_LENGTH, 0);
 }
 
-async function package() {
+async function pkg() {
 	let globalLevelId = 0;
 	const book = { chapters: [] };
 
@@ -45,8 +45,10 @@ async function package() {
 	for (let chapterFolder of chapterFolders) {
 		const chapterPath = $path.join(LEVELS_PATH, chapterFolder);
 		const [chapterId, chapterName] = chapterFolder.split("_");
-		if (!isIdValid(chapterId) || !isNameValid(chapterName))
-			throw new Error(`Invalid chapter folder name: ${chapterFolder}`);
+		if (!isIdValid(chapterId) || !isNameValid(chapterName)) {
+			console.error(`❌ Invalid chapter folder name: ${chapterFolder}`);
+			process.exit(0);
+		}
 
 		let chapterMetadata;
 		try {
@@ -55,7 +57,9 @@ async function package() {
 				.toString();
 			chapterMetadata = JSON.parse(chapterJSON);
 		} catch (e) {
-			throw new Error(`Invalid chapter metadata: ${chapterFolder}`);
+			console.error(`❌ Invalid chapter metadata: ${chapterFolder}`);
+			console.error(e);
+			process.exit(0);
 		}
 
 		const chapter = {
@@ -68,8 +72,10 @@ async function package() {
 		for (let levelFolder of levelFolders) {
 			const levelPath = $path.join(chapterPath, levelFolder);
 			const [levelId, levelName] = levelFolder.split("_");
-			if (!isIdValid(levelId) || !isNameValid(levelName))
-				throw new Error(`Invalid level folder name: ${levelFolder}`);
+			if (!isIdValid(levelId) || !isNameValid(levelName)) {
+				console.error(`❌ Invalid level folder name: ${levelFolder}`);
+				process.exit(0);
+			}
 
 			let levelMetadata;
 			try {
@@ -78,7 +84,9 @@ async function package() {
 					.toString();
 				levelMetadata = JSON.parse(levelJSON);
 			} catch (e) {
-				throw new Error(`Invalid level metadata: ${chapterFolder}`);
+				console.error(`❌ Invalid level metadata: ${chapterFolder}`);
+				console.error(e);
+				process.exit(0);
 			}
 
 			chapter.levels.push({
@@ -106,12 +114,14 @@ async function package() {
 
 				archive.on("warning", function (err) {
 					console.warn("⚠️  " + slug);
-					throw err;
+					console.warn(err);
+					process.exit(0);
 				});
 
 				archive.on("error", function (err) {
 					console.error("❌  " + slug);
-					throw err;
+					process.error(err);
+					process.exit(0);
 				});
 
 				archive.directory(levelPath, false);
@@ -128,4 +138,4 @@ async function package() {
 	console.log("✔️  " + BOOK_FILE);
 }
 
-package();
+pkg();

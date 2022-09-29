@@ -14,6 +14,7 @@ import { asm6502, errorMarker, lineHighlighter } from "../../utils/codemirror";
 import IconButton from "./widgets/IconButton";
 import styles from "./CodeEditor.module.css";
 
+const NULL_ACTION = "none";
 const COMPILE_DEBOUNCE_MS = 500;
 const LANGUAGES = {
 	javascript: () => langs.javascript(),
@@ -31,9 +32,9 @@ class CodeEditor extends PureComponent {
 		isReadOnly: false,
 		isDisabled: false,
 		isCompiling: false,
-		onlyShowPlayWhen: null,
-		onlyEnablePlayWhen: null,
-		actionName: "step",
+		actionName: NULL_ACTION,
+		onlyShowActionWhen: null,
+		onlyEnableActionWhen: null,
 	};
 
 	actions = {
@@ -50,7 +51,7 @@ class CodeEditor extends PureComponent {
 				this.setState({ actionName: "step" });
 			},
 		},
-		unknown: {
+		[NULL_ACTION]: {
 			icon: () => false,
 			tooltip: "?",
 			run: () => {},
@@ -70,8 +71,9 @@ class CodeEditor extends PureComponent {
 		this.setState({
 			_isInitialized: true,
 			isReadOnly: !!args.readOnly,
-			onlyShowPlayWhen: args.onlyShowPlayWhen || null,
-			onlyEnablePlayWhen: args.onlyEnablePlayWhen || null,
+			actionName: args.action || NULL_ACTION,
+			onlyShowActionWhen: args.onlyShowActionWhen || null,
+			onlyEnableActionWhen: args.onlyEnableActionWhen || null,
 		});
 	}
 
@@ -84,19 +86,21 @@ class CodeEditor extends PureComponent {
 			isReadOnly,
 			isDisabled,
 			isCompiling,
-			onlyShowPlayWhen,
-			onlyEnablePlayWhen,
+			actionName,
+			onlyShowActionWhen,
+			onlyEnableActionWhen,
 		} = this.state;
 		if (!_isInitialized) return false;
 
 		const action = this._getAction();
 		const isPlayShown =
+			actionName !== NULL_ACTION &&
 			!isCompiling &&
-			(onlyShowPlayWhen == null || codeEval.eval(onlyShowPlayWhen));
+			(onlyShowActionWhen == null || codeEval.eval(onlyShowActionWhen));
 		const isPlayEnabled =
 			!isDisabled &&
 			isReady &&
-			(onlyEnablePlayWhen == null || codeEval.eval(onlyEnablePlayWhen));
+			(onlyEnableActionWhen == null || codeEval.eval(onlyEnableActionWhen));
 
 		return (
 			<div className={styles.container}>

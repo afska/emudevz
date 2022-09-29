@@ -23,7 +23,8 @@
 			"Top": [
 				"code",
 				{
-					"language": "asm"
+					"language": "asm",
+					"action": "step"
 				}
 			]
 		},
