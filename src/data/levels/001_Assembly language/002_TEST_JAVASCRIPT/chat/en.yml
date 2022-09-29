@@ -2,9 +2,8 @@
 main:
   messages:
   - test level!
-  - make a function with no arguments that returns the string "hello world"
-  - the current implementation of runners is buggy
-  - so you need to wrap the function like this
-  - (function() { return "something"; })
+  - make a hello function with no arguments that returns the string "world"
+  - remember that you have to export it!
+  - e.g. export function hello() { ... }
   responses:
   - ok [end]

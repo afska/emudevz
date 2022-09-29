@@ -1,9 +1,14 @@
-const { result } = $;
+const { evaluate } = $;
 
-it("result is a function", () => {
-	(typeof result).should.equal("function");
+let hello;
+beforeEach(async () => {
+	hello = (await evaluate()).hello;
 });
 
-it("the function returns hello world", () => {
-	result().should.equal("hello world");
+it("it exports a hello function", () => {
+	expect(hello).to.be.a("function");
+});
+
+it("the function returns world", () => {
+	hello().should.equal("world");
 });

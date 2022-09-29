@@ -23,6 +23,8 @@ export default {
 		};
 
 		// eslint-disable-next-line
+		const expect = chai.expect;
+		// eslint-disable-next-line
 		const should = chai.should();
 
 		eval(_code_);
