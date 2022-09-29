@@ -93,18 +93,20 @@ class CodeEditor extends PureComponent {
 		if (!_isInitialized) return false;
 
 		const action = this._getAction();
+		const isNullAction = actionName === NULL_ACTION;
 		const isPlayShown =
-			actionName !== NULL_ACTION &&
+			!isNullAction &&
 			!isCompiling &&
 			(onlyShowActionWhen == null || codeEval.eval(onlyShowActionWhen));
 		const isPlayEnabled =
 			!isDisabled &&
 			isReady &&
 			(onlyEnableActionWhen == null || codeEval.eval(onlyEnableActionWhen));
+		const isCompilingSpinnerShown = !isNullAction && isCompiling;
 
 		return (
 			<div className={styles.container}>
-				{isCompiling && (
+				{isCompilingSpinnerShown && (
 					<div className={styles.spinner}>
 						<FaSpinner size={24} />
 					</div>
