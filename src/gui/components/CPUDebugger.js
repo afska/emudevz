@@ -85,7 +85,7 @@ export default class CPUDebugger extends PureComponent {
 		window.addEventListener("resize", this._onResize);
 		this._subscriber = bus.subscribe({
 			code: this._onCode,
-			play: this._onPlay,
+			step: this._onStep,
 			reset: this._onReset,
 		});
 	}
@@ -290,7 +290,7 @@ export default class CPUDebugger extends PureComponent {
 		}
 	};
 
-	_onPlay = () => {
+	_onStep = () => {
 		bus.emit("run-enabled", false);
 		setTimeout(() => {
 			bus.emit("run-enabled", true);

@@ -40,7 +40,7 @@ class CodeEditor extends PureComponent {
 		step: {
 			icon: FaStepForward,
 			tooltip: locales.get("stepForward"),
-			run: () => bus.emit("play"),
+			run: () => bus.emit("step"),
 		},
 		reset: {
 			icon: FaFastBackward,

@@ -49,7 +49,7 @@ otherthings:
   - agregué un botón ⏩  a la sección de código
   - "¿podrás clickearlo? 🙏"
   events:
-  - play [lda]
+  - step [lda]
 
 lda:
   run: |
@@ -94,7 +94,7 @@ ldaexplanation:
   - 🐏  cualquier otro número refiere a una ubicación de memoria
   - ¡ahora ejecuta la siguiente instrucción!
   events:
-  - play [sta]
+  - step [sta]
 
 sta:
   run: |
