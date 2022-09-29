@@ -27,8 +27,13 @@ const MIN_WIDTH = 512;
 const MIN_HEIGHT = 256;
 
 class HomeScreen extends PureComponent {
+	state = { fontsLoaded: false };
+
 	render() {
 		const { isSettingsOpen, play, setSettingsOpen } = this.props;
+		const { fontsLoaded } = this.state;
+
+		if (!fontsLoaded) return false;
 
 		return (
 			<>
@@ -53,6 +58,12 @@ class HomeScreen extends PureComponent {
 				</div>
 			</>
 		);
+	}
+
+	componentDidMount() {
+		document.fonts.ready.then(() => {
+			this.setState({ fontsLoaded: true });
+		});
 	}
 
 	onReady = (div) => {
