@@ -125,6 +125,20 @@ export default class Terminal {
 		}
 	}
 
+	async clearInput() {
+		while (!this._input.isEmpty()) await this.backspace();
+	}
+
+	async backspace() {
+		if (
+			this.isExpectingInput &&
+			this._xterm._core.buffer.x > this._input.indicator.length
+		) {
+			await this.write(BACKSPACE);
+			this._input.backspace();
+		}
+	}
+
 	cancelSpeedFlag() {
 		this._speedFlag = false;
 	}
@@ -171,13 +185,7 @@ export default class Terminal {
 				break;
 			}
 			case KEY_BACKSPACE: {
-				if (
-					this.isExpectingInput &&
-					this._xterm._core.buffer.x > this._input.indicator.length
-				) {
-					await this.write(BACKSPACE);
-					this._input.backspace();
-				}
+				await this.backspace();
 				break;
 			}
 			default: {

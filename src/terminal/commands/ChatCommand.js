@@ -187,11 +187,12 @@ export default class ChatCommand extends Command {
 			}),
 			"gu"
 		);
-		const handler = (__, text) => {
+		const handler = async (__, text) => {
 			if (command.hasEnded) return;
 			const number = text.match(LINK_PARSE_REGEXP)[1];
 			command.selectedResponse = getResponse(number);
-			this._terminal.writeln(number);
+			await this._terminal.clearInput();
+			await this._terminal.writeln(number);
 			this._terminal.cancelPrompt();
 		};
 		this._linkProvider = this._terminal.registerLinkProvider(regexp, handler);
