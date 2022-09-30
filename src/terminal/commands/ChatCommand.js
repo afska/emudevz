@@ -103,10 +103,7 @@ export default class ChatCommand extends Command {
 
 	async _showChooseAnAnswer() {
 		await this._terminal.newline();
-		await this._terminal.writeln(
-			locales.get("command_chat_choose_an_answer"),
-			theme.SYSTEM
-		);
+		await this._terminal.writeln(locales.get("choose_an_answer"), theme.SYSTEM);
 	}
 
 	async _showResponses(responses) {
@@ -131,8 +128,8 @@ export default class ChatCommand extends Command {
 			try {
 				const response = await this._terminal.prompt(
 					PROMPT_SYMBOL,
-					(x) => getResponse(x) != null,
-					theme.INPUT
+					theme.INPUT,
+					(x) => getResponse(x) != null
 				);
 				selectedResponse = getResponse(response);
 			} catch (e) {

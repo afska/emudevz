@@ -98,7 +98,7 @@ export default class Terminal {
 		});
 	}
 
-	prompt(indicator = "$ ", isValid = (x) => x !== "", style = theme.ACCENT) {
+	prompt(indicator = "$ ", style = theme.ACCENT, isValid = (x) => x !== "") {
 		this.cancelSpeedFlag();
 		this._interruptIfNeeded();
 
@@ -196,7 +196,7 @@ export default class Terminal {
 	_isValidInput(data) {
 		return (
 			(data >= String.fromCharCode(0x20) &&
-				data <= String.fromCharCode(0x7b)) ||
+				data <= String.fromCharCode(0x7e)) ||
 			data >= "\u00a0"
 		);
 	}

@@ -1,37 +1,39 @@
-import _ from "lodash";
-import $locales from "../locales";
-import { bus as $bus } from "../utils";
-import $Level from "./Level";
+import ___ from "lodash";
+import _locales_ from "../locales";
+import { bus as _bus_ } from "../utils";
+import _Level_ from "./Level";
 
 export default {
-	eval(code, $ = {}) {
-		if (code == null) return;
+	eval(_code_, $ = {}) {
+		if (_code_ == null) return;
 
 		// eval scope:
-		const level = $Level.current;
+		const level = _Level_.current;
 		const layout = level.$layout;
 		// eslint-disable-next-line
 		const m = level.memory;
 		// eslint-disable-next-line
 		const set = (action) => level.setMemory(action);
 		// eslint-disable-next-line
-		const bus = $bus;
+		const bus = _bus_;
 		// eslint-disable-next-line
-		const locales = $locales;
+		const locales = _locales_;
+		// eslint-disable-next-line
+		const _ = ___;
 
-		let evalCode = code;
+		let _evalCode_ = _code_;
 		_.forEach(layout.instances, (__, name) => {
-			evalCode = evalCode.replace(
+			_evalCode_ = _evalCode_.replace(
 				new RegExp(`{{${name}}}`, "g"),
 				`layout.instances["${name}"]`
 			);
 		});
 
 		try {
-			return eval(evalCode);
+			return eval(_evalCode_);
 		} catch (e) {
 			const error = new Error(`Code eval failed: ${e}`);
-			error.code = evalCode;
+			error.code = _evalCode_;
 			error.inner = e;
 			throw error;
 		}

@@ -11,9 +11,12 @@ export default class HelpCommand extends Command {
 	}
 
 	async execute() {
+		const findCommand = (it) => commands.find((command) => command.name === it);
+
 		await this._terminal.writeln(
-			commands
-				.filter((it) => this._shell.availableCommands.includes(it.name))
+			this._shell.availableCommands
+				.filter(findCommand)
+				.map(findCommand)
 				.map(
 					(it) => it.name.padEnd(SPACING) + theme.ACCENT(":: ") + it.description
 				)

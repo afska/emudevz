@@ -81,9 +81,9 @@ export default {
 					setNodeLine(line, node);
 					parsed.push(node);
 				}
-			} catch (err) {
-				const parserError = new ParseError(err, line);
-				parserError.err = err;
+			} catch (e) {
+				const parserError = new ParseError(e, line);
+				parserError.err = e;
 				parserError.lineNumber = line.lineNumber;
 				throw parserError;
 			}
