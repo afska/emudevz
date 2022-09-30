@@ -102,7 +102,7 @@ export default class ChatCommand extends Command {
 		Level.current.setMemory(({ chat }) => {
 			chat.isOpen = false;
 		});
-		if (this._linkProvider) this._linkProvider.dispose();
+		if (this._linkProvider) this._linkProvider.end();
 	}
 
 	async _showMessages(messages) {
@@ -174,27 +174,31 @@ export default class ChatCommand extends Command {
 	}
 
 	_setUpHyperlinkProvider(command, responses, getResponse) {
-		this._linkProvider = this._terminal.registerLinkProvider(
-			new RegExp(
-				LINK_DETECT_REGEXP({
-					responses: responses
-						.map((response) => {
-							const escapedText = escapeStringRegexp(
-								this._buildResponseText(response)
-							);
-							return `(${escapedText})`;
-						})
-						.join("|"),
-				}),
-				"gu"
-			),
-			(__, text) => {
-				const number = text.match(LINK_PARSE_REGEXP)[1];
-				command.selectedResponse = getResponse(number);
-				this._terminal.writeln(number);
-				this._terminal.cancelPrompt();
-			}
+		const regexp = new RegExp(
+			LINK_DETECT_REGEXP({
+				responses: responses
+					.map((response) => {
+						const escapedText = escapeStringRegexp(
+							this._buildResponseText(response)
+						);
+						return `(${escapedText})`;
+					})
+					.join("|"),
+			}),
+			"gu"
 		);
+		const handler = (__, text) => {
+			if (command.hasEnded) return;
+			const number = text.match(LINK_PARSE_REGEXP)[1];
+			command.selectedResponse = getResponse(number);
+			this._terminal.writeln(number);
+			this._terminal.cancelPrompt();
+		};
+		this._linkProvider = this._terminal.registerLinkProvider(regexp, handler);
+		this._linkProvider.end = () => {
+			this._linkProvider.dispose();
+			command.hasEnded = true;
+		};
 	}
 
 	_buildResponseText(response) {
