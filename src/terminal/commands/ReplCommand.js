@@ -19,6 +19,9 @@ export default class ReplCommand extends Command {
 			while (expression === "")
 				expression = await this._terminal.prompt(PROMPT_SYMBOL, theme.INPUT);
 
+			if (expression.startsWith("{") && expression.endsWith("}"))
+				expression = `(${expression})`;
+
 			try {
 				const result = replEval.eval(expression);
 				this._terminal.writeln(cliHighlighter.highlight(this._format(result)));
@@ -42,7 +45,6 @@ export default class ReplCommand extends Command {
 				return JSON.stringify(expression);
 			case "function":
 				return `<function>`;
-			// TODO: INFINITE LOOPS
 			default:
 				return `${expression}`;
 		}

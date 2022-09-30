@@ -22,6 +22,7 @@ const chalk = {
 	underline: (t) => `\x1B[4m${t}\x1B[24m`,
 };
 
+cliHighlight.DEFAULT_THEME.comment = chalk.grey;
 cliHighlight.DEFAULT_THEME.keyword = chalk.blue;
 cliHighlight.DEFAULT_THEME.built_in = chalk.cyan;
 cliHighlight.DEFAULT_THEME.type = chalk.cyanDim;
