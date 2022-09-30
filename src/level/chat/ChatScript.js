@@ -1,5 +1,15 @@
 import codeEval from "../codeEval";
 
+const REGEXP = {
+	if: /^<(.+)> /,
+	modifier: /^\(.\) /,
+	consumable: /^\(\*\) /,
+	key: /^\(k\) /,
+	lock: /^\(l\) /,
+	inheritance: /^\.\.\./,
+	link: / \[(\w+)\]$/,
+};
+
 export default class ChatScript {
 	constructor(content, language) {
 		this.content = content;
@@ -14,43 +24,15 @@ export default class ChatScript {
 		return "end";
 	}
 
-	static get IF_REGEXP() {
-		return /^<(.+)> /;
-	}
-
-	static get MODIFIER_REGEXP() {
-		return /^\(.\) /;
-	}
-
-	static get CONSUMABLE_REGEXP() {
-		return /^\(\*\) /;
-	}
-
-	static get KEY_REGEXP() {
-		return /^\(k\) /;
-	}
-
-	static get LOCK_REGEXP() {
-		return /^\(l\) /;
-	}
-
-	static get INHERITANCE_REGEXP() {
-		return /^\.\.\./;
-	}
-
-	static get LINK_REGEXP() {
-		return / \[(\w+)\]$/;
-	}
-
 	static getInheritanceOf(string) {
-		const parts = string.split(ChatScript.INHERITANCE_REGEXP);
+		const parts = string.split(REGEXP.inheritance);
 		if (parts.length !== 2) return null;
 
 		return parts[1] || null;
 	}
 
 	static getLinkOf(string) {
-		const parts = string.split(ChatScript.LINK_REGEXP);
+		const parts = string.split(REGEXP.link);
 		if (parts.length !== 3) return null;
 
 		return parts[1] || null;
@@ -86,14 +68,14 @@ export default class ChatScript {
 				const inheritance = ChatScript.getInheritanceOf(rawContent);
 				if (inheritance) return this.getOptionsOf(field, inheritance, history);
 
-				const [content, link] = rawContent.split(ChatScript.LINK_REGEXP);
-				const isConsumable = ChatScript.CONSUMABLE_REGEXP.test(rawContent);
-				const isKey = ChatScript.KEY_REGEXP.test(rawContent);
-				const isLock = ChatScript.LOCK_REGEXP.test(rawContent);
+				const [content, link] = rawContent.split(REGEXP.link);
+				const isConsumable = REGEXP.consumable.test(rawContent);
+				const isKey = REGEXP.key.test(rawContent);
+				const isLock = REGEXP.lock.test(rawContent);
 
 				return [
 					{
-						content: content.replace(ChatScript.MODIFIER_REGEXP, ""),
+						content: content.replace(REGEXP.modifier, ""),
 						link,
 						isConsumable,
 						isKey,
@@ -192,14 +174,14 @@ export default class ChatScript {
 	_processIfs = (strings) => {
 		return strings
 			.filter((string) => {
-				const hasIf = ChatScript.IF_REGEXP.test(string);
+				const hasIf = REGEXP.if.test(string);
 				if (!hasIf) return true;
 
-				const condition = string.match(ChatScript.IF_REGEXP)[1];
+				const condition = string.match(REGEXP.if)[1];
 				return !!codeEval.eval(condition);
 			})
 			.map(this._stripIf);
 	};
 
-	_stripIf = (string) => string.replace(ChatScript.IF_REGEXP, "");
+	_stripIf = (string) => string.replace(REGEXP.if, "");
 }

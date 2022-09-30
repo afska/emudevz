@@ -21,6 +21,7 @@ export default {
 			eval(_code_) {
 				const result = _eval_(_firstTime_ ? _clearGlobals_ + _code_ : _code_);
 				_firstTime_ = false;
+
 				return result;
 			},
 		};

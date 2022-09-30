@@ -1,4 +1,4 @@
-import contextPreservingEval from "./contextPreservingEval";
+import contextEval from "./contextEval";
 import moduleEval from "./moduleEval";
 
-export { contextPreservingEval, moduleEval };
+export { contextEval, moduleEval };

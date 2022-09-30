@@ -1,5 +1,5 @@
 import cliHighlighter from "../../utils/cli/cliHighlighter";
-import { contextPreservingEval } from "../../utils/eval";
+import { contextEval } from "../../utils/eval";
 import theme from "../style/theme";
 import Command from "./Command";
 
@@ -11,7 +11,7 @@ export default class ReplCommand extends Command {
 	}
 
 	async execute() {
-		const replEval = contextPreservingEval.create();
+		const context = contextEval.create();
 
 		while (true) {
 			let expression = "";
@@ -23,7 +23,7 @@ export default class ReplCommand extends Command {
 				expression = `(${expression})`;
 
 			try {
-				const result = replEval.eval(expression);
+				const result = context.eval(expression);
 				this._terminal.writeln(cliHighlighter.highlight(this._format(result)));
 			} catch (e) {
 				this._terminal.writeln("❌  " + theme.ERROR(e.message));
