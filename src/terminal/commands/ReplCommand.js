@@ -33,14 +33,13 @@ export default class ReplCommand extends Command {
 			case "object":
 				return JSON.stringify(expression, null, 2);
 			case "string":
-				return `"${expression}"`;
+				return JSON.stringify(expression);
 			case "function":
 				return `<function>`;
-			// TODO: ESCAPE
 			// TODO: await new Promise(() => {})
 			// TODO: INFINITE LOOPS
-			// TODO: ALTGR + }
-			// TODO: MEMORY
+			// TODO: let & const
+			// TODO: MEMORY (remember previous variables)
 			default:
 				return `${expression}`;
 		}
