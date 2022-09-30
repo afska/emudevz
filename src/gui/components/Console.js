@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
+import { XTerm } from "updated-xterm-for-react";
 import { FitAddon } from "xterm-addon-fit";
-import { XTerm } from "xterm-for-react";
 import locales from "../../locales";
 import Terminal from "../../terminal/Terminal";
 import styles from "./Console.module.css";
