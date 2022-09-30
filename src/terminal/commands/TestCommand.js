@@ -1,7 +1,7 @@
 import _ from "lodash";
 import Level from "../../level/Level";
 import locales from "../../locales";
-import cliHighlighter from "../../utils/cli/cliHighlighter";
+import { cliHighlighter } from "../../utils/cli";
 import theme from "../style/theme";
 import Command from "./Command";
 import testContext from "./test/context";

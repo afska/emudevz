@@ -1,4 +1,4 @@
-import cliHighlighter from "../../utils/cli/cliHighlighter";
+import { cliHighlighter } from "../../utils/cli";
 import { contextEval } from "../../utils/eval";
 import theme from "../style/theme";
 import Command from "./Command";
