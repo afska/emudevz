@@ -33,7 +33,11 @@ export default class Console extends PureComponent {
 					className={styles.xtermContainer}
 					options={{
 						cursorBlink: true,
-						theme: { background: "#111111" },
+						theme: {
+							background: "#111111",
+							cursor: "#ffffff",
+							cursorAccent: "#111111",
+						},
 					}}
 					addons={[this.fitAddon]}
 					ref={(ref) => {
