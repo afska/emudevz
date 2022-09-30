@@ -10,6 +10,8 @@ import Command from "./Command";
 const MESSAGE_SYMBOL = ">> ";
 const PROMPT_SYMBOL = "?? ";
 const SPEED = 30;
+const LINK_DETECT_REGEXP = /^(\d\d?\) .+)/gu;
+const LINK_PARSE_REGEXP = /^(\d\d?)\) .+/u;
 
 export default class ChatCommand extends Command {
 	static get name() {
@@ -29,9 +31,7 @@ export default class ChatCommand extends Command {
 			return;
 		}
 
-		level.setMemory(({ chat }) => {
-			chat.isOpen = true;
-		});
+		this._onOpen();
 
 		while (memory.sectionName !== ChatScript.END_SECTION) {
 			const sectionName = memory.sectionName;
@@ -64,14 +64,13 @@ export default class ChatCommand extends Command {
 		}
 
 		if (memory.winOnEnd) {
+			this._onClose();
 			level.advance();
 			return;
 		}
 
 		this._goTo(ChatScript.INITIAL_SECTION);
-		level.setMemory(({ chat }) => {
-			chat.isOpen = false;
-		});
+		this._onClose();
 	}
 
 	onStop() {
@@ -85,11 +84,22 @@ export default class ChatCommand extends Command {
 
 		if (this._args.includes("-f")) return false;
 
+		this._onClose();
+
+		return true;
+	}
+
+	_onOpen() {
+		Level.current.setMemory(({ chat }) => {
+			chat.isOpen = true;
+		});
+	}
+
+	_onClose() {
 		Level.current.setMemory(({ chat }) => {
 			chat.isOpen = false;
 		});
-
-		return true;
+		if (this._linkProvider) this._linkProvider.dispose();
 	}
 
 	async _showMessages(messages) {
@@ -112,9 +122,9 @@ export default class ChatCommand extends Command {
 	}
 
 	async _getSelectedResponse(responses) {
-		let selectedResponse = null;
+		let command = { selectedResponse: null };
 
-		while (selectedResponse == null) {
+		while (command.selectedResponse == null) {
 			const getResponse = (x) => {
 				if (isFinite(parseInt(x)))
 					return responses.find((it) => it.number.toString() === x);
@@ -126,18 +136,30 @@ export default class ChatCommand extends Command {
 			};
 
 			try {
+				this._linkProvider = this._terminal.registerLinkProvider(
+					LINK_DETECT_REGEXP,
+					(__, text) => {
+						const number = text.match(LINK_PARSE_REGEXP)[1];
+						command.selectedResponse = getResponse(number);
+						this._terminal.writeln(number);
+						this._terminal.cancelPrompt();
+					}
+				);
+
 				const response = await this._terminal.prompt(
 					PROMPT_SYMBOL,
 					theme.INPUT,
 					(x) => getResponse(x) != null
 				);
-				selectedResponse = getResponse(response);
+				command.selectedResponse = getResponse(response);
 			} catch (e) {
 				if (e !== "canceled") throw e;
+			} finally {
+				this._linkProvider.dispose();
 			}
 		}
 
-		return selectedResponse;
+		return command.selectedResponse;
 	}
 
 	async _getEventLink(events) {

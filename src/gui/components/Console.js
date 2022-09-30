@@ -33,6 +33,7 @@ export default class Console extends PureComponent {
 					className={styles.xtermContainer}
 					options={{
 						cursorBlink: true,
+						allowProposedApi: true,
 						theme: {
 							background: "#111111",
 							cursor: "#ffffff",

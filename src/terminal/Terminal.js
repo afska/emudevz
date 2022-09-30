@@ -1,3 +1,4 @@
+import { LinkProvider } from "xterm-link-provider";
 import { async } from "../utils";
 import PendingInput from "./PendingInput";
 import Shell from "./Shell";
@@ -126,6 +127,12 @@ export default class Terminal {
 
 	cancelSpeedFlag() {
 		this._speedFlag = false;
+	}
+
+	registerLinkProvider(regexp, callback) {
+		return this._xterm.registerLinkProvider(
+			new LinkProvider(this._xterm, regexp, callback)
+		);
 	}
 
 	clear() {
