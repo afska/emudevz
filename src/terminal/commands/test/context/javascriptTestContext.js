@@ -1,4 +1,4 @@
-import { superEval } from "../../../../utils";
+import { moduleEval } from "../../../../utils/eval";
 
 export default {
 	prepare(level) {
@@ -6,7 +6,7 @@ export default {
 
 		return {
 			evaluate() {
-				return superEval(code);
+				return moduleEval(code);
 			},
 		};
 	},

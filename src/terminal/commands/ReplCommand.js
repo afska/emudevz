@@ -1,5 +1,5 @@
-import { superEval } from "../../utils";
 import cliHighlighter from "../../utils/cli/cliHighlighter";
+import { contextPreservingEval } from "../../utils/eval";
 import theme from "../style/theme";
 import Command from "./Command";
 
@@ -11,6 +11,8 @@ export default class ReplCommand extends Command {
 	}
 
 	async execute() {
+		const replEval = contextPreservingEval.create();
+
 		while (true) {
 			let expression = "";
 
@@ -18,10 +20,8 @@ export default class ReplCommand extends Command {
 				expression = await this._terminal.prompt(PROMPT_SYMBOL, theme.INPUT);
 
 			try {
-				const resultModule = await superEval(`export default ${expression}`);
-				this._terminal.writeln(
-					cliHighlighter.highlight(this._format(resultModule.default))
-				);
+				const result = replEval.eval(expression);
+				this._terminal.writeln(cliHighlighter.highlight(this._format(result)));
 			} catch (e) {
 				this._terminal.writeln("❌  " + theme.ERROR(e.message));
 			}
@@ -31,15 +31,18 @@ export default class ReplCommand extends Command {
 	_format(expression) {
 		switch (typeof expression) {
 			case "object":
-				return JSON.stringify(expression, null, 2);
+				try {
+					return JSON.stringify(expression, null, 2);
+				} catch (e) {
+					if (e.message.includes("Converting circular structure to JSON"))
+						return "<object>";
+					else throw e;
+				}
 			case "string":
 				return JSON.stringify(expression);
 			case "function":
 				return `<function>`;
-			// TODO: await new Promise(() => {})
 			// TODO: INFINITE LOOPS
-			// TODO: let & const
-			// TODO: MEMORY (remember previous variables)
 			default:
 				return `${expression}`;
 		}
