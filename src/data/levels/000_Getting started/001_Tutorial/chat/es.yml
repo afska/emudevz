@@ -9,7 +9,7 @@ main:
   - 💬  cuéntame sobre esta app [app]
   - 💬  cuéntame sobre otras apps [otherapps]
   - 💬  ¿qué hay en la otra mitad de la pantalla? [tv]
-  - 💬  ¿cómo puedo scrollear en la terminal? [scroll]
+  - 💬  ¿cómo puedo scrollear/copiar/pegar en la terminal? [terminal]
   - 💬  ¿cómo puedo navegar entre los paneles? [panes]
   - 👌  entendido [end]
 
@@ -46,10 +46,10 @@ turnontv:
   responses:
   - ...main
 
-scroll:
+terminal:
   messages:
-  - puedes usar `Ctrl+Shift+PageUp` y `Ctrl+Shift+PageDown`
-  - o la rueda de tu mouse
+  - "para scrollear: `Ctrl+Shift+PageUp` y `Ctrl+Shift+PageDown`, o la rueda de tu mouse"
+  - "para copiar&pegar: `Ctrl+Shift+C` y `Ctrl+Shift+V`"
   responses:
   - ...main
 
