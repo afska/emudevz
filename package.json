@@ -38,6 +38,7 @@
     "classnames": "^2.2.6",
     "cli-highlight": "^2.1.11",
     "connected-react-router": "^6.9.3",
+    "escape-string-regexp": "^5.0.0",
     "eventemitter3": "^4.0.7",
     "history": "^4.10.1",
     "jszip": "^3.10.1",

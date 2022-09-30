@@ -1,3 +1,4 @@
+import escapeStringRegexp from "escape-string-regexp";
 import _ from "lodash";
 import Level from "../../level/Level";
 import ChatScript from "../../level/chat/ChatScript";
@@ -10,7 +11,9 @@ import Command from "./Command";
 const MESSAGE_SYMBOL = ">> ";
 const PROMPT_SYMBOL = "?? ";
 const SPEED = 30;
-const LINK_DETECT_REGEXP = /^(\d\d?\) .+)/gu;
+
+// eslint-disable-next-line
+const LINK_DETECT_REGEXP = _.template("^(${responses}$)");
 const LINK_PARSE_REGEXP = /^(\d\d?)\) .+/u;
 
 export default class ChatCommand extends Command {
@@ -118,7 +121,7 @@ export default class ChatCommand extends Command {
 
 	async _showResponses(responses) {
 		for (let response of responses)
-			await this._terminal.writeln(`${response.number}) ${response.content}`);
+			await this._terminal.writeln(this._buildResponseText(response));
 	}
 
 	async _getSelectedResponse(responses) {
@@ -136,16 +139,7 @@ export default class ChatCommand extends Command {
 			};
 
 			try {
-				this._linkProvider = this._terminal.registerLinkProvider(
-					LINK_DETECT_REGEXP,
-					(__, text) => {
-						const number = text.match(LINK_PARSE_REGEXP)[1];
-						command.selectedResponse = getResponse(number);
-						this._terminal.writeln(number);
-						this._terminal.cancelPrompt();
-					}
-				);
-
+				this._setUpHyperlinkProvider(command, responses, getResponse);
 				const response = await this._terminal.prompt(
 					PROMPT_SYMBOL,
 					theme.INPUT,
@@ -177,6 +171,34 @@ export default class ChatCommand extends Command {
 		subscriber.release();
 
 		return link;
+	}
+
+	_setUpHyperlinkProvider(command, responses, getResponse) {
+		this._linkProvider = this._terminal.registerLinkProvider(
+			new RegExp(
+				LINK_DETECT_REGEXP({
+					responses: responses
+						.map((response) => {
+							const escapedText = escapeStringRegexp(
+								this._buildResponseText(response)
+							);
+							return `(${escapedText})`;
+						})
+						.join("|"),
+				}),
+				"gu"
+			),
+			(__, text) => {
+				const number = text.match(LINK_PARSE_REGEXP)[1];
+				command.selectedResponse = getResponse(number);
+				this._terminal.writeln(number);
+				this._terminal.cancelPrompt();
+			}
+		);
+	}
+
+	_buildResponseText(response) {
+		return `${response.number}) ${response.content}`;
 	}
 
 	_eval(code) {
