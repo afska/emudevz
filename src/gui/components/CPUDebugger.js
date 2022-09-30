@@ -9,6 +9,7 @@ import { bus, hex } from "../../utils";
 import { assembler, runner } from "../../utils/nes";
 import styles from "./CPUDebugger.module.css";
 
+const WIDTH = 600;
 const HEIGHT = 300;
 const REGISTERS = ["A", "X", "Y", "SP", "PC"];
 const FLAGS_TEXT = ["N", "V", "-", "-", "-", "I", "Z", "C"];
@@ -312,7 +313,11 @@ export default class CPUDebugger extends PureComponent {
 	_onResize = () => {
 		if (!this._div) return;
 
-		const scale = Math.min(this._div.clientHeight / HEIGHT, 1);
+		const scale = Math.min(
+			this._div.clientWidth / WIDTH,
+			this._div.clientHeight / HEIGHT,
+			1
+		);
 		this._div.style.transform = `scale(${scale})`;
 	};
 
