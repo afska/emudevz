@@ -41,6 +41,16 @@ export default class Console extends PureComponent {
 						},
 					}}
 					addons={[this.fitAddon]}
+					customKeyEventHandler={(e) => {
+						const isCtrlShiftC = e.ctrlKey && e.shiftKey && e.key === "C";
+						if (e.type === "keydown" && isCtrlShiftC) {
+							const xterm = this.ref?.terminal;
+							const selection = xterm?.getSelection();
+							navigator.clipboard.writeText(selection);
+							xterm?.clearSelection();
+							e.preventDefault();
+						}
+					}}
 					ref={(ref) => {
 						this.ref = ref;
 					}}
