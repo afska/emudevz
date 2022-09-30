@@ -9,7 +9,7 @@ export default {
 	command_chat_description: "Runs the chat app.",
 	command_clear_description: "Clears the terminal.",
 	command_help_description: "Shows this help.",
-	command_repl_description: "Opens a JavaScript REPL",
+	command_repl_description: "Opens a JavaScript REPL.",
 	command_test_description: "Tests your solution.",
 	goBack: "Go back",
 	language: "Language",

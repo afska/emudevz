@@ -9,6 +9,7 @@ export default {
 	command_chat_description: "Ejecuta la app de chat.",
 	command_clear_description: "Limpia la terminal.",
 	command_help_description: "Muestra esta ayuda.",
+	command_repl_description: "Abre un REPL de JavaScript.",
 	command_test_description: "Prueba tu solución.",
 	goBack: "Volver",
 	language: "Idioma",

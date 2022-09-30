@@ -17,7 +17,7 @@ main:
 
 debugger:
   messages:
-  - ¿el debugger de CPU?
+  - ¿el depurador de CPU?
   - nah, no te preocupes
   - ¡voy a explicar todo!
   responses:
