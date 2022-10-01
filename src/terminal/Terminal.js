@@ -240,9 +240,6 @@ export default class Terminal {
 					if (isMultiLine && !this._input.multiLine) return;
 
 					await this.write(data);
-					await async.sleep();
-					if (this.buffer.x === this.width)
-						this.write(ansiEscapes.cursorDown() + ansiEscapes.cursorTo(0));
 					this._input.append(data);
 				}
 			}
