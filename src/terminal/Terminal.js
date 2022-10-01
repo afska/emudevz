@@ -242,7 +242,8 @@ export default class Terminal {
 					this._input.append(data);
 
 					setTimeout(() => {
-						if (this.buffer.x === this.width) this.write(NEWLINE);
+						if (this.buffer.x === this.width)
+							this.write(ansiEscapes.cursorDown() + ansiEscapes.cursorTo(0));
 					});
 				}
 			}
