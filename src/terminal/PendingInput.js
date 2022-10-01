@@ -14,10 +14,14 @@ export default class PendingInput {
 		return this._text === "";
 	}
 
+	getIndicatorOffset(y) {
+		return y === this.position.y ? this.indicator.length : 0;
+	}
+
 	getLineLength(y) {
 		const lineNumber = y - this.position.y;
 		const line = this._text.split("\n")[lineNumber];
-		return line.length;
+		return line?.length;
 	}
 
 	append(text) {

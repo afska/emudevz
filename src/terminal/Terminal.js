@@ -155,13 +155,12 @@ export default class Terminal {
 			if (x > 0) {
 				await this.write(BACKSPACE);
 			} else {
-				await this.write(ansiEscapes.cursorUp());
 				const newLine = y - 1;
-				const indicatorOffset =
-					newLine === this._input.position.y ? this._input.indicator.length : 0;
-				const lineLength = this._input.getLineLength(newLine) + indicatorOffset;
-				for (let i = 0; i < lineLength; i++)
-					await this.write(ansiEscapes.cursorForward());
+				const indicatorOffset = this._input.getIndicatorOffset(newLine);
+				const lineLength =
+					(this._input.getLineLength(newLine) ?? this.width) + indicatorOffset;
+
+				await this.write(ansiEscapes.cursorMove(lineLength, -1));
 			}
 		}
 	}
@@ -184,7 +183,16 @@ export default class Terminal {
 		return this._input != null;
 	}
 
+	get width() {
+		return this._xterm.cols;
+	}
+
+	get height() {
+		return this._xterm.rows;
+	}
+
 	async _onData(data) {
+		if (data === "") return;
 		if (this._processCommonBrowserKeys(data)) return;
 		data = this._normalize(data, SHORT_NEWLINE);
 
