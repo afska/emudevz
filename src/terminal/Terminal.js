@@ -119,7 +119,7 @@ export default class Terminal {
 			await this.newline();
 			await this.write(indicator, style);
 			setTimeout(() => {
-				const { x, y } = this._xterm._core.buffer;
+				const { x, y } = this.buffer;
 				this._input.position.x = x;
 				this._input.position.y = y;
 			});
@@ -148,7 +148,7 @@ export default class Terminal {
 
 	async backspace() {
 		if (this.isExpectingInput) {
-			const { x, y } = this._xterm._core.buffer;
+			const { x, y } = this.buffer;
 			if (y === this._input.position.y && x === this._input.position.x) return;
 
 			if (x > 0) {
@@ -161,10 +161,8 @@ export default class Terminal {
 					this.width
 				);
 
-				console.log(lineLength);
 				if (lineLength < this.width) {
 					await this.write(ansiEscapes.cursorMove(lineLength, -1));
-					// TODO: BORDER CASE "level!..."
 				} else {
 					await this.write(
 						ansiEscapes.cursorMove(this.width - 1, -1) +
@@ -203,6 +201,10 @@ export default class Terminal {
 		return this._xterm.rows;
 	}
 
+	get buffer() {
+		return this._xterm._core.buffer;
+	}
+
 	async _onData(data) {
 		if (data === "") return;
 		if (this._processCommonBrowserKeys(data)) return;
@@ -237,6 +239,10 @@ export default class Terminal {
 
 					await this.write(data);
 					this._input.append(data);
+
+					setTimeout(() => {
+						if (this.buffer.x === this.width) this.write(NEWLINE);
+					});
 				}
 			}
 		}
@@ -256,8 +262,8 @@ export default class Terminal {
 
 		if (isKeyDown && isEnter) {
 			if (isShiftEnter && this.isExpectingInput && this._input.multiLine) {
-				this._input.append(SHORT_NEWLINE);
 				await this.newline();
+				this._input.append(SHORT_NEWLINE);
 			} else {
 				if (this._isWriting) this._speedFlag = true;
 				await this.confirmPrompt();
