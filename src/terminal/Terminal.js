@@ -153,6 +153,7 @@ export default class Terminal {
 
 			if (x > 0) {
 				await this.write(BACKSPACE);
+				this._input.backspace();
 			} else {
 				const newLine = y - 1;
 				const indicatorOffset = this._input.getIndicatorOffset(newLine);
@@ -160,18 +161,18 @@ export default class Terminal {
 					this._input.getLineLength(newLine, this.width) + indicatorOffset,
 					this.width
 				);
+				const character = this._input.backspace();
 
 				if (lineLength < this.width) {
 					await this.write(ansiEscapes.cursorMove(lineLength, -1));
 				} else {
-					await this.write(
-						ansiEscapes.cursorMove(this.width - 1, -1) +
-							ansiEscapes.eraseEndLine
-					);
+					if (character !== SHORT_NEWLINE)
+						await this.write(
+							ansiEscapes.cursorMove(this.width - 1, -1) +
+								ansiEscapes.eraseEndLine
+						);
 				}
 			}
-
-			this._input.backspace();
 		}
 	}
 

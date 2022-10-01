@@ -29,7 +29,9 @@ export default class PendingInput {
 	}
 
 	backspace() {
+		const character = this._text[this._text.length - 1];
 		this._text = this._text.substring(0, this._text.length - 1);
+		return character;
 	}
 
 	confirm() {
