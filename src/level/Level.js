@@ -32,7 +32,7 @@ export default class Level {
 	}
 
 	get content() {
-		return store.getState().files.levels[this.id];
+		return store.getState().files.levels[this.id] || "";
 	}
 
 	setMemory(change) {
