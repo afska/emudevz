@@ -119,9 +119,9 @@ export default class Terminal {
 			await this.newline();
 			await this.write(indicator, style);
 			await async.sleep();
-			const { x, y } = this.buffer;
+			const { x, y, ybase } = this.buffer;
 			this._input.position.x = x;
-			this._input.position.y = y;
+			this._input.position.y = y + ybase;
 		});
 	}
 
@@ -150,8 +150,10 @@ export default class Terminal {
 
 	async backspace() {
 		if (this.isExpectingInput) {
-			const { x, y } = this.buffer;
-			if (y === this._input.position.y && x === this._input.position.x) return;
+			const { x, y, ybase } = this.buffer;
+			const absY = y + ybase;
+			if (absY === this._input.position.y && x === this._input.position.x)
+				return;
 
 			if (x > 0) {
 				await this.write(
@@ -163,7 +165,7 @@ export default class Terminal {
 				);
 				this._input.backspace();
 			} else {
-				const newLine = y - 1;
+				const newLine = absY - 1;
 				const indicatorOffset = this._input.getIndicatorOffset(newLine);
 				const lineLength = Math.min(
 					this._input.getLineLength(newLine, this.width) + indicatorOffset,
