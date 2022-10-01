@@ -118,11 +118,10 @@ export default class Terminal {
 			this._input.multiLine = multiLine;
 			await this.newline();
 			await this.write(indicator, style);
-			setTimeout(() => {
-				const { x, y } = this.buffer;
-				this._input.position.x = x;
-				this._input.position.y = y;
-			});
+			await async.sleep();
+			const { x, y } = this.buffer;
+			this._input.position.x = x;
+			this._input.position.y = y;
 		});
 	}
 
@@ -165,12 +164,11 @@ export default class Terminal {
 
 				if (lineLength < this.width) {
 					await this.write(ansiEscapes.cursorMove(lineLength, -1));
-				} else {
-					if (character !== SHORT_NEWLINE)
-						await this.write(
-							ansiEscapes.cursorMove(this.width - 1, -1) +
-								ansiEscapes.eraseEndLine
-						);
+				} else if (character !== SHORT_NEWLINE) {
+					await this.write(
+						ansiEscapes.cursorMove(this.width - 1, -1) +
+							ansiEscapes.eraseEndLine
+					);
 				}
 			}
 		}
@@ -239,12 +237,10 @@ export default class Terminal {
 					if (isMultiLine && !this._input.multiLine) return;
 
 					await this.write(data);
+					await async.sleep();
+					if (this.buffer.x === this.width)
+						this.write(ansiEscapes.cursorDown() + ansiEscapes.cursorTo(0));
 					this._input.append(data);
-
-					setTimeout(() => {
-						if (this.buffer.x === this.width)
-							this.write(ansiEscapes.cursorDown() + ansiEscapes.cursorTo(0));
-					});
 				}
 			}
 		}
