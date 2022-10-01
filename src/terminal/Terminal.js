@@ -151,17 +151,29 @@ export default class Terminal {
 			const { x, y } = this._xterm._core.buffer;
 			if (y === this._input.position.y && x === this._input.position.x) return;
 
-			this._input.backspace();
 			if (x > 0) {
 				await this.write(BACKSPACE);
 			} else {
 				const newLine = y - 1;
 				const indicatorOffset = this._input.getIndicatorOffset(newLine);
-				const lineLength =
-					(this._input.getLineLength(newLine) ?? this.width) + indicatorOffset;
+				const lineLength = Math.min(
+					this._input.getLineLength(newLine, this.width) + indicatorOffset,
+					this.width
+				);
 
-				await this.write(ansiEscapes.cursorMove(lineLength, -1));
+				console.log(lineLength);
+				if (lineLength < this.width) {
+					await this.write(ansiEscapes.cursorMove(lineLength, -1));
+					// TODO: BORDER CASE "level!..."
+				} else {
+					await this.write(
+						ansiEscapes.cursorMove(this.width - 1, -1) +
+							ansiEscapes.eraseEndLine
+					);
+				}
 			}
+
+			this._input.backspace();
 		}
 	}
 
@@ -223,8 +235,8 @@ export default class Terminal {
 					const isMultiLine = data.split(NEWLINE_REGEXP).length > 1;
 					if (isMultiLine && !this._input.multiLine) return;
 
-					this._input.append(data);
 					await this.write(data);
+					this._input.append(data);
 				}
 			}
 		}

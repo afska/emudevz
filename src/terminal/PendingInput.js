@@ -18,10 +18,10 @@ export default class PendingInput {
 		return y === this.position.y ? this.indicator.length : 0;
 	}
 
-	getLineLength(y) {
+	getLineLength(y, defaultValue) {
 		const lineNumber = y - this.position.y;
 		const line = this._text.split("\n")[lineNumber];
-		return line?.length;
+		return line?.length ?? defaultValue;
 	}
 
 	append(text) {
