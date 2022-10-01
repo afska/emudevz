@@ -154,7 +154,13 @@ export default class Terminal {
 			if (y === this._input.position.y && x === this._input.position.x) return;
 
 			if (x > 0) {
-				await this.write(BACKSPACE);
+				await this.write(
+					x === this.width
+						? ansiEscapes.cursorMove(-1) +
+								ansiEscapes.cursorMove(1) +
+								ansiEscapes.eraseEndLine
+						: BACKSPACE
+				);
 				this._input.backspace();
 			} else {
 				const newLine = y - 1;
