@@ -142,7 +142,10 @@ export default class Terminal {
 	}
 
 	async clearInput() {
-		while (!this._input.isEmpty()) await this.backspace();
+		while (!this._input.isEmpty()) {
+			await async.sleep();
+			await this.backspace();
+		}
 	}
 
 	async backspace() {
