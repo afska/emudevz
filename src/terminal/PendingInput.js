@@ -1,6 +1,8 @@
 export default class PendingInput {
 	constructor(indicator, isValid, resolve, reject) {
 		this.indicator = indicator;
+		this.multiLine = false;
+		this.position = { x: 0, y: 0 };
 
 		this._text = "";
 		this._isValid = isValid;
@@ -10,6 +12,12 @@ export default class PendingInput {
 
 	isEmpty() {
 		return this._text === "";
+	}
+
+	getLineLength(y) {
+		const lineNumber = y - this.position.y;
+		const line = this._text.split("\n")[lineNumber];
+		return line.length;
 	}
 
 	append(text) {

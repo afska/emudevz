@@ -17,7 +17,11 @@ export default class ReplCommand extends Command {
 			let expression = "";
 
 			while (expression === "")
-				expression = await this._terminal.prompt(PROMPT_SYMBOL, theme.INPUT);
+				expression = await this._terminal.prompt(
+					PROMPT_SYMBOL,
+					theme.INPUT,
+					true
+				);
 
 			if (expression.startsWith("{") && expression.endsWith("}"))
 				expression = `(${expression})`;

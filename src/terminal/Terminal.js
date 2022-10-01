@@ -1,5 +1,6 @@
 import { LinkProvider } from "xterm-link-provider";
 import { async } from "../utils";
+import { ansiEscapes } from "../utils/cli";
 import PendingInput from "./PendingInput";
 import Shell from "./Shell";
 import { theme } from "./style";
@@ -9,7 +10,6 @@ const KEY_REFRESH_1 = "[15~";
 const KEY_REFRESH_2 = "";
 const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
-const KEY_ENTER = "\r";
 const NEWLINE = "\r\n";
 const TABULATION = "  ";
 const CTRL_C = "^C";
@@ -34,8 +34,11 @@ export default class Terminal {
 		this._shell = new Shell(this);
 		this._currentProgram = null;
 
-		this._xterm.onData((e) => {
-			this._onData(e);
+		this._xterm.onData((data) => {
+			this._onData(data);
+		});
+		this._xterm.attachCustomKeyEventHandler((e) => {
+			this._onKey(e);
 		});
 	}
 
@@ -99,13 +102,25 @@ export default class Terminal {
 		});
 	}
 
-	prompt(indicator = "$ ", style = theme.ACCENT, isValid = (x) => x !== "") {
+	prompt(
+		indicator = "$ ",
+		style = theme.ACCENT,
+		multiLine = false,
+		isValid = (x) => x !== ""
+	) {
 		this.cancelSpeedFlag();
 		this._interruptIfNeeded();
 
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			this._input = new PendingInput(indicator, isValid, resolve, reject);
-			this.newline().then(() => this.write(indicator, style));
+			this._input.multiLine = multiLine;
+			await this.newline();
+			await this.write(indicator, style);
+			setTimeout(() => {
+				const { x, y } = this._xterm._core.buffer;
+				this._input.position.x = x;
+				this._input.position.y = y;
+			});
 		});
 	}
 
@@ -130,12 +145,22 @@ export default class Terminal {
 	}
 
 	async backspace() {
-		if (
-			this.isExpectingInput &&
-			this._xterm._core.buffer.x > this._input.indicator.length
-		) {
-			await this.write(BACKSPACE);
+		if (this.isExpectingInput) {
+			const { x, y } = this._xterm._core.buffer;
+			if (y === this._input.position.y && x === this._input.position.x) return;
+
 			this._input.backspace();
+			if (x > 0) {
+				await this.write(BACKSPACE);
+			} else {
+				await this.write(ansiEscapes.cursorUp());
+				const newLine = y - 1;
+				const indicatorOffset =
+					newLine === this._input.position.y ? this._input.indicator.length : 0;
+				const lineLength = this._input.getLineLength(newLine) + indicatorOffset;
+				for (let i = 0; i < lineLength; i++)
+					await this.write(ansiEscapes.cursorForward());
+			}
 		}
 	}
 
@@ -178,12 +203,6 @@ export default class Terminal {
 
 				break;
 			}
-			case KEY_ENTER: {
-				if (this._isWriting) this._speedFlag = true;
-				await this.confirmPrompt();
-
-				break;
-			}
 			case KEY_BACKSPACE: {
 				await this.backspace();
 				break;
@@ -193,6 +212,29 @@ export default class Terminal {
 					this._input.append(data);
 					await this.write(data);
 				}
+			}
+		}
+	}
+
+	async _onKey(e) {
+		const isKeyDown = e.type === "keydown";
+		const isEnter = e.key === "Enter";
+		const isCtrlShiftC = e.ctrlKey && e.shiftKey && e.key === "C";
+		const isShiftEnter = e.shiftKey && isEnter;
+
+		if (isKeyDown && isCtrlShiftC) {
+			const selection = this._xterm.getSelection();
+			navigator.clipboard.writeText(selection);
+			e.preventDefault();
+		}
+
+		if (isKeyDown && isEnter) {
+			if (isShiftEnter && this.isExpectingInput && this._input.multiLine) {
+				this._input.append("\n");
+				await this.newline();
+			} else {
+				if (this._isWriting) this._speedFlag = true;
+				await this.confirmPrompt();
 			}
 		}
 	}

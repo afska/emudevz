@@ -143,6 +143,7 @@ export default class ChatCommand extends Command {
 				const response = await this._terminal.prompt(
 					PROMPT_SYMBOL,
 					theme.INPUT,
+					false,
 					(x) => getResponse(x) != null
 				);
 				command.selectedResponse = getResponse(response);
