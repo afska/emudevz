@@ -10,7 +10,10 @@ const KEY_REFRESH_1 = "[15~";
 const KEY_REFRESH_2 = "";
 const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
+const NEWLINE_REGEXP = /\r\n?|\n/g;
 const NEWLINE = "\r\n";
+const SHORT_NEWLINE = "\n";
+const TABULATION_REGEXP = /\t/g;
 const TABULATION = "  ";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
@@ -67,9 +70,8 @@ export default class Terminal {
 	}
 
 	async write(text, style = theme.NORMAL, interval = 0) {
+		text = this._normalize(text);
 		this._isWriting = true;
-
-		text = text.replace(/\n/g, NEWLINE).replace(/\t/g, TABULATION);
 
 		if (interval === 0) {
 			this._interruptIfNeeded();
@@ -184,6 +186,7 @@ export default class Terminal {
 
 	async _onData(data) {
 		if (this._processCommonBrowserKeys(data)) return;
+		data = this._normalize(data, SHORT_NEWLINE);
 
 		if (this._keyInput) {
 			this._keyInput();
@@ -209,6 +212,9 @@ export default class Terminal {
 			}
 			default: {
 				if (this.isExpectingInput && this._isValidInput(data)) {
+					const isMultiLine = data.split(NEWLINE_REGEXP).length > 1;
+					if (isMultiLine && !this._input.multiLine) return;
+
 					this._input.append(data);
 					await this.write(data);
 				}
@@ -230,7 +236,7 @@ export default class Terminal {
 
 		if (isKeyDown && isEnter) {
 			if (isShiftEnter && this.isExpectingInput && this._input.multiLine) {
-				this._input.append("\n");
+				this._input.append(SHORT_NEWLINE);
 				await this.newline();
 			} else {
 				if (this._isWriting) this._speedFlag = true;
@@ -248,6 +254,12 @@ export default class Terminal {
 			this._stopFlag = false;
 			throw INTERRUPTED;
 		}
+	}
+
+	_normalize(text, newline = NEWLINE) {
+		return text
+			.replace(NEWLINE_REGEXP, newline)
+			.replace(TABULATION_REGEXP, TABULATION);
 	}
 
 	_isValidInput(data) {
