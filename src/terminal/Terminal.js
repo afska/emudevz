@@ -1,4 +1,5 @@
 import { LinkProvider } from "xterm-link-provider";
+import locales from "../locales";
 import { async } from "../utils";
 import { ansiEscapes } from "../utils/cli";
 import PendingInput from "./PendingInput";
@@ -42,6 +43,9 @@ export default class Terminal {
 		});
 		this._xterm.attachCustomKeyEventHandler((e) => {
 			this._onKey(e);
+		});
+		this._xterm.onResize((e) => {
+			this._onResize(e);
 		});
 	}
 
@@ -274,6 +278,16 @@ export default class Terminal {
 				if (this._isWriting) this._speedFlag = true;
 				await this.confirmPrompt();
 			}
+		}
+	}
+
+	async _onResize(e) {
+		if (this.isExpectingInput) {
+			this.cancelPrompt();
+			await async.sleep(1);
+			this.clear();
+			await this.write("⚠️  " + locales.get("resize_warning"), theme.ACCENT);
+			this.cancelPrompt();
 		}
 	}
 

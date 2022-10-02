@@ -31,6 +31,7 @@ export default {
 	register_flags_Z: "Bandera de Cero",
 	register_flags_C: "Bandera de Acarreo",
 	register_flags_U: "Bandera sin uso",
+	resize_warning: "No se puede redimensionar y escribir a la vez.",
 	save: "Guardar",
 	settings: "Opciones",
 	shell_command_not_found: "comando no encontrado",
