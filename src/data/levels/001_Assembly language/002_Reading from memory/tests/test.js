@@ -1,15 +1,20 @@
 const { compile } = $;
 
-let instructions, cpu;
+const randomByte = () => Math.floor(Math.random() * 255);
+
+let instructions, cpu, initialValue;
 beforeEach(() => {
 	const compilation = compile();
 	instructions = compilation.instructions;
 	cpu = compilation.cpu;
+
+	initialValue = randomByte();
+	cpu.memory.writeAt(0x4085, initialValue);
 	cpu.run();
 });
 
-it("the address $4086 contains $13", () => {
-	cpu.memory.readAt(0x4086).should.equal(0x13);
+it("the address $4086 contains $4085 + 3", () => {
+	cpu.memory.readAt(0x4086).should.equal(initialValue + 3);
 });
 
 it("it uses only 3 instructions", () => {
