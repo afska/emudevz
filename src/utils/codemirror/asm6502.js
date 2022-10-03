@@ -21,21 +21,16 @@ function asm6502Mode() {
 			if (stream.eatWhile(/\w/)) {
 				w = stream.current();
 
-				if (true) {
-					if (
-						(state.context === 1 || state.context === 4) &&
-						variables.test(w)
-					) {
-						state.context = 4;
-						return "variable";
-					}
+				if ((state.context === 1 || state.context === 4) && variables.test(w)) {
+					state.context = 4;
+					return "variable";
+				}
 
-					if (keywords.test(w)) {
-						state.context = 1;
-						return "keyword";
-					} else if (state.context === 4 && numbers.test(w)) {
-						return "number";
-					}
+				if (keywords.test(w)) {
+					state.context = 1;
+					return "keyword";
+				} else if (state.context === 4 && numbers.test(w)) {
+					return "number";
 				}
 			} else if (stream.eat(";")) {
 				stream.skipToEnd();
@@ -47,16 +42,8 @@ function asm6502Mode() {
 					if (w === "\\") stream.next();
 				}
 				return "string";
-			} else if (stream.eat("'")) {
-				if (stream.match(/\\?.'/)) return "number";
-			} else if (stream.eat(".") || (stream.sol() && stream.eat("#"))) {
-				state.context = 5;
-
-				if (stream.eatWhile(/\w/)) return "def";
 			} else if (stream.eat("$")) {
 				if (stream.eatWhile(/[\da-f]/i)) return "number";
-			} else if (stream.eat("%")) {
-				if (stream.eatWhile(/[01]/)) return "number";
 			} else {
 				stream.next();
 			}
