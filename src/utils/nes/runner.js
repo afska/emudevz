@@ -1,11 +1,13 @@
 import NES from "nes-emu";
+import assembler from "./assembler";
 
 const CODE_ADDRESS = 0x4020;
 
 export default {
 	CODE_ADDRESS,
 
-	create(code) {
+	create(code, preCode = null) {
+		const { instructions, bytes } = assembler.compile(code);
 		const cpu = new NES().cpu;
 
 		const memory = {
@@ -33,8 +35,31 @@ export default {
 		cpu.stack.context = context;
 		cpu.pc.value = CODE_ADDRESS;
 
-		code.forEach((byte, i) => memory.writeAt(CODE_ADDRESS + i, byte));
+		if (preCode != null) {
+			try {
+				const preCpu = this.create(preCode).cpu;
+				preCpu.run();
+				for (let i = 0; i < 0xffff; i++)
+					cpu.memory.writeAt(i, preCpu.memory.readAt(i));
+			} catch (e) {
+				throw new Error("Pre-code failed!");
+			}
+		}
 
-		return cpu;
+		bytes.forEach((byte, i) => memory.writeAt(CODE_ADDRESS + i, byte));
+
+		cpu.run = () => {
+			while (true) {
+				cpu.step();
+
+				const lineNumber = instructions.find(
+					(it) => this.CODE_ADDRESS + it.address === cpu.pc.value
+				)?.lineNumber;
+
+				if (!lineNumber) break;
+			}
+		};
+
+		return { instructions, bytes, cpu };
 	},
 };

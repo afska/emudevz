@@ -4,9 +4,10 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Table from "react-bootstrap/Table";
 import Tooltip from "react-bootstrap/Tooltip";
 import _ from "lodash";
+import Level from "../../level/Level";
 import locales from "../../locales";
+import testContext from "../../terminal/commands/test/context";
 import { bus, hex } from "../../utils";
-import { assembler, runner } from "../../utils/nes";
 import styles from "./CPUDebugger.module.css";
 
 const WIDTH = 600;
@@ -18,12 +19,15 @@ const MEMORY_ROWS = 10;
 const BASE = 16;
 const PC_STYLE = { textDecoration: "underline" };
 
+const asm = testContext.asm;
+
 export default class CPUDebugger extends PureComponent {
 	state = {
 		_isInitialized: false,
 		_hideFlags: false,
 		_delay: 500,
 		_lastCode: "",
+		_initialCode: null,
 		_memoryStart: 0x4020,
 		_mappings: [],
 		_error: null,
@@ -243,7 +247,7 @@ export default class CPUDebugger extends PureComponent {
 						${hex.format(address, 4)}
 						{(() => {
 							const line = _mappings.find(
-								(it) => runner.CODE_ADDRESS + it.address === address
+								(it) => asm.CODE_ADDRESS + it.address === address
 							)?.line;
 
 							return line != null ? (
@@ -267,11 +271,11 @@ export default class CPUDebugger extends PureComponent {
 
 	_onCode = (code) => {
 		try {
-			const { instructions: mappings, bytes } = assembler.compile(code);
-			this._cpu = runner.create(bytes);
+			const { instructions, cpu } = asm.prepare(Level.current, code).compile();
+			this._cpu = cpu;
 
 			this.setState(
-				{ _lastCode: code, _mappings: mappings, _error: null },
+				{ _lastCode: code, _mappings: instructions, _error: null },
 				() => {
 					setTimeout(() => {
 						this._updateState();
@@ -323,9 +327,8 @@ export default class CPUDebugger extends PureComponent {
 
 	_updateState() {
 		const memory = new Uint8Array(MEMORY_ROWS * BASE);
-		for (let i = 0; i < MEMORY_ROWS * BASE; i++) {
+		for (let i = 0; i < MEMORY_ROWS * BASE; i++)
 			memory[i] = this._cpu.memory.readAt(this.state._memoryStart + i);
-		}
 
 		this.setState({
 			A: this._cpu.registers.a.value,
@@ -345,7 +348,7 @@ export default class CPUDebugger extends PureComponent {
 		});
 
 		const lineNumber = this.state._mappings.find(
-			(it) => runner.CODE_ADDRESS + it.address === this._cpu.pc.value
+			(it) => asm.CODE_ADDRESS + it.address === this._cpu.pc.value
 		)?.lineNumber;
 
 		bus.emit("highlight", lineNumber);

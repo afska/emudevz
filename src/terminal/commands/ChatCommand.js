@@ -49,7 +49,10 @@ export default class ChatCommand extends Command {
 			const events = chatScript.getEventsOf(memory.sectionName, memory.history);
 
 			this._eval(chatScript.getStartUpCodeOf(memory.sectionName));
+			if (memory.sectionName !== sectionName) continue;
+
 			await this._showMessages(messages);
+
 			this._eval(chatScript.getAfterMessagesCodeOf(memory.sectionName));
 			if (memory.sectionName !== sectionName) continue;
 

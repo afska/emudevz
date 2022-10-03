@@ -1,0 +1,94 @@
+---
+main:
+  run: |
+    if (m.$end) $.goTo("refactor");
+    else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+    }
+  messages:
+  - entonces, con el combo `LDA` + `STA` puedes escribir en memoria ✍️
+  - "hay instrucciones similares que usan los registros [X] e [Y]:"
+  - "`LDX`, `STX`, `LDY` y `STY`"
+  - ahora vamos a usar las variantes [X], solo por diversión
+  responses:
+  - ¿qué pasa si quiero <leer> de la memoria? 📖 [read]
+
+read:
+  messages:
+  - "puedes pasarle una dirección de memoria a `LDX`, tan solo omitiendo el prefijo #"
+  - p. ej. la instrucción `LDX $4080` cargará en [X] lo que sea que esté en la dirección de memoria $4080
+  responses:
+  - ¿y después qué? 🤔 [then]
+
+then:
+  messages:
+  - una vez que cargas algo en un registro, puedes hacer lo que tú quieras
+  - algo común es mutar el valor y copiarlo a otro registro
+  - ¡o a otra ubicación de memoria! 🐏
+  - "`INX`, por ejemplo, incrementa el valor en [X]"
+  responses:
+  - ¿puedo probarlo? [tryit]
+
+tryit:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - sí, hay un $10 ya cargado en $4085
+  - ejecuta el código actual y mira qué ocurre
+  events:
+  - end [result]
+
+result:
+  messages:
+  - ¿ves? el programa leyó ese $10
+  - lo incrementó 3 veces
+  - y escribió el resultado en $4086 😎
+  responses:
+  - suena como mucho trabajo, ¿qué pasa si quiero incrementarlo 8 veces? [8times]
+
+8times:
+  messages:
+  - "en ese caso, escribes:"
+  - INX
+  - INX
+  - INX
+  - INX
+  - INX
+  - INX
+  - INX
+  - INX
+  - nah, mentira 😂
+  - hay una instrucción para sumar
+  - "puedes escribir `ADC #$08` para incrementar [A] ocho veces"
+  responses:
+  - uff 😅 [iknow]
+  - pero... [iknow]
+
+iknow:
+  run: |
+    set((m) => m.$end = true);
+  run-after-messages: |
+    set((m) => {
+      m.chat.stopBlock = null;
+      m.$canEdit = true;
+    });
+  messages:
+  - ya sé, dije [A] en vez de [X]
+  - "`ADC` solo funciona con [A] 🤷"
+  - mmm...
+  - ...refactor
+  responses:
+  - ...refactor
+
+refactor:
+  messages:
+  - vamos a refactorizar el código 💡
+  - haz que use `ADC` en vez de 3 instrucciones de incremento
+  - (recuerda reemplazar `LDX` y `STX` por `LDA` y `STA`)
+  - cuando esté listo, ejecuta el comando `test`
+  responses:
+  - ok [end]

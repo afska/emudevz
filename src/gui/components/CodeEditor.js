@@ -35,6 +35,7 @@ class CodeEditor extends PureComponent {
 		actionName: NULL_ACTION,
 		onlyShowActionWhen: null,
 		onlyEnableActionWhen: null,
+		onlyEnableEditionWhen: null,
 	};
 
 	actions = {
@@ -74,6 +75,7 @@ class CodeEditor extends PureComponent {
 			actionName: args.action || NULL_ACTION,
 			onlyShowActionWhen: args.onlyShowActionWhen || null,
 			onlyEnableActionWhen: args.onlyEnableActionWhen || null,
+			onlyEnableEditionWhen: args.onlyEnableEditionWhen || null,
 		});
 	}
 
@@ -89,6 +91,7 @@ class CodeEditor extends PureComponent {
 			actionName,
 			onlyShowActionWhen,
 			onlyEnableActionWhen,
+			onlyEnableEditionWhen,
 		} = this.state;
 		if (!_isInitialized) return false;
 
@@ -102,6 +105,9 @@ class CodeEditor extends PureComponent {
 			!isDisabled &&
 			isReady &&
 			(onlyEnableActionWhen == null || codeEval.eval(onlyEnableActionWhen));
+		const isEditionEnabled =
+			!isReadOnly &&
+			(onlyEnableEditionWhen == null || codeEval.eval(onlyEnableEditionWhen));
 		const isCompilingSpinnerShown = !isNullAction && isCompiling;
 
 		return (
@@ -129,7 +135,7 @@ class CodeEditor extends PureComponent {
 					width="100%"
 					height="100%"
 					theme={oneDark}
-					readOnly={isReadOnly}
+					readOnly={!isEditionEnabled}
 					extensions={[LANGUAGES[language]()]}
 					onChange={this._setCode}
 					autoFocus

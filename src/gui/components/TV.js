@@ -12,7 +12,7 @@ export default class TV extends PureComponent {
 
 	load(fileName) {
 		const image = this._level?.media[fileName];
-		if (!image) throw new Error(`Image not found: ${fileName}`);
+		if (!image) throw new Error(`Media not found: ${fileName}`);
 
 		this.setState({ image });
 	}
