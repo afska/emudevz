@@ -69,10 +69,9 @@ result:
   - but... [iknow]
 
 iknow:
-  run: |
-    set((m) => m.$end = true);
   run-after-messages: |
     set((m) => {
+      m.$end = true;
       m.chat.stopBlock = null;
       m.$canEdit = true;
     });
@@ -90,5 +89,4 @@ refactor:
   - make it so it uses `ADC` instead of 3 incrementing instructions
   - (remember to replace `LDX` and `STX` with `LDA` and `STA`)
   - when you're ready, run the `test` command
-  responses:
-  - ok [end]
+  responses: []

@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Reading from memory",
-		"es": "Leyendo de la memoria"
+		"en": "Flags",
+		"es": "Banderas"
 	},
 	"ui": {
 		"layout": "triple",
@@ -16,8 +16,7 @@
 			"Bottom": [
 				"cpu",
 				{
-					"delay": 500,
-					"hideFlags": true
+					"delay": 500
 				}
 			],
 			"Top": [
@@ -34,7 +33,6 @@
 		"focus": "Left"
 	},
 	"test": {
-		"context": "asm",
-		"precode": "pre.asm"
+		"context": "asm"
 	}
 }

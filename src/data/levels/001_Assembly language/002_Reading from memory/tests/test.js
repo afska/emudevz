@@ -17,6 +17,6 @@ it("the address $4086 contains $4085 + 3", () => {
 	cpu.memory.readAt(0x4086).should.equal(initialValue + 3);
 });
 
-it("it uses only 3 instructions", () => {
+it("it only uses 3 instructions", () => {
 	instructions.length.should.equal(3);
 });

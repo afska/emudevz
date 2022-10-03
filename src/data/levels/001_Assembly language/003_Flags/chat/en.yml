@@ -1,0 +1,115 @@
+---
+main:
+  run: |
+    if (m.$end) $.goTo("otherflags");
+    else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+    }
+  run-after-messages: |
+    $.goTo("question");
+  messages:
+  - as I said, each register can hold a single byte
+  - so their values are always between 0 ($00) and 255 ($FF)
+  - you can't, for example, set the number 260 to them 👮
+  responses: []
+
+question:
+  messages:
+  - what do you think it'll happen if we use `ADC` to calculate 200 + 60?
+  responses:
+  - (*) [A] will be equal to 2️⃣ 6️⃣ 0️⃣ [a260]
+  - (*) [A] will be equal to 2️⃣ 5️⃣ 6️⃣ [a256]
+  - (*) [A] will be equal to 4️⃣ [a4]
+  - (*) it will throw an error ⚠️ [error]
+  - (*) the CPU explodes? 💥 [explodes]
+
+a260:
+  messages:
+  - nope, its max value is 255, so that's not possible 👮
+  - try again
+  - ...question
+  responses:
+  - ...question
+
+a256:
+  messages:
+  - that would make sense, but it's not what happens 👎
+  - try again
+  - ...question
+  responses:
+  - ...question
+
+error:
+  messages:
+  - CPUs don't <throw errors> 🙄
+  - try again
+  - ...question
+  responses:
+  - ...question
+
+explodes:
+  messages:
+  - 💥 💥 💥
+  - that would explain my PC's temperature problems 🌡️
+  - it's probably a program trying to overflow CPU registers
+  - no, try again
+  - ...question
+  responses:
+  - ...question
+
+a4:
+  messages:
+  - correct! ✔️
+  - but the processor isn't actually dumb
+  - it notifies the program that the value didn't fit
+  - by setting the Carry Flag to 1
+  responses:
+  - what's a flag? 🏁 [flags]
+
+flags:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - it's a boolean (1-bit value) set by the processor
+  - it gives information about the previous instruction
+  - there are 5 flags, so they all live in a single byte
+  - try running the code ⏩
+  events:
+  - end [carry]
+
+carry:
+  messages:
+  - you can see now in the debugger that the Carry Flag is set to 1
+  responses:
+  - (*) wow, any other useful flags? [otherflags]
+  - (*) wait, all this time you could have been writing numbers in decimal? 😤 [decimal]
+
+decimal:
+  messages:
+  - "yeah! `LDA #200` is the same as `LDA #$C8`"
+  - "📝  so, quick recap:"
+  - "#$20 refers to the number 32 (decimal) or $20 (hexadecimal)"
+  - "#20 refers to the number 20 (decimal) or $14 (hexadecimal)"
+  - "$20 refers to the 33rd byte in memory, with the address 32 (decimal) or $20 (hexadecimal)"
+  - "20 refers to the 21st byte in memory, with the address 20 (decimal) or $14 (hexadecimal)"
+  responses:
+  - ...carry
+
+otherflags:
+  run-after-messages: |
+    set((m) => {
+      m.$end = true;
+      m.chat.stopBlock = null;
+      m.$canEdit = true;
+    });
+  messages:
+  - yup, there's a Zero Flag, which is set by all instructions to 1 when the result is zero
+  - without deleting the current code, try substracting 4 to [A], with the `SBC` instruction
+  - it works the same as `ADC`, but it substracts instead of adding
+  - after that instruction, the Zero Flag should be 1 😊
+  responses:
+  - ...carry

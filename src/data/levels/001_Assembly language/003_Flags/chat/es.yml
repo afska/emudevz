@@ -1,0 +1,115 @@
+---
+main:
+  run: |
+    if (m.$end) $.goTo("otherflags");
+    else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+    }
+  run-after-messages: |
+    $.goTo("question");
+  messages:
+  - como dije, cada registro puede almacenar un solo byte
+  - así que sus valores están siempre entre 0 ($00) y 255 ($FF)
+  - no puedes, por ejemplo, guardar el número 260 en ellos 👮
+  responses: []
+
+question:
+  messages:
+  - ¿qué pensás que pasaría si usáramos `ADC` para calcular 200 + 60?
+  responses:
+  - (*) [A] sería igual a 2️⃣ 6️⃣ 0️⃣ [a260]
+  - (*) [A] sería igual a 2️⃣ 5️⃣ 6️⃣ [a256]
+  - (*) [A] sería igual a 4️⃣ [a4]
+  - (*) lanzaría un error ⚠️ [error]
+  - (*) ¿la CPU explota? 💥 [explodes]
+
+a260:
+  messages:
+  - nop, su valor máximo es 255, así que eso no es posible 👮
+  - intenta de nuevo
+  - ...question
+  responses:
+  - ...question
+
+a256:
+  messages:
+  - eso tendría sentido, pero no es lo que sucede 👎
+  - intenta de nuevo
+  - ...question
+  responses:
+  - ...question
+
+error:
+  messages:
+  - las CPUs no <tiran errores> 🙄
+  - intenta de nuevo
+  - ...question
+  responses:
+  - ...question
+
+explodes:
+  messages:
+  - 💥 💥 💥
+  - eso explicaría los problemas de temperatura de mi PC 🌡️
+  - probablemente es un programa intentando desbordar los registros de CPU
+  - no, intenta de nuevo
+  - ...question
+  responses:
+  - ...question
+
+a4:
+  messages:
+  - ¡correcto! ✔️
+  - pero en realidad el procesador no es tonto
+  - le notifica al programa que el valor no calzó bien
+  - cargando la Bandera de Acarreo en 1
+  responses:
+  - ¿qué es una bandera? 🏁 [flags]
+
+flags:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - es un booleano (valor de 1 bit) que carga el procesador
+  - da información sobre la instrucción anterior
+  - hay 5 banderas, así que todas viven en un solo byte
+  - intenta ejecutar el código ⏩
+  events:
+  - end [carry]
+
+carry:
+  messages:
+  - ahora puedes ver en el depurador que la Bandera de Acarreo está en 1
+  responses:
+  - (*) wow, ¿alguna otra bandera útil? [otherflags]
+  - (*) momento, ¿todo este tiempo podrías haber estado escribiendo números en decimal? 😤 [decimal]
+
+decimal:
+  messages:
+  - "¡sí! `LDA #200` es lo mismo que `LDA #$C8`"
+  - "📝  así que, resúmen rápido:"
+  - "#$20 representa al número 32 (decimal) o $20 (hexadecimal)"
+  - "#20 representa al número 20 (decimal) o $14 (hexadecimal)"
+  - "$20 representa al 33avo byte en memoria, con la dirección 32 (decimal) o $20 (hexadecimal)"
+  - "20 representa al 21avo byte en memoria, con la dirección 20 (decimal) o $14 (hexadecimal)"
+  responses:
+  - ...carry
+
+otherflags:
+  run-after-messages: |
+    set((m) => {
+      m.$end = true;
+      m.chat.stopBlock = null;
+      m.$canEdit = true;
+    });
+  messages:
+  - yep, está la Bandera de Cero, que todas las instrucciones la ponen en 1 cuando el resultado es cero
+  - sin eliminar el código actual, intenta sustraer 4 a [A], con la instrucción `SBC`
+  - funciona igual que `ADC`, pero resta en lugar de sumar
+  - luego de la instrucción, la Bandera de Cero debería estar en 1 😊
+  responses:
+  - ...carry

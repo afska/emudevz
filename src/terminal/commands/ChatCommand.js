@@ -66,7 +66,7 @@ export default class ChatCommand extends Command {
 				this._terminal.cancelSpeedFlag();
 				const link = await this._getEventLink(events);
 				this._goTo(link);
-			}
+			} else this._goTo(ChatScript.END_SECTION);
 		}
 
 		if (memory.winOnEnd) {
