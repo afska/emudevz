@@ -66,7 +66,7 @@ a4:
   - ¡correcto! ✔️
   - pero en realidad el procesador no es tonto
   - le notifica al programa que el valor no calzó bien
-  - cargando la Bandera de Acarreo en 1
+  - cargando la Bandera Carry en 1
   responses:
   - ¿qué es una bandera? 🏁 [flags]
 
@@ -83,7 +83,7 @@ flags:
 
 carry:
   messages:
-  - ahora puedes ver en el depurador que la Bandera de Acarreo está en 1
+  - ahora puedes ver en el depurador que la Bandera Carry está en 1
   responses:
   - (*) wow, ¿alguna otra bandera útil? [otherflags]
   - (*) momento, ¿todo este tiempo podrías haber estado escribiendo números en decimal? 😤 [decimal]
@@ -107,9 +107,9 @@ otherflags:
       m.$canEdit = true;
     });
   messages:
-  - yep, está la Bandera de Cero, que todas las instrucciones la ponen en 1 cuando el resultado es cero
+  - yep, está la Bandera Zero, que todas las instrucciones la ponen en 1 cuando el resultado es cero
   - sin eliminar el código actual, intenta sustraer 4 a [A], con la instrucción `SBC`
   - funciona igual que `ADC`, pero resta en lugar de sumar
-  - luego de la instrucción, la Bandera de Cero debería estar en 1 😊
+  - luego de la instrucción, la Bandera Zero debería estar en 1 😊
   responses:
   - ...carry
