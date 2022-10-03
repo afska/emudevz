@@ -5,6 +5,8 @@ import layouts from "./components/layouts";
 import NavBar from "./components/widgets/NavBar";
 
 class LevelScreen extends PureComponent {
+	$timeouts = [];
+
 	render() {
 		const { maxLevelId, chapter, level } = this.props;
 
@@ -22,25 +24,33 @@ class LevelScreen extends PureComponent {
 		);
 	}
 
-	onReady = (layout) => {
+	onReady = async (layout) => {
 		if (!layout) return;
 
 		const { level } = this.props;
 		level.$layout = layout;
 
-		setTimeout(() => {
-			const runningComponents = layout.instances;
-
-			_.forEach(runningComponents, (runningComponent, name) => {
-				const [, args] = level.ui.components[name];
-				runningComponent.initialize(args, level);
-			});
-
+		this.$timeouts.push(
 			setTimeout(() => {
-				layout.focus(level.ui.focus);
-			});
-		});
+				const runningComponents = layout.instances;
+
+				_.forEach(runningComponents, (runningComponent, name) => {
+					const [, args] = level.ui.components[name];
+					runningComponent.initialize(args, level);
+				});
+
+				this.$timeouts.push(
+					setTimeout(() => {
+						layout.focus(level.ui.focus);
+					})
+				);
+			})
+		);
 	};
+
+	componentWillUnmount() {
+		this.$timeouts.forEach((it) => clearTimeout(it));
+	}
 }
 
 export default LevelScreen;

@@ -20,6 +20,7 @@ const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
 const CANCELED = "canceled";
 const INTERRUPTED = "interrupted";
+const DISPOSED = "disposed";
 
 // Program interface:
 // - async run(args) -> void
@@ -34,6 +35,7 @@ export default class Terminal {
 		this._isWriting = false;
 		this._speedFlag = false;
 		this._stopFlag = false;
+		this._disposeFlag = false;
 
 		this._shell = new Shell(this);
 		this._currentProgram = null;
@@ -203,6 +205,10 @@ export default class Terminal {
 		this._xterm.clear();
 	}
 
+	dispose() {
+		this._disposeFlag = true;
+	}
+
 	get isExpectingInput() {
 		return this._input != null;
 	}
@@ -300,6 +306,8 @@ export default class Terminal {
 			this._stopFlag = false;
 			throw INTERRUPTED;
 		}
+
+		if (this._disposeFlag) throw DISPOSED;
 	}
 
 	_normalize(text, newline = NEWLINE) {
