@@ -22,7 +22,7 @@ question:
   - ¿qué pensás que pasaría si usáramos `ADC` para calcular 200 + 60?
   responses:
   - (*) [A] sería igual a 2️⃣ 6️⃣ 0️⃣ [a260]
-  - (*) [A] sería igual a 2️⃣ 5️⃣ 6️⃣ [a256]
+  - (*) [A] sería igual a 2️⃣ 5️⃣ 5️⃣ [a255]
   - (*) [A] sería igual a 4️⃣ [a4]
   - (*) lanzaría un error ⚠️ [error]
   - (*) ¿la CPU explota? 💥 [explodes]
@@ -35,7 +35,7 @@ a260:
   responses:
   - ...question
 
-a256:
+a255:
   messages:
   - eso tendría sentido, pero no es lo que sucede 👎
   - intenta de nuevo
