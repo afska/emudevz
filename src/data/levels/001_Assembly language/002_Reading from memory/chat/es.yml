@@ -38,7 +38,7 @@ tryit:
     set((m) => m.$canRun = true);
   messages:
   - sí, hay un $10 ya cargado en $4085
-  - ejecuta el código actual y mira qué ocurre
+  - ejecuta el código actual y mira qué ocurre ⏩
   events:
   - end [result]
 

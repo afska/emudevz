@@ -92,7 +92,7 @@ ldaexplanation:
   - 💸  todos los números con el prefijo $ están en notación hexadecimal
   - "🔢  cualquier cosa con el prefijo # es un valor numérico literal"
   - 🐏  cualquier otro número refiere a una ubicación de memoria
-  - ¡ahora ejecuta la siguiente instrucción!
+  - ¡ahora ejecuta la siguiente instrucción! ⏩
   events:
   - step [sta]
 
@@ -106,7 +106,7 @@ sta:
   - y como puedes ver, escribe el contenido de [A] en una ubicación de memoria
   - en este ejemplo, en la dirección $4070
   - así que ahora la celda $4070 del Visor de Memoria tiene un $01
-  - intenta ejecutar las instrucciones restantes 😊
+  - intenta ejecutar las instrucciones restantes ⏩
   events:
   - end [finish]
 

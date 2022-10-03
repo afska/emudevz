@@ -92,7 +92,7 @@ ldaexplanation:
   - 💸  any numbers prefixed with $ are in hexadecimal notation
   - "🔢  anything prefixed with # is a literal number value"
   - 🐏  any other number refers to a memory location
-  - now run the next instruction!
+  - now run the next instruction! ⏩
   events:
   - step [sta]
 
@@ -106,7 +106,7 @@ sta:
   - and as you can see, it writes the contents of [A] to a memory location
   - in this example, on the address $4070
   - so now the $4070 cell of the Memory Viewer has a $01
-  - try running the remaining instructions 😊
+  - try running the remaining instructions ⏩
   events:
   - end [finish]
 
