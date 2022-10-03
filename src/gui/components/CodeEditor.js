@@ -239,7 +239,7 @@ class CodeEditor extends PureComponent {
 }
 
 const mapStateToProps = ({ files, level }) => {
-	return { code: files.levels[level.instance.id] || "" };
+	return { code: files.levels[level.instance?.id] || "" };
 };
 const mapDispatchToProps = ({ files }) => ({
 	setCode: files.setCurrentLevelContent,
