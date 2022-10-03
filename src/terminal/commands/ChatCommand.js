@@ -153,7 +153,7 @@ export default class ChatCommand extends Command {
 			} catch (e) {
 				if (e !== "canceled") throw e;
 			} finally {
-				this._linkProvider.dispose();
+				this._linkProvider.end();
 			}
 		}
 
