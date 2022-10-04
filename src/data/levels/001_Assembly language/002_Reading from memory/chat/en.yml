@@ -1,7 +1,7 @@
 ---
 main:
   run: |
-    if (m.$end) $.goTo("refactor");
+    if (m.$end) $.goTo("exercise");
     else {
       set((m) => {
         m.chat.stopBlock = locales.get("not_now");
@@ -79,11 +79,11 @@ iknow:
   - I know, I said [A] instead of [X]
   - "`ADC` only works with [A] 🤷"
   - hmm...
-  - ...refactor
+  - ...exercise
   responses:
-  - ...refactor
+  - ...exercise
 
-refactor:
+exercise:
   messages:
   - let's refactor the code 💡
   - make it so it uses `ADC` instead of 3 incrementing instructions

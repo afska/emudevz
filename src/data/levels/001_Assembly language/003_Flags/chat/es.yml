@@ -1,7 +1,7 @@
 ---
 main:
   run: |
-    if (m.$end) $.goTo("otherflags");
+    if (m.$end) $.goTo("exercise");
     else {
       set((m) => {
         m.chat.stopBlock = locales.get("not_now");
@@ -85,7 +85,7 @@ carry:
   messages:
   - ahora puedes ver en el depurador que la Bandera Carry está en 1
   responses:
-  - (*) wow, ¿alguna otra bandera útil? [otherflags]
+  - (*) wow, ¿alguna otra bandera útil? [exercise]
   - (*) momento, ¿todo este tiempo podrías haber estado escribiendo números en decimal? 😤 [decimal]
 
 decimal:
@@ -99,7 +99,7 @@ decimal:
   responses:
   - ...carry
 
-otherflags:
+exercise:
   run-after-messages: |
     set((m) => {
       m.$end = true;

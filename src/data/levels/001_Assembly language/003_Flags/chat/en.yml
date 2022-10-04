@@ -1,7 +1,7 @@
 ---
 main:
   run: |
-    if (m.$end) $.goTo("otherflags");
+    if (m.$end) $.goTo("exercise");
     else {
       set((m) => {
         m.chat.stopBlock = locales.get("not_now");
@@ -85,7 +85,7 @@ carry:
   messages:
   - you can see now in the debugger that the Carry Flag is set to 1
   responses:
-  - (*) wow, any other useful flags? [otherflags]
+  - (*) wow, any other useful flags? [exercise]
   - (*) wait, all this time you could have been writing numbers in decimal? 😤 [decimal]
 
 decimal:
@@ -99,7 +99,7 @@ decimal:
   responses:
   - ...carry
 
-otherflags:
+exercise:
   run-after-messages: |
     set((m) => {
       m.$end = true;
