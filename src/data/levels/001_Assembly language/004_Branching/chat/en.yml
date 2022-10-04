@@ -10,5 +10,97 @@ main:
       });
     }
   messages:
-  - coming soon
+  - so far, we only ran programs without any branching logic
+  - let's change that
+  - 6502 assembly has multiple branching instructions 🌲
+  - all of which branch on whether certain flags are set or not
+  responses:
+  - (*) 6502 what? 🤔 [asm6502]
+  - ok how do I branch [how]
+
+asm6502:
+  messages:
+  - that's the name of the NEEES processor, "6502"
+  - each assembly language targets one specific CPU
+  - with its own set of instructions
+  - so, we're writing "6502 assembly" 🙂
+  responses:
+  - ...main
+
+how:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - we'll be looking at `BNE`
+  - ("Branch on Not Equal")
+  - run the first 5 instructions to see what they do ⏩
+  events:
+  - step [step1]
+
+step1:
+  messages: []
+  events:
+  - step [step2]
+
+step2:
+  messages: []
+  events:
+  - step [step3]
+
+step3:
+  messages: []
+  events:
+  - step [step4]
+
+step4:
+  messages: []
+  events:
+  - step [step5]
+
+step5:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+  - here's what happened
+  - "`CPX #3` sets the Zero Flag if [X] equals 3"
+  - "`BNE @decrement` jumps to that label if the Zero Flag is not set"
+  - since [X] has a 7, then Z is still 0
+  - and because Z is 0, `BNE @decrement` jumped 🦘
+  - ([X] and 3 were "Not Equal", hence the name)
+  responses:
+  - oh, I see [oh]
+
+oh:
+  run: |
+    set((m) => m.$canRun = true);
+  messages:
+  - now, run the rest of the code ⏩
+  events:
+  - end [exercise]
+
+exercise:
+  run-after-messages: |
+    set((m) => {
+      m.$end = true;
+      m.chat.stopBlock = null;
+      m.$canEdit = true;
+    });
+  messages:
+  - the opposite of `BNE` is `BEQ`, which jumps when the numbers are equal
+  - let's practice 👾
+  - delete the current code
+  - and build a program that reads the value of $4080
+  - if it has a 7, writes $EE to $40BF
+  - if not, writes $AA to $40BF
+  - then, run the `test` command
+  responses:
+  - wait, how do I test this? 🧪 [testing]
+
+testing:
+  messages:
+  - I set up a random number generator 🔢
+  - every time you change/run your code, it'll set either a 7 or another random byte on $4080
+  - with 50% of chances each
+  - so when it's 7, your code should write $EE
+  - and when it's not, $AA should be written
   responses: []

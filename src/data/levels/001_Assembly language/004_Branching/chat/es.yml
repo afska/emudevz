@@ -10,5 +10,97 @@ main:
       });
     }
   messages:
-  - coming soon
+  - hasta ahora, solo corrimos programas sin bifurcaciones
+  - vamos a cambiar eso
+  - el lenguaje ensamblador para 6502 tiene multiples instrucciones para bifurcar 🌲
+  - todas ellas saltan cuando ciertas banderas están activadas o no
+  responses:
+  - (*) ¿"para 6502"? 🤔 [asm6502]
+  - bueno y cómo salto [how]
+
+asm6502:
+  messages:
+  - ese es el nombre del procesador de la NEEES, "6502"
+  - cada lenguaje ensamblador está diseñado para una CPU específica
+  - con su propio conjunto de instrucciones
+  - así que, estamos escribiendo "lenguaje ensamblador para 6502" 🙂
+  responses:
+  - ...main
+
+how:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - vamos a analizar `BNE`
+  - ("Branch on Not Equal")
+  - corre las primeras 5 instrucciones para ver qué hacen ⏩
+  events:
+  - step [step1]
+
+step1:
+  messages: []
+  events:
+  - step [step2]
+
+step2:
+  messages: []
+  events:
+  - step [step3]
+
+step3:
+  messages: []
+  events:
+  - step [step4]
+
+step4:
+  messages: []
+  events:
+  - step [step5]
+
+step5:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+  - esto es lo que pasó
+  - "`CPX #3` activa la Bandera Zero si [X] es igual a 3"
+  - "`BNE @decrement` salta a esa etiqueta si la Bandera Zero no está activada"
+  - como [X] tiene un 7, entonces Z sigue siendo 0
+  - y como Z es 0, `BNE @decrement` saltó 🦘
+  - ([X] y 3 eran "Not Equal", por eso el nombre)
+  responses:
+  - ah, ya veo [oh]
+
+oh:
+  run: |
+    set((m) => m.$canRun = true);
+  messages:
+  - ahora, corre el resto del código ⏩
+  events:
+  - end [exercise]
+
+exercise:
+  run-after-messages: |
+    set((m) => {
+      m.$end = true;
+      m.chat.stopBlock = null;
+      m.$canEdit = true;
+    });
+  messages:
+  - el opuesto de `BNE` es `BEQ`, que salta cuando los números son iguales
+  - vamos a practicar 👾
+  - borra el código actual
+  - y construye un programa que lea el valor de $4080
+  - si tiene un 7, escribe $EE en $40BF
+  - si no, escribe $AA en $40BF
+  - luego, ejecuta el comando `test`
+  responses:
+  - momento, ¿cómo pruebo esto? 🧪 [testing]
+
+testing:
+  messages:
+  - configuré un generador de números aleatorios 🔢
+  - cada vez que cambies/corras tu código, escribirá un 7 o un byte aleatorio en $4080
+  - con 50% de probabilidades cada cosa
+  - así que cuando sea 7, tu código debería escribir $EE
+  - y cuando no, $AA tendría que ser escrito
   responses: []

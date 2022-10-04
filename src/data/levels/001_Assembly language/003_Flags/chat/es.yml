@@ -111,5 +111,6 @@ exercise:
   - sin eliminar el código actual, intenta sustraer 4 a [A], con la instrucción `SBC`
   - funciona igual que `ADC`, pero resta en lugar de sumar
   - luego de la instrucción, la Bandera Zero debería estar en 1 😊
+  - cuando esté listo, ejecuta el comando `test`
   responses:
   - ...carry

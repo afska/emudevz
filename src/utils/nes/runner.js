@@ -38,6 +38,9 @@ export default {
 		if (preCode != null) {
 			try {
 				const preCpu = this.create(preCode).cpu;
+				let randomByte = Math.floor(Math.random() * 255);
+				if (randomByte === 7) randomByte++;
+				preCpu.memory.writeAt(0x4000, Math.random() < 0.5 ? 7 : randomByte);
 				preCpu.run();
 				for (let i = 0; i < 0xffff; i++)
 					cpu.memory.writeAt(i, preCpu.memory.readAt(i));

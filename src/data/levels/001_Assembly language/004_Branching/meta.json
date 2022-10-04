@@ -16,7 +16,7 @@
 			"Bottom": [
 				"cpu",
 				{
-					"delay": 500
+					"delay": 250
 				}
 			],
 			"Top": [
@@ -33,6 +33,7 @@
 		"focus": "Left"
 	},
 	"test": {
-		"context": "asm"
+		"context": "asm",
+		"precode": "pre.asm"
 	}
 }

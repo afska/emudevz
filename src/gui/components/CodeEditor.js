@@ -232,7 +232,6 @@ class CodeEditor extends PureComponent {
 		if (!this.ref) return;
 
 		setTimeout(() => {
-			window.yata = true;
 			lineHighlighter.highlightLine(this.ref, this.props.code, line);
 		});
 	}

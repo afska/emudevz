@@ -40,7 +40,7 @@ export default {
 				const { lineNumber } = nonLabel.line;
 				const { source } = nonLabel;
 				throw new Error(
-					`Unable to generate hex for line ${lineNumber} "${source}".`
+					`Assembly Error: Unable to generate hex for line ${lineNumber} "${source}".`
 				);
 			}
 			for (let byte of nonLabel._bytes) hex.push(byte);
