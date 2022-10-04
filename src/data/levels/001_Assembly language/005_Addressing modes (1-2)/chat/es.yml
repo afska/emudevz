@@ -11,4 +11,6 @@ main:
     }
   messages:
   - coming soon
+  - part of the level is available in english though
+  - try switching the language in the home screen
   responses: []

@@ -33,7 +33,8 @@
 		"focus": "Left"
 	},
 	"test": {
-		"context": "asm"
+		"context": "asm",
+		"precode": "pre.asm"
 	},
 	"initialMemory": {
 		"content": {

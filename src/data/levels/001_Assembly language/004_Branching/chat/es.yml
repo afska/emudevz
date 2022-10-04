@@ -80,6 +80,7 @@ oh:
 
 exercise:
   run-after-messages: |
+    level.fillContentFromTemp();
     set((m) => {
       m.$end = true;
       m.chat.stopBlock = null;
@@ -89,7 +90,8 @@ exercise:
   messages:
   - el opuesto de `BNE` es `BEQ`, que salta cuando los números son iguales
   - vamos a practicar 👾
-  - construye un programa que lea el valor de $4080
+  - borra el código actual
+  - y construye un programa que lea el valor de $4080
   - si tiene un 7, escribe $EE en $40BF
   - si no, escribe $AA en $40BF
   - luego, ejecuta el comando `test`

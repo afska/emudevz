@@ -235,7 +235,7 @@ export default class CPUDebugger extends PureComponent {
 				placement="top"
 				show={isPC ? true : undefined}
 				overlay={
-					<Tooltip>
+					<Tooltip style={isPC ? { opacity: 0.75 } : {}}>
 						{isPC && (
 							<span>
 								<strong className={styles.name} style={PC_STYLE}>
