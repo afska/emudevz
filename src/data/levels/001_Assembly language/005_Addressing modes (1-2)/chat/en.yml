@@ -1,0 +1,25 @@
+---
+main:
+  run: |
+    if (m.$end) $.goTo("exercise");
+    else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+    }
+  messages:
+  - if you didn't notice, all instructions can take one or zero arguments
+  - and one compiled instruction can occupy 1, 2, or 3 bytes
+  - "`INC` takes no arguments, so it's only 1 byte"
+  - "`LDA #$04` takes 1 byte as argument, so it's 2-byte long"
+  - "`LDA $4080` takes a 2-byte value as argument, so it compiles to 3 bytes"
+  responses:
+  - why are you telling me that? [why]
+
+why:
+  messages:
+  - there are various ways to refer to these arguments
+  - and they're called addressing modes
+  responses: []
