@@ -34,5 +34,10 @@
 	},
 	"test": {
 		"context": "asm"
+	},
+	"initialMemory": {
+		"content": {
+			"useTempContent": true
+		}
 	}
 }

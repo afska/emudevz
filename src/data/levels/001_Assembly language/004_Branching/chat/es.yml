@@ -84,12 +84,12 @@ exercise:
       m.$end = true;
       m.chat.stopBlock = null;
       m.$canEdit = true;
+      m.content.useTempContent = false;
     });
   messages:
   - el opuesto de `BNE` es `BEQ`, que salta cuando los números son iguales
   - vamos a practicar 👾
-  - borra el código actual
-  - y construye un programa que lea el valor de $4080
+  - construye un programa que lea el valor de $4080
   - si tiene un 7, escribe $EE en $40BF
   - si no, escribe $AA en $40BF
   - luego, ejecuta el comando `test`

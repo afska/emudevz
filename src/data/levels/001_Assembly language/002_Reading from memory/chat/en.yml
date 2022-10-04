@@ -70,10 +70,12 @@ result:
 
 iknow:
   run-after-messages: |
+    level.fillContentFromTemp();
     set((m) => {
       m.$end = true;
       m.chat.stopBlock = null;
       m.$canEdit = true;
+      m.content.useTempContent = false;
     });
   messages:
   - I know, I said [A] instead of [X]

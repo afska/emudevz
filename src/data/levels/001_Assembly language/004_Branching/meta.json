@@ -35,5 +35,10 @@
 	"test": {
 		"context": "asm",
 		"precode": "pre.asm"
+	},
+	"initialMemory": {
+		"content": {
+			"useTempContent": true
+		}
 	}
 }

@@ -15,15 +15,22 @@ export default class Level {
 		this.tests = tests;
 		this.media = media;
 
-		this.memory = {
-			chat: {
-				isOpen: false,
-				sectionName: ChatScript.INITIAL_SECTION,
-				history: [],
-				winOnEnd: false,
-				stopBlock: null,
+		this.memory = _.merge(
+			{
+				chat: {
+					isOpen: false,
+					sectionName: ChatScript.INITIAL_SECTION,
+					history: [],
+					winOnEnd: false,
+					stopBlock: null,
+				},
+				content: {
+					useTempContent: false,
+					temp: "",
+				},
 			},
-		};
+			this.initialMemory
+		);
 		this.$layout = null;
 	}
 
@@ -32,7 +39,25 @@ export default class Level {
 	}
 
 	get content() {
-		return store.getState().files.levels[this.id] || "";
+		return this.memory.content.useTempContent
+			? this.memory.content.temp
+			: store.getState().files.levels[this.id] || "";
+	}
+
+	set content(value) {
+		if (this.memory.content.useTempContent)
+			this.setMemory((memory) => {
+				memory.content.temp = value;
+			});
+		else store.dispatch.files.setCurrentLevelContent(value);
+	}
+
+	fillContentFromTemp() {
+		const content = store.getState().files.levels[this.id] || "";
+		const tempContent = this.memory.content.temp;
+
+		if (_.isEmpty(content))
+			store.dispatch.files.setCurrentLevelContent(tempContent);
 	}
 
 	setMemory(change) {

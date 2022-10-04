@@ -67,7 +67,7 @@ class CodeEditor extends PureComponent {
 
 		const initialCode = this._level?.code[initialCodeFile];
 		if (initialCode != null) this._setCode(initialCode || "");
-		else this._compile(this.props.code);
+		else this._compile(this.props.getCode());
 
 		this.setState({
 			_isInitialized: true,
@@ -80,7 +80,7 @@ class CodeEditor extends PureComponent {
 	}
 
 	render() {
-		const { code } = this.props;
+		const { getCode } = this.props;
 		const {
 			_isInitialized,
 			language,
@@ -131,7 +131,7 @@ class CodeEditor extends PureComponent {
 
 				<CodeMirror
 					className={styles.editor}
-					value={code}
+					value={getCode()}
 					width="100%"
 					height="100%"
 					theme={oneDark}
@@ -224,7 +224,7 @@ class CodeEditor extends PureComponent {
 		if (!this.ref) return;
 
 		setTimeout(() => {
-			errorMarker.markError(this.ref, this.props.code, start, end);
+			errorMarker.markError(this.ref, this.props.getCode(), start, end);
 		});
 	}
 
@@ -232,18 +232,21 @@ class CodeEditor extends PureComponent {
 		if (!this.ref) return;
 
 		setTimeout(() => {
-			lineHighlighter.highlightLine(this.ref, this.props.code, line);
+			lineHighlighter.highlightLine(this.ref, this.props.getCode(), line);
 		});
 	}
 }
 
-const mapStateToProps = ({ files, level }) => {
-	return { code: files.levels[level.instance?.id] || "" };
+const mapStateToProps = ({ level }) => {
+	return {
+		hasLevel: true,
+		getCode: () => level.instance.content,
+		setCode: (code) => {
+			level.instance.content = code;
+		},
+	};
 };
-const mapDispatchToProps = ({ files }) => ({
-	setCode: files.setCurrentLevelContent,
-});
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
+export default connect(mapStateToProps, null, null, {
 	forwardRef: true,
 })(CodeEditor);

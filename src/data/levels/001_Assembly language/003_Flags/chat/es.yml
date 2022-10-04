@@ -101,10 +101,12 @@ decimal:
 
 exercise:
   run-after-messages: |
+    level.fillContentFromTemp();
     set((m) => {
       m.$end = true;
       m.chat.stopBlock = null;
       m.$canEdit = true;
+      m.content.useTempContent = false;
     });
   messages:
   - yep, está la Bandera Zero, que todas las instrucciones la ponen en 1 cuando el resultado es cero
