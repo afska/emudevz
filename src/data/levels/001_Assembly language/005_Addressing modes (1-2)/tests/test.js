@@ -1,18 +1,44 @@
 const { compile } = $;
 
-it("when $4080 is 7, it writes $EE to $40BF", () => {
-	const cpu = compile().cpu;
-	cpu.memory.writeAt(0x4080, 7);
-	cpu.run();
-	cpu.memory.readAt(0x40bf).should.equal(0xee);
+let instructions, bytes, cpu;
+beforeEach(() => {
+	const compilation = compile();
+	bytes = compilation.bytes;
+	compilation.cpu.run();
 });
 
-it("when $4080 is not 7, it writes $AA to $40BF", () => {
-	const non7Bytes = [...Array(255).keys()].filter((it) => it !== 7);
-	non7Bytes.forEach((byte) => {
-		const cpu = compile().cpu;
-		cpu.memory.writeAt(0x4080, byte);
-		cpu.run();
-		cpu.memory.readAt(0x40bf).should.equal(0xaa);
-	});
+it("the assembled code is OK", () => {
+	bytes.should.eql(
+		new Uint8Array([
+			0xe8,
+			0xa9,
+			0x08,
+			0xad,
+			0x02,
+			0xc0,
+			0xa5,
+			0x15,
+			0xd0,
+			0x02,
+			0xc8,
+			0xc8,
+			0xa9,
+			0x3c,
+			0x8d,
+			0x80,
+			0x40,
+			0xa9,
+			0x40,
+			0x8d,
+			0x81,
+			0x40,
+			0x6c,
+			0x80,
+			0x40,
+			0x8c,
+			0x01,
+			0x10,
+			0xe8,
+		])
+	);
 });

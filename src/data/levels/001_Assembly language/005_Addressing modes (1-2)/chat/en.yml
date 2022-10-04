@@ -10,7 +10,7 @@ main:
       });
     }
   messages:
-  - if you didn't notice, all instructions can take one or zero arguments
+  - in case you didn't notice, all instructions can take one or zero arguments
   - and one compiled instruction can occupy 1, 2, or 3 bytes
   responses:
   - why are you telling me this? [why]
@@ -77,7 +77,7 @@ zeropage:
   - that's the "Zero Page" addressing mode
   - where the argument is a <partial> memory address
   responses:
-  - it looks like the same thing [samething]
+  - it looks like the same thing 😓 [samething]
 
 samething:
   run-after-messages: |
@@ -95,17 +95,67 @@ relative:
     set((m) => m.$canRun = false);
   messages:
   - branching instructions use the "Relative" addressing mode
-  - these instructions take a single byte, which is used as an offset from the following instruction
+  - these take a single byte, which is used as an offset from the following instruction
   - look at the compiled code of `BNE @label` in $4028
-  - $D0 is the opcode of `BNE`, and the $02 from $4029 is the jump offset
+  - $D0 is the opcode of `BNE`, and the $02 from $4029 is the jump offset 🦘
   - "this means that [PC] will jump to $402A + 2: directly into $402C, where @label starts"
   - (it'll skip the bytes of the two `INY`s)
   responses:
   - interesting, so that's how branching works [whoa]
 
 whoa:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
   messages:
-  - last one is a bit tricky
-  - I'm gonna explain it beforehand
-  - coming soon!
+  - last one is a bit tricky 😶
+  - "\"Indirect\" addressing uses an absolute address (let's say <J>) to look up another absolute address (let's say <K>)"
+  - the content of <J> gives the least significant byte of <K>
+  - and the following byte (the content of <J>+1) gives the most significant byte of <K>
+  - run the example ⏩
+  events:
+  - step [step1]
+
+step1:
+  messages: []
+  events:
+  - step [step2]
+
+step2:
+  messages: []
+  events:
+  - step [step3]
+
+step3:
+  messages: []
+  events:
+  - step [step4]
+
+step4:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - now $4080 contains $21, and $4081 contains $40
+  - so, in this case, `JMP ($4080)` will unconditionally jump to $4021"
+  - creating an infinite loop ⏩
+  events:
+  - step [exercise]
+
+exercise:
+  run-after-messages: |
+    level.fillContentFromTemp();
+    set((m) => {
+      m.$end = true;
+      m.chat.stopBlock = null;
+      m.$canEdit = true;
+      m.content.useTempContent = false;
+    });
+  messages:
+  - there we go...
+  - as an exercise, modify the code by adding an `STY $1001` instruction at the end
+  - then an `INX` instruction
+  - but make the indirect `JMP` skip the `STY` 👀
+  - you'll need to look the address of the last `INX` inside the compiled code
+  - when you finish, run the `test` command
   responses: []
