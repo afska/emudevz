@@ -25,7 +25,8 @@
 					"language": "asm",
 					"initialCodeFile": "content.asm",
 					"readOnly": true,
-					"action": "step"
+					"action": "step",
+					"onlyEnableActionWhen": "m.$canRun"
 				}
 			]
 		},
