@@ -334,6 +334,8 @@ export default class Terminal {
 		parts = this._highlight(parts, /(<[^>]+>)/);
 		parts = this._highlight(parts, /(\[[^\]]+\])/);
 		parts = this._highlight(parts, /(#?\$[0-9a-fA-F]+)/);
+		parts = this._highlight(parts, /(\b[0-9]+\b)/);
+		parts = this._highlight(parts, /(#[0-9]+)/);
 		return parts;
 	}
 
