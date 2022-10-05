@@ -81,7 +81,8 @@ export default class Terminal {
 		if (withAccents) {
 			const parts = this._highlightAccents(text);
 			for (let part of parts) {
-				if (part.isHighlighted) await this.write(part.text, theme.ACCENT);
+				if (part.isHighlighted)
+					await this.write(part.text, theme.ACCENT, interval);
 				else await this.write(part.text, style, interval);
 			}
 			return;
