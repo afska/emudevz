@@ -42,7 +42,7 @@ zero2:
   - que es el resultado de $60 + [X]
   - nota que hackeé tu Visor de Memoria para que muestre la página cero
   - puedes comprobarlo tú 👀
-  - corre dos instrucciones más ⏩
+  - corre las siguientes dos instrucciones ⏩
   events:
   - step [zero3]
 

@@ -42,7 +42,7 @@ zero2:
   - which is the result of $60 + [X]
   - note that I hacked your Memory Viewer to show the zero page
   - you can check it out yourself 👀
-  - run the two more instructions ⏩
+  - run the next two instructions ⏩
   events:
   - step [zero3]
 
@@ -66,7 +66,7 @@ wrap:
   messages:
   - the address just wraps around 🎁
   - let me show you
-  - run the two more instructions ⏩
+  - run two more instructions ⏩
   events:
   - step [wrap1]
 
