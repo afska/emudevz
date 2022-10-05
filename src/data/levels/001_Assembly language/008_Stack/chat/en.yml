@@ -1,0 +1,127 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.winOnEnd = true;
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+    });
+    bus.emit("memory-view", 0x0);
+  messages:
+  - now, the most insane ones 😓
+  - let's start with "Indexed Indirect"
+  - it's like a cross between "Zero Page,X" and "Indirect"
+  - basically, you take the zero page address, add the value of [X] to it
+  - then use that to look up a two-byte address
+  responses:
+  - this is starting to get obscure [what]
+
+what:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - I know 😅 🔫
+  - let's try an example
+  - run the first 4 instructions ⏩
+  events:
+  - step [step1]
+
+step1:
+  messages: []
+  events:
+  - step [step2]
+
+step2:
+  messages: []
+  events:
+  - step [step3]
+
+step3:
+  messages: []
+  events:
+  - step [step4]
+
+step4:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - we've set up memory for indirect addressing
+  - in the address $0003, we have an $80
+  - in the address $0004, we have a $40
+  - now I'll switch the Memory Viewer to the usual section
+  - run the other 3 instructions ⏩
+  events:
+  - step [step5]
+
+step5:
+  run: |
+    bus.emit("memory-view", 0x4020);
+  messages: []
+  events:
+  - step [step6]
+
+step6:
+  messages: []
+  events:
+  - step [step7]
+
+step7:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+  - we loaded a $FA in [A] and a $02 in [X]
+  - "`STA ($01,X)` can be interpreted as something like `STA ($01+X)`"
+  - so if we add [X], we'd have `STA ($0003)`
+  - from here, things proceed like standard "Indirect" addressing
+  - this end up writing the value of [A] to $4080
+  responses:
+  - (*) what was that? 🤨 [whatwasthat]
+  - makes total sense 👍 [makessense]
+
+whatwasthat:
+  messages:
+  - remember the "Indirect" mode?
+  - it builds a address by reading another address and its consecutive byte
+  - in this case, it read an $80 from $0003 and a $40 from $0004
+  - it used the former as <least significant byte>
+  - and the latter as <most significant byte>
+  - so the resulting new address was $4080 ✨
+  responses:
+  - ...step7
+
+makessense:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - let's talk about "Indirect Indexed"
+  - last one, I promise 🤞
+  - instead of adding [X] to the address <before> evaluating the indirection
+  - it adds [Y] right <after> doing it
+  - run the remaining code ⏩
+  - and keep in mind there's a preloaded $BE in $4085
+  events:
+  - step [step8]
+
+step8:
+  messages: []
+  events:
+  - step [step9]
+
+step9:
+  messages:
+  - that $BE was loaded into [A] 🤯
+  - as we saw earlier, in our current setup ($0003) evaluates to $4080
+  - the instruction just added [Y] to it, so the final address was $4085
+  responses:
+  - I think I'm burnt out, can we skip the practice? 😓 [skip]
+
+skip:
+  messages:
+  - sure, you won't see this too much anyway
+  - you'll code an emulator
+  - so you need to build an <interpreter> for these things
+  - not the things themselves 😉
+  responses:
+  - gotcha... [end]

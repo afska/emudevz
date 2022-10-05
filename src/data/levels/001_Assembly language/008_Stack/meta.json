@@ -1,0 +1,39 @@
+{
+	"name": {
+		"en": "Stack",
+		"es": "Pila"
+	},
+	"ui": {
+		"layout": "triple",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat",
+					"availableCommands": ["chat", "help", "clear"]
+				}
+			],
+			"Bottom": [
+				"cpu",
+				{
+					"delay": 250
+				}
+			],
+			"Top": [
+				"code",
+				{
+					"language": "asm",
+					"initialCodeFile": "content.asm",
+					"readOnly": true,
+					"action": "step",
+					"onlyEnableActionWhen": "m.$canRun",
+					"onlyEnableEditionWhen": "m.$canEdit"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "asm"
+	}
+}

@@ -2,6 +2,7 @@ import NES from "nes-emu";
 import assembler from "./assembler";
 
 const CODE_ADDRESS = 0x4020;
+const TIMEOUT = 3000;
 
 export default {
 	CODE_ADDRESS,
@@ -52,6 +53,8 @@ export default {
 		bytes.forEach((byte, i) => memory.writeAt(CODE_ADDRESS + i, byte));
 
 		cpu.run = () => {
+			const startTime = Date.now();
+
 			while (true) {
 				cpu.step();
 
@@ -60,6 +63,8 @@ export default {
 				)?.lineNumber;
 
 				if (!lineNumber) break;
+				if (Date.now() - startTime > TIMEOUT)
+					throw new Error("Execution timed out (infinite loop?)");
 			}
 		};
 
