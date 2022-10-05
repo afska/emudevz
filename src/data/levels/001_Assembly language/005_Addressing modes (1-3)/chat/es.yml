@@ -108,7 +108,7 @@ whoa:
     set((m) => m.$canRun = true);
   messages:
   - la última es un poco complicada 😶
-  - "el modo de direccionamiento \"Indirect\" usa una dirección absoluta (digamos <J>) para buscar otra dirección absoluta (digamos <K>)"
+  - "el modo de direccionamiento \"Indirect\" lee una dirección absoluta (digamos <J>) para construir otra dirección absoluta (digamos <K>)"
   - el contenido de <J> da el byte menos significativo de <K>
   - y el siguiente byte (el contenido de <J>+1) da el byte más significativo de <K>
   - corre el ejemplo ⏩

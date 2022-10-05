@@ -1,129 +1,127 @@
 ---
 main:
   run: |
-    if (m.$end) $.goTo("exercise");
-    else {
-      set((m) => {
-        m.chat.stopBlock = locales.get("not_now");
-        m.$canRun = false;
-        m.$canEdit = false;
-      });
-      bus.emit("memory-view", 0x0);
-    }
-  messages: []
-  events:
-  - compiled [lda]
-
-lda:
-  run: |
-    bus.emit("step");
-  run-after-messages: |
-    set((m) => m.$canRun = true);
-  messages:
-  - aquí es donde el direccionamiento se pone interesante 🧐
-  - en el modo de direccionamiento "Zero Page,X", se da una dirección de la página cero
-  - y luego se suma el valor de [X]
-  - ejecuta las primeras dos instrucciones ⏩
-  events:
-  - step [zero1]
-
-zero1:
-  messages: []
-  events:
-  - step [zero2]
-
-zero2:
-  run: |
-    set((m) => m.$canRun = false);
-  run-after-messages: |
-    set((m) => m.$canRun = true);
-  messages:
-  - esto terminó escribiendo $CD (el contenido de [A]) en $0062
-  - que es el resultado de $60 + [X]
-  - nota que hackeé tu Visor de Memoria para que muestre la página cero
-  - puedes comprobarlo tú 👀
-  - corre las siguientes dos instrucciones ⏩
-  events:
-  - step [zero3]
-
-zero3:
-  messages: []
-  events:
-  - step [zero4]
-
-zero4:
-  run: |
-    set((m) => m.$canRun = false);
-  messages:
-  - ¿ves? la <misma> instrucción (`STA $60,X`) tuvo dos resultados <diferentes> 🤯
-  - como [X] ahora es 3, escribió en $0063
-  responses:
-  - ¿qué pasa si el resultado de la suma es más grande que un byte? [wrap]
-
-wrap:
-  run-after-messages: |
-    set((m) => m.$canRun = true);
-  messages:
-  - la dirección da la vuelta 🎁
-  - déjame mostrarte
-  - ejecuta dos instrucciones más ⏩
-  events:
-  - step [wrap1]
-
-wrap1:
-  messages: []
-  events:
-  - step [wrap2]
-
-wrap2:
-  run: |
-    set((m) => m.$canRun = false);
-  run-after-messages: |
-    set((m) => m.$canRun = true);
-    bus.emit("memory-view", 0x4020);
-  messages:
-  - como viste, escribió $CD en $05
-  - el próximo modo de direccionamiento se llama "Absolute,X"
-  - es la versión absoluta de "Zero Page,X"
-  - voy a cambiar el Visor de Memoria de vuelta a $4020 para que puedas verlo
-  - termina de correr el código ⏩
-  events:
-  - step [rest1]
-
-rest1:
-  messages: []
-  events:
-  - step [rest2]
-
-rest2:
-  messages:
-  - esto ha escrito $CD en $4052 😋
-  - ($4050 + el contenido de [X])
-  responses:
-  - ¡muy bueno! ¿puedo usar [Y] en vez de [X]? [yvariants]
-
-yvariants:
-  messages:
-  - sí, hay equivalentes de estos modos que usan [Y]
-  - no todas las instrucciones los soportan, sin embargo 👎
-  - se llaman "Zero Page,Y" y "Absolute,Y"
-  - ¿quieres hacer algo divertido?
-  responses:
-  - mmm... ¿sí? [exercise]
-
-exercise:
-  run-after-messages: |
-    level.fillContentFromTemp();
     set((m) => {
-      m.$end = true;
-      m.chat.stopBlock = null;
-      m.$canEdit = true;
-      m.content.useTempContent = false;
+      m.chat.winOnEnd = true;
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
     });
-    {{Bottom}}.setDelay(0);
+    bus.emit("memory-view", 0x0);
   messages:
-  - borra todo el código
-  - construye un programa que grite por la memoria 😱
-  - eso significa, que escriba $AA exactamente 64 veces desde $4080 hasta $40BF
-  - como siempre, cuando esté listo, ejecuta el comando `test`
-  responses: []
+  - ahora, los más dementes 😓
+  - empecemos con "Indexed Indirect"
+  - es como una mezcla entre "Zero Page,X" e "Indirect"
+  - básicamente, tomas la dirección de la página cero, sumas el valor de [X] a ella
+  - luego usas eso para buscar una dirección de dos bytes
+  responses:
+  - esto está empezando a volverse oscuro [what]
+
+what:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - lo sé 😅 🔫
+  - probemos con un ejemplo
+  - corre las primeras 4 instrucciones ⏩
+  events:
+  - step [step1]
+
+step1:
+  messages: []
+  events:
+  - step [step2]
+
+step2:
+  messages: []
+  events:
+  - step [step3]
+
+step3:
+  messages: []
+  events:
+  - step [step4]
+
+step4:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - hemos configurado la memoria para direccionamiento indirecto
+  - en la dirección $0003, tenemos un $80
+  - en la dirección $0004, tenemos un $40
+  - ahora voy a cambiar el Visor de Memoria a la sección habitual
+  - ejecuta las otras 3 instrucciones ⏩
+  events:
+  - step [step5]
+
+step5:
+  run: |
+    bus.emit("memory-view", 0x4020);
+  messages: []
+  events:
+  - step [step6]
+
+step6:
+  messages: []
+  events:
+  - step [step7]
+
+step7:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+  - cargamos un $FA en [A] y un $02 en [X]
+  - "`STA ($01,X)` puede ser interpretado como `STA ($01+X)`"
+  - por lo que si sumamos [X], obtendríamos `STA ($0003)`
+  - desde aquí, las cosas proceden como un direccionamiento "Indirect" estándar
+  - esto termina escribiendo el valor de [A] en $4080
+  responses:
+  - (*) ¿cómo es eso? 🤨 [whatwasthat]
+  - tiene todo el sentido 👍 [makessense]
+
+whatwasthat:
+  messages:
+  - ¿recuerdas el modo "Indirect"?
+  - construye una dirección leyendo otra dirección y su byte consecutivo
+  - en este caso, leyó un $80 de $0003 y un $40 de $0004
+  - usó el primero como el <byte menos significativo>
+  - y el último como el <byte más significativo>
+  - por lo que la dirección resultante fue $4080 ✨
+  responses:
+  - ...step7
+
+makessense:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - hablemos de "Indirect Indexed"
+  - el último, lo prometo 🤞
+  - en lugar de sumar [X] a la dirección <antes> de evaluar la indirección
+  - suma [Y] justo <después> de hacerlo
+  - ejecuta el código restante ⏩
+  - y ten en mente que hay un $BE precargado en $4085
+  events:
+  - step [step8]
+
+step8:
+  messages: []
+  events:
+  - step [step9]
+
+step9:
+  messages:
+  - ese $BE fue cargado en [A] 🤯
+  - como vimos anteriormente, en nuestra configuración actual ($0003) evalúa a $4080
+  - la instrucción solo sumó [Y] a eso, así que la dirección final fue $4085
+  responses:
+  - creo que me estresé, ¿podemos saltear la práctica? 😓 [skip]
+
+skip:
+  messages:
+  - seguro, no vas a ver mucho esto de todas formas
+  - vas a programar un emulador
+  - por lo que necesitas construir un <intérprete> para estas cosas
+  - no las cosas en sí mismas 😉
+  responses:
+  - entiendo... [end]
