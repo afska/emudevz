@@ -79,7 +79,7 @@ export default class Terminal {
 		text = this._normalize(text);
 
 		if (withAccents) {
-			const parts = this._highlight(text);
+			const parts = this._highlightAccents(text);
 			for (let part of parts) {
 				if (part.isHighlighted) await this.write(part.text, theme.ACCENT);
 				else await this.write(part.text, style, interval);
@@ -328,15 +328,23 @@ export default class Terminal {
 			.replace(TABULATION_REGEXP, TABULATION);
 	}
 
-	_highlight(text) {
-		const regexp = /(\$\w+)/;
-
-		const parts = text.split(regexp).map((part) => ({
-			isHighlighted: regexp.test(part),
-			text: part,
-		}));
-
+	_highlightAccents(text) {
+		let parts = this._highlight([{ isHighlighted: false, text }], /(`\w+`)/);
+		parts = this._highlight(parts, /(<\w+>)/);
+		parts = this._highlight(parts, /(\[\w+\])/);
+		parts = this._highlight(parts, /(#?\$\w+)/);
 		return parts;
+	}
+
+	_highlight(parts, regexp) {
+		return parts.flatMap((part) => {
+			if (part.isHighlighted) return part;
+
+			return part.text.split(regexp).map((part) => ({
+				isHighlighted: regexp.test(part),
+				text: part,
+			}));
+		});
 	}
 
 	_isValidInput(data) {
