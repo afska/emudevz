@@ -97,6 +97,7 @@ exercise:
   - luego, ejecuta el comando `test`
   responses:
   - momento, ¿cómo pruebo esto? 🧪 [testing]
+  - necesito ayuda [help]
 
 testing:
   messages:
@@ -105,4 +106,13 @@ testing:
   - con 50% de probabilidades cada cosa
   - así que cuando sea 7, tu código debería escribir $EE
   - y cuando no, $AA tendría que ser escrito
+  responses: []
+
+help:
+  messages:
+  - las etiquetas son solo... etiquetas
+  - son ignoradas a menos que tengamos que saltar a alguna de ellas
+  - si alguna vez necesitas parar el programa, puedes poner una etiqueta al final del código
+  - y usar una instrucción de bifurcación para saltar a ella
+  - o más fácil, usa la instrucción `BRK`, que interrumpe la ejecución 😉
   responses: []

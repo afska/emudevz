@@ -97,6 +97,7 @@ exercise:
   - then, run the `test` command
   responses:
   - wait, how do I test this? 🧪 [testing]
+  - I need help [help]
 
 testing:
   messages:
@@ -105,4 +106,13 @@ testing:
   - with 50% of chances each
   - so when it's 7, your code should write $EE
   - and when it's not, $AA should be written
+  responses: []
+
+help:
+  messages:
+  - label are just... labels
+  - they are ignored unless we have to jump to any of them
+  - if you ever need to stop the program, you can put a label at the very end of the code
+  - and use a branch instruction to jump to it
+  - or more simply, just use the `BRK` instruction, which halts the execution 😉
   responses: []

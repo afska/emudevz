@@ -83,7 +83,7 @@ flags:
 
 carry:
   messages:
-  - you can see now in the debugger that the Carry Flag is set to 1
+  - now you can see in the debugger that the Carry Flag is set to 1
   responses:
   - (*) wow, any other useful flags? [exercise]
   - (*) wait, all this time you could have been writing numbers in decimal? 😤 [decimal]

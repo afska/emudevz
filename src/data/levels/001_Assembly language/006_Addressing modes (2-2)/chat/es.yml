@@ -1,0 +1,161 @@
+---
+main:
+  run: |
+    if (m.$end) $.goTo("exercise");
+    else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+    }
+  messages:
+  - por si no te diste cuenta, todas las instrucciones toman uno o cero argumentos
+  - y una instrucción compilada puede ocupar 1, 2 o 3 bytes
+  responses:
+  - ¿por qué me estás contando esto? [why]
+
+why:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - hay varias formas de referirse estos argumentos
+  - y se llaman "modos de direccionamiento"
+  - corre la primer instrucción ⏩
+  events:
+  - step [implicit]
+
+implicit:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - la instrucción `INX` no toma argumentos, por lo que es de solo 1 byte
+  - ([PC] pasó de $4020 a $4021)
+  - esto se llama modo de direccionamiento "Implicit"
+  - el argumento está <implícito> en la instrucción misma
+  - sigue ⏩
+  events:
+  - step [immediate]
+
+immediate:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - "aquí, `LDA #$08` toma 1 byte como argumento, por lo que ocupa 2 bytes"
+  - (el "operation code" y un ocho)
+  - esto es el modo de direccionamiento "Immediate"
+  - donde el argumento es un byte <literal>
+  - sigue ⏩
+  events:
+  - step [absolute]
+
+absolute:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - "`LDA $C002` en cambio toma una dirección de memoria"
+  - como tiene un argumento de 2 bytes, se compila a 3 bytes
+  - este es el modo de direccionamiento "Absolute"
+  - donde el argumento es una dirección de memoria <completa>
+  - sigue ⏩
+  events:
+  - step [zeropage]
+
+zeropage:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+  - "`LDA $15` también toma una dirección de memoria"
+  - pero una corta, porque solo es 1 byte
+  - la dirección completa sería $0015
+  - eso es el modo de direccionamiento "Zero Page"
+  - donde el argumento es una dirección de memoria <parcial>
+  responses:
+  - parece la misma cosa 😓 [samething]
+
+samething:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - es más rápido que el modo "Absolute", ya que solo se necesita buscar un byte
+  - y además ocupa menos espacio en el código ensamblado
+  - pero solo la primera página (los primeros 256 bytes) es accesible
+  - sigue ⏩
+  events:
+  - step [relative]
+
+relative:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+  - las instrucciones de bifurcación usan el modo de direccionamiento "Relative"
+  - éstas toman un solo byte, que es usado como un desplazamiento desde la siguiente instrucción
+  - mira el código compilado de `BNE @label` en $4028
+  - $D0 es el opcode de `BNE`, y el $02 de $4029 es el desplazamiento del salto 🦘
+  - "esto significa que [PC] saltará a $402A + 2: directo hacia $402C, donde comienza @label"
+  - (salteará los bytes de los dos `INY`s)
+  responses:
+  - interesante, conque así funcionan las bifurcaciones [whoa]
+
+whoa:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - la última es un poco complicada 😶
+  - "el modo de direccionamiento \"Indirect\" usa una dirección absoluta (digamos <J>) para buscar otra dirección absoluta (digamos <K>)"
+  - el contenido de <J> da el byte menos significativo de <K>
+  - y el siguiente byte (el contenido de <J>+1) da el byte más significativo de <K>
+  - corre el ejemplo ⏩
+  events:
+  - step [step1]
+
+step1:
+  messages: []
+  events:
+  - step [step2]
+
+step2:
+  messages: []
+  events:
+  - step [step3]
+
+step3:
+  messages: []
+  events:
+  - step [step4]
+
+step4:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - ahora $4080 contiene $21, y $4081 contiene $40
+  - por lo que en este caso, `JMP ($4080)` saltará incondicionalmente a $4021"
+  - creando un bucle infinito ⏩
+  events:
+  - step [exercise]
+
+exercise:
+  run-after-messages: |
+    level.fillContentFromTemp();
+    set((m) => {
+      m.$end = true;
+      m.chat.stopBlock = null;
+      m.$canEdit = true;
+      m.content.useTempContent = false;
+    });
+  messages:
+  - ahí está...
+  - como ejercicio, modifica el código agregando una instrucción `STY $1001` al final
+  - luego una instrucción `INX`
+  - pero haz que el `JMP` indirecto saltee el `STY` 👀
+  - necesitarás mirar la dirección del último `INX` dentro del código compilado
+  - cuando termines, ejecuta el comando `test`
+  responses: []
