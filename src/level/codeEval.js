@@ -32,6 +32,7 @@ export default {
 		try {
 			return eval(_evalCode_);
 		} catch (e) {
+			debugger;
 			const error = new Error(`Code eval failed: ${e}`);
 			error.code = _evalCode_;
 			error.inner = e;

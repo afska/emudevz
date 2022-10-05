@@ -38,9 +38,15 @@ export default class ChatScript {
 		return parts[1] || null;
 	}
 
-	getMessagesOf(sectionName, history = []) {
+	getSection(sectionName) {
 		const section = this.content[sectionName];
 		if (!section) throw new Error(`Section not found: ${sectionName}`);
+
+		return section;
+	}
+
+	getMessagesOf(sectionName, history = []) {
+		const section = this.getSection(sectionName);
 
 		return this._processIfs(section.messages).flatMap((rawMessage) => {
 			const inheritance = ChatScript.getInheritanceOf(rawMessage);
@@ -59,8 +65,7 @@ export default class ChatScript {
 	}
 
 	getOptionsOf(field, sectionName, history = []) {
-		const section = this.content[sectionName];
-		if (!section) throw new Error(`Section not found: ${sectionName}`);
+		const section = this.getSection(sectionName);
 		if (!Array.isArray(section[field])) return [];
 
 		return this._processIfs(section[field])
@@ -98,15 +103,13 @@ export default class ChatScript {
 	}
 
 	getStartUpCodeOf(sectionName) {
-		const section = this.content[sectionName];
-		if (!section) throw new Error(`Section not found: ${sectionName}`);
+		const section = this.getSection(sectionName);
 
 		return section.run || null;
 	}
 
 	getAfterMessagesCodeOf(sectionName) {
-		const section = this.content[sectionName];
-		if (!section) throw new Error(`Section not found: ${sectionName}`);
+		const section = this.getSection(sectionName);
 
 		return section["run-after-messages"] || null;
 	}

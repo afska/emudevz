@@ -92,6 +92,7 @@ export default class CPUDebugger extends PureComponent {
 			code: this._onCode,
 			step: this._onStep,
 			reset: this._onReset,
+			"memory-view": this._onMemoryView,
 		});
 	}
 
@@ -282,6 +283,7 @@ export default class CPUDebugger extends PureComponent {
 					});
 				}
 			);
+			bus.emit("compiled");
 		} catch (e) {
 			if (
 				e.message.startsWith("Parse Error") ||
@@ -309,6 +311,12 @@ export default class CPUDebugger extends PureComponent {
 		this._onCode(this.state._lastCode);
 	};
 
+	_onMemoryView = (memoryStart) => {
+		this.setState({ _memoryStart: memoryStart }, () => {
+			this._updateState();
+		});
+	};
+
 	_onRef = (ref) => {
 		this._div = ref;
 		this._onResize();
@@ -326,6 +334,8 @@ export default class CPUDebugger extends PureComponent {
 	};
 
 	_updateState() {
+		if (!this._cpu) return;
+
 		const memory = new Uint8Array(MEMORY_ROWS * BASE);
 		for (let i = 0; i < MEMORY_ROWS * BASE; i++)
 			memory[i] = this._cpu.memory.readAt(this.state._memoryStart + i);

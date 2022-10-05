@@ -62,7 +62,7 @@ export default class ChatCommand extends Command {
 				const response = await this._getSelectedResponse(responses);
 				this._goTo(response.link);
 			} else if (!_.isEmpty(events)) {
-				await this._terminal.newline();
+				if (!_.isEmpty(messages)) await this._terminal.newline();
 				this._terminal.cancelSpeedFlag();
 				const link = await this._getEventLink(events);
 				this._goTo(link);
