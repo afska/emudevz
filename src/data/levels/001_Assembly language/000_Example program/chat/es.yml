@@ -141,3 +141,13 @@ finish:
   responses:
   - 💪  creo que ya entendí todo [end]
   - <!m.$others> (*) ¿y qué onda con [X], [Y], and [SP]? [theothers]
+  - (*) I don't like clicking buttons [clicking]
+
+clicking:
+  messages:
+  - hmm...
+  - you can navigate to the code section with `Alt+Up`
+  - then hit `Alt+Enter`
+  - and go back with `Alt+Left`
+  responses:
+  - ...finish
