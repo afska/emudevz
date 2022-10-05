@@ -119,7 +119,7 @@ step9:
 
 skip:
   messages:
-  - seguro, no vas a ver mucho esto de todas formas
+  - claro, no vas a ver mucho esto de todas formas
   - vas a programar un emulador
   - por lo que necesitas construir un <intérprete> para estas cosas
   - no las cosas en sí mismas 😉
