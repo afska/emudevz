@@ -330,6 +330,7 @@ export default class Terminal {
 
 	_highlightAccents(text) {
 		let parts = this._highlight([{ isHighlighted: false, text }], /(`\w+`)/);
+		parts = this._highlight(parts, /("\w+")/);
 		parts = this._highlight(parts, /(<\w+>)/);
 		parts = this._highlight(parts, /(\[\w+\])/);
 		parts = this._highlight(parts, /(#?\$\w+)/);

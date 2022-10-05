@@ -125,7 +125,12 @@ export default class ChatCommand extends Command {
 
 	async _showResponses(responses) {
 		for (let response of responses)
-			await this._terminal.writeln(this._buildResponseText(response));
+			await this._terminal.writeln(
+				this._buildResponseText(response),
+				undefined,
+				undefined,
+				true
+			);
 	}
 
 	async _getSelectedResponse(responses) {
