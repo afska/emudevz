@@ -274,6 +274,7 @@ export default class Terminal {
 			const selection = this._xterm.getSelection();
 			navigator.clipboard.writeText(selection);
 			e.preventDefault();
+			return;
 		}
 
 		if (isKeyDown && isEnter) {
@@ -284,6 +285,7 @@ export default class Terminal {
 				if (this._isWriting) this._speedFlag = true;
 				await this.confirmPrompt();
 			}
+			return;
 		}
 	}
 

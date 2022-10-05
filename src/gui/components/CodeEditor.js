@@ -84,27 +84,17 @@ class CodeEditor extends PureComponent {
 		const {
 			_isInitialized,
 			language,
-			isReady,
 			isReadOnly,
-			isDisabled,
 			isCompiling,
 			actionName,
-			onlyShowActionWhen,
-			onlyEnableActionWhen,
 			onlyEnableEditionWhen,
 		} = this.state;
 		if (!_isInitialized) return false;
 
 		const action = this._getAction();
 		const isNullAction = actionName === NULL_ACTION;
-		const isPlayShown =
-			!isNullAction &&
-			!isCompiling &&
-			(onlyShowActionWhen == null || codeEval.eval(onlyShowActionWhen));
-		const isPlayEnabled =
-			!isDisabled &&
-			isReady &&
-			(onlyEnableActionWhen == null || codeEval.eval(onlyEnableActionWhen));
+		const isActionShown = this._isActionShown();
+		const isActionEnabled = this._isActionEnabled();
 		const isEditionEnabled =
 			!isReadOnly &&
 			(onlyEnableEditionWhen == null || codeEval.eval(onlyEnableEditionWhen));
@@ -117,13 +107,13 @@ class CodeEditor extends PureComponent {
 						<FaSpinner size={24} />
 					</div>
 				)}
-				{isPlayShown && (
+				{isActionShown && (
 					<div className={styles.debugger}>
 						<IconButton
 							Icon={action.icon}
 							tooltip={action.tooltip}
 							onClick={action.run}
-							disabled={!isPlayEnabled}
+							disabled={!isActionEnabled}
 							kind="rounded"
 						/>
 					</div>
@@ -142,6 +132,7 @@ class CodeEditor extends PureComponent {
 					ref={(ref) => {
 						this.ref = ref;
 					}}
+					onKeyDown={this._onKeyDown}
 				/>
 			</div>
 		);
@@ -167,6 +158,18 @@ class CodeEditor extends PureComponent {
 
 	focus = () => {
 		this.ref.view.focus();
+	};
+
+	_onKeyDown = (e) => {
+		const isKeyDown = e.type === "keydown";
+		const isAltEnter = e.altKey && e.code === "Enter";
+
+		if (isKeyDown && isAltEnter) {
+			if (!this._isActionEnabled()) return;
+			const action = this._getAction();
+			action.run();
+			return;
+		}
 	};
 
 	_onRunEnabled = (isEnabled) => {
@@ -218,6 +221,29 @@ class CodeEditor extends PureComponent {
 		const { actionName } = this.state;
 
 		return this.actions[actionName] || this.actions.unknown;
+	}
+
+	_isActionShown() {
+		const { actionName, isCompiling, onlyShowActionWhen } = this.state;
+
+		const isNullAction = actionName === NULL_ACTION;
+
+		return (
+			!isNullAction &&
+			!isCompiling &&
+			(onlyShowActionWhen == null || codeEval.eval(onlyShowActionWhen))
+		);
+	}
+
+	_isActionEnabled() {
+		const { isDisabled, isReady, onlyEnableActionWhen } = this.state;
+
+		return (
+			this._isActionShown() &&
+			!isDisabled &&
+			isReady &&
+			(onlyEnableActionWhen == null || codeEval.eval(onlyEnableActionWhen))
+		);
 	}
 
 	_markError(start, end) {
