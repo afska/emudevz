@@ -70,13 +70,23 @@ export default class Terminal {
 		await this.run(this._shell);
 	}
 
-	async writeln(text, style, interval) {
-		await this.write(text, style, interval);
+	async writeln(text, style, interval, withAccents) {
+		await this.write(text, style, interval, withAccents);
 		await this.newline();
 	}
 
-	async write(text, style = theme.NORMAL, interval = 0) {
+	async write(text, style = theme.NORMAL, interval = 0, withAccents = false) {
 		text = this._normalize(text);
+
+		if (withAccents) {
+			const parts = this._highlight(text);
+			for (let part of parts) {
+				if (part.isHighlighted) await this.write(part.text, theme.ACCENT);
+				else await this.write(part.text, style, interval);
+			}
+			return;
+		}
+
 		this._isWriting = true;
 
 		if (interval === 0) {
@@ -316,6 +326,17 @@ export default class Terminal {
 		return text
 			.replace(NEWLINE_REGEXP, newline)
 			.replace(TABULATION_REGEXP, TABULATION);
+	}
+
+	_highlight(text) {
+		const regexp = /(\$\w+)/;
+
+		const parts = text.split(regexp).map((part) => ({
+			isHighlighted: regexp.test(part),
+			text: part,
+		}));
+
+		return parts;
 	}
 
 	_isValidInput(data) {

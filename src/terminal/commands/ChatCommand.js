@@ -113,7 +113,8 @@ export default class ChatCommand extends Command {
 			await this._terminal.writeln(
 				MESSAGE_SYMBOL + message,
 				theme.MESSAGE,
-				SPEED
+				SPEED,
+				true
 			);
 	}
 
