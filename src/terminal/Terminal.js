@@ -51,8 +51,14 @@ export default class Terminal {
 		});
 	}
 
-	async start(welcomeMessage, availableCommands = [], startup = null) {
-		await this.writeln(welcomeMessage, theme.SYSTEM);
+	async start(
+		title = null,
+		subtitle = null,
+		availableCommands = [],
+		startup = null
+	) {
+		if (title != null) await this.writeln(title, theme.SYSTEM);
+		if (subtitle != null) await this.writeln(subtitle, theme.COMMENT);
 		this._shell.availableCommands = availableCommands;
 
 		if (startup != null) {

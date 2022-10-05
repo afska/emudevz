@@ -11,13 +11,15 @@ export default class Console extends PureComponent {
 	async initialize(args, level) {
 		this._level = level;
 
-		const welcomeMessage =
-			(args.welcomeMessage && args.welcomeMessage[locales.language]) ||
+		const title =
+			(args.title && args.title[locales.language]) ||
 			`---${level.name[locales.language]}---` ||
 			"?";
+		const subtitle = (args.subtitle && args.subtitle[locales.language]) || null;
 
 		await this.terminal.start(
-			welcomeMessage,
+			title,
+			subtitle,
 			args.availableCommands,
 			args.startup
 		);

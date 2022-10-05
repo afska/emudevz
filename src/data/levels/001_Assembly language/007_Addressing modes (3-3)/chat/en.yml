@@ -1,0 +1,129 @@
+---
+main:
+  run: |
+    if (m.$end) $.goTo("exercise");
+    else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+      bus.emit("memory-view", 0x0);
+    }
+  messages: []
+  events:
+  - compiled [lda]
+
+lda:
+  run: |
+    bus.emit("step");
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - this is where addressing gets interesting 🧐
+  - in "Zero Page,X" addressing, a zero page address is given
+  - and then the value of [X] is added
+  - run the first two instructions ⏩
+  events:
+  - step [zero1]
+
+zero1:
+  messages: []
+  events:
+  - step [zero2]
+
+zero2:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - this ended up writing $CD (the content of [A]) to $0062
+  - which is the result of $60 + [X]
+  - note that I hacked your Memory Viewer to show the zero page
+  - you can check it out yourself 👀
+  - run the next two instructions ⏩
+  events:
+  - step [zero3]
+
+zero3:
+  messages: []
+  events:
+  - step [zero4]
+
+zero4:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+  - see? the <same> instruction (`STA $60,X`) had a <different> result 🤯
+  - since [X] is now 3, it wrote to $0063
+  responses:
+  - what happens if the result of the addition is larger than a byte? [wrap]
+
+wrap:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - the address just wraps around 🎁
+  - let me show you
+  - run two more instructions ⏩
+  events:
+  - step [wrap1]
+
+wrap1:
+  messages: []
+  events:
+  - step [wrap2]
+
+wrap2:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+    bus.emit("memory-view", 0x4020);
+  messages:
+  - as you saw, it wrote $CD to $05
+  - the next addressing mode is called "Absolute,X"
+  - it's the absolute version of "Zero Page,X"
+  - I'm gonna switch the Memory Viewer back to $4020 so you can see it
+  - run the rest of the code ⏩
+  events:
+  - step [rest1]
+
+rest1:
+  messages: []
+  events:
+  - step [rest2]
+
+rest2:
+  messages:
+  - this has written $CD to $4052 😋
+  - ($4050 + the content of [X])
+  responses:
+  - pretty cool! can I use [Y] instead of [X]? [yvariants]
+
+yvariants:
+  messages:
+  - yes, there're equivalents to these modes that use [Y]
+  - not all instructions support them though 👎
+  - they're called "Zero Page,Y" and "Absolute,Y"
+  - do you want to do something fun?
+  responses:
+  - hmm... yeah? [exercise]
+
+exercise:
+  run-after-messages: |
+    level.fillContentFromTemp();
+    set((m) => {
+      m.$end = true;
+      m.chat.stopBlock = null;
+      m.$canEdit = true;
+      m.content.useTempContent = false;
+    });
+    {{Bottom}}.setDelay(0);
+  messages:
+  - remove all the code
+  - build a program that screams through the memory addresses 😱
+  - that means, it writes $AA exactly 64 times from $4080 to $40BF
+  - as always, when you're ready, run the `test` command
+  responses: []
