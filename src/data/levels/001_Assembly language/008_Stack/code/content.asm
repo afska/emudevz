@@ -2,16 +2,16 @@
 ; Y = Number
 LDY #1
 @firstLoop:
-  TYA
-  STA $4080,X
-  PHA
+  TYA          ; Transfers [Y] to [A]
+  PHA          ; Pushes [A] to the Stack
+  STA $4080,X  ; = STA $4080+X
   INX
   INY
-  CPX #8       ; loop until X is #8
+  CPX #8       ; (loops until [X] is #8)
   BNE @firstLoop
 @secondLoop:
-  PLA
+  PLA          ; Pulls from the Stack to [A]
   STA $4080,X
   INX
-  CPX #16      ; loop until X is #16
+  CPX #16      ; (loops until [X] is #16)
   BNE @secondLoop
