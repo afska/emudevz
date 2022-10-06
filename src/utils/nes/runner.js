@@ -43,6 +43,8 @@ export default {
 				let randomByte = Math.floor(Math.random() * 255);
 				if (randomByte === 7) randomByte++;
 				preCpu.memory.writeAt(0x4000, Math.random() < 0.5 ? 7 : randomByte);
+				preCpu.memory.writeAt(0x4001, Math.floor(Math.random() * 255));
+				preCpu.memory.writeAt(0x4002, Math.floor(Math.random() * 255));
 				preCpu.run();
 				for (let i = 0; i < 0xffff; i++)
 					cpu.memory.writeAt(i, preCpu.memory.readAt(i));

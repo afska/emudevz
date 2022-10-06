@@ -13,7 +13,7 @@ main:
   - the stack 📚  is a LIFO structure ("Last In, First Out") which programs can use to store values
   - the current stack depth is measured by the "Stack Pointer" ([SP])
   - in a 6502 processor, it lives in memory between $0100 and $01FF 🐏
-  - "[SP] is initially $FF, which points to the last byte ($01FF)"
+  - "[SP] is initially $FF, which points to the last stack byte ($01FF)"
   - when a byte is pushed onto the stack, [SP] becomes $FE (or memory location $01FE), and so on
   responses:
   - and how can I put values on it? [put]
@@ -33,7 +33,7 @@ example:
   - it creates two loops ➰
   - "`@save` puts odd numbers from $4080 to $4087"
   - and `@load` puts those numbers in reverse order from $4088 to $408F
-  - the former pushes values onto the stack, the latter pulls values from the stack
+  - the former <pushes> values onto the stack, the latter <pulls> values from the stack
   - now your debugger has a Stack section 👀
   - run the code and check it out yourself ⏩
   responses:
@@ -43,7 +43,7 @@ example:
 remove:
   messages:
   - it "removes" it, by incrementing [SP]
-  - the value is kept in memory though
+  - the value is kept in memory though 😅
   - there's no reason to remove it, as you'd only access the stack with the appropriate instructions
   responses:
   - ...example
@@ -51,13 +51,18 @@ remove:
 exercise:
   run-after-messages: |
     level.fillContentFromTemp();
+    level.test.precode = "pretest.asm";
     set((m) => {
       m.$end = true;
       m.chat.stopBlock = null;
       m.$canEdit = true;
       m.content.useTempContent = false;
     });
-    {{Bottom}}.setDelay(0);
   messages:
-  - exercise!
+  - now, an exercise
+  - your stack will have 2 random preloaded values
+  - you just need to pull and load them into 2 consecutive memory addresses
+  - then, make an indirect `JMP` 🦘
+  - e.g. if your stack has -from top to bottom- $C4 and $3E, when your program finishes, [PC] should be $3EC4
+  - run `test` when it's all done 😊
   responses: []

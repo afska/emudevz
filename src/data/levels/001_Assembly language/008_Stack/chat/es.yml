@@ -1,11 +1,68 @@
 ---
 main:
   run: |
+    if (m.$end) $.goTo("exercise");
+    else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+    }
+  messages:
+  - la pila 📚  es una estructura LIFO ("Last In, First Out") que los programas usan para almacenar valores
+  - la longitud actual de la pila es medida por el "Stack Pointer" ([SP])
+  - en un procesador 6502, vive en la memoria entre $0100 y $01FF 🐏
+  - "[SP] inicialmente es $FF, que apunta al último byte de la pila ($01FF)"
+  - cuando un byte se agrega a la pila, [SP] pasa a ser $FE (o ubicación de memoria $01FE), y así
+  responses:
+  - ¿y cómo puedo poner valores en ella? [put]
+
+put:
+  messages:
+  - "puedes usar dos instrucciones:"
+  - "⬆️  `PHA` (\"PusH Accumulator\"), que pone [A] en la pila"
+  - "⬇️  `PLA` (\"PulL Accumulator\"), que saca el último byte de la pila, y lo carga en [A]"
+  responses:
+  - ¿puedes explicarme el código de ejemplo? [example]
+
+example:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - crea dos bucles ➰
+  - "`@save` pone números impares entre $4080 y $4087"
+  - y `@load` pone esos números en orden inverso desde $4088 hasta $408F
+  - el primero <pone> valores en la pila, el segundo <saca> valores de la pila
+  - ahora tu depurador tiene una sección Pila 👀
+  - ejecuta el código y compruébalo con tus propios ojos ⏩
+  responses:
+  - buenísimo, ahora entiendo [exercise]
+  - (*) ¿por qué `PLA` no saca el valor de la pila? [remove]
+
+remove:
+  messages:
+  - lo "saca", solamente incrementando [SP]
+  - el valor queda en memoria, no obstante 😅
+  - no hay razón para quitarlo, ya que solo accederías a la pila con las instrucciones apropiadas
+  responses:
+  - ...example
+
+exercise:
+  run-after-messages: |
+    level.fillContentFromTemp();
+    level.test.precode = "pretest.asm";
     set((m) => {
-      m.chat.stopBlock = locales.get("not_now");
-      m.$canRun = true;
-      m.$canEdit = false;
+      m.$end = true;
+      m.chat.stopBlock = null;
+      m.$canEdit = true;
+      m.content.useTempContent = false;
     });
   messages:
-  - coming soon
+  - ahora, un ejercicio
+  - tu pila tendrá 2 valores precargados aleatorios
+  - solo necesitas sacar y cargarlos en 2 direcciones de memoria consecutivas
+  - luego, hacer un salto indirecto `JMP` 🦘
+  - p. ej. si tu pila tiene -de arriba a abajo- $C4 y $3E, cuando tu programa finalice, [PC] debería valer $3EC4
+  - corre `test` cuando esté todo listo 😊
   responses: []

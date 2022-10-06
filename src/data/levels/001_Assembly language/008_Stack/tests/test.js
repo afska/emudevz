@@ -6,17 +6,11 @@ beforeEach(() => {
 	cpu.run();
 });
 
-it("$407F contains $00", () => {
-	cpu.memory.readAt(0x407f).should.equal(0x00);
-});
+it("it jumps to the right address", () => {
+	const lsb = cpu.memory.readAt(0x01fe);
+	const msb = cpu.memory.readAt(0x01ff);
+	const address = (msb << 8) | lsb;
 
-it("all bytes from $4080 to $40BF contain $aa", () => {
-	const addresses = [...Array(64).keys()].map((it) => 0x4080 + it);
-	addresses.forEach((address) => {
-		cpu.memory.readAt(address).should.equal(0xaa);
-	});
-});
-
-it("$40C0 contains $00", () => {
-	cpu.memory.readAt(0x40c0).should.equal(0x00);
+	cpu.sp.value.should.equal(0xff);
+	cpu.pc.value.should.equal(address);
 });

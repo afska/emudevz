@@ -10,7 +10,7 @@
 				"console",
 				{
 					"startup": "chat",
-					"availableCommands": ["chat", "help", "clear"]
+					"availableCommands": ["chat", "test", "help", "clear"]
 				}
 			],
 			"Bottom": [

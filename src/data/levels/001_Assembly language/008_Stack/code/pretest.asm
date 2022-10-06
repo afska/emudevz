@@ -1,0 +1,4 @@
+LDA $4001
+PHA
+LDA $4002
+PHA
