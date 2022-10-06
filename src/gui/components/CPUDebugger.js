@@ -19,8 +19,19 @@ const MEMORY_ROWS = 10;
 const BASE = 16;
 const BYTES_MEMORY = MEMORY_ROWS * BASE;
 const BYTES_STACK = MEMORY_ROWS + 1;
+const ADDRESS_STACK_START = 0x0100;
 const ADDRESS_STACK_END = 0x01ff;
-const PC_STYLE = { textDecoration: "underline" };
+const CUSTOM_STYLES = {
+	SP: {
+		textDecoration: "overline",
+		background: "rgb(75, 77, 81)",
+		borderRadius: 12,
+		padding: 4,
+	},
+	PC: {
+		textDecoration: "underline",
+	},
+};
 
 const asm = testContext.asm;
 
@@ -131,9 +142,7 @@ export default class CPUDebugger extends PureComponent {
 							>
 								<tr>
 									<td className={styles.name}>
-										<strong style={name === "PC" ? PC_STYLE : {}}>
-											{name}
-										</strong>
+										<strong style={CUSTOM_STYLES[name] || {}}>{name}</strong>
 									</td>
 									<td>
 										<Value
@@ -240,33 +249,6 @@ export default class CPUDebugger extends PureComponent {
 		});
 	}
 
-	_renderStack() {
-		if (this.state._hideStack) return false;
-
-		const { stack, _delay } = this.state;
-
-		return Array.from(stack).map((byte, i) => {
-			const address = ADDRESS_STACK_END - (BYTES_STACK - 1 - i);
-
-			return (
-				<OverlayTrigger
-					key={i}
-					placement="top"
-					overlay={<Tooltip>{locales.get("stack")}</Tooltip>}
-				>
-					<tr>
-						<td className={styles.name}>
-							<strong>${hex.format(address, 4)}</strong>
-						</td>
-						<td>
-							<Value value={byte} flashDuration={_delay} digits={2} />
-						</td>
-					</tr>
-				</OverlayTrigger>
-			);
-		});
-	}
-
 	_renderMemoryCell({ key, rowStart, row, column }) {
 		const { memory, PC, _mappings, _delay } = this.state;
 		const address = rowStart + column;
@@ -281,7 +263,7 @@ export default class CPUDebugger extends PureComponent {
 					<Tooltip style={isPC ? { opacity: 0.75 } : {}}>
 						{isPC && (
 							<span>
-								<strong className={styles.name} style={PC_STYLE}>
+								<strong className={styles.name} style={CUSTOM_STYLES.PC}>
 									PC
 								</strong>{" "}
 								={" "}
@@ -304,12 +286,45 @@ export default class CPUDebugger extends PureComponent {
 					<Value
 						value={memory[row * BASE + column]}
 						flashDuration={_delay}
-						style={isPC ? PC_STYLE : {}}
+						style={isPC ? CUSTOM_STYLES.PC : {}}
 						digits={2}
 					/>
 				</td>
 			</OverlayTrigger>
 		);
+	}
+
+	_renderStack() {
+		if (this.state._hideStack) return false;
+
+		const { stack, SP, _delay } = this.state;
+
+		return Array.from(stack).map((byte, i) => {
+			const address = ADDRESS_STACK_END - (BYTES_STACK - 1 - i);
+			const isSP = address === ADDRESS_STACK_START + SP;
+
+			return (
+				<OverlayTrigger
+					key={i}
+					placement="top"
+					overlay={<Tooltip>{locales.get("stack")}</Tooltip>}
+				>
+					<tr>
+						<td className={styles.name}>
+							<strong>${hex.format(address, 4)}</strong>
+						</td>
+						<td>
+							<Value
+								value={byte}
+								flashDuration={_delay}
+								style={isSP ? CUSTOM_STYLES.SP : {}}
+								digits={2}
+							/>
+						</td>
+					</tr>
+				</OverlayTrigger>
+			);
+		});
 	}
 
 	_onCode = (code) => {

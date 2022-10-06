@@ -35,6 +35,7 @@ export default {
 		cpu.context = context;
 		cpu.stack.context = context;
 		cpu.pc.value = CODE_ADDRESS;
+		cpu.sp.value = 0xff;
 
 		if (preCode != null) {
 			try {
