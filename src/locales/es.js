@@ -35,6 +35,7 @@ export default {
 	save: "Guardar",
 	settings: "Opciones",
 	shell_command_not_found: "comando no encontrado",
+	stack: "Pila",
 	stepForward: "Avanzar",
 	stepReset: "Reiniciar",
 	testing: "Probando: ",

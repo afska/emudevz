@@ -16,7 +16,8 @@
 			"Bottom": [
 				"cpu",
 				{
-					"delay": 250
+					"delay": 250,
+					"hideStack": true
 				}
 			],
 			"Top": [

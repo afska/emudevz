@@ -27,7 +27,7 @@
     "@codemirror/language": "6.1.0",
     "@codemirror/theme-one-dark": "6.1.0",
     "@fancyapps/ui": "^4.0.31",
-    "@neshacker/6502-tools": "0.1.0",
+    "@neshacker/6502-tools": "rodri042/6502",
     "@pixi/layers": "^1.0.11",
     "@rematch/core": "^2.2.0",
     "@rematch/loading": "^2.1.2",

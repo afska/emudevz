@@ -1,16 +1,17 @@
-  LDX #$00
-  LDY #$00
-@firstloop:
-  TXA
-  STA $0200,Y
+; X = Position
+; Y = Number
+LDY #1
+@firstLoop:
+  TYA
+  STA $4080,X
   PHA
   INX
   INY
-  CPY #$10
-  BNE @firstloop ; loop until Y is $10
-@secondloop:
+  CPX #8       ; loop until X is #8
+  BNE @firstLoop
+@secondLoop:
   PLA
-  STA $0200,Y
-  INY
-  CPY #$20      ; loop until Y is $20
-  BNE @secondloop
+  STA $4080,X
+  INX
+  CPX #16      ; loop until X is #16
+  BNE @secondLoop

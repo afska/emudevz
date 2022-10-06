@@ -17,6 +17,9 @@ const FLAGS_TEXT = ["N", "V", "-", "-", "-", "I", "Z", "C"];
 const FLAGS_KEYS = ["N", "V", "B", "b", "D", "I", "Z", "C"];
 const MEMORY_ROWS = 10;
 const BASE = 16;
+const BYTES_MEMORY = MEMORY_ROWS * BASE;
+const BYTES_STACK = MEMORY_ROWS + 1;
+const ADDRESS_STACK_END = 0x01ff;
 const PC_STYLE = { textDecoration: "underline" };
 
 const asm = testContext.asm;
@@ -25,6 +28,7 @@ export default class CPUDebugger extends PureComponent {
 	state = {
 		_isInitialized: false,
 		_hideFlags: false,
+		_hideStack: false,
 		_delay: 500,
 		_lastCode: "",
 		_initialCode: null,
@@ -44,7 +48,8 @@ export default class CPUDebugger extends PureComponent {
 		F_I: 0,
 		F_Z: 0,
 		F_C: 0,
-		memory: new Uint8Array(MEMORY_ROWS * BASE),
+		memory: new Uint8Array(BYTES_MEMORY),
+		stack: new Uint8Array(BYTES_STACK),
 	};
 
 	async initialize(args, level) {
@@ -52,7 +57,11 @@ export default class CPUDebugger extends PureComponent {
 
 		if (Number.isFinite(args.delay)) this.setState({ _delay: args.delay });
 
-		this.setState({ _isInitialized: true, _hideFlags: !!args.hideFlags });
+		this.setState({
+			_isInitialized: true,
+			_hideFlags: !!args.hideFlags,
+			_hideStack: !!args.hideStack,
+		});
 	}
 
 	setDelay(delay) {
@@ -80,6 +89,12 @@ export default class CPUDebugger extends PureComponent {
 					<Viewer className={styles.memory}>
 						<thead>{this._renderMemoryViewerHead()}</thead>
 						<tbody>{this._renderMemoryViewerContent()}</tbody>
+					</Viewer>
+				</div>
+
+				<div className={styles.column}>
+					<Viewer className={styles.memory}>
+						<tbody>{this._renderStack()}</tbody>
 					</Viewer>
 				</div>
 			</div>
@@ -225,6 +240,33 @@ export default class CPUDebugger extends PureComponent {
 		});
 	}
 
+	_renderStack() {
+		if (this.state._hideStack) return false;
+
+		const { stack, _delay } = this.state;
+
+		return Array.from(stack).map((byte, i) => {
+			const address = ADDRESS_STACK_END - (BYTES_STACK - 1 - i);
+
+			return (
+				<OverlayTrigger
+					key={i}
+					placement="top"
+					overlay={<Tooltip>{locales.get("stack")}</Tooltip>}
+				>
+					<tr>
+						<td className={styles.name}>
+							<strong>${hex.format(address, 4)}</strong>
+						</td>
+						<td>
+							<Value value={byte} flashDuration={_delay} digits={2} />
+						</td>
+					</tr>
+				</OverlayTrigger>
+			);
+		});
+	}
+
 	_renderMemoryCell({ key, rowStart, row, column }) {
 		const { memory, PC, _mappings, _delay } = this.state;
 		const address = rowStart + column;
@@ -258,14 +300,14 @@ export default class CPUDebugger extends PureComponent {
 					</Tooltip>
 				}
 			>
-				<th>
+				<td>
 					<Value
 						value={memory[row * BASE + column]}
 						flashDuration={_delay}
 						style={isPC ? PC_STYLE : {}}
 						digits={2}
 					/>
-				</th>
+				</td>
 			</OverlayTrigger>
 		);
 	}
@@ -336,9 +378,14 @@ export default class CPUDebugger extends PureComponent {
 	_updateState() {
 		if (!this._cpu) return;
 
-		const memory = new Uint8Array(MEMORY_ROWS * BASE);
+		const memory = new Uint8Array(BYTES_MEMORY);
+		const stack = new Uint8Array(BYTES_STACK);
 		for (let i = 0; i < MEMORY_ROWS * BASE; i++)
 			memory[i] = this._cpu.memory.readAt(this.state._memoryStart + i);
+		for (let i = 0; i < BYTES_STACK; i++)
+			stack[i] = this._cpu.memory.readAt(
+				ADDRESS_STACK_END - (BYTES_STACK - 1 - i)
+			);
 
 		this.setState({
 			A: this._cpu.registers.a.value,
@@ -355,6 +402,7 @@ export default class CPUDebugger extends PureComponent {
 			F_Z: +this._cpu.flags.z,
 			F_C: +this._cpu.flags.c,
 			memory,
+			stack,
 		});
 
 		const lineNumber = this.state._mappings.find(

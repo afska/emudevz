@@ -24,7 +24,6 @@
 				{
 					"language": "asm",
 					"initialCodeFile": "content.asm",
-					"readOnly": true,
 					"action": "step",
 					"onlyEnableActionWhen": "m.$canRun",
 					"onlyEnableEditionWhen": "m.$canEdit"

@@ -35,6 +35,7 @@ export default {
 	save: "Save",
 	settings: "Settings",
 	shell_command_not_found: "command not found",
+	stack: "Stack",
 	stepForward: "Step",
 	stepReset: "Reset",
 	testing: "Testing: ",

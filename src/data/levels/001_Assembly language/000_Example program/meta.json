@@ -17,7 +17,8 @@
 				"cpu",
 				{
 					"delay": 1500,
-					"hideFlags": true
+					"hideFlags": true,
+					"hideStack": true
 				}
 			],
 			"Top": [

@@ -4,9 +4,9 @@ main:
     set((m) => {
       m.chat.winOnEnd = true;
       m.chat.stopBlock = locales.get("not_now");
-      m.$canRun = false;
+      m.$canRun = true; // TODO: FALSE
+      m.$canEdit = false;
     });
-    bus.emit("memory-view", 0x0);
   messages:
   - now, the most insane ones 😓
   - let's start with "Indexed Indirect"
