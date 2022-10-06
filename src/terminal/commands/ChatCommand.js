@@ -136,31 +136,34 @@ export default class ChatCommand extends Command {
 	async _getSelectedResponse(responses) {
 		let command = { selectedResponse: null };
 
-		while (command.selectedResponse == null) {
-			const getResponse = (x) => {
-				if (isFinite(parseInt(x)))
-					return responses.find((it) => it.number.toString() === x);
+		const getResponse = (x) => {
+			if (isFinite(parseInt(x)))
+				return responses.find((it) => it.number.toString() === x);
 
-				const candidates = responses.filter((it) =>
-					it.content.toLowerCase().includes(x.toLowerCase())
-				);
-				if (x.length > 0 && candidates.length === 1) return candidates[0];
-			};
+			const candidates = responses.filter((it) =>
+				it.content.toLowerCase().includes(x.toLowerCase())
+			);
+			if (x.length > 0 && candidates.length === 1) return candidates[0];
+		};
 
-			try {
-				this._setUpHyperlinkProvider(command, responses, getResponse);
-				const response = await this._terminal.prompt(
-					PROMPT_SYMBOL,
-					theme.INPUT,
-					false,
-					(x) => getResponse(x) != null
-				);
-				command.selectedResponse = getResponse(response);
-			} catch (e) {
-				if (e !== "canceled") throw e;
-			} finally {
-				this._linkProvider.end();
+		try {
+			this._setUpHyperlinkProvider(command, responses, getResponse);
+
+			while (command.selectedResponse == null) {
+				try {
+					const response = await this._terminal.prompt(
+						PROMPT_SYMBOL,
+						theme.INPUT,
+						false,
+						(x) => getResponse(x) != null
+					);
+					command.selectedResponse = getResponse(response);
+				} catch (e) {
+					if (e !== "canceled") throw e;
+				}
 			}
+		} finally {
+			this._linkProvider.end();
 		}
 
 		return command.selectedResponse;
