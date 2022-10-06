@@ -68,8 +68,13 @@ export default class Terminal {
 	}
 
 	async run(program) {
-		this._currentProgram = program;
-		await this._currentProgram.run();
+		try {
+			this._currentProgram = program;
+			await this._currentProgram.run();
+		} catch (e) {
+			if (e === DISPOSED) return;
+			throw e;
+		}
 	}
 
 	async restart() {

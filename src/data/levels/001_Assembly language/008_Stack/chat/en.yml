@@ -31,9 +31,9 @@ example:
     set((m) => m.$canRun = true);
   messages:
   - it creates two loops ➰
-  - "`@firstLoop` puts sequential numbers from $4080 to $4087"
-  - and `@secondLoop` does the same in reverse order from $4088 to $408F
-  - the former pushes values to the stack, the latter pulls values from the stack
+  - "`@save` puts odd numbers from $4080 to $4087"
+  - and `@load` puts those numbers in reverse order from $4088 to $408F
+  - the former pushes values onto the stack, the latter pulls values from the stack
   - now your debugger has a Stack section 👀
   - run the code and check it out yourself ⏩
   responses:
