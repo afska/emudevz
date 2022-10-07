@@ -9,8 +9,8 @@ import { theme } from "../style";
 import Command from "./Command";
 
 const MESSAGE_SYMBOL = ">> ";
-const PROMPT_SYMBOL = "?? ";
-const SPEED = 30;
+const SELECTION_SYMBOL = "=> ";
+const MESSAGE_SPEED = 30;
 
 // eslint-disable-next-line
 const LINK_DETECT_REGEXP = _.template("^(${responses}$)");
@@ -82,9 +82,9 @@ export default class ChatCommand extends Command {
 	onStop() {
 		const { stopBlock } = Level.current.memory.chat;
 		if (stopBlock != null) {
-			if (this._terminal.isExpectingInput)
-				this._terminal.write(stopBlock, theme.ACCENT);
-			this._terminal.cancelPrompt();
+			if (this._terminal.isExpectingKey)
+				this._terminal.writeln(stopBlock, theme.ACCENT);
+			this._terminal.cancelKey();
 			return false;
 		}
 
@@ -113,7 +113,7 @@ export default class ChatCommand extends Command {
 			await this._terminal.writeln(
 				MESSAGE_SYMBOL + message,
 				theme.MESSAGE,
-				SPEED,
+				MESSAGE_SPEED,
 				true
 			);
 	}
@@ -124,6 +124,8 @@ export default class ChatCommand extends Command {
 	}
 
 	async _showResponses(responses) {
+		if (responses.length > 9) throw new Error("More than 9 responses");
+
 		for (let response of responses)
 			await this._terminal.writeln(
 				this._buildResponseText(response),
@@ -139,11 +141,7 @@ export default class ChatCommand extends Command {
 		const getResponse = (x) => {
 			if (isFinite(parseInt(x)))
 				return responses.find((it) => it.number.toString() === x);
-
-			const candidates = responses.filter((it) =>
-				it.content.toLowerCase().includes(x.toLowerCase())
-			);
-			if (x.length > 0 && candidates.length === 1) return candidates[0];
+			return null;
 		};
 
 		try {
@@ -151,22 +149,24 @@ export default class ChatCommand extends Command {
 
 			while (command.selectedResponse == null) {
 				try {
-					const response = await this._terminal.prompt(
-						PROMPT_SYMBOL,
-						theme.INPUT,
-						false,
-						(x) => getResponse(x) != null
-					);
+					const response = await this._terminal.waitForKey();
 					command.selectedResponse = getResponse(response);
 				} catch (e) {
 					if (e !== "canceled") throw e;
 				}
 			}
+			await this._showResponse(command.selectedResponse);
 		} finally {
 			this._linkProvider.end();
 		}
 
 		return command.selectedResponse;
+	}
+
+	async _showResponse(response) {
+		await this._terminal.write(SELECTION_SYMBOL, theme.ACCENT);
+		await this._terminal.writeln(response.number.toString(), theme.COMMENT);
+		await this._terminal.newline();
 	}
 
 	async _getEventLink(events) {
@@ -204,9 +204,7 @@ export default class ChatCommand extends Command {
 			if (command.hasEnded) return;
 			const number = text.match(LINK_PARSE_REGEXP)[1];
 			command.selectedResponse = getResponse(number);
-			await this._terminal.clearInput();
-			await this._terminal.writeln(number);
-			this._terminal.cancelPrompt();
+			this._terminal.cancelKey();
 		};
 		this._linkProvider = this._terminal.registerLinkProvider(regexp, handler);
 		this._linkProvider.end = () => {

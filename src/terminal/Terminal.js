@@ -2,7 +2,7 @@ import { LinkProvider } from "xterm-link-provider";
 import locales from "../locales";
 import { async } from "../utils";
 import { ansiEscapes } from "../utils/cli";
-import PendingInput from "./PendingInput";
+import PendingInput, { PendingKey } from "./PendingInput";
 import Shell from "./Shell";
 import { theme } from "./style";
 
@@ -127,8 +127,11 @@ export default class Terminal {
 	}
 
 	waitForKey() {
-		return new Promise((resolve) => {
-			this._keyInput = resolve;
+		this.cancelSpeedFlag();
+		this._interruptIfNeeded();
+
+		return new Promise((resolve, reject) => {
+			this._keyInput = new PendingKey(resolve, reject);
 		});
 	}
 
@@ -166,6 +169,13 @@ export default class Terminal {
 		if (this.isExpectingInput) {
 			this._input.cancel(reason);
 			this._input = null;
+		}
+	}
+
+	cancelKey(reason = CANCELED) {
+		if (this.isExpectingKey) {
+			this._keyInput.reject(reason);
+			this._keyInput = null;
 		}
 	}
 
@@ -235,6 +245,10 @@ export default class Terminal {
 		return this._input != null;
 	}
 
+	get isExpectingKey() {
+		return this._keyInput != null;
+	}
+
 	get width() {
 		return this._xterm.cols;
 	}
@@ -252,20 +266,17 @@ export default class Terminal {
 		if (this._processCommonBrowserKeys(data)) return;
 		data = this._normalize(data, SHORT_NEWLINE);
 
-		if (this._keyInput) {
-			this._keyInput();
-			this._keyInput = null;
-		}
-
 		switch (data) {
 			case KEY_CTRL_C: {
 				const wasExpectingInput = this.isExpectingInput;
+				const wasExpectingKey = this.isExpectingKey;
 
 				if (this._currentProgram.onStop()) {
 					this.cancelPrompt(INTERRUPTED);
+					this.cancelKey(INTERRUPTED);
 					await this.break();
 					await this.newline();
-					if (!wasExpectingInput) this._requestInterrupt();
+					if (!wasExpectingInput && !wasExpectingKey) this._requestInterrupt();
 				}
 
 				break;
@@ -275,6 +286,12 @@ export default class Terminal {
 				break;
 			}
 			default: {
+				if (this.isExpectingKey) {
+					this._keyInput.resolve(data);
+					this._keyInput = null;
+					return;
+				}
+
 				if (this.isExpectingInput && this._isValidInput(data)) {
 					const isMultiLine = data.split(NEWLINE_REGEXP).length > 1;
 					if (isMultiLine && !this._input.multiLine) return;

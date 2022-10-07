@@ -76,7 +76,7 @@ class PlayScreen extends PureComponent {
 
 		fetch(BOOK_PATH)
 			.then((req) => {
-				if (req.status !== STATUS_OK) throw new Error("Book not found.");
+				if (req.status !== STATUS_OK) throw new Error("Book not found");
 				return req.json();
 			})
 			.then((book) => new Book(book))

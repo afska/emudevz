@@ -44,3 +44,10 @@ export default class PendingInput {
 		this._reject(reason);
 	}
 }
+
+export class PendingKey {
+	constructor(resolve, reject) {
+		this.resolve = resolve;
+		this.reject = reject;
+	}
+}
