@@ -1,6 +1,6 @@
 ; X = Position
 ; A = Number
-LDA #1
+  LDA #1
 @save:
   PHA          ; Pushes [A] onto the Stack
   STA $4080,X  ; = STA $4080+X (puts the number in memory)

@@ -50,8 +50,8 @@ remove:
 
 exercise:
   run-after-messages: |
-    level.fillContentFromTemp();
     level.test.precode = "pretest.asm";
+    level.fillContentFromTemp();
     set((m) => {
       m.$end = true;
       m.chat.stopBlock = null;

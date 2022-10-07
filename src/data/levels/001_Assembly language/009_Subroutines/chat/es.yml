@@ -1,0 +1,15 @@
+---
+main:
+  run: |
+    if (m.$end) $.goTo("exercise");
+    else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+    }
+  messages:
+  - coming soon
+  responses:
+  - ok [end]
