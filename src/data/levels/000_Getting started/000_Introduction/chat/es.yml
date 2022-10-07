@@ -25,7 +25,7 @@ forwhat:
 
 name:
   messages:
-  - creo que significa <No Entiendo El Entretenimiento Saludable>, pero no estoy seguro
+  - creo que significa <No Entiendo El Entretenimiento Saludable>, pero no puedo comprobarlo
   responses:
   - ah, ya veo - ¿dónde encontraste eso? [namehow]
   - ...forwhat

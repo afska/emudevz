@@ -10,7 +10,7 @@
 				"console",
 				{
 					"startup": "chat",
-					"availableCommands": ["chat", "test", "help", "clear"]
+					"availableCommands": ["chat", "help", "clear"]
 				}
 			],
 			"Bottom": [
@@ -24,9 +24,8 @@
 				{
 					"language": "asm",
 					"initialCodeFile": "content.asm",
-					"action": "step",
-					"onlyEnableActionWhen": "m.$canRun",
-					"onlyEnableEditionWhen": "m.$canEdit"
+					"readOnly": true,
+					"action": "step"
 				}
 			]
 		},
@@ -34,10 +33,5 @@
 	},
 	"test": {
 		"context": "asm"
-	},
-	"initialMemory": {
-		"content": {
-			"useTempContent": true
-		}
 	}
 }

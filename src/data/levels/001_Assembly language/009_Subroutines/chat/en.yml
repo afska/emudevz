@@ -1,15 +1,35 @@
 ---
 main:
   run: |
-    if (m.$end) $.goTo("exercise");
-    else {
-      set((m) => {
-        m.chat.stopBlock = locales.get("not_now");
-        m.$canRun = true; // TODO: false
-        m.$canEdit = false;
-      });
-    }
+    set((m) => m.chat.winOnEnd = true);
   messages:
-  - coming soon
+  - "`JSR` and `RTS` (\"Jump to Subroutine\" and \"Return from Subroutine\") are a dynamic duo that you'll usually see used together"
+  - "`JSR` jumps to another part of the code, and `RTS` returns to the previous position"
+  - it's basically like calling a function and returning! 📞
+  - check out the example ⏩
   responses:
-  - ok [end]
+  - how does it know where to return? 😲 [where]
+
+where:
+  messages:
+  - well, `JSR` pushes the address of the next instruction (minus 1) onto the stack before jumping to the given location
+  - then, `RTS` pops this address, adds 1 to it, and jumps to that location
+  - the example code illustrates how can both be used together to create modular code 🗃️
+  responses:
+  - (*) why didn't you use the label names? [label]
+  - awesome! [awesome]
+
+label:
+  messages:
+  - the assembler I found doesn't support that 😔
+  - but I'm sure that's possible with other assemblers
+  - and they'd generate exactly the same binary code
+  responses:
+  - ...where
+
+awesome:
+  messages:
+  - we've learned enough 6502 assembly
+  - let's jump to the next chapter, so we can start coding our emulator 🙃
+  responses:
+  - "`JMP @nextChapter` [end]"

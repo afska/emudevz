@@ -1,15 +1,35 @@
 ---
 main:
   run: |
-    if (m.$end) $.goTo("exercise");
-    else {
-      set((m) => {
-        m.chat.stopBlock = locales.get("not_now");
-        m.$canRun = false;
-        m.$canEdit = false;
-      });
-    }
+    set((m) => m.chat.winOnEnd = true);
   messages:
-  - coming soon
+  - "`JSR` y `RTS` (\"Jump to Subroutine\" y \"Return from Subroutine\") son un dúo dinámico que verás que se usan mucho juntos"
+  - "`JSR` salta a otra parte del código, y `RTS` retorna a la posición anterior"
+  - ¡es básicamente como llamar a una función y retornar! 📞
+  - revisa el ejemplo ⏩
   responses:
-  - ok [end]
+  - ¿cómo sabe a dónde retornar? 😲 [where]
+
+where:
+  messages:
+  - bueno, `JSR` pone la dirección de la siguiente instrucción (menos 1) en la pila antes de saltar a la ubicación dada
+  - luego, `RTS` saca esta dirección, le suma 1, y salta a esa ubicación
+  - el código de ejemplo ilustra cómo se pueden usar ambos para crear código modular 🗃️
+  responses:
+  - (*) ¿por qué no usaste los nombres de las etiquetas? [label]
+  - ¡genial! [awesome]
+
+label:
+  messages:
+  - el ensamblador que encontré no soporta eso 😔
+  - pero eso tiene que ser posible con otros ensambladores
+  - y generarían exactamente el mismo código binario
+  responses:
+  - ...where
+
+awesome:
+  messages:
+  - ya aprendimos suficiente lenguaje ensamblador para 6502
+  - saltemos al capítulo siguiente, así podemos empezar a programar nuestro emulador 🙃
+  responses:
+  - "`JMP @nextChapter` [end]"

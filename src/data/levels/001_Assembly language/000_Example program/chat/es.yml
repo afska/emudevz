@@ -76,7 +76,7 @@ lda:
     set((m) => m.$canRun = false);
   messages:
   - ¡genial!
-  - si prestaste atención, seguro viste que [A] cambió de $00 a $01
+  - si prestaste atención, seguramente viste que [A] cambió de $00 a $01
   - y [PC] cambió de $4020 a $4022 🤯
   - estos son registros de CPU, ubicaciones rápidamente accesibles
   - cada registro puede almacenar un solo byte (8 bits) de datos
