@@ -35,7 +35,7 @@ machinecode:
   messages:
   - correcto
   - de hecho, estás viendo el código compilado ahora mismo
-  - fíjate en el Visor de Memoria en la parte de abajo de la pantalla
+  - fíjate en el Visor de Memoria en la parte inferior derecha de la pantalla
   - el código empieza desde la dirección de memoria $4020
   - si posas el cursor de tu mouse sobre una de estas direcciones, mostrará dónde empieza cada instrucción
   responses:
