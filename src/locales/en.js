@@ -12,6 +12,9 @@ export default {
 	command_repl_description: "Opens a JavaScript REPL.",
 	command_test_description: "Tests your solution.",
 	goBack: "Go back",
+	help_more: "💬  For additional help, run `help -t`",
+	help_terminal:
+		"🛑  Close app:\n   `Ctrl+C`\n📜  Scroll terminal:\n   `Ctrl+Shift+PageUp` and `Ctrl+Shift+PageDown` (or mouse wheel)\n📋  Copy/paste:\n   `Ctrl+Shift+C` and `Ctrl+Shift+V`\n♐  Switch active pane:\n   `Alt+{DirectionalKey}` (or mouse click)\n▶️  Run code:\n   `Alt+Enter`",
 	language: "Language",
 	language_en: "English",
 	language_es: "Spanish",
@@ -43,4 +46,5 @@ export default {
 	testing: "Testing: ",
 	tests_success: "🎉  All tests passed. Press any key to continue.",
 	tests_failure: "💥  Some tests are broken. Fix your code.",
+	tests_more: "💬  For more info, run `test -v`",
 };

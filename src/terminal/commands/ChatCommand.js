@@ -88,7 +88,7 @@ export default class ChatCommand extends Command {
 			return false;
 		}
 
-		if (this._args.includes("-f")) return false;
+		if (this._includes("-f")) return false;
 
 		this._onClose();
 

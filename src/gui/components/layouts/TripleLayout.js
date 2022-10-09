@@ -21,7 +21,7 @@ export default class TripleLayout extends Layout {
 					className={classNames(
 						styles.leftColumn,
 						styles.column,
-						selected === "Left" && styles.selected
+						selected === "Left" ? styles.selected : styles.unselected
 					)}
 					onMouseDown={(e) => {
 						this.setState({ selected: "Left" });
@@ -39,7 +39,7 @@ export default class TripleLayout extends Layout {
 						className={classNames(
 							styles.topRow,
 							styles.row,
-							selected === "Top" && styles.selected
+							selected === "Top" ? styles.selected : styles.unselected
 						)}
 						onMouseDown={(e) => {
 							this.setState({ selected: "Top" });
@@ -56,7 +56,7 @@ export default class TripleLayout extends Layout {
 						className={classNames(
 							styles.bottomRow,
 							styles.row,
-							selected === "Bottom" && styles.selected
+							selected === "Bottom" ? styles.selected : styles.unselected
 						)}
 						onMouseDown={(e) => {
 							this.setState({ selected: "Bottom" });

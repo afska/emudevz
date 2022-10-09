@@ -22,7 +22,9 @@ export default class QuadLayout extends Layout {
 						className={classNames(
 							styles.topRow,
 							styles.row,
-							selectedY === "Top" && selectedX === "Left" && styles.selected
+							selectedY === "Top" && selectedX === "Left"
+								? styles.selected
+								: styles.unselected
 						)}
 						onMouseDown={(e) => {
 							this.setState({ selectedY: "Top", selectedX: "Left" });
@@ -39,7 +41,9 @@ export default class QuadLayout extends Layout {
 						className={classNames(
 							styles.bottomRow,
 							styles.row,
-							selectedY === "bottom" && selectedX === "Left" && styles.selected
+							selectedY === "bottom" && selectedX === "Left"
+								? styles.selected
+								: styles.unselected
 						)}
 						onMouseDown={(e) => {
 							this.setState({ selectedY: "bottom", selectedX: "Left" });
@@ -58,7 +62,9 @@ export default class QuadLayout extends Layout {
 						className={classNames(
 							styles.topRow,
 							styles.row,
-							selectedY === "Top" && selectedX === "Right" && styles.selected
+							selectedY === "Top" && selectedX === "Right"
+								? styles.selected
+								: styles.unselected
 						)}
 						onMouseDown={(e) => {
 							this.setState({ selectedY: "Top", selectedX: "Right" });
@@ -75,7 +81,9 @@ export default class QuadLayout extends Layout {
 						className={classNames(
 							styles.bottomRow,
 							styles.row,
-							selectedY === "bottom" && selectedX === "Right" && styles.selected
+							selectedY === "bottom" && selectedX === "Right"
+								? styles.selected
+								: styles.unselected
 						)}
 						onMouseDown={(e) => {
 							this.setState({ selectedY: "bottom", selectedX: "Right" });

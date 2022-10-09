@@ -32,6 +32,10 @@ export default class Command {
 		return true;
 	}
 
+	_includes(arg) {
+		return this._args.some((it) => it.toLowerCase() === arg);
+	}
+
 	get _terminal() {
 		return this._shell.terminal;
 	}

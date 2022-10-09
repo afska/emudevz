@@ -19,7 +19,7 @@ export default class TestCommand extends Command {
 			level,
 		};
 
-		let allGreen = true;
+		const overallResult = { allGreen: true };
 		const hasMultipleTests = _.keys(level.tests).length > 1;
 
 		for (let fileName in level.tests) {
@@ -32,35 +32,50 @@ export default class TestCommand extends Command {
 
 			const results = await framework.test(test, $);
 
-			for (let result of results) {
-				const emoji = result.passed ? "✔️ " : "❌ ";
-
-				if (!result.passed) {
-					await this._terminal.newline();
-					allGreen = false;
-				}
-
-				await this._terminal.writeln(`${emoji} ${result.name}`);
-
-				if (!result.passed) {
-					await this._terminal.writeln(result.reason, theme.ERROR);
-					if (this._args.includes("-v")) {
-						await this._terminal.writeln(
-							cliCodeHighlighter.highlight(result.testCode)
-						);
-					}
-				}
-			}
+			for (let result of results)
+				await this._printResult(result, overallResult);
 
 			await this._terminal.newline();
 		}
 
-		if (allGreen) {
+		if (overallResult.allGreen) {
 			await this._terminal.writeln(locales.get("tests_success"));
 			await this._terminal.waitForKey();
 			level.advance();
 		} else {
 			await this._terminal.writeln(locales.get("tests_failure"));
+			if (!this._isVerbose)
+				await this._terminal.writeln(
+					locales.get("tests_more"),
+					theme.COMMENT,
+					undefined,
+					true
+				);
 		}
+	}
+
+	async _printResult(result, overallResult) {
+		const emoji = result.passed ? "✔️ " : "❌ ";
+
+		if (!result.passed) {
+			await this._terminal.newline();
+			overallResult.allGreen = false;
+		}
+
+		await this._terminal.writeln(`${emoji} ${result.name}`);
+
+		if (!result.passed) {
+			await this._terminal.writeln(result.reason, theme.ERROR);
+
+			if (this._isVerbose) {
+				await this._terminal.writeln(
+					cliCodeHighlighter.highlight(result.testCode)
+				);
+			}
+		}
+	}
+
+	get _isVerbose() {
+		return this._includes("-v");
 	}
 }

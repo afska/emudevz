@@ -110,7 +110,7 @@ testing:
 
 help:
   messages:
-  - 🦘  you want to always use `BEQ` and `BNE` after a comparison instruction (like `CPX`)
+  - 🔀  you want to always use `BEQ` and `BNE` after a comparison instruction (like `CPX`)
   - "`CPX` sets the flag Z=1 if [X] equals the value, and then `BEQ`/`BNE` jump depending on whether Z is 1 or 0"
   - 🏷️  also, remember that labels are ignored unless we have to jump to any of them
   - 🛑  if you ever need to stop the program, you can put a label at the very end of the code

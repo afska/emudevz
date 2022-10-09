@@ -21,7 +21,7 @@ export default class DualLayout extends Layout {
 					className={classNames(
 						styles.leftColumn,
 						styles.column,
-						selected === "Left" && styles.selected
+						selected === "Left" ? styles.selected : styles.unselected
 					)}
 					onMouseDown={(e) => {
 						this.setState({ selected: "Left" });
@@ -38,7 +38,7 @@ export default class DualLayout extends Layout {
 					className={classNames(
 						styles.rightColumn,
 						styles.column,
-						selected === "Right" && styles.selected
+						selected === "Right" ? styles.selected : styles.unselected
 					)}
 					onMouseDown={(e) => {
 						this.setState({ selected: "Right" });

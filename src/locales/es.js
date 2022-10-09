@@ -12,6 +12,9 @@ export default {
 	command_repl_description: "Abre un REPL de JavaScript.",
 	command_test_description: "Prueba tu solución.",
 	goBack: "Volver",
+	help_more: "💬  Para ayuda adicional, corre `help -t`",
+	help_terminal:
+		"🛑  Cerrar app:\n   `Ctrl+C`\n📜  Scrollear terminal:\n   `Ctrl+Shift+PageUp` y `Ctrl+Shift+PageDown` (o rueda del mouse)\n📋  Copiar/pegar:\n   `Ctrl+Shift+C` y `Ctrl+Shift+V`\n♐  Cambiar panel activo:\n   `Alt+{DirectionalKey}` (o click del mouse)\n▶️  Ejecutar código:\n   `Alt+Enter`",
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",
@@ -44,4 +47,5 @@ export default {
 	tests_success:
 		"🎉  Todas las pruebas pasaron. Presiona cualquier tecla para continuar.",
 	tests_failure: "💥  Algunas pruebas fallaron. Arregla tu código.",
+	tests_more: "💬  Para más información, corre `test -v`",
 };

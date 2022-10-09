@@ -1,3 +1,4 @@
+import locales from "../../locales";
 import { theme } from "../style";
 import commands from ".";
 import Command from "./Command";
@@ -11,6 +12,20 @@ export default class HelpCommand extends Command {
 	}
 
 	async execute() {
+		if (this._isTerminal) await this._printTerminalHelp();
+		else await this._printNormalHelp();
+	}
+
+	async _printTerminalHelp() {
+		await this._terminal.writeln(
+			locales.get("help_terminal"),
+			undefined,
+			undefined,
+			true
+		);
+	}
+
+	async _printNormalHelp() {
 		const findCommand = (it) => commands.find((command) => command.name === it);
 
 		await this._terminal.writeln(
@@ -18,9 +33,23 @@ export default class HelpCommand extends Command {
 				.filter(findCommand)
 				.map(findCommand)
 				.map(
-					(it) => it.name.padEnd(SPACING) + theme.ACCENT(":: ") + it.description
+					(it) =>
+						theme.SYSTEM(it.name.padEnd(SPACING)) +
+						theme.ACCENT(":: ") +
+						it.description
 				)
 				.join(NEWLINE)
 		);
+
+		await this._terminal.writeln(
+			"\n" + locales.get("help_more"),
+			theme.COMMENT,
+			undefined,
+			true
+		);
+	}
+
+	get _isTerminal() {
+		return this._includes("-t");
 	}
 }

@@ -48,6 +48,13 @@
 	animation-name: select;
 }
 
+.unselected {
+	filter: brightness(100%);
+
+	animation-duration: 0.5s;
+	animation-name: unselect;
+}
+
 @keyframes select {
 	from {
 		filter: brightness(100%);
@@ -55,5 +62,15 @@
 
 	to {
 		filter: brightness(150%);
+	}
+}
+
+@keyframes unselect {
+	from {
+		filter: brightness(150%);
+	}
+
+	to {
+		filter: brightness(100%);
 	}
 }

@@ -110,7 +110,7 @@ testing:
 
 help:
   messages:
-  - 🦘  siempre querrás usar `BEQ` y `BNE` luego de una instrucción de comparación (como `CPX`)
+  - 🔀  siempre querrás usar `BEQ` y `BNE` luego de una instrucción de comparación (como `CPX`)
   - "`CPX` asigna el flag Z=1 si [X] es igual al valor, y luego `BEQ`/`BNE` saltan dependiendo de si Z es 1 o 0"
   - 🏷️  recuerda que las etiquetas son ignoradas a menos que tengamos que saltar a alguna de ellas
   - 🛑  si alguna vez necesitas parar el programa, puedes poner una etiqueta al final del código
