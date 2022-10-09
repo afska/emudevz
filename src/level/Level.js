@@ -27,7 +27,7 @@ export default class Level {
 					stopBlock: null,
 				},
 				content: {
-					useTempContent: false,
+					useTemp: false,
 					temp: "",
 				},
 			},
@@ -41,13 +41,11 @@ export default class Level {
 	}
 
 	get content() {
-		return this.memory.content.useTempContent
-			? this.tempContent
-			: this.storedContent;
+		return this.memory.content.useTemp ? this.tempContent : this.storedContent;
 	}
 
 	set content(value) {
-		if (this.memory.content.useTempContent)
+		if (this.memory.content.useTemp)
 			this.setMemory((memory) => {
 				memory.content.temp = value;
 			});

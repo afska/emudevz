@@ -38,7 +38,7 @@
 	},
 	"memory": {
 		"content": {
-			"useTempContent": true
+			"useTemp": true
 		}
 	}
 }

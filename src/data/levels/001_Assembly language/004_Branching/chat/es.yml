@@ -85,7 +85,7 @@ exercise:
       m.chat.stopBlock = null;
       m.$canRun = true;
       m.$canEdit = true;
-      m.content.useTempContent = false;
+      m.content.useTemp = false;
     });
   messages:
   - el opuesto de `BNE` es `BEQ`, que salta cuando los números son iguales

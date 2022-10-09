@@ -149,7 +149,7 @@ exercise:
       m.chat.stopBlock = null;
       m.$canRun = true;
       m.$canEdit = true;
-      m.content.useTempContent = false;
+      m.content.useTemp = false;
     });
   messages:
   - ahí está...

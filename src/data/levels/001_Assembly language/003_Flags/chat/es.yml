@@ -106,7 +106,7 @@ exercise:
       m.chat.stopBlock = null;
       m.$canRun = true;
       m.$canEdit = true;
-      m.content.useTempContent = false;
+      m.content.useTemp = false;
     });
   messages:
   - yep, está la Bandera Zero, que todas las instrucciones la ponen en 1 cuando el resultado es cero

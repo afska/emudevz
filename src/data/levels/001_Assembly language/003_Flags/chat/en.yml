@@ -106,7 +106,7 @@ exercise:
       m.chat.stopBlock = null;
       m.$canRun = true;
       m.$canEdit = true;
-      m.content.useTempContent = false;
+      m.content.useTemp = false;
     });
   messages:
   - yup, there's a Zero Flag, which is set by all instructions to 1 when the result is zero
