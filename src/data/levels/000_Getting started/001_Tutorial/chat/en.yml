@@ -9,8 +9,7 @@ main:
   - 💬  tell me about this app [app]
   - 💬  tell me about other apps [otherapps]
   - 💬  what's in the other half of the screen? [tv]
-  - 💬  how can I scroll/copy/paste in the terminal? [terminal]
-  - 💬  how can I navigate between panes? [panes]
+  - 💬  any keyboard shortcuts I should learn? [shortcuts]
   - 👌  gotcha [end]
 
 app:
@@ -46,16 +45,8 @@ turnontv:
   responses:
   - ...main
 
-terminal:
+shortcuts:
   messages:
-  - "for scrolling: `Ctrl+Shift+PageUp` and `Ctrl+Shift+PageDown`, or your mouse wheel"
-  - "for copy&paste: `Ctrl+Shift+C` and `Ctrl+Shift+V`"
-  responses:
-  - ...main
-
-panes:
-  messages:
-  - you can use `Alt` + any directional key
-  - or just click on the pane you want to focus
+  - you can list them all, at any time, by running `help -t`
   responses:
   - ...main

@@ -9,8 +9,7 @@ main:
   - 💬  cuéntame sobre esta app [app]
   - 💬  cuéntame sobre otras apps [otherapps]
   - 💬  ¿qué hay en la otra mitad de la pantalla? [tv]
-  - 💬  ¿cómo puedo scrollear/copiar/pegar en la terminal? [terminal]
-  - 💬  ¿cómo puedo navegar entre los paneles? [panes]
+  - 💬  ¿algún atajo de teclado que deba aprender? [shortcuts]
   - 👌  entendido [end]
 
 app:
@@ -46,16 +45,8 @@ turnontv:
   responses:
   - ...main
 
-terminal:
+shortcuts:
   messages:
-  - "para scrollear: `Ctrl+Shift+PageUp` y `Ctrl+Shift+PageDown`, o la rueda de tu mouse"
-  - "para copiar&pegar: `Ctrl+Shift+C` y `Ctrl+Shift+V`"
-  responses:
-  - ...main
-
-panes:
-  messages:
-  - puedes usar `Alt` + cualquier tecla direccional
-  - o solo clickear en el panel que quieras hacer foco
+  - puedes listarlos todos, en cualquier momento, ejecutando `help -t`
   responses:
   - ...main

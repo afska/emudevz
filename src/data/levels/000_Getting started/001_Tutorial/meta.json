@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Tutorial",
-		"es": "Tutorial"
+		"en": "Quick tutorial",
+		"es": "Tutorial rápido"
 	},
 	"ui": {
 		"layout": "dual",
@@ -10,17 +10,10 @@
 				"console",
 				{
 					"startup": "chat",
-					"availableCommands": [
-						"chat",
-						"clear",
-						"help"
-					]
+					"availableCommands": ["chat", "clear", "help"]
 				}
 			],
-			"Right": [
-				"tv",
-				{}
-			]
+			"Right": ["tv", {}]
 		},
 		"focus": "Left"
 	}
