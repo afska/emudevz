@@ -41,7 +41,7 @@ turnontv:
     {{Right}}.load("monkey-conga.webp");
   messages:
   - there you go...
-  - "a clip of a popular NEEES game: Monkey Conga"
+  - "a clip of a popular NEEES game: \"Monkey Conga\""
   - a weird story about a monkey kidnapping your girlfriend 🤨
   responses:
   - ...main

@@ -41,7 +41,7 @@ turnontv:
     {{Right}}.load("monkey-conga.webp");
   messages:
   - ahí tienes...
-  - "un video de un juego popular de NEEES: Monkey Conga"
+  - "un video de un juego popular de NEEES: \"Monkey Conga\""
   - una historia rara sobre un mono secuestrando a tu novia 🤨
   responses:
   - ...main
