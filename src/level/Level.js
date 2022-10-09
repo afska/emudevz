@@ -31,7 +31,7 @@ export default class Level {
 					temp: "",
 				},
 			},
-			this.initialMemory
+			this.memory
 		);
 		this.$layout = null;
 	}
