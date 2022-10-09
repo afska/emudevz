@@ -1,18 +1,20 @@
 import _ from "lodash";
 import components from "../gui/components";
 import layouts from "../gui/components/layouts";
+import locales from "../locales";
 import store from "../store";
 import bus from "../utils/bus";
 import ChatScript from "./chat/ChatScript";
 
 export default class Level {
-	constructor(id, metadata, chatScripts, code, tests, media) {
+	constructor(id, metadata, chatScripts, code, tests, help, media) {
 		_.extend(this, metadata);
 
 		this.id = id;
 		this.chatScripts = chatScripts;
 		this.code = code;
 		this.tests = tests;
+		this.help = help;
 		this.media = media;
 
 		this.memory = _.merge(
@@ -50,6 +52,12 @@ export default class Level {
 				memory.content.temp = value;
 			});
 		else store.dispatch.files.setCurrentLevelContent(value);
+	}
+
+	get localizedHelp() {
+		if (!this.help) return null;
+
+		return this.help[`${locales.language}.txt`] || null;
 	}
 
 	fillContentFromTemp() {

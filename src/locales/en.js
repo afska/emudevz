@@ -12,6 +12,7 @@ export default {
 	command_repl_description: "Opens a JavaScript REPL.",
 	command_test_description: "Tests your solution.",
 	goBack: "Go back",
+	help_basic: "💬  If you're stuck, run the `help` command...",
 	help_more: "💬  For additional help, run `help -t`",
 	help_terminal:
 		"🛑  Close app:\n   `Ctrl+C`\n📜  Scroll terminal:\n   `Ctrl+Shift+PageUp` and `Ctrl+Shift+PageDown` (or mouse wheel)\n📋  Copy/paste:\n   `Ctrl+Shift+C` and `Ctrl+Shift+V`\n♐  Switch active pane:\n   `Alt+{DirectionalKey}` (or mouse click)\n▶️  Run code:\n   `Alt+Enter`",

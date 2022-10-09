@@ -1,3 +1,4 @@
+import Level from "../../level/Level";
 import locales from "../../locales";
 import { theme } from "../style";
 import commands from ".";
@@ -14,6 +15,15 @@ export default class HelpCommand extends Command {
 	async execute() {
 		if (this._isTerminal) await this._printTerminalHelp();
 		else await this._printNormalHelp();
+
+		const help = Level.current.localizedHelp;
+		if (help != null)
+			await this._terminal.writeln(
+				"\n" + help.trim(),
+				undefined,
+				undefined,
+				true
+			);
 	}
 
 	async _printTerminalHelp() {
