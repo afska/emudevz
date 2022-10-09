@@ -1,4 +1,5 @@
 import { LinkProvider } from "xterm-link-provider";
+import _ from "lodash";
 import locales from "../locales";
 import { async, bus } from "../utils";
 import { ansiEscapes } from "../utils/cli";
@@ -13,6 +14,7 @@ const KEY_REFRESH_2 = "";
 const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
 const NEWLINE_REGEXP = /\r\n?|\n/g;
+const WHITESPACE_REGEXP = /\s/;
 const NEWLINE = "\r\n";
 const SHORT_NEWLINE = "\n";
 const TABULATION_REGEXP = /\t/g;
@@ -119,12 +121,17 @@ export default class Terminal {
 			this._xterm.write(style(text));
 		} else {
 			const characters = [...text];
+			let lastCharacter = " ";
 
 			for (let i = 0; i < characters.length; i++) {
 				this._interruptIfNeeded();
 
-				this._xterm.write(style(characters[i]));
-				if (!this._speedFlag) await async.sleep(interval);
+				if (this._needsWordWrap(characters, i, lastCharacter))
+					await this.newline();
+
+				lastCharacter = characters[i];
+				this._xterm.write(style(lastCharacter));
+				await async.sleep(this._speedFlag ? 0 : interval);
 			}
 		}
 
@@ -366,6 +373,20 @@ export default class Terminal {
 		}
 
 		if (this._disposeFlag) throw DISPOSED;
+	}
+
+	_needsWordWrap(characters, i, lastCharacter) {
+		if (WHITESPACE_REGEXP.test(lastCharacter)) {
+			const remainingCharacters = characters.slice(i);
+			let nextWordLength = _.findIndex(remainingCharacters, (it) =>
+				WHITESPACE_REGEXP.test(it)
+			);
+			if (nextWordLength === -1) nextWordLength = remainingCharacters.length;
+
+			return this.buffer.x + nextWordLength > this.width;
+		}
+
+		return false;
 	}
 
 	_normalize(text, newline = NEWLINE) {

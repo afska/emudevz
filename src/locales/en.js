@@ -15,7 +15,7 @@ export default {
 	help_basic: "💬  If you're stuck, run the `help` command...",
 	help_more: "💬  For additional help, run `help -t`",
 	help_terminal:
-		"🛑  Close app:\n   `Ctrl+C`\n📜  Scroll terminal:\n   `Ctrl+Shift+PageUp` and `Ctrl+Shift+PageDown` (or mouse wheel)\n📋  Copy/paste:\n   `Ctrl+Shift+C` and `Ctrl+Shift+V`\n♐  Switch active pane:\n   `Alt+{DirectionalKey}` (or mouse click)\n▶️  Run code:\n   `Alt+Enter`",
+		"🛑  Close app:\n   `Ctrl+C`\n🕑  Speed up chat:\n   `Enter`\n📜  Scroll terminal:\n   `Ctrl+Shift+PageUp` and `Ctrl+Shift+PageDown` (or mouse wheel)\n📋  Copy/paste:\n   `Ctrl+Shift+C` and `Ctrl+Shift+V`\n♐  Switch active pane:\n   `Alt+{DirectionalKey}` (or mouse click)\n▶️  Run code:\n   `Alt+Enter`",
 	language: "Language",
 	language_en: "English",
 	language_es: "Spanish",
