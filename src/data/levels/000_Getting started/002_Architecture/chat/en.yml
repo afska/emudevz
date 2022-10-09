@@ -57,7 +57,9 @@ apu:
 
 start:
   messages:
-  - we'll first study the assembly language
+  - to emulate the CPU, we'll have to interpret games' code
+  - they're written in assembly, so you need to study that first
+  - let's jump into it!
   - are you ready?
   responses:
-  - let's go [end]
+  - ok let's go [end]

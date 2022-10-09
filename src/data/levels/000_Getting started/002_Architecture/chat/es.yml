@@ -57,7 +57,9 @@ apu:
 
 start:
   messages:
-  - primero vamos a estudiar el lenguaje ensamblador
+  - para emular la CPU, tendrás que interpretar el código de los juegos
+  - están escritos en assembly, por lo que deberás estudiar eso primero
+  - ¡adentrémonos en ello!
   - ¿vamos?
   responses:
-  - vamos [end]
+  - bueno vamos [end]

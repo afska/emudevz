@@ -57,7 +57,7 @@ butyousaid:
   - so the first two kilobytes are actual RAM
   - and the rest is used to interact with the hardware 💻
   - that doesn't matter too much in this chapter
-  - we're simulating a 64KiB RAM for simplicity
+  - we're simulating a 64KiB RAM for simplicity's sake
   responses:
   - ...machinecode
 
