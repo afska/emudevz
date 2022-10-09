@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronLeft, FaTrash } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
@@ -10,7 +10,7 @@ import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
 	render() {
-		const { maxLevelId, chapter, level, goBack } = this.props;
+		const { maxLevelId, chapter, level, goBack, resetLevel } = this.props;
 
 		const levelIndex = _.findIndex(chapter.levels, (it) => it.id === level.id);
 
@@ -26,6 +26,13 @@ class NavBar extends PureComponent {
 						{chapter.number}.{levelIndex + 1} / {chapter.name[locales.language]}{" "}
 						/ {level.name[locales.language]}
 					</span>
+					<div className={styles.buttons}>
+						<IconButton
+							Icon={FaTrash}
+							tooltip={locales.get("reset_level")}
+							onClick={resetLevel}
+						/>
+					</div>
 				</div>
 				<div className={styles.item}>
 					<ProgressList
@@ -41,6 +48,7 @@ class NavBar extends PureComponent {
 
 const mapDispatchToProps = ({ level }) => ({
 	goBack: level.goHome,
+	resetLevel: level.resetProgress,
 });
 
 export default connect(undefined, mapDispatchToProps)(NavBar);

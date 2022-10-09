@@ -20,6 +20,13 @@
 	display: flex;
 	margin: 4px 8px 4px 8px;
 	align-items: center;
+	position: relative;
+}
+
+.buttons {
+	position: absolute;
+	top: -4px;
+	right: 0;
 }
 
 .text {

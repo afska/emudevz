@@ -31,6 +31,7 @@ export default {
 	register_flags_Z: "Zero Flag",
 	register_flags_C: "Carry Flag",
 	register_flags_U: "Unused Flag",
+	reset_level: "Reset level progress",
 	resize_warning: "Resizing is not supported while typing.",
 	run: "Run",
 	save: "Save",

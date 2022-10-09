@@ -41,6 +41,15 @@ export default {
 				this.reset();
 				_dispatch_(push("/"));
 			},
+
+			resetProgress(__, _state_) {
+				_dispatch_.files.setCurrentLevelContent("");
+
+				setTimeout(() => {
+					const state = _state_[KEY];
+					this.goTo(state.instance.id);
+				});
+			},
 		};
 	},
 };

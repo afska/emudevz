@@ -31,6 +31,7 @@ export default {
 	register_flags_Z: "Bandera Zero",
 	register_flags_C: "Bandera Carry",
 	register_flags_U: "Bandera sin uso",
+	reset_level: "Reiniciar progreso del nivel",
 	resize_warning: "No se puede redimensionar y escribir a la vez.",
 	run: "Run",
 	save: "Guardar",
