@@ -5,6 +5,8 @@
 `STA $60,X`   ; Writes [A] to address $60+[X]
 `STA $2030,X` ; Writes [A] to address $2030+[X]
   ; [X] and [Y] variants: `LDX`, `STX`, `LDY`, `STY`
+`TXA`         ; Transfers [X] to [A]
+  ; variants: `TAX`, `TYA`, `TAY`
 `ADC #30`     ; Adds 30 to [A] (using the Carry Flag)
 `SBC #30`     ; Substracts 30 from [A] (using the Carry Flag)
 `INX`         ; Increments [X]

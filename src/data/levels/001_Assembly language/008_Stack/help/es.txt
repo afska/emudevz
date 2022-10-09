@@ -7,6 +7,8 @@
 `STA ($01,X)` ; = STA ($01+X)
 `STA ($03),Y` ; = STA ($03)+Y
   ; variantes con [X] e [Y]: `LDX`, `STX`, `LDY`, `STY`
+`TXA`         ; Transfiere [X] a [A]
+  ; variantes: `TAX`, `TYA`, `TAY`
 `ADC #30`     ; Suma 30 a [A] (usando la Bandera Carry)
 `SBC #30`     ; Substracts 30 from [A] (usando la Bandera Carry)
 `INX`         ; Incrementa [X]
