@@ -42,8 +42,8 @@ export default class Level {
 
 	get content() {
 		return this.memory.content.useTempContent
-			? this.memory.content.temp
-			: store.getState().files.levels[this.id] || "";
+			? this.tempContent
+			: this.storedContent;
 	}
 
 	set content(value) {
@@ -54,6 +54,18 @@ export default class Level {
 		else store.dispatch.files.setCurrentLevelContent(value);
 	}
 
+	get hasStoredContent() {
+		return !_.isEmpty(this.storedContent);
+	}
+
+	get storedContent() {
+		return store.getState().files.levels[this.id] || "";
+	}
+
+	get tempContent() {
+		return this.memory.content.temp;
+	}
+
 	get localizedHelp() {
 		if (!this.help) return null;
 
@@ -61,11 +73,8 @@ export default class Level {
 	}
 
 	fillContentFromTemp() {
-		const content = store.getState().files.levels[this.id] || "";
-		const tempContent = this.memory.content.temp;
-
-		if (_.isEmpty(content))
-			store.dispatch.files.setCurrentLevelContent(tempContent);
+		if (!this.hasStoredContent)
+			store.dispatch.files.setCurrentLevelContent(this.tempContent);
 	}
 
 	setMemory(change) {

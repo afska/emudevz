@@ -1,7 +1,7 @@
 ---
 main:
   run: |
-    if (m.$end) $.goTo("exercise");
+    if (level.hasStoredContent) $.goTo("exercise");
     else {
       set((m) => {
         m.chat.stopBlock = locales.get("not_now");
@@ -70,22 +70,22 @@ result:
 
 iknow:
   run-after-messages: |
-    level.fillContentFromTemp();
-    set((m) => {
-      m.$end = true;
-      m.chat.stopBlock = null;
-      m.$canEdit = true;
-      m.content.useTempContent = false;
-    });
+    $.goTo("exercise");
   messages:
   - ya sé, dije [A] en vez de [X]
   - "`ADC` solo funciona con [A] 🤷"
   - mmm...
-  - ...exercise
-  responses:
-  - ...exercise
+  responses: []
 
 exercise:
+  run: |
+    level.fillContentFromTemp();
+    set((m) => {
+      m.chat.stopBlock = null;
+      m.$canRun = true;
+      m.$canEdit = true;
+      m.content.useTempContent = false;
+    });
   messages:
   - vamos a refactorizar el código 💡
   - haz que use `ADC` en vez de 3 instrucciones de incremento

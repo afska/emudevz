@@ -1,7 +1,7 @@
 ---
 main:
   run: |
-    if (m.$end) $.goTo("exercise");
+    if (level.hasStoredContent) $.goTo("exercise");
     else {
       set((m) => {
         m.chat.stopBlock = locales.get("not_now");
@@ -112,11 +112,11 @@ yvariants:
   - mmm... ¿sí? [exercise]
 
 exercise:
-  run-after-messages: |
+  run: |
     level.fillContentFromTemp();
     set((m) => {
-      m.$end = true;
       m.chat.stopBlock = null;
+      m.$canRun = true;
       m.$canEdit = true;
       m.content.useTempContent = false;
     });
