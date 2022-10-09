@@ -2,9 +2,12 @@ import React, { PureComponent } from "react";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
-import { FaStepForward } from "react-icons/fa";
-import { FaSpinner } from "react-icons/fa";
-import { FaFastBackward } from "react-icons/fa";
+import {
+	FaFastBackward,
+	FaPlay,
+	FaSpinner,
+	FaStepForward,
+} from "react-icons/fa";
 import { connect } from "react-redux";
 import _ from "lodash";
 import codeEval from "../../level/codeEval";
@@ -39,6 +42,11 @@ class CodeEditor extends PureComponent {
 	};
 
 	actions = {
+		run: {
+			icon: FaPlay,
+			tooltip: locales.get("run"),
+			run: () => bus.emit("run", "test"),
+		},
 		step: {
 			icon: FaStepForward,
 			tooltip: locales.get("stepForward"),

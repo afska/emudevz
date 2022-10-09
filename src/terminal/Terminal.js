@@ -1,6 +1,6 @@
 import { LinkProvider } from "xterm-link-provider";
 import locales from "../locales";
-import { async } from "../utils";
+import { async, bus } from "../utils";
 import { ansiEscapes } from "../utils/cli";
 import PendingInput, { PendingKey } from "./PendingInput";
 import Shell from "./Shell";
@@ -49,6 +49,16 @@ export default class Terminal {
 		});
 		this._xterm.onResize((e) => {
 			this._onResize(e);
+		});
+
+		this._subscriber = bus.subscribe({
+			run: async (commandLine) => {
+				await this.interrupt();
+				await async.sleep();
+				while (this._stopFlag) await async.sleep();
+				await this.writeln(commandLine);
+				await this._shell.runLine(commandLine);
+			},
 		});
 	}
 
@@ -182,6 +192,19 @@ export default class Terminal {
 		}
 	}
 
+	async interrupt() {
+		const wasExpectingInput = this.isExpectingInput;
+		const wasExpectingKey = this.isExpectingKey;
+
+		if (this._currentProgram.onStop()) {
+			this.cancelPrompt(INTERRUPTED);
+			this.cancelKey(INTERRUPTED);
+			await this.break();
+			await this.newline();
+			if (!wasExpectingInput && !wasExpectingKey) this._requestInterrupt();
+		}
+	}
+
 	async clearInput() {
 		while (!this._input.isEmpty()) {
 			await async.sleep();
@@ -242,6 +265,7 @@ export default class Terminal {
 
 	dispose() {
 		this._disposeFlag = true;
+		this._subscriber.release();
 	}
 
 	get isExpectingInput() {
@@ -271,17 +295,7 @@ export default class Terminal {
 
 		switch (data) {
 			case KEY_CTRL_C: {
-				const wasExpectingInput = this.isExpectingInput;
-				const wasExpectingKey = this.isExpectingKey;
-
-				if (this._currentProgram.onStop()) {
-					this.cancelPrompt(INTERRUPTED);
-					this.cancelKey(INTERRUPTED);
-					await this.break();
-					await this.newline();
-					if (!wasExpectingInput && !wasExpectingKey) this._requestInterrupt();
-				}
-
+				await this.interrupt();
 				break;
 			}
 			case KEY_BACKSPACE: {

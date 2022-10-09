@@ -5,6 +5,7 @@ export default {
 
 	prepare(level, code = level.content) {
 		return {
+			code,
 			compile() {
 				const preCode = level.code[level.test?.precode];
 				return runner.create(code, preCode);

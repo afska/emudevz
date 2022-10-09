@@ -44,9 +44,11 @@ export default class TestCommand extends Command {
 
 				if (!result.passed) {
 					await this._terminal.writeln(result.reason, theme.ERROR);
-					await this._terminal.writeln(
-						cliCodeHighlighter.highlight(result.testCode)
-					);
+					if (this._args.includes("-v")) {
+						await this._terminal.writeln(
+							cliCodeHighlighter.highlight(result.testCode)
+						);
+					}
 				}
 			}
 

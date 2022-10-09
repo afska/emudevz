@@ -16,7 +16,8 @@
 			"Right": [
 				"code",
 				{
-					"language": "javascript"
+					"language": "javascript",
+					"action": "run"
 				}
 			]
 		},

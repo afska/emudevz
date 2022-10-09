@@ -14,8 +14,8 @@ export default {
 			/(<[^>]+>)/, // angular brackets
 			/(\[[^\]]+\])/, // square brackets
 			/(#?\$[0-9a-fA-F]+)/, // [literal] hex numbers
-			/(\b[0-9]+\b)/, // numbers
 			/(#[0-9]+)/, // literal dec numbers
+			/(\b[0-9]+\b)/, // numbers
 		].forEach((regexp) => {
 			parts = this._highlightAccent(parts, regexp);
 		});

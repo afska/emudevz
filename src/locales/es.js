@@ -32,6 +32,7 @@ export default {
 	register_flags_C: "Bandera Carry",
 	register_flags_U: "Bandera sin uso",
 	resize_warning: "No se puede redimensionar y escribir a la vez.",
+	run: "Run",
 	save: "Guardar",
 	settings: "Opciones",
 	shell_command_not_found: "comando no encontrado",
