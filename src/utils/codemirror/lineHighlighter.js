@@ -1,14 +1,14 @@
-import highlighter from "./highlighter";
+import decorator from "./decorator";
 
 export default {
 	highlightLine(ref, code, lineNumber) {
 		this.clear(ref, code);
 
 		const { line, index } = this.findLine(code, lineNumber);
-		this.highlight(ref, index, index + line.length);
+		this.decorate(ref, index, index + line.length);
 	},
 
-	...highlighter(
+	...decorator(
 		"cm-highlight",
 		"line",
 		"rgba(98, 112, 128, 0.5) !important",

@@ -7,5 +7,16 @@ main:
   - e.g. export function hello() { ... }
   - when you finish, close the terminal with `Ctrl+C`
   - and run the command `test`
+  - |-
+    multi
+       line!
+  - AND THERE'S MORE!
+  - look at this syntax highlighter 😎
+  - |-
+    ```javascript function hello(arg1, arg2, ...rest) {
+         const b = alert("pium pium");
+         return "w" + 0 + "rld";
+       }```
+  - you can also highlight single line code like ```javascript this(2 * 3)```
   responses:
   - ok [end]

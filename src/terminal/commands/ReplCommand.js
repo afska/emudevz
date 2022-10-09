@@ -1,4 +1,4 @@
-import { cliHighlighter } from "../../utils/cli";
+import { cliCodeHighlighter } from "../../utils/cli";
 import { contextEval } from "../../utils/eval";
 import theme from "../style/theme";
 import Command from "./Command";
@@ -28,7 +28,9 @@ export default class ReplCommand extends Command {
 
 			try {
 				const result = context.eval(expression);
-				this._terminal.writeln(cliHighlighter.highlight(this._format(result)));
+				this._terminal.writeln(
+					cliCodeHighlighter.highlight(this._format(result))
+				);
 			} catch (e) {
 				this._terminal.writeln("❌  " + theme.ERROR(e.message));
 			}

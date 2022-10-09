@@ -1,7 +1,7 @@
 import _ from "lodash";
 import Level from "../../level/Level";
 import locales from "../../locales";
-import { cliHighlighter } from "../../utils/cli";
+import { cliCodeHighlighter } from "../../utils/cli";
 import theme from "../style/theme";
 import Command from "./Command";
 import testContext from "./test/context";
@@ -45,9 +45,7 @@ export default class TestCommand extends Command {
 				if (!result.passed) {
 					await this._terminal.writeln(result.reason, theme.ERROR);
 					await this._terminal.writeln(
-						cliHighlighter.highlight(result.testCode, {
-							language: "javascript",
-						})
+						cliCodeHighlighter.highlight(result.testCode)
 					);
 				}
 			}

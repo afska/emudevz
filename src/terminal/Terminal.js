@@ -4,6 +4,7 @@ import { async } from "../utils";
 import { ansiEscapes } from "../utils/cli";
 import PendingInput, { PendingKey } from "./PendingInput";
 import Shell from "./Shell";
+import highlighter from "./highlighter";
 import { theme } from "./style";
 
 const KEY_FULLSCREEN = "[23~";
@@ -81,21 +82,24 @@ export default class Terminal {
 		await this.run(this._shell);
 	}
 
-	async writeln(text, style, interval, withAccents) {
-		await this.write(text, style, interval, withAccents);
+	async writeln(text, style, interval, withHighlight) {
+		await this.write(text, style, interval, withHighlight);
 		await this.newline();
 	}
 
-	async write(text, style = theme.NORMAL, interval = 0, withAccents = false) {
+	async write(text, style = theme.NORMAL, interval = 0, withHighlight = false) {
+		if (text.includes("multi")) debugger;
 		text = this._normalize(text);
 
-		if (withAccents) {
-			const parts = this._highlightAccents(text);
+		if (withHighlight) {
+			const parts = highlighter.highlightText(text);
+
 			for (let part of parts) {
-				if (part.isHighlighted)
-					await this.write(part.text, theme.ACCENT, interval);
+				if (part.isAccent) await this.write(part.text, theme.ACCENT, interval);
+				else if (part.isCode) await this.write(part.text);
 				else await this.write(part.text, style, interval);
 			}
+
 			return;
 		}
 
@@ -355,28 +359,6 @@ export default class Terminal {
 		return text
 			.replace(NEWLINE_REGEXP, newline)
 			.replace(TABULATION_REGEXP, TABULATION);
-	}
-
-	_highlightAccents(text) {
-		let parts = this._highlight([{ isHighlighted: false, text }], /(`[^`]+`)/);
-		parts = this._highlight(parts, /("[^"]+")/);
-		parts = this._highlight(parts, /(<[^>]+>)/);
-		parts = this._highlight(parts, /(\[[^\]]+\])/);
-		parts = this._highlight(parts, /(#?\$[0-9a-fA-F]+)/);
-		parts = this._highlight(parts, /(\b[0-9]+\b)/);
-		parts = this._highlight(parts, /(#[0-9]+)/);
-		return parts;
-	}
-
-	_highlight(parts, regexp) {
-		return parts.flatMap((part) => {
-			if (part.isHighlighted) return part;
-
-			return part.text.split(regexp).map((part) => ({
-				isHighlighted: regexp.test(part),
-				text: part,
-			}));
-		});
 	}
 
 	_isValidInput(data) {

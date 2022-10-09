@@ -1,4 +1,4 @@
 import ansiEscapes from "./ansiEscapes";
-import cliHighlighter from "./cliHighlighter";
+import cliCodeHighlighter from "./cliCodeHighlighter";
 
-export { ansiEscapes, cliHighlighter };
+export { ansiEscapes, cliCodeHighlighter };

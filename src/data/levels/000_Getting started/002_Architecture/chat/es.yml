@@ -18,7 +18,7 @@ cpu:
   messages:
   - es la Unidad Central de Procesamiento
   - lee el código de los juegos y ejecuta sus instrucciones
-  - como la de tu computadora, pero *muchas* veces más lenta
+  - como la de tu computadora, pero <muchas> veces más lenta
   - tiene acceso a un banco de 2KiB de WRAM (Work RAM)
   responses:
   - ¿y dónde está el código del juego? [thecode]

@@ -1,9 +1,9 @@
 const cliHighlight = require("cli-highlight");
 
 export default {
-	highlight(code) {
+	highlight(code, language = "javascript") {
 		return cliHighlight.highlight(code, {
-			language: "javascript",
+			language,
 		});
 	},
 };

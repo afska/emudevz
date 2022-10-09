@@ -18,7 +18,7 @@ cpu:
   messages:
   - it's the Central Processing Unit
   - reads a game's code and executes its instructions
-  - like the one in your computer, but *several* times slower
+  - like the one in your computer, but <several> times slower
   - it has access to a 2KiB bank of WRAM (Work RAM)
   responses:
   - and where's the game's code? [thecode]

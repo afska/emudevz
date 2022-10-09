@@ -8,9 +8,9 @@ export default (
 	from = (r) => r.from,
 	to = (r) => r.to
 ) => {
-	const highlightMark = Decoration[type]({ class: className });
+	const decorationMark = Decoration[type]({ class: className });
 
-	const highlightTheme = EditorView.baseTheme({
+	const decorationTheme = EditorView.baseTheme({
 		[`.${className}`]: { background },
 	});
 
@@ -22,12 +22,12 @@ export default (
 			}),
 		});
 
-	const addHighlight = createEffect();
-	const removeHighlight = createEffect();
+	const addDecoration = createEffect();
+	const removeDecoration = createEffect();
 
 	function addRange(ranges, r) {
 		return ranges.update({
-			add: [highlightMark.range(from(r), to(r))],
+			add: [decorationMark.range(from(r), to(r))],
 		});
 	}
 
@@ -45,44 +45,44 @@ export default (
 		});
 	}
 
-	const highlightField = StateField.define({
+	const decorationField = StateField.define({
 		create() {
 			return Decoration.none;
 		},
-		update(highlights, tr) {
-			highlights = highlights.map(tr.changes);
+		update(decorations, tr) {
+			decorations = decorations.map(tr.changes);
 			for (let e of tr.effects)
-				if (e.is(addHighlight)) {
-					highlights = addRange(highlights, e.value);
-				} else if (e.is(removeHighlight))
-					highlights = cutRange(highlights, e.value);
-			return highlights;
+				if (e.is(addDecoration)) {
+					decorations = addRange(decorations, e.value);
+				} else if (e.is(removeDecoration))
+					decorations = cutRange(decorations, e.value);
+			return decorations;
 		},
 		provide: (f) => EditorView.decorations.from(f),
 	});
 
 	return {
-		highlight(ref, from, to) {
+		decorate(ref, from, to) {
 			if (ref == null) return;
 			const { view } = ref;
-			const effects = [addHighlight.of({ from, to })];
+			const effects = [addDecoration.of({ from, to })];
 
-			if (!view.state.field(highlightField, false))
+			if (!view.state.field(decorationField, false))
 				effects.push(
-					StateEffect.appendConfig.of([highlightField, highlightTheme])
+					StateEffect.appendConfig.of([decorationField, decorationTheme])
 				);
 
 			view.dispatch({ effects });
 		},
 
-		unhighlight(ref, from, to) {
+		undecorate(ref, from, to) {
 			if (ref == null) return;
 			const { view } = ref;
-			const effects = [removeHighlight.of({ from, to })];
+			const effects = [removeDecoration.of({ from, to })];
 
-			if (!view.state.field(highlightField, false))
+			if (!view.state.field(decorationField, false))
 				effects.push(
-					StateEffect.appendConfig.of([highlightField, highlightTheme])
+					StateEffect.appendConfig.of([decorationField, decorationTheme])
 				);
 
 			view.dispatch({ effects });
@@ -100,7 +100,7 @@ export default (
 		},
 
 		clear(ref, code) {
-			this.unhighlight(ref, 0, code.length);
+			this.undecorate(ref, 0, code.length);
 		},
 	};
 };
