@@ -46,7 +46,7 @@ immediate:
     set((m) => m.$canRun = true);
   messages:
   - "aquí, `LDA #$08` toma 1 byte como argumento, por lo que ocupa 2 bytes"
-  - (el "operation code" y un ocho)
+  - el "código de operación" (<opcode>) y el ocho
   - esto es el modo de direccionamiento "Immediate"
   - donde el argumento es un byte <literal>
   - sigue ⏩

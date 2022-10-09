@@ -46,7 +46,7 @@ immediate:
     set((m) => m.$canRun = true);
   messages:
   - "here, `LDA #$08` takes 1 byte as argument, so it's 2-byte long"
-  - (the "operation code" and the eight)
+  - the "operation code" (<opcode>) and the eight
   - that's the "Immediate" addressing mode
   - where the argument is a <literal> byte
   - keep going ⏩
