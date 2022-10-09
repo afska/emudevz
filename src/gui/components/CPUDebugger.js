@@ -8,6 +8,7 @@ import Level from "../../level/Level";
 import locales from "../../locales";
 import testContext from "../../terminal/commands/test/context";
 import { bus, hex } from "../../utils";
+import TVNoise from "./TVNoise";
 import styles from "./CPUDebugger.module.css";
 
 const WIDTH = 600;
@@ -38,6 +39,7 @@ const asm = testContext.asm;
 export default class CPUDebugger extends PureComponent {
 	state = {
 		_isInitialized: false,
+		_hasCode: false,
 		_hideFlags: false,
 		_hideStack: false,
 		_delay: 500,
@@ -81,6 +83,7 @@ export default class CPUDebugger extends PureComponent {
 
 	render() {
 		if (!this.state._isInitialized) return false;
+		if (!this.state._hasCode) return <TVNoise />;
 
 		if (this.state._error)
 			return (
@@ -328,6 +331,8 @@ export default class CPUDebugger extends PureComponent {
 	}
 
 	_onCode = (code) => {
+		this.setState({ _hasCode: true });
+
 		try {
 			const { instructions, cpu } = asm.prepare(Level.current, code).compile();
 			this._cpu = cpu;
