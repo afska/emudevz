@@ -10,7 +10,7 @@
 `TXA`         ; Transfiere [X] a [A]
   ; variantes: `TAX`, `TYA`, `TAY`
 `ADC #30`     ; Suma 30 a [A] (usando la Bandera Carry)
-`SBC #30`     ; Substracts 30 from [A] (usando la Bandera Carry)
+`SBC #30`     ; Resta 30 a [A] (usando la Bandera Carry)
 `INX`         ; Incrementa [X]
   ; variante con [Y]: `INY`
 `DEX`         ; Decrementa [X]
@@ -20,6 +20,6 @@
   ; variante con [Y]: `CPY`
 `BEQ @jump`   ; Salta a @jump si Z == 1
 `BNE @jump`   ; Salta a @jump si Z == 0
-`JMP $4030`   ; Jumps to $4030 (sets [PC] = $4030)
-`JMP ($4030)` ; Jumps to an address made by $4030 and $4031
+`JMP $4030`   ; Salta a $4030 (asigna [PC] = $4030)
+`JMP ($4030)` ; Salta a una dirección formada por $4030 and $4031
 `BRK`         ; Termina el programa
