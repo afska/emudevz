@@ -1,0 +1,9 @@
+`LDA #$01`  ; Carga el número $01 en el registro [A]
+`LDA $01`   ; Carga el valor de la dirección $1F4B en [A]
+`LDA $1F4B` ; Carga el valor de la dirección $1F4B en [A]
+`STA $4070` ; Escribe [A] en la dirección $4070
+  ; variantes con [X] e [Y]: `LDX`, `STX`, `LDY`, `STY`
+`ADC #30`   ; Suma 30 a [A] (usando la Bandera Carry)
+`SBC #30`   ; Substracts 30 from [A] (usando la Bandera Carry)
+`INX`       ; Incrementa [X]
+  ; variante con [Y]: `INY`

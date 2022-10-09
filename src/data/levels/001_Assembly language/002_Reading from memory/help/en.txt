@@ -1,0 +1,8 @@
+`LDA #$01`  ; Loads the number $01 into the [A] register
+`LDA $01`   ; Loads the value of address $0001 into [A]
+`LDA $1F4B` ; Loads the value of address $1F4B into [A]
+`STA $4070` ; Writes [A] to address $4070
+  ; [X] and [Y] variants: `LDX`, `STX`, `LDY`, `STY`
+`ADC #30`   ; Adds 30 to [A]
+`INX`       ; Increments [X]
+  ; [Y] variant: `INY`

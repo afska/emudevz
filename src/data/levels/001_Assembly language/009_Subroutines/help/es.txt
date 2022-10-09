@@ -1,0 +1,27 @@
+`LDA #$01`    ; Carga el número $01 en el registro [A]
+`LDA $01`     ; Carga el valor de la dirección $1F4B en [A]
+`LDA $1F4B`   ; Carga el valor de la dirección $1F4B en [A]
+`STA $4070`   ; Escribe [A] en la dirección $4070
+`STA $60,X`   ; Escribe [A] en la dirección $60+[X]
+`STA $2030,X` ; Escribe [A] en la dirección $2030+[X]
+`STA ($01,X)` ; = STA ($01+X)
+`STA ($03),Y` ; = STA ($03)+Y
+  ; variantes con [X] e [Y]: `LDX`, `STX`, `LDY`, `STY`
+`ADC #30`     ; Suma 30 a [A] (usando la Bandera Carry)
+`SBC #30`     ; Substracts 30 from [A] (usando la Bandera Carry)
+`INX`         ; Incrementa [X]
+  ; variante con [Y]: `INY`
+`DEX`         ; Decrementa [X]
+  ; variante con [Y]: `DEY`
+@jump:        ; Define una etiqueta que puede ser referenciada luego
+`CPX #3`      ; Asigna el Z=1 si [X] == 3
+  ; variante con [Y]: `CPY`
+`BEQ @jump`   ; Salta a @jump si Z == 1
+`BNE @jump`   ; Salta a @jump si Z == 0
+`JMP $4030`   ; Jumps to $4030 (sets [PC] = $4030)
+`JMP ($4030)` ; Jumps to an address made by $4030 and $4031
+`PHA`         ; Pone [A] en la Pila
+`PLA`         ; Saca de la Pila hacia [A]
+`JSR $4029`   ; Salta a la subrutina en $4029
+`RTS`         ; Salta de vuelta a la instrucción anterior
+`BRK`         ; Termina el programa

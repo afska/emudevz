@@ -1,0 +1,2 @@
+`LDA #$01`  ; Loads the number $01 into the [A] register
+`STA $4070` ; Writes [A] to address $4070
