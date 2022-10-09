@@ -88,7 +88,6 @@ export default class Terminal {
 	}
 
 	async write(text, style = theme.NORMAL, interval = 0, withHighlight = false) {
-		if (text.includes("multi")) debugger;
 		text = this._normalize(text);
 
 		if (withHighlight) {
