@@ -41,6 +41,10 @@
 	margin-bottom: 0 !important;
 }
 
+.selectedCell {
+	filter: sepia(1);
+}
+
 .sentence {
 	color: #c678dd;
 }

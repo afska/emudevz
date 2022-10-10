@@ -8,7 +8,7 @@ main:
         m.$canRun = false;
         m.$canEdit = false;
       });
-      bus.emit("memory-view", 0x0);
+      {{Bottom}}.setMemoryStart(0x0);
     }
   messages: []
   events:
@@ -80,7 +80,7 @@ wrap2:
     set((m) => m.$canRun = false);
   run-after-messages: |
     set((m) => m.$canRun = true);
-    bus.emit("memory-view", 0x4020);
+    {{Bottom}}.setMemoryStart(0x4020);
   messages:
   - as you saw, it wrote $CD to $05
   - the next addressing mode is called "Absolute,X"

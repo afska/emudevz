@@ -47,6 +47,7 @@ export default class CPUDebugger extends PureComponent {
 		_initialCode: null,
 		_memoryStart: 0x4020,
 		_mappings: [],
+		_selectedCells: [],
 		_error: null,
 		A: 0x0,
 		X: 0x0,
@@ -79,6 +80,16 @@ export default class CPUDebugger extends PureComponent {
 
 	setDelay(delay) {
 		this.setState({ _delay: delay });
+	}
+
+	setMemoryStart(memoryStart) {
+		this.setState({ _memoryStart: memoryStart }, () => {
+			this._updateState();
+		});
+	}
+
+	setSelectedCells(selectedCells) {
+		this.setState({ _selectedCells: selectedCells });
 	}
 
 	render() {
@@ -121,7 +132,6 @@ export default class CPUDebugger extends PureComponent {
 			code: this._onCode,
 			step: this._onStep,
 			reset: this._onReset,
-			"memory-view": this._onMemoryView,
 		});
 	}
 
@@ -285,7 +295,11 @@ export default class CPUDebugger extends PureComponent {
 					</Tooltip>
 				}
 			>
-				<td>
+				<td
+					className={
+						this.state._selectedCells.includes(address) && styles.selectedCell
+					}
+				>
 					<Value
 						value={memory[row * BASE + column]}
 						flashDuration={_delay}
@@ -371,12 +385,6 @@ export default class CPUDebugger extends PureComponent {
 
 	_onReset = () => {
 		this._onCode(this.state._lastCode);
-	};
-
-	_onMemoryView = (memoryStart) => {
-		this.setState({ _memoryStart: memoryStart }, () => {
-			this._updateState();
-		});
 	};
 
 	_onRef = (ref) => {

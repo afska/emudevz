@@ -6,7 +6,7 @@ main:
       m.chat.stopBlock = locales.get("not_now");
       m.$canRun = false;
     });
-    bus.emit("memory-view", 0x0);
+    {{Bottom}}.setMemoryStart(0x0);
   messages:
   - now, the most insane ones 😓
   - let's start with "Indexed Indirect"
@@ -57,7 +57,8 @@ step4:
 
 step5:
   run: |
-    bus.emit("memory-view", 0x4020);
+    {{Bottom}}.setMemoryStart(0x4020);
+    {{Bottom}}.setSelectedCells([0x402c, 0x402d]);
   messages: []
   events:
   - step [step6]
@@ -92,6 +93,8 @@ whatwasthat:
   - ...step7
 
 makessense:
+  run: |
+    {{Bottom}}.setSelectedCells([0x4030, 0x4031]);
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:

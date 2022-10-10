@@ -28,6 +28,7 @@ why:
 implicit:
   run: |
     set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4020]);
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
@@ -42,6 +43,7 @@ implicit:
 immediate:
   run: |
     set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4021, 0x4022]);
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
@@ -56,6 +58,7 @@ immediate:
 absolute:
   run: |
     set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4023, 0x4024, 0x4025]);
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
@@ -70,6 +73,7 @@ absolute:
 zeropage:
   run: |
     set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4026, 0x4027]);
   messages:
   - "`LDA $15` also takes a memory address"
   - but a short one, because it's only 1 byte
@@ -93,6 +97,7 @@ samething:
 relative:
   run: |
     set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4028, 0x4029]);
   messages:
   - branching instructions use the "Relative" addressing mode
   - these take a single byte, which is used as an offset from the following instruction
@@ -104,6 +109,8 @@ relative:
   - interesting, so that's how branching works [whoa]
 
 whoa:
+  run: |
+    {{Bottom}}.setSelectedCells([0x4036, 0x4037, 0x4038]);
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
@@ -151,6 +158,7 @@ exercise:
       m.$canEdit = true;
       m.content.useTemp = false;
     });
+    {{Bottom}}.setSelectedCells([]);
   messages:
   - there we go...
   - as an exercise, modify the code by adding an `STY $1001` instruction at the end
