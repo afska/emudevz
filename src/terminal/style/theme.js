@@ -15,6 +15,5 @@ export default {
 	MESSAGE: color(111),
 	INPUT: color(207),
 
-	BG_NORMAL: bgColor(0),
 	BG_NEW: bgColor(44),
 };

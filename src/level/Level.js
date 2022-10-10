@@ -77,9 +77,7 @@ export default class Level {
 
 		return lines
 			.map((it, i) =>
-				this.help?.addLines?.includes(i + 1)
-					? theme.BG_NEW(it) + " "
-					: theme.BG_NORMAL(it) + " "
+				this.help?.addLines?.includes(i + 1) ? theme.BG_NEW(it) : it
 			)
 			.filter((__, i) => levelDefinition.helpLines.includes(i + 1))
 			.join("\n");

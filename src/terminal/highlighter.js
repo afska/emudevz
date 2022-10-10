@@ -12,7 +12,7 @@ export default {
 			/(`[^`]+`)/, // backticks
 			/("[^"]+")/, // quotes
 			/(<[^>]+>)/, // angular brackets
-			/(\[[^\]]+\])/, // square brackets
+			/([^\x1B]\[[^\]]+\])/, // square brackets (ignoring terminal sequences)
 			/(#?\$[0-9a-fA-F]+)/, // [literal] hex numbers
 			/(#[0-9]+)/, // literal dec numbers
 			/(\b[0-9]+\b)/, // numbers

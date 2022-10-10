@@ -95,7 +95,8 @@
         ],
         "rules": {
           "import/no-anonymous-default-export": "off",
-          "no-eval": "off"
+          "no-eval": "off",
+          "no-control-regex": "off"
         }
       }
     ]
