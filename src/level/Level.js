@@ -4,17 +4,17 @@ import layouts from "../gui/components/layouts";
 import locales from "../locales";
 import store from "../store";
 import bus from "../utils/bus";
+import Book from "./Book";
 import ChatScript from "./chat/ChatScript";
 
 export default class Level {
-	constructor(id, metadata, chatScripts, code, tests, help, media) {
+	constructor(id, metadata, chatScripts, code, tests, media) {
 		_.extend(this, metadata);
 
 		this.id = id;
 		this.chatScripts = chatScripts;
 		this.code = code;
 		this.tests = tests;
-		this.help = help;
 		this.media = media;
 
 		this.memory = _.merge(
@@ -65,9 +65,18 @@ export default class Level {
 	}
 
 	get localizedHelp() {
-		if (!this.help) return null;
+		const book = Book.current;
+		const chapter = book.getChapterOf(this.id);
 
-		return this.help[`${locales.language}.txt`] || null;
+		const help = chapter.help[locales.language];
+		if (!help) return null;
+
+		const levelDefinition = book.getLevelDefinitionOf(this.id);
+		const lines = help.split("\n");
+
+		return lines
+			.filter((__, i) => levelDefinition.helpLines.includes(i + 1))
+			.join("\n");
 	}
 
 	fillContentFromTemp() {

@@ -36,5 +36,8 @@
 	"test": {
 		"context": "asm",
 		"precode": "pre.asm"
+	},
+	"help": {
+		"addLines": [7, 8]
 	}
 }

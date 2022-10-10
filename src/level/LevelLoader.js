@@ -10,7 +10,6 @@ const CHAT_FOLDER = "chat";
 const CHAT_EXTENSION = "yml";
 const CODE_FOLDER = "code";
 const TESTS_FOLDER = "tests";
-const HELP_FOLDER = "help";
 const MEDIA_FOLDER = "media";
 
 export default class LevelLoader {
@@ -26,7 +25,6 @@ export default class LevelLoader {
 		const chatScripts = await this._loadChatScripts(zip);
 		const code = await this._loadTextFolder(zip, CODE_FOLDER);
 		const tests = await this._loadTextFolder(zip, TESTS_FOLDER);
-		const help = await this._loadTextFolder(zip, HELP_FOLDER);
 		const media = await this._loadMediaFolder(zip);
 
 		const level = new Level(
@@ -35,7 +33,6 @@ export default class LevelLoader {
 			chatScripts,
 			code,
 			tests,
-			help,
 			media
 		);
 		level.validate();

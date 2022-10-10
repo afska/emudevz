@@ -41,5 +41,8 @@
 		"content": {
 			"useTemp": true
 		}
+	},
+	"help": {
+		"addLines": [16, 17, 18, 19, 20, 21, 22, 29]
 	}
 }

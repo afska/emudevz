@@ -1,2 +1,0 @@
-`LDA #$01`  ; Carga el número $01 en el registro [A]
-`STA $4070` ; Escribe [A] en la dirección $4070

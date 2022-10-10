@@ -6,6 +6,7 @@ const _ = require("lodash");
 
 const LEVELS_PATH = "src/data/levels";
 const OUTPUT_PATH = "public/levels";
+const CHAPTER_HELP_FILES = { en: "$help/en.txt", es: "$help/es.txt" };
 const CHAPTER_METADATA_FILE = "chapter.json";
 const LEVEL_METADATA_FILE = "meta.json";
 const BOOK_FILE = "book.json";
@@ -65,10 +66,20 @@ async function pkg() {
 		const chapter = {
 			name: chapterMetadata.name,
 			levels: [],
+			help: _.mapValues(CHAPTER_HELP_FILES, (helpFile) => {
+				try {
+					return fs.readFileSync($path.join(chapterPath, helpFile)).toString();
+				} catch (e) {
+					return "";
+				}
+			}),
 		};
 		book.chapters.push(chapter);
 
-		const levelFolders = readDirs(chapterPath);
+		const helpLines = [];
+		const levelFolders = readDirs(chapterPath).filter(
+			(it) => !it.startsWith("$")
+		);
 		for (let levelFolder of levelFolders) {
 			const levelPath = $path.join(chapterPath, levelFolder);
 			const [levelId, levelName] = levelFolder.split("_");
@@ -89,9 +100,13 @@ async function pkg() {
 				process.exit(0);
 			}
 
+			if (levelMetadata.help?.addLines != null)
+				helpLines.push(...levelMetadata.help.addLines);
+
 			chapter.levels.push({
 				id: globalLevelId,
 				name: levelMetadata.name,
+				helpLines: _.sortBy([...helpLines]),
 			});
 
 			const outputPath = $path.join(

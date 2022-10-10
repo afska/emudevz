@@ -24,4 +24,14 @@ export default class Book {
 		chapter.number = index + 1;
 		return chapter;
 	}
+
+	getLevelDefinitionOf(levelId) {
+		const chapter = this.getChapterOf(levelId);
+		const levelDefinition = chapter.levels.find(
+			(level) => level.id === levelId
+		);
+		if (!levelDefinition) return null;
+
+		return levelDefinition;
+	}
 }
