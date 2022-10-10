@@ -42,35 +42,35 @@
 }
 
 .selected {
-	filter: brightness(150%);
+	filter: brightness(125%);
 
-	animation-duration: 0.5s;
+	animation-duration: 0.25s;
 	animation-name: select;
 }
 
 .unselected {
-	filter: brightness(100%);
+	filter: brightness(90%);
 
-	animation-duration: 0.5s;
+	animation-duration: 0.25s;
 	animation-name: unselect;
 }
 
 @keyframes select {
 	from {
-		filter: brightness(100%);
+		filter: brightness(90%);
 	}
 
 	to {
-		filter: brightness(150%);
+		filter: brightness(125%);
 	}
 }
 
 @keyframes unselect {
 	from {
-		filter: brightness(150%);
+		filter: brightness(125%);
 	}
 
 	to {
-		filter: brightness(100%);
+		filter: brightness(90%);
 	}
 }

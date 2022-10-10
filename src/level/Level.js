@@ -3,6 +3,7 @@ import components from "../gui/components";
 import layouts from "../gui/components/layouts";
 import locales from "../locales";
 import store from "../store";
+import { theme } from "../terminal/style";
 import bus from "../utils/bus";
 import Book from "./Book";
 import ChatScript from "./chat/ChatScript";
@@ -75,6 +76,11 @@ export default class Level {
 		const lines = help.split("\n");
 
 		return lines
+			.map((it, i) =>
+				this.help?.addLines?.includes(i + 1)
+					? theme.BG_NEW(it) + " "
+					: theme.BG_NORMAL(it) + " "
+			)
 			.filter((__, i) => levelDefinition.helpLines.includes(i + 1))
 			.join("\n");
 	}

@@ -17,13 +17,7 @@ export default class HelpCommand extends Command {
 		else await this._printNormalHelp();
 
 		const help = Level.current.localizedHelp;
-		if (help != null)
-			await this._terminal.writeln(
-				"\n" + help.trim(),
-				undefined,
-				undefined,
-				true
-			);
+		if (help != null) await this._printLevelHelp(help);
 	}
 
 	async _printTerminalHelp() {
@@ -54,6 +48,15 @@ export default class HelpCommand extends Command {
 		await this._terminal.writeln(
 			"\n" + locales.get("help_more"),
 			theme.COMMENT,
+			undefined,
+			true
+		);
+	}
+
+	async _printLevelHelp(help) {
+		await this._terminal.writeln(
+			"\n" + help.trim(),
+			undefined,
 			undefined,
 			true
 		);
