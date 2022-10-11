@@ -62,7 +62,7 @@ step5:
     set((m) => m.$canRun = false);
   messages:
   - esto es lo que pasó
-  - "`CPX #3` activa la Bandera Zero si [X] es igual a 3"
+  - "`CPX #3` 'ComPara' X con 3, y activa la Bandera Zero si son iguales"
   - "`BNE @decrement` salta a esa etiqueta si la Bandera Zero no está activada"
   - como [X] tiene un 7, entonces Z sigue siendo 0
   - y como Z es 0, `BNE @decrement` saltó 🦘
