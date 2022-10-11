@@ -25,5 +25,10 @@
 	},
 	"test": {
 		"context": "javascript"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
 	}
 }

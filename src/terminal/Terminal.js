@@ -44,25 +44,8 @@ export default class Terminal {
 		this._shell = new Shell(this);
 		this._currentProgram = null;
 
-		this._xterm.onData((data) => {
-			this._onData(data);
-		});
-		this._xterm.attachCustomKeyEventHandler((e) => {
-			this._onKey(e);
-		});
-		this._xterm.onResize((e) => {
-			this._onResize(e);
-		});
-
-		this._subscriber = bus.subscribe({
-			run: async (commandLine) => {
-				await this.interrupt(true);
-				await async.sleep();
-				while (this._stopFlag) await async.sleep();
-				await this.writeln(commandLine, undefined, BUS_RUN_SPEED);
-				await this._shell.runLine(commandLine);
-			},
-		});
+		this._setUpXtermHooks();
+		this._setUpRemoteCommandSubscriber();
 	}
 
 	async start(
@@ -363,6 +346,37 @@ export default class Terminal {
 			await this.write("⚠️  " + locales.get("resize_warning"), theme.ACCENT);
 			this.cancelPrompt();
 		}
+	}
+
+	_setUpXtermHooks() {
+		this._xterm.onData((data) => {
+			this._onData(data);
+		});
+		this._xterm.attachCustomKeyEventHandler((e) => {
+			this._onKey(e);
+		});
+		this._xterm.onResize((e) => {
+			this._onResize(e);
+		});
+	}
+
+	_setUpRemoteCommandSubscriber() {
+		this._subscriber = bus.subscribe({
+			run: async (commandLine) => {
+				if (this._isRunningRemoteCommand) return;
+
+				try {
+					this._isRunningRemoteCommand = true;
+					await this.interrupt(true);
+					await async.sleep();
+					while (this._stopFlag) await async.sleep();
+					await this.writeln(commandLine, undefined, BUS_RUN_SPEED);
+					await this._shell.runLine(commandLine);
+				} finally {
+					this._isRunningRemoteCommand = false;
+				}
+			},
+		});
 	}
 
 	_requestInterrupt() {
