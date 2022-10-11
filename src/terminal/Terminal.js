@@ -5,6 +5,7 @@ import { async, bus } from "../utils";
 import { ansiEscapes } from "../utils/cli";
 import PendingInput, { PendingKey } from "./PendingInput";
 import Shell from "./Shell";
+import { CANCELED, DISPOSED, INTERRUPTED } from "./errors";
 import highlighter from "./highlighter";
 import { theme } from "./style";
 
@@ -22,9 +23,6 @@ const TABULATION_REGEXP = /\t/g;
 const TABULATION = "  ";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
-const CANCELED = "canceled";
-const INTERRUPTED = "interrupted";
-const DISPOSED = "disposed";
 
 // Program interface:
 // - async run(args) -> void
@@ -74,8 +72,8 @@ export default class Terminal {
 		}
 	}
 
-	async restart() {
-		await this.run(this._shell);
+	restart() {
+		this.run(this._shell);
 	}
 
 	async writeln(text, style, interval, withHighlight) {
@@ -183,17 +181,17 @@ export default class Terminal {
 		}
 	}
 
-	async interrupt(ignoreShells = false) {
-		if (this._currentProgram.isShell && ignoreShells) return;
-
+	async interrupt() {
 		const wasExpectingInput = this.isExpectingInput;
 		const wasExpectingKey = this.isExpectingKey;
+
+		const isShell = this._currentProgram.isShell;
 
 		if (this._currentProgram.onStop()) {
 			this.cancelPrompt(INTERRUPTED);
 			this.cancelKey(INTERRUPTED);
 			await this.break();
-			await this.newline();
+			if (!isShell) await this.newline();
 			if (!wasExpectingInput && !wasExpectingKey) this._requestInterrupt();
 		}
 	}
@@ -363,17 +361,17 @@ export default class Terminal {
 	_setUpRemoteCommandSubscriber() {
 		this._subscriber = bus.subscribe({
 			run: async (commandLine) => {
-				if (this._isRunningRemoteCommand) return;
+				if (this._isWritingRemoteCommand) return;
 
 				try {
-					this._isRunningRemoteCommand = true;
-					await this.interrupt(true);
-					await async.sleep();
+					this._isWritingRemoteCommand = true;
+					await this.interrupt();
 					while (this._stopFlag) await async.sleep();
+					while (!this._currentProgram.isShell) await async.sleep();
 					await this.writeln(commandLine, undefined, BUS_RUN_SPEED);
-					await this._shell.runLine(commandLine);
+					this._shell.runLine(commandLine);
 				} finally {
-					this._isRunningRemoteCommand = false;
+					this._isWritingRemoteCommand = false;
 				}
 			},
 		});

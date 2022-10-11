@@ -5,6 +5,7 @@ import ChatScript from "../../level/chat/ChatScript";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import { bus } from "../../utils";
+import { CANCELED } from "../errors";
 import { theme } from "../style";
 import Command from "./Command";
 
@@ -152,7 +153,7 @@ export default class ChatCommand extends Command {
 					const response = await this._terminal.waitForKey();
 					command.selectedResponse = getResponse(response);
 				} catch (e) {
-					if (e !== "canceled") throw e;
+					if (e !== CANCELED) throw e;
 				}
 			}
 			await this._showResponse(command.selectedResponse);

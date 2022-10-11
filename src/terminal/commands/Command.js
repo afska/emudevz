@@ -1,4 +1,5 @@
 import locales from "../../locales";
+import { INTERRUPTED } from "../errors";
 
 export default class Command {
 	static get name() {
@@ -18,7 +19,7 @@ export default class Command {
 		try {
 			await this.execute(this._args, this._shell);
 		} catch (e) {
-			if (e !== "interrupted") throw e;
+			if (e !== INTERRUPTED) throw e;
 		}
 
 		this._terminal.restart();

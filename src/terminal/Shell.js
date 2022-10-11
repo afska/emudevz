@@ -13,8 +13,7 @@ export default class Shell {
 			const commandLine = await this._getNextCommandLine();
 			await this.runLine(commandLine);
 		} catch (e) {
-			if (e !== "interrupted" && e !== "canceled") throw e;
-			this.run();
+			if (!e.isUserEvent) throw e;
 		}
 	}
 
@@ -30,11 +29,11 @@ export default class Shell {
 			await this.terminal.writeln(
 				`${commandName}: ${locales.get("shell_command_not_found")}`
 			);
-			this.run();
+			this.terminal.restart();
 			return;
 		}
 
-		this.terminal.run(new Command(args, this));
+		await this.terminal.run(new Command(args, this));
 	}
 
 	async _getNextCommandLine() {
@@ -43,12 +42,5 @@ export default class Shell {
 		while (commandLine === "") commandLine = await this.terminal.prompt();
 
 		return commandLine;
-	}
-
-	onStop() {
-		this.terminal.cancelPrompt();
-		this.terminal.break();
-
-		return false;
 	}
 }
