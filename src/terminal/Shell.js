@@ -4,6 +4,7 @@ import commands from "./commands";
 export default class Shell {
 	constructor(terminal) {
 		this.terminal = terminal;
+		this.isShell = true;
 		this.availableCommands = [];
 	}
 

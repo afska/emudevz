@@ -45,7 +45,11 @@ class CodeEditor extends PureComponent {
 		run: {
 			icon: FaPlay,
 			tooltip: locales.get("run"),
-			run: () => bus.emit("run", "test"),
+			run: () => {
+				bus.emit("run", "test");
+				const { onRunFocus } = this._args;
+				if (onRunFocus != null) this._layout.focus(onRunFocus);
+			},
 		},
 		step: {
 			icon: FaStepForward,
@@ -67,8 +71,10 @@ class CodeEditor extends PureComponent {
 		},
 	};
 
-	async initialize(args, level) {
+	async initialize(args, level, layout) {
+		this._args = args;
 		this._level = level;
+		this._layout = layout;
 
 		const { language, initialCodeFile } = args;
 		if (LANGUAGES[language]) this.setState({ language });

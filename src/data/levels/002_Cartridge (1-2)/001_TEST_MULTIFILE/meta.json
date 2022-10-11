@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "TEST JAVASCRIPT!!!",
-		"es": "TEST DE JAVASCRIPT!!!"
+		"en": "TEST Multifile!",
+		"es": "TEST Multifile"
 	},
 	"ui": {
 		"layout": "dual",
@@ -17,8 +17,7 @@
 				"code",
 				{
 					"language": "javascript",
-					"action": "run",
-					"onRunFocus": "Left"
+					"action": "run"
 				}
 			]
 		},

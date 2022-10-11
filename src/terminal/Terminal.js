@@ -8,6 +8,7 @@ import Shell from "./Shell";
 import highlighter from "./highlighter";
 import { theme } from "./style";
 
+const BUS_RUN_SPEED = 30;
 const KEY_FULLSCREEN = "[23~";
 const KEY_REFRESH_1 = "[15~";
 const KEY_REFRESH_2 = "";
@@ -55,10 +56,10 @@ export default class Terminal {
 
 		this._subscriber = bus.subscribe({
 			run: async (commandLine) => {
-				await this.interrupt();
+				await this.interrupt(true);
 				await async.sleep();
 				while (this._stopFlag) await async.sleep();
-				await this.writeln(commandLine);
+				await this.writeln(commandLine, undefined, BUS_RUN_SPEED);
 				await this._shell.runLine(commandLine);
 			},
 		});
@@ -199,7 +200,9 @@ export default class Terminal {
 		}
 	}
 
-	async interrupt() {
+	async interrupt(ignoreShells = false) {
+		if (this._currentProgram.isShell && ignoreShells) return;
+
 		const wasExpectingInput = this.isExpectingInput;
 		const wasExpectingKey = this.isExpectingKey;
 

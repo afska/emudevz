@@ -36,7 +36,7 @@ class LevelScreen extends PureComponent {
 
 				_.forEach(runningComponents, (runningComponent, name) => {
 					const [, args] = level.ui.components[name];
-					runningComponent.initialize(args, level);
+					runningComponent.initialize(args, level, layout);
 				});
 
 				this.$timeouts.push(
