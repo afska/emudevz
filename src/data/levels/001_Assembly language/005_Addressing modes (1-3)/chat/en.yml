@@ -163,7 +163,7 @@ exercise:
   - there we go...
   - as an exercise, modify the code by adding an `STY $1001` instruction at the end
   - then an `INX` instruction
-  - and lastly, change lines 11 and 13 so the indirect `JMP` goes directly into the new `INX` 👀
+  - and lastly, change lines 10 and 12 so the indirect `JMP` goes directly into the new `INX` 👀
   - (instead of jumping backwards, it should skip the `STY` and jump to our new last instruction)
   - ⚠️  don't change the `JMP` itself, the idea is that the same `JMP ($4080)` jumps to another place
   - you'll need to look the address of the last `INX` inside the compiled code

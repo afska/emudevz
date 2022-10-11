@@ -163,7 +163,7 @@ exercise:
   - ahí está...
   - como ejercicio, modifica el código agregando una instrucción `STY $1001` al final
   - luego una instrucción `INX`
-  - y por último, cambia las líneas 11 y 13 para que el `JMP` indirecto vaya directamente a la nueva `INX` 👀
+  - y por último, cambia las líneas 10 y 12 para que el `JMP` indirecto vaya directamente a la nueva `INX` 👀
   - (en vez de saltar hacia atrás, debería omitir `STY` y saltar a nuestra nueva última instrucción)
   - ⚠️  no cambies el `JMP` en sí mismo, la idea es que el mismo `JMP ($4080)` salte a otro lugar
   - necesitarás mirar la dirección del último `INX` dentro del código compilado
