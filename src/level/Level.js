@@ -50,7 +50,7 @@ export default class Level {
 			this.setMemory((memory) => {
 				memory.content.temp = value;
 			});
-		else store.dispatch.files.setCurrentLevelContent(value);
+		else store.dispatch.content.setCurrentLevelContent(value);
 	}
 
 	get hasStoredContent() {
@@ -58,7 +58,7 @@ export default class Level {
 	}
 
 	get storedContent() {
-		return store.getState().files.levels[this.id] || "";
+		return store.getState().content.levels[this.id] || "";
 	}
 
 	get tempContent() {
@@ -85,7 +85,7 @@ export default class Level {
 
 	fillContentFromTemp() {
 		if (!this.hasStoredContent)
-			store.dispatch.files.setCurrentLevelContent(this.tempContent);
+			store.dispatch.content.setCurrentLevelContent(this.tempContent);
 	}
 
 	setMemory(change) {

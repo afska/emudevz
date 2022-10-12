@@ -1,17 +1,10 @@
 import { createTransform } from "redux-persist";
 import _ from "lodash";
 
-const KEY = "files";
+const KEY = "content";
 const KEY_PREFIX = "persist:emudevz:level-";
 const INITIAL_STATE = () => ({
 	levels: {},
-	filesystem: {
-		path: "/",
-		parent: null,
-		isReadOnly: true,
-		isDirectory: true,
-		children: [],
-	},
 });
 
 export const transform = createTransform(
@@ -41,9 +34,6 @@ export default {
 	reducers: {
 		setLevelContent(state, { levelId, content }) {
 			return { ...state, levels: { ...state.levels, [levelId]: content } };
-		},
-		setFilesystem(state, filesystem) {
-			return { ...state, filesystem };
 		},
 		reset() {
 			return INITIAL_STATE();

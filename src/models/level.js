@@ -43,7 +43,7 @@ export default {
 			},
 
 			resetProgress(__, _state_) {
-				_dispatch_.files.setCurrentLevelContent("");
+				_dispatch_.content.setCurrentLevelContent("");
 
 				setTimeout(() => {
 					const state = _state_[KEY];
