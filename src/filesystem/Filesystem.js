@@ -15,4 +15,8 @@ export default class Filesystem {
 	mkdir(path) {
 		this.fs.mkdirSync(path);
 	}
+
+	write(path, data) {
+		this.fs.writeFileSync(path, data);
+	}
 }
