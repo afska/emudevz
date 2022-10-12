@@ -34,7 +34,7 @@ export default class Filesystem {
 	}
 
 	rmdir(path) {
-		// this.fs.rmdir; // TODO
+		this.fs.rmdirSync(path);
 	}
 
 	mv(oldPath, newPath) {
