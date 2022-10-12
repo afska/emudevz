@@ -1,21 +1,12 @@
 import filesystem from "../../../filesystem";
-import { theme } from "../../style";
-import Command from "../Command";
+import FilesystemCommand from "./FilesystemCommand";
 
-export default class RmCommand extends Command {
+export default class RmCommand extends FilesystemCommand {
 	static get name() {
 		return "rm";
 	}
 
-	static get isHelpCollapsed() {
-		return true;
-	}
-
-	async execute() {
-		try {
-			filesystem.rm(this._args[0]);
-		} catch (e) {
-			this._terminal.writeln("❌  " + theme.ERROR(e.message));
-		}
+	async _execute() {
+		filesystem.rm(this._args[0]);
 	}
 }

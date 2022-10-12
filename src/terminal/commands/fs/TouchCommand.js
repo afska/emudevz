@@ -1,21 +1,12 @@
 import filesystem from "../../../filesystem";
-import { theme } from "../../style";
-import Command from "../Command";
+import FilesystemCommand from "./FilesystemCommand";
 
-export default class TouchCommand extends Command {
+export default class TouchCommand extends FilesystemCommand {
 	static get name() {
 		return "touch";
 	}
 
-	static get isHelpCollapsed() {
-		return true;
-	}
-
-	async execute() {
-		try {
-			filesystem.write(this._args[0], this._args[1]); // TODO: TEST!
-		} catch (e) {
-			this._terminal.writeln("❌  " + theme.ERROR(e.message));
-		}
+	async _execute() {
+		filesystem.write(this._args[0], this._args[1]); // TODO: TEST!
 	}
 }

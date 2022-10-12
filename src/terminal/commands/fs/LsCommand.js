@@ -1,21 +1,12 @@
 import filesystem from "../../../filesystem";
-import { theme } from "../../style";
-import Command from "../Command";
+import FilesystemCommand from "./FilesystemCommand";
 
-export default class LsCommand extends Command {
+export default class LsCommand extends FilesystemCommand {
 	static get name() {
 		return "ls";
 	}
 
-	static get isHelpCollapsed() {
-		return true;
-	}
-
-	async execute() {
-		try {
-			this._terminal.writeln(JSON.stringify(filesystem.ls("/"), null, 2));
-		} catch (e) {
-			this._terminal.writeln("❌  " + theme.ERROR(e.message));
-		}
+	async _execute() {
+		this._terminal.writeln(JSON.stringify(filesystem.ls("/"), null, 2));
 	}
 }

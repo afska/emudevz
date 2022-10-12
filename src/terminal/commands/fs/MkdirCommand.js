@@ -1,21 +1,12 @@
 import filesystem from "../../../filesystem";
-import { theme } from "../../style";
-import Command from "../Command";
+import FilesystemCommand from "./FilesystemCommand";
 
-export default class LsCommand extends Command {
+export default class MkdirCommand extends FilesystemCommand {
 	static get name() {
 		return "mkdir";
 	}
 
-	static get isHelpCollapsed() {
-		return true;
-	}
-
-	async execute() {
-		try {
-			filesystem.mkdir(this._args[0]);
-		} catch (e) {
-			this._terminal.writeln("❌  " + theme.ERROR(e.message));
-		}
+	async _execute() {
+		filesystem.mkdir(this._args[0]);
 	}
 }
