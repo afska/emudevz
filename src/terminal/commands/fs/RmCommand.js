@@ -7,6 +7,7 @@ export default class RmCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		filesystem.rm(this._args[0]);
+		const path = this._resolve(this._args[0]);
+		filesystem.rm(path);
 	}
 }

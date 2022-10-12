@@ -7,6 +7,7 @@ export default class OpenCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		this._terminal.writeln(filesystem.read(this._args[0]));
+		const path = this._resolve(this._args[0]);
+		this._terminal.writeln(filesystem.read(path));
 	}
 }

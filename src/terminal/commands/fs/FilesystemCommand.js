@@ -24,7 +24,8 @@ export default class FilesystemCommand extends Command {
 	}
 
 	_resolve(path) {
-		if (!path) throw new Error("A path is required");
+		if (path == null) throw new Error("A path is required");
+
 		process.$setCwd(this._shell.workingDirectory);
 		return $path.resolve(path);
 	}

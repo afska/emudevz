@@ -7,6 +7,8 @@ export default class MvCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		filesystem.mv(this._args[0], this._args[1]);
+		const oldPath = this._resolve(this._args[0]);
+		const newPath = this._resolve(this._args[1]);
+		filesystem.mv(oldPath, newPath);
 	}
 }

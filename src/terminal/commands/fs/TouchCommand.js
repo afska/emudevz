@@ -7,6 +7,7 @@ export default class TouchCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		filesystem.write(this._args[0], this._args[1]); // TODO: TEST!
+		const path = this._resolve(this._args[0]);
+		filesystem.write(path, this._args[1]); // TODO: TEST!
 	}
 }

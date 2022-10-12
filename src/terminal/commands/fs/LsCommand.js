@@ -7,6 +7,7 @@ export default class LsCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		this._terminal.writeln(JSON.stringify(filesystem.ls("/"), null, 2));
+		const path = this._resolve(this._args[0] || "");
+		this._terminal.writeln(JSON.stringify(filesystem.ls(path), null, 2));
 	}
 }
