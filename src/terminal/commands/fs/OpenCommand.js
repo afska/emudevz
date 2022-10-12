@@ -2,9 +2,9 @@ import filesystem from "../../../filesystem";
 import { theme } from "../../style";
 import Command from "../Command";
 
-export default class TouchCommand extends Command {
+export default class OpenCommand extends Command {
 	static get name() {
-		return "touch";
+		return "open";
 	}
 
 	static get isHelpCollapsed() {
@@ -13,7 +13,7 @@ export default class TouchCommand extends Command {
 
 	async execute() {
 		try {
-			filesystem.write(this._args[0], this._args[1]); // TODO: TEST!
+			this._terminal.writeln(filesystem.read(this._args[0]));
 		} catch (e) {
 			this._terminal.writeln("❌  " + theme.ERROR(e.message));
 		}
