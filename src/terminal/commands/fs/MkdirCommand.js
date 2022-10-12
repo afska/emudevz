@@ -7,7 +7,7 @@ export default class MkdirCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		const path = this._resolve(this._args[0]);
+		const path = this._resolve(this._args[0], true);
 		filesystem.mkdir(path);
 	}
 }

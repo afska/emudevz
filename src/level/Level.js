@@ -41,6 +41,10 @@ export default class Level {
 		return store.getState().level.instance;
 	}
 
+	static get readOnlyPaths() {
+		return ["/", "/media", "/roms"];
+	}
+
 	get content() {
 		return this.memory.content.useTemp ? this.tempContent : this.storedContent;
 	}

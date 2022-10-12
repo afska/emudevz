@@ -1,4 +1,5 @@
 import $path from "path";
+import Level from "../../../level/Level";
 import { theme } from "../../style";
 import Command from "../Command";
 
@@ -23,10 +24,15 @@ export default class FilesystemCommand extends Command {
 		throw new Error("not_implemented");
 	}
 
-	_resolve(path) {
+	_resolve(path, isWrite = false) {
 		if (path == null) throw new Error("A path is required");
 
 		process.$setCwd(this._shell.workingDirectory);
-		return $path.resolve(path);
+		const absolutePath = $path.resolve(path);
+		const parsedPath = $path.parse(absolutePath);
+		if (isWrite && Level.readOnlyPaths.some((it) => parsedPath.dir === it))
+			throw new Error(`EPERM: opeartion not permitted., '${absolutePath}'`);
+
+		return absolutePath;
 	}
 }
