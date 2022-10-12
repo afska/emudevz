@@ -1,18 +1,18 @@
-import store from "../store";
-import Directory from "./Directory";
-
 export default class Filesystem {
 	constructor() {
-		this.metadata = this._load(store.getState().files.filesystem);
+		const BrowserFS = require("browserfs");
+
+		BrowserFS.configure({ fs: "LocalStorage" }, (e) => {
+			if (e != null) throw new Error("Failed to initialized BrowserFS");
+			this.fs = BrowserFS.BFSRequire("fs");
+		});
 	}
 
-	_load(obj) {
-		if (obj.isDirectory) {
-			const directory = new Directory(obj.path, obj.parent, obj.isReadOnly);
-			directory.children = obj.children.map((it) => this._load(it));
-			return directory;
-		} else {
-			return new File(obj.path, obj.parent, obj.isReadOnly);
-		}
+	ls(path) {
+		return this.fs.readdirSync(path);
+	}
+
+	mkdir(path) {
+		this.fs.mkdirSync(path);
 	}
 }

@@ -3,10 +3,10 @@ import Command from "../Command";
 
 export default class LsCommand extends Command {
 	static get name() {
-		return "ls";
+		return "mkdir";
 	}
 
 	async execute() {
-		this._terminal.writeln(JSON.stringify(filesystem.ls("/"), null, 2));
+		filesystem.mkdir(this._args[0]);
 	}
 }
