@@ -1,4 +1,5 @@
 import filesystem from "../../../filesystem";
+import { theme } from "../../style";
 import Command from "../Command";
 
 export default class LsCommand extends Command {
@@ -7,6 +8,10 @@ export default class LsCommand extends Command {
 	}
 
 	async execute() {
-		this._terminal.writeln(JSON.stringify(filesystem.ls("/"), null, 2));
+		try {
+			this._terminal.writeln(JSON.stringify(filesystem.ls("/"), null, 2));
+		} catch (e) {
+			this._terminal.writeln("❌  " + theme.ERROR(e.message));
+		}
 	}
 }

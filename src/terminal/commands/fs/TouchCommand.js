@@ -1,4 +1,5 @@
 import filesystem from "../../../filesystem";
+import { theme } from "../../style";
 import Command from "../Command";
 
 export default class TouchCommand extends Command {
@@ -7,6 +8,10 @@ export default class TouchCommand extends Command {
 	}
 
 	async execute() {
-		filesystem.write(this._args[0], "");
+		try {
+			filesystem.write(this._args[0], "");
+		} catch (e) {
+			this._terminal.writeln("❌  " + theme.ERROR(e.message));
+		}
 	}
 }

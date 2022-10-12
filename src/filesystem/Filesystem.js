@@ -19,4 +19,12 @@ export default class Filesystem {
 	write(path, data) {
 		this.fs.writeFileSync(path, data);
 	}
+
+	rm(path) {
+		this.fs.unlinkSync(path);
+	}
+
+	rmdir(path) {
+		// this.fs.rmdir; // TODO
+	}
 }
