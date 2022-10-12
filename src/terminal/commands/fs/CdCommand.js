@@ -1,3 +1,4 @@
+import $path from "path";
 import filesystem from "../../../filesystem";
 import { theme } from "../../style";
 import Command from "../Command";
@@ -13,8 +14,11 @@ export default class CdCommand extends Command {
 
 	async execute() {
 		try {
-			const stat = filesystem.stat(this._args[0]);
-			if (stat.isDirectory()) this._shell.workingDirectory = this._args[0];
+			process.$setCwd(this._shell.workingDirectory);
+			const path = $path.resolve(this._args[0]);
+
+			const stat = filesystem.stat(path);
+			if (stat.isDirectory()) this._shell.workingDirectory = path;
 			else throw new Error("not a directoryyyyyyyyy");
 		} catch (e) {
 			this._terminal.writeln("❌  " + theme.ERROR(e.message));
