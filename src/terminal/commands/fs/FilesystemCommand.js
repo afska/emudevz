@@ -1,5 +1,5 @@
 import $path from "path";
-import Level from "../../../level/Level";
+import { READONLY_PATHS } from "../../../filesystem";
 import { theme } from "../../style";
 import Command from "../Command";
 
@@ -30,7 +30,7 @@ export default class FilesystemCommand extends Command {
 		process.$setCwd(this._shell.workingDirectory);
 		const absolutePath = $path.resolve(path);
 		const parsedPath = $path.parse(absolutePath);
-		if (isWrite && Level.readOnlyPaths.some((it) => parsedPath.dir === it))
+		if (isWrite && READONLY_PATHS.some((it) => parsedPath.dir === it))
 			throw new Error(`EPERM: opeartion not permitted., '${absolutePath}'`);
 
 		return absolutePath;
