@@ -5,7 +5,7 @@ import { theme } from "../style";
 import commands from ".";
 import Command from "./Command";
 
-const NEWLINE = "\r\n";
+const NEWLINE = "\n";
 const SPACING = 10;
 
 export default class HelpCommand extends Command {
@@ -14,20 +14,27 @@ export default class HelpCommand extends Command {
 	}
 
 	async execute() {
-		if (this._isTerminal) await this._printTerminalHelp();
-		else await this._printNormalHelp();
+		await this._printNormalHelp();
+
+		if (this._isAll) {
+			await this._printTerminalHelp();
+		} else {
+			await this._terminal.writeln(
+				locales.get("help_more"),
+				theme.COMMENT,
+				undefined,
+				true
+			);
+		}
 
 		const help = Level.current.localizedHelp;
-		if (help != null) await this._printLevelHelp(help);
-	}
-
-	async _printTerminalHelp() {
-		await this._terminal.writeln(
-			locales.get("help_terminal"),
-			undefined,
-			undefined,
-			true
-		);
+		if (this._isAll && help != null) {
+			await this._terminal.writeln(
+				NEWLINE + locales.get("help_level"),
+				theme.COMMENT
+			);
+			await this._printLevelHelp(help);
+		}
 	}
 
 	async _printNormalHelp() {
@@ -41,6 +48,7 @@ export default class HelpCommand extends Command {
 			availableCommands
 				.filter(findCommand)
 				.map(findCommand)
+				.filter((it) => !it.isHelpCollapsed || this._isAll)
 				.map(
 					(it) =>
 						theme.SYSTEM(it.name.padEnd(SPACING)) +
@@ -49,25 +57,23 @@ export default class HelpCommand extends Command {
 				)
 				.join(NEWLINE)
 		);
+		await this._terminal.newline();
+	}
 
+	async _printTerminalHelp() {
 		await this._terminal.writeln(
-			"\n" + locales.get("help_more"),
-			theme.COMMENT,
+			locales.get("help_terminal"),
+			undefined,
 			undefined,
 			true
 		);
 	}
 
 	async _printLevelHelp(help) {
-		await this._terminal.writeln(
-			"\n" + help.trim(),
-			undefined,
-			undefined,
-			true
-		);
+		await this._terminal.writeln(help.trim(), undefined, undefined, true);
 	}
 
-	get _isTerminal() {
-		return this._includes("-t");
+	get _isAll() {
+		return this._includes("-a");
 	}
 }

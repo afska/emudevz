@@ -7,6 +7,10 @@ export default class TouchCommand extends Command {
 		return "touch";
 	}
 
+	static get isHelpCollapsed() {
+		return true;
+	}
+
 	async execute() {
 		try {
 			filesystem.write(this._args[0], "");

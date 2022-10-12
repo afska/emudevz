@@ -7,6 +7,10 @@ export default class RmCommand extends Command {
 		return "rm";
 	}
 
+	static get isHelpCollapsed() {
+		return true;
+	}
+
 	async execute() {
 		try {
 			filesystem.rm(this._args[0]);

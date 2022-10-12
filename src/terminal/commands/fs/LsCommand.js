@@ -7,6 +7,10 @@ export default class LsCommand extends Command {
 		return "ls";
 	}
 
+	static get isHelpCollapsed() {
+		return true;
+	}
+
 	async execute() {
 		try {
 			this._terminal.writeln(JSON.stringify(filesystem.ls("/"), null, 2));

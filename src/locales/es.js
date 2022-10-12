@@ -13,7 +13,8 @@ export default {
 	command_test_description: "Prueba tu solución.",
 	goBack: "Volver",
 	help_basic: "💬  Si te bloqueas, corre el comando `help`...",
-	help_more: "💬  Para ayuda adicional, corre `help -t`",
+	help_level: "✨  Ayuda del nivel:",
+	help_more: "💬  Para ayuda adicional, corre `help -a",
 	help_terminal:
 		"🛑  Cerrar app:\n   `Ctrl+C`\n🕑  Acelerar chat:\n   `Enter`\n📜  Scrollear terminal:\n   `Ctrl+Shift+PageUp` y `Ctrl+Shift+PageDown` (o rueda del mouse)\n📋  Copiar/pegar:\n   `Ctrl+Shift+C` y `Ctrl+Shift+V`\n♐  Cambiar panel activo:\n   `Alt+{DirectionalKey}` (o click del mouse)\n▶️  Ejecutar código:\n   `Alt+Enter`",
 	language: "Idioma",

@@ -10,6 +10,10 @@ export default class Command {
 		return locales.get(`command_${this.name}_description`);
 	}
 
+	static get isHelpCollapsed() {
+		return false;
+	}
+
 	constructor(args, shell) {
 		this._args = args;
 		this._shell = shell;

@@ -7,6 +7,10 @@ export default class LsCommand extends Command {
 		return "mkdir";
 	}
 
+	static get isHelpCollapsed() {
+		return true;
+	}
+
 	async execute() {
 		try {
 			filesystem.mkdir(this._args[0]);
