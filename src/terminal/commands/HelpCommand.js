@@ -16,25 +16,24 @@ export default class HelpCommand extends Command {
 	async execute() {
 		await this._printNormalHelp();
 
-		if (this._isAll) {
-			await this._printTerminalHelp();
-		} else {
-			await this._terminal.writeln(
-				locales.get("help_more"),
-				theme.COMMENT,
-				undefined,
-				true
-			);
-		}
-
 		const help = Level.current.localizedHelp;
-		if (this._isAll && help != null) {
+		if (help != null) {
 			await this._terminal.writeln(
 				NEWLINE + locales.get("help_level"),
 				theme.COMMENT
 			);
 			await this._printLevelHelp(help);
 		}
+
+		if (this._isAll) await this._printTerminalHelp();
+
+		if (!this._isAll)
+			await this._terminal.writeln(
+				NEWLINE + locales.get("help_more"),
+				theme.COMMENT,
+				undefined,
+				true
+			);
 	}
 
 	async _printNormalHelp() {
@@ -57,12 +56,11 @@ export default class HelpCommand extends Command {
 				)
 				.join(NEWLINE)
 		);
-		await this._terminal.newline();
 	}
 
 	async _printTerminalHelp() {
 		await this._terminal.writeln(
-			locales.get("help_terminal"),
+			NEWLINE + locales.get("help_terminal"),
 			undefined,
 			undefined,
 			true
