@@ -1,6 +1,7 @@
 import _ from "lodash";
 import locales from "../locales";
 import commands from "./commands";
+import { DISPOSED } from "./errors";
 
 export default class Shell {
 	constructor(terminal) {
@@ -15,6 +16,7 @@ export default class Shell {
 			await this.runLine(commandLine);
 		} catch (e) {
 			if (!e.isUserEvent) throw e;
+			if (e !== DISPOSED) this.terminal.restart();
 		}
 	}
 
@@ -37,6 +39,10 @@ export default class Shell {
 		}
 
 		await this.terminal.run(new Command(args, this));
+	}
+
+	onStop() {
+		return true;
 	}
 
 	async _getNextCommandLine() {
