@@ -14,7 +14,7 @@ export default class HelpCommand extends Command {
 	}
 
 	async execute() {
-		await this._printNormalHelp();
+		await this._printCommandsHelp();
 
 		const help = Level.current.localizedHelp;
 		if (help != null) {
@@ -36,18 +36,23 @@ export default class HelpCommand extends Command {
 			);
 	}
 
-	async _printNormalHelp() {
+	async _printCommandsHelp() {
 		const findCommand = (it) => commands.find((command) => command.name === it);
 
 		const availableCommands = _.isEmpty(this._shell.availableCommands)
 			? commands.map((it) => it.name)
 			: this._shell.availableCommands;
 
+		let more = false;
 		await this._terminal.writeln(
 			availableCommands
 				.filter(findCommand)
 				.map(findCommand)
-				.filter((it) => !it.isHelpCollapsed || this._isAll)
+				.filter((it) => {
+					const show = !it.isHelpCollapsed || this._isAll;
+					if (!show) more = true;
+					return show;
+				})
 				.map(
 					(it) =>
 						theme.SYSTEM(it.name.padEnd(SPACING)) +
@@ -56,6 +61,7 @@ export default class HelpCommand extends Command {
 				)
 				.join(NEWLINE)
 		);
+		if (more) await this._terminal.writeln("<...>", theme.ACCENT);
 	}
 
 	async _printTerminalHelp() {
