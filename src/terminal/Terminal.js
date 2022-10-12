@@ -10,6 +10,7 @@ import highlighter from "./highlighter";
 import { theme } from "./style";
 
 const BUS_RUN_SPEED = 30;
+const REMOTE_RUN_TIMEOUT = 3000;
 const KEY_FULLSCREEN = "[23~";
 const KEY_REFRESH_1 = "[15~";
 const KEY_REFRESH_2 = "";
@@ -366,10 +367,18 @@ export default class Terminal {
 				try {
 					this._isWritingRemoteCommand = true;
 					await this.interrupt();
+					await async.sleep();
 					while (this._stopFlag) await async.sleep();
-					while (!this._currentProgram.isShell) await async.sleep();
-					await this.writeln(commandLine, undefined, BUS_RUN_SPEED);
-					this._shell.runLine(commandLine);
+					let wait = 0;
+					while (!this._currentProgram.isShell) {
+						await async.sleep();
+						wait++;
+						if (wait > REMOTE_RUN_TIMEOUT) break;
+					}
+					if (wait <= REMOTE_RUN_TIMEOUT) {
+						await this.writeln(commandLine, undefined, BUS_RUN_SPEED);
+						this._shell.runLine(commandLine);
+					}
 				} finally {
 					this._isWritingRemoteCommand = false;
 				}
