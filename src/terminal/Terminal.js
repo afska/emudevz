@@ -140,7 +140,7 @@ export default class Terminal {
 
 	prompt(
 		indicator = "$ ",
-		style = theme.ACCENT,
+		styledIndicator = theme.ACCENT(indicator),
 		multiLine = false,
 		isValid = (x) => x !== ""
 	) {
@@ -151,7 +151,7 @@ export default class Terminal {
 			this._input = new PendingInput(indicator, isValid, resolve, reject);
 			this._input.multiLine = multiLine;
 			await this.newline();
-			await this.write(indicator, style);
+			await this.write(styledIndicator);
 			await async.sleep();
 			const { x, y, ybase } = this.buffer;
 			this._input.position.x = x;

@@ -9,7 +9,12 @@ export default class Filesystem {
 	}
 
 	ls(path) {
-		return this.fs.readdirSync(path);
+		return this.fs.readdirSync(path).map((it) => {
+			return {
+				name: it,
+				isDirectory: this.stat(`${path}/${it}`).isDirectory(),
+			};
+		});
 	}
 
 	read(path) {
@@ -34,5 +39,9 @@ export default class Filesystem {
 
 	mv(oldPath, newPath) {
 		this.fs.renameSync(oldPath, newPath);
+	}
+
+	stat(path) {
+		return this.fs.statSync(path);
 	}
 }

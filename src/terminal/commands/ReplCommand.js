@@ -19,7 +19,7 @@ export default class ReplCommand extends Command {
 			while (expression === "")
 				expression = await this._terminal.prompt(
 					PROMPT_SYMBOL,
-					theme.INPUT,
+					theme.INPUT(PROMPT_SYMBOL),
 					true
 				);
 

@@ -2,12 +2,16 @@ import _ from "lodash";
 import locales from "../locales";
 import commands from "./commands";
 import { DISPOSED } from "./errors";
+import { theme } from "./style";
+
+const PROMPT_SYMBOL = "$ ";
 
 export default class Shell {
 	constructor(terminal) {
 		this.terminal = terminal;
 		this.isShell = true;
 		this.availableCommands = [];
+		this.workingDirectory = "/";
 	}
 
 	async run() {
@@ -48,7 +52,13 @@ export default class Shell {
 	async _getNextCommandLine() {
 		let commandLine = "";
 
-		while (commandLine === "") commandLine = await this.terminal.prompt();
+		while (commandLine === "") {
+			const cwd = this.workingDirectory.slice(1);
+			commandLine = await this.terminal.prompt(
+				cwd + PROMPT_SYMBOL,
+				theme.SYSTEM(cwd) + theme.ACCENT(PROMPT_SYMBOL)
+			);
+		}
 
 		return commandLine;
 	}
