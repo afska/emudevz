@@ -9,8 +9,7 @@
 			"Left": [
 				"console",
 				{
-					"startup": "chat",
-					"availableCommands": ["chat", "repl", "test", "help", "clear"]
+					"startup": "chat"
 				}
 			],
 			"Right": [

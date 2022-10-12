@@ -1,8 +1,12 @@
 import _ from "lodash";
 import Entry from "./Entry";
-import { ENTRY_ALREADY_EXISTS, PERMISSION_DENIED } from "./errors";
+import {
+	ENTRY_ALREADY_EXISTS,
+	ENTRY_NOT_FOUND,
+	PERMISSION_DENIED,
+} from "./errors";
 
-export class Directory extends Entry {
+export default class Directory extends Entry {
 	constructor(name, parent, isReadOnly) {
 		super(name, parent, isReadOnly);
 

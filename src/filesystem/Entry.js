@@ -1,4 +1,4 @@
-class Entry {
+export default class Entry {
 	constructor(name, parent, isReadOnly = false) {
 		this.name = name;
 		this.parent = parent;

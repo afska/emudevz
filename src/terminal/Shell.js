@@ -1,3 +1,4 @@
+import _ from "lodash";
 import locales from "../locales";
 import commands from "./commands";
 
@@ -23,7 +24,9 @@ export default class Shell {
 		const args = commandParts.slice(1);
 
 		const Command = commands.find((it) => it.name === commandName);
-		const isAvailable = this.availableCommands.includes(commandName);
+		const isAvailable =
+			this.availableCommands.includes(commandName) ||
+			_.isEmpty(this.availableCommands);
 
 		if (!Command || !isAvailable) {
 			await this.terminal.writeln(
