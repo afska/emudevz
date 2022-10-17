@@ -8,8 +8,8 @@ import {
 	FaSpinner,
 	FaStepForward,
 } from "react-icons/fa";
-import { connect } from "react-redux";
 import _ from "lodash";
+import Level from "../../level/Level";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import { bus } from "../../utils";
@@ -24,7 +24,7 @@ const LANGUAGES = {
 	asm: () => asm6502(),
 };
 
-class CodeEditor extends PureComponent {
+export default class CodeEditor extends PureComponent {
 	state = {
 		_isInitialized: false,
 		language: "javascript",
@@ -273,15 +273,15 @@ class CodeEditor extends PureComponent {
 	}
 }
 
-const mapStateToProps = ({ level }) => {
-	return {
-		getCode: () => level.instance.content,
-		setCode: (code) => {
-			level.instance.content = code;
-		},
-	};
-};
-
-export default connect(mapStateToProps, null, null, {
-	forwardRef: true,
-})(CodeEditor);
+export const SingleFileCodeEditor = React.forwardRef((props, ref) => {
+	return (
+		<CodeEditor
+			ref={ref}
+			{...props}
+			getCode={() => Level.current.content}
+			setCode={(code) => {
+				Level.current.content = code;
+			}}
+		/>
+	);
+});

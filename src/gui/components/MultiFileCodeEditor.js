@@ -2,14 +2,13 @@ import React, { PureComponent } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FaTimes } from "react-icons/fa";
-import { connect } from "react-redux";
 import Level from "../../level/Level";
 import { bus } from "../../utils";
 import CodeEditor from "./CodeEditor";
 import IconButton from "./widgets/IconButton";
 import styles from "./MultiFileCodeEditor.module.css";
 
-class MultiFileCodeEditor extends PureComponent {
+export default class MultiFileCodeEditor extends PureComponent {
 	async initialize(args, level, layout) {
 		this._args = args;
 		this._level = level;
@@ -29,7 +28,11 @@ class MultiFileCodeEditor extends PureComponent {
 					<Tab
 						eventKey="/code/index.js"
 						title={
-							<span>
+							<span
+								onClick={(e) => {
+									// TODO: FOCUS CodeEditor (grab ref and call .focus())
+								}}
+							>
 								index.js{" "}
 								<IconButton Icon={FaTimes} onClick={() => alert("hello")} />
 							</span>
@@ -38,8 +41,10 @@ class MultiFileCodeEditor extends PureComponent {
 						<CodeEditor
 							ref={(e) => {
 								if (!e) return;
-								e.initialize({}, Level.current);
+								e.initialize({ readOnly: true }, Level.current);
 							}}
+							getCode={() => "=> index.js content"}
+							setCode={() => {}}
 						/>
 					</Tab>
 					<Tab
@@ -54,8 +59,10 @@ class MultiFileCodeEditor extends PureComponent {
 						<CodeEditor
 							ref={(e) => {
 								if (!e) return;
-								e.initialize({}, Level.current);
+								e.initialize({ readOnly: true }, Level.current);
 							}}
+							getCode={() => "=> CPU.js content"}
+							setCode={() => {}}
 						/>
 					</Tab>
 					<Tab
@@ -70,8 +77,10 @@ class MultiFileCodeEditor extends PureComponent {
 						<CodeEditor
 							ref={(e) => {
 								if (!e) return;
-								e.initialize({}, Level.current);
+								e.initialize({ readOnly: true }, Level.current);
 							}}
+							getCode={() => "=> Cartridge.js content"}
+							setCode={() => {}}
 						/>
 					</Tab>
 				</Tabs>
@@ -93,18 +102,3 @@ class MultiFileCodeEditor extends PureComponent {
 		// TODO: FOCUS CURRENT TAB
 	};
 }
-
-// TODO: REVISE
-
-const mapStateToProps = ({ level }) => {
-	return {
-		getCode: () => level.instance.content,
-		setCode: (code) => {
-			level.instance.content = code;
-		},
-	};
-};
-
-export default connect(mapStateToProps, null, null, {
-	forwardRef: true,
-})(MultiFileCodeEditor);
