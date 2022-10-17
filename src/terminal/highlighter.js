@@ -2,6 +2,7 @@ import { cliCodeHighlighter } from "../utils/cli";
 
 const CODE_DETECT_REGEXP = /(```\S+\s+[^`]+```)/;
 const CODE_PARSE_REGEXP = /```(\S+)\s+([^`]+)```/;
+const RAW = "raw";
 
 export default {
 	highlightText(text) {
@@ -46,7 +47,10 @@ export default {
 
 				return {
 					isCode: true,
-					text: cliCodeHighlighter.highlight(code, language),
+					text:
+						language === RAW
+							? code
+							: cliCodeHighlighter.highlight(code, language),
 				};
 			});
 		});
