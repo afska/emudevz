@@ -29,6 +29,7 @@ export default class Level {
 				},
 				content: {
 					multifile: false,
+					openFiles: [],
 					useTemp: false,
 					temp: "",
 				},

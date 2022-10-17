@@ -115,7 +115,7 @@ class CodeEditor extends PureComponent {
 		const isCompilingSpinnerShown = !isNullAction && isCompiling;
 
 		return (
-			<div className={styles.editorContainer}>
+			<div className={styles.container}>
 				{isCompilingSpinnerShown && (
 					<div className={styles.spinner}>
 						<FaSpinner size={24} />
@@ -156,7 +156,7 @@ class CodeEditor extends PureComponent {
 		this._subscriber = bus.subscribe({
 			"run-enabled": this._onRunEnabled,
 			highlight: this._onHighlight,
-			"level-memory-changed": this._onLevelMemoryChanged,
+			"level-memory-changed": () => this.forceUpdate(),
 		});
 	}
 
@@ -195,10 +195,6 @@ class CodeEditor extends PureComponent {
 			highlightedLine: line,
 			actionName: line == null ? "reset" : "step",
 		});
-	};
-
-	_onLevelMemoryChanged = () => {
-		this.forceUpdate();
 	};
 
 	_setCode = (code) => {
