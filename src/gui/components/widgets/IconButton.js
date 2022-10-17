@@ -26,7 +26,6 @@ export default class IconButton extends PureComponent {
 			onClick,
 			kind = "inline",
 			disabled = false,
-			className,
 			...rest
 		} = this.props;
 
@@ -35,8 +34,7 @@ export default class IconButton extends PureComponent {
 				className={classNames(
 					styles.icon,
 					this._getStyle(kind),
-					disabled && styles.disabled,
-					className
+					disabled && styles.disabled
 				)}
 				onClick={() => {
 					if (disabled) return;
