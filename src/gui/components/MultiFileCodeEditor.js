@@ -20,11 +20,7 @@ export default class MultiFileCodeEditor extends PureComponent {
 	render() {
 		return (
 			<div className={styles.container}>
-				<Tabs
-					defaultActiveKey="/code/index.js"
-					transition={false}
-					tabIndex={-1}
-				>
+				<Tabs defaultActiveKey="/code/index.js" transition={false}>
 					<Tab
 						eventKey="/code/index.js"
 						title={
