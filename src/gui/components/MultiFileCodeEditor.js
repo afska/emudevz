@@ -5,8 +5,31 @@ import { FaTimes } from "react-icons/fa";
 import Level from "../../level/Level";
 import { bus } from "../../utils";
 import CodeEditor from "./CodeEditor";
+import HorizontalDragList from "./widgets/HorizontalDragList";
 import IconButton from "./widgets/IconButton";
 import styles from "./MultiFileCodeEditor.module.css";
+
+const grid = 8;
+
+const getListStyle = (isDraggingOver) => ({
+	background: isDraggingOver ? "lightblue" : "lightgrey",
+	display: "flex",
+	padding: grid,
+	overflow: "auto",
+});
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+	// some basic styles to make the items look a bit nicer
+	userSelect: "none",
+	padding: grid * 2,
+	margin: `0 ${grid}px 0 0`,
+
+	// change background colour if dragging
+	background: isDragging ? "lightgreen" : "grey",
+
+	// styles we need to apply on draggables
+	...draggableStyle,
+});
 
 export default class MultiFileCodeEditor extends PureComponent {
 	async initialize(args, level, layout) {
@@ -17,10 +40,28 @@ export default class MultiFileCodeEditor extends PureComponent {
 		// TODO: INITIALIZE EDITORS
 	}
 
+	state = {
+		items: [
+			{ id: "1", content: <span>one</span> },
+			{ id: "2", content: <span>two</span> },
+			{ id: "3", content: <span>three</span> },
+		],
+	};
+
 	render() {
 		return (
+			<HorizontalDragList
+				items={this.state.items}
+				onSort={(updatedItems) => this.setState({ items: updatedItems })}
+				getListStyle={getListStyle}
+				getItemStyle={getItemStyle}
+			/>
+		);
+
+		return (
 			<div className={styles.container}>
-				<Tabs defaultActiveKey="/code/index.js" transition={false}>
+				<HorizontalDragList />
+				{/*<Tabs defaultActiveKey="/code/index.js" transition={false}>
 					<Tab
 						eventKey="/code/index.js"
 						title={
@@ -94,7 +135,7 @@ export default class MultiFileCodeEditor extends PureComponent {
 							setCode={() => {}}
 						/>
 					</Tab>
-				</Tabs>
+				</Tabs>*/}
 			</div>
 		);
 	}
