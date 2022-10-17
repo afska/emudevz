@@ -3,3 +3,7 @@
 	background-color: #111111;
 	margin: 0.5px;
 }
+
+.closeButton:hover {
+	color: #8dbeff;
+}

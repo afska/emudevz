@@ -33,7 +33,11 @@ export default class MultiFileCodeEditor extends PureComponent {
 								}}
 							>
 								index.js{" "}
-								<IconButton Icon={FaTimes} onClick={() => alert("hello")} />
+								<IconButton
+									Icon={FaTimes}
+									onClick={() => alert("hello")}
+									className={styles.closeButton}
+								/>
 							</span>
 						}
 					>
@@ -51,7 +55,11 @@ export default class MultiFileCodeEditor extends PureComponent {
 						title={
 							<span>
 								CPU.js{" "}
-								<IconButton Icon={FaTimes} onClick={() => alert("hello")} />
+								<IconButton
+									Icon={FaTimes}
+									onClick={() => alert("hello")}
+									className={styles.closeButton}
+								/>
 							</span>
 						}
 					>
@@ -69,7 +77,11 @@ export default class MultiFileCodeEditor extends PureComponent {
 						title={
 							<span>
 								Cartridge.js{" "}
-								<IconButton Icon={FaTimes} onClick={() => alert("hello")} />
+								<IconButton
+									Icon={FaTimes}
+									onClick={() => alert("hello")}
+									className={styles.closeButton}
+								/>
 							</span>
 						}
 					>
