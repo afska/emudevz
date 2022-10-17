@@ -13,7 +13,7 @@
 				}
 			],
 			"Right": [
-				"code",
+				"multicode",
 				{
 					"language": "javascript",
 					"action": "run"

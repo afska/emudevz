@@ -6,6 +6,20 @@ import styles from "./IconButton.module.css";
 
 export default class IconButton extends PureComponent {
 	render() {
+		const { tooltip = null, tooltipPlacement = "top" } = this.props;
+		if (!tooltip) return this._renderIcon();
+
+		return (
+			<OverlayTrigger
+				placement={tooltipPlacement}
+				overlay={<Tooltip>{tooltip}</Tooltip>}
+			>
+				{this._renderIcon()}
+			</OverlayTrigger>
+		);
+	}
+
+	_renderIcon() {
 		const {
 			Icon,
 			tooltip,
@@ -16,22 +30,20 @@ export default class IconButton extends PureComponent {
 		} = this.props;
 
 		return (
-			<OverlayTrigger placement="top" overlay={<Tooltip>{tooltip}</Tooltip>}>
-				<span
-					className={classNames(
-						styles.icon,
-						this._getStyle(kind),
-						disabled && styles.disabled
-					)}
-					onClick={() => {
-						if (disabled) return;
-						onClick();
-					}}
-					{...rest}
-				>
-					<Icon />
-				</span>
-			</OverlayTrigger>
+			<span
+				className={classNames(
+					styles.icon,
+					this._getStyle(kind),
+					disabled && styles.disabled
+				)}
+				onClick={() => {
+					if (disabled) return;
+					onClick();
+				}}
+				{...rest}
+			>
+				<Icon />
+			</span>
 		);
 	}
 

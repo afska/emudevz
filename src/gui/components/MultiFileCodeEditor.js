@@ -2,11 +2,14 @@ import React, { PureComponent } from "react";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
 import {
 	FaFastBackward,
 	FaPlay,
 	FaSpinner,
 	FaStepForward,
+	FaTimes,
 } from "react-icons/fa";
 import { connect } from "react-redux";
 import _ from "lodash";
@@ -24,7 +27,7 @@ const LANGUAGES = {
 	asm: () => asm6502(),
 };
 
-class CodeEditor extends PureComponent {
+class MultiFileCodeEditor extends PureComponent {
 	state = {
 		_isInitialized: false,
 		language: "javascript",
@@ -94,16 +97,80 @@ class CodeEditor extends PureComponent {
 	}
 
 	render() {
+		if (!this.state._isInitialized) return false;
+
+		return (
+			<div className={styles.container}>
+				<Tabs defaultActiveKey="index" transition={false} tabIndex={-1}>
+					<Tab
+						eventKey="index"
+						title={
+							<span>
+								index.js{" "}
+								<IconButton Icon={FaTimes} onClick={() => alert("hello")} />
+							</span>
+						}
+					>
+						{this._renderEditor()}
+					</Tab>
+					<Tab
+						eventKey="profile"
+						title={
+							<span>
+								CPU.js{" "}
+								<IconButton Icon={FaTimes} onClick={() => alert("hello")} />
+							</span>
+						}
+					>
+						{this._renderEditor()}
+					</Tab>
+					<Tab
+						eventKey="contact"
+						title={
+							<span>
+								Cartridge.js{" "}
+								<IconButton Icon={FaTimes} onClick={() => alert("hello")} />
+							</span>
+						}
+					>
+						{this._renderEditor()}
+					</Tab>
+				</Tabs>
+			</div>
+		);
+	}
+
+	componentDidMount() {
+		this._subscriber = bus.subscribe({
+			"run-enabled": this._onRunEnabled,
+			highlight: this._onHighlight,
+			"level-memory-changed": this._onLevelMemoryChanged,
+		});
+	}
+
+	componentWillUnmount() {
+		this._subscriber.release();
+	}
+
+	componentDidUpdate() {
+		const { highlightedLine, errorStart, errorEnd } = this.state;
+		this._highlight(highlightedLine);
+		this._markError(errorStart, errorEnd);
+	}
+
+	focus = () => {
+		this.ref.view.focus();
+	};
+
+	_renderEditor() {
 		const { getCode } = this.props;
 		const {
-			_isInitialized,
 			language,
 			isReadOnly,
 			isCompiling,
 			actionName,
 			onlyEnableEditionWhen,
 		} = this.state;
-		if (!_isInitialized) return false;
 
 		const action = this._getAction();
 		const isNullAction = actionName === NULL_ACTION;
@@ -151,28 +218,6 @@ class CodeEditor extends PureComponent {
 			</div>
 		);
 	}
-
-	componentDidMount() {
-		this._subscriber = bus.subscribe({
-			"run-enabled": this._onRunEnabled,
-			highlight: this._onHighlight,
-			"level-memory-changed": this._onLevelMemoryChanged,
-		});
-	}
-
-	componentWillUnmount() {
-		this._subscriber.release();
-	}
-
-	componentDidUpdate() {
-		const { highlightedLine, errorStart, errorEnd } = this.state;
-		this._highlight(highlightedLine);
-		this._markError(errorStart, errorEnd);
-	}
-
-	focus = () => {
-		this.ref.view.focus();
-	};
 
 	_onKeyDown = (e) => {
 		const isKeyDown = e.type === "keydown";
@@ -288,4 +333,4 @@ const mapStateToProps = ({ level }) => {
 
 export default connect(mapStateToProps, null, null, {
 	forwardRef: true,
-})(CodeEditor);
+})(MultiFileCodeEditor);

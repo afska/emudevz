@@ -28,6 +28,7 @@ export default class Level {
 					stopBlock: null,
 				},
 				content: {
+					multifile: false,
 					useTemp: false,
 					temp: "",
 				},
