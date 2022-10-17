@@ -1,3 +1,5 @@
+import $path from "path";
+
 export default class Filesystem {
 	constructor() {
 		const BrowserFS = require("browserfs");
@@ -38,6 +40,9 @@ export default class Filesystem {
 	}
 
 	mv(oldPath, newPath) {
+		this.stat(oldPath); // (exists)
+		const newPathStat = this.stat(newPath);
+		if (newPathStat.isDirectory()) newPath += "/" + $path.parse(oldPath).name;
 		this.fs.renameSync(oldPath, newPath);
 	}
 

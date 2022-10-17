@@ -31,6 +31,9 @@ export default class MultiFileCodeEditor extends PureComponent {
 							<span
 								onClick={(e) => {
 									// TODO: FOCUS CodeEditor (grab ref and call .focus())
+									// don't add onClick, use instead:
+									//       activeKey={key}
+									//       onSelect={(k) => setKey(k)}
 								}}
 							>
 								index.js{" "}
