@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import { FaTimes } from "react-icons/fa";
+import DraggableTabs from "react-draggable-tabs";
+import { FaPlus, FaTimes } from "react-icons/fa";
 import Level from "../../level/Level";
 import { bus } from "../../utils";
 import CodeEditor from "./CodeEditor";
@@ -20,7 +21,47 @@ export default class MultiFileCodeEditor extends PureComponent {
 	render() {
 		return (
 			<div className={styles.container}>
-				<Tabs
+				<DraggableTabs
+					tabs={[
+						{
+							id: "/code/index.js",
+							content: "index.js",
+							active: true,
+						},
+						{
+							id: "/code/CPU.js",
+							content: "CPU.js",
+						},
+						{
+							id: "/code/Cartridge.js",
+							content: "Cartridge.js",
+						},
+					]}
+					moveTab={(dragIndex, hoverIndex) => {
+						console.log(`MOVING FROM ${dragIndex} to ${hoverIndex}`);
+					}}
+					selectTab={(selectedIndex) => {
+						console.log("SELECTED: " + selectedIndex);
+					}}
+					closeTab={(index) => {
+						console.log("CLOSED: " + index);
+					}}
+				>
+					<IconButton
+						className={styles.addButton}
+						Icon={FaPlus}
+						onClick={() => alert("hello")}
+					/>
+				</DraggableTabs>
+				<CodeEditor
+					ref={(e) => {
+						if (!e) return;
+						e.initialize({ readOnly: true }, Level.current);
+					}}
+					getCode={() => "=> the content"}
+					setCode={() => {}}
+				/>
+				{/*<Tabs
 					defaultActiveKey="/code/index.js"
 					transition={false}
 					tabIndex={-1}
@@ -86,7 +127,7 @@ export default class MultiFileCodeEditor extends PureComponent {
 							setCode={() => {}}
 						/>
 					</Tab>
-				</Tabs>
+				</Tabs>*/}
 			</div>
 		);
 	}

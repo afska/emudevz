@@ -1,5 +1,18 @@
 .container {
-	height: 100%;
+	height: calc(100% - 34px);
 	background-color: #111111;
 	margin: 0.5px;
+}
+
+.addButton {
+	background-color: #001f27;
+	transition: background-color 0.5s ease;
+	padding: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-bottom: 6px;
+}
+
+.addButton:hover {
+	background-color: #073642;
 }
