@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import $path from "path";
 // import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FaTimes } from "react-icons/fa";
@@ -20,20 +21,8 @@ export default class MultiFileCodeEditor extends PureComponent {
 	}
 
 	state = {
-		items: [
-			{
-				id: "1",
-				render: () => <Tab title="index.js" />,
-			},
-			{
-				id: "2",
-				render: () => <Tab title="CPU.js" active />,
-			},
-			{
-				id: "3",
-				render: () => <Tab title="Cartridge.js" />,
-			},
-		],
+		openFiles: ["/code/index.js", "/code/CPU.js", "/code/Cartridge.js"],
+		selectedFile: "/code/index.js",
 	};
 
 	render() {
@@ -41,8 +30,33 @@ export default class MultiFileCodeEditor extends PureComponent {
 			<div className={styles.container}>
 				<div className={styles.tabs}>
 					<HorizontalDragList
-						items={this.state.items}
-						onSort={(updatedItems) => this.setState({ items: updatedItems })}
+						items={this.state.openFiles.map((filePath) => ({
+							id: filePath,
+							render: (__, index) => (
+								<Tab
+									title={$path.parse(filePath).name}
+									active={this.state.selectedFile === filePath}
+									onSelect={() => this.setState({ selectedFile: filePath })}
+									canClose={this.state.openFiles.length > 1}
+									onClose={() => {
+										const newOpenFiles = this.state.openFiles.filter(
+											(it) => it !== filePath
+										);
+										this.setState({
+											openFiles: newOpenFiles,
+											selectedFile:
+												filePath === this.state.selectedFile
+													? newOpenFiles[0]
+													: this.state.selectedFile,
+										});
+									}}
+									tabIndex={index + 1}
+								/>
+							),
+						}))}
+						onSort={(updatedItems) =>
+							this.setState({ openFiles: updatedItems.map((it) => it.id) })
+						}
 					/>
 				</div>
 				<div className={styles.content}>content</div>

@@ -8,13 +8,16 @@ export default class Tab extends PureComponent {
 	render() {
 		const {
 			title,
+			onSelect,
 			onClose,
+			canClose = true,
 			active = false,
 			className,
 			children,
 			...rest
 		} = this.props;
 
+		// TODO: SELECT ON CLICK / ENTER
 		return (
 			<div
 				className={classNames(
@@ -22,14 +25,17 @@ export default class Tab extends PureComponent {
 					active ? styles.active : {},
 					className
 				)}
+				onClick={onSelect}
 				{...rest}
 			>
 				<span>{title}</span>
-				<IconButton
-					Icon={FaTimes}
-					onClick={onClose}
-					className={styles.closeButton}
-				/>
+				{canClose && (
+					<IconButton
+						Icon={FaTimes}
+						onClick={onClose}
+						className={styles.closeButton}
+					/>
+				)}
 			</div>
 		);
 	}

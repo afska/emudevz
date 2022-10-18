@@ -31,7 +31,7 @@ const HorizontalDragList = ({ items, onSort }) => {
 											...provided.draggableProps.style,
 										}}
 									>
-										{item.render(snapshot.isDragging)}
+										{item.render(snapshot.isDragging, index)}
 									</div>
 								))}
 							</Draggable>

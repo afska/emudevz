@@ -3,7 +3,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 6px 0px 6px 6px;
+	padding: 6px;
 	background-color: #18181a;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
@@ -24,6 +24,7 @@
 
 .closeButton {
 	margin-left: 6px;
+	margin-right: 2px;
 }
 
 .closeButton:hover {
