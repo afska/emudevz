@@ -1,4 +1,4 @@
 import contextEval from "./contextEval";
-import moduleEval from "./moduleEval";
+import moduleEval, { createModule, evaluateModule } from "./moduleEval";
 
-export { contextEval, moduleEval };
+export { contextEval, moduleEval, createModule, evaluateModule };
