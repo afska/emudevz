@@ -28,32 +28,7 @@ export default class MultiFileCodeEditor extends PureComponent {
 					<HorizontalDragList
 						items={this.state.openFiles.map((filePath) => ({
 							id: filePath,
-							render: () => (
-								<Tab
-									title={$path.parse(filePath).base}
-									active={this.state.selectedFile === filePath}
-									onSelect={() => this.setState({ selectedFile: filePath })}
-									canClose={this.state.openFiles.length > 1}
-									onClose={() => {
-										const newOpenFiles = this.state.openFiles.filter(
-											(it) => it !== filePath
-										);
-										this.setState(
-											{
-												openFiles: newOpenFiles,
-											},
-											() => {
-												this.setState({
-													selectedFile:
-														this.state.selectedFile === filePath
-															? newOpenFiles[0]
-															: this.state.selectedFile,
-												});
-											}
-										);
-									}}
-								/>
-							),
+							render: () => this._renderTab(filePath),
 						}))}
 						onSort={(updatedItems) =>
 							this.setState({ openFiles: updatedItems.map((it) => it.id) })
@@ -87,4 +62,34 @@ export default class MultiFileCodeEditor extends PureComponent {
 	focus = () => {
 		// TODO: FOCUS CURRENT TAB
 	};
+
+	_renderTab(filePath) {
+		return (
+			<Tab
+				title={$path.parse(filePath).base}
+				active={this.state.selectedFile === filePath}
+				onSelect={() => this.setState({ selectedFile: filePath })}
+				canClose={this.state.openFiles.length > 1}
+				onClose={() => this._onFileClose(filePath)}
+			/>
+		);
+	}
+
+	_onFileClose(filePath) {
+		const newOpenFiles = this.state.openFiles.filter((it) => it !== filePath);
+
+		this.setState(
+			{
+				openFiles: newOpenFiles,
+			},
+			() => {
+				this.setState({
+					selectedFile:
+						this.state.selectedFile === filePath
+							? newOpenFiles[0]
+							: this.state.selectedFile,
+				});
+			}
+		);
+	}
 }
