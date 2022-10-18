@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import $path from "path";
-import Level from "../../level/Level";
 import { bus } from "../../utils";
 import CodeEditor from "./CodeEditor";
 import HorizontalDragList from "./widgets/HorizontalDragList";
@@ -13,15 +12,18 @@ export default class MultiFileCodeEditor extends PureComponent {
 		this._level = level;
 		this._layout = layout;
 
-		// TODO: INITIALIZE EDITORS
+		this.setState({ _isInitialized: true });
 	}
 
 	state = {
+		_isInitialized: false,
 		openFiles: ["/code/index.js", "/code/CPU.js", "/code/Cartridge.js"],
 		selectedFile: "/code/index.js",
 	};
 
 	render() {
+		if (!this.state._isInitialized) return false;
+
 		return (
 			<div className={styles.container}>
 				<div className={styles.tabs} tabIndex={-1}>
@@ -37,9 +39,10 @@ export default class MultiFileCodeEditor extends PureComponent {
 				</div>
 				<div className={styles.content}>
 					<CodeEditor
-						ref={(e) => {
-							if (!e) return;
-							e.initialize({ readOnly: true }, Level.current);
+						ref={(ref) => {
+							if (!ref) return;
+							ref.initialize(this._args, this._level, this._layout);
+							this._editor = ref;
 						}}
 						getCode={() => "=> content"}
 						setCode={() => {}}
@@ -60,7 +63,7 @@ export default class MultiFileCodeEditor extends PureComponent {
 	}
 
 	focus = () => {
-		// TODO: FOCUS CURRENT TAB
+		this._editor.focus();
 	};
 
 	_renderTab(filePath) {
