@@ -1,9 +1,18 @@
 .container {
 	height: 100%;
-	background-color: #111111;
-	margin: 0.5px;
+	margin-top: 1px;
+	margin-left: 1px;
+	margin-right: 1px;
 }
 
-.closeButton:hover {
-	color: #8dbeff;
+.tabs {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	background-color: #111111;
+	border-bottom: solid 1px #577295;
+}
+
+.content {
+	height: calc(100% - 41px);
 }

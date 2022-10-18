@@ -71,31 +71,3 @@ input[type="range"]:focus::-moz-range-thumb {
 input[type="range"]::-moz-range-thumb {
 	background: #9bc0e9;
 }
-
-/* Bootstrap Tabs */
-
-.nav-tabs {
-	--bs-nav-tabs-border-width: 1px;
-	--bs-nav-tabs-border-color: #577295;
-	--bs-nav-tabs-border-radius: 8px;
-	--bs-nav-link-color: #516176;
-	--bs-nav-link-hover-color: #577295;
-	--bs-nav-tabs-link-hover-border-color: #7792b28c;
-	--bs-nav-tabs-link-active-color: #7792b2;
-	--bs-nav-tabs-link-active-bg: #2b323a;
-	--bs-nav-tabs-link-active-border-color: #7792b2;
-	height: 34px;
-}
-
-.nav-link {
-	padding: 4px 8px;
-}
-
-.tab-pane,
-.tab-pane-active {
-	height: 100%;
-}
-
-.tab-content {
-	height: calc(100% - 34px);
-}

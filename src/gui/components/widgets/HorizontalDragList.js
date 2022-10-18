@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { createPortal } from "react-dom";
 
-const HorizontalDragList = ({ items, onSort, getListStyle, getItemStyle }) => {
+const HorizontalDragList = ({ items, onSort }) => {
 	const onDragEnd = (result) => {
 		if (!result.destination) return;
 		onSort(reorder(items, result.source.index, result.destination.index));
@@ -16,7 +16,7 @@ const HorizontalDragList = ({ items, onSort, getListStyle, getItemStyle }) => {
 				{(provided, snapshot) => (
 					<div
 						ref={provided.innerRef}
-						style={getListStyle(snapshot.isDraggingOver)}
+						style={{ display: "flex", overflow: "auto" }}
 						{...provided.droppableProps}
 					>
 						{items.map((item, index) => (
@@ -26,12 +26,12 @@ const HorizontalDragList = ({ items, onSort, getListStyle, getItemStyle }) => {
 										ref={provided.innerRef}
 										{...provided.draggableProps}
 										{...provided.dragHandleProps}
-										style={getItemStyle(
-											snapshot.isDragging,
-											provided.draggableProps.style
-										)}
+										style={{
+											userSelect: "none",
+											...provided.draggableProps.style,
+										}}
 									>
-										{item.content}
+										{item.render(snapshot.isDragging)}
 									</div>
 								))}
 							</Draggable>

@@ -1,0 +1,31 @@
+.container {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 6px 0px 6px 6px;
+	background-color: #18181a;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border: 1px solid #ffffff00;
+	color: #b3c6df;
+}
+
+.container:hover {
+	filter: brightness(1.5);
+}
+
+.active {
+	background-color: #2b323a;
+	border-top: 1px solid #577295;
+	border-left: 1px solid #577295;
+	border-right: 1px solid #577295;
+}
+
+.closeButton {
+	margin-left: 6px;
+}
+
+.closeButton:hover {
+	color: #466a8e;
+}
