@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Drive } from "../filesystem";
+import filesystem, { Drive } from "../filesystem";
 import components from "../gui/components";
 import layouts from "../gui/components/layouts";
 import locales from "../locales";
@@ -46,6 +46,9 @@ export default class Level {
 	}
 
 	get content() {
+		if (this.memory.content.multifile)
+			return { index: filesystem.read(Drive.MAIN_FILE) };
+
 		return this.memory.content.useTemp ? this.tempContent : this.storedContent;
 	}
 
