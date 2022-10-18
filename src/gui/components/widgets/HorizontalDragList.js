@@ -17,6 +17,7 @@ const HorizontalDragList = ({ items, onSort }) => {
 					<div
 						ref={provided.innerRef}
 						style={{ display: "flex", overflow: "auto" }}
+						tabIndex={-1}
 						{...provided.droppableProps}
 					>
 						{items.map((item, index) => (
@@ -26,6 +27,7 @@ const HorizontalDragList = ({ items, onSort }) => {
 										ref={provided.innerRef}
 										{...provided.draggableProps}
 										{...provided.dragHandleProps}
+										tabIndex={-1}
 										style={{
 											userSelect: "none",
 											...provided.draggableProps.style,
