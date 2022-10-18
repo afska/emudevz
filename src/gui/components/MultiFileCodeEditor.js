@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import $path from "path";
+import filesystem from "../../filesystem";
 import { bus } from "../../utils";
 import CodeEditor from "./CodeEditor";
 import HorizontalDragList from "./widgets/HorizontalDragList";
@@ -44,8 +45,10 @@ export default class MultiFileCodeEditor extends PureComponent {
 							ref.initialize(this._args, this._level, this._layout);
 							this._editor = ref;
 						}}
-						getCode={() => "=> content"}
-						setCode={() => {}}
+						getCode={() => filesystem.read(this._memory.selectedFile)}
+						setCode={(code) => {
+							filesystem.write(this._memory.selectedFile, code);
+						}}
 					/>
 				</div>
 			</div>

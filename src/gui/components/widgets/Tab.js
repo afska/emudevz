@@ -18,6 +18,8 @@ export default class Tab extends PureComponent {
 			...rest
 		} = this.props;
 
+		// TODO: MIDDLE CLICK, CTRL+W, CTRL+SHIFT+W, CTRL+TAB, CTRL+SHIFT+TAB, SCROLL W/ MOUSE WHEEL
+
 		return (
 			<div
 				className={classNames(

@@ -1,4 +1,4 @@
-import filesystem from "../../../filesystem";
+import Level from "../../../level/Level";
 import FilesystemCommand from "./FilesystemCommand";
 
 export default class OpenCommand extends FilesystemCommand {
@@ -8,6 +8,8 @@ export default class OpenCommand extends FilesystemCommand {
 
 	async _execute() {
 		const path = this._resolve(this._args[0]);
-		this._terminal.writeln(filesystem.read(path));
+		Level.current.openFile(path);
+		// TODO: CHECK FILE TYPE
+		this._terminal.writeln("Opening " + this._args[0] + "...");
 	}
 }

@@ -161,8 +161,9 @@ export default class Terminal {
 
 	async confirmPrompt() {
 		if (this.isExpectingInput) {
-			const isValid = this._input.confirm();
+			const input = this._input;
 			this._input = null;
+			const isValid = input.confirm();
 
 			if (isValid) await this.newline();
 		}
@@ -170,15 +171,17 @@ export default class Terminal {
 
 	cancelPrompt(reason = CANCELED) {
 		if (this.isExpectingInput) {
-			this._input.cancel(reason);
+			const input = this._input;
 			this._input = null;
+			input.cancel(reason);
 		}
 	}
 
 	cancelKey(reason = CANCELED) {
 		if (this.isExpectingKey) {
-			this._keyInput.reject(reason);
+			const keyInput = this._keyInput;
 			this._keyInput = null;
+			keyInput.reject(reason);
 		}
 	}
 

@@ -16,7 +16,7 @@ const HorizontalDragList = ({ items, onSort }) => {
 				{(provided, snapshot) => (
 					<div
 						ref={provided.innerRef}
-						style={{ display: "flex", overflow: "auto" }}
+						style={{ display: "flex" }}
 						tabIndex={-1}
 						{...provided.droppableProps}
 					>

@@ -92,6 +92,17 @@ export default class Level {
 			store.dispatch.content.setCurrentLevelContent(this.tempContent);
 	}
 
+	openFile(filePath) {
+		if (!this.memory.content.multifile)
+			throw new Error("Multifile mode is disabled");
+		if (this.memory.content.openFiles.includes(filePath)) return;
+
+		this.setMemory((memory) => {
+			memory.content.openFiles.push(filePath);
+			memory.content.selectedFile = filePath;
+		});
+	}
+
 	setMemory(change) {
 		change(this.memory);
 		bus.emit("level-memory-changed");
