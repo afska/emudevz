@@ -17,8 +17,6 @@ export default class MultiFileCodeEditor extends PureComponent {
 
 	state = {
 		_isInitialized: false,
-		openFiles: ["/code/index.js", "/code/CPU.js", "/code/Cartridge.js"],
-		selectedFile: "/code/index.js",
 	};
 
 	render() {
@@ -28,13 +26,15 @@ export default class MultiFileCodeEditor extends PureComponent {
 			<div className={styles.container}>
 				<div className={styles.tabs} tabIndex={-1}>
 					<HorizontalDragList
-						items={this.state.openFiles.map((filePath) => ({
+						items={this._memory.openFiles.map((filePath) => ({
 							id: filePath,
-							render: () => this._renderTab(filePath),
+							render: (isDragging) => this._renderTab(filePath, isDragging),
 						}))}
-						onSort={(updatedItems) =>
-							this.setState({ openFiles: updatedItems.map((it) => it.id) })
-						}
+						onSort={(updatedItems) => {
+							this._setMemory((content) => {
+								content.openFiles = updatedItems.map((it) => it.id);
+							});
+						}}
 					/>
 				</div>
 				<div className={styles.content}>
@@ -66,33 +66,43 @@ export default class MultiFileCodeEditor extends PureComponent {
 		this._editor.focus();
 	};
 
-	_renderTab(filePath) {
+	_renderTab(filePath, isDragging) {
 		return (
 			<Tab
 				title={$path.parse(filePath).base}
-				active={this.state.selectedFile === filePath}
-				onSelect={() => this.setState({ selectedFile: filePath })}
-				canClose={this.state.openFiles.length > 1}
+				active={this._memory.selectedFile === filePath}
+				dragging={isDragging}
+				onSelect={() => {
+					this._setMemory((content) => {
+						content.selectedFile = filePath;
+					});
+				}}
+				canClose={this._memory.openFiles.length > 1}
 				onClose={() => this._onFileClose(filePath)}
 			/>
 		);
 	}
 
 	_onFileClose(filePath) {
-		const newOpenFiles = this.state.openFiles.filter((it) => it !== filePath);
+		const newOpenFiles = this._memory.openFiles.filter((it) => it !== filePath);
 
-		this.setState(
-			{
-				openFiles: newOpenFiles,
-			},
-			() => {
-				this.setState({
-					selectedFile:
-						this.state.selectedFile === filePath
-							? newOpenFiles[0]
-							: this.state.selectedFile,
-				});
-			}
-		);
+		if (this._memory.selectedFile === filePath)
+			this._setMemory((content) => {
+				content.selectedFile = newOpenFiles[0];
+			});
+
+		this._setMemory((content) => {
+			content.openFiles = newOpenFiles;
+		});
+	}
+
+	get _memory() {
+		return this._level.memory.content;
+	}
+
+	_setMemory(change) {
+		this._level.setMemory((memory) => {
+			change(memory.content);
+		});
 	}
 }

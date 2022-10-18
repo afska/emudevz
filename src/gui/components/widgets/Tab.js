@@ -12,20 +12,21 @@ export default class Tab extends PureComponent {
 			onClose,
 			canClose = true,
 			active = false,
+			dragging = false,
 			className,
 			children,
 			...rest
 		} = this.props;
 
-		// TODO: SELECT ON CLICK / ENTER
 		return (
 			<div
 				className={classNames(
 					styles.container,
 					active ? styles.active : {},
+					dragging ? styles.dragging : {},
 					className
 				)}
-				onClick={onSelect}
+				onMouseDown={onSelect}
 				{...rest}
 			>
 				<span>{title}</span>

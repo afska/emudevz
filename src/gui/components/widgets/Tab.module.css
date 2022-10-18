@@ -11,7 +11,8 @@
 	color: #b3c6df;
 }
 
-.container:hover {
+.container:hover,
+.dragging {
 	filter: brightness(1.5);
 }
 

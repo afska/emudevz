@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { Drive } from "../filesystem";
 import components from "../gui/components";
 import layouts from "../gui/components/layouts";
 import locales from "../locales";
@@ -29,7 +30,8 @@ export default class Level {
 				},
 				content: {
 					multifile: false,
-					openFiles: [],
+					openFiles: [Drive.MAIN_FILE],
+					selectedFile: Drive.MAIN_FILE,
 					useTemp: false,
 					temp: "",
 				},

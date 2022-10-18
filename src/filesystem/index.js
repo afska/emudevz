@@ -1,5 +1,6 @@
+import _Drive_ from "./Drive";
 import Filesystem from "./Filesystem";
 
-export const READONLY_PATHS = ["/", "/media", "/roms"];
+export const Drive = _Drive_;
 
 export default new Filesystem();
