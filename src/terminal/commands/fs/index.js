@@ -7,11 +7,11 @@ import RmCommand from "./RmCommand";
 import TouchCommand from "./TouchCommand";
 
 export default [
-	CdCommand,
 	LsCommand,
+	CdCommand,
+	TouchCommand,
 	MkdirCommand,
+	RmCommand,
 	MvCommand,
 	OpenCommand,
-	RmCommand,
-	TouchCommand,
 ];
