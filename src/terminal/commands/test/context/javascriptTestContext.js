@@ -35,36 +35,62 @@ export default {
 	},
 
 	_compile(filePath, modules = {}) {
-		const parsedPath = $path.parse(filePath);
-		let content = filesystem.read(filePath);
+		const context = {
+			filePath,
+			content: filesystem.read(filePath),
+			matches: null,
+			hasImports: false,
+		};
 
-		let matches, isValid;
 		do {
-			matches =
-				content.match(SINGLE_IMPORTS[0]) || content.match(SINGLE_IMPORTS[1]); // TODO: CHECK OTHER REGEXPS
-			isValid = matches && matches.length === 3;
+			this._compileSingleImports(context, modules);
+		} while (context.hasImports);
 
-			if (isValid) {
-				const defaultExport = matches[1];
-				const relativePath = matches[2];
+		return createModule(context.content);
+	},
 
-				process.$setCwd(parsedPath.dir);
-				const absolutePath = $path.resolve(relativePath);
-				// TODO: CHECK WHETHER FILE EXISTS
+	_compileSingleImports(context, modules) {
+		let found = false;
+
+		for (let regexp of SINGLE_IMPORTS) {
+			context.matches = context.content.match(regexp);
+
+			if (context.matches && context.matches.length === 3) {
+				found = true;
+
+				const defaultExport = context.matches[1];
+				const relativePath = context.matches[2];
+				const absolutePath = this._resolvePath(
+					context.filePath,
+					relativePath,
+					context.matches
+				);
 
 				const module =
 					modules[absolutePath] || this._compile(absolutePath, modules);
 				modules[absolutePath] = module;
 
-				content = content.replace(
-					SINGLE_IMPORTS[0],
+				context.content = context.content.replace(
+					regexp,
 					`const ${defaultExport} = (await import("${module}")).default`
 				);
 			}
-		} while (isValid);
+		}
 
-		if (filePath === "/code/index.js") console.log(content); // TODO: REMOVE
+		context.hasImports = found;
+	},
 
-		return createModule(content);
+	_resolvePath(filePath, relativePath, matches) {
+		const parsedPath = $path.parse(filePath);
+		process.$setCwd(parsedPath.dir);
+		const absolutePath = $path.resolve(relativePath);
+
+		try {
+			filesystem.stat(absolutePath);
+		} catch (e) {
+			throw new Error(`Invalid import (\`${filePath}\`):\n  => ${matches[0]}`);
+		}
+
+		return absolutePath;
 	},
 };
