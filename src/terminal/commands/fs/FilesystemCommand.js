@@ -34,6 +34,9 @@ export default class FilesystemCommand extends Command {
 		if (Drive.INVALID_CHARACTERS.test(parsedPath.base))
 			throw new Error(`Invalid name: '${parsedPath.base}'`);
 
+		if (parsedPath.base.length > Drive.MAX_FILE_NAME_LENGTH)
+			throw new Error(`Name too long: '${parsedPath.base}'`);
+
 		if (isWrite && Drive.READONLY_PATHS.some((it) => parsedPath.dir === it))
 			throw new Error(`EPERM: opeartion not permitted., '${absolutePath}'`);
 
