@@ -38,6 +38,7 @@ export default class Console extends PureComponent {
 					className={styles.xtermContainer}
 					options={{
 						cursorBlink: true,
+						smoothScrollDuration: 50,
 						allowProposedApi: true,
 						theme: {
 							background: "#111111",

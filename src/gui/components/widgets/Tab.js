@@ -17,8 +17,6 @@ export default class Tab extends PureComponent {
 			...rest
 		} = this.props;
 
-		// TODO: CTRL+W, CTRL+SHIFT+W, CTRL+TAB, CTRL+SHIFT+TAB, CTRL+N
-
 		return (
 			<div
 				className={classNames(
