@@ -31,6 +31,9 @@ export default class FilesystemCommand extends Command {
 		const absolutePath = $path.resolve(path);
 		const parsedPath = $path.parse(absolutePath);
 
+		if (Drive.INVALID_CHARACTERS.test(parsedPath.base))
+			throw new Error(`Invalid name: '${parsedPath.base}'`);
+
 		if (isWrite && Drive.READONLY_PATHS.some((it) => parsedPath.dir === it))
 			throw new Error(`EPERM: opeartion not permitted., '${absolutePath}'`);
 

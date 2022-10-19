@@ -40,9 +40,13 @@ export default class Filesystem {
 	}
 
 	mv(oldPath, newPath) {
-		this.stat(oldPath); // (exists)
-		const newPathStat = this.stat(newPath);
-		if (newPathStat.isDirectory()) newPath += "/" + $path.parse(oldPath).base;
+		this.stat(oldPath);
+		try {
+			const newPathStat = this.stat(newPath);
+			if (newPathStat.isDirectory()) newPath += "/" + $path.parse(oldPath).base;
+		} catch (e) {
+			if (e.code !== "ENOENT") throw e;
+		}
 		this.fs.renameSync(oldPath, newPath);
 	}
 
