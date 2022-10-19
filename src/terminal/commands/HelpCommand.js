@@ -55,11 +55,12 @@ export default class HelpCommand extends Command {
 				})
 				.map(
 					(it) =>
-						theme.SYSTEM(it.name.padEnd(SPACING)) +
-						theme.ACCENT(":: ") +
-						it.description
+						theme.SYSTEM(it.name.padEnd(SPACING)) + "~::~ " + it.description
 				)
-				.join(NEWLINE)
+				.join(NEWLINE),
+			undefined,
+			undefined,
+			true
 		);
 		if (more) await this._terminal.writeln("<...>", theme.ACCENT);
 	}
