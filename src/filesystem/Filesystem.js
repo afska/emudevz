@@ -12,9 +12,12 @@ export default class Filesystem {
 
 	ls(path) {
 		return this.fs.readdirSync(path).map((it) => {
+			const stat = this.stat(`${path}/${it}`);
+
 			return {
 				name: it,
-				isDirectory: this.stat(`${path}/${it}`).isDirectory(),
+				isDirectory: stat.isDirectory(),
+				size: stat.size,
 			};
 		});
 	}

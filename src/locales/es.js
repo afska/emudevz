@@ -3,6 +3,7 @@ export default {
 	button_play: "Jugar",
 	button_quit: "Salir",
 	button_settings: "Opciones",
+	bytes: "bytes",
 	cancel: "Cancelar",
 	choose_an_answer: "Elige una respuesta.",
 	command_chat_already_open: "Ya abierto.",
