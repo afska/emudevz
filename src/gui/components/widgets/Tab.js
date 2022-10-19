@@ -8,7 +8,6 @@ export default class Tab extends PureComponent {
 	render() {
 		const {
 			title,
-			onSelect,
 			onClose,
 			canClose = true,
 			active = false,
@@ -18,7 +17,7 @@ export default class Tab extends PureComponent {
 			...rest
 		} = this.props;
 
-		// TODO: MIDDLE CLICK, CTRL+W, CTRL+SHIFT+W, CTRL+TAB, CTRL+SHIFT+TAB, SCROLL W/ MOUSE WHEEL
+		// TODO: CTRL+W, CTRL+SHIFT+W, CTRL+TAB, CTRL+SHIFT+TAB, SCROLL W/ MOUSE WHEEL, CTRL+N
 
 		return (
 			<div
@@ -28,7 +27,8 @@ export default class Tab extends PureComponent {
 					dragging ? styles.dragging : {},
 					className
 				)}
-				onMouseDown={onSelect}
+				onMouseDown={this._onMouseDown}
+				onMouseUp={this._onMouseUp}
 				{...rest}
 			>
 				<span>{title}</span>
@@ -42,4 +42,23 @@ export default class Tab extends PureComponent {
 			</div>
 		);
 	}
+
+	_onMouseDown = (e) => {
+		if (e.button === 0) {
+			this.props.onSelect();
+			return;
+		}
+
+		if (e.button === 1) {
+			e.preventDefault();
+			return;
+		}
+	};
+
+	_onMouseUp = (e) => {
+		if (e.button === 1 && this.props.canClose) {
+			this.props.onClose();
+			return;
+		}
+	};
 }
