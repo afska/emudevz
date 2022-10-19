@@ -30,6 +30,7 @@ export default class FilesystemCommand extends Command {
 		process.$setCwd(this._shell.workingDirectory);
 		const absolutePath = $path.resolve(path);
 		const parsedPath = $path.parse(absolutePath);
+
 		if (isWrite && Drive.READONLY_PATHS.some((it) => parsedPath.dir === it))
 			throw new Error(`EPERM: opeartion not permitted., '${absolutePath}'`);
 
