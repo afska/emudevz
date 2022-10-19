@@ -1,7 +1,13 @@
+import Drive from "../filesystem/Drive";
+
+const DEFAULT_FILE = Drive.MAIN_FILE;
+
 const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	levelId: 0,
 	language: "en",
+	openFiles: [DEFAULT_FILE],
+	selectedFile: DEFAULT_FILE,
 });
 
 export default {
@@ -12,6 +18,12 @@ export default {
 		},
 		setLanguage(state, language) {
 			return { ...state, language };
+		},
+		setOpenFiles(state, openFiles) {
+			return { ...state, openFiles };
+		},
+		setSelectedFile(state, selectedFile) {
+			return { ...state, selectedFile };
 		},
 		reset() {
 			return INITIAL_STATE();
@@ -36,6 +48,11 @@ export default {
 			},
 			validate(levelId, _state_) {
 				const state = _state_[KEY];
+
+				if (state.openFiles == null) {
+					this.setOpenFiles([DEFAULT_FILE]);
+					this.setSelectedFile(DEFAULT_FILE);
+				}
 
 				if (levelId > state.levelId) {
 					_dispatch_.level.goToReplacing(state.levelId);

@@ -30,8 +30,6 @@ export default class Level {
 				},
 				content: {
 					multifile: false,
-					openFiles: [Drive.MAIN_FILE],
-					selectedFile: Drive.MAIN_FILE,
 					useTemp: false,
 					temp: "",
 				},
@@ -43,6 +41,10 @@ export default class Level {
 
 	static get current() {
 		return store.getState().level.instance;
+	}
+
+	static get savedata() {
+		return store.getState().savedata;
 	}
 
 	get content() {
@@ -95,14 +97,11 @@ export default class Level {
 	}
 
 	openFile(filePath) {
-		if (!this.memory.content.multifile)
-			throw new Error("Multifile mode is disabled");
-		if (this.memory.content.openFiles.includes(filePath)) return;
+		const openFiles = Level.savedata.openFiles;
+		if (openFiles.includes(filePath)) return;
 
-		this.setMemory((memory) => {
-			memory.content.openFiles.push(filePath);
-			memory.content.selectedFile = filePath;
-		});
+		store.dispatch.savedata.setOpenFiles([...openFiles, filePath]);
+		store.dispatch.savedata.setSelectedFile(filePath);
 	}
 
 	setMemory(change) {

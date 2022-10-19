@@ -1,13 +1,13 @@
 import React, { PureComponent } from "react";
 import $path from "path";
+import { connect } from "react-redux";
 import filesystem from "../../filesystem";
-import { bus } from "../../utils";
 import CodeEditor from "./CodeEditor";
 import HorizontalDragList from "./widgets/HorizontalDragList";
 import Tab from "./widgets/Tab";
 import styles from "./MultiFileCodeEditor.module.css";
 
-export default class MultiFileCodeEditor extends PureComponent {
+class MultiFileCodeEditor extends PureComponent {
 	async initialize(args, level, layout) {
 		this._args = args;
 		this._level = level;
@@ -27,14 +27,12 @@ export default class MultiFileCodeEditor extends PureComponent {
 			<div className={styles.container}>
 				<div className={styles.tabs} tabIndex={-1}>
 					<HorizontalDragList
-						items={this._memory.openFiles.map((filePath) => ({
+						items={this.props.openFiles.map((filePath) => ({
 							id: filePath,
 							render: (isDragging) => this._renderTab(filePath, isDragging),
 						}))}
 						onSort={(updatedItems) => {
-							this._setMemory((content) => {
-								content.openFiles = updatedItems.map((it) => it.id);
-							});
+							this.props.setOpenFiles(updatedItems.map((it) => it.id));
 						}}
 					/>
 				</div>
@@ -45,24 +43,14 @@ export default class MultiFileCodeEditor extends PureComponent {
 							ref.initialize(this._args, this._level, this._layout);
 							this._editor = ref;
 						}}
-						getCode={() => filesystem.read(this._memory.selectedFile)}
+						getCode={() => filesystem.read(this.props.selectedFile)}
 						setCode={(code) => {
-							filesystem.write(this._memory.selectedFile, code);
+							filesystem.write(this.props.selectedFile, code);
 						}}
 					/>
 				</div>
 			</div>
 		);
-	}
-
-	componentDidMount() {
-		this._subscriber = bus.subscribe({
-			"level-memory-changed": () => this.forceUpdate(),
-		});
-	}
-
-	componentWillUnmount() {
-		this._subscriber.release();
 	}
 
 	focus = () => {
@@ -73,39 +61,41 @@ export default class MultiFileCodeEditor extends PureComponent {
 		return (
 			<Tab
 				title={$path.parse(filePath).base}
-				active={this._memory.selectedFile === filePath}
+				active={this.props.selectedFile === filePath}
 				dragging={isDragging}
 				onSelect={() => {
-					this._setMemory((content) => {
-						content.selectedFile = filePath;
-					});
+					this.props.setSelectedFile(filePath);
 				}}
-				canClose={this._memory.openFiles.length > 1}
+				canClose={this.props.openFiles.length > 1}
 				onClose={() => this._onFileClose(filePath)}
 			/>
 		);
 	}
 
 	_onFileClose(filePath) {
-		const newOpenFiles = this._memory.openFiles.filter((it) => it !== filePath);
+		const newOpenFiles = this.props.openFiles.filter((it) => it !== filePath);
 
-		if (this._memory.selectedFile === filePath)
-			this._setMemory((content) => {
-				content.selectedFile = newOpenFiles[0];
-			});
+		if (this.props.selectedFile === filePath)
+			this.props.setSelectedFile(newOpenFiles[0]);
 
-		this._setMemory((content) => {
-			content.openFiles = newOpenFiles;
-		});
-	}
-
-	get _memory() {
-		return this._level.memory.content;
-	}
-
-	_setMemory(change) {
-		this._level.setMemory((memory) => {
-			change(memory.content);
-		});
+		this.props.setOpenFiles(newOpenFiles);
 	}
 }
+
+const mapStateToProps = ({ savedata }) => {
+	return {
+		openFiles: savedata.openFiles,
+		selectedFile: savedata.selectedFile,
+	};
+};
+
+const mapDispatchToProps = ({ savedata }) => {
+	return {
+		setOpenFiles: savedata.setOpenFiles,
+		setSelectedFile: savedata.setSelectedFile,
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps, null, {
+	forwardRef: true,
+})(MultiFileCodeEditor);
