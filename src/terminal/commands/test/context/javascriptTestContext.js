@@ -11,14 +11,14 @@ const SINGLE_IMPORTS = [
 	/^import (\w+) from "(.+)";?$/m,
 	/^import (\w+) from '(.+)';?$/m,
 ];
-/*const MULTI_IMPORTS = [
+const MULTI_IMPORTS = [
 	/^import {([^}]+)} from "(.+)";?$/m,
 	/^import {([^}]+)} from '(.+)';?$/m,
 ];
 const MIXED_IMPORTS = [
 	/^import (\w+), ?{([^}]+)} from "(.+)";?$/m,
 	/^import (\w+), ?{([^}]+)} from '(.+)';?$/m,
-];*/
+];
 
 export default {
 	prepare(level) {
@@ -44,22 +44,68 @@ export default {
 
 		do {
 			this._compileSingleImports(context, modules);
+			this._compileMultiImports(context, modules);
+			this._compileMixedImports(context, modules);
 		} while (context.hasImports);
 
 		return createModule(context.content);
 	},
 
 	_compileSingleImports(context, modules) {
+		return this._compileImports(
+			context,
+			modules,
+			SINGLE_IMPORTS,
+			3,
+			(matches) => matches[2],
+			(matches, module) =>
+				`const ${matches[1]} = (await import("${module}")).default;`
+		);
+	},
+
+	_compileMultiImports(context, modules) {
+		return this._compileImports(
+			context,
+			modules,
+			MULTI_IMPORTS,
+			3,
+			(matches) => matches[2],
+			(matches, module) =>
+				`const { ${matches[1]} } = await import("${module}");`
+		);
+	},
+
+	_compileMixedImports(context, modules) {
+		return this._compileImports(
+			context,
+			modules,
+			MIXED_IMPORTS,
+			4,
+			(matches) => matches[3],
+			(matches, module) =>
+				`const ${matches[1]} = (await import("${module}")).default;` +
+				"\n" +
+				`const { ${matches[2]} } = await import("${module}");`
+		);
+	},
+
+	_compileImports(
+		context,
+		modules,
+		regexps,
+		expectedMatches,
+		getRelativePath,
+		buildImport
+	) {
 		let found = false;
 
-		for (let regexp of SINGLE_IMPORTS) {
+		for (let regexp of regexps) {
 			context.matches = context.content.match(regexp);
 
-			if (context.matches && context.matches.length === 3) {
+			if (context.matches && context.matches.length === expectedMatches) {
 				found = true;
 
-				const defaultExport = context.matches[1];
-				const relativePath = context.matches[2];
+				const relativePath = getRelativePath(context.matches);
 				const absolutePath = this._resolvePath(
 					context.filePath,
 					relativePath,
@@ -72,7 +118,7 @@ export default {
 
 				context.content = context.content.replace(
 					regexp,
-					`const ${defaultExport} = (await import("${module}")).default`
+					buildImport(context.matches, module)
 				);
 			}
 		}
