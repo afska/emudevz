@@ -7,6 +7,7 @@ import {
 	moduleEval,
 } from "../../../../utils/eval";
 
+const IMPORT_EXTENSION = ".js";
 const SINGLE_IMPORTS = [
 	/^import (\w+) from "(.+)";?$/m,
 	/^import (\w+) from '(.+)';?$/m,
@@ -127,14 +128,18 @@ export default {
 	},
 
 	_resolvePath(filePath, relativePath, matches) {
+		if (!relativePath.endsWith(IMPORT_EXTENSION))
+			relativePath += IMPORT_EXTENSION;
+
 		const parsedPath = $path.parse(filePath);
 		process.$setCwd(parsedPath.dir);
 		const absolutePath = $path.resolve(relativePath);
 
 		try {
-			filesystem.stat(absolutePath);
+			const stat = filesystem.stat(absolutePath);
+			if (stat.isDirectory()) throw "invalid";
 		} catch (e) {
-			throw new Error(`Invalid import (\`${filePath}\`):\n  => ${matches[0]}`);
+			throw new Error(`Import failed (\`${filePath}\`):\n  => ${matches[0]}`);
 		}
 
 		return absolutePath;
