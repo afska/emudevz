@@ -25,7 +25,15 @@ class MultiFileCodeEditor extends PureComponent {
 
 		return (
 			<div className={styles.container}>
-				<div className={styles.tabs} tabIndex={-1}>
+				<div
+					className={styles.tabs}
+					tabIndex={-1}
+					ref={(ref) => {
+						if (!ref) return null;
+						this._tabs = ref;
+					}}
+					onWheel={this._onWheelTabs}
+				>
 					<HorizontalDragList
 						items={this.props.openFiles.map((filePath) => ({
 							id: filePath,
@@ -80,6 +88,10 @@ class MultiFileCodeEditor extends PureComponent {
 
 		this.props.setOpenFiles(newOpenFiles);
 	}
+
+	_onWheelTabs = (e) => {
+		this._tabs.scrollBy(-e.deltaY, 0);
+	};
 }
 
 const mapStateToProps = ({ savedata }) => {
