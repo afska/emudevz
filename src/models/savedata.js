@@ -61,6 +61,22 @@ export default {
 
 				return true;
 			},
+			openFile(filePath, _state_) {
+				const state = _state_[KEY];
+				const { openFiles } = state;
+				if (openFiles.includes(filePath)) return;
+
+				this.setOpenFiles([...openFiles, filePath]);
+				this.setSelectedFile(filePath);
+			},
+			closeFile(filePath, _state_) {
+				const state = _state_[KEY];
+				const { openFiles, selectedFile } = state;
+
+				const newOpenFiles = openFiles.filter((it) => it !== filePath);
+				if (selectedFile === filePath) this.setSelectedFile(newOpenFiles[0]);
+				this.setOpenFiles(newOpenFiles);
+			},
 		};
 	},
 };

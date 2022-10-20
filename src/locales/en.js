@@ -48,6 +48,8 @@ export default {
 	register_flags_U: "Unused Flag",
 	reset_level: "Reset level progress",
 	resize_warning: "Resizing is not supported while typing.",
+	rm_with_files: "This directory contains ~files~. Delete everything? ~(y/N)~",
+	rm_deleting_recursively: "Deleting reecursively...",
 	run: "Run",
 	save: "Save",
 	settings: "Settings",

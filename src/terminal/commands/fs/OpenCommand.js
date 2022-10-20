@@ -1,6 +1,6 @@
 import filesystem from "../../../filesystem";
-import Level from "../../../level/Level";
 import locales from "../../../locales";
+import store from "../../../store";
 import { theme } from "../../style";
 import FilesystemCommand from "./FilesystemCommand";
 
@@ -18,6 +18,6 @@ export default class OpenCommand extends FilesystemCommand {
 		this._terminal.writeln(
 			`${locales.get("opening")} ${theme.ACCENT(this._args[0])}...`
 		);
-		Level.current.openFile(path);
+		store.dispatch.savedata.openFile(path);
 	}
 }

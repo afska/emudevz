@@ -17,11 +17,7 @@ class NavBar extends PureComponent {
 		return (
 			<div className={styles.navbar}>
 				<div className={classNames(styles.item, styles.text)}>
-					<IconButton
-						Icon={FaChevronLeft}
-						tooltip={locales.get("goBack")}
-						onClick={goBack}
-					/>
+					<IconButton Icon={FaChevronLeft} onClick={goBack} />
 					<span>
 						{chapter.number}.{levelIndex + 1} / {chapter.name[locales.language]}{" "}
 						/ {level.name[locales.language]}

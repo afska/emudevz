@@ -14,9 +14,11 @@ export default class FilesystemCommand extends Command {
 		try {
 			await this._execute();
 		} catch (e) {
-			this._terminal.writeln(
-				"❌  " + theme.ERROR(e.message.replace(ERROR_PREFIX, ""))
-			);
+			if (e.message != null) {
+				this._terminal.writeln(
+					"❌  " + theme.ERROR(e.message.replace(ERROR_PREFIX, ""))
+				);
+			}
 		}
 	}
 
@@ -37,8 +39,12 @@ export default class FilesystemCommand extends Command {
 		if (parsedPath.base.length > Drive.MAX_FILE_NAME_LENGTH)
 			throw new Error(`Name too long: '${parsedPath.base}'`);
 
-		if (isWrite && Drive.READONLY_PATHS.some((it) => parsedPath.dir === it))
-			throw new Error(`EPERM: opeartion not permitted., '${absolutePath}'`);
+		const isMainFile = absolutePath === Drive.MAIN_FILE;
+		const isReadOnlyDir = Drive.READONLY_PATHS.some(
+			(it) => parsedPath.dir === it
+		);
+		if (isWrite && (isMainFile || isReadOnlyDir))
+			throw new Error(`EPERM: operation not permitted., '${absolutePath}'`);
 
 		return absolutePath;
 	}

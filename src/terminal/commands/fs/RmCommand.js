@@ -1,4 +1,5 @@
 import filesystem from "../../../filesystem";
+import locales from "../../../locales";
 import FilesystemCommand from "./FilesystemCommand";
 
 export default class RmCommand extends FilesystemCommand {
@@ -12,20 +13,25 @@ export default class RmCommand extends FilesystemCommand {
 		try {
 			filesystem.rm(path);
 		} catch (e) {
-			if (!e.message.startsWith("Error: EISDIR")) throw e;
+			if (e.code !== "EISDIR") throw e;
+
+			this._resolve(this._args[0] + "/..", true);
 
 			try {
 				filesystem.rmdir(path);
 			} catch (e) {
-				if (!e.message.startsWith("Error: ENOTEMPTY")) throw e;
+				if (e.code !== "ENOTEMPTY") throw e;
 
-				// TODO: LOCALIZE
 				await this._terminal.writeln(
-					"This has FILES!!! Are you freaking sure? (y/N)"
+					locales.get("rm_with_files"),
+					undefined,
+					undefined,
+					true
 				);
 				const key = await this._terminal.waitForKey();
 				if (key.toLowerCase() === "y") {
-					await this._terminal.writeln("Deleting recursively...");
+					await this._terminal.writeln(locales.get("rm_deleting_recursively"));
+
 					// TODO: DELETE RECURSIVELY
 				}
 			}

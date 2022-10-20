@@ -75,18 +75,9 @@ class MultiFileCodeEditor extends PureComponent {
 					this.props.setSelectedFile(filePath);
 				}}
 				canClose={this.props.openFiles.length > 1}
-				onClose={() => this._onFileClose(filePath)}
+				onClose={() => this.props.closeFile(filePath)}
 			/>
 		);
-	}
-
-	_onFileClose(filePath) {
-		const newOpenFiles = this.props.openFiles.filter((it) => it !== filePath);
-
-		if (this.props.selectedFile === filePath)
-			this.props.setSelectedFile(newOpenFiles[0]);
-
-		this.props.setOpenFiles(newOpenFiles);
 	}
 
 	_onWheelTabs = (e) => {
@@ -105,6 +96,7 @@ const mapDispatchToProps = ({ savedata }) => {
 	return {
 		setOpenFiles: savedata.setOpenFiles,
 		setSelectedFile: savedata.setSelectedFile,
+		closeFile: savedata.closeFile,
 	};
 };
 

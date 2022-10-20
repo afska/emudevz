@@ -47,6 +47,8 @@ export default {
 	register_flags_U: "Bandera sin uso",
 	reset_level: "Reiniciar progreso del nivel",
 	resize_warning: "No se puede redimensionar y escribir a la vez.",
+	rm_with_files: "Este directorio contiene ~archivos~. ¿Borrar todo? ~(y/N)~",
+	rm_deleting_recursively: "Borrando recursivamente...",
 	run: "Run",
 	save: "Guardar",
 	settings: "Opciones",

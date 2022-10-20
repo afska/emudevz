@@ -43,10 +43,6 @@ export default class Level {
 		return store.getState().level.instance;
 	}
 
-	static get savedata() {
-		return store.getState().savedata;
-	}
-
 	get content() {
 		if (this.memory.content.multifile) return { main: Drive.MAIN_FILE };
 
@@ -94,14 +90,6 @@ export default class Level {
 	fillContentFromTemp() {
 		if (!this.hasStoredContent)
 			store.dispatch.content.setCurrentLevelContent(this.tempContent);
-	}
-
-	openFile(filePath) {
-		const openFiles = Level.savedata.openFiles;
-		if (openFiles.includes(filePath)) return;
-
-		store.dispatch.savedata.setOpenFiles([...openFiles, filePath]);
-		store.dispatch.savedata.setSelectedFile(filePath);
 	}
 
 	setMemory(change) {
