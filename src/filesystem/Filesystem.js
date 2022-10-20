@@ -1,4 +1,5 @@
 import $path from "path";
+import store from "../store";
 
 export default class Filesystem {
 	constructor() {
@@ -36,6 +37,8 @@ export default class Filesystem {
 
 	rm(path) {
 		this.fs.unlinkSync(path);
+
+		store.dispatch.savedata.closeFile(path);
 	}
 
 	rmdir(path) {
@@ -51,6 +54,8 @@ export default class Filesystem {
 			if (e.code !== "ENOENT") throw e;
 		}
 		this.fs.renameSync(oldPath, newPath);
+
+		store.dispatch.savedata.closeFile(oldPath);
 	}
 
 	stat(path) {
