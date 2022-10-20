@@ -45,6 +45,19 @@ export default class Filesystem {
 		this.fs.rmdirSync(path);
 	}
 
+	rimraf(path) {
+		const files = this.ls(path);
+
+		for (let file of files) {
+			const filePath = `${path}/${file.name}`;
+
+			if (file.isDirectory) this.rimraf(filePath);
+			else this.rm(filePath);
+		}
+
+		this.rmdir(path);
+	}
+
 	mv(oldPath, newPath) {
 		this.stat(oldPath);
 		try {

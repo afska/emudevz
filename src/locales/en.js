@@ -49,7 +49,7 @@ export default {
 	reset_level: "Reset level progress",
 	resize_warning: "Resizing is not supported while typing.",
 	rm_with_files: "This directory contains ~files~. Delete everything? ~(y/N)~",
-	rm_deleting_recursively: "Deleting reecursively...",
+	rm_deleting_recursively: "Deleting recursively...",
 	run: "Run",
 	save: "Save",
 	settings: "Settings",

@@ -1,5 +1,6 @@
 import filesystem from "../../../filesystem";
 import locales from "../../../locales";
+import { theme } from "../../style";
 import FilesystemCommand from "./FilesystemCommand";
 
 export default class RmCommand extends FilesystemCommand {
@@ -15,8 +16,6 @@ export default class RmCommand extends FilesystemCommand {
 		} catch (e) {
 			if (e.code !== "EISDIR") throw e;
 
-			this._resolve(this._args[0] + "/..", true);
-
 			try {
 				filesystem.rmdir(path);
 			} catch (e) {
@@ -30,9 +29,11 @@ export default class RmCommand extends FilesystemCommand {
 				);
 				const key = await this._terminal.waitForKey();
 				if (key.toLowerCase() === "y") {
-					await this._terminal.writeln(locales.get("rm_deleting_recursively"));
-
-					// TODO: DELETE RECURSIVELY
+					await this._terminal.writeln(
+						locales.get("rm_deleting_recursively"),
+						theme.ERROR
+					);
+					filesystem.rimraf(path);
 				}
 			}
 		}
