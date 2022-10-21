@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    eval(level.code["addFiles.js"]);
   messages:
   - test multifile
   - WORK IN PROGRESS
