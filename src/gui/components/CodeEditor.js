@@ -94,7 +94,7 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	render() {
-		const { getCode } = this.props;
+		const { getCode, forceReadOnly = false } = this.props;
 		const {
 			_isInitialized,
 			language,
@@ -111,6 +111,7 @@ export default class CodeEditor extends PureComponent {
 		const isActionEnabled = this._isActionEnabled();
 		const isEditionEnabled =
 			!isReadOnly &&
+			!forceReadOnly &&
 			(onlyEnableEditionWhen == null || codeEval.eval(onlyEnableEditionWhen));
 		const isCompilingSpinnerShown = !isNullAction && isCompiling;
 

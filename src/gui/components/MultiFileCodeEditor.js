@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import $path from "path";
 import { connect } from "react-redux";
 import filesystem from "../../filesystem";
+import Drive from "../../filesystem/Drive";
 import CodeEditor from "./CodeEditor";
 import HorizontalDragList from "./widgets/HorizontalDragList";
 import Tab from "./widgets/Tab";
@@ -22,6 +23,11 @@ class MultiFileCodeEditor extends PureComponent {
 
 	render() {
 		if (!this.state._isInitialized) return false;
+
+		const parsedPath = $path.parse(this.props.selectedFile);
+		const isReadOnlyDir = Drive.READONLY_PATHS.some(
+			(it) => parsedPath.dir === it
+		);
 
 		return (
 			<div className={styles.container}>
@@ -55,6 +61,7 @@ class MultiFileCodeEditor extends PureComponent {
 						setCode={(code) => {
 							filesystem.write(this.props.selectedFile, code);
 						}}
+						forceReadOnly={isReadOnlyDir}
 					/>
 				</div>
 			</div>
