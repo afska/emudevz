@@ -67,7 +67,7 @@ class PlayScreen extends PureComponent {
 	}
 
 	_onError = (e) => {
-		this.setState({ error: e.message });
+		this.setState({ error: e?.message || e?.toString() || "?" });
 		console.error(e);
 	};
 

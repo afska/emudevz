@@ -14,11 +14,10 @@ export default class FilesystemCommand extends Command {
 		try {
 			await this._execute();
 		} catch (e) {
-			if (e.message != null) {
-				this._terminal.writeln(
-					"❌  " + theme.ERROR(e.message.replace(ERROR_PREFIX, ""))
-				);
-			}
+			const message = e?.message || e?.toString() || "?";
+			this._terminal.writeln(
+				"❌  " + theme.ERROR(message.replace(ERROR_PREFIX, ""))
+			);
 		}
 	}
 

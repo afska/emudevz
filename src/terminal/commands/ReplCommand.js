@@ -32,7 +32,9 @@ export default class ReplCommand extends Command {
 					cliCodeHighlighter.highlight(this._format(result))
 				);
 			} catch (e) {
-				this._terminal.writeln("❌  " + theme.ERROR(e.message));
+				this._terminal.writeln(
+					"❌  " + theme.ERROR(e?.message || e?.toString() || "?")
+				);
 			}
 		}
 	}

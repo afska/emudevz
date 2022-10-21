@@ -41,7 +41,7 @@ export default {
 					name,
 					passed: false,
 					testCode: test.toString(),
-					reason: e.message,
+					reason: e?.message || e?.toString() || "?",
 				});
 			}
 		}
