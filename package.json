@@ -24,7 +24,9 @@
   ],
   "dependencies": {
     "@avinlab/react-flash-change": "^1.2.0",
+    "@codemirror/lang-javascript": "6.1.0",
     "@codemirror/language": "6.1.0",
+    "@codemirror/lint": "6.0.0",
     "@codemirror/theme-one-dark": "6.1.0",
     "@fancyapps/ui": "^4.0.31",
     "@neshacker/6502-tools": "github:rodri042/6502",
@@ -40,6 +42,7 @@
     "cli-highlight": "^2.1.11",
     "connected-react-router": "^6.9.3",
     "escape-string-regexp": "^5.0.0",
+    "eslint-linter-browserify": "^8.25.0",
     "eventemitter3": "^4.0.7",
     "history": "^4.10.1",
     "install": "^0.13.0",

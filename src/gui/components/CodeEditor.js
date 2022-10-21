@@ -1,7 +1,10 @@
 import React, { PureComponent } from "react";
+import { esLint } from "@codemirror/lang-javascript";
+import { lintGutter, linter } from "@codemirror/lint";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
+import { Linter } from "eslint-linter-browserify";
 import {
 	FaFastBackward,
 	FaPlay,
@@ -13,15 +16,26 @@ import Level from "../../level/Level";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import { bus } from "../../utils";
-import { asm6502, errorMarker, lineHighlighter } from "../../utils/codemirror";
+import {
+	asm6502,
+	errorMarker,
+	esLintConfig,
+	lineHighlighter,
+} from "../../utils/codemirror";
 import IconButton from "./widgets/IconButton";
 import styles from "./CodeEditor.module.css";
 
 const NULL_ACTION = "none";
 const COMPILE_DEBOUNCE_MS = 500;
 const LANGUAGES = {
-	javascript: () => langs.javascript(),
-	asm: () => asm6502(),
+	javascript: () => [
+		langs.javascript(),
+		lintGutter(),
+		linter(esLint(new Linter(), esLintConfig), {
+			delay: COMPILE_DEBOUNCE_MS,
+		}),
+	],
+	asm: () => [asm6502()],
 };
 
 export default class CodeEditor extends PureComponent {
@@ -141,7 +155,7 @@ export default class CodeEditor extends PureComponent {
 					height="100%"
 					theme={oneDark}
 					readOnly={!isEditionEnabled}
-					extensions={[LANGUAGES[language]()]}
+					extensions={LANGUAGES[language]()}
 					onChange={this._setCode}
 					autoFocus
 					ref={(ref) => {

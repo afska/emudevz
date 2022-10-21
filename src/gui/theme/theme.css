@@ -71,3 +71,9 @@ input[type="range"]:focus::-moz-range-thumb {
 input[type="range"]::-moz-range-thumb {
 	background: #9bc0e9;
 }
+
+/* CodeMirror Gutters */
+
+.cm-gutter-lint {
+	border-right: 1px solid #577295;
+}
