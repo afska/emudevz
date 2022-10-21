@@ -55,7 +55,7 @@ export default {
 		"no-shadow-restricted-names": "warn",
 		"no-sparse-arrays": "warn",
 		"no-this-before-super": "warn",
-		"no-undef": "warn",
+		"no-undef": "error",
 		"no-unexpected-multiline": "warn",
 		"no-unreachable": "warn",
 		"no-unsafe-finally": "warn",
