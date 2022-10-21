@@ -25,8 +25,12 @@ body {
 	width: 100%;
 }
 
+.cm-gutters {
+	user-select: none;
+}
+
 .cm-gutter-lint {
-	border-right: 1px solid #577295;
+	border-right: 1px dashed #577295;
 }
 
 .cm-tooltip {
