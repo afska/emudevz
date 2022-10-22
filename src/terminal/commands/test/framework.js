@@ -73,10 +73,10 @@ export default {
 				if (trace[endIndex] === ":") {
 					const matches = trace.slice(endIndex).match(/\b(\d+)\b/);
 					if (matches.length === 2) {
-						const line = parseInt(matches[1]);
+						const lineNumber = parseInt(matches[1]);
 						location = {
 							filePath,
-							line,
+							lineNumber,
 						};
 					}
 				}

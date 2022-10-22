@@ -1,11 +1,16 @@
 import _ from "lodash";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
+import store from "../../../store";
+import { bus } from "../../../utils";
 import { cliCodeHighlighter } from "../../../utils/cli";
 import theme from "../../style/theme";
 import Command from "../Command";
 import testContext from "./context";
 import framework from "./framework";
+
+const LOCATION_DETECT_REGEXP = /📌 {2}(.+:\d+) 📌/gu;
+const LOCATION_PARSE_REGEXP = /(.+):(\d+)/;
 
 export default class TestCommand extends Command {
 	static get name() {
@@ -15,43 +20,83 @@ export default class TestCommand extends Command {
 	async execute() {
 		const level = Level.current;
 
-		const $ = testContext[level.test?.context]?.prepare(level) || {
-			level,
+		try {
+			this._setUpHyperlinkProvider();
+
+			const $ = testContext[level.test?.context]?.prepare(level) || {
+				level,
+			};
+
+			const overallResult = { allGreen: true };
+			const hasMultipleTests = _.keys(level.tests).length > 1;
+
+			for (let fileName in level.tests) {
+				const test = level.tests[fileName];
+
+				if (hasMultipleTests)
+					await this._terminal.writeln(
+						locales.get("testing") + theme.MESSAGE(fileName) + "..."
+					);
+
+				const results = await framework.test(test, $);
+
+				for (let result of results)
+					await this._printResult(result, overallResult);
+
+				await this._terminal.newline();
+			}
+
+			if (overallResult.allGreen) {
+				await this._terminal.writeln(locales.get("tests_success"));
+				await this._terminal.waitForKey();
+				level.advance();
+			} else {
+				await this._terminal.writeln(locales.get("tests_failure"));
+
+				if (this._isVerbose) {
+					await this._terminal.waitForKey();
+				} else {
+					await this._terminal.writeln(
+						locales.get("tests_more"),
+						theme.COMMENT,
+						undefined,
+						true
+					);
+				}
+			}
+		} finally {
+			this._onClose();
+		}
+	}
+
+	onStop() {
+		this._onClose();
+
+		return true;
+	}
+
+	_setUpHyperlinkProvider() {
+		const handler = (__, text) => {
+			if (this._hasEnded) return;
+			const matches = text.match(LOCATION_PARSE_REGEXP);
+			const filePath = matches[1];
+			const lineNumber = parseInt(matches[2]);
+
+			store.dispatch.savedata.openFile(filePath);
+			bus.emit("highlight", lineNumber - 1);
 		};
+		this._linkProvider = this._terminal.registerLinkProvider(
+			LOCATION_DETECT_REGEXP,
+			handler
+		);
+		this._linkProvider.end = () => {
+			this._linkProvider.dispose();
+			this._hasEnded = true;
+		};
+	}
 
-		const overallResult = { allGreen: true };
-		const hasMultipleTests = _.keys(level.tests).length > 1;
-
-		for (let fileName in level.tests) {
-			const test = level.tests[fileName];
-
-			if (hasMultipleTests)
-				await this._terminal.writeln(
-					locales.get("testing") + theme.MESSAGE(fileName) + "..."
-				);
-
-			const results = await framework.test(test, $);
-
-			for (let result of results)
-				await this._printResult(result, overallResult);
-
-			await this._terminal.newline();
-		}
-
-		if (overallResult.allGreen) {
-			await this._terminal.writeln(locales.get("tests_success"));
-			await this._terminal.waitForKey();
-			level.advance();
-		} else {
-			await this._terminal.writeln(locales.get("tests_failure"));
-			if (!this._isVerbose)
-				await this._terminal.writeln(
-					locales.get("tests_more"),
-					theme.COMMENT,
-					undefined,
-					true
-				);
-		}
+	_onClose() {
+		if (this._linkProvider) this._linkProvider.end();
 	}
 
 	async _printResult(result, overallResult) {
@@ -65,6 +110,12 @@ export default class TestCommand extends Command {
 		await this._terminal.writeln(`${emoji} ${result.name}`);
 
 		if (!result.passed) {
+			if (this._isVerbose && result.stack?.location) {
+				await this._terminal.writeln(
+					`📌  ${result.stack.location.filePath}:${result.stack.location.lineNumber} 📌`,
+					theme.ACCENT
+				);
+			}
 			await this._terminal.writeln(result.reason, theme.ERROR);
 
 			if (this._isVerbose) {
