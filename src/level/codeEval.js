@@ -1,4 +1,4 @@
-import ___ from "lodash";
+import _ from "lodash";
 import _filesystem_ from "../filesystem";
 import _locales_ from "../locales";
 import { bus as _bus_ } from "../utils";
@@ -21,8 +21,6 @@ export default {
 		const locales = _locales_;
 		// eslint-disable-next-line
 		const filesystem = _filesystem_;
-		// eslint-disable-next-line
-		const _ = ___;
 
 		let _evalCode_ = _code_;
 		_.forEach(layout.instances, (__, name) => {

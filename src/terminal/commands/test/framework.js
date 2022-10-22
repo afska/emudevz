@@ -1,4 +1,5 @@
-import chai from "chai";
+import _chai_ from "chai";
+import _escapeStringRegexp_ from "escape-string-regexp";
 import _ from "lodash";
 
 export default {
@@ -23,9 +24,9 @@ export default {
 		};
 
 		// eslint-disable-next-line
-		const expect = chai.expect;
+		const expect = _chai_.expect;
 		// eslint-disable-next-line
-		const should = chai.should();
+		const should = _chai_.should();
 
 		eval(_code_);
 
@@ -37,15 +38,37 @@ export default {
 				if (_after_) await _after_();
 				results.push({ name, passed: true });
 			} catch (e) {
+				const isUserCode = e.stack != null && e.stack.includes("blob:");
+
 				results.push({
 					name,
 					passed: false,
 					testCode: test.toString(),
 					reason: e?.message || e?.toString() || "?",
+					stackTrace:
+						isUserCode && $.modules != null
+							? this._buildStackTrace(e.stack, $.modules)
+							: null,
 				});
 			}
 		}
 
 		return _.orderBy(results, "passed", "desc");
+	},
+
+	_buildStackTrace(originalStack, modules) {
+		let stackTrace = originalStack
+			.split("\n")
+			.filter((it) => it.includes("blob:"))
+			.join("\n");
+
+		_.forEach(modules, (module, filePath) => {
+			stackTrace = stackTrace.replace(
+				new RegExp(_escapeStringRegexp_(module), "g"),
+				filePath
+			);
+		});
+
+		return stackTrace;
 	},
 };

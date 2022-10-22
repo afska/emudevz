@@ -24,15 +24,18 @@ const MIXED_IMPORTS = [
 export default {
 	prepare(level) {
 		const code = level.content;
-		const self = this;
 
-		return {
-			evaluate() {
-				return _.isObject(code)
-					? evaluateModule(self._compile(code.main))
-					: moduleEval(code);
-			},
+		const $ = { modules: null };
+		$.evaluate = () => {
+			if (!_.isObject(code)) return moduleEval(code);
+
+			const { module, modules } = this._compile(code.main);
+			$.modules = modules;
+
+			return evaluateModule(module);
 		};
+
+		return $;
 	},
 
 	_compile(filePath, modules = {}) {
@@ -49,7 +52,9 @@ export default {
 			this._compileMixedImports(context, modules);
 		} while (context.hasImports);
 
-		return createModule(context.content);
+		const module = createModule(context.content);
+		modules[filePath] = module;
+		return { module, modules };
 	},
 
 	_compileSingleImports(context, modules) {
@@ -114,8 +119,7 @@ export default {
 				);
 
 				const module =
-					modules[absolutePath] || this._compile(absolutePath, modules);
-				modules[absolutePath] = module;
+					modules[absolutePath] || this._compile(absolutePath, modules).module;
 
 				context.content = context.content.replace(
 					regexp,

@@ -68,9 +68,14 @@ export default class TestCommand extends Command {
 			await this._terminal.writeln(result.reason, theme.ERROR);
 
 			if (this._isVerbose) {
+				if (result.stackTrace != null)
+					await this._terminal.writeln(result.stackTrace, theme.ERROR);
+
+				await this._terminal.writeln("----------", theme.ACCENT);
 				await this._terminal.writeln(
 					cliCodeHighlighter.highlight(result.testCode)
 				);
+				await this._terminal.writeln("----------", theme.ACCENT);
 			}
 		}
 	}
