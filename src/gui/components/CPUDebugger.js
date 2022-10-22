@@ -439,7 +439,10 @@ export default class CPUDebugger extends PureComponent {
 			(it) => asm.CODE_ADDRESS + it.address === this._cpu.pc.value
 		)?.lineNumber;
 
-		bus.emit("highlight", lineNumber);
+		bus.emit("highlight", {
+			line: lineNumber,
+			nextAction: lineNumber == null ? "reset" : "step",
+		});
 		if (lineNumber == null) bus.emit("end");
 	}
 }

@@ -207,10 +207,10 @@ export default class CodeEditor extends PureComponent {
 		this.setState({ isDisabled: !isEnabled });
 	};
 
-	_onHighlight = (line) => {
+	_onHighlight = ({ line, nextAction }) => {
 		this.setState({
 			highlightedLine: line,
-			actionName: line == null ? "reset" : "step",
+			actionName: nextAction != null ? nextAction : this.state.actionName,
 		});
 	};
 

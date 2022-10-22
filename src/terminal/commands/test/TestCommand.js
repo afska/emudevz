@@ -83,7 +83,7 @@ export default class TestCommand extends Command {
 			const lineNumber = parseInt(matches[2]);
 
 			store.dispatch.savedata.openFile(filePath);
-			bus.emit("highlight", lineNumber - 1);
+			bus.emit("highlight", { line: lineNumber - 1 });
 		};
 		this._linkProvider = this._terminal.registerLinkProvider(
 			LOCATION_DETECT_REGEXP,
