@@ -64,9 +64,9 @@ export default {
 			openFile(filePath, _state_) {
 				const state = _state_[KEY];
 				const { openFiles } = state;
-				if (openFiles.includes(filePath)) return;
 
-				this.setOpenFiles([...openFiles, filePath]);
+				if (!openFiles.includes(filePath))
+					this.setOpenFiles([...openFiles, filePath]);
 				this.setSelectedFile(filePath);
 			},
 			closeFile(filePath, _state_) {
