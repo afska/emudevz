@@ -68,8 +68,8 @@ export default class TestCommand extends Command {
 			await this._terminal.writeln(result.reason, theme.ERROR);
 
 			if (this._isVerbose) {
-				if (result.stackTrace != null)
-					await this._terminal.writeln(result.stackTrace, theme.ERROR);
+				if (result.stack != null)
+					await this._terminal.writeln(result.stack.trace, theme.ERROR);
 
 				await this._terminal.writeln("----------", theme.ACCENT);
 				await this._terminal.writeln(

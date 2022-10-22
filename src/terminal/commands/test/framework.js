@@ -45,9 +45,9 @@ export default {
 					passed: false,
 					testCode: test.toString(),
 					reason: e?.message || e?.toString() || "?",
-					stackTrace:
+					stack:
 						isUserCode && $.modules != null
-							? this._buildStackTrace(e.stack, $.modules)
+							? this._buildStack(e.stack, $.modules)
 							: null,
 				});
 			}
@@ -56,19 +56,36 @@ export default {
 		return _.orderBy(results, "passed", "desc");
 	},
 
-	_buildStackTrace(originalStack, modules) {
-		let stackTrace = originalStack
+	_buildStack(originalTrace, modules) {
+		let trace = originalTrace
 			.split("\n")
 			.filter((it) => it.includes("blob:"))
 			.join("\n");
 
+		let location = null;
 		_.forEach(modules, (module, filePath) => {
-			stackTrace = stackTrace.replace(
-				new RegExp(_escapeStringRegexp_(module), "g"),
-				filePath
-			);
+			const regexp = new RegExp(_escapeStringRegexp_(module), "g");
+			const index = trace.search(regexp);
+
+			// find error location (file + line)
+			if (location == null && index > -1) {
+				const endIndex = index + module.length;
+				if (trace[endIndex] === ":") {
+					const matches = trace.slice(endIndex).match(/\b(\d+)\b/);
+					if (matches.length === 2) {
+						const line = parseInt(matches[1]);
+						location = {
+							filePath,
+							line,
+						};
+					}
+				}
+			}
+
+			// replace blob with local file name
+			trace = trace.replace(regexp, filePath);
 		});
 
-		return stackTrace;
+		return { trace, location };
 	},
 };
