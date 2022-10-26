@@ -358,9 +358,10 @@ export default class Terminal {
 
 	async _onResize(e) {
 		if (this.isExpectingInput) {
-			this.cancelPrompt();
-			await async.sleep();
-			await this.write("⚠️  " + locales.get("resize_warning"), theme.ACCENT);
+			await this.write(
+				NEWLINE + INDENTATION + "⚠️  " + locales.get("resize_warning"),
+				theme.ACCENT
+			);
 			this.cancelPrompt();
 		}
 	}
