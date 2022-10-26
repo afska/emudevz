@@ -359,7 +359,7 @@ export default class Terminal {
 	async _onResize(e) {
 		if (this.isExpectingInput) {
 			await this.write(
-				NEWLINE + INDENTATION + "⚠️  " + locales.get("resize_warning"),
+				NEWLINE + "⚠️  " + locales.get("resize_warning"),
 				theme.ACCENT
 			);
 			this.cancelPrompt();
@@ -467,10 +467,7 @@ export default class Terminal {
 			}
 			const autocompletedCharacters = commonCharacters.replace(lastPart, "");
 
-			await this.write(
-				NEWLINE + INDENTATION + options.join(INDENTATION),
-				theme.MESSAGE
-			);
+			await this.write(NEWLINE + options.join(INDENTATION), theme.MESSAGE);
 			this.cancelPrompt();
 			await async.sleep();
 			this._onData(text + autocompletedCharacters);
