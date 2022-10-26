@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import _ from "lodash";
+import codeEval from "../level/codeEval";
 import components from "./components";
 import layouts from "./components/layouts";
 import NavBar from "./components/widgets/NavBar";
@@ -29,6 +30,13 @@ class LevelScreen extends PureComponent {
 
 		const { level } = this.props;
 		level.$layout = layout;
+
+		const initFile = level.ui.run;
+		if (initFile != null) {
+			const code = level.code[initFile];
+			if (code != null) codeEval.eval(code);
+			else throw new Error(`Code not found: ${initFile}`);
+		}
 
 		this.$timeouts.push(
 			setTimeout(() => {
