@@ -13,4 +13,4 @@ it("the function returns world", function () {
 	[1].forEach(() => {
 		hello().should.equal("world" /* comment */); // comment!
 	});
-});
+})({ es: "la función retorna mundo" });

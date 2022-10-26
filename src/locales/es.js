@@ -60,5 +60,6 @@ export default {
 	tests_success:
 		"🎉  Todas las pruebas pasaron. Presiona cualquier tecla para continuar.",
 	tests_failure: "💥  Algunas pruebas fallaron. Arregla tu código.",
+	tests_warnings_found: "⚠️  Advertencias encontradas.",
 	tests_more: "💬  Para más información, corre `test -v`",
 };

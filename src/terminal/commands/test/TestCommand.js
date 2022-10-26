@@ -9,8 +9,8 @@ import Command from "../Command";
 import testContext from "./context";
 import framework from "./framework";
 
-const LOCATION_DETECT_REGEXP = /📌 {2}(.+:\d+) 📌/gu;
-const LOCATION_PARSE_REGEXP = /(.+):(\d+)/;
+const LOCATION_DETECT_REGEXP = /📌 {2}(.+:?\d*) 📌/gu;
+const LOCATION_PARSE_REGEXP = /([^:]+):?(\d*)/;
 
 export default class TestCommand extends Command {
 	static get name() {
@@ -23,9 +23,11 @@ export default class TestCommand extends Command {
 		try {
 			this._setUpHyperlinkProvider();
 
-			const $ = testContext[level.test?.context]?.prepare(level) || {
+			const context = level.test?.context;
+			const $ = testContext[context]?.prepare(level) || {
 				level,
 			};
+			const warnings = testContext[context]?.getWarnings(level) || [];
 
 			const overallResult = { allGreen: true };
 			const hasMultipleTests = _.keys(level.tests).length > 1;
@@ -44,6 +46,11 @@ export default class TestCommand extends Command {
 					await this._printResult(result, overallResult);
 
 				await this._terminal.newline();
+			}
+
+			if (!_.isEmpty(warnings)) {
+				if (this._isVerbose) await this._printWarnings(warnings);
+				else await this._terminal.writeln(locales.get("tests_warnings_found"));
 			}
 
 			if (overallResult.allGreen) {
@@ -83,7 +90,8 @@ export default class TestCommand extends Command {
 			const lineNumber = parseInt(matches[2]);
 
 			store.dispatch.savedata.openFile(filePath);
-			bus.emit("highlight", { line: lineNumber - 1 });
+			if (_.isFinite(lineNumber))
+				bus.emit("highlight", { line: lineNumber - 1 });
 		};
 		this._linkProvider = this._terminal.registerLinkProvider(
 			LOCATION_DETECT_REGEXP,
@@ -129,6 +137,21 @@ export default class TestCommand extends Command {
 				await this._terminal.writeln("----------", theme.ACCENT);
 			}
 		}
+	}
+
+	async _printWarnings(warnings) {
+		for (let { fileName, lint } of warnings) {
+			await this._terminal.writeln(`📌  ${fileName} 📌`, theme.MESSAGE);
+
+			for (let warning of lint)
+				await this._terminal.writeln(
+					`⚠️  ${theme.SYSTEM(`(:${warning.line})`)} ${theme.COMMENT(
+						warning.message
+					)}`
+				);
+		}
+
+		await this._terminal.newline();
 	}
 
 	get _isVerbose() {

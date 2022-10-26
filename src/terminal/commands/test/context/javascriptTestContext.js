@@ -1,6 +1,8 @@
+import { Linter } from "eslint-linter-browserify";
 import $path from "path";
 import _ from "lodash";
 import filesystem from "../../../../filesystem";
+import { esLintConfig } from "../../../../utils/codemirror";
 import {
 	createModule,
 	evaluateModule,
@@ -36,6 +38,27 @@ export default {
 		};
 
 		return $;
+	},
+
+	getWarnings(level) {
+		const code = level.content;
+		if (!_.isObject(code)) return [];
+
+		const { modules } = this._compile(code.main);
+		const fileNames = _(modules).keys().sort().value();
+
+		return fileNames
+			.map((fileName) => {
+				const linter = new Linter();
+
+				return {
+					fileName,
+					lint: linter.verify(filesystem.read(fileName), esLintConfig, {
+						filename: fileName,
+					}),
+				};
+			})
+			.filter((it) => !_.isEmpty(it.lint));
 	},
 
 	_compile(filePath, modules = {}) {
