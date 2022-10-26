@@ -141,14 +141,18 @@ export default class TestCommand extends Command {
 
 	async _printWarnings(warnings) {
 		for (let { fileName, lint } of warnings) {
-			await this._terminal.writeln(`📌  ${fileName} 📌`, theme.MESSAGE);
+			await this._terminal.writeln(`📌  ${fileName} 📌`, theme.ACCENT);
 
-			for (let warning of lint)
+			for (let warning of lint) {
+				const symbol = warning.severity === 2 ? "🚫 " : "⚠️ ";
+				const color = warning.severity === 2 ? theme.ERROR : theme.WARNING;
+
 				await this._terminal.writeln(
-					`⚠️  ${theme.SYSTEM(`(:${warning.line})`)} ${theme.COMMENT(
+					`${symbol} ${theme.SYSTEM(`(:${warning.line})`)} ${color(
 						warning.message
 					)}`
 				);
+			}
 		}
 
 		await this._terminal.newline();
