@@ -9,6 +9,7 @@ import Command from "../Command";
 import testContext from "./context";
 import framework from "./framework";
 
+const ERROR = 2;
 const LOCATION_DETECT_REGEXP = /📌 {2}(.+:?\d*) 📌/gu;
 const LOCATION_PARSE_REGEXP = /([^:]+):?(\d*)/;
 
@@ -50,7 +51,14 @@ export default class TestCommand extends Command {
 
 			if (!_.isEmpty(warnings)) {
 				if (this._isVerbose) await this._printWarnings(warnings);
-				else await this._terminal.writeln(locales.get("tests_warnings_found"));
+				else
+					await this._terminal.writeln(
+						locales.get(
+							warnings.some((it) => it.lint.some((it) => it.severity === ERROR))
+								? "tests_errors_found"
+								: "tests_warnings_found"
+						)
+					);
 			}
 
 			if (overallResult.allGreen) {
@@ -144,8 +152,8 @@ export default class TestCommand extends Command {
 			await this._terminal.writeln(`📌  ${fileName} 📌`, theme.ACCENT);
 
 			for (let warning of lint) {
-				const symbol = warning.severity === 2 ? "🚫 " : "⚠️ ";
-				const color = warning.severity === 2 ? theme.ERROR : theme.WARNING;
+				const symbol = warning.severity === ERROR ? "🚫 " : "⚠️ ";
+				const color = warning.severity === ERROR ? theme.ERROR : theme.WARNING;
 
 				await this._terminal.writeln(
 					`${symbol} ${theme.SYSTEM(`(:${warning.line})`)} ${color(
