@@ -1,4 +1,5 @@
 import $path from "path";
+import _ from "lodash";
 import store from "../store";
 
 export default class Filesystem {
@@ -12,7 +13,7 @@ export default class Filesystem {
 	}
 
 	ls(path) {
-		return this.fs.readdirSync(path).map((it) => {
+		const content = this.fs.readdirSync(path).map((it) => {
 			const stat = this.stat(`${path}/${it}`);
 
 			return {
@@ -21,6 +22,8 @@ export default class Filesystem {
 				size: stat.size,
 			};
 		});
+
+		return _.orderBy(content, ["isDirectory", "name"], ["desc", "asc"]);
 	}
 
 	read(path) {

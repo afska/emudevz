@@ -14,19 +14,14 @@ export default class LsCommand extends FilesystemCommand {
 	async _execute() {
 		const path = this._resolve(this._args[0] || "");
 		const content = filesystem.ls(path);
-		const sortedContent = _.orderBy(
-			content,
-			["isDirectory", "name"],
-			["desc", "asc"]
-		);
 		const maxNameLength =
-			_.maxBy(sortedContent, (it) => it.name.length)?.name.length ?? 0;
+			_.maxBy(content, (it) => it.name.length)?.name.length ?? 0;
 		const maxSizeLenght =
-			_.maxBy(sortedContent, (it) => it.size.toString().length)?.size.toString()
+			_.maxBy(content, (it) => it.size.toString().length)?.size.toString()
 				.length ?? 0;
 
 		this._terminal.writeln(
-			sortedContent
+			content
 				.map(({ name, isDirectory, size }) => {
 					const style = isDirectory ? theme.MESSAGE : theme.NORMAL;
 

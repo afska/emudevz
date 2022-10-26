@@ -1,9 +1,12 @@
+import $path from "path";
 import _ from "lodash";
+import filesystem from "../filesystem";
 import locales from "../locales";
 import commands from "./commands";
 import { DISPOSED } from "./errors";
 import { theme } from "./style";
 
+const ARGUMENT_SEPARATOR = " ";
 const PROMPT_SYMBOL = "$ ";
 
 export default class Shell {
@@ -14,8 +17,15 @@ export default class Shell {
 		this.workingDirectory = "/";
 	}
 
+	get allAvailableCommands() {
+		return _.isEmpty(this.availableCommands)
+			? commands.map((it) => it.name)
+			: this.availableCommands;
+	}
+
 	async run() {
 		try {
+			this.terminal.autocompleteOptions = this.allAvailableCommands;
 			const commandLine = await this._getNextCommandLine();
 			await this.runLine(commandLine);
 		} catch (e) {
@@ -25,7 +35,7 @@ export default class Shell {
 	}
 
 	async runLine(commandLine) {
-		const commandParts = commandLine.trim().split(" ");
+		const commandParts = commandLine.trim().split(ARGUMENT_SEPARATOR);
 		const commandName = commandParts[0];
 		const args = commandParts.slice(1);
 
@@ -45,7 +55,35 @@ export default class Shell {
 		await this.terminal.run(new Command(args, this));
 	}
 
+	onInput(input) {
+		const commandParts = input.split(ARGUMENT_SEPARATOR);
+
+		if (commandParts.length > 1) {
+			const lastPart = _.last(commandParts);
+			const path = lastPart.split("/").slice(0, -1).join("/");
+
+			try {
+				process.$setCwd(this.workingDirectory);
+				const absolutePath = $path.resolve(path);
+				const files = filesystem.ls(absolutePath).map((it) => {
+					return (
+						path +
+						(path !== "" ? "/" : "") +
+						(it.isDirectory ? `${it.name}/` : it.name)
+					);
+				});
+				this.terminal.autocompleteOptions = files;
+			} catch (e) {
+				this.terminal.autocompleteOptions = [];
+			}
+		} else this.terminal.autocompleteOptions = this.allAvailableCommands;
+	}
+
 	onStop() {
+		return true;
+	}
+
+	usesAutocomplete() {
 		return true;
 	}
 

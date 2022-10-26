@@ -16,18 +16,22 @@ const KEY_REFRESH_1 = "[15~";
 const KEY_REFRESH_2 = "";
 const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
+const ARGUMENT_SEPARATOR = " ";
 const NEWLINE_REGEXP = /\r\n?|\n/g;
 const WHITESPACE_REGEXP = /\s/;
 const NEWLINE = "\r\n";
 const SHORT_NEWLINE = "\n";
 const TABULATION_REGEXP = /\t/g;
-const TABULATION = "  ";
+const TABULATION = "\t";
+const INDENTATION = "  ";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
 
 // Program interface:
 // - async run(args) -> void
+// - onInput(input) -> void
 // - onStop() -> Boolean
+// - usesAutocomplete() -> Boolean
 
 export default class Terminal {
 	constructor(xterm) {
@@ -39,12 +43,16 @@ export default class Terminal {
 		this._speedFlag = false;
 		this._stopFlag = false;
 		this._disposeFlag = false;
+		this._interceptingKey = undefined;
+		this._interceptingCallback = undefined;
 
 		this._shell = new Shell(this);
 		this._currentProgram = null;
 
 		this._setUpXtermHooks();
 		this._setUpRemoteCommandSubscriber();
+
+		this.autocompleteOptions = [];
 	}
 
 	async start(
@@ -66,6 +74,7 @@ export default class Terminal {
 	async run(program) {
 		try {
 			this._currentProgram = program;
+			this.autocompleteOptions = [];
 			await this._currentProgram.run();
 		} catch (e) {
 			if (e === DISPOSED) return;
@@ -285,7 +294,7 @@ export default class Terminal {
 
 	async _onData(data) {
 		if (data === "") return;
-		if (this._processCommonBrowserKeys(data)) return;
+		if (this._processCommonKeys(data)) return;
 		data = this._normalize(data, SHORT_NEWLINE);
 
 		switch (data) {
@@ -310,6 +319,7 @@ export default class Terminal {
 
 					await this.write(data);
 					this._input.append(data);
+					this._currentProgram.onInput(this._input.text);
 				}
 			}
 		}
@@ -320,6 +330,12 @@ export default class Terminal {
 		const isEnter = e.key === "Enter";
 		const isCtrlShiftC = e.ctrlKey && e.shiftKey && e.key === "C";
 		const isShiftEnter = e.shiftKey && isEnter;
+
+		if (e.key === "Tab" && this._currentProgram.usesAutocomplete()) {
+			this._interceptingKey = TABULATION;
+			this._interceptingCallback = () => this._processAutocomplete();
+			return;
+		}
 
 		if (isKeyDown && isCtrlShiftC) {
 			const selection = this._xterm.getSelection();
@@ -343,8 +359,7 @@ export default class Terminal {
 	async _onResize(e) {
 		if (this.isExpectingInput) {
 			this.cancelPrompt();
-			await async.sleep(1);
-			this.clear();
+			await async.sleep();
 			await this.write("⚠️  " + locales.get("resize_warning"), theme.ACCENT);
 			this.cancelPrompt();
 		}
@@ -419,7 +434,7 @@ export default class Terminal {
 	_normalize(text, newline = NEWLINE) {
 		return text
 			.replace(NEWLINE_REGEXP, newline)
-			.replace(TABULATION_REGEXP, TABULATION);
+			.replace(TABULATION_REGEXP, INDENTATION);
 	}
 
 	_isValidInput(data) {
@@ -430,7 +445,45 @@ export default class Terminal {
 		);
 	}
 
-	_processCommonBrowserKeys(data) {
+	async _processAutocomplete() {
+		if (!this.isExpectingInput || this._input.isEmpty()) return;
+
+		const text = this._input.text;
+		const lastPart = _.last(text.split(ARGUMENT_SEPARATOR));
+		const options = this.autocompleteOptions.filter((it) =>
+			it.startsWith(lastPart)
+		);
+
+		if (options.length === 1) {
+			const autocompletedCharacters = options[0].replace(lastPart, "");
+			this._onData(autocompletedCharacters);
+		} else if (options.length > 1) {
+			let commonCharacters = "";
+			const tmp = { index: 0 };
+			while (options.every((it) => it[tmp.index] === options[0][tmp.index])) {
+				commonCharacters += options[0][tmp.index];
+				tmp.index++;
+			}
+			const autocompletedCharacters = commonCharacters.replace(lastPart, "");
+
+			await this.write(
+				NEWLINE + INDENTATION + options.join(INDENTATION),
+				theme.MESSAGE
+			);
+			this.cancelPrompt();
+			await async.sleep();
+			this._onData(text + autocompletedCharacters);
+		}
+	}
+
+	_processCommonKeys(data) {
+		if (data === this._interceptingKey) {
+			this._interceptingCallback();
+			this._interceptingKey = undefined;
+			this._interceptingCallback = undefined;
+			return true;
+		}
+
 		if (data === KEY_REFRESH_1 || data === KEY_REFRESH_2) {
 			window.location.reload();
 			return true;

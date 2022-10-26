@@ -1,4 +1,3 @@
-import _ from "lodash";
 import Level from "../../level/Level";
 import locales from "../../locales";
 import { theme } from "../style";
@@ -39,9 +38,7 @@ export default class HelpCommand extends Command {
 	async _printCommandsHelp() {
 		const findCommand = (it) => commands.find((command) => command.name === it);
 
-		const availableCommands = _.isEmpty(this._shell.availableCommands)
-			? commands.map((it) => it.name)
-			: this._shell.availableCommands;
+		const availableCommands = this._shell.allAvailableCommands;
 
 		let more = false;
 		await this._terminal.writeln(

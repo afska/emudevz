@@ -33,8 +33,14 @@ export default class Command {
 		throw new Error("not_implemented");
 	}
 
+	onInput() {}
+
 	onStop() {
 		return true;
+	}
+
+	usesAutocomplete() {
+		return false;
 	}
 
 	_includes(arg) {

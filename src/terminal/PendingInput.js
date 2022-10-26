@@ -10,6 +10,10 @@ export default class PendingInput {
 		this._reject = reject;
 	}
 
+	get text() {
+		return this._text;
+	}
+
 	isEmpty() {
 		return this._text === "";
 	}
