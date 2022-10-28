@@ -5,6 +5,11 @@
 	margin-right: 1px;
 }
 
+.innerContainer {
+	height: 100%;
+	filter: blur(2px);
+}
+
 .tabs {
 	width: 100%;
 	display: flex;

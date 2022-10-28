@@ -1,0 +1,13 @@
+.container {
+	background: #2e3c49;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 10;
+	user-select: none;
+	padding: 12px;
+	border-radius: 8px;
+	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
+		0 0 8px rgba(200, 200, 200, 0.6);
+}

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import filesystem from "../../filesystem";
 import Drive from "../../filesystem/Drive";
 import CodeEditor from "./CodeEditor";
+import FileSearch from "./widgets/FileSearch";
 import HorizontalDragList from "./widgets/HorizontalDragList";
 import Tab from "./widgets/Tab";
 import styles from "./MultiFileCodeEditor.module.css";
@@ -31,38 +32,42 @@ class MultiFileCodeEditor extends PureComponent {
 
 		return (
 			<div className={styles.container}>
-				<div
-					className={styles.tabs}
-					tabIndex={-1}
-					ref={(ref) => {
-						if (!ref) return null;
-						this._tabs = ref;
-					}}
-					onWheel={this._onWheelTabs}
-				>
-					<HorizontalDragList
-						items={this.props.openFiles.map((filePath) => ({
-							id: filePath,
-							render: (isDragging) => this._renderTab(filePath, isDragging),
-						}))}
-						onSort={(updatedItems) => {
-							this.props.setOpenFiles(updatedItems.map((it) => it.id));
-						}}
-					/>
-				</div>
-				<div className={styles.content}>
-					<CodeEditor
+				<FileSearch />
+
+				<div className={styles.innerContainer}>
+					<div
+						className={styles.tabs}
+						tabIndex={-1}
 						ref={(ref) => {
-							if (!ref) return;
-							ref.initialize(this._args, this._level, this._layout);
-							this._editor = ref;
+							if (!ref) return null;
+							this._tabs = ref;
 						}}
-						getCode={() => filesystem.read(this.props.selectedFile)}
-						setCode={(code) => {
-							filesystem.write(this.props.selectedFile, code);
-						}}
-						forceReadOnly={isReadOnlyDir}
-					/>
+						onWheel={this._onWheelTabs}
+					>
+						<HorizontalDragList
+							items={this.props.openFiles.map((filePath) => ({
+								id: filePath,
+								render: (isDragging) => this._renderTab(filePath, isDragging),
+							}))}
+							onSort={(updatedItems) => {
+								this.props.setOpenFiles(updatedItems.map((it) => it.id));
+							}}
+						/>
+					</div>
+					<div className={styles.content}>
+						<CodeEditor
+							ref={(ref) => {
+								if (!ref) return;
+								ref.initialize(this._args, this._level, this._layout);
+								this._editor = ref;
+							}}
+							getCode={() => filesystem.read(this.props.selectedFile)}
+							setCode={(code) => {
+								filesystem.write(this.props.selectedFile, code);
+							}}
+							forceReadOnly={isReadOnlyDir}
+						/>
+					</div>
 				</div>
 			</div>
 		);
