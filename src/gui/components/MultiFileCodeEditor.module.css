@@ -8,6 +8,7 @@
 .innerContainer {
 	height: 100%;
 	filter: blur(2px);
+	pointer-events: none;
 }
 
 .tabs {

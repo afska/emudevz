@@ -19,6 +19,17 @@ body {
 	height: 100%;
 }
 
+/* Bootstrap */
+
+.form-control {
+	background-color: #435c69 !important;
+	color: white !important;
+}
+
+::placeholder {
+	color: rgb(184, 189, 197) !important;
+}
+
 /* CodeMirror */
 
 .cm-theme {
