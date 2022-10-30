@@ -29,6 +29,12 @@
 	background: #505a69;
 	border: 1px solid #577295;
 	color: #b7bbc7;
+	cursor: pointer;
+}
+
+.path {
+	color: rgb(149, 149, 149);
+	margin-left: 8px;
 }
 
 .highlight {

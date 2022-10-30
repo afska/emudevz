@@ -14,16 +14,25 @@ export default class Filesystem {
 
 	ls(path) {
 		const content = this.fs.readdirSync(path).map((it) => {
-			const stat = this.stat(`${path}/${it}`);
+			const filePath = `${path}/${it}`;
+			const stat = this.stat(filePath);
 
 			return {
 				name: it,
 				isDirectory: stat.isDirectory(),
 				size: stat.size,
+				filePath,
+				dirPath: path,
 			};
 		});
 
 		return _.orderBy(content, ["isDirectory", "name"], ["desc", "asc"]);
+	}
+
+	lsr(path) {
+		return this.ls(path).flatMap((it) => {
+			return it.isDirectory ? this.ls(`${path}/${it.name}`) : it;
+		});
 	}
 
 	read(path) {
