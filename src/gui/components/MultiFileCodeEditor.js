@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import $path from "path";
 import { connect } from "react-redux";
+import classNames from "classnames";
 import filesystem from "../../filesystem";
 import Drive from "../../filesystem/Drive";
 import CodeEditor from "./CodeEditor";
@@ -20,10 +21,13 @@ class MultiFileCodeEditor extends PureComponent {
 
 	state = {
 		_isInitialized: false,
+		isSearching: false,
 	};
 
 	render() {
 		if (!this.state._isInitialized) return false;
+
+		const { isSearching } = this.state;
 
 		const parsedPath = $path.parse(this.props.selectedFile);
 		const isReadOnlyDir = Drive.READONLY_PATHS.some(
@@ -32,14 +36,26 @@ class MultiFileCodeEditor extends PureComponent {
 
 		return (
 			<div className={styles.container}>
-				<FileSearch />
+				<FileSearch
+					isSearching={isSearching}
+					onOpen={() => this.setState({ isSearching: true })}
+					onBlur={() => {
+						this.setState({ isSearching: false });
+						this._editor.focus();
+					}}
+				/>
 
-				<div className={styles.innerContainer}>
+				<div
+					className={classNames(
+						styles.innerContainer,
+						isSearching ? styles.unselected : styles.selected
+					)}
+				>
 					<div
 						className={styles.tabs}
 						tabIndex={-1}
 						ref={(ref) => {
-							if (!ref) return null;
+							if (!ref) return;
 							this._tabs = ref;
 						}}
 						onWheel={this._onWheelTabs}
@@ -66,6 +82,7 @@ class MultiFileCodeEditor extends PureComponent {
 								filesystem.write(this.props.selectedFile, code);
 							}}
 							forceReadOnly={isReadOnlyDir}
+							onKeyDown={this._onKeyDown}
 						/>
 					</div>
 				</div>
@@ -94,6 +111,23 @@ class MultiFileCodeEditor extends PureComponent {
 
 	_onWheelTabs = (e) => {
 		this._tabs.scrollBy(-e.deltaY, 0);
+	};
+
+	_onKeyDown = (e) => {
+		const isCtrlP = e.ctrlKey && e.code === "KeyP";
+		const isEsc = e.code === "Escape";
+
+		if (isCtrlP) {
+			e.preventDefault();
+			this.setState({ isSearching: true });
+			return;
+		}
+
+		if (isEsc && this.state.isSearching) {
+			e.preventDefault();
+			this.setState({ isSearching: false });
+			return;
+		}
 	};
 }
 

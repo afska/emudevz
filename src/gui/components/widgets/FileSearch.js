@@ -1,18 +1,27 @@
-import React, { PureComponent } from "react";
+import React, { useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
+import locales from "../../../locales";
 import styles from "./FileSearch.module.css";
 
-export default class FileSearch extends PureComponent {
-	render() {
-		const { className, ...rest } = this.props;
+export default function FileSearch(props) {
+	const { isSearching, onBlur, className, ...rest } = props;
 
+	const inputRef = useRef(null);
+	useEffect(() => {
+		if (isSearching) inputRef.current.focus();
+	}, [isSearching]);
+
+	const render = () => {
 		return (
 			<div className={classNames(styles.container, className)} {...rest}>
 				<Form.Control
-					placeholder="Enter a file name..."
+					placeholder={locales.get("enter_a_file_name")}
 					spellCheck={false}
 					className={styles.input}
+					onBlur={onBlur}
+					onKeyDown={onKeyDown}
+					ref={inputRef}
 				/>
 
 				<div className={styles.results}>
@@ -28,5 +37,18 @@ export default class FileSearch extends PureComponent {
 				</div>
 			</div>
 		);
-	}
+	};
+
+	const onKeyDown = (e) => {
+		const isEsc = e.code === "Escape";
+
+		if (isEsc) {
+			e.preventDefault();
+			if (onBlur) onBlur();
+			return;
+		}
+	};
+
+	if (!isSearching) return false;
+	return render();
 }

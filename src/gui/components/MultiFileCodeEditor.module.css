@@ -7,8 +7,12 @@
 
 .innerContainer {
 	height: 100%;
-	filter: blur(2px);
-	pointer-events: none;
+	-webkit-transition: 1s -webkit-filter linear;
+	-moz-transition: 1s -moz-filter linear;
+	-moz-transition: 1s filter linear;
+	-ms-transition: 1s -ms-filter linear;
+	-o-transition: 1s -o-filter linear;
+	transition: 1s filter linear, 1s -webkit-filter linear;
 }
 
 .tabs {
@@ -23,4 +27,39 @@
 
 .content {
 	height: calc(100% - 41px);
+}
+
+.selected {
+	filter: blur(0px);
+
+	animation-duration: 0.25s;
+	animation-name: select;
+}
+
+.unselected {
+	filter: blur(2px);
+	pointer-events: none;
+
+	animation-duration: 0.25s;
+	animation-name: unselect;
+}
+
+@keyframes select {
+	from {
+		filter: blur(2px);
+	}
+
+	to {
+		filter: blur(0px);
+	}
+}
+
+@keyframes unselect {
+	from {
+		filter: blur(0px);
+	}
+
+	to {
+		filter: blur(2px);
+	}
 }
