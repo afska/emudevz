@@ -12,7 +12,7 @@ export default class LsCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		const path = this._resolve(this._args[0] || "");
+		const path = this._resolve(this._fileArgs[0] || "");
 		const content = filesystem.ls(path);
 		const maxNameLength =
 			_.maxBy(content, (it) => it.name.length)?.name.length ?? 0;

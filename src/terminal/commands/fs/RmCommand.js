@@ -9,33 +9,54 @@ export default class RmCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		const path = this._resolve(this._args[0], true);
-
-		try {
-			filesystem.rm(path);
-		} catch (e) {
-			if (e.code !== "EISDIR") throw e;
+		for (let arg of this._fileArgs) {
+			const path = this._resolve(arg, true);
 
 			try {
-				filesystem.rmdir(path);
-			} catch (e) {
-				if (e.code !== "ENOTEMPTY") throw e;
-
 				await this._terminal.writeln(
-					locales.get("rm_with_files"),
-					undefined,
-					undefined,
-					true
+					`${locales.get("deleting")} ${theme.ACCENT(arg)}...`
 				);
-				const key = await this._terminal.waitForKey();
-				if (key.toLowerCase() === "y") {
-					await this._terminal.writeln(
-						locales.get("rm_deleting_recursively"),
-						theme.ERROR
-					);
-					filesystem.rimraf(path);
+				filesystem.rm(path);
+			} catch (e) {
+				if (e.code !== "EISDIR") throw e;
+
+				try {
+					filesystem.rmdir(path);
+				} catch (e) {
+					if (e.code !== "ENOTEMPTY") throw e;
+
+					if (await this._recursiveCheck()) {
+						await this._terminal.writeln(
+							locales.get("rm_deleting_recursively"),
+							theme.ERROR
+						);
+						filesystem.rimraf(path);
+					}
 				}
 			}
 		}
+	}
+
+	async _recursiveCheck() {
+		if (this._isRecursive) return true;
+
+		await this._terminal.writeln(
+			locales.get("rm_with_files"),
+			undefined,
+			undefined,
+			true
+		);
+		await this._terminal.writeln(
+			locales.get("rm_recursive_flag"),
+			theme.COMMENT,
+			undefined,
+			true
+		);
+		const key = await this._terminal.waitForKey();
+		return key.toLowerCase() === "y";
+	}
+
+	get _isRecursive() {
+		return this._includes("-rf");
 	}
 }

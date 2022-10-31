@@ -14,6 +14,8 @@ export default class FilesystemCommand extends Command {
 		try {
 			await this._execute();
 		} catch (e) {
+			if (e?.isUserEvent) return;
+
 			const message = e?.message || e?.toString() || "?";
 			this._terminal.writeln(
 				"❌  " + theme.ERROR(message.replace(ERROR_PREFIX, ""))
@@ -45,5 +47,9 @@ export default class FilesystemCommand extends Command {
 			throw new Error(`EPERM: operation not permitted., '${absolutePath}'`);
 
 		return absolutePath;
+	}
+
+	get _fileArgs() {
+		return this._args.filter((it) => !it.startsWith("-"));
 	}
 }

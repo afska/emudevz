@@ -10,14 +10,16 @@ export default class OpenCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		const path = this._resolve(this._args[0]);
-		const stat = filesystem.stat(path);
-		if (stat.isDirectory())
-			throw new Error(`EISDIR: File is a directory., '${path}'`);
+		for (let arg of this._fileArgs) {
+			const path = this._resolve(arg);
+			const stat = filesystem.stat(path);
+			if (stat.isDirectory())
+				throw new Error(`EISDIR: File is a directory., '${path}'`);
 
-		this._terminal.writeln(
-			`${locales.get("opening")} ${theme.ACCENT(this._args[0])}...`
-		);
-		store.dispatch.savedata.openFile(path);
+			await this._terminal.writeln(
+				`${locales.get("opening")} ${theme.ACCENT(arg)}...`
+			);
+			store.dispatch.savedata.openFile(path);
+		}
 	}
 }
