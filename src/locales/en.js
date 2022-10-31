@@ -20,6 +20,7 @@ export default {
 	command_open_description: "Opens a file (usage: ~open a_file~)",
 	command_rm_description: "Removes something (usage: ~rm something~)",
 	command_touch_description: "Creates a file (usage: ~touch a_file~)",
+	enter_a_file_name: "Enter a file name...",
 	goBack: "Go back",
 	help_basic: "💬  If you're stuck, run the `help` command...",
 	help_level: "✨  Level help:",

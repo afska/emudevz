@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
 import $path from "path";
 import { connect } from "react-redux";
-import filesystem from "../../filesystem";
-import Drive from "../../filesystem/Drive";
+import classNames from "classnames";
+import filesystem, { Drive } from "../../filesystem";
 import CodeEditor from "./CodeEditor";
+import FileSearch from "./widgets/FileSearch";
 import HorizontalDragList from "./widgets/HorizontalDragList";
 import Tab from "./widgets/Tab";
 import styles from "./MultiFileCodeEditor.module.css";
@@ -19,10 +20,13 @@ class MultiFileCodeEditor extends PureComponent {
 
 	state = {
 		_isInitialized: false,
+		isSearching: false,
 	};
 
 	render() {
 		if (!this.state._isInitialized) return false;
+
+		const { isSearching } = this.state;
 
 		const parsedPath = $path.parse(this.props.selectedFile);
 		const isReadOnlyDir = Drive.READONLY_PATHS.some(
@@ -31,38 +35,57 @@ class MultiFileCodeEditor extends PureComponent {
 
 		return (
 			<div className={styles.container}>
-				<div
-					className={styles.tabs}
-					tabIndex={-1}
-					ref={(ref) => {
-						if (!ref) return null;
-						this._tabs = ref;
+				<FileSearch
+					isSearching={isSearching}
+					onSelect={(filePath) => {
+						this.props.openFile(filePath);
 					}}
-					onWheel={this._onWheelTabs}
+					onBlur={() => {
+						this.setState({ isSearching: false });
+						this._editor.focus();
+					}}
+				/>
+
+				<div
+					className={classNames(
+						styles.innerContainer,
+						isSearching ? styles.unselected : styles.selected
+					)}
 				>
-					<HorizontalDragList
-						items={this.props.openFiles.map((filePath) => ({
-							id: filePath,
-							render: (isDragging) => this._renderTab(filePath, isDragging),
-						}))}
-						onSort={(updatedItems) => {
-							this.props.setOpenFiles(updatedItems.map((it) => it.id));
-						}}
-					/>
-				</div>
-				<div className={styles.content}>
-					<CodeEditor
+					<div
+						className={styles.tabs}
+						tabIndex={-1}
 						ref={(ref) => {
 							if (!ref) return;
-							ref.initialize(this._args, this._level, this._layout);
-							this._editor = ref;
+							this._tabs = ref;
 						}}
-						getCode={() => filesystem.read(this.props.selectedFile)}
-						setCode={(code) => {
-							filesystem.write(this.props.selectedFile, code);
-						}}
-						forceReadOnly={isReadOnlyDir}
-					/>
+						onWheel={this._onWheelTabs}
+					>
+						<HorizontalDragList
+							items={this.props.openFiles.map((filePath) => ({
+								id: filePath,
+								render: (isDragging) => this._renderTab(filePath, isDragging),
+							}))}
+							onSort={(updatedItems) => {
+								this.props.setOpenFiles(updatedItems.map((it) => it.id));
+							}}
+						/>
+					</div>
+					<div className={styles.content}>
+						<CodeEditor
+							ref={(ref) => {
+								if (!ref) return;
+								ref.initialize(this._args, this._level, this._layout);
+								this._editor = ref;
+							}}
+							getCode={() => filesystem.read(this.props.selectedFile)}
+							setCode={(code) => {
+								filesystem.write(this.props.selectedFile, code);
+							}}
+							forceReadOnly={isReadOnlyDir}
+							onKeyDown={this._onKeyDown}
+						/>
+					</div>
 				</div>
 			</div>
 		);
@@ -90,6 +113,23 @@ class MultiFileCodeEditor extends PureComponent {
 	_onWheelTabs = (e) => {
 		this._tabs.scrollBy(-e.deltaY, 0);
 	};
+
+	_onKeyDown = (e) => {
+		const isCtrlP = e.ctrlKey && e.code === "KeyP";
+		const isEsc = e.code === "Escape";
+
+		if (isCtrlP) {
+			e.preventDefault();
+			this.setState({ isSearching: true });
+			return;
+		}
+
+		if (isEsc && this.state.isSearching) {
+			e.preventDefault();
+			this.setState({ isSearching: false });
+			return;
+		}
+	};
 }
 
 const mapStateToProps = ({ savedata }) => {
@@ -101,6 +141,7 @@ const mapStateToProps = ({ savedata }) => {
 
 const mapDispatchToProps = ({ savedata }) => {
 	return {
+		openFile: savedata.openFile,
 		setOpenFiles: savedata.setOpenFiles,
 		setSelectedFile: savedata.setSelectedFile,
 		closeFile: savedata.closeFile,

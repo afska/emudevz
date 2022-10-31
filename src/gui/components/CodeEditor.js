@@ -192,15 +192,16 @@ export default class CodeEditor extends PureComponent {
 	};
 
 	_onKeyDown = (e) => {
-		const isKeyDown = e.type === "keydown";
 		const isAltEnter = e.altKey && e.code === "Enter";
 
-		if (isKeyDown && isAltEnter) {
+		if (isAltEnter) {
 			if (!this._isActionEnabled()) return;
 			const action = this._getAction();
 			action.run();
 			return;
 		}
+
+		if (this.props.onKeyDown) this.props.onKeyDown(e);
 	};
 
 	_onRunEnabled = (isEnabled) => {

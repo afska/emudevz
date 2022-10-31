@@ -19,6 +19,7 @@ export default {
 	command_open_description: "Abre un archivo (uso: ~open un_archivo~)",
 	command_rm_description: "Remueve algo (uso: ~rm algo~)",
 	command_touch_description: "Crea un archivo (uso: ~touch un_archivo~)",
+	enter_a_file_name: "Ingresa un nombre de archivo...",
 	goBack: "Volver",
 	help_basic: "💬  Si te bloqueas, corre el comando `help`...",
 	help_level: "✨  Ayuda del nivel:",

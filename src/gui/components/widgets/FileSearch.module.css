@@ -1,0 +1,50 @@
+.container {
+	background: #2e3c49;
+	width: 75%;
+	position: absolute;
+	top: 56px;
+	left: 50%;
+	transform: translate(-50%, 0);
+	padding: 12px;
+	border-radius: 8px;
+	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
+		0 0 8px rgba(200, 200, 200, 0.6);
+	z-index: 10;
+	user-select: none;
+}
+
+.input {
+	box-shadow: inset 16px 16px 16px rgb(0 0 0 / 8%),
+		0 0 16px rgba(200, 200, 200, 0.6) !important;
+}
+
+.results {
+	margin-top: 8px;
+}
+
+.result {
+	margin-top: 8px;
+	border-radius: 4px;
+	padding: 4px 8px;
+	background: #505a69;
+	border: 1px solid #577295;
+	color: #b7bbc7;
+	cursor: pointer;
+}
+
+.path {
+	color: rgb(165, 176, 186);
+}
+
+.pathStart {
+	margin-left: 8px;
+}
+
+.highlight {
+	color: #d7d6ff;
+	font-weight: bold;
+}
+
+.selected {
+	background: #697992;
+}
