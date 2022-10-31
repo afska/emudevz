@@ -45,7 +45,7 @@ export default function FileSearch(props) {
 				/>
 
 				<div className={styles.results}>
-					{matches.map(({ groups }, i) => {
+					{matches.map(({ file, groups }, i) => {
 						return (
 							<div
 								key={i}
@@ -53,6 +53,7 @@ export default function FileSearch(props) {
 									styles.result,
 									selected === i && styles.selected
 								)}
+								onMouseDown={() => _onSelect(file)}
 							>
 								{_renderGroups(groups.file)}
 								{_renderGroups(groups.dir, true)}
@@ -109,13 +110,15 @@ export default function FileSearch(props) {
 
 		if (isEnter) {
 			const match = matches[selected];
-			if (match != null) {
-				onSelect(PREFIX + match.file.filePath);
-				onBlur();
-			}
+			if (match != null) _onSelect(match.file);
 			e.preventDefault();
 			return;
 		}
+	};
+
+	const _onSelect = (file) => {
+		onSelect(PREFIX + file.filePath);
+		onBlur();
 	};
 
 	if (!isSearching) return false;
