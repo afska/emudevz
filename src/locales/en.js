@@ -14,12 +14,13 @@ export default {
 	command_test_description: "Tests your solution.",
 	command_cd_description: "Changes directory (usage: ~cd a_directory~)",
 	command_ls_description: "Shows a file list",
-	command_mkdir_description: "Creates a directory (usage: ~mkdir a_directory~)",
+	command_mkdir_description: "Creates directories (usage: ~mkdir dir1 dir2~)",
 	command_mv_description:
 		"Moves or renames something (usage: ~mv old_path new_path~)",
-	command_open_description: "Opens a file (usage: ~open a_file~)",
+	command_open_description:
+		"Opens files (usage: ~open file1 file2~, or ~open *~)",
 	command_rm_description: "Removes something (usage: ~rm something~)",
-	command_touch_description: "Creates a file (usage: ~touch a_file~)",
+	command_touch_description: "Creates files (usage: ~touch file1 file2~)",
 	creating_file: "Creating file",
 	creating_directory: "Creating directory",
 	deleting: "Deleting",
