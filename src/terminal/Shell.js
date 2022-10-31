@@ -1,4 +1,3 @@
-import $path from "path";
 import _ from "lodash";
 import filesystem from "../filesystem";
 import locales from "../locales";
@@ -63,8 +62,7 @@ export default class Shell {
 			const path = lastPart.split("/").slice(0, -1).join("/");
 
 			try {
-				process.$setCwd(this.workingDirectory);
-				const absolutePath = $path.resolve(path);
+				const absolutePath = filesystem.resolve(path, this.workingDirectory);
 				const files = filesystem.ls(absolutePath).map((it) => {
 					return (
 						path +

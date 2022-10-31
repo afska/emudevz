@@ -85,4 +85,9 @@ export default class Filesystem {
 	stat(path) {
 		return this.fs.statSync(path);
 	}
+
+	resolve(path, relativePath) {
+		process.$setCwd(relativePath);
+		return $path.resolve(path);
+	}
 }

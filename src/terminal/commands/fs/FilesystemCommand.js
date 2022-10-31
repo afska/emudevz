@@ -1,5 +1,5 @@
 import $path from "path";
-import { Drive } from "../../../filesystem";
+import filesystem, { Drive } from "../../../filesystem";
 import { theme } from "../../style";
 import Command from "../Command";
 
@@ -28,8 +28,7 @@ export default class FilesystemCommand extends Command {
 	_resolve(path, isWrite = false) {
 		if (path == null) throw new Error("A path is required");
 
-		process.$setCwd(this._shell.workingDirectory);
-		const absolutePath = $path.resolve(path);
+		const absolutePath = filesystem.resolve(path, this._shell.workingDirectory);
 		const parsedPath = $path.parse(absolutePath);
 
 		if (Drive.INVALID_CHARACTERS.test(parsedPath.base))
