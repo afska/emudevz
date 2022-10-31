@@ -23,6 +23,7 @@ export default function FileSearch(props) {
 
 			setFiles(newFiles);
 			setInput("");
+			setSelected(0);
 			inputRef.current.focus();
 		}
 	}, [isSearching]);
