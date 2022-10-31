@@ -53,7 +53,11 @@ export default function FileSearch(props) {
 									styles.result,
 									selected === i && styles.selected
 								)}
-								onMouseDown={() => _onSelect(file)}
+								onMouseMove={() => setSelected(i)}
+								onMouseDown={(e) => {
+									e.preventDefault();
+									_onSelect(file);
+								}}
 							>
 								{_renderGroups(groups.file)}
 								{_renderGroups(groups.dir, true)}
