@@ -29,7 +29,7 @@ export default {
 	help_level: "✨  Ayuda del nivel:",
 	help_more: "💬  Para ayuda adicional, corre `help -a",
 	help_terminal:
-		"🛑  Cerrar app:\n   `Ctrl+C`\n🕑  Acelerar chat:\n   `Enter`\n📜  Scrollear terminal:\n   `Ctrl+Shift+PageUp` y `Ctrl+Shift+PageDown` (o rueda del mouse)\n📋  Copiar/pegar:\n   `Ctrl+Shift+C` y `Ctrl+Shift+V`\n♐  Cambiar panel activo:\n   `Alt+{DirectionalKey}` (o click del mouse)\n▶️  Ejecutar código:\n   `Alt+Enter`",
+		"🛑  Cerrar app:\n   `Ctrl+C`\n🕑  Acelerar chat:\n   `Enter`\n📜  Scrollear terminal:\n   `Ctrl+Shift+PageUp` y `Ctrl+Shift+PageDown` (o rueda del mouse)\n📋  Copiar/pegar:\n   `Ctrl+Shift+C` y `Ctrl+Shift+V`\n♐  Cambiar panel activo:\n   `Alt+{DirectionalKey}` (o click del mouse)\n🔍  Buscar código:\n   `Ctrl+P`\n▶️  Ejecutar código:\n   `Alt+Enter`",
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",
