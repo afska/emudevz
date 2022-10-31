@@ -7,6 +7,7 @@ import styles from "./FileSearch.module.css";
 
 const FOLDER = "/code";
 const PREFIX = `${FOLDER}/`;
+const MAX_RESULTS = 10;
 
 export default function FileSearch(props) {
 	const { isSearching, onSelect, onBlur, className, ...rest } = props;
@@ -28,7 +29,7 @@ export default function FileSearch(props) {
 		}
 	}, [isSearching]);
 
-	const matches = fuzzy.search(files, input);
+	const matches = fuzzy.search(files, input).slice(0, MAX_RESULTS);
 
 	const render = () => {
 		return (
