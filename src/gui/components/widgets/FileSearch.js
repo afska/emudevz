@@ -44,27 +44,29 @@ export default function FileSearch(props) {
 					ref={inputRef}
 				/>
 
-				<div className={styles.results}>
-					{matches.map(({ file, groups }, i) => {
-						return (
-							<div
-								key={i}
-								className={classNames(
-									styles.result,
-									selected === i && styles.selected
-								)}
-								onMouseMove={() => setSelected(i)}
-								onMouseDown={(e) => {
-									e.preventDefault();
-									_onSelect(file);
-								}}
-							>
-								{_renderGroups(groups.file)}
-								{_renderGroups(groups.dir, true)}
-							</div>
-						);
-					})}
-				</div>
+				{matches.length > 0 && (
+					<div className={styles.results}>
+						{matches.map(({ file, groups }, i) => {
+							return (
+								<div
+									key={i}
+									className={classNames(
+										styles.result,
+										selected === i && styles.selected
+									)}
+									onMouseMove={() => setSelected(i)}
+									onMouseDown={(e) => {
+										e.preventDefault();
+										_onSelect(file);
+									}}
+								>
+									{_renderGroups(groups.file)}
+									{_renderGroups(groups.dir, true)}
+								</div>
+							);
+						})}
+					</div>
+				)}
 			</div>
 		);
 	};
