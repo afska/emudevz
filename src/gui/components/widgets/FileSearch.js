@@ -1,35 +1,35 @@
 import React, { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
-import _ from "lodash";
-import filesystem from "../../../filesystem";
-import Drive from "../../../filesystem/Drive";
+import filesystem, { fuzzy } from "../../../filesystem";
 import locales from "../../../locales";
 import styles from "./FileSearch.module.css";
 
 const FOLDER = "/code";
+const PREFIX = `${FOLDER}/`;
 
 export default function FileSearch(props) {
-	const { isSearching, onOpen, onBlur, className, ...rest } = props;
+	const { isSearching, onSelect, onBlur, className, ...rest } = props;
 
 	const [files, setFiles] = useState([]);
 	const [input, setInput] = useState("");
+	const [selected, setSelected] = useState(0);
 	const inputRef = useRef(null);
 	useEffect(() => {
 		if (isSearching) {
-			setFiles(filesystem.lsr(FOLDER));
+			const newFiles = filesystem.lsr(FOLDER).map((file) => {
+				return { ...file, filePath: file.filePath.replace(PREFIX, "") };
+			});
+
+			setFiles(newFiles);
 			setInput("");
 			inputRef.current.focus();
 		}
 	}, [isSearching]);
 
-	const render = () => {
-		const matches = _.orderBy(
-			files.map(_findMatches).filter((it) => it != null),
-			[(it) => it.groups.length],
-			["asc"]
-		);
+	const matches = fuzzy.search(files, input);
 
+	const render = () => {
 		return (
 			<div className={classNames(styles.container, className)} {...rest}>
 				<Form.Control
@@ -44,19 +44,17 @@ export default function FileSearch(props) {
 				/>
 
 				<div className={styles.results}>
-					{matches.map(({ file, groups }, i) => {
+					{matches.map(({ groups }, i) => {
 						return (
-							<div key={i} className={styles.result}>
-								{groups.map((it, j) => {
-									return (
-										<span
-											key={j}
-											className={it.matches ? styles.highlight : undefined}
-										>
-											{it.text}
-										</span>
-									);
-								})}
+							<div
+								key={i}
+								className={classNames(
+									styles.result,
+									selected === i && styles.selected
+								)}
+							>
+								{_renderGroups(groups.file)}
+								{_renderGroups(groups.dir, true)}
 							</div>
 						);
 					})}
@@ -65,58 +63,56 @@ export default function FileSearch(props) {
 		);
 	};
 
-	const _findMatches = (file) => {
-		const cleanInput = input
-			.replace(Drive.PATH_INVALID_CHARACTERS, "")
-			.toLowerCase();
-		const indexes = [];
-		let path = file.filePath.toLowerCase();
-		let baseIndex = 0;
+	const _renderGroups = (groups, isPath) => {
+		if (groups == null) return null;
 
-		if (cleanInput.length === 0) return null;
-
-		for (let i = 0; i < cleanInput.length; i++) {
-			const character = cleanInput[i];
-			const index = path.indexOf(character);
-			if (index < 0) return null;
-
-			indexes.push(baseIndex + index);
-
-			path = path.slice(index + 1);
-			baseIndex += index + 1;
-		}
-
-		return { file, groups: _buildMatchGroups(file.filePath, indexes) };
-	};
-
-	const _buildMatchGroups = (filePath, indexes) => {
-		const groups = [];
-
-		let wasMatching = false;
-		for (let i = 0; i < filePath.length; i++) {
-			let lastGroup;
-			const isMatching = indexes.includes(i);
-
-			lastGroup = groups[groups.length - 1];
-			if (!lastGroup || wasMatching !== isMatching)
-				groups.push({ text: "", matches: isMatching });
-
-			lastGroup = groups[groups.length - 1];
-			lastGroup.text += filePath[i];
-			lastGroup.matches = isMatching;
-
-			wasMatching = isMatching;
-		}
-
-		return groups;
+		return groups.map((it, i) => {
+			return (
+				<span
+					key={i}
+					className={classNames(
+						it.matches && styles.highlight,
+						isPath && styles.path,
+						isPath && i === 0 && styles.pathStart
+					)}
+				>
+					{it.text}
+				</span>
+			);
+		});
 	};
 
 	const _onKeyDown = (e) => {
 		const isEsc = e.code === "Escape";
+		const isArrowDown = e.code === "ArrowDown";
+		const isArrowUp = e.code === "ArrowUp";
+		const isEnter = e.code === "Enter";
 
 		if (isEsc) {
 			e.preventDefault();
 			if (onBlur) onBlur();
+			return;
+		}
+
+		if (isArrowDown) {
+			setSelected((selected + 1) % matches.length);
+			e.preventDefault();
+			return;
+		}
+
+		if (isArrowUp) {
+			setSelected((selected === 0 ? matches.length : selected) - 1);
+			e.preventDefault();
+			return;
+		}
+
+		if (isEnter) {
+			const match = matches[selected];
+			if (match != null) {
+				onSelect(PREFIX + match.file.filePath);
+				onBlur();
+			}
+			e.preventDefault();
 			return;
 		}
 	};

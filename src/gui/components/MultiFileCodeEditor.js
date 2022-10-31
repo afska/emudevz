@@ -2,8 +2,7 @@ import React, { PureComponent } from "react";
 import $path from "path";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import filesystem from "../../filesystem";
-import Drive from "../../filesystem/Drive";
+import filesystem, { Drive } from "../../filesystem";
 import CodeEditor from "./CodeEditor";
 import FileSearch from "./widgets/FileSearch";
 import HorizontalDragList from "./widgets/HorizontalDragList";
@@ -38,7 +37,9 @@ class MultiFileCodeEditor extends PureComponent {
 			<div className={styles.container}>
 				<FileSearch
 					isSearching={isSearching}
-					onOpen={() => this.setState({ isSearching: true })}
+					onSelect={(filePath) => {
+						this.props.openFile(filePath);
+					}}
 					onBlur={() => {
 						this.setState({ isSearching: false });
 						this._editor.focus();
@@ -140,6 +141,7 @@ const mapStateToProps = ({ savedata }) => {
 
 const mapDispatchToProps = ({ savedata }) => {
 	return {
+		openFile: savedata.openFile,
 		setOpenFiles: savedata.setOpenFiles,
 		setSelectedFile: savedata.setSelectedFile,
 		closeFile: savedata.closeFile,

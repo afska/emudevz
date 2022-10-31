@@ -1,4 +1,4 @@
-import Drive from "../filesystem/Drive";
+import { Drive } from "../filesystem";
 
 const DEFAULT_FILE = Drive.MAIN_FILE;
 

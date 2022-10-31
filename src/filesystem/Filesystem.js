@@ -22,7 +22,6 @@ export default class Filesystem {
 				isDirectory: stat.isDirectory(),
 				size: stat.size,
 				filePath,
-				dirPath: path,
 			};
 		});
 
@@ -31,7 +30,7 @@ export default class Filesystem {
 
 	lsr(path) {
 		return this.ls(path).flatMap((it) => {
-			return it.isDirectory ? this.ls(`${path}/${it.name}`) : it;
+			return it.isDirectory ? this.lsr(`${path}/${it.name}`) : it;
 		});
 	}
 

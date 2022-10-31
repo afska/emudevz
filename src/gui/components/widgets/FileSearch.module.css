@@ -33,7 +33,10 @@
 }
 
 .path {
-	color: rgb(149, 149, 149);
+	color: rgb(165, 176, 186);
+}
+
+.pathStart {
 	margin-left: 8px;
 }
 
