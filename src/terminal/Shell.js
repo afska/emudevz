@@ -1,3 +1,4 @@
+import escapeStringRegexp from "escape-string-regexp";
 import _ from "lodash";
 import filesystem from "../filesystem";
 import locales from "../locales";
@@ -7,6 +8,7 @@ import { theme } from "./style";
 
 const ARGUMENT_SEPARATOR = " ";
 const PROMPT_SYMBOL = "$ ";
+const WILDCARD = "*";
 
 export default class Shell {
 	constructor(terminal) {
@@ -51,7 +53,7 @@ export default class Shell {
 			return;
 		}
 
-		await this.terminal.run(new Command(args, this));
+		await this._runCommand(Command, args);
 	}
 
 	onInput(input) {
@@ -83,6 +85,37 @@ export default class Shell {
 
 	usesAutocomplete() {
 		return true;
+	}
+
+	async _runCommand(Command, args) {
+		const wildcardIndex = _.findIndex(args, (it) => it.includes(WILDCARD));
+		const lastWildcardIndex = _.findLastIndex(args, (it) =>
+			it.includes(WILDCARD)
+		);
+
+		if (wildcardIndex !== -1 && wildcardIndex === lastWildcardIndex) {
+			await this._runWildcard(Command, args, wildcardIndex);
+		} else {
+			await this.terminal.run(new Command(args, this));
+		}
+	}
+
+	async _runWildcard(Command, args, wildcardIndex) {
+		const expression = args[wildcardIndex];
+		const regexp = new RegExp(
+			escapeStringRegexp(expression).replace("\\*", ".*")
+		);
+
+		const files = filesystem.ls(this.workingDirectory);
+		const filteredFiles = files.filter((it) => {
+			return regexp.test(it.name);
+		});
+
+		for (let filteredFile of filteredFiles) {
+			args[wildcardIndex] = filteredFile.name;
+			await this.terminal.run(new Command(args, this, false));
+		}
+		this.terminal.restart();
 	}
 
 	async _getNextCommandLine() {

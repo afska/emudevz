@@ -14,9 +14,10 @@ export default class Command {
 		return false;
 	}
 
-	constructor(args, shell) {
+	constructor(args, shell, restartOnEnd = true) {
 		this._args = args;
 		this._shell = shell;
+		this._restartOnEnd = restartOnEnd;
 	}
 
 	async run() {
@@ -26,7 +27,7 @@ export default class Command {
 			if (e !== INTERRUPTED) throw e;
 		}
 
-		this._terminal.restart();
+		if (this._restartOnEnd) this._terminal.restart();
 	}
 
 	async execute() {
