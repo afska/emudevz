@@ -457,7 +457,7 @@ export default class Terminal {
 
 		if (options.length === 1) {
 			const autocompletedCharacters = options[0].replace(lastPart, "");
-			this._onData(autocompletedCharacters + " ");
+			this._onData(autocompletedCharacters);
 		} else if (options.length > 1) {
 			let commonCharacters = "";
 			const tmp = { index: 0 };
@@ -470,7 +470,7 @@ export default class Terminal {
 			await this.write(NEWLINE + options.join(INDENTATION), theme.MESSAGE);
 			this.cancelPrompt();
 			await async.sleep();
-			this._onData(text + autocompletedCharacters + " ");
+			this._onData(text + autocompletedCharacters);
 		}
 	}
 

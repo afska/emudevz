@@ -13,7 +13,7 @@ export default {
 	command_repl_description: "Opens a JavaScript REPL.",
 	command_test_description: "Tests your solution.",
 	command_cd_description: "Changes directory (usage: ~cd a_directory~)",
-	command_ls_description: "Shows a file list",
+	command_ls_description: "Shows a file list (usage: ~ls~, or ~ls -r~)",
 	command_mkdir_description: "Creates directories (usage: ~mkdir dir1 dir2~)",
 	command_mv_description:
 		"Moves or renames something (usage: ~mv old_path new_path~)",

@@ -17,7 +17,7 @@ export default class FilesystemCommand extends Command {
 			if (e?.isUserEvent) return;
 
 			const message = e?.message || e?.toString() || "?";
-			this._terminal.writeln(
+			await this._terminal.writeln(
 				"❌  " + theme.ERROR(message.replace(ERROR_PREFIX, ""))
 			);
 		}

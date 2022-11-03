@@ -69,14 +69,17 @@ export default class Shell {
 					return (
 						path +
 						(path !== "" ? "/" : "") +
-						(it.isDirectory ? `${it.name}/` : it.name)
+						(it.isDirectory ? `${it.name}/` : `${it.name} `)
 					);
 				});
 				this.terminal.autocompleteOptions = files;
 			} catch (e) {
 				this.terminal.autocompleteOptions = [];
 			}
-		} else this.terminal.autocompleteOptions = this.allAvailableCommands;
+		} else
+			this.terminal.autocompleteOptions = this.allAvailableCommands.map(
+				(it) => `${it} `
+			);
 	}
 
 	onStop() {

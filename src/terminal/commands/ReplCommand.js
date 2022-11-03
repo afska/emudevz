@@ -28,11 +28,11 @@ export default class ReplCommand extends Command {
 
 			try {
 				const result = context.eval(expression);
-				this._terminal.writeln(
+				await this._terminal.writeln(
 					cliCodeHighlighter.highlight(this._format(result))
 				);
 			} catch (e) {
-				this._terminal.writeln(
+				await this._terminal.writeln(
 					"❌  " + theme.ERROR(e?.message || e?.toString() || "?")
 				);
 			}
