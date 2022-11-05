@@ -55,7 +55,6 @@ export default class LsCommand extends FilesystemCommand {
 		return content
 			.flatMap(({ name, isDirectory }, i) => {
 				const style = isDirectory ? theme.MESSAGE : theme.NORMAL;
-				debugger;
 				const isLastItem = i === content.length - 1;
 				const indentSymbol = isLastItem ? " " : "│";
 				const newIndent = indent + indentSymbol + _.repeat(" ", INDENT + 1);

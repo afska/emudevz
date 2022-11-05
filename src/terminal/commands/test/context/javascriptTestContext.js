@@ -165,7 +165,9 @@ export default {
 			const stat = filesystem.stat(absolutePath);
 			if (stat.isDirectory()) throw new Error("invalid");
 		} catch (e) {
-			throw new Error(`Import failed (\`${filePath}\`):\n  => ${matches[0]}`);
+			throw new Error(
+				`Import failed (📌  ${filePath} 📌 ):\n  => ${matches[0]}`
+			);
 		}
 
 		return absolutePath;
