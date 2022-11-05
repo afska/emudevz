@@ -159,7 +159,7 @@ export default {
 			relativePath += IMPORT_EXTENSION;
 
 		const parsedPath = $path.parse(filePath);
-		const absolutePath = filesystem.resolve(parsedPath.dir, relativePath);
+		const absolutePath = filesystem.resolve(relativePath, parsedPath.dir);
 
 		try {
 			const stat = filesystem.stat(absolutePath);
