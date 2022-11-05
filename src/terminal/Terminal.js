@@ -61,8 +61,8 @@ export default class Terminal {
 		availableCommands = [],
 		startup = null
 	) {
-		if (title != null) await this.writeln(title, theme.SYSTEM);
-		if (subtitle != null) await this.writeln(subtitle, theme.COMMENT);
+		if (title) await this.writeln(title, theme.SYSTEM);
+		if (subtitle) await this.writeln(subtitle, theme.COMMENT);
 		this._shell.availableCommands = availableCommands;
 
 		if (startup != null) {
