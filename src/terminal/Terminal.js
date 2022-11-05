@@ -168,6 +168,17 @@ export default class Terminal {
 		});
 	}
 
+	async addInput(data, runSpeed = 0) {
+		if (this.isExpectingInput && this._isValidInput(data)) {
+			const isMultiLine = data.split(NEWLINE_REGEXP).length > 1;
+			if (isMultiLine && !this._input.multiLine) return;
+
+			await this.write(data, undefined, runSpeed);
+			this._input.append(data);
+			this._currentProgram.onInput(this._input.text);
+		}
+	}
+
 	async confirmPrompt() {
 		if (this.isExpectingInput) {
 			const input = this._input;
@@ -313,14 +324,7 @@ export default class Terminal {
 					return;
 				}
 
-				if (this.isExpectingInput && this._isValidInput(data)) {
-					const isMultiLine = data.split(NEWLINE_REGEXP).length > 1;
-					if (isMultiLine && !this._input.multiLine) return;
-
-					await this.write(data);
-					this._input.append(data);
-					this._currentProgram.onInput(this._input.text);
-				}
+				await this.addInput(data);
 			}
 		}
 	}
@@ -395,8 +399,8 @@ export default class Terminal {
 						if (wait > REMOTE_RUN_TIMEOUT) break;
 					}
 					if (wait <= REMOTE_RUN_TIMEOUT) {
-						await this.writeln(commandLine, undefined, BUS_RUN_SPEED);
-						this._shell.runLine(commandLine);
+						await this.addInput(commandLine, BUS_RUN_SPEED);
+						await this.confirmPrompt();
 					}
 				} finally {
 					this._isWritingRemoteCommand = false;
