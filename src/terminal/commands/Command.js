@@ -36,6 +36,8 @@ export default class Command {
 
 	onInput() {}
 
+	onData() {}
+
 	onStop() {
 		return true;
 	}

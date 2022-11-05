@@ -9,6 +9,8 @@ import { theme } from "./style";
 const ARGUMENT_SEPARATOR = " ";
 const PROMPT_SYMBOL = "$ ";
 const WILDCARD = "*";
+const KEY_UP = "[A";
+const KEY_DOWN = "[B";
 
 export default class Shell {
 	constructor(terminal) {
@@ -16,6 +18,9 @@ export default class Shell {
 		this.isShell = true;
 		this.availableCommands = [];
 		this.workingDirectory = "/";
+		this._inputHistory = [];
+		this._inputHistoryCursor = 0;
+		this._inputBackup = "";
 	}
 
 	get allAvailableCommands() {
@@ -53,10 +58,14 @@ export default class Shell {
 			return;
 		}
 
+		this._inputHistory.push(commandLine);
+		this._inputHistoryCursor = 0;
+
 		await this._runCommand(Command, args);
 	}
 
 	onInput(input) {
+		if (!this.$loadingHistory) this._inputBackup = input;
 		const commandParts = input.split(ARGUMENT_SEPARATOR);
 
 		if (commandParts.length > 1) {
@@ -80,6 +89,30 @@ export default class Shell {
 			this.terminal.autocompleteOptions = this.allAvailableCommands.map(
 				(it) => `${it} `
 			);
+	}
+
+	async onData(data) {
+		if (data === KEY_UP && !_.isEmpty(this._inputHistory)) {
+			const commandLine = this._inputHistory[
+				this._inputHistory.length - 1 - this._inputHistoryCursor
+			];
+			if (!commandLine) return;
+
+			await this._loadHistory(commandLine);
+			this._inputHistoryCursor++;
+			return;
+		}
+
+		if (data === KEY_DOWN && this._inputHistoryCursor > 0) {
+			this._inputHistoryCursor--;
+			await this._loadHistory(
+				this._inputHistoryCursor === 0
+					? this._inputBackup
+					: this._inputHistory[
+							this._inputHistory.length - this._inputHistoryCursor
+					  ]
+			);
+		}
 	}
 
 	onStop() {
@@ -133,5 +166,15 @@ export default class Shell {
 		}
 
 		return commandLine;
+	}
+
+	async _loadHistory(commandLine) {
+		this.$loadingHistory = true;
+		try {
+			await this.terminal.clearInput();
+			await this.terminal.addInput(commandLine);
+		} finally {
+			this.$loadingHistory = false;
+		}
 	}
 }

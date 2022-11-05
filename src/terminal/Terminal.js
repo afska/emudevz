@@ -30,6 +30,7 @@ const BACKSPACE = "\b \b";
 // Program interface:
 // - async run(args) -> void
 // - onInput(input) -> void
+// - onData(data) -> void
 // - onStop() -> Boolean
 // - usesAutocomplete() -> Boolean
 
@@ -325,6 +326,7 @@ export default class Terminal {
 				}
 
 				await this.addInput(data);
+				await this._currentProgram.onData(data);
 			}
 		}
 	}
