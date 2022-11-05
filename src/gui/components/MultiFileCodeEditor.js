@@ -59,6 +59,7 @@ class MultiFileCodeEditor extends PureComponent {
 							if (!ref) return;
 							this._tabs = ref;
 						}}
+						onMouseDown={this._onMouseDownTabs}
 						onWheel={this._onWheelTabs}
 					>
 						<HorizontalDragList
@@ -109,6 +110,10 @@ class MultiFileCodeEditor extends PureComponent {
 			/>
 		);
 	}
+
+	_onMouseDownTabs = (e) => {
+		if (e.button === 1) e.preventDefault();
+	};
 
 	_onWheelTabs = (e) => {
 		this._tabs.scrollBy(-e.deltaY, 0);
