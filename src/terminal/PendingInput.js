@@ -2,6 +2,7 @@ export default class PendingInput {
 	constructor(indicator, isValid, resolve, reject) {
 		this.indicator = indicator;
 		this.multiLine = false;
+		this.onChange = null;
 		this.position = { x: 0, y: 0 };
 
 		this._text = "";
@@ -14,8 +15,13 @@ export default class PendingInput {
 		return this._text;
 	}
 
+	set text(value) {
+		this._text = value;
+		if (this.onChange) this.onChange(this._text);
+	}
+
 	isEmpty() {
-		return this._text === "";
+		return this.text === "";
 	}
 
 	getIndicatorOffset(y) {
@@ -24,24 +30,25 @@ export default class PendingInput {
 
 	getLineLength(y, defaultValue) {
 		const lineNumber = y - this.position.y;
-		const line = this._text.split("\n")[lineNumber];
+		const line = this.text.split("\n")[lineNumber];
 		return line?.length ?? defaultValue;
 	}
 
-	append(text) {
-		this._text += text;
+	append(newText) {
+		this.text += newText;
 	}
 
 	backspace() {
-		const character = this._text[this._text.length - 1];
-		this._text = this._text.substring(0, this._text.length - 1);
+		const character = this.text[this.text.length - 1];
+		this.text = this.text.substring(0, this.text.length - 1);
+		if (this.onChange) this.onChange(this.text);
 		return character;
 	}
 
 	confirm() {
-		this._resolve(this._text);
+		this._resolve(this.text);
 
-		return this._isValid(this._text);
+		return this._isValid(this.text);
 	}
 
 	cancel(reason) {

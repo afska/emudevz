@@ -2,6 +2,7 @@ import escapeStringRegexp from "escape-string-regexp";
 import _ from "lodash";
 import filesystem from "../filesystem";
 import locales from "../locales";
+import Program from "./Program";
 import commands from "./commands";
 import { DISPOSED } from "./errors";
 import { theme } from "./style";
@@ -9,18 +10,14 @@ import { theme } from "./style";
 const ARGUMENT_SEPARATOR = " ";
 const PROMPT_SYMBOL = "$ ";
 const WILDCARD = "*";
-const KEY_UP = "[A";
-const KEY_DOWN = "[B";
 
-export default class Shell {
+export default class Shell extends Program {
 	constructor(terminal) {
-		this.terminal = terminal;
+		super(terminal);
+
 		this.isShell = true;
 		this.availableCommands = [];
 		this.workingDirectory = "/";
-		this._inputHistory = [];
-		this._inputHistoryCursor = 0;
-		this._inputBackup = "";
 	}
 
 	get allAvailableCommands() {
@@ -31,12 +28,12 @@ export default class Shell {
 
 	async run() {
 		try {
-			this.terminal.autocompleteOptions = this.allAvailableCommands;
+			this._terminal.autocompleteOptions = this.allAvailableCommands;
 			const commandLine = await this._getNextCommandLine();
 			await this.runLine(commandLine);
 		} catch (e) {
 			if (!e.isUserEvent) throw e;
-			if (e !== DISPOSED) this.terminal.restart();
+			if (e !== DISPOSED) this._terminal.restart();
 		}
 	}
 
@@ -51,21 +48,19 @@ export default class Shell {
 			_.isEmpty(this.availableCommands);
 
 		if (!Command || !isAvailable) {
-			await this.terminal.writeln(
+			await this._terminal.writeln(
 				`${commandName}: ${locales.get("shell_command_not_found")}`
 			);
-			this.terminal.restart();
+			this._terminal.restart();
 			return;
 		}
-
-		this._inputHistory.push(commandLine);
-		this._inputHistoryCursor = 0;
 
 		await this._runCommand(Command, args);
 	}
 
 	onInput(input) {
-		if (!this.$loadingHistory) this._inputBackup = input;
+		super.onInput(input);
+
 		const commandParts = input.split(ARGUMENT_SEPARATOR);
 
 		if (commandParts.length > 1) {
@@ -81,38 +76,14 @@ export default class Shell {
 						(it.isDirectory ? `${it.name}/` : `${it.name} `)
 					);
 				});
-				this.terminal.autocompleteOptions = files;
+				this._terminal.autocompleteOptions = files;
 			} catch (e) {
-				this.terminal.autocompleteOptions = [];
+				this._terminal.autocompleteOptions = [];
 			}
 		} else
-			this.terminal.autocompleteOptions = this.allAvailableCommands.map(
+			this._terminal.autocompleteOptions = this.allAvailableCommands.map(
 				(it) => `${it} `
 			);
-	}
-
-	async onData(data) {
-		if (data === KEY_UP && !_.isEmpty(this._inputHistory)) {
-			const commandLine = this._inputHistory[
-				this._inputHistory.length - 1 - this._inputHistoryCursor
-			];
-			if (!commandLine) return;
-
-			await this._loadHistory(commandLine);
-			this._inputHistoryCursor++;
-			return;
-		}
-
-		if (data === KEY_DOWN && this._inputHistoryCursor > 0) {
-			this._inputHistoryCursor--;
-			await this._loadHistory(
-				this._inputHistoryCursor === 0
-					? this._inputBackup
-					: this._inputHistory[
-							this._inputHistory.length - this._inputHistoryCursor
-					  ]
-			);
-		}
 	}
 
 	onStop() {
@@ -120,6 +91,10 @@ export default class Shell {
 	}
 
 	usesAutocomplete() {
+		return true;
+	}
+
+	usesInputHistory() {
 		return true;
 	}
 
@@ -132,7 +107,7 @@ export default class Shell {
 		if (wildcardIndex !== -1 && wildcardIndex === lastWildcardIndex) {
 			await this._runWildcard(Command, args, wildcardIndex);
 		} else {
-			await this.terminal.run(new Command(args, this));
+			await this._terminal.run(new Command(args, this));
 		}
 	}
 
@@ -149,9 +124,9 @@ export default class Shell {
 
 		for (let filteredFile of filteredFiles) {
 			args[wildcardIndex] = filteredFile.name;
-			await this.terminal.run(new Command(args, this, false));
+			await this._terminal.run(new Command(args, this, false));
 		}
-		this.terminal.restart();
+		this._terminal.restart();
 	}
 
 	async _getNextCommandLine() {
@@ -159,22 +134,13 @@ export default class Shell {
 
 		while (commandLine === "") {
 			const cwd = this.workingDirectory.slice(1);
-			commandLine = await this.terminal.prompt(
+			commandLine = await this._terminal.prompt(
 				cwd + PROMPT_SYMBOL,
 				theme.SYSTEM(cwd) + theme.ACCENT(PROMPT_SYMBOL)
 			);
 		}
+		this._addInputHistory(commandLine);
 
 		return commandLine;
-	}
-
-	async _loadHistory(commandLine) {
-		this.$loadingHistory = true;
-		try {
-			await this.terminal.clearInput();
-			await this.terminal.addInput(commandLine);
-		} finally {
-			this.$loadingHistory = false;
-		}
 	}
 }

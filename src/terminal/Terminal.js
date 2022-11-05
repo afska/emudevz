@@ -27,13 +27,6 @@ const INDENTATION = "  ";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
 
-// Program interface:
-// - async run(args) -> void
-// - onInput(input) -> void
-// - onData(data) -> void
-// - onStop() -> Boolean
-// - usesAutocomplete() -> Boolean
-
 export default class Terminal {
 	constructor(xterm) {
 		this._xterm = xterm;
@@ -159,6 +152,7 @@ export default class Terminal {
 
 		return new Promise(async (resolve, reject) => {
 			this._input = new PendingInput(indicator, isValid, resolve, reject);
+			this._input.onChange = (text) => this._currentProgram.onInput(text);
 			this._input.multiLine = multiLine;
 			await this.newline();
 			await this.write(styledIndicator);
@@ -176,7 +170,6 @@ export default class Terminal {
 
 			await this.write(data, undefined, runSpeed);
 			this._input.append(data);
-			this._currentProgram.onInput(this._input.text);
 		}
 	}
 

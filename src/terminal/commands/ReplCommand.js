@@ -22,6 +22,7 @@ export default class ReplCommand extends Command {
 					theme.INPUT(PROMPT_SYMBOL),
 					true
 				);
+			this._addInputHistory(expression);
 
 			if (expression.startsWith("{") && expression.endsWith("}"))
 				expression = `(${expression})`;
@@ -37,6 +38,10 @@ export default class ReplCommand extends Command {
 				);
 			}
 		}
+	}
+
+	usesInputHistory() {
+		return true;
 	}
 
 	_format(expression) {

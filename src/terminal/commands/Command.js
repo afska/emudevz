@@ -1,7 +1,8 @@
 import locales from "../../locales";
+import Program from "../Program";
 import { INTERRUPTED } from "../errors";
 
-export default class Command {
+export default class Command extends Program {
 	static get name() {
 		throw new Error("not_implemented");
 	}
@@ -15,6 +16,8 @@ export default class Command {
 	}
 
 	constructor(args, shell, restartOnEnd = true) {
+		super(shell._terminal);
+
 		this._args = args;
 		this._shell = shell;
 		this._restartOnEnd = restartOnEnd;
@@ -34,10 +37,6 @@ export default class Command {
 		throw new Error("not_implemented");
 	}
 
-	onInput() {}
-
-	onData() {}
-
 	onStop() {
 		return true;
 	}
@@ -46,11 +45,11 @@ export default class Command {
 		return false;
 	}
 
-	_includes(arg) {
-		return this._args.some((it) => it.toLowerCase() === arg);
+	usesInputHistory() {
+		return false;
 	}
 
-	get _terminal() {
-		return this._shell.terminal;
+	_includes(arg) {
+		return this._args.some((it) => it.toLowerCase() === arg);
 	}
 }
