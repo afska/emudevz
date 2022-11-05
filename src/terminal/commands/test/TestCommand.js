@@ -28,7 +28,11 @@ export default class TestCommand extends Command {
 			const $ = testContext[context]?.prepare(level) || {
 				level,
 			};
-			const warnings = testContext[context]?.getWarnings(level) || [];
+
+			let warnings = [];
+			try {
+				warnings = testContext[context]?.getWarnings(level);
+			} catch (e) {}
 
 			const overallResult = { allGreen: true };
 			const hasMultipleTests = _.keys(level.tests).length > 1;
