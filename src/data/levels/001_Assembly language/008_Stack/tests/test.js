@@ -6,11 +6,17 @@ beforeEach(() => {
 	cpu.run();
 });
 
-it("it jumps to the right address", () => {
-	const lsb = cpu.memory.readAt(0x01fe);
-	const msb = cpu.memory.readAt(0x01ff);
-	const address = (msb << 8) | lsb;
+it(
+	"it jumps to the right address",
+	() => {
+		const lsb = cpu.memory.readAt(0x01fe);
+		const msb = cpu.memory.readAt(0x01ff);
+		const address = (msb << 8) | lsb;
 
-	cpu.sp.value.should.equal(0xff);
-	cpu.pc.value.should.equal(address);
-});
+		cpu.sp.value.should.equal(0xff);
+		cpu.pc.value.should.equal(address);
+	},
+	{
+		locales: { es: "salta a la dirección correcta" },
+	}
+);
