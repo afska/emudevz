@@ -1,7 +1,7 @@
 const _INVALID_CHARACTERS_ = /[^_$a-zA-Z0-9]/;
 
 export default {
-	create: (_include_ = _DEFAULT_SCOPE_) => {
+	create: ($ = {}, _include_ = _DEFAULT_SCOPE_) => {
 		let _firstTime_ = true;
 
 		const _globals_ = Object.getOwnPropertyNames(window);

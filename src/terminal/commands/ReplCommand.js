@@ -1,9 +1,14 @@
+import _ from "lodash";
+import Level from "../../level/Level";
 import { cliCodeHighlighter } from "../../utils/cli";
 import { contextEval } from "../../utils/eval";
 import theme from "../style/theme";
 import Command from "./Command";
+import testContext from "./test/context";
 
 const PROMPT_SYMBOL = "> ";
+const FUNCTION = "<function>";
+const OBJECT = "<object>";
 
 export default class ReplCommand extends Command {
 	static get name() {
@@ -11,7 +16,10 @@ export default class ReplCommand extends Command {
 	}
 
 	async execute() {
-		const context = contextEval.create();
+		const level = Level.current;
+		const $ = testContext.javascript.prepare(level);
+		const module = await $.evaluate();
+		const context = contextEval.create(module);
 
 		while (true) {
 			let expression = "";
@@ -48,16 +56,21 @@ export default class ReplCommand extends Command {
 		switch (typeof expression) {
 			case "object":
 				try {
-					return JSON.stringify(expression, null, 2);
+					const withFunctions = _.mapValues(expression, (v) => {
+						if (typeof v === "function") return FUNCTION;
+						return v;
+					});
+
+					return JSON.stringify(withFunctions, null, 2);
 				} catch (e) {
 					if (e.message.includes("Converting circular structure to JSON"))
-						return "<object>";
+						return OBJECT;
 					else throw e;
 				}
 			case "string":
 				return JSON.stringify(expression);
 			case "function":
-				return `<function>`;
+				return FUNCTION;
 			default:
 				return `${expression}`;
 		}
