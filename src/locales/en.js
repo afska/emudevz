@@ -51,6 +51,9 @@ export default {
 	register_flags_Z: "Zero Flag",
 	register_flags_C: "Carry Flag",
 	register_flags_U: "Unused Flag",
+	repl_code_error:
+		"⚠️  Your code has errors. The ~$~ object won't be available.",
+	repl_code_success: "💬  Inspect your main code using the ~$~ object.",
 	reset_level: "Reset level progress",
 	resize_warning: "Resizing is not supported while typing.",
 	rm_with_files:

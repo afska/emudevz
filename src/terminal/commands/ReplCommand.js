@@ -1,5 +1,6 @@
 import _ from "lodash";
 import Level from "../../level/Level";
+import locales from "../../locales";
 import { cliCodeHighlighter } from "../../utils/cli";
 import { contextEval } from "../../utils/eval";
 import theme from "../style/theme";
@@ -17,9 +18,22 @@ export default class ReplCommand extends Command {
 
 	async execute() {
 		const level = Level.current;
-		const $ = testContext.javascript.prepare(level);
-		const module = await $.evaluate();
-		const context = contextEval.create(module);
+
+		let $;
+		try {
+			$ = await testContext.javascript.prepare(level).evaluate();
+			await this._terminal.writehlln(
+				locales.get("repl_code_success"),
+				theme.COMMENT
+			);
+		} catch (e) {
+			await this._terminal.writehlln(
+				locales.get("repl_code_error"),
+				theme.WARNING
+			);
+		}
+
+		const context = contextEval.create($);
 
 		while (true) {
 			let expression = "";

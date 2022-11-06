@@ -50,6 +50,10 @@ export default {
 	register_flags_Z: "Bandera Zero",
 	register_flags_C: "Bandera Carry",
 	register_flags_U: "Bandera sin uso",
+	repl_code_error:
+		"⚠️  Tu código tiene errores. El objeto ~$~ no estará disponible.",
+	repl_code_success:
+		"💬  Inspecciona tu código principal usando el objeto ~$~.",
 	reset_level: "Reiniciar progreso del nivel",
 	resize_warning: "No se puede redimensionar y escribir a la vez.",
 	rm_with_files:
