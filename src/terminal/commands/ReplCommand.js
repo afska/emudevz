@@ -24,8 +24,8 @@ export default class ReplCommand extends Command {
 				);
 			this._addInputHistory(expression);
 
-			if (expression.startsWith("{") && expression.endsWith("}"))
-				expression = `(${expression})`;
+			if (expression.trim().startsWith("{") && expression.trim().endsWith("}"))
+				expression = `(${expression.trim()})`;
 
 			try {
 				const result = context.eval(expression);
