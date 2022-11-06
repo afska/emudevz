@@ -1,6 +1,9 @@
 import _chai_ from "chai";
 import _escapeStringRegexp_ from "escape-string-regexp";
 import _ from "lodash";
+import _Book_ from "../../../level/Book";
+import _Level_ from "../../../level/Level";
+import _locales_ from "../../../locales";
 
 export default {
 	async test(_code_, $ = {}) {
@@ -19,8 +22,13 @@ export default {
 		};
 
 		// eslint-disable-next-line
-		const it = (name, test) => {
-			_tests_.push({ name, test });
+		const it = (name, test, options = {}) => {
+			if (!options.use || options.use(_Level_.current, _Book_.current)) {
+				_tests_.push({
+					name: options.locales?.[_locales_.language] || name,
+					test,
+				});
+			}
 		};
 
 		// eslint-disable-next-line

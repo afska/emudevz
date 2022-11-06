@@ -14,6 +14,16 @@ export default class Book {
 		return _(this.chapters).flatMap("levels").map("id").max();
 	}
 
+	getId(humanId) {
+		for (let chapter of this.chapters) {
+			for (let level of chapter.levels) {
+				if (level.humanId === humanId) return level.id;
+			}
+		}
+
+		return null;
+	}
+
 	getChapterOf(levelId) {
 		const index = _.findIndex(this.chapters, (chapter) => {
 			return _.some(chapter.levels, (level) => level.id === levelId);
@@ -21,7 +31,6 @@ export default class Book {
 		const chapter = this.chapters[index];
 		if (!chapter) return null;
 
-		chapter.number = index + 1;
 		return chapter;
 	}
 

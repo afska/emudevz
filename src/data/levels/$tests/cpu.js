@@ -12,6 +12,6 @@ it(
 	},
 	{
 		locales: { en: "la primer letra de la cadena retornada es una 'w'" },
-		use: (id) => id === 13,
+		use: ({ id }, book) => id === book.getId("3.1"),
 	}
 );
