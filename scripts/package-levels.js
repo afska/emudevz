@@ -6,6 +6,8 @@ const _ = require("lodash");
 
 const LEVELS_PATH = "src/data/levels";
 const OUTPUT_PATH = "public/levels";
+const GLOBAL_TEST_FOLDER = "$tests";
+const LOCAL_TEST_FOLDER = "tests";
 const CHAPTER_HELP_FILES = { en: "$help/en.txt", es: "$help/es.txt" };
 const CHAPTER_METADATA_FILE = "chapter.json";
 const LEVEL_METADATA_FILE = "meta.json";
@@ -16,10 +18,13 @@ const EXTENSION = ".zip";
 const FORMAT = "zip";
 const COMPRESSION_LEVEL = 9;
 
+const GLOBAL_TEST_PATH = $path.join(LEVELS_PATH, GLOBAL_TEST_FOLDER);
+
 function readDirs(path) {
 	return _(fs.readdirSync(path, { withFileTypes: true }))
 		.filter((it) => it.isDirectory())
 		.map("name")
+		.filter((it) => !it.startsWith("$"))
 		.sortBy()
 		.value();
 }
@@ -77,9 +82,7 @@ async function pkg() {
 		book.chapters.push(chapter);
 
 		const helpLines = [];
-		const levelFolders = readDirs(chapterPath).filter(
-			(it) => !it.startsWith("$")
-		);
+		const levelFolders = readDirs(chapterPath);
 		for (let levelFolder of levelFolders) {
 			const levelPath = $path.join(chapterPath, levelFolder);
 			const [levelId, levelName] = levelFolder.split("_");
@@ -135,11 +138,18 @@ async function pkg() {
 
 				archive.on("error", function (err) {
 					console.error("❌  " + slug);
-					process.error(err);
+					console.error(err);
 					process.exit(0);
 				});
 
 				archive.directory(levelPath, false);
+				if (levelMetadata.test?.inherit != null) {
+					levelMetadata.test?.inherit.forEach((file) => {
+						archive.file($path.join(GLOBAL_TEST_PATH, file), {
+							name: $path.join(LOCAL_TEST_FOLDER, file),
+						});
+					});
+				}
 				archive.finalize();
 
 				globalLevelId++;
