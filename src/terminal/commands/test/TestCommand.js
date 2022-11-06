@@ -75,11 +75,9 @@ export default class TestCommand extends Command {
 				if (this._isVerbose) {
 					await this._terminal.waitForKey();
 				} else {
-					await this._terminal.writeln(
+					await this._terminal.writehlln(
 						locales.get("tests_more"),
-						theme.COMMENT,
-						undefined,
-						true
+						theme.COMMENT
 					);
 				}
 			}
@@ -127,7 +125,7 @@ export default class TestCommand extends Command {
 			overallResult.allGreen = false;
 		}
 
-		await this._terminal.writeln(`${emoji} ${result.name}`);
+		await this._terminal.writehlln(`${emoji} ${result.name}`);
 
 		if (!result.passed) {
 			if (this._isVerbose && result.stack?.location) {

@@ -14,7 +14,8 @@ export default {
 		[
 			SILENT_ACCENT, // tilde (silent accent)
 			/(`[^`]+`)/, // backticks
-			/("[^"]+")/, // quotes
+			/('[^']+')/, // single quotes
+			/("[^"]+")/, // double quotes
 			/(<[^>]+>)/, // angular brackets
 			/([^\x1B]\[[^\]]+\])/, // square brackets (ignoring terminal sequences)
 			/(#?\$[0-9a-fA-F]+)/, // [literal] hex numbers

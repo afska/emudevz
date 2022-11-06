@@ -21,17 +21,16 @@ export default class HelpCommand extends Command {
 				NEWLINE + locales.get("help_level"),
 				theme.COMMENT
 			);
-			await this._printLevelHelp(help);
+			await this._terminal.writehlln(help.trim());
 		}
 
-		if (this._isAll) await this._printTerminalHelp();
+		if (this._isAll)
+			await this._terminal.writehlln(NEWLINE + locales.get("help_terminal"));
 
 		if (!this._isAll)
-			await this._terminal.writeln(
+			await this._terminal.writehlln(
 				NEWLINE + locales.get("help_more"),
-				theme.COMMENT,
-				undefined,
-				true
+				theme.COMMENT
 			);
 	}
 
@@ -41,7 +40,7 @@ export default class HelpCommand extends Command {
 		const availableCommands = this._shell.allAvailableCommands;
 
 		let more = false;
-		await this._terminal.writeln(
+		await this._terminal.writehlln(
 			availableCommands
 				.filter(findCommand)
 				.map(findCommand)
@@ -54,25 +53,9 @@ export default class HelpCommand extends Command {
 					(it) =>
 						theme.SYSTEM(it.name.padEnd(SPACING)) + "~::~ " + it.description
 				)
-				.join(NEWLINE),
-			undefined,
-			undefined,
-			true
+				.join(NEWLINE)
 		);
 		if (more) await this._terminal.writeln("<...>", theme.ACCENT);
-	}
-
-	async _printTerminalHelp() {
-		await this._terminal.writeln(
-			NEWLINE + locales.get("help_terminal"),
-			undefined,
-			undefined,
-			true
-		);
-	}
-
-	async _printLevelHelp(help) {
-		await this._terminal.writeln(help.trim(), undefined, undefined, true);
 	}
 
 	get _isAll() {

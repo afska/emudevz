@@ -80,6 +80,14 @@ export default class Terminal {
 		this.run(this._shell);
 	}
 
+	async writehlln(text, style, interval) {
+		await this.writeln(text, style, interval, true);
+	}
+
+	async writehl(text, style, interval) {
+		await this.write(text, style, interval, true);
+	}
+
 	async writeln(text, style, interval, withHighlight) {
 		await this.write(text, style, interval, withHighlight);
 		await this.newline();

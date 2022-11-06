@@ -128,12 +128,7 @@ export default class ChatCommand extends Command {
 		if (responses.length > 9) throw new Error("More than 9 responses");
 
 		for (let response of responses)
-			await this._terminal.writeln(
-				this._buildResponseText(response),
-				undefined,
-				undefined,
-				true
-			);
+			await this._terminal.writehlln(this._buildResponseText(response));
 	}
 
 	async _getSelectedResponse(responses) {

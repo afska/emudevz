@@ -40,17 +40,10 @@ export default class RmCommand extends FilesystemCommand {
 	async _recursiveCheck() {
 		if (this._isRecursive) return true;
 
-		await this._terminal.writeln(
-			locales.get("rm_with_files"),
-			undefined,
-			undefined,
-			true
-		);
-		await this._terminal.writeln(
+		await this._terminal.writehlln(locales.get("rm_with_files"));
+		await this._terminal.writehlln(
 			locales.get("rm_recursive_flag"),
-			theme.COMMENT,
-			undefined,
-			true
+			theme.COMMENT
 		);
 		const key = await this._terminal.waitForKey();
 		return key.toLowerCase() === "y";
