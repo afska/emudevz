@@ -12,7 +12,8 @@ export default {
 	command_help_description: "Shows this help.",
 	command_repl_description: "Opens a JavaScript REPL.",
 	command_test_description: "Tests your solution.",
-	command_cd_description: "Changes directory (usage: ~cd a_directory~)",
+	command_cd_description:
+		"Changes directory (usage: ~cd a_directory~, or ~cd ..~)",
 	command_ls_description: "Shows a file list (usage: ~ls~, or ~ls -r~)",
 	command_mkdir_description: "Creates directories (usage: ~mkdir dir1 dir2~)",
 	command_mv_description:

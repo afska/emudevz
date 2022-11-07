@@ -1,0 +1,34 @@
+{
+	"name": {
+		"en": "Using JS modules",
+		"es": "Usando módulos JS"
+	},
+	"ui": {
+		"run": "addFiles.js",
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multicode",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
