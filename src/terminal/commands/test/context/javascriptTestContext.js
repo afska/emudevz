@@ -27,11 +27,15 @@ export default {
 	prepare(level) {
 		const code = level.content;
 
-		const $ = { modules: null };
-		$.evaluate = () => {
+		const $ = {
+			modules: null,
+			filesystem,
+		};
+
+		$.evaluate = (path = null) => {
 			if (!_.isObject(code)) return moduleEval(code);
 
-			const { module, modules } = this._compile(code.main);
+			const { module, modules } = this._compile(path ?? code.main);
 			$.modules = modules;
 
 			return evaluateModule(module);

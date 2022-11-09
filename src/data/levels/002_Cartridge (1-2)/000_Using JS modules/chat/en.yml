@@ -48,7 +48,7 @@ ready:
 syntax:
   messages:
   - "to set the export value of a module:"
-  - "  ```javascript export default () => { ... }```"
+  - "  ```javascript export default someValue```"
   - "to import a module:"
-  - "  ```javascript import world from \"./relative/path/to/world\"```"
+  - "  ```javascript import someModule from \"./relative/path/to/someModule\"```"
   responses: []

@@ -74,6 +74,17 @@ export default class Filesystem {
 		store.dispatch.savedata.closeFile(oldPath);
 	}
 
+	exists(path) {
+		try {
+			this.stat(path);
+			return true;
+		} catch (e) {
+			if (e.code === "ENOENT") {
+				return false;
+			} else throw e;
+		}
+	}
+
 	stat(path) {
 		return this.fs.statSync(path);
 	}
