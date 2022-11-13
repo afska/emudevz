@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Drive } from "../filesystem";
+import filesystem, { Drive } from "../filesystem";
 import components from "../gui/components";
 import layouts from "../gui/components/layouts";
 import locales from "../locales";
@@ -37,6 +37,8 @@ export default class Level {
 			this.memory
 		);
 		this.$layout = null;
+
+		Drive.init();
 	}
 
 	static get current() {
@@ -98,6 +100,13 @@ export default class Level {
 	}
 
 	advance() {
+		if (this.memory.content.multifile) {
+			const snapshotDir = Drive.snapshotDirOf(this.id);
+
+			if (!filesystem.exists(snapshotDir))
+				filesystem.cpr(Drive.CODE_DIR, snapshotDir);
+		}
+
 		if (!store.dispatch.savedata.advance(this.id)) {
 			alert("That's all I have 😅");
 			store.dispatch.level.goHome();

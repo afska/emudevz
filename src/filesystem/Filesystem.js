@@ -2,7 +2,7 @@ import $path from "path";
 import _ from "lodash";
 import store from "../store";
 
-export default class Filesystem {
+class Filesystem {
 	constructor() {
 		const BrowserFS = require("browserfs");
 
@@ -39,6 +39,24 @@ export default class Filesystem {
 
 	write(path, data) {
 		this.fs.writeFileSync(path, data);
+	}
+
+	cp(filePath, newFilePath) {
+		const content = this.read(filePath);
+		this.write(newFilePath, content);
+	}
+
+	cpr(dirPath, newDirPath) {
+		this.mkdir(newDirPath);
+
+		const files = this.ls(dirPath);
+		for (let entry of files) {
+			const name = $path.parse(entry.filePath).base;
+			const newPath = `${newDirPath}/${name}`;
+
+			if (entry.isDirectory) this.cpr(entry.filePath, newPath);
+			else this.cp(entry.filePath, newPath);
+		}
 	}
 
 	mkdir(path) {
@@ -98,3 +116,5 @@ export default class Filesystem {
 		return $path.resolve(path);
 	}
 }
+
+export default new Filesystem();

@@ -13,7 +13,8 @@ export default class MvCommand extends FilesystemCommand {
 
 		try {
 			const stat = filesystem.stat(newPath);
-			if (stat.isDirectory) newPath += `/${$path.parse(oldPath).base}`;
+			const name = $path.parse(oldPath).base;
+			if (stat.isDirectory) newPath += `/${name}`;
 		} catch (e) {
 			if (e.code !== "ENOENT") throw e;
 		}

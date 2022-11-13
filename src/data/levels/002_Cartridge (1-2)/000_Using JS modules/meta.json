@@ -4,7 +4,6 @@
 		"es": "Usando módulos JS"
 	},
 	"ui": {
-		"run": "addFiles.js",
 		"layout": "dual",
 		"components": {
 			"Left": [

@@ -4,7 +4,7 @@
 		"es": "TEST Multifile"
 	},
 	"ui": {
-		"run": "addFiles.js",
+		"run": "hello.js",
 		"layout": "dual",
 		"components": {
 			"Left": [
