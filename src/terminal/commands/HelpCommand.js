@@ -13,6 +13,11 @@ export default class HelpCommand extends Command {
 	}
 
 	async execute() {
+		if (this._isKeys) {
+			await this._terminal.writehlln(locales.get("help_shortcuts"));
+			return;
+		}
+
 		await this._printCommandsHelp();
 
 		const help = Level.current.localizedHelp;
@@ -24,14 +29,17 @@ export default class HelpCommand extends Command {
 			await this._terminal.writehlln(help.trim());
 		}
 
-		if (this._isAll)
-			await this._terminal.writehlln(NEWLINE + locales.get("help_terminal"));
-
-		if (!this._isAll)
+		if (!this._isAll) {
 			await this._terminal.writehlln(
 				NEWLINE + locales.get("help_more"),
 				theme.COMMENT
 			);
+		} else {
+			await this._terminal.writehlln(
+				NEWLINE + locales.get("help_keys"),
+				theme.COMMENT
+			);
+		}
 	}
 
 	async _printCommandsHelp() {
@@ -60,5 +68,9 @@ export default class HelpCommand extends Command {
 
 	get _isAll() {
 		return this._includes("-a");
+	}
+
+	get _isKeys() {
+		return this._includes("keys");
 	}
 }

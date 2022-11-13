@@ -28,9 +28,10 @@ export default {
 	goBack: "Volver",
 	help_basic: "💬  Si te bloqueas, corre el comando `help`...",
 	help_level: "✨  Ayuda del nivel:",
-	help_more: "💬  Para ayuda adicional, corre `help -a",
-	help_terminal:
-		"🛑  Cerrar app:\n   `Ctrl+C`\n🕑  Acelerar chat:\n   `Enter`\n📜  Scrollear terminal:\n   `Ctrl+Shift+PageUp` y `Ctrl+Shift+PageDown` (o rueda del mouse)\n📋  Copiar/pegar:\n   `Ctrl+Shift+C` y `Ctrl+Shift+V`\n♐  Cambiar panel activo:\n   `Alt+{DirectionalKey}` (o click del mouse)\n▶️  Ejecutar código:\n   `Alt+Enter`\n🔍  Buscar código:\n   `Ctrl+P`",
+	help_more: "💬  Para ayuda adicional, corre `help -a`",
+	help_keys: "🚀  Para atajos de teclado, corre `help keys`",
+	help_shortcuts:
+		"🚀  General:\n  ♐  Cambiar panel activo:\n     `Alt+{DirectionalKey}` (o click del mouse)\n💻  Terminal:\n  🛑  Cerrar app:\n     `Ctrl+C`\n  🕑  Acelerar chat:\n     `Enter`\n  📜  Scrollear terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (o rueda del mouse)\n  📋  Copiar/pegar:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocompletar:\n     `Tab`\n📝  Editor de código:\n  ▶️  Ejecutar código:\n     `Alt+Enter`\n  🔍  Buscar archivo:\n     `Ctrl+P`",
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",

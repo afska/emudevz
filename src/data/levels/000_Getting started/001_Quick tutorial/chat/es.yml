@@ -47,6 +47,6 @@ turnontv:
 
 shortcuts:
   messages:
-  - puedes listarlos todos, en cualquier momento, ejecutando `help -a`
+  - puedes listarlos todos, en cualquier momento, ejecutando `help keys`
   responses:
   - ...main

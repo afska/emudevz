@@ -28,10 +28,11 @@ export default {
 	enter_a_file_name: "Enter a file name...",
 	goBack: "Go back",
 	help_basic: "💬  If you're stuck, run the `help` command...",
-	help_level: "✨  Level help:",
+	help_level: "✨  Level:",
 	help_more: "💬  For additional help, run `help -a`",
-	help_terminal:
-		"🛑  Close app:\n   `Ctrl+C`\n🕑  Speed up chat:\n   `Enter`\n📜  Scroll terminal:\n   `Ctrl+Shift+PageUp` and `Ctrl+Shift+PageDown` (or mouse wheel)\n📋  Copy/paste:\n   `Ctrl+Shift+C` and `Ctrl+Shift+V`\n♐  Switch active pane:\n   `Alt+{DirectionalKey}` (or mouse click)\n▶️  Run code:\n   `Alt+Enter`\n🔍  Search code:\n   `Ctrl+P`",
+	help_keys: "🚀  For keyboard shortcuts, run `help keys`",
+	help_shortcuts:
+		"🚀  General:\n  ♐  Switch active pane:\n     `Alt+{DirectionalKey}` (or mouse click)\n💻  Terminal:\n  🛑  Close app:\n     `Ctrl+C`\n  🕑  Speed up chat:\n     `Enter`\n  📜  Scroll terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (or mouse wheel)\n  📋  Copy/paste:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocomplete:\n     `Tab`\n📝  Code editor:\n  ▶️  Run code:\n     `Alt+Enter`\n  🔍  Find file:\n     `Ctrl+P`",
 	language: "Language",
 	language_en: "English",
 	language_es: "Spanish",
