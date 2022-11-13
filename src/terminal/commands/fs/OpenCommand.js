@@ -13,7 +13,7 @@ export default class OpenCommand extends FilesystemCommand {
 		for (let arg of this._fileArgs) {
 			const path = this._resolve(arg);
 			const stat = filesystem.stat(path);
-			if (stat.isDirectory())
+			if (stat.isDirectory)
 				throw new Error(`EISDIR: File is a directory., '${path}'`);
 
 			await this._terminal.writeln(

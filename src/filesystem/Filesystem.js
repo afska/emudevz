@@ -18,9 +18,8 @@ export default class Filesystem {
 			const stat = this.stat(filePath);
 
 			return {
+				...stat,
 				name: it,
-				isDirectory: stat.isDirectory(),
-				size: stat.size,
 				filePath,
 			};
 		});
@@ -86,7 +85,12 @@ export default class Filesystem {
 	}
 
 	stat(path) {
-		return this.fs.statSync(path);
+		const stat = this.fs.statSync(path);
+
+		return {
+			isDirectory: stat.isDirectory(),
+			size: stat.size,
+		};
 	}
 
 	resolve(path, workingDirectory) {
