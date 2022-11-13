@@ -12,9 +12,18 @@ class Filesystem {
 			if (e != null) throw new Error("Failed to initialized BrowserFS");
 			this.fs = BrowserFS.BFSRequire("fs");
 		});
+
+		this.symlinks = [];
+	}
+
+	setSymlinks(symlinks) {
+		this.symlinks = symlinks;
 	}
 
 	ls(path) {
+		path = this.process(path);
+		// ---
+
 		const content = this.fs
 			.readdirSync(path)
 			.map((it) => {
@@ -35,25 +44,42 @@ class Filesystem {
 	}
 
 	lsr(path) {
+		path = this.process(path);
+		// ---
+
 		return this.ls(path).flatMap((it) => {
 			return it.isDirectory ? this.lsr(`${path}/${it.name}`) : it;
 		});
 	}
 
 	read(path) {
+		path = this.process(path);
+		// ---
+
 		return this.fs.readFileSync(path).toString();
 	}
 
 	write(path, data) {
+		path = this.process(path);
+		// ---
+
 		this.fs.writeFileSync(path, data);
 	}
 
 	cp(filePath, newFilePath) {
+		filePath = this.process(filePath);
+		newFilePath = this.process(newFilePath);
+		// ---
+
 		const content = this.read(filePath);
 		this.write(newFilePath, content);
 	}
 
 	cpr(dirPath, newDirPath) {
+		dirPath = this.process(dirPath);
+		newDirPath = this.process(newDirPath);
+		// ---
+
 		this.mkdir(newDirPath);
 
 		const files = this.ls(dirPath);
@@ -67,20 +93,32 @@ class Filesystem {
 	}
 
 	mkdir(path) {
+		path = this.process(path);
+		// ---
+
 		this.fs.mkdirSync(path);
 	}
 
 	rm(path) {
+		path = this.process(path);
+		// ---
+
 		this.fs.unlinkSync(path);
 
 		store.dispatch.savedata.closeFile(path);
 	}
 
 	rmdir(path) {
+		path = this.process(path);
+		// ---
+
 		this.fs.rmdirSync(path);
 	}
 
 	rmrf(path) {
+		path = this.process(path);
+		// ---
+
 		const files = this.ls(path);
 
 		for (let file of files) {
@@ -94,11 +132,18 @@ class Filesystem {
 	}
 
 	mv(oldPath, newPath) {
+		oldPath = this.process(oldPath);
+		newPath = this.process(newPath);
+		// ---
+
 		this.fs.renameSync(oldPath, newPath);
 		store.dispatch.savedata.closeFile(oldPath);
 	}
 
 	exists(path) {
+		path = this.process(path);
+		// ---
+
 		try {
 			this.stat(path);
 			return true;
@@ -110,6 +155,9 @@ class Filesystem {
 	}
 
 	stat(path) {
+		path = this.process(path);
+		// ---
+
 		const stat = this.fs.statSync(path);
 
 		return {
@@ -121,6 +169,13 @@ class Filesystem {
 	resolve(path, workingDirectory) {
 		process.$setCwd(workingDirectory);
 		return $path.resolve(path);
+	}
+
+	process(path) {
+		for (let symlink of this.symlinks)
+			path = path.replace(new RegExp("^" + symlink.from, "g"), symlink.to);
+
+		return path;
 	}
 }
 

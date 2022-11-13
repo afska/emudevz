@@ -1,4 +1,4 @@
-import { Drive } from "../filesystem";
+import filesystem, { Drive } from "../filesystem";
 
 const DEFAULT_FILE = Drive.MAIN_FILE;
 
@@ -61,6 +61,7 @@ export default {
 
 				return true;
 			},
+
 			openFile(filePath, _state_) {
 				const state = _state_[KEY];
 				const { openFiles } = state;
@@ -76,6 +77,14 @@ export default {
 				const newOpenFiles = openFiles.filter((it) => it !== filePath);
 				if (selectedFile === filePath) this.setSelectedFile(newOpenFiles[0]);
 				this.setOpenFiles(newOpenFiles);
+			},
+			closeNonExistingFiles(__, _state_) {
+				const state = _state_[KEY];
+				const { openFiles } = state;
+
+				for (let openFile of openFiles) {
+					if (!filesystem.exists(openFile)) this.closeFile(openFile);
+				}
 			},
 		};
 	},

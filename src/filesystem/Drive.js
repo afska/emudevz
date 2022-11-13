@@ -14,21 +14,39 @@ export default {
 	MAIN_FILE,
 	CODE_DIR,
 
-	init() {
+	init(levelId) {
 		if (!filesystem.exists(CODE_DIR)) filesystem.mkdir(CODE_DIR);
 		if (!filesystem.exists(MAIN_FILE)) filesystem.write(MAIN_FILE, "");
 		if (!filesystem.exists(SNAPSHOTS_DIR)) filesystem.mkdir(SNAPSHOTS_DIR);
+
+		const snapshotDir = this.snapshotDirOf(levelId);
+		filesystem.setSymlinks(
+			filesystem.exists(snapshotDir)
+				? [
+						{
+							from: CODE_DIR,
+							to: snapshotDir,
+						},
+				  ]
+				: []
+		);
 	},
 
 	snapshotDirOf(levelId) {
 		return `${SNAPSHOTS_DIR}/level-${levelId}`;
 	},
 
-	isReadOnlyDir(absolutePath) {
-		return READONLY_PATHS.some((it) => it.test(absolutePath));
+	isReadOnlyDir(path) {
+		path = filesystem.process(path);
+		// ---
+
+		return READONLY_PATHS.some((it) => it.test(path));
 	},
 
-	isProtectedFile(absolutePath) {
-		return PROTECTED_PATHS.some((it) => it === absolutePath);
+	isProtectedFile(path) {
+		path = filesystem.process(path);
+		// ---
+
+		return PROTECTED_PATHS.some((it) => it === path);
 	},
 };

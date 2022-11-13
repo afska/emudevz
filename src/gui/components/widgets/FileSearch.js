@@ -19,7 +19,11 @@ export default function FileSearch(props) {
 	useEffect(() => {
 		if (isSearching) {
 			const newFiles = filesystem.lsr(FOLDER).map((file) => {
-				return { ...file, filePath: file.filePath.replace(PREFIX, "") };
+				return {
+					...file,
+					originalFilePath: file.filePath,
+					filePath: file.filePath.replace(PREFIX, ""),
+				};
 			});
 
 			setFiles(newFiles);
@@ -124,7 +128,7 @@ export default function FileSearch(props) {
 	};
 
 	const _onSelect = (file) => {
-		onSelect(PREFIX + file.filePath);
+		onSelect(file.originalFilePath);
 		onBlur();
 	};
 

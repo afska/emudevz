@@ -35,7 +35,7 @@ export default class LevelLoader {
 			tests,
 			media
 		);
-		level.validate();
+		level.init();
 
 		return level;
 	}

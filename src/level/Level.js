@@ -37,8 +37,6 @@ export default class Level {
 			this.memory
 		);
 		this.$layout = null;
-
-		Drive.init();
 	}
 
 	static get current() {
@@ -111,6 +109,13 @@ export default class Level {
 			alert("That's all I have 😅");
 			store.dispatch.level.goHome();
 		}
+	}
+
+	init() {
+		this.validate();
+
+		Drive.init(this.id);
+		store.dispatch.savedata.closeNonExistingFiles();
 	}
 
 	validate() {
