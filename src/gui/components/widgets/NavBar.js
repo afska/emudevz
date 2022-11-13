@@ -28,13 +28,15 @@ class NavBar extends PureComponent {
 							{locales.get("using_old_snapshot")}
 						</Badge>
 					)}
-					<div className={styles.buttons}>
-						<IconButton
-							Icon={FaTrash}
-							tooltip={locales.get("reset_level")}
-							onClick={resetLevel}
-						/>
-					</div>
+					{!level.memory.content.multifile && (
+						<div className={styles.buttons}>
+							<IconButton
+								Icon={FaTrash}
+								tooltip={locales.get("reset_level")}
+								onClick={resetLevel}
+							/>
+						</div>
+					)}
 				</div>
 				<div className={styles.item}>
 					<ProgressList
