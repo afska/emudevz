@@ -30,7 +30,7 @@ export default class RmCommand extends FilesystemCommand {
 							locales.get("rm_deleting_recursively"),
 							theme.ERROR
 						);
-						filesystem.rimraf(path);
+						filesystem.rmrf(path);
 					}
 				}
 			}

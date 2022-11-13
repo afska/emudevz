@@ -56,13 +56,13 @@ export default class Filesystem {
 		this.fs.rmdirSync(path);
 	}
 
-	rimraf(path) {
+	rmrf(path) {
 		const files = this.ls(path);
 
 		for (let file of files) {
 			const filePath = `${path}/${file.name}`;
 
-			if (file.isDirectory) this.rimraf(filePath);
+			if (file.isDirectory) this.rmrf(filePath);
 			else this.rm(filePath);
 		}
 
