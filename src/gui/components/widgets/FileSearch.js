@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
-import filesystem, { fuzzy } from "../../../filesystem";
+import filesystem, { Drive, fuzzy } from "../../../filesystem";
 import locales from "../../../locales";
 import styles from "./FileSearch.module.css";
 
-const FOLDER = "/code";
+const FOLDER = Drive.CODE_DIR;
 const PREFIX = `${FOLDER}/`;
 const MAX_RESULTS = 10;
 

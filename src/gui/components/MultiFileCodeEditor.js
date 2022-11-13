@@ -29,9 +29,7 @@ class MultiFileCodeEditor extends PureComponent {
 		const { isSearching } = this.state;
 
 		const parsedPath = $path.parse(this.props.selectedFile);
-		const isReadOnlyDir = Drive.READONLY_PATHS.some(
-			(it) => parsedPath.dir === it
-		);
+		const isReadOnlyDir = Drive.isReadOnlyDir(parsedPath.dir);
 
 		return (
 			<div className={styles.container}>
