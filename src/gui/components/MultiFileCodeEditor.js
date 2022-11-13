@@ -14,6 +14,7 @@ class MultiFileCodeEditor extends PureComponent {
 		this._args = args;
 		this._level = level;
 		this._layout = layout;
+		this._editors = {};
 
 		this.setState({ _isInitialized: true });
 	}
@@ -71,19 +72,27 @@ class MultiFileCodeEditor extends PureComponent {
 						/>
 					</div>
 					<div className={styles.content}>
-						<CodeEditor
-							ref={(ref) => {
-								if (!ref) return;
-								ref.initialize(this._args, this._level, this._layout);
-								this._editor = ref;
-							}}
-							getCode={() => filesystem.read(this.props.selectedFile)}
-							setCode={(code) => {
-								filesystem.write(this.props.selectedFile, code);
-							}}
-							forceReadOnly={isReadOnlyDir}
-							onKeyDown={this._onKeyDown}
-						/>
+						{this.props.openFiles.map((it, i) => {
+							return (
+								<CodeEditor
+									style={{
+										display: it === this.props.selectedFile ? "block" : "none",
+									}}
+									key={i}
+									ref={(ref) => {
+										if (!ref) return;
+										ref.initialize(this._args, this._level, this._layout);
+										this._editors[it] = ref;
+									}}
+									getCode={() => filesystem.read(it)}
+									setCode={(code) => {
+										filesystem.write(it, code);
+									}}
+									forceReadOnly={isReadOnlyDir}
+									onKeyDown={this._onKeyDown}
+								/>
+							);
+						})}
 					</div>
 				</div>
 			</div>
@@ -102,6 +111,10 @@ class MultiFileCodeEditor extends PureComponent {
 				dragging={isDragging}
 				onSelect={() => {
 					this.props.setSelectedFile(filePath);
+
+					setTimeout(() => {
+						this._editor.focus();
+					});
 				}}
 				canClose={this.props.openFiles.length > 1}
 				onClose={() => this.props.closeFile(filePath)}
@@ -133,6 +146,10 @@ class MultiFileCodeEditor extends PureComponent {
 			return;
 		}
 	};
+
+	get _editor() {
+		return this._editors[this.props.selectedFile];
+	}
 }
 
 const mapStateToProps = ({ savedata }) => {
