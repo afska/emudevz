@@ -20,22 +20,20 @@ class Filesystem {
 		this.symlinks = symlinks;
 	}
 
-	ls(path) {
-		path = this.process(path);
-		// ---
-
+	ls(path, displayPath = path) {
 		const content = this.fs
-			.readdirSync(path)
+			.readdirSync(this.process(path))
 			.map((it) => {
 				if (it.startsWith(HIDDEN_PREFIX)) return null;
 
 				const filePath = `${path}/${it}`;
+				const displayFilePath = `${displayPath}/${it}`;
 				const stat = this.stat(filePath);
 
 				return {
 					...stat,
 					name: it,
-					filePath,
+					filePath: displayFilePath,
 				};
 			})
 			.filter((it) => it != null);
@@ -44,10 +42,7 @@ class Filesystem {
 	}
 
 	lsr(path) {
-		path = this.process(path);
-		// ---
-
-		return this.ls(path).flatMap((it) => {
+		return this.ls(this.process(path), path).flatMap((it) => {
 			return it.isDirectory ? this.lsr(`${path}/${it.name}`) : it;
 		});
 	}
