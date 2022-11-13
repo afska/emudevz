@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    if (m.$end) $.goTo("exercise");
   messages:
   - we're gonna start coding in JavaScript
   - by the way, your computer has been <upgraded>
@@ -27,19 +29,23 @@ notcool:
   responses: []
 
 play:
+  run-after-messages: |
+    $.goTo("exercise");
+    bus.emit("kill");
   messages:
   - the code editor is displaying your <main code file> (the entry point of your emulator)
   - it's in ~/code/index.js~
   - now you have a bunch of new commands to manage files
   - run `help -a` and play around with them a little bit
   - open the chat again when you're ready
-  responses:
-  - ok, and now? [ready]
+  responses: []
 
-ready:
+exercise:
+  run: |
+    set((m) => m.$end = true);
   messages:
   - create a file in ~/code/world.js~
-  - its default export should be a function that returns "w0rld"
+  - its default export should be the string "w0rld"
   - then, import that file from ~/code/index.js~
-  - and let the default export be another function that returns "h3ll0 " + the output of the imported world function
+  - and make it so it exports a function that returns "h3ll0 " + the string from the imported ~world~ module
   responses: []

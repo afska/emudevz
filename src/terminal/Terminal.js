@@ -409,6 +409,9 @@ export default class Terminal {
 					this._isWritingRemoteCommand = false;
 				}
 			},
+			kill: async () => {
+				await this.interrupt();
+			},
 		});
 	}
 
