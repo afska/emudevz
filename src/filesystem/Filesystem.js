@@ -2,6 +2,8 @@ import $path from "path";
 import _ from "lodash";
 import store from "../store";
 
+const HIDDEN_PREFIX = ".";
+
 class Filesystem {
 	constructor() {
 		const BrowserFS = require("browserfs");
@@ -13,16 +15,21 @@ class Filesystem {
 	}
 
 	ls(path) {
-		const content = this.fs.readdirSync(path).map((it) => {
-			const filePath = `${path}/${it}`;
-			const stat = this.stat(filePath);
+		const content = this.fs
+			.readdirSync(path)
+			.map((it) => {
+				if (it.startsWith(HIDDEN_PREFIX)) return null;
 
-			return {
-				...stat,
-				name: it,
-				filePath,
-			};
-		});
+				const filePath = `${path}/${it}`;
+				const stat = this.stat(filePath);
+
+				return {
+					...stat,
+					name: it,
+					filePath,
+				};
+			})
+			.filter((it) => it != null);
 
 		return _.orderBy(content, ["isDirectory", "name"], ["desc", "asc"]);
 	}
