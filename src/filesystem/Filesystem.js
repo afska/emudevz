@@ -1,3 +1,4 @@
+import escapeStringRegexp from "escape-string-regexp";
 import $path from "path";
 import _ from "lodash";
 import store from "../store";
@@ -167,8 +168,13 @@ class Filesystem {
 	}
 
 	process(path) {
+		path = path.replace(/\/\//g, "/");
+
 		for (let symlink of this.symlinks)
-			path = path.replace(new RegExp("^" + symlink.from, "g"), symlink.to);
+			path = path.replace(
+				new RegExp("^" + escapeStringRegexp(symlink.from), "g"),
+				symlink.to
+			);
 
 		return path;
 	}
