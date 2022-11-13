@@ -39,11 +39,13 @@ export default class FilesystemCommand extends Command {
 		if (parsedPath.base.length > Drive.MAX_FILE_NAME_LENGTH)
 			throw new Error(`Name too long: '${parsedPath.base}'`);
 
-		const isMainFile = absolutePath === Drive.MAIN_FILE;
-		const isReadOnlyDir = Drive.READONLY_PATHS.some(
-			(it) => parsedPath.dir === it
+		const isProtectedFile = Drive.PROTECTED_PATHS.some(
+			(it) => it === absolutePath
 		);
-		if (isWrite && (isMainFile || isReadOnlyDir))
+		const isReadOnlyDir = Drive.READONLY_PATHS.some(
+			(it) => it === parsedPath.dir
+		);
+		if (isWrite && (isProtectedFile || isReadOnlyDir))
 			throw new Error(`EPERM: operation not permitted., '${absolutePath}'`);
 
 		return absolutePath;
