@@ -40,15 +40,6 @@ ready:
   messages:
   - create a file in ~/code/world.js~
   - its default export should be a function that returns "w0rld"
-  - then, import that file in ~/code/index.js~
+  - then, import that file from ~/code/index.js~
   - and let the default export be another function that returns "h3ll0 " + the output of the imported world function
-  responses:
-  - what's the syntax for importing/exporting things? [syntax]
-
-syntax:
-  messages:
-  - "to set the export value of a module:"
-  - "  ```javascript export default someValue```"
-  - "to import a module:"
-  - "  ```javascript import someModule from \"./relative/path/to/someModule\"```"
   responses: []

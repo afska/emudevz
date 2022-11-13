@@ -1,0 +1,7 @@
+to set the export value of a module:
+  ```javascript export default \"A_STRING\"```
+  ```javascript export default { an: \"object\", number: 123 }```
+  ```javascript export default [1, 2, 3]```
+  ```javascript export default function aFunction() { }```
+to import a module:
+  ```javascript import aModule from \"./relative/path/to/aModule\"```

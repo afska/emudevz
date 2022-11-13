@@ -1,13 +1,18 @@
 const DEFAULT_COLOR_ID = 255;
 
 const colorTag = (id) => `\u001b[38;5;${id}m`;
-const bgColorTag = (id) => `\u001b[${id}m`;
+const effectTag = (id) => `\u001b[${id}m`;
 const color = (id) => (text) =>
 	colorTag(id) + text + colorTag(DEFAULT_COLOR_ID);
-const bgColor = (id) => (text) => bgColorTag(id) + text + bgColorTag(0);
+const effect = (id) => (text) => effectTag(id) + text + effectTag(0);
 
 export default {
 	NORMAL: (x) => x,
+	BOLD: effect(1),
+	FAINT: effect(2),
+	ITALIC: effect(3),
+	UNDERLINE: effect(4),
+
 	ACCENT: color(180),
 	SYSTEM: color(45),
 	ERROR: color(202),
@@ -16,5 +21,5 @@ export default {
 	MESSAGE: color(111),
 	INPUT: color(207),
 
-	BG_NEW: bgColor(44),
+	BG_NEW: effect(45),
 };

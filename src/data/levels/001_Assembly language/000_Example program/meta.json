@@ -33,8 +33,5 @@
 			]
 		},
 		"focus": "Left"
-	},
-	"help": {
-		"addLines": [1, 4]
 	}
 }
