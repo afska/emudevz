@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import Badge from "react-bootstrap/Badge";
 import { FaChevronLeft, FaTrash } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
@@ -22,6 +23,11 @@ class NavBar extends PureComponent {
 						{chapter.number}.{levelIndex + 1} / {chapter.name[locales.language]}{" "}
 						/ {level.name[locales.language]}
 					</span>
+					{level.isUsingSnapshot && (
+						<Badge bg="warning" text="dark" className={styles.warning}>
+							{locales.get("using_old_snapshot")}
+						</Badge>
+					)}
 					<div className={styles.buttons}>
 						<IconButton
 							Icon={FaTrash}

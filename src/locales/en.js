@@ -74,4 +74,5 @@ export default {
 	tests_errors_found: "🚫  Errors found.",
 	tests_warnings_found: "⚠️  Warnings found.",
 	tests_more: "💬  For more info, run `test -v`",
+	using_old_snapshot: "⚠️ Using a read-only snapshot of your old code.",
 };

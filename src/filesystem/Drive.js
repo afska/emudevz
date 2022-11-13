@@ -20,8 +20,9 @@ export default {
 		if (!filesystem.exists(SNAPSHOTS_DIR)) filesystem.mkdir(SNAPSHOTS_DIR);
 
 		const snapshotDir = this.snapshotDirOf(levelId);
+		const isUsingSnapshot = filesystem.exists(snapshotDir);
 		filesystem.setSymlinks(
-			filesystem.exists(snapshotDir)
+			isUsingSnapshot
 				? [
 						{
 							from: CODE_DIR,
@@ -30,6 +31,8 @@ export default {
 				  ]
 				: []
 		);
+
+		return { isUsingSnapshot };
 	},
 
 	snapshotDirOf(levelId) {
