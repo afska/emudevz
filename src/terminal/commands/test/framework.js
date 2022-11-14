@@ -4,6 +4,7 @@ import _ from "lodash";
 import _Book_ from "../../../level/Book";
 import _Level_ from "../../../level/Level";
 import _locales_ from "../../../locales";
+import { evaluateModule as _evaluateModule_ } from "../../../utils/eval";
 
 export default {
 	async test(_code_, $ = {}) {
@@ -43,6 +44,8 @@ export default {
 		const expect = _chai_.expect;
 		// eslint-disable-next-line
 		const should = _chai_.should();
+		// eslint-disable-next-line
+		const evaluateModule = _evaluateModule_;
 
 		eval(_code_);
 

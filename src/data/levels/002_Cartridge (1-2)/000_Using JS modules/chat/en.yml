@@ -53,7 +53,7 @@ exercise:
 
 modules:
   messages:
-  - yeah, every file is a module, and it has <exported> value
+  - yeah, every file is a module, and it has an <exported> value
   - that value can be any JS expression, and it can be used elsewhere by <importing> the module
   - you can learn the syntax by running `help`
   responses: []

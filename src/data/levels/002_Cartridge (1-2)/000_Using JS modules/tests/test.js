@@ -31,12 +31,9 @@ it("`/code/index.js` imports the module from `/code/Cartridge.js`", () => {
 	locales: { es: "`/code/index.js` importa el módulo de `/code/Cartridge.js`" },
 });
 
-it("`/code/index.js` exports an object containing the class", () => {
-	const importedKeys = Object.keys(mainModule).filter((it) =>
-		it.startsWith("_$_")
-	);
-	importedKeys.length.should.equal(1);
-	const Cartridge = mainModule[importedKeys[0]];
+it("`/code/index.js` exports an object containing the class", async () => {
+	const Cartridge = (await evaluateModule($.modules["/code/Cartridge.js"]))
+		.default;
 
 	expect(mainModule.default).to.be.an("object");
 	Object.keys(mainModule.default).should.eql(["Cartridge"]);
