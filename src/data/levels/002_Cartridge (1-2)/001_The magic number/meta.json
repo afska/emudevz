@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Using JS modules",
-		"es": "Usando módulos JS"
+		"en": "The magic number",
+		"es": "El número mágico"
 	},
 	"ui": {
 		"layout": "dual",
@@ -29,8 +29,5 @@
 		"content": {
 			"multifile": true
 		}
-	},
-	"help": {
-		"addLines": [1, 2, 3, 4, 5, 6, 7]
 	}
 }

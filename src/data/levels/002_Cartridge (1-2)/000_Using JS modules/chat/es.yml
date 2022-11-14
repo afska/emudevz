@@ -35,7 +35,7 @@ play:
   messages:
   - el editor de código está mostrando tu <archivo de código principal> (el punto de entrada de tu emulador)
   - está en ~/code/index.js~
-  - ahora tienes varios nuevos comandos para manejar archivos
+  - ahora tienes varios nuevos comandos para manejar archivos 🚀
   - corre `help -a` y experimenta con ellos un poco
   - abre el chat nuevamente cuando los hayas aprendido a usar
   responses: []
@@ -44,8 +44,16 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - crea un archivo en ~/code/world.js~
-  - su valor a exportar debería ser la cadena "w0rld"
+  - crea un archivo en ~/code/Cartridge.js~
+  - su valor a exportar debería ser una clase vacía
   - luego, importa ese archivo desde ~/code/index.js~
-  - y haz que exporte una función que retorne "h3ll0 " + la cadena del módulo ~world~ importado
+  - y exporta un objeto con una sola clave ("Cartridge") apuntando a esa clase
+  responses:
+  - ¿exportar? ¿módulos? 🧐 [modules]
+
+modules:
+  messages:
+  - sí, cada archivo es un módulo, y tiene un valor <exportado>
+  - ese valor puede ser cualquier expressión JS, y puede ser usado en otro lugar <importando> el módulo
+  - puedes aprender la sintaxis corriendo `help`
   responses: []

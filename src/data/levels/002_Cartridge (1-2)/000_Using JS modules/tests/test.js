@@ -1,35 +1,42 @@
 const { evaluate, filesystem } = $;
 
+function isClass(v) {
+	return typeof v === "function" && /^\s*class\s+/.test(v.toString());
+}
+
 let mainModule;
 beforeEach(async () => {
 	mainModule = await evaluate();
 });
 
-it("the file `/code/world.js` exists", () => {
-	filesystem.exists("/code/world.js").should.be.true;
+it("`/code/Cartridge.js` exists as a file", () => {
+	filesystem.exists("/code/Cartridge.js").should.be.true;
 })({
-	locales: { es: "el archivo `/code/world.js` existe" },
+	locales: { es: "`/code/Cartridge.js` existe como archivo" },
 });
 
-it('`/code/world.js` is a JS module that exports "w0rld"', async () => {
-	const module = await evaluate("/code/world.js");
+it("`/code/Cartridge.js` is a JS module that exports a class", async () => {
+	const module = await evaluate("/code/Cartridge.js");
 	expect(module?.default).to.exist;
-	module.default.should.equal("w0rld");
-})({
-	locales: { es: '`/code/world.js` es un módulo JS que exporta "w0rld"' },
-});
-
-it("`/code/index.js` imports the module from `/code/world.js`", () => {
-	expect($.modules["/code/world.js"]).to.exist;
-})({
-	locales: { es: "`/code/index.js` importa el módulo de `/code/world.js`" },
-});
-
-it('`/code/index.js` exports a function that returns "h3ll0 w0rld"', () => {
-	expect(mainModule.default).to.be.a("function");
-	mainModule.default().should.equal("h3ll0 w0rld");
+	isClass(module.default).should.be.true;
 })({
 	locales: {
-		es: '`/code/index.js` exporta una función que retorna "h3ll0 w0rld"',
+		es: "`/code/world.js` es un módulo JS que exporta una clase",
+	},
+});
+
+it("`/code/index.js` imports the module from `/code/Cartridge.js`", () => {
+	expect($.modules["/code/Cartridge.js"]).to.exist;
+})({
+	locales: { es: "`/code/index.js` importa el módulo de `/code/Cartridge.js`" },
+});
+
+it("`/code/index.js` exports an object containing the class", async () => {
+	expect(mainModule.default).to.be.an("object");
+	Object.keys(mainModule.default).should.eql(["Cartridge"]);
+	isClass(mainModule.default.Cartridge).should.be.true;
+})({
+	locales: {
+		es: "`/code/index.js` exporta un objeto que contiene la clase",
 	},
 });
