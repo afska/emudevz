@@ -1,9 +1,5 @@
 const { evaluate, filesystem } = $;
 
-function isClass(v) {
-	return typeof v === "function" && /^\s*class\s+/.test(v.toString());
-}
-
 let mainModule;
 beforeEach(async () => {
 	mainModule = await evaluate();

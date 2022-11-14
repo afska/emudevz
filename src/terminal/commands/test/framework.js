@@ -46,6 +46,10 @@ export default {
 		const should = _chai_.should();
 		// eslint-disable-next-line
 		const evaluateModule = _evaluateModule_;
+		// eslint-disable-next-line
+		function isClass(v) {
+			return typeof v === "function" && /^\s*class\s+/.test(v.toString());
+		}
 
 		eval(_code_);
 
