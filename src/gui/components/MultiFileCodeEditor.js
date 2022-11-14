@@ -9,6 +9,11 @@ import HorizontalDragList from "./widgets/HorizontalDragList";
 import Tab from "./widgets/Tab";
 import styles from "./MultiFileCodeEditor.module.css";
 
+const LANGUAGES = {
+	".js": "javascript",
+	".asm": "asm",
+};
+
 class MultiFileCodeEditor extends PureComponent {
 	async initialize(args, level, layout) {
 		this._args = args;
@@ -80,8 +85,14 @@ class MultiFileCodeEditor extends PureComponent {
 									}}
 									key={i}
 									ref={(ref) => {
+										const extension = $path.parse(it).ext;
+										const args = {
+											...this._args,
+											language: LANGUAGES[extension] ?? "plaintext",
+										};
+
 										if (!ref) return;
-										ref.initialize(this._args, this._level, this._layout);
+										ref.initialize(args, this._level, this._layout);
 										this._editors[it] = ref;
 									}}
 									getCode={() => filesystem.read(it)}

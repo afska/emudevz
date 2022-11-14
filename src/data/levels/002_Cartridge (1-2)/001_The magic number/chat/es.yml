@@ -1,0 +1,51 @@
+---
+main:
+  run: |
+    if (m.$end) $.goTo("exercise");
+  messages:
+  - vamos a empezar a programar en JavaScript
+  - por cierto, tu computadora ha sido <actualizada>
+  - ahora puedes usar MÚLTIPLES archivos 🗃️ 📄 📁
+  - muy bueno, ¿no?
+  responses:
+  - es una funcionalidad bastante común [notcool]
+  - ¿cómo tienes tanto control de mi computadora? 😶 [hacked]
+
+hacked:
+  run-after-messages: |
+    $.goTo("play");
+  messages:
+  - ¿quién te dijo que ésta era <TU> computadora?
+  - ...notcool
+  responses: []
+
+notcool:
+  run-after-messages: |
+    $.goTo("play");
+  messages:
+  - argh, estos jóvenes no pueden apreciar cosas lindas hoy en día 😔
+  - |+
+    como sea, tengo que asegurarme de que sabes crear módulos JS
+  responses: []
+
+play:
+  run-after-messages: |
+    $.goTo("exercise");
+    bus.emit("kill");
+  messages:
+  - el editor de código está mostrando tu <archivo de código principal> (el punto de entrada de tu emulador)
+  - está en ~/code/index.js~
+  - ahora tienes varios nuevos comandos para manejar archivos
+  - corre `help -a` y experimenta con ellos un poco
+  - abre el chat nuevamente cuando los hayas aprendido a usar
+  responses: []
+
+exercise:
+  run: |
+    set((m) => m.$end = true);
+  messages:
+  - crea un archivo en ~/code/world.js~
+  - su valor a exportar debería ser la cadena "w0rld"
+  - luego, importa ese archivo desde ~/code/index.js~
+  - y haz que exporte una función que retorne "h3ll0 " + la cadena del módulo ~world~ importado
+  responses: []

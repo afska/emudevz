@@ -2,6 +2,7 @@ import escapeStringRegexp from "escape-string-regexp";
 import $path from "path";
 import _ from "lodash";
 import store from "../store";
+import { blob } from "../utils";
 
 const HIDDEN_PREFIX = ".";
 
@@ -48,16 +49,22 @@ class Filesystem {
 		});
 	}
 
-	read(path) {
+	read(path, options = {}) {
 		path = this.process(path);
 		// ---
 
-		return this.fs.readFileSync(path).toString();
+		let data = this.fs.readFileSync(path).toString();
+		if (options.binary) data = blob.base64ToArrayBuffer(data);
+
+		return data;
 	}
 
-	write(path, data) {
+	write(path, data, options = {}) {
 		path = this.process(path);
 		// ---
+
+		if (options.binary) data = blob.arrayBufferToBase64(data);
+		else if (data instanceof ArrayBuffer) data = new TextDecoder().decode(data);
 
 		this.fs.writeFileSync(path, data);
 	}
@@ -99,9 +106,8 @@ class Filesystem {
 		path = this.process(path);
 		// ---
 
-		this.fs.unlinkSync(path);
-
 		store.dispatch.savedata.closeFile(path);
+		this.fs.unlinkSync(path);
 	}
 
 	rmdir(path) {
@@ -132,8 +138,8 @@ class Filesystem {
 		newPath = this.process(newPath);
 		// ---
 
-		this.fs.renameSync(oldPath, newPath);
 		store.dispatch.savedata.closeFile(oldPath);
+		this.fs.renameSync(oldPath, newPath);
 	}
 
 	exists(path) {

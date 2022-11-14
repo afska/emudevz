@@ -10,7 +10,7 @@ import Book from "./Book";
 import ChatScript from "./chat/ChatScript";
 
 export default class Level {
-	constructor(id, metadata, chatScripts, code, tests, media) {
+	constructor(id, metadata, chatScripts, { code, tests, media, bin }) {
 		_.extend(this, metadata);
 
 		this.id = id;
@@ -18,6 +18,7 @@ export default class Level {
 		this.code = code;
 		this.tests = tests;
 		this.media = media;
+		this.bin = bin;
 
 		this.memory = _.merge(
 			{

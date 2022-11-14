@@ -10,6 +10,7 @@ const CHAT_FOLDER = "chat";
 const CHAT_EXTENSION = "yml";
 const CODE_FOLDER = "code";
 const TESTS_FOLDER = "tests";
+const BIN_FOLDER = "bin";
 const MEDIA_FOLDER = "media";
 
 export default class LevelLoader {
@@ -26,15 +27,15 @@ export default class LevelLoader {
 		const code = await this._loadTextFolder(zip, CODE_FOLDER);
 		const tests = await this._loadTextFolder(zip, TESTS_FOLDER);
 		const media = await this._loadMediaFolder(zip);
-
-		const level = new Level(
-			this.levelId,
-			meta,
-			chatScripts,
+		const bin = await this._loadBinaryFolder(zip);
+		const files = {
 			code,
 			tests,
-			media
-		);
+			media,
+			bin,
+		};
+
+		const level = new Level(this.levelId, meta, chatScripts, files);
 		level.init();
 
 		return level;
@@ -77,6 +78,13 @@ export default class LevelLoader {
 		return await this._forEachFile(zip, MEDIA_FOLDER, async (filePath) => {
 			const blob = await zip.file(filePath).async("blob");
 			return await blobUtils.toBase64(blob);
+		});
+	}
+
+	async _loadBinaryFolder(zip) {
+		return await this._forEachFile(zip, BIN_FOLDER, async (filePath) => {
+			const blob = await zip.file(filePath).async("blob");
+			return await blobUtils.toArrayBuffer(blob);
 		});
 	}
 
