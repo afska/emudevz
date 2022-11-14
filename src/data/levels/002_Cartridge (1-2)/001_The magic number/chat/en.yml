@@ -3,49 +3,6 @@ main:
   run: |
     if (m.$end) $.goTo("exercise");
   messages:
-  - we're gonna start coding in JavaScript
-  - by the way, your computer has been <upgraded>
-  - now you can use MULTIPLE files 🗃️ 📄 📁
-  - very cool, huh?
+  - coming soon
   responses:
-  - that's a pretty normal feature [notcool]
-  - why do you have so much control of my computer? 😶 [hacked]
-
-hacked:
-  run-after-messages: |
-    $.goTo("play");
-  messages:
-  - who told you this was <YOUR> computer?
-  - ...notcool
-  responses: []
-
-notcool:
-  run-after-messages: |
-    $.goTo("play");
-  messages:
-  - argh, this kids can't appreciate cool things nowadays 😔
-  - |+
-    anywho, I need to make sure you know how to create JS modules
-  responses: []
-
-play:
-  run-after-messages: |
-    $.goTo("exercise");
-    bus.emit("kill");
-  messages:
-  - the code editor is displaying your <main code file> (the entry point of your emulator)
-  - it's in ~/code/index.js~
-  - now you have a bunch of new commands to manage files
-  - run `help -a` and play around with them a little bit
-  - open the chat again when you're ready
-  responses: []
-
-exercise:
-  run: |
-    set((m) => m.$end = true);
-  messages:
-  - create a file in ~/code/world.js~
-  - its default export should be the string "w0rld"
-  - then, import that file from ~/code/index.js~
-  - and make it so it exports a function that returns "h3ll0 " + the string from the imported ~world~ module
-  responses: []
+  - ok [end]
