@@ -92,7 +92,7 @@ export default {
 			3,
 			(matches) => matches[2],
 			(matches, module) =>
-				`const ${matches[1]} = (await import("${module}")).default;`
+				`const ${matches[1]} = (await import("${module}")).default; export const _$_${matches[1]} = ${matches[1]};`
 		);
 	},
 
