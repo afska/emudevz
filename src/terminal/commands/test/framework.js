@@ -1,10 +1,10 @@
-import _chai_ from "chai";
 import _escapeStringRegexp_ from "escape-string-regexp";
 import _ from "lodash";
 import _Book_ from "../../../level/Book";
 import _Level_ from "../../../level/Level";
 import _locales_ from "../../../locales";
 import { evaluateModule as _evaluateModule_ } from "../../../utils/eval";
+import _chai_ from "./chai";
 
 export default {
 	async test(_code_, $ = {}) {
@@ -46,10 +46,6 @@ export default {
 		const should = _chai_.should();
 		// eslint-disable-next-line
 		const evaluateModule = _evaluateModule_;
-		// eslint-disable-next-line
-		function isClass(v) {
-			return typeof v === "function" && /^\s*class\s+/.test(v.toString());
-		}
 
 		eval(_code_);
 

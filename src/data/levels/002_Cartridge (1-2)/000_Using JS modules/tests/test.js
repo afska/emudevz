@@ -14,7 +14,7 @@ it("`/code/Cartridge.js` exists as a file", () => {
 it("`/code/Cartridge.js` is a JS module that exports a class", async () => {
 	const module = await evaluate("/code/Cartridge.js");
 	expect(module?.default).to.exist;
-	isClass(module.default).should.be.true;
+	expect(module?.default).to.be.a.class;
 })({
 	locales: {
 		es: "`/code/world.js` es un módulo JS que exporta una clase",
