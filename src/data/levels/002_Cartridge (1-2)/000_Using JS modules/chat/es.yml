@@ -55,5 +55,16 @@ modules:
   messages:
   - sí, cada archivo es un módulo, y tiene un valor <exportado>
   - ese valor puede ser cualquier expressión JS, y puede ser usado en otro lugar <importando> el módulo
-  - puedes aprender la sintaxis corriendo `help`
+  - |-
+    algo de ayuda...
+
+    para definir el valor que exporta un módulo:
+      ```javascript export default "A_STRING"```
+      ```javascript export default { an: "object", number: 123 }```
+      ```javascript export default [1, 2, 3]```
+      ```javascript export default function aFunction() { }```
+      ```javascript export default class SomeClass() { }```
+    para importar un módulo:
+      ```javascript import aFunction from "./relative/path/to/aFunction"```
+      ```javascript import SomeClass from "./relative/path/to/SomeClass"```
   responses: []
