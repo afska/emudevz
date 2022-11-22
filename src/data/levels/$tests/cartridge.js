@@ -44,16 +44,19 @@ it("`/code/index.js` exports an object containing the class", async () => {
 
 // 3.2 The magic constant
 
-it("instantiating a `Cartridge` saves a `bytes` property", () => {
+it("instantiating a `Cartridge` with a valid header saves a `bytes` property", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53]);
 	new Cartridge(bytes).bytes.should.equal(bytes);
 })({
-	locales: { es: "instanciar un `Cartridge` guarda una propiedad `bytes`" },
+	locales: {
+		es:
+			"instanciar un `Cartridge` con una cabecera válida guarda una propiedad `bytes`",
+	},
 	use: ({ id }, book) => id >= book.getId("3.2"),
 });
 
-it("instantiating a `Cartridge` throws an error if <the magic constant> doesn't match", () => {
+it("instantiating a `Cartridge` with an invalid header throws an error", () => {
 	const Cartridge = mainModule.default.Cartridge;
 
 	[
@@ -67,8 +70,7 @@ it("instantiating a `Cartridge` throws an error if <the magic constant> doesn't 
 	});
 })({
 	locales: {
-		es:
-			"instanciar un `Cartridge` tira un error si <la constante mágica> no coincide",
+		es: "instanciar un `Cartridge` con una cabecera inválida tira un error",
 	},
 	use: ({ id }, book) => id >= book.getId("3.2"),
 });

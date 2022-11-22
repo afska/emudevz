@@ -1,6 +1,6 @@
 [
-	["nestest.nes", true],
-	["nestest.log", false],
+	["NEEEStest.neees", true],
+	["NEEEStest.log", false],
 ].forEach(([file, binary]) => {
 	const path = `${Drive.TESTROMS_DIR}/${file}`;
 
