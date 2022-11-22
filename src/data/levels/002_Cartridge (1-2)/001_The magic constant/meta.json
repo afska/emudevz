@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "The magic number",
-		"es": "El número mágico"
+		"en": "The magic constant",
+		"es": "La constante mágica"
 	},
 	"ui": {
 		"layout": "dual",

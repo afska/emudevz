@@ -1,0 +1,26 @@
+---
+main:
+  run: |
+    if (m.$end) $.goTo("exercise");
+  messages:
+  - we preserve games in digital format with game files (also called ROMs) 👾
+  - these contain code, graphics, and a header that identifies the hardware
+  responses:
+  - they're the famous *.neees files, right? [neeesfiles]
+
+neeesfiles:
+  messages:
+  - right, and you should start by reading the header
+  - "the first 3 bytes of a game file always contain the following:"
+  - $4E $45 $53
+  - which represents the ASCII sequence of the console's name ("NEEES"), but only with one "E"
+  - that's <the magic constant> ✨
+  - you should look for these bytes to check whether a ROM is valid or not
+  responses:
+  - what do you want me to do? [exercise]
+
+exercise:
+  messages:
+  - add a constructor to the `Cartridge` class receiving the ROM bytes, and save them in an instance variable called `bytes`
+  - if the magic constant doesn't match $4E $45 $53, throw an error with the "Invalid ROM." message
+  responses: []

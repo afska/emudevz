@@ -1,6 +1,6 @@
 export default {
 	parserOptions: {
-		ecmaVersion: 2020,
+		ecmaVersion: 2022,
 		sourceType: "module",
 	},
 	env: {

@@ -1,8 +1,0 @@
----
-main:
-  run: |
-    if (m.$end) $.goTo("exercise");
-  messages:
-  - coming soon
-  responses:
-  - ok [end]
