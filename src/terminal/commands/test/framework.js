@@ -23,21 +23,20 @@ export default {
 		};
 
 		// eslint-disable-next-line
-		const it = (name, test, options = {}) => {
-			if (!options.use || options.use(_Level_.current, _Book_.current)) {
-				const testDefinition = {
-					name,
-					test,
-				};
+		const it = (name, test) => {
+			const testDefinition = {
+				name,
+				test,
+			};
 
-				_tests_.push(testDefinition);
+			_tests_.push(testDefinition);
 
-				return (options) => {
-					testDefinition.name = options.locales?.[_locales_.language] || name;
-				};
-			}
+			return (options) => {
+				testDefinition.name = options.locales?.[_locales_.language] || name;
 
-			return () => {};
+				if (options.use && !options.use(_Level_.current, _Book_.current))
+					_tests_.pop();
+			};
 		};
 
 		// eslint-disable-next-line

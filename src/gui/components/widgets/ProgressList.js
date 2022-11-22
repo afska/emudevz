@@ -19,7 +19,8 @@ class ProgressList extends PureComponent {
 							placement="top"
 							overlay={
 								<Tooltip>
-									{i + 1}. {levelDefinition.name[locales.language]}
+									{levelDefinition.humanId}{" "}
+									{levelDefinition.name[locales.language]}
 								</Tooltip>
 							}
 						>

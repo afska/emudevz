@@ -25,7 +25,6 @@
 		"focus": "Left"
 	},
 	"test": {
-		"context": "javascript",
-		"inherit": ["cpu.js"]
+		"context": "javascript"
 	}
 }
