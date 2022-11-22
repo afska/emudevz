@@ -23,4 +23,12 @@ exercise:
   messages:
   - agrega un constructor a la clase `Cartridge` que reciba los bytes de la ROM, y guárdalos en una variable de instancia llamada `bytes`
   - si la constante mágica no coincide con $4E $45 $53, tira un error con el mensaje "Invalid ROM."
+  responses:
+  - necesito ayuda 🥺 [help]
+
+help:
+  messages:
+  - vas a recibir un `Uint8Array`, ¡que funciona similar a los arrays comunes!
+  - recuerda que puedes expresar notación hexadecimal con el prefijo ~0x~, p. ej. ~0x4e~
+  - "para tirar errores, usa:\n  ```javascript throw new Error(\"un mensaje\")```"
   responses: []
