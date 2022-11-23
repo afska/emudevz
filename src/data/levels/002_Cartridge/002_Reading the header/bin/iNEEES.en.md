@@ -27,7 +27,7 @@ Cartridge boards are divided into classes called **mappers** based on similar bo
 ||||||||
 |||||||+- Mirroring: 0: horizontal (for vertical scrolling)
 |||||||              1: vertical (for horizontal scrolling)
-||||||+-- 1: Cartridge contains persistent memory ($6000-7FFF)
+||||||+-- 1: Cartridge contains persistent memory (`$6000`-`$7FFF`)
 |||||+--- 1: File contains 512-byte padding before PRG-ROM data
 ||||+---- 1: Ignore mirroring and provide four-screen VRAM
 ++++----- Lower nybble of mapper number

@@ -1,6 +1,6 @@
-# iNEEES Format
+# Formato iNEEES
 
-Un formato iNEEES consiste en las siguientes secciones, en orden:
+Un archivo iNEEES consiste en las siguientes secciones, en orden:
 
 - Cabecera (`16` bytes)
 - Relleno, si existe (`0` or `512` bytes)
@@ -18,7 +18,7 @@ El formato de la cabecera es el siguiente:
 - `7`: Flags 7 - Mapper (nybble superior)
 - `8-15`: Relleno sin uso
 
-Las placas de cartuchos se dividen en clases llamadas **mappers** basadas en similitudes de hardware y comportamiento, y cada mapper tiene un número de 8 bits asignado.
+Las placas de cartuchos se dividen en clases llamadas **mappers** basadas en similitudes de hardware y comportamiento, y cada mapper tiene asignado un número de 8 bits.
 
 ### Flags 6
 
@@ -27,7 +27,7 @@ Las placas de cartuchos se dividen en clases llamadas **mappers** basadas en sim
 ||||||||
 |||||||+- Mirroring: 0: horizontal (para scroll vertical)
 |||||||              1: vertical (para scroll horizontal)
-||||||+-- 1: El cartucho contiene memoria persistente ($6000-7FFF)
+||||||+-- 1: El cartucho contiene memoria persistente (`$6000`-`$7FFF`)
 |||||+--- 1: El archivo contiene relleno de 512 bytes antes de los datos PRG-ROM
 ||||+---- 1: Ignorar mirroring y proveer VRAM de 4 pantallas
 ++++----- Nybble inferior del número de mapper
