@@ -42,7 +42,7 @@
 }
 
 .selected {
-	filter: brightness(125%);
+	filter: brightness(125%); /* (tied to TV.module.css) */
 
 	animation-duration: 0.25s;
 	animation-name: select;
