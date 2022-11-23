@@ -48,3 +48,8 @@
 .selected {
 	background: #697992;
 }
+
+.tree {
+	margin-top: 24px;
+	max-height: 300px;
+}

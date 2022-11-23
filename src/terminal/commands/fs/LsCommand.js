@@ -12,6 +12,36 @@ export default class LsCommand extends FilesystemCommand {
 		return "ls";
 	}
 
+	static getTree(path, format = true, indent = "") {
+		const content = filesystem.ls(path);
+
+		return content
+			.flatMap(({ name, isDirectory }, i) => {
+				const style = isDirectory && format ? theme.MESSAGE : theme.NORMAL;
+				const isLastItem = i === content.length - 1;
+				const indentSymbol = isLastItem ? " " : "│";
+				const newIndent = indent + indentSymbol + _.repeat(" ", INDENT + 1);
+				const innerContent = isDirectory
+					? LsCommand.getTree(`${path}/${name}`, format, newIndent)
+					: "";
+
+				// (main)
+				const mainSymbol = isLastItem ? "└" : "├";
+				let entry =
+					indent +
+					mainSymbol +
+					_.repeat("─", INDENT) +
+					" " +
+					(isDirectory ? style(name) + "/" : style(name));
+
+				// (inner)
+				if (innerContent !== "") entry += "\n" + innerContent;
+
+				return entry;
+			})
+			.join("\n");
+	}
+
 	async _execute() {
 		const path = this._resolve(this._fileArgs[0] || "");
 
@@ -46,37 +76,7 @@ export default class LsCommand extends FilesystemCommand {
 	}
 
 	async _listRecursive(path) {
-		await this._terminal.writeln(await this._getTree(path));
-	}
-
-	_getTree(path, indent = "") {
-		const content = filesystem.ls(path);
-
-		return content
-			.flatMap(({ name, isDirectory }, i) => {
-				const style = isDirectory ? theme.MESSAGE : theme.NORMAL;
-				const isLastItem = i === content.length - 1;
-				const indentSymbol = isLastItem ? " " : "│";
-				const newIndent = indent + indentSymbol + _.repeat(" ", INDENT + 1);
-				const innerContent = isDirectory
-					? this._getTree(`${path}/${name}`, newIndent)
-					: "";
-
-				// (main)
-				const mainSymbol = isLastItem ? "└" : "├";
-				let entry =
-					indent +
-					mainSymbol +
-					_.repeat("─", INDENT) +
-					" " +
-					(isDirectory ? style(name) + "/" : style(name));
-
-				// (inner)
-				if (innerContent !== "") entry += "\n" + innerContent;
-
-				return entry;
-			})
-			.join("\n");
+		await this._terminal.writeln(LsCommand.getTree(path));
 	}
 
 	get _isRecursive() {

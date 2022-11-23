@@ -47,6 +47,10 @@ class MultiFile extends PureComponent {
 					isSearching={isSearching}
 					onSelect={(filePath) => {
 						this.props.openFile(filePath);
+
+						setTimeout(() => {
+							this._view.focus();
+						});
 					}}
 					onBlur={() => {
 						this.setState({ isSearching: false });

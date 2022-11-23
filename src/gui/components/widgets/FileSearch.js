@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import classNames from "classnames";
 import filesystem, { Drive, fuzzy } from "../../../filesystem";
 import locales from "../../../locales";
+import LsCommand from "../../../terminal/commands/fs/LsCommand";
 import styles from "./FileSearch.module.css";
 
 const FOLDER = Drive.CODE_DIR;
@@ -34,6 +35,7 @@ export default function FileSearch(props) {
 	}, [isSearching]);
 
 	const matches = fuzzy.search(files, input).slice(0, MAX_RESULTS);
+	const tree = LsCommand.getTree(FOLDER, false);
 
 	const render = () => {
 		return (
@@ -49,6 +51,9 @@ export default function FileSearch(props) {
 					ref={inputRef}
 				/>
 
+				{matches.length === 0 && tree && (
+					<pre className={styles.tree}>{tree}</pre>
+				)}
 				{matches.length > 0 && (
 					<div className={styles.results}>
 						{matches.map(({ file, groups }, i) => {
