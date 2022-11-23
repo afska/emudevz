@@ -10,7 +10,7 @@ main:
 
 neeesfiles:
   messages:
-  - correcto, right, y deberías empezar leyendo la cabecera
+  - correcto, el formato se llama <iNEEES>, y deberías empezar leyendo su cabecera
   - "los primeros 3 bytes de un archivod e juego siempre contienen lo siguiente:"
   - $4E $45 $53
   - que representa la secuencia ASCII del nombre de la consola ("NEEES"), pero con una sola "E"

@@ -4,6 +4,7 @@
 		"es": "Leyendo la cabecera"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [

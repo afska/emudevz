@@ -13,8 +13,8 @@ import styles from "./MultiFile.module.css";
 const EXTENSIONS = {
 	".js": [CodeEditor, { language: "javascript" }],
 	".asm": [CodeEditor, { language: "asm" }],
-	".webp": [TV, { type: "image" }],
-	".png": [TV, { type: "image" }],
+	".webp": [TV, { type: "media" }],
+	".png": [TV, { type: "media" }],
 	".md": [TV, { type: "markdown" }],
 };
 
