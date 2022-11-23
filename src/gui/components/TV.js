@@ -54,7 +54,11 @@ export default class TV extends PureComponent {
 					<PanZoom
 						src={content}
 						options={{
-							click: false,
+							click: () => {
+								setTimeout(() => {
+									this.focus();
+								});
+							},
 						}}
 					/>
 				);
