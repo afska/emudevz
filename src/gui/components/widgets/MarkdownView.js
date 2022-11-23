@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { marked } from "marked";
 import classNames from "classnames";
 import styles from "./MarkdownView.module.css";
 
@@ -7,9 +8,11 @@ export default class MarkdownView extends PureComponent {
 		const { content, className, ...rest } = this.props;
 
 		return (
-			<div className={classNames(styles.container, className)} {...rest}>
-				{content}
-			</div>
+			<div
+				className={classNames(styles.container, className)}
+				dangerouslySetInnerHTML={{ __html: marked.parse(content) }}
+				{...rest}
+			/>
 		);
 	}
 }
