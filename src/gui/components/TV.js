@@ -1,23 +1,29 @@
 import React, { PureComponent } from "react";
 import TVNoise from "./TVNoise";
+import MarkdownView from "./widgets/MarkdownView";
 import PanZoom from "./widgets/PanZoom";
 import styles from "./TV.module.css";
 
 export default class TV extends PureComponent {
-	state = { image: null };
+	state = { content: null, type: "media" };
 
 	async initialize(args, level) {
+		if (args.content != null && args.type != null)
+			this.setState({ content: args.content, type: args.type });
+
 		this._level = level;
 	}
 
 	load(fileName) {
-		const image = this._level?.media[fileName];
-		if (!image) throw new Error(`Media not found: ${fileName}`);
+		const content = this._level?.media[fileName];
+		if (!content) throw new Error(`Media not found: ${fileName}`);
 
-		this.setState({ image });
+		this.setState({ content, type: "media" });
 	}
 
 	render() {
+		const { style, onKeyDown } = this.props;
+
 		return (
 			<div
 				className={styles.tvContainer}
@@ -25,6 +31,8 @@ export default class TV extends PureComponent {
 				ref={(ref) => {
 					this.ref = ref;
 				}}
+				style={style}
+				onKeyDown={onKeyDown}
 			>
 				{this._renderContent()}
 			</div>
@@ -32,18 +40,28 @@ export default class TV extends PureComponent {
 	}
 
 	_renderContent() {
-		const { image } = this.state;
+		const { content, type } = this.state;
 
-		if (!image) return <TVNoise />;
+		if (!content) return <TVNoise />;
 
-		return (
-			<PanZoom
-				src={image}
-				options={{
-					click: false,
-				}}
-			/>
-		);
+		switch (type) {
+			case "media": {
+				return (
+					<PanZoom
+						src={content}
+						options={{
+							click: false,
+						}}
+					/>
+				);
+			}
+			case "markdown": {
+				return <MarkdownView content={content} />;
+			}
+			default: {
+				return <TVNoise />;
+			}
+		}
 	}
 
 	focus = () => {

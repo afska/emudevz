@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { esLint, javascript } from "@codemirror/lang-javascript";
 import { lintGutter, linter } from "@codemirror/lint";
 import { oneDark } from "@codemirror/theme-one-dark";
+// GRAB FUTURE LANGUAGES FROM:
+import { langs } from "@uiw/codemirror-extensions-langs";
 import CodeMirror from "@uiw/react-codemirror";
 import { Linter } from "eslint-linter-browserify";
 import {
@@ -24,9 +26,6 @@ import {
 import IconButton from "./widgets/IconButton";
 import styles from "./CodeEditor.module.css";
 
-// GRAB FUTURE LANGUAGES FROM:
-// import { langs } from "@uiw/codemirror-extensions-langs";
-
 const NULL_ACTION = "none";
 const COMPILE_DEBOUNCE_MS = 500;
 const LANGUAGES = {
@@ -38,6 +37,7 @@ const LANGUAGES = {
 		}),
 	],
 	asm: () => [asm6502()],
+	markdown: () => [langs.markdown()],
 	plaintext: () => [],
 };
 

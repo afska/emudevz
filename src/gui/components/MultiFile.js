@@ -4,22 +4,26 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import filesystem, { Drive } from "../../filesystem";
 import CodeEditor from "./CodeEditor";
+import TV from "./TV";
 import FileSearch from "./widgets/FileSearch";
 import HorizontalDragList from "./widgets/HorizontalDragList";
 import Tab from "./widgets/Tab";
-import styles from "./MultiFileCodeEditor.module.css";
+import styles from "./MultiFile.module.css";
 
-const LANGUAGES = {
-	".js": "javascript",
-	".asm": "asm",
+const EXTENSIONS = {
+	".js": [CodeEditor, { language: "javascript" }],
+	".asm": [CodeEditor, { language: "asm" }],
+	".webp": [TV, { type: "image" }],
+	".png": [TV, { type: "image" }],
+	".md": [TV, { type: "markdown" }],
 };
 
-class MultiFileCodeEditor extends PureComponent {
+class MultiFile extends PureComponent {
 	async initialize(args, level, layout) {
 		this._args = args;
 		this._level = level;
 		this._layout = layout;
-		this._editors = {};
+		this._views = {};
 
 		this.setState({ _isInitialized: true });
 	}
@@ -46,7 +50,7 @@ class MultiFileCodeEditor extends PureComponent {
 					}}
 					onBlur={() => {
 						this.setState({ isSearching: false });
-						this._editor.focus();
+						this._view.focus();
 					}}
 				/>
 
@@ -78,30 +82,18 @@ class MultiFileCodeEditor extends PureComponent {
 					</div>
 					<div className={styles.content}>
 						{this.props.openFiles.map((it, i) => {
-							return (
-								<CodeEditor
-									style={{
-										display: it === this.props.selectedFile ? "block" : "none",
-									}}
-									key={i}
-									ref={(ref) => {
-										const extension = $path.parse(it).ext;
-										const args = {
-											...this._args,
-											language: LANGUAGES[extension] ?? "plaintext",
-										};
+							const extension = $path.parse(it).ext;
+							const [Component, customArgs] = EXTENSIONS[extension] ?? [
+								CodeEditor,
+								{ language: "plaintext" },
+							];
 
-										if (!ref) return;
-										ref.initialize(args, this._level, this._layout);
-										this._editors[it] = ref;
-									}}
-									getCode={() => filesystem.read(it)}
-									setCode={(code) => {
-										filesystem.write(it, code);
-									}}
-									forceReadOnly={isReadOnlyDir}
-									onKeyDown={this._onKeyDown}
-								/>
+							return this._renderFile(
+								it,
+								i,
+								Component,
+								customArgs,
+								isReadOnlyDir
 							);
 						})}
 					</div>
@@ -111,7 +103,7 @@ class MultiFileCodeEditor extends PureComponent {
 	}
 
 	focus = () => {
-		this._editor.focus();
+		this._view.focus();
 	};
 
 	_renderTab(filePath, isDragging) {
@@ -124,11 +116,51 @@ class MultiFileCodeEditor extends PureComponent {
 					this.props.setSelectedFile(filePath);
 
 					setTimeout(() => {
-						this._editor.focus();
+						this._view.focus();
 					});
 				}}
 				canClose={this.props.openFiles.length > 1}
 				onClose={() => this.props.closeFile(filePath)}
+			/>
+		);
+	}
+
+	_renderFile(filePath, index, Component, customArgs, isReadOnly) {
+		let props = {};
+
+		switch (Component) {
+			case CodeEditor: {
+				props = {
+					getCode: () => filesystem.read(filePath),
+					setCode: (code) => {
+						filesystem.write(filePath, code);
+					},
+					forceReadOnly: isReadOnly,
+				};
+				break;
+			}
+			default:
+		}
+
+		return (
+			<Component
+				style={{
+					display: filePath === this.props.selectedFile ? "block" : "none",
+				}}
+				key={index}
+				ref={(ref) => {
+					const args = {
+						...this._args,
+						...customArgs,
+						content: filesystem.read(filePath),
+					};
+
+					if (!ref) return;
+					ref.initialize(args, this._level, this._layout);
+					this._views[filePath] = ref;
+				}}
+				{...props}
+				onKeyDown={this._onKeyDown}
 			/>
 		);
 	}
@@ -158,8 +190,8 @@ class MultiFileCodeEditor extends PureComponent {
 		}
 	};
 
-	get _editor() {
-		return this._editors[this.props.selectedFile];
+	get _view() {
+		return this._views[this.props.selectedFile];
 	}
 }
 
@@ -181,4 +213,4 @@ const mapDispatchToProps = ({ savedata }) => {
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
 	forwardRef: true,
-})(MultiFileCodeEditor);
+})(MultiFile);
