@@ -1,7 +1,0 @@
----
-main:
-  messages:
-  - test multifile
-  - coming soon!
-  responses:
-  - ok [end]
