@@ -29,7 +29,7 @@ export default class Tab extends PureComponent {
 				onMouseUp={this._onMouseUp}
 				{...rest}
 			>
-				<span>{title}</span>
+				<span className={styles.title}>{title}</span>
 				{canClose && (
 					<IconButton
 						Icon={FaTimes}
