@@ -5,6 +5,10 @@ import PanZoom from "./widgets/PanZoom";
 import styles from "./TV.module.css";
 
 export default class TV extends PureComponent {
+	static get tabIcon() {
+		return "📺 ";
+	}
+
 	state = { content: null, type: "media" };
 
 	async initialize(args, level) {

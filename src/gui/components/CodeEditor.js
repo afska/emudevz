@@ -42,6 +42,10 @@ const LANGUAGES = {
 };
 
 export default class CodeEditor extends PureComponent {
+	static get tabIcon() {
+		return "📝 ";
+	}
+
 	state = {
 		_isInitialized: false,
 		language: "plaintext",

@@ -82,11 +82,7 @@ class MultiFile extends PureComponent {
 					</div>
 					<div className={styles.content}>
 						{this.props.openFiles.map((it, i) => {
-							const extension = $path.parse(it).ext;
-							const [Component, customArgs] = EXTENSIONS[extension] ?? [
-								CodeEditor,
-								{ language: "plaintext" },
-							];
+							const [Component, customArgs] = this._getOptions(it);
 
 							return this._renderFile(
 								it,
@@ -106,10 +102,17 @@ class MultiFile extends PureComponent {
 		this._view.focus();
 	};
 
+	_getOptions(filePath) {
+		const extension = $path.parse(filePath).ext;
+		return EXTENSIONS[extension] ?? [CodeEditor, { language: "plaintext" }];
+	}
+
 	_renderTab(filePath, isDragging) {
+		const [Component] = this._getOptions(filePath);
+
 		return (
 			<Tab
-				title={$path.parse(filePath).base}
+				title={Component.tabIcon + $path.parse(filePath).base}
 				active={this.props.selectedFile === filePath}
 				dragging={isDragging}
 				onSelect={() => {
