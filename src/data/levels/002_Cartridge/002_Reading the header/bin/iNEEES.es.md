@@ -1,6 +1,6 @@
 # Formato iNEEES
 
-Un archivo iNEEES consiste en las siguientes secciones, en orden:
+Un archivo iNEEES consiste de las siguientes secciones, en orden:
 
 - Cabecera (`16` bytes)
 - Relleno, si existe (`0` or `512` bytes)
