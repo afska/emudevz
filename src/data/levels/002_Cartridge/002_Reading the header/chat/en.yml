@@ -3,5 +3,23 @@ main:
   run: |
     if (m.$end) $.goTo("exercise");
   messages:
-  - coming soon!
+  - hey
+  - look at your ~/docs~ directory!
+  responses:
+  - what's there? [exercise]
+
+exercise:
+  run: |
+    set((m) => m.$end = true);
+  messages:
+  - I've sent you two diagrams of the hardware architecture
+  - and a document describing the iNEEES format
+  - you can inspect them with the ~open~ command
+  - I want you to read it and tell me if you understand it
   responses: []
+  # - I don't know what's mirroring, PRG-RAM
+  # - I don't know what mirroring is
+  # - please define PRG-ROM, CHR-ROM, PRG-RAM and CHR-RAM
+  # - what's the difference between <CHR-ROM> and <CHR-RAM>?
+  # - what the hell is "padding"?
+  # - what the hell is a "nybble"?

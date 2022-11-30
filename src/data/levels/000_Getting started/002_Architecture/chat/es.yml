@@ -15,6 +15,8 @@ main:
   - (l) ¿cuál es la mejor forma de empezar? [start]
 
 cpu:
+  run: |
+    {{Right}}.load("architecture.png");
   messages:
   - es la Unidad Central de Procesamiento
   - lee el código de los juegos y ejecuta sus instrucciones
@@ -25,6 +27,8 @@ cpu:
   - ...main
 
 thecode:
+  run: |
+    {{Right}}.load("cartridge.png");
   messages:
   - ¡en el cartucho!
   - específicamente, en un chip llamado PRG-ROM (Program ROM)
@@ -32,6 +36,8 @@ thecode:
   - ...main
 
 ppu:
+  run: |
+    {{Right}}.load("architecture.png");
   messages:
   - es la Unidad de Procesamiento de Imagen
   - dibuja gráficos poniendo pixeles en la pantalla
@@ -41,6 +47,8 @@ ppu:
   - ...main
 
 thegraphics:
+  run: |
+    {{Right}}.load("cartridge.png");
   messages:
   - ¡en el cartucho! :)
   - específicamente, en un chip llamado CHR-ROM (Character ROM)
@@ -48,6 +56,8 @@ thegraphics:
   - ...main
 
 apu:
+  run: |
+    {{Right}}.load("architecture.png");
   messages:
   - es la Unidad de Procesamiento de Audio
   - maneja el sonido, produciendo ondas de audio

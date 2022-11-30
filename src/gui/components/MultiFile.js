@@ -38,6 +38,7 @@ class MultiFile extends PureComponent {
 
 		const { isSearching } = this.state;
 
+		if (!this.props.selectedFile) return false;
 		const parsedPath = $path.parse(this.props.selectedFile);
 		const isReadOnlyDir = Drive.isReadOnlyDir(parsedPath.dir);
 

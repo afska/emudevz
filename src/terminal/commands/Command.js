@@ -15,6 +15,10 @@ export default class Command extends Program {
 		return false;
 	}
 
+	static get isHidden() {
+		return false;
+	}
+
 	constructor(args, shell, restartOnEnd = true) {
 		super(shell._terminal);
 

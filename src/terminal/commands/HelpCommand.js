@@ -53,6 +53,8 @@ export default class HelpCommand extends Command {
 				.filter(findCommand)
 				.map(findCommand)
 				.filter((it) => {
+					if (it.isHidden) return false;
+
 					const show = !it.isHelpCollapsed || this._isAll;
 					if (!show) more = true;
 					return show;
