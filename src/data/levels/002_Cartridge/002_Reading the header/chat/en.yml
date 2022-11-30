@@ -78,4 +78,10 @@ understand:
       has512BytePadding: false, // (obtained from Flags 6)
       mapperId: 4 // (obtained from Flags 6 and Flags 7)
     }```
+  responses:
+  - I need help with bit arithmetic 📐 [bits]
+
+bits:
+  messages:
+  - coming soon!
   responses: []

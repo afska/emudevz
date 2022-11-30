@@ -1,10 +1,12 @@
 import escapeStringRegexp from "escape-string-regexp";
 import $path from "path";
 import _ from "lodash";
+import locales from "../locales";
 import store from "../store";
 import { blob } from "../utils";
 
 const HIDDEN_PREFIX = ".";
+const MARKDOWN_POSTFIX = ".md";
 
 class Filesystem {
 	constructor() {
@@ -26,7 +28,12 @@ class Filesystem {
 		const content = this.fs
 			.readdirSync(this.process(path))
 			.map((it) => {
-				if (it.startsWith(HIDDEN_PREFIX)) return null;
+				if (it.startsWith(HIDDEN_PREFIX)) return null; // (ignore dotfiles)
+				if (
+					it.endsWith(MARKDOWN_POSTFIX) &&
+					!it.endsWith(`.${locales.language}${MARKDOWN_POSTFIX}`)
+				)
+					return null; // (ignore non-localized markdown files)
 
 				const filePath = `${path}/${it}`;
 				const displayFilePath = `${displayPath}/${it}`;
