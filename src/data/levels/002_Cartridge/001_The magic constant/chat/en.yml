@@ -10,7 +10,7 @@ main:
 
 neeesfiles:
   messages:
-  - right, the format is called <iNEEES>, and you should start by reading its header
+  - right, the format is called ~iNEEES~, and you should start by reading its header
   - "the first 3 bytes of a game file always contain the following:"
   - $4E $45 $53
   - which represents the ASCII sequence of the console's name ("NEEES"), but only with one "E"

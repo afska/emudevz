@@ -4,7 +4,7 @@ main:
     if (m.$end) $.goTo("exercise");
   messages:
   - hey
-  - look at your ~/docs~ directory!
+  - look at your ~/docs~ directory! 📁
   responses:
   - what's there? [exercise]
 
@@ -13,13 +13,69 @@ exercise:
     set((m) => m.$end = true);
   messages:
   - I've sent you two diagrams of the hardware architecture
-  - and a document describing the iNEEES format
+  - and a document describing the ~iNEEES~ format
   - you can inspect them with the ~open~ command
   - I want you to read it and tell me if you understand it
+  responses:
+  - I think I do [understand]
+  - what's a mapper? 🧠 [mapper]
+  - what's mirroring? 🚽 [mirroring]
+  - please define <PRG-ROM>, <CHR-ROM>, <PRG-RAM> and <CHR-RAM> 🐏 [memories]
+  - padding? 🧸 [padding]
+  - what the hell is a "nybble"? 🦴 [nybble]
+
+mapper:
+  messages:
+  - it's kind of an "expansion chip" that every game has
+  - they help the console read bigger programs and graphic chunks
+  - and they allow games to perform more complex operations like changing mirroring on the fly
+  - more on that later! 🔜
+  responses:
+  - ...exercise
+
+mirroring:
+  messages:
+  - it doesn't matter too much right now!
+  - mirroring affects what's shown past the right and bottom edges of the screen
+  - depending on the mirroring type, the PPU will use different memory sections to draw backgrounds 🎨
+  responses:
+  - ...exercise
+
+memories:
+  messages:
+  - "💻  <PRG-ROM>: read-only memory that contains the program"
+  - "👾  <CHR-ROM>: read-only memory that contains the graphics"
+  - "👾  <CHR-RAM>: writable memory to put graphics in runtime."
+  - "💾  <PRG-RAM>: (optional) writable memory to store game progress"
+  - each game uses either <CHR-ROM> or <CHR-RAM>
+  - if it uses <CHR-RAM>, the ~iNEEES~ file will not contain its last <CHR-ROM> section
+  responses:
+  - ...exercise
+
+padding:
+  messages:
+  - just zeroes, a part of the file which you can ignore
+  responses:
+  - ...exercise
+
+nybble:
+  messages:
+  - a nybble is half a byte
+  - so "lower nybble" means the first 4 bits and "upper nybble" means the last 4 bits
+  responses:
+  - ...exercise
+
+understand:
+  messages:
+  - awesome 💪
+  - |-
+    let's add a `header` property to the `Cartridge` class, with the following form:
+    ```javascript {
+      prgRomPages: 2, // (obtained from byte 4)
+      chrRomPages: 1, // (obtained from byte 5)
+      usesChrRam: false, // (true if chrRomPages === 0)
+      mirroring: "VERTICAL", // (obtained from Flags 6)
+      has512BytePadding: false, // (obtained from Flags 6)
+      mapperId: 4 // (obtained from Flags 6 and Flags 7)
+    }```
   responses: []
-  # - I don't know what's mirroring, PRG-RAM
-  # - I don't know what mirroring is
-  # - please define PRG-ROM, CHR-ROM, PRG-RAM and CHR-RAM
-  # - what's the difference between <CHR-ROM> and <CHR-RAM>?
-  # - what the hell is "padding"?
-  # - what the hell is a "nybble"?
