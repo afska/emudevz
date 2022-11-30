@@ -58,7 +58,7 @@ ready:
   messages:
   - eso fue MUY rápido
   - ¿ya sabes JavaScript ahora?
-  - pruébalo, escribe algo de código
+  - pruébalo, escribe algo de código 👀
   responses:
   - console.log("hello world") [woo]
   - alert("foo bar baz") [woo]
@@ -66,6 +66,7 @@ ready:
 woo:
   messages:
   - fah! 💡
+  - sabes mucho
   - ...javascript
   responses:
   - ...javascript
@@ -73,9 +74,7 @@ woo:
 javascript:
   messages:
   - eso va a funcionar
-  - "pero también necesitas conocimientos básicos de:"
-  - "  - aritmética de bits"
-  - "  - sistemas numéricos binario y hexadecimal"
-  - "  - programación orientada a objetos"
+  - pero también necesitas conocimientos básicos de sistemas informáticos
+  - (bytes, lógica booleana, sistemas de numeración, etc.)
   responses:
   - ok, hagámoslo [end]

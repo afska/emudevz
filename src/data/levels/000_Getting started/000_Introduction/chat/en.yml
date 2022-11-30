@@ -58,7 +58,7 @@ ready:
   messages:
   - that was REALLY fast
   - do you know JavaScript now?
-  - prove it, write some code
+  - prove it, write some code 👀
   responses:
   - console.log("hello world") [woo]
   - alert("foo bar baz") [woo]
@@ -66,6 +66,7 @@ ready:
 woo:
   messages:
   - whoa! 💡
+  - you know a lot
   - ...javascript
   responses:
   - ...javascript
@@ -73,9 +74,7 @@ woo:
 javascript:
   messages:
   - that'll work perfect
-  - "but you also need basic understanding of:"
-  - "  - bit arithmetic"
-  - "  - binary and hexadecimal numeral systems"
-  - "  - object oriented programming"
+  - but you also need basic understanding of computer systems
+  - (bytes, boolean logic, numbering systems, etc.)
   responses:
   - ok, let's do this [end]
