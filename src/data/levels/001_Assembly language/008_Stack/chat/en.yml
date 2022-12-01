@@ -62,7 +62,7 @@ exercise:
   - now, an exercise
   - your stack will have 2 random preloaded values
   - you just need to pull and load them into 2 consecutive memory addresses
-  - then, make an indirect `JMP` 🦘
+  - then, perform an indirect `JMP` 🦘
   - e.g. if your stack has -from top to bottom- $C4 and $3E, when your program finishes, [PC] should be $3EC4
   - run `test` when it's all done 😊
   responses: []
