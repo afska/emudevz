@@ -75,8 +75,9 @@ understand:
       prgRomPages: 2, // (obtained from byte 4)
       chrRomPages: 1, // (obtained from byte 5)
       usesChrRam: false, // (true if chrRomPages === 0)
-      mirroring: "VERTICAL", // (obtained from <Flags 6>)
       has512BytePadding: false, // (obtained from <Flags 6>)
+      hasPrgRam: false, // (obtained from <Flags 6>)
+      mirroring: "VERTICAL", // (obtained from <Flags 6>)
       mapperId: 4 // (obtained from <Flags 6> and <Flags 7>)
     }```
   responses:

@@ -120,6 +120,52 @@ it("a `Cartridge` has a `header` property with metadata (CHR-ROM pages)", () => 
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
 
+it("a `Cartridge` has a `header` property with metadata (512-byte padding)", () => {
+	const Cartridge = mainModule.default.Cartridge;
+	// prettier-ignore
+	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
+
+	[
+		[false, 0b00000000],
+		[true, 0b00000100],
+	].forEach(([has512BytePadding, flags6]) => {
+		bytes[6] = flags6;
+		const header = new Cartridge(bytes).header;
+		expect(header).to.be.an("object");
+		header.should.include.key("has512BytePadding");
+		header.has512BytePadding.should.equal(has512BytePadding);
+	});
+})({
+	locales: {
+		es:
+			"un `Cartridge` tiene una propiedad `header` con metadatos (padding de 512 bytes)",
+	},
+	use: ({ id }, book) => id >= book.getId("3.3"),
+});
+
+it("a `Cartridge` has a `header` property with metadata (PRG-RAM presence)", () => {
+	const Cartridge = mainModule.default.Cartridge;
+	// prettier-ignore
+	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
+
+	[
+		[false, 0b00000000],
+		[true, 0b00000010],
+	].forEach(([hasPrgRam, flags6]) => {
+		bytes[6] = flags6;
+		const header = new Cartridge(bytes).header;
+		expect(header).to.be.an("object");
+		header.should.include.key("hasPrgRam");
+		header.hasPrgRam.should.equal(hasPrgRam);
+	});
+})({
+	locales: {
+		es:
+			"un `Cartridge` tiene una propiedad `header` con metadatos (presencia de PRG-RAM)",
+	},
+	use: ({ id }, book) => id >= book.getId("3.3"),
+});
+
 it("a `Cartridge` has a `header` property with metadata (mirroring)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	// prettier-ignore
@@ -140,29 +186,6 @@ it("a `Cartridge` has a `header` property with metadata (mirroring)", () => {
 })({
 	locales: {
 		es: "un `Cartridge` tiene una propiedad `header` con metadatos (mirroring)",
-	},
-	use: ({ id }, book) => id >= book.getId("3.3"),
-});
-
-it("a `Cartridge` has a `header` property with metadata (512-byte padding)", () => {
-	const Cartridge = mainModule.default.Cartridge;
-	// prettier-ignore
-	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
-
-	[
-		[false, 0b00000000],
-		[true, 0b00000100],
-	].forEach(([has512BytePadding, flags6]) => {
-		bytes[6] = flags6;
-		const header = new Cartridge(bytes).header;
-		expect(header).to.be.an("object");
-		header.should.include.key("has512BytePadding");
-		header.has512BytePadding.should.equal(has512BytePadding);
-	});
-})({
-	locales: {
-		es:
-			"un `Cartridge` tiene una propiedad `header` con metadatos (padding de 512 bytes)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
