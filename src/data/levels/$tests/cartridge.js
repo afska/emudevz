@@ -34,6 +34,7 @@ it("`/code/index.js` exports an object containing the class", async () => {
 		.default;
 
 	expect(mainModule.default).to.be.an("object");
+	mainModule.default.should.include.key("Cartridge");
 	mainModule.default.Cartridge.should.equal(Cartridge);
 })({
 	locales: {
@@ -45,7 +46,7 @@ it("`/code/index.js` exports an object containing the class", async () => {
 
 it("instantiating a `Cartridge` with a valid header saves a `bytes` property", () => {
 	const Cartridge = mainModule.default.Cartridge;
-	const bytes = new Uint8Array([0x4e, 0x45, 0x53]);
+	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a]);
 	new Cartridge(bytes).bytes.should.equal(bytes);
 })({
 	locales: {
@@ -59,10 +60,11 @@ it("instantiating a `Cartridge` with an invalid header throws an error", () => {
 	const Cartridge = mainModule.default.Cartridge;
 
 	[
-		[0x11, 0x22, 0x33],
-		[0x99, 0x45, 0x53],
-		[0x4e, 0x99, 0x53],
-		[0x4e, 0x45, 0x99],
+		[0x11, 0x22, 0x33, 0x44],
+		[0x99, 0x45, 0x53, 0x1a],
+		[0x4e, 0x99, 0x53, 0x1a],
+		[0x4e, 0x45, 0x99, 0x1a],
+		[0x4e, 0x45, 0x53, 0x99],
 	].forEach((wrongBytes) => {
 		const bytes = new Uint8Array(wrongBytes);
 		expect(() => new Cartridge(bytes)).to.throw(Error, "Invalid ROM.");
@@ -78,20 +80,15 @@ it("instantiating a `Cartridge` with an invalid header throws an error", () => {
 
 it("a `Cartridge` has a `header` property with metadata (PRG-ROM pages)", () => {
 	const Cartridge = mainModule.default.Cartridge;
-	const bytes = new Uint8Array([
-		0x4e,
-		0x45,
-		0x53,
-		0x1a,
-		0,
-		9,
-		0b00000000,
-		0b00000000,
-	]);
+	// prettier-ignore
+	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
 
 	for (let i = 0; i < 255; i++) {
 		bytes[4] = i;
-		new Cartridge(bytes).header.prgRomPages.should.equal(i);
+		const header = new Cartridge(bytes).header;
+		expect(header).to.be.an("object");
+		header.should.include.key("prgRomPages");
+		header.prgRomPages.should.equal(i);
 	}
 })({
 	locales: {
@@ -103,21 +100,17 @@ it("a `Cartridge` has a `header` property with metadata (PRG-ROM pages)", () => 
 
 it("a `Cartridge` has a `header` property with metadata (CHR-ROM pages)", () => {
 	const Cartridge = mainModule.default.Cartridge;
-	const bytes = new Uint8Array([
-		0x4e,
-		0x45,
-		0x53,
-		0x1a,
-		3,
-		0,
-		0b00000000,
-		0b00000000,
-	]);
+	// prettier-ignore
+	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
 
 	for (let i = 0; i < 255; i++) {
 		bytes[5] = i;
-		new Cartridge(bytes).header.chrRomPages.should.equal(i);
-		new Cartridge(bytes).header.usesChrRam.should.equal(i === 0);
+		const header = new Cartridge(bytes).header;
+		expect(header).to.be.an("object");
+		header.should.include.key("chrRomPages");
+		header.chrRomPages.should.equal(i);
+		header.should.include.key("usesChrRam");
+		header.usesChrRam.should.equal(i === 0);
 	}
 })({
 	locales: {
@@ -129,24 +122,21 @@ it("a `Cartridge` has a `header` property with metadata (CHR-ROM pages)", () => 
 
 it("a `Cartridge` has a `header` property with metadata (mirroring)", () => {
 	const Cartridge = mainModule.default.Cartridge;
-	const bytes = new Uint8Array([
-		0x4e,
-		0x45,
-		0x53,
-		0x1a,
-		3,
-		9,
-		0b00000000,
-		0b00000000,
-	]);
+	// prettier-ignore
+	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
 
-	new Cartridge(bytes).header.mirroring.should.equal("HORIZONTAL");
-	bytes[6] = 0b00000001;
-	new Cartridge(bytes).header.mirroring.should.equal("VERTICAL");
-	bytes[6] = 0b00001001;
-	new Cartridge(bytes).header.mirroring.should.equal("FOUR_SCREENS");
-	bytes[6] = 0b00001000;
-	new Cartridge(bytes).header.mirroring.should.equal("FOUR_SCREENS");
+	[
+		["HORIZONTAL", 0b00000000],
+		["VERTICAL", 0b00000001],
+		["FOUR_SCREENS", 0b00001001],
+		["FOUR_SCREENS", 0b00001000],
+	].forEach(([mirroring, flags6]) => {
+		bytes[6] = flags6;
+		const header = new Cartridge(bytes).header;
+		expect(header).to.be.an("object");
+		header.should.include.key("mirroring");
+		header.mirroring.should.equal(mirroring);
+	});
 })({
 	locales: {
 		es: "un `Cartridge` tiene una propiedad `header` con metadatos (mirroring)",
@@ -156,20 +146,19 @@ it("a `Cartridge` has a `header` property with metadata (mirroring)", () => {
 
 it("a `Cartridge` has a `header` property with metadata (512-byte padding)", () => {
 	const Cartridge = mainModule.default.Cartridge;
-	const bytes = new Uint8Array([
-		0x4e,
-		0x45,
-		0x53,
-		0x1a,
-		3,
-		9,
-		0b00000000,
-		0b00000000,
-	]);
+	// prettier-ignore
+	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
 
-	new Cartridge(bytes).header.has512BytePadding.should.be.false;
-	bytes[6] = 0b00000100;
-	new Cartridge(bytes).header.has512BytePadding.should.be.true;
+	[
+		[false, 0b00000000],
+		[true, 0b00000100],
+	].forEach(([has512BytePadding, flags6]) => {
+		bytes[6] = flags6;
+		const header = new Cartridge(bytes).header;
+		expect(header).to.be.an("object");
+		header.should.include.key("has512BytePadding");
+		header.has512BytePadding.should.equal(has512BytePadding);
+	});
 })({
 	locales: {
 		es:
@@ -180,16 +169,8 @@ it("a `Cartridge` has a `header` property with metadata (512-byte padding)", () 
 
 it("a `Cartridge` has a `header` property with metadata (mapper id)", () => {
 	const Cartridge = mainModule.default.Cartridge;
-	const bytes = new Uint8Array([
-		0x4e,
-		0x45,
-		0x53,
-		0x1a,
-		3,
-		9,
-		0b00000000,
-		0b00000000,
-	]);
+	// prettier-ignore
+	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
 
 	for (let i = 0; i < 255; i++) {
 		const lowNybble = byte.lowNybbleOf(i);

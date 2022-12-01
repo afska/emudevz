@@ -88,4 +88,9 @@ export default {
 	buildU8(highNybble, lowNybble) {
 		return ((highNybble & 0b1111) << 4) | (lowNybble & 0b1111);
 	},
+
+	/** Returns a random byte ([0, 255]). */
+	random() {
+		return Math.floor(Math.random() * 255);
+	},
 };

@@ -12,7 +12,7 @@ neeesfiles:
   messages:
   - correcto, el formato se llama <iNEEES>, y deberías empezar leyendo su cabecera
   - "los primeros 3 bytes de un archivod e juego siempre contienen lo siguiente:"
-  - $4E $45 $53
+  - $4E $45 $53 $1A
   - que representa la secuencia ASCII del nombre de la consola ("NEEES"), pero con una sola "E"
   - esa es <la constante mágica> ✨
   - deberías buscar esos bytes para verificar si una ROM es válida o no
@@ -22,7 +22,7 @@ neeesfiles:
 exercise:
   messages:
   - agrega un constructor a la clase `Cartridge` que reciba los bytes de la ROM, y guárdalos en una variable de instancia llamada `bytes`
-  - si la constante mágica no coincide con $4E $45 $53, tira un error con el mensaje "Invalid ROM."
+  - si la constante mágica no coincide con $4E $45 $53 $1A, tira un error con el mensaje "Invalid ROM."
   responses:
   - necesito ayuda 🥺 [help]
 
