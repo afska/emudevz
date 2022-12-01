@@ -3,6 +3,7 @@ import Level from "../../level/Level";
 import locales from "../../locales";
 import { cliCodeHighlighter } from "../../utils/cli";
 import { contextEval } from "../../utils/eval";
+import { CANCELED } from "../errors";
 import theme from "../style/theme";
 import Command from "./Command";
 import testContext from "./test/context";
@@ -40,12 +41,17 @@ export default class ReplCommand extends Command {
 		while (true) {
 			let expression = "";
 
-			while (expression === "")
-				expression = await this._terminal.prompt(
-					PROMPT_SYMBOL,
-					theme.INPUT(PROMPT_SYMBOL),
-					true
-				);
+			while (expression === "") {
+				try {
+					expression = await this._terminal.prompt(
+						PROMPT_SYMBOL,
+						theme.INPUT(PROMPT_SYMBOL),
+						true
+					);
+				} catch (e) {
+					if (e !== CANCELED) throw e;
+				}
+			}
 			this._addInputHistory(expression);
 
 			if (expression.trim().startsWith("{") && expression.trim().endsWith("}"))
@@ -62,6 +68,15 @@ export default class ReplCommand extends Command {
 				);
 			}
 		}
+	}
+
+	onStop() {
+		if (this._terminal.hasPendingInput) {
+			this._terminal.cancelPrompt();
+			return false;
+		}
+
+		return true;
 	}
 
 	usesInputHistory() {

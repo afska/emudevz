@@ -293,6 +293,10 @@ export default class Terminal {
 		return this._keyInput != null;
 	}
 
+	get hasPendingInput() {
+		return this.isExpectingInput && this._input.text.length > 0;
+	}
+
 	get width() {
 		return this._xterm.cols;
 	}

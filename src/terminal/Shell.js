@@ -86,10 +86,6 @@ export default class Shell extends Program {
 			);
 	}
 
-	onStop() {
-		return true;
-	}
-
 	usesAutocomplete() {
 		return true;
 	}
