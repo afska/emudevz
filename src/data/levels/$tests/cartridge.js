@@ -212,66 +212,87 @@ it("a `Cartridge` has a `header` property with metadata (mapper id)", () => {
 
 // 3.4 Locating the program
 
-it("a `Cartridge` has a `prg` method that returns the code", () => {
+const buildHeader = (withPadding, flags6, prgPages, chrPages) => {
+	// prettier-ignore
+	const header = [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
+	if (withPadding) header.push(...new Array(512).fill(0));
+	return header;
+};
+
+const buildRom = (
+	withPadding = false,
+	flags6 = 0b00000000,
+	prgPages = 1 + byte.random(3),
+	chrPages = 1 + byte.random(3)
+) => {
+	const header = buildHeader(withPadding, flags6, prgPages, chrPages);
+	const prg = [];
+	const chr = [];
+	for (let i = 0; i < prgPages * 16384; i++) prg.push(byte.random());
+	for (let i = 0; i < chrPages * 8192; i++) chr.push(byte.random());
+	const bytes = new Uint8Array([...header, ...prg, ...chr]);
+
+	return { header, prg, chr, bytes };
+};
+
+it("a `Cartridge` has a `prg` method that returns the code (no padding)", () => {
 	const Cartridge = mainModule.default.Cartridge;
+	const { prg, bytes } = buildRom();
 
-	[
-		[false, 0b00000000],
-		[true, 0b00000100],
-	].forEach(([withPadding, flags6]) => {
-		const pages = 1 + byte.random(3);
-		// prettier-ignore
-		const header = [0x4e, 0x45, 0x53, 0x1a, pages, 1, flags6, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
-		const prg = [];
-		const chr = [];
-		if (withPadding) header.push(...new Array(512).fill(0));
-		for (let i = 0; i < pages * 16384; i++) prg.push(byte.random());
-		for (let i = 0; i < 8192; i++) chr.push(byte.random());
-		const bytes = new Uint8Array([...header, ...prg, ...chr]);
-
-		const cartridge = new Cartridge(bytes);
-		cartridge.should.respondTo("prg");
-		cartridge.prg().should.eql(new Uint8Array(prg));
-	});
+	const cartridge = new Cartridge(bytes);
+	cartridge.should.respondTo("prg");
+	cartridge.prg().should.eql(new Uint8Array(prg));
 })({
 	locales: {
-		es: "un `Cartridge` tiene un método `prg` que retorna el código",
+		es:
+			"un `Cartridge` tiene un método `prg` que retorna el código (sin relleno)",
+	},
+	use: ({ id }, book) => id >= book.getId("3.4"),
+});
+
+it("a `Cartridge` has a `prg` method that returns the code (with padding)", () => {
+	const Cartridge = mainModule.default.Cartridge;
+	const { prg, bytes } = buildRom(true, 0b00000100);
+
+	const cartridge = new Cartridge(bytes);
+	cartridge.should.respondTo("prg");
+	cartridge.prg().should.eql(new Uint8Array(prg));
+})({
+	locales: {
+		es:
+			"un `Cartridge` tiene un método `prg` que retorna el código (con relleno)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.4"),
 });
 
 // 3.5 Locating the graphics
 
-it("a `Cartridge` has a `chr` method that returns the graphics", () => {
+it("a `Cartridge` has a `chr` method that returns the graphics (using CHR-ROM)", () => {
 	const Cartridge = mainModule.default.Cartridge;
+	const { chr, bytes } = buildRom();
 
-	[
-		[false, 0b00000000],
-		[true, 0b00000100],
-	].forEach(([withPadding, flags6]) => {
-		[0, 1 + byte.random(3)].forEach((chrPages) => {
-			const prgPages = 1 + byte.random(3);
-			// prettier-ignore
-			const header = [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
-			const prg = [];
-			const chr = [];
-			if (withPadding) header.push(...new Array(512).fill(0));
-			for (let i = 0; i < prgPages * 16384; i++) prg.push(byte.random());
-			for (let i = 0; i < chrPages * 8192; i++) chr.push(byte.random());
-			const bytes = new Uint8Array([...header, ...prg, ...chr]);
-
-			const cartridge = new Cartridge(bytes);
-			cartridge.should.respondTo("chr");
-			cartridge
-				.chr()
-				.should.eql(
-					chrPages === 0 ? new Uint8Array(8192) : new Uint8Array(chr)
-				);
-		});
-	});
+	const cartridge = new Cartridge(bytes);
+	cartridge.should.respondTo("chr");
+	cartridge.chr().should.eql(new Uint8Array(chr));
 })({
 	locales: {
-		es: "un `Cartridge` tiene un método `chr` que retorna los gráficos",
+		es:
+			"un `Cartridge` tiene un método `chr` que retorna los gráficos (usando CHR-ROM)",
+	},
+	use: ({ id }, book) => id >= book.getId("3.5"),
+});
+
+it("a `Cartridge` has a `chr` method that returns the graphics (using CHR-RAM)", () => {
+	const Cartridge = mainModule.default.Cartridge;
+	const { bytes } = buildRom(undefined, undefined, undefined, 0);
+
+	const cartridge = new Cartridge(bytes);
+	cartridge.should.respondTo("chr");
+	cartridge.chr().should.eql(new Uint8Array(8192));
+})({
+	locales: {
+		es:
+			"un `Cartridge` tiene un método `chr` que retorna los gráficos (usando CHR-RAM)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.5"),
 });
