@@ -48,10 +48,7 @@ class MultiFile extends PureComponent {
 					isSearching={isSearching}
 					onSelect={(filePath) => {
 						this.props.openFile(filePath);
-
-						setTimeout(() => {
-							this._view.focus();
-						});
+						this._refresh();
 					}}
 					onBlur={() => {
 						this.setState({ isSearching: false });
@@ -82,6 +79,7 @@ class MultiFile extends PureComponent {
 							}))}
 							onSort={(updatedItems) => {
 								this.props.setOpenFiles(updatedItems.map((it) => it.id));
+								this._refresh();
 							}}
 						/>
 					</div>
@@ -122,13 +120,13 @@ class MultiFile extends PureComponent {
 				dragging={isDragging}
 				onSelect={() => {
 					this.props.setSelectedFile(filePath);
-
-					setTimeout(() => {
-						this._view.focus();
-					});
+					this._refresh();
 				}}
 				canClose={this.props.openFiles.length > 1}
-				onClose={() => this.props.closeFile(filePath)}
+				onClose={() => {
+					this.props.closeFile(filePath);
+					this._refresh();
+				}}
 			/>
 		);
 	}
@@ -197,6 +195,12 @@ class MultiFile extends PureComponent {
 			return;
 		}
 	};
+
+	_refresh() {
+		setTimeout(() => {
+			this._view.focus();
+		});
+	}
 
 	get _view() {
 		return this._views[this.props.selectedFile];

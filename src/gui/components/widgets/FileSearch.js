@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
-import filesystem, { Drive, fuzzy } from "../../../filesystem";
+import filesystem, { fuzzy } from "../../../filesystem";
 import locales from "../../../locales";
 import LsCommand from "../../../terminal/commands/fs/LsCommand";
 import styles from "./FileSearch.module.css";
 
-const FOLDER = Drive.ROOT;
+const FOLDER = "";
 const PREFIX = `${FOLDER}/`;
 const MAX_RESULTS = 10;
 
@@ -105,8 +105,9 @@ export default function FileSearch(props) {
 		const isArrowDown = e.code === "ArrowDown";
 		const isArrowUp = e.code === "ArrowUp";
 		const isEnter = e.code === "Enter";
+		const isCtrlP = e.ctrlKey && e.code === "KeyP";
 
-		if (isEsc) {
+		if (isEsc || isCtrlP) {
 			e.preventDefault();
 			if (onBlur) onBlur();
 			return;

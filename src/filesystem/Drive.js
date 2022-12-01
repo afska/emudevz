@@ -23,7 +23,6 @@ export default {
 	MAX_FILE_NAME_LENGTH: 50,
 
 	MAIN_FILE,
-	ROOT: "/",
 	CODE_DIR,
 	LIB_DIR,
 	DOCS_DIR,

@@ -26,7 +26,7 @@ class Filesystem {
 
 	ls(path, displayPath = path) {
 		const content = this.fs
-			.readdirSync(this.process(path))
+			.readdirSync(this.process(path || "/"))
 			.map((it) => {
 				if (it.startsWith(HIDDEN_PREFIX)) return null; // (ignore dotfiles)
 				if (
