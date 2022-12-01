@@ -31,6 +31,8 @@ export default class ReplCommand extends Command {
 				locales.get("repl_code_error"),
 				theme.WARNING
 			);
+			if (e?.message != null)
+				await this._terminal.writehlln(e.message, theme.ERROR);
 		}
 
 		const context = contextEval.create($);

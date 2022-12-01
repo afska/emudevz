@@ -2,6 +2,7 @@ import filesystem from "./Filesystem";
 
 const MAIN_FILE = "/code/index.js";
 const CODE_DIR = "/code";
+const LIB_DIR = "/lib";
 const DOCS_DIR = "/docs";
 const ROMS_DIR = "/roms";
 const TESTROMS_DIR = "/roms/test";
@@ -11,6 +12,7 @@ const READONLY_PATHS = [
 	/^\/\.snapshots.*/,
 	/^\/$/,
 	/^\/docs.*/,
+	/^\/lib.*/,
 	/^\/roms.*/,
 ];
 const PROTECTED_PATHS = [MAIN_FILE];
@@ -22,11 +24,13 @@ export default {
 
 	MAIN_FILE,
 	CODE_DIR,
+	LIB_DIR,
 	DOCS_DIR,
 	TESTROMS_DIR,
 
 	init(levelId) {
 		if (!filesystem.exists(CODE_DIR)) filesystem.mkdir(CODE_DIR);
+		if (!filesystem.exists(LIB_DIR)) filesystem.mkdir(LIB_DIR);
 		if (!filesystem.exists(DOCS_DIR)) filesystem.mkdir(DOCS_DIR);
 		if (!filesystem.exists(ROMS_DIR)) filesystem.mkdir(ROMS_DIR);
 		if (!filesystem.exists(TESTROMS_DIR)) filesystem.mkdir(TESTROMS_DIR);

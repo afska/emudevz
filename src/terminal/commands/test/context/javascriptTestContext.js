@@ -74,6 +74,7 @@ export default {
 		};
 
 		do {
+			context.hasImports = false;
 			this._compileSingleImports(context, modules);
 			this._compileMultiImports(context, modules);
 			this._compileMixedImports(context, modules);
@@ -155,7 +156,7 @@ export default {
 			}
 		}
 
-		context.hasImports = found;
+		context.hasImports = context.hasImports || found;
 	},
 
 	_resolvePath(filePath, relativePath, matches) {

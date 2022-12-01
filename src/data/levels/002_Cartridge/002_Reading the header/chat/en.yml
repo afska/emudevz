@@ -79,9 +79,11 @@ understand:
       mapperId: 4 // (obtained from Flags 6 and Flags 7)
     }```
   responses:
-  - I need help with bit arithmetic 📐 [bits]
+  - I need a bit of help 📐 [bits]
 
 bits:
   messages:
-  - coming soon!
+  - if you don't know how to operate with bits, you can use my library 📚
+  - its in ~/lib/byte.js~, just import it as another module and use it
+  - the methods you'd want to use are `highNybbleOf`, `lowNybbleOf`, and `buildU8`
   responses: []
