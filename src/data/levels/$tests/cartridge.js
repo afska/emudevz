@@ -34,7 +34,6 @@ it("`/code/index.js` exports an object containing the class", async () => {
 		.default;
 
 	expect(mainModule.default).to.be.an("object");
-	Object.keys(mainModule.default).should.eql(["Cartridge"]);
 	mainModule.default.Cartridge.should.equal(Cartridge);
 })({
 	locales: {
