@@ -19,7 +19,7 @@ it("`/code/Cartridge.js` is a JS module that exports a class", async () => {
 	expect(module?.default).to.be.a.class;
 })({
 	locales: {
-		es: "`/code/world.js` es un módulo JS que exporta una clase",
+		es: "`/code/Cartridge.js` es un módulo JS que exporta una clase",
 	},
 });
 
