@@ -25,9 +25,7 @@ export default class TestCommand extends Command {
 			this._setUpHyperlinkProvider();
 
 			const context = level.test?.context;
-			const $ = testContext[context]?.prepare(level) || {
-				level,
-			};
+			const $ = testContext[context]?.prepare(level) || {};
 
 			let warnings = [];
 			try {

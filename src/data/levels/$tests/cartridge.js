@@ -1,4 +1,4 @@
-const { evaluate, filesystem } = $;
+const { evaluate, filesystem, byte } = $;
 
 let mainModule;
 beforeEach(async () => {
@@ -72,4 +72,136 @@ it("instantiating a `Cartridge` with an invalid header throws an error", () => {
 		es: "instanciar un `Cartridge` con una cabecera inválida tira un error",
 	},
 	use: ({ id }, book) => id >= book.getId("3.2"),
+});
+
+// 3.3 Reading the header
+
+it("a `Cartridge` has a `header` property with metadata (PRG-ROM pages)", () => {
+	const Cartridge = mainModule.default.Cartridge;
+	const bytes = new Uint8Array([
+		0x4e,
+		0x45,
+		0x53,
+		0x1a,
+		0,
+		9,
+		0b00000000,
+		0b00000000,
+	]);
+
+	for (let i = 0; i < 255; i++) {
+		bytes[4] = i;
+		new Cartridge(bytes).header.prgRomPages.should.equal(i);
+	}
+})({
+	locales: {
+		es:
+			"un `Cartridge` tiene una propiedad `header` con metadatos (páginas de PRG-ROM)",
+	},
+	use: ({ id }, book) => id >= book.getId("3.3"),
+});
+
+it("a `Cartridge` has a `header` property with metadata (CHR-ROM pages)", () => {
+	const Cartridge = mainModule.default.Cartridge;
+	const bytes = new Uint8Array([
+		0x4e,
+		0x45,
+		0x53,
+		0x1a,
+		3,
+		0,
+		0b00000000,
+		0b00000000,
+	]);
+
+	for (let i = 0; i < 255; i++) {
+		bytes[5] = i;
+		new Cartridge(bytes).header.chrRomPages.should.equal(i);
+		new Cartridge(bytes).header.usesChrRam.should.equal(i === 0);
+	}
+})({
+	locales: {
+		es:
+			"un `Cartridge` tiene una propiedad `header` con metadatos (páginas de CHR-ROM)",
+	},
+	use: ({ id }, book) => id >= book.getId("3.3"),
+});
+
+it("a `Cartridge` has a `header` property with metadata (mirroring)", () => {
+	const Cartridge = mainModule.default.Cartridge;
+	const bytes = new Uint8Array([
+		0x4e,
+		0x45,
+		0x53,
+		0x1a,
+		3,
+		9,
+		0b00000000,
+		0b00000000,
+	]);
+
+	new Cartridge(bytes).header.mirroring.should.equal("HORIZONTAL");
+	bytes[6] = 0b00000001;
+	new Cartridge(bytes).header.mirroring.should.equal("VERTICAL");
+	bytes[6] = 0b00001001;
+	new Cartridge(bytes).header.mirroring.should.equal("FOUR_SCREENS");
+	bytes[6] = 0b00001000;
+	new Cartridge(bytes).header.mirroring.should.equal("FOUR_SCREENS");
+})({
+	locales: {
+		es: "un `Cartridge` tiene una propiedad `header` con metadatos (mirroring)",
+	},
+	use: ({ id }, book) => id >= book.getId("3.3"),
+});
+
+it("a `Cartridge` has a `header` property with metadata (512-byte padding)", () => {
+	const Cartridge = mainModule.default.Cartridge;
+	const bytes = new Uint8Array([
+		0x4e,
+		0x45,
+		0x53,
+		0x1a,
+		3,
+		9,
+		0b00000000,
+		0b00000000,
+	]);
+
+	new Cartridge(bytes).header.has512BytePadding.should.be.false;
+	bytes[6] = 0b00000100;
+	new Cartridge(bytes).header.has512BytePadding.should.be.true;
+})({
+	locales: {
+		es:
+			"un `Cartridge` tiene una propiedad `header` con metadatos (padding de 512 bytes)",
+	},
+	use: ({ id }, book) => id >= book.getId("3.3"),
+});
+
+it("a `Cartridge` has a `header` property with metadata (mapper id)", () => {
+	const Cartridge = mainModule.default.Cartridge;
+	const bytes = new Uint8Array([
+		0x4e,
+		0x45,
+		0x53,
+		0x1a,
+		3,
+		9,
+		0b00000000,
+		0b00000000,
+	]);
+
+	for (let i = 0; i < 255; i++) {
+		const lowNybble = byte.lowNybbleOf(i);
+		const highNybble = byte.highNybbleOf(i);
+		bytes[6] = byte.buildU8(lowNybble, 0);
+		bytes[7] = byte.buildU8(highNybble, 0);
+		new Cartridge(bytes).header.mapperId.should.equal(i);
+	}
+})({
+	locales: {
+		es:
+			"un `Cartridge` tiene una propiedad `header` con metadatos (id de mapper)",
+	},
+	use: ({ id }, book) => id >= book.getId("3.3"),
 });

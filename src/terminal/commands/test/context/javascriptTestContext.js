@@ -2,6 +2,7 @@ import { Linter } from "eslint-linter-browserify";
 import $path from "path";
 import _ from "lodash";
 import filesystem from "../../../../filesystem";
+import { byte } from "../../../../utils";
 import { esLintConfig } from "../../../../utils/codemirror";
 import {
 	createModule,
@@ -30,6 +31,7 @@ export default {
 		const $ = {
 			modules: null,
 			filesystem,
+			byte,
 		};
 
 		$.evaluate = (path = null) => {

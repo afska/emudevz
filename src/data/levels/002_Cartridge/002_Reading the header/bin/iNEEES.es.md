@@ -13,7 +13,7 @@ El formato de la cabecera es el siguiente:
 
 - `0-3`: Constante `$4E $45 $53 $1A`
 - `4`: Tamaño del `PRG-ROM` en unidades de `16` KiB
-- `5`: Tamaño del `CHR-ROM` en unidades de `8` KiB (el valor `0` significa que la placa usa `CHR-RAM`)
+- `5`: Tamaño del `CHR-ROM` en unidades de `8` KiB (el valor `0` significa que la placa usa `8` KiB de `CHR-RAM`)
 - `6`: Flags 6 - Mapper (nybble inferior), mirroring, guardado de progreso (`PRG-RAM`), relleno
 - `7`: Flags 7 - Mapper (nybble superior)
 - `8-15`: Relleno sin uso
