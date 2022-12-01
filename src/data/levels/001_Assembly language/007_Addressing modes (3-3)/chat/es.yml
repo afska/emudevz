@@ -118,7 +118,7 @@ step9:
   - como vimos anteriormente, en nuestra configuración actual ($0003) evalúa a $4080
   - la instrucción solo sumó [Y] a eso, así que la dirección final fue $4085
   responses:
-  - creo que me estresé, ¿podemos saltear la práctica? 😓 [skip]
+  - creo que me estresé, ¿podemos omitir la práctica? 😓 [skip]
 
 skip:
   messages:

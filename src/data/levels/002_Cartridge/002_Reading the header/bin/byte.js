@@ -1,7 +1,7 @@
 /*
  * A byte helper. Numbers use the "Two's complement" representation.
  *
- * Positive values are: {value}             => [0  , 127]
+ * Positive values are: {value}            => [0  , 127]
  * Negative values are: -(256 - {value})   => [128, 255]
  */
 export default {

@@ -61,7 +61,7 @@ export default {
 	rm_with_files:
 		"⚠️  Este directorio contiene ~archivos~. ¿Borrar todo? ~(y/N)~",
 	rm_deleting_recursively: "💥  Borrando recursivamente...",
-	rm_recursive_flag: "(para saltear esta verificación, corre `rm -rf`)",
+	rm_recursive_flag: "(para omitir esta verificación, corre `rm -rf`)",
 	run: "Run",
 	save: "Guardar",
 	settings: "Opciones",

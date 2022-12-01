@@ -104,7 +104,7 @@ relative:
   - mira el código compilado de `BNE @label` en $4028
   - $D0 es el opcode de `BNE`, y el $02 de $4029 es el desplazamiento del salto 🦘
   - "esto significa que [PC] saltará a $402A + 2: directo hacia $402C, donde comienza @label"
-  - (salteará los bytes de los dos `INY`s)
+  - (omitirá los bytes de los dos `INY`s)
   responses:
   - interesante, conque así funcionan las bifurcaciones [whoa]
 

@@ -1,7 +1,7 @@
 /*
  * A byte helper. Numbers use the "Two's complement" representation.
  *
- * Positive values are: {value}             => [0  , 127]
+ * Positive values are: {value}            => [0  , 127]
  * Negative values are: -(256 - {value})   => [128, 255]
  */
 export default {
@@ -89,8 +89,8 @@ export default {
 		return ((highNybble & 0b1111) << 4) | (lowNybble & 0b1111);
 	},
 
-	/** Returns a random byte ([0, 255]). */
-	random() {
-		return Math.floor(Math.random() * 255);
+	/** Returns a random byte ([0, `max`]). */
+	random(max = 255) {
+		return Math.floor(Math.random() * max);
 	},
 };
