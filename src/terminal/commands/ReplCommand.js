@@ -22,7 +22,7 @@ export default class ReplCommand extends Command {
 
 		let $;
 		try {
-			$ = await testContext.javascript.prepare(level).evaluate();
+			$ = (await testContext.javascript.prepare(level).evaluate())?.default;
 			await this._terminal.writehlln(
 				locales.get("repl_code_success"),
 				theme.COMMENT
