@@ -196,7 +196,7 @@ it("a `Cartridge` has a `prg` method that returns the code", () => {
 		[false, 0b00000000],
 		[true, 0b00000100],
 	].forEach(([withPadding, flags6]) => {
-		const pages = 1 + byte.random(4);
+		const pages = 1 + byte.random(3);
 		// prettier-ignore
 		const header = [0x4e, 0x45, 0x53, 0x1a, pages, 1, flags6, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
 		const prg = [];
@@ -215,4 +215,40 @@ it("a `Cartridge` has a `prg` method that returns the code", () => {
 		es: "un `Cartridge` tiene un método `prg` que retorna el código",
 	},
 	use: ({ id }, book) => id >= book.getId("3.4"),
+});
+
+// 3.5 Locating the graphics
+
+it("a `Cartridge` has a `chr` method that returns the graphics", () => {
+	const Cartridge = mainModule.default.Cartridge;
+
+	[
+		[false, 0b00000000],
+		[true, 0b00000100],
+	].forEach(([withPadding, flags6]) => {
+		[0, 1 + byte.random(3)].forEach((chrPages) => {
+			const prgPages = 1 + byte.random(3);
+			// prettier-ignore
+			const header = [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
+			const prg = [];
+			const chr = [];
+			if (withPadding) header.push(...new Array(512).fill(0));
+			for (let i = 0; i < prgPages * 16384; i++) prg.push(byte.random());
+			for (let i = 0; i < chrPages * 8192; i++) chr.push(byte.random());
+			const bytes = new Uint8Array([...header, ...prg, ...chr]);
+
+			const cartridge = new Cartridge(bytes);
+			cartridge.should.respondTo("chr");
+			cartridge
+				.chr()
+				.should.eql(
+					chrPages === 0 ? new Uint8Array(8192) : new Uint8Array(chr)
+				);
+		});
+	});
+})({
+	locales: {
+		es: "un `Cartridge` tiene un método `chr` que retorna los gráficos",
+	},
+	use: ({ id }, book) => id >= book.getId("3.5"),
 });
