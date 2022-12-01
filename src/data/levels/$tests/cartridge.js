@@ -192,18 +192,24 @@ it("a `Cartridge` has a `header` property with metadata (mapper id)", () => {
 it("a `Cartridge` has a `prg` method that returns the code", () => {
 	const Cartridge = mainModule.default.Cartridge;
 
-	const pages = 1 + byte.random(4);
-	// prettier-ignore
-	const header = [0x4e, 0x45, 0x53, 0x1a, pages, 1, 0b00000000, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
-	const prg = [];
-	const chr = [];
-	for (let i = 0; i < pages * 16384; i++) prg.push(byte.random());
-	for (let i = 0; i < 8192; i++) chr.push(byte.random());
-	const bytes = new Uint8Array([...header, ...prg, ...chr]);
+	[
+		[false, 0b00000000],
+		[true, 0b00000100],
+	].forEach(([withPadding, flags6]) => {
+		const pages = 1 + byte.random(4);
+		// prettier-ignore
+		const header = [0x4e, 0x45, 0x53, 0x1a, pages, 1, flags6, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
+		const prg = [];
+		const chr = [];
+		if (withPadding) header.push(...new Array(512).fill(0));
+		for (let i = 0; i < pages * 16384; i++) prg.push(byte.random());
+		for (let i = 0; i < 8192; i++) chr.push(byte.random());
+		const bytes = new Uint8Array([...header, ...prg, ...chr]);
 
-	const cartridge = new Cartridge(bytes);
-	cartridge.should.respondTo("prg");
-	cartridge.prg().should.eql(new Uint8Array(prg));
+		const cartridge = new Cartridge(bytes);
+		cartridge.should.respondTo("prg");
+		cartridge.prg().should.eql(new Uint8Array(prg));
+	});
 })({
 	locales: {
 		es: "un `Cartridge` tiene un método `prg` que retorna el código",
