@@ -12,7 +12,8 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - I've sent you two diagrams of the hardware architecture
+  - I've sent you some files
+  - two diagrams of the hardware architecture
   - and a document describing the ~iNEEES~ format
   - you can inspect them with the ~open~ command
   - I want you to read it and tell me if you understand it
@@ -35,7 +36,7 @@ mapper:
 
 mirroring:
   messages:
-  - it doesn't matter too much right now!
+  - it doesn't matter too much right now
   - mirroring affects what's shown past the right and bottom edges of the screen
   - depending on the mirroring type, the PPU will use different memory sections to draw backgrounds 🎨
   responses:
@@ -45,7 +46,7 @@ memories:
   messages:
   - "💻  <PRG-ROM>: read-only memory that contains the program"
   - "👾  <CHR-ROM>: read-only memory that contains the graphics"
-  - "👾  <CHR-RAM>: writable memory to put graphics in runtime."
+  - "👾  <CHR-RAM>: writable memory to put graphics in runtime"
   - "🔋  <PRG-RAM>: (optional) writable memory to store game progress"
   - each game uses either <CHR-ROM> or <CHR-RAM>
   - if it uses <CHR-RAM>, the ~iNEEES~ file will not contain its last <CHR-ROM> section
@@ -74,9 +75,9 @@ understand:
       prgRomPages: 2, // (obtained from byte 4)
       chrRomPages: 1, // (obtained from byte 5)
       usesChrRam: false, // (true if chrRomPages === 0)
-      mirroring: "VERTICAL", // (obtained from Flags 6)
-      has512BytePadding: false, // (obtained from Flags 6)
-      mapperId: 4 // (obtained from Flags 6 and Flags 7)
+      mirroring: "VERTICAL", // (obtained from <Flags 6>)
+      has512BytePadding: false, // (obtained from <Flags 6>)
+      mapperId: 4 // (obtained from <Flags 6> and <Flags 7>)
     }```
   responses:
   - I need a bit of help 📐 [bits]
@@ -95,7 +96,7 @@ import:
     do it like this:
       ```javascript import byte from "/lib/byte"```
   - |-
-    also, if you add it to your exported `index.js` object:
+    also, if you add it to your exported `index.js` object...
       ```javascript import Cartridge from "./Cartridge"
       import byte from "/lib/byte";
 

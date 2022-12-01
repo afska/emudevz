@@ -3,5 +3,104 @@ main:
   run: |
     if (m.$end) $.goTo("exercise");
   messages:
-  - coming soon!
+  - ey
+  - ¡mira tu directorio ~/docs~! 📁
+  responses:
+  - ¿qué hay ahí? [exercise]
+
+exercise:
+  run: |
+    set((m) => m.$end = true);
+  messages:
+  - te envié algunos archivos
+  - dos diagramas de la arquitectura de hardware
+  - y un documento que describe el formato ~iNEEES~
+  - puedes inspeccionarlos con el comando ~open~
+  - quiero que lo veas y me digas si entiendes
+  responses:
+  - creo que sí [understand]
+  - ¿qué es un mapper? 🧠 [mapper]
+  - ¿qué es mirroring? 🚽 [mirroring]
+  - por favor, define <PRG-ROM>, <CHR-ROM>, <PRG-RAM> y <CHR-RAM> 🐏 [memories]
+  - ¿relleno? 🧸 [padding]
+  - ¿qué demonios es un "nybble"? 🦴 [nybble]
+
+mapper:
+  messages:
+  - es como un "chip de expansión" que todo juego tiene
+  - ayudan a la consola a leer programas y datos gráficos más grandes
+  - y permiten que los juegos realicen operaciones más complejas como modificar el mirroring sobre la marcha
+  - ¡más sobre eso luego! 🔜
+  responses:
+  - ...exercise
+
+mirroring:
+  messages:
+  - no importa demasiado por ahora
+  - el mirroring afecta qué se va a mostrar pasado el borde derecho e inferior de la pantalla
+  - dependiendo del tipo de mirroring, la PPU usará diferentes secciones de memoria para dibujar fondos 🎨
+  responses:
+  - ...exercise
+
+memories:
+  messages:
+  - "💻  <PRG-ROM>: memoria de solo lectura que contiene el programa"
+  - "👾  <CHR-ROM>: memoria de solo lectura que contiene los gráficos"
+  - "👾  <CHR-RAM>: memoria escribible para poner gráficos en tiempo de ejecución"
+  - "🔋  <PRG-RAM>: (opcional) memoria escribible para almacenar el progreso del juego"
+  - cada juego usa <CHR-ROM> o <CHR-RAM>
+  - si usa <CHR-RAM>, el archivo ~iNEEES~ no contendrá su última sección de <CHR-ROM>
+  responses:
+  - ...exercise
+
+padding:
+  messages:
+  - solo ceros, una parte del archivo que puedes ignorar
+  responses:
+  - ...exercise
+
+nybble:
+  messages:
+  - un nybble es medio byte
+  - por lo que "nybble inferior" significa los primeros 4 bits y "nybble superior" significa los últimos 4 bits
+  responses:
+  - ...exercise
+
+understand:
+  messages:
+  - excelente 💪
+  - |-
+    agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
+    ```javascript {
+      prgRomPages: 2, // (obtenido del byte 4)
+      chrRomPages: 1, // (obtenido del byte 5)
+      usesChrRam: false, // (true si chrRomPages === 0)
+      mirroring: "VERTICAL", // (obtenido de <Flags 6>)
+      has512BytePadding: false, // (obtenido de <Flags 6>)
+      mapperId: 4 // (obtenido de <Flags 6> y <Flags 7>)
+    }```
+  responses:
+  - necesito un poco de ayuda 📐 [bits]
+
+bits:
+  messages:
+  - si no sabes cómo operar con bits, puedes usar mi biblioteca 📚
+  - está en ~/lib/byte.js~, solo impórtala como otro módulo más y úsala
+  - los métodos que querrás usar son `highNybbleOf`, `lowNybbleOf` y `buildU8`
+  responses:
+  - ¿cómo puedo importar el módulo? [import]
+
+import:
+  messages:
+  - |-
+    hazlo así:
+      ```javascript import byte from "/lib/byte"```
+  - |-
+    además, si lo agregas a tu objeto exportado en `index.js`...
+      ```javascript import Cartridge from "./Cartridge"
+      import byte from "/lib/byte";
+
+      export default { Cartridge, byte }```
+  - puedes probar la biblioteca con el comando ~repl~
+  - ¡una consola JS interactiva! 🤯
   responses: []
