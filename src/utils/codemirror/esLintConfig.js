@@ -6,6 +6,7 @@ export default {
 	env: {
 		browser: true,
 		node: false,
+		es6: true,
 	},
 	/* eslint:recommended */
 	rules: {

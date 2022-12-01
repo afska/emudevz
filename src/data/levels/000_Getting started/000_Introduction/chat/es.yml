@@ -75,6 +75,6 @@ javascript:
   messages:
   - eso va a funcionar
   - pero también necesitas conocimientos básicos de sistemas informáticos
-  - (bytes, lógica booleana, sistemas de numeración, etc.)
+  - (bytes, enteros con signo, lógica booleana, sistemas de numeración, etc.)
   responses:
   - ok, hagámoslo [end]
