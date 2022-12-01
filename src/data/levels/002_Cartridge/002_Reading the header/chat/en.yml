@@ -46,7 +46,7 @@ memories:
   - "💻  <PRG-ROM>: read-only memory that contains the program"
   - "👾  <CHR-ROM>: read-only memory that contains the graphics"
   - "👾  <CHR-RAM>: writable memory to put graphics in runtime."
-  - "💾  <PRG-RAM>: (optional) writable memory to store game progress"
+  - "🔋  <PRG-RAM>: (optional) writable memory to store game progress"
   - each game uses either <CHR-ROM> or <CHR-RAM>
   - if it uses <CHR-RAM>, the ~iNEEES~ file will not contain its last <CHR-ROM> section
   responses:
