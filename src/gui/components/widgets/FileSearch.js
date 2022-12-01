@@ -6,7 +6,7 @@ import locales from "../../../locales";
 import LsCommand from "../../../terminal/commands/fs/LsCommand";
 import styles from "./FileSearch.module.css";
 
-const FOLDER = Drive.CODE_DIR;
+const FOLDER = Drive.ROOT;
 const PREFIX = `${FOLDER}/`;
 const MAX_RESULTS = 10;
 
