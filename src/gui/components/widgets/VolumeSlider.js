@@ -36,14 +36,13 @@ export default class VolumeSlider extends PureComponent {
 				style={{ marginRight: 4, marginBottom: 0 }}
 				{...rest}
 			>
-				<VolumeUp />
 				<Slider
+					className="volume-slider"
 					valueLabelDisplay="auto"
 					slots={{
 						valueLabel: ValueLabel,
 					}}
 					step={0.1}
-					marks
 					min={0}
 					max={1}
 					value={value}

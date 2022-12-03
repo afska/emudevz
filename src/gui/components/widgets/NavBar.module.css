@@ -39,6 +39,6 @@
 }
 
 .slider {
-	width: 150px;
-	transform: translateY(-4px);
+	width: 75px;
+	transform: translate(-8px, -4px);
 }
