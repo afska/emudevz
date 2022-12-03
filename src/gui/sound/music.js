@@ -1,10 +1,11 @@
 const MUSIC_DIR = "music/";
 const TRACKS = ["pl1sk3n.mp3", "m3m0r13s.mp3", "3muwh4t.mp3"];
+const STORAGE_KEY = "volume";
 
 class Music {
 	constructor() {
 		this._volume = this._loadVolume();
-		this._audio = new Audio("music/pl1sk3n.mp3");
+		this._audio = new Audio(""); //"music/pl1sk3n.mp3");
 		this._hasStarted = false;
 	}
 
@@ -14,8 +15,9 @@ class Music {
 
 	set volume(value) {
 		this._volume = value;
-		this._audio.volume = value;
 		this._saveVolume();
+
+		this._audio.volume = value;
 	}
 
 	start() {
@@ -26,14 +28,14 @@ class Music {
 	}
 
 	_loadVolume() {
-		const value = parseInt(localStorage.getItem("volume"));
+		const value = parseFloat(localStorage.getItem(STORAGE_KEY));
 		if (isFinite(value) && value >= 0 && value <= 1) return value;
 
 		return 0.5;
 	}
 
 	_saveVolume() {
-		localStorage.setItem("volume", this._volume);
+		localStorage.setItem(STORAGE_KEY, this._volume);
 	}
 }
 
