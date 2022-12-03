@@ -7,6 +7,7 @@ import { Route, Switch } from "react-router-dom";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import HomeScreen from "./gui/HomeScreen";
 import PlayScreen from "./gui/PlayScreen";
+import music from "./gui/sound/music";
 import store, { history } from "./store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./gui/theme/crt.css";
@@ -31,6 +32,11 @@ const app = (
 
 // Render the React app
 ReactDOM.render(app, document.getElementById("root"));
+
+// Run music on click
+document.onclick = () => {
+	music.start();
+};
 
 // Make the page visible once everything loaded
 window.addEventListener(

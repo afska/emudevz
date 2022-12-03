@@ -5,8 +5,10 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
 import locales from "../../../locales";
+import music from "../../sound/music";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
+import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
@@ -28,15 +30,25 @@ class NavBar extends PureComponent {
 							{locales.get("using_old_snapshot")}
 						</Badge>
 					)}
-					{!level.memory.content.multifile && (
-						<div className={styles.buttons}>
+					<div className={styles.buttons}>
+						<div className={styles.slider}>
+							<VolumeSlider
+								value={music.volume}
+								onChange={(e) => {
+									music.volume = e.target.value;
+									this.forceUpdate();
+								}}
+							/>
+						</div>
+						{!level.memory.content.multifile && (
 							<IconButton
+								style={{ marginLeft: 8 }}
 								Icon={FaTrash}
 								tooltip={locales.get("reset_level")}
 								onClick={resetLevel}
 							/>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 				<div className={styles.item}>
 					<ProgressList
