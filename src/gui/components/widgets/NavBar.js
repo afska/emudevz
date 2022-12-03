@@ -8,6 +8,7 @@ import locales from "../../../locales";
 import music from "../../sound/music";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
+import Tooltip from "./Tooltip";
 import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
@@ -20,7 +21,11 @@ class NavBar extends PureComponent {
 		return (
 			<div className={styles.navbar}>
 				<div className={classNames(styles.item, styles.text)}>
-					<IconButton Icon={FaChevronLeft} onClick={goBack} />
+					<IconButton
+						Icon={FaChevronLeft}
+						tooltip={locales.get("goBack")}
+						onClick={goBack}
+					/>
 					<span>
 						{chapter.number}.{levelIndex + 1} / {chapter.name[locales.language]}{" "}
 						/ {level.name[locales.language]}

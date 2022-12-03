@@ -1,8 +1,27 @@
 import React, { PureComponent } from "react";
-import VolumeDown from "@mui/icons-material/VolumeDown";
 import VolumeUp from "@mui/icons-material/VolumeUp";
 import Slider from "@mui/material/Slider";
 import Stack from "@mui/material/Stack";
+import Marquee from "react-fast-marquee";
+import Tooltip from "./Tooltip";
+
+function ValueLabel(props) {
+	const { children, value } = props;
+
+	return (
+		<Tooltip
+			enterTouchDelay={0}
+			placement="top"
+			title={
+				<Marquee style={{ width: 150 }} gradient={false}>
+					🎶 Synthenia 🎼 Detective Plisken&nbsp;
+				</Marquee>
+			}
+		>
+			{children}
+		</Tooltip>
+	);
+}
 
 export default class VolumeSlider extends PureComponent {
 	render() {
@@ -14,11 +33,15 @@ export default class VolumeSlider extends PureComponent {
 				direction="row"
 				sx={{ mb: 1 }}
 				alignItems="center"
-				style={{ marginBottom: 0 }}
+				style={{ marginRight: 4, marginBottom: 0 }}
 				{...rest}
 			>
-				<VolumeDown />
+				<VolumeUp />
 				<Slider
+					valueLabelDisplay="auto"
+					slots={{
+						valueLabel: ValueLabel,
+					}}
 					step={0.1}
 					marks
 					min={0}
@@ -26,7 +49,6 @@ export default class VolumeSlider extends PureComponent {
 					value={value}
 					onChange={onChange}
 				/>
-				<VolumeUp />
 			</Stack>
 		);
 	}
