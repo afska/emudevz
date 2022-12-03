@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
-import VolumeUp from "@mui/icons-material/VolumeUp";
 import Slider from "@mui/material/Slider";
 import Stack from "@mui/material/Stack";
 import Marquee from "react-fast-marquee";
+import { connect } from "react-redux";
+import music from "../../sound/music";
 import Tooltip from "./Tooltip";
 
 function ValueLabel(props) {
-	const { children, value } = props;
+	const { children } = props;
 
 	return (
 		<Tooltip
@@ -14,7 +15,7 @@ function ValueLabel(props) {
 			placement="top"
 			title={
 				<Marquee style={{ width: 150 }} gradient={false}>
-					🎶 Synthenia 🎼 Detective Plisken&nbsp;
+					🎶 Artist 🎼 Song&nbsp;
 				</Marquee>
 			}
 		>
@@ -23,9 +24,9 @@ function ValueLabel(props) {
 	);
 }
 
-export default class VolumeSlider extends PureComponent {
+class VolumeSlider extends PureComponent {
 	render() {
-		const { value, onChange, navBarMode = false, ...rest } = this.props;
+		const { volume, setVolume, navBarMode = false, ...rest } = this.props;
 
 		return (
 			<Stack
@@ -45,10 +46,18 @@ export default class VolumeSlider extends PureComponent {
 					step={0.1}
 					min={0}
 					max={1}
-					value={value}
-					onChange={onChange}
+					value={volume}
+					onChange={(e) => {
+						music.setVolume(e.target.value);
+					}}
 				/>
 			</Stack>
 		);
 	}
 }
+
+const mapStateToProps = ({ savedata }) => ({
+	volume: savedata.musicVolume,
+});
+
+export default connect(mapStateToProps)(VolumeSlider);
