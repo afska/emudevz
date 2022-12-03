@@ -24,6 +24,8 @@ class Music {
 		if (this._hasStarted) return;
 
 		this._audio.play();
+		this._audio.loop = true;
+
 		this._hasStarted = true;
 	}
 
