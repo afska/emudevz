@@ -25,7 +25,7 @@ function ValueLabel(props) {
 
 export default class VolumeSlider extends PureComponent {
 	render() {
-		const { value, onChange, ...rest } = this.props;
+		const { value, onChange, navBarMode = false, ...rest } = this.props;
 
 		return (
 			<Stack
@@ -37,7 +37,7 @@ export default class VolumeSlider extends PureComponent {
 				{...rest}
 			>
 				<Slider
-					className="volume-slider"
+					className={navBarMode ? "navbar-volume-slider" : "menu-volume-slider"}
 					valueLabelDisplay="auto"
 					slots={{
 						valueLabel: ValueLabel,

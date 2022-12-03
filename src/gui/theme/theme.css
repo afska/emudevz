@@ -36,11 +36,14 @@ body {
 
 /* MUI */
 
-.volume-slider > .MuiSlider-thumb:before {
-	padding: 0 5px 0 0 !important;
+.navbar-volume-slider > .MuiSlider-thumb:before {
 	content: "🎵" !important;
-	vertical-align: -50% !important;
 	transform: scale(0.75) !important;
+}
+
+.menu-volume-slider > .MuiSlider-thumb:before {
+	content: "🎵" !important;
+	transform: scale(0.6) translate(-2px, -2px) !important;
 }
 
 /* CodeMirror */

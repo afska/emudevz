@@ -43,6 +43,7 @@ class NavBar extends PureComponent {
 									music.volume = e.target.value;
 									this.forceUpdate();
 								}}
+								navBarMode
 							/>
 						</div>
 						{!level.memory.content.multifile && (

@@ -4,6 +4,8 @@ import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales, { LANGUAGES } from "../locales";
 import Button from "./components/widgets/Button";
+import VolumeSlider from "./components/widgets/VolumeSlider";
+import music from "./sound/music";
 import styles from "./SettingsModal.module.css";
 
 class SettingsModal extends PureComponent {
@@ -50,6 +52,16 @@ class SettingsModal extends PureComponent {
 									</div>
 								))}
 							</div>
+						</Form.Group>
+						<Form.Group>
+							<Form.Label>{locales.get("music")}</Form.Label>
+							<VolumeSlider
+								value={music.volume}
+								onChange={(e) => {
+									music.volume = e.target.value;
+									this.forceUpdate();
+								}}
+							/>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
