@@ -98,7 +98,7 @@ it("instantiating a `Cartridge` with an invalid header throws an error", () => {
 
 // 3.3 Reading the header
 
-it("a `Cartridge` has a `header` property with metadata (PRG-ROM pages)", () => {
+it("has a `header` property with metadata (PRG-ROM pages)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
@@ -118,7 +118,7 @@ it("a `Cartridge` has a `header` property with metadata (PRG-ROM pages)", () => 
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
 
-it("a `Cartridge` has a `header` property with metadata (CHR-ROM pages)", () => {
+it("has a `header` property with metadata (CHR-ROM pages)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
@@ -140,7 +140,7 @@ it("a `Cartridge` has a `header` property with metadata (CHR-ROM pages)", () => 
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
 
-it("a `Cartridge` has a `header` property with metadata (512-byte padding)", () => {
+it("has a `header` property with metadata (512-byte padding)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
@@ -163,7 +163,7 @@ it("a `Cartridge` has a `header` property with metadata (512-byte padding)", () 
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
 
-it("a `Cartridge` has a `header` property with metadata (PRG-RAM presence)", () => {
+it("has a `header` property with metadata (PRG-RAM presence)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
@@ -186,7 +186,7 @@ it("a `Cartridge` has a `header` property with metadata (PRG-RAM presence)", () 
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
 
-it("a `Cartridge` has a `header` property with metadata (mirroring)", () => {
+it("has a `header` property with metadata (mirroring)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
@@ -210,7 +210,7 @@ it("a `Cartridge` has a `header` property with metadata (mirroring)", () => {
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
 
-it("a `Cartridge` has a `header` property with metadata (mapper id)", () => {
+it("has a `header` property with metadata (mapper id)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
@@ -255,7 +255,7 @@ const buildRom = (
 	return { header, prg, chr, bytes };
 };
 
-it("a `Cartridge` has a `prg` method that returns the code (no padding)", () => {
+it("has a `prg` method that returns the code (no padding)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	const { prg, bytes } = buildRom();
 
@@ -270,7 +270,7 @@ it("a `Cartridge` has a `prg` method that returns the code (no padding)", () => 
 	use: ({ id }, book) => id >= book.getId("3.4"),
 });
 
-it("a `Cartridge` has a `prg` method that returns the code (with padding)", () => {
+it("has a `prg` method that returns the code (with padding)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	const { prg, bytes } = buildRom(true, 0b00000100);
 
@@ -287,7 +287,7 @@ it("a `Cartridge` has a `prg` method that returns the code (with padding)", () =
 
 // 3.5 Locating the graphics
 
-it("a `Cartridge` has a `chr` method that returns the graphics (using CHR-ROM)", () => {
+it("has a `chr` method that returns the graphics (using CHR-ROM)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	const { chr, bytes } = buildRom();
 
@@ -302,7 +302,7 @@ it("a `Cartridge` has a `chr` method that returns the graphics (using CHR-ROM)",
 	use: ({ id }, book) => id >= book.getId("3.5"),
 });
 
-it("a `Cartridge` has a `chr` method that returns the graphics (using CHR-RAM)", () => {
+it("has a `chr` method that returns the graphics (using CHR-RAM)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	const { bytes } = buildRom(undefined, undefined, undefined, 0);
 

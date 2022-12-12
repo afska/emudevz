@@ -20,7 +20,7 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 
 // 4.2 Registers
 
-it("it includes all the registers", () => {
+it("includes all the registers", () => {
 	const CPU = mainModule.default.CPU;
 	const cpu = new CPU();
 
@@ -120,7 +120,7 @@ it("16-bit registers wrap with values outside the range", () => {
 
 // 4.3 Flags
 
-it("it includes a `flags` property with 5 booleans", () => {
+it("includes a `flags` property with 5 booleans", () => {
 	const CPU = mainModule.default.CPU;
 	const cpu = new CPU();
 

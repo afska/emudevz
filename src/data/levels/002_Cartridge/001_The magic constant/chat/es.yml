@@ -29,6 +29,7 @@ exercise:
 help:
   messages:
   - vas a recibir un `Uint8Array`, ¡que funciona similar a los arrays comunes!
+  - por lo que ```javascript bytes[0]``` representa el primer byte, ```javascript bytes[1]``` el segundo, y así
   - recuerda que puedes expresar notación hexadecimal con el prefijo ~0x~, p. ej. ~0x4e~
   - "para tirar errores, usa:\n  ```javascript throw new Error(\"un mensaje\");```"
   responses: []

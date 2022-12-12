@@ -35,7 +35,8 @@ export default class TestCommand extends Command {
 			const overallResult = { allGreen: true };
 			const hasMultipleTests = _.keys(level.tests).length > 1;
 
-			for (let fileName in level.tests) {
+			const testFiles = _.keys(level.tests);
+			for (let fileName of testFiles) {
 				const test = level.tests[fileName];
 
 				if (hasMultipleTests)
