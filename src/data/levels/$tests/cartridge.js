@@ -11,6 +11,7 @@ it("`/code/Cartridge.js` exists as a file", () => {
 	filesystem.exists("/code/Cartridge.js").should.be.true;
 })({
 	locales: { es: "`/code/Cartridge.js` existe como archivo" },
+	use: ({ id }, book) => id >= book.getId("3.1") && id < book.getId("4.1"),
 });
 
 it("`/code/Cartridge.js` is a JS module that exports a class", async () => {
@@ -21,12 +22,14 @@ it("`/code/Cartridge.js` is a JS module that exports a class", async () => {
 	locales: {
 		es: "`/code/Cartridge.js` es un módulo JS que exporta una clase",
 	},
+	use: ({ id }, book) => id >= book.getId("3.1") && id < book.getId("4.1"),
 });
 
 it("`/code/index.js` imports the module from `/code/Cartridge.js`", () => {
 	expect($.modules["/code/Cartridge.js"]).to.exist;
 })({
 	locales: { es: "`/code/index.js` importa el módulo de `/code/Cartridge.js`" },
+	use: ({ id }, book) => id >= book.getId("3.1") && id < book.getId("4.1"),
 });
 
 it("`/code/index.js` exports an object containing the class", async () => {
@@ -40,6 +43,19 @@ it("`/code/index.js` exports an object containing the class", async () => {
 	locales: {
 		es: "`/code/index.js` exporta un objeto que contiene la clase",
 	},
+	use: ({ id }, book) => id >= book.getId("3.1") && id < book.getId("4.1"),
+});
+
+// After
+it("`/code/index.js` exports an object containing the Cartridge class", async () => {
+	expect(mainModule.default).to.be.an("object");
+	mainModule.default.should.include.key("Cartridge");
+	expect(mainModule.default.Cartridge).to.be.a.class;
+})({
+	locales: {
+		es: "`/code/index.js` exporta un objeto que contiene la clase",
+	},
+	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
 // 3.2 The magic constant
