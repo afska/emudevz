@@ -21,7 +21,7 @@ cpu:
   - es la Unidad Central de Procesamiento
   - lee el código de los juegos y ejecuta sus instrucciones
   - como la de tu computadora, pero <muchas> veces más lenta
-  - tiene acceso a un banco de 2KiB de WRAM (Work RAM)
+  - tiene acceso a un banco de 2 KiB de WRAM (Work RAM)
   responses:
   - ¿y dónde está el código del juego? [thecode]
   - ...main
@@ -41,7 +41,7 @@ ppu:
   messages:
   - es la Unidad de Procesamiento de Imagen
   - dibuja gráficos poniendo pixeles en la pantalla
-  - y tiene acceso a un banco de 2KiB de VRAM (Video RAM)
+  - y tiene acceso a un banco de 2 KiB de VRAM (Video RAM)
   responses:
   - ¿y dónde están almacenados esos gráficos? [thegraphics]
   - ...main

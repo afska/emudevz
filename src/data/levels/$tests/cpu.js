@@ -1,4 +1,4 @@
-const { evaluate, filesystem, byte } = $;
+const { evaluate, byte } = $;
 
 let mainModule;
 beforeEach(async () => {
@@ -199,4 +199,87 @@ it("flags register can be set from a byte", () => {
 		es: "el registro de flags puede ser asignado desde un byte",
 	},
 	use: ({ id }, book) => id >= book.getId("4.3"),
+});
+
+// 4.4 Memory
+
+it("includes a `memory` property with `ram` and `read`/`write` methods", () => {
+	const CPU = mainModule.default.CPU;
+	const cpu = new CPU();
+
+	cpu.should.include.key("memory");
+	expect(cpu.memory).to.be.an("object");
+
+	cpu.memory.ram.should.be.a("Uint8Array");
+	cpu.memory.should.respondTo("read");
+	cpu.memory.should.respondTo("write");
+})({
+	locales: {
+		es: "incluye una propiedad `memory` con `ram` y métodos `read`/`write`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.4"),
+});
+
+it("can read from RAM", () => {
+	const CPU = mainModule.default.CPU;
+	const cpu = new CPU();
+
+	for (let i = 0; i < 2048; i++) {
+		const value = byte.random();
+		cpu.memory.ram[i] = value;
+		cpu.memory.read(i).should.equal(value);
+	}
+})({
+	locales: {
+		es: "puede leer de RAM",
+	},
+	use: ({ id }, book) => id >= book.getId("4.4"),
+});
+
+it("reading RAM mirror results in RAM reads", () => {
+	const CPU = mainModule.default.CPU;
+	const cpu = new CPU();
+
+	for (let i = 0x0800; i < 0x0800 + 0x1800; i++) {
+		const value = byte.random();
+		cpu.memory.ram[(i - 0x0800) % 0x0800] = value;
+		cpu.memory.read(i).should.equal(value);
+	}
+})({
+	locales: {
+		es: "leer espejo de RAM ocasiona lecturas de RAM",
+	},
+	use: ({ id }, book) => id >= book.getId("4.4"),
+});
+
+it("can write to RAM", () => {
+	const CPU = mainModule.default.CPU;
+	const cpu = new CPU();
+
+	for (let i = 0; i < 2048; i++) {
+		const value = byte.random();
+		cpu.memory.write(i, value);
+		cpu.memory.ram[i].should.equal(value);
+	}
+})({
+	locales: {
+		es: "puede escribir en RAM",
+	},
+	use: ({ id }, book) => id >= book.getId("4.4"),
+});
+
+it("writing RAM mirror results in RAM writes", () => {
+	const CPU = mainModule.default.CPU;
+	const cpu = new CPU();
+
+	for (let i = 0x0800; i < 0x0800 + 0x1800; i++) {
+		const value = byte.random();
+		cpu.memory.write(i, value);
+		cpu.memory.ram[(i - 0x0800) % 0x0800].should.equal(value);
+	}
+})({
+	locales: {
+		es: "escribir espejo de RAM ocasiona escrituras en RAM",
+	},
+	use: ({ id }, book) => id >= book.getId("4.4"),
 });

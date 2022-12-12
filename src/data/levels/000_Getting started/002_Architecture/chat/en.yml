@@ -21,7 +21,7 @@ cpu:
   - it's the Central Processing Unit
   - reads a game's code and executes its instructions
   - like the one in your computer, but <several> times slower
-  - it has access to a 2KiB bank of WRAM (Work RAM)
+  - it has access to a 2 KiB bank of WRAM (Work RAM)
   responses:
   - and where's the game's code? [thecode]
   - ...main
@@ -41,7 +41,7 @@ ppu:
   messages:
   - it's the Picture Processing Unit
   - draws graphics by putting pixels on the screen
-  - and it has access to a 2KiB bank of VRAM (Video RAM)
+  - and it has access to a 2 KiB bank of VRAM (Video RAM)
   responses:
   - and where are those graphics located? [thegraphics]
   - ...main

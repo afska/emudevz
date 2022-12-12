@@ -84,3 +84,19 @@ body {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(188, 188, 188, 0.5);
 }
+
+/* Markdown */
+
+.markdown-view table {
+	margin-top: 16px;
+}
+
+.markdown-view th {
+	border: 1px solid #577295;
+	padding: 4px;
+}
+
+.markdown-view td {
+	border: 1px solid #577295;
+	padding: 4px;
+}

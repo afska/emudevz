@@ -1,0 +1,59 @@
+---
+main:
+  messages:
+  - you need to emulate a memory bus as well
+  - the CPU has 2 KiB of RAM 🐏
+  - but the full addressable space is 64 KiB
+  - we identify a memory location with a <memory address> (a 16-bit number)
+  responses:
+  - so, if only 2 KiB are actual RAM, what's in the other 62 KiB? 🤨 [other62]
+
+other62:
+  messages:
+  - other things, like RAM mirrors, memory-mapped I/O, and the cartridge data
+  - the memory map has a very specific structure, see ~/docs/cpu_memory.en.md~
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu_memory.en.md");
+  responses:
+  - (*) what's "memory-mapped I/O"? 🗺️ [io]
+  - 👌  I see... what do I need to implement? [implement]
+
+io:
+  messages:
+  - a scheme in which the CPU is connected to physical devices
+  - for example...
+  - reading $4016 will read the 🎮  controller's pressed buttons
+  - writing the 🖥️  PPU registers at $2000-$2007 will modify the screen
+  - writing the 🔊  APU registers at $4000-$4013 will produce sounds
+  - reading $8000 will probably read the first byte of <PRG-ROM> from the 💾  cartridge
+  responses:
+  - ...other62
+
+implement:
+  messages:
+  - for now, we'll just implement the first two ranges of the memory map
+  - create a `CPUMemory` class with a constructor
+  - it should assign a `ram` property (a `Uint8Array` of 2048 bytes)
+  - |-
+    implement these two methods:
+    ~read(address)~:
+      if ~address~ is in $0000-$07FF, return the byte from ~ram~
+      if ~address~ is in $0800-$1FFF, return a mirrored byte from ~ram~
+        (e.g. $0802 becomes $0002, $1023 becomes $0023)
+      otherwise, return 0
+    ~write(address, byte)~:
+      similar to ~read(...)~, but write the ~byte~ instead of returning
+  - |-
+    then, add to your `CPU` constructor:
+    ```javascript this.memory = new CPUMemory();```
+  responses:
+  - I need help with the mirrored bytes 📐 [help]
+
+help:
+  messages:
+  - you have to substract the range start
+  - then, use the ~%~ (remainder) operator with the mirror size
+  - |-
+    for example, to calculate the 4th range's mirror, we would do:
+    ```javascript (address - 0x2008) % 0x0008```
+  responses: []

@@ -9,7 +9,7 @@ export default class MarkdownView extends PureComponent {
 
 		return (
 			<div
-				className={classNames(styles.container, className)}
+				className={classNames(styles.container, "markdown-view", className)}
 				dangerouslySetInnerHTML={{ __html: marked.parse(content) }}
 				{...rest}
 			/>

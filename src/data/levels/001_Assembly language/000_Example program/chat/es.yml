@@ -47,17 +47,17 @@ address:
   - un número de 2 bytes que representa una ubicación dentro de la memoria 🐏
   - puede ir de 0 ($0000) a 65535 ($FFFF)
   responses:
-  - pero dijiste que la NEEES solo tenía 2KiB (2048 bytes) de memoria 😕 [butyousaid]
+  - pero dijiste que la NEEES solo tenía 2 KiB (2048 bytes) de memoria 😕 [butyousaid]
   - ...machinecode
 
 butyousaid:
   messages:
   - eso es cierto
-  - pero la CPU puede <ver> hasta 64KiB
+  - pero la CPU puede <ver> hasta 64 KiB
   - así que los primeros dos kilobytes son RAM de verdad
   - y el resto se usa para interactuar con el hardware 💻
   - eso no importa mucho en este capítulo
-  - estamos simulando una RAM de 64KiB por simplicidad
+  - estamos simulando una RAM de 64 KiB por simplicidad
   responses:
   - ...machinecode
 

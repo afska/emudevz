@@ -1,6 +1,7 @@
 import _ from "lodash";
 import _filesystem_, { Drive as _Drive_ } from "../filesystem";
 import _locales_ from "../locales";
+import _store_ from "../store";
 import { bus as _bus_ } from "../utils";
 import _Level_ from "./Level";
 
@@ -21,6 +22,8 @@ export default {
 		const locales = _locales_;
 		// eslint-disable-next-line
 		const filesystem = _filesystem_;
+		// eslint-disable-next-line
+		const store = _store_;
 		// eslint-disable-next-line
 		const Drive = _Drive_;
 
