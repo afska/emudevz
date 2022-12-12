@@ -1,7 +1,7 @@
 import store from "../../store";
 
 const MUSIC_DIR = "music/";
-const TRACKS = ["pl1sk3n.mp3", "m3m0r13s.mp3", "3muwh4t.mp3"];
+const TRACKS = [];
 
 class Music {
 	constructor() {
