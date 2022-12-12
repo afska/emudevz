@@ -33,7 +33,7 @@ limit:
 implement:
   messages:
   - yo crearía arrays tipados que contengan solo un elemento, como ```javascript new Uint8Array(1)``` y ```javascript new Uint16Array(1)```
-  - luego, cuando hagas algo como ```javascript array[0] = 258```, el valor se ajustará automáticamente ✨
+  - luego, cuando hagas algo como ```javascript array[0] = 258;```, el valor se ajustará automáticamente ✨
   responses:
   - ...main
 

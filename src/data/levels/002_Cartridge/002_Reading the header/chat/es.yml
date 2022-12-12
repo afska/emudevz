@@ -95,10 +95,10 @@ import:
   messages:
   - |-
     hazlo así:
-      ```javascript import byte from "/lib/byte"```
+      ```javascript import byte from "/lib/byte";```
   - |-
     además, si lo agregas a tu objeto exportado en `index.js`...
-      ```javascript import Cartridge from "./Cartridge"
+      ```javascript import Cartridge from "./Cartridge";
       import byte from "/lib/byte";
 
       export default { Cartridge, byte }```

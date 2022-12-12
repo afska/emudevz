@@ -1,0 +1,48 @@
+---
+main:
+  messages:
+  - as you saw in the Assembly chapter, there's also a 🏁  <Flags> register that represents the processor status
+  - |-
+    it's an 8-bit register, in which each bit has a special meaning:
+     ```raw _______________________________```
+    ```raw | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |```
+    ```raw |---|---|---|---|---|---|---|---|```
+    ```raw |``` ~N~ ```raw |``` ~V~ ```raw |``` ```raw 1``` ```raw |``` ```raw b``` ```raw |``` ```raw 0``` ```raw |``` ~I~ ```raw |``` ~Z~ ```raw |``` ~C~ ```raw |```
+     ```raw ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾```
+  - we already covered C ("Carry") and Z ("Zero") in the past, and we'll talk about the others when we start coding CPU instructions
+  - all flags are represented by an uppercase letter
+  responses:
+  - not <all> of them 😑 [notall]
+
+notall:
+  messages:
+  - right, right, with some exceptions
+  - bit 3 is always 0
+  - bit 5 is always 1
+  - bit 4 ("b")... depends... on... things - we'll ignore it for now 😂
+  responses:
+  - fair enough, what should I do? [what]
+
+what:
+  messages:
+  - create a `FlagsRegister` class with 5 boolean properties (called ~c~, ~z~, ~i~, ~v~ and ~n~)
+  - initialize them with ```javascript false```
+  - then, implement ```javascript getValue()``` and ```javascript setValue(value)``` following the previous table
+  - i.e. with ~i~ and ~v~ on, ```javascript getValue()``` should return ```javascript 0b01100100```
+  - and ```javascript setValue(0b00000010)``` should set all booleans to ```javascript false```, except for ~z~
+  responses:
+  - (*) I need a bit of help 📐 [bits]
+  - ✔️  I have the class [nowwhat]
+
+bits:
+  messages:
+  - ~/lib/byte.js~ comes to the rescue 🙌
+  - to build the value on ```javascript getValue()```, use `bitfield`
+  - to get the flags on ```javascript setValue(value)```, use `getFlag`
+  responses:
+  - ...what
+
+nowwhat:
+  messages:
+  - "great, just add a new instance to the `CPU` class, like this:\n```javascript this.flags = new FlagsRegister();```"
+  responses: []

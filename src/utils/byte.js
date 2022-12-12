@@ -41,6 +41,11 @@ export default {
 		return this.toU8(-this.toS8(u8));
 	},
 
+	/** Returns the bit located at `position` in `number`, as a boolean. */
+	getFlag(number, position) {
+		return !!this.getBit(number, position);
+	},
+
 	/** Returns the bit located at `position` in `number`. */
 	getBit(number, position) {
 		return (number >> position) & 1;
@@ -87,6 +92,20 @@ export default {
 	/** Returns an 8-bit number from `highNybble` and `lowNybble`. */
 	buildU8(highNybble, lowNybble) {
 		return ((highNybble & 0b1111) << 4) | (lowNybble & 0b1111);
+	},
+
+	/** Returns an 8-bit number from `bit0`, `bit1`, `bit2`, etc. */
+	bitfield(bit0, bit1, bit2, bit3, bit4, bit5, bit6, bit7) {
+		return (
+			((bit0 & 1) << 0) |
+			((bit1 & 1) << 1) |
+			((bit2 & 1) << 2) |
+			((bit3 & 1) << 3) |
+			((bit4 & 1) << 4) |
+			((bit5 & 1) << 5) |
+			((bit6 & 1) << 6) |
+			((bit7 & 1) << 7)
+		);
 	},
 
 	/** Returns a random byte ([0, `max`]). */

@@ -50,13 +50,13 @@ it("`/code/index.js` exports an object containing the class", async () => {
 
 // --- After 4.1 ---
 
-it("`/code/index.js` exports an object containing the Cartridge class", () => {
+it("`/code/index.js` exports an object containing the `Cartridge` class", () => {
 	expect(mainModule.default).to.be.an("object");
 	mainModule.default.should.include.key("Cartridge");
 	expect(mainModule.default.Cartridge).to.be.a.class;
 })({
 	locales: {
-		es: "`/code/index.js` exporta un objeto que contiene la clase",
+		es: "`/code/index.js` exporta un objeto que contiene la clase `Cartridge`",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });

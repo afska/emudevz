@@ -33,7 +33,7 @@ limit:
 implement:
   messages:
   - I'd create typed arrays containing just one element, like ```javascript new Uint8Array(1)``` and ```javascript new Uint16Array(1)```
-  - then, when you do something like ```javascript array[0] = 258```, the wrapping will be performed automatically ✨
+  - then, when you do something like ```javascript array[0] = 258;```, the wrapping will be performed automatically ✨
   responses:
   - ...main
 

@@ -1,0 +1,48 @@
+---
+main:
+  messages:
+  - como viste en el capítulo de Ensamblador, también existe un registro 🏁  <Flags> que representa el estado del procesador
+  - |-
+    es un registro de 8 bits, en el cual cada bit tiene un significado especial
+     ```raw _______________________________```
+    ```raw | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |```
+    ```raw |---|---|---|---|---|---|---|---|```
+    ```raw |``` ~N~ ```raw |``` ~V~ ```raw |``` ```raw 1``` ```raw |``` ```raw b``` ```raw |``` ```raw 0``` ```raw |``` ~I~ ```raw |``` ~Z~ ```raw |``` ~C~ ```raw |```
+     ```raw ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾```
+  - ya cubrimos C ("Carry") y Z ("Zero") anteriormente, y hablaremos de los demás cuando empecemos a programar instrucciones de CPU
+  - todas las banderas se representan con una letra en mayúscula
+  responses:
+  - no <todas> 😑 [notall]
+
+notall:
+  messages:
+  - bueno, bueno, con algunas excepciones
+  - el bit 3 es siempre 0
+  - el bit 5 es siempre 1
+  - el bit 4 ("b")... depende... de... cosas - vamos a ignorarlo por ahora 😂
+  responses:
+  - está bien, ¿qué debería hacer? [what]
+
+what:
+  messages:
+  - crea una clase `FlagsRegister` con 5 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~v~ y ~n~)
+  - inicialízalas en ```javascript false```
+  - luego, implementa ```javascript getValue()``` y ```javascript setValue(value)``` siguiendo la tabla anterior
+  - por ej. con ~i~ y ~v~ encendidas, ```javascript getValue()``` debería retornar ```javascript 0b01100100```
+  - y ```javascript setValue(0b00000010)``` debería poner todos los booleanos en ```javascript false```, menos ~z~
+  responses:
+  - (*) necesito un poco de ayuda 📐 [bits]
+  - ✔️  ya tengo la clase [nowwhat]
+
+bits:
+  messages:
+  - ~/lib/byte.js~ al rescate 🙌
+  - para construir el valor en ```javascript getValue()```, usa `bitfield`
+  - para obtener las banderas en ```javascript setValue(value)```, usa `getFlag`
+  responses:
+  - ...what
+
+nowwhat:
+  messages:
+  - "perfecto, solo agrega una nueva instancia a la clase `CPU`, así:\n```javascript this.flags = new FlagsRegister();```"
+  responses: []

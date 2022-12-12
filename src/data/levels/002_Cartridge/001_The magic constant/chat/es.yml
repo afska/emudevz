@@ -30,5 +30,5 @@ help:
   messages:
   - vas a recibir un `Uint8Array`, ¡que funciona similar a los arrays comunes!
   - recuerda que puedes expresar notación hexadecimal con el prefijo ~0x~, p. ej. ~0x4e~
-  - "para tirar errores, usa:\n  ```javascript throw new Error(\"un mensaje\")```"
+  - "para tirar errores, usa:\n  ```javascript throw new Error(\"un mensaje\");```"
   responses: []
