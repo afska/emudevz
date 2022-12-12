@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import classNames from "classnames";
+import Tooltip from "./Tooltip";
 import styles from "./IconButton.module.css";
 
 export default class IconButton extends PureComponent {
@@ -10,12 +9,9 @@ export default class IconButton extends PureComponent {
 		if (!tooltip) return this._renderIcon();
 
 		return (
-			<OverlayTrigger
-				placement={tooltipPlacement}
-				overlay={<Tooltip>{tooltip}</Tooltip>}
-			>
+			<Tooltip title={tooltip} placement={tooltipPlacement}>
 				{this._renderIcon()}
-			</OverlayTrigger>
+			</Tooltip>
 		);
 	}
 

@@ -6,6 +6,8 @@ const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	levelId: 0,
 	language: "en",
+	musicVolume: 0.5,
+	musicTrack: 0,
 	openFiles: [DEFAULT_FILE],
 	selectedFile: DEFAULT_FILE,
 });
@@ -18,6 +20,12 @@ export default {
 		},
 		setLanguage(state, language) {
 			return { ...state, language };
+		},
+		setMusicVolume(state, musicVolume) {
+			return { ...state, musicVolume };
+		},
+		setMusicTrack(state, musicTrack) {
+			return { ...state, musicTrack };
 		},
 		setOpenFiles(state, openFiles) {
 			return { ...state, openFiles };

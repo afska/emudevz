@@ -34,6 +34,18 @@ body {
 	color: rgb(184, 189, 197) !important;
 }
 
+/* MUI */
+
+.navbar-volume-slider > .MuiSlider-thumb:before {
+	content: "🎵" !important;
+	transform: scale(0.75) !important;
+}
+
+.menu-volume-slider > .MuiSlider-thumb:before {
+	content: "🎵" !important;
+	transform: scale(0.6) translate(-2px, -2px) !important;
+}
+
 /* CodeMirror */
 
 .cm-theme {
@@ -71,31 +83,4 @@ body {
 ::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(188, 188, 188, 0.5);
-}
-
-/* Range sliders */
-
-input[type="range"]::-webkit-slider-runnable-track {
-	background: #373b3e;
-}
-input[type="range"]:focus::-webkit-slider-runnable-track {
-	background: #4e565d;
-}
-input[type="range"]::-webkit-slider-thumb {
-	background: #7792b2;
-}
-input[type="range"]:focus::-webkit-slider-thumb {
-	background: #9bc0e9;
-}
-input[type="range"]::-moz-range-track {
-	background: #373b3e;
-}
-input[type="range"]:focus::-moz-range-track {
-	background: #4e565d;
-}
-input[type="range"]:focus::-moz-range-thumb {
-	background: #7792b2;
-}
-input[type="range"]::-moz-range-thumb {
-	background: #9bc0e9;
 }

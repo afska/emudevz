@@ -37,6 +37,7 @@ export default {
 	language_es: "Español",
 	loading: "Cargando...",
 	memory_viewer: "Visor de Memoria",
+	music: "Música",
 	not_now: "⚠️  ¡Ahora no!",
 	opening: "Abriendo",
 	plot:

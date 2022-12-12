@@ -1,9 +1,8 @@
 import React, { PureComponent } from "react";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import locales from "../../../locales";
+import Tooltip from "./Tooltip";
 import styles from "./ProgressList.module.css";
 
 class ProgressList extends PureComponent {
@@ -14,15 +13,14 @@ class ProgressList extends PureComponent {
 			<div className={styles.progressList}>
 				{levelDefinitions.map((levelDefinition, i) => {
 					return (
-						<OverlayTrigger
-							key={levelDefinition.id}
-							placement="top"
-							overlay={
-								<Tooltip>
-									{levelDefinition.humanId}{" "}
-									{levelDefinition.name[locales.language]}
-								</Tooltip>
+						<Tooltip
+							key={i}
+							title={
+								levelDefinition.humanId +
+								" " +
+								levelDefinition.name[locales.language]
 							}
+							placement="top"
 						>
 							<div
 								onClick={() => {
@@ -39,7 +37,7 @@ class ProgressList extends PureComponent {
 									levelDefinition.id === selectedLevelId && styles.selected
 								)}
 							/>
-						</OverlayTrigger>
+						</Tooltip>
 					);
 				})}
 			</div>

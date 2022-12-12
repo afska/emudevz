@@ -7,6 +7,7 @@ import _ from "lodash";
 import locales from "../../../locales";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
+import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
@@ -18,7 +19,11 @@ class NavBar extends PureComponent {
 		return (
 			<div className={styles.navbar}>
 				<div className={classNames(styles.item, styles.text)}>
-					<IconButton Icon={FaChevronLeft} onClick={goBack} />
+					<IconButton
+						Icon={FaChevronLeft}
+						tooltip={locales.get("goBack")}
+						onClick={goBack}
+					/>
 					<span>
 						{chapter.number}.{levelIndex + 1} / {chapter.name[locales.language]}{" "}
 						/ {level.name[locales.language]}
@@ -28,15 +33,19 @@ class NavBar extends PureComponent {
 							{locales.get("using_old_snapshot")}
 						</Badge>
 					)}
-					{!level.memory.content.multifile && (
-						<div className={styles.buttons}>
+					<div className={styles.buttons}>
+						<div className={styles.slider}>
+							<VolumeSlider navBarMode />
+						</div>
+						{!level.memory.content.multifile && (
 							<IconButton
+								style={{ marginLeft: 8 }}
 								Icon={FaTrash}
 								tooltip={locales.get("reset_level")}
 								onClick={resetLevel}
 							/>
-						</div>
-					)}
+						)}
+					</div>
 				</div>
 				<div className={styles.item}>
 					<ProgressList

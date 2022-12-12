@@ -6,8 +6,8 @@ import locales from "../../../locales";
 import LsCommand from "../../../terminal/commands/fs/LsCommand";
 import styles from "./FileSearch.module.css";
 
-const FOLDER = "";
-const PREFIX = `${FOLDER}/`;
+const DIRECTORY = "";
+const PREFIX = `${DIRECTORY}/`;
 const MAX_RESULTS = 10;
 
 export default function FileSearch(props) {
@@ -19,7 +19,7 @@ export default function FileSearch(props) {
 	const inputRef = useRef(null);
 	useEffect(() => {
 		if (isSearching) {
-			const newFiles = filesystem.lsr(FOLDER).map((file) => {
+			const newFiles = filesystem.lsr(DIRECTORY).map((file) => {
 				return {
 					...file,
 					originalFilePath: file.filePath,
@@ -35,7 +35,7 @@ export default function FileSearch(props) {
 	}, [isSearching]);
 
 	const matches = fuzzy.search(files, input).slice(0, MAX_RESULTS);
-	const tree = LsCommand.getTree(FOLDER, false);
+	const tree = LsCommand.getTree(DIRECTORY, false);
 
 	const render = () => {
 		return (

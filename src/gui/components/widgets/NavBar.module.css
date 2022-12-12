@@ -27,6 +27,7 @@
 	position: absolute;
 	top: -4px;
 	right: 0;
+	display: flex;
 }
 
 .text {
@@ -35,4 +36,9 @@
 
 .warning {
 	margin-left: 8px;
+}
+
+.slider {
+	width: 75px;
+	transform: translate(-8px, -4px);
 }
