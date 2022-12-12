@@ -112,8 +112,7 @@ it("has a `header` property with metadata (PRG-ROM pages)", () => {
 	}
 })({
 	locales: {
-		es:
-			"un `Cartridge` tiene una propiedad `header` con metadatos (páginas de PRG-ROM)",
+		es: "tiene una propiedad `header` con metadatos (páginas de PRG-ROM)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
@@ -134,8 +133,7 @@ it("has a `header` property with metadata (CHR-ROM pages)", () => {
 	}
 })({
 	locales: {
-		es:
-			"un `Cartridge` tiene una propiedad `header` con metadatos (páginas de CHR-ROM)",
+		es: "tiene una propiedad `header` con metadatos (páginas de CHR-ROM)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
@@ -157,8 +155,7 @@ it("has a `header` property with metadata (512-byte padding)", () => {
 	});
 })({
 	locales: {
-		es:
-			"un `Cartridge` tiene una propiedad `header` con metadatos (padding de 512 bytes)",
+		es: "tiene una propiedad `header` con metadatos (padding de 512 bytes)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
@@ -180,8 +177,7 @@ it("has a `header` property with metadata (PRG-RAM presence)", () => {
 	});
 })({
 	locales: {
-		es:
-			"un `Cartridge` tiene una propiedad `header` con metadatos (presencia de PRG-RAM)",
+		es: "tiene una propiedad `header` con metadatos (presencia de PRG-RAM)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
@@ -205,7 +201,7 @@ it("has a `header` property with metadata (mirroring)", () => {
 	});
 })({
 	locales: {
-		es: "un `Cartridge` tiene una propiedad `header` con metadatos (mirroring)",
+		es: "tiene una propiedad `header` con metadatos (mirroring)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
@@ -224,8 +220,7 @@ it("has a `header` property with metadata (mapper id)", () => {
 	}
 })({
 	locales: {
-		es:
-			"un `Cartridge` tiene una propiedad `header` con metadatos (id de mapper)",
+		es: "tiene una propiedad `header` con metadatos (id de mapper)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.3"),
 });
@@ -264,8 +259,7 @@ it("has a `prg` method that returns the code (no padding)", () => {
 	cartridge.prg().should.eql(new Uint8Array(prg));
 })({
 	locales: {
-		es:
-			"un `Cartridge` tiene un método `prg` que retorna el código (sin relleno)",
+		es: "tiene un método `prg` que retorna el código (sin relleno)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.4"),
 });
@@ -279,8 +273,7 @@ it("has a `prg` method that returns the code (with padding)", () => {
 	cartridge.prg().should.eql(new Uint8Array(prg));
 })({
 	locales: {
-		es:
-			"un `Cartridge` tiene un método `prg` que retorna el código (con relleno)",
+		es: "tiene un método `prg` que retorna el código (con relleno)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.4"),
 });
@@ -296,8 +289,7 @@ it("has a `chr` method that returns the graphics (using CHR-ROM)", () => {
 	cartridge.chr().should.eql(new Uint8Array(chr));
 })({
 	locales: {
-		es:
-			"un `Cartridge` tiene un método `chr` que retorna los gráficos (usando CHR-ROM)",
+		es: "tiene un método `chr` que retorna los gráficos (usando CHR-ROM)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.5"),
 });
@@ -311,8 +303,7 @@ it("has a `chr` method that returns the graphics (using CHR-RAM)", () => {
 	cartridge.chr().should.eql(new Uint8Array(8192));
 })({
 	locales: {
-		es:
-			"un `Cartridge` tiene un método `chr` que retorna los gráficos (usando CHR-RAM)",
+		es: "tiene un método `chr` que retorna los gráficos (usando CHR-RAM)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.5"),
 });

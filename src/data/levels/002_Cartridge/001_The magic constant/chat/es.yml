@@ -11,7 +11,7 @@ main:
 neeesfiles:
   messages:
   - correcto, el formato se llama <iNEEES>, y deberías empezar leyendo su cabecera
-  - "los primeros 3 bytes de un archivod e juego siempre contienen lo siguiente:"
+  - "los primeros 4 bytes de un archivo de juego siempre contienen lo siguiente:"
   - $4E $45 $53 $1A
   - que representa la secuencia ASCII del nombre de la consola ("NEEES"), pero con una sola "E"
   - esa es <la constante mágica> ✨

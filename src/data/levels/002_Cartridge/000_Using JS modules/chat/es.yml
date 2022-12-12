@@ -54,7 +54,7 @@ exercise:
 modules:
   messages:
   - sí, cada archivo es un módulo, y tiene un valor <exportado>
-  - ese valor puede ser cualquier expressión JS, y puede ser usado en otro lugar <importando> el módulo
+  - ese valor puede ser cualquier expresión JS, y puede ser usado en otro lugar <importando> el módulo
   - |-
     algo de ayuda...
 
