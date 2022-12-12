@@ -1,8 +1,17 @@
 ---
 main:
   messages:
-  - crea un archivo en algún lugar para el código de la CPU
+  - crea un archivo en algún lugar para el código de la CPU 💻
   - su valor a exportar debería ser una clase vacía
   - luego, importa ese archivo desde ~/code/index.js~
   - y agrega una clave "CPU" (apuntando a esa clase) al objeto exportado
+  responses:
+  - ¿dónde debería guardar el archivo? [where]
+
+where:
+  messages:
+  - no importa 🤷
+  - a partir de ahora, estás a cargo de organizar tu propio código
+  - almacenar todo el código de CPU dentro de un directorio ~cpu~ sería una buena práctica, igualmente
+  - las pruebas encontrarán tus clases a través de ~/code/index.js~
   responses: []

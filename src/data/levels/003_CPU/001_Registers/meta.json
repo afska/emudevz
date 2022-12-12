@@ -1,0 +1,34 @@
+{
+	"name": {
+		"en": "Registers",
+		"es": "Registros"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "cpu.js"]
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

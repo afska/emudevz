@@ -7,6 +7,8 @@ beforeEach(async () => {
 
 // 3.1 Using JS modules
 
+// --- Before 4.1 ---
+
 it("`/code/Cartridge.js` exists as a file", () => {
 	filesystem.exists("/code/Cartridge.js").should.be.true;
 })({
@@ -46,8 +48,9 @@ it("`/code/index.js` exports an object containing the class", async () => {
 	use: ({ id }, book) => id >= book.getId("3.1") && id < book.getId("4.1"),
 });
 
-// After
-it("`/code/index.js` exports an object containing the Cartridge class", async () => {
+// --- After 4.1 ---
+
+it("`/code/index.js` exports an object containing the Cartridge class", () => {
 	expect(mainModule.default).to.be.an("object");
 	mainModule.default.should.include.key("Cartridge");
 	expect(mainModule.default.Cartridge).to.be.a.class;
@@ -62,6 +65,7 @@ it("`/code/index.js` exports an object containing the Cartridge class", async ()
 
 it("instantiating a `Cartridge` with a valid header saves a `bytes` property", () => {
 	const Cartridge = mainModule.default.Cartridge;
+
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a]);
 	new Cartridge(bytes).bytes.should.equal(bytes);
 })({

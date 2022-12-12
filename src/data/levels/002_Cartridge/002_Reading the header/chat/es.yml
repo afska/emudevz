@@ -18,12 +18,12 @@ exercise:
   - puedes inspeccionarlos con el comando ~open~
   - quiero que lo veas y me digas si entiendes
   responses:
-  - creo que sí [understand]
-  - ¿qué es un mapper? 🧠 [mapper]
-  - ¿qué es mirroring? 🚽 [mirroring]
-  - por favor, define <PRG-ROM>, <CHR-ROM>, <PRG-RAM> y <CHR-RAM> 🐏 [memories]
-  - ¿relleno? 🧸 [padding]
-  - ¿qué demonios es un "nybble"? 🦴 [nybble]
+  - 🤔  creo que entiendo [understand]
+  - (*) ¿qué es un mapper? 🧠 [mapper]
+  - (*) ¿qué es mirroring? 🚽 [mirroring]
+  - (*) por favor, define <PRG-ROM>, <CHR-ROM>, <PRG-RAM> y <CHR-RAM> 🐏 [memories]
+  - (*) ¿relleno? 🧸 [padding]
+  - (*) ¿qué demonios es un "nybble"? 🦴 [nybble]
 
 mapper:
   messages:
