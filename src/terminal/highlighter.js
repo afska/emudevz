@@ -13,8 +13,8 @@ export default {
 		parts = this._highlightCode(parts);
 		[
 			{
-				regexp: /(\*\*[^\*]+\*\*)/,
-				silent: /(\*\*([^\*]+)\*\*)/g,
+				regexp: /(\*\*[^*]+\*\*)/,
+				silent: /(\*\*([^*]+)\*\*)/g,
 				style: theme.BOLD,
 			}, // quick bold
 			{

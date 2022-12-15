@@ -11,7 +11,7 @@ main:
     }
   messages:
   - the stack 📚  is a LIFO structure ("Last In, First Out") which programs can use to store values
-  - the current stack depth is measured by the "Stack Pointer" [SP]
+  - the current stack depth is measured by the "Stack Pointer" ([SP])
   - in a 6502 processor, it lives in memory between $0100 and $01FF 🐏
   - "[SP] is initially $FF, which points to the last stack byte ($01FF)"
   - when a byte is pushed onto the stack, [SP] becomes $FE (or memory location $01FE), and so on

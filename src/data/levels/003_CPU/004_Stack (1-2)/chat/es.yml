@@ -1,0 +1,17 @@
+---
+main:
+  messages:
+  - ¿recuerdas la pila? 📚
+  - crea una nueva clase para ella
+  - tendría que recibir `memory` y `sp` de la CPU, ya que va a tener que interactuar con ellos
+  - |-
+    implementa estos métodos:
+    **push(byte)**:
+      __escribe <byte> en <direcciónActual>, luego decrementa <sp>__
+    **pop()**:
+      __incrementa <sp> y retorna el contenido de <direcciónActual>__
+  - la <direcciónActual> siempre es $0100 (donde vive la pila en la RAM), más el valor en [SP]
+  - |-
+    cuando termines, agrega una nueva instancia de la pila a la CPU:
+    ```javascript this.stack = new Stack(this.memory, this.sp);```
+  responses: []

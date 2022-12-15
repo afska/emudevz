@@ -11,7 +11,7 @@ main:
     }
   messages:
   - la pila 📚  es una estructura LIFO ("Last In, First Out") que los programas usan para almacenar valores
-  - la longitud actual de la pila es medida por el "Stack Pointer" [SP]
+  - la longitud actual de la pila es medida por el "Stack Pointer" ([SP])
   - en un procesador 6502, vive en la memoria entre $0100 y $01FF 🐏
   - "[SP] inicialmente es $FF, que apunta al último byte de la pila ($01FF)"
   - cuando un byte se agrega a la pila, [SP] pasa a ser $FE (o ubicación de memoria $01FE), y así
