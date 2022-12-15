@@ -1,6 +1,6 @@
 import { cliCodeHighlighter } from "../utils/cli";
+import { theme } from "./style";
 
-const SILENT_ACCENT = /(~[^~]+~)/;
 const NUMBERS = /(\b[0-9]+\b)/;
 const CODE_DETECT_REGEXP = /(```\S+\s+[^`]+```)/;
 const CODE_PARSE_REGEXP = /```(\S+)\s+([^`]+)```/;
@@ -12,22 +12,34 @@ export default {
 
 		parts = this._highlightCode(parts);
 		[
-			SILENT_ACCENT, // tilde (silent accent)
-			/(`[^`]+`)/, // backticks
-			/("[^"]+")/, // double quotes
-			/(<[^>]+>)/, // angular brackets
-			/([^\x1B]\[[^\]]+\])/, // square brackets (ignoring terminal sequences)
-			/(#?\$[0-9a-fA-F]+)/, // [literal] hex numbers
-			/(#[0-9]+)/, // literal dec numbers
-			NUMBERS, // numbers
-		].forEach((regexp) => {
-			parts = this._highlightAccent(parts, regexp);
+			{
+				regexp: /(\*\*[^\*]+\*\*)/,
+				silent: /(\*\*([^\*]+)\*\*)/g,
+				style: theme.BOLD,
+			}, // quick bold
+			{
+				regexp: /(__[^_]+__)/,
+				silent: /(__([^_]+)__)/g,
+				style: theme.ITALIC,
+			}, // quick italic
+			{ regexp: /(~[^~]+~)/, silent: /(~([^~]+)~)/g }, // quick accent
+			{ regexp: /(`[^`]+`)/ }, // backticks
+			{ regexp: /("[^"]+")/ }, // double quotes
+			{ regexp: /(<[^>]+>)/ }, // angular brackets
+			{ regexp: /([^\x1B]\[[^\]]+\])/ }, // square brackets (ignoring terminal sequences)
+			{ regexp: /(#?\$[0-9a-fA-F]+)/ }, // [literal] hex numbers
+			{ regexp: /(#[0-9]+)/ }, // literal dec numbers
+			{ regexp: NUMBERS }, // numbers
+		].forEach((symbol) => {
+			parts = this._highlightAccent(parts, symbol);
 		});
 
 		return parts;
 	},
 
-	_highlightAccent(parts, regexp) {
+	_highlightAccent(parts, symbol) {
+		const { regexp, silent = null, style = theme.ACCENT } = symbol;
+
 		return parts.flatMap((part) => {
 			if (part.isAccent || part.isCode) return part;
 
@@ -40,11 +52,15 @@ export default {
 					isNumber &&
 					previousCharacter !== null &&
 					!/\s/.test(previousCharacter);
-				const isSilentAccent = SILENT_ACCENT.test(part);
+				const isValidAccent = isAccent && !isInvalidNumber;
 
 				return {
-					isAccent: isAccent && !isInvalidNumber,
-					text: isSilentAccent ? part.replace(/~/g, "") : part,
+					isAccent: isValidAccent,
+					style,
+					text:
+						isValidAccent && silent != null
+							? part.replace(silent, (__, ___, inner) => inner)
+							: part,
 					regexp,
 				};
 			});

@@ -36,13 +36,13 @@ implement:
   - debería asignar una propiedad `ram` (un `Uint8Array` de 2048 bytes)
   - |-
     implementa estos dos métodos:
-    ~read(address)~:
-      si ~address~ está dentro de $0000-$07FF, retorna el byte de ~ram~
-      si ~address~ está dentro de $0800-$1FFF, retorna un byte espejado de ~ram~
+    **read(address)**:
+      __si <address> está dentro de $0000-$07FF, retorna el byte de <ram>
+      si <address> está dentro de $0800-$1FFF, retorna un byte espejado de <ram>
         (por ej. $0802 se vuelve $0002, $1023 se vuelve $0023)
-      caso contrario, retorna 0
-    ~write(address, byte)~:
-      similar a ~read(...)~, pero escribe el ~byte~ en lugar de retornar
+      caso contrario, retorna 0__
+    **write(address, byte)**:
+      __similar a read(...), pero escribe el <byte> en lugar de retornar__
   - |-
     luego, agrega al constructor de tu `CPU`:
     ```javascript this.memory = new CPUMemory();```

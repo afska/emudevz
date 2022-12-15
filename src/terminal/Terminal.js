@@ -100,7 +100,7 @@ export default class Terminal {
 			const parts = highlighter.highlightText(text);
 
 			for (let part of parts) {
-				if (part.isAccent) await this.write(part.text, theme.ACCENT, interval);
+				if (part.isAccent) await this.write(part.text, part.style, interval);
 				else if (part.isCode) await this.write(part.text);
 				else await this.write(part.text, style, interval);
 			}

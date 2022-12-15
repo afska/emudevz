@@ -36,13 +36,13 @@ implement:
   - it should assign a `ram` property (a `Uint8Array` of 2048 bytes)
   - |-
     implement these two methods:
-    ~read(address)~:
-      if ~address~ is in $0000-$07FF, return the byte from ~ram~
-      if ~address~ is in $0800-$1FFF, return a mirrored byte from ~ram~
+    **read(address)**:
+      __if <address> is in $0000-$07FF, returns the byte from <ram>
+      if <address> is in $0800-$1FFF, returns a mirrored byte from <ram>
         (e.g. $0802 becomes $0002, $1023 becomes $0023)
-      otherwise, return 0
-    ~write(address, byte)~:
-      similar to ~read(...)~, but write the ~byte~ instead of returning
+      otherwise, returns 0__
+    **write(address, byte)**:
+      __similar to read(...), but writes the <byte> instead of returning__
   - |-
     then, add to your `CPU` constructor:
     ```javascript this.memory = new CPUMemory();```

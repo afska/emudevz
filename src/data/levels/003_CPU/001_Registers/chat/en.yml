@@ -4,8 +4,10 @@ main:
   - "you'll start by creating two clases: `Register8Bit` and `Register16Bit` 🔢"
   - |-
     they should have two methods:
-    ```javascript getValue()```: returns the register's content
-    ```javascript setValue(value)```: sets the register's content
+    **getValue()**:
+      __returns the register's content__
+    **setValue(value)**:
+      __sets the register's content__
   - the register's content starts from 0 and can be an 8-bit number (0-255) or a 16-bit number (0-65535), depending on the class
   responses:
   - (*) what if I try to write off the limits? 🚫 [limit]
