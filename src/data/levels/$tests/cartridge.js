@@ -103,7 +103,7 @@ it("has a `header` property with metadata (PRG-ROM pages)", () => {
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
 
-	for (let i = 0; i < 255; i++) {
+	for (let i = 0; i < 256; i++) {
 		bytes[4] = i;
 		const header = new Cartridge(bytes).header;
 		expect(header).to.be.an("object");
@@ -122,7 +122,7 @@ it("has a `header` property with metadata (CHR-ROM pages)", () => {
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
 
-	for (let i = 0; i < 255; i++) {
+	for (let i = 0; i < 256; i++) {
 		bytes[5] = i;
 		const header = new Cartridge(bytes).header;
 		expect(header).to.be.an("object");
@@ -211,7 +211,7 @@ it("has a `header` property with metadata (mapper id)", () => {
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
 
-	for (let i = 0; i < 255; i++) {
+	for (let i = 0; i < 256; i++) {
 		const lowNybble = byte.lowNybbleOf(i);
 		const highNybble = byte.highNybbleOf(i);
 		bytes[6] = byte.buildU8(lowNybble, 0);

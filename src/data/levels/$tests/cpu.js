@@ -314,7 +314,7 @@ it("the stack can push and pop values", () => {
 	for (let i = 255; i <= 0; i--) stack.pop().should.equal(bytes[i]);
 })({
 	locales: {
-		es: "el stack puede poner y sacar elementos",
+		es: "la pila puede poner y sacar elementos",
 	},
 	use: ({ id }, book) => id >= book.getId("4.5"),
 });
@@ -330,7 +330,7 @@ it("the stack updates RAM and decrements SP on push", () => {
 	sp.getValue().should.equal(0xfe);
 })({
 	locales: {
-		es: "el stack actualiza RAM y SP al poner",
+		es: "la pila actualiza RAM y SP al poner",
 	},
 	use: ({ id }, book) => id >= book.getId("4.5"),
 });
@@ -347,7 +347,7 @@ it("the stack reads RAM and increments SP on pop", () => {
 	sp.getValue().should.equal(0xff);
 })({
 	locales: {
-		es: "el stack lee RAM e incrementa SP al sacar",
+		es: "la pila lee RAM e incrementa SP al sacar",
 	},
 	use: ({ id }, book) => id >= book.getId("4.5"),
 });
