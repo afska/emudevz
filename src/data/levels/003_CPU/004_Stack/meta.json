@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Stack (1/2)",
-		"es": "Pila (1/2)"
+		"en": "Stack",
+		"es": "Pila"
 	},
 	"ui": {
 		"layout": "dual",

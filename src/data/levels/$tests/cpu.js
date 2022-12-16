@@ -283,3 +283,71 @@ it("writing RAM mirror results in RAM writes", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("4.4"),
 });
+
+// 4.5 Stack
+
+it("includes a `stack` property with `push`/`pop` methods", () => {
+	const CPU = mainModule.default.CPU;
+	const cpu = new CPU();
+
+	cpu.should.include.key("stack");
+	expect(cpu.stack).to.be.an("object");
+
+	cpu.stack.should.respondTo("push");
+	cpu.stack.should.respondTo("pop");
+})({
+	locales: {
+		es: "incluye una propiedad `stack` con métodos `push`/`pop`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
+
+it("the stack can push and pop values", () => {
+	const CPU = mainModule.default.CPU;
+	const { stack, sp } = new CPU();
+	sp.setValue(0xff);
+
+	const bytes = [];
+	for (let i = 0; i < 256; i++) bytes.push(byte.random());
+
+	for (let i = 0; i < 256; i++) stack.push(bytes[i]);
+	for (let i = 255; i <= 0; i--) stack.pop().should.equal(bytes[i]);
+})({
+	locales: {
+		es: "el stack puede poner y sacar elementos",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
+
+it("the stack updates RAM and decrements SP on push", () => {
+	const CPU = mainModule.default.CPU;
+	const { stack, memory, sp } = new CPU();
+	sp.setValue(0xff);
+
+	const value = byte.random();
+	stack.push(value);
+	memory.read(0x0100 + 0xff).should.equal(value);
+	sp.getValue().should.equal(0xfe);
+})({
+	locales: {
+		es: "el stack actualiza RAM y SP al poner",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
+
+it("the stack reads RAM and increments SP on pop", () => {
+	const CPU = mainModule.default.CPU;
+	const { stack, memory, sp } = new CPU();
+	sp.setValue(0xff);
+
+	stack.push(byte.random());
+	const value = byte.random();
+	memory.write(0x0100 + 0xff, value);
+	stack.pop().should.equal(value);
+	sp.getValue().should.equal(0xff);
+})({
+	locales: {
+		es: "el stack lee RAM e incrementa SP al sacar",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
