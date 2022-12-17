@@ -299,7 +299,7 @@ it("includes a `stack` property with `push`/`pop` methods", () => {
 	locales: {
 		es: "incluye una propiedad `stack` con métodos `push`/`pop`",
 	},
-	use: ({ id }, book) => id >= book.getId("4.5"),
+	use: ({ id }, book) => id >= book.getId("4.8"),
 });
 
 it("the stack can push and pop values", () => {
@@ -316,7 +316,7 @@ it("the stack can push and pop values", () => {
 	locales: {
 		es: "la pila puede poner y sacar elementos",
 	},
-	use: ({ id }, book) => id >= book.getId("4.5"),
+	use: ({ id }, book) => id >= book.getId("4.8"),
 });
 
 it("the stack updates RAM and decrements SP on push", () => {
@@ -332,7 +332,7 @@ it("the stack updates RAM and decrements SP on push", () => {
 	locales: {
 		es: "la pila actualiza RAM y SP al poner",
 	},
-	use: ({ id }, book) => id >= book.getId("4.5"),
+	use: ({ id }, book) => id >= book.getId("4.8"),
 });
 
 it("the stack reads RAM and increments SP on pop", () => {
@@ -349,5 +349,5 @@ it("the stack reads RAM and increments SP on pop", () => {
 	locales: {
 		es: "la pila lee RAM e incrementa SP al sacar",
 	},
-	use: ({ id }, book) => id >= book.getId("4.5"),
+	use: ({ id }, book) => id >= book.getId("4.8"),
 });
