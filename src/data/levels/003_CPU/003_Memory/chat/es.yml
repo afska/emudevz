@@ -51,6 +51,7 @@ implement:
 
 help:
   messages:
+  - para saber qué dirección leer
   - tienes que sustraer el inicio del rango (el ~0x0800~ de ~0x0800~-~0x1FFF~)
   - luego, usa el operador ~%~ (resto) con el tamaño del espejado
   - |-

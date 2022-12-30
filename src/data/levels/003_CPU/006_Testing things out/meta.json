@@ -9,14 +9,13 @@
 			"Left": [
 				"console",
 				{
-					"startup": "chat"
+					"startup": "chat -f"
 				}
 			],
 			"Right": [
-				"multifile",
+				"console",
 				{
-					"language": "javascript",
-					"action": "run"
+					"startup": "clear"
 				}
 			]
 		},

@@ -5,9 +5,29 @@ beforeEach(async () => {
 	mainModule = await evaluate();
 });
 
-const newCPU = () => {
+const newHeader = (prgPages = 1, chrPages = 1) => {
+	// prettier-ignore
+	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, 0b00000000, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
+};
+
+const newRom = (prgBytes = []) => {
+	const header = newHeader();
+	const prg = prgBytes;
+	const chr = [];
+	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
+	for (let i = 0; i < 8192; i++) chr.push(byte.random());
+	const bytes = new Uint8Array([...header, ...prg, ...chr]);
+
+	return bytes;
+};
+
+const newCPU = (prgBytes = null) => {
 	const CPU = mainModule.default.CPU;
-	const cartridge = { prg: () => [] };
+	const Cartridge = mainModule.default.Cartridge;
+
+	const cartridge =
+		prgBytes == null ? { prg: () => [] } : new Cartridge(newRom(prgBytes));
+
 	return new CPU(cartridge);
 };
 
@@ -51,7 +71,7 @@ it("all registers start from 0", () => {
 	locales: {
 		es: "todos los registros comienzan en 0",
 	},
-	use: ({ id }, book) => id >= book.getId("4.2"),
+	use: ({ id }, book) => id >= book.getId("4.2") && id < book.getId("4.6"),
 });
 
 it("8-bit registers can save and read values (valid range)", () => {
@@ -278,22 +298,6 @@ it("writing RAM mirror results in RAM writes", () => {
 
 // 4.5 Insert cartridge
 
-const newHeader = (prgPages = 1, chrPages = 1) => {
-	// prettier-ignore
-	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, 0b00000000, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
-};
-
-const newRom = (prgBytes = []) => {
-	const header = newHeader();
-	const prg = prgBytes;
-	const chr = [];
-	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
-	for (let i = 0; i < 8192; i++) chr.push(byte.random());
-	const bytes = new Uint8Array([...header, ...prg, ...chr]);
-
-	return bytes;
-};
-
 it("`/code/index.js` exports an object containing the `NEEES` class", () => {
 	expect(mainModule.default).to.be.an("object");
 	mainModule.default.should.include.key("NEEES");
@@ -370,6 +374,118 @@ it("PRG-ROM code is read only", () => {
 	use: ({ id }, book) => id >= book.getId("4.5"),
 });
 
+// 4.6 Execute (1/2)
+
+it("all registers start from 0, except for [PC], which starts from $8000", () => {
+	const cpu = newCPU();
+
+	["a", "x", "y", "sp"].forEach((register) => {
+		cpu[register].getValue().should.equal(0);
+	});
+	cpu.pc.getValue().should.equal(0x8000);
+})({
+	locales: {
+		es:
+			"todos los registros comienzan en 0, excepto [PC], que comienza en $8000",
+	},
+	use: ({ id }, book) => id >= book.getId("4.6"),
+});
+
+it("opcode $E8 means `INX`, which increments the [X] register", () => {
+	const cpu = newCPU([0xe8]);
+
+	cpu.x.getValue().should.equal(0);
+	cpu.step();
+	cpu.x.getValue().should.equal(1);
+})({
+	locales: {
+		es: "el opcode $E8 es `INX`, que incrementa el registro [X]",
+	},
+	use: ({ id }, book) => id >= book.getId("4.6"),
+});
+
+it("opcode $C8 means `INY`, which increments the [Y] register", () => {
+	const cpu = newCPU([0xc8]);
+
+	cpu.y.getValue().should.equal(0);
+	cpu.step();
+	cpu.y.getValue().should.equal(1);
+})({
+	locales: {
+		es: "el opcode $C8 es `INY`, que incrementa el registro [Y]",
+	},
+	use: ({ id }, book) => id >= book.getId("4.6"),
+});
+
+it("opcode $8A means `TXA`, which transfers [X] to [A]", () => {
+	const cpu = newCPU([0x8a]);
+	cpu.x.setValue(123);
+
+	cpu.a.getValue().should.equal(0);
+	cpu.step();
+	cpu.a.getValue().should.equal(123);
+})({
+	locales: {
+		es: "el opcode $8A es `TXA`, que transfiere [X] a [A]",
+	},
+	use: ({ id }, book) => id >= book.getId("4.6"),
+});
+
+it("after a `step()` call, [PC] is incremented", () => {
+	const cpu = newCPU([0xe8]);
+
+	cpu.step();
+	cpu.pc.getValue().should.equal(0x8001);
+})({
+	locales: {
+		es: "luego de una llamada a `step()`, [PC] es incrementado",
+	},
+	use: ({ id }, book) => id >= book.getId("4.6"),
+});
+
+it("supports combinations of `INX`, `INY` and `TXA`", () => {
+	const cpu = newCPU([0xe8, 0xc8, 0xe8, 0x8a]); // INX, INY, INX, TXA
+
+	cpu.step();
+	cpu.step();
+	cpu.step();
+	cpu.step();
+	cpu.x.getValue().should.equal(2);
+	cpu.y.getValue().should.equal(1);
+	cpu.a.getValue().should.equal(2);
+	cpu.pc.getValue().should.equal(0x8004);
+})({
+	locales: {
+		es: "soporta combinaciones de `INX`, `INY` y `TXA`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.6"),
+});
+
+it("throws an error on unsupported opcodes", () => {
+	const cpu = newCPU([0xff]);
+
+	expect(() => cpu.step()).to.throw(Error, "Invalid opcode.");
+})({
+	locales: {
+		es: "tira un error con opcodes no soportados",
+	},
+	use: ({ id }, book) => id >= book.getId("4.6"),
+});
+
+it("`NEEES::step()` calls `CPU::step()` once", () => {
+	const NEEES = mainModule.default.NEEES;
+	const neees = new NEEES(newRom([0xe8, 0xe8, 0xe8]));
+
+	neees.cpu.step = sinon.spy();
+	neees.step();
+	neees.cpu.step.should.have.been.calledOnce;
+})({
+	locales: {
+		es: "`NEEES::step()` llama a `CPU::step()` una vez",
+	},
+	use: ({ id }, book) => id >= book.getId("4.6"),
+});
+
 // 4.8 Stack
 
 it("includes a `stack` property with `push`/`pop` methods", () => {
@@ -403,7 +519,7 @@ it("the stack can push and pop values", () => {
 	use: ({ id }, book) => id >= book.getId("4.8"),
 });
 
-it("the stack updates RAM and decrements SP on push", () => {
+it("the stack updates RAM and decrements [SP] on push", () => {
 	const { stack, memory, sp } = newCPU();
 	sp.setValue(0xff);
 
@@ -413,12 +529,12 @@ it("the stack updates RAM and decrements SP on push", () => {
 	sp.getValue().should.equal(0xfe);
 })({
 	locales: {
-		es: "la pila actualiza RAM y SP al poner",
+		es: "la pila actualiza RAM y [SP] al poner",
 	},
 	use: ({ id }, book) => id >= book.getId("4.8"),
 });
 
-it("the stack reads RAM and increments SP on pop", () => {
+it("the stack reads RAM and increments [SP] on pop", () => {
 	const { stack, memory, sp } = newCPU();
 	sp.setValue(0xff);
 
@@ -429,7 +545,7 @@ it("the stack reads RAM and increments SP on pop", () => {
 	sp.getValue().should.equal(0xff);
 })({
 	locales: {
-		es: "la pila lee RAM e incrementa SP al sacar",
+		es: "la pila lee RAM e incrementa [SP] al sacar",
 	},
 	use: ({ id }, book) => id >= book.getId("4.8"),
 });

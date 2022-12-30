@@ -1,4 +1,6 @@
 import _escapeStringRegexp_ from "escape-string-regexp";
+import _sinon_ from "sinon";
+import _sinonChai_ from "sinon-chai";
 import _ from "lodash";
 import _Book_ from "../../../level/Book";
 import _Level_ from "../../../level/Level";
@@ -43,6 +45,10 @@ export default {
 		const expect = _chai_.expect;
 		// eslint-disable-next-line
 		const should = _chai_.should();
+		_chai_.use(_sinonChai_);
+		// eslint-disable-next-line
+		const sinon = _sinon_;
+
 		// eslint-disable-next-line
 		const evaluateModule = _evaluateModule_;
 

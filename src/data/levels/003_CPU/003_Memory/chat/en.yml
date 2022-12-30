@@ -51,6 +51,7 @@ implement:
 
 help:
   messages:
+  - to know which address you should read
   - you have to substract the range start
   - then, use the ~%~ (remainder) operator with the mirror size
   - |-

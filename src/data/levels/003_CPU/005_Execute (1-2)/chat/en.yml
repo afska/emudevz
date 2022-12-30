@@ -1,5 +1,28 @@
 ---
 main:
   messages:
-  - coming soon!
+  - I'm going to <oversimplify> reality for this level, just so we can get some instructions working
+  - change your code so your [PC] register starts from $8000 (where the code is) instead of 0
+  - |-
+    and implement this method in your `CPU`:
+    **step()**:
+      __reads a byte from the memory location that PC points at
+        (let's call it <opcode>)
+      if <opcode> is 0xe8, emulates an INX instruction
+      if <opcode> is 0xc8, emulates an INY instruction
+      if <opcode> is 0x8a, emulates a TXA instruction
+      otherwise, throws an error with the "Invalid opcode." message
+      -> after emulating any instruction, PC is incremented__
+  - |-
+    then, add this method to your `NEEES`:
+    **step()**:
+      __calls cpu.step()__
+  responses:
+  - I don't remember what `INX`, `INY` or `TXA` do 💭 [remember]
+
+remember:
+  messages:
+  - "`INX` increments the [X] register"
+  - "`INY` increments the [Y] register"
+  - "`TXA` transfers [X] to [A]"
   responses: []
