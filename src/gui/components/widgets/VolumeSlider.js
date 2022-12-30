@@ -26,7 +26,13 @@ function ValueLabel(props) {
 
 class VolumeSlider extends PureComponent {
 	render() {
-		const { volume, setVolume, navBarMode = false, ...rest } = this.props;
+		const {
+			volume,
+			setVolume,
+			navBarMode = false,
+			dispatch,
+			...rest
+		} = this.props;
 
 		return (
 			<Stack

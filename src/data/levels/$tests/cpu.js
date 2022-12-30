@@ -5,6 +5,12 @@ beforeEach(async () => {
 	mainModule = await evaluate();
 });
 
+const newCPU = () => {
+	const CPU = mainModule.default.CPU;
+	const cartridge = { prg: () => [] };
+	return new CPU(cartridge);
+};
+
 // 4.1 New CPU
 
 it("`/code/index.js` exports an object containing the `CPU` class", () => {
@@ -21,8 +27,7 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 // 4.2 Registers
 
 it("includes all the registers", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	["a", "x", "y", "sp", "pc"].forEach((register) => {
 		cpu.should.include.key(register);
@@ -37,8 +42,7 @@ it("includes all the registers", () => {
 });
 
 it("all registers start from 0", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	["a", "x", "y", "sp", "pc"].forEach((register) => {
 		cpu[register].getValue().should.equal(0);
@@ -51,8 +55,7 @@ it("all registers start from 0", () => {
 });
 
 it("8-bit registers can save and read values (valid range)", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	["a", "x", "y", "sp"].forEach((register) => {
 		for (let i = 0; i < 256; i++) {
@@ -68,8 +71,7 @@ it("8-bit registers can save and read values (valid range)", () => {
 });
 
 it("8-bit registers wrap with values outside the range", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	["a", "x", "y", "sp"].forEach((register) => {
 		for (let i = -300; i < 600; i++) {
@@ -87,8 +89,7 @@ it("8-bit registers wrap with values outside the range", () => {
 });
 
 it("16-bit registers can save and read values (valid range)", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	for (let i = 0; i < 65536; i++) {
 		cpu.pc.setValue(i);
@@ -102,8 +103,7 @@ it("16-bit registers can save and read values (valid range)", () => {
 });
 
 it("16-bit registers wrap with values outside the range", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	for (let i = -300; i < 65800; i++) {
 		const array = new Uint16Array(1);
@@ -121,8 +121,7 @@ it("16-bit registers wrap with values outside the range", () => {
 // 4.3 Flags
 
 it("includes a `flags` property with 5 booleans", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	cpu.should.include.key("flags");
 	expect(cpu.flags).to.be.an("object");
@@ -140,8 +139,7 @@ it("includes a `flags` property with 5 booleans", () => {
 });
 
 it("flags register can be serialized into a byte", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	cpu.flags.getValue().should.equal(0b00100000);
 	cpu.flags.z = true;
@@ -168,8 +166,7 @@ it("flags register can be serialized into a byte", () => {
 });
 
 it("flags register can be set from a byte", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	cpu.flags.setValue(0b11111111);
 	cpu.flags.getValue().should.equal(0b11100111);
@@ -204,8 +201,7 @@ it("flags register can be set from a byte", () => {
 // 4.4 Memory
 
 it("includes a `memory` property with `ram` and `read`/`write` methods", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	cpu.should.include.key("memory");
 	expect(cpu.memory).to.be.an("object");
@@ -221,8 +217,7 @@ it("includes a `memory` property with `ram` and `read`/`write` methods", () => {
 });
 
 it("can read from RAM", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	for (let i = 0; i < 2048; i++) {
 		const value = byte.random();
@@ -237,8 +232,7 @@ it("can read from RAM", () => {
 });
 
 it("reading RAM mirror results in RAM reads", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	for (let i = 0x0800; i < 0x0800 + 0x1800; i++) {
 		const value = byte.random();
@@ -253,8 +247,7 @@ it("reading RAM mirror results in RAM reads", () => {
 });
 
 it("can write to RAM", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	for (let i = 0; i < 2048; i++) {
 		const value = byte.random();
@@ -269,8 +262,7 @@ it("can write to RAM", () => {
 });
 
 it("writing RAM mirror results in RAM writes", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	for (let i = 0x0800; i < 0x0800 + 0x1800; i++) {
 		const value = byte.random();
@@ -284,11 +276,104 @@ it("writing RAM mirror results in RAM writes", () => {
 	use: ({ id }, book) => id >= book.getId("4.4"),
 });
 
-// 4.5 Stack
+// 4.5 Insert cartridge
+
+const newHeader = (prgPages = 1, chrPages = 1) => {
+	// prettier-ignore
+	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, 0b00000000, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
+};
+
+const newRom = (prgBytes = []) => {
+	const header = newHeader();
+	const prg = prgBytes;
+	const chr = [];
+	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
+	for (let i = 0; i < 8192; i++) chr.push(byte.random());
+	const bytes = new Uint8Array([...header, ...prg, ...chr]);
+
+	return bytes;
+};
+
+it("`/code/index.js` exports an object containing the `NEEES` class", () => {
+	expect(mainModule.default).to.be.an("object");
+	mainModule.default.should.include.key("NEEES");
+	expect(mainModule.default.NEEES).to.be.a.class;
+})({
+	locales: {
+		es: "`/code/index.js` exporta un objeto que contiene la clase `NEEES`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
+
+it("instantiating a `NEEES` with a ROM creates a `cartridge`", () => {
+	const { NEEES, Cartridge } = mainModule.default;
+	const neees = new NEEES(newRom());
+
+	neees.should.include.key("cartridge");
+	expect(neees.cartridge).to.be.an("object");
+	neees.cartridge.should.be.an.instanceof(Cartridge);
+})({
+	locales: {
+		es: "instanciar una `NEEES` con una ROM crea un `cartridge`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
+
+it("instantiating a `NEEES` with a ROM creates a `cpu`", () => {
+	const { NEEES, CPU } = mainModule.default;
+	const neees = new NEEES(newRom());
+
+	neees.should.include.key("cpu");
+	expect(neees.cpu).to.be.an("object");
+	neees.cpu.should.be.an.instanceof(CPU);
+})({
+	locales: {
+		es: "instanciar una `NEEES` con una ROM crea una `cpu`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
+
+it("PRG-ROM code is mapped to $8000-$BFFF", () => {
+	const { CPU, Cartridge } = mainModule.default;
+
+	const code = [];
+	for (let i = 0; i < 16384; i++) code.push(byte.random());
+
+	const cpu = new CPU(new Cartridge(newRom(code)));
+
+	for (let i = 0; i < 16384; i++)
+		cpu.memory.read(0x8000 + i).should.equal(code[i]);
+})({
+	locales: {
+		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
+
+it("PRG-ROM code is read only", () => {
+	const { CPU, Cartridge } = mainModule.default;
+
+	const code = [];
+	for (let i = 0; i < 16384; i++) code.push(byte.random());
+
+	const cpu = new CPU(new Cartridge(newRom(code)));
+
+	for (let i = 0; i < 16384; i++) {
+		const value = cpu.memory.read(0x8000 + i);
+		cpu.memory.write(0x8000 + i, byte.random());
+		cpu.memory.read(0x8000 + i).should.equal(value);
+	}
+})({
+	locales: {
+		es: "el código PRG-ROM es solo lectura",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
+
+// 4.8 Stack
 
 it("includes a `stack` property with `push`/`pop` methods", () => {
-	const CPU = mainModule.default.CPU;
-	const cpu = new CPU();
+	const cpu = newCPU();
 
 	cpu.should.include.key("stack");
 	expect(cpu.stack).to.be.an("object");
@@ -303,8 +388,7 @@ it("includes a `stack` property with `push`/`pop` methods", () => {
 });
 
 it("the stack can push and pop values", () => {
-	const CPU = mainModule.default.CPU;
-	const { stack, sp } = new CPU();
+	const { stack, sp } = newCPU();
 	sp.setValue(0xff);
 
 	const bytes = [];
@@ -320,8 +404,7 @@ it("the stack can push and pop values", () => {
 });
 
 it("the stack updates RAM and decrements SP on push", () => {
-	const CPU = mainModule.default.CPU;
-	const { stack, memory, sp } = new CPU();
+	const { stack, memory, sp } = newCPU();
 	sp.setValue(0xff);
 
 	const value = byte.random();
@@ -336,8 +419,7 @@ it("the stack updates RAM and decrements SP on push", () => {
 });
 
 it("the stack reads RAM and increments SP on pop", () => {
-	const CPU = mainModule.default.CPU;
-	const { stack, memory, sp } = new CPU();
+	const { stack, memory, sp } = newCPU();
 	sp.setValue(0xff);
 
 	stack.push(byte.random());
