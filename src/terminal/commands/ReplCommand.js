@@ -10,6 +10,7 @@ import testContext from "./test/context";
 
 const PROMPT_SYMBOL = "> ";
 const FUNCTION = "<function>";
+const BINARY = "<binary>";
 const OBJECT = "<object>";
 
 export default class ReplCommand extends Command {
@@ -84,15 +85,19 @@ export default class ReplCommand extends Command {
 	}
 
 	_format(expression) {
+		if (expression instanceof Uint8Array) return `"${BINARY}"`;
+
 		switch (typeof expression) {
 			case "object":
 				try {
-					const withFunctions = _.mapValues(expression, (v) => {
+					const sanitized = _.mapValues(expression, (v) => {
 						if (typeof v === "function") return FUNCTION;
+						if (v instanceof Uint8Array) return BINARY;
+						if (typeof v === "object") return JSON.parse(this._format(v));
 						return v;
 					});
 
-					return JSON.stringify(withFunctions, null, 2);
+					return JSON.stringify(sanitized, null, 2);
 				} catch (e) {
 					if (e.message.includes("Converting circular structure to JSON"))
 						return OBJECT;
@@ -101,7 +106,7 @@ export default class ReplCommand extends Command {
 			case "string":
 				return JSON.stringify(expression);
 			case "function":
-				return FUNCTION;
+				return `"${FUNCTION}"`;
 			default:
 				return `${expression}`;
 		}

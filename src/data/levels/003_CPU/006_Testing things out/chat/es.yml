@@ -1,5 +1,30 @@
 ---
 main:
   messages:
-  - coming soon!
-  responses: []
+  - antes de avanzar, disfrutemos lo que construimos hasta ahora 😎
+  - en el lado derecho tienes otra terminal
+  - |
+    ejecuta el comando `repl` y prueba el siguiente código:
+
+    ```javascript
+    const newRom = (prgBytes) => {
+      const header = [
+        0x4e, 0x45, 0x53, 0x1a, // magic constant
+        1, //                      PRG-ROM size
+        0, //                      CHR-ROM size
+        0b00000000, //             flags 6
+        0b00000000, //             flags 7
+        0, 0, 0, 0, 0, 0, 0, 0 //  padding
+      ];
+      return new Uint8Array([...header, ...prgBytes]);
+    }
+
+    $ // nuestro código
+    const testRom = newRom([0xe8, 0xc8, 0xe8, 0x8a]); // INX, INY, INX, TXA
+    const neees = new $.NEEES(testRom); // crear NEEES
+    neees.step(); // ejecutar una instrucción
+    neees.cpu.x.getValue(); // inspeccionar [X]
+    neees.cpu.pc.getValue().toString(16); // inspeccionar [PC] en hexadecimal```
+  - cuando termines, corre el comando `test` para continuar
+  events:
+  - null [end]
