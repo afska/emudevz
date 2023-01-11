@@ -53,7 +53,7 @@ help:
   messages:
   - para saber qué dirección leer
   - tienes que sustraer el inicio del rango (el ~0x0800~ de ~0x0800~-~0x1FFF~)
-  - luego, usa el operador ~%~ (resto) con el tamaño del espejado
+  - luego, usa el operador ~%~ (resto) con el tamaño de la sección de memoria que queremos espejar
   - |-
     por ejemplo, para calcular el espejado del 4to rango, haríamos:
     ```javascript (address - 0x2008) % 0x0008```

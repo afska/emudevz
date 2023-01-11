@@ -6,8 +6,8 @@ main:
   - it should receive the `memory` and `sp` from the CPU, as it will have to interact with them
   - |-
     implement these methods:
-    **push(byte)**:
-      __writes <byte> to <currentAddress>, then decrements <sp>__
+    **push(value)**:
+      __writes <value> to <currentAddress>, then decrements <sp>__
     **pop()**:
       __increments <sp> and returns the content of <currentAddress>__
   - the <currentAddress> always equals $0100 (where the stack lives in RAM), plus the value in [SP]
