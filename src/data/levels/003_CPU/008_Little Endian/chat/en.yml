@@ -1,0 +1,20 @@
+---
+main:
+  messages:
+  - sometimes, values are represented using more than 1 byte
+  - e.g. when a CPU instruction has a 16-bit address as an argument
+  - or when using the `RTS` instruction and the CPU needs to restore [PC] from the stack
+  - in these cases, the <Little Endian> convention is used 🔌
+  - "that means: the least significant byte (\"low byte\") is stored first, then the most significant byte (\"high byte\")"
+  - |-
+    implement this method in `CPUMemory`:
+    **read16(address)**:
+      __returns a 16-bit number using the bytes of <address> (low byte) and <address>+1 (high byte)__
+  - |-
+    and these two methods in `Stack`:
+    **push16(value)**:
+      __*pushes* the high byte first, then *pushes* the low byte__
+    **pop16()**:
+      __returns a 16-bit number after *popping* from the stack two times (first the low byte, then the high one)__
+  - 💡  remember to use ~/lib/byte.js~!
+  responses: []
