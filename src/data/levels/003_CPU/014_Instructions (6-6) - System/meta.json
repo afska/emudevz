@@ -1,0 +1,34 @@
+{
+	"name": {
+		"en": "Instructions (6/6): System",
+		"es": "Instrucciones (6/6): Sistema"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "cpu.js", "cpu_instructions.js"]
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

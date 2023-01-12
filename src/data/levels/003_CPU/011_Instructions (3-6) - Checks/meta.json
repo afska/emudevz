@@ -1,0 +1,34 @@
+{
+	"name": {
+		"en": "Instructions (3/6): Checks",
+		"es": "Instrucciones (3/6): Verificaciones"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "cpu.js", "cpu_instructions.js"]
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
