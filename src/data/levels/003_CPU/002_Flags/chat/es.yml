@@ -25,7 +25,7 @@ notall:
 
 what:
   messages:
-  - crea una clase `FlagsRegister` con 5 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~v~ y ~n~)
+  - 📚  crea una clase `FlagsRegister` con 5 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~v~ y ~n~)
   - inicialízalas en ```javascript false```
   - luego, implementa ```javascript getValue()``` y ```javascript setValue(value)``` siguiendo la tabla anterior
   - por ej. con ~i~ y ~v~ encendidas, ```javascript getValue()``` debería retornar ```javascript 0b01100100```

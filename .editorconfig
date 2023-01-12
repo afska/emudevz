@@ -29,3 +29,6 @@ trim_trailing_whitespace = false
 
 [*.asm]
 insert_final_newline = false
+
+[**/bin/*.js]
+indent_style = space

@@ -122,7 +122,7 @@ exercise:
     });
     {{Bottom}}.setDelay(0);
   messages:
-  - borra todo el código
+  - 📚  borra todo el código
   - construye un programa que grite por la memoria 😱
   - eso significa, que escriba $AA exactamente 64 veces desde $4080 hasta $40BF
   - como siempre, cuando esté listo, ejecuta el comando `test`

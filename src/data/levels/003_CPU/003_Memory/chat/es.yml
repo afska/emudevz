@@ -32,7 +32,7 @@ io:
 implement:
   messages:
   - por ahora, solo vamos a implementar los dos primeros rangos del mapa de memoria
-  - crea una clase `CPUMemory` con un constructor
+  - 📚  crea una clase `CPUMemory` con un constructor
   - debería asignar una propiedad `ram` (un `Uint8Array` de 2048 bytes)
   - |-
     implementa estos dos métodos:

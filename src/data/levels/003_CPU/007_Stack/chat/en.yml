@@ -1,8 +1,8 @@
 ---
 main:
   messages:
-  - remember the stack? 📚
-  - create a new class for it
+  - remember the stack? 🧱
+  - 📚  create a new class for it
   - it should receive the `memory` and `sp` from the CPU, as it will have to interact with them
   - |-
     implement these methods:

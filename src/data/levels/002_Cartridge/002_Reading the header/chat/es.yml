@@ -70,7 +70,7 @@ understand:
   messages:
   - excelente 💪
   - |-
-    agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
+    📚  agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
     ```javascript {
       prgRomPages: 2, // (obtenido del byte 4)
       chrRomPages: 1, // (obtenido del byte 5)
@@ -85,7 +85,7 @@ understand:
 
 bits:
   messages:
-  - si no sabes cómo operar con bits, puedes usar mi biblioteca 📚
+  - si no sabes cómo operar con bits, puedes usar mi biblioteca 📖
   - está en ~/lib/byte.js~, solo impórtala como otro módulo más y úsala
   - los métodos que querrás usar son `getFlag`, `highNybbleOf`, `lowNybbleOf` y `buildU8`
   responses:

@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - change your code so your [PC] register starts from $8000 (where the code is) instead of 0
+  - 📚  change your code so your [PC] register starts from $8000 (where the code is) instead of 0
   - |-
     and implement this method in your `CPU`:
     **step()**:

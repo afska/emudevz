@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - modifica tu código para que tu registro [PC] empieze en $8000 (donde está el código) en lugar de en 0
+  - 📚  modifica tu código para que tu registro [PC] empieze en $8000 (donde está el código) en lugar de en 0
   - |-
     e implementa este método en tu `CPU`:
     **step()**:

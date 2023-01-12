@@ -2,7 +2,7 @@
 main:
   messages:
   - necesitamos acceder al código del programa fácilmente 💻
-  - crea un método ```javascript prg()``` que retorne un `Uint8Array` con él
+  - 📚  crea un método ```javascript prg()``` que retorne un `Uint8Array` con él
   - el código está justo después de la cabecera de 16 bytes, pero recuerda que podrías tener que omitir 512 bytes si la cabecera lo indica
   responses:
   - ¿cómo puedo cortar los bytes? ✂️ [cut]

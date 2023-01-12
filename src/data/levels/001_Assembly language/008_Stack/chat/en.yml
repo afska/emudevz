@@ -10,7 +10,7 @@ main:
       });
     }
   messages:
-  - the stack 📚  is a LIFO structure ("Last In, First Out") which programs can use to store values
+  - the stack 🧱  is a LIFO structure ("Last In, First Out") which programs can use to store values
   - the current stack depth is measured by the "Stack Pointer" ([SP])
   - in a 6502 processor, it lives in memory between $0100 and $01FF 🐏
   - "[SP] is initially $FF, which points to the last stack byte ($01FF)"
@@ -60,7 +60,7 @@ exercise:
     });
   messages:
   - now, an exercise
-  - your stack will have 2 random preloaded values
+  - 📚  your stack will have 2 random preloaded values
   - you just need to pull and load them into 2 consecutive memory addresses
   - then, perform an indirect `JMP` 🦘
   - e.g. if your stack has -from top to bottom- $C4 and $3E, when your program finishes, [PC] should be $3EC4

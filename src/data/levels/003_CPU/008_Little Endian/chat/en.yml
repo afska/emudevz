@@ -7,7 +7,7 @@ main:
   - in these cases, the <Little Endian> convention is used 🔌
   - "that means: the least significant byte (\"low byte\") is stored first, then the most significant byte (\"high byte\")"
   - |-
-    implement this method in `CPUMemory`:
+    📚  implement this method in `CPUMemory`:
     **read16(address)**:
       __returns a 16-bit number using the bytes of <address> (low byte) and <address>+1 (high byte)__
   - |-

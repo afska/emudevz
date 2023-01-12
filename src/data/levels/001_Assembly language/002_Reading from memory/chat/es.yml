@@ -88,7 +88,7 @@ exercise:
     });
   messages:
   - vamos a refactorizar el código 💡
-  - haz que use `ADC` en vez de 3 instrucciones de incremento
+  - 📚  haz que use `ADC` en vez de 3 instrucciones de incremento
   - (recuerda reemplazar `LDX` y `STX` por `LDA` y `STA`)
   - cuando esté listo, ejecuta el comando `test`
   responses: []

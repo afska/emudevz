@@ -2,7 +2,7 @@
 main:
   messages:
   - ahora es tu turno 😛
-  - haz un programa que escriba el número $7C en las direcciones $4055 y $4072
+  - 📚  haz un programa que escriba el número $7C en las direcciones $4055 y $4072
   - luego, el número $18 en la dirección $40B8
   - prueba el programa con el botón ⏩
   - cuando esté listo, cierra el chat y ejecuta el comando `test`

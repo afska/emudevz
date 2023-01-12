@@ -44,7 +44,7 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - crea un archivo en ~/code/Cartridge.js~
+  - 📚  crea un archivo en ~/code/Cartridge.js~
   - su valor a exportar debería ser una clase vacía
   - luego, importa ese archivo desde ~/code/index.js~
   - y exporta un objeto con una sola clave ("Cartridge") apuntando a esa clase

@@ -7,7 +7,7 @@ main:
   - en estos casos, se usa la convención <Little Endian> 🔌
   - "eso significa: el byte menos significativo (\"low byte\") se guarda primero, luego el más significativo (\"high byte\")"
   - |-
-    implementa este método en `CPUMemory`:
+    📚  implementa este método en `CPUMemory`:
     **read16(address)**:
       __retorna un número de 16 bits usando los bytes de <address> (low byte) y <address>+1 (high byte)__
   - |-

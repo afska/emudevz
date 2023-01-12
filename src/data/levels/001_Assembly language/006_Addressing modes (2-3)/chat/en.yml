@@ -122,7 +122,7 @@ exercise:
     });
     {{Bottom}}.setDelay(0);
   messages:
-  - remove all the code
+  - 📚  remove all the code
   - build a program that screams through the memory addresses 😱
   - that means, it writes $AA exactly 64 times from $4080 to $40BF
   - as always, when you're ready, run the `test` command

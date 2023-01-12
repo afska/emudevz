@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - "you'll start by creating two clases: `Register8Bit` and `Register16Bit` 🔢"
+  - "📚  you'll start by creating two clases: `Register8Bit` and `Register16Bit` 🔢"
   - |-
     they should have two methods:
     **getValue()**:

@@ -88,7 +88,7 @@ exercise:
     });
   messages:
   - let's refactor the code 💡
-  - make it so it uses `ADC` instead of 3 incrementing instructions
+  - 📚  make it so it uses `ADC` instead of 3 incrementing instructions
   - (remember to replace `LDX` and `STX` with `LDA` and `STA`)
   - when you're ready, run the `test` command
   responses: []

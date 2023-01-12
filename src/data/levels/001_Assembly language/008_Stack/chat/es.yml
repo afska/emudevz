@@ -10,7 +10,7 @@ main:
       });
     }
   messages:
-  - la pila 📚  es una estructura LIFO ("Last In, First Out") que los programas usan para almacenar valores
+  - la pila 🧱  es una estructura LIFO ("Last In, First Out") que los programas usan para almacenar valores
   - la longitud actual de la pila es medida por el "Stack Pointer" ([SP])
   - en un procesador 6502, vive en la memoria entre $0100 y $01FF 🐏
   - "[SP] inicialmente es $FF, que apunta al último byte de la pila ($01FF)"
@@ -60,7 +60,7 @@ exercise:
     });
   messages:
   - ahora, un ejercicio
-  - tu pila tendrá 2 valores precargados aleatorios
+  - 📚  tu pila tendrá 2 valores precargados aleatorios
   - solo necesitas sacar y cargarlos en 2 direcciones de memoria consecutivas
   - luego, hacer un salto indirecto `JMP` 🦘
   - p. ej. si tu pila tiene -de arriba a abajo- $C4 y $3E, cuando tu programa finalice, [PC] debería valer $3EC4

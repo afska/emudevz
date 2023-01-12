@@ -14,9 +14,10 @@ main:
 
 howmany:
   messages:
-  - there are 12 of them, but I already coded 2 for you! 😎
+  - there are 12 of them, but I already coded 3 for you! 😎
   - and some of them are pretty similar
-  - create an object following the same format as the example
+  - 📚  create an object following the same format as the example
+  - implement all of the 12 arithmetic instructions on it
   - and export it under the `instructions` key in ~/code/index.js~
   - you need docs regarding what should each instruction do
   - so check out 📄  ~/docs/cpu_instructions.en.md~

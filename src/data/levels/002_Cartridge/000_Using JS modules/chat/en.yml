@@ -44,7 +44,7 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - create a file in ~/code/Cartridge.js~
+  - 📚  create a file in ~/code/Cartridge.js~
   - its default export should be an empty class
   - then, import that file from ~/code/index.js~
   - and export an object with only one key ("Cartridge") pointing to that class

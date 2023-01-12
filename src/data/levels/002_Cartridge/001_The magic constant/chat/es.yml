@@ -1,7 +1,5 @@
 ---
 main:
-  run: |
-    if (m.$end) $.goTo("exercise");
   messages:
   - los juegos se suelen preservar en formato digital con archivos de juego (también llamados ROMs) 👾
   - estos contienen código, gráficos y una cabecera que identifica el hardware
@@ -21,7 +19,7 @@ neeesfiles:
 
 exercise:
   messages:
-  - agrega un constructor a la clase `Cartridge` que reciba los bytes de la ROM, y guárdalos en una propiedad llamada `bytes`
+  - 📚  agrega un constructor a la clase `Cartridge` que reciba los bytes de la ROM, y guárdalos en una propiedad llamada `bytes`
   - si la constante mágica no coincide con $4E $45 $53 $1A, tira un error con el mensaje "Invalid ROM."
   responses:
   - necesito ayuda 🥺 [help]

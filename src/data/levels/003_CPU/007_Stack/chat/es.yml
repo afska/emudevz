@@ -1,8 +1,8 @@
 ---
 main:
   messages:
-  - ¿recuerdas la pila? 📚
-  - crea una nueva clase para ella
+  - ¿recuerdas la pila? 🧱
+  - 📚  crea una nueva clase para ella
   - tendría que recibir `memory` y `sp` de la CPU, ya que va a tener que interactuar con ellos
   - |-
     implementa estos métodos:

@@ -25,6 +25,6 @@ main:
     neees.step(); // run one instruction
     neees.cpu.x.getValue(); // inspect [X]
     neees.cpu.pc.getValue().toString(16); // inspect [PC] in hexadecimal```
-  - when you're done, run the `test` command to continue
+  - 📚  when you're done, run the `test` command to continue
   events:
   - null [end]
