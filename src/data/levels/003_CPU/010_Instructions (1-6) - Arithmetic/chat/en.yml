@@ -7,8 +7,6 @@ main:
   - "🔢  instructions that expect <a value>"
   - I'll exemplify this by implementing 3 common instructions in a particular format
   - look at your 📄  ~/docs/cpu_example_instructions.js~ file!
-  run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu_example_instructions.js");
   responses:
   - alright... how many arithmetic instructions are? [howmany]
 

@@ -1,6 +1,7 @@
 import byte from "/lib/byte";
 
 export default {
+  // Increment X Register
   INX: {
     argument: "no",
     run(cpu) {
@@ -9,6 +10,8 @@ export default {
       cpu.flags.updateZeroAndNegative(cpu.x.getValue());
     },
   },
+
+  // Increment Memory
   INC: {
     argument: "address",
     run(cpu, addr) {
@@ -19,6 +22,8 @@ export default {
       cpu.flags.updateZeroAndNegative(newValue);
     },
   },
+
+  // Add with Carry
   ADC: {
     argument: "value",
     run(cpu, val) {
