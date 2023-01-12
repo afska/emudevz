@@ -4,6 +4,7 @@
 		"es": "Instrucciones (1/6): Aritméticas"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [

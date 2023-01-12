@@ -374,6 +374,30 @@ it("PRG-ROM code is read only", () => {
 	use: ({ id }, book) => id >= book.getId("4.5"),
 });
 
+it("the `prg()` method is called only one time", () => {
+	const { CPU, Cartridge } = mainModule.default;
+
+	const code = [1, 2, 3];
+	const cartridge = new Cartridge(newRom(code));
+	sinon.spy(cartridge, "prg");
+	const cpu = new CPU(cartridge);
+
+	cpu.memory.read(0x8000);
+	cpu.memory.read(0x8000);
+	cpu.memory.read(0x8000);
+
+	try {
+		cartridge.prg.should.have.been.calledOnce;
+	} catch (e) {
+		throw new Error(e.message.split("\n")[0]);
+	}
+})({
+	locales: {
+		es: "el método `prg()` se llama solo una vez",
+	},
+	use: ({ id }, book) => id >= book.getId("4.5"),
+});
+
 // 4.6 Execute (1/2)
 
 it("all registers start from 0, except for [PC], which starts from $8000", () => {
@@ -596,4 +620,88 @@ it("can pop 16-bit values from the stack", () => {
 		es: "puede sacar valores de 16 bits de la pila",
 	},
 	use: ({ id }, book) => id >= book.getId("4.9"),
+});
+
+// 4.10 Helpers
+
+it("can increment and decrement registers", () => {
+	const cpu = newCPU();
+	const a = cpu.a.getValue();
+	const pc = cpu.pc.getValue();
+
+	["a", "x", "y", "sp", "pc"].forEach((register) => {
+		cpu[register].should.respondTo("increment");
+		cpu[register].should.respondTo("decrement");
+	});
+
+	cpu.a.increment();
+	cpu.a.increment();
+	cpu.a.increment();
+	cpu.a.decrement();
+
+	cpu.pc.increment();
+	cpu.pc.increment();
+	cpu.pc.increment();
+	cpu.pc.increment();
+	cpu.pc.decrement();
+	cpu.pc.decrement();
+
+	cpu.a.getValue().should.equal(a + 3 - 1);
+	cpu.pc.getValue().should.equal(pc + 4 - 2);
+})({
+	locales: {
+		es: "puede incrementar y decrementar registros",
+	},
+	use: ({ id }, book) => id >= book.getId("4.10"),
+});
+
+it("can update the Zero Flag", () => {
+	const cpu = newCPU();
+
+	cpu.flags.should.respondTo("updateZero");
+
+	cpu.flags.updateZero(0);
+	cpu.flags.z.should.be.true;
+
+	cpu.flags.updateZero(50);
+	cpu.flags.z.should.be.false;
+})({
+	locales: {
+		es: "puede actualizar la Bandera Zero",
+	},
+	use: ({ id }, book) => id >= book.getId("4.10"),
+});
+
+it("can update the Negative Flag", () => {
+	const cpu = newCPU();
+
+	cpu.flags.should.respondTo("updateNegative");
+
+	cpu.flags.updateNegative(2);
+	cpu.flags.n.should.be.false;
+
+	cpu.flags.updateNegative(129);
+	cpu.flags.n.should.be.true;
+})({
+	locales: {
+		es: "puede actualizar la Bandera Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.10"),
+});
+
+it("can update the Zero and Negative flags", () => {
+	const cpu = newCPU();
+
+	cpu.flags.should.respondTo("updateZeroAndNegative");
+	sinon.spy(cpu.flags, "updateZero");
+	sinon.spy(cpu.flags, "updateNegative");
+
+	cpu.flags.updateZeroAndNegative(28);
+	cpu.flags.updateZero.should.have.been.calledWith(28);
+	cpu.flags.updateNegative.should.have.been.calledWith(28);
+})({
+	locales: {
+		es: "puede actualizar las Banderas Zero y Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.10"),
 });

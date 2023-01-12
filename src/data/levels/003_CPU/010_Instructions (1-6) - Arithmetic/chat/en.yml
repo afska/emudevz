@@ -1,0 +1,22 @@
+---
+main:
+  messages:
+  - "there are 3 kinds of instructions:"
+  - "🚫  instructions that expect <no arguments>"
+  - "🐏  instructions that expect <a memory address>"
+  - "🔢  instructions that expect <a value>"
+  - I'll exemplify this by implementing 3 common instructions in a particular format
+  - look at your 📄  ~/docs/cpu_example_instructions.js~ file!
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu_example_instructions.js");
+  responses:
+  - alright... how many arithmetic instructions are? [howmany]
+
+howmany:
+  messages:
+  - there are 12 of them, but I already coded 2 for you! 😎
+  - and some of them are pretty similar
+  - create an object following the same format as the example
+  - and export it under the `instructions` key in ~/code/index.js~
+  - you need docs regarding what should each instruction do, so check out 📄  ~/docs/cpu_instructions.md~
+  responses: []

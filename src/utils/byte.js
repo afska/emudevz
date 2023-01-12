@@ -33,7 +33,7 @@ export default {
 
 	/** Returns whether `u8` is negative or not. */
 	isNegative(u8) {
-		return (u8 >> 7) & 1;
+		return !!((u8 >> 7) & 1);
 	},
 
 	/** Converts `u8` to its negative. */

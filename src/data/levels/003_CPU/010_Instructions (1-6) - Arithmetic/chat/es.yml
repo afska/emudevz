@@ -1,0 +1,22 @@
+---
+main:
+  messages:
+  - "hay 3 tipos de instrucciones:"
+  - "🚫  instrucciones que esperan <cero argumentos>"
+  - "🐏  instrucciones que esperan <una dirección de memoria>"
+  - "🔢  instrucciones que esperan <un valor>"
+  - voy a ejemplificar esto implementando 3 instrucciones comunes en un formato particular
+  - ¡mira tu archivo 📄  ~/docs/cpu_example_instructions.js~!
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu_example_instructions.js");
+  responses:
+  - bueno... ¿cuántas instrucciones aritméticas hay? [howmany]
+
+howmany:
+  messages:
+  - son 12 en total, ¡pero ya programé 2 por tí! 😎
+  - y algunas de ellas son muy similares
+  - crea un objeto siguiendo el mismo formato que el ejemplo
+  - y expórtalo bajo la clave `instructions` en ~/code/index.js~
+  - necesitas documentación acerca de qué debería hacer cada instrucción, así que revisa 📄  ~/docs/cpu_instructions.md~
+  responses: []
