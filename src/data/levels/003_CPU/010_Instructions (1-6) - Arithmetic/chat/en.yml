@@ -18,5 +18,8 @@ howmany:
   - and some of them are pretty similar
   - create an object following the same format as the example
   - and export it under the `instructions` key in ~/code/index.js~
-  - you need docs regarding what should each instruction do, so check out 📄  ~/docs/cpu_instructions.md~
+  - you need docs regarding what should each instruction do
+  - so check out 📄  ~/docs/cpu_instructions.en.md~
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu_instructions.en.md");
   responses: []
