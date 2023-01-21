@@ -64,12 +64,12 @@ export default {
     return newByte | (value << startPosition);
   },
 
-  /** Returns the most significative byte of `u16`. */
+  /** Returns the most significant byte of `u16`. */
   highByteOf(u16) {
     return u16 >> 8;
   },
 
-  /** Returns the least significative byte of `u16`. */
+  /** Returns the least significant byte of `u16`. */
   lowByteOf(u16) {
     return u16 & 0xff;
   },
