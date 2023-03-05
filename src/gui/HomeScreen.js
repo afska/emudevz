@@ -53,7 +53,9 @@ class HomeScreen extends PureComponent {
 						<Button onClick={this._openSettings}>
 							{locales.get("button_settings")}
 						</Button>
-						<Button>{locales.get("button_quit")}</Button>
+						{window.DESKTOP_MODE && (
+							<Button onClick={this._quit}>{locales.get("button_quit")}</Button>
+						)}
 					</div>
 				</div>
 			</>
@@ -178,6 +180,10 @@ class HomeScreen extends PureComponent {
 
 	_openSettings = () => {
 		this.props.setSettingsOpen(true);
+	};
+
+	_quit = () => {
+		window.close();
 	};
 }
 
