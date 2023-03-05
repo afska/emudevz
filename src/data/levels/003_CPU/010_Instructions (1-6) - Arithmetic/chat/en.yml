@@ -8,7 +8,7 @@ main:
   - I'll exemplify this by implementing 3 common instructions in a particular format
   - look at your 📄  ~/docs/cpu_example_instructions.js~ file!
   responses:
-  - alright... how many arithmetic instructions are? [howmany]
+  - alright... how many arithmetic instructions are there? [howmany]
 
 howmany:
   messages:
