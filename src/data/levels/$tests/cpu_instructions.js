@@ -45,19 +45,19 @@ it("`/code/index.js` exports an object containing the `instructions` object", ()
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("INX: argument == 'no'", () => {
+it("`INX`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("INX");
 	expect(instructions.INX).to.be.an("object");
 	instructions.INX.argument.should.equal("no");
 })({
 	locales: {
-		es: "INX: argument == 'no'",
+		es: "`INX`: argument == 'no'",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("INX: increments the [X] register and updates the flags", () => {
+it("`INX`: increments the [X] register and updates the flags", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -76,24 +76,24 @@ it("INX: increments the [X] register and updates the flags", () => {
 	cpu.flags.n.should.equal(true);
 })({
 	locales: {
-		es: "INX: incrementa el registro [X] y actualiza las banderas",
+		es: "`INX`: incrementa el registro [X] y actualiza las banderas",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("INC: argument == 'address'", () => {
+it("`INC`: argument == 'address'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("INC");
 	expect(instructions.INC).to.be.an("object");
 	instructions.INC.argument.should.equal("address");
 })({
 	locales: {
-		es: "INC: argument == 'address'",
+		es: "`INC`: argument == 'address'",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("INC: increments the value in memory", () => {
+it("`INC`: increments the value in memory", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -102,12 +102,12 @@ it("INC: increments the value in memory", () => {
 	cpu.memory.read(0x1234).should.equal(9);
 })({
 	locales: {
-		es: "INC: incrementa el valor en memoria",
+		es: "`INC`: incrementa el valor en memoria",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("INC: sets the Zero Flag", () => {
+it("`INC`: sets the Zero Flag", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -118,12 +118,12 @@ it("INC: sets the Zero Flag", () => {
 	cpu.flags.n.should.equal(false);
 })({
 	locales: {
-		es: "INC: actualiza la Bandera Zero",
+		es: "`INC`: actualiza la Bandera Zero",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("INC: sets the Negative Flag", () => {
+it("`INC`: sets the Negative Flag", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -134,24 +134,24 @@ it("INC: sets the Negative Flag", () => {
 	cpu.flags.n.should.equal(true);
 })({
 	locales: {
-		es: "INC: actualiza la Bandera Negative",
+		es: "`INC`: actualiza la Bandera Negative",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("ADC: argument == 'value'", () => {
+it("`ADC`: argument == 'value'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("ADC");
 	expect(instructions.ADC).to.be.an("object");
 	instructions.ADC.argument.should.equal("value");
 })({
 	locales: {
-		es: "ADC: argument == 'value'",
+		es: "`ADC`: argument == 'value'",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("ADC: adds the value to the Accumulator", () => {
+it("`ADC`: adds the value to the Accumulator", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -160,12 +160,12 @@ it("ADC: adds the value to the Accumulator", () => {
 	cpu.a.getValue().should.equal(25);
 })({
 	locales: {
-		es: "ADC: suma el valor al Acumulador",
+		es: "`ADC`: suma el valor al Acumulador",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("ADC: adds the Carry bit", () => {
+it("`ADC`: adds the Carry bit", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -175,12 +175,12 @@ it("ADC: adds the Carry bit", () => {
 	cpu.a.getValue().should.equal(26);
 })({
 	locales: {
-		es: "ADC: suma el bit de Carry",
+		es: "`ADC`: suma el bit de Carry",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("ADC: updates the Zero and Negative flags", () => {
+it("`ADC`: updates the Zero and Negative flags", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -194,12 +194,12 @@ it("ADC: updates the Zero and Negative flags", () => {
 	cpu.flags.n.should.equal(false);
 })({
 	locales: {
-		es: "ADC: actualiza las banderas Zero y Negative",
+		es: "`ADC`: actualiza las banderas Zero y Negative",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("ADC: updates the Carry and Overflow flags", () => {
+it("`ADC`: updates the Carry and Overflow flags", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -221,7 +221,7 @@ it("ADC: updates the Carry and Overflow flags", () => {
 	cpu.flags.v.should.equal(false);
 })({
 	locales: {
-		es: "ADC: actualiza las banderas Carry y Overflow",
+		es: "`ADC`: actualiza las banderas Carry y Overflow",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
