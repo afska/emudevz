@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - before going forward, let's enjoy what we build so far 😎
+  - before going forward, let's enjoy what we built so far 😎
   - on the right side you have another terminal
   - |
     run the `repl` command and test the following code:

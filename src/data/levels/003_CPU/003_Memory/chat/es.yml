@@ -20,7 +20,7 @@ other62:
 
 io:
   messages:
-  - un esquema en el cual la CPU está conectada a dispositivos físicos
+  - un esquema en el cual las direcciones de memoria están conectadas a dispositivos físicos
   - por ejemplo...
   - leer $4016 leerá los botones presionados del 🎮  mando
   - escribir los registros de la 🖥️  PPU en $2000-$2007 modificará la pantalla
@@ -41,8 +41,8 @@ implement:
       si <address> está dentro de $0800-$1FFF, retorna un byte espejado de <ram>
         (por ej. $0802 se vuelve $0002, $1023 se vuelve $0023)
       caso contrario, retorna 0__
-    **write(address, byte)**:
-      __similar a *read*, pero escribe el <byte> en lugar de retornar__
+    **write(address, value)**:
+      __similar a *read*, pero escribe el <value> en lugar de retornar__
   - |-
     luego, agrega al constructor de tu `CPU`:
     ```javascript this.memory = new CPUMemory();```

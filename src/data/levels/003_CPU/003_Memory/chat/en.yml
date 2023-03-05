@@ -20,7 +20,7 @@ other62:
 
 io:
   messages:
-  - a scheme in which the CPU is connected to physical devices
+  - a scheme in which memory addresses are connected to physical devices
   - for example...
   - reading $4016 will read the 🎮  controller's pressed buttons
   - writing the 🖥️  PPU registers at $2000-$2007 will modify the screen
@@ -41,8 +41,8 @@ implement:
       if <address> is in $0800-$1FFF, returns a mirrored byte from <ram>
         (e.g. $0802 becomes $0002, $1023 becomes $0023)
       otherwise, returns 0__
-    **write(address, byte)**:
-      __similar to *read*, but writes the <byte> instead of returning__
+    **write(address, value)**:
+      __similar to *read*, but writes the <value> instead of returning__
   - |-
     then, add to your `CPU` constructor:
     ```javascript this.memory = new CPUMemory();```
