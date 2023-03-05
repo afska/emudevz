@@ -5,6 +5,32 @@ beforeEach(async () => {
 	mainModule = await evaluate();
 });
 
+const newHeader = (prgPages = 1, chrPages = 1) => {
+	// prettier-ignore
+	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, 0b00000000, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
+};
+
+const newRom = (prgBytes = []) => {
+	const header = newHeader();
+	const prg = prgBytes;
+	const chr = [];
+	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
+	for (let i = 0; i < 8192; i++) chr.push(byte.random());
+	const bytes = new Uint8Array([...header, ...prg, ...chr]);
+
+	return bytes;
+};
+
+const newCPU = (prgBytes = null) => {
+	const CPU = mainModule.default.CPU;
+	const Cartridge = mainModule.default.Cartridge;
+
+	const cartridge =
+		prgBytes == null ? { prg: () => [] } : new Cartridge(newRom(prgBytes));
+
+	return new CPU(cartridge);
+};
+
 // 4.11 Instructions (1/6): Arithmetic
 
 it("`/code/index.js` exports an object containing the `instructions` object", () => {
@@ -27,6 +53,175 @@ it("INX: argument == 'no'", () => {
 })({
 	locales: {
 		es: "INX: argument == 'no'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("INX: increments the [X] register and updates the flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.x.setValue(255);
+	instructions.INX.run(cpu);
+
+	cpu.x.getValue().should.equal(0);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+
+	cpu.x.setValue(244);
+	instructions.INX.run(cpu);
+
+	cpu.x.getValue().should.equal(245);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+})({
+	locales: {
+		es: "INX: incrementa el registro [X] y actualiza las banderas",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("INC: argument == 'address'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("INC");
+	expect(instructions.INC).to.be.an("object");
+	instructions.INC.argument.should.equal("address");
+})({
+	locales: {
+		es: "INC: argument == 'address'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("INC: increments the value in memory", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 8);
+	instructions.INC.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(9);
+})({
+	locales: {
+		es: "INC: incrementa el valor en memoria",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("INC: sets the Zero Flag", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 255);
+	instructions.INC.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(0);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+})({
+	locales: {
+		es: "INC: actualiza la Bandera Zero",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("INC: sets the Negative Flag", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 244);
+	instructions.INC.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(245);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+})({
+	locales: {
+		es: "INC: actualiza la Bandera Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("ADC: argument == 'value'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("ADC");
+	expect(instructions.ADC).to.be.an("object");
+	instructions.ADC.argument.should.equal("value");
+})({
+	locales: {
+		es: "ADC: argument == 'value'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("ADC: adds the value to the Accumulator", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.a.setValue(20);
+	instructions.ADC.run(cpu, 5);
+	cpu.a.getValue().should.equal(25);
+})({
+	locales: {
+		es: "ADC: suma el valor al Acumulador",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("ADC: adds the Carry bit", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.a.setValue(20);
+	cpu.flags.c = true;
+	instructions.ADC.run(cpu, 5);
+	cpu.a.getValue().should.equal(26);
+})({
+	locales: {
+		es: "ADC: suma el bit de Carry",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("ADC: updates the Zero and Negative flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.a.setValue(50);
+	instructions.ADC.run(cpu, 120);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+
+	instructions.ADC.run(cpu, 86);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+})({
+	locales: {
+		es: "ADC: actualiza las banderas Zero y Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("ADC: updates the Carry and Overflow flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.a.setValue(50);
+	instructions.ADC.run(cpu, 10);
+	cpu.flags.c.should.equal(false);
+	cpu.flags.v.should.equal(false);
+
+	// positive (60) + positive (75) = negative (-121) => overflow
+	cpu.flags.c = false;
+	instructions.ADC.run(cpu, 75);
+	cpu.flags.c.should.equal(false);
+	cpu.flags.v.should.equal(true);
+
+	// result is over 255 => carry
+	cpu.flags.c = false;
+	instructions.ADC.run(cpu, 122);
+	cpu.flags.c.should.equal(true);
+	cpu.flags.v.should.equal(false);
+})({
+	locales: {
+		es: "ADC: actualiza las banderas Carry y Overflow",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
