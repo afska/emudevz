@@ -16,3 +16,31 @@
 | `ROL` | Rotate Left           | 🐏  | Moves all the bits of the value held at an `address` one place to the left.<br><br>Bit `7` is placed in the `C` flag and bit `0` is filled with the old value of the `C` flag.<br><br>The `Z` and `N` flags are updated using the result.                                                                                                                                                                                      |
 | `ROR` | Rotate Right          | 🐏  | Moves all the bits of the value held at an `address` one place to the right.<br><br>Bit `0` is placed in the `C` flag and bit `7` is filled with the old value of the `C` flag.<br><br>The `Z` and `N` flags are updated using the result.                                                                                                                                                                                     |
 | `SBC` | Subtract with Carry   | 🔢  | Substracts the contents of a `value` to `[A]` together with the `not` of the Carry flag.<br><br>The `Z`, `N`, `C` (set if there was no borrow), and `V` (set when sign is wrong) flags are updated.<br><br>It can be implemented as an `ADC` call with the negative representation of `value` - 1.<br>Ex:<br>`SBC(cpu, value) { ADC(cpu, byte.negate(value) - 1) }`                                                            |
+
+#### 🐏 Data
+
+| Code  | Name                        | Arg | Description                                                             |
+| ----- | --------------------------- | --- | ----------------------------------------------------------------------- |
+| `CLC` | Clear Carry Flag            | 🚫  | Sets `C` = `0`.                                                         |
+| `CLD` | Clear Decimal Mode          | 🚫  | Sets `D` = `0`.                                                         |
+| `CLI` | Clear Interrupt Disable     | 🚫  | Sets `I` = `0`.                                                         |
+| `CLV` | Clear Overflow Flag         | 🚫  | Sets `V` = `0`.                                                         |
+| `LDA` | Load Accumulator            | 🔢  | Loads a `value` into `[A]`, updating the `Z` and `N` flags.             |
+| `LDX` | Load X Register             | 🔢  | Loads a `value` into `[X]`, updating the `Z` and `N` flags.             |
+| `LDY` | Load Y Register             | 🔢  | Loads a `value` into `[Y]`, updating the `Z` and `N` flags.             |
+| `PHA` | Push Accumulator            | 🚫  | Pushes `[A]` onto the stack.                                            |
+| `PHP` | Push Processor Status       | 🚫  | Pushes the flags (as a byte, with bit `4` set) onto the stack.          |
+| `PLA` | Pull Accumulator            | 🚫  | Pulls a byte from the stack into `[A]`, updating the `Z` and `N` flags. |
+| `PLP` | Pull Processor Status       | 🚫  | Pulls a byte from the stack into the flags register.                    |
+| `SEC` | Set Carry Flag              | 🚫  | Sets `C` = `1`.                                                         |
+| `SED` | Set Decimal Flag            | 🚫  | Sets `D` = `1`.                                                         |
+| `SEI` | Set Interrupt Disable       | 🚫  | Sets `I` = `1`.                                                         |
+| `STA` | Store Accumulator           | 🐏  | Stores the contents of `[A]` into an `address`.                         |
+| `STX` | Store X Register            | 🐏  | Stores the contents of `[X]` into an `address`.                         |
+| `STY` | Store Y Register            | 🐏  | Stores the contents of `[Y]` into an `address`.                         |
+| `TAX` | Transfer Accumulator to X   | 🚫  | Copies `[A]` into `[X]`, updating the `Z` and `N` flags.                |
+| `TAY` | Transfer Accumulator to Y   | 🚫  | Copies `[A]` into `[Y]`, updating the `Z` and `N` flags.                |
+| `TSX` | Transfer Stack Pointer to X | 🚫  | Copies `[SP]` into `[X]`, updating the `Z` and `N` flags.               |
+| `TXA` | Transfer X to Accumulator   | 🚫  | Copies `[X]` into `[A]`, updating the `Z` and `N` flags.                |
+| `TXS` | Transfer X to Stack Pointer | 🚫  | Copies `[X]` into `[SP]`, **WITHOUT** updating any flag.                |
+| `TYA` | Transfer Y to Accumulator   | 🚫  | Copies `[Y]` into `[A]`, updating the `Z` and `N` flags.                |

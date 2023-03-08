@@ -16,3 +16,31 @@
 | `ROL`  | Rotar Izquierda                       | 🐏  | Mueve todos los bits del valor contenido en una `address` un lugar hacia la izquierda.<br><br>El bit `7` es colocado en la bandera `C` y el bit `0` es rellenado con el valor anterior de la bandera `C`.<br><br>Las banderas `Z` y `N` se actualizan usando el resultado.                                                                                                                                                                                    |
 | `ROR`  | Rotar Derecha                         | 🐏  | Mueve todos los bits del valor contenido en una `address` un lugar hacia la derecha.<br><br>El bit `0` es colocado en la bandera `C` y el bit `7` es rellenado con el valor anterior de la bandera `C`.<br><br>Las banderas `Z` y `N` se actualizan usando el resultado.                                                                                                                                                                                      |
 | `SBC`  | Sustraer con Carry                    | 🔢  | Sustrae el contenido de un `value` a `[A]` junto con el `not` de la bandera Carry (`[A]` = `[A]` - `value` - `!C`).<br><br>Las banderas `Z`, `N`, `C` (activada si no hay que "tomar prestado"), y `V` (activada cuando el signo quedó mal) se actualizan.<br><br>Puede ser implementada como una llamada a `ADC` con la representación negativa de `value` - 1.<br>Ej:<br>`SBC(cpu, value) { ADC(cpu, byte.negate(value) - 1) }`                             |
+
+#### 🐏 Data
+
+| Código | Nombre                         | Arg | Descripción                                                                      |
+| ------ | ------------------------------ | --- | -------------------------------------------------------------------------------- |
+| `CLC`  | Limpiar Bandera Carry          | 🚫  | Asigna `C` = `0`.                                                                |
+| `CLD`  | Limpiar Decimal Mode           | 🚫  | Asigna `D` = `0`.                                                                |
+| `CLI`  | Limpiar Interrupt Disable      | 🚫  | Asigna `I` = `0`.                                                                |
+| `CLV`  | Limpiar Bandera Overflow       | 🚫  | Asigna `V` = `0`.                                                                |
+| `LDA`  | Cargar Acumulador              | 🔢  | Carga un `value` en `[A]`, actualizando las banderas `Z` y `N`.                  |
+| `LDX`  | Cargar Registro X              | 🔢  | Carga un `value` en `[X]`, actualizando las banderas `Z` y `N`.                  |
+| `LDY`  | Cargar Registro Y              | 🔢  | Carga un `value` en `[Y]`, actualizando las banderas `Z` y `N`.                  |
+| `PHA`  | Agregar Acumulador             | 🚫  | Agrega `[A]` a la pila.                                                          |
+| `PHP`  | Agregar Estado del Procesador  | 🚫  | Agrega las banderas (como un byte, con el bit `4` encendido) a la pila.          |
+| `PLA`  | Sacar Acumulador               | 🚫  | Saca un byte de la pila y lo pone en `[A]`, actualizando las banderas `Z` y `N`. |
+| `PLP`  | Sacar Estado del Procesador    | 🚫  | Saca un byte de la pila y lo pone en el registro de banderas.                    |
+| `SEC`  | Encender Bandera Carry         | 🚫  | Asigna `C` = `1`.                                                                |
+| `SED`  | Encender Bandera Decimal       | 🚫  | Asigna `D` = `1`.                                                                |
+| `SEI`  | Encender Interrupt Disable     | 🚫  | Asigna `I` = `1`.                                                                |
+| `STA`  | Almacenar Acumulador           | 🐏  | Almacena el contenido de `[A]` en una `address`.                                 |
+| `STX`  | Almacenar Registro X           | 🐏  | Almacena el contenido de `[X]` en una `address`.                                 |
+| `STY`  | Almacenar Registro Y           | 🐏  | Almacena el contenido de `[Y]` en una `address`.                                 |
+| `TAX`  | Transferir Acumulador a X      | 🚫  | Copia `[A]` a `[X]`, actualizando las banderas `Z` y `N`.                        |
+| `TAY`  | Transferir Accumulator a Y     | 🚫  | Copia `[A]` a `[Y]`, actualizando las banderas `Z` y `N`.                        |
+| `TSX`  | Transferir Puntero de Pila a X | 🚫  | Copia `[SP]` a `[X]`, actualizando las banderas `Z` y `N`.                       |
+| `TXA`  | Transferir X a Accumulator     | 🚫  | Copia `[X]` a `[A]`, actualizando las banderas `Z` y `N`.                        |
+| `TXS`  | Transferir X a Puntero de Pila | 🚫  | Copia `[X]` a `[SP]`, **SIN** actualizar ninguna bandera.                        |
+| `TYA`  | Transferir Y a Accumulator     | 🚫  | Copia `[Y]` a `[A]`, actualizando las banderas `Z` y `N`.                        |

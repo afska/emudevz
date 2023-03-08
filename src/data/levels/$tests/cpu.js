@@ -153,7 +153,7 @@ it("includes a `flags` property with 6 booleans", () => {
 	});
 })({
 	locales: {
-		es: "incluye una propiedad `flag` con 6 booleanos",
+		es: "incluye una propiedad `flags` con 6 booleanos",
 	},
 	use: ({ id }, book) => id >= book.getId("4.3"),
 });

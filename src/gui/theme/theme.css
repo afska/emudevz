@@ -87,6 +87,10 @@ body {
 
 /* Markdown */
 
+.markdown-view h4 {
+	margin-top: 8px;
+}
+
 .markdown-view table {
 	margin-top: 16px;
 }
