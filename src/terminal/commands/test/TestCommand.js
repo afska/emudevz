@@ -143,6 +143,11 @@ export default class TestCommand extends Command {
 				await this._terminal.writeln(
 					cliCodeHighlighter.highlight(result.testCode)
 				);
+				if (result.testErrorLine != null)
+					await this._terminal.writeln(
+						`⚠️  ${result.testErrorLine}`,
+						theme.ERROR
+					);
 				await this._terminal.writeln("----------", theme.ACCENT);
 			}
 		}

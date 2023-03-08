@@ -51,8 +51,8 @@ it("includes all the registers", () => {
 
 	["a", "x", "y", "sp", "pc"].forEach((register) => {
 		cpu.should.include.key(register);
-		cpu[register].should.respondTo("getValue");
-		cpu[register].should.respondTo("setValue");
+		cpu[register].should.respondTo("getValue", register);
+		cpu[register].should.respondTo("setValue", register);
 	});
 })({
 	locales: {
@@ -65,7 +65,7 @@ it("all registers start from 0", () => {
 	const cpu = newCPU();
 
 	["a", "x", "y", "sp", "pc"].forEach((register) => {
-		cpu[register].getValue().should.equal(0);
+		cpu[register].getValue().should.equal(0, register);
 	});
 })({
 	locales: {
@@ -80,7 +80,7 @@ it("8-bit registers can save and read values (valid range)", () => {
 	["a", "x", "y", "sp"].forEach((register) => {
 		for (let i = 0; i < 256; i++) {
 			cpu[register].setValue(i);
-			cpu[register].getValue().should.equal(i);
+			cpu[register].getValue().should.equal(i, register);
 		}
 	});
 })({
@@ -98,7 +98,7 @@ it("8-bit registers wrap with values outside the range", () => {
 			const array = new Uint8Array(1);
 			array[0] = i;
 			cpu[register].setValue(i);
-			cpu[register].getValue().should.equal(array[0]);
+			cpu[register].getValue().should.equal(array[0], register);
 		}
 	});
 })({
@@ -148,7 +148,7 @@ it("includes a `flags` property with 6 booleans", () => {
 
 	["c", "z", "i", "d", "v", "n"].forEach((flag) => {
 		cpu.flags.should.include.key(flag);
-		expect(cpu.flags[flag]).to.be.an("boolean");
+		expect(cpu.flags[flag]).to.be.an("boolean", flag);
 		cpu.flags[flag].should.be.false;
 	});
 })({
@@ -163,23 +163,23 @@ it("flags register can be serialized into a byte", () => {
 
 	cpu.flags.getValue().should.equal(0b00100000);
 	cpu.flags.z = true;
-	cpu.flags.getValue().should.equal(0b00100010);
+	cpu.flags.getValue().should.equal(0b00100010, "+z");
 	cpu.flags.c = true;
-	cpu.flags.getValue().should.equal(0b00100011);
+	cpu.flags.getValue().should.equal(0b00100011, "+c");
 	cpu.flags.v = true;
-	cpu.flags.getValue().should.equal(0b01100011);
+	cpu.flags.getValue().should.equal(0b01100011, "+v");
 	cpu.flags.n = true;
-	cpu.flags.getValue().should.equal(0b11100011);
+	cpu.flags.getValue().should.equal(0b11100011, "+n");
 	cpu.flags.i = true;
-	cpu.flags.getValue().should.equal(0b11100111);
+	cpu.flags.getValue().should.equal(0b11100111, "+i");
 	cpu.flags.d = true;
-	cpu.flags.getValue().should.equal(0b11101111);
+	cpu.flags.getValue().should.equal(0b11101111, "+d");
 	cpu.flags.c = false;
-	cpu.flags.getValue().should.equal(0b11101110);
+	cpu.flags.getValue().should.equal(0b11101110, "-c");
 	cpu.flags.v = false;
-	cpu.flags.getValue().should.equal(0b10101110);
+	cpu.flags.getValue().should.equal(0b10101110, "-v");
 	cpu.flags.z = false;
-	cpu.flags.getValue().should.equal(0b10101100);
+	cpu.flags.getValue().should.equal(0b10101100, "-z");
 })({
 	locales: {
 		es: "el registro de flags puede ser serializado en un byte",
@@ -231,8 +231,8 @@ it("can increment and decrement registers", () => {
 	const pc = cpu.pc.getValue();
 
 	["a", "x", "y", "sp", "pc"].forEach((register) => {
-		cpu[register].should.respondTo("increment");
-		cpu[register].should.respondTo("decrement");
+		cpu[register].should.respondTo("increment", register);
+		cpu[register].should.respondTo("decrement", register);
 	});
 
 	cpu.a.increment();
@@ -493,7 +493,7 @@ it("all registers start from 0, except for [PC], which starts from $8000", () =>
 	const cpu = newCPU();
 
 	["a", "x", "y", "sp"].forEach((register) => {
-		cpu[register].getValue().should.equal(0);
+		cpu[register].getValue().should.equal(0, register);
 	});
 	cpu.pc.getValue().should.equal(0x8000);
 })({

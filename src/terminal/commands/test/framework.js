@@ -62,12 +62,20 @@ export default {
 				if (_after_) await _after_();
 				results.push({ name, passed: true });
 			} catch (e) {
+				const testCode = test.toString();
 				const isUserCode = e.stack != null && e.stack.includes("blob:");
+				let testErrorLine =
+					e.stack != null && e.stack.match(/<anonymous>:(\d+):\d+/);
+				if (testErrorLine != null)
+					testErrorLine = _code_
+						.split("\n")
+						[parseInt(testErrorLine[1]) - 1]?.trim();
 
 				results.push({
 					name,
 					passed: false,
-					testCode: test.toString(),
+					testCode,
+					testErrorLine,
 					reason: e?.message || e?.toString() || "?",
 					stack:
 						isUserCode && $.modules != null
