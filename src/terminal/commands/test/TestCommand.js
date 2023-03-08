@@ -26,6 +26,7 @@ export default class TestCommand extends Command {
 
 			const context = level.test?.context;
 			const $ = testContext[context]?.prepare(level) || {};
+			let mainTestFile = level.test?.mainTestFile;
 
 			let warnings = [];
 			try {
@@ -35,8 +36,14 @@ export default class TestCommand extends Command {
 			const overallResult = { allGreen: true };
 			const hasMultipleTests = _.keys(level.tests).length > 1;
 
-			const testFiles = _.keys(level.tests);
+			let testFiles = _.keys(level.tests);
+			if (mainTestFile != null && testFiles.includes(mainTestFile))
+				testFiles = [..._.without(testFiles, mainTestFile), mainTestFile];
+			else mainTestFile = null;
+
 			for (let fileName of testFiles) {
+				const isMainTestFile =
+					mainTestFile == null || fileName === mainTestFile;
 				const test = level.tests[fileName];
 
 				if (hasMultipleTests)
@@ -46,8 +53,12 @@ export default class TestCommand extends Command {
 
 				const results = await framework.test(test, $);
 
-				for (let result of results)
-					await this._printResult(result, overallResult);
+				for (let result of results) {
+					if (isMainTestFile || !result.passed)
+						await this._printResult(result, overallResult);
+				}
+				if (!isMainTestFile && _.every(results, "passed"))
+					await this._terminal.writeln("✔️ ");
 
 				await this._terminal.newline();
 			}
