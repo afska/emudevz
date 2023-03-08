@@ -674,3 +674,100 @@ it("`ROR`: updates the Zero and Negative flags", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
+
+// ---
+
+it("`SBC`: argument == 'value'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("SBC");
+	expect(instructions.SBC).to.be.an("object");
+	instructions.SBC.argument.should.equal("value");
+})({
+	locales: {
+		es: "`SBC`: argument == 'value'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`SBC`: substracts the value from the Accumulator - 1 when C is clear", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.a.setValue(20);
+	instructions.SBC.run(cpu, 5);
+	cpu.a.getValue().should.equal(14);
+})({
+	locales: {
+		es: "`SBC`: resta el valor del Acumulador - 1 cuando C está apagado",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`SBC`: substracts the value from the Accumulator - 0 when C is set", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.a.setValue(20);
+	cpu.flags.c = true;
+	instructions.SBC.run(cpu, 5);
+	cpu.a.getValue().should.equal(15);
+})({
+	locales: {
+		es: "`SBC`: resta el valor del Acumulador - 0 cuando C está encendido",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`SBC`: updates the Zero and Negative flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.a.setValue(20);
+	instructions.SBC.run(cpu, 30);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+
+	cpu.a.setValue(0);
+	cpu.flags.c = true;
+	instructions.SBC.run(cpu, 0);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+})({
+	locales: {
+		es: "`SBC`: actualiza las banderas Zero y Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`SBC`: updates the Carry and Overflow flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.a.setValue(50);
+	instructions.SBC.run(cpu, 10);
+	cpu.flags.c.should.equal(true);
+	cpu.flags.v.should.equal(false);
+
+	// positive (40) - negative (-100) = negative (-116) => overflow
+	cpu.a.setValue(40);
+	cpu.flags.c = true;
+	instructions.SBC.run(cpu, byte.toU8(-100));
+	cpu.flags.c.should.equal(false); // borrow!
+	cpu.flags.v.should.equal(true); //  |
+	//                                  v
+	//                                  00101000 (40)
+	//                                - 10011100 (-100)
+	//                                  ^
+
+	// negative (-40) - positive (100) = positive (116) => overflow
+	cpu.a.setValue(byte.toU8(-40));
+	cpu.flags.c = true;
+	instructions.SBC.run(cpu, 100);
+	cpu.flags.c.should.equal(true);
+	cpu.flags.v.should.equal(true);
+})({
+	locales: {
+		es: "`SBC`: actualiza las banderas Carry y Overflow",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
