@@ -310,6 +310,78 @@ it("`INC`: sets the Negative Flag", () => {
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
+it("`DEX`: argument == 'no'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("DEX");
+	expect(instructions.DEX).to.be.an("object");
+	instructions.DEX.argument.should.equal("no");
+})({
+	locales: {
+		es: "`DEX`: argument == 'no'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`DEX`: decrements the [X] register and updates the flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.x.setValue(1);
+	instructions.DEX.run(cpu);
+
+	cpu.x.getValue().should.equal(0);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+
+	cpu.x.setValue(0);
+	instructions.DEX.run(cpu);
+
+	cpu.x.getValue().should.equal(255);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+})({
+	locales: {
+		es: "`DEX`: decrementa el registro [X] y actualiza las banderas",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`DEY`: argument == 'no'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("DEY");
+	expect(instructions.DEY).to.be.an("object");
+	instructions.DEY.argument.should.equal("no");
+})({
+	locales: {
+		es: "`DEY`: argument == 'no'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`DEY`: decrements the [Y] register and updates the flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.y.setValue(1);
+	instructions.DEY.run(cpu);
+
+	cpu.y.getValue().should.equal(0);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+
+	cpu.y.setValue(0);
+	instructions.DEY.run(cpu);
+
+	cpu.y.getValue().should.equal(255);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+})({
+	locales: {
+		es: "`DEY`: decrementa el registro [Y] y actualiza las banderas",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
 it("`INX`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("INX");
