@@ -44,3 +44,44 @@
 | `TXA` | Transfer X to Accumulator   | 🚫  | Copies `[X]` into `[A]`, updating the `Z` and `N` flags.                |
 | `TXS` | Transfer X to Stack Pointer | 🚫  | Copies `[X]` into `[SP]`, **WITHOUT** updating any flag.                |
 | `TYA` | Transfer Y to Accumulator   | 🚫  | Copies `[Y]` into `[A]`, updating the `Z` and `N` flags.                |
+
+#### ✅ Checks
+
+| Code  | Name               | Arg | Description                                                                                                                                                                                                                                                   |
+| ----- | ------------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BIT` | Bit Test           | 🔢  | Tests if one or more bits are set in a `value`.<br>The `Z` flag is updated so it's set if the value ANDed with the `[A]` register is `0` (`Z` = `value` & `[A]` == `0`).<br>Bits `7` and `6` of the value are copied into the `N` and `V` flags respectively. |
+| `CMP` | Compare            | 🔢  | Compares `[A]` with a `value`, setting the flags:<br>`Z` (if `[A]` == `value`), `N` (if bit `7` of (`[A]` - `value`) is set) and `C` (if `[A]` >= `value`).                                                                                                   |
+| `CPX` | Compare X Register | 🔢  | Compares `[X]` with a `value`, setting the flags:<br>`Z` (if `[X]` == `value`), `N` (if bit `7` of (`[X]` - `value`) is set) and `C` (if `[X]` >= `value`).                                                                                                   |
+| `CPY` | Compare Y Register | 🔢  | Compares `[Y]` with a `value`, setting the flags:<br>`Z` (if `[Y]` == `value`), `N` (if bit `7` of (`[Y]` - `value`) is set) and `C` (if `[Y]` >= `value`).                                                                                                   |
+
+#### 🧩 Logical
+
+| Code  | Name              | Arg | Description                                                                                                                               |
+| ----- | ----------------- | --- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `AND` | Logical AND       | 🔢  | Performs a "bit by bit" logical AND between `[A]` and a `value`, storing the result in `[A]` and updating the `Z` and `N` flags.          |
+| `EOR` | Exclusive OR      | 🔢  | Performs a "bit by bit" exclusive OR between `[A]` and a `value`, storing the result in `[A]` and updating the `Z` and `N` flags.         |
+| `ORA` | Logical Inclusive | 🔢  | Performs a "bit by bit" logical inclusive OR between `[A]` and a `value`, storing the result in `[A]` and updating the `Z` and `N` flags. |
+
+#### 🔀 Branching
+
+| Code  | Name                     | Arg | Description                                                                  |
+| ----- | ------------------------ | --- | ---------------------------------------------------------------------------- |
+| `BCC` | Branch if Carry Clear    | 🐏  | If the `C` flag is clear, jumps to an `address`.                             |
+| `BCS` | Branch if Carry Set      | 🐏  | If the `C` flag is set, jumps to an `address`.                               |
+| `BEQ` | Branch if Equal          | 🐏  | If the `Z` flag is set, jumps to an `address`.                               |
+| `BMI` | Branch if Minus          | 🐏  | If the `N` flag is set, jumps to an `address`.                               |
+| `BNE` | Branch if Not Equal      | 🐏  | If the `Z` flag is clear, jumps to an `address`.                             |
+| `BPL` | Branch if Positive       | 🐏  | If the `N` flag is clear, jumps to an `address`.                             |
+| `BVC` | Branch if Overflow Clear | 🐏  | If the `V` flag is clear, jumps to an `address`.                             |
+| `BVS` | Branch if Overflow Set   | 🐏  | If the `V` flag is set, jumps to an `address`.                               |
+| `JMP` | Jump                     | 🐏  | Jumps to an `address`.                                                       |
+| `JSR` | Jump to Subroutine       | 🐏  | Pushes the current `[PC]` (minus one) onto the stack and jumps to `address`. |
+| `RTI` | Return from Interrupt    | 🚫  | Pulls the flags register from the stack, then pulls `[PC]` from the stack.   |
+| `RTS` | Return from Subroutine   | 🚫  | Pulls `[PC]` (plus one) from the stack.                                      |
+
+#### 💻 System
+
+| Code  | Name            | Arg | Description                                                                                                                                                                            |
+| ----- | --------------- | --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BRK` | Force Interrupt | 🚫  | Forces the generation of an interrupt request.<br>The `[PC]` and flags (with bit `4` set) are pushed onto the stack, then the IRQ interrupt vector at `$FFFE/F` is loaded into `[PC]`. |
+| `NOP` | No Operation    | 🚫  | Causes no changes at all.                                                                                                                                                              |
