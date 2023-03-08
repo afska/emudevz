@@ -7,7 +7,7 @@ main:
      ```raw _______________________________```
     ```raw | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |```
     ```raw |---|---|---|---|---|---|---|---|```
-    ```raw |``` ~N~ ```raw |``` ~V~ ```raw |``` ```raw 1``` ```raw |``` ```raw b``` ```raw |``` ```raw 0``` ```raw |``` ~I~ ```raw |``` ~Z~ ```raw |``` ~C~ ```raw |```
+    ```raw |``` ~N~ ```raw |``` ~V~ ```raw |``` ```raw 1``` ```raw |``` ```raw b``` ```raw |``` ~D~ ```raw |``` ~I~ ```raw |``` ~Z~ ```raw |``` ~C~ ```raw |```
      ```raw ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾```
   - we already covered C ("Carry") and Z ("Zero") in the past, and we'll talk about the others when we start coding CPU instructions
   - all flags are represented by an uppercase letter
@@ -17,7 +17,6 @@ main:
 notall:
   messages:
   - right, right, with some exceptions
-  - bit 3 is always 0
   - bit 5 is always 1
   - bit 4 ("b")... depends... on... things - we'll ignore it for now 😂
   responses:
@@ -25,7 +24,7 @@ notall:
 
 what:
   messages:
-  - 📚  create a `FlagsRegister` class with 5 boolean properties (called ~c~, ~z~, ~i~, ~v~ and ~n~)
+  - 📚  create a `FlagsRegister` class with 6 boolean properties (called ~c~, ~z~, ~i~, ~d~, ~v~ and ~n~)
   - initialize them with ```javascript false```
   - then, implement ```javascript getValue()``` and ```javascript setValue(value)``` following the previous table
   - i.e. with ~i~ and ~v~ on, ```javascript getValue()``` should return ```javascript 0b01100100```

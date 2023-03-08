@@ -51,6 +51,7 @@ export default {
 	register_flags_N: "Negative Flag",
 	register_flags_V: "Overflow Flag",
 	register_flags_I: "Interrupt Disable Flag",
+	register_flags_D: "Decimal Flag",
 	register_flags_Z: "Zero Flag",
 	register_flags_C: "Carry Flag",
 	register_flags_U: "Unused Flag",

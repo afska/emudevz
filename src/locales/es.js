@@ -50,6 +50,7 @@ export default {
 	register_flags_N: "Bandera Negative",
 	register_flags_V: "Bandera Overflow",
 	register_flags_I: "Bandera Interrupt Disable",
+	register_flags_I: "Bandera Decimal",
 	register_flags_Z: "Bandera Zero",
 	register_flags_C: "Bandera Carry",
 	register_flags_U: "Bandera sin uso",

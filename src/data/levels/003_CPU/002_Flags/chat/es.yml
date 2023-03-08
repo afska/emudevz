@@ -7,7 +7,7 @@ main:
      ```raw _______________________________```
     ```raw | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |```
     ```raw |---|---|---|---|---|---|---|---|```
-    ```raw |``` ~N~ ```raw |``` ~V~ ```raw |``` ```raw 1``` ```raw |``` ```raw b``` ```raw |``` ```raw 0``` ```raw |``` ~I~ ```raw |``` ~Z~ ```raw |``` ~C~ ```raw |```
+    ```raw |``` ~N~ ```raw |``` ~V~ ```raw |``` ```raw 1``` ```raw |``` ```raw b``` ```raw |``` ~D~ ```raw |``` ~I~ ```raw |``` ~Z~ ```raw |``` ~C~ ```raw |```
      ```raw ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾```
   - ya cubrimos C ("Carry") y Z ("Zero") anteriormente, y hablaremos de los demás cuando empecemos a programar instrucciones de CPU
   - todas las banderas se representan con una letra en mayúscula
@@ -17,7 +17,6 @@ main:
 notall:
   messages:
   - bueno, bueno, con algunas excepciones
-  - el bit 3 es siempre 0
   - el bit 5 es siempre 1
   - el bit 4 ("b")... depende... de... cosas - vamos a ignorarlo por ahora 😂
   responses:
@@ -25,7 +24,7 @@ notall:
 
 what:
   messages:
-  - 📚  crea una clase `FlagsRegister` con 5 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~v~ y ~n~)
+  - 📚  crea una clase `FlagsRegister` con 5 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~d~, ~v~ y ~n~)
   - inicialízalas en ```javascript false```
   - luego, implementa ```javascript getValue()``` y ```javascript setValue(value)``` siguiendo la tabla anterior
   - por ej. con ~i~ y ~v~ encendidas, ```javascript getValue()``` debería retornar ```javascript 0b01100100```

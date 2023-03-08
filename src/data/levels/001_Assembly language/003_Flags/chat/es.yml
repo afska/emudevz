@@ -76,7 +76,7 @@ flags:
   messages:
   - es un booleano (valor de 1 bit) que carga el procesador
   - da información sobre la instrucción anterior
-  - hay 5 banderas, así que todas viven en un solo byte
+  - hay 6 banderas, así que todas viven en un solo byte
   - intenta ejecutar el código ⏩
   events:
   - end [carry]

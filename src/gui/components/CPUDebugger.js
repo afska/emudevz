@@ -14,7 +14,7 @@ import styles from "./CPUDebugger.module.css";
 const WIDTH = 600;
 const HEIGHT = 300;
 const REGISTERS = ["A", "X", "Y", "SP", "PC"];
-const FLAGS_TEXT = ["N", "V", "-", "-", "-", "I", "Z", "C"];
+const FLAGS_TEXT = ["N", "V", "-", "-", "D", "I", "Z", "C"];
 const FLAGS_KEYS = ["N", "V", "B", "b", "D", "I", "Z", "C"];
 const MEMORY_ROWS = 10;
 const BASE = 16;

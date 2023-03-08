@@ -140,20 +140,20 @@ it("16-bit registers wrap with values outside the range", () => {
 
 // 4.3 Flags
 
-it("includes a `flags` property with 5 booleans", () => {
+it("includes a `flags` property with 6 booleans", () => {
 	const cpu = newCPU();
 
 	cpu.should.include.key("flags");
 	expect(cpu.flags).to.be.an("object");
 
-	["c", "z", "i", "v", "n"].forEach((flag) => {
+	["c", "z", "i", "d", "v", "n"].forEach((flag) => {
 		cpu.flags.should.include.key(flag);
 		expect(cpu.flags[flag]).to.be.an("boolean");
 		cpu.flags[flag].should.be.false;
 	});
 })({
 	locales: {
-		es: "incluye una propiedad `flag` con 5 booleanos",
+		es: "incluye una propiedad `flag` con 6 booleanos",
 	},
 	use: ({ id }, book) => id >= book.getId("4.3"),
 });
@@ -172,12 +172,14 @@ it("flags register can be serialized into a byte", () => {
 	cpu.flags.getValue().should.equal(0b11100011);
 	cpu.flags.i = true;
 	cpu.flags.getValue().should.equal(0b11100111);
+	cpu.flags.d = true;
+	cpu.flags.getValue().should.equal(0b11101111);
 	cpu.flags.c = false;
-	cpu.flags.getValue().should.equal(0b11100110);
+	cpu.flags.getValue().should.equal(0b11101110);
 	cpu.flags.v = false;
-	cpu.flags.getValue().should.equal(0b10100110);
+	cpu.flags.getValue().should.equal(0b10101110);
 	cpu.flags.z = false;
-	cpu.flags.getValue().should.equal(0b10100100);
+	cpu.flags.getValue().should.equal(0b10101100);
 })({
 	locales: {
 		es: "el registro de flags puede ser serializado en un byte",
@@ -189,10 +191,11 @@ it("flags register can be set from a byte", () => {
 	const cpu = newCPU();
 
 	cpu.flags.setValue(0b11111111);
-	cpu.flags.getValue().should.equal(0b11100111);
+	cpu.flags.getValue().should.equal(0b11101111);
 	cpu.flags.c.should.be.true;
 	cpu.flags.z.should.be.true;
 	cpu.flags.i.should.be.true;
+	cpu.flags.d.should.be.true;
 	cpu.flags.v.should.be.true;
 	cpu.flags.n.should.be.true;
 
@@ -201,6 +204,7 @@ it("flags register can be set from a byte", () => {
 	cpu.flags.c.should.be.true;
 	cpu.flags.z.should.be.false;
 	cpu.flags.i.should.be.false;
+	cpu.flags.d.should.be.false;
 	cpu.flags.v.should.be.true;
 	cpu.flags.n.should.be.false;
 
@@ -209,6 +213,7 @@ it("flags register can be set from a byte", () => {
 	cpu.flags.c.should.be.true;
 	cpu.flags.z.should.be.true;
 	cpu.flags.i.should.be.false;
+	cpu.flags.d.should.be.false;
 	cpu.flags.v.should.be.false;
 	cpu.flags.n.should.be.true;
 })({

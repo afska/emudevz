@@ -76,7 +76,7 @@ flags:
   messages:
   - it's a boolean (1-bit value) set by the processor
   - it gives information about the previous instruction
-  - there are 5 flags, so they all live in a single byte
+  - there are 6 flags, so they all live in a single byte
   - try running the code ⏩
   events:
   - end [carry]
