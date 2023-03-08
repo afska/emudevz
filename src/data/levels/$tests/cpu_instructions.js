@@ -453,3 +453,65 @@ it("`INY`: increments the [Y] register and updates the flags", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
+
+it("`LSR`: argument == 'address'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("LSR");
+	expect(instructions.LSR).to.be.an("object");
+	instructions.LSR.argument.should.equal("address");
+})({
+	locales: {
+		es: "`LSR`: argument == 'address'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`LSR`: divides the value by 2", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 128);
+	instructions.LSR.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(64);
+	cpu.flags.c.should.equal(false);
+})({
+	locales: {
+		es: "`LSR`: divide el valor entre dos",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`LSR`: fills the Carry Flag with bit 0", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 0b11000001);
+	instructions.LSR.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(0b01100000);
+	cpu.flags.c.should.equal(true);
+})({
+	locales: {
+		es: "`LSR`: llena la Bandera Carry con el bit 0",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`LSR`: updates the Zero and Negative flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 0b11000000);
+	instructions.LSR.run(cpu, 0x1234);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(false);
+
+	cpu.memory.write(0x1234, 0);
+	instructions.LSR.run(cpu, 0x1234);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+})({
+	locales: {
+		es: "`LSR`: actualiza las banderas Zero y Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
