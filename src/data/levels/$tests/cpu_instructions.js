@@ -154,7 +154,7 @@ it("`ASL`: multiplies the value by 2", () => {
 	cpu.flags.c.should.equal(false);
 })({
 	locales: {
-		es: "`ASL`: multiplica el valor por dos",
+		es: "`ASL`: multiplica el valor por 2",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
@@ -476,7 +476,7 @@ it("`LSR`: divides the value by 2", () => {
 	cpu.flags.c.should.equal(false);
 })({
 	locales: {
-		es: "`LSR`: divide el valor entre dos",
+		es: "`LSR`: divide el valor entre 2",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
@@ -512,6 +512,165 @@ it("`LSR`: updates the Zero and Negative flags", () => {
 })({
 	locales: {
 		es: "`LSR`: actualiza las banderas Zero y Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ROL`: argument == 'address'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("ROL");
+	expect(instructions.ROL).to.be.an("object");
+	instructions.ROL.argument.should.equal("address");
+})({
+	locales: {
+		es: "`ROL`: argument == 'address'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ROL`: multiplies the value by 2", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 12);
+	instructions.ROL.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(24);
+})({
+	locales: {
+		es: "`ROL`: multiplica el valor por 2",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ROL`: fills the Carry Flag with bit 7", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 0b10100000);
+	instructions.ROL.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(0b01000000);
+	cpu.flags.c.should.equal(true);
+})({
+	locales: {
+		es: "`ROL`: llena la Bandera Carry con el bit 7",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ROL`: sets the bit 0 with the Carry Flag", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.flags.c = true;
+	cpu.memory.write(0x1234, 0b10100000);
+	instructions.ROL.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(0b01000001);
+})({
+	locales: {
+		es: "`ROL`: llena el bit 0 con la Bandera Carry",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ROL`: updates the Zero and Negative flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 0b11000000);
+	instructions.ROL.run(cpu, 0x1234);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+
+	cpu.flags.c = false;
+
+	cpu.memory.write(0x1234, 0);
+	instructions.ROL.run(cpu, 0x1234);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+})({
+	locales: {
+		es: "`ROL`: actualiza las banderas Zero y Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+// ---
+
+it("`ROR`: argument == 'address'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("ROR");
+	expect(instructions.ROR).to.be.an("object");
+	instructions.ROR.argument.should.equal("address");
+})({
+	locales: {
+		es: "`ROR`: argument == 'address'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ROR`: divides the value by 2", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 24);
+	instructions.ROR.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(12);
+})({
+	locales: {
+		es: "`ROR`: divide el valor entre 2",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ROR`: fills the Carry Flag with bit 0", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 0b00000101);
+	instructions.ROR.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(0b00000010);
+	cpu.flags.c.should.equal(true);
+})({
+	locales: {
+		es: "`ROR`: llena la Bandera Carry con el bit 0",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ROR`: sets the bit 7 with the Carry Flag", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.flags.c = true;
+	cpu.memory.write(0x1234, 0b00000101);
+	instructions.ROR.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(0b10000010);
+})({
+	locales: {
+		es: "`ROR`: llena el bit 7 con la Bandera Carry",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ROR`: updates the Zero and Negative flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.flags.c = true;
+	cpu.memory.write(0x1234, 0b11000000);
+	instructions.ROR.run(cpu, 0x1234);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+
+	cpu.flags.c = false;
+
+	cpu.memory.write(0x1234, 0);
+	instructions.ROR.run(cpu, 0x1234);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+})({
+	locales: {
+		es: "`ROR`: actualiza las banderas Zero y Negative",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });

@@ -74,7 +74,8 @@ woo:
 javascript:
   messages:
   - eso va a funcionar
-  - pero también necesitas conocimientos básicos de sistemas informáticos
+  - pero también necesitas saber algo de programación orientada a objetos
+  - y conocimientos básicos de sistemas informáticos
   - (bytes, enteros con signo, lógica booleana, sistemas de numeración, etc.)
   responses:
   - ok, hagámoslo [end]
