@@ -417,3 +417,39 @@ it("`INX`: increments the [X] register and updates the flags", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
+
+it("`INY`: argument == 'no'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("INY");
+	expect(instructions.INY).to.be.an("object");
+	instructions.INY.argument.should.equal("no");
+})({
+	locales: {
+		es: "`INY`: argument == 'no'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`INY`: increments the [Y] register and updates the flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.y.setValue(255);
+	instructions.INY.run(cpu);
+
+	cpu.y.getValue().should.equal(0);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+
+	cpu.y.setValue(244);
+	instructions.INY.run(cpu);
+
+	cpu.y.getValue().should.equal(245);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+})({
+	locales: {
+		es: "`INY`: incrementa el registro [Y] y actualiza las banderas",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
