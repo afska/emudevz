@@ -17,7 +17,7 @@
 | `ROR`  | Rotar Derecha                         | 🐏  | Mueve todos los bits del valor contenido en una `address` un lugar hacia la derecha.<br><br>El bit `0` es colocado en la bandera `C` y el bit `7` es rellenado con el valor anterior de la bandera `C`.<br><br>Las banderas `Z` y `N` se actualizan usando el resultado.                                                                                                                                                                                      |
 | `SBC`  | Sustraer con Carry                    | 🔢  | Sustrae el contenido de un `value` a `[A]` junto con el `not` de la bandera Carry (`[A]` = `[A]` - `value` - `!C`).<br><br>Las banderas `Z`, `N`, `C` (activada si no hay que "tomar prestado"), y `V` (activada cuando el signo quedó mal) se actualizan.<br><br>Puede ser implementada como una llamada a `ADC` con la representación negativa de `value` - 1.<br>Ej:<br>`SBC(cpu, value) { ADC(cpu, byte.negate(value) - 1) }`                             |
 
-#### 🐏 Data
+#### 🐏 Datos
 
 | Código | Nombre                         | Arg | Descripción                                                                      |
 | ------ | ------------------------------ | --- | -------------------------------------------------------------------------------- |
@@ -44,3 +44,44 @@
 | `TXA`  | Transferir X a Accumulator     | 🚫  | Copia `[X]` a `[A]`, actualizando las banderas `Z` y `N`.                        |
 | `TXS`  | Transferir X a Puntero de Pila | 🚫  | Copia `[X]` a `[SP]`, **SIN** actualizar ninguna bandera.                        |
 | `TYA`  | Transferir Y a Accumulator     | 🚫  | Copia `[Y]` a `[A]`, actualizando las banderas `Z` y `N`.                        |
+
+#### ✅ Verificaciones
+
+| Código | Nombre              | Arg | Descripción                                                                                                                                                                                                                                                                           |
+| ------ | ------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BIT`  | Comprobar Bits      | 🔢  | Comprueba si uno o más bits están encendidos en un `value`.<br><br>La bandera `Z` se actualiza encendiéndose si el valor ANDeado con el registro `[A]` es `0` (`Z` = `value` & `[A]` == `0`).<br><br>Los bits `7` y `6` del valor se copian a las banderas `N` y `V` respectivamente. |
+| `CMP`  | Comparar            | 🔢  | Compara `[A]` con un `value`, actualizando las banderas:<br><br>`Z` (si `[A]` == `value`), `N` (si el bit `7` de (`[A]` - `value`) está encendido) y `C` (si `[A]` >= `value`).                                                                                                       |
+| `CPX`  | Comparar Registro X | 🔢  | Compara `[X]` con un `value`, actualizando las banderas:<br><br>`Z` (si `[X]` == `value`), `N` (si el bit `7` de (`[X]` - `value`) está encendido) y `C` (si `[X]` >= `value`).                                                                                                       |
+| `CPY`  | Comparar Registro Y | 🔢  | Compara `[Y]` con un `value`, actualizando las banderas:<br><br>`Z` (si `[Y]` == `value`), `N` (si el bit `7` de (`[Y]` - `value`) está encendido) y `C` (si `[Y]` >= `value`).                                                                                                       |
+
+#### 🧩 Lógicas
+
+| Código | Nombre              | Arg | Descripción                                                                                                                                     |
+| ------ | ------------------- | --- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AND`  | AND Lógico          | 🔢  | Realiza un AND lógico "bit por bit" entre `[A]` y un `value`, almacenando el resultado en `[A]` y actualizando las banderas `Z` y `N`.          |
+| `EOR`  | OR Exclusivo        | 🔢  | Realiza un OR exclusivo "bit por bit" entre `[A]` y un `value`, almacenando el resultado en `[A]` y actualizando las banderas `Z` y `N`.        |
+| `ORA`  | OR Lógico Inclusivo | 🔢  | Realiza un OR lógico inclusivo "bit por bit" entre `[A]` y un `value`, almacenando el resultado en `[A]` y actualizando las banderas `Z` y `N`. |
+
+#### 🔀 Bifurcaciones
+
+| Código | Nombre                      | Arg | Descripción                                                            |
+| ------ | --------------------------- | --- | ---------------------------------------------------------------------- |
+| `BCC`  | Saltar si no Carry          | 🐏  | Si la bandera `C` está apagada, salta a una `address`.                 |
+| `BCS`  | Saltar si Carry             | 🐏  | Si la bandera `C` está encendida, salta a una `address`.               |
+| `BEQ`  | Saltar si Igual             | 🐏  | Si la bandera `Z` está encendida, salta a una `address`.               |
+| `BMI`  | Saltar si Negativo          | 🐏  | Si la bandera `N` está encendida, salta a una `address`.               |
+| `BNE`  | Saltar si Distinto          | 🐏  | Si la bandera `Z` está apagada, salta a una `address`.                 |
+| `BPL`  | Saltar si Positivo          | 🐏  | Si la bandera `N` está apagada, salta a una `address`.                 |
+| `BVC`  | Saltar si no Overflow       | 🐏  | Si la bandera `V` está apagada, salta a una `address`.                 |
+| `BVS`  | Saltar si Overflow          | 🐏  | Si la bandera `V` está encendida, salta a una `address`.               |
+| `JMP`  | Saltar                      | 🐏  | Salta a una `address`.                                                 |
+| `JSR`  | Saltar a Subrutina          | 🐏  | Pone el `[PC]` actual (menos uno) en la pila y salta a una `address`.  |
+| `RTI`  | Retornar desde Interrupción | 🚫  | Saca el registro de banderas de la pila, luego saca `[PC]` de la pila. |
+| `RTS`  | Retornar desde Subrutina    | 🚫  | Saca `[PC]` (más uno) de la pila.                                      |
+
+#### 💻 Sistema
+
+| Código | Nombre              | Arg | Descripción                                                                                                                                                                                                  |
+| ------ | ------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `BRK`  | Forzar Interrupción | 🚫  | Fuerza la generación de una solicitud de interrupción.<br><br>El `[PC]` y las banderas (con el bit `4` encendido) se ponen en la pila, luego el vector de interrupciones IRQ en `$FFFE/F` se carga a `[PC]`. |
+| `NOP`  | No Operar           | 🚫  | No causa ningún tipo de cambio.                                                                                                                                                                              |
