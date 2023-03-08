@@ -45,100 +45,6 @@ it("`/code/index.js` exports an object containing the `instructions` object", ()
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("`INX`: argument == 'no'", () => {
-	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("INX");
-	expect(instructions.INX).to.be.an("object");
-	instructions.INX.argument.should.equal("no");
-})({
-	locales: {
-		es: "`INX`: argument == 'no'",
-	},
-	use: ({ id }, book) => id >= book.getId("4.11"),
-});
-
-it("`INX`: increments the [X] register and updates the flags", () => {
-	const cpu = newCPU();
-	const instructions = mainModule.default.instructions;
-
-	cpu.x.setValue(255);
-	instructions.INX.run(cpu);
-
-	cpu.x.getValue().should.equal(0);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
-
-	cpu.x.setValue(244);
-	instructions.INX.run(cpu);
-
-	cpu.x.getValue().should.equal(245);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
-})({
-	locales: {
-		es: "`INX`: incrementa el registro [X] y actualiza las banderas",
-	},
-	use: ({ id }, book) => id >= book.getId("4.11"),
-});
-
-it("`INC`: argument == 'address'", () => {
-	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("INC");
-	expect(instructions.INC).to.be.an("object");
-	instructions.INC.argument.should.equal("address");
-})({
-	locales: {
-		es: "`INC`: argument == 'address'",
-	},
-	use: ({ id }, book) => id >= book.getId("4.11"),
-});
-
-it("`INC`: increments the value in memory", () => {
-	const cpu = newCPU();
-	const instructions = mainModule.default.instructions;
-
-	cpu.memory.write(0x1234, 8);
-	instructions.INC.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(9);
-})({
-	locales: {
-		es: "`INC`: incrementa el valor en memoria",
-	},
-	use: ({ id }, book) => id >= book.getId("4.11"),
-});
-
-it("`INC`: sets the Zero Flag", () => {
-	const cpu = newCPU();
-	const instructions = mainModule.default.instructions;
-
-	cpu.memory.write(0x1234, 255);
-	instructions.INC.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(0);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
-})({
-	locales: {
-		es: "`INC`: actualiza la Bandera Zero",
-	},
-	use: ({ id }, book) => id >= book.getId("4.11"),
-});
-
-it("`INC`: sets the Negative Flag", () => {
-	const cpu = newCPU();
-	const instructions = mainModule.default.instructions;
-
-	cpu.memory.write(0x1234, 244);
-	instructions.INC.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(245);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
-})({
-	locales: {
-		es: "`INC`: actualiza la Bandera Negative",
-	},
-	use: ({ id }, book) => id >= book.getId("4.11"),
-});
-
 it("`ADC`: argument == 'value'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("ADC");
@@ -222,6 +128,220 @@ it("`ADC`: updates the Carry and Overflow flags", () => {
 })({
 	locales: {
 		es: "`ADC`: actualiza las banderas Carry y Overflow",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ASL`: argument == 'address'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("ASL");
+	expect(instructions.ASL).to.be.an("object");
+	instructions.ASL.argument.should.equal("address");
+})({
+	locales: {
+		es: "`ASL`: argument == 'address'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ASL`: multiplies the value by 2", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 12);
+	instructions.ASL.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(24);
+	cpu.flags.c.should.equal(false);
+})({
+	locales: {
+		es: "`ASL`: multiplica el valor por dos",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ASL`: fills the Carry Flag with bit 7", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 0b11000000);
+	instructions.ASL.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(0b10000000);
+	cpu.flags.c.should.equal(true);
+})({
+	locales: {
+		es: "`ASL`: llena la Bandera Carry con el bit 7",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`ASL`: updates the Zero and Negative flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 0b11000000);
+	instructions.ASL.run(cpu, 0x1234);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+
+	cpu.memory.write(0x1234, 0);
+	instructions.ASL.run(cpu, 0x1234);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+})({
+	locales: {
+		es: "`ASL`: actualiza las banderas Zero y Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`DEC`: argument == 'address'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("DEC");
+	expect(instructions.DEC).to.be.an("object");
+	instructions.DEC.argument.should.equal("address");
+})({
+	locales: {
+		es: "`DEC`: argument == 'address'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`DEC`: decrements the value", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 9);
+	instructions.DEC.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(8);
+})({
+	locales: {
+		es: "`DEC`: decrementa el valor",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`DEC`: updates the Zero Flag", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 1);
+	instructions.DEC.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(0);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+})({
+	locales: {
+		es: "`DEC`: actualiza la Bandera Zero",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`DEC`: updates the Negative Flag", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 0);
+	instructions.DEC.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(255);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+})({
+	locales: {
+		es: "`DEC`: actualiza la Bandera Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`INC`: argument == 'address'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("INC");
+	expect(instructions.INC).to.be.an("object");
+	instructions.INC.argument.should.equal("address");
+})({
+	locales: {
+		es: "`INC`: argument == 'address'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`INC`: increments the value in memory", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 8);
+	instructions.INC.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(9);
+})({
+	locales: {
+		es: "`INC`: incrementa el valor en memoria",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`INC`: sets the Zero Flag", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 255);
+	instructions.INC.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(0);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+})({
+	locales: {
+		es: "`INC`: actualiza la Bandera Zero",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`INC`: sets the Negative Flag", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.memory.write(0x1234, 244);
+	instructions.INC.run(cpu, 0x1234);
+	cpu.memory.read(0x1234).should.equal(245);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+})({
+	locales: {
+		es: "`INC`: actualiza la Bandera Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`INX`: argument == 'no'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("INX");
+	expect(instructions.INX).to.be.an("object");
+	instructions.INX.argument.should.equal("no");
+})({
+	locales: {
+		es: "`INX`: argument == 'no'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
+it("`INX`: increments the [X] register and updates the flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.x.setValue(255);
+	instructions.INX.run(cpu);
+
+	cpu.x.getValue().should.equal(0);
+	cpu.flags.z.should.equal(true);
+	cpu.flags.n.should.equal(false);
+
+	cpu.x.setValue(244);
+	instructions.INX.run(cpu);
+
+	cpu.x.getValue().should.equal(245);
+	cpu.flags.z.should.equal(false);
+	cpu.flags.n.should.equal(true);
+})({
+	locales: {
+		es: "`INX`: incrementa el registro [X] y actualiza las banderas",
 	},
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
