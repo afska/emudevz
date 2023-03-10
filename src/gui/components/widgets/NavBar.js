@@ -7,7 +7,7 @@ import _ from "lodash";
 import locales from "../../../locales";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
-import VolumeSlider from "./VolumeSlider";
+// import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
@@ -34,9 +34,9 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
-						<div className={styles.slider}>
+						{/* <div className={styles.slider}>
 							<VolumeSlider navBarMode />
-						</div>
+						</div> */}
 						{!level.memory.content.multifile && (
 							<IconButton
 								style={{ marginLeft: 8 }}

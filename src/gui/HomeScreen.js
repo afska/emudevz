@@ -45,11 +45,12 @@ class HomeScreen extends PureComponent {
 				/>
 
 				<div id="ui" className={styles.ui}>
+					<h3 style={{ marginBottom: 24 }}>Demo</h3>
 					<div className={styles.box}>{locales.get("plot")}</div>
 
 					<div className={styles.buttons}>
 						<Button onClick={play}>{locales.get("button_play")}</Button>
-						<Button>{locales.get("button_chapter_selection")}</Button>
+						{/* <Button>{locales.get("button_chapter_selection")}</Button> */}
 						<Button onClick={this._openSettings}>
 							{locales.get("button_settings")}
 						</Button>
