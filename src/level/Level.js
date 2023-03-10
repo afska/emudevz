@@ -5,6 +5,7 @@ import layouts from "../gui/components/layouts";
 import locales from "../locales";
 import store from "../store";
 import { theme } from "../terminal/style";
+import { analytics } from "../utils";
 import bus from "../utils/bus";
 import Book from "./Book";
 import ChatScript from "./chat/ChatScript";
@@ -107,7 +108,12 @@ export default class Level {
 		}
 
 		if (!store.dispatch.savedata.advance(this.id)) {
-			alert("That's all I have 😅");
+			const feedback = prompt(
+				"That's all I have 😅\nPut your feedback here - it will be sent to Mixpanel, so please disable your adblocker first (:"
+			);
+			analytics.track("feedback", {
+				data: feedback,
+			});
 			store.dispatch.level.goHome();
 		}
 	}

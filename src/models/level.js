@@ -1,4 +1,5 @@
 import { push, replace } from "connected-react-router";
+import { analytics } from "../utils";
 
 const KEY = "level";
 const INITIAL_STATE = () => ({
@@ -25,6 +26,9 @@ export default {
 
 		return {
 			goTo(levelId) {
+				analytics.track("level", {
+					id: levelId,
+				});
 				_dispatch_(push(`/levels/${levelId}?r=${Math.random()}`));
 			},
 

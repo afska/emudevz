@@ -2,7 +2,7 @@ import _ from "lodash";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
-import { bus } from "../../../utils";
+import { analytics, bus } from "../../../utils";
 import { cliCodeHighlighter } from "../../../utils/cli";
 import theme from "../../style/theme";
 import Command from "../Command";
@@ -33,7 +33,7 @@ export default class TestCommand extends Command {
 				warnings = testContext[context]?.getWarnings(level);
 			} catch (e) {}
 
-			const overallResult = { allGreen: true };
+			const overallResult = { allGreen: true, passCount: 0, failCount: 0 };
 			const hasMultipleTests = _.keys(level.tests).length > 1;
 
 			let testFiles = _.keys(level.tests);
@@ -74,6 +74,13 @@ export default class TestCommand extends Command {
 						)
 					);
 			}
+
+			analytics.track("test_results", {
+				levelId: level.id,
+				passed: overallResult.allGreen,
+				passCount: overallResult.passCount,
+				failCount: overallResult.failCount,
+			});
 
 			if (overallResult.allGreen) {
 				await this._terminal.writeln(locales.get("tests_success"));
@@ -133,7 +140,8 @@ export default class TestCommand extends Command {
 		if (!result.passed) {
 			await this._terminal.newline();
 			overallResult.allGreen = false;
-		}
+			overallResult.failCount++;
+		} else overallResult.passCount++;
 
 		await this._terminal.writehlln(`${emoji} ${result.name}`);
 
