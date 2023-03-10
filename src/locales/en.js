@@ -5,6 +5,8 @@ export default {
 	button_settings: "Settings",
 	bytes: "bytes",
 	cancel: "Cancel",
+	chapter_next: "Go to next chapter",
+	chapter_previous: "Go to previous chapter",
 	choose_an_answer: "Choose an answer.",
 	command_chat_already_open: "Already open.",
 	command_chat_description: "Runs the chat app.",

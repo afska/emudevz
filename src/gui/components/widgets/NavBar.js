@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import Badge from "react-bootstrap/Badge";
-import { FaChevronLeft, FaTrash } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaHome, FaTrash } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
@@ -12,7 +12,7 @@ import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
 	render() {
-		const { maxLevelId, chapter, level, goBack, resetLevel } = this.props;
+		const { maxLevelId, chapter, level, goBack, goTo, resetLevel } = this.props;
 
 		const levelIndex = _.findIndex(chapter.levels, (it) => it.id === level.id);
 
@@ -20,10 +20,17 @@ class NavBar extends PureComponent {
 			<div className={styles.navbar}>
 				<div className={classNames(styles.item, styles.text)}>
 					<IconButton
-						Icon={FaChevronLeft}
+						Icon={FaHome}
 						tooltip={locales.get("goBack")}
 						onClick={goBack}
 					/>
+					{_.first(chapter.levels).id > 0 && (
+						<IconButton
+							Icon={FaChevronLeft}
+							tooltip={locales.get("chapter_previous")}
+							onClick={() => goTo(_.first(chapter.levels).id - 1)}
+						/>
+					)}
 					<span>
 						{chapter.number}.{levelIndex + 1} / {chapter.name[locales.language]}{" "}
 						/ {level.name[locales.language]}
@@ -45,6 +52,13 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
+						{maxLevelId > _.last(chapter.levels).id && (
+							<IconButton
+								Icon={FaChevronRight}
+								tooltip={locales.get("chapter_next")}
+								onClick={() => goTo(_.last(chapter.levels).id + 1)}
+							/>
+						)}
 					</div>
 				</div>
 				<div className={styles.item}>
@@ -61,6 +75,7 @@ class NavBar extends PureComponent {
 
 const mapDispatchToProps = ({ level }) => ({
 	goBack: level.goHome,
+	goTo: level.goTo,
 	resetLevel: level.resetProgress,
 });
 

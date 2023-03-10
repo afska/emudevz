@@ -5,6 +5,8 @@ export default {
 	button_settings: "Opciones",
 	bytes: "bytes",
 	cancel: "Cancelar",
+	chapter_next: "Ir al siguiente capítulo",
+	chapter_previous: "Ir al capítulo anterior",
 	choose_an_answer: "Elige una respuesta.",
 	command_chat_already_open: "Ya abierto.",
 	command_chat_description: "Ejecuta la app de chat.",
