@@ -108,12 +108,7 @@ export default class Level {
 		}
 
 		if (!store.dispatch.savedata.advance(this.id)) {
-			const feedback = prompt(
-				"That's all I have 😅\nPut your feedback here - it will be sent to Mixpanel, so please disable your adblocker first (:"
-			);
-			analytics.track("feedback", {
-				data: feedback,
-			});
+			analytics.requestFeedback("demo_end", "That's all I have 😅");
 			store.dispatch.level.goHome();
 		}
 	}

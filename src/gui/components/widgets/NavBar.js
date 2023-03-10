@@ -1,10 +1,17 @@
 import React, { PureComponent } from "react";
 import Badge from "react-bootstrap/Badge";
-import { FaChevronLeft, FaChevronRight, FaHome, FaTrash } from "react-icons/fa";
+import {
+	FaChevronLeft,
+	FaChevronRight,
+	FaComment,
+	FaHome,
+	FaTrash,
+} from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
 import locales from "../../../locales";
+import { analytics } from "../../../utils";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
 // import VolumeSlider from "./VolumeSlider";
@@ -44,6 +51,16 @@ class NavBar extends PureComponent {
 						{/* <div className={styles.slider}>
 							<VolumeSlider navBarMode />
 						</div> */}
+						<IconButton
+							Icon={FaComment}
+							tooltip={"Send feedback"}
+							onClick={() =>
+								analytics.requestFeedback(
+									"navbar",
+									"What do you think of the game? 👀"
+								)
+							}
+						/>
 						{!level.memory.content.multifile && (
 							<IconButton
 								style={{ marginLeft: 8 }}
