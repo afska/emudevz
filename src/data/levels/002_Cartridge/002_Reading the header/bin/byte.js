@@ -58,10 +58,8 @@ export default {
 
   /** Inserts a `value` of `size` bits inside a `byte`, starting at `startPosition`. */
   setBits(byte, startPosition, size, value) {
-    let newByte = byte;
-    for (let i = startPosition; i < startPosition + size; i++)
-      newByte &= ~(1 << i);
-    return newByte | (value << startPosition);
+		const mask = ((1 << size) - 1) << startPosition;
+		return (byte & ~mask) | ((value << startPosition) & mask);
   },
 
   /** Returns the most significant byte of `u16`. */
