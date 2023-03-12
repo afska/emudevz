@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Instructions (3/6): Checks",
-		"es": "Instrucciones (3/6): Verificaciones"
+		"en": "Instructions (5/6): Branching",
+		"es": "Instrucciones (5/6): Bifurcaciones"
 	},
 	"ui": {
 		"layout": "dual",
@@ -24,8 +24,16 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": ["cartridge.js", "cpu.js", "cpu_instructions_3.js"],
-		"mainTestFile": "cpu_instructions_3.js"
+		"inherit": [
+			"cartridge.js",
+			"cpu.js",
+			"cpu_instructions_1.js",
+			"cpu_instructions_2.js",
+			"cpu_instructions_3.js",
+			"cpu_instructions_4.js",
+			"cpu_instructions_5.js"
+		],
+		"mainTestFile": "cpu_instructions_5.js"
 	},
 	"memory": {
 		"content": {

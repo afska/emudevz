@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Instructions (4/6): Logical",
-		"es": "Instrucciones (4/6): Lógicas"
+		"en": "Instructions (3/6): Checks",
+		"es": "Instrucciones (3/6): Verificaciones"
 	},
 	"ui": {
 		"layout": "dual",
@@ -24,8 +24,14 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": ["cartridge.js", "cpu.js", "cpu_instructions_4.js"],
-		"mainTestFile": "cpu_instructions_4.js"
+		"inherit": [
+			"cartridge.js",
+			"cpu.js",
+			"cpu_instructions_1.js",
+			"cpu_instructions_2.js",
+			"cpu_instructions_3.js"
+		],
+		"mainTestFile": "cpu_instructions_3.js"
 	},
 	"memory": {
 		"content": {

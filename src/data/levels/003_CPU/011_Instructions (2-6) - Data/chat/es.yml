@@ -1,0 +1,9 @@
+---
+main:
+  messages:
+  - las instrucciones de datos son muy simples
+  - como el nombre sugiere, se tratan de guardar y mover datos 😉
+  - 📚  implementa todas las instrucciones de datos en tu objeto `instructions`!
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu_instructions.es.md");
+  responses: []

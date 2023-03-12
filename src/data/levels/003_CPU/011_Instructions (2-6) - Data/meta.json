@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Instructions (6/6): System",
-		"es": "Instrucciones (6/6): Sistema"
+		"en": "Instructions (2/6): Data",
+		"es": "Instrucciones (2/6): Datos"
 	},
 	"ui": {
 		"layout": "dual",
@@ -24,8 +24,13 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": ["cartridge.js", "cpu.js", "cpu_instructions_6.js"],
-		"mainTestFile": "cpu_instructions_6.js"
+		"inherit": [
+			"cartridge.js",
+			"cpu.js",
+			"cpu_instructions_1.js",
+			"cpu_instructions_2.js"
+		],
+		"mainTestFile": "cpu_instructions_2.js"
 	},
 	"memory": {
 		"content": {

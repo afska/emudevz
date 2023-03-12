@@ -31,4 +31,407 @@ const newCPU = (prgBytes = null) => {
 	return new CPU(cartridge);
 };
 
-// TODO: IMPLEMENT
+// 4.12 Instructions (2/6): Data
+
+[
+	{ instruction: "CLC", flag: "c" },
+	{ instruction: "CLD", flag: "d" },
+	{ instruction: "CLI", flag: "i" },
+	{ instruction: "CLV", flag: "v" },
+].forEach(({ instruction, flag }) => {
+	it("`" + instruction + "`: argument == 'no'", () => {
+		const instructions = mainModule.default.instructions;
+		instructions.should.include.key(instruction);
+		expect(instructions[instruction]).to.be.an("object");
+		instructions[instruction].argument.should.equal("no");
+	})({
+		locales: {
+			es: "`" + instruction + "`: argument == 'no'",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+
+	it(
+		"`" + instruction + "`: clears the " + flag.toUpperCase() + " flag",
+		() => {
+			const cpu = newCPU();
+			const instructions = mainModule.default.instructions;
+
+			cpu.flags[flag] = true;
+			instructions[instruction].run(cpu);
+			cpu.flags[flag].should.equal(false);
+		}
+	)({
+		locales: {
+			es: "`" + instruction + "`: apaga la bandera " + flag.toUpperCase(),
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+});
+
+[
+	{ instruction: "LDA", register: "a" },
+	{ instruction: "LDX", register: "x" },
+	{ instruction: "LDY", register: "y" },
+].forEach(({ instruction, register }) => {
+	it("`" + instruction + "`: argument == 'value'", () => {
+		const instructions = mainModule.default.instructions;
+		instructions.should.include.key(instruction);
+		expect(instructions[instruction]).to.be.an("object");
+		instructions[instruction].argument.should.equal("value");
+	})({
+		locales: {
+			es: "`" + instruction + "`: argument == 'value'",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+
+	it(
+		"`" +
+			instruction +
+			"`: loads [" +
+			register.toUpperCase() +
+			"] (positive value)",
+		() => {
+			const cpu = newCPU();
+			const instructions = mainModule.default.instructions;
+
+			instructions[instruction].run(cpu, 5);
+			cpu[register].getValue().should.equal(5);
+			cpu.flags.z.should.equal(false);
+			cpu.flags.n.should.equal(false);
+		}
+	)({
+		locales: {
+			es:
+				"`" +
+				instruction +
+				"`: carga [" +
+				register.toUpperCase() +
+				"] (valor positivo)",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+
+	it(
+		"`" +
+			instruction +
+			"`: loads [" +
+			register.toUpperCase() +
+			"] (negative value)",
+		() => {
+			const cpu = newCPU();
+			const instructions = mainModule.default.instructions;
+
+			const value = byte.toU8(-5);
+			instructions[instruction].run(cpu, value);
+			cpu[register].getValue().should.equal(value);
+			cpu.flags.z.should.equal(false);
+			cpu.flags.n.should.equal(true);
+		}
+	)({
+		locales: {
+			es:
+				"`" +
+				instruction +
+				"`: loads [" +
+				register.toUpperCase() +
+				"] (valor negativo)",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+
+	it(
+		"`" +
+			instruction +
+			"`: loads [" +
+			register.toUpperCase() +
+			"] (zero value)",
+		() => {
+			const cpu = newCPU();
+			const instructions = mainModule.default.instructions;
+
+			instructions[instruction].run(cpu, 0);
+			cpu[register].getValue().should.equal(0);
+			cpu.flags.z.should.equal(true);
+			cpu.flags.n.should.equal(false);
+		}
+	)({
+		locales: {
+			es:
+				"`" +
+				instruction +
+				"`: carga [" +
+				register.toUpperCase() +
+				"] (valor cero)",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+});
+
+it("`PHA`: argument == 'no'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("PHA");
+	expect(instructions.PHA).to.be.an("object");
+	instructions.PHA.argument.should.equal("no");
+})({
+	locales: {
+		es: "`PHA`: argument == 'no'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.12"),
+});
+
+it("`PHA`: pushes [A] into the stack", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.a.setValue(88);
+	instructions.PHA.run(cpu);
+	cpu.stack.pop().should.equal(88);
+})({
+	locales: {
+		es: "`PHA`: pone [A] en la pila",
+	},
+	use: ({ id }, book) => id >= book.getId("4.12"),
+});
+
+it("`PHP`: argument == 'no'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("PHP");
+	expect(instructions.PHP).to.be.an("object");
+	instructions.PHP.argument.should.equal("no");
+})({
+	locales: {
+		es: "`PHP`: argument == 'no'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.12"),
+});
+
+it("`PHP`: pushes the flags into the stack", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.flags.c = true;
+	cpu.flags.z = false;
+	cpu.flags.i = false;
+	cpu.flags.d = false;
+	cpu.flags.v = true;
+	cpu.flags.n = false;
+	instructions.PHP.run(cpu);
+	cpu.stack.pop().should.equal(0b01110001);
+})({
+	locales: {
+		es: "`PHP`: pone las banderas en la pila",
+	},
+	use: ({ id }, book) => id >= book.getId("4.12"),
+});
+
+it("`PLA`: argument == 'no'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("PLA");
+	expect(instructions.PLA).to.be.an("object");
+	instructions.PLA.argument.should.equal("no");
+})({
+	locales: {
+		es: "`PLA`: argument == 'no'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.12"),
+});
+
+it("`PLA`: sets [A] with a value from the stack", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.stack.push(76);
+	instructions.PLA.run(cpu);
+	cpu.a.getValue().should.equal(76);
+})({
+	locales: {
+		es: "`PLA`: asigna [A] con un valor de la pila",
+	},
+	use: ({ id }, book) => id >= book.getId("4.12"),
+});
+
+it("`PLP`: argument == 'no'", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.should.include.key("PLP");
+	expect(instructions.PLP).to.be.an("object");
+	instructions.PLP.argument.should.equal("no");
+})({
+	locales: {
+		es: "`PLP`: argument == 'no'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.12"),
+});
+
+it("`PLP`: sets the flags with a value from the stack", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.stack.push(0b01000101);
+	instructions.PLP.run(cpu);
+	cpu.flags.should.include({
+		n: false,
+		v: true,
+		d: false,
+		i: true,
+		z: false,
+		c: true,
+	});
+})({
+	locales: {
+		es: "`PLP`: asigna las banderas con un valor de la pila",
+	},
+	use: ({ id }, book) => id >= book.getId("4.12"),
+});
+
+[
+	{ instruction: "SEC", flag: "c" },
+	{ instruction: "SED", flag: "d" },
+	{ instruction: "SEI", flag: "i" },
+].forEach(({ instruction, flag }) => {
+	it("`" + instruction + "`: argument == 'no'", () => {
+		const instructions = mainModule.default.instructions;
+		instructions.should.include.key(instruction);
+		expect(instructions[instruction]).to.be.an("object");
+		instructions[instruction].argument.should.equal("no");
+	})({
+		locales: {
+			es: "`" + instruction + "`: argument == 'no'",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+
+	it("`" + instruction + "`: sets the " + flag.toUpperCase() + " flag", () => {
+		const cpu = newCPU();
+		const instructions = mainModule.default.instructions;
+
+		cpu.flags[flag] = false;
+		instructions[instruction].run(cpu);
+		cpu.flags[flag].should.equal(true);
+	})({
+		locales: {
+			es: "`" + instruction + "`: enciende la bandera " + flag.toUpperCase(),
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+});
+
+[
+	{ instruction: "STA", register: "a" },
+	{ instruction: "STX", register: "x" },
+	{ instruction: "STY", register: "y" },
+].forEach(({ instruction, register }) => {
+	it("`" + instruction + "`: argument == 'address'", () => {
+		const instructions = mainModule.default.instructions;
+		instructions.should.include.key(instruction);
+		expect(instructions[instruction]).to.be.an("object");
+		instructions[instruction].argument.should.equal("address");
+	})({
+		locales: {
+			es: "`" + instruction + "`: argument == 'address'",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+
+	it(
+		"`" +
+			instruction +
+			"`: writes [" +
+			register.toUpperCase() +
+			"] to the memory address",
+		() => {
+			const cpu = newCPU();
+			const instructions = mainModule.default.instructions;
+
+			cpu[register].setValue(123);
+			instructions[instruction].run(cpu, 0x1349);
+			cpu.memory.read(0x1349).should.equal(123);
+		}
+	)({
+		locales: {
+			es:
+				"`" +
+				instruction +
+				"`: escribe [" +
+				register.toUpperCase() +
+				"] en la dirección de memoria",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+});
+
+[
+	{
+		instruction: "TAX",
+		sourceRegister: "a",
+		targetRegister: "x",
+	},
+	{
+		instruction: "TAY",
+		sourceRegister: "a",
+		targetRegister: "y",
+	},
+	{
+		instruction: "TSX",
+		sourceRegister: "sp",
+		targetRegister: "x",
+	},
+	{
+		instruction: "TXA",
+		sourceRegister: "x",
+		targetRegister: "a",
+	},
+	{
+		instruction: "TXS",
+		sourceRegister: "x",
+		targetRegister: "sp",
+	},
+	{
+		instruction: "TYA",
+		sourceRegister: "y",
+		targetRegister: "a",
+	},
+].forEach(({ instruction, sourceRegister, targetRegister }) => {
+	it("`" + instruction + "`: argument == 'no'", () => {
+		const instructions = mainModule.default.instructions;
+		instructions.should.include.key(instruction);
+		expect(instructions[instruction]).to.be.an("object");
+		instructions[instruction].argument.should.equal("no");
+	})({
+		locales: {
+			es: "`" + instruction + "`: argument == 'no'",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+
+	it(
+		"`" +
+			instruction +
+			"`: transfers the value from [" +
+			sourceRegister.toUpperCase() +
+			"] to [" +
+			targetRegister.toUpperCase() +
+			"]",
+		() => {
+			const cpu = newCPU();
+			const instructions = mainModule.default.instructions;
+
+			cpu[sourceRegister].setValue(123);
+			instructions[instruction].run(cpu);
+			cpu[targetRegister].getValue().should.equal(123);
+		}
+	)({
+		locales: {
+			es:
+				"`" +
+				instruction +
+				"`: transfiere el valor de [" +
+				sourceRegister.toUpperCase() +
+				"] a [" +
+				targetRegister.toUpperCase() +
+				"]",
+		},
+		use: ({ id }, book) => id >= book.getId("4.12"),
+	});
+});
