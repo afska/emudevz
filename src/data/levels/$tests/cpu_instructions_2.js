@@ -52,7 +52,7 @@ const newCPU = (prgBytes = null) => {
 	});
 
 	it(
-		"`" + instruction + "`: clears the " + flag.toUpperCase() + " flag",
+		"`" + instruction + "`: clears the ~" + flag.toUpperCase() + "~ flag",
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -63,7 +63,8 @@ const newCPU = (prgBytes = null) => {
 		}
 	)({
 		locales: {
-			es: "`" + instruction + "`: apaga la bandera " + flag.toUpperCase(),
+			es:
+				"`" + instruction + "`: apaga la bandera ~" + flag.toUpperCase() + "~",
 		},
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});
@@ -302,16 +303,24 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});
 
-	it("`" + instruction + "`: sets the " + flag.toUpperCase() + " flag", () => {
-		const cpu = newCPU();
-		const instructions = mainModule.default.instructions;
+	it(
+		"`" + instruction + "`: sets the ~" + flag.toUpperCase() + "~ flag",
+		() => {
+			const cpu = newCPU();
+			const instructions = mainModule.default.instructions;
 
-		cpu.flags[flag] = false;
-		instructions[instruction].run(cpu);
-		cpu.flags[flag].should.equal(true);
-	})({
+			cpu.flags[flag] = false;
+			instructions[instruction].run(cpu);
+			cpu.flags[flag].should.equal(true);
+		}
+	)({
 		locales: {
-			es: "`" + instruction + "`: enciende la bandera " + flag.toUpperCase(),
+			es:
+				"`" +
+				instruction +
+				"`: enciende la bandera ~" +
+				flag.toUpperCase() +
+				"~",
 		},
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});

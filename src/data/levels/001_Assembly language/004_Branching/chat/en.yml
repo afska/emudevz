@@ -97,7 +97,7 @@ exercise:
   - then, run the `test` command
   responses:
   - wait, how do I test this? 🧪 [testing]
-  - I need help [help]
+  - I need help 😅 [help]
 
 testing:
   messages:

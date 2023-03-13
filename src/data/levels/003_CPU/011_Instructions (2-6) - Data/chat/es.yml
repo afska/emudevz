@@ -7,7 +7,7 @@ main:
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu_instructions.es.md");
   responses:
-  - necesito ayuda con `PHP` [php]
+  - necesito ayuda con `PHP` 😅 [php]
 
 php:
   messages:
@@ -17,7 +17,7 @@ php:
 
 inst:
   messages:
-  - claro, disculpa...
+  - claro, disculpa... 🤣
   - en `PHP`, tienes que poner un número en la pila
   - ese número es el resultado de llamar a `cpu.flags.getValue()`
   - pero tendrías que poner su bit 4 en 1 (usa `byte.setBit(flags, 4, 1)`)

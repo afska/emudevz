@@ -97,7 +97,7 @@ exercise:
   - luego, ejecuta el comando `test`
   responses:
   - momento, ¿cómo pruebo esto? 🧪 [testing]
-  - necesito ayuda [help]
+  - necesito ayuda 😅 [help]
 
 testing:
   messages:

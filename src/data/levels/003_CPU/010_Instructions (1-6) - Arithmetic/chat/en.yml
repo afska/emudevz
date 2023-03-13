@@ -21,4 +21,37 @@ howmany:
   - so check out 📄  ~/docs/cpu_instructions.en.md~
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu_instructions.en.md");
-  responses: []
+  responses:
+  - I need help moving bits 😅 [bits]
+  - I need help updating the Z and N flags 😅 [flags]
+
+bits:
+  messages:
+  - use the ~<<~ operator to move bits to the left, and ~>>~ to move bits to the right
+  - for example
+  - ~0b00001100 << 1~ would produce ~0b00011000~
+  - and ~0b01000001 >> 1~ would produce ~0b00100000~
+  responses:
+  - that's how you shift bits, what about rotation? [rotation]
+
+rotation:
+  messages:
+  - to rotate bits to the right (let's say, ~0b00000001 >> 1~), you have to put bit 0 (which gets lost after the shift) in the last position (bit 7) 
+  - |-
+    so, if you have a `number`, you can do:
+      ```javascript byte.setBit(number >> 1, 7, byte.getBit(number, 0))```
+  - |-
+    or, without using the byte library:
+      ```javascript (number >> 1) | ((number & 1) << 7)```
+  - note that this is not what `ROL` or `ROR` do, as they rotate using the ~C~ flag
+  responses:
+  - ...howmany
+
+flags:
+  messages:
+  - in almost all instructions that produce a value, the ~Z~ and ~N~ flags are updated
+  - you should set ~Z=1~ when the produced value is 0, and ~Z=0~ when it's not
+  - also, set ~N=1~ when the byte is negative, and ~N=0~ when it's not
+  - you already have methods for this task, just use `cpu.flags.updateZeroAndNegative(...)`!
+  responses:
+  - ...howmany

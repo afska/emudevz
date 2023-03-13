@@ -21,4 +21,37 @@ howmany:
   - así que revisa 📄  ~/docs/cpu_instructions.es.md~
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu_instructions.es.md");
-  responses: []
+  responses:
+  - necesito ayuda para mover bits 😅 [bits]
+  - necesito ayuda para actualizar las banderas Z y N 😅 [flags]
+
+bits:
+  messages:
+  - usa el operador ~<<~ para mover bits a la izquierda, y ~>>~ para mover bits a la derecha
+  - por ejemplo
+  - ~0b00001100 << 1~ produciría ~0b00011000~
+  - y ~0b01000001 >> 1~ produciría ~0b00100000~
+  responses:
+  - así es como mueves bits, ¿pero cómo los rotarías? [rotation]
+
+rotation:
+  messages:
+  - para rotar bits a la derecha (digamos, ~0b00000001 >> 1~), tienes que poner el bit 0 (que se pierde luego de mover los bits) en la última posición (bit 7) 
+  - |-
+    por lo que, si tienes un `number`, puedes hacer:
+      ```javascript byte.setBit(number >> 1, 7, byte.getBit(number, 0))```
+  - |-
+    o, sin usar la biblioteca de bytes:
+      ```javascript (number >> 1) | ((number & 1) << 7)```
+  - ten en cuenta que así no es como funcionan `ROL` y `ROR`, ya que esas rotan usando la bandera ~C~
+  responses:
+  - ...howmany
+
+flags:
+  messages:
+  - en casi todas las instrucciones que producen un valor, las banderas ~Z~ y ~N~ son actualizadas
+  - deberías asignar ~Z=1~ cuando el valor producido es 0, y ~Z=0~ en caso contrario
+  - y además, asignar ~N=1~ cuando el byte es negativo, y ~N=0~ cuando no lo es
+  - ya tienes métodos para esta tarea, solo usa `cpu.flags.updateZeroAndNegative(...)`!
+  responses:
+  - ...howmany
