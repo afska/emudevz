@@ -1,0 +1,31 @@
+LDA #$01    ; Loads the number $01 into the [A] register
+LDA $01     ; Loads the value of address $0001 into [A]
+LDA $1F4B   ; Loads the value of address $1F4B into [A]
+STA $4070   ; Writes [A] to address $4070
+STA $60,X   ; Writes [A] to address $60+[X]
+STA $2030,X ; Writes [A] to address $2030+[X]
+STA ($01,X) ; = STA ($01+X)
+STA ($03),Y ; = STA ($03)+Y
+  ; [X] and [Y] variants: LDX, STX, LDY, STY
+TXA         ; Transfers [X] to [A]
+  ; variants: TAX, TYA, TAY
+ADC #30     ; Adds 30 to [A] (using the Carry Flag)
+SBC #30     ; Substracts 30 from [A] (using the Carry Flag)
+INX         ; Increments [X]
+  ; [Y] variant: INY
+DEX         ; Decrements [X]
+  ; [Y] variant: DEY
+@jump:      ; Defines a label that can be referenced later
+CPX #3      ; Sets Z=1 if [X] == 3
+  ; [Y] variant: CPY
+BEQ @jump   ; Jumps to @jump if Z == 1
+BNE @jump   ; Jumps to @jump if Z == 0
+JMP $4030   ; Jumps to $4030 (sets [PC] = $4030)
+JMP ($4030) ; Jumps to an address made by $4030 and $4031
+PHA         ; Pushes [A] onto the Stack
+PLA         ; Pulls from the Stack to [A]
+JSR $4029   ; Jumps to subroutine in $4029
+
+RTS         ; Jumps back to the previous instruction
+
+BRK         ; Ends the program
