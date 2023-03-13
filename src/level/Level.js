@@ -108,7 +108,10 @@ export default class Level {
 		}
 
 		if (!store.dispatch.savedata.advance(this.id)) {
-			analytics.requestFeedback("demo_end", "That's all I have 😅");
+			analytics.requestFeedback(
+				"demo_end",
+				"That's all I have 😅\nAny feedback? 👀"
+			);
 			store.dispatch.level.goHome();
 		}
 	}

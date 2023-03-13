@@ -6,7 +6,7 @@ export default {
 	requestFeedback(type, message) {
 		const feedback = prompt(
 			message +
-				"\nPut your feedback here - it will be sent to Mixpanel, so please disable your adblocker first (:"
+				"\n\nThis will be sent to Mixpanel, so please disable your adblocker first 🙏\nI won't show any ads!"
 		);
 		if (feedback) {
 			this.track("feedback", {
