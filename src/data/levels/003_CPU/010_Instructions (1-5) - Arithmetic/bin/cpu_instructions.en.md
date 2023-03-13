@@ -74,6 +74,8 @@
 | `RTI` | Return from Interrupt    | 🚫  | Pulls the flags register from the stack, then pulls `[PC]` from the stack.      |
 | `RTS` | Return from Subroutine   | 🚫  | Pulls `[PC]` (plus one) from the stack.                                         |
 
+All **conditional** branching instructions must increment `cpu.extraCycles` if they branch.
+
 #### 🧙‍♂️ System
 
 | Code  | Name            | Arg | Description                                                                                                                                                                                |

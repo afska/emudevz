@@ -74,6 +74,8 @@
 | `RTI`  | Retornar desde Interrupción | 🚫  | Saca el registro de banderas de la pila, luego saca `[PC]` de la pila. |
 | `RTS`  | Retornar desde Subrutina    | 🚫  | Saca `[PC]` (más uno) de la pila.                                      |
 
+Todas las instrucciones de bifurcación **condicionales** deben incrementar `cpu.extraCycles` si saltan.
+
 #### 🧙‍♂️ Sistema
 
 | Código | Nombre              | Arg | Descripción                                                                                                                                                                                                  |

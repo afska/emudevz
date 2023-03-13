@@ -66,7 +66,7 @@ const newCPU = (prgBytes = null) => {
 			cpu.flags[flag] = false;
 			instructions[instruction].run(cpu, 0x2000);
 			cpu.pc.getValue().should.equal(0x2000);
-			// cpu.extraCycles.should.equal(1); // TODO: TEST EXTRA CYCLES
+			cpu.extraCycles.should.equal(1);
 		}
 	)({
 		locales: {
@@ -89,11 +89,11 @@ const newCPU = (prgBytes = null) => {
 			const instructions = mainModule.default.instructions;
 			cpu.pc.setValue(0x1000);
 
-			// cpu.extraCycles = 3;  // TODO: TEST EXTRA CYCLES
+			cpu.extraCycles = 3;
 			cpu.flags[flag] = true;
 			instructions[instruction].run(cpu, 0x2000);
 			cpu.pc.getValue().should.equal(0x1000);
-			// cpu.extraCycles.should.equal(0); // TODO: TEST EXTRA CYCLES
+			cpu.extraCycles.should.equal(3);
 		}
 	)({
 		locales: {
@@ -138,7 +138,7 @@ const newCPU = (prgBytes = null) => {
 			cpu.flags[flag] = true;
 			instructions[instruction].run(cpu, 0x2000);
 			cpu.pc.getValue().should.equal(0x2000);
-			// cpu.extraCycles.should.equal(1); // TODO: TEST EXTRA CYCLES
+			cpu.extraCycles.should.equal(1);
 		}
 	)({
 		locales: {
@@ -161,11 +161,11 @@ const newCPU = (prgBytes = null) => {
 			const instructions = mainModule.default.instructions;
 			cpu.pc.setValue(0x1000);
 
-			// cpu.extraCycles = 3; // TODO: TEST EXTRA CYCLES
+			cpu.extraCycles = 3;
 			cpu.flags[flag] = false;
 			instructions[instruction].run(cpu, 0x2000);
 			cpu.pc.getValue().should.equal(0x1000);
-			// cpu.extraCycles.should.equal(0); // TODO: TEST EXTRA CYCLES
+			cpu.extraCycles.should.equal(3);
 		}
 	)({
 		locales: {
