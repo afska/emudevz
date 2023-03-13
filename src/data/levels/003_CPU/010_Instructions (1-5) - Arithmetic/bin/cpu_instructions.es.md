@@ -74,7 +74,7 @@
 | `RTI`  | Retornar desde Interrupción | 🚫  | Saca el registro de banderas de la pila, luego saca `[PC]` de la pila. |
 | `RTS`  | Retornar desde Subrutina    | 🚫  | Saca `[PC]` (más uno) de la pila.                                      |
 
-#### 💻 Sistema
+#### 🧙‍♂️ Sistema
 
 | Código | Nombre              | Arg | Descripción                                                                                                                                                                                                  |
 | ------ | ------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
