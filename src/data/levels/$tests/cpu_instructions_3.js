@@ -70,9 +70,9 @@ it("`BIT`: argument == 'value'", () => {
 	)({
 		locales: {
 			es:
-				"`BIT`: actualiza las banderas ~Z~, ~N~, and ~V~ con [A] = ~0b" +
+				"`BIT`: actualiza las banderas ~Z~, ~N~, y ~V~ con [A] = ~0b" +
 				mask.toString(2).padStart(8, "0") +
-				"~ and value = ~0b" +
+				"~ y value = ~0b" +
 				value.toString(2).padStart(8, "0") +
 				"~",
 		},
@@ -212,8 +212,10 @@ it("`BIT`: argument == 'value'", () => {
 	it(
 		"`" +
 			instruction +
-			"`: funciona con " +
-			`${value1.toString(2).padStart(8, "0")} ${symbol} ${value2
+			"`: " +
+			`works with ${value1
+				.toString(2)
+				.padStart(8, "0")} ${symbol} ${value2
 				.toString(2)
 				.padStart(8, "0")} => ${result.toString(2).padStart(8, "0")}`,
 		() => {
@@ -231,8 +233,10 @@ it("`BIT`: argument == 'value'", () => {
 			es:
 				"`" +
 				instruction +
-				"`: works with " +
-				`${value1.toString(2).padStart(8, "0")} ${symbol} ${value2
+				"`: " +
+				`funciona con ${value1
+					.toString(2)
+					.padStart(8, "0")} ${symbol} ${value2
 					.toString(2)
 					.padStart(8, "0")} => ${result.toString(2).padStart(8, "0")}`,
 		},

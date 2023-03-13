@@ -54,7 +54,7 @@ const newCPU = (prgBytes = null) => {
 	});
 
 	it(
-		"`" + instruction + "`: clears the ~" + flag.toUpperCase() + "~ flag",
+		"`" + instruction + "`: " + `clears the ~${flag.toUpperCase()}~ flag`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -66,7 +66,7 @@ const newCPU = (prgBytes = null) => {
 	)({
 		locales: {
 			es:
-				"`" + instruction + "`: apaga la bandera ~" + flag.toUpperCase() + "~",
+				"`" + instruction + "`: " + `apaga la bandera ~${flag.toUpperCase()}~`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});
@@ -92,9 +92,8 @@ const newCPU = (prgBytes = null) => {
 	it(
 		"`" +
 			instruction +
-			"`: loads [" +
-			register.toUpperCase() +
-			"] (positive value)",
+			"`: " +
+			`loads [${register.toUpperCase()}] (positive value)`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -109,9 +108,8 @@ const newCPU = (prgBytes = null) => {
 			es:
 				"`" +
 				instruction +
-				"`: carga [" +
-				register.toUpperCase() +
-				"] (valor positivo)",
+				"`: " +
+				`carga [${register.toUpperCase()}] (valor positivo)`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});
@@ -119,9 +117,8 @@ const newCPU = (prgBytes = null) => {
 	it(
 		"`" +
 			instruction +
-			"`: loads [" +
-			register.toUpperCase() +
-			"] (negative value)",
+			"`: " +
+			`loads [${register.toUpperCase()}] (negative value)`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -137,9 +134,8 @@ const newCPU = (prgBytes = null) => {
 			es:
 				"`" +
 				instruction +
-				"`: loads [" +
-				register.toUpperCase() +
-				"] (valor negativo)",
+				"`: " +
+				`loads [${register.toUpperCase()}] (valor negativo)`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});
@@ -147,9 +143,8 @@ const newCPU = (prgBytes = null) => {
 	it(
 		"`" +
 			instruction +
-			"`: loads [" +
-			register.toUpperCase() +
-			"] (zero value)",
+			"`: " +
+			`loads [${register.toUpperCase()}] (zero value)`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -164,9 +159,8 @@ const newCPU = (prgBytes = null) => {
 			es:
 				"`" +
 				instruction +
-				"`: carga [" +
-				register.toUpperCase() +
-				"] (valor cero)",
+				"`: " +
+				`carga [${register.toUpperCase()}] (valor cero)`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});
@@ -306,7 +300,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 	});
 
 	it(
-		"`" + instruction + "`: sets the ~" + flag.toUpperCase() + "~ flag",
+		"`" + instruction + "`: " + `sets the ~${flag.toUpperCase()}~ flag`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -320,9 +314,8 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 			es:
 				"`" +
 				instruction +
-				"`: enciende la bandera ~" +
-				flag.toUpperCase() +
-				"~",
+				"`: " +
+				`enciende la bandera ~${flag.toUpperCase()}~`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});
@@ -348,9 +341,8 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 	it(
 		"`" +
 			instruction +
-			"`: writes [" +
-			register.toUpperCase() +
-			"] to the memory address",
+			"`: " +
+			`writes [${register.toUpperCase()}] to the memory address`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -364,9 +356,8 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 			es:
 				"`" +
 				instruction +
-				"`: escribe [" +
-				register.toUpperCase() +
-				"] en la dirección de memoria",
+				"`: " +
+				`escribe [${register.toUpperCase()}] en la dirección de memoria`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});
@@ -419,11 +410,8 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 	it(
 		"`" +
 			instruction +
-			"`: transfers the value from [" +
-			sourceRegister.toUpperCase() +
-			"] to [" +
-			targetRegister.toUpperCase() +
-			"]",
+			"`: " +
+			`transfers the value from [${sourceRegister.toUpperCase()}] to [${targetRegister.toUpperCase()}]`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -437,11 +425,8 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 			es:
 				"`" +
 				instruction +
-				"`: transfiere el valor de [" +
-				sourceRegister.toUpperCase() +
-				"] a [" +
-				targetRegister.toUpperCase() +
-				"]",
+				"`: " +
+				`transfiere el valor de [${sourceRegister.toUpperCase()}] a [${targetRegister.toUpperCase()}]`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.12"),
 	});
