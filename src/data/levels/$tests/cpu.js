@@ -5,6 +5,7 @@ beforeEach(async () => {
 	mainModule = await evaluate();
 });
 
+// [!] Duplicated >>>
 const newHeader = (prgPages = 1, chrPages = 1) => {
 	// prettier-ignore
 	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, 0b00000000, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -30,6 +31,7 @@ const newCPU = (prgBytes = null) => {
 
 	return new CPU(cartridge);
 };
+// [!] Duplicated <<<
 
 // 4.1 New CPU
 

@@ -1,5 +1,10 @@
 ---
 main:
   messages:
-  - coming soon!
+  - solo hay 4 verificaciones
+  - son, básicamente, instrucciones que comparan valores con un registro
+  - no creo que necesites ayuda con estas
+  - 📚  ¡implementa todas las instrucciones de verificaciones en tu objeto `instructions`!
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu_instructions.en.md");
   responses: []

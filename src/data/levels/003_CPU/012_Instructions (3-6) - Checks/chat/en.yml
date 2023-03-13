@@ -1,5 +1,10 @@
 ---
 main:
   messages:
-  - coming soon!
+  - there are only 4 checks
+  - they are, basically, instructions that compare values with a register
+  - I don't think you will need help with these
+  - 📚  implement all the check instructions in your `instructions` object!
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu_instructions.en.md");
   responses: []
