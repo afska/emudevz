@@ -178,7 +178,7 @@ it("`PHA`: argument == 'no'", () => {
 	use: ({ id }, book) => id >= book.getId("4.12"),
 });
 
-it("`PHA`: pushes [A] into the stack", () => {
+it("`PHA`: pushes [A] onto the stack", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -204,7 +204,7 @@ it("`PHP`: argument == 'no'", () => {
 	use: ({ id }, book) => id >= book.getId("4.12"),
 });
 
-it("`PHP`: pushes the flags into the stack", () => {
+it("`PHP`: pushes the flags onto the stack", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 

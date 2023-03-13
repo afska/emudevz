@@ -5,12 +5,12 @@ main:
   - |-
     e implementa este método en tu `CPU`:
     **step()**:
-      __lee un byte de la ubicación de memoria apuntada por PC
+      __-> lee un byte de la ubicación de memoria apuntada por PC
         (llamémoslo <opcode>)
-      si <opcode> es 0xe8, emula una instrucción INX
-      si <opcode> es 0xc8, emula una instrucción INY
-      si <opcode> es 0x8a, emula una instrucción TXA
-      caso contrario, tira un error con el mensaje "Invalid opcode."
+      -> si <opcode> es 0xe8, emula una instrucción INX
+      -> si <opcode> es 0xc8, emula una instrucción INY
+      -> si <opcode> es 0x8a, emula una instrucción TXA
+      -> caso contrario, tira un error con el mensaje "Invalid opcode."
       -> luego de emular cualquier instrucción, PC se incrementa__
   - |-
     luego, agrega este método a tu `NEEES`:

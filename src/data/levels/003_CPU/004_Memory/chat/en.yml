@@ -37,10 +37,10 @@ implement:
   - |-
     implement these two methods:
     **read(address)**:
-      __if <address> is in $0000-$07FF, returns the byte from <ram>
-      if <address> is in $0800-$1FFF, returns a mirrored byte from <ram>
+      __-> if <address> is in $0000-$07FF, returns the byte from <ram>
+      -> if <address> is in $0800-$1FFF, returns a mirrored byte from <ram>
         (e.g. $0802 becomes $0002, $1023 becomes $0023)
-      otherwise, returns 0__
+      -> otherwise, returns 0__
     **write(address, value)**:
       __similar to *read*, but writes the <value> instead of returning__
   - |-

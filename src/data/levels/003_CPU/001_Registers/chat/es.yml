@@ -42,10 +42,13 @@ implement:
 nowwhat:
   messages:
   - |-
-    entonces, agrega los registros a tu clase `CPU`, así:
+    entonces, agrega el siguiente constructor a tu clase `CPU`:
     ```javascript
     export default class CPU {
       constructor() {
+        this.cycle = 0;
+        this.extraCycles = 0;
+
         this.a = new Register8Bit();
         this.x = new Register8Bit();
         this.y = new Register8Bit();

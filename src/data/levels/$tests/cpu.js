@@ -48,6 +48,20 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 
 // 4.2 Registers
 
+it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
+	const cpu = newCPU();
+
+	["cycle", "extraCycles"].forEach((property) => {
+		cpu.should.include.key(property);
+		cpu[property].should.equal(0);
+	});
+})({
+	locales: {
+		es: "incluye dos propiedades misteriosas: `cycle` y `extraCycles`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.2"),
+});
+
 it("includes all the registers", () => {
 	const cpu = newCPU();
 
