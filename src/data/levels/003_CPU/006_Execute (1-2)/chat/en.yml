@@ -1,6 +1,8 @@
 ---
 main:
   messages:
+  - we'll implement some opcodes in a very <incorrect> and temporary way
+  - just for fun ✨
   - 📚  change your code so your [PC] register starts from $8000 (where the code is) instead of 0
   - |-
     and implement this method in your `CPU`:
