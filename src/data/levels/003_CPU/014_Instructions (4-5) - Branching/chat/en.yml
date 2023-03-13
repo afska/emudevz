@@ -1,5 +1,9 @@
 ---
 main:
   messages:
-  - coming soon!
+  - branching means changing the value of `[PC]` (the Program Counter)
+  - and that's what most of these instructions do
+  - 📚  implement all the branching instructions in your `instructions` object!
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu_instructions.en.md");
   responses: []
