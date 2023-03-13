@@ -11,9 +11,9 @@ main:
 other62:
   messages:
   - other things, like RAM mirrors, memory-mapped I/O, and the cartridge data
-  - the memory map has a very specific structure, see ~/docs/cpu_memory.en.md~
+  - the memory map has a very specific structure, see ~/docs/cpu/cpu_memory.en.md~
   run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu_memory.en.md");
+    store.dispatch.savedata.openFile("/docs/cpu/cpu_memory.en.md");
   responses:
   - (*) what's "memory-mapped I/O"? 🗺️ [io]
   - 👌  I see... what do I need to implement? [implement]

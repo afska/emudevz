@@ -11,9 +11,9 @@ main:
 other62:
   messages:
   - otras cosas, como espejos de RAM, E/S mapeada en memoria y la información del cartucho
-  - el mapa de memoria tiene una estructura muy específica, mira ~/docs/cpu_memory.es.md~
+  - el mapa de memoria tiene una estructura muy específica, mira ~/docs/cpu/cpu_memory.es.md~
   run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu_memory.es.md");
+    store.dispatch.savedata.openFile("/docs/cpu/cpu_memory.es.md");
   responses:
   - (*) ¿qué es "E/S mapeada en memoria"? 🗺️ [io]
   - 👌  ya veo... ¿qué necesito implementar? [implement]

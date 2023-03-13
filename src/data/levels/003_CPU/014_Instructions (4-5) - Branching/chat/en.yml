@@ -5,5 +5,5 @@ main:
   - and that's what all these instructions do
   - 📚  implement all the branching instructions in your `instructions` object!
   run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu_instructions.en.md");
+    store.dispatch.savedata.openFile("/docs/cpu/instructions.en.md");
   responses: []

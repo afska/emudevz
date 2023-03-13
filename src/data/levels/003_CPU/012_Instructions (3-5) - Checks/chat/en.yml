@@ -6,5 +6,5 @@ main:
   - I don't think you will need help with these
   - 📚  implement all the check instructions in your `instructions` object!
   run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu_instructions.en.md");
+    store.dispatch.savedata.openFile("/docs/cpu/instructions.en.md");
   responses: []
