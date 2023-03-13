@@ -6,4 +6,28 @@ main:
   - 📚  implement all the data instructions in your `instructions` object!
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu_instructions.en.md");
+  responses:
+  - I need help with `PHP` [php]
+
+php:
+  messages:
+  - that language sucks! 🧦
+  responses:
+  - no, I mean the instruction [inst]
+
+inst:
+  messages:
+  - right, sorry...
+  - in `PHP`, you should push a number to the stack
+  - that number is the result of calling `cpu.flags.getValue()`
+  - but you should set its bit 4 to 1 (use `byte.setBit(flags, 4, 1)`)
+  responses:
+  - why? [why]
+
+why:
+  messages:
+  - because that's what the hardware does!
+  - as emulator developers, we don't care about <why> things work in a certain way
+  - we only care about <how> they work 🤷
+  - so you turn that bit 4 on, please
   responses: []

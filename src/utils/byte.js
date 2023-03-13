@@ -51,6 +51,12 @@ export default {
 		return (number >> position) & 1;
 	},
 
+	/** Returns an updated `byte`, with a `bit` changed to `value` (0 or 1). */
+	setBit(byte, bit, value) {
+		const mask = 1 << bit;
+		return (byte & ~mask) | ((value & 0b1) << bit);
+	},
+
 	/** Returns a sub-number of `size` bits inside a `byte`, starting at `startPosition`. */
 	getBits(byte, startPosition, size) {
 		return (byte >> startPosition) & (0xff >> (8 - size));
