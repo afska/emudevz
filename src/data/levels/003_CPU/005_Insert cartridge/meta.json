@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Insert cartridge",
-		"es": "Inserte cartucho"
+		"en": "💾 Insert cartridge",
+		"es": "💾 Inserte cartucho"
 	},
 	"ui": {
 		"layout": "dual",

@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Instructions (1/5): Arithmetic",
-		"es": "Instrucciones (1/5): Aritméticas"
+		"en": "🔢 Instructions (1/5): Arithmetic",
+		"es": "🔢 Instrucciones (1/5): Aritméticas"
 	},
 	"ui": {
 		"run": "copy.js",

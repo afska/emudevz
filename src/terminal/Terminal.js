@@ -55,6 +55,12 @@ export default class Terminal {
 		availableCommands = [],
 		startup = null
 	) {
+		// (add an extra space after emojis)
+		title = title.replace(
+			/(<a?:.+?:\d{18}>|\p{Extended_Pictographic}.?) /u,
+			"$1  "
+		);
+
 		if (title) await this.writeln(title, theme.SYSTEM);
 		if (subtitle) await this.writeln(subtitle, theme.COMMENT);
 		this._shell.availableCommands = availableCommands;

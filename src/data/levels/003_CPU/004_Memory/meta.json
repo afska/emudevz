@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Memory",
-		"es": "Memoria"
+		"en": "🐏 Memory",
+		"es": "🐏 Memoria"
 	},
 	"ui": {
 		"run": "copy.js",

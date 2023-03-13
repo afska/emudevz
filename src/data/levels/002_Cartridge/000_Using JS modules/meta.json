@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Using JS modules",
-		"es": "Usando módulos JS"
+		"en": "📄 Using JS modules",
+		"es": "📄 Usando módulos JS"
 	},
 	"ui": {
 		"run": "copy.js",

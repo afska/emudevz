@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Architecture",
-		"es": "Arquitectura"
+		"en": "🏟️ Architecture",
+		"es": "🏟️ Arquitectura"
 	},
 	"ui": {
 		"layout": "dual",
@@ -10,17 +10,10 @@
 				"console",
 				{
 					"startup": "chat",
-					"availableCommands": [
-						"chat",
-						"clear",
-						"help"
-					]
+					"availableCommands": ["chat", "clear", "help"]
 				}
 			],
-			"Right": [
-				"tv",
-				{}
-			]
+			"Right": ["tv", {}]
 		},
 		"focus": "Left"
 	}

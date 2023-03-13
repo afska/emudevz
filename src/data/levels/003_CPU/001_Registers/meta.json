@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Registers",
-		"es": "Registros"
+		"en": "🔢 Registers",
+		"es": "🔢 Registros"
 	},
 	"ui": {
 		"layout": "dual",

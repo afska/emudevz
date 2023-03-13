@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Now it's your turn",
-		"es": "Ahora es tu turno"
+		"en": "👆 Now it's your turn",
+		"es": "👆 Ahora es tu turno"
 	},
 	"ui": {
 		"layout": "triple",
