@@ -1,9 +1,10 @@
 {
 	"name": {
-		"en": "Instructions (2/6): Data",
-		"es": "Instrucciones (2/6): Datos"
+		"en": "Instructions (1/5): Arithmetic",
+		"es": "Instrucciones (1/5): Aritméticas"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [
@@ -24,13 +25,8 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": [
-			"cartridge.js",
-			"cpu.js",
-			"cpu_instructions_1.js",
-			"cpu_instructions_2.js"
-		],
-		"mainTestFile": "cpu_instructions_2.js"
+		"inherit": ["cartridge.js", "cpu.js", "cpu_instructions_1.js"],
+		"mainTestFile": "cpu_instructions_1.js"
 	},
 	"memory": {
 		"content": {

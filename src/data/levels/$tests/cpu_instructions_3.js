@@ -33,7 +33,7 @@ const newCPU = (prgBytes = null) => {
 };
 // [!] Duplicated <<<
 
-// 4.13 Instructions (3/6): Checks
+// 4.13 Instructions (3/5): Checks
 
 it("`BIT`: argument == 'value'", () => {
 	const instructions = mainModule.default.instructions;
@@ -152,6 +152,89 @@ it("`BIT`: argument == 'value'", () => {
 				instruction +
 				"`: " +
 				`compara y actualiza las banderas apropiadas con [${register.toUpperCase()}] = ${source} y value = ${value}`,
+		},
+		use: ({ id }, book) => id >= book.getId("4.13"),
+	});
+});
+
+["AND", "EOR", "ORA"].forEach((instruction) => {
+	it("`" + instruction + "`: argument == 'value'", () => {
+		const instructions = mainModule.default.instructions;
+		instructions.should.include.key(instruction);
+		expect(instructions[instruction]).to.be.an("object");
+		instructions[instruction].argument.should.equal("value");
+	})({
+		locales: {
+			es: "`" + instruction + "`: argument == 'value'",
+		},
+		use: ({ id }, book) => id >= book.getId("4.13"),
+	});
+});
+
+[
+	{
+		instruction: "AND",
+		value1: 0b10100100,
+		value2: 0b10000100,
+		result: 0b10000100,
+		zero: false,
+		negative: true,
+		symbol: "&",
+	},
+	{
+		instruction: "EOR",
+		value1: 0b00100100,
+		value2: 0b00010100,
+		result: 0b00110000,
+		zero: false,
+		negative: false,
+		symbol: "^",
+	},
+	{
+		instruction: "EOR",
+		value1: 0b11111111,
+		value2: 0b11111111,
+		result: 0b00000000,
+		zero: true,
+		negative: false,
+		symbol: "^",
+	},
+	{
+		instruction: "ORA",
+		value1: 0b00100100,
+		value2: 0b00010100,
+		result: 0b00110100,
+		zero: false,
+		negative: false,
+		symbol: "|",
+	},
+].forEach(({ instruction, value1, value2, result, zero, negative, symbol }) => {
+	it(
+		"`" +
+			instruction +
+			"`: funciona con " +
+			`${value1.toString(2).padStart(8, "0")} ${symbol} ${value2
+				.toString(2)
+				.padStart(8, "0")} => ${result.toString(2).padStart(8, "0")}`,
+		() => {
+			const cpu = newCPU();
+			const instructions = mainModule.default.instructions;
+
+			cpu.a.setValue(value1);
+			instructions[instruction].run(cpu, value2);
+			cpu.a.getValue().should.equal(result);
+			cpu.flags.z = zero;
+			cpu.flags.n = negative;
+		}
+	)({
+		locales: {
+			es:
+				"`" +
+				instruction +
+				"`: works with " +
+				`${value1.toString(2).padStart(8, "0")} ${symbol} ${value2
+					.toString(2)
+					.padStart(8, "0")} => ${result.toString(2).padStart(8, "0")}`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.13"),
 	});

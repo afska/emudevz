@@ -33,7 +33,7 @@ const newCPU = (prgBytes = null) => {
 };
 // [!] Duplicated <<<
 
-// 4.12 Instructions (2/6): Data
+// 4.12 Instructions (2/5): Data
 
 [
 	{ instruction: "CLC", flag: "c" },

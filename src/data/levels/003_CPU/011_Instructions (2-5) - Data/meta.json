@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Instructions (3/6): Checks",
-		"es": "Instrucciones (3/6): Verificaciones"
+		"en": "Instructions (2/5): Data",
+		"es": "Instrucciones (2/5): Datos"
 	},
 	"ui": {
 		"layout": "dual",
@@ -28,10 +28,9 @@
 			"cartridge.js",
 			"cpu.js",
 			"cpu_instructions_1.js",
-			"cpu_instructions_2.js",
-			"cpu_instructions_3.js"
+			"cpu_instructions_2.js"
 		],
-		"mainTestFile": "cpu_instructions_3.js"
+		"mainTestFile": "cpu_instructions_2.js"
 	},
 	"memory": {
 		"content": {

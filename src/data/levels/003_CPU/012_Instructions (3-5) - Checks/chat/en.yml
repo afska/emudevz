@@ -1,8 +1,8 @@
 ---
 main:
   messages:
-  - there are only 4 checks
-  - they are, basically, instructions that compare values with a register
+  - there are only a few checks
+  - they are, basically, instructions that compare values with a register or perform logical operations
   - I don't think you will need help with these
   - 📚  implement all the check instructions in your `instructions` object!
   run-after-messages: |

@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "Instructions (4/6): Logical",
-		"es": "Instrucciones (4/6): Lógicas"
+		"en": "Instructions (3/5): Checks",
+		"es": "Instrucciones (3/5): Verificaciones"
 	},
 	"ui": {
 		"layout": "dual",
@@ -29,10 +29,9 @@
 			"cpu.js",
 			"cpu_instructions_1.js",
 			"cpu_instructions_2.js",
-			"cpu_instructions_3.js",
-			"cpu_instructions_4.js"
+			"cpu_instructions_3.js"
 		],
-		"mainTestFile": "cpu_instructions_4.js"
+		"mainTestFile": "cpu_instructions_3.js"
 	},
 	"memory": {
 		"content": {

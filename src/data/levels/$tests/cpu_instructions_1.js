@@ -33,7 +33,7 @@ const newCPU = (prgBytes = null) => {
 };
 // [!] Duplicated <<<
 
-// 4.11 Instructions (1/6): Arithmetic
+// 4.11 Instructions (1/5): Arithmetic
 
 it("`/code/index.js` exports an object containing the `instructions` object", () => {
 	expect(mainModule.default).to.be.an("object");

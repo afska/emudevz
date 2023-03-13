@@ -53,14 +53,9 @@
 | `CMP`  | Comparar            | 🔢  | Compara `[A]` con un `value`, actualizando las banderas:<br><br>`Z` (si `[A]` == `value`), `N` (si el bit `7` de (`[A]` - `value`) está encendido) y `C` (si `[A]` >= `value`).                                                                                                       |
 | `CPX`  | Comparar Registro X | 🔢  | Compara `[X]` con un `value`, actualizando las banderas:<br><br>`Z` (si `[X]` == `value`), `N` (si el bit `7` de (`[X]` - `value`) está encendido) y `C` (si `[X]` >= `value`).                                                                                                       |
 | `CPY`  | Comparar Registro Y | 🔢  | Compara `[Y]` con un `value`, actualizando las banderas:<br><br>`Z` (si `[Y]` == `value`), `N` (si el bit `7` de (`[Y]` - `value`) está encendido) y `C` (si `[Y]` >= `value`).                                                                                                       |
-
-#### 🧩 Lógicas
-
-| Código | Nombre              | Arg | Descripción                                                                                                                                     |
-| ------ | ------------------- | --- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `AND`  | AND Lógico          | 🔢  | Realiza un AND lógico "bit por bit" entre `[A]` y un `value`, almacenando el resultado en `[A]` y actualizando las banderas `Z` y `N`.          |
-| `EOR`  | OR Exclusivo        | 🔢  | Realiza un OR exclusivo "bit por bit" entre `[A]` y un `value`, almacenando el resultado en `[A]` y actualizando las banderas `Z` y `N`.        |
-| `ORA`  | OR Lógico Inclusivo | 🔢  | Realiza un OR lógico inclusivo "bit por bit" entre `[A]` y un `value`, almacenando el resultado en `[A]` y actualizando las banderas `Z` y `N`. |
+| `AND`  | AND Lógico          | 🔢  | Realiza un AND lógico "bit por bit" entre `[A]` y un `value` (`[A]` & `value`), almacenando el resultado en `[A]` y actualizando las banderas `Z` y `N`.                                                                                                                              |
+| `EOR`  | OR Exclusivo        | 🔢  | Realiza un OR exclusivo "bit por bit" entre `[A]` y un `value` (`[A]` ^ `value`), almacenando el resultado en `[A]` y actualizando las banderas `Z` y `N`.                                                                                                                            |
+| `ORA`  | OR Lógico Inclusivo | 🔢  | Realiza un OR lógico inclusivo "bit por bit" entre `[A]` y un `value` (`[A]` \| `value`), almacenando el resultado en `[A]` y actualizando las banderas `Z` y `N`.                                                                                                                    |
 
 #### 🔀 Bifurcaciones
 

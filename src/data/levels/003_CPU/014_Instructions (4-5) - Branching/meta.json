@@ -1,10 +1,9 @@
 {
 	"name": {
-		"en": "Instructions (1/6): Arithmetic",
-		"es": "Instrucciones (1/6): Aritméticas"
+		"en": "Instructions (4/5): Branching",
+		"es": "Instrucciones (4/5): Bifurcaciones"
 	},
 	"ui": {
-		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [
@@ -25,8 +24,15 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": ["cartridge.js", "cpu.js", "cpu_instructions_1.js"],
-		"mainTestFile": "cpu_instructions_1.js"
+		"inherit": [
+			"cartridge.js",
+			"cpu.js",
+			"cpu_instructions_1.js",
+			"cpu_instructions_2.js",
+			"cpu_instructions_3.js",
+			"cpu_instructions_4.js"
+		],
+		"mainTestFile": "cpu_instructions_4.js"
 	},
 	"memory": {
 		"content": {
