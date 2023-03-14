@@ -1,13 +1,13 @@
 # Simples
 
-| Nombre    | Ejemplo       | Tamaño de entrada | Entrada                      | Salida (pseudocódigo)                |
-| --------- | ------------- | ----------------- | ---------------------------- | ------------------------------------ |
-| Implicit  | `INX`         | `0`               | 🚫                           | 🚫                                   |
-| Immediate | `LDA #$08`    | `1`               | 🔢 **valor** _final_         | 🔢                                   |
-| Absolute  | `LDA $C002`   | `2`               | 🐏 **dirección** _completa_  | 🔢/🐏                                |
-| Zero Page | `LDA $15`     | `1`               | 🐏 **dirección** _parcial_   | 🔢/🐏                                |
-| Relative  | `BNE @label`  | `1`               | 🐏 **dirección** _relativa_  | 🔢/🐏<br/>`[PC] + address`.          |
-| Indirect  | `JMP ($4080)` | `2`               | 🐏 **dirección** _indirecta_ | 🔢/🐏<br/>`read16(address)` **(\*)** |
+| Nombre    | Ejemplo       | Tamaño de entrada | Entrada                      | Salida (pseudocódigo)             |
+| --------- | ------------- | ----------------- | ---------------------------- | --------------------------------- |
+| Implicit  | `INX`         | `0`               | 🚫                           | 🚫                                |
+| Immediate | `LDA #$08`    | `1`               | 🔢 **valor** _final_         | 🔢                                |
+| Absolute  | `LDA $C002`   | `2`               | 🐏 **dirección** _completa_  | 🔢/🐏                             |
+| Zero Page | `LDA $15`     | `1`               | 🐏 **dirección** _parcial_   | 🔢/🐏                             |
+| Relative  | `BNE @label`  | `1`               | 🐏 **dirección** _relativa_  | 🐏<br/>`[PC] + address`.          |
+| Indirect  | `JMP ($4080)` | `2`               | 🐏 **dirección** _indirecta_ | 🐏<br/>`read16(address)` **(\*)** |
 
 <br/>
 

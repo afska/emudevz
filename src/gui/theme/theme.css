@@ -104,3 +104,7 @@ body {
 	border: 1px solid #577295;
 	padding: 4px;
 }
+
+.markdown-view code {
+	color: var(--bs-code-color);
+}
