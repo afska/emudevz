@@ -24,8 +24,7 @@ interrupt:
 example:
   messages:
   - ¡sí! imagina que eres un juego
-  - necesitas mover tus sprites cuando la PPU termina de dibujar su frame actual
-  - para evitar hacerlo mientras dibuja (causando glitches 💥 )
+  - necesitas mover tus sprites cuando la PPU termina de dibujar su frame actual, para evitar hacerlo mientras dibuja (causando glitches 💥 )
   - así que, pones tu código que mueve sprites en -por ejemplo- la dirección $90CC
   - esa será la ubicación de tu <manejador de interrupciones>
   - y luego te "suscribes" al evento <NMI> poniendo un puntero a $90CC en el vector de <NMI> (que es $FFFA/B)

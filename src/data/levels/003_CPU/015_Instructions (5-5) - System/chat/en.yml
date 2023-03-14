@@ -24,8 +24,7 @@ interrupt:
 example:
   messages:
   - sure! imagine you're a game
-  - you need to move your sprites when the PPU finishes drawing its current frame
-  - to avoid doing it while it draws (causing glitches 💥 )
+  - you need to move your sprites when the PPU finishes drawing its current frame, to avoid doing it while it draws (causing glitches 💥 )
   - so, you put your sprite moving code in -for example- address $90CC
   - that will be the location of your <interrupt handler>
   - and then you "subscribe" to the <NMI> event by placing a pointer to $90CC in <NMI>'s vector (which is $FFFA/B)
