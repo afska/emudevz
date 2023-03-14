@@ -77,6 +77,7 @@ export default class TestCommand extends Command {
 
 			analytics.track("test_results", {
 				levelId: level.id,
+				levelName: level.name.en,
 				passed: overallResult.allGreen,
 				passCount: overallResult.passCount,
 				failCount: overallResult.failCount,
