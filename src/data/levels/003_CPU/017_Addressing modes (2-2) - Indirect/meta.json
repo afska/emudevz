@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "🧙‍♂️ Instructions (5/5): System (interrupts)",
-		"es": "🧙‍♂️ Instrucciones (5/5): Sistema (interrupciones)"
+		"en": "📍 Addressing modes (2/2): Indexed",
+		"es": "📍 Modos de direccionamiento (2/2): Indexados"
 	},
 	"ui": {
 		"run": "copy.js",

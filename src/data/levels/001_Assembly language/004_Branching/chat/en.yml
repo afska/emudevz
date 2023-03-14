@@ -62,7 +62,7 @@ step5:
     set((m) => m.$canRun = false);
   messages:
   - here's what happened
-  - "`CPX #3` 'ComPares' X with 3, and sets the Zero Flag if they're equal"
+  - "`CPX #3` 'ComPares' [X] with 3, and sets the Zero Flag if they're equal"
   - "`BNE @decrement` jumps to that label if the Zero Flag is not set"
   - since [X] has a 7, then Z is still 0
   - and because Z is 0, `BNE @decrement` jumped 🦘

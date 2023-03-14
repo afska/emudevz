@@ -22,7 +22,7 @@ app:
 
 otherapps:
   messages:
-  - to see what commands are available, run the `help` app
+  - to see what commands are available, hit `Ctrl+C` and run the `help` app
   - it will list them all along with a brief explanation of what they do
   responses:
   - ...main

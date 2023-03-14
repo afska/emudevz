@@ -1,10 +1,8 @@
 import byte from "/lib/byte";
 
-// TODO: COPY
-
 const unsupported = () => { throw new Error("Unsupported.") };
-function read(cpu, argument, operation) {
-  return cpu.memory.read(this.getAddress(cpu, argument, operation));
+function read(cpu, argument, takesExtraCyclesOnPageCross) {
+  return cpu.memory.read(this.getAddress(cpu, argument, takesExtraCyclesOnPageCross));
 }
 
 const addressingModes = {
@@ -28,36 +26,22 @@ const addressingModes = {
 
   ZERO_PAGE: {
     inputSize: 1,
-    getAddress: (cpu, address) => address,
+    getAddress: (cpu, zeroPageAddress) => zeroPageAddress,
     getValue: read
   },
 
   RELATIVE: {
     inputSize: 1,
-    getAddress: (cpu, address, operation) => {
-      const address = cpu.pc.getValue();
-      const newAddress = address + byte.toS8(address);
-      const pageCrossed =
-        byte.highByteOf(address) !== byte.highByteOf(newAddress);
-
-      if (pageCrossed && operation.takesExtraCyclesOnPageCross) cpu.extraCycles += 2;
-
-      return byte.toU16(newAddress);
+    getAddress: (cpu, offset, takesExtraCyclesOnPageCross) => {
+      // TODO: IMPLEMENT
     },
     getValue: unsupported
   },
 
   INDIRECT: {
     inputSize: 1,
-    getAddress: (cpu, address, operation) => {
-      const msb = byte.highPartOf(address);
-      const lsb = byte.lowPartOf(address);
-      const low = cpu.memory.read(address);
-      const high = cpu.memory.read(
-        lsb === 0xff ? byte.toU16(msb, 0x00) : address + 1
-      );
-
-      return byte.buildU16(high, low);
+    getAddress: (cpu, indirectAddress) => {
+      // TODO: IMPLEMENT
     },
     getValue: unsupported
   },

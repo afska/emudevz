@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - las bifurcaciones implican cambiar el valor de `[PC]` (el "Program Counter")
+  - las bifurcaciones implican cambiar el valor de [PC] (el "Program Counter")
   - y eso es lo que todas estas instrucciones hacen
   - 📚  ¡implementa todas las instrucciones de bifurcaciones en tu objeto `instructions`!
   run-after-messages: |
