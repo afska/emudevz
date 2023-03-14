@@ -25,7 +25,5 @@ JMP ($4030) ; Jumps to an address made by $4030 and $4031
 PHA         ; Pushes [A] onto the Stack
 PLA         ; Pulls from the Stack to [A]
 JSR $4029   ; Jumps to subroutine in $4029
-
 RTS         ; Jumps back to the previous instruction
-
 BRK         ; Ends the program
