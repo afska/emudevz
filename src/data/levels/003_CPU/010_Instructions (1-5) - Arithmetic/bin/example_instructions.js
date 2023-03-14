@@ -1,6 +1,6 @@
 import byte from "/lib/byte";
 
-export default {
+const instructions = {
   // Increment X Register
   INX: {
     argument: "no",
@@ -49,3 +49,9 @@ export default {
     },
   },
 };
+
+for (let key in instructions) {
+  instructions[key].id = key;
+}
+
+export default instructions;

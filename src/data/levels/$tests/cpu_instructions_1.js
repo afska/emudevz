@@ -47,6 +47,20 @@ it("`/code/index.js` exports an object containing the `instructions` object", ()
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
+it("`every member of the `instructions` object has an `id`", () => {
+	const instructions = mainModule.default.instructions;
+
+	for (let key in instructions) {
+		instructions[key].should.include.key("id");
+		instructions[key].id.should.equal(key);
+	}
+})({
+	locales: {
+		es: "cada miembro del objeto `instructions` tiene un `id`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.11"),
+});
+
 it("`ADC`: argument == 'value'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("ADC");
