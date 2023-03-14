@@ -1,5 +1,66 @@
 ---
 main:
   messages:
-  - coming soon!
-  responses: []
+  - ¿recuerdas los <modos de direccionamiento> del capítulo de ensamblador?
+  - bueno... es hora de emularlos 😏
+  - hice una guía rápida para ti
+  - revisa 📄  ~/docs/cpu/addressing_modes.es.md~
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu/addressing_modes.es.md");
+  responses:
+  - definitivamente voy a necesitar que me expliques esto un poco más [explain]
+
+explain:
+  messages:
+  - seh
+  - puedes ver que cada modo de direccionamiento tiene una <entrada> y una <salida>
+  - ⬅️  la <entrada> es el argumento (lo que sigue después del opcode, ¿recuerdas?)
+  - en `JMP ($4080)` la <entrada> sería $4080
+  - ➡️  la <salida> es lo que las instrucciones terminan recibiendo en realidad
+  - (el argumento `address` en la función `run(...)` de tu instrucción `JMP`)
+  - en este caso, la <salida> sería el resultado de realizar una lectura de 16 bits a la dirección $4080
+  responses:
+  - no tan así, ¿qué es ese "page boundary bug"? 🐞 [pageboundary]
+
+pageboundary:
+  messages:
+  - básicamente, la unidad de hardware se lanzó con un fallo en el modo "Indirect"
+  - y si queremos emular el hardware precisamente... tenemos también que emular los bugs 😅
+  responses:
+  - (*) ¿no puedo simplemente arreglar el bug? [fix]
+  - vamos a programar esto [letscode]
+
+fix:
+  messages:
+  - puedes, pero estarías rompiendo la compatibilidad con algunos juegos que dependen (ya sea accidentalmente o intencionalmente) de ese bug
+  responses:
+  - ...pageboundary
+
+letscode:
+  messages:
+  - en realidad ya codifiqué algunos de estos modos
+  - por lo que solo tienes que implementar "Relative" e "Indirect"
+  - ¡puedes tomar el código de 📄  ~/docs/cpu/example_addressing_modes.js~ y continuar desde ahí!
+  - 📚  implementa los modos de direccionamiento restantes
+  - y exporta el objeto bajo la clave `addressingModes` en ~/code/index.js~
+  responses:
+  - ayúdame con el modo "Relative" 😅 [relative]
+  - ayúdame con el modo "Indirect" 😅 [indirect]
+
+relative:
+  messages:
+  - 💡  recuerda que toma un "desplazamiento" (un byte con signo)
+  - los bytes con signo pueden ser complicados de entender para los humanos
+  - usan la notación "Two's component", que está explicada brevemente en ~/lib/byte.js~
+  - por ejemplo, si el desplazamiento es ~-3~, recibirías un 253
+  - puedes convertir ese 253 en ~-3~ usando el método `toS8`
+  - 💡  además, para detectar si se cruza de página, vas a necesitar `highByteOf`
+  responses:
+  - ...letscode
+
+indirect:
+  messages:
+  - tienes una implementación completa en el archivo de documentación 😊
+  - es pseudocódigo, claro, pero vas a ser capaz de hacerlo funcionar
+  responses:
+  - ...letscode
