@@ -1,13 +1,13 @@
 # Simple
 
-| Name      | Example       | Input size | Input                     | Output (pseudocode)               |
-| --------- | ------------- | ---------- | ------------------------- | --------------------------------- |
-| Implicit  | `INX`         | `0`        | 🚫                        | 🚫                                |
-| Immediate | `LDA #$08`    | `1`        | 🔢 _final_ **value**      | 🔢                                |
-| Absolute  | `LDA $C002`   | `2`        | 🐏 _full_ **address**     | 🔢/🐏                             |
-| Zero Page | `LDA $15`     | `1`        | 🐏 _partial_ **address**  | 🔢/🐏                             |
-| Relative  | `BNE @label`  | `1`        | 🐏 _relative_ **address** | 🔢/🐏<br/>`[PC] + address`.       |
-| Indirect  | `JMP ($4080)` | `2`        | 🐏 _indirect_ **address** | 🐏<br/>`read16(address)` **(\*)** |
+| Name      | Example       | Input size | Input                     | Output (pseudocode)                  |
+| --------- | ------------- | ---------- | ------------------------- | ------------------------------------ |
+| Implicit  | `INX`         | `0`        | 🚫                        | 🚫                                   |
+| Immediate | `LDA #$08`    | `1`        | 🔢 _final_ **value**      | 🔢                                   |
+| Absolute  | `LDA $C002`   | `2`        | 🐏 _full_ **address**     | 🔢/🐏                                |
+| Zero Page | `LDA $15`     | `1`        | 🐏 _partial_ **address**  | 🔢/🐏                                |
+| Relative  | `BNE @label`  | `1`        | 🐏 _relative_ **address** | 🔢/🐏<br/>`[PC] + address`.          |
+| Indirect  | `JMP ($4080)` | `2`        | 🐏 _indirect_ **address** | 🔢/🐏<br/>`read16(address)` **(\*)** |
 
 <br/>
 
