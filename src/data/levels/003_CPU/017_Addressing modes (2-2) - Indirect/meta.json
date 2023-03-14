@@ -1,0 +1,44 @@
+{
+	"name": {
+		"en": "🧙‍♂️ Instructions (5/5): System (interrupts)",
+		"es": "🧙‍♂️ Instrucciones (5/5): Sistema (interrupciones)"
+	},
+	"ui": {
+		"run": "copy.js",
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": [
+			"cartridge.js",
+			"cpu.js",
+			"cpu_instructions_1.js",
+			"cpu_instructions_2.js",
+			"cpu_instructions_3.js",
+			"cpu_instructions_4.js",
+			"cpu_instructions_5.js"
+		],
+		"mainTestFile": "cpu_instructions_5.js"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
