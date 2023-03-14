@@ -27,14 +27,23 @@ name:
   messages:
   - creo que significa <No Entiendo El Entretenimiento Saludable>, pero no puedo comprobarlo
   responses:
-  - ah, ya veo - ¿dónde encontraste eso? [namehow]
+  - ah, ya veo - ¿cómo sabes de estas cosas? [namehow]
   - ...forwhat
 
 namehow:
   messages:
-  - en un archivo secreto
-  - ¡esta documentación es muy difícil de encontrar!
-  - pero con lo que encontré, voy a poder enseñarte todo lo importante
+  - porque tengo una NEEES aquí mismo 😉
+  - y estoy tratando de hacerle ingeniería inversa
+  responses:
+  - ¿TIENES UNA NEEES QUE FUNCIONA? [workingnes]
+  - ...forwhat
+
+workingnes:
+  messages:
+  - loco, ¿no?
+  - funciona bien, aunque ahora está desarmada y conectada a un montón de analizadores lógicos
+  - pertenecía a un antepasado mío
+  - debe estar revolcándose en su tumba después de lo que hice con su pobre NEEES 😅
   responses:
   - ...forwhat
 

@@ -27,14 +27,23 @@ name:
   messages:
   - I think it stands for <'No Entiendo' Enigmatic Enjoyment Solution>, but I'm not sure
   responses:
-  - oh, I see - where did you find that? [namehow]
+  - oh, I see - how do you know about this stuff? [namehow]
   - ...forwhat
 
 namehow:
   messages:
-  - in a secret file
-  - these docs are too damn hard to find!
-  - but with what I found, I'll be able to teach you all the important stuff
+  - because I have a NEEES right here 😉
+  - and I'm trying to reverse-engineer it
+  responses:
+  - DO YOU HAVE A WORKING NEEES? [workingnes]
+  - ...forwhat
+
+workingnes:
+  messages:
+  - crazy, huh?
+  - it works just fine, though now it's disassembled and hooked up to a bunch of logic analyzers
+  - it belonged to an ancestor of mine
+  - he must be turning in his grave after what I did to his poor NEEES 😅
   responses:
   - ...forwhat
 
