@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "📍 Addressing modes (1/2): Simple",
-		"es": "📍 Modos de direccionamiento (1/2): Simples"
+		"en": "📍 Addressing modes",
+		"es": "📍 Modos de direccionamiento"
 	},
 	"ui": {
 		"run": "copy.js",
