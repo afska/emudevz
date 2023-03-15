@@ -1,4 +1,4 @@
-# CPU Addressing modes
+# CPU: Addressing modes
 
 #### Simple
 
@@ -13,20 +13,20 @@
 
 #### Indexed
 
-| Name             | Example       | Input size | Input                    | Output (pseudocode)                          |
-| ---------------- | ------------- | ---------- | ------------------------ | -------------------------------------------- |
-| Zero Page,X      | `STA $60,X`   | `1`        | 🐏 _partial_ **address** | 🔢/🐏 **(\*1)**<br/>`address + [X]`.         |
-| Zero Page,Y      | `STA $60,Y`   | `1`        | 🐏 _partial_ **address** | 🔢/🐏 **(\*1)**<br/>`address + [Y]`.         |
-| Absolute,X       | `STA $4050,X` | `2`        | 🐏 _full_ **address**    | 🔢/🐏 **(\*1)**<br/>`address + [X]`.         |
-| Absolute,Y       | `STA $4050,Y` | `2`        | 🐏 _full_ **address**    | 🔢/🐏 **(\*1)**<br/>`address + [Y]`.         |
-| Indexed Indirect | `STA ($01,X)` | `1`        | 🐏 _partial_ **address** | 🔢/🐏<br/>`read16(address+[X])`.             |
-| Indirect Indexed | `LDA ($03),Y` | `1`        | 🐏 _partial_ **address** | 🔢/🐏 **(\*1)**<br/>`read16(address) + [Y]`. |
+| Name             | Example       | Input size | Input                    | Output (pseudocode)                         |
+| ---------------- | ------------- | ---------- | ------------------------ | ------------------------------------------- |
+| Zero Page,X      | `STA $60,X`   | `1`        | 🐏 _partial_ **address** | 🔢/🐏<br/>`toU8(address+[X])`               |
+| Zero Page,Y      | `STA $60,Y`   | `1`        | 🐏 _partial_ **address** | 🔢/🐏<br/>`toU8(address+[Y])`               |
+| Absolute,X       | `STA $4050,X` | `2`        | 🐏 _full_ **address**    | 🔢/🐏 **(\*1)**<br/>`address + [X]`         |
+| Absolute,Y       | `STA $4050,Y` | `2`        | 🐏 _full_ **address**    | 🔢/🐏 **(\*1)**<br/>`address + [Y]`         |
+| Indexed Indirect | `STA ($01,X)` | `1`        | 🐏 _partial_ **address** | 🔢/🐏<br/>`read16(address+[X])`             |
+| Indirect Indexed | `LDA ($03),Y` | `1`        | 🐏 _partial_ **address** | 🔢/🐏 **(\*1)**<br/>`read16(address) + [Y]` |
 
 <hr>
 
-**(\*1)** These addressing modes add two extra cycles (`cpu.extraCycles += 2`) if it crosses pages. That is, when the base and the new address differ in their most significant byte.
+**(\*1)** These addressing modes define the _output_ as the sum of a _base address_ and an offset, adding two extra cycles (`cpu.extraCycles += 2`) if they cross pages. That is, when the _base address_ and _output_ differ in their most significant byte.
 
-In the **Relative** addressing mode, the base address is `[PC]`. In the **indexed modes**, it's the `input`.
+⚠️ Not all opcodes have this cross-page penalty, so the addressing modes receive a `hasPageCrossPenalty` boolean that indicates whether this extra cycles should be added.
 
 **(\*2)** The **Indirect** addressing mode has a bug (called _"page boundary bug"_):
 

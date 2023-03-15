@@ -1,4 +1,4 @@
-# Instrucciones de CPU
+# CPU: Instrucciones
 
 #### 🔢 Aritméticas
 

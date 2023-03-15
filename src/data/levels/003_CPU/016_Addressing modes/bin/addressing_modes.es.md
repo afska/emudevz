@@ -1,4 +1,6 @@
-# Simples
+# CPU: Modos de direccionamiento
+
+#### Simples
 
 | Nombre    | Ejemplo       | Tamaño de entrada | Entrada                      | Salida (pseudocódigo)              |
 | --------- | ------------- | ----------------- | ---------------------------- | ---------------------------------- |
@@ -9,9 +11,22 @@
 | Relative  | `BNE @label`  | `1`               | 🐏 **dirección** _relativa_  | 🐏 **(\*1)**<br/>`[PC] + address`  |
 | Indirect  | `JMP ($4080)` | `2`               | 🐏 **dirección** _indirecta_ | 🐏 **(\*2)**<br/>`read16(address)` |
 
-<br/>
+#### Indexados
 
-**(\*1)** El modo de direccionamiento **Relative** agrega dos ciclos extra (`cpu.extraCycles += 2`) si cruza páginas. Esto es, cuando `[PC]` y la nueva dirección difieren en su byte más significativo.
+| Nombre           | Ejemplo       | Tamaño de entrada | Entrada                     | Salida (pseudocódigo)                       |
+| ---------------- | ------------- | ----------------- | --------------------------- | ------------------------------------------- |
+| Zero Page,X      | `STA $60,X`   | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`toU8(address+[X])`               |
+| Zero Page,Y      | `STA $60,Y`   | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`toU8(address+[Y])`               |
+| Absolute,X       | `STA $4050,X` | `2`               | 🐏 **dirección** _completa_ | 🔢/🐏 **(\*1)**<br/>`address + [X]`         |
+| Absolute,Y       | `STA $4050,Y` | `2`               | 🐏 **dirección** _completa_ | 🔢/🐏 **(\*1)**<br/>`address + [Y]`         |
+| Indexed Indirect | `STA ($01,X)` | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏 **(\*1)**<br/>`read16(address+[X])`   |
+| Indirect Indexed | `LDA ($03),Y` | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏 **(\*1)**<br/>`read16(address) + [Y]` |
+
+<hr>
+
+**(\*1)** Estos modos de direccionamiento definen la _salida_ como la suma de una _dirección base_ y un desplazamiento, agregando dos ciclos extra (`cpu.extraCycles += 2`) si cruzan páginas. Esto es, cuando la _dirección base_ y la _salida_ difieren en su byte más significativo.
+
+⚠️ No todos los opcodes tienen esta penalidad al cruzar de página, por lo que los modos de direccionamiento reciben un booleano `hasPageCrossPenalty` que indica si los ciclos extra deberían ser agregados.
 
 **(\*2)** El modo de direccionamiento **Indirect** tiene una falla (llamada _"page boundary bug"_):
 
@@ -29,14 +44,3 @@ buildU16(
   read(address)
 );
 ```
-
-# Indexados
-
-| Nombre           | Ejemplo       | Tamaño de entrada | Entrada                     | Salida (pseudocódigo)              |
-| ---------------- | ------------- | ----------------- | --------------------------- | ---------------------------------- |
-| Zero Page,X      | `STA $60,X`   | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`address + [X]`.         |
-| Zero Page,Y      | `STA $60,Y`   | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`address + [Y]`.         |
-| Absolute,X       | `STA $4050,X` | `2`               | 🐏 **dirección** _completa_ | 🔢/🐏<br/>`address + [X]`.         |
-| Absolute,Y       | `STA $4050,Y` | `2`               | 🐏 **dirección** _completa_ | 🔢/🐏<br/>`address + [Y]`.         |
-| Indexed Indirect | `STA ($01,X)` | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`read16(address+[X])`.   |
-| Indirect Indexed | `LDA ($03),Y` | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`read16(address) + [Y]`. |

@@ -32,9 +32,10 @@
 			"cpu_instructions_2.js",
 			"cpu_instructions_3.js",
 			"cpu_instructions_4.js",
-			"cpu_instructions_5.js"
+			"cpu_instructions_5.js",
+			"cpu_addressing_modes.js"
 		],
-		"mainTestFile": "cpu_instructions_5.js"
+		"mainTestFile": "cpu_addressing_modes.js"
 	},
 	"memory": {
 		"content": {

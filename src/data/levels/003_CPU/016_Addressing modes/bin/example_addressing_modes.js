@@ -1,8 +1,8 @@
 import byte from "/lib/byte";
 
 const unsupported = () => { throw new Error("Unsupported.") };
-function read(cpu, argument, takesExtraCyclesOnPageCross) {
-  return cpu.memory.read(this.getAddress(cpu, argument, takesExtraCyclesOnPageCross));
+function read(cpu, argument, hasPageCrossPenalty) {
+  return cpu.memory.read(this.getAddress(cpu, argument, hasPageCrossPenalty));
 }
 
 const addressingModes = {
@@ -32,7 +32,7 @@ const addressingModes = {
 
   RELATIVE: {
     inputSize: 1,
-    getAddress: (cpu, offset, takesExtraCyclesOnPageCross) => {
+    getAddress: (cpu, offset, hasPageCrossPenalty) => {
       // TODO: IMPLEMENT
     },
     getValue: unsupported
@@ -40,10 +40,58 @@ const addressingModes = {
 
   INDIRECT: {
     inputSize: 1,
-    getAddress: (cpu, indirectAddress) => {
+    getAddress: (cpu, absoluteAddress) => {
       // TODO: IMPLEMENT
     },
     getValue: unsupported
+  },
+
+  INDEXED_ZERO_PAGE_X: {
+    inputSize: 1,
+    getAddress: (cpu, zeroPageAddress) => {
+      // TODO: IMPLEMENT
+    },
+    getValue: read
+  },
+
+  INDEXED_ZERO_PAGE_Y: {
+    inputSize: 1,
+    getAddress: (cpu, zeroPageAddress) => {
+      // TODO: IMPLEMENT
+    },
+    getValue: read
+  },
+
+  INDEXED_ABSOLUTE_X: {
+    inputSize: 2,
+    getAddress: (cpu, absoluteAddress, hasPageCrossPenalty) => {
+      // TODO: IMPLEMENT
+    },
+    getValue: read
+  },
+
+  INDEXED_ABSOLUTE_Y: {
+    inputSize: 2,
+    getAddress: (cpu, absoluteAddress, hasPageCrossPenalty) => {
+      // TODO: IMPLEMENT
+    },
+    getValue: read
+  },
+
+  INDEXED_INDIRECT: {
+    inputSize: 1,
+    getAddress: (cpu, zeroPageAddress) => {
+      // TODO: IMPLEMENT
+    },
+    getValue: read
+  },
+
+  INDIRECT_INDEXED: {
+    inputSize: 1,
+    getAddress: (cpu, zeroPageAddress, hasPageCrossPenalty) => {
+      // TODO: IMPLEMENT
+    },
+    getValue: read
   },
 };
 

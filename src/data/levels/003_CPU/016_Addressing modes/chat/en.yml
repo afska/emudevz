@@ -39,7 +39,7 @@ fix:
 letscode:
   messages:
   - actually I already coded some of these modes
-  - so you only have to implement "Relative" and "Indirect"
+  - so you only have to implement "Relative", "Indirect", and the <indexed> modes
   - you can grab the code from 📄  ~/docs/cpu/example_addressing_modes.js~ and continue from there!
   - 📚  implement the missing addressing modes
   - and export the object under the `addressingModes` key in ~/code/index.js~
