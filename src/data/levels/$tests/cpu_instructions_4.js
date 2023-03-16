@@ -41,6 +41,8 @@ const newCPU = (prgBytes = null) => {
 	{ instruction: "BPL", flag: "n" },
 	{ instruction: "BVC", flag: "v" },
 ].forEach(({ instruction, flag }) => {
+	const name = flag.toUpperCase();
+
 	it("`" + instruction + "`: argument == 'address'", () => {
 		const instructions = mainModule.default.instructions;
 		instructions.should.include.key(instruction);
@@ -53,37 +55,28 @@ const newCPU = (prgBytes = null) => {
 		use: ({ id }, book) => id >= book.getId("4.14"),
 	});
 
-	it(
-		"`" +
-			instruction +
-			"`: " +
-			`jumps if the ~${flag.toUpperCase()}~ flag is clear`,
-		() => {
-			const cpu = newCPU();
-			const instructions = mainModule.default.instructions;
-			cpu.pc.setValue(0x1000);
+	it("`" + instruction + "`: " + `jumps if the ~${name}~ flag is clear`, () => {
+		const cpu = newCPU();
+		const instructions = mainModule.default.instructions;
+		cpu.pc.setValue(0x1000);
 
-			cpu.flags[flag] = false;
-			instructions[instruction].run(cpu, 0x2000);
-			cpu.pc.getValue().should.equal(0x2000);
-			cpu.extraCycles.should.equal(1);
-		}
-	)({
+		cpu.flags[flag] = false;
+		instructions[instruction].run(cpu, 0x2000);
+		cpu.pc.getValue().should.equal(0x2000);
+		cpu.extraCycles.should.equal(1);
+	})({
 		locales: {
 			es:
 				"`" +
 				instruction +
 				"`: " +
-				`salta si la bandera ~${flag.toUpperCase()}~ está apagada`,
+				`salta si la bandera ~${name}~ está apagada`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.14"),
 	});
 
 	it(
-		"`" +
-			instruction +
-			"`: " +
-			`doesn't jump if the ~${flag.toUpperCase()}~ flag is set`,
+		"`" + instruction + "`: " + `doesn't jump if the ~${name}~ flag is set`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -101,7 +94,7 @@ const newCPU = (prgBytes = null) => {
 				"`" +
 				instruction +
 				"`: " +
-				`no salta si la bandera ~${flag.toUpperCase()}~ está encendida`,
+				`no salta si la bandera ~${name}~ está encendida`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.14"),
 	});
@@ -113,6 +106,8 @@ const newCPU = (prgBytes = null) => {
 	{ instruction: "BMI", flag: "n" },
 	{ instruction: "BVS", flag: "v" },
 ].forEach(({ instruction, flag }) => {
+	const name = flag.toUpperCase();
+
 	it("`" + instruction + "`: argument == 'address'", () => {
 		const instructions = mainModule.default.instructions;
 		instructions.should.include.key(instruction);
@@ -125,37 +120,28 @@ const newCPU = (prgBytes = null) => {
 		use: ({ id }, book) => id >= book.getId("4.14"),
 	});
 
-	it(
-		"`" +
-			instruction +
-			"`: " +
-			`jumps if the ~${flag.toUpperCase()}~ flag is set`,
-		() => {
-			const cpu = newCPU();
-			const instructions = mainModule.default.instructions;
-			cpu.pc.setValue(0x1000);
+	it("`" + instruction + "`: " + `jumps if the ~${name}~ flag is set`, () => {
+		const cpu = newCPU();
+		const instructions = mainModule.default.instructions;
+		cpu.pc.setValue(0x1000);
 
-			cpu.flags[flag] = true;
-			instructions[instruction].run(cpu, 0x2000);
-			cpu.pc.getValue().should.equal(0x2000);
-			cpu.extraCycles.should.equal(1);
-		}
-	)({
+		cpu.flags[flag] = true;
+		instructions[instruction].run(cpu, 0x2000);
+		cpu.pc.getValue().should.equal(0x2000);
+		cpu.extraCycles.should.equal(1);
+	})({
 		locales: {
 			es:
 				"`" +
 				instruction +
 				"`: " +
-				`salta si la bandera ~${flag.toUpperCase()}~ está encendida`,
+				`salta si la bandera ~${name}~ está encendida`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.14"),
 	});
 
 	it(
-		"`" +
-			instruction +
-			"`: " +
-			`doesn't jump if the ~${flag.toUpperCase()}~ flag is clear`,
+		"`" + instruction + "`: " + `doesn't jump if the ~${name}~ flag is clear`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -173,7 +159,7 @@ const newCPU = (prgBytes = null) => {
 				"`" +
 				instruction +
 				"`: " +
-				`no salta si la bandera ~${flag.toUpperCase()}~ está encendida`,
+				`no salta si la bandera ~${name}~ está encendida`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.14"),
 	});

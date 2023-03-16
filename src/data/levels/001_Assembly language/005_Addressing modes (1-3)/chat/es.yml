@@ -115,10 +115,10 @@ whoa:
     set((m) => m.$canRun = true);
   messages:
   - la última es un poco complicada 😶
-  - "el modo de direccionamiento \"Indirect\" lee una dirección absoluta (digamos <J>) para construir otra dirección absoluta (digamos <K>)"
-  - el contenido de <J> da el byte menos significativo de <K>
-  - y el siguiente byte (el contenido de <J>+1) da el byte más significativo de <K>
-  - corre el ejemplo ⏩
+  - "el modo de direccionamiento \"Indirect\" usa una dirección absoluta para buscar otra dirección"
+  - al leer la primer dirección obtenemos el byte menos significativo
+  - y leer el byte siguiente (dirección + 1) nos da el byte más significativo
+  - eso puede ser difícil de entender completamente, así que ejecuta el ejemplo ⏩
   events:
   - step [step1]
 

@@ -112,8 +112,9 @@ help:
   messages:
   - 🔀  siempre querrás usar `BEQ` y `BNE` luego de una instrucción de comparación (como `CPX`)
   - "`CPX` asigna el flag Z=1 si [X] es igual al valor, y luego `BEQ`/`BNE` saltan dependiendo de si Z es 1 o 0"
-  - 🏷️  recuerda que las etiquetas son ignoradas a menos que tengamos que saltar a alguna de ellas
-  - 🛑  si alguna vez necesitas parar el programa, puedes poner una etiqueta al final del código
+  - 🏷️  recuerda que la ejecución siempre es de arriba hacia abajo, ignorando etiquetas
+  - por lo que probablemente en algún momento necesites parar el programa (para evitar que "siga de largo")
+  - 🛑  para eso, puedes poner una etiqueta al final del código
   - y usar una instrucción de bifurcación para saltar a ella
   - o más fácil, usa la instrucción `BRK`, que interrumpe la ejecución 😉
   responses: []

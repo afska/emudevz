@@ -118,6 +118,8 @@ it("`BIT`: argument == 'value'", () => {
 		c: true,
 	},
 ].forEach(({ instruction, register, source, value, z, n, c }) => {
+	const name = register.toUpperCase();
+
 	it("`" + instruction + "`: argument == 'value'", () => {
 		const instructions = mainModule.default.instructions;
 		instructions.should.include.key(instruction);
@@ -134,7 +136,7 @@ it("`BIT`: argument == 'value'", () => {
 		"`" +
 			instruction +
 			"`: " +
-			`compares and updates the proper flags with [${register.toUpperCase()}] = ${source} and value = ${value}`,
+			`compares and updates the proper flags with [${name}] = ${source} and value = ${value}`,
 		() => {
 			const cpu = newCPU();
 			const instructions = mainModule.default.instructions;
@@ -151,7 +153,7 @@ it("`BIT`: argument == 'value'", () => {
 				"`" +
 				instruction +
 				"`: " +
-				`compara y actualiza las banderas apropiadas con [${register.toUpperCase()}] = ${source} y value = ${value}`,
+				`compara y actualiza las banderas apropiadas con [${name}] = ${source} y value = ${value}`,
 		},
 		use: ({ id }, book) => id >= book.getId("4.13"),
 	});

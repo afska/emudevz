@@ -47,7 +47,7 @@ it("`/code/index.js` exports an object containing the `instructions` object", ()
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("`every member of the `instructions` object has an `id`", () => {
+it("every member of the `instructions` object has an `id`", () => {
 	const instructions = mainModule.default.instructions;
 
 	for (let key in instructions) {

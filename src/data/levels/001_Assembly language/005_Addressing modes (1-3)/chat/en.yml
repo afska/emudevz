@@ -115,10 +115,10 @@ whoa:
     set((m) => m.$canRun = true);
   messages:
   - last one is a bit tricky 😶
-  - "\"Indirect\" addressing reads an absolute address (let's say <J>) to build another absolute address (let's say <K>)"
-  - the content of <J> gives the least significant byte of <K>
-  - and the following byte (the content of <J>+1) gives the most significant byte of <K>
-  - run the example ⏩
+  - "\"Indirect\" addressing uses an absolute address to look up another address"
+  - reading the first address gives the least significant byte
+  - and reading the following byte (address + 1) gives the most significant byte
+  - that can be hard to wrap your head around, so run the example ⏩
   events:
   - step [step1]
 

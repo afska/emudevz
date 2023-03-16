@@ -34,14 +34,16 @@ const addressingModes = {
     inputSize: 1,
     getAddress: (cpu, offset, hasPageCrossPenalty) => {
       // TODO: IMPLEMENT
+      return 0;
     },
     getValue: unsupported
   },
 
   INDIRECT: {
-    inputSize: 1,
+    inputSize: 2,
     getAddress: (cpu, absoluteAddress) => {
       // TODO: IMPLEMENT
+      return 0;
     },
     getValue: unsupported
   },
@@ -50,6 +52,7 @@ const addressingModes = {
     inputSize: 1,
     getAddress: (cpu, zeroPageAddress) => {
       // TODO: IMPLEMENT
+      return 0;
     },
     getValue: read
   },
@@ -58,6 +61,7 @@ const addressingModes = {
     inputSize: 1,
     getAddress: (cpu, zeroPageAddress) => {
       // TODO: IMPLEMENT
+      return 0;
     },
     getValue: read
   },
@@ -66,6 +70,7 @@ const addressingModes = {
     inputSize: 2,
     getAddress: (cpu, absoluteAddress, hasPageCrossPenalty) => {
       // TODO: IMPLEMENT
+      return 0;
     },
     getValue: read
   },
@@ -74,6 +79,7 @@ const addressingModes = {
     inputSize: 2,
     getAddress: (cpu, absoluteAddress, hasPageCrossPenalty) => {
       // TODO: IMPLEMENT
+      return 0;
     },
     getValue: read
   },
@@ -82,6 +88,7 @@ const addressingModes = {
     inputSize: 1,
     getAddress: (cpu, zeroPageAddress) => {
       // TODO: IMPLEMENT
+      return 0;
     },
     getValue: read
   },
@@ -90,6 +97,7 @@ const addressingModes = {
     inputSize: 1,
     getAddress: (cpu, zeroPageAddress, hasPageCrossPenalty) => {
       // TODO: IMPLEMENT
+      return 0;
     },
     getValue: read
   },
