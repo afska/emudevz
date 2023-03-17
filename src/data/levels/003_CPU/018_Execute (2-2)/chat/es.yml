@@ -1,0 +1,62 @@
+---
+main:
+  messages:
+  - implementemos el método `step(...)` de La Forma Correcta™️
+  - aquí, leeremos los argumentos correctos desde <PRG-ROM>
+  - llamaremos a la <instrucción> correcta y al <modo de direccionamiento> adecuado
+  - e incrementaremos los contadores de ciclos
+  responses:
+  - prometiste que explicarías ciclos 🚲 [cycles]
+
+cycles:
+  messages:
+  - ¡y lo haré!
+  - el tiempo que le toma a la CPU ejecutar una acción se mide en <ciclos>
+  - los ciclos son muy importantes si queremos construir un emulador "cycle-accurate" (¡no queremos!)
+  - pero igualmente sirven para mantener las diferentes unidades (CPU, PPU, APU) en sincronía 🔄
+  - por lo que cada opcode sabe cuántos ciclos debería tomar
+  responses:
+  - (*) ¿por qué no queremos construir un emulador "cycle-accurate"? [accuracy]
+  - bueno, ¿y cuál es La Forma Correcta™️? [rightway]
+
+accuracy:
+  messages:
+  - porque es una tarea compleja 🥵
+  - y MUY compleja para gente sin conocimientos previos en emulación
+  - existen juegos "difíciles de emular" que demandan precisión para funcionar
+  - pero la mayoría de los otros simplemente funciona bien, así que no lo necesitaremos de todas formas
+  responses:
+  - ...cycles
+
+rightway:
+  messages:
+  - |-
+    📚  vamos a reescribir este método en tu `CPU`:
+    **step()**:
+      __-> lee un byte de la ubicación de memoria apuntada por PC
+        (llamemos esto <opcode>)
+      -> encuentra la operación relacionada con ese opcode: this.operations[opcode]
+        (llamemos esto <operation>)
+      -> si <operation> es null, tira un error "Unknown opcode."
+      -> incrementa PC
+      -> lee 0, 1 (usando read) o 2 bytes (usando read16) dependiendo de operation.addressingMode.inputSize
+        (llamemos esto <input>)
+      -> incrementa PC (0, 1, o 2 veces) para saltear esos bytes
+      -> si opcode.instruction.argument === "value", llama a opcode.addressing.getValue(this, input, opcode.hasPageCrossPenalty)
+         si no, llama a opcode.addressing.getAddress(this, input, opcode.hasPageCrossPenalty)
+        (llamemos al valor resultante <argument>)
+      -> si this.logger != null, llama a this.logger(...) con:
+        1. la instancia de la CPU (this)
+        2. el valor de PC (this.pc.getValue())
+        3. <operation>
+        4. <input>
+        5. <argument>
+        (vamos a usar esto después)
+      -> llama a operation.instruction.run(this, argument)
+      -> calcula cuántos ciclos tomó (operation.cycles + this.extraCycles)
+        (llamemos esto <cycles>)
+      -> (incrementa / reinicia) los contadores de ciclos:
+        this.cycle += cycles;
+        this.extraCycles = 0;
+      -> retorna <cycles>__
+  responses: []

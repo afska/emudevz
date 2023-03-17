@@ -1,5 +1,5 @@
 export default (instructions, addressingModes) => {
-  const opcodes = [
+  const operations = [
     {
       id: 0x69,
       instruction: instructions.ADC,
@@ -786,8 +786,8 @@ export default (instructions, addressingModes) => {
     }
   ];
 
-  const sortedOpcodes = [];
+  const sortedOperations = [];
   for (let i = 0; i < 256; i++)
-    sortedOpcodes.push(opcodes.find((it) => it.id === i) || null);
-  return sortedOpcodes;
+    sortedOperations.push(operations.find((it) => it.id === i) || null);
+  return sortedOperations;
 }

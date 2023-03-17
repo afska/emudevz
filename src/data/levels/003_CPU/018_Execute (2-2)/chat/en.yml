@@ -1,0 +1,62 @@
+---
+main:
+  messages:
+  - let's implement our `step(...)` method The Right Way™️
+  - here, we'll read the right arguments from <PRG-ROM>
+  - call the right <instruction> and <addressing mode>
+  - and increment the cycle counters
+  responses:
+  - you promised you'd explain cycles 🚲 [cycles]
+
+cycles:
+  messages:
+  - and I will!
+  - the time it takes for the CPU to execute an action is measured in <cycles>
+  - cycles are very important if we want to build a "cycle-accurate" emulator (we don't!)
+  - but they still matter to keep the different units (CPU, PPU, APU) on sync 🔄
+  - so every opcode knows how many cycles it should take
+  responses:
+  - (*) why don't we want to build a "cycle-accurate" emulator? [accuracy]
+  - alright, what's The Right Way™️? [rightway]
+
+accuracy:
+  messages:
+  - because it's a complex task 🥵
+  - and VERY complex for people without prior experience in emulation
+  - there are tricky-to-emulate games that demand accuracy in order to work
+  - but most other games work just fine, so we won't need it anyway
+  responses:
+  - ...cycles
+
+rightway:
+  messages:
+  - |-
+    📚  we'll rewrite this method in your `CPU`:
+    **step()**:
+      __-> reads a byte from the memory location that PC points at
+        (let's call this <opcode>)
+      -> find the operation related with that opcode: this.operations[opcode]
+        (let's call this <operation>)
+      -> if <operation> is null, throw an "Unknown opcode." error
+      -> increment PC
+      -> read 0, 1 (using read) or 2 bytes (using read16) depending on operation.addressingMode.inputSize
+        (let's call this <input>)
+      -> increment PC (0, 1, or 2 times) to skip those bytes
+      -> if opcode.instruction.argument === "value", call opcode.addressing.getValue(this, input, opcode.hasPageCrossPenalty)
+         else, call opcode.addressing.getAddress(this, input, opcode.hasPageCrossPenalty)
+        (let's call the resulting value <argument>)
+      -> if this.logger != null, call this.logger(...) with:
+        1. the CPU instance (this)
+        2. the value of PC (this.pc.getValue())
+        3. <operation>
+        4. <input>
+        5. <argument>
+        (we'll use this later)
+      -> call operation.instruction.run(this, argument)
+      -> calculate how many cycles it took (operation.cycles + this.extraCycles)
+        (let's call this <cycles>)
+      -> (increment / reset) the cycle counters:
+        this.cycle += cycles;
+        this.extraCycles = 0;
+      -> return <cycles>__
+  responses: []

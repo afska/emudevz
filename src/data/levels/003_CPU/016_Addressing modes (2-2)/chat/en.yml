@@ -7,4 +7,6 @@ main:
   - you have to be careful and apply the proper `byte.toU8(...)` and `byte.toU16(...)` calls
   - e.g. in the "Absolute,X" mode, if the <input> is $FFFF and [X] is 3, the <output> must be 2 (and not $10002)
   - 📚  implement the missing modes!
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu/addressing_modes.en.md");
   responses: []

@@ -18,8 +18,8 @@ multiple:
   messages:
   - exactly that ✔️
   - "here's a function that defines all the opcodes for you:"
-  - 📄  ~/lib/opcodes.js~
+  - 📄  ~/lib/operations.js~
   - you only need to call it, passing the `instructions` and the `addressingModes` objects
   - "📚  add the following property to your `CPU`:"
-  - "```javascript this.opcodes = opcodes(instructions, addressingModes);```"
+  - "```javascript this.operations = opcodes(instructions, addressingModes);```"
   responses: []

@@ -1,3 +1,3 @@
-["opcodes.js"].forEach((file) => {
+["operations.js"].forEach((file) => {
 	filesystem.write(`${Drive.LIB_DIR}/${file}`, level.bin[file]);
 });

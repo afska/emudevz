@@ -727,36 +727,36 @@ it("can pop 16-bit values from the stack", () => {
 	use: ({ id }, book) => id >= book.getId("4.10"),
 });
 
-// 4.18 Opcodes
+// 4.18 Operations
 
-it("defines a list of 127 `opcodes`", () => {
+it("defines a list of 127 `operations`", () => {
 	const cpu = newCPU();
 
-	cpu.should.include.key("opcodes");
-	Array.isArray(cpu.opcodes).should.equal(true);
+	cpu.should.include.key("operations");
+	Array.isArray(cpu.operations).should.equal(true);
 	let count = 0;
 
-	for (let opcode of cpu.opcodes) {
-		if (opcode == null) continue;
+	for (let operation of cpu.operations) {
+		if (operation == null) continue;
 
-		opcode.should.include.key("id");
-		opcode.should.include.key("instruction");
-		opcode.should.include.key("cycles");
-		opcode.should.include.key("addressingMode");
-		opcode.instruction.should.include.key("id");
-		opcode.instruction.should.include.key("argument");
-		opcode.instruction.should.respondTo("run");
-		opcode.addressingMode.should.include.key("id");
-		opcode.addressingMode.should.include.key("inputSize");
-		opcode.addressingMode.should.respondTo("getAddress");
-		opcode.addressingMode.should.respondTo("getValue");
+		operation.should.include.key("id");
+		operation.should.include.key("instruction");
+		operation.should.include.key("cycles");
+		operation.should.include.key("addressingMode");
+		operation.instruction.should.include.key("id");
+		operation.instruction.should.include.key("argument");
+		operation.instruction.should.respondTo("run");
+		operation.addressingMode.should.include.key("id");
+		operation.addressingMode.should.include.key("inputSize");
+		operation.addressingMode.should.respondTo("getAddress");
+		operation.addressingMode.should.respondTo("getValue");
 		count++;
 	}
 
 	count.should.equal(127);
 })({
 	locales: {
-		es: "define una lista con 127 `opcodes`",
+		es: "define una lista con 127 `operations`",
 	},
 	use: ({ id }, book) => id >= book.getId("4.18"),
 });
