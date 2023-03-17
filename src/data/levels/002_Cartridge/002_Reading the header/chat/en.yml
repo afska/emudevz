@@ -72,13 +72,13 @@ understand:
   - |-
     📚  let's add a `header` property to the `Cartridge` class, with the following form:
     ```javascript {
-      prgRomPages: 2, // (obtained from byte 4)
-      chrRomPages: 1, // (obtained from byte 5)
+      prgRomPages: 2, // (obtain this from byte 4)
+      chrRomPages: 1, // (obtain this from byte 5)
       usesChrRam: false, // (true if chrRomPages === 0)
-      has512BytePadding: false, // (obtained from <Flags 6>)
-      hasPrgRam: false, // (obtained from <Flags 6>)
-      mirroring: "VERTICAL", // (obtained from <Flags 6>)
-      mapperId: 4 // (obtained from <Flags 6> and <Flags 7>)
+      has512BytePadding: false, // (obtain this from <Flags 6>)
+      hasPrgRam: false, // (obtain this from <Flags 6>)
+      mirroring: "VERTICAL", // (obtain this from <Flags 6>)
+      mapperId: 4 // (obtain this from <Flags 6> and <Flags 7>)
     }```
   responses:
   - I need a bit of help 📐 [bits]
@@ -97,7 +97,7 @@ import:
     do it like this:
       ```javascript import byte from "/lib/byte";```
   - |-
-    also, if you add it to your exported `index.js` object...
+    optionally, if you add it to your exported `index.js` object...
       ```javascript import Cartridge from "./Cartridge";
       import byte from "/lib/byte";
 

@@ -42,7 +42,7 @@ implement:
         (e.g. $0802 becomes $0002, $1023 becomes $0023)
       -> otherwise, returns 0__
     **write(address, value)**:
-      __similar to *read*, but writes the <value> instead of returning__
+      __-> similar to *read*, but writes the <value> instead of returning__
   - |-
     then, add to your `CPU` constructor:
     ```javascript this.memory = new CPUMemory();```

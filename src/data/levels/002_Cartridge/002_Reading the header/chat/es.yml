@@ -37,7 +37,7 @@ mapper:
 mirroring:
   messages:
   - no importa demasiado por ahora
-  - el mirroring afecta qué se va a mostrar pasado el borde derecho e inferior de la pantalla
+  - el mirroring define qué se va a mostrar pasado el borde derecho e inferior de la pantalla
   - dependiendo del tipo de mirroring, la PPU usará diferentes secciones de memoria para dibujar fondos 🎨
   responses:
   - ...exercise
@@ -72,13 +72,13 @@ understand:
   - |-
     📚  agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
     ```javascript {
-      prgRomPages: 2, // (obtenido del byte 4)
-      chrRomPages: 1, // (obtenido del byte 5)
+      prgRomPages: 2, // (obtener esto del byte 4)
+      chrRomPages: 1, // (obtener esto del byte 5)
       usesChrRam: false, // (true si chrRomPages === 0)
-      has512BytePadding: false, // (obtenido de <Flags 6>)
-      hasPrgRam: false, // (obtenido de <Flags 6>)
-      mirroring: "VERTICAL", // (obtenido de <Flags 6>)
-      mapperId: 4 // (obtenido de <Flags 6> y <Flags 7>)
+      has512BytePadding: false, // (obtener esto de <Flags 6>)
+      hasPrgRam: false, // (obtener esto de <Flags 6>)
+      mirroring: "VERTICAL", // (obtener esto de <Flags 6>)
+      mapperId: 4 // (obtener esto de <Flags 6> y <Flags 7>)
     }```
   responses:
   - necesito un poco de ayuda 📐 [bits]
@@ -97,7 +97,7 @@ import:
     hazlo así:
       ```javascript import byte from "/lib/byte";```
   - |-
-    además, si lo agregas a tu objeto exportado en `index.js`...
+    opcionalmente, si lo agregas a tu objeto exportado en `index.js`...
       ```javascript import Cartridge from "./Cartridge";
       import byte from "/lib/byte";
 

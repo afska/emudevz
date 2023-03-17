@@ -3,6 +3,7 @@ import $path from "path";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import filesystem, { Drive } from "../../filesystem";
+import locales from "../../locales";
 import CodeEditor from "./CodeEditor";
 import TV from "./TV";
 import FileSearch from "./widgets/FileSearch";
@@ -38,9 +39,11 @@ class MultiFile extends PureComponent {
 
 		const { isSearching } = this.state;
 
-		if (!this.props.selectedFile) return false;
-		const parsedPath = $path.parse(this.props.selectedFile);
-		const isReadOnlyDir = Drive.isReadOnlyDir(parsedPath.dir);
+		const parsedPath =
+			this.props.selectedFile && $path.parse(this.props.selectedFile);
+		const isReadOnlyDir = this.props.selectedFile
+			? Drive.isReadOnlyDir(parsedPath.dir)
+			: true;
 
 		return (
 			<div className={styles.container}>
@@ -52,7 +55,7 @@ class MultiFile extends PureComponent {
 					}}
 					onBlur={() => {
 						this.setState({ isSearching: false });
-						this._view.focus();
+						this._view?.focus();
 					}}
 				/>
 
@@ -95,6 +98,9 @@ class MultiFile extends PureComponent {
 								isReadOnlyDir
 							);
 						})}
+						{!this.props.selectedFile && (
+							<div className={styles.empty}>{locales.get("no_open_files")}</div>
+						)}
 					</div>
 				</div>
 			</div>
@@ -102,7 +108,7 @@ class MultiFile extends PureComponent {
 	}
 
 	focus = () => {
-		this._view.focus();
+		this._view?.focus();
 	};
 
 	_getOptions(filePath) {
@@ -198,7 +204,7 @@ class MultiFile extends PureComponent {
 
 	_refresh() {
 		setTimeout(() => {
-			this._view.focus();
+			this._view?.focus();
 		});
 	}
 

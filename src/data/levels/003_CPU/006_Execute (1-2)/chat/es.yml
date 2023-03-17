@@ -17,7 +17,7 @@ main:
   - |-
     luego, agrega este método a tu `NEEES`:
     **step()**:
-      __llama a cpu.step()__
+      __-> llama a cpu.step()__
   responses:
   - no recuerdo qué hacen `INX`, `INY` o `TXA` 💭 [remember]
 

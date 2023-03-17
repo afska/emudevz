@@ -7,9 +7,9 @@ main:
   - |-
     implement these methods:
     **push(value)**:
-      __writes <value> to <currentAddress>, then decrements <sp>__
+      __-> writes <value> to <currentAddress>, then decrements <sp>__
     **pop()**:
-      __increments <sp> and returns the content of <currentAddress>__
+      __-> increments <sp> and returns the content of <currentAddress>__
   - the <currentAddress> always equals $0100 (where the stack lives in RAM), plus the value in [SP]
   - |-
     when you finish, add a new stack instance to the CPU:

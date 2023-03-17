@@ -44,6 +44,13 @@
 	animation-name: unselect;
 }
 
+.empty {
+	margin-top: 8px;
+	margin-left: 8px;
+	user-select: none;
+	text-align: center;
+}
+
 @keyframes select {
 	from {
 		filter: blur(2px);

@@ -5,9 +5,9 @@ main:
   - |-
     tendrían que tener dos métodos:
     **getValue()**:
-      __retorna el contenido del registro__
+      __-> retorna el contenido del registro__
     **setValue(value)**:
-      __asigna el contenido del registro__
+      __-> asigna el contenido del registro__
   - el contenido del registro comienza en 0 y puede ser un número de 8 bits (0-255) o uno de 16 bits (0-65535), dependiendo de la clase
   responses:
   - (*) ¿y si trato de escribir fuera de los límites? 🚫 [limit]

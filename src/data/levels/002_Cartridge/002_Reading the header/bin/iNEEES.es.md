@@ -36,7 +36,7 @@ Por ahora:
 |||||||              1: VERTICAL (para scroll horizontal)
 ||||||+-- 1: El cartucho contiene PRG-RAM (para guardado de progreso)
 |||||+--- 1: El archivo contiene relleno de 512 bytes antes de los datos PRG-ROM
-||||+---- 1: Ignorar el primer bit y usar el mirroring FOUR_SCREENS
+||||+---- 1: Ignorar el bit 0 y usar el mirroring FOUR_SCREENS
 ++++----- Nybble inferior del número de mapper
 ```
 

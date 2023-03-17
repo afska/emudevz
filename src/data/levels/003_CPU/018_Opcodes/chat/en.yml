@@ -1,0 +1,11 @@
+---
+main:
+  messages:
+  - "opcode" stands for "operation code"
+  - so... what's an <operation>?
+  - it's the union of an <instruction> and an <addressing mode>
+  - "let's list some examples:"
+  - "`STA $4080`: `STA` with the `ABSOLUTE` mode is opcode $8D"
+  - "`STA $30,X`: `STA` with the `INDEXED_ABSOLUTE_X` mode is opcode $9D"
+  - "`STA ($55),Y`: `STA  with the `INDIRECT_INDEXED` mode is opcode $91"
+  responses: []

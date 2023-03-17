@@ -40,6 +40,7 @@ export default {
 	loading: "Cargando...",
 	memory_viewer: "Visor de Memoria",
 	music: "Música",
+	no_open_files: "🚫 Ningún archivo abierto.",
 	not_now: "⚠️  ¡Ahora no!",
 	opening: "Abriendo",
 	plot:
