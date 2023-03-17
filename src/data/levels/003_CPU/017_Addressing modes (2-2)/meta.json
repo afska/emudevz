@@ -1,10 +1,9 @@
 {
 	"name": {
-		"en": "📍 Addressing modes",
-		"es": "📍 Modos de direccionamiento"
+		"en": "📍 Addressing modes (2/2): Indexed",
+		"es": "📍 Modos de direccionamiento (2/2): Indexados"
 	},
 	"ui": {
-		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [
@@ -33,9 +32,10 @@
 			"cpu_instructions_3.js",
 			"cpu_instructions_4.js",
 			"cpu_instructions_5.js",
-			"cpu_addressing_modes.js"
+			"cpu_addressing_modes_1.js",
+			"cpu_addressing_modes_2.js"
 		],
-		"mainTestFile": "cpu_addressing_modes.js"
+		"mainTestFile": "cpu_addressing_modes_2.js"
 	},
 	"memory": {
 		"content": {

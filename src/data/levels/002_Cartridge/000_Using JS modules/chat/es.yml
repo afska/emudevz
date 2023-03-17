@@ -47,7 +47,7 @@ exercise:
   - 📚  crea un archivo en ~/code/Cartridge.js~
   - su valor a exportar debería ser una clase vacía
   - luego, importa ese archivo desde ~/code/index.js~
-  - y exporta un objeto con una sola clave ("Cartridge") apuntando a esa clase
+  - y exporta un objeto literal con una sola clave ("Cartridge") apuntando a esa clase
   responses:
   - ¿exportar? ¿módulos? 🧐 [modules]
 
@@ -63,7 +63,7 @@ modules:
       ```javascript export default { an: "object", number: 123 }```
       ```javascript export default [1, 2, 3]```
       ```javascript export default function aFunction() { }```
-      ```javascript export default class SomeClass() { }```
+      ```javascript export default class SomeClass { }```
     para importar un módulo:
       ```javascript import aFunction from "./relative/path/to/aFunction"```
       ```javascript import SomeClass from "./relative/path/to/SomeClass"```

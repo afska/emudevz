@@ -26,6 +26,7 @@ export default class TestCommand extends Command {
 
 			const context = level.test?.context;
 			const $ = testContext[context]?.prepare(level) || {};
+			const inherit = level.test?.inherit;
 			let mainTestFile = level.test?.mainTestFile;
 
 			let warnings = [];
@@ -36,7 +37,9 @@ export default class TestCommand extends Command {
 			const overallResult = { allGreen: true, passCount: 0, failCount: 0 };
 			const hasMultipleTests = _.keys(level.tests).length > 1;
 
-			let testFiles = _.keys(level.tests);
+			let testFiles = _.sortBy(_.keys(level.tests));
+			if (inherit != null) testFiles = inherit;
+
 			if (mainTestFile != null && testFiles.includes(mainTestFile))
 				testFiles = [..._.without(testFiles, mainTestFile), mainTestFile];
 			else mainTestFile = null;

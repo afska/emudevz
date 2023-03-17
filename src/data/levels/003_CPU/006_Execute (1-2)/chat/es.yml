@@ -3,7 +3,7 @@ main:
   messages:
   - vamos a implementar algunos opcodes de una forma muy <incorrecta> y temporal
   - solo por diversión ✨
-  - 📚  modifica tu código para que tu registro [PC] empieze en $8000 (donde está el código) en lugar de en 0
+  - 📚  modifica tu código para que tu registro [PC] empiece en $8000 (donde está el código) en lugar de en 0
   - |-
     e implementa este método en tu `CPU`:
     **step()**:

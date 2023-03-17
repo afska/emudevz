@@ -47,7 +47,7 @@ exercise:
   - 📚  create a file in ~/code/Cartridge.js~
   - its default export should be an empty class
   - then, import that file from ~/code/index.js~
-  - and export an object with only one key ("Cartridge") pointing to that class
+  - and export an object literal with only one key ("Cartridge") pointing to that class
   responses:
   - export? modules? 🧐 [modules]
 
@@ -63,7 +63,7 @@ modules:
       ```javascript export default { an: "object", number: 123 }```
       ```javascript export default [1, 2, 3]```
       ```javascript export default function aFunction() { }```
-      ```javascript export default class SomeClass() { }```
+      ```javascript export default class SomeClass { }```
     to import a module:
       ```javascript import aFunction from "./relative/path/to/aFunction"```
       ```javascript import SomeClass from "./relative/path/to/SomeClass"```
