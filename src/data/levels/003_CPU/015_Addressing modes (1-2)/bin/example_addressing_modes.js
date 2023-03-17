@@ -8,7 +8,7 @@ function read(cpu, argument, hasPageCrossPenalty) {
 const addressingModes = {
   IMPLICIT: {
     inputSize: 0,
-    getAddress: unsupported,
+    getAddress: () => null,
     getValue: unsupported
   },
 

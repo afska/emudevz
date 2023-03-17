@@ -522,6 +522,7 @@ it("all registers start from 0, except for [PC], which starts from $8000", () =>
 
 it("opcode $E8 means `INX`, which increments the [X] register", () => {
 	const cpu = newCPU([0xe8]);
+	cpu.pc.setValue(0x8000);
 
 	cpu.x.getValue().should.equal(0);
 	cpu.step();
@@ -535,6 +536,7 @@ it("opcode $E8 means `INX`, which increments the [X] register", () => {
 
 it("opcode $C8 means `INY`, which increments the [Y] register", () => {
 	const cpu = newCPU([0xc8]);
+	cpu.pc.setValue(0x8000);
 
 	cpu.y.getValue().should.equal(0);
 	cpu.step();
@@ -548,6 +550,7 @@ it("opcode $C8 means `INY`, which increments the [Y] register", () => {
 
 it("opcode $8A means `TXA`, which transfers [X] to [A]", () => {
 	const cpu = newCPU([0x8a]);
+	cpu.pc.setValue(0x8000);
 	cpu.x.setValue(123);
 
 	cpu.a.getValue().should.equal(0);
@@ -562,6 +565,7 @@ it("opcode $8A means `TXA`, which transfers [X] to [A]", () => {
 
 it("after a `step()` call, [PC] is incremented", () => {
 	const cpu = newCPU([0xe8]);
+	cpu.pc.setValue(0x8000);
 
 	cpu.step();
 	cpu.pc.getValue().should.equal(0x8001);
@@ -574,6 +578,7 @@ it("after a `step()` call, [PC] is incremented", () => {
 
 it("supports combinations of `INX`, `INY` and `TXA`", () => {
 	const cpu = newCPU([0xe8, 0xc8, 0xe8, 0x8a]); // INX, INY, INX, TXA
+	cpu.pc.setValue(0x8000);
 
 	cpu.step();
 	cpu.step();
@@ -592,6 +597,7 @@ it("supports combinations of `INX`, `INY` and `TXA`", () => {
 
 it("throws an error on unsupported opcodes", () => {
 	const cpu = newCPU([0xff]);
+	cpu.pc.setValue(0x8000);
 
 	expect(() => cpu.step()).to.throw(Error, "Invalid opcode.");
 })({
@@ -604,6 +610,7 @@ it("throws an error on unsupported opcodes", () => {
 it("`NEEES::step()` calls `CPU::step()` once", () => {
 	const NEEES = mainModule.default.NEEES;
 	const neees = new NEEES(newRom([0xe8, 0xe8, 0xe8]));
+	neees.cpu.pc.setValue(0x8000);
 
 	neees.cpu.step = sinon.spy();
 	neees.step();
@@ -759,4 +766,76 @@ it("defines a list of 127 `operations`", () => {
 		es: "define una lista con 127 `operations`",
 	},
 	use: ({ id }, book) => id >= book.getId("4.18"),
+});
+
+// 4.19 Execute (2/2)
+
+it("can run 4 simple operations, updating all counters, and calling a `logger` function", () => {
+	// NOP ; LDA #$05 ; STA $0201 ; LDX $0201
+	const cpu = newCPU([0xea, 0xa9, 0x05, 0x8d, 0x01, 0x02, 0xae, 0x01, 0x02]);
+	let cycles;
+	cpu.pc.setValue(0x8000);
+	cpu.cycle = 7;
+
+	// NOP
+	cpu.logger = sinon.spy();
+	cycles = cpu.step();
+	cycles.should.equal(2);
+	cpu.pc.getValue().should.equal(0x8001);
+	cpu.cycle.should.equal(9);
+	cpu.logger.should.have.been.calledWith(
+		cpu,
+		0x8000,
+		cpu.operations[0xea],
+		null,
+		null
+	);
+
+	// LDA #$05
+	cpu.logger = sinon.spy();
+	cycles = cpu.step();
+	cycles.should.equal(2);
+	cpu.pc.getValue().should.equal(0x8003);
+	cpu.cycle.should.equal(11);
+	cpu.logger.should.have.been.calledWith(
+		cpu,
+		0x8001,
+		cpu.operations[0xa9],
+		0x05,
+		0x05
+	);
+
+	// STA $0201
+	cpu.logger = sinon.spy();
+	cycles = cpu.step();
+	cycles.should.equal(4);
+	cpu.pc.getValue().should.equal(0x8006);
+	cpu.cycle.should.equal(15);
+	cpu.logger.should.have.been.calledWith(
+		cpu,
+		0x8003,
+		cpu.operations[0x8d],
+		0x0201,
+		0x0201
+	);
+
+	// LDX $0201
+	cpu.logger = sinon.spy();
+	cycles = cpu.step();
+	cycles.should.equal(4);
+	cpu.pc.getValue().should.equal(0x8009);
+	cpu.cycle.should.equal(19);
+	cpu.logger.should.have.been.calledWith(
+		cpu,
+		0x8006,
+		cpu.operations[0xae],
+		0x0201,
+		0x0005
+	);
+})({
+	locales: {
+		es:
+			"puede ejecutar 4 operaciones simples, actualizando todos los contadores, y llamando a una función `logger`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.19"),
 });

@@ -73,16 +73,14 @@ it("`IMPLICIT`: inputSize == 0", () => {
 	use: ({ id }, book) => id >= book.getId("4.16"),
 });
 
-it("`IMPLICIT` / `getAddress`: unsupported", () => {
+it("`IMPLICIT` / `getAddress`: returns null", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
-	(() => addressingModes.IMPLICIT.getAddress(cpu, 0)).should.throw(
-		"Unsupported."
-	);
+	expect(addressingModes.IMPLICIT.getAddress(cpu, 0)).to.equal(null);
 })({
 	locales: {
-		es: "`IMPLICIT` / `getAddress`: no soportado",
+		es: "`IMPLICIT` / `getAddress`: retorna null",
 	},
 	use: ({ id }, book) => id >= book.getId("4.16"),
 });

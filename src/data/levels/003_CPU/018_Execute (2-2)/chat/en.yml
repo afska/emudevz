@@ -33,30 +33,38 @@ rightway:
   - |-
     📚  we'll rewrite this method in your `CPU`:
     **step()**:
-      __-> reads a byte from the memory location that PC points at
+      __-> remember the original value of PC
+        (let's call this <originalPC>)
+
+      -> reads a byte from the memory location that PC points at
         (let's call this <opcode>)
       -> find the operation related with that opcode: this.operations[opcode]
         (let's call this <operation>)
-      -> if <operation> is null, throw an "Unknown opcode." error
+      -> if <operation> no existe, throw an "Invalid opcode." error
       -> increment PC
-      -> read 0, 1 (using read) or 2 bytes (using read16) depending on operation.addressingMode.inputSize
+
+      -> read 0, 1 (using read) or 2 bytes (using read16) from the memory location that PC points at, depending on operation.addressingMode.inputSize
         (let's call this <input>)
       -> increment PC (0, 1, or 2 times) to skip those bytes
-      -> if opcode.instruction.argument === "value", call opcode.addressing.getValue(this, input, opcode.hasPageCrossPenalty)
-         else, call opcode.addressing.getAddress(this, input, opcode.hasPageCrossPenalty)
+
+      -> if operation.instruction.argument === "value", call operation.addressingMode.getValue(this, input, operation.hasPageCrossPenalty)
+         else, instead of getValue, call getAddress (with the same arguments)
         (let's call the resulting value <argument>)
+
       -> if this.logger != null, call this.logger(...) with:
         1. the CPU instance (this)
-        2. the value of PC (this.pc.getValue())
+        2. <originalPC>
         3. <operation>
-        4. <input>
-        5. <argument>
+        4. <input> (or null)
+        5. <argument> (or null)
         (we'll use this later)
+
       -> call operation.instruction.run(this, argument)
       -> calculate how many cycles it took (operation.cycles + this.extraCycles)
         (let's call this <cycles>)
       -> (increment / reset) the cycle counters:
         this.cycle += cycles;
         this.extraCycles = 0;
+
       -> return <cycles>__
   responses: []
