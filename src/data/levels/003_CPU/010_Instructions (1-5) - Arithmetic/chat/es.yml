@@ -18,9 +18,9 @@ howmany:
   - implementa cada una de las 16 instrucciones aritméticas sobre él
   - y expórtalo bajo la clave `instructions` en ~/code/index.js~
   - necesitas documentación acerca de qué debería hacer cada instrucción
-  - así que revisa 📄  ~/docs/cpu_instructions.es.md~
+  - así que revisa 📄  ~/docs/cpu/instructions.es.md~
   run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu_instructions.es.md");
+    store.dispatch.savedata.openFile("/docs/cpu/instructions.es.md");
   responses:
   - necesito ayuda para mover bits 😅 [bits]
   - necesito ayuda para actualizar las banderas Z y N 😅 [flags]

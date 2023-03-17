@@ -5,7 +5,7 @@ main:
   - como el nombre sugiere, se tratan de guardar y mover datos 😉
   - 📚  ¡implementa todas las instrucciones de datos en tu objeto `instructions`!
   run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu_instructions.es.md");
+    store.dispatch.savedata.openFile("/docs/cpu/instructions.es.md");
   responses:
   - necesito ayuda con `PHP` 😅 [php]
 
