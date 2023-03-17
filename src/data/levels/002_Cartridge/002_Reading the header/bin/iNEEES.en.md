@@ -5,7 +5,9 @@ An iNEEES file consists of the following sections, in order:
 - 🗣️ Header (`16` bytes)
 - 🧸 Padding, if present (`0` or `512` bytes)
 - 💻 `PRG-ROM` data (`16384` \* `x` bytes)
+  - `x` = byte `4` from header
 - 👾 `CHR-ROM` data (`8192` \* `y` bytes)
+  - `y` = byte `5` from header
 
 ## Header
 

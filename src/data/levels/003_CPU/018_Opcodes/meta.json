@@ -4,6 +4,7 @@
 		"es": "📋 Opcodes"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [
@@ -35,7 +36,7 @@
 			"cpu_addressing_modes_1.js",
 			"cpu_addressing_modes_2.js"
 		],
-		"mainTestFile": "cpu_opcodes.js"
+		"mainTestFile": "cpu.js"
 	},
 	"memory": {
 		"content": {

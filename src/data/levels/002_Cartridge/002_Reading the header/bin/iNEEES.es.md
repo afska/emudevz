@@ -5,7 +5,9 @@ Un archivo iNEEES consiste de las siguientes secciones, en orden:
 - 🗣️ Cabecera (`16` bytes)
 - 🧸 Relleno, si existe (`0` or `512` bytes)
 - 💻 Datos `PRG-ROM` (`16384` \* `x` bytes)
+  - `x` = byte `4` de la cabecera
 - 👾 Datos `CHR-ROM` (`8192` \* `y` bytes)
+  - `y` = byte `5` de la cabecera
 
 ## Cabecera
 

@@ -6,4 +6,6 @@
 	filesystem.write(path, level.bin[file], { binary });
 });
 
-filesystem.write(`${Drive.DOCS_DIR}/assembly.asm`, level.bin["assembly.asm"]);
+["assembly.asm"].forEach((file) => {
+	filesystem.write(`${Drive.DOCS_DIR}/${file}`, level.bin[file]);
+});

@@ -726,3 +726,37 @@ it("can pop 16-bit values from the stack", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("4.10"),
 });
+
+// 4.18 Opcodes
+
+it("defines a list of 127 `opcodes`", () => {
+	const cpu = newCPU();
+
+	cpu.should.include.key("opcodes");
+	Array.isArray(cpu.opcodes).should.equal(true);
+	let count = 0;
+
+	for (let opcode of cpu.opcodes) {
+		if (opcode == null) continue;
+
+		opcode.should.include.key("id");
+		opcode.should.include.key("instruction");
+		opcode.should.include.key("cycles");
+		opcode.should.include.key("addressingMode");
+		opcode.instruction.should.include.key("id");
+		opcode.instruction.should.include.key("argument");
+		opcode.instruction.should.respondTo("run");
+		opcode.addressingMode.should.include.key("id");
+		opcode.addressingMode.should.include.key("inputSize");
+		opcode.addressingMode.should.respondTo("getAddress");
+		opcode.addressingMode.should.respondTo("getValue");
+		count++;
+	}
+
+	count.should.equal(127);
+})({
+	locales: {
+		es: "define una lista con 127 `opcodes`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.18"),
+});
