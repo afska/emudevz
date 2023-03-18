@@ -17,7 +17,7 @@ cycles:
   - por lo que cada opcode sabe cuántos ciclos debería tomar
   responses:
   - (*) ¿por qué no queremos construir un emulador "cycle-accurate"? [accuracy]
-  - bueno, ¿y cuál es La Forma Correcta™️? [rightway]
+  - ✔️  bueno, ¿y cuál es La Forma Correcta™️? [rightway]
 
 accuracy:
   messages:

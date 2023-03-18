@@ -28,7 +28,7 @@ pageboundary:
   - and if we want to emulate the hardware accurately... we have to also emulate the bugs 😅
   responses:
   - (*) can't I just fix the bug? [fix]
-  - let's code this [letscode]
+  - ✔️  let's code this [letscode]
 
 fix:
   messages:

@@ -13,5 +13,4 @@ how:
   - también tendría que instanciar la `CPU`, pasando el cartucho como argumento, y guardarla en una propiedad `cpu`
   - la `CPU` debería pasarle el cartucho al constructor de `CPUMemory`
   - en `CPUMemory`, mapea el rango $8000-$BFFF a <PRG-ROM> (recuerda que puedes obtener los bytes llamando a ```javascript cartridge.prg()```)
-  - no invoques a ```javascript prg()``` múltiples veces, ya que afectaría el rendimiento
   responses: []

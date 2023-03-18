@@ -1,5 +1,69 @@
 ---
 main:
   messages:
-  - coming soon!
+  - our CPU is almost working now
+  - let's talk about <mappers> 🧠
+  - they're circuits inside the cartridge that control how the ROM data is read by the console
+  - each game uses a specific mapper, but some use "Mapper 0"
+  responses:
+  - so, what's Mapper 0? 🤔 [mapper0]
+
+mapper0:
+  messages:
+  - it's the most basic mapper there is
+  - in which one or two 16 KiB PRG-ROM chips are directly mapped to 🖥️  CPU memory
+  - and one 8 KiB CHR-ROM (or RAM!) chip is mapped to 👾  PPU memory
+  responses:
+  - (*) what's the benefit of using a more complex mapper? [complex]
+  - ✔️  cool, so how can I implement mappers? [implement]
+
+complex:
+  messages:
+  - more advanced mappers offer more flexibility to game developers
+  - for example, they can add RAM, generate IRQs on certain scanlines, or even switch between different banks of ROM data
+  - this allows games to have more complex logic, save data, or use advanced graphics and sound effects
+  - but for simple games, Mapper 0 is more than enough 😊
+  responses:
+  - ...mapper0
+
+implement:
+  messages:
+  - you'll deal with them in the Mappers chapter
+  - as always, first one is free 😎
+  - so check out my "mapper 0" implementation in 📄  ~/lib/NROM.js~
+  - the only thing you have to do is integrate it with your existing code
+  - 📚  create a `mappers` module that contains all the mappers
+  - |-
+    for now, it should look like this:
+      ```javascript
+      import NROM from "/lib/NROM";
+
+      export default { 0: NROM }```
+  - |-
+    import that module where you have your `NEEES` class, and add this code:
+      ```javascript
+      class NEEES {
+        constructor(bytes) {
+          this.cartridge = new Cartridge(bytes);
+
+          // >>> 👇
+          const Mapper = mappers[this.cartridge.header.mapperId];
+          if (!Mapper) throw new Error("Invalid mapper.");
+          this.mapper = new Mapper(this);
+          // <<<
+          
+          this.cpu = new CPU(this.mapper); // <<< 👈
+        }
+
+        // ... <rest of your NEEES class> ...
+      }```
+  responses:
+  - wait, now `CPU` receives the mapper? [wait]
+
+wait:
+  messages:
+  - yeah, change `CPU` and `CPUMemory` to receive the mapper instead of the cartridge
+  - "and modify your `CPUMemory` in the following way:"
+  - "  - remove the test mapping we added in the 'Insert cartridge' level (the one that maps $8000-$BFFF to PRG-ROM)"
+  - "  - map $4020-$FFFF so it redirects everything to the mapper (`read(...)` should call `mapper.cpuRead(...)` and `write(...)` should call `mapper.cpuWrite(...)`)"
   responses: []

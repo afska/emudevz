@@ -24,9 +24,11 @@ notall:
 
 what:
   messages:
-  - 📚  crea una clase `FlagsRegister` con 5 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~d~, ~v~ y ~n~)
+  - 📚  crea una clase `FlagsRegister` con 6 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~d~, ~v~ y ~n~)
   - inicialízalas en ```javascript false```
   - luego, implementa ```javascript getValue()``` y ```javascript setValue(value)``` siguiendo la tabla anterior
+  - "`getValue()` tiene que retornar un número de 8 bits con todas las banderas" 
+  - "`setValue(...)` tiene que asignar todas las banderas a partir del número de 8 bits que recibe" 
   - por ej. con ~i~ y ~v~ encendidas, ```javascript getValue()``` debería retornar ```javascript 0b01100100```
   - y ```javascript setValue(0b00000010)``` debería poner todos los booleanos en ```javascript false```, menos ~z~
   responses:

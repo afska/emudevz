@@ -28,7 +28,7 @@ pageboundary:
   - y si queremos emular el hardware precisamente... tenemos también que emular los bugs 😅
   responses:
   - (*) ¿no puedo simplemente arreglar el bug? [fix]
-  - vamos a programar esto [letscode]
+  - ✔️  vamos a programar esto [letscode]
 
 fix:
   messages:

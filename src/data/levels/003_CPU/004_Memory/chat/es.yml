@@ -37,7 +37,7 @@ implement:
   - |-
     implementa estos dos métodos:
     **read(address)**:
-      __-> si <address> está dentro de $0000-$07FF, retorna el byte de <ram>
+      __-> si <address> está dentro de $0000-$07FF, retorna el byte correspondiente de <ram>
       -> si <address> está dentro de $0800-$1FFF, retorna un byte espejado de <ram>
         (por ej. $0802 se vuelve $0002, $1023 se vuelve $0023)
       -> caso contrario, retorna 0__
@@ -52,9 +52,15 @@ implement:
 help:
   messages:
   - para saber qué dirección leer
-  - tienes que sustraer el inicio del rango (el ~0x0800~ de ~0x0800~-~0x1FFF~)
+  - tienes que sustraer el inicio del rango
   - luego, usa el operador ~%~ (resto) con el tamaño de la sección de memoria que queremos espejar
   - |-
-    por ejemplo, para calcular el espejado del 4to rango, haríamos:
-    ```javascript (address - 0x2008) % 0x0008```
+    por ejemplo, veamos el 4to rango ("🚽  Espejo de $2000-2007")
+      inicio del rango => $2008
+      rango a espejar => $2000-$2007
+      tamaño del rango a espejar => $0008
+  - |-
+    entonces, haríamos:
+      ```javascript (address - 0x2008) % 0x0008```
+    
   responses: []

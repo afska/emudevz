@@ -1,18 +1,21 @@
 const { evaluate, byte } = $;
 
 let mainModule;
+let NROM = null;
 beforeEach(async () => {
 	mainModule = await evaluate();
+	try {
+		NROM = (await evaluate("/lib/NROM.js")).default;
+	} catch {}
 });
 
 // [!] Duplicated >>>
-const newHeader = (prgPages = 1, chrPages = 1) => {
+const newHeader = (prgPages = 1, chrPages = 1, flags6 = 0, flags7 = 0) => {
 	// prettier-ignore
-	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, 0b00000000, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
+	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, flags7, 0, 0, 0, 0, 0, 0, 0, 0];
 };
 
-const newRom = (prgBytes = []) => {
-	const header = newHeader();
+const newRom = (prgBytes = [], header = newHeader()) => {
 	const prg = prgBytes;
 	const chr = [];
 	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
@@ -22,14 +25,18 @@ const newRom = (prgBytes = []) => {
 	return bytes;
 };
 
-const newCPU = (prgBytes = null) => {
+const newCPU = (prgBytes = []) => {
 	const CPU = mainModule.default.CPU;
 	const Cartridge = mainModule.default.Cartridge;
 
-	const cartridge =
-		prgBytes == null ? { prg: () => [] } : new Cartridge(newRom(prgBytes));
+	const cartridge = new Cartridge(newRom(prgBytes));
 
-	return new CPU(cartridge);
+	if (NROM != null) {
+		const mapper = new NROM({ cartridge });
+		return new CPU(mapper);
+	} else {
+		return new CPU(cartridge);
+	}
 };
 // [!] Duplicated <<<
 

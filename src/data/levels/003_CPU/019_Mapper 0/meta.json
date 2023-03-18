@@ -4,6 +4,7 @@
 		"es": "🧠 Mapper 0"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [

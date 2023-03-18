@@ -1,18 +1,21 @@
 const { evaluate, byte } = $;
 
 let mainModule;
+let NROM = null;
 beforeEach(async () => {
 	mainModule = await evaluate();
+	try {
+		NROM = (await evaluate("/lib/NROM.js")).default;
+	} catch {}
 });
 
 // [!] Duplicated >>>
-const newHeader = (prgPages = 1, chrPages = 1) => {
+const newHeader = (prgPages = 1, chrPages = 1, flags6 = 0, flags7 = 0) => {
 	// prettier-ignore
-	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, 0b00000000, 0b00000000, 0, 0, 0, 0, 0, 0, 0, 0];
+	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, flags7, 0, 0, 0, 0, 0, 0, 0, 0];
 };
 
-const newRom = (prgBytes = []) => {
-	const header = newHeader();
+const newRom = (prgBytes = [], header = newHeader()) => {
 	const prg = prgBytes;
 	const chr = [];
 	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
@@ -22,14 +25,18 @@ const newRom = (prgBytes = []) => {
 	return bytes;
 };
 
-const newCPU = (prgBytes = null) => {
+const newCPU = (prgBytes = []) => {
 	const CPU = mainModule.default.CPU;
 	const Cartridge = mainModule.default.Cartridge;
 
-	const cartridge =
-		prgBytes == null ? { prg: () => [] } : new Cartridge(newRom(prgBytes));
+	const cartridge = new Cartridge(newRom(prgBytes));
 
-	return new CPU(cartridge);
+	if (NROM != null) {
+		const mapper = new NROM({ cartridge });
+		return new CPU(mapper);
+	} else {
+		return new CPU(cartridge);
+	}
 };
 // [!] Duplicated <<<
 
@@ -53,7 +60,7 @@ it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
 
 	["cycle", "extraCycles"].forEach((property) => {
 		cpu.should.include.key(property);
-		cpu[property].should.equal(0);
+		cpu[property].should.equal(0, property);
 	});
 })({
 	locales: {
@@ -96,7 +103,7 @@ it("8-bit registers can save and read values (valid range)", () => {
 	["a", "x", "y", "sp"].forEach((register) => {
 		for (let i = 0; i < 256; i++) {
 			cpu[register].setValue(i);
-			cpu[register].getValue().should.equal(i, register);
+			cpu[register].getValue().should.equal(i, `${register}=${i}`);
 		}
 	});
 })({
@@ -114,7 +121,7 @@ it("8-bit registers wrap with values outside the range", () => {
 			const array = new Uint8Array(1);
 			array[0] = i;
 			cpu[register].setValue(i);
-			cpu[register].getValue().should.equal(array[0], register);
+			cpu[register].getValue().should.equal(array[0], `${register}=${i}`);
 		}
 	});
 })({
@@ -129,7 +136,7 @@ it("16-bit registers can save and read values (valid range)", () => {
 
 	for (let i = 0; i < 65536; i++) {
 		cpu.pc.setValue(i);
-		cpu.pc.getValue().should.equal(i);
+		cpu.pc.getValue().should.equal(i, i);
 	}
 })({
 	locales: {
@@ -145,7 +152,7 @@ it("16-bit registers wrap with values outside the range", () => {
 		const array = new Uint16Array(1);
 		array[0] = i;
 		cpu.pc.setValue(i);
-		cpu.pc.getValue().should.equal(array[0]);
+		cpu.pc.getValue().should.equal(array[0], i);
 	}
 })({
 	locales: {
@@ -347,7 +354,7 @@ it("can read from RAM", () => {
 	for (let i = 0; i < 2048; i++) {
 		const value = byte.random();
 		cpu.memory.ram[i] = value;
-		cpu.memory.read(i).should.equal(value);
+		cpu.memory.read(i).should.equal(value, i);
 	}
 })({
 	locales: {
@@ -362,7 +369,7 @@ it("reading RAM mirror results in RAM reads", () => {
 	for (let i = 0x0800; i < 0x0800 + 0x1800; i++) {
 		const value = byte.random();
 		cpu.memory.ram[(i - 0x0800) % 0x0800] = value;
-		cpu.memory.read(i).should.equal(value);
+		cpu.memory.read(i).should.equal(value, `$${i.toString(16)}`);
 	}
 })({
 	locales: {
@@ -377,7 +384,7 @@ it("can write to RAM", () => {
 	for (let i = 0; i < 2048; i++) {
 		const value = byte.random();
 		cpu.memory.write(i, value);
-		cpu.memory.ram[i].should.equal(value);
+		cpu.memory.ram[i].should.equal(value, i);
 	}
 })({
 	locales: {
@@ -392,7 +399,7 @@ it("writing RAM mirror results in RAM writes", () => {
 	for (let i = 0x0800; i < 0x0800 + 0x1800; i++) {
 		const value = byte.random();
 		cpu.memory.write(i, value);
-		cpu.memory.ram[(i - 0x0800) % 0x0800].should.equal(value);
+		cpu.memory.ram[(i - 0x0800) % 0x0800].should.equal(value, i);
 	}
 })({
 	locales: {
@@ -451,12 +458,12 @@ it("PRG-ROM code is mapped to $8000-$BFFF", () => {
 	const cpu = new CPU(new Cartridge(newRom(code)));
 
 	for (let i = 0; i < 16384; i++)
-		cpu.memory.read(0x8000 + i).should.equal(code[i]);
+		cpu.memory.read(0x8000 + i).should.equal(code[i], i);
 })({
 	locales: {
 		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
 	},
-	use: ({ id }, book) => id >= book.getId("4.6"),
+	use: ({ id }, book) => id >= book.getId("4.6") && id < book.getId("4.20"),
 });
 
 it("PRG-ROM code is read only", () => {
@@ -470,37 +477,13 @@ it("PRG-ROM code is read only", () => {
 	for (let i = 0; i < 16384; i++) {
 		const value = cpu.memory.read(0x8000 + i);
 		cpu.memory.write(0x8000 + i, byte.random());
-		cpu.memory.read(0x8000 + i).should.equal(value);
+		cpu.memory.read(0x8000 + i).should.equal(value, i);
 	}
 })({
 	locales: {
 		es: "el código PRG-ROM es solo lectura",
 	},
-	use: ({ id }, book) => id >= book.getId("4.6"),
-});
-
-it("the `prg()` method is called only one time", () => {
-	const { CPU, Cartridge } = mainModule.default;
-
-	const code = [1, 2, 3];
-	const cartridge = new Cartridge(newRom(code));
-	sinon.spy(cartridge, "prg");
-	const cpu = new CPU(cartridge);
-
-	cpu.memory.read(0x8000);
-	cpu.memory.read(0x8000);
-	cpu.memory.read(0x8000);
-
-	try {
-		cartridge.prg.should.have.been.calledOnce;
-	} catch (e) {
-		throw new Error(e.message.split("\n")[0]);
-	}
-})({
-	locales: {
-		es: "el método `prg()` se llama solo una vez",
-	},
-	use: ({ id }, book) => id >= book.getId("4.6"),
+	use: ({ id }, book) => id >= book.getId("4.6") && id < book.getId("4.20"),
 });
 
 // 4.7 Execute (1/2)
@@ -647,7 +630,7 @@ it("the stack can push and pop values", () => {
 	for (let i = 0; i < 256; i++) bytes.push(byte.random());
 
 	for (let i = 0; i < 256; i++) stack.push(bytes[i]);
-	for (let i = 255; i <= 0; i--) stack.pop().should.equal(bytes[i]);
+	for (let i = 255; i <= 0; i--) stack.pop().should.equal(bytes[i], i);
 })({
 	locales: {
 		es: "la pila puede poner y sacar elementos",
@@ -780,9 +763,9 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	// NOP
 	cpu.logger = sinon.spy();
 	cycles = cpu.step();
-	cycles.should.equal(2);
-	cpu.pc.getValue().should.equal(0x8001);
-	cpu.cycle.should.equal(9);
+	cycles.should.equal(2, "NOP => cycles");
+	cpu.pc.getValue().should.equal(0x8001, "NOP => pc");
+	cpu.cycle.should.equal(9, "NOP => cycle");
 	cpu.logger.should.have.been.calledWith(
 		cpu,
 		0x8000,
@@ -794,9 +777,9 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	// LDA #$05
 	cpu.logger = sinon.spy();
 	cycles = cpu.step();
-	cycles.should.equal(2);
-	cpu.pc.getValue().should.equal(0x8003);
-	cpu.cycle.should.equal(11);
+	cycles.should.equal(2, "LDA #$05 => cycles");
+	cpu.pc.getValue().should.equal(0x8003, "LDA #$05 => pc");
+	cpu.cycle.should.equal(11, "LDA #$05 => cycle");
 	cpu.logger.should.have.been.calledWith(
 		cpu,
 		0x8001,
@@ -808,9 +791,9 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	// STA $0201
 	cpu.logger = sinon.spy();
 	cycles = cpu.step();
-	cycles.should.equal(4);
-	cpu.pc.getValue().should.equal(0x8006);
-	cpu.cycle.should.equal(15);
+	cycles.should.equal(4, "STA $0201 => cycles");
+	cpu.pc.getValue().should.equal(0x8006, "STA $0201 => pc");
+	cpu.cycle.should.equal(15, "STA $0201 => cycle");
 	cpu.logger.should.have.been.calledWith(
 		cpu,
 		0x8003,
@@ -822,9 +805,9 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	// LDX $0201
 	cpu.logger = sinon.spy();
 	cycles = cpu.step();
-	cycles.should.equal(4);
-	cpu.pc.getValue().should.equal(0x8009);
-	cpu.cycle.should.equal(19);
+	cycles.should.equal(4, "LDX $0201 => cycles");
+	cpu.pc.getValue().should.equal(0x8009, "LDX $0201 => pc");
+	cpu.cycle.should.equal(19, "LDX $0201 => cycle");
 	cpu.logger.should.have.been.calledWith(
 		cpu,
 		0x8006,
@@ -839,3 +822,94 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	},
 	use: ({ id }, book) => id >= book.getId("4.19"),
 });
+
+// 4.20 Mapper 0
+
+it("instantiating a `NEEES` with an unknown mapper throws an 'Invalid mapper.' error", () => {
+	const { NEEES, Cartridge } = mainModule.default;
+
+	expect(
+		() => new NEEES(newRom([], newHeader(1, 1, 0b10110000, 0b11000000)))
+	).to.throw(Error, "Invalid mapper.");
+})({
+	locales: {
+		es:
+			"instanciar una `NEEES` con un mapper desconocido tira un error 'Invalid mapper.'",
+	},
+	use: ({ id }, book) => id >= book.getId("4.20"),
+});
+
+it("PRG-ROM code is mapped to $8000-$BFFF", () => {
+	const { NEEES } = mainModule.default;
+
+	const code = [];
+	for (let i = 0; i < 16384; i++) code.push(byte.random());
+
+	const neees = new NEEES(newRom(code));
+	const cpu = neees.cpu;
+
+	for (let i = 0; i < 16384; i++)
+		cpu.memory.read(0x8000 + i).should.equal(code[i], i);
+})({
+	locales: {
+		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
+	},
+	use: ({ id }, book) => id >= book.getId("4.20"),
+});
+
+it("PRG-ROM code is read only", () => {
+	const { NEEES } = mainModule.default;
+
+	const code = [];
+	for (let i = 0; i < 16384; i++) code.push(byte.random());
+
+	const neees = new NEEES(newRom(code));
+	const cpu = neees.cpu;
+
+	for (let i = 0; i < 16384; i++) {
+		const value = cpu.memory.read(0x8000 + i);
+		cpu.memory.write(0x8000 + i, byte.random());
+		cpu.memory.read(0x8000 + i).should.equal(value, i);
+	}
+})({
+	locales: {
+		es: "el código PRG-ROM es solo lectura",
+	},
+	use: ({ id }, book) => id >= book.getId("4.20"),
+});
+
+it("PRG-ROM code is also mapped to $C000-$FFFF", () => {
+	const { NEEES } = mainModule.default;
+
+	const code = [];
+	for (let i = 0; i < 16384; i++) code.push(byte.random());
+
+	const neees = new NEEES(newRom(code));
+	const cpu = neees.cpu;
+
+	for (let i = 0; i < 16384; i++)
+		cpu.memory.read(0xc000 + i).should.equal(code[i], i);
+})({
+	locales: {
+		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
+	},
+	use: ({ id }, book) => id >= book.getId("4.20"),
+});
+
+// TODO: For PPU
+// it("CHR-ROM code is mapped to PPU range $0000-$1FFF", () => {
+// 	const { NEEES } = mainModule.default;
+
+// 	const neees = new NEEES(newRom());
+// 	const cpu = neees.cpu;
+// 	const graphics = neees.cartridge.chr();
+
+//  const ppu = TODO;
+// 	for (let i = 0; i < 8192; i++)
+// 		ppu.memory.read(i).should.equal(graphics[i], i);
+// })({
+// 	locales: {
+// 		es: "el código CHR-ROM está mapeado al rango PPU $0000-$1FFF",
+// 	},
+// 	use: ({ id }, book) => id >= book.getId("4.20"),
+// });

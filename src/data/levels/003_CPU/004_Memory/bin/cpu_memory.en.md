@@ -5,7 +5,7 @@
 | `$0000-$07FF` | `$0800` | 🐏 `2` KiB internal RAM                    |
 | `$0800-$1FFF` | `$1800` | 🚽 Mirrors of `$0000-$07FF`                |
 | `$2000-$2007` | `$0008` | 🖥️ PPU registers                           |
-| `$2008-$3FFF` | `$1FF8` | 🚽 Mirrors of `$2000-2007`                 |
+| `$2008-$3FFF` | `$1FF8` | 🚽 Mirrors of `$2000-$2007`                |
 | `$4000-$4013` | `$0014` | 🔊 APU registers                           |
 | `$4014-$4014` | `$0001` | 🖥️ PPU's OAMDMA register                   |
 | `$4015-$4015` | `$0001` | 🔊 APUStatus / APUControl registers        |
