@@ -61,8 +61,10 @@ export default class NEEESTester extends PureComponent {
 		return (
 			<div className={styles.container}>
 				<DiffViewer
-					oldValue={"test\ning\ndiffs!\nlet's see"}
-					newValue={"test\ning\ndiffs!!! long long diff! loooong!\nlet's see"}
+					oldValue={"test\ning\ndiffs!\nlet's see\n1\n2\n3\n4\n5\n6\n7"}
+					newValue={
+						"test\ning\ndiffs!!! long long diff! loooong!\nlet's see\n1\n2\n3\n4\n5\n6\n7"
+					}
 					splitView={true}
 					useDarkTheme={true}
 					leftTitle={"EmuDevz"}

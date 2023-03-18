@@ -4,25 +4,24 @@
 		"es": "🔰 Pasando NEEEStest"
 	},
 	"ui": {
-		"layout": "quad",
+		"layout": "tripleBottom",
 		"components": {
-			"TopLeft": [
+			"Left": [
 				"console",
 				{
 					"startup": "chat -f"
 				}
 			],
-			"TopRight": [
+			"Right": [
 				"multifile",
 				{
 					"language": "javascript",
 					"action": "run"
 				}
 			],
-			"BottomLeft": ["neeestester", {}],
-			"BottomRight": ["neeestester", {}]
+			"Bottom": ["neeestester", {}]
 		},
-		"focus": "TopLeft"
+		"focus": "Left"
 	},
 	"test": {
 		"context": "javascript",

@@ -1,4 +1,5 @@
 .container,
+.verticalContainer,
 .editor,
 .column {
 	height: 100%;
@@ -7,6 +8,15 @@
 .container {
 	display: flex;
 	flex-direction: row;
+}
+
+.verticalContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.fullRow {
+	width: 100%;
 }
 
 .column {
