@@ -1,5 +1,21 @@
 ---
 main:
   messages:
-  - coming soon!
-  responses: []
+  - si esto fuera un juego extraño en el que tienes que programar un emulador
+  - este sería un <jefe final> 👹
+  - ~NEEEStest~ es un homebrew que prueba exhaustivamente el funcionamiento de la CPU
+  - fue creado por alguien llamado <kevtris>
+  - ejecutaré tu emulador y registraré cada instrucción
+  - comparando cada línea con un "golden log"
+  responses:
+  - ¿qué es un golden log? 🏆 [golden]
+
+golden:
+  messages:
+  - un log hecho para el mismo ROM, pero creado por un emulador que se demostró que funciona correctamente
+  - hasta ahora, solo he ejecutado pruebas básicas en tu código
+  - esto abarcará todo tipo de casos extremos, verificando que tu CPU sea sólida
+  - si encuentras discrepancias, tendrás que averiguar la causa o buscar ayuda en línea
+  - 📚  ¡usa los botones y llega al final del registro de oro!
+  events:
+  - golden-log-end [end]
