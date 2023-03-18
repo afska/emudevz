@@ -4,15 +4,17 @@
 		"es": "🔰 Pasando NEEEStest"
 	},
 	"ui": {
-		"layout": "dual",
+		"layout": "quad",
 		"components": {
-			"Left": [
+			"TopLeft": ["tv", {}],
+			"TopRight": ["tv", {}],
+			"BottomLeft": [
 				"console",
 				{
-					"startup": "chat"
+					"startup": "chat -f"
 				}
 			],
-			"Right": [
+			"BottomRight": [
 				"multifile",
 				{
 					"language": "javascript",
@@ -20,7 +22,7 @@
 				}
 			]
 		},
-		"focus": "Left"
+		"focus": "BottomLeft"
 	},
 	"test": {
 		"context": "javascript",
@@ -34,8 +36,7 @@
 			"cpu_instructions_5.js",
 			"cpu_addressing_modes_1.js",
 			"cpu_addressing_modes_2.js"
-		],
-		"mainTestFile": "cpu.js"
+		]
 	},
 	"memory": {
 		"content": {
