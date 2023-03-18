@@ -36,11 +36,11 @@ rightway:
       __-> remember the original value of PC
         (let's call this <originalPC>)
 
-      -> reads a byte from the memory location that PC points at
+      -> read a byte from the memory location that PC points at
         (let's call this <opcode>)
       -> find the operation related with that opcode: this.operations[opcode]
         (let's call this <operation>)
-      -> if <operation> no existe, throw an "Invalid opcode." error
+      -> if <operation> doesn't exist, throw an "Invalid opcode." error
       -> increment PC
 
       -> read 0, 1 (using read) or 2 bytes (using read16) from the memory location that PC points at, depending on operation.addressingMode.inputSize
