@@ -66,7 +66,7 @@ it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
 	locales: {
 		es: "incluye dos propiedades misteriosas: `cycle` y `extraCycles`",
 	},
-	use: ({ id }, book) => id >= book.getId("4.2"),
+	use: ({ id }, book) => id >= book.getId("4.2") && id < book.getId("4.21"),
 });
 
 it("includes all the registers", () => {
@@ -94,7 +94,7 @@ it("all registers start from 0", () => {
 	locales: {
 		es: "todos los registros comienzan en 0",
 	},
-	use: ({ id }, book) => id >= book.getId("4.2") && id < book.getId("4.6"),
+	use: ({ id }, book) => id >= book.getId("4.2") && id < book.getId("4.21"),
 });
 
 it("8-bit registers can save and read values (valid range)", () => {
@@ -178,11 +178,12 @@ it("includes a `flags` property with 6 booleans", () => {
 	locales: {
 		es: "incluye una propiedad `flags` con 6 booleanos",
 	},
-	use: ({ id }, book) => id >= book.getId("4.3"),
+	use: ({ id }, book) => id >= book.getId("4.3") && id < book.getId("4.21"),
 });
 
 it("flags register can be serialized into a byte", () => {
 	const cpu = newCPU();
+	cpu.flags.i = false;
 
 	cpu.flags.getValue().should.equal(0b00100000);
 	cpu.flags.z = true;
@@ -487,21 +488,6 @@ it("PRG-ROM code is read only", () => {
 });
 
 // 4.7 Execute (1/2)
-
-it("all registers start from 0, except for [PC], which starts from $8000", () => {
-	const cpu = newCPU();
-
-	["a", "x", "y", "sp"].forEach((register) => {
-		cpu[register].getValue().should.equal(0, register);
-	});
-	cpu.pc.getValue().should.equal(0x8000);
-})({
-	locales: {
-		es:
-			"todos los registros comienzan en 0, excepto [PC], que comienza en $8000",
-	},
-	use: ({ id }, book) => id >= book.getId("4.7"),
-});
 
 it("opcode $E8 means `INX`, which increments the [X] register", () => {
 	const cpu = newCPU([0xe8]);
@@ -894,6 +880,63 @@ it("PRG-ROM code is also mapped to $C000-$FFFF", () => {
 		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
 	},
 	use: ({ id }, book) => id >= book.getId("4.20"),
+});
+
+// 4.21 Initial state
+
+it("includes a `flags` property with 6 booleans (I = true)", () => {
+	const cpu = newCPU();
+
+	cpu.should.include.key("flags");
+	expect(cpu.flags).to.be.an("object");
+
+	["c", "z", "i", "d", "v", "n"].forEach((flag) => {
+		cpu.flags.should.include.key(flag);
+		expect(cpu.flags[flag]).to.be.an("boolean", flag);
+	});
+
+	["c", "z", "d", "v", "n"].forEach((flag) => {
+		cpu.flags[flag].should.be.false;
+	});
+	cpu.flags.i.should.be.true;
+})({
+	locales: {
+		es: "incluye una propiedad `flags` con 6 booleanos (I = true)",
+	},
+	use: ({ id }, book) => id >= book.getId("4.21"),
+});
+
+it("all registers start from 0 (except for [SP])", () => {
+	const cpu = newCPU();
+
+	["a", "x", "y", "pc"].forEach((register) => {
+		cpu[register].getValue().should.equal(0, register);
+	});
+})({
+	locales: {
+		es: "todos los registros comienzan en 0 (excepto [SP])",
+	},
+	use: ({ id }, book) => id >= book.getId("4.21"),
+});
+
+it("triggers a <RESET> interrupt on start", () => {
+	const cpu = newCPU();
+
+	["cycle", "extraCycles"].forEach((property) => {
+		cpu.should.include.key(property);
+	});
+
+	cpu.stack.pop().should.equal(0b00100100, "flags");
+	cpu.stack.pop16().should.equal(0x0, "old pc");
+	cpu.cycle.should.equal(7, "cycle");
+	cpu.extraCycles.should.equal(0, "extra cycles");
+	cpu.flags.i.should.equal(true, "i");
+	cpu.pc.getValue().should.equal(0x0, "new pc");
+})({
+	locales: {
+		es: "dispara una interrupción <RESET> al inicio",
+	},
+	use: ({ id }, book) => id >= book.getId("4.21"),
 });
 
 // TODO: For PPU

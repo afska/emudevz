@@ -1,0 +1,11 @@
+---
+main:
+  messages:
+  - nuestro último paso 🤩
+  - inicializaremos nuestra CPU con los valores iniciales correctos
+  - 📚  cambia `FlagsRegister` para que la bandera ~I~ comience como `true`
+  - |-
+      y al final de nuestro constructor de `CPU`, dispara una interrupción <RESET>:
+        ```javascript this.interrupt(interrupts.RESET);```
+  - ¡asegúrate de haber importado correctamente ~/lib/interrupts.js~!
+  responses: []
