@@ -6,8 +6,8 @@
 	"ui": {
 		"layout": "quad",
 		"components": {
-			"TopLeft": ["tv", {}],
-			"TopRight": ["tv", {}],
+			"TopLeft": ["neeestester", {}],
+			"TopRight": ["neeestester", {}],
 			"BottomLeft": [
 				"console",
 				{
