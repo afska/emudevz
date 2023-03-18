@@ -6,23 +6,23 @@
 	"ui": {
 		"layout": "quad",
 		"components": {
-			"TopLeft": ["neeestester", {}],
-			"TopRight": ["neeestester", {}],
-			"BottomLeft": [
+			"TopLeft": [
 				"console",
 				{
 					"startup": "chat -f"
 				}
 			],
-			"BottomRight": [
+			"TopRight": [
 				"multifile",
 				{
 					"language": "javascript",
 					"action": "run"
 				}
-			]
+			],
+			"BottomLeft": ["neeestester", {}],
+			"BottomRight": ["neeestester", {}]
 		},
-		"focus": "BottomLeft"
+		"focus": "TopLeft"
 	},
 	"test": {
 		"context": "javascript",

@@ -1,14 +1,13 @@
 import React, { PureComponent } from "react";
 import FlashChange from "@avinlab/react-flash-change";
 import Table from "react-bootstrap/Table";
+import DiffViewer from "react-diff-viewer";
 import _ from "lodash";
 import Level from "../../level/Level";
 import testContext from "../../terminal/commands/test/context";
 import { bus, hex } from "../../utils";
-import styles from "./CPUDebugger.module.css";
+import styles from "./NEEESTester.module.css";
 
-const WIDTH = 600;
-const HEIGHT = 300;
 const MEMORY_ROWS = 10;
 const BASE = 16;
 const BYTES_MEMORY = MEMORY_ROWS * BASE;
@@ -60,18 +59,21 @@ export default class NEEESTester extends PureComponent {
 			);
 
 		return (
-			<div className={styles.container} ref={this._onRef}>
-				<div className={styles.column}>// TODO: IMPLEMENT</div>
-
-				<div className={styles.column}>MEMORY</div>
-
-				<div className={styles.column}>STACK</div>
+			<div className={styles.container}>
+				<DiffViewer
+					oldValue={"test\ning\ndiffs!\nlet's see"}
+					newValue={"test\ning\ndiffs!!! long long diff! loooong!\nlet's see"}
+					splitView={true}
+					useDarkTheme={true}
+					leftTitle={"EmuDevz"}
+					rightTitle={"Golden Log"}
+					linesOffset={0}
+				/>
 			</div>
 		);
 	}
 
 	componentDidMount() {
-		window.addEventListener("resize", this._onResize);
 		this._subscriber = bus.subscribe({
 			code: this._onCode,
 			step: this._onStep,
@@ -80,7 +82,6 @@ export default class NEEESTester extends PureComponent {
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener("resize", this._onResize);
 		this._subscriber.release();
 	}
 
@@ -119,22 +120,6 @@ export default class NEEESTester extends PureComponent {
 
 	_onReset = () => {
 		this._onCode(this.state._lastCode);
-	};
-
-	_onRef = (ref) => {
-		this._div = ref;
-		this._onResize();
-	};
-
-	_onResize = () => {
-		if (!this._div) return;
-
-		const scale = Math.min(
-			this._div.clientWidth / WIDTH,
-			this._div.clientHeight / HEIGHT,
-			1
-		);
-		this._div.style.transform = `scale(${scale})`;
 	};
 
 	_updateState() {

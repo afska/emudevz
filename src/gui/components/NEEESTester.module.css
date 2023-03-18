@@ -7,8 +7,11 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-	padding: 16px;
 	transform-origin: center;
+}
+
+.container table {
+	height: 100%;
 }
 
 .column {
