@@ -182,7 +182,8 @@ class MultiFile extends PureComponent {
 	};
 
 	_onWheelTabs = (e) => {
-		this._tabs.scrollBy(-e.deltaY, 0);
+		const delta = e.deltaY;
+		this._tabs.scrollBy({ left: -delta, top: 0, behavior: "instant" });
 	};
 
 	_onKeyDown = (e) => {
