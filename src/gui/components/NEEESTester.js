@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import FlashChange from "@avinlab/react-flash-change";
 import Table from "react-bootstrap/Table";
 import DiffViewer from "react-diff-viewer";
+import classNames from "classnames";
 import _ from "lodash";
 import Level from "../../level/Level";
 import testContext from "../../terminal/commands/test/context";
@@ -60,20 +61,22 @@ export default class NEEESTester extends PureComponent {
 
 		return (
 			<div className={styles.container}>
+				<div className={styles.titles}>
+					<div className={styles.title}>Golden Log</div>
+					<div className={styles.title}>EmuDevz</div>
+				</div>
 				<DiffViewer
 					oldValue={"C000  4C F5 C5  JMP $C5F5                       A:00 X:00 Y:00 P:24 SP:FD CYC:7\nC5F5  A2 00     LDX #$00                        A:00 X:00 Y:00 P:24 SP:FD CYC:10\nC5F7  86 00     STX $00 = 05                    A:00 X:00 Y:00 P:27 SP:FD CYC:12\nC5F9  86 10     STX $10 = 00                    A:00 X:00 Y:00 P:26 SP:FD CYC:15\nC5FB  86 11     STX $11 = 00                    A:00 X:00 Y:00 P:26 SP:FD CYC:18\nC5FD  20 2D C7  JSR $C72D                       A:00 X:00 Y:00 P:26 SP:FD CYC:21\nC72D  EA        NOP                             A:00 X:00 Y:00 P:26 SP:FB CYC:27\nC72E  38        SEC                             A:00 X:00 Y:00 P:26 SP:FB CYC:29\nC72F  B0 04     BCS $C735                       A:00 X:00 Y:00 P:27 SP:FB CYC:31\nC735  EA        NOP                             A:00 X:00 Y:00 P:27 SP:FB CYC:34"
 						.split("\n")
-						.slice(0, 4)
+						.slice(0, 6)
 						.join("\n")}
 					newValue={"C000  4C F5 C5  JMP $C5F5                       A:00 X:00 Y:00 P:24 SP:FD CYC:7\nC5F5  A2 00     LDX #$00                        A:00 X:00 Y:00 P:24 SP:FD CYC:10\nC5F7  86 00     STX $00 = 00                    A:00 X:00 Y:00 P:26 SP:FD CYC:12\nC5F9  86 10     STX $10 = 00                    A:00 X:00 Y:00 P:26 SP:FD CYC:15\nC5FB  86 11     STX $11 = 00                    A:00 X:00 Y:00 P:26 SP:FD CYC:18\nC5FD  20 2D C7  JSR $C72D                       A:00 X:00 Y:00 P:26 SP:FD CYC:21\nC72D  EA        NOP                             A:00 X:00 Y:00 P:26 SP:FB CYC:27\nC72E  38        SEC                             A:00 X:00 Y:00 P:26 SP:FB CYC:29\nC72F  B0 04     BCS $C735                       A:00 X:00 Y:00 P:27 SP:FB CYC:31\nC735  EA        NOP                             A:00 X:00 Y:00 P:27 SP:FB CYC:34"
 						.split("\n")
-						.slice(0, 4)
+						.slice(0, 6)
 						.join("\n")}
 					splitView={true}
 					useDarkTheme={true}
 					hideLineNumbers={false}
-					leftTitle={"Golden Log"}
-					rightTitle={"EmuDevz"}
 					linesOffset={0}
 				/>
 			</div>

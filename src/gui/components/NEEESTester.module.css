@@ -4,10 +4,11 @@
 	color: white;
 	font-family: "Courier New", Courier, monospace;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	transform-origin: center;
+	padding: 24px 12px;
 }
 
 .container table {
@@ -15,6 +16,31 @@
 	display: flex;
 	flex: 1;
 	overflow: auto;
+	font-size: 12px;
+
+	border: 1px solid #577295;
+	border-radius: 8px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.titles {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	background: #2e303c;
+	border: 1px solid #577295;
+	border-bottom: 0px;
+	border-radius: 8px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.title {
+	flex: 1;
+	text-align: center;
+	padding-top: 6px;
+	padding-bottom: 6px;
 }
 
 .column {
