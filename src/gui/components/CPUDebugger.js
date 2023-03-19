@@ -98,29 +98,41 @@ export default class CPUDebugger extends PureComponent {
 
 		if (this.state._error)
 			return (
-				<div className={styles.message}>
-					<span>❌ {this.state._error}</span>
+				<div
+					className={styles.topContainer}
+					tabIndex={0}
+					ref={this._onContainerRef}
+				>
+					<div className={styles.message} tabIndex={0}>
+						<span>❌ {this.state._error}</span>
+					</div>
 				</div>
 			);
 
 		return (
-			<div className={styles.container} ref={this._onRef}>
-				<div className={styles.column}>
-					{this._renderRegisters()}
-					{this._renderFlags()}
-				</div>
+			<div
+				className={styles.topContainer}
+				tabIndex={0}
+				ref={this._onContainerRef}
+			>
+				<div className={styles.container} ref={this._onRef}>
+					<div className={styles.column}>
+						{this._renderRegisters()}
+						{this._renderFlags()}
+					</div>
 
-				<div className={styles.column}>
-					<Viewer className={styles.memory}>
-						<thead>{this._renderMemoryViewerHead()}</thead>
-						<tbody>{this._renderMemoryViewerContent()}</tbody>
-					</Viewer>
-				</div>
+					<div className={styles.column}>
+						<Viewer className={styles.memory}>
+							<thead>{this._renderMemoryViewerHead()}</thead>
+							<tbody>{this._renderMemoryViewerContent()}</tbody>
+						</Viewer>
+					</div>
 
-				<div className={styles.column}>
-					<Viewer className={styles.memory}>
-						<tbody>{this._renderStack()}</tbody>
-					</Viewer>
+					<div className={styles.column}>
+						<Viewer className={styles.memory}>
+							<tbody>{this._renderStack()}</tbody>
+						</Viewer>
+					</div>
 				</div>
 			</div>
 		);
@@ -140,7 +152,9 @@ export default class CPUDebugger extends PureComponent {
 		this._subscriber.release();
 	}
 
-	focus = () => {};
+	focus = () => {
+		this._container.focus();
+	};
 
 	_renderRegisters() {
 		return (
@@ -387,6 +401,10 @@ export default class CPUDebugger extends PureComponent {
 
 	_onReset = () => {
 		this._onCode(this.state._lastCode);
+	};
+
+	_onContainerRef = (ref) => {
+		this._container = ref;
 	};
 
 	_onRef = (ref) => {

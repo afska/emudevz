@@ -1,3 +1,8 @@
+.topContainer {
+	width: 100%;
+	height: 100%;
+}
+
 .container {
 	height: 100%;
 	user-select: none;
@@ -41,44 +46,6 @@
 	text-align: center;
 	padding-top: 6px;
 	padding-bottom: 6px;
-}
-
-.column {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}
-
-.name {
-	color: #9bc0e9 !important;
-}
-
-.registers {
-	width: 125px !important;
-	text-align: center;
-}
-
-.flags {
-	text-align: center;
-	margin-bottom: 0 !important;
-}
-
-.memory {
-	width: 0px !important;
-	margin-left: 16px !important;
-	font-size: x-small;
-	white-space: nowrap;
-	text-align: center;
-	margin-bottom: 0 !important;
-}
-
-.selectedCell {
-	filter: sepia(1);
-}
-
-.sentence {
-	color: #c678dd;
 }
 
 .message {
