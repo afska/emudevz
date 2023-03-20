@@ -687,6 +687,159 @@ export default (instructions, addressingModes) => {
       addressingMode: addressingModes.ABSOLUTE
     },
     {
+      id: 0x29,
+      instruction: instructions.AND,
+      cycles: 2,
+      addressingMode: addressingModes.IMMEDIATE
+    },
+    {
+      id: 0x25,
+      instruction: instructions.AND,
+      cycles: 3,
+      addressingMode: addressingModes.ZERO_PAGE
+    },
+    {
+      id: 0x35,
+      instruction: instructions.AND,
+      cycles: 4,
+      addressingMode: addressingModes.INDEXED_ZERO_PAGE_X
+    },
+    {
+      id: 0x2d,
+      instruction: instructions.AND,
+      cycles: 4,
+      addressingMode: addressingModes.ABSOLUTE
+    },
+    {
+      id: 0x3d,
+      instruction: instructions.AND,
+      cycles: 4,
+      addressingMode: addressingModes.INDEXED_ABSOLUTE_X,
+      hasPageCrossPenalty: true
+    },
+    {
+      id: 0x39,
+      instruction: instructions.AND,
+      cycles: 4,
+      addressingMode: addressingModes.INDEXED_ABSOLUTE_Y,
+      hasPageCrossPenalty: true
+    },
+    {
+      id: 0x21,
+      instruction: instructions.AND,
+      cycles: 6,
+      addressingMode: addressingModes.INDEXED_INDIRECT
+    },
+    {
+      id: 0x31,
+      instruction: instructions.AND,
+      cycles: 5,
+      addressingMode: addressingModes.INDIRECT_INDEXED,
+      hasPageCrossPenalty: true
+    },
+    {
+      id: 0x49,
+      instruction: instructions.EOR,
+      cycles: 2,
+      addressingMode: addressingModes.IMMEDIATE
+    },
+    {
+      id: 0x45,
+      instruction: instructions.EOR,
+      cycles: 3,
+      addressingMode: addressingModes.ZERO_PAGE
+    },
+    {
+      id: 0x55,
+      instruction: instructions.EOR,
+      cycles: 4,
+      addressingMode: addressingModes.INDEXED_ZERO_PAGE_X
+    },
+    {
+      id: 0x4d,
+      instruction: instructions.EOR,
+      cycles: 4,
+      addressingMode: addressingModes.ABSOLUTE
+    },
+    {
+      id: 0x5d,
+      instruction: instructions.EOR,
+      cycles: 4,
+      addressingMode: addressingModes.INDEXED_ABSOLUTE_X,
+      hasPageCrossPenalty: true
+    },
+    {
+      id: 0x59,
+      instruction: instructions.EOR,
+      cycles: 4,
+      addressingMode: addressingModes.INDEXED_ABSOLUTE_Y,
+      hasPageCrossPenalty: true
+    },
+    {
+      id: 0x41,
+      instruction: instructions.EOR,
+      cycles: 6,
+      addressingMode: addressingModes.INDEXED_INDIRECT
+    },
+    {
+      id: 0x51,
+      instruction: instructions.EOR,
+      cycles: 5,
+      addressingMode: addressingModes.INDIRECT_INDEXED,
+      hasPageCrossPenalty: true
+    },
+    {
+      id: 0x09,
+      instruction: instructions.ORA,
+      cycles: 2,
+      addressingMode: addressingModes.IMMEDIATE
+    },
+    {
+      id: 0x05,
+      instruction: instructions.ORA,
+      cycles: 3,
+      addressingMode: addressingModes.ZERO_PAGE
+    },
+    {
+      id: 0x15,
+      instruction: instructions.ORA,
+      cycles: 4,
+      addressingMode: addressingModes.INDEXED_ZERO_PAGE_X
+    },
+    {
+      id: 0x0d,
+      instruction: instructions.ORA,
+      cycles: 4,
+      addressingMode: addressingModes.ABSOLUTE
+    },
+    {
+      id: 0x1d,
+      instruction: instructions.ORA,
+      cycles: 4,
+      addressingMode: addressingModes.INDEXED_ABSOLUTE_X,
+      hasPageCrossPenalty: true
+    },
+    {
+      id: 0x19,
+      instruction: instructions.ORA,
+      cycles: 4,
+      addressingMode: addressingModes.INDEXED_ABSOLUTE_Y,
+      hasPageCrossPenalty: true
+    },
+    {
+      id: 0x01,
+      instruction: instructions.ORA,
+      cycles: 6,
+      addressingMode: addressingModes.INDEXED_INDIRECT
+    },
+    {
+      id: 0x11,
+      instruction: instructions.ORA,
+      cycles: 5,
+      addressingMode: addressingModes.INDIRECT_INDEXED,
+      hasPageCrossPenalty: true
+    },
+    {
       id: 0x90,
       instruction: instructions.BCC,
       cycles: 2,

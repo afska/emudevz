@@ -148,14 +148,15 @@ export default class NEEESTester extends PureComponent {
 			try {
 				this._neees.cpu.step();
 			} catch (e) {
-				debugger; // TODO: REMOVE
-				this.setState({ _error: e.message, line: 0 });
+				this.setState({ _error: e.stack, line: 0 });
 				return;
 			}
 			expected = this.state.logLines[line];
 			actual = this._neees.logger.lastLog;
 			line++;
 		}
+
+		debugger; // TODO: DEBUG PAGE CROSS PENALTY
 
 		this.setState({ line });
 	};
