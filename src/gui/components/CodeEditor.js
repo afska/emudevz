@@ -74,12 +74,12 @@ export default class CodeEditor extends PureComponent {
 		},
 		step: {
 			icon: FaStepForward,
-			tooltip: locales.get("stepForward"),
+			tooltip: locales.get("step_forward"),
 			run: () => bus.emit("step"),
 		},
 		reset: {
 			icon: FaFastBackward,
-			tooltip: locales.get("stepReset"),
+			tooltip: locales.get("step_reset"),
 			run: () => {
 				bus.emit("reset");
 				this.setState({ actionName: "step" });

@@ -1,5 +1,9 @@
 ---
 main:
+  run: |
+    set((m) => {
+      m.$canRun = true; // TODO: FALSE
+    });
   messages:
   - if this was a weird game in which you have to code an emulator
   - this would be a <final boss> 👹
@@ -17,5 +21,9 @@ golden:
   - this will go through all type of corner cases, verifying that your CPU is solid
   - if you find discrepancies, you'll have to figure out the cause, or ask for help online
   - 📚  use the buttons and reach the end of the golden log!
+  run-after-messages: |
+    set((m) => {
+      m.$canRun = true;
+    });
   events:
   - golden-log-end [end]

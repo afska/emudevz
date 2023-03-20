@@ -28,7 +28,7 @@ class NavBar extends PureComponent {
 				<div className={classNames(styles.item, styles.text)}>
 					<IconButton
 						Icon={FaHome}
-						tooltip={locales.get("goBack")}
+						tooltip={locales.get("go_back")}
 						onClick={goBack}
 					/>
 					{_.first(chapter.levels).id > 0 && (

@@ -15,8 +15,7 @@
 			"Right": [
 				"multifile",
 				{
-					"language": "javascript",
-					"action": "run"
+					"language": "javascript"
 				}
 			],
 			"Bottom": ["neeestester", {}]

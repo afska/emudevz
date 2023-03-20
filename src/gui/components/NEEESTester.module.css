@@ -60,3 +60,18 @@
 	padding-left: 32px;
 	padding-right: 32px;
 }
+
+.debugger {
+	position: absolute;
+	bottom: 28px;
+	right: 16px;
+	z-index: 1;
+}
+
+.spinner {
+	position: absolute;
+	bottom: 28px;
+	right: 36px;
+	z-index: 1;
+	animation: spinner 0.8s linear infinite;
+}

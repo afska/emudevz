@@ -1,5 +1,9 @@
 ---
 main:
+  run: |
+    set((m) => {
+      m.$canRun = false;
+    });
   messages:
   - si esto fuera un juego extraño en el que tienes que programar un emulador
   - este sería un <jefe final> 👹
@@ -17,5 +21,9 @@ golden:
   - esto abarcará todo tipo de casos extremos, verificando que tu CPU sea sólida
   - si encuentras discrepancias, tendrás que averiguar la causa o buscar ayuda en línea
   - 📚  ¡usa los botones y llega al final del registro de oro!
+  run-after-messages: |
+    set((m) => {
+      m.$canRun = true;
+    });
   events:
   - golden-log-end [end]
