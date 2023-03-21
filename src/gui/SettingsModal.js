@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales, { LANGUAGES } from "../locales";
 import Button from "./components/widgets/Button";
-// import VolumeSlider from "./components/widgets/VolumeSlider";
+import VolumeSlider from "./components/widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
 
 class SettingsModal extends PureComponent {
@@ -52,10 +52,16 @@ class SettingsModal extends PureComponent {
 								))}
 							</div>
 						</Form.Group>
-						{/* <Form.Group>
+						<Form.Group>
 							<Form.Label>{locales.get("music")}</Form.Label>
 							<VolumeSlider />
-						</Form.Group> */}
+						</Form.Group>
+						<Form.Label style={{ color: "gray" }}>Save file</Form.Label>
+						<div style={{ color: "gray", fontSize: 12, fontStyle: "italic" }}>
+							The game's save file is in your LocalStorage. You can make a
+							backup using the <b>LocalStorage Manager</b> extension (on
+							Chrome).
+						</div>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
