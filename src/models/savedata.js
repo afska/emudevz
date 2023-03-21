@@ -8,6 +8,7 @@ const INITIAL_STATE = () => ({
 	language: "en",
 	musicVolume: 0.5,
 	musicTrack: 0,
+	trackInfo: null,
 	openFiles: [DEFAULT_FILE],
 	selectedFile: DEFAULT_FILE,
 });
@@ -26,6 +27,9 @@ export default {
 		},
 		setMusicTrack(state, musicTrack) {
 			return { ...state, musicTrack };
+		},
+		setTrackInfo(state, trackInfo) {
+			return { ...state, trackInfo };
 		},
 		setOpenFiles(state, openFiles) {
 			return { ...state, openFiles };

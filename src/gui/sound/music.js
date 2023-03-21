@@ -1,7 +1,22 @@
 import store from "../../store";
 
 const MUSIC_DIR = "music/";
-const TRACKS = [];
+const TRACKS = [
+	{ file: "0-plisken.mp3", artist: "Synthenia", title: "Detective Plisken" },
+	{ file: "1-reveng.mp3", artist: "Synthenia", title: "RevEng" },
+	{ file: "2-memories.mp3", artist: "Synthenia", title: "Memories" },
+	{ file: "3-neural.mp3", artist: "Synthenia", title: "Neural Emulation" },
+	{ file: "4-unknown.mp3", artist: "Synthenia", title: "Unknown Opcode" },
+	{ file: "5-lazer.mp3", artist: "Synthenia", title: "Lazer Idols" },
+	{
+		file: "6-lynx.mp3",
+		artist: "Synthenia",
+		title: "There is a lynx in the shower",
+	},
+	{ file: "7-irq.mp3", artist: "Synthenia", title: "IRQ Handler" },
+	{ file: "8-water.mp3", artist: "Synthenia", title: "Water Level" },
+	{ file: "9-voltage.mp3", artist: "Synthenia", title: "Voltage Overload" },
+];
 
 class Music {
 	constructor() {
@@ -29,13 +44,19 @@ class Music {
 		this._hasStarted = true;
 	}
 
+	next() {
+		if (this._audio) this._audio.pause();
+		this._track = (this._track + 1) % TRACKS.length;
+		this._saveTrack();
+		this._playCurrentTrack();
+	}
+
 	_playCurrentTrack() {
-		this._audio = new Audio(MUSIC_DIR + TRACKS[this._track]);
+		this._saveTrackInfo();
+		this._audio = new Audio(MUSIC_DIR + TRACKS[this._track].file);
 		this._audio.play();
 		this._audio.onended = () => {
-			this._track = (this._track + 1) % TRACKS.length;
-			this._saveTrack();
-			this._playCurrentTrack();
+			this.next();
 		};
 	}
 
@@ -59,6 +80,11 @@ class Music {
 
 	_saveTrack() {
 		store.dispatch.savedata.setMusicTrack(this._track);
+		this._saveTrackInfo();
+	}
+
+	_saveTrackInfo() {
+		store.dispatch.savedata.setTrackInfo(TRACKS[this._track]);
 	}
 }
 

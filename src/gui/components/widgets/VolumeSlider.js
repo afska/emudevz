@@ -7,20 +7,22 @@ import music from "../../sound/music";
 import Tooltip from "./Tooltip";
 
 function ValueLabel(props) {
-	const { children } = props;
+	const { trackInfo, children } = props;
+
+	if (!trackInfo) return null;
 
 	return (
-		<Tooltip
-			enterTouchDelay={0}
-			placement="top"
-			title={
-				<Marquee style={{ width: 150 }} gradient={false}>
-					🎶 Artist 🎼 Song&nbsp;
-				</Marquee>
-			}
-		>
-			{children}
-		</Tooltip>
+		// <Tooltip
+		// 	enterTouchDelay={0}
+		// 	placement="top"
+		// 	title={
+		// 		<Marquee style={{ width: 150 }} gradient={false}>
+		// 			🎶 {trackInfo.artist} 🎼 {trackInfo.title}&nbsp;
+		// 		</Marquee>
+		// 	}
+		// >
+		children
+		// </Tooltip>
 	);
 }
 
@@ -28,11 +30,14 @@ class VolumeSlider extends PureComponent {
 	render() {
 		const {
 			volume,
+			trackInfo,
 			setVolume,
 			navBarMode = false,
 			dispatch,
 			...rest
 		} = this.props;
+
+		if (!trackInfo) return null;
 
 		return (
 			<Stack
@@ -47,7 +52,9 @@ class VolumeSlider extends PureComponent {
 					className={navBarMode ? "navbar-volume-slider" : "menu-volume-slider"}
 					valueLabelDisplay="auto"
 					slots={{
-						valueLabel: ValueLabel,
+						valueLabel: React.forwardRef((props, ref) => (
+							<ValueLabel trackInfo={trackInfo} ref={ref} {...props} />
+						)),
 					}}
 					step={0.1}
 					min={0}
@@ -64,6 +71,7 @@ class VolumeSlider extends PureComponent {
 
 const mapStateToProps = ({ savedata }) => ({
 	volume: savedata.musicVolume,
+	trackInfo: savedata.trackInfo,
 });
 
 export default connect(mapStateToProps)(VolumeSlider);

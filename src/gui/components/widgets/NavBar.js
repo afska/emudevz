@@ -1,10 +1,12 @@
 import React, { PureComponent } from "react";
 import Badge from "react-bootstrap/Badge";
+import Marquee from "react-fast-marquee";
 import {
 	FaChevronLeft,
 	FaChevronRight,
 	FaComment,
 	FaHome,
+	FaMusic,
 	FaTrash,
 } from "react-icons/fa";
 import { connect } from "react-redux";
@@ -12,14 +14,23 @@ import classNames from "classnames";
 import _ from "lodash";
 import locales from "../../../locales";
 import { analytics } from "../../../utils";
+import music from "../../sound/music";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
-// import VolumeSlider from "./VolumeSlider";
+import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
 	render() {
-		const { maxLevelId, chapter, level, goBack, goTo, resetLevel } = this.props;
+		const {
+			trackInfo,
+			maxLevelId,
+			chapter,
+			level,
+			goBack,
+			goTo,
+			resetLevel,
+		} = this.props;
 
 		const levelIndex = _.findIndex(chapter.levels, (it) => it.id === level.id);
 
@@ -48,10 +59,24 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
-						{/* <div className={styles.slider}>
+						<div className={styles.slider}>
 							<VolumeSlider navBarMode />
-						</div> */}
+						</div>
 						<IconButton
+							Icon={FaMusic}
+							tooltip={
+								trackInfo ? (
+									<Marquee style={{ width: 150 }} gradient={false}>
+										🎶 {trackInfo.artist} 🎼 {trackInfo.title}&nbsp;
+									</Marquee>
+								) : (
+									"?"
+								)
+							}
+							onClick={() => music.next()}
+						/>
+						<IconButton
+							style={{ marginLeft: 8 }}
 							Icon={FaComment}
 							tooltip={"Send feedback"}
 							onClick={() =>
@@ -90,10 +115,14 @@ class NavBar extends PureComponent {
 	}
 }
 
+const mapStateToProps = ({ savedata }) => ({
+	trackInfo: savedata.trackInfo,
+});
+
 const mapDispatchToProps = ({ level }) => ({
 	goBack: level.goHome,
 	goTo: level.goTo,
 	resetLevel: level.resetProgress,
 });
 
-export default connect(undefined, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
