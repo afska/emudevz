@@ -14,6 +14,29 @@ main:
   responses:
   - (*) el visor no me asusta, lo que sí lo hace son los números raros de abajo [debugger]
   - ¿qué lenguaje es éste? 😮 [language]
+  - ⏭️  ya sé esto [iknow]
+
+iknow:
+  messages:
+  - 🤔
+  - estás <de verdad> familiarizado con 6502 assembly?
+  - (registros, banderas, bifurcaciones, modos de direccionamiento, pila y subrutinas)
+  - si no, en el próximo capítulo vas a <sufrir>
+  - meh, puedes volver y jugarlo cuando quieras, de todas formas
+  - ¿quieres saltear TODO el capítulo?
+  responses:
+  - ⏭️  sí, saltear [skip]
+  - ❌  no, no sé [main]
+
+skip:
+  run: |
+    const book = store.getState().book.instance;
+    const chapter = book.getChapterOf(level.id);
+    const lastLevelId = _.last(chapter.levels).id;
+    store.dispatch.savedata.advanceTo(lastLevelId + 1);
+  messages: []
+  events:
+  - null [end]
 
 debugger:
   messages:

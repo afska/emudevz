@@ -14,7 +14,7 @@ main:
   responses:
   - (*) the viewer doesn't scare me, what it does is the weird looking numbers at the bottom [debugger]
   - what language is this? 😮 [language]
-  - ⏭️  I already know 6502 assembly [iknow]
+  - ⏭️  I already know this [iknow]
 
 iknow:
   messages:
