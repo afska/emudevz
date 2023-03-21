@@ -1,0 +1,23 @@
+{
+	"name": {
+		"en": "🚧 Demo end",
+		"es": "🚧 Fin de la demo"
+	},
+	"ui": {
+		"layout": "mono",
+		"components": {
+			"Main": [
+				"console",
+				{
+					"startup": "chat -f",
+					"availableCommands": ["chat"],
+					"subtitle": {
+						"en": "",
+						"es": ""
+					}
+				}
+			]
+		},
+		"focus": "Main"
+	}
+}

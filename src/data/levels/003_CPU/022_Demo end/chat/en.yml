@@ -1,0 +1,48 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - well...
+  - that's all I have for now 😅
+  - 👀  remember that you can use the feedback button to send me your comments
+  - it took me a long time and effort to build this demo
+  - remember that this is free software
+  - so, please, if you liked this, support me on Patreon
+  - will you? 🥺 🥺
+  responses:
+  - sure! [sure]
+  - yes! [yes]
+  - of course! [ofcourse]
+  - take my money! [money]
+  - hmm... ok [ok]
+
+sure:
+  messages:
+  - thanks so much!
+  events:
+  - asdasdasd [end]
+
+yes:
+  messages:
+  - thanks so much!
+  events:
+  - asdasdasd [end]
+
+ofcourse:
+  messages:
+  - thanks so much!
+  events:
+  - asdasdasd [end]
+
+money:
+  messages:
+  - thanks so much!
+  events:
+  - asdasdasd [end]
+
+ok:
+  messages:
+  - thanks so much!
+  events:
+  - asdasdasd [end]
