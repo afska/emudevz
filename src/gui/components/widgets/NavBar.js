@@ -61,7 +61,7 @@ class NavBar extends PureComponent {
 								)
 							}
 						/>
-						{!level.memory.content.multifile && (
+						{(!level.memory.content.multifile || level.id === maxLevelId) && (
 							<IconButton
 								style={{ marginLeft: 8 }}
 								Icon={FaTrash}

@@ -1,4 +1,5 @@
 import { push, replace } from "connected-react-router";
+import filesystem from "../filesystem";
 import { analytics } from "../utils";
 
 const KEY = "level";
@@ -47,6 +48,20 @@ export default {
 			},
 
 			resetProgress(__, _state_) {
+				const level = _state_[KEY].instance;
+
+				if (level.memory.content.multifile) {
+					const snapshot = `/.snapshots/level-${level.id - 1}`;
+					if (!filesystem.exists(snapshot)) return;
+
+					filesystem.rmrf("/code");
+					filesystem.cpr(snapshot, "/code");
+					filesystem.rmrf(snapshot);
+
+					_dispatch_.savedata.setLevelId(level.id - 1);
+					dispatch.goTo(level.id - 1);
+				}
+
 				_dispatch_.content.setCurrentLevelContent("");
 
 				setTimeout(() => {

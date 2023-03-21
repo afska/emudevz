@@ -705,7 +705,7 @@ it("can pop 16-bit values from the stack", () => {
 
 // 4.18 Operations
 
-it("defines a list of 127 `operations`", () => {
+it("defines a list of 151 `operations`", () => {
 	const cpu = newCPU();
 
 	cpu.should.include.key("operations");
@@ -729,10 +729,10 @@ it("defines a list of 127 `operations`", () => {
 		count++;
 	}
 
-	count.should.equal(127);
+	count.should.equal(151);
 })({
 	locales: {
-		es: "define una lista con 127 `operations`",
+		es: "define una lista con 151 `operations`",
 	},
 	use: ({ id }, book) => id >= book.getId("4.18"),
 });

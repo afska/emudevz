@@ -19,5 +19,10 @@
 			]
 		},
 		"focus": "Main"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
 	}
 }
