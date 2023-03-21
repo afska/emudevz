@@ -4,6 +4,7 @@
 		"es": "🏆 El golden log"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleBottom",
 		"components": {
 			"Left": [

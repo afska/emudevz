@@ -2,7 +2,8 @@
 main:
   run: |
     set((m) => {
-      m.$canRun = true; // TODO: FALSE
+      m.chat.winOnEnd = true;
+      m.$canRun = false;
     });
   messages:
   - if this was a weird game in which you have to code an emulator
@@ -29,4 +30,62 @@ golden:
       m.$canRun = true;
     });
   events:
-  - golden-log-end [end]
+  - cpu-bug-page-boundary [pageboundary]
+  - cpu-bug-unexpected [unexpected]
+  - golden-log-end [success]
+
+pageboundary:
+  run: |
+    set((m) => {
+      m.$canRun = false;
+    });
+  messages:
+  - ah... the <page boundary bug> 😅
+  responses:
+  - the what? [thewhat]
+
+thewhat:
+  messages:
+  - there's a bug in how the NEEES processes the "Indirect" addressing mode
+  - and I totally forgot about it!
+  responses:
+  - a bug in the hardware?! 🤔 [hardware]
+
+hardware:
+  messages:
+  - yes, and if we want to emulate the hardware accurately... we have to also emulate the bugs 😅
+  responses:
+  - can't I just fix the bug? 😤 [fix]
+
+fix:
+  messages:
+  - you can, but you'd be breaking compatibility with some games that depend (whether accidentally or intentionally) on that bug
+  - I improvised a quick documentation file talking about it
+  - it's in 📄  ~/docs/cpu/page_boundary_bug.en.md~
+  - 📚  introduce that bug and try again!
+  run-after-messages: |
+    set((m) => {
+      m.$canRun = true;
+    });
+    store.dispatch.savedata.openFile("/docs/cpu/page_boundary_bug.en.md");
+  events:
+  - ...golden
+
+unexpected:
+  messages:
+  - 💥  what?! 💥
+  - that was unexpected
+  - try analyzing that exact line in the log file
+  - you should be able to find the cause
+  - or ask for help online 🌎
+  events:
+  - ...golden
+
+success:
+  messages:
+  - omg
+  - YOU DID IT! 🎉
+  - awesome, your CPU now works correctly!
+  - you can advance and start drawing things on screen with the 👾  PPU
+  responses:
+  - lesgooo 🥳 [end]

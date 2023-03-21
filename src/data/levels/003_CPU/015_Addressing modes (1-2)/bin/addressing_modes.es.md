@@ -13,37 +13,20 @@
 
 #### Indexados
 
-| Nombre           | Ejemplo       | Tamaño de entrada | Entrada                     | Salida (pseudocódigo)                                                                                                                                                            |
-| ---------------- | ------------- | ----------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Zero Page,X      | `STA $60,X`   | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`toU8(address+[X])`                                                                                                                                                    |
-| Zero Page,Y      | `STA $60,Y`   | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`toU8(address+[Y])`                                                                                                                                                    |
-| Absolute,X       | `STA $4050,X` | `2`               | 🐏 **dirección** _completa_ | 🔢/🐏 **(\*1)**<br/>`toU16(address+[X])`                                                                                                                                         |
-| Absolute,Y       | `STA $4050,Y` | `2`               | 🐏 **dirección** _completa_ | 🔢/🐏 **(\*1)**<br/>`toU16(address+[Y])`                                                                                                                                         |
-| Indexed Indirect | `STA ($01,X)` | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/><br/>`const start = toU8(address+[X]);`<br/>`const end = toU8(start+1);`<br/><br/>`buildU16(read(end), read(start))`                                                   |
-| Indirect Indexed | `LDA ($03),Y` | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏 **(\*1)**<br/><br/>`const start = address;`<br/>`const end = toU8(start+1);`<br/>`const baseAddress = buildU16(read(end), read(start));`<br/><br/>`toU16(baseAddress+[Y])` |
+| Nombre           | Ejemplo       | Tamaño de entrada | Entrada                     | Salida (pseudocódigo)                                                                                                                                                           |
+| ---------------- | ------------- | ----------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Zero Page,X      | `STA $60,X`   | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`toU8(address+[X])`                                                                                                                                                   |
+| Zero Page,Y      | `STA $60,Y`   | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/>`toU8(address+[Y])`                                                                                                                                                   |
+| Absolute,X       | `STA $4050,X` | `2`               | 🐏 **dirección** _completa_ | 🔢/🐏 **(\*)**<br/>`toU16(address+[X])`                                                                                                                                         |
+| Absolute,Y       | `STA $4050,Y` | `2`               | 🐏 **dirección** _completa_ | 🔢/🐏 **(\*)**<br/>`toU16(address+[Y])`                                                                                                                                         |
+| Indexed Indirect | `STA ($01,X)` | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏<br/><br/>`const start = toU8(address+[X]);`<br/>`const end = toU8(start+1);`<br/><br/>`buildU16(read(end), read(start))`                                                  |
+| Indirect Indexed | `LDA ($03),Y` | `1`               | 🐏 **dirección** _parcial_  | 🔢/🐏 **(\*)**<br/><br/>`const start = address;`<br/>`const end = toU8(start+1);`<br/>`const baseAddress = buildU16(read(end), read(start));`<br/><br/>`toU16(baseAddress+[Y])` |
 
 <hr>
 
-**(\*1)** Estos modos de direccionamiento definen la _salida_ como la suma de una _dirección base_ y un desplazamiento, agregando `N` ciclos extra (`cpu.extraCycles += N`) si cruzan páginas. Esto es, cuando la _dirección base_ y la _salida_ difieren en su byte más significativo.
+**(\*)** Estos modos de direccionamiento definen la _salida_ como la suma de una _dirección base_ y un desplazamiento, agregando `N` ciclos extra (`cpu.extraCycles += N`) si cruzan páginas. Esto es, cuando la _dirección base_ y la _salida_ difieren en su byte más significativo.
 
 - En el modo **Relative**, `N` = 2
 - En los modos **indexados**, `N` = 1
 
 ⚠️ No todos los opcodes tienen esta penalidad al cruzar de página, por lo que los modos de direccionamiento reciben un booleano `hasPageCrossPenalty` que indica si los ciclos extra deberían ser agregados.
-
-**(\*2)** El modo de direccionamiento **Indirect** tiene una falla (llamada _"page boundary bug"_):
-
-Si la dirección cae en el borde de una página `($aaFF)`, lee el byte menos significativo de `$aaFF` como es esperado, pero toma el byte más significativo de `$aa00` (en vez de `$ab00`).
-
-Así que, en vez de `read16(address)`, la implementación debería ser algo así:
-
-```
-buildU16(
-  read(
-    lowByteOf(address) === 0xff
-      ? buildU16(highByteOf(address), 0x00)
-      : address + 1
-  ),
-  read(address)
-);
-```

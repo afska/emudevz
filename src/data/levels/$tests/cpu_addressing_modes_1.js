@@ -347,6 +347,8 @@ it("`INDIRECT` / `getValue`: unsupported", () => {
 	use: ({ id }, book) => id >= book.getId("4.16"),
 });
 
+// --- After passing 4.22 ---
+
 it("`INDIRECT`: emulates the 'page boundary bug'", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
@@ -358,5 +360,5 @@ it("`INDIRECT`: emulates the 'page boundary bug'", () => {
 	locales: {
 		es: "`INDIRECT`: emula el 'page boundary bug'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.16"),
+	use: ({ id }, book) => id > book.getId("4.22"),
 });

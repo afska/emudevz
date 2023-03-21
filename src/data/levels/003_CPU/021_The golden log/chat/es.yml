@@ -2,6 +2,7 @@
 main:
   run: |
     set((m) => {
+      m.chat.winOnEnd = true;
       m.$canRun = false;
     });
   messages:
@@ -29,4 +30,62 @@ golden:
       m.$canRun = true;
     });
   events:
-  - golden-log-end [end]
+  - cpu-bug-page-boundary [pageboundary]
+  - cpu-bug-unexpected [unexpected]
+  - golden-log-end [success]
+
+pageboundary:
+  run: |
+    set((m) => {
+      m.$canRun = false;
+    });
+  messages:
+  - ah... el <page boundary bug> 😅
+  responses:
+  - ¿el qué? [thewhat]
+
+thewhat:
+  messages:
+  - hay un bug en cómo la NEEES procesa el modo de direccionamiento "Indirect"
+  - ¡y me olvidé completamente de él!
+  responses:
+  - ¡¿un bug en el hardware?! 🤔 [hardware]
+
+hardware:
+  messages:
+  - sí, y si queremos emular el hardware precisamente... tenemos también que emular los bugs 😅
+  responses:
+  - ¿no puedo simplemente arreglar el bug? 😤 [fix]
+
+fix:
+  messages:
+  - puedes, pero estarías rompiendo la compatibilidad con algunos juegos que dependen (ya sea accidentalmente o intencionalmente) de ese bug
+  - improvisé un archivo de documentación corto hablando sobre esto
+  - está en 📄  ~/docs/cpu/page_boundary_bug.es.md~
+  - 📚  ¡introduce el bug e intenta de nuevo!
+  run-after-messages: |
+    set((m) => {
+      m.$canRun = true;
+    });
+    store.dispatch.savedata.openFile("/docs/cpu/page_boundary_bug.es.md");
+  events:
+  - ...golden
+
+unexpected:
+  messages:
+  - 💥  ¡¿qué?! 💥
+  - eso fue inesperado
+  - intenta analizar esa línea exacta en el archivo de log
+  - deberías poder encontrar la causa
+  - o pide ayuda en línea 🌎
+  events:
+  - ...golden
+
+success:
+  messages:
+  - omg
+  - ¡LO HICISTE! 🎉
+  - buenísimo, ¡tu CPU ahora funciona correctamente!
+  - puedes avanzar y empezar a dibujar cosas en la pantalla con la 👾  PPU
+  responses:
+  - vamooo 🥳 [end]

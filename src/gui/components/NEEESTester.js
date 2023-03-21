@@ -15,6 +15,7 @@ const LOG_PATH = "/roms/test/golden.log";
 const NEWLINE = /\n|\r\n|\r/;
 const ENTRY_POINT = 0xc000;
 const LINES = 6;
+const PAGE_BOUNDARY_BUG_LINE = 3348;
 
 const javascript = testContext.javascript;
 
@@ -145,13 +146,18 @@ export default class NEEESTester extends PureComponent {
 			this._neees = neees;
 
 			this.setState({ _error: null });
+			return true;
 		} catch (e) {
 			this.setState({ _error: e.message });
+			return false;
 		}
 	};
 
-	_onRun = () => {
+	_onRun = async () => {
 		if (!this._neees) return;
+		if (!(await this._onCode())) return;
+
+		this.setState({ success: false, lastLines: [], diffLine: 0 });
 
 		let line = 0;
 		let expected = null;
@@ -165,7 +171,7 @@ export default class NEEESTester extends PureComponent {
 			try {
 				this._neees.cpu.step();
 			} catch (e) {
-				this.setState({ _error: e.stack, line: 0 });
+				this.setState({ _error: e.message, line: 0 });
 			}
 
 			actual = this._neees.logger.lastLog;
@@ -174,8 +180,13 @@ export default class NEEESTester extends PureComponent {
 		}
 
 		if (line === this.state.logLines.length - 1) {
+			bus.emit("golden-log-end");
+
 			this.setState({ success: true });
 		} else {
+			if (line === PAGE_BOUNDARY_BUG_LINE) bus.emit("cpu-bug-page-boundary");
+			else bus.emit("cpu-bug-unexpected");
+
 			this.setState({ success: false, diffLine: line, lastLines });
 		}
 	};

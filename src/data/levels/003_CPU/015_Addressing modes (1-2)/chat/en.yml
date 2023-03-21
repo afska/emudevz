@@ -20,21 +20,7 @@ explain:
   - (the `address` argument in your `JMP` instruction's `run(...)` function)
   - in this case, the <output> would be the result of performing a 16-bit read to address $4080
   responses:
-  - not quite, what's that page boundary bug? 🐞 [pageboundary]
-
-pageboundary:
-  messages:
-  - basically, the hardware unit was released with a bug in the "Indirect" mode
-  - and if we want to emulate the hardware accurately... we have to also emulate the bugs 😅
-  responses:
-  - (*) can't I just fix the bug? [fix]
-  - ✔️  let's code this [letscode]
-
-fix:
-  messages:
-  - you can, but you'd be breaking compatibility with some games that depend (whether accidentally or intentionally) on that bug
-  responses:
-  - ...pageboundary
+  - ✔️  ok, let's code this [letscode]
 
 letscode:
   messages:
@@ -61,6 +47,6 @@ relative:
 indirect:
   messages:
   - you have a full implementation in the doc file 😊
-  - it's pseudocode, right, but you'll be able to make it work
+  - just perform a `read16` with the address!
   responses:
   - ...letscode
