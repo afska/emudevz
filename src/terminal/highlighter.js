@@ -26,7 +26,7 @@ export default {
 			{ regexp: /(`[^`]+`)/ }, // backticks
 			{ regexp: /("[^"]+")/ }, // double quotes
 			{ regexp: /(<[^>]+>)/ }, // angular brackets
-			{ regexp: /([^\x1B]\[[^\]]+\])/ }, // square brackets (ignoring terminal sequences)
+			{ regexp: /(\[[^\];]+\])/ }, // square brackets (ignoring terminal sequences)
 			{ regexp: /(#?\$[0-9a-fA-F]+)/ }, // [literal] hex numbers
 			{ regexp: /(#[0-9]+)/ }, // literal dec numbers
 			{ regexp: NUMBERS }, // numbers

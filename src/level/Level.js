@@ -86,7 +86,7 @@ export default class Level {
 				this.help?.addLines?.includes(i + 1) ? theme.BG_NEW(it) : it
 			)
 			.filter((__, i) => levelDefinition.helpLines.includes(i + 1))
-			.join("");
+			.join("\n");
 	}
 
 	fillContentFromTemp() {
