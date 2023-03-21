@@ -1,10 +1,11 @@
 import React, { PureComponent } from "react";
 import Slider from "@mui/material/Slider";
 import Stack from "@mui/material/Stack";
-import Marquee from "react-fast-marquee";
 import { connect } from "react-redux";
 import music from "../../sound/music";
-import Tooltip from "./Tooltip";
+
+// import Marquee from "react-fast-marquee";
+// import Tooltip from "./Tooltip";
 
 function ValueLabel(props) {
 	const { trackInfo, children } = props;

@@ -58,6 +58,21 @@ class HomeScreen extends PureComponent {
 							<Button onClick={this._quit}>{locales.get("button_quit")}</Button>
 						)}
 					</div>
+
+					<div style={{ marginTop: 16, fontSize: 12 }}>
+						{locales.get("_created_by")}{" "}
+						<a href="https://r-labs.io" target="_blank" rel="noreferrer">
+							r-labs.io
+						</a>{" "}
+						{"//"} {locales.get("_music_by")}{" "}
+						<a
+							href="https://open.spotify.com/artist/7ewiTkC0wCMdpx1Wp1z140"
+							target="_blank"
+							rel="noreferrer"
+						>
+							Synthenia
+						</a>
+					</div>
 				</div>
 			</>
 		);

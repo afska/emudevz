@@ -6,7 +6,7 @@ const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	levelId: 0,
 	language: "en",
-	musicVolume: 0.5,
+	musicVolume: 0.3,
 	musicTrack: 0,
 	trackInfo: null,
 	openFiles: [DEFAULT_FILE],

@@ -54,6 +54,7 @@ class Music {
 	_playCurrentTrack() {
 		this._saveTrackInfo();
 		this._audio = new Audio(MUSIC_DIR + TRACKS[this._track].file);
+		this._audio.volume = this._volume;
 		this._audio.play();
 		this._audio.onended = () => {
 			this.next();

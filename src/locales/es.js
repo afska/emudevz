@@ -1,4 +1,6 @@
 export default {
+	_created_by: "Creado por",
+	_music_by: "música por",
 	button_chapter_selection: "Selección de capítulo",
 	button_play: "Jugar",
 	button_quit: "Salir",
