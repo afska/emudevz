@@ -30,6 +30,7 @@ export default {
 	enter_a_file_name: "Enter a file name...",
 	find_errors: "Find errors",
 	go_back: "Go back",
+	golden_log: "Golden log",
 	help_basic: "💬  If you're stuck, run the `help` command...",
 	help_level: "✨  Level:",
 	help_more: "💬  For additional help, run `help -a`",
@@ -82,4 +83,6 @@ export default {
 	tests_warnings_found: "⚠️  Warnings found.",
 	tests_more: "💬  For more info, run `test -v`",
 	using_old_snapshot: "⚠️ Using a read-only snapshot of your old code.",
+	your_cpu_rocks: "Your CPU rocks!",
+	your_emulator: "Your emulator",
 };

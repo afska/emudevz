@@ -36,11 +36,6 @@ export default {
     return !!((u8 >> 7) & 1);
   },
 
-  /** Converts `u8` to its negative. */
-  negate(u8) {
-    return this.toU8(-this.toS8(u8));
-  },
-
   /** Returns the bit located at `position` in `number`, as a boolean. */
   getFlag(number, position) {
     return !!this.getBit(number, position);

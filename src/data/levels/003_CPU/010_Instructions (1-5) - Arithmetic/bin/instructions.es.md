@@ -19,7 +19,7 @@
 | `ROLa` | Rotar Izquierda (Acumulador)                       | 🚫  | Como `ROL`, pero funciona con `[A]` en vez de con una dirección de memoria.                                                                                                                                                                                                                                                                                                                                                                                   |
 | `ROR`  | Rotar Derecha                                      | 🐏  | Mueve todos los bits del valor contenido en una `address` un lugar hacia la derecha.<br><br>El bit `0` es colocado en la bandera `C` y el bit `7` es rellenado con el valor anterior de la bandera `C`.<br><br>Las banderas `Z` y `N` se actualizan usando el resultado.                                                                                                                                                                                      |
 | `RORa` | Rotar Derecha (Acumulador)                         | 🚫  | Como `ROR`, pero funciona con `[A]` en vez de con una dirección de memoria.                                                                                                                                                                                                                                                                                                                                                                                   |
-| `SBC`  | Sustraer con Carry                                 | 🔢  | Sustrae el contenido de un `value` a `[A]` junto con el `not` de la bandera Carry (`[A]` = `[A]` - `value` - `!C`).<br><br>Las banderas `Z`, `N`, `C` (activada si no hay que "tomar prestado"), y `V` (activada cuando el signo quedó mal) se actualizan.<br><br>Puede ser implementada como una llamada a `ADC` con la representación negativa de `value` - 1.<br>Ej:<br>`SBC(cpu, value) { ADC(cpu, byte.negate(value) - 1) }`                             |
+| `SBC`  | Sustraer con Carry                                 | 🔢  | Sustrae el contenido de un `value` a `[A]` junto con el `not` de la bandera Carry (`[A]` = `[A]` - `value` - `!C`).<br><br>Las banderas `Z`, `N`, `C` (activada si no hay que "tomar prestado"), y `V` (activada cuando el signo quedó mal) se actualizan.<br><br>Puede ser implementada como una llamada a `ADC` con la representación negativa de `value` - 1.<br>Ej:<br>`SBC(cpu, value) { ADC(cpu, 256 - value - 1) }`                                    |
 
 #### 🐏 Datos
 
@@ -80,7 +80,7 @@
 
 <br />
 
-Todas las instrucciones de bifurcación **condicionales** deben incrementar `cpu.extraCycles` si saltan.
+Todas las instrucciones de bifurcación **condicionales** deben incrementar `cpu.extraCycles` si saltan, y asignarlo a `0` en caso contrario.
 
 #### 🧙‍♂️ Sistema
 

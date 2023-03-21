@@ -29,6 +29,7 @@ export default {
 	enter_a_file_name: "Ingresa un nombre de archivo...",
 	find_errors: "Encontrar errores",
 	go_back: "Volver",
+	golden_log: "Golden log",
 	help_basic: "💬  Si te bloqueas, corre el comando `help`...",
 	help_level: "✨  Ayuda del nivel:",
 	help_more: "💬  Para ayuda adicional, corre `help -a`",
@@ -83,4 +84,6 @@ export default {
 	tests_warnings_found: "⚠️  Advertencias encontradas.",
 	tests_more: "💬  Para más información, corre `test -v`",
 	using_old_snapshot: "⚠️ Usando una copia solo lectura de tu código viejo.",
+	your_cpu_rocks: "¡Tu CPU es genial!",
+	your_emulator: "Tu emulador",
 };

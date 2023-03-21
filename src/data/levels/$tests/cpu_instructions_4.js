@@ -93,7 +93,7 @@ const newCPU = (prgBytes = []) => {
 			cpu.flags[flag] = true;
 			instructions[instruction].run(cpu, 0x2000);
 			cpu.pc.getValue().should.equal(0x1000);
-			cpu.extraCycles.should.equal(3);
+			cpu.extraCycles.should.equal(0);
 		}
 	)({
 		locales: {
@@ -158,7 +158,7 @@ const newCPU = (prgBytes = []) => {
 			cpu.flags[flag] = false;
 			instructions[instruction].run(cpu, 0x2000);
 			cpu.pc.getValue().should.equal(0x1000);
-			cpu.extraCycles.should.equal(3);
+			cpu.extraCycles.should.equal(0);
 		}
 	)({
 		locales: {

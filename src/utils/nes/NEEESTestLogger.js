@@ -95,12 +95,12 @@ export default class NESTestLogger {
 					)}`;
 				case "INDIRECT":
 					return `($${$input}) = ${hex(finalAddress, 4)}`;
-				case "INDEXED_INDIRECT_X":
+				case "INDEXED_INDIRECT":
 					return `($${$input},X) @ ${hex(
 						byte.toU8(input + cpu.x.getValue()),
 						2
 					)} = ${hex(finalAddress, 4)} = ${hex(memory.read(finalAddress), 2)}`;
-				case "INDEXED_INDIRECT_Y":
+				case "INDIRECT_INDEXED":
 					return `($${$input}),Y = ${hex(
 						getIndirectAddress(cpu, input),
 						4

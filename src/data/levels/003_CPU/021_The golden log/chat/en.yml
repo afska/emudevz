@@ -11,16 +11,19 @@ main:
   - it was created by someone called <kevtris>
   - I'll run your emulator and log every instruction
   - comparing each line against a "golden log"
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/roms/test/golden.log");
   responses:
   - what's a golden log? 🏆 [golden]
 
 golden:
   messages:
-  - a log made for the same ROM, but created by an emulator that was proven to work correctly
+  - a log file which documents the result of running that test ROM, but created by an emulator that was proven to work correctly ✔️
+  - "it has -in order-: the [PC], the bytecode, the decompiled assembly, the state of all registers, and the cycle counter"
   - so far, I only ran basic tests to your code
   - this will go through all type of corner cases, verifying that your CPU is solid
   - if you find discrepancies, you'll have to figure out the cause, or ask for help online
-  - 📚  use the buttons and reach the end of the golden log!
+  - use the ⏩  button and reach the end of the golden log!
   run-after-messages: |
     set((m) => {
       m.$canRun = true;
