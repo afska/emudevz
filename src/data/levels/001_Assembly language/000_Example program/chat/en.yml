@@ -14,7 +14,30 @@ main:
   responses:
   - (*) the viewer doesn't scare me, what it does is the weird looking numbers at the bottom [debugger]
   - what language is this? 😮 [language]
+  - ⏭️  I already know 6502 assembly [iknow]
 
+iknow:
+  messages:
+  - 🤔
+  - are you <really> familiar with 6502 assembly?
+  - (registers, flags, branching, addressing modes, stack and subroutines)
+  - if not, in the next chapter you will <suffer>
+  - meh, you can go back and play it whenever you want, anyway
+  - do you want to skip the WHOLE chapter?
+  responses:
+  - ⏭️  yes, skip [skip]
+  - ❌  no, I'm not sure [main]
+
+skip:
+  run: |
+    const book = store.getState().book.instance;
+    const chapter = book.getChapterOf(level.id);
+    const lastLevelId = _.last(chapter.levels).id;
+    store.dispatch.savedata.advanceTo(lastLevelId + 1);
+  messages: []
+  events:
+  - null [end]
+  
 debugger:
   messages:
   - the CPU debugger?

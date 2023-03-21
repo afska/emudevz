@@ -9,10 +9,10 @@ main:
   - in order to play games, you must connect two pieces of hardware
   - a cartridge (the game itself!) and an 8-button gamepad
   responses:
-  - (k) 💻  tell me about the CPU [cpu]
-  - (k) 🖥️  tell me about the PPU [ppu]
-  - (k) 🔊  tell me about the APU [apu]
-  - (l) what's the best way to start? [start]
+  - 💻  tell me about the CPU [cpu]
+  - 🖥️  tell me about the PPU [ppu]
+  - 🔊  tell me about the APU [apu]
+  - ⏭️  what's the best way to start? [start]
 
 cpu:
   run: |

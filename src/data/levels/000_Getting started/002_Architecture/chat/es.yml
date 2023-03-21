@@ -9,10 +9,10 @@ main:
   - para poder jugar juegos, tienes que conectar dos piezas de hardware
   - un cartucho (¡el juego mismo!) y un mando de 8 botones
   responses:
-  - (k) 💻  cuéntame sobre la CPU [cpu]
-  - (k) 🖥️  cuéntame sobre la PPU [ppu]
-  - (k) 🔊  cuéntame sobre la APU [apu]
-  - (l) ¿cuál es la mejor forma de empezar? [start]
+  - 💻  cuéntame sobre la CPU [cpu]
+  - 🖥️  cuéntame sobre la PPU [ppu]
+  - 🔊  cuéntame sobre la APU [apu]
+  - ⏭️  ¿cuál es la mejor forma de empezar? [start]
 
 cpu:
   run: |
@@ -68,7 +68,7 @@ apu:
 start:
   messages:
   - para emular la CPU, tendrás que interpretar el código de los juegos
-  - están escritos en assembly, por lo que deberás estudiar eso primero
+  - están escritos en lenguaje ensamblador, por lo que deberás estudiar eso primero
   - ¡adentrémonos en ello!
   - ¿vamos?
   responses:

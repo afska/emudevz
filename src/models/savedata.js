@@ -42,13 +42,14 @@ export default {
 		const dispatch = _dispatch_[KEY];
 
 		return {
-			advance(levelId, _state_) {
+			advance(currentLevelId, _state_) {
+				return this.advanceTo(currentLevelId + 1);
+			},
+			advanceTo(nextLevelId, _state_) {
 				const state = _state_[KEY];
 				const book = _state_.book.instance;
 
-				const nextLevelId = levelId + 1;
 				if (nextLevelId > book.maxLevelId) return false;
-
 				if (nextLevelId > state.levelId) dispatch.setLevelId(nextLevelId);
 
 				_dispatch_.level.goTo(nextLevelId);

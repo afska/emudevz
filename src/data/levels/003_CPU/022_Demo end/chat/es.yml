@@ -21,28 +21,28 @@ sure:
   messages:
   - ¡muchas gracias!
   events:
-  - asdasdasd [end]
+  - null [end]
 
 yes:
   messages:
   - ¡muchas gracias!
   events:
-  - asdasdasd [end]
+  - null [end]
 
 ofcourse:
   messages:
   - ¡muchas gracias!
   events:
-  - asdasdasd [end]
+  - null [end]
 
 money:
   messages:
   - ¡muchas gracias!
   events:
-  - asdasdasd [end]
+  - null [end]
 
 ok:
   messages:
   - ¡muchas gracias!
   events:
-  - asdasdasd [end]
+  - null [end]
