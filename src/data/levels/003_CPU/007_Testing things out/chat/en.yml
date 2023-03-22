@@ -22,7 +22,7 @@ main:
     $ // our code
     const testRom = newRom([0xe8, 0xc8, 0xe8, 0x8a]); // INX, INY, INX, TXA
     const neees = new $.NEEES(testRom); // create NEEES
-    neees.cpu.setValue(0x8000);
+    neees.cpu.pc.setValue(0x8000); // set [PC] to where the code starts
     neees.step(); // run one instruction
     neees.cpu.x.getValue(); // inspect [X]
     neees.cpu.pc.getValue().toString(16); // inspect [PC] in hexadecimal```

@@ -28,7 +28,7 @@ letscode:
   - so you only have to implement "Relative" and "Indirect"
   - you can grab the code from 📄  ~/docs/cpu/example_addressing_modes.js~ and continue from there!
   - 📚  implement the missing addressing modes
-  - and export the object under the `addressingModes` key in ~/code/index.js~
+  - and export the object under the `addressingModes` key in 📄  ~/code/index.js~
   responses:
   - help me with the "Relative" mode 😅 [relative]
   - help me with the "Indirect" mode 😅 [indirect]
@@ -37,7 +37,7 @@ relative:
   messages:
   - 💡  remember that it takes an "offset" (a signed byte)
   - signed bytes can be tricky to understand for humans
-  - they use the "Two's component" notation, which is explained briefly in ~/lib/byte.js~
+  - they use the "Two's component" notation, which is explained briefly in 📄  ~/lib/byte.js~
   - for example, if the offset is ~-3~, you would receive a 253
   - you can convert that 253 to ~-3~ using the `toS8` method
   - 💡  also, to check for page crossing events, you will need `highByteOf`

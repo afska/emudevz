@@ -34,7 +34,7 @@ play:
     bus.emit("kill");
   messages:
   - el editor de código está mostrando tu <archivo de código principal> (el punto de entrada de tu emulador)
-  - está en ~/code/index.js~
+  - está en 📄  ~/code/index.js~
   - ahora tienes varios nuevos comandos para manejar archivos 🚀
   - corre `help -a` y experimenta con ellos un poco
   - abre el chat nuevamente cuando los hayas aprendido a usar
@@ -44,9 +44,9 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - 📚  crea un archivo en ~/code/Cartridge.js~
+  - 📚  crea un archivo en 📄  ~/code/Cartridge.js~
   - su valor a exportar debería ser una clase vacía
-  - luego, importa ese archivo desde ~/code/index.js~
+  - luego, importa ese archivo desde 📄  ~/code/index.js~
   - y exporta un objeto literal con una sola clave ("Cartridge") apuntando a esa clase
   responses:
   - ¿exportar? ¿módulos? 🧐 [modules]

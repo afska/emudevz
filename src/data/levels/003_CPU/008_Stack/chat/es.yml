@@ -13,5 +13,5 @@ main:
   - la <direcciónActual> siempre es $0100 (donde vive la pila en la RAM), más el valor en [SP]
   - |-
     cuando termines, agrega una nueva instancia de la pila a la CPU:
-    ```javascript this.stack = new Stack(this.memory, this.sp);```
+      ```javascript this.stack = new Stack(this.memory, this.sp);```
   responses: []

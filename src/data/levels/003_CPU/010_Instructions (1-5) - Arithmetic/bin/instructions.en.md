@@ -80,7 +80,7 @@
 
 <br />
 
-All **conditional** branching instructions must increment `cpu.extraCycles` if they branch, and assign it to `0` otherwise.
+All **conditional** branching instructions must increment `cpu.extraCycles` if they branch, or assign it to `0` otherwise.
 
 #### 🧙‍♂️ System
 

@@ -34,7 +34,7 @@ play:
     bus.emit("kill");
   messages:
   - the code editor is displaying your <main code file> (the entry point of your emulator)
-  - it's in ~/code/index.js~
+  - it's in 📄  ~/code/index.js~
   - now you have a bunch of new commands to manage files 🚀
   - run `help -a` and play around with them for a little bit
   - open the chat again when you're ready
@@ -44,9 +44,9 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - 📚  create a file in ~/code/Cartridge.js~
+  - 📚  create a file in 📄  ~/code/Cartridge.js~
   - its default export should be an empty class
-  - then, import that file from ~/code/index.js~
+  - then, import that file from 📄  ~/code/index.js~
   - and export an object literal with only one key ("Cartridge") pointing to that class
   responses:
   - export? modules? 🧐 [modules]

@@ -8,7 +8,7 @@ main:
 
 how:
   messages:
-  - 📚  create a `NEEES` class that receives the ROM bytes (and add it to ~/code/index.js~)
+  - 📚  create a `NEEES` class that receives the ROM bytes (and add it to 📄  ~/code/index.js~)
   - it should instantiate a new `Cartridge` using those bytes, and assign it to a `cartridge` property
   - it should also instantiate the `CPU`, passing the cartridge as an argument, and save it into a `cpu` property
   - the `CPU` should pass the cartridge to `CPUMemory`'s constructor

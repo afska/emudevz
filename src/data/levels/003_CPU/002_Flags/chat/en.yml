@@ -37,7 +37,7 @@ what:
 
 bits:
   messages:
-  - ~/lib/byte.js~ comes to the rescue 🙌
+  - 📄  ~/lib/byte.js~ comes to the rescue 🙌
   - to build the value on ```javascript getValue()```, use `bitfield`
   - to get the flags on ```javascript setValue(value)```, use `getFlag`
   responses:

@@ -11,7 +11,7 @@ main:
 other62:
   messages:
   - otras cosas, como espejos de RAM, E/S mapeada en memoria y la información del cartucho
-  - el mapa de memoria tiene una estructura muy específica, mira ~/docs/cpu/cpu_memory.es.md~
+  - el mapa de memoria tiene una estructura muy específica, mira 📄  ~/docs/cpu/cpu_memory.es.md~
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu/cpu_memory.es.md");
   responses:
@@ -45,7 +45,7 @@ implement:
       __-> similar a *read*, pero escribe el <value> en lugar de retornar__
   - |-
     luego, agrega al constructor de tu `CPU`:
-    ```javascript this.memory = new CPUMemory();```
+      ```javascript this.memory = new CPUMemory();```
   responses:
   - necesito ayuda con los bytes espejados 📐 [help]
 

@@ -16,5 +16,5 @@ main:
       __-> usa *push* primero con el "high byte", y luego con el "low byte"__
     **pop16()**:
       __-> retorna un número de 16 bits luego de hacer *pop* dos veces (primero el "low byte", luego el "high byte")__
-  - 💡  ¡recuerda usar ~/lib/byte.js~!
+  - 💡  ¡recuerda usar 📄  ~/lib/byte.js~!
   responses: []

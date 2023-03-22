@@ -80,7 +80,7 @@
 
 <br />
 
-Todas las instrucciones de bifurcación **condicionales** deben incrementar `cpu.extraCycles` si saltan, y asignarlo a `0` en caso contrario.
+Todas las instrucciones de bifurcación **condicionales** deben incrementar `cpu.extraCycles` si saltan, o asignarle `0` en caso contrario.
 
 #### 🧙‍♂️ Sistema
 

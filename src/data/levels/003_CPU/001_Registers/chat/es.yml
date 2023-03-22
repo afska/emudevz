@@ -43,17 +43,17 @@ nowwhat:
   messages:
   - |-
     entonces, agrega el siguiente constructor a tu clase `CPU`:
-    ```javascript
-    export default class CPU {
-      constructor() {
-        this.cycle = 0;
-        this.extraCycles = 0;
+      ```javascript
+      export default class CPU {
+        constructor() {
+          this.cycle = 0;
+          this.extraCycles = 0;
 
-        this.a = new Register8Bit();
-        this.x = new Register8Bit();
-        this.y = new Register8Bit();
-        this.sp = new Register8Bit();
-        this.pc = new Register16Bit();
-      }
-    }```
+          this.a = new Register8Bit();
+          this.x = new Register8Bit();
+          this.y = new Register8Bit();
+          this.sp = new Register8Bit();
+          this.pc = new Register16Bit();
+        }
+      }```
   responses: []

@@ -3,7 +3,7 @@ main:
   messages:
   - 📚  create a file somewhere for the CPU code 💻
   - its default export should be an empty class
-  - then, import that file from ~/code/index.js~
+  - then, import that file from 📄  ~/code/index.js~
   - and add a "CPU" key (pointing to that class) to the exported object
   responses:
   - where should I put the file? [where]
@@ -13,5 +13,5 @@ where:
   - it doesn't matter 🤷
   - from now on, you are in charge of organizing your own code
   - saving all your CPU code inside a ~cpu~ directory would be a good pattern, though
-  - the tests will find your classes through ~/code/index.js~
+  - the tests will find your classes through 📄  ~/code/index.js~
   responses: []

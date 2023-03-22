@@ -13,5 +13,5 @@ main:
   - the <currentAddress> always equals $0100 (where the stack lives in RAM), plus the value in [SP]
   - |-
     when you finish, add a new stack instance to the CPU:
-    ```javascript this.stack = new Stack(this.memory, this.sp);```
+      ```javascript this.stack = new Stack(this.memory, this.sp);```
   responses: []

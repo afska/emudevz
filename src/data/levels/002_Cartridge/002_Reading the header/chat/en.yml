@@ -86,7 +86,7 @@ understand:
 bits:
   messages:
   - if you don't know how to operate with bits, you can use my library 📖
-  - its in ~/lib/byte.js~, just import it as another module and use it
+  - its in 📄  ~/lib/byte.js~, just import it as another module and use it
   - the methods you'd want to use are `getFlag`, `highNybbleOf`, `lowNybbleOf`, and `buildU8`
   responses:
   - how can I import the module? [import]

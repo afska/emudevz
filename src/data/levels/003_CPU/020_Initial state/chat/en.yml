@@ -5,7 +5,7 @@ main:
   - we'll initialize our CPU with the right initial values
   - 📚  change `FlagsRegister` in order to make the ~I~ flag start as `true`
   - |-
-      and at the very end of our `CPU` constructor, trigger a <RESET> interrupt:
-        ```javascript this.interrupt(interrupts.RESET);```
-  - make sure that you've imported ~/lib/interrupts.js~ correctly!
+    and at the very end of our `CPU` constructor, trigger a <RESET> interrupt:
+      ```javascript this.interrupt(interrupts.RESET);```
+  - make sure that you've imported 📄  ~/lib/interrupts.js~ correctly!
   responses: []

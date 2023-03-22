@@ -11,7 +11,7 @@ main:
 other62:
   messages:
   - other things, like RAM mirrors, memory-mapped I/O, and the cartridge data
-  - the memory map has a very specific structure, see ~/docs/cpu/cpu_memory.en.md~
+  - the memory map has a very specific structure, see 📄  ~/docs/cpu/cpu_memory.en.md~
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu/cpu_memory.en.md");
   responses:
@@ -45,7 +45,7 @@ implement:
       __-> similar to *read*, but writes the <value> instead of returning__
   - |-
     then, add to your `CPU` constructor:
-    ```javascript this.memory = new CPUMemory();```
+      ```javascript this.memory = new CPUMemory();```
   responses:
   - I need help with the mirrored bytes 📐 [help]
 
@@ -56,7 +56,7 @@ help:
   - then, use the ~%~ (remainder) operator with the size of the chunk we want to mirror
   - |-
     for example, to calculate the 4th range's mirror, we would do:
-    ```javascript (address - 0x2008) % 0x0008```
+      ```javascript (address - 0x2008) % 0x0008```
   - |-
     for example, let's look at the 4th range ("🚽  Mirrors of $2000-$2007")
       range start => $2008

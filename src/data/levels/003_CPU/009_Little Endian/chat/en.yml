@@ -16,5 +16,5 @@ main:
       __-> *pushes* the high byte first, then *pushes* the low byte__
     **pop16()**:
       __-> returns a 16-bit number after *popping* from the stack two times (first the low byte, then the high one)__
-  - 💡  remember to use ~/lib/byte.js~!
+  - 💡  remember to use 📄  ~/lib/byte.js~!
   responses: []
