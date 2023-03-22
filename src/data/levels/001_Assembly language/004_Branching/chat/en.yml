@@ -63,9 +63,9 @@ step5:
   messages:
   - here's what happened
   - "`CPX #3` 'ComPares' [X] with 3, and sets the Zero Flag if they're equal"
+  - "[X] has a 7, and that's not equal to 3, so Z = 0"
   - "`BNE @decrement` jumps to that label if the Zero Flag is not set"
-  - since [X] has a 7, then Z is still 0
-  - and because Z is 0, `BNE @decrement` jumped 🦘
+  - which is not! so it jumped 🦘
   - ([X] and 3 were "Not Equal", hence the name)
   responses:
   - oh, I see [oh]

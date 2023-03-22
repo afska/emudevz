@@ -63,9 +63,9 @@ step5:
   messages:
   - esto es lo que pasó
   - "`CPX #3` 'ComPara' [X] con 3, y activa la Bandera Zero si son iguales"
+  - "[X] tiene un 7, y eso no es igual a 3, así que Z = 0"
   - "`BNE @decrement` salta a esa etiqueta si la Bandera Zero no está activada"
-  - como [X] tiene un 7, entonces Z sigue siendo 0
-  - y como Z es 0, `BNE @decrement` saltó 🦘
+  - ¡que no lo está! así que saltó 🦘
   - ([X] y 3 eran "Not Equal", por eso el nombre)
   responses:
   - ah, ya veo [oh]
