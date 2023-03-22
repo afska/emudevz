@@ -446,7 +446,7 @@ export default class Terminal {
 			);
 			if (nextWordLength === -1) nextWordLength = remainingCharacters.length;
 
-			return this.buffer.x + nextWordLength > this.width;
+			return this.buffer.x + nextWordLength > this.width - 1;
 		}
 
 		return false;
