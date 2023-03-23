@@ -1,4 +1,5 @@
 import chai from "chai";
+import _ from "lodash";
 
 function isClass(v) {
 	return typeof v === "function" && /^\s*class\s+/.test(v.toString());
@@ -13,6 +14,27 @@ chai.Assertion.addProperty("class", function () {
 		"expected #{this} to not be a class",
 		"class", // expected
 		typeof obj // actual
+	);
+});
+
+chai.Assertion.addChainableMethod("equalN", function (expected, name) {
+	const actual = this._obj;
+
+	this.assert(
+		actual === expected,
+		`expected ${name} to equal ${expected}, but got ${actual}`,
+		`expected ${name} not to equal ${expected}`
+	);
+});
+
+const toHex = (x) => (_.isFinite(x) ? `$${x.toString(16).toUpperCase()}` : x);
+chai.Assertion.addChainableMethod("equalHex", function (expected, name) {
+	const actual = this._obj;
+
+	this.assert(
+		actual === expected,
+		`expected ${name} to equal ${toHex(expected)}, but got ${toHex(actual)}`,
+		`expected ${name} not to equal ${toHex(expected)}`
 	);
 });
 
