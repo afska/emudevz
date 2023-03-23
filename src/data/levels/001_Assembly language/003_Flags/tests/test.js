@@ -17,7 +17,7 @@ it("it doesn't change the initial code", () => {
 });
 
 it("it only uses 4 instructions", () => {
-	instructions.length.should.equal(4);
+	instructions.length.should.equalN(4, "length");
 })({
 	locales: { es: "solo usa 4 instrucciones" },
 });

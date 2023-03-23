@@ -72,7 +72,7 @@ it("`ADC`: argument == 'value'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("ADC");
 	expect(instructions.ADC).to.be.an("object");
-	instructions.ADC.argument.should.equal("value");
+	instructions.ADC.argument.should.equalN("value", "argument");
 })({
 	locales: {
 		es: "`ADC`: argument == 'value'",
@@ -86,7 +86,7 @@ it("`ADC`: adds the value to the Accumulator", () => {
 
 	cpu.a.setValue(20);
 	instructions.ADC.run(cpu, 5);
-	cpu.a.getValue().should.equal(25);
+	cpu.a.getValue().should.equalN(25, "getValue()");
 })({
 	locales: {
 		es: "`ADC`: suma el valor al Acumulador",
@@ -101,7 +101,7 @@ it("`ADC`: adds the Carry bit", () => {
 	cpu.a.setValue(20);
 	cpu.flags.c = true;
 	instructions.ADC.run(cpu, 5);
-	cpu.a.getValue().should.equal(26);
+	cpu.a.getValue().should.equalN(26, "getValue()");
 })({
 	locales: {
 		es: "`ADC`: suma el bit de Carry",
@@ -115,12 +115,12 @@ it("`ADC`: updates the Zero and Negative flags", () => {
 
 	cpu.a.setValue(50);
 	instructions.ADC.run(cpu, 120);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 
 	instructions.ADC.run(cpu, 86);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`ADC`: actualiza las banderas Zero y Negative",
@@ -134,20 +134,20 @@ it("`ADC`: updates the Carry and Overflow flags", () => {
 
 	cpu.a.setValue(50);
 	instructions.ADC.run(cpu, 10);
-	cpu.flags.c.should.equal(false);
-	cpu.flags.v.should.equal(false);
+	cpu.flags.c.should.equalN(false, "c");
+	cpu.flags.v.should.equalN(false, "v");
 
 	// positive (60) + positive (75) = negative (-121) => overflow
 	cpu.flags.c = false;
 	instructions.ADC.run(cpu, 75);
-	cpu.flags.c.should.equal(false);
-	cpu.flags.v.should.equal(true);
+	cpu.flags.c.should.equalN(false, "c");
+	cpu.flags.v.should.equalN(true, "v");
 
 	// result is over 255 => carry
 	cpu.flags.c = false;
 	instructions.ADC.run(cpu, 122);
-	cpu.flags.c.should.equal(true);
-	cpu.flags.v.should.equal(false);
+	cpu.flags.c.should.equalN(true, "c");
+	cpu.flags.v.should.equalN(false, "v");
 })({
 	locales: {
 		es: "`ADC`: actualiza las banderas Carry y Overflow",
@@ -159,7 +159,7 @@ it("`ASL`: argument == 'address'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("ASL");
 	expect(instructions.ASL).to.be.an("object");
-	instructions.ASL.argument.should.equal("address");
+	instructions.ASL.argument.should.equalN("address", "argument");
 })({
 	locales: {
 		es: "`ASL`: argument == 'address'",
@@ -173,8 +173,8 @@ it("`ASL`: multiplies the value by 2", () => {
 
 	cpu.memory.write(0x1234, 12);
 	instructions.ASL.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(24);
-	cpu.flags.c.should.equal(false);
+	cpu.memory.read(0x1234).should.equalN(24, "read(...)");
+	cpu.flags.c.should.equalN(false, "c");
 })({
 	locales: {
 		es: "`ASL`: multiplica el valor por 2",
@@ -188,8 +188,8 @@ it("`ASL`: fills the Carry Flag with bit 7", () => {
 
 	cpu.memory.write(0x1234, 0b11000000);
 	instructions.ASL.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(0b10000000);
-	cpu.flags.c.should.equal(true);
+	cpu.memory.read(0x1234).should.equalBin(0b10000000, "read(...)");
+	cpu.flags.c.should.equalN(true, "c");
 })({
 	locales: {
 		es: "`ASL`: llena la Bandera Carry con el bit 7",
@@ -203,13 +203,13 @@ it("`ASL`: updates the Zero and Negative flags", () => {
 
 	cpu.memory.write(0x1234, 0b11000000);
 	instructions.ASL.run(cpu, 0x1234);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 
 	cpu.memory.write(0x1234, 0);
 	instructions.ASL.run(cpu, 0x1234);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`ASL`: actualiza las banderas Zero y Negative",
@@ -221,7 +221,7 @@ it("`ASLa`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("ASLa");
 	expect(instructions.ASLa).to.be.an("object");
-	instructions.ASLa.argument.should.equal("no");
+	instructions.ASLa.argument.should.equalN("no", "argument");
 })({
 	locales: {
 		es: "`ASLa`: argument == 'no'",
@@ -235,8 +235,8 @@ it("`ASLa`: multiplies [A] by 2", () => {
 
 	cpu.a.setValue(12);
 	instructions.ASLa.run(cpu);
-	cpu.a.getValue().should.equal(24);
-	cpu.flags.c.should.equal(false);
+	cpu.a.getValue().should.equalN(24, "getValue()");
+	cpu.flags.c.should.equalN(false, "c");
 })({
 	locales: {
 		es: "`ASLa`: multiplica [A] por 2",
@@ -250,8 +250,8 @@ it("`ASLa`: fills the Carry Flag with bit 7", () => {
 
 	cpu.a.setValue(0b11000000);
 	instructions.ASLa.run(cpu);
-	cpu.a.getValue().should.equal(0b10000000);
-	cpu.flags.c.should.equal(true);
+	cpu.a.getValue().should.equalBin(0b10000000, "getValue()");
+	cpu.flags.c.should.equalN(true, "c");
 })({
 	locales: {
 		es: "`ASLa`: llena la Bandera Carry con el bit 7",
@@ -265,13 +265,13 @@ it("`ASLa`: updates the Zero and Negative flags", () => {
 
 	cpu.a.setValue(0b11000000);
 	instructions.ASLa.run(cpu);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 
 	cpu.a.setValue(0);
 	instructions.ASLa.run(cpu);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`ASLa`: actualiza las banderas Zero y Negative",
@@ -283,7 +283,7 @@ it("`DEC`: argument == 'address'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("DEC");
 	expect(instructions.DEC).to.be.an("object");
-	instructions.DEC.argument.should.equal("address");
+	instructions.DEC.argument.should.equalN("address", "argument");
 })({
 	locales: {
 		es: "`DEC`: argument == 'address'",
@@ -297,7 +297,7 @@ it("`DEC`: decrements the value", () => {
 
 	cpu.memory.write(0x1234, 9);
 	instructions.DEC.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(8);
+	cpu.memory.read(0x1234).should.equalN(8, "read(...)");
 })({
 	locales: {
 		es: "`DEC`: decrementa el valor",
@@ -311,9 +311,9 @@ it("`DEC`: updates the Zero Flag", () => {
 
 	cpu.memory.write(0x1234, 1);
 	instructions.DEC.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(0);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.memory.read(0x1234).should.equalN(0, "read(...)");
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`DEC`: actualiza la Bandera Zero",
@@ -327,9 +327,9 @@ it("`DEC`: updates the Negative Flag", () => {
 
 	cpu.memory.write(0x1234, 0);
 	instructions.DEC.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(255);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.memory.read(0x1234).should.equalN(255, "read(...)");
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 })({
 	locales: {
 		es: "`DEC`: actualiza la Bandera Negative",
@@ -341,7 +341,7 @@ it("`INC`: argument == 'address'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("INC");
 	expect(instructions.INC).to.be.an("object");
-	instructions.INC.argument.should.equal("address");
+	instructions.INC.argument.should.equalN("address", "argument");
 })({
 	locales: {
 		es: "`INC`: argument == 'address'",
@@ -355,7 +355,7 @@ it("`INC`: increments the value in memory", () => {
 
 	cpu.memory.write(0x1234, 8);
 	instructions.INC.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(9);
+	cpu.memory.read(0x1234).should.equalN(9, "read(...)");
 })({
 	locales: {
 		es: "`INC`: incrementa el valor en memoria",
@@ -369,9 +369,9 @@ it("`INC`: sets the Zero Flag", () => {
 
 	cpu.memory.write(0x1234, 255);
 	instructions.INC.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(0);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.memory.read(0x1234).should.equalN(0, "read(...)");
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`INC`: actualiza la Bandera Zero",
@@ -385,9 +385,9 @@ it("`INC`: sets the Negative Flag", () => {
 
 	cpu.memory.write(0x1234, 244);
 	instructions.INC.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(245);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.memory.read(0x1234).should.equalN(245, "read(...)");
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 })({
 	locales: {
 		es: "`INC`: actualiza la Bandera Negative",
@@ -399,7 +399,7 @@ it("`DEX`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("DEX");
 	expect(instructions.DEX).to.be.an("object");
-	instructions.DEX.argument.should.equal("no");
+	instructions.DEX.argument.should.equalN("no", "argument");
 })({
 	locales: {
 		es: "`DEX`: argument == 'no'",
@@ -414,16 +414,16 @@ it("`DEX`: decrements the [X] register and updates the flags", () => {
 	cpu.x.setValue(1);
 	instructions.DEX.run(cpu);
 
-	cpu.x.getValue().should.equal(0);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.x.getValue().should.equalN(0, "getValue()");
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 
 	cpu.x.setValue(0);
 	instructions.DEX.run(cpu);
 
-	cpu.x.getValue().should.equal(255);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.x.getValue().should.equalN(255, "getValue()");
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 })({
 	locales: {
 		es: "`DEX`: decrementa el registro [X] y actualiza las banderas",
@@ -435,7 +435,7 @@ it("`DEY`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("DEY");
 	expect(instructions.DEY).to.be.an("object");
-	instructions.DEY.argument.should.equal("no");
+	instructions.DEY.argument.should.equalN("no", "argument");
 })({
 	locales: {
 		es: "`DEY`: argument == 'no'",
@@ -450,16 +450,16 @@ it("`DEY`: decrements the [Y] register and updates the flags", () => {
 	cpu.y.setValue(1);
 	instructions.DEY.run(cpu);
 
-	cpu.y.getValue().should.equal(0);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.y.getValue().should.equalN(0, "getValue()");
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 
 	cpu.y.setValue(0);
 	instructions.DEY.run(cpu);
 
-	cpu.y.getValue().should.equal(255);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.y.getValue().should.equalN(255, "getValue()");
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 })({
 	locales: {
 		es: "`DEY`: decrementa el registro [Y] y actualiza las banderas",
@@ -471,7 +471,7 @@ it("`INX`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("INX");
 	expect(instructions.INX).to.be.an("object");
-	instructions.INX.argument.should.equal("no");
+	instructions.INX.argument.should.equalN("no", "argument");
 })({
 	locales: {
 		es: "`INX`: argument == 'no'",
@@ -486,16 +486,16 @@ it("`INX`: increments the [X] register and updates the flags", () => {
 	cpu.x.setValue(255);
 	instructions.INX.run(cpu);
 
-	cpu.x.getValue().should.equal(0);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.x.getValue().should.equalN(0, "getValue()");
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 
 	cpu.x.setValue(244);
 	instructions.INX.run(cpu);
 
-	cpu.x.getValue().should.equal(245);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.x.getValue().should.equalN(245, "getValue()");
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 })({
 	locales: {
 		es: "`INX`: incrementa el registro [X] y actualiza las banderas",
@@ -507,7 +507,7 @@ it("`INY`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("INY");
 	expect(instructions.INY).to.be.an("object");
-	instructions.INY.argument.should.equal("no");
+	instructions.INY.argument.should.equalN("no", "argument");
 })({
 	locales: {
 		es: "`INY`: argument == 'no'",
@@ -522,16 +522,16 @@ it("`INY`: increments the [Y] register and updates the flags", () => {
 	cpu.y.setValue(255);
 	instructions.INY.run(cpu);
 
-	cpu.y.getValue().should.equal(0);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.y.getValue().should.equalN(0, "getValue()");
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 
 	cpu.y.setValue(244);
 	instructions.INY.run(cpu);
 
-	cpu.y.getValue().should.equal(245);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.y.getValue().should.equalN(245, "getValue()");
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 })({
 	locales: {
 		es: "`INY`: incrementa el registro [Y] y actualiza las banderas",
@@ -543,7 +543,7 @@ it("`LSR`: argument == 'address'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("LSR");
 	expect(instructions.LSR).to.be.an("object");
-	instructions.LSR.argument.should.equal("address");
+	instructions.LSR.argument.should.equalN("address", "argument");
 })({
 	locales: {
 		es: "`LSR`: argument == 'address'",
@@ -557,8 +557,8 @@ it("`LSR`: divides the value by 2", () => {
 
 	cpu.memory.write(0x1234, 128);
 	instructions.LSR.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(64);
-	cpu.flags.c.should.equal(false);
+	cpu.memory.read(0x1234).should.equalN(64, "read(...)");
+	cpu.flags.c.should.equalN(false, "c");
 })({
 	locales: {
 		es: "`LSR`: divide el valor entre 2",
@@ -572,8 +572,8 @@ it("`LSR`: fills the Carry Flag with bit 0", () => {
 
 	cpu.memory.write(0x1234, 0b11000001);
 	instructions.LSR.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(0b01100000);
-	cpu.flags.c.should.equal(true);
+	cpu.memory.read(0x1234).should.equalBin(0b01100000, "read(...)");
+	cpu.flags.c.should.equalN(true, "c");
 })({
 	locales: {
 		es: "`LSR`: llena la Bandera Carry con el bit 0",
@@ -587,13 +587,13 @@ it("`LSR`: updates the Zero and Negative flags", () => {
 
 	cpu.memory.write(0x1234, 0b11000000);
 	instructions.LSR.run(cpu, 0x1234);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(false, "n");
 
 	cpu.memory.write(0x1234, 0);
 	instructions.LSR.run(cpu, 0x1234);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`LSR`: actualiza las banderas Zero y Negative",
@@ -605,7 +605,7 @@ it("`LSRa`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("LSRa");
 	expect(instructions.LSRa).to.be.an("object");
-	instructions.LSRa.argument.should.equal("no");
+	instructions.LSRa.argument.should.equalN("no", "argument");
 })({
 	locales: {
 		es: "`LSR`: argument == 'no'",
@@ -619,8 +619,8 @@ it("`LSRa`: divides [A] by 2", () => {
 
 	cpu.a.setValue(128);
 	instructions.LSRa.run(cpu);
-	cpu.a.getValue().should.equal(64);
-	cpu.flags.c.should.equal(false);
+	cpu.a.getValue().should.equalN(64, "getValue()");
+	cpu.flags.c.should.equalN(false, "c");
 })({
 	locales: {
 		es: "`LSRa`: divide [A] entre 2",
@@ -634,8 +634,8 @@ it("`LSRa`: fills the Carry Flag with bit 0", () => {
 
 	cpu.a.setValue(0b11000001);
 	instructions.LSRa.run(cpu);
-	cpu.a.getValue().should.equal(0b01100000);
-	cpu.flags.c.should.equal(true);
+	cpu.a.getValue().should.equalBin(0b01100000, "getValue()");
+	cpu.flags.c.should.equalN(true, "c");
 })({
 	locales: {
 		es: "`LSRa`: llena la Bandera Carry con el bit 0",
@@ -649,13 +649,13 @@ it("`LSRa`: updates the Zero and Negative flags", () => {
 
 	cpu.a.setValue(0b11000000);
 	instructions.LSRa.run(cpu);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(false, "n");
 
 	cpu.a.setValue(0);
 	instructions.LSRa.run(cpu);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`LSRa`: actualiza las banderas Zero y Negative",
@@ -667,7 +667,7 @@ it("`ROL`: argument == 'address'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("ROL");
 	expect(instructions.ROL).to.be.an("object");
-	instructions.ROL.argument.should.equal("address");
+	instructions.ROL.argument.should.equalN("address", "argument");
 })({
 	locales: {
 		es: "`ROL`: argument == 'address'",
@@ -681,7 +681,7 @@ it("`ROL`: multiplies the value by 2", () => {
 
 	cpu.memory.write(0x1234, 12);
 	instructions.ROL.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(24);
+	cpu.memory.read(0x1234).should.equalN(24, "read(...)");
 })({
 	locales: {
 		es: "`ROL`: multiplica el valor por 2",
@@ -695,8 +695,8 @@ it("`ROL`: fills the Carry Flag with bit 7", () => {
 
 	cpu.memory.write(0x1234, 0b10100000);
 	instructions.ROL.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(0b01000000);
-	cpu.flags.c.should.equal(true);
+	cpu.memory.read(0x1234).should.equalBin(0b01000000, "read(...)");
+	cpu.flags.c.should.equalN(true, "c");
 })({
 	locales: {
 		es: "`ROL`: llena la Bandera Carry con el bit 7",
@@ -711,7 +711,7 @@ it("`ROL`: sets the bit 0 with the Carry Flag", () => {
 	cpu.flags.c = true;
 	cpu.memory.write(0x1234, 0b10100000);
 	instructions.ROL.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(0b01000001);
+	cpu.memory.read(0x1234).should.equalBin(0b01000001, "read(...)");
 })({
 	locales: {
 		es: "`ROL`: llena el bit 0 con la Bandera Carry",
@@ -725,15 +725,15 @@ it("`ROL`: updates the Zero and Negative flags", () => {
 
 	cpu.memory.write(0x1234, 0b11000000);
 	instructions.ROL.run(cpu, 0x1234);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 
 	cpu.flags.c = false;
 
 	cpu.memory.write(0x1234, 0);
 	instructions.ROL.run(cpu, 0x1234);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`ROL`: actualiza las banderas Zero y Negative",
@@ -745,7 +745,7 @@ it("`ROLa`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("ROLa");
 	expect(instructions.ROLa).to.be.an("object");
-	instructions.ROLa.argument.should.equal("no");
+	instructions.ROLa.argument.should.equalN("no", "argument");
 })({
 	locales: {
 		es: "`ROLa`: argument == 'no'",
@@ -759,7 +759,7 @@ it("`ROLa`: multiplies [A] by 2", () => {
 
 	cpu.a.setValue(12);
 	instructions.ROLa.run(cpu);
-	cpu.a.getValue().should.equal(24);
+	cpu.a.getValue().should.equalN(24, "getValue()");
 })({
 	locales: {
 		es: "`ROLa`: multiplica [A] por 2",
@@ -773,8 +773,8 @@ it("`ROLa`: fills the Carry Flag with bit 7", () => {
 
 	cpu.a.setValue(0b10100000);
 	instructions.ROLa.run(cpu);
-	cpu.a.getValue().should.equal(0b01000000);
-	cpu.flags.c.should.equal(true);
+	cpu.a.getValue().should.equalBin(0b01000000, "getValue()");
+	cpu.flags.c.should.equalN(true, "c");
 })({
 	locales: {
 		es: "`ROLa`: llena la Bandera Carry con el bit 7",
@@ -789,7 +789,7 @@ it("`ROLa`: sets the bit 0 with the Carry Flag", () => {
 	cpu.flags.c = true;
 	cpu.a.setValue(0b10100000);
 	instructions.ROLa.run(cpu);
-	cpu.a.getValue().should.equal(0b01000001);
+	cpu.a.getValue().should.equalBin(0b01000001, "getValue()");
 })({
 	locales: {
 		es: "`ROLa`: llena el bit 0 con la Bandera Carry",
@@ -803,15 +803,15 @@ it("`ROLa`: updates the Zero and Negative flags", () => {
 
 	cpu.a.setValue(0b11000000);
 	instructions.ROLa.run(cpu);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 
 	cpu.flags.c = false;
 
 	cpu.a.setValue(0);
 	instructions.ROLa.run(cpu);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`ROLa`: actualiza las banderas Zero y Negative",
@@ -823,7 +823,7 @@ it("`ROR`: argument == 'address'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("ROR");
 	expect(instructions.ROR).to.be.an("object");
-	instructions.ROR.argument.should.equal("address");
+	instructions.ROR.argument.should.equalN("address", "argument");
 })({
 	locales: {
 		es: "`ROR`: argument == 'address'",
@@ -837,7 +837,7 @@ it("`ROR`: divides the value by 2", () => {
 
 	cpu.memory.write(0x1234, 24);
 	instructions.ROR.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(12);
+	cpu.memory.read(0x1234).should.equalN(12, "read(...)");
 })({
 	locales: {
 		es: "`ROR`: divide el valor entre 2",
@@ -851,8 +851,8 @@ it("`ROR`: fills the Carry Flag with bit 0", () => {
 
 	cpu.memory.write(0x1234, 0b00000101);
 	instructions.ROR.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(0b00000010);
-	cpu.flags.c.should.equal(true);
+	cpu.memory.read(0x1234).should.equalBin(0b00000010, "read(...)");
+	cpu.flags.c.should.equalN(true, "c");
 })({
 	locales: {
 		es: "`ROR`: llena la Bandera Carry con el bit 0",
@@ -867,7 +867,7 @@ it("`ROR`: sets the bit 7 with the Carry Flag", () => {
 	cpu.flags.c = true;
 	cpu.memory.write(0x1234, 0b00000101);
 	instructions.ROR.run(cpu, 0x1234);
-	cpu.memory.read(0x1234).should.equal(0b10000010);
+	cpu.memory.read(0x1234).should.equalBin(0b10000010, "read(...)");
 })({
 	locales: {
 		es: "`ROR`: llena el bit 7 con la Bandera Carry",
@@ -882,15 +882,15 @@ it("`ROR`: updates the Zero and Negative flags", () => {
 	cpu.flags.c = true;
 	cpu.memory.write(0x1234, 0b11000000);
 	instructions.ROR.run(cpu, 0x1234);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 
 	cpu.flags.c = false;
 
 	cpu.memory.write(0x1234, 0);
 	instructions.ROR.run(cpu, 0x1234);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`ROR`: actualiza las banderas Zero y Negative",
@@ -902,7 +902,7 @@ it("`RORa`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("RORa");
 	expect(instructions.RORa).to.be.an("object");
-	instructions.RORa.argument.should.equal("no");
+	instructions.RORa.argument.should.equalN("no", "argument");
 })({
 	locales: {
 		es: "`RORa`: argument == 'address'",
@@ -916,7 +916,7 @@ it("`RORa`: divides [A] by 2", () => {
 
 	cpu.a.setValue(24);
 	instructions.RORa.run(cpu);
-	cpu.a.getValue().should.equal(12);
+	cpu.a.getValue().should.equalN(12, "getValue()");
 })({
 	locales: {
 		es: "`RORa`: divide [A] entre 2",
@@ -930,8 +930,8 @@ it("`RORa`: fills the Carry Flag with bit 0", () => {
 
 	cpu.a.setValue(0b00000101);
 	instructions.RORa.run(cpu);
-	cpu.a.getValue().should.equal(0b00000010);
-	cpu.flags.c.should.equal(true);
+	cpu.a.getValue().should.equalBin(0b00000010, "getValue()");
+	cpu.flags.c.should.equalN(true, "c");
 })({
 	locales: {
 		es: "`RORa`: llena la Bandera Carry con el bit 0",
@@ -946,7 +946,7 @@ it("`RORa`: sets the bit 7 with the Carry Flag", () => {
 	cpu.flags.c = true;
 	cpu.a.setValue(0b00000101);
 	instructions.RORa.run(cpu);
-	cpu.a.getValue().should.equal(0b10000010);
+	cpu.a.getValue().should.equalBin(0b10000010, "getValue()");
 })({
 	locales: {
 		es: "`RORa`: llena el bit 7 con la Bandera Carry",
@@ -961,15 +961,15 @@ it("`RORa`: updates the Zero and Negative flags", () => {
 	cpu.flags.c = true;
 	cpu.a.setValue(0b11000000);
 	instructions.RORa.run(cpu);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 
 	cpu.flags.c = false;
 
 	cpu.a.setValue(0);
 	instructions.RORa.run(cpu);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`RORa`: actualiza las banderas Zero y Negative",
@@ -981,7 +981,7 @@ it("`SBC`: argument == 'value'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("SBC");
 	expect(instructions.SBC).to.be.an("object");
-	instructions.SBC.argument.should.equal("value");
+	instructions.SBC.argument.should.equalN("value", "argument");
 })({
 	locales: {
 		es: "`SBC`: argument == 'value'",
@@ -995,7 +995,7 @@ it("`SBC`: substracts the value from the Accumulator - 1 when C is clear", () =>
 
 	cpu.a.setValue(20);
 	instructions.SBC.run(cpu, 5);
-	cpu.a.getValue().should.equal(14);
+	cpu.a.getValue().should.equalN(14, "getValue()");
 })({
 	locales: {
 		es: "`SBC`: resta el valor del Acumulador - 1 cuando C está apagado",
@@ -1010,7 +1010,7 @@ it("`SBC`: substracts the value from the Accumulator - 0 when C is set", () => {
 	cpu.a.setValue(20);
 	cpu.flags.c = true;
 	instructions.SBC.run(cpu, 5);
-	cpu.a.getValue().should.equal(15);
+	cpu.a.getValue().should.equalN(15, "getValue()");
 })({
 	locales: {
 		es: "`SBC`: resta el valor del Acumulador - 0 cuando C está encendido",
@@ -1024,14 +1024,14 @@ it("`SBC`: updates the Zero and Negative flags", () => {
 
 	cpu.a.setValue(20);
 	instructions.SBC.run(cpu, 30);
-	cpu.flags.z.should.equal(false);
-	cpu.flags.n.should.equal(true);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
 
 	cpu.a.setValue(0);
 	cpu.flags.c = true;
 	instructions.SBC.run(cpu, 0);
-	cpu.flags.z.should.equal(true);
-	cpu.flags.n.should.equal(false);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
 })({
 	locales: {
 		es: "`SBC`: actualiza las banderas Zero y Negative",
@@ -1045,15 +1045,15 @@ it("`SBC`: updates the Carry and Overflow flags", () => {
 
 	cpu.a.setValue(50);
 	instructions.SBC.run(cpu, 10);
-	cpu.flags.c.should.equal(true);
-	cpu.flags.v.should.equal(false);
+	cpu.flags.c.should.equalN(true, "c");
+	cpu.flags.v.should.equalN(false, "v");
 
 	// positive (40) - negative (-100) = negative (-116) => overflow
 	cpu.a.setValue(40);
 	cpu.flags.c = true;
 	instructions.SBC.run(cpu, byte.toU8(-100));
-	cpu.flags.c.should.equal(false); // borrow!
-	cpu.flags.v.should.equal(true); //  |
+	cpu.flags.c.should.equalN(false, "c"); // borrow!
+	cpu.flags.v.should.equalN(true, "v"); //  |
 	//                                  v
 	//                                  00101000 (40)
 	//                                - 10011100 (-100)
@@ -1063,8 +1063,8 @@ it("`SBC`: updates the Carry and Overflow flags", () => {
 	cpu.a.setValue(byte.toU8(-40));
 	cpu.flags.c = true;
 	instructions.SBC.run(cpu, 100);
-	cpu.flags.c.should.equal(true);
-	cpu.flags.v.should.equal(true);
+	cpu.flags.c.should.equalN(true, "c");
+	cpu.flags.v.should.equalN(true, "v");
 })({
 	locales: {
 		es: "`SBC`: actualiza las banderas Carry y Overflow",

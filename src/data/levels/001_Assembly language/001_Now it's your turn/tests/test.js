@@ -17,19 +17,19 @@ it("it doesn't load anything from the zero page", () => {
 });
 
 it("the address $4055 contains $7C", () => {
-	cpu.memory.readAt(0x4055).should.equal(0x7c);
+	cpu.memory.readAt(0x4055).should.equalHex(0x7c, "readAt(0x4055)");
 })({
 	locales: { es: "la dirección $4055 contiene $7C" },
 });
 
 it("the address $4072 also contains $7C", () => {
-	cpu.memory.readAt(0x4072).should.equal(0x7c);
+	cpu.memory.readAt(0x4072).should.equalHex(0x7c, "readAt(0x4072)");
 })({
 	locales: { es: "la dirección $4072 también contiene $7C" },
 });
 
 it("the address $40B8 contains $18", () => {
-	cpu.memory.readAt(0x40b8).should.equal(0x18);
+	cpu.memory.readAt(0x40b8).should.equalHex(0x18, "readAt(0x40b8)");
 })({
 	locales: { es: "la dirección $40B8 contiene $18" },
 });

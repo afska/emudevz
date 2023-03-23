@@ -46,7 +46,7 @@ it("`BIT`: argument == 'value'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("BIT");
 	expect(instructions.BIT).to.be.an("object");
-	instructions.BIT.argument.should.equal("value");
+	instructions.BIT.argument.should.equalN("value", "argument");
 })({
 	locales: {
 		es: "`BIT`: argument == 'value'",
@@ -70,9 +70,9 @@ it("`BIT`: argument == 'value'", () => {
 
 			cpu.a.setValue(mask);
 			instructions.BIT.run(cpu, value);
-			cpu.flags.z.should.equal(z);
-			cpu.flags.n.should.equal(n);
-			cpu.flags.v.should.equal(v);
+			cpu.flags.z.should.equalN(z, "z");
+			cpu.flags.n.should.equalN(n, "n");
+			cpu.flags.v.should.equalN(v, "v");
 		}
 	)({
 		locales: {
@@ -131,7 +131,7 @@ it("`BIT`: argument == 'value'", () => {
 		const instructions = mainModule.default.instructions;
 		instructions.should.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equal("value");
+		instructions[instruction].argument.should.equalN("value", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
@@ -150,9 +150,9 @@ it("`BIT`: argument == 'value'", () => {
 
 			cpu[register].setValue(source);
 			instructions[instruction].run(cpu, value);
-			cpu.flags.z.should.equal(z);
-			cpu.flags.n.should.equal(n);
-			cpu.flags.c.should.equal(c);
+			cpu.flags.z.should.equalN(z, "z");
+			cpu.flags.n.should.equalN(n, "n");
+			cpu.flags.c.should.equalN(c, "c");
 		}
 	)({
 		locales: {
@@ -171,7 +171,7 @@ it("`BIT`: argument == 'value'", () => {
 		const instructions = mainModule.default.instructions;
 		instructions.should.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equal("value");
+		instructions[instruction].argument.should.equalN("value", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
@@ -233,7 +233,7 @@ it("`BIT`: argument == 'value'", () => {
 
 			cpu.a.setValue(value1);
 			instructions[instruction].run(cpu, value2);
-			cpu.a.getValue().should.equal(result);
+			cpu.a.getValue().should.equalN(result, "getValue()");
 			cpu.flags.z = zero;
 			cpu.flags.n = negative;
 		}

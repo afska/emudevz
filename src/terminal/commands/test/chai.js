@@ -27,7 +27,7 @@ chai.Assertion.addChainableMethod("equalN", function (expected, name) {
 	);
 });
 
-const toHex = (x) => (_.isFinite(x) ? `$${x.toString(16).toUpperCase()}` : x);
+const toHex = (x) => (_.isFinite(x) ? `0x${x.toString(16).toUpperCase()}` : x);
 chai.Assertion.addChainableMethod("equalHex", function (expected, name) {
 	const actual = this._obj;
 
@@ -35,6 +35,18 @@ chai.Assertion.addChainableMethod("equalHex", function (expected, name) {
 		actual === expected,
 		`expected ${name} to equal ${toHex(expected)}, but got ${toHex(actual)}`,
 		`expected ${name} not to equal ${toHex(expected)}`
+	);
+});
+
+const toBin = (x) =>
+	_.isFinite(x) ? `0b${x.toString(2).padStart(8, "0")}` : x;
+chai.Assertion.addChainableMethod("equalBin", function (expected, name) {
+	const actual = this._obj;
+
+	this.assert(
+		actual === expected,
+		`expected ${name} to equal ${toBin(expected)}, but got ${toBin(actual)}`,
+		`expected ${name} not to equal ${toBin(expected)}`
 	);
 });
 

@@ -60,7 +60,7 @@ it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
 
 	["cycle", "extraCycles"].forEach((property) => {
 		cpu.should.include.key(property);
-		cpu[property].should.equal(0, property);
+		cpu[property].should.equalN(0, property);
 	});
 })({
 	locales: {
@@ -88,7 +88,7 @@ it("all registers start from 0", () => {
 	const cpu = newCPU();
 
 	["a", "x", "y", "sp", "pc"].forEach((register) => {
-		cpu[register].getValue().should.equal(0, register);
+		cpu[register].getValue().should.equalN(0, register);
 	});
 })({
 	locales: {
@@ -103,7 +103,7 @@ it("8-bit registers can save and read values (valid range)", () => {
 	["a", "x", "y", "sp"].forEach((register) => {
 		for (let i = 0; i < 256; i++) {
 			cpu[register].setValue(i);
-			cpu[register].getValue().should.equal(i, `${register}=${i}`);
+			cpu[register].getValue().should.equalN(i, `${register}.getValue()`);
 		}
 	});
 })({
@@ -121,7 +121,9 @@ it("8-bit registers wrap with values outside the range", () => {
 			const array = new Uint8Array(1);
 			array[0] = i;
 			cpu[register].setValue(i);
-			cpu[register].getValue().should.equal(array[0], `${register}=${i}`);
+			cpu[register]
+				.getValue()
+				.should.equalN(array[0], `${register}.getValue()`);
 		}
 	});
 })({
@@ -136,7 +138,7 @@ it("16-bit registers can save and read values (valid range)", () => {
 
 	for (let i = 0; i < 65536; i++) {
 		cpu.pc.setValue(i);
-		cpu.pc.getValue().should.equal(i, i);
+		cpu.pc.getValue().should.equalHex(i, "getValue()");
 	}
 })({
 	locales: {
@@ -185,25 +187,25 @@ it("flags register can be serialized into a byte", () => {
 	const cpu = newCPU();
 	cpu.flags.i = false;
 
-	cpu.flags.getValue().should.equal(0b00100000);
+	cpu.flags.getValue().should.equalBin(0b00100000, "getValue()");
 	cpu.flags.z = true;
-	cpu.flags.getValue().should.equal(0b00100010, "+z");
+	cpu.flags.getValue().should.equalBin(0b00100010, "[+z] => getValue()");
 	cpu.flags.c = true;
-	cpu.flags.getValue().should.equal(0b00100011, "+c");
+	cpu.flags.getValue().should.equalBin(0b00100011, "[+c] => getValue()");
 	cpu.flags.v = true;
-	cpu.flags.getValue().should.equal(0b01100011, "+v");
+	cpu.flags.getValue().should.equalBin(0b01100011, "[+v] => getValue()");
 	cpu.flags.n = true;
-	cpu.flags.getValue().should.equal(0b11100011, "+n");
+	cpu.flags.getValue().should.equalBin(0b11100011, "[+n] => getValue()");
 	cpu.flags.i = true;
-	cpu.flags.getValue().should.equal(0b11100111, "+i");
+	cpu.flags.getValue().should.equalBin(0b11100111, "[+i] => getValue()");
 	cpu.flags.d = true;
-	cpu.flags.getValue().should.equal(0b11101111, "+d");
+	cpu.flags.getValue().should.equalBin(0b11101111, "[+d] => getValue()");
 	cpu.flags.c = false;
-	cpu.flags.getValue().should.equal(0b11101110, "-c");
+	cpu.flags.getValue().should.equalBin(0b11101110, "[-c] => getValue()");
 	cpu.flags.v = false;
-	cpu.flags.getValue().should.equal(0b10101110, "-v");
+	cpu.flags.getValue().should.equalBin(0b10101110, "[-v] => getValue()");
 	cpu.flags.z = false;
-	cpu.flags.getValue().should.equal(0b10101100, "-z");
+	cpu.flags.getValue().should.equalBin(0b10101100, "[-z] => getValue()");
 })({
 	locales: {
 		es: "el registro de flags puede ser serializado en un byte",
@@ -215,7 +217,7 @@ it("flags register can be set from a byte", () => {
 	const cpu = newCPU();
 
 	cpu.flags.setValue(0b11111111);
-	cpu.flags.getValue().should.equal(0b11101111);
+	cpu.flags.getValue().should.equalBin(0b11101111, "getValue()");
 	cpu.flags.c.should.be.true;
 	cpu.flags.z.should.be.true;
 	cpu.flags.i.should.be.true;
@@ -224,7 +226,7 @@ it("flags register can be set from a byte", () => {
 	cpu.flags.n.should.be.true;
 
 	cpu.flags.setValue(0b01000001);
-	cpu.flags.getValue().should.equal(0b01100001);
+	cpu.flags.getValue().should.equalBin(0b01100001, "getValue()");
 	cpu.flags.c.should.be.true;
 	cpu.flags.z.should.be.false;
 	cpu.flags.i.should.be.false;
@@ -233,7 +235,7 @@ it("flags register can be set from a byte", () => {
 	cpu.flags.n.should.be.false;
 
 	cpu.flags.setValue(0b10000011);
-	cpu.flags.getValue().should.equal(0b10100011);
+	cpu.flags.getValue().should.equalBin(0b10100011, "getValue()");
 	cpu.flags.c.should.be.true;
 	cpu.flags.z.should.be.true;
 	cpu.flags.i.should.be.false;
@@ -271,8 +273,8 @@ it("can increment and decrement registers", () => {
 	cpu.pc.decrement();
 	cpu.pc.decrement();
 
-	cpu.a.getValue().should.equal(a + 3 - 1);
-	cpu.pc.getValue().should.equal(pc + 4 - 2);
+	cpu.a.getValue().should.equalN(a + 3 - 1, "getValue()");
+	cpu.pc.getValue().should.equalHex(pc + 4 - 2, "getValue()");
 })({
 	locales: {
 		es: "puede incrementar y decrementar registros",
@@ -355,7 +357,7 @@ it("can read from RAM", () => {
 	for (let i = 0; i < 2048; i++) {
 		const value = byte.random();
 		cpu.memory.ram[i] = value;
-		cpu.memory.read(i).should.equal(value, i);
+		cpu.memory.read(i).should.equalN(value, `read(${i})`);
 	}
 })({
 	locales: {
@@ -370,7 +372,7 @@ it("reading RAM mirror results in RAM reads", () => {
 	for (let i = 0x0800; i < 0x0800 + 0x1800; i++) {
 		const value = byte.random();
 		cpu.memory.ram[(i - 0x0800) % 0x0800] = value;
-		cpu.memory.read(i).should.equal(value, `$${i.toString(16)}`);
+		cpu.memory.read(i).should.equalN(value, `read(${i})`);
 	}
 })({
 	locales: {
@@ -385,7 +387,7 @@ it("can write to RAM", () => {
 	for (let i = 0; i < 2048; i++) {
 		const value = byte.random();
 		cpu.memory.write(i, value);
-		cpu.memory.ram[i].should.equal(value, i);
+		cpu.memory.ram[i].should.equalN(value, `ram[${i}]`);
 	}
 })({
 	locales: {
@@ -400,7 +402,8 @@ it("writing RAM mirror results in RAM writes", () => {
 	for (let i = 0x0800; i < 0x0800 + 0x1800; i++) {
 		const value = byte.random();
 		cpu.memory.write(i, value);
-		cpu.memory.ram[(i - 0x0800) % 0x0800].should.equal(value, i);
+		const index = (i - 0x0800) % 0x0800;
+		cpu.memory.ram[index].should.equalN(value, `ram[${index}]`);
 	}
 })({
 	locales: {
@@ -458,8 +461,10 @@ it("PRG-ROM code is mapped to $8000-$BFFF", () => {
 
 	const cpu = new CPU(new Cartridge(newRom(code)));
 
-	for (let i = 0; i < 16384; i++)
-		cpu.memory.read(0x8000 + i).should.equal(code[i], i);
+	for (let i = 0; i < 16384; i++) {
+		const address = 0x8000 + i;
+		cpu.memory.read(address).should.equalHex(code[i], `read(${address})`);
+	}
 })({
 	locales: {
 		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
@@ -478,7 +483,8 @@ it("PRG-ROM code is read only", () => {
 	for (let i = 0; i < 16384; i++) {
 		const value = cpu.memory.read(0x8000 + i);
 		cpu.memory.write(0x8000 + i, byte.random());
-		cpu.memory.read(0x8000 + i).should.equal(value, i);
+		const address = 0x8000 + i;
+		cpu.memory.read(address).should.equalHex(value, `read(${address})`);
 	}
 })({
 	locales: {
@@ -493,9 +499,9 @@ it("opcode $E8 means `INX`, which increments the [X] register", () => {
 	const cpu = newCPU([0xe8]);
 	cpu.pc.setValue(0x8000);
 
-	cpu.x.getValue().should.equal(0);
+	cpu.x.getValue().should.equalN(0, "getValue()");
 	cpu.step();
-	cpu.x.getValue().should.equal(1);
+	cpu.x.getValue().should.equalN(1, "getValue()");
 })({
 	locales: {
 		es: "el opcode $E8 es `INX`, que incrementa el registro [X]",
@@ -507,9 +513,9 @@ it("opcode $C8 means `INY`, which increments the [Y] register", () => {
 	const cpu = newCPU([0xc8]);
 	cpu.pc.setValue(0x8000);
 
-	cpu.y.getValue().should.equal(0);
+	cpu.y.getValue().should.equalN(0, "getValue()");
 	cpu.step();
-	cpu.y.getValue().should.equal(1);
+	cpu.y.getValue().should.equalN(1, "getValue()");
 })({
 	locales: {
 		es: "el opcode $C8 es `INY`, que incrementa el registro [Y]",
@@ -522,9 +528,9 @@ it("opcode $8A means `TXA`, which transfers [X] to [A]", () => {
 	cpu.pc.setValue(0x8000);
 	cpu.x.setValue(123);
 
-	cpu.a.getValue().should.equal(0);
+	cpu.a.getValue().should.equalN(0, "getValue()");
 	cpu.step();
-	cpu.a.getValue().should.equal(123);
+	cpu.a.getValue().should.equalN(123, "getValue()");
 })({
 	locales: {
 		es: "el opcode $8A es `TXA`, que transfiere [X] a [A]",
@@ -537,7 +543,7 @@ it("after a `step()` call, [PC] is incremented", () => {
 	cpu.pc.setValue(0x8000);
 
 	cpu.step();
-	cpu.pc.getValue().should.equal(0x8001);
+	cpu.pc.getValue().should.equalHex(0x8001, "getValue()");
 })({
 	locales: {
 		es: "luego de una llamada a `step()`, [PC] es incrementado",
@@ -553,10 +559,10 @@ it("supports combinations of `INX`, `INY` and `TXA`", () => {
 	cpu.step();
 	cpu.step();
 	cpu.step();
-	cpu.x.getValue().should.equal(2);
-	cpu.y.getValue().should.equal(1);
-	cpu.a.getValue().should.equal(2);
-	cpu.pc.getValue().should.equal(0x8004);
+	cpu.x.getValue().should.equalN(2, "getValue()");
+	cpu.y.getValue().should.equalN(1, "getValue()");
+	cpu.a.getValue().should.equalN(2, "getValue()");
+	cpu.pc.getValue().should.equalHex(0x8004, "getValue()");
 })({
 	locales: {
 		es: "soporta combinaciones de `INX`, `INY` y `TXA`",
@@ -616,7 +622,8 @@ it("the stack can push and pop values", () => {
 	for (let i = 0; i < 256; i++) bytes.push(byte.random());
 
 	for (let i = 0; i < 256; i++) stack.push(bytes[i]);
-	for (let i = 255; i <= 0; i--) stack.pop().should.equal(bytes[i], i);
+	for (let i = 255; i <= 0; i--)
+		stack.pop().should.equalHex(bytes[i], `[${i}] pop()`);
 })({
 	locales: {
 		es: "la pila puede poner y sacar elementos",
@@ -630,8 +637,8 @@ it("the stack updates RAM and decrements [SP] on push", () => {
 
 	const value = byte.random();
 	stack.push(value);
-	memory.read(0x0100 + 0xff).should.equal(value);
-	sp.getValue().should.equal(0xfe);
+	memory.read(0x0100 + 0xff).should.equalHex(value, "read(...)");
+	sp.getValue().should.equalHex(0xfe, "getValue()");
 })({
 	locales: {
 		es: "la pila actualiza RAM y [SP] al poner",
@@ -646,8 +653,8 @@ it("the stack reads RAM and increments [SP] on pop", () => {
 	stack.push(byte.random());
 	const value = byte.random();
 	memory.write(0x0100 + 0xff, value);
-	stack.pop().should.equal(value);
-	sp.getValue().should.equal(0xff);
+	stack.pop().should.equalHex(value, "pop()");
+	sp.getValue().should.equalHex(0xff, "getValue()");
 })({
 	locales: {
 		es: "la pila lee RAM e incrementa [SP] al sacar",
@@ -664,8 +671,8 @@ it("can read 16-bit values from the memory bus", () => {
 	cpu.memory.write(0x0051, 0x23);
 
 	cpu.memory.should.respondTo("read16");
-	cpu.memory.read16(0x0050).should.equal(0x2345);
-	cpu.memory.read16(0x8000).should.equal(0x1234);
+	cpu.memory.read16(0x0050).should.equalHex(0x2345, "read16(...)");
+	cpu.memory.read16(0x8000).should.equalHex(0x1234, "read16(...)");
 })({
 	locales: {
 		es: "puede leer valores de 16 bits del bus de memoria",
@@ -679,8 +686,8 @@ it("can push 16-bit values onto the stack", () => {
 	cpu.stack.should.respondTo("push16");
 	cpu.stack.push16(0x1234);
 
-	cpu.stack.pop().should.equal(0x34);
-	cpu.stack.pop().should.equal(0x12);
+	cpu.stack.pop().should.equalHex(0x34, "pop()");
+	cpu.stack.pop().should.equalHex(0x12, "pop()");
 })({
 	locales: {
 		es: "puede poner valores de 16 bits en la pila",
@@ -695,7 +702,7 @@ it("can pop 16-bit values from the stack", () => {
 	cpu.stack.push(0x34);
 
 	cpu.stack.should.respondTo("pop16");
-	cpu.stack.pop16().should.equal(0x1234);
+	cpu.stack.pop16().should.equalHex(0x1234, "pop16()");
 })({
 	locales: {
 		es: "puede sacar valores de 16 bits de la pila",
@@ -709,7 +716,7 @@ it("defines a list of 151 `operations`", () => {
 	const cpu = newCPU();
 
 	cpu.should.include.key("operations");
-	Array.isArray(cpu.operations).should.equal(true);
+	Array.isArray(cpu.operations).should.equalN(true, "isArray(...)");
 	let count = 0;
 
 	for (let operation of cpu.operations) {
@@ -729,7 +736,7 @@ it("defines a list of 151 `operations`", () => {
 		count++;
 	}
 
-	count.should.equal(151);
+	count.should.equalN(151, "count");
 })({
 	locales: {
 		es: "define una lista con 151 `operations`",
@@ -749,9 +756,9 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	// NOP
 	cpu.logger = sinon.spy();
 	cycles = cpu.step();
-	cycles.should.equal(2, "NOP => cycles");
-	cpu.pc.getValue().should.equal(0x8001, "NOP => pc");
-	cpu.cycle.should.equal(9, "NOP => cycle");
+	cycles.should.equalN(2, "NOP => cycles");
+	cpu.pc.getValue().should.equalHex(0x8001, "NOP => pc");
+	cpu.cycle.should.equalN(9, "NOP => cycle");
 	cpu.logger.should.have.been.calledWith(
 		cpu,
 		0x8000,
@@ -763,9 +770,9 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	// LDA #$05
 	cpu.logger = sinon.spy();
 	cycles = cpu.step();
-	cycles.should.equal(2, "LDA #$05 => cycles");
-	cpu.pc.getValue().should.equal(0x8003, "LDA #$05 => pc");
-	cpu.cycle.should.equal(11, "LDA #$05 => cycle");
+	cycles.should.equalN(2, "LDA #$05 => cycles");
+	cpu.pc.getValue().should.equalHex(0x8003, "LDA #$05 => pc");
+	cpu.cycle.should.equalN(11, "LDA #$05 => cycle");
 	cpu.logger.should.have.been.calledWith(
 		cpu,
 		0x8001,
@@ -777,9 +784,9 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	// STA $0201
 	cpu.logger = sinon.spy();
 	cycles = cpu.step();
-	cycles.should.equal(4, "STA $0201 => cycles");
-	cpu.pc.getValue().should.equal(0x8006, "STA $0201 => pc");
-	cpu.cycle.should.equal(15, "STA $0201 => cycle");
+	cycles.should.equalN(4, "STA $0201 => cycles");
+	cpu.pc.getValue().should.equalHex(0x8006, "STA $0201 => pc");
+	cpu.cycle.should.equalN(15, "STA $0201 => cycle");
 	cpu.logger.should.have.been.calledWith(
 		cpu,
 		0x8003,
@@ -791,9 +798,9 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	// LDX $0201
 	cpu.logger = sinon.spy();
 	cycles = cpu.step();
-	cycles.should.equal(4, "LDX $0201 => cycles");
-	cpu.pc.getValue().should.equal(0x8009, "LDX $0201 => pc");
-	cpu.cycle.should.equal(19, "LDX $0201 => cycle");
+	cycles.should.equalN(4, "LDX $0201 => cycles");
+	cpu.pc.getValue().should.equalHex(0x8009, "LDX $0201 => pc");
+	cpu.cycle.should.equalN(19, "LDX $0201 => cycle");
 	cpu.logger.should.have.been.calledWith(
 		cpu,
 		0x8006,
@@ -812,7 +819,7 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 // 4.20 Mapper 0
 
 it("instantiating a `NEEES` with an unknown mapper throws an 'Invalid mapper.' error", () => {
-	const { NEEES, Cartridge } = mainModule.default;
+	const { NEEES } = mainModule.default;
 
 	expect(
 		() => new NEEES(newRom([], newHeader(1, 1, 0b10110000, 0b11000000)))
@@ -834,8 +841,10 @@ it("PRG-ROM code is mapped to $8000-$BFFF", () => {
 	const neees = new NEEES(newRom(code));
 	const cpu = neees.cpu;
 
-	for (let i = 0; i < 16384; i++)
-		cpu.memory.read(0x8000 + i).should.equal(code[i], i);
+	for (let i = 0; i < 16384; i++) {
+		const address = 0x8000 + i;
+		cpu.memory.read(address).should.equalHex(code[i], `read(${address})`);
+	}
 })({
 	locales: {
 		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
@@ -855,7 +864,8 @@ it("PRG-ROM code is read only", () => {
 	for (let i = 0; i < 16384; i++) {
 		const value = cpu.memory.read(0x8000 + i);
 		cpu.memory.write(0x8000 + i, byte.random());
-		cpu.memory.read(0x8000 + i).should.equal(value, i);
+		const address = 0x8000 + i;
+		cpu.memory.read(address).should.equalHex(value, `read(${address})`);
 	}
 })({
 	locales: {
@@ -873,8 +883,10 @@ it("PRG-ROM code is also mapped to $C000-$FFFF", () => {
 	const neees = new NEEES(newRom(code));
 	const cpu = neees.cpu;
 
-	for (let i = 0; i < 16384; i++)
-		cpu.memory.read(0xc000 + i).should.equal(code[i], i);
+	for (let i = 0; i < 16384; i++) {
+		const address = 0xc000 + i;
+		cpu.memory.read(address).should.equalHex(code[i], `read(${address})`);
+	}
 })({
 	locales: {
 		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
@@ -910,7 +922,7 @@ it("all registers start from 0 (except for [SP])", () => {
 	const cpu = newCPU();
 
 	["a", "x", "y", "pc"].forEach((register) => {
-		cpu[register].getValue().should.equal(0, register);
+		cpu[register].getValue().should.equalN(0, `${register}.getValue()`);
 	});
 })({
 	locales: {
@@ -926,12 +938,12 @@ it("triggers a <RESET> interrupt on start", () => {
 		cpu.should.include.key(property);
 	});
 
-	cpu.stack.pop().should.equal(0b00100100, "flags");
-	cpu.stack.pop16().should.equal(0x0, "old pc");
-	cpu.cycle.should.equal(7, "cycle");
-	cpu.extraCycles.should.equal(0, "extra cycles");
-	cpu.flags.i.should.equal(true, "i");
-	cpu.pc.getValue().should.equal(0x0, "new pc");
+	cpu.stack.pop().should.equalBin(0b00100100, "pop()");
+	cpu.stack.pop16().should.equalHex(0x0, "pop16()");
+	cpu.cycle.should.equalN(7, "cycle");
+	cpu.extraCycles.should.equalN(0, "extraCycles");
+	cpu.flags.i.should.equalN(true, "i");
+	cpu.pc.getValue().should.equalHex(0x0, "getValue()");
 })({
 	locales: {
 		es: "dispara una interrupción <RESET> al inicio",
@@ -949,7 +961,7 @@ it("triggers a <RESET> interrupt on start", () => {
 
 //  const ppu = TODO;
 // 	for (let i = 0; i < 8192; i++)
-// 		ppu.memory.read(i).should.equal(graphics[i], i);
+// 		ppu.memory.read(i).should.equalHex(graphics[i], `read(${i})`);
 // })({
 // 	locales: {
 // 		es: "el código CHR-ROM está mapeado al rango PPU $0000-$1FFF",

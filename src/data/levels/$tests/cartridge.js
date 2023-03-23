@@ -108,7 +108,7 @@ it("has a `header` property with metadata (PRG-ROM pages)", () => {
 		const header = new Cartridge(bytes).header;
 		expect(header).to.be.an("object");
 		header.should.include.key("prgRomPages");
-		header.prgRomPages.should.equal(i);
+		header.prgRomPages.should.equalN(i, "prgRomPages");
 	}
 })({
 	locales: {
@@ -127,9 +127,9 @@ it("has a `header` property with metadata (CHR-ROM pages)", () => {
 		const header = new Cartridge(bytes).header;
 		expect(header).to.be.an("object");
 		header.should.include.key("chrRomPages");
-		header.chrRomPages.should.equal(i);
+		header.chrRomPages.should.equalN(i, "chrRomPages");
 		header.should.include.key("usesChrRam");
-		header.usesChrRam.should.equal(i === 0);
+		header.usesChrRam.should.equalN(i === 0, "usesChrRam");
 	}
 })({
 	locales: {
@@ -151,7 +151,10 @@ it("has a `header` property with metadata (512-byte padding)", () => {
 		const header = new Cartridge(bytes).header;
 		expect(header).to.be.an("object");
 		header.should.include.key("has512BytePadding");
-		header.has512BytePadding.should.equal(has512BytePadding);
+		header.has512BytePadding.should.equalN(
+			has512BytePadding,
+			"has512BytePadding"
+		);
 	});
 })({
 	locales: {
@@ -173,7 +176,7 @@ it("has a `header` property with metadata (PRG-RAM presence)", () => {
 		const header = new Cartridge(bytes).header;
 		expect(header).to.be.an("object");
 		header.should.include.key("hasPrgRam");
-		header.hasPrgRam.should.equal(hasPrgRam);
+		header.hasPrgRam.should.equalN(hasPrgRam, "hasPrgRam");
 	});
 })({
 	locales: {
@@ -197,7 +200,7 @@ it("has a `header` property with metadata (mirroring)", () => {
 		const header = new Cartridge(bytes).header;
 		expect(header).to.be.an("object");
 		header.should.include.key("mirroring");
-		header.mirroring.should.equal(mirroring);
+		header.mirroring.should.equalN(mirroring, "mirroring");
 	});
 })({
 	locales: {
@@ -216,7 +219,7 @@ it("has a `header` property with metadata (mapper id)", () => {
 		const highNybble = byte.highNybbleOf(i);
 		bytes[6] = byte.buildU8(lowNybble, 0);
 		bytes[7] = byte.buildU8(highNybble, 0);
-		new Cartridge(bytes).header.mapperId.should.equal(i);
+		new Cartridge(bytes).header.mapperId.should.equalN(i, "mapperId");
 	}
 })({
 	locales: {
