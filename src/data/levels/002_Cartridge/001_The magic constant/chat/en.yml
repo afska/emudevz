@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    if (m.$end) $.goTo("exercise");
   messages:
   - we preserve games in digital format with game files (also called ROMs) 👾
   - these contain code, graphics, and a header that identifies the hardware
@@ -18,16 +20,38 @@ neeesfiles:
   - what do you want me to do? [exercise]
 
 exercise:
+  run: |
+    set((m) => m.$end = true);
   messages:
   - 📚  add a constructor to the `Cartridge` class receiving the ROM bytes, and save them in a property called `bytes`
   - if the magic constant doesn't match $4E $45 $53 $1A, throw an error with the "Invalid ROM." message
   responses:
-  - I need help 🥺 [help]
+  - how can I add a constructor? 😳 [constructor]
+  - I need help checking the bytes 🥺 [help]
+  - help me throw an error 🤔 [errors]
+
+constructor:
+  messages:
+  - |-
+    after adding a constructor and saving the bytes, your code should look like this:
+      ```javascript
+      export default class Cartridge {
+        constructor(bytes) {
+          this.bytes = bytes;
+          // check the bytes here!
+        }
+      }
+      ```
+  responses: []
 
 help:
   messages:
   - you'll receive a `Uint8Array`, which works similar to regular arrays!
   - so ```javascript bytes[0]``` represents the first byte, ```javascript bytes[1]``` the second one, and so on
   - remember that you can express hexadecimal notation with the ~0x~ prefix, i.e. ~0x4e~
+  responses: []
+
+errors:
+  messages:
   - "to throw errors, use:\n  ```javascript throw new Error(\"a message\");```"
   responses: []
