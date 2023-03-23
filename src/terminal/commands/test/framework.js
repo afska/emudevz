@@ -15,6 +15,11 @@ export default {
 		const _tests_ = [];
 
 		// eslint-disable-next-line
+		const Level = _Level_;
+		// eslint-disable-next-line
+		const Book = _Book_;
+
+		// eslint-disable-next-line
 		const beforeEach = (run) => {
 			_before_ = run;
 		};

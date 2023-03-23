@@ -31,7 +31,8 @@ const newCPU = (prgBytes = []) => {
 
 	const cartridge = new Cartridge(newRom(prgBytes));
 
-	if (NROM != null) {
+	const areMappersImplemented = Level.current.id >= Book.current.getId("4.20");
+	if (areMappersImplemented && NROM != null) {
 		const mapper = new NROM({ cartridge });
 		return new CPU(mapper);
 	} else {
