@@ -48,6 +48,11 @@ exercise:
   - su valor a exportar debería ser una clase vacía
   - luego, importa ese archivo desde 📄  ~/code/index.js~
   - y exporta un objeto literal con una sola clave ("Cartridge") apuntando a esa clase
+  - |-
+    tu archivo ~index.js~ debería verse así:
+      ```javascript
+      import Cartridge from "./Cartridge";
+      export default { Cartridge }```
   responses:
   - ¿exportar? ¿módulos? 🧐 [modules]
 

@@ -61,16 +61,19 @@ export default class ChatCommand extends Command {
 				await this._showChooseAnAnswer();
 				await this._showResponses(responses);
 				const response = await this._getSelectedResponse(responses);
+				if (response.link === ChatScript.END_SECTION) this._showDisconnected();
 				this._goTo(response.link);
 			} else if (!_.isEmpty(events)) {
 				if (!_.isEmpty(messages)) await this._terminal.newline();
 				this._terminal.cancelSpeedFlag();
 				const link = await this._getEventLink(events);
 				this._goTo(link);
-			} else this._goTo(ChatScript.END_SECTION);
+			} else {
+				await this._terminal.newline();
+				this._showDisconnected();
+				this._goTo(ChatScript.END_SECTION);
+			}
 		}
-
-		await this._terminal.writeln(locales.get("disconnected"), theme.COMMENT);
 
 		if (memory.winOnEnd) {
 			this._onClose();
@@ -109,6 +112,10 @@ export default class ChatCommand extends Command {
 			chat.isOpen = false;
 		});
 		if (this._linkProvider) this._linkProvider.end();
+	}
+
+	async _showDisconnected() {
+		await this._terminal.writeln(locales.get("disconnected"), theme.COMMENT);
 	}
 
 	async _showMessages(messages) {

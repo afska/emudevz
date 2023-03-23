@@ -48,6 +48,11 @@ exercise:
   - its default export should be an empty class
   - then, import that file from 📄  ~/code/index.js~
   - and export an object literal with only one key ("Cartridge") pointing to that class
+  - |-
+    your ~index.js~ file should look like this:
+      ```javascript
+      import Cartridge from "./Cartridge";
+      export default { Cartridge }```
   responses:
   - export? modules? 🧐 [modules]
 
