@@ -70,6 +70,8 @@ export default class ChatCommand extends Command {
 			} else this._goTo(ChatScript.END_SECTION);
 		}
 
+		await this._terminal.writeln(locales.get("disconnected"), theme.COMMENT);
+
 		if (memory.winOnEnd) {
 			this._onClose();
 			level.advance();

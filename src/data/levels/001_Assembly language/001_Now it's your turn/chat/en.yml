@@ -8,7 +8,7 @@ main:
   - when you're ready, close the chat and run the `test` command
   responses:
   - no, I need help 😔 [help]
-  - (*) can you tell me again how to run the other command? [othercommands]
+  - can you tell me again how to run the other command? [othercommands]
 
 othercommands:
   messages:

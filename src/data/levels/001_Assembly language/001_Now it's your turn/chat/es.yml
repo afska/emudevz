@@ -8,7 +8,7 @@ main:
   - cuando esté listo, cierra el chat y ejecuta el comando `test`
   responses:
   - no, necesito ayuda 😔 [help]
-  - (*) ¿me puedes recordar cómo correr el otro comando? [othercommands]
+  - ¿me puedes recordar cómo correr el otro comando? [othercommands]
 
 othercommands:
   messages:

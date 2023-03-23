@@ -106,7 +106,8 @@ testing:
   - con 50% de probabilidades cada cosa
   - así que cuando sea 7, tu código debería escribir $EE
   - y cuando no, $AA tendría que ser escrito
-  responses: []
+  responses:
+  - necesito ayuda 😅 [help]
 
 help:
   messages:

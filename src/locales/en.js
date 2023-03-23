@@ -29,6 +29,7 @@ export default {
 	creating_file: "Creating file",
 	creating_directory: "Creating directory",
 	deleting: "Deleting",
+	disconnected: "🔌  Disconnected. Use the `chat` command to talk again!",
 	enter_a_file_name: "Enter a file name...",
 	find_errors: "Find errors",
 	go_back: "Go back",
