@@ -64,6 +64,6 @@ wait:
   messages:
   - yeah, change `CPU` and `CPUMemory` to receive the mapper instead of the cartridge
   - "and modify your `CPUMemory` in the following way:"
-  - "  - remove the test mapping we added in the 'Insert cartridge' level (the one that maps $8000-$BFFF to PRG-ROM)"
-  - "  - map $4020-$FFFF so it redirects everything to the mapper (`read(...)` should call `mapper.cpuRead(...)` and `write(...)` should call `mapper.cpuWrite(...)`)"
+  - 🚫  remove the test mapping we added in the 'Insert cartridge' level (the one that maps $8000-$BFFF to PRG-ROM)
+  - 🗺️  map $4020-$FFFF so it redirects everything to the mapper (`read(...)` should call `mapper.cpuRead(...)` and `write(...)` should call `mapper.cpuWrite(...)`)
   responses: []

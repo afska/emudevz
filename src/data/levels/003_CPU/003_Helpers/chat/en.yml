@@ -3,7 +3,7 @@ main:
   messages:
   - we'll define some helpers to simplify future tasks
   - |-
-    in your `Register8Bit` and `Register16Bit` classes, implement:
+    📚  in your `Register8Bit` and `Register16Bit` classes, implement:
     **increment()**:
       __-> calls *setValue* with the result of getValue() + 1__
     **decrement()**:

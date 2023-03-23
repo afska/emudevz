@@ -5,12 +5,15 @@ main:
   - so... what's an <operation>? 🤔
   - it's the union of an 📖  <instruction> and an 📍  <addressing mode>
   - "let's list some examples:"
-  - "`STA $4080`: the `STA` instruction using the `ABSOLUTE` mode"
-  - "  => opcode $8D"
-  - "`STA $30,X`: the `STA` instruction with the `INDEXED_ABSOLUTE_X` mode"
-  - "  => opcode $9D"
-  - "`STA ($55),Y`: the `STA` instruction with the `INDIRECT_INDEXED`"
-  - "  => opcode $91"
+  - |-
+    `STA $4080`: the `STA` instruction using the `ABSOLUTE` mode
+      => opcode $8D
+  - |-
+    `STA $30,X`: the `STA` instruction with the `INDEXED_ABSOLUTE_X` mode
+      => opcode $9D
+  - |-
+    `STA ($55),Y`: the `STA` instruction with the `INDIRECT_INDEXED`
+      => opcode $91
   responses:
   - that means `STA` can have different opcodes depending on the addressing mode? [multiple]
 

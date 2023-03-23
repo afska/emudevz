@@ -64,6 +64,6 @@ wait:
   messages:
   - sí, cambia `CPU` y `CPUMemory` para que reciban el mapper en lugar del cartucho
   - "y modifica tu `CPUMemory` de la siguiente manera:"
-  - "  - elimina el mapeo de prueba que agregamos en el nivel 'Inserte cartucho' (el que mapea $8000-$BFFF a PRG-ROM)"
-  - "  - mapea $4020-$FFFF para que redirija todo al mapper (`read(...)` tiene que llamar a `mapper.cpuRead(...)` y `write(...)` tiene que llamar a `mapper.cpuWrite(...)`)"
+  - 🚫  elimina el mapeo de prueba que agregamos en el nivel 'Inserte cartucho' (el que mapea $8000-$BFFF a PRG-ROM)
+  - 🗺️  mapea $4020-$FFFF para que redirija todo al mapper (`read(...)` tiene que llamar a `mapper.cpuRead(...)` y `write(...)` tiene que llamar a `mapper.cpuWrite(...)`)
   responses: []

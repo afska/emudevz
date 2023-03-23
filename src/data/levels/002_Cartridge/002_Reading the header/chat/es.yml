@@ -4,7 +4,7 @@ main:
     if (m.$end) $.goTo("exercise");
   messages:
   - ey
-  - ¡mira tu directorio ~/docs~! 📁
+  - ¡mira tu directorio 📁  ~/docs~!
   responses:
   - ¿qué hay ahí? [exercise]
 
