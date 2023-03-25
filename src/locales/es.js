@@ -1,6 +1,7 @@
 export default {
 	_created_by: "Creado por",
 	_music_by: "música por",
+	binary: "Binario",
 	button_chapter_selection: "Selección de capítulo",
 	button_play: "Jugar",
 	button_quit: "Salir",
@@ -10,6 +11,7 @@ export default {
 	chapter_next: "Ir al siguiente capítulo",
 	chapter_previous: "Ir al capítulo anterior",
 	choose_an_answer: "Elige una respuesta.",
+	calculator: "Calculadora",
 	command_chat_already_open: "Ya abierto.",
 	command_chat_description: "Ejecuta la app de chat.",
 	command_clear_description: "Limpia la terminal.",
@@ -27,6 +29,7 @@ export default {
 	command_touch_description: "Crea archivos (uso: ~touch arch1 arch2~)",
 	creating_file: "Creando archivo",
 	creating_directory: "Creando directorio",
+	decimal: "Decimal",
 	deleting: "Borrando",
 	disconnected:
 		"🔌  Desconectado. ¡Usa el comando `chat` para hablar de nuevo!",
@@ -40,6 +43,7 @@ export default {
 	help_keys: "🚀  Para atajos de teclado, corre `help keys`",
 	help_shortcuts:
 		"🚀  General:\n  ♐  Cambiar panel activo:\n     `Alt+{DirectionalKey}` (o click del mouse)\n💻  Terminal:\n  🛑  Cerrar app:\n     `Ctrl+C`\n  🕑  Acelerar chat:\n     `Enter`\n  📜  Scrollear terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (o rueda del mouse)\n  📋  Copiar/pegar:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocompletar:\n     `Tab`\n📝  Editor de código:\n  ▶️  Ejecutar código:\n     `Alt+Enter`\n  🔍  Buscar archivo:\n     `Ctrl+P`",
+	hexadecimal: "Hexadecimal",
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",

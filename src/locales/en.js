@@ -1,6 +1,7 @@
 export default {
 	_created_by: "Created by",
 	_music_by: "music by",
+	binary: "Binary",
 	button_chapter_selection: "Chapter selection",
 	button_play: "Play",
 	button_quit: "Quit",
@@ -10,6 +11,7 @@ export default {
 	chapter_next: "Go to next chapter",
 	chapter_previous: "Go to previous chapter",
 	choose_an_answer: "Choose an answer.",
+	calculator: "Calculator",
 	command_chat_already_open: "Already open.",
 	command_chat_description: "Runs the chat app.",
 	command_clear_description: "Clears the terminal.",
@@ -28,6 +30,7 @@ export default {
 	command_touch_description: "Creates files (usage: ~touch file1 file2~)",
 	creating_file: "Creating file",
 	creating_directory: "Creating directory",
+	decimal: "Decimal",
 	deleting: "Deleting",
 	disconnected: "🔌  Disconnected. Use the `chat` command to talk again!",
 	enter_a_file_name: "Enter a file name...",
@@ -40,6 +43,7 @@ export default {
 	help_keys: "🚀  For keyboard shortcuts, run `help keys`",
 	help_shortcuts:
 		"🚀  General:\n  ♐  Switch active pane:\n     `Alt+{DirectionalKey}` (or mouse click)\n💻  Terminal:\n  🛑  Close app:\n     `Ctrl+C`\n  🕑  Speed up chat:\n     `Enter`\n  📜  Scroll terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (or mouse wheel)\n  📋  Copy/paste:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocomplete:\n     `Tab`\n📝  Code editor:\n  ▶️  Run code:\n     `Alt+Enter`\n  🔍  Find file:\n     `Ctrl+P`",
+	hexadecimal: "Hexadecimal",
 	language: "Language",
 	language_en: "English",
 	language_es: "Spanish",

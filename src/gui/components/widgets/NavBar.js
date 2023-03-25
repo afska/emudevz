@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import Badge from "react-bootstrap/Badge";
 import Marquee from "react-fast-marquee";
 import {
+	FaCalculator,
 	FaChevronLeft,
 	FaChevronRight,
 	FaComment,
@@ -15,12 +16,15 @@ import _ from "lodash";
 import locales from "../../../locales";
 import { analytics } from "../../../utils";
 import music from "../../sound/music";
+import CalculatorModal from "./CalculatorModal";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
 import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
+	state = { isCalculatorOpen: false };
+
 	render() {
 		const {
 			trackInfo,
@@ -36,6 +40,11 @@ class NavBar extends PureComponent {
 
 		return (
 			<div className={styles.navbar}>
+				<CalculatorModal
+					open={this.state.isCalculatorOpen}
+					onClose={this._closeCalculator}
+				/>
+
 				<div className={classNames(styles.item, styles.text)}>
 					<IconButton
 						Icon={FaHome}
@@ -59,7 +68,13 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
-						<div className={styles.slider}>
+						<IconButton
+							style={{ marginRight: 32 }}
+							Icon={FaCalculator}
+							tooltip={locales.get("calculator")}
+							onClick={this._openCalculator}
+						/>
+						<div className={styles.slider} style={{ marginRight: 12 }}>
 							<VolumeSlider navBarMode />
 						</div>
 						<IconButton
@@ -113,6 +128,14 @@ class NavBar extends PureComponent {
 			</div>
 		);
 	}
+
+	_openCalculator = () => {
+		this.setState({ isCalculatorOpen: true });
+	};
+
+	_closeCalculator = () => {
+		this.setState({ isCalculatorOpen: false });
+	};
 }
 
 const mapStateToProps = ({ savedata }) => ({
