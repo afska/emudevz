@@ -116,8 +116,8 @@ whoa:
   messages:
   - last one is a bit tricky 😶
   - "\"Indirect\" addressing uses an absolute address to look up another address"
-  - reading the first address gives the least significant byte
-  - and reading the following byte (address + 1) gives the most significant byte
+  - reading the first address gives the <least significant byte> (also called "low byte", ```raw $00```~XX~)
+  - and reading the following byte (address + 1) gives the <most significant byte> (also called "high byte", ```raw $```~XX~```raw 00```)
   - that can be hard to wrap your head around, so run the example ⏩
   events:
   - step [step1]

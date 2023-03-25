@@ -116,8 +116,8 @@ whoa:
   messages:
   - la última es un poco complicada 😶
   - "el modo de direccionamiento \"Indirect\" usa una dirección absoluta para buscar otra dirección"
-  - al leer la primer dirección obtenemos el byte menos significativo
-  - y leer el byte siguiente (dirección + 1) nos da el byte más significativo
+  - al leer la primer dirección obtenemos el <byte menos significativo> (también llamado "low byte", ```raw $00```~XX~)
+  - y leer el byte siguiente (dirección + 1) nos da el <byte más significativo> (también llamado "high byte", ```raw $```~XX~```raw 00```)
   - eso puede ser difícil de entender completamente, así que ejecuta el ejemplo ⏩
   events:
   - step [step1]
