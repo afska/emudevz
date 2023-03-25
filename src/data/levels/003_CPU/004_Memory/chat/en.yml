@@ -52,7 +52,7 @@ implement:
 help:
   messages:
   - to know which address you should read
-  - you have to substract the range start
+  - you have to subtract the range start
   - then, use the ~%~ (remainder) operator with the size of the chunk we want to mirror
   - |-
     for example, to calculate the 4th range's mirror, we would do:

@@ -990,7 +990,7 @@ it("`SBC`: argument == 'value'", () => {
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("`SBC`: substracts the value from the Accumulator - 1 when C is clear", () => {
+it("`SBC`: subtracts the value from the Accumulator - 1 when C is clear", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 
@@ -1004,7 +1004,7 @@ it("`SBC`: substracts the value from the Accumulator - 1 when C is clear", () =>
 	use: ({ id }, book) => id >= book.getId("4.11"),
 });
 
-it("`SBC`: substracts the value from the Accumulator - 0 when C is set", () => {
+it("`SBC`: subtracts the value from the Accumulator - 0 when C is set", () => {
 	const cpu = newCPU();
 	const instructions = mainModule.default.instructions;
 

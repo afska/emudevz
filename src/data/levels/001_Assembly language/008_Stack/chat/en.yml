@@ -24,7 +24,7 @@ put:
   - "⬆️  `PHA` (\"PusH Accumulator\"), which adds [A] to the stack"
   - "⬇️  `PLA` (\"PulL Accumulator\"), which removes the last byte from the stack, and loads it in [A]"
   responses:
-  - can you explain me the example code? [example]
+  - can you explain to me the example code? [example]
 
 example:
   run-after-messages: |
@@ -35,14 +35,14 @@ example:
   - and `@load` puts those numbers in reverse order from $4088 to $408F
   - the former <pushes> values onto the stack, the latter <pulls> values from the stack
   - now your debugger has a Stack section 👀
-  - run the code and check it out yourself ⏩
+  - run the code and check it out for yourself ⏩
   responses:
   - nice, I get it now [exercise]
   - (*) why doesn't `PLA` remove the value from the stack? [remove]
 
 remove:
   messages:
-  - it "removes" it, by incrementing [SP]
+  - it "removes" it, just by incrementing [SP]
   - the value is kept in memory though 😅
   - there's no reason to remove it, as you'd only access the stack with the appropriate instructions
   responses:

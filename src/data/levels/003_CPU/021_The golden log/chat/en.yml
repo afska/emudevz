@@ -60,7 +60,7 @@ hardware:
 fix:
   messages:
   - you can, but you'd be breaking compatibility with some games that depend (whether accidentally or intentionally) on that bug
-  - I improvised a quick documentation file talking about it
+  - I've improvised a quick documentation file talking about it
   - it's in 📄  ~/docs/cpu/page_boundary_bug.en.md~
   - 📚  introduce that bug and try again!
   run-after-messages: |

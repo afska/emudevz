@@ -10,7 +10,7 @@
 `TXA`         ; Transfers [X] to [A]
   ; variants: `TAX`, `TYA`, `TAY`
 `ADC #30`     ; Adds 30 to [A] (using the Carry Flag)
-`SBC #30`     ; Substracts 30 from [A] (using the Carry Flag)
+`SBC #30`     ; Subtracts 30 from [A] (using the Carry Flag)
 `INX`         ; Increments [X]
   ; [Y] variant: `INY`
 `DEX`         ; Decrements [X]

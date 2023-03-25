@@ -110,8 +110,8 @@ exercise:
     });
   messages:
   - yup, there's a Zero Flag, which is set by all instructions to 1 when the result is zero
-  - 📚  without deleting the current code, try substracting 4 to [A], with the `SBC` instruction
-  - it works the same as `ADC`, but it substracts instead of adding
+  - 📚  without deleting the current code, try subtracting 4 to [A], with the `SBC` instruction
+  - it works the same as `ADC`, but it subtracts instead of adding
   - after that instruction, the Zero Flag should be 1 😊
   - when you're ready, run the `test` command
   responses:

@@ -41,7 +41,7 @@ zero2:
   - this ended up writing $CD (the content of [A]) to $0062
   - which is the result of $60 + [X]
   - note that I hacked your Memory Viewer to show the zero page
-  - you can check it out yourself 👀
+  - you can check it out for yourself 👀
   - run the next two instructions ⏩
   events:
   - step [zero3]
@@ -104,7 +104,7 @@ rest2:
 
 yvariants:
   messages:
-  - yes, there're equivalents to these modes that use [Y]
+  - yes, there are equivalents to these modes that use [Y]
   - not all instructions support them though 👎
   - they're called "Zero Page,Y" and "Absolute,Y"
   - do you want to do something fun?

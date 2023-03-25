@@ -48,7 +48,7 @@ immediate:
     set((m) => m.$canRun = true);
   messages:
   - "here, `LDA #$08` takes 1 byte as argument, so it's 2-byte long"
-  - the "operation code" (<opcode>) and the eight
+  - the "operation code" (<opcode>) and the 8
   - that's the "Immediate" addressing mode
   - where the argument is a <literal> byte
   - keep going ⏩
@@ -144,7 +144,7 @@ step4:
     set((m) => m.$canRun = true);
   messages:
   - now $4080 contains $21, and $4081 contains $40
-  - so, in this case, `JMP ($4080)` will unconditionally jump to $4021"
+  - so, in this case, `JMP ($4080)` will unconditionally jump to $4021
   - creating an infinite loop ⏩
   events:
   - step [exercise]
@@ -163,8 +163,8 @@ exercise:
   - there we go...
   - 📚  as an exercise, modify the code by adding an `STY $1001` instruction at the end
   - then an `INX` instruction
-  - and lastly, change lines 10 and 12 so the indirect `JMP` goes directly into the new `INX` 👀
-  - when you finish, run the `test` command
+  - and lastly, change lines 10 and 12, so the indirect `JMP` goes directly into the new `INX` 👀
+  - when you're done, run the `test` command
   responses:
   - wait, what? [what]
 

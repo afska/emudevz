@@ -14,7 +14,7 @@ where:
   messages:
   - well, `JSR` pushes the address of the next instruction (minus 1) onto the stack before jumping to the given location
   - then, `RTS` pops this address, adds 1 to it, and jumps to that location
-  - the example code illustrates how can both be used together to create modular code 🗃️
+  - the example code illustrates how both can be used together to create modular code 🗃️
   responses:
   - (*) why didn't you use the label names? [label]
   - awesome! [awesome]

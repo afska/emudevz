@@ -65,7 +65,7 @@ step5:
   - "`CPX #3` 'ComPares' [X] with 3, and sets the Zero Flag if they're equal"
   - "[X] has a 7, and that's not equal to 3, so Z = 0"
   - "`BNE @decrement` jumps to that label if the Zero Flag is not set"
-  - which is not! so it jumped 🦘
+  - which it's not! so it jumped 🦘
   - ([X] and 3 were "Not Equal", hence the name)
   responses:
   - oh, I see [oh]
@@ -101,7 +101,7 @@ exercise:
 
 testing:
   messages:
-  - I set up a random number generator 🔢
+  - I've set up a random number generator 🔢
   - every time you change/run your code, it'll set either a 7 or another random byte on $4080
   - with 50% of chances each
   - so when it's 7, your code should write $EE
