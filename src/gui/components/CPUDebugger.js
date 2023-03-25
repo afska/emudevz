@@ -288,24 +288,26 @@ export default class CPUDebugger extends PureComponent {
 				show={isPC ? true : undefined}
 				overlay={
 					<Tooltip style={isPC ? { opacity: 0.75 } : {}}>
-						{isPC && (
-							<span>
-								<strong className={styles.name} style={CUSTOM_STYLES.PC}>
-									PC
-								</strong>{" "}
-								={" "}
-							</span>
-						)}
-						${hex.format(address, 4)}
-						{(() => {
-							const line = _mappings.find(
-								(it) => asm.CODE_ADDRESS + it.address === address
-							)?.line;
+						<div className="memoryTooltip">
+							{isPC && (
+								<span>
+									<strong className={styles.name} style={CUSTOM_STYLES.PC}>
+										PC
+									</strong>{" "}
+									={" "}
+								</span>
+							)}
+							${hex.format(address, 4)}
+							{(() => {
+								const line = _mappings.find(
+									(it) => asm.CODE_ADDRESS + it.address === address
+								)?.line;
 
-							return line != null ? (
-								<div className={styles.sentence}>${line}</div>
-							) : null;
-						})()}
+								return line != null ? (
+									<div className={styles.sentence}>${line}</div>
+								) : null;
+							})()}
+						</div>
 					</Tooltip>
 				}
 			>

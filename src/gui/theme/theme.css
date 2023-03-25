@@ -108,3 +108,13 @@ body {
 .markdown-view code {
 	color: var(--bs-code-color);
 }
+
+/* Tooltips */
+
+.tooltip:has(.memoryTooltip) {
+	user-select: none;
+}
+
+.tooltip:has(.memoryTooltip):hover {
+	opacity: 0.1 !important;
+}
