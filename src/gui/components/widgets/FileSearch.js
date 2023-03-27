@@ -16,6 +16,7 @@ export default function FileSearch(props) {
 	const [files, setFiles] = useState([]);
 	const [input, setInput] = useState("");
 	const [selected, setSelected] = useState(0);
+	const [matches, setMatches] = useState([]);
 	const inputRef = useRef(null);
 	useEffect(() => {
 		if (isSearching) {
@@ -34,7 +35,12 @@ export default function FileSearch(props) {
 		}
 	}, [isSearching]);
 
-	const matches = fuzzy.search(files, input).slice(0, MAX_RESULTS);
+	useEffect(() => {
+		const matches = fuzzy.search(files, input).slice(0, MAX_RESULTS);
+		setMatches(matches);
+		if (selected >= matches.length) setSelected(0);
+	}, [input, files, selected]);
+
 	const tree = LsCommand.getTree(DIRECTORY, false);
 
 	const render = () => {
