@@ -11,8 +11,8 @@ main:
 mapper0:
   messages:
   - it's the most basic mapper there is
-  - in which one or two 16 KiB PRG-ROM chips are directly mapped to 🖥️  CPU memory
-  - and one 8 KiB CHR-ROM (or RAM!) chip is mapped to 👾  PPU memory
+  - in which one or two 16 KiB PRG-ROM chips are directly mapped to 💻  CPU memory
+  - and one 8 KiB CHR-ROM (or RAM!) chip is mapped to 🖥️  PPU memory
   responses:
   - (*) what's the benefit of using a more complex mapper? [complex]
   - ✔️  cool, so how can I implement mappers? [implement]

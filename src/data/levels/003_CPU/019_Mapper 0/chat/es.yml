@@ -12,7 +12,7 @@ mapper0:
   messages:
   - es el mapper más básico que hay
   - en el que uno o dos chips PRG-ROM de 16 KiB están directamente mapeados a la memoria de la 🖥️  CPU
-  - y un chip CHR-ROM (o RAM) de 8 KiB está mapeado a memoria de la 👾  PPU
+  - y un chip CHR-ROM (o RAM) de 8 KiB está mapeado a memoria de la 🖥️  PPU
   responses:
   - (*) ¿cuál es el beneficio de usar un mapper más complejo? [complex]
   - ✔️  genial, ¿cómo puedo implementar los mappers? [implement]

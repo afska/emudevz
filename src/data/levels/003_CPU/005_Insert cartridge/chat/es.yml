@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - tenemos que unir nuestro 💾  `Cartridge` y nuestra 🖥️  `CPU`
+  - tenemos que unir nuestro 💾  `Cartridge` y nuestra 💻  `CPU`
   - y conectar <PRG-ROM> al mapa de memoria
   responses:
   - ¿cómo? [how]

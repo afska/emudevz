@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - we need to glue our 💾  `Cartridge` and our 🖥️  `CPU`
+  - we need to glue our 💾  `Cartridge` and our 💻  `CPU`
   - and connect <PRG-ROM> to the memory map
   responses:
   - how? [how]
