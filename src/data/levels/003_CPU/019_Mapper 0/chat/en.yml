@@ -11,8 +11,8 @@ main:
 mapper0:
   messages:
   - it's the most basic mapper there is
-  - in which one or two 16 KiB PRG-ROM chips are directly mapped to 💻  CPU memory
-  - and one 8 KiB CHR-ROM (or RAM!) chip is mapped to 🖥️  PPU memory
+  - in which one or two 16 KiB 🤖  <PRG-ROM> chips are directly mapped to 💻  CPU memory
+  - and one 8 KiB 👾  CHR-ROM (or RAM!) chip is mapped to 🖥️  PPU memory
   responses:
   - (*) what's the benefit of using a more complex mapper? [complex]
   - ✔️  cool, so how can I implement mappers? [implement]
@@ -64,6 +64,6 @@ wait:
   messages:
   - yeah, change `CPU` and `CPUMemory` to receive the mapper instead of the cartridge
   - "and modify your `CPUMemory` in the following way:"
-  - 🚫  remove the test mapping we added in the 'Insert cartridge' level (the one that maps $8000-$BFFF to PRG-ROM)
+  - 🚫  remove the test mapping we added in the 'Insert cartridge' level (the one that maps $8000-$BFFF to 🤖  <PRG-ROM>)
   - 🗺️  map $4020-$FFFF so it redirects everything to the mapper (`read(...)` should call `mapper.cpuRead(...)` and `write(...)` should call `mapper.cpuWrite(...)`)
   responses: []

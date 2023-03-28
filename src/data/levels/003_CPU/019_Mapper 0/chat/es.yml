@@ -11,8 +11,8 @@ main:
 mapper0:
   messages:
   - es el mapper más básico que hay
-  - en el que uno o dos chips PRG-ROM de 16 KiB están directamente mapeados a la memoria de la 🖥️  CPU
-  - y un chip CHR-ROM (o RAM) de 8 KiB está mapeado a memoria de la 🖥️  PPU
+  - en el que uno o dos chips 🤖  <PRG-ROM> de 16 KiB están directamente mapeados a la memoria de la 🖥️  CPU
+  - y un chip 👾  CHR-ROM (o RAM) de 8 KiB está mapeado a memoria de la 🖥️  PPU
   responses:
   - (*) ¿cuál es el beneficio de usar un mapper más complejo? [complex]
   - ✔️  genial, ¿cómo puedo implementar los mappers? [implement]
@@ -64,6 +64,6 @@ wait:
   messages:
   - sí, cambia `CPU` y `CPUMemory` para que reciban el mapper en lugar del cartucho
   - "y modifica tu `CPUMemory` de la siguiente manera:"
-  - 🚫  elimina el mapeo de prueba que agregamos en el nivel 'Inserte cartucho' (el que mapea $8000-$BFFF a PRG-ROM)
+  - 🚫  elimina el mapeo de prueba que agregamos en el nivel 'Inserte cartucho' (el que mapea $8000-$BFFF a 🤖  <PRG-ROM>)
   - 🗺️  mapea $4020-$FFFF para que redirija todo al mapper (`read(...)` tiene que llamar a `mapper.cpuRead(...)` y `write(...)` tiene que llamar a `mapper.cpuWrite(...)`)
   responses: []

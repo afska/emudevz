@@ -2,7 +2,7 @@
 main:
   messages:
   - tenemos que unir nuestro 💾  `Cartridge` y nuestra 💻  `CPU`
-  - y conectar <PRG-ROM> al mapa de memoria
+  - y conectar 🤖  <PRG-ROM> al mapa de memoria
   responses:
   - ¿cómo? [how]
 
@@ -12,5 +12,5 @@ how:
   - tendría que instanciar un nuevo `Cartridge` usando esos bytes, y asignarlo a una propiedad `cartridge`
   - también tendría que instanciar la `CPU`, pasando el cartucho como argumento, y guardarla en una propiedad `cpu`
   - la `CPU` debería pasarle el cartucho al constructor de `CPUMemory`
-  - en `CPUMemory`, mapea el rango $8000-$BFFF a <PRG-ROM> (recuerda que puedes obtener los bytes llamando a ```javascript cartridge.prg()```)
+  - en `CPUMemory`, mapea el rango $8000-$BFFF a 🤖  <PRG-ROM> (recuerda que puedes obtener los bytes llamando a ```javascript cartridge.prg()```)
   responses: []

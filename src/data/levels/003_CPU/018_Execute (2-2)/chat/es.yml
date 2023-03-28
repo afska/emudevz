@@ -2,7 +2,7 @@
 main:
   messages:
   - implementemos el método `step(...)` de La Forma Correcta™️
-  - aquí, leeremos los argumentos correctos desde <PRG-ROM>
+  - aquí, leeremos los argumentos correctos desde 🤖  <PRG-ROM>
   - llamaremos a la <instrucción> correcta y al <modo de direccionamiento> adecuado
   - e incrementaremos los contadores de ciclos
   responses:

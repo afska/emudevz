@@ -31,7 +31,7 @@ thecode:
     {{Right}}.load("cartridge.png");
   messages:
   - in the cartridge!
-  - specifically, in a chip called PRG-ROM (Program ROM)
+  - specifically, in a chip called 🤖  <PRG-ROM> (Program ROM)
   responses:
   - ...main
 
@@ -51,7 +51,7 @@ thegraphics:
     {{Right}}.load("cartridge.png");
   messages:
   - in the cartridge! :)
-  - specifically, in a chip called CHR-ROM (Character ROM)
+  - specifically, in a chip called 👾  <CHR-ROM> (Character ROM)
   responses:
   - ...main
 

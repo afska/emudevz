@@ -44,7 +44,7 @@ mirroring:
 
 memories:
   messages:
-  - "💻  <PRG-ROM>: memoria de solo lectura que contiene el programa"
+  - "🤖  <PRG-ROM>: memoria de solo lectura que contiene el programa"
   - "👾  <CHR-ROM>: memoria de solo lectura que contiene los gráficos"
   - "👾  <CHR-RAM>: memoria escribible para poner gráficos en tiempo de ejecución"
   - "🔋  <PRG-RAM>: (opcional) memoria escribible para almacenar el progreso del juego"

@@ -2,7 +2,7 @@
 main:
   messages:
   - we need to glue our 💾  `Cartridge` and our 💻  `CPU`
-  - and connect <PRG-ROM> to the memory map
+  - and connect 🤖  <PRG-ROM> to the memory map
   responses:
   - how? [how]
 
@@ -12,5 +12,5 @@ how:
   - it should instantiate a new `Cartridge` using those bytes, and assign it to a `cartridge` property
   - it should also instantiate the `CPU`, passing the cartridge as an argument, and save it into a `cpu` property
   - the `CPU` should pass the cartridge to `CPUMemory`'s constructor
-  - in `CPUMemory`, map the range $8000-$BFFF to <PRG-ROM> (remember you can obtain the bytes by calling ```javascript cartridge.prg()```)
+  - in `CPUMemory`, map the range $8000-$BFFF to 🤖  <PRG-ROM> (remember you can obtain the bytes by calling ```javascript cartridge.prg()```)
   responses: []
