@@ -3,9 +3,9 @@ main:
   messages:
   - los modos indexados...
   - hora de implementarlos también
-  - hecha un vistazo al pseudocódigo de ejemplo dentro de la documentación 👀
+  - hecha un vistazo al pseudocódigo de ejemplo en la documentación 👀
   - tienes que tener cuidado y aplicar las llamadas a `byte.toU8(...)` y `byte.toU16(...)` apropiadas
-  - p. ej. en el modo "Absolute,X", si la <entrada> es $FFFF y [X] es 3, el <output> tiene que ser 2 (y no $10002)
+  - p. ej. en el modo "Absolute,X", si la <entrada> es $FFFF y [X] es 3, el <output> tiene que ser $0002 (y no $10002)
   - 📚  ¡implementa los modos restantes!
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu/addressing_modes.es.md");

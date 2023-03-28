@@ -28,7 +28,7 @@ exercise:
 mapper:
   messages:
   - it's kind of an "expansion chip" that every game has
-  - they help the console read bigger programs and graphics chunks
+  - they help the console read larger programs and graphics chunks
   - and they allow games to perform more complex operations like changing mirroring on the fly
   - more on that later! 🔜
   responses:
@@ -46,7 +46,7 @@ memories:
   messages:
   - "💻  <PRG-ROM>: read-only memory that contains the program"
   - "👾  <CHR-ROM>: read-only memory that contains the graphics"
-  - "👾  <CHR-RAM>: writable memory to put graphics in runtime"
+  - "👾  <CHR-RAM>: writable memory to store graphics in runtime"
   - "🔋  <PRG-RAM>: (optional) writable memory to store game progress"
   - each game uses either <CHR-ROM> or <CHR-RAM>
   - if it uses <CHR-RAM>, the ~iNEEES~ file will not contain its last <CHR-ROM> section

@@ -2,7 +2,7 @@
 main:
   messages:
   - let's implement our `step(...)` method The Right Way™️
-  - here, we'll read the right arguments from <PRG-ROM>
+  - here, we'll read the correct arguments from <PRG-ROM>
   - call the right <instruction> and <addressing mode>
   - and increment the cycle counters
   responses:
@@ -22,7 +22,7 @@ cycles:
 accuracy:
   messages:
   - because it's a complex task 🥵
-  - and VERY complex for people without prior experience in emulation
+  - and it can be especially challenging for individuals without prior experience in emulation
   - there are tricky-to-emulate games that demand accuracy in order to work
   - but most other games work just fine, so we won't need it anyway
   responses:

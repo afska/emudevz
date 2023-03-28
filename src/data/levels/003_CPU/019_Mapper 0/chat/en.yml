@@ -29,7 +29,7 @@ complex:
 implement:
   messages:
   - you'll deal with them in the Mappers chapter
-  - as always, first one is free 😎
+  - as always, the first one is free 😎
   - so check out my "mapper 0" implementation in 📄  ~/lib/NROM.js~
   - the only thing you have to do is integrate it with your existing code
   - 📚  create a `mappers` module that contains all the mappers

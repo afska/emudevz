@@ -14,7 +14,7 @@ explain:
   messages:
   - seh
   - puedes ver que cada modo de direccionamiento tiene una <entrada> y una <salida>
-  - ⬅️  la <entrada> es el argumento (lo que sigue después del opcode, ¿recuerdas?)
+  - ⬅️  la <entrada> es el argumento de la operación (lo que sigue después del opcode, ¿recuerdas?)
   - en `JMP ($4080)` la <entrada> sería $4080
   - ➡️  la <salida> es lo que las instrucciones terminan recibiendo en realidad
   - (el argumento `address` en la función `run(...)` de tu instrucción `JMP`)
@@ -25,7 +25,7 @@ explain:
 letscode:
   messages:
   - en realidad ya codifiqué algunos de estos modos
-  - por lo que solo tienes que implementar "Relative" e "Indirect"
+  - por lo que solo tendrás que implementar "Relative" e "Indirect"
   - ¡puedes tomar el código de 📄  ~/docs/cpu/example_addressing_modes.js~ y continuar desde ahí!
   - 📚  implementa los modos de direccionamiento restantes
   - y exporta el objeto bajo la clave `addressingModes` en 📄  ~/code/index.js~

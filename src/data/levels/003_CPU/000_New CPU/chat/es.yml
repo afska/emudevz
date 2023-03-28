@@ -4,7 +4,7 @@ main:
   - 📚  crea un archivo en algún lugar para el código de la CPU 💻
   - su valor a exportar debería ser una clase vacía
   - luego, importa ese archivo desde 📄  ~/code/index.js~
-  - y agrega una clave "CPU" (apuntando a esa clase) al objeto exportado
+  - y agrega una clave `CPU` (apuntando a esa clase) al objeto exportado
   responses:
   - ¿dónde debería guardar el archivo? [where]
 

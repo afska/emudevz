@@ -19,11 +19,11 @@ main:
 
 golden:
   messages:
-  - a log file which documents the result of running that test ROM, but created by an emulator that was proven to work correctly ✔️
+  - a log file that documents the result of running that test ROM, but created by an emulator that was proven to work correctly ✔️
   - "it has -in order-: the [PC], the bytecode, the decompiled assembly, the state of all registers, and the cycle counter"
   - so far, I only ran basic tests to your code
   - this will go through all type of corner cases, verifying that your CPU is solid
-  - if you find discrepancies, you'll have to figure out the cause, or ask for help online
+  - if you find discrepancies, you'll have to figure out the cause or ask for help online
   - use the ⏩  button and reach the end of the golden log!
   run-after-messages: |
     set((m) => {

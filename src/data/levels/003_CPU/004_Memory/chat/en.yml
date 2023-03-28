@@ -55,9 +55,6 @@ help:
   - you have to subtract the range start
   - then, use the ~%~ (remainder) operator with the size of the chunk we want to mirror
   - |-
-    for example, to calculate the 4th range's mirror, we would do:
-      ```javascript (address - 0x2008) % 0x0008```
-  - |-
     for example, let's look at the 4th range ("🚽  Mirrors of $2000-$2007")
       range start => $2008
       chunk we want to mirror => $2000-$2007

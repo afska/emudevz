@@ -12,7 +12,7 @@ main:
 interrupt:
   messages:
   - it's a signal that interrupts the current program in order to handle a specific event
-  - when such event happens, the CPU saves its state ([PC] and flags) in the stack
+  - when such an event happens, the CPU saves its state ([PC] and flags) in the stack
   - and jumps to a well-known memory location (called "vector") associated with that event
   - "in the NEEES, there are 3 events:"
   - "🔁  <RESET>: Triggered when the system is turned on"
@@ -24,7 +24,7 @@ interrupt:
 example:
   messages:
   - sure! imagine you're a game
-  - you need to move your sprites when the PPU finishes drawing its current frame, to avoid doing it while it draws (causing glitches 💥 )
+  - you need to move your sprites when the PPU finishes rendering its current frame, to avoid doing it while it's drawing (causing glitches 💥 )
   - so, you put your sprite moving code in -for example- address $90CC
   - that will be the location of your <interrupt handler>
   - and then you "subscribe" to the <NMI> event by placing a pointer to $90CC in <NMI>'s vector (which is $FFFA/B)
@@ -59,7 +59,7 @@ cycle:
 iflag:
   messages:
   - it's the "Interrupt Disable" flag, and as the name says, it disables interrupts
-  - the systems sets ~I=1~ so interrupts handlers don't get... hmm... interrupted 😅
+  - the systems sets ~I=1~ so interrupt handlers don't get... hmm... interrupted 😅
   - |-
     the thing is... only <IRQ> events can be disabled
     <RESET> can't be ignored for obvious reasons
