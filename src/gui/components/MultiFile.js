@@ -127,7 +127,7 @@ class MultiFile extends PureComponent {
 					this.props.closeFile(filePath);
 					this._refresh();
 				}}
-				canPin={isReadOnly}
+				canPin={this._layout.supportsPin && isReadOnly}
 				onPin={() => {
 					this._openPinnedFile(filePath, Component, customArgs);
 				}}

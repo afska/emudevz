@@ -3,6 +3,10 @@ import { PureComponent } from "react";
 export default class Layout extends PureComponent {
 	instances = {};
 
+	get supportsPin() {
+		return this.constructor.pinLocation != null;
+	}
+
 	focus(instanceName) {
 		const pinLocation = this.constructor.pinLocation;
 		if (this.instances.Pin != null && instanceName === pinLocation) {
