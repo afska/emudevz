@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { FaArrowAltCircleLeft, FaTimes } from "react-icons/fa";
 import classNames from "classnames";
+import locales from "../../../locales";
 import IconButton from "./IconButton";
 import styles from "./Tab.module.css";
 
@@ -35,6 +36,7 @@ export default class Tab extends PureComponent {
 				{canPin && (
 					<IconButton
 						Icon={FaArrowAltCircleLeft}
+						tooltip={locales.get("pin_left")}
 						onClick={onPin}
 						className={styles.pinButton}
 					/>
@@ -42,6 +44,7 @@ export default class Tab extends PureComponent {
 				{canClose && (
 					<IconButton
 						Icon={FaTimes}
+						tooltip={locales.get("close")}
 						onClick={onClose}
 						className={styles.closeButton}
 					/>

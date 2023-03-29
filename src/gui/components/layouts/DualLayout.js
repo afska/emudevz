@@ -1,6 +1,7 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
 import classNames from "classnames";
+import locales from "../../../locales";
 import { bus } from "../../../utils";
 import IconButton from "../widgets/IconButton";
 import Layout from "./Layout";
@@ -55,6 +56,7 @@ export default class DualLayout extends Layout {
 					>
 						<IconButton
 							Icon={FaTimes}
+							tooltip={locales.get("close")}
 							onClick={this._closePin}
 							className={styles.closePinButton}
 						/>
