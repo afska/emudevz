@@ -40,8 +40,21 @@ class MultiFile extends PureComponent {
 
 		const { isSearching } = this.state;
 
+		const hotkeyProps = this.props.selectedFile
+			? {}
+			: {
+					tabIndex: 0,
+					onKeyDown: this._onKeyDown,
+			  };
+
 		return (
-			<div className={styles.container}>
+			<div
+				className={styles.container}
+				{...hotkeyProps}
+				ref={(ref) => {
+					this._container = ref;
+				}}
+			>
 				<FileSearch
 					isSearching={isSearching}
 					onSelect={(filePath) => {
@@ -50,7 +63,7 @@ class MultiFile extends PureComponent {
 					}}
 					onBlur={() => {
 						this.setState({ isSearching: false });
-						this._view?.focus();
+						this.focus();
 					}}
 				/>
 
@@ -87,7 +100,12 @@ class MultiFile extends PureComponent {
 							return this._renderTabbedFile(it, i, Component, customArgs);
 						})}
 						{!this.props.selectedFile && (
-							<div className={styles.empty}>{locales.get("no_open_files")}</div>
+							<div
+								className={styles.empty}
+								dangerouslySetInnerHTML={{
+									__html: locales.get("no_open_files"),
+								}}
+							/>
 						)}
 					</div>
 				</div>
@@ -96,7 +114,8 @@ class MultiFile extends PureComponent {
 	}
 
 	focus = () => {
-		this._view?.focus();
+		if (this._view) this._view.focus();
+		else this._container.focus();
 	};
 
 	_isReadOnly(filePath) {
@@ -122,13 +141,14 @@ class MultiFile extends PureComponent {
 					this.props.setSelectedFile(filePath);
 					this._refresh();
 				}}
-				canClose={this.props.openFiles.length > 1}
+				canClose={true}
 				onClose={() => {
 					this.props.closeFile(filePath);
 					this._refresh();
 				}}
 				canPin={this._layout.supportsPin && isReadOnly}
 				onPin={() => {
+					this.props.closeFile(filePath);
 					this._openPinnedFile(filePath, Component, customArgs);
 				}}
 			/>
@@ -241,7 +261,7 @@ class MultiFile extends PureComponent {
 
 	_refresh() {
 		setTimeout(() => {
-			this._view?.focus();
+			this.focus();
 		});
 	}
 
