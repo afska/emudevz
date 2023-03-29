@@ -78,6 +78,8 @@ export default {
 	rm_recursive_flag: "(to skip this check, run `rm -rf`)",
 	run: "Run",
 	save: "Save",
+	scroll_left: "Scroll left",
+	scroll_right: "Scroll right",
 	settings: "Settings",
 	shell_command_not_found: "command not found",
 	stack: "Stack",

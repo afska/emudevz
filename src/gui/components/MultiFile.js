@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import $path from "path";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import filesystem, { Drive } from "../../filesystem";
@@ -9,8 +10,11 @@ import CodeEditor from "./CodeEditor";
 import TV from "./TV";
 import FileSearch from "./widgets/FileSearch";
 import HorizontalDragList from "./widgets/HorizontalDragList";
+import IconButton from "./widgets/IconButton";
 import Tab from "./widgets/Tab";
 import styles from "./MultiFile.module.css";
+
+const DELTA_SCROLL = 150;
 
 const EXTENSIONS = {
 	".js": [CodeEditor, { language: "javascript" }],
@@ -83,6 +87,12 @@ class MultiFile extends PureComponent {
 						onMouseDown={this._onMouseDownTabs}
 						onWheel={this._onWheelTabs}
 					>
+						<IconButton
+							Icon={FaChevronLeft}
+							tooltip={locales.get("scroll_left")}
+							onClick={() => this._onManualScrollTabs(-DELTA_SCROLL)}
+							className={styles.scrollButton}
+						/>
 						<HorizontalDragList
 							items={this.props.openFiles.map((filePath) => ({
 								id: filePath,
@@ -92,6 +102,12 @@ class MultiFile extends PureComponent {
 								this.props.setOpenFiles(updatedItems.map((it) => it.id));
 								this._refresh();
 							}}
+						/>
+						<IconButton
+							Icon={FaChevronRight}
+							tooltip={locales.get("scroll_right")}
+							onClick={() => this._onManualScrollTabs(DELTA_SCROLL)}
+							className={styles.scrollButton}
 						/>
 					</div>
 					<div className={styles.content}>
@@ -238,8 +254,16 @@ class MultiFile extends PureComponent {
 	};
 
 	_onWheelTabs = (e) => {
-		const delta = e.deltaY;
-		this._tabs.scrollBy({ left: -delta, top: 0, behavior: "instant" });
+		const delta = -e.deltaY;
+		this._tabsScroll.scrollBy({ left: delta, top: 0, behavior: "instant" });
+	};
+
+	_onManualScrollTabs = (delta) => {
+		this._tabsScroll.scrollBy({
+			left: delta,
+			top: 0,
+			behavior: "smooth",
+		});
 	};
 
 	_onKeyDown = (e) => {
@@ -267,6 +291,10 @@ class MultiFile extends PureComponent {
 
 	get _view() {
 		return this._views[this.props.selectedFile];
+	}
+
+	get _tabsScroll() {
+		return this._tabs.querySelector(".horizontalDragList");
 	}
 }
 

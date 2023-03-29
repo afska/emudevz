@@ -18,6 +18,7 @@
 .tabs {
 	width: 100%;
 	display: flex;
+	flex-direction: row;
 	align-items: center;
 	background-color: #111111;
 	border-bottom: solid 1px #577295;
@@ -69,4 +70,12 @@
 	to {
 		filter: blur(2px);
 	}
+}
+
+.scrollButton {
+	margin-left: 8px;
+}
+
+.scrollButton:hover {
+	color: #466a8e;
 }

@@ -80,6 +80,8 @@ export default {
 	rm_recursive_flag: "(para omitir esta verificación, corre `rm -rf`)",
 	run: "Run",
 	save: "Guardar",
+	scroll_left: "Scrollear a la izquierda",
+	scroll_right: "Scrollear a la derecha",
 	settings: "Opciones",
 	shell_command_not_found: "comando no encontrado",
 	stack: "Pila",
