@@ -51,6 +51,9 @@ implement:
 
 help:
   messages:
+  - calling `read(0x0802)` should return the same as `read(0x0002)`
+  - and calling `write(0x0802, value)` should have the same effect as calling `write(0x0002, value)`
+  - that's why the range $0800-$1FFF is called 🚽  <a mirror> of $0000-$07FF
   - to know which address you should read
   - you have to subtract the range start
   - then, use the ~%~ (remainder) operator with the size of the chunk we want to mirror

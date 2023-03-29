@@ -51,6 +51,9 @@ implement:
 
 help:
   messages:
+  - llamar a `read(0x0802)` debería retonar lo mismo que `read(0x0002)`
+  - y llamar a `write(0x0802, value)` debería tener el mismo efecto que tiene `write(0x0002, value)`
+  - por eso es que el rango $0800-$1FFF es 🚽  <un espejo> de $0000-$07FF
   - para saber qué dirección leer
   - tienes que sustraer el inicio del rango
   - luego, usa el operador ~%~ (resto) con el tamaño de la sección de memoria que queremos espejar
