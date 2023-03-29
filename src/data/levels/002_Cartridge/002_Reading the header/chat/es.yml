@@ -62,7 +62,8 @@ padding:
 nybble:
   messages:
   - un nybble es medio byte
-  - por lo que "nybble inferior" significa los primeros 4 bits y "nybble superior" significa los últimos 4 bits
+  - por lo que "nybble inferior" significa los primeros 4 bits (```raw 0000```~XXXX~)
+  - y "nybble superior" significa los últimos 4 bits (~XXXX~```raw 0000```)
   responses:
   - ...exercise
 

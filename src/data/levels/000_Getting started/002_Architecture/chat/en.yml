@@ -7,7 +7,7 @@ main:
   - so... apparently, this thing has 3 main components that work pretty much independently from each other
   - "these are: 💻  CPU, 🖥️  PPU, and 🔊  APU"
   - in order to play games, you must connect two pieces of hardware
-  - a cartridge (the game itself!) and an 8-button gamepad
+  - 💾  a cartridge (the game itself!) and 🎮  an 8-button gamepad
   responses:
   - 💻  tell me about the CPU [cpu]
   - 🖥️  tell me about the PPU [ppu]
@@ -41,6 +41,7 @@ ppu:
   messages:
   - it's the Picture Processing Unit
   - draws graphics by putting pixels on the screen
+  - in the magnificent resolution of 256x240!
   - and it has access to a 2 KiB bank of VRAM (Video RAM)
   responses:
   - and where are those graphics located? [thegraphics]
@@ -61,7 +62,8 @@ apu:
   messages:
   - it's the Audio Processing Unit
   - handles sound, producing audio waves
-  - I'm still learning about this one
+  - like square waves, triangle waves, noise, and even custom samples!
+  - it outputs a stream of 44100 samples per second
   responses:
   - ...main
 

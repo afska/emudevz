@@ -70,12 +70,12 @@ address:
   - un número de 2 bytes que representa una ubicación dentro de la memoria 🐏
   - puede ir de 0 ($0000) a 65535 ($FFFF)
   responses:
-  - pero dijiste que la NEEES solo tenía 2 KiB (2048 bytes) de memoria 😕 [butyousaid]
+  - si la NEEES solo tenía 2 KiB (2048 bytes) de memoria, ¿cómo puede ser que haya 65536 direcciones? 😕 [butyousaid]
   - ...machinecode
 
 butyousaid:
   messages:
-  - eso es cierto
+  - solo tiene 2 KiB de memoria real
   - pero la CPU puede <ver> hasta 64 KiB
   - así que los primeros dos kilobytes son RAM de verdad
   - y el resto se usa para interactuar con el hardware 💻

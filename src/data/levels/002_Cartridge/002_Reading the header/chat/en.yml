@@ -62,7 +62,8 @@ padding:
 nybble:
   messages:
   - a nybble is half a byte
-  - so "lower nybble" means the first 4 bits and "upper nybble" means the last 4 bits
+  - so "lower nybble" means the first 4 bits (```raw 0000```~XXXX~)
+  - and "upper nybble" means the last 4 bits (~XXXX~```raw 0000```)
   responses:
   - ...exercise
 
