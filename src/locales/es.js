@@ -92,6 +92,7 @@ export default {
 	tests_warnings_found: "⚠️  Advertencias encontradas.",
 	tests_more: "💬  Para más información, corre `test -v`",
 	using_old_snapshot: "⚠️ Usando una copia solo lectura de tu código viejo.",
+	volume: "Volumen",
 	your_cpu_rocks: "¡Tu CPU es genial!",
 	your_emulator: "Tu emulador",
 };

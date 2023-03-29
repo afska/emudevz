@@ -2,10 +2,9 @@ import React, { PureComponent } from "react";
 import Slider from "@mui/material/Slider";
 import Stack from "@mui/material/Stack";
 import { connect } from "react-redux";
+import locales from "../../../locales";
 import music from "../../sound/music";
-
-// import Marquee from "react-fast-marquee";
-// import Tooltip from "./Tooltip";
+import Tooltip from "./Tooltip";
 
 function ValueLabel(props) {
 	const { trackInfo, children } = props;
@@ -13,17 +12,9 @@ function ValueLabel(props) {
 	if (!trackInfo) return null;
 
 	return (
-		// <Tooltip
-		// 	enterTouchDelay={0}
-		// 	placement="top"
-		// 	title={
-		// 		<Marquee style={{ width: 150 }} gradient={false}>
-		// 			🎶 {trackInfo.artist} 🎼 {trackInfo.title}&nbsp;
-		// 		</Marquee>
-		// 	}
-		// >
-		children
-		// </Tooltip>
+		<Tooltip enterTouchDelay={0} placement="top" title={locales.get("volume")}>
+			{children}
+		</Tooltip>
 	);
 }
 

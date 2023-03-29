@@ -4,6 +4,12 @@ export default class Layout extends PureComponent {
 	instances = {};
 
 	focus(instanceName) {
+		const pinLocation = this.constructor.pinLocation;
+		if (this.instances.Pin != null && instanceName === pinLocation) {
+			this.instances.Pin.focus();
+			return;
+		}
+
 		this.instances[instanceName].focus();
 	}
 

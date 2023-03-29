@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaArrowAltCircleLeft, FaTimes } from "react-icons/fa";
 import classNames from "classnames";
 import IconButton from "./IconButton";
 import styles from "./Tab.module.css";
@@ -8,7 +8,9 @@ export default class Tab extends PureComponent {
 	render() {
 		const {
 			title,
+			onPin,
 			onClose,
+			canPin = true,
 			canClose = true,
 			active = false,
 			dragging = false,
@@ -30,6 +32,13 @@ export default class Tab extends PureComponent {
 				{...rest}
 			>
 				<span className={styles.title}>{title}</span>
+				{canPin && (
+					<IconButton
+						Icon={FaArrowAltCircleLeft}
+						onClick={onPin}
+						className={styles.pinButton}
+					/>
+				)}
 				{canClose && (
 					<IconButton
 						Icon={FaTimes}

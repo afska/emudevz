@@ -29,8 +29,16 @@
 	white-space: nowrap;
 }
 
-.closeButton {
+.pinButton {
 	margin-left: 6px;
+	margin-right: 2px;
+}
+
+.pinButton:hover {
+	color: #466a8e;
+}
+
+.closeButton {
 	margin-right: 2px;
 }
 

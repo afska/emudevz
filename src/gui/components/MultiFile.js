@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import filesystem, { Drive } from "../../filesystem";
 import locales from "../../locales";
+import { bus } from "../../utils";
 import CodeEditor from "./CodeEditor";
 import TV from "./TV";
 import FileSearch from "./widgets/FileSearch";
@@ -38,12 +39,6 @@ class MultiFile extends PureComponent {
 		if (!this.state._isInitialized) return false;
 
 		const { isSearching } = this.state;
-
-		const parsedPath =
-			this.props.selectedFile && $path.parse(this.props.selectedFile);
-		const isReadOnlyDir = this.props.selectedFile
-			? Drive.isReadOnlyDir(parsedPath.dir)
-			: true;
 
 		return (
 			<div className={styles.container}>
@@ -89,14 +84,7 @@ class MultiFile extends PureComponent {
 					<div className={styles.content}>
 						{this.props.openFiles.map((it, i) => {
 							const [Component, customArgs] = this._getOptions(it);
-
-							return this._renderFile(
-								it,
-								i,
-								Component,
-								customArgs,
-								isReadOnlyDir
-							);
+							return this._renderTabbedFile(it, i, Component, customArgs);
 						})}
 						{!this.props.selectedFile && (
 							<div className={styles.empty}>{locales.get("no_open_files")}</div>
@@ -111,13 +99,19 @@ class MultiFile extends PureComponent {
 		this._view?.focus();
 	};
 
+	_isReadOnly(filePath) {
+		const parsedPath = filePath && $path.parse(filePath);
+		return filePath ? Drive.isReadOnlyDir(parsedPath.dir) : true;
+	}
+
 	_getOptions(filePath) {
 		const extension = $path.parse(filePath).ext;
 		return EXTENSIONS[extension] ?? [CodeEditor, { language: "plaintext" }];
 	}
 
 	_renderTab(filePath, isDragging) {
-		const [Component] = this._getOptions(filePath);
+		const isReadOnly = this._isReadOnly(filePath);
+		const [Component, customArgs] = this._getOptions(filePath);
 
 		return (
 			<Tab
@@ -133,11 +127,67 @@ class MultiFile extends PureComponent {
 					this.props.closeFile(filePath);
 					this._refresh();
 				}}
+				canPin={isReadOnly}
+				onPin={() => {
+					this._openPinnedFile(filePath, Component, customArgs);
+				}}
 			/>
 		);
 	}
 
-	_renderFile(filePath, index, Component, customArgs, isReadOnly) {
+	_openPinnedFile(filePath, Component, customArgs) {
+		const { args } = this._getFileArgsAndProps(filePath, Component, customArgs);
+
+		bus.emit("pin", {
+			Component: React.forwardRef((props, ref) => {
+				return this._renderPinnedFile(
+					filePath,
+					Component,
+					{ ...customArgs, ...props },
+					ref
+				);
+			}),
+			args,
+			level: this._level,
+		});
+	}
+
+	_renderPinnedFile(filePath, Component, customArgs, ref) {
+		const { props } = this._getFileArgsAndProps(
+			filePath,
+			Component,
+			customArgs
+		);
+
+		return <Component ref={ref} {...props} />;
+	}
+
+	_renderTabbedFile(filePath, index, Component, customArgs) {
+		const { args, props } = this._getFileArgsAndProps(
+			filePath,
+			Component,
+			customArgs
+		);
+
+		return (
+			<Component
+				style={{
+					display: filePath === this.props.selectedFile ? "block" : "none",
+				}}
+				key={index}
+				ref={(ref) => {
+					if (!ref) return;
+					ref.initialize(args, this._level, this._layout);
+					this._views[filePath] = ref;
+				}}
+				{...props}
+				onKeyDown={this._onKeyDown}
+			/>
+		);
+	}
+
+	_getFileArgsAndProps(filePath, Component, customArgs) {
+		const isReadOnly = this._isReadOnly(filePath);
 		let props = {};
 
 		switch (Component) {
@@ -154,27 +204,13 @@ class MultiFile extends PureComponent {
 			default:
 		}
 
-		return (
-			<Component
-				style={{
-					display: filePath === this.props.selectedFile ? "block" : "none",
-				}}
-				key={index}
-				ref={(ref) => {
-					const args = {
-						...this._args,
-						...customArgs,
-						content: filesystem.read(filePath),
-					};
+		const args = {
+			...this._args,
+			...customArgs,
+			content: filesystem.read(filePath),
+		};
 
-					if (!ref) return;
-					ref.initialize(args, this._level, this._layout);
-					this._views[filePath] = ref;
-				}}
-				{...props}
-				onKeyDown={this._onKeyDown}
-			/>
-		);
+		return { args, props };
 	}
 
 	_onMouseDownTabs = (e) => {
