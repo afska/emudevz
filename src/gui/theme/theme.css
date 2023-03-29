@@ -34,6 +34,10 @@ body {
 	color: rgb(184, 189, 197) !important;
 }
 
+.modal {
+	z-index: 9999;
+}
+
 /* MUI */
 
 .navbar-volume-slider > .MuiSlider-thumb:before {
