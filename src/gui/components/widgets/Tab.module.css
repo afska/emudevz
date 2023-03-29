@@ -31,7 +31,7 @@
 
 .pinButton {
 	margin-left: 6px;
-	margin-right: 2px;
+	margin-right: -2px;
 }
 
 .pinButton:hover {
@@ -39,6 +39,7 @@
 }
 
 .closeButton {
+	margin-left: 6px;
 	margin-right: 2px;
 }
 
