@@ -22,6 +22,7 @@ const EXTENSIONS = {
 	".webp": [TV, { type: "media" }],
 	".png": [TV, { type: "media" }],
 	".md": [TV, { type: "markdown" }],
+	".neees": [TV, { type: "rom", binary: true }],
 };
 
 class MultiFile extends PureComponent {
@@ -243,7 +244,7 @@ class MultiFile extends PureComponent {
 		const args = {
 			...this._args,
 			...customArgs,
-			content: filesystem.read(filePath),
+			content: filesystem.read(filePath, { binary: !!customArgs.binary }),
 		};
 
 		return { args, props };
