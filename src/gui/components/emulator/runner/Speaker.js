@@ -16,6 +16,10 @@ export default class Speaker {
 			sampleRate: SAMPLE_RATE,
 		});
 
+		this.gainNode = this._audioCtx.createGain();
+		this.gainNode.gain.value = 1;
+		this.gainNode.connect(this._audioCtx.destination);
+
 		await this._audioCtx.audioWorklet.addModule(audioWorklet);
 		if (this._audioCtx == null) {
 			this.stop();
@@ -28,7 +32,7 @@ export default class Speaker {
 				bufferSize: WEBAUDIO_BUFFER_SIZE,
 			},
 		});
-		this.playerWorklet.connect(this._audioCtx.destination);
+		this.playerWorklet.connect(this.gainNode);
 		this.playerWorklet.port.onmessage = (event) => {
 			this.bufferSize = event.data;
 		};

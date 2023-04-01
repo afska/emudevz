@@ -39,6 +39,7 @@ class LevelScreen extends PureComponent {
 					codeEval.eval(code);
 				} catch (e) {
 					alert("💥💥💥💥💥");
+					console.error(e);
 				}
 			} else throw new Error(`Code not found: ${initFile}`);
 		}
