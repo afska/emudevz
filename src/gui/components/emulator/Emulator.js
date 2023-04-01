@@ -55,6 +55,8 @@ export default class Emulator extends Component {
 					<span id="fps">00</span>
 					<span>&nbsp;FPS</span>
 					<span>&nbsp;|&nbsp;</span>
+					<span id="controls">⌨️</span>
+					<span>&nbsp;|&nbsp;</span>
 					<VolumeSlider
 						volume={null}
 						setVolume={this._updateVolume}
@@ -82,6 +84,12 @@ export default class Emulator extends Component {
 	sendState = () => {
 		const gamepadInput = gamepad.getInput();
 		const input = gamepadInput || this.keyboardInput;
+
+		if (this._container) {
+			this._container.querySelector("#controls").textContent = gamepadInput
+				? "🎮"
+				: "⌨️";
+		}
 
 		webWorker.postMessage([...input, this.speaker.bufferSize]);
 	};
