@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import classNames from "classnames";
 import styles from "./Screen.module.css";
 
 const SCREEN_WIDTH = 256;
@@ -6,9 +7,11 @@ const SCREEN_HEIGHT = 240;
 
 export default class Screen extends Component {
 	render() {
+		const { className } = this.props;
+
 		return (
 			<canvas
-				className={styles.screen}
+				className={classNames(styles.screen, className)}
 				width={SCREEN_WIDTH}
 				height={SCREEN_HEIGHT}
 				ref={(canvas) => {

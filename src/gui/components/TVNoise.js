@@ -1,17 +1,17 @@
 import React, { Component } from "react";
+import classNames from "classnames";
+import styles from "./TVNoise.module.css";
 
 const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
 
 export default class TVNoise extends Component {
 	render() {
+		const { className } = this.props;
+
 		return (
 			<canvas
-				style={{
-					width: "100%",
-					height: "100%",
-					backgroundColor: "#333333",
-				}}
+				className={classNames(styles.container, className)}
 				width={SCREEN_WIDTH}
 				height={SCREEN_HEIGHT}
 				ref={(canvas) => {

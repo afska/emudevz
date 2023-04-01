@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import TVNoise from "../TVNoise";
 import Screen from "./Screen";
 import Speaker from "./runner/Speaker";
 import WebWorker from "./runner/WebWorker";
 import gamepad from "./runner/gamepad";
+import styles from "./Emulator.module.css";
 
 const NEW_WEB_WORKER = () =>
 	new Worker(new URL("./runner/webWorkerRunner.js", import.meta.url));
@@ -26,13 +28,24 @@ const SAVESTATE_KEY = "emudevz-savestate";
 let webWorker = null;
 
 export default class Emulator extends Component {
+	state = { error: null };
+
 	render() {
+		const { error } = this.state;
+
 		return (
-			<Screen
-				ref={(screen) => {
-					if (screen) this._initialize(screen);
-				}}
-			/>
+			<div className={styles.container}>
+				{error == null ? (
+					<Screen
+						className={styles.box}
+						ref={(screen) => {
+							if (screen) this._initialize(screen);
+						}}
+					/>
+				) : (
+					<TVNoise className={styles.box} />
+				)}
+			</div>
 		);
 	}
 
@@ -137,7 +150,8 @@ export default class Emulator extends Component {
 	}
 
 	_onError(e) {
-		this.props.onError(e);
+		console.error(e);
+		this.setState({ error: e });
 		this.stop();
 	}
 

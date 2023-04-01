@@ -1,9 +1,6 @@
 .screen {
-	height: 85%;
+	height: 100%;
 
 	image-rendering: pixelated; /* webkit */
 	image-rendering: optimizespeed; /* firefox */
-
-	border: 1px solid #466a8e;
-	border-radius: 8px;
 }
