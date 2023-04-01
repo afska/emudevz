@@ -4,15 +4,11 @@ import Speaker from "./runner/Speaker";
 import WebWorker from "./runner/WebWorker";
 import gamepad from "./runner/gamepad";
 
-// TODO: FIX MULTIPLE FILES
-
 const NEW_WEB_WORKER = () =>
 	new Worker(new URL("./runner/webWorkerRunner.js", import.meta.url));
 
-const STATE_POLL_INTERVAL = 10;
-const SAVESTATE_KEY = "emudevz-savestate";
-
-const DEBUG_MODE = true; // TODO: REMOVE
+// Web Workers are faster, but hard to debug. When disabled, a mock is used.
+const USE_WEB_WORKER = false;
 const KEY_MAP = {
 	" ": "BUTTON_A",
 	d: "BUTTON_B",
@@ -23,6 +19,9 @@ const KEY_MAP = {
 	ArrowLeft: "BUTTON_LEFT",
 	ArrowRight: "BUTTON_RIGHT",
 };
+
+const STATE_POLL_INTERVAL = 10;
+const SAVESTATE_KEY = "emudevz-savestate";
 
 let webWorker = null;
 
@@ -45,8 +44,7 @@ export default class Emulator extends Component {
 	};
 
 	setFps = (fps) => {
-		// TODO: FIX
-		// document.querySelector("#fps").textContent = `(fps: ${fps})`;
+		// DISABLED
 	};
 
 	onWorkerMessage = ({ data }) => {
@@ -102,8 +100,7 @@ export default class Emulator extends Component {
 
 		const bytes = new Uint8Array(rom);
 
-		// (web workers are hard to debug, a mock is used in development mode)
-		webWorker = DEBUG_MODE
+		webWorker = !USE_WEB_WORKER
 			? new WebWorker(
 					(data) => this.onWorkerMessage({ data }),
 					this.speaker.writeSample,
@@ -112,11 +109,15 @@ export default class Emulator extends Component {
 			: NEW_WEB_WORKER();
 
 		webWorker.onmessage = this.onWorkerMessage;
+
 		webWorker.postMessage(bytes);
+		if (webWorker == null) return;
+
 		webWorker.postMessage({
 			id: "saveState",
 			saveState: this._getSaveState(),
 		});
+		if (webWorker == null) return;
 
 		this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
 		window.addEventListener("keydown", this._onKeyDown);
@@ -136,12 +137,13 @@ export default class Emulator extends Component {
 	}
 
 	_onError(e) {
-		// this.props.onError(e);
-		// TODO: FIX!
+		this.props.onError(e);
 		this.stop();
 	}
 
 	_onKeyDown = (e) => {
+		if (document.activeElement.id !== "emulator") return;
+
 		const button = KEY_MAP[e.key];
 		if (!button) return;
 
@@ -149,6 +151,8 @@ export default class Emulator extends Component {
 	};
 
 	_onKeyUp = (e) => {
+		if (document.activeElement.id !== "emulator") return;
+
 		const button = KEY_MAP[e.key];
 		if (!button) return;
 

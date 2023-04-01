@@ -63,8 +63,14 @@ class MultiFile extends PureComponent {
 				<FileSearch
 					isSearching={isSearching}
 					onSelect={(filePath) => {
-						this.props.openFile(filePath);
-						this._refresh();
+						const [Component, customArgs] = this._getOptions(filePath);
+
+						if (Component === TV && customArgs.type === "rom") {
+							this._openPinnedFile(filePath, Component, customArgs);
+						} else {
+							this.props.openFile(filePath);
+							this._refresh();
+						}
 					}}
 					onBlur={() => {
 						this.setState({ isSearching: false });

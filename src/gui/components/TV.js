@@ -10,7 +10,7 @@ export default class TV extends PureComponent {
 		return "📺 ";
 	}
 
-	state = { content: null, type: "media" };
+	state = { content: null, type: "media", error: false };
 
 	async initialize(args, level) {
 		if (args.content != null && args.type != null)
@@ -29,14 +29,25 @@ export default class TV extends PureComponent {
 	render() {
 		const { style, onKeyDown } = this.props;
 
+		const isEmulator = this.state.type === "rom";
+		const extraStyles = isEmulator
+			? {
+					aspectRatio: "256/240",
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+			  }
+			: {};
+
 		return (
 			<div
+				id={isEmulator ? "emulator" : undefined}
 				className={styles.tvContainer}
 				tabIndex={0}
 				ref={(ref) => {
 					this.ref = ref;
 				}}
-				style={style}
+				style={{ ...style, ...extraStyles }}
 				onKeyDown={onKeyDown}
 			>
 				{this._renderContent()}
@@ -45,7 +56,7 @@ export default class TV extends PureComponent {
 	}
 
 	_renderContent() {
-		const { content, type } = this.state;
+		const { content, type, error } = this.state;
 
 		if (!content) return <TVNoise />;
 
@@ -68,7 +79,17 @@ export default class TV extends PureComponent {
 				return <MarkdownView content={content} />;
 			}
 			case "rom": {
-				return <Emulator rom={content} />;
+				if (error) return <TVNoise />;
+
+				return (
+					<Emulator
+						rom={content}
+						onError={(err) => {
+							console.error(err);
+							this.setState({ error: true });
+						}}
+					/>
+				);
 			}
 			default: {
 				return <TVNoise />;
