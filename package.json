@@ -146,6 +146,7 @@
     "prettier": "2.2.1",
     "pretty-quick": "^1.10.0",
     "react-app-rewired": "^2.2.1",
+    "slug": "^8.2.2",
     "worklet-loader": "^2.0.0"
   }
 }

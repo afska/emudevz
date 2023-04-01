@@ -1,0 +1,69 @@
+---
+main:
+  messages:
+  - nuestra CPU casi está funcionando ahora
+  - hablemos de <mappers> 🧠
+  - son circuitos dentro del cartucho que controlan cómo se leen los datos de la ROM por la consola
+  - cada juego utiliza un mapper específico, pero algunos usan "Mapper 0"
+  responses:
+  - entonces, ¿qué es Mapper 0? 🤔 [mapper0]
+
+mapper0:
+  messages:
+  - es el mapper más básico que hay
+  - en el que uno o dos chips 🤖  <PRG-ROM> de 16 KiB están directamente mapeados a la memoria de la 🖥️  CPU
+  - y un chip 👾  CHR-ROM (o RAM) de 8 KiB está mapeado a memoria de la 🖥️  PPU
+  responses:
+  - (*) ¿cuál es el beneficio de usar un mapper más complejo? [complex]
+  - ✔️  genial, ¿cómo puedo implementar los mappers? [implement]
+
+complex:
+  messages:
+  - los mappers más avanzados ofrecen más flexibilidad a los desarrolladores de juegos
+  - por ejemplo, pueden agregar RAM, generar IRQs en ciertas scanlines, o incluso cambiar entre diferentes bancos de datos ROM
+  - esto permite que los juegos tengan una lógica más compleja, guarden datos o usen efectos de sonido y gráficos avanzados
+  - pero para juegos simples, Mapper 0 es más que suficiente 😊
+  responses:
+  - ...mapper0
+
+implement:
+  messages:
+  - pelearás con ellos en el capítulo de Mappers
+  - como siempre, el primero es gratis 😎
+  - así que revisa mi implementación de "Mapper 0" en 📄  ~/lib/NROM.js~
+  - lo único que tienes que hacer es integrarlo con tu código existente
+  - 📚  crea un módulo `mappers` que contenga todos los mappers
+  - |-
+    por ahora, debería verse así:
+      ```javascript
+      import NROM from "/lib/NROM";
+
+      export default { 0: NROM }```
+  - |-
+    importa ese módulo donde tengas tu clase `NEEES`, y agrega este código:
+      ```javascript
+      class NEEES {
+        constructor(bytes) {
+          this.cartridge = new Cartridge(bytes);
+
+          // >>> 👇
+          const Mapper = mappers[this.cartridge.header.mapperId];
+          if (!Mapper) throw new Error("Invalid mapper.");
+          this.mapper = new Mapper(this);
+          // <<<
+          
+          this.cpu = new CPU(this.mapper); // <<< 👈
+        }
+
+        // ... <rest of your NEEES class> ...
+      }```
+  responses:
+  - espera, ¿ahora `CPU` recibe el mapper? [wait]
+
+wait:
+  messages:
+  - sí, cambia `CPU` y `CPUMemory` para que reciban el mapper en lugar del cartucho
+  - "y modifica tu `CPUMemory` de la siguiente manera:"
+  - 🚫  elimina el mapeo de prueba que agregamos en el nivel 'Inserte cartucho' (el que mapea $8000-$BFFF a 🤖  <PRG-ROM>)
+  - 🗺️  mapea $4020-$FFFF para que redirija todo al mapper (`read(...)` tiene que llamar a `mapper.cpuRead(...)` y `write(...)` tiene que llamar a `mapper.cpuWrite(...)`)
+  responses: []
