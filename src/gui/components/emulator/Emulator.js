@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import classNames from "classnames";
+import locales from "../../../locales";
+import Tooltip from "../../components/widgets/Tooltip";
 import VolumeSlider from "../../components/widgets/VolumeSlider";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
@@ -44,18 +46,49 @@ export default class Emulator extends Component {
 				}}
 			>
 				<div className={classNames(styles.bar, "d-none d-xl-flex d-xxl-flex")}>
-					<span>💻: ❌</span>
+					<Tooltip
+						title={`💻 CPU: ${locales.get("using_your_emulator")}`}
+						placement="top"
+					>
+						<span>💻: ✔️</span>
+					</Tooltip>
 					<span>&nbsp;|&nbsp;</span>
-					<span>🖥️: ❌</span>
+					<Tooltip
+						title={`🖥️ PPU: ${locales.get("using_bugged_emulator")}`}
+						placement="top"
+					>
+						<span>🖥️: ❌</span>
+					</Tooltip>
 					<span>&nbsp;|&nbsp;</span>
-					<span>🔊: ❌</span>
+					<Tooltip
+						title={`🔊 APU: ${locales.get("using_bugged_emulator")}`}
+						placement="top"
+					>
+						<span>🔊: ❌</span>
+					</Tooltip>
 					<span>&nbsp;|&nbsp;</span>
-					<span>🎮: ❌</span>
+					<Tooltip
+						title={`🎮 ${locales.get("controller")}: ${locales.get(
+							"using_bugged_emulator"
+						)}`}
+						placement="top"
+					>
+						<span>🎮: ❌</span>
+					</Tooltip>
 					<span>&nbsp;|&nbsp;⚡️&nbsp;</span>
 					<span id="fps">00</span>
 					<span>&nbsp;FPS</span>
 					<span>&nbsp;|&nbsp;</span>
-					<span id="controls">⌨️</span>
+					<Tooltip title={locales.get("using_keyboard")} placement="top">
+						<span id="keyboard">⌨️</span>
+					</Tooltip>
+					<Tooltip
+						title={locales.get("using_gamepad")}
+						placement="top"
+						style={{ display: "none" }}
+					>
+						<span id="gamepad">🎮</span>
+					</Tooltip>
 					<span>&nbsp;|&nbsp;</span>
 					<VolumeSlider
 						volume={null}
@@ -86,9 +119,12 @@ export default class Emulator extends Component {
 		const input = gamepadInput || this.keyboardInput;
 
 		if (this._container) {
-			this._container.querySelector("#controls").textContent = gamepadInput
-				? "🎮"
-				: "⌨️";
+			this._container.querySelector("#keyboard").style.display = gamepadInput
+				? "none"
+				: "block";
+			this._container.querySelector("#gamepad").style.display = gamepadInput
+				? "block"
+				: "none";
 		}
 
 		webWorker.postMessage([...input, this.speaker.bufferSize]);
