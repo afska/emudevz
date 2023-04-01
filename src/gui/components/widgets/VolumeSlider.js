@@ -7,9 +7,7 @@ import music from "../../sound/music";
 import Tooltip from "./Tooltip";
 
 function ValueLabel(props) {
-	const { trackInfo, children } = props;
-
-	if (!trackInfo) return null;
+	const { children } = props;
 
 	return (
 		<Tooltip enterTouchDelay={0} placement="top" title={locales.get("volume")}>
@@ -21,15 +19,22 @@ function ValueLabel(props) {
 class VolumeSlider extends PureComponent {
 	render() {
 		const {
-			volume,
-			trackInfo,
-			setVolume,
-			navBarMode = false,
+			musicVolume,
+			volume = musicVolume,
+			defaultVolume,
+			setVolume = (v) => music.setVolume(v),
+			className = "menu-volume-slider",
 			dispatch,
+			style,
 			...rest
 		} = this.props;
 
-		if (!trackInfo) return null;
+		const valueHolder =
+			volume !== null
+				? {
+						value: volume,
+				  }
+				: {};
 
 		return (
 			<Stack
@@ -37,23 +42,24 @@ class VolumeSlider extends PureComponent {
 				direction="row"
 				sx={{ mb: 1 }}
 				alignItems="center"
-				style={{ marginRight: 4, marginBottom: 0 }}
+				style={{ marginRight: 4, marginBottom: 0, ...style }}
 				{...rest}
 			>
 				<Slider
-					className={navBarMode ? "navbar-volume-slider" : "menu-volume-slider"}
+					className={className}
 					valueLabelDisplay="auto"
 					slots={{
 						valueLabel: React.forwardRef((props, ref) => (
-							<ValueLabel trackInfo={trackInfo} ref={ref} {...props} />
+							<ValueLabel ref={ref} {...props} />
 						)),
 					}}
 					step={0.1}
 					min={0}
 					max={1}
-					value={volume}
+					defaultValue={defaultVolume}
+					{...valueHolder}
 					onChange={(e) => {
-						music.setVolume(e.target.value);
+						setVolume(e.target.value);
 					}}
 				/>
 			</Stack>
@@ -62,8 +68,7 @@ class VolumeSlider extends PureComponent {
 }
 
 const mapStateToProps = ({ savedata }) => ({
-	volume: savedata.musicVolume,
-	trackInfo: savedata.trackInfo,
+	musicVolume: savedata.musicVolume,
 });
 
 export default connect(mapStateToProps)(VolumeSlider);

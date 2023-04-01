@@ -50,6 +50,11 @@ body {
 	transform: scale(0.6) translate(-2px, -2px) !important;
 }
 
+.emu-volume-slider > .MuiSlider-thumb:before {
+	content: "🔊" !important;
+	transform: scale(0.9) translate(2px, 2px) !important;
+}
+
 /* CodeMirror */
 
 .cm-theme {

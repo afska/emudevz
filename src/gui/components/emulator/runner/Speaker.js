@@ -6,6 +6,10 @@ const SAMPLE_RATE = 44100;
 const CHANNELS = 1;
 
 export default class Speaker {
+	constructor(initialVolume = 1) {
+		this.initialVolume = initialVolume;
+	}
+
 	async start() {
 		if (this._audioCtx) return;
 		if (!window.AudioContext) return;
@@ -17,7 +21,7 @@ export default class Speaker {
 		});
 
 		this.gainNode = this._audioCtx.createGain();
-		this.gainNode.gain.value = 1;
+		this.gainNode.gain.value = this.initialVolume;
 		this.gainNode.connect(this._audioCtx.destination);
 
 		await this._audioCtx.audioWorklet.addModule(audioWorklet);

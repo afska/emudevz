@@ -75,7 +75,7 @@ class NavBar extends PureComponent {
 							onClick={this._openCalculator}
 						/>
 						<div className={styles.slider} style={{ marginRight: 12 }}>
-							<VolumeSlider navBarMode />
+							<VolumeSlider className="navbar-volume-slider" />
 						</div>
 						<IconButton
 							Icon={FaMusic}

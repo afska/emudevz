@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import classNames from "classnames";
+import VolumeSlider from "../../components/widgets/VolumeSlider";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
 import Speaker from "./runner/Speaker";
@@ -22,6 +24,7 @@ const KEY_MAP = {
 	ArrowRight: "BUTTON_RIGHT",
 };
 
+const INITIAL_VOLUME = 0;
 const STATE_POLL_INTERVAL = 10;
 const SAVESTATE_KEY = "emudevz-savestate";
 
@@ -34,17 +37,44 @@ export default class Emulator extends Component {
 		const { error } = this.state;
 
 		return (
-			<div className={styles.container}>
-				{error == null ? (
-					<Screen
-						className={styles.box}
-						ref={(screen) => {
-							if (screen) this._initialize(screen);
-						}}
+			<div
+				className={styles.container}
+				ref={(ref) => {
+					this._container = ref;
+				}}
+			>
+				<div className={classNames(styles.bar, "d-none d-xl-flex d-xxl-flex")}>
+					<span>💻: ❌</span>
+					<span>&nbsp;|&nbsp;</span>
+					<span>🖥️: ❌</span>
+					<span>&nbsp;|&nbsp;</span>
+					<span>🔊: ❌</span>
+					<span>&nbsp;|&nbsp;</span>
+					<span>🎮: ❌</span>
+					<span>&nbsp;|&nbsp;⚡️&nbsp;</span>
+					<span id="fps">00</span>
+					<span>&nbsp;FPS</span>
+					<span>&nbsp;|&nbsp;</span>
+					<VolumeSlider
+						volume={null}
+						setVolume={this._updateVolume}
+						defaultVolume={INITIAL_VOLUME}
+						style={{ marginLeft: 8, width: 64 }}
+						className="emu-volume-slider"
 					/>
-				) : (
-					<TVNoise className={styles.box} />
-				)}
+				</div>
+				<div className={styles.content}>
+					{error == null ? (
+						<Screen
+							className={styles.box}
+							ref={(screen) => {
+								if (screen) this._initialize(screen);
+							}}
+						/>
+					) : (
+						<TVNoise className={styles.box} />
+					)}
+				</div>
 			</div>
 		);
 	}
@@ -57,7 +87,9 @@ export default class Emulator extends Component {
 	};
 
 	setFps = (fps) => {
-		// DISABLED
+		if (!this._container) return;
+		const formattedFps = `${fps}`.padStart(2, "0");
+		this._container.querySelector("#fps").textContent = formattedFps;
 	};
 
 	onWorkerMessage = ({ data }) => {
@@ -108,7 +140,7 @@ export default class Emulator extends Component {
 
 		this.stop();
 		this.stateInterval = setInterval(this.sendState, STATE_POLL_INTERVAL);
-		this.speaker = new Speaker();
+		this.speaker = new Speaker(INITIAL_VOLUME);
 		this.speaker.start();
 
 		const bytes = new Uint8Array(rom);
@@ -171,5 +203,9 @@ export default class Emulator extends Component {
 		if (!button) return;
 
 		this.keyboardInput[0][button] = false;
+	};
+
+	_updateVolume = (v) => {
+		this.speaker.gainNode.gain.value = v;
 	};
 }
