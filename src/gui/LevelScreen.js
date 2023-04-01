@@ -34,8 +34,13 @@ class LevelScreen extends PureComponent {
 		const initFile = level.ui.run;
 		if (initFile != null) {
 			const code = level.code[initFile];
-			if (code != null) codeEval.eval(code);
-			else throw new Error(`Code not found: ${initFile}`);
+			if (code != null) {
+				try {
+					codeEval.eval(code);
+				} catch (e) {
+					alert("💥💥💥💥💥");
+				}
+			} else throw new Error(`Code not found: ${initFile}`);
 		}
 
 		this.$timeouts.push(

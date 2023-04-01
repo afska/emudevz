@@ -26,6 +26,7 @@ export default {
 	CODE_DIR,
 	LIB_DIR,
 	DOCS_DIR,
+	ROMS_DIR,
 	TESTROMS_DIR,
 
 	init(levelId) {
