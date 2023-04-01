@@ -37,10 +37,10 @@ tv:
 
 turnontv:
   run: |
-    {{Right}}.load("monkey-conga.webp");
+    {{Right}}.load("conga.webp");
   messages:
   - ahí tienes...
-  - "un video de un juego popular de NEEES: \"Conga\"" 🤨
+  - "un video de un juego popular de NEEES: \"Conga\" 😉"
   responses:
   - ...main
 
