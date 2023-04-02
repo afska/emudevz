@@ -69,12 +69,15 @@ export default {
 			rollback(__, _state_) {
 				const snapshots = _state_.savedata.snapshots;
 				const lastSnapshot = _.last(snapshots);
-
 				const snapshot = `/.snapshots/level-${lastSnapshot}`;
 				if (!filesystem.exists(snapshot)) return;
 
+				filesystem.setSymlinks([]);
 				filesystem.rmrf("/code");
 				filesystem.cpr(snapshot, "/code");
+
+				const state = _state_[KEY];
+				this.goTo(state.instance.id);
 			},
 		};
 	},

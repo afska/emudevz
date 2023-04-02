@@ -1,8 +1,6 @@
 import _ from "lodash";
 import store from "../store";
 
-// TODO: When calling nextIdOf, ensure that all chapters with the same number are finished
-
 export default class Book {
 	constructor(metadata) {
 		_.extend(this, metadata);
@@ -23,6 +21,8 @@ export default class Book {
 	}
 
 	isUnlockedNext(levelId) {
+		// TODO: When calling nextIdOf, ensure that all chapters with the same number are finished
+
 		const nextLevelId = this.nextIdOf(levelId);
 		return this.isUnlocked(nextLevelId);
 	}
@@ -67,6 +67,7 @@ export default class Book {
 	}
 
 	previousIdOf(levelId) {
+		// TODO: FIX, GO TO LAST PLAYABLE LEVEL OF PREVIOUS CHAPTER
 		const level = this.getLevelDefinitionOf(levelId);
 		if (!level) return null;
 		const previousLevel = this.getLevelDefinitionOfGlobalId(level.globalId - 1);
