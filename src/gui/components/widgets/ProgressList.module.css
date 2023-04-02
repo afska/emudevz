@@ -26,6 +26,7 @@
 }
 
 .locked {
+	background-color: #acacac;
 	cursor: not-allowed;
 }
 

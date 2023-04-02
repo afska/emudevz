@@ -2,7 +2,6 @@ import _ from "lodash";
 import store from "../store";
 
 // TODO: Check if all these methods are needed
-// TODO: REVISE NAVBAR
 
 export default class Book {
 	constructor(metadata) {
@@ -21,6 +20,11 @@ export default class Book {
 		}
 
 		return null;
+	}
+
+	isUnlockedNext(levelId) {
+		const nextLevelId = this.nextIdOf(levelId);
+		return this.isUnlocked(nextLevelId);
 	}
 
 	isUnlocked(levelId) {

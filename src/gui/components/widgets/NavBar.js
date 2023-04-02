@@ -38,6 +38,8 @@ class NavBar extends PureComponent {
 		} = this.props;
 
 		const levelDefinition = book.getLevelDefinitionOf(level.id);
+		const firstLevelDefinition = _.first(chapter.levels);
+		const lastLevelDefinition = _.last(chapter.levels);
 
 		return (
 			<div className={styles.navbar}>
@@ -52,11 +54,11 @@ class NavBar extends PureComponent {
 						tooltip={locales.get("go_back")}
 						onClick={goBack}
 					/>
-					{_.first(chapter.levels).globalId > 0 && (
+					{firstLevelDefinition.globalId > 0 && (
 						<IconButton
 							Icon={FaChevronLeft}
 							tooltip={locales.get("chapter_previous")}
-							onClick={() => goToPrevious(_.first(chapter.levels).id)}
+							onClick={() => goToPrevious(firstLevelDefinition.id)}
 						/>
 					)}
 					<span>
@@ -110,11 +112,11 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
-						{book.isFinished(_.last(chapter.levels).id) && (
+						{book.isUnlockedNext(lastLevelDefinition.id) && (
 							<IconButton
 								Icon={FaChevronRight}
 								tooltip={locales.get("chapter_next")}
-								onClick={() => goToNext(_.last(chapter.levels).id)}
+								onClick={() => goToNext(lastLevelDefinition.id)}
 							/>
 						)}
 					</div>
@@ -122,8 +124,8 @@ class NavBar extends PureComponent {
 				<div className={styles.item}>
 					<ProgressList
 						book={book}
+						chapter={chapter}
 						selectedLevelId={level.id}
-						levelDefinitions={chapter.levels}
 					/>
 				</div>
 			</div>

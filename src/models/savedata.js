@@ -6,6 +6,7 @@ const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	maxChapterNumber: 1,
 	completedLevels: [],
+	lastLevelId: "start",
 	language: "en",
 	musicVolume: 0.3,
 	musicTrack: 0,
@@ -28,6 +29,9 @@ export default {
 				...state,
 				completedLevels: state.completedLevels.filter((it) => it !== levelId),
 			};
+		},
+		setLastLevelId(state, lastLevelId) {
+			return { ...state, lastLevelId };
 		},
 		setLanguage(state, language) {
 			return { ...state, language };
