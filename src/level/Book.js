@@ -92,7 +92,7 @@ export default class Book {
 		const maxChapterNumber = this._savedata.maxChapterNumber;
 		const nextLevelChapter = this.getChapterOf(nextLevel.id);
 
-		if (nextLevelChapter > maxChapterNumber) {
+		if (nextLevelChapter.number > maxChapterNumber) {
 			const pendingLevels = _(this.chapters)
 				.filter((it) => it.number === maxChapterNumber)
 				.flatMap("levels")
