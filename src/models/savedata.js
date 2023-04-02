@@ -6,6 +6,7 @@ const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	maxChapterNumber: 1,
 	completedLevels: [],
+	snapshots: [],
 	lastLevelId: "start",
 	language: "en",
 	musicVolume: 0.3,
@@ -24,10 +25,14 @@ export default {
 		addCompletedLevel(state, levelId) {
 			return { ...state, completedLevels: [...state.completedLevels, levelId] };
 		},
-		removeCompletedLevel(state, levelId) {
+		addSnapshot(state, snapshot) {
+			return { ...state, snapshots: [...state.snapshots, snapshot] };
+		},
+		removeCompletedLevelAndSnapshot(state, levelId) {
 			return {
 				...state,
 				completedLevels: state.completedLevels.filter((it) => it !== levelId),
+				snapshots: state.snapshots.filter((it) => it !== levelId),
 			};
 		},
 		setLastLevelId(state, lastLevelId) {
@@ -63,7 +68,9 @@ export default {
 			advance(currentLevelId, _state_) {
 				const book = _state_.book.instance;
 
-				this.addCompletedLevel(currentLevelId);
+				if (!book.isFinished(currentLevelId))
+					this.addCompletedLevel(currentLevelId);
+
 				const nextLevelId = book.nextIdOf(currentLevelId);
 				return this.advanceTo(nextLevelId);
 			},

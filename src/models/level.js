@@ -1,5 +1,6 @@
 import { push, replace } from "connected-react-router";
-// import filesystem from "../filesystem"; // TODO: PROGRESS RESET
+import _ from "lodash";
+import filesystem from "../filesystem";
 import { analytics } from "../utils";
 
 const KEY = "level";
@@ -58,29 +59,26 @@ export default {
 				_dispatch_(push("/"));
 			},
 			resetProgress(__, _state_) {
-				// TODO: PROGRESS RESET
-				/*
-				const level = _state_[KEY].instance;
-
-				if (level.memory.content.multifile) {
-					const snapshot = `/.snapshots/level-${level.id - 1}`;
-					if (!filesystem.exists(snapshot)) return;
-
-					filesystem.rmrf("/code");
-					filesystem.cpr(snapshot, "/code");
-					filesystem.rmrf(snapshot);
-
-					_dispatch_.savedata.setLevelId(level.id - 1);
-					dispatch.goTo(level.id - 1);
-				}
-
 				_dispatch_.content.setCurrentLevelContent("");
 
 				setTimeout(() => {
 					const state = _state_[KEY];
 					this.goTo(state.instance.id);
 				});
-				*/
+			},
+			rollback(__, _state_) {
+				const snapshots = _state_.savedata.snapshots;
+				const lastSnapshot = _.last(snapshots);
+
+				const snapshot = `/.snapshots/level-${lastSnapshot}`;
+				if (!filesystem.exists(snapshot)) return;
+
+				filesystem.rmrf("/code");
+				filesystem.cpr(snapshot, "/code");
+				filesystem.rmrf(snapshot);
+
+				_dispatch_.savedata.removeCompletedLevelAndSnapshot(lastSnapshot);
+				dispatch.goTo(lastSnapshot);
 			},
 		};
 	},

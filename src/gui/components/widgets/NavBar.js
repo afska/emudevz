@@ -9,6 +9,7 @@ import {
 	FaHome,
 	FaMusic,
 	FaTrash,
+	FaTrashRestore,
 } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
@@ -35,6 +36,7 @@ class NavBar extends PureComponent {
 			goToPrevious,
 			goToNext,
 			resetLevel,
+			rollbackLevel,
 		} = this.props;
 
 		const levelDefinition = book.getLevelDefinitionOf(level.id);
@@ -112,6 +114,14 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
+						{book.canRollback(level) && (
+							<IconButton
+								style={{ marginLeft: 8 }}
+								Icon={FaTrashRestore}
+								tooltip={locales.get("rollback")}
+								onClick={rollbackLevel}
+							/>
+						)}
 						{book.isUnlockedNext(lastLevelDefinition.id) && (
 							<IconButton
 								Icon={FaChevronRight}
@@ -150,6 +160,7 @@ const mapDispatchToProps = ({ level }) => ({
 	goToPrevious: level.goToPrevious,
 	goToNext: level.goToNext,
 	resetLevel: level.resetProgress,
+	rollbackLevel: level.rollback,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

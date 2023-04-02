@@ -1,7 +1,7 @@
 import _ from "lodash";
 import store from "../store";
 
-// TODO: Check if all these methods are needed
+// TODO: When calling nextIdOf, ensure that all chapters with the same number are finished
 
 export default class Book {
 	constructor(metadata) {
@@ -57,12 +57,12 @@ export default class Book {
 	}
 
 	canReset(level) {
-		const completedLevels = this._savedata.completedLevels;
-		const lastCompletedLevel = _.last(completedLevels);
+		return !level.memory.content.multifile;
+	}
 
-		return (
-			!level.memory.content.multifile || level.id === lastCompletedLevel?.id
-		);
+	canRollback(level) {
+		const snapshots = this._savedata.snapshots;
+		return level.memory.content.multifile && !_.isEmpty(snapshots);
 	}
 
 	previousIdOf(levelId) {
@@ -79,8 +79,6 @@ export default class Book {
 		if (!level) return null;
 		const nextLevel = this.getLevelDefinitionOfGlobalId(level.globalId + 1);
 		if (!nextLevel) return null;
-
-		// TODO: Check siblings instead of a fixed + 1
 
 		return nextLevel.id;
 	}

@@ -81,6 +81,7 @@ export default {
 		"⚠️  Este directorio contiene ~archivos~. ¿Borrar todo? ~(y/N)~",
 	rm_deleting_recursively: "💥  Borrando recursivamente...",
 	rm_recursive_flag: "(para omitir esta verificación, corre `rm -rf`)",
+	rollback: "Restaurar última copia del código",
 	run: "Run",
 	save: "Guardar",
 	scroll_left: "Scrollear a la izquierda",
