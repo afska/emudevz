@@ -6,6 +6,7 @@ import {
 	FaChevronLeft,
 	FaChevronRight,
 	FaComment,
+	FaExclamationCircle,
 	FaHome,
 	FaMusic,
 	FaTrash,
@@ -24,7 +25,7 @@ import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
-	state = { isCalculatorOpen: false };
+	state = { isCalculatorOpen: false, areYouSureRollback: false };
 
 	render() {
 		const {
@@ -114,11 +115,19 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
-						{book.canRollback(level) && (
+						{book.canRollback(level) && !this.state.areYouSureRollback && (
 							<IconButton
 								style={{ marginLeft: 8 }}
 								Icon={FaTrashRestore}
 								tooltip={locales.get("rollback")}
+								onClick={() => this.setState({ areYouSureRollback: true })}
+							/>
+						)}
+						{book.canRollback(level) && this.state.areYouSureRollback && (
+							<IconButton
+								style={{ marginLeft: 8, color: "#ff2d2d" }}
+								Icon={FaExclamationCircle}
+								tooltip={locales.get("rollback_sure")}
 								onClick={rollbackLevel}
 							/>
 						)}

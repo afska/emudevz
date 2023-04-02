@@ -75,10 +75,6 @@ export default {
 
 				filesystem.rmrf("/code");
 				filesystem.cpr(snapshot, "/code");
-				filesystem.rmrf(snapshot);
-
-				_dispatch_.savedata.removeCompletedLevelAndSnapshot(lastSnapshot);
-				dispatch.goTo(lastSnapshot);
 			},
 		};
 	},

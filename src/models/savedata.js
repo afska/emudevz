@@ -28,13 +28,6 @@ export default {
 		addSnapshot(state, snapshot) {
 			return { ...state, snapshots: [...state.snapshots, snapshot] };
 		},
-		removeCompletedLevelAndSnapshot(state, levelId) {
-			return {
-				...state,
-				completedLevels: state.completedLevels.filter((it) => it !== levelId),
-				snapshots: state.snapshots.filter((it) => it !== levelId),
-			};
-		},
 		setLastLevelId(state, lastLevelId) {
 			return { ...state, lastLevelId };
 		},
