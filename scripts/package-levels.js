@@ -31,6 +31,7 @@ function readDirs(path) {
 
 async function pkg() {
 	let globalLevelId = 0;
+	let globalChapterId = 0;
 	const book = { chapters: [] };
 
 	mkdirp.sync(OUTPUT_PATH);
@@ -52,8 +53,12 @@ async function pkg() {
 			process.exit(0);
 		}
 
+		const chapterHumanId = chapterId.replace(/^0+/, "");
+
 		const chapter = {
-			number: chapterId.replace(/^0+/, ""),
+			id: globalChapterId,
+			number: parseInt(chapterHumanId.replace(/\D/g, "")),
+			humanId: chapterHumanId,
 			name: chapterMetadata.name,
 			levels: [],
 			help: _.mapValues(CHAPTER_HELP_FILES, (helpFile) => {
@@ -92,7 +97,7 @@ async function pkg() {
 
 			chapter.levels.push({
 				id,
-				humanId: `${chapter.number}.${localLevelId + 1}`,
+				humanId: `${chapter.humanId}.${localLevelId + 1}`,
 				globalId: globalLevelId,
 				name: levelMetadata.name,
 				helpLines: _.sortBy([...helpLines]),
@@ -137,6 +142,8 @@ async function pkg() {
 			globalLevelId++;
 			localLevelId++;
 		}
+
+		globalChapterId++;
 	}
 
 	const serializedBook = JSON.stringify(book, null, 2);

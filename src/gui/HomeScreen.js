@@ -207,7 +207,7 @@ const mapStateToProps = ({ level }) => ({
 	isSettingsOpen: level.isSettingsOpen,
 });
 const mapDispatchToProps = ({ level }) => ({
-	play: level.goToLastUnlockedLevel,
+	play: level.goToLastLevel,
 	setSettingsOpen: level.setSettingsOpen,
 });
 

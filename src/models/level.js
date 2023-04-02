@@ -6,6 +6,7 @@ const KEY = "level";
 const INITIAL_STATE = () => ({
 	instance: null,
 	isSettingsOpen: false,
+	lastLevelId: "start",
 });
 
 export default {
@@ -16,6 +17,9 @@ export default {
 		},
 		setSettingsOpen(state, isSettingsOpen) {
 			return { ...state, isSettingsOpen };
+		},
+		setLastLevelId(state, lastLevelId) {
+			return { ...state, lastLevelId };
 		},
 		reset() {
 			return INITIAL_STATE();
@@ -42,14 +46,17 @@ export default {
 				analytics.track("level", {
 					id: levelId,
 				});
+
+				this.setLastLevelId(levelId);
 				_dispatch_(push(`/levels/${levelId}?r=${Math.random()}`));
 			},
 			goToReplacing(levelId) {
+				this.setLastLevelId(levelId);
 				_dispatch_(replace(`/levels/${levelId}?r=${Math.random()}`));
 			},
-			goToLastUnlockedLevel(__, _state_) {
-				const levelId = _state_.savedata.levelId;
-				this.goTo(levelId);
+			goToLastLevel(__, _state_) {
+				const state = _state_[KEY];
+				this.goTo(state.lastLevelId);
 			},
 			goHome() {
 				this.reset();

@@ -45,10 +45,6 @@ export default class Level {
 		return store.getState().level.instance;
 	}
 
-	static get maxLevelId() {
-		return store.getState().savedata.levelId;
-	}
-
 	get content() {
 		if (this.memory.content.multifile) return { main: Drive.MAIN_FILE };
 

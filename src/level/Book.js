@@ -1,6 +1,9 @@
 import _ from "lodash";
 import store from "../store";
 
+// TODO: Check if all these methods are needed
+// TODO: REVISE NAVBAR
+
 export default class Book {
 	constructor(metadata) {
 		_.extend(this, metadata);
@@ -13,29 +16,54 @@ export default class Book {
 	getId(humanId) {
 		for (let chapter of this.chapters) {
 			for (let level of chapter.levels) {
-				if (level.humanId === humanId) return level.id;
+				if (level.humanId === humanId) return level.id; // TODO: globalId? and pass id in framework
 			}
 		}
 
 		return null;
 	}
 
-	isUnlocked(levelId, maxLevelId) {
+	isUnlocked(levelId) {
+		const maxChapterNumber = this._savedata.maxChapterNumber;
 		const level = this.getLevelDefinitionOf(levelId);
-		const maxLevel = this.getLevelDefinitionOf(maxLevelId);
+		if (!level) return false;
+		const chapter = this.getChapterOf(levelId);
 
-		return maxLevel.globalId >= level.globalId;
+		if (chapter.number < maxChapterNumber) {
+			return true;
+		} else if (chapter.number > maxChapterNumber) {
+			return false;
+		} else {
+			const nextPendingLevel = this.nextPendingLevelOfChapter(chapter.id);
+			if (!nextPendingLevel) return false; // (should not happen)
+			return level.globalId <= nextPendingLevel.globalId;
+		}
 	}
 
-	isFinished(levelId, maxLevelId) {
-		const level = this.getLevelDefinitionOf(levelId);
-		const maxLevel = this.getLevelDefinitionOf(maxLevelId);
+	nextPendingLevelOfChapter(chapterId) {
+		const chapter = this.getChapter(chapterId);
+		if (!chapter) return null;
+		const pendingLevel = chapter.levels.find((it) => !this.isFinished(it.id));
+		return pendingLevel || null;
+	}
 
-		return maxLevel.globalId > level.globalId;
+	isFinished(levelId) {
+		const completedLevels = this._savedata.completedLevels;
+		return completedLevels.includes(levelId);
+	}
+
+	canReset(level) {
+		const completedLevels = this._savedata.completedLevels;
+		const lastCompletedLevel = _.last(completedLevels);
+
+		return (
+			!level.memory.content.multifile || level.id === lastCompletedLevel?.id
+		);
 	}
 
 	previousIdOf(levelId) {
 		const level = this.getLevelDefinitionOf(levelId);
+		if (!level) return null;
 		const previousLevel = this.getLevelDefinitionOfGlobalId(level.globalId - 1);
 		if (!previousLevel) return null;
 
@@ -44,14 +72,21 @@ export default class Book {
 
 	nextIdOf(levelId) {
 		const level = this.getLevelDefinitionOf(levelId);
+		if (!level) return null;
 		const nextLevel = this.getLevelDefinitionOfGlobalId(level.globalId + 1);
 		if (!nextLevel) return null;
+
+		// TODO: Check siblings instead of a fixed + 1
 
 		return nextLevel.id;
 	}
 
 	exists(levelId) {
 		return this.getChapterOf(levelId) != null;
+	}
+
+	getChapter(chapterId) {
+		return _.find(this.chapters, { id: chapterId }) || null;
 	}
 
 	getChapterOf(levelId) {
@@ -76,6 +111,7 @@ export default class Book {
 
 	getLevelDefinitionOf(levelId) {
 		const chapter = this.getChapterOf(levelId);
+		if (!chapter) return null;
 		const levelDefinition = chapter.levels.find(
 			(level) => level.id === levelId
 		);
@@ -86,11 +122,16 @@ export default class Book {
 
 	getLevelDefinitionOfGlobalId(globalId) {
 		const chapter = this.getChapterOfGlobalId(globalId);
+		if (!chapter) return null;
 		const levelDefinition = chapter.levels.find(
 			(level) => level.globalId === globalId
 		);
 		if (!levelDefinition) return null;
 
 		return levelDefinition;
+	}
+
+	get _savedata() {
+		return store.getState().savedata;
 	}
 }

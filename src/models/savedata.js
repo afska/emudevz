@@ -1,11 +1,10 @@
 import filesystem, { Drive } from "../filesystem";
 
-const INITIAL_LEVEL = "getting-started-introduction";
 const DEFAULT_FILE = Drive.MAIN_FILE;
 
 const KEY = "savedata";
 const INITIAL_STATE = () => ({
-	levelId: INITIAL_LEVEL,
+	maxChapterNumber: 1,
 	completedLevels: [],
 	language: "en",
 	musicVolume: 0.3,
@@ -18,8 +17,8 @@ const INITIAL_STATE = () => ({
 export default {
 	state: INITIAL_STATE(),
 	reducers: {
-		setLevelId(state, levelId) {
-			return { ...state, levelId };
+		setMaxChapterNumber(state, maxChapterNumber) {
+			return { ...state, maxChapterNumber };
 		},
 		addCompletedLevel(state, levelId) {
 			return { ...state, completedLevels: [...state.completedLevels, levelId] };
@@ -69,8 +68,10 @@ export default {
 				const book = _state_.book.instance;
 
 				if (!book.exists(nextLevelId)) return false;
-				if (!book.isUnlocked(nextLevelId, state.levelId))
-					dispatch.setLevelId(nextLevelId);
+
+				const chapter = book.getChapterOf(nextLevelId);
+				if (chapter.number > state.maxChapterNumber)
+					dispatch.setMaxChapterNumber(chapter.number);
 
 				_dispatch_.level.goTo(nextLevelId);
 				return true;
@@ -84,8 +85,9 @@ export default {
 					this.setSelectedFile(DEFAULT_FILE);
 				}
 
-				if (!book.isUnlocked(levelId, state.levelId)) {
-					_dispatch_.level.goToReplacing(state.levelId);
+				if (!book.isUnlocked(levelId)) {
+					const firstLevel = book.chapters[0].levels[0];
+					_dispatch_.level.goToReplacing(firstLevel.id);
 					return false;
 				}
 

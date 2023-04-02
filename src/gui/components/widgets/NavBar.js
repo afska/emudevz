@@ -30,7 +30,6 @@ class NavBar extends PureComponent {
 			chapter,
 			level,
 			book,
-			maxLevelId,
 			trackInfo,
 			goBack,
 			goToPrevious,
@@ -103,7 +102,7 @@ class NavBar extends PureComponent {
 								)
 							}
 						/>
-						{(!level.memory.content.multifile || level.id === maxLevelId) && (
+						{book.canReset(level) && (
 							<IconButton
 								style={{ marginLeft: 8 }}
 								Icon={FaTrash}
@@ -111,7 +110,7 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
-						{book.isFinished(_.last(chapter.levels).id, maxLevelId) && (
+						{book.isFinished(_.last(chapter.levels).id) && (
 							<IconButton
 								Icon={FaChevronRight}
 								tooltip={locales.get("chapter_next")}
@@ -124,7 +123,6 @@ class NavBar extends PureComponent {
 					<ProgressList
 						book={book}
 						selectedLevelId={level.id}
-						maxLevelId={maxLevelId}
 						levelDefinitions={chapter.levels}
 					/>
 				</div>
@@ -143,7 +141,6 @@ class NavBar extends PureComponent {
 
 const mapStateToProps = ({ book, savedata }) => ({
 	book: book.instance,
-	maxLevelId: savedata.levelId,
 	trackInfo: savedata.trackInfo,
 });
 const mapDispatchToProps = ({ level }) => ({
