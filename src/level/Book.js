@@ -15,7 +15,7 @@ export default class Book {
 	getId(humanId) {
 		for (let chapter of this.chapters) {
 			for (let level of chapter.levels) {
-				if (level.humanId === humanId) return level.id; // TODO: globalId? and pass id in framework
+				if (level.humanId === humanId) return level.globalId;
 			}
 		}
 

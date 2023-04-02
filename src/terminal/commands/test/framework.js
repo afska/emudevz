@@ -41,7 +41,10 @@ export default {
 			return (options) => {
 				testDefinition.name = options.locales?.[_locales_.language] || name;
 
-				if (options.use && !options.use(_Level_.current, _Book_.current))
+				if (
+					options.use &&
+					!options.use({ id: _Level_.current.globalId }, _Book_.current)
+				)
 					_tests_.pop();
 			};
 		};
