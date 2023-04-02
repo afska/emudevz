@@ -27,16 +27,18 @@ class NavBar extends PureComponent {
 
 	render() {
 		const {
-			trackInfo,
-			maxLevelId,
 			chapter,
 			level,
+			book,
+			maxLevelId,
+			trackInfo,
 			goBack,
-			goTo,
+			goToPrevious,
+			goToNext,
 			resetLevel,
 		} = this.props;
 
-		const levelIndex = _.findIndex(chapter.levels, (it) => it.id === level.id);
+		const levelDefinition = book.getLevelDefinitionOf(level.id);
 
 		return (
 			<div className={styles.navbar}>
@@ -51,16 +53,16 @@ class NavBar extends PureComponent {
 						tooltip={locales.get("go_back")}
 						onClick={goBack}
 					/>
-					{_.first(chapter.levels).id > 0 && (
+					{_.first(chapter.levels).globalId > 0 && (
 						<IconButton
 							Icon={FaChevronLeft}
 							tooltip={locales.get("chapter_previous")}
-							onClick={() => goTo(_.first(chapter.levels).id - 1)}
+							onClick={() => goToPrevious(_.first(chapter.levels).id)}
 						/>
 					)}
 					<span>
-						{chapter.number}.{levelIndex + 1} / {chapter.name[locales.language]}{" "}
-						/ {level.name[locales.language]}
+						{levelDefinition.humanId} / {chapter.name[locales.language]} /{" "}
+						{level.name[locales.language]}
 					</span>
 					{level.isUsingSnapshot && (
 						<Badge bg="warning" text="dark" className={styles.warning}>
@@ -109,17 +111,18 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
-						{maxLevelId > _.last(chapter.levels).id && (
+						{book.isFinished(_.last(chapter.levels).id, maxLevelId) && (
 							<IconButton
 								Icon={FaChevronRight}
 								tooltip={locales.get("chapter_next")}
-								onClick={() => goTo(_.last(chapter.levels).id + 1)}
+								onClick={() => goToNext(_.last(chapter.levels).id)}
 							/>
 						)}
 					</div>
 				</div>
 				<div className={styles.item}>
 					<ProgressList
+						book={book}
 						selectedLevelId={level.id}
 						maxLevelId={maxLevelId}
 						levelDefinitions={chapter.levels}
@@ -138,13 +141,15 @@ class NavBar extends PureComponent {
 	};
 }
 
-const mapStateToProps = ({ savedata }) => ({
+const mapStateToProps = ({ book, savedata }) => ({
+	book: book.instance,
+	maxLevelId: savedata.levelId,
 	trackInfo: savedata.trackInfo,
 });
-
 const mapDispatchToProps = ({ level }) => ({
 	goBack: level.goHome,
-	goTo: level.goTo,
+	goToPrevious: level.goToPrevious,
+	goToNext: level.goToNext,
 	resetLevel: level.resetProgress,
 });
 

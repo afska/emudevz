@@ -21,15 +21,30 @@ export default class Book {
 	}
 
 	isUnlocked(levelId, maxLevelId) {
-		const maxLevel = this.getLevelDefinitionOf(maxLevelId);
 		const level = this.getLevelDefinitionOf(levelId);
+		const maxLevel = this.getLevelDefinitionOf(maxLevelId);
 
 		return maxLevel.globalId >= level.globalId;
 	}
 
-	nextIdOf(maxLevelId) {
+	isFinished(levelId, maxLevelId) {
+		const level = this.getLevelDefinitionOf(levelId);
 		const maxLevel = this.getLevelDefinitionOf(maxLevelId);
-		const nextLevel = this.getLevelDefinitionOfGlobalId(maxLevel.globalId + 1);
+
+		return maxLevel.globalId > level.globalId;
+	}
+
+	previousIdOf(levelId) {
+		const level = this.getLevelDefinitionOf(levelId);
+		const previousLevel = this.getLevelDefinitionOfGlobalId(level.globalId - 1);
+		if (!previousLevel) return null;
+
+		return previousLevel.id;
+	}
+
+	nextIdOf(levelId) {
+		const level = this.getLevelDefinitionOf(levelId);
+		const nextLevel = this.getLevelDefinitionOfGlobalId(level.globalId + 1);
 		if (!nextLevel) return null;
 
 		return nextLevel.id;

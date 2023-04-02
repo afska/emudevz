@@ -42,7 +42,7 @@ class PlayScreen extends PureComponent {
 
 	render() {
 		const { error } = this.state;
-		const { maxLevelId, book, level } = this.props;
+		const { book, level } = this.props;
 
 		if (error) return <div className={styles.message}>❌ {error}</div>;
 
@@ -51,11 +51,7 @@ class PlayScreen extends PureComponent {
 
 		return (
 			<div className={styles.container}>
-				<LevelScreen
-					maxLevelId={maxLevelId}
-					chapter={this.currentChapter}
-					level={level}
-				/>
+				<LevelScreen chapter={this.currentChapter} level={level} />
 			</div>
 		);
 	}
@@ -103,14 +99,13 @@ class PlayScreen extends PureComponent {
 	}
 }
 
-const mapStateToProps = ({ router, savedata, book, level }) => {
+const mapStateToProps = ({ router, book, level }) => {
 	const path = router.location.pathname;
 	const currentLevelId = _.last(path.split("/"));
 
 	return {
 		path: path + router.location.search,
 		currentLevelId,
-		maxLevelId: savedata.levelId,
 		book: book.instance,
 		level: level.instance,
 	};

@@ -80,7 +80,6 @@ export default {
 
 				return true;
 			},
-
 			openFile(filePath, _state_) {
 				const state = _state_[KEY];
 				const { openFiles } = state;

@@ -26,27 +26,35 @@ export default {
 		const dispatch = _dispatch_[KEY];
 
 		return {
+			goToPrevious(levelId, _state_) {
+				const book = _state_.book.instance;
+
+				const previousLevelId = book.previousIdOf(levelId);
+				return this.goTo(previousLevelId);
+			},
+			goToNext(levelId, _state_) {
+				const book = _state_.book.instance;
+
+				const nextLevelId = book.nextIdOf(levelId);
+				return this.goTo(nextLevelId);
+			},
 			goTo(levelId) {
 				analytics.track("level", {
 					id: levelId,
 				});
 				_dispatch_(push(`/levels/${levelId}?r=${Math.random()}`));
 			},
-
 			goToReplacing(levelId) {
 				_dispatch_(replace(`/levels/${levelId}?r=${Math.random()}`));
 			},
-
 			goToLastUnlockedLevel(__, _state_) {
 				const levelId = _state_.savedata.levelId;
 				this.goTo(levelId);
 			},
-
 			goHome() {
 				this.reset();
 				_dispatch_(push("/"));
 			},
-
 			resetProgress(__, _state_) {
 				// TODO: PROGRESS RESET
 				/*

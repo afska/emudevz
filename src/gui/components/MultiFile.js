@@ -311,7 +311,6 @@ const mapStateToProps = ({ savedata }) => {
 		selectedFile: savedata.selectedFile,
 	};
 };
-
 const mapDispatchToProps = ({ savedata }) => {
 	return {
 		openFile: savedata.openFile,
