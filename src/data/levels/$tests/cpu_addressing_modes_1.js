@@ -375,7 +375,7 @@ it("`INDIRECT` / `getValue`: unsupported", () => {
 	use: ({ id }, book) => id >= book.getId("5a.16"),
 });
 
-// --- After passing 4.22 ---
+// --- After passing 5a.22 ---
 
 it("`INDIRECT`: emulates the 'page boundary bug'", () => {
 	const addressingModes = mainModule.default.addressingModes;

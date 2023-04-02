@@ -7,7 +7,7 @@ beforeEach(async () => {
 
 // 3.1 Using JS modules
 
-// --- Before 4.1 ---
+// --- Before 5a.1 ---
 
 it("`/code/Cartridge.js` exists as a file", () => {
 	filesystem.exists("/code/Cartridge.js").should.be.true;
@@ -48,7 +48,7 @@ it("`/code/index.js` exports an object containing the class", async () => {
 	use: ({ id }, book) => id >= book.getId("3.1") && id < book.getId("5a.1"),
 });
 
-// --- After 4.1 ---
+// --- After 5a.1 ---
 
 it("`/code/index.js` exports an object containing the `Cartridge` class", () => {
 	expect(mainModule.default).to.be.an("object");
