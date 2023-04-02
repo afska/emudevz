@@ -31,7 +31,7 @@ const newCPU = (prgBytes = []) => {
 
 	const cartridge = new Cartridge(newRom(prgBytes));
 
-	const areMappersImplemented = Level.current.id >= Book.current.getId("4.20");
+	const areMappersImplemented = Level.current.id >= Book.current.getId("5a.20");
 	if (areMappersImplemented && NROM != null) {
 		const mapper = new NROM({ cartridge });
 		return new CPU(mapper);
@@ -41,7 +41,7 @@ const newCPU = (prgBytes = []) => {
 };
 // [!] Duplicated <<<
 
-// 4.13 Instructions (3/5): Checks
+// 5a.13 Instructions (3/5): Checks
 
 it("`BIT`: argument == 'value'", () => {
 	const instructions = mainModule.default.instructions;
@@ -52,7 +52,7 @@ it("`BIT`: argument == 'value'", () => {
 	locales: {
 		es: "`BIT`: argument == 'value'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 [
@@ -84,7 +84,7 @@ it("`BIT`: argument == 'value'", () => {
 				value.toString(2).padStart(8, "0") +
 				"~",
 		},
-		use: ({ id }, book) => id >= book.getId("4.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 });
 
@@ -137,7 +137,7 @@ it("`BIT`: argument == 'value'", () => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
 		},
-		use: ({ id }, book) => id >= book.getId("4.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -163,7 +163,7 @@ it("`BIT`: argument == 'value'", () => {
 				"`: " +
 				`compara y actualiza las banderas apropiadas con [${name}] = ${source} y value = ${value}`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 });
 
@@ -177,7 +177,7 @@ it("`BIT`: argument == 'value'", () => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
 		},
-		use: ({ id }, book) => id >= book.getId("4.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 });
 
@@ -250,6 +250,6 @@ it("`BIT`: argument == 'value'", () => {
 					.toString(2)
 					.padStart(8, "0")} => ${result.toString(2).padStart(8, "0")}`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 });
