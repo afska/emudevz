@@ -15,9 +15,11 @@ export default {
 		const _tests_ = [];
 
 		// eslint-disable-next-line
-		const Level = _Level_;
-		// eslint-disable-next-line
 		const Book = _Book_;
+		// eslint-disable-next-line
+		const GLOBAL_LEVEL_ID = Book.current.getLevelDefinitionOf(
+			_Level_.current.id
+		).globalId;
 
 		// eslint-disable-next-line
 		const beforeEach = (run) => {
@@ -43,7 +45,7 @@ export default {
 
 				if (
 					options.use &&
-					!options.use({ id: _Level_.current.globalId }, _Book_.current)
+					!options.use({ id: GLOBAL_LEVEL_ID }, _Book_.current)
 				)
 					_tests_.pop();
 			};
