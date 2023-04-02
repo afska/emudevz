@@ -6,6 +6,7 @@ const DEFAULT_FILE = Drive.MAIN_FILE;
 const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	levelId: INITIAL_LEVEL,
+	completedLevels: [],
 	language: "en",
 	musicVolume: 0.3,
 	musicTrack: 0,
@@ -19,6 +20,15 @@ export default {
 	reducers: {
 		setLevelId(state, levelId) {
 			return { ...state, levelId };
+		},
+		addCompletedLevel(state, levelId) {
+			return { ...state, completedLevels: [...state.completedLevels, levelId] };
+		},
+		removeCompletedLevel(state, levelId) {
+			return {
+				...state,
+				completedLevels: state.completedLevels.filter((it) => it !== levelId),
+			};
 		},
 		setLanguage(state, language) {
 			return { ...state, language };
@@ -50,6 +60,7 @@ export default {
 			advance(currentLevelId, _state_) {
 				const book = _state_.book.instance;
 
+				this.addCompletedLevel(currentLevelId);
 				const nextLevelId = book.nextIdOf(currentLevelId);
 				return this.advanceTo(nextLevelId);
 			},

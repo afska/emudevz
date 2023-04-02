@@ -33,7 +33,8 @@ skip:
     const book = store.getState().book.instance;
     const chapter = book.getChapterOf(level.id);
     const lastLevelId = _.last(chapter.levels).id;
-    store.dispatch.savedata.advance(lastLevelId);
+    const nextLevelId = book.nextIdOf(lastLevelId);
+    store.dispatch.savedata.advanceTo(nextLevelId);
   messages: []
   events:
   - null [end]
