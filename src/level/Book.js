@@ -20,11 +20,13 @@ export default class Book {
 		return null;
 	}
 
-	isUnlockedNext(levelId) {
-		// TODO: When calling nextIdOf, ensure that all chapters with the same number are finished
+	canGoToPreviousChapter(chapter) {
+		return chapter.id > 0;
+	}
 
-		const nextLevelId = this.nextIdOf(levelId);
-		return this.isUnlocked(nextLevelId);
+	canGoToNextChapter(chapter) {
+		const maxChapterNumber = this._savedata.maxChapterNumber;
+		return maxChapterNumber > chapter.number;
 	}
 
 	isUnlocked(levelId) {
@@ -67,11 +69,16 @@ export default class Book {
 	}
 
 	previousIdOf(levelId) {
-		// TODO: FIX, GO TO LAST PLAYABLE LEVEL OF PREVIOUS CHAPTER
 		const level = this.getLevelDefinitionOf(levelId);
 		if (!level) return null;
-		const previousLevel = this.getLevelDefinitionOfGlobalId(level.globalId - 1);
+		let previousLevel = this.getLevelDefinitionOfGlobalId(level.globalId - 1);
 		if (!previousLevel) return null;
+
+		if (!this.isUnlocked(previousLevel.id)) {
+			const chapter = this.getChapterOf(previousLevel.id);
+			previousLevel = this.nextPendingLevelOfChapter(chapter.id);
+			if (!previousLevel) return null;
+		}
 
 		return previousLevel.id;
 	}
@@ -79,8 +86,23 @@ export default class Book {
 	nextIdOf(levelId) {
 		const level = this.getLevelDefinitionOf(levelId);
 		if (!level) return null;
-		const nextLevel = this.getLevelDefinitionOfGlobalId(level.globalId + 1);
+		let nextLevel = this.getLevelDefinitionOfGlobalId(level.globalId + 1);
 		if (!nextLevel) return null;
+
+		const maxChapterNumber = this._savedata.maxChapterNumber;
+		const nextLevelChapter = this.getChapterOf(nextLevel.id);
+
+		if (nextLevelChapter > maxChapterNumber) {
+			const pendingLevels = _(this.chapters)
+				.filter((it) => it.number === maxChapterNumber)
+				.flatMap("levels")
+				.filter((it) => !this.isFinished(it.id))
+				.value();
+
+			if (!_.isEmpty(pendingLevels)) {
+				nextLevel = _.first(pendingLevels);
+			}
+		}
 
 		return nextLevel.id;
 	}

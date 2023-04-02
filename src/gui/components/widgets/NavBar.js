@@ -57,7 +57,7 @@ class NavBar extends PureComponent {
 						tooltip={locales.get("go_back")}
 						onClick={goBack}
 					/>
-					{firstLevelDefinition.globalId > 0 && (
+					{book.canGoToPreviousChapter(chapter) && (
 						<IconButton
 							Icon={FaChevronLeft}
 							tooltip={locales.get("chapter_previous")}
@@ -131,7 +131,7 @@ class NavBar extends PureComponent {
 								onClick={rollbackLevel}
 							/>
 						)}
-						{book.isUnlockedNext(lastLevelDefinition.id) && (
+						{book.canGoToNextChapter(chapter) && (
 							<IconButton
 								Icon={FaChevronRight}
 								tooltip={locales.get("chapter_next")}
