@@ -1,5 +1,5 @@
 import { push, replace } from "connected-react-router";
-import filesystem from "../filesystem";
+// import filesystem from "../filesystem"; // TODO: PROGRESS RESET
 import { analytics } from "../utils";
 
 const KEY = "level";
@@ -48,6 +48,8 @@ export default {
 			},
 
 			resetProgress(__, _state_) {
+				// TODO: PROGRESS RESET
+				/*
 				const level = _state_[KEY].instance;
 
 				if (level.memory.content.multifile) {
@@ -68,6 +70,7 @@ export default {
 					const state = _state_[KEY];
 					this.goTo(state.instance.id);
 				});
+				*/
 			},
 		};
 	},

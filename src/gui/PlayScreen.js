@@ -10,22 +10,25 @@ import styles from "./PlayScreen.module.css";
 
 const LEVELS_PATH = "levels";
 const BOOK_PATH = `${LEVELS_PATH}/book.json`;
-const LEVEL_ID_LENGTH = 3;
 const STATUS_OK = 200;
 
 class PlayScreen extends PureComponent {
 	state = { path: null, error: null };
 
 	componentDidMount() {
-		const { currentLevelId, validateSavedata } = this.props;
-		validateSavedata(currentLevelId);
-
 		this._loadBook();
 	}
 
 	componentDidUpdate() {
-		const { path, currentLevelId, resetLevel, validateSavedata } = this.props;
-		if (!validateSavedata(currentLevelId)) return;
+		const {
+			book,
+			path,
+			currentLevelId,
+			resetLevel,
+			validateSavedata,
+		} = this.props;
+
+		if (book && !validateSavedata(currentLevelId)) return;
 		if (!this.currentChapter) return;
 
 		if (path !== this.state.path) {
@@ -55,10 +58,6 @@ class PlayScreen extends PureComponent {
 				/>
 			</div>
 		);
-	}
-
-	get formattedLevelId() {
-		return this.props.currentLevelId.toString().padStart(LEVEL_ID_LENGTH, 0);
 	}
 
 	get currentChapter() {
@@ -91,7 +90,7 @@ class PlayScreen extends PureComponent {
 	_loadLevel() {
 		const { currentLevelId, setLevel } = this.props;
 
-		const levelPath = `${LEVELS_PATH}/level_${this.formattedLevelId}.zip`;
+		const levelPath = `${LEVELS_PATH}/level_${currentLevelId}.zip`;
 
 		fetch(levelPath)
 			.then((req) => {
@@ -106,8 +105,7 @@ class PlayScreen extends PureComponent {
 
 const mapStateToProps = ({ router, savedata, book, level }) => {
 	const path = router.location.pathname;
-	let currentLevelId = parseInt(_.last(path.split("/")));
-	if (!isFinite(currentLevelId)) currentLevelId = 0;
+	const currentLevelId = _.last(path.split("/"));
 
 	return {
 		path: path + router.location.search,

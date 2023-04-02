@@ -30,6 +30,7 @@ function readDirs(path) {
 }
 
 async function pkg() {
+	let globalLevelId = 0;
 	const book = { chapters: [] };
 
 	mkdirp.sync(OUTPUT_PATH);
@@ -92,6 +93,7 @@ async function pkg() {
 			chapter.levels.push({
 				id,
 				humanId: `${chapter.number}.${localLevelId + 1}`,
+				globalId: globalLevelId,
 				name: levelMetadata.name,
 				helpLines: _.sortBy([...helpLines]),
 			});
@@ -132,6 +134,7 @@ async function pkg() {
 				archive.finalize();
 			});
 
+			globalLevelId++;
 			localLevelId++;
 		}
 	}
