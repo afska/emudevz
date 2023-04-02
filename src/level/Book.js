@@ -25,8 +25,8 @@ export default class Book {
 	}
 
 	canGoToNextChapter(chapter) {
-		const maxChapterNumber = this._savedata.maxChapterNumber;
-		return maxChapterNumber > chapter.number;
+		const nextLevelId = this.nextIdOf(_.last(chapter.levels).id);
+		return this.isUnlocked(nextLevelId);
 	}
 
 	isUnlocked(levelId) {
