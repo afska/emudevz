@@ -57,7 +57,7 @@ export default {
 	opening: "Opening",
 	pin_left: "Pin left",
 	plot:
-		"In the year 2300, the world suffered a massive cyber attack which destroyed the entire Internet. Since then, you and an online friend are trying to understand the sparse pieces of documentation about the NEEES, an ancient game console released in 1983. With your programming skills, you'll have to build an emulator that runs those old games, helping preserve the video game history.",
+		"In the year 2300, the world suffered a massive cyber attack which <b>destroyed</b> the entire Internet. Since then, you and an online friend are trying to understand the sparse pieces of documentation about the NEEES, an ancient game console released in 1983. With your programming skills, you'll have to build an emulator that runs those old games, helping preserve the video game history.",
 	register_A: "Accumulator Register",
 	register_X: "X Register",
 	register_Y: "Y Register",

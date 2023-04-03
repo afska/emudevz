@@ -57,8 +57,11 @@ class HomeScreen extends PureComponent {
 				/>
 
 				<div id="ui" className={styles.ui}>
-					<h3 style={{ marginBottom: 24 }}>Demo</h3>
-					<div className={styles.box}>{locales.get("plot")}</div>
+					<h6 style={{ marginBottom: 22 }}>Demo</h6>
+					<div
+						className={styles.box}
+						dangerouslySetInnerHTML={{ __html: locales.get("plot") }}
+					/>
 
 					<div className={styles.buttons}>
 						<Button onClick={this._openChapterSelect}>
@@ -76,7 +79,7 @@ class HomeScreen extends PureComponent {
 					<div style={{ marginTop: 16, fontSize: 12 }}>
 						{locales.get("_created_by")}{" "}
 						<a href="https://r-labs.io" target="_blank" rel="noreferrer">
-							r-labs.io
+							[r]labs
 						</a>{" "}
 						{"//"} {locales.get("_music_by")}{" "}
 						<a
