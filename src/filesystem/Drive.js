@@ -59,7 +59,7 @@ export default {
 	},
 
 	isReadOnlyDir(path) {
-		if (window.DEBUG) return false;
+		if (window.SUDO) return false;
 		path = filesystem.process(path);
 		// ---
 
@@ -67,7 +67,7 @@ export default {
 	},
 
 	isProtectedFile(path) {
-		if (window.DEBUG) return false;
+		if (window.SUDO) return false;
 		path = filesystem.process(path);
 		// ---
 

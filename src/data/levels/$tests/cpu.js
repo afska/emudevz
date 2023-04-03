@@ -56,6 +56,21 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 
 // 5a.2 Registers
 
+it("includes a `memory` property with a `CPUMemory` instance", async () => {
+	const CPUMemory = (await evaluateModule($.modules["/code/CPUMemory.js"]))
+		.default;
+
+	const cpu = newCPU();
+
+	cpu.should.include.key("memory");
+	cpu.memory.constructor.should.equal(CPUMemory);
+})({
+	locales: {
+		es: "incluye una propiedad `memory` con una instancia de `CPUMemory`",
+	},
+	use: ({ id }, book) => id >= book.getId("5a.2"),
+});
+
 it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
 	const cpu = newCPU();
 

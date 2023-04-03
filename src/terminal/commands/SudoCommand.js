@@ -1,8 +1,8 @@
 import Command from "./Command";
 
-export default class DebugCommand extends Command {
+export default class SudoCommand extends Command {
 	static get name() {
-		return "_debug_";
+		return "_sudo_";
 	}
 
 	static get isHidden() {
@@ -10,6 +10,6 @@ export default class DebugCommand extends Command {
 	}
 
 	async execute() {
-		window.DEBUG = true;
+		window.SUDO = true;
 	}
 }

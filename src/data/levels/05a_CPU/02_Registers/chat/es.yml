@@ -44,8 +44,12 @@ nowwhat:
   - |-
     entonces, agrega el siguiente constructor a tu clase `CPU`:
       ```javascript
+      import CPUMemory from "/code/CPUMemory";
+      // ☝️ import memory
+      
       export default class CPU {
         constructor() {
+          this.memory = new CPUMemory();
           this.cycle = 0;
           this.extraCycles = 0;
 
