@@ -1,9 +1,10 @@
 {
 	"name": {
-		"en": "🏁 Flags",
-		"es": "🏁 Banderas"
+		"en": "🔢 Instructions (1/5): Arithmetic",
+		"es": "🔢 Instrucciones (1/5): Aritméticas"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [
@@ -24,8 +25,8 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": ["cartridge.js", "memory.js", "cpu.js"],
-		"mainTestFile": "cpu.js"
+		"inherit": ["cartridge.js", "memory.js", "cpu.js", "cpu_instructions_1.js"],
+		"mainTestFile": "cpu_instructions_1.js"
 	},
 	"memory": {
 		"content": {
