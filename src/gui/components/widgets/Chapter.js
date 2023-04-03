@@ -11,6 +11,7 @@ class Chapter extends PureComponent {
 			book,
 			chapter,
 			goTo,
+			comingSoon = false,
 			mini = false,
 			right = false,
 			left = false,
@@ -53,7 +54,11 @@ class Chapter extends PureComponent {
 				>
 					<span>{chapter.name[locales.language]}</span>
 
-					{isUnlocked ? (
+					{comingSoon ? (
+						<div style={{ fontSize: "xx-small" }}>
+							🚧 {locales.get("coming_soon")}
+						</div>
+					) : isUnlocked ? (
 						<div className={styles.progress}>
 							<div className={styles.bar}>
 								<span
@@ -78,7 +83,7 @@ class Chapter extends PureComponent {
 	}
 
 	_go = () => {
-		if (!this._isUnlocked) return;
+		if (!this._isUnlocked || this.props.comingSoon) return;
 
 		const { book, chapter, goTo } = this.props;
 		const level =

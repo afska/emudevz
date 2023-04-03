@@ -50,6 +50,7 @@ export default class ChapterSelectModal extends PureComponent {
 									mini
 									left
 									right
+									comingSoon
 								/>
 								<Chapter
 									book={book}
@@ -57,8 +58,15 @@ export default class ChapterSelectModal extends PureComponent {
 									mini
 									left
 									right
+									comingSoon
 								/>
-								<Chapter book={book} chapter={book.getChapter(7)} mini left />
+								<Chapter
+									book={book}
+									chapter={book.getChapter(7)}
+									mini
+									left
+									comingSoon
+								/>
 							</div>
 							<div className={styles.horizontalLine} />
 							<div className={styles.verticalLine} />
