@@ -31,7 +31,7 @@ const newCPU = (prgBytes = []) => {
 
 	const cartridge = new Cartridge(newRom(prgBytes));
 
-	const areMappersImplemented = GLOBAL_LEVEL_ID >= Book.current.getId("5a.18");
+	const areMappersImplemented = GLOBAL_LEVEL_ID >= Book.current.getId("5a.17");
 	if (areMappersImplemented && NROM != null) {
 		const mapper = new NROM({ cartridge });
 		return new CPU(mapper);
@@ -41,7 +41,7 @@ const newCPU = (prgBytes = []) => {
 };
 // [!] Duplicated <<<
 
-// 5a.12 Instructions (4/5): Branching
+// 5a.11 Instructions (4/5): Branching
 
 [
 	{ instruction: "BCC", flag: "c" },
@@ -60,7 +60,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
 		},
-		use: ({ id }, book) => id >= book.getId("5a.12"),
+		use: ({ id }, book) => id >= book.getId("5a.11"),
 	});
 
 	it("`" + instruction + "`: " + `jumps if the ~${name}~ flag is clear`, () => {
@@ -80,7 +80,7 @@ const newCPU = (prgBytes = []) => {
 				"`: " +
 				`salta si la bandera ~${name}~ está apagada`,
 		},
-		use: ({ id }, book) => id >= book.getId("5a.12"),
+		use: ({ id }, book) => id >= book.getId("5a.11"),
 	});
 
 	it(
@@ -104,7 +104,7 @@ const newCPU = (prgBytes = []) => {
 				"`: " +
 				`no salta si la bandera ~${name}~ está encendida`,
 		},
-		use: ({ id }, book) => id >= book.getId("5a.12"),
+		use: ({ id }, book) => id >= book.getId("5a.11"),
 	});
 });
 
@@ -125,7 +125,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
 		},
-		use: ({ id }, book) => id >= book.getId("5a.12"),
+		use: ({ id }, book) => id >= book.getId("5a.11"),
 	});
 
 	it("`" + instruction + "`: " + `jumps if the ~${name}~ flag is set`, () => {
@@ -145,7 +145,7 @@ const newCPU = (prgBytes = []) => {
 				"`: " +
 				`salta si la bandera ~${name}~ está encendida`,
 		},
-		use: ({ id }, book) => id >= book.getId("5a.12"),
+		use: ({ id }, book) => id >= book.getId("5a.11"),
 	});
 
 	it(
@@ -169,7 +169,7 @@ const newCPU = (prgBytes = []) => {
 				"`: " +
 				`no salta si la bandera ~${name}~ está encendida`,
 		},
-		use: ({ id }, book) => id >= book.getId("5a.12"),
+		use: ({ id }, book) => id >= book.getId("5a.11"),
 	});
 });
 
@@ -182,7 +182,7 @@ it("`JMP`: argument == 'address'", () => {
 	locales: {
 		es: "`JMP`: argument == 'address'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`JMP`: jumps to the address", () => {
@@ -196,7 +196,7 @@ it("`JMP`: jumps to the address", () => {
 	locales: {
 		es: "`JMP`: salta a la dirección",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`JSR`: argument == 'address'", () => {
@@ -208,7 +208,7 @@ it("`JSR`: argument == 'address'", () => {
 	locales: {
 		es: "`JSR`: argument == 'address'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
@@ -223,7 +223,7 @@ it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
 	locales: {
 		es: "`JSR`: pone [PC] - 1 en la pila y salta a la dirección",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`RTI`: argument == 'no'", () => {
@@ -235,7 +235,7 @@ it("`RTI`: argument == 'no'", () => {
 	locales: {
 		es: "`RTI`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`RTI`: updates the flags and [PC] from the stack", () => {
@@ -252,7 +252,7 @@ it("`RTI`: updates the flags and [PC] from the stack", () => {
 	locales: {
 		es: "`RTI`: actualiza las banderas y [PC] desde la pila",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`RTS`: argument == 'no'", () => {
@@ -264,7 +264,7 @@ it("`RTS`: argument == 'no'", () => {
 	locales: {
 		es: "`RTS`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`RTS`: updates [PC] from a value in the stack + 1", () => {
@@ -279,5 +279,5 @@ it("`RTS`: updates [PC] from a value in the stack + 1", () => {
 	locales: {
 		es: "`RTS`: actualiza [PC] desde un valor en la pila + 1",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });

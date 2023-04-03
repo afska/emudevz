@@ -31,7 +31,7 @@ const newCPU = (prgBytes = []) => {
 
 	const cartridge = new Cartridge(newRom(prgBytes));
 
-	const areMappersImplemented = GLOBAL_LEVEL_ID >= Book.current.getId("5a.18");
+	const areMappersImplemented = GLOBAL_LEVEL_ID >= Book.current.getId("5a.17");
 	if (areMappersImplemented && NROM != null) {
 		const mapper = new NROM({ cartridge });
 		return new CPU(mapper);
@@ -67,7 +67,7 @@ it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
 	locales: {
 		es: "incluye dos propiedades misteriosas: `cycle` y `extraCycles`",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.2") && id < book.getId("5a.19"),
+	use: ({ id }, book) => id >= book.getId("5a.2") && id < book.getId("5a.18"),
 });
 
 it("includes all the registers", () => {
@@ -95,7 +95,7 @@ it("all registers start from 0", () => {
 	locales: {
 		es: "todos los registros comienzan en 0",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.2") && id < book.getId("5a.19"),
+	use: ({ id }, book) => id >= book.getId("5a.2") && id < book.getId("5a.18"),
 });
 
 it("8-bit registers can save and read values (valid range)", () => {
@@ -181,7 +181,7 @@ it("includes a `flags` property with 6 booleans", () => {
 	locales: {
 		es: "incluye una propiedad `flags` con 6 booleanos",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.3") && id < book.getId("5a.19"),
+	use: ({ id }, book) => id >= book.getId("5a.3") && id < book.getId("5a.18"),
 });
 
 it("flags register can be serialized into a byte", () => {
@@ -334,111 +334,7 @@ it("can update the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.4"),
 });
 
-// 5a.5 Execute (1/2)
-
-it("opcode $E8 means `INX`, which increments the [X] register", () => {
-	const cpu = newCPU([0xe8]);
-	cpu.pc.setValue(0x8000);
-
-	cpu.x.getValue().should.equalN(0, "getValue()");
-	cpu.step();
-	cpu.x.getValue().should.equalN(1, "getValue()");
-})({
-	locales: {
-		es: "el opcode $E8 es `INX`, que incrementa el registro [X]",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.5"),
-});
-
-it("opcode $C8 means `INY`, which increments the [Y] register", () => {
-	const cpu = newCPU([0xc8]);
-	cpu.pc.setValue(0x8000);
-
-	cpu.y.getValue().should.equalN(0, "getValue()");
-	cpu.step();
-	cpu.y.getValue().should.equalN(1, "getValue()");
-})({
-	locales: {
-		es: "el opcode $C8 es `INY`, que incrementa el registro [Y]",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.5"),
-});
-
-it("opcode $8A means `TXA`, which transfers [X] to [A]", () => {
-	const cpu = newCPU([0x8a]);
-	cpu.pc.setValue(0x8000);
-	cpu.x.setValue(123);
-
-	cpu.a.getValue().should.equalN(0, "getValue()");
-	cpu.step();
-	cpu.a.getValue().should.equalN(123, "getValue()");
-})({
-	locales: {
-		es: "el opcode $8A es `TXA`, que transfiere [X] a [A]",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.5"),
-});
-
-it("after a `step()` call, [PC] is incremented", () => {
-	const cpu = newCPU([0xe8]);
-	cpu.pc.setValue(0x8000);
-
-	cpu.step();
-	cpu.pc.getValue().should.equalHex(0x8001, "getValue()");
-})({
-	locales: {
-		es: "luego de una llamada a `step()`, [PC] es incrementado",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.5"),
-});
-
-it("supports combinations of `INX`, `INY` and `TXA`", () => {
-	const cpu = newCPU([0xe8, 0xc8, 0xe8, 0x8a]); // INX, INY, INX, TXA
-	cpu.pc.setValue(0x8000);
-
-	cpu.step();
-	cpu.step();
-	cpu.step();
-	cpu.step();
-	cpu.x.getValue().should.equalN(2, "getValue()");
-	cpu.y.getValue().should.equalN(1, "getValue()");
-	cpu.a.getValue().should.equalN(2, "getValue()");
-	cpu.pc.getValue().should.equalHex(0x8004, "getValue()");
-})({
-	locales: {
-		es: "soporta combinaciones de `INX`, `INY` y `TXA`",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.5"),
-});
-
-it("throws an error on unsupported opcodes", () => {
-	const cpu = newCPU([0xff]);
-	cpu.pc.setValue(0x8000);
-
-	expect(() => cpu.step()).to.throw(Error, "Invalid opcode.");
-})({
-	locales: {
-		es: "tira un error con opcodes no soportados",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.5"),
-});
-
-it("`NEEES::step()` calls `CPU::step()` once", () => {
-	const NEEES = mainModule.default.NEEES;
-	const neees = new NEEES(newRom([0xe8, 0xe8, 0xe8]));
-	neees.cpu.pc.setValue(0x8000);
-
-	neees.cpu.step = sinon.spy();
-	neees.step();
-	neees.cpu.step.should.have.been.calledOnce;
-})({
-	locales: {
-		es: "`NEEES::step()` llama a `CPU::step()` una vez",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.5"),
-});
-
-// 5a.7 Stack
+// 5a.6 Stack
 
 it("includes a `stack` property with `push`/`pop` methods", () => {
 	const cpu = newCPU();
@@ -452,7 +348,7 @@ it("includes a `stack` property with `push`/`pop` methods", () => {
 	locales: {
 		es: "incluye una propiedad `stack` con métodos `push`/`pop`",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
 
 it("the stack can push and pop values", () => {
@@ -469,7 +365,7 @@ it("the stack can push and pop values", () => {
 	locales: {
 		es: "la pila puede poner y sacar elementos",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
 
 it("the stack updates RAM and decrements [SP] on push", () => {
@@ -484,7 +380,7 @@ it("the stack updates RAM and decrements [SP] on push", () => {
 	locales: {
 		es: "la pila actualiza RAM y [SP] al poner",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
 
 it("the stack reads RAM and increments [SP] on pop", () => {
@@ -500,10 +396,10 @@ it("the stack reads RAM and increments [SP] on pop", () => {
 	locales: {
 		es: "la pila lee RAM e incrementa [SP] al sacar",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
 
-// 5a.8 Little Endian
+// 5a.7 Little Endian
 
 it("can read 16-bit values from the memory bus", () => {
 	const cpu = newCPU([0x34, 0x12]);
@@ -518,7 +414,7 @@ it("can read 16-bit values from the memory bus", () => {
 	locales: {
 		es: "puede leer valores de 16 bits del bus de memoria",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.8"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("can push 16-bit values onto the stack", () => {
@@ -533,7 +429,7 @@ it("can push 16-bit values onto the stack", () => {
 	locales: {
 		es: "puede poner valores de 16 bits en la pila",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.8"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("can pop 16-bit values from the stack", () => {
@@ -548,10 +444,10 @@ it("can pop 16-bit values from the stack", () => {
 	locales: {
 		es: "puede sacar valores de 16 bits de la pila",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.8"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-// 5a.16 Operations
+// 5a.15 Operations
 
 it("defines a list of 151 `operations`", () => {
 	const cpu = newCPU();
@@ -582,10 +478,10 @@ it("defines a list of 151 `operations`", () => {
 	locales: {
 		es: "define una lista con 151 `operations`",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.16"),
+	use: ({ id }, book) => id >= book.getId("5a.15"),
 });
 
-// 5a.17 Execute (2/2)
+// 5a.16 Execute (2/2)
 
 it("can run 4 simple operations, updating all counters, and calling a `logger` function", () => {
 	// NOP ; LDA #$05 ; STA $0201 ; LDX $0201
@@ -654,10 +550,10 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 		es:
 			"puede ejecutar 4 operaciones simples, actualizando todos los contadores, y llamando a una función `logger`",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.17"),
+	use: ({ id }, book) => id >= book.getId("5a.16"),
 });
 
-// 5a.18 Mapper 0
+// 5a.17 Mapper 0
 
 it("instantiating a `NEEES` with an unknown mapper throws an 'Invalid mapper.' error", () => {
 	const { NEEES } = mainModule.default;
@@ -670,7 +566,7 @@ it("instantiating a `NEEES` with an unknown mapper throws an 'Invalid mapper.' e
 		es:
 			"instanciar una `NEEES` con un mapper desconocido tira un error 'Invalid mapper.'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.18"),
+	use: ({ id }, book) => id >= book.getId("5a.17"),
 });
 
 it("PRG-ROM code is mapped to $8000-$BFFF", () => {
@@ -690,7 +586,7 @@ it("PRG-ROM code is mapped to $8000-$BFFF", () => {
 	locales: {
 		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.18"),
+	use: ({ id }, book) => id >= book.getId("5a.17"),
 });
 
 it("PRG-ROM code is read only", () => {
@@ -712,7 +608,7 @@ it("PRG-ROM code is read only", () => {
 	locales: {
 		es: "el código PRG-ROM es solo lectura",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.18"),
+	use: ({ id }, book) => id >= book.getId("5a.17"),
 });
 
 it("PRG-ROM code is also mapped to $C000-$FFFF", () => {
@@ -732,10 +628,10 @@ it("PRG-ROM code is also mapped to $C000-$FFFF", () => {
 	locales: {
 		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.18"),
+	use: ({ id }, book) => id >= book.getId("5a.17"),
 });
 
-// 5a.19 Initial state
+// 5a.18 Initial state
 
 it("includes a `flags` property with 6 booleans (I = true)", () => {
 	const cpu = newCPU();
@@ -756,7 +652,7 @@ it("includes a `flags` property with 6 booleans (I = true)", () => {
 	locales: {
 		es: "incluye una propiedad `flags` con 6 booleanos (I = true)",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.19"),
+	use: ({ id }, book) => id >= book.getId("5a.18"),
 });
 
 it("all registers start from 0 (except for [SP])", () => {
@@ -769,7 +665,7 @@ it("all registers start from 0 (except for [SP])", () => {
 	locales: {
 		es: "todos los registros comienzan en 0 (excepto [SP])",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.19"),
+	use: ({ id }, book) => id >= book.getId("5a.18"),
 });
 
 it("triggers a <RESET> interrupt on start", () => {
@@ -789,7 +685,7 @@ it("triggers a <RESET> interrupt on start", () => {
 	locales: {
 		es: "dispara una interrupción <RESET> al inicio",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.19"),
+	use: ({ id }, book) => id >= book.getId("5a.18"),
 });
 
 // TODO: For PPU
@@ -807,5 +703,5 @@ it("triggers a <RESET> interrupt on start", () => {
 // 	locales: {
 // 		es: "el código CHR-ROM está mapeado al rango PPU $0000-$1FFF",
 // 	},
-// 	use: ({ id }, book) => id >= book.getId("5a.18"),
+// 	use: ({ id }, book) => id >= book.getId("5a.17"),
 // });
