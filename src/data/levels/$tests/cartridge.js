@@ -43,7 +43,7 @@ it("`/code/index.js` exports an object containing the class", async () => {
 	locales: {
 		es: "`/code/index.js` exporta un objeto que contiene la clase",
 	},
-	use: ({ id }, book) => id >= book.getId("3.1") && id < book.getId("5a.1"),
+	use: ({ id }, book) => id >= book.getId("3.1"),
 });
 
 // 3.2 The magic constant

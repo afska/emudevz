@@ -67,7 +67,7 @@ it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
 	locales: {
 		es: "incluye dos propiedades misteriosas: `cycle` y `extraCycles`",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.2") && id < book.getId("5a.17"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 it("includes all the registers", () => {
@@ -95,7 +95,7 @@ it("all registers start from 0", () => {
 	locales: {
 		es: "todos los registros comienzan en 0",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.2") && id < book.getId("5a.17"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 it("8-bit registers can save and read values (valid range)", () => {
@@ -181,7 +181,7 @@ it("includes a `flags` property with 6 booleans", () => {
 	locales: {
 		es: "incluye una propiedad `flags` con 6 booleanos",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.3") && id < book.getId("5a.17"),
+	use: ({ id }, book) => id >= book.getId("5a.3"),
 });
 
 it("flags register can be serialized into a byte", () => {
@@ -552,156 +552,3 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 	},
 	use: ({ id }, book) => id >= book.getId("5a.15"),
 });
-
-// 5a.16 Mapper 0
-
-it("instantiating a `NEEES` with an unknown mapper throws an 'Invalid mapper.' error", () => {
-	const { NEEES } = mainModule.default;
-
-	expect(
-		() => new NEEES(newRom([], newHeader(1, 1, 0b10110000, 0b11000000)))
-	).to.throw(Error, "Invalid mapper.");
-})({
-	locales: {
-		es:
-			"instanciar una `NEEES` con un mapper desconocido tira un error 'Invalid mapper.'",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.16"),
-});
-
-it("PRG-ROM code is mapped to $8000-$BFFF", () => {
-	const { NEEES } = mainModule.default;
-
-	const code = [];
-	for (let i = 0; i < 16384; i++) code.push(byte.random());
-
-	const neees = new NEEES(newRom(code));
-	const cpu = neees.cpu;
-
-	for (let i = 0; i < 16384; i++) {
-		const address = 0x8000 + i;
-		cpu.memory.read(address).should.equalHex(code[i], `read(${address})`);
-	}
-})({
-	locales: {
-		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.16"),
-});
-
-it("PRG-ROM code is read only", () => {
-	const { NEEES } = mainModule.default;
-
-	const code = [];
-	for (let i = 0; i < 16384; i++) code.push(byte.random());
-
-	const neees = new NEEES(newRom(code));
-	const cpu = neees.cpu;
-
-	for (let i = 0; i < 16384; i++) {
-		const value = cpu.memory.read(0x8000 + i);
-		cpu.memory.write(0x8000 + i, byte.random());
-		const address = 0x8000 + i;
-		cpu.memory.read(address).should.equalHex(value, `read(${address})`);
-	}
-})({
-	locales: {
-		es: "el código PRG-ROM es solo lectura",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.16"),
-});
-
-it("PRG-ROM code is also mapped to $C000-$FFFF", () => {
-	const { NEEES } = mainModule.default;
-
-	const code = [];
-	for (let i = 0; i < 16384; i++) code.push(byte.random());
-
-	const neees = new NEEES(newRom(code));
-	const cpu = neees.cpu;
-
-	for (let i = 0; i < 16384; i++) {
-		const address = 0xc000 + i;
-		cpu.memory.read(address).should.equalHex(code[i], `read(${address})`);
-	}
-})({
-	locales: {
-		es: "el código PRG-ROM está mapeado a $8000-$BFFF",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.16"),
-});
-
-// 5a.17 Initial state
-
-it("includes a `flags` property with 6 booleans (I = true)", () => {
-	const cpu = newCPU();
-
-	cpu.should.include.key("flags");
-	expect(cpu.flags).to.be.an("object");
-
-	["c", "z", "i", "d", "v", "n"].forEach((flag) => {
-		cpu.flags.should.include.key(flag);
-		expect(cpu.flags[flag]).to.be.an("boolean", flag);
-	});
-
-	["c", "z", "d", "v", "n"].forEach((flag) => {
-		cpu.flags[flag].should.be.false;
-	});
-	cpu.flags.i.should.be.true;
-})({
-	locales: {
-		es: "incluye una propiedad `flags` con 6 booleanos (I = true)",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.17"),
-});
-
-it("all registers start from 0 (except for [SP])", () => {
-	const cpu = newCPU();
-
-	["a", "x", "y", "pc"].forEach((register) => {
-		cpu[register].getValue().should.equalN(0, `${register}.getValue()`);
-	});
-})({
-	locales: {
-		es: "todos los registros comienzan en 0 (excepto [SP])",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.17"),
-});
-
-it("triggers a <RESET> interrupt on start", () => {
-	const cpu = newCPU();
-
-	["cycle", "extraCycles"].forEach((property) => {
-		cpu.should.include.key(property);
-	});
-
-	cpu.stack.pop().should.equalBin(0b00100100, "pop()");
-	cpu.stack.pop16().should.equalHex(0x0, "pop16()");
-	cpu.cycle.should.equalN(7, "cycle");
-	cpu.extraCycles.should.equalN(0, "extraCycles");
-	cpu.flags.i.should.equalN(true, "i");
-	cpu.pc.getValue().should.equalHex(0x0, "getValue()");
-})({
-	locales: {
-		es: "dispara una interrupción <RESET> al inicio",
-	},
-	use: ({ id }, book) => id >= book.getId("5a.17"),
-});
-
-// TODO: For PPU
-// it("CHR-ROM code is mapped to PPU range $0000-$1FFF", () => {
-// 	const { NEEES } = mainModule.default;
-
-// 	const neees = new NEEES(newRom());
-// 	const cpu = neees.cpu;
-// 	const graphics = neees.cartridge.chr();
-
-//  const ppu = TODO;
-// 	for (let i = 0; i < 8192; i++)
-// 		ppu.memory.read(i).should.equalHex(graphics[i], `read(${i})`);
-// })({
-// 	locales: {
-// 		es: "el código CHR-ROM está mapeado al rango PPU $0000-$1FFF",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5a.16"),
-// });
