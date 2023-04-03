@@ -34,16 +34,36 @@ export default class ChapterSelectModal extends PureComponent {
 					{book && (
 						<div className={styles.levelMap}>
 							<Chapter book={book} chapter={book.getChapter(0)} />
+							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(1)} />
+							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(2)} />
+							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(3)} />
+							<div className={styles.verticalLine} />
+							<div className={styles.horizontalLine} />
 							<div className={styles.chapterRow}>
-								<Chapter book={book} chapter={book.getChapter(4)} mini />
-								<Chapter book={book} chapter={book.getChapter(5)} mini />
-								<Chapter book={book} chapter={book.getChapter(6)} mini />
-								<Chapter book={book} chapter={book.getChapter(7)} mini />
+								<Chapter book={book} chapter={book.getChapter(4)} mini right />
+								<Chapter
+									book={book}
+									chapter={book.getChapter(5)}
+									mini
+									left
+									right
+								/>
+								<Chapter
+									book={book}
+									chapter={book.getChapter(6)}
+									mini
+									left
+									right
+								/>
+								<Chapter book={book} chapter={book.getChapter(7)} mini left />
 							</div>
+							<div className={styles.horizontalLine} />
+							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(8)} />
+							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(9)} />
 						</div>
 					)}

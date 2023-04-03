@@ -1,6 +1,12 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 .chapter {
 	flex-direction: column;
-	margin-bottom: 8px;
 	min-width: 160px;
 }
 
@@ -32,4 +38,37 @@
 	height: 4px;
 	background-color: #5cb85c;
 	border-radius: 3px;
+}
+
+.verticalLine {
+	width: 2px;
+	height: 8px;
+	border-radius: 8px;
+	background: white;
+}
+
+.horizontalLines {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.horizontalLinesRightOnly {
+	justify-content: end;
+}
+
+.horizontalLineRight {
+	width: 50%;
+	height: 2px;
+	border-radius: 8px;
+	background: white;
+	align-self: end;
+}
+
+.horizontalLineLeft {
+	width: 50%;
+	height: 2px;
+	border-radius: 8px;
+	background: white;
+	align-self: start;
 }

@@ -16,3 +16,10 @@
 	display: flex;
 	flex-direction: row;
 }
+
+.verticalLine {
+	width: 2px;
+	height: 8px;
+	border-radius: 8px;
+	background: white;
+}

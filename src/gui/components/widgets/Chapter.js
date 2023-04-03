@@ -12,6 +12,8 @@ class Chapter extends PureComponent {
 			chapter,
 			goTo,
 			mini = false,
+			right = false,
+			left = false,
 			className,
 			children,
 			...rest
@@ -23,32 +25,50 @@ class Chapter extends PureComponent {
 			.length;
 		const percentage = Math.round((totalCompleted / totalLevels) * 100);
 
-		return (
-			<Button
+		const lines = (left || right) && (
+			<div
 				className={classNames(
-					styles.chapter,
-					mini ? styles.mini : false,
-					!isUnlocked ? styles.locked : false,
-					className
+					styles.horizontalLines,
+					!left && right ? styles.horizontalLinesRightOnly : false
 				)}
-				onClick={this._go}
-				{...rest}
 			>
-				<span>{chapter.name[locales.language]}</span>
+				{mini && right && <div className={styles.horizontalLineRight} />}
+				{mini && left && <div className={styles.horizontalLineLeft} />}
+			</div>
+		);
 
-				{isUnlocked ? (
-					<div className={styles.progress}>
-						<div className={styles.bar}>
-							<span
-								className={styles.barFill}
-								style={{ width: percentage + "%" }}
-							/>
+		return (
+			<div className={styles.container}>
+				{lines}
+				{mini && <div className={styles.verticalLine} />}
+				<Button
+					className={classNames(
+						styles.chapter,
+						mini ? styles.mini : false,
+						!isUnlocked ? styles.locked : false,
+						className
+					)}
+					onClick={this._go}
+					{...rest}
+				>
+					<span>{chapter.name[locales.language]}</span>
+
+					{isUnlocked ? (
+						<div className={styles.progress}>
+							<div className={styles.bar}>
+								<span
+									className={styles.barFill}
+									style={{ width: percentage + "%" }}
+								/>
+							</div>
 						</div>
-					</div>
-				) : (
-					<div>🔒</div>
-				)}
-			</Button>
+					) : (
+						<div>🔒</div>
+					)}
+				</Button>
+				{mini && <div className={styles.verticalLine} />}
+				{lines}
+			</div>
 		);
 	}
 
