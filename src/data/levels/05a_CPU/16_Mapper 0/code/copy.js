@@ -1,3 +1,0 @@
-["Mapper.js", "NROM.js"].forEach((file) => {
-	filesystem.write(`${Drive.LIB_DIR}/${file}`, level.bin[file]);
-});
