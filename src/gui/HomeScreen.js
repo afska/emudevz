@@ -64,10 +64,7 @@ class HomeScreen extends PureComponent {
 					/>
 
 					<div className={styles.buttons}>
-						<Button onClick={this._openChapterSelect}>
-							{locales.get("button_play")}
-						</Button>
-						{/* <Button>{locales.get("button_chapter_selection")}</Button> */}
+						<Button onClick={this._play}>{locales.get("button_play")}</Button>
 						<Button onClick={this._openSettings}>
 							{locales.get("button_settings")}
 						</Button>
@@ -215,8 +212,9 @@ class HomeScreen extends PureComponent {
 		this.props.setSettingsOpen(true);
 	};
 
-	_openChapterSelect = () => {
-		this.props.setChapterSelectOpen(true);
+	_play = () => {
+		if (this.props.maxChapterNumber > 1) this.props.setChapterSelectOpen(true);
+		else this.props.play();
 	};
 
 	_quit = () => {
@@ -224,7 +222,8 @@ class HomeScreen extends PureComponent {
 	};
 }
 
-const mapStateToProps = ({ level }) => ({
+const mapStateToProps = ({ level, savedata }) => ({
+	maxChapterNumber: savedata.maxChapterNumber,
 	isSettingsOpen: level.isSettingsOpen,
 	isChapterSelectOpen: level.isChapterSelectOpen,
 });

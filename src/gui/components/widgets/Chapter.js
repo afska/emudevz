@@ -1,10 +1,8 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import _ from "lodash";
 import locales from "../../../locales";
 import Button from "./Button";
-import Tooltip from "./Tooltip";
 import styles from "./Chapter.module.css";
 
 class Chapter extends PureComponent {
