@@ -25,7 +25,7 @@ export default class Book {
 	}
 
 	canGoToNextChapter(chapter) {
-		const nextLevelId = this.nextIdOf(_.last(chapter.levels).id);
+		const nextLevelId = this.nextIdOf(_.last(chapter.levels).id, true);
 		return this.isUnlocked(nextLevelId);
 	}
 
