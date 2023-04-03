@@ -34,15 +34,7 @@
 	margin-right: -2px;
 }
 
-.pinButton:hover {
-	color: #466a8e;
-}
-
 .closeButton {
 	margin-left: 6px;
 	margin-right: 2px;
-}
-
-.closeButton:hover {
-	color: #466a8e;
 }

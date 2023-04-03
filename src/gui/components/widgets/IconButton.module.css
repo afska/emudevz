@@ -7,6 +7,10 @@
 	margin-right: 8px;
 }
 
+.inline:hover {
+	color: #466a8e;
+}
+
 .disabled {
 	background: #929292 !important;
 	cursor: not-allowed;
