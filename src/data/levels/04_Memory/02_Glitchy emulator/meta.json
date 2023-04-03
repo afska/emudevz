@@ -1,10 +1,9 @@
 {
 	"name": {
-		"en": "🧠 Mapper 0",
-		"es": "🧠 Mapper 0"
+		"en": "🌀 Glitchy emulator",
+		"es": "🌀 Emulador buggeado"
 	},
 	"ui": {
-		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [
@@ -25,18 +24,8 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": [
-			"cartridge.js",
-			"cpu.js",
-			"cpu_instructions_1.js",
-			"cpu_instructions_2.js",
-			"cpu_instructions_3.js",
-			"cpu_instructions_4.js",
-			"cpu_instructions_5.js",
-			"cpu_addressing_modes_1.js",
-			"cpu_addressing_modes_2.js"
-		],
-		"mainTestFile": "cpu.js"
+		"inherit": ["cartridge.js", "memory.js"],
+		"mainTestFile": "memory.js"
 	},
 	"memory": {
 		"content": {

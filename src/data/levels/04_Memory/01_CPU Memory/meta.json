@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "🐏 Memory",
-		"es": "🐏 Memoria"
+		"en": "🐏 CPU Memory",
+		"es": "🐏 Memoria de CPU"
 	},
 	"ui": {
 		"run": "copy.js",
@@ -26,7 +26,7 @@
 	"test": {
 		"context": "javascript",
 		"inherit": ["cartridge.js", "cpu.js"],
-		"mainTestFile": "cpu.js"
+		"mainTestFile": "memory.js"
 	},
 	"memory": {
 		"content": {

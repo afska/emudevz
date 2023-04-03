@@ -32,7 +32,7 @@ io:
 implement:
   messages:
   - for now, we'll just implement the first two ranges of the memory map
-  - 📚  create a `CPUMemory` class with a constructor
+  - 📚  create a `CPUMemory` class in 📄  ~/code/CPUMemory.js~ with a constructor
   - it should assign a `ram` property (a `Uint8Array` of 2048 bytes)
   - |-
     implement these two methods:
@@ -43,9 +43,7 @@ implement:
       -> otherwise, returns 0__
     **write(address, value)**:
       __-> similar to *read*, but writes the <value> instead of returning__
-  - |-
-    then, add to your `CPU` constructor:
-      ```javascript this.memory = new CPUMemory();```
+  - then, as you did with `Cartridge`, add the class to ~/code/index.js~
   responses:
   - I need help with the mirrored bytes 📐 [help]
 
