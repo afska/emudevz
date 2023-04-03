@@ -29,6 +29,7 @@ const KEY_MAP = {
 const INITIAL_VOLUME = 0;
 const STATE_POLL_INTERVAL = 10;
 const SAVESTATE_KEY = "emudevz-savestate";
+const COMPONENT_BORDER_RADIUS = 8;
 
 let webWorker = null;
 
@@ -57,21 +58,25 @@ export default class Emulator extends Component {
 								title={`💻 CPU: ${locales.get("using_your_emulator")}`}
 								placement="right"
 							>
-								<span>💻: ✔️</span>
+								<span
+									className={styles.component}
+									style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
+								>
+									💻: ✔️
+								</span>
 							</Tooltip>
-							<span>&nbsp;|&nbsp;</span>
 							<Tooltip
 								title={`🖥️ PPU: ${locales.get("using_bugged_emulator")}`}
 								placement="right"
 							>
-								<span>🖥️: ❌</span>
+								<span className={styles.component}>🖥️: ❌</span>
 							</Tooltip>
-							<span>&nbsp;|&nbsp;</span>
 							<Tooltip
 								title={`🔊 APU: ${locales.get("using_bugged_emulator")}`}
 								placement="right"
+								style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
 							>
-								<span>🔊: ❌</span>
+								<span className={styles.component}>🔊: ❌</span>
 							</Tooltip>
 						</div>
 						<div className={styles.row}>
@@ -81,23 +86,31 @@ export default class Emulator extends Component {
 								)}`}
 								placement="right"
 							>
-								<span>🎮: ❌</span>
+								<span
+									className={styles.component}
+									style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
+								>
+									🎮: ❌
+								</span>
 							</Tooltip>
-							<span>&nbsp;|&nbsp;</span>
 							<Tooltip
 								title={`🕹️ ${locales.get("console")}: ${locales.get(
 									"using_bugged_emulator"
 								)}`}
 								placement="right"
 							>
-								<span>🕹️: ❌</span>
+								<span className={styles.component}>🕹️: ❌</span>
 							</Tooltip>
-							<span>&nbsp;|&nbsp;</span>
 							<Tooltip
 								title={`🧠 Mappers: ${locales.get("using_default_emulator")}`}
 								placement="right"
 							>
-								<span>🧠: ⚠️</span>
+								<span
+									className={styles.component}
+									style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
+								>
+									🧠: ⚠️
+								</span>
 							</Tooltip>
 						</div>
 					</div>
