@@ -496,7 +496,7 @@ it("defines a list of 151 `operations`", () => {
 	use: ({ id }, book) => id >= book.getId("5a.14"),
 });
 
-// 5a.15 Execute (2/2)
+// 5a.15 Execute
 
 it("can run 4 simple operations, updating all counters, and calling a `logger` function", () => {
 	// NOP ; LDA #$05 ; STA $0201 ; LDX $0201
