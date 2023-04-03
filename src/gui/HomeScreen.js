@@ -63,7 +63,9 @@ class HomeScreen extends PureComponent {
 					/>
 
 					<div className={styles.buttons}>
-						<Button onClick={this._play}>{locales.get("button_play")}</Button>
+						<Button onClick={this._play} primary>
+							{locales.get("button_play")}
+						</Button>
 						<Button onClick={this._openSettings}>
 							{locales.get("button_settings")}
 						</Button>
