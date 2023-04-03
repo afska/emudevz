@@ -36,7 +36,6 @@ class HomeScreen extends PureComponent {
 			isChapterSelectOpen,
 			setSettingsOpen,
 			setChapterSelectOpen,
-			play,
 		} = this.props;
 		const { fontsLoaded } = this.state;
 

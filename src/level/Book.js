@@ -83,11 +83,13 @@ export default class Book {
 		return previousLevel.id;
 	}
 
-	nextIdOf(levelId) {
+	nextIdOf(levelId, ignoreProgress = false) {
 		const level = this.getLevelDefinitionOf(levelId);
 		if (!level) return null;
 		let nextLevel = this.getLevelDefinitionOfGlobalId(level.globalId + 1);
 		if (!nextLevel) return null;
+
+		if (ignoreProgress) return nextLevel.id;
 
 		const maxChapterNumber = this._savedata.maxChapterNumber;
 		const nextLevelChapter = this.getChapterOf(nextLevel.id);
