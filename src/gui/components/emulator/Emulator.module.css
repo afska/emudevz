@@ -18,10 +18,22 @@
 
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
 	align-items: center;
-	padding-left: 8px;
-	padding-right: 8px;
+	padding-left: 16px;
+	padding-right: 48px;
 	font-size: small;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
 }
 
 .content {

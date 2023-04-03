@@ -45,58 +45,86 @@ export default class Emulator extends Component {
 					this._container = ref;
 				}}
 			>
-				<div className={classNames(styles.bar, "d-none d-xl-flex d-xxl-flex")}>
-					<Tooltip
-						title={`💻 CPU: ${locales.get("using_your_emulator")}`}
-						placement="top"
-					>
-						<span>💻: ✔️</span>
-					</Tooltip>
-					<span>&nbsp;|&nbsp;</span>
-					<Tooltip
-						title={`🖥️ PPU: ${locales.get("using_bugged_emulator")}`}
-						placement="top"
-					>
-						<span>🖥️: ❌</span>
-					</Tooltip>
-					<span>&nbsp;|&nbsp;</span>
-					<Tooltip
-						title={`🔊 APU: ${locales.get("using_bugged_emulator")}`}
-						placement="top"
-					>
-						<span>🔊: ❌</span>
-					</Tooltip>
-					<span>&nbsp;|&nbsp;</span>
-					<Tooltip
-						title={`🎮 ${locales.get("controller")}: ${locales.get(
-							"using_bugged_emulator"
-						)}`}
-						placement="top"
-					>
-						<span>🎮: ❌</span>
-					</Tooltip>
-					<span>&nbsp;|&nbsp;⚡️&nbsp;</span>
-					<span id="fps">00</span>
-					<span>&nbsp;FPS</span>
-					<span>&nbsp;|&nbsp;</span>
-					<Tooltip title={locales.get("using_keyboard")} placement="top">
-						<span id="keyboard">⌨️</span>
-					</Tooltip>
-					<Tooltip
-						title={locales.get("using_gamepad")}
-						placement="top"
-						style={{ display: "none" }}
-					>
-						<span id="gamepad">🎮</span>
-					</Tooltip>
-					<span>&nbsp;|&nbsp;</span>
-					<VolumeSlider
-						volume={null}
-						setVolume={this._updateVolume}
-						defaultVolume={INITIAL_VOLUME}
-						style={{ marginLeft: 8, width: 64 }}
-						className="emu-volume-slider"
-					/>
+				<div
+					className={classNames(
+						styles.bar,
+						"d-none d-lg-flex d-xl-flex d-xxl-flex"
+					)}
+				>
+					<div className={styles.column}>
+						<div className={styles.row}>
+							<Tooltip
+								title={`💻 CPU: ${locales.get("using_your_emulator")}`}
+								placement="right"
+							>
+								<span>💻: ✔️</span>
+							</Tooltip>
+							<span>&nbsp;|&nbsp;</span>
+							<Tooltip
+								title={`🖥️ PPU: ${locales.get("using_bugged_emulator")}`}
+								placement="right"
+							>
+								<span>🖥️: ❌</span>
+							</Tooltip>
+							<span>&nbsp;|&nbsp;</span>
+							<Tooltip
+								title={`🔊 APU: ${locales.get("using_bugged_emulator")}`}
+								placement="right"
+							>
+								<span>🔊: ❌</span>
+							</Tooltip>
+						</div>
+						<div className={styles.row}>
+							<Tooltip
+								title={`🎮 ${locales.get("controller")}: ${locales.get(
+									"using_bugged_emulator"
+								)}`}
+								placement="right"
+							>
+								<span>🎮: ❌</span>
+							</Tooltip>
+							<span>&nbsp;|&nbsp;</span>
+							<Tooltip
+								title={`🕹️ ${locales.get("console")}: ${locales.get(
+									"using_bugged_emulator"
+								)}`}
+								placement="right"
+							>
+								<span>🕹️: ❌</span>
+							</Tooltip>
+							<span>&nbsp;|&nbsp;</span>
+							<Tooltip
+								title={`🧠 Mappers: ${locales.get("using_default_emulator")}`}
+								placement="right"
+							>
+								<span>🧠: ⚠️</span>
+							</Tooltip>
+						</div>
+					</div>
+					<div className={styles.row}>
+						<span>⚡️&nbsp;</span>
+						<span id="fps">00</span>
+						<span>&nbsp;FPS</span>
+						<span>&nbsp;|&nbsp;</span>
+						<Tooltip title={locales.get("using_keyboard")} placement="top">
+							<span id="keyboard">⌨️</span>
+						</Tooltip>
+						<Tooltip
+							title={locales.get("using_gamepad")}
+							placement="top"
+							style={{ display: "none" }}
+						>
+							<span id="gamepad">🎮</span>
+						</Tooltip>
+						<span>&nbsp;|&nbsp;</span>
+						<VolumeSlider
+							volume={null}
+							setVolume={this._updateVolume}
+							defaultVolume={INITIAL_VOLUME}
+							style={{ marginLeft: 8, width: 64 }}
+							className="emu-volume-slider"
+						/>
+					</div>
 				</div>
 				<div className={styles.content}>
 					{error == null ? (
