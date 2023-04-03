@@ -25,7 +25,7 @@ class SettingsModal extends PureComponent {
 		return (
 			<Modal
 				show={open}
-				onHide={this.onClose}
+				onHide={this._onClose}
 				centered
 				contentClassName={"crt " + styles.modalContent}
 			>
@@ -65,8 +65,8 @@ class SettingsModal extends PureComponent {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={this.onClose}>{locales.get("cancel")}</Button>
-					<Button onClick={this.onSave} primary>
+					<Button onClick={this._onClose}>{locales.get("cancel")}</Button>
+					<Button onClick={this._onSave} primary>
 						{locales.get("save")}
 					</Button>
 				</Modal.Footer>
@@ -74,12 +74,12 @@ class SettingsModal extends PureComponent {
 		);
 	}
 
-	onSave = () => {
+	_onSave = () => {
 		this.props.setLanguage(this.state.language);
 		this.props.setSettingsOpen(false);
 	};
 
-	onClose = () => {
+	_onClose = () => {
 		this.props.setSettingsOpen(false);
 		this.reset();
 	};

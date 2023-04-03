@@ -5,6 +5,7 @@ import { PointLight, lightGroup } from "pixi-lights";
 import * as PIXI from "pixi.js";
 import { connect } from "react-redux";
 import locales from "../locales";
+import ChapterSelectModal from "./ChapterSelectModal";
 import SettingsModal from "./SettingsModal";
 import Button from "./components/widgets/Button";
 import styles from "./HomeScreen.module.css";
@@ -30,7 +31,13 @@ class HomeScreen extends PureComponent {
 	state = { fontsLoaded: false };
 
 	render() {
-		const { isSettingsOpen, play, setSettingsOpen } = this.props;
+		const {
+			isSettingsOpen,
+			isChapterSelectOpen,
+			setSettingsOpen,
+			setChapterSelectOpen,
+			play,
+		} = this.props;
 		const { fontsLoaded } = this.state;
 
 		if (!fontsLoaded) return false;
@@ -44,12 +51,19 @@ class HomeScreen extends PureComponent {
 					setSettingsOpen={setSettingsOpen}
 				/>
 
+				<ChapterSelectModal
+					open={isChapterSelectOpen}
+					setChapterSelectOpen={setChapterSelectOpen}
+				/>
+
 				<div id="ui" className={styles.ui}>
 					<h3 style={{ marginBottom: 24 }}>Demo</h3>
 					<div className={styles.box}>{locales.get("plot")}</div>
 
 					<div className={styles.buttons}>
-						<Button onClick={play}>{locales.get("button_play")}</Button>
+						<Button onClick={this._openChapterSelect}>
+							{locales.get("button_play")}
+						</Button>
 						{/* <Button>{locales.get("button_chapter_selection")}</Button> */}
 						<Button onClick={this._openSettings}>
 							{locales.get("button_settings")}
@@ -198,6 +212,10 @@ class HomeScreen extends PureComponent {
 		this.props.setSettingsOpen(true);
 	};
 
+	_openChapterSelect = () => {
+		this.props.setChapterSelectOpen(true);
+	};
+
 	_quit = () => {
 		window.close();
 	};
@@ -205,10 +223,12 @@ class HomeScreen extends PureComponent {
 
 const mapStateToProps = ({ level }) => ({
 	isSettingsOpen: level.isSettingsOpen,
+	isChapterSelectOpen: level.isChapterSelectOpen,
 });
 const mapDispatchToProps = ({ level }) => ({
 	play: level.goToLastLevel,
 	setSettingsOpen: level.setSettingsOpen,
+	setChapterSelectOpen: level.setChapterSelectOpen,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

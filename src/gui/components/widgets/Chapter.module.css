@@ -1,0 +1,22 @@
+.chapter {
+	flex-direction: column;
+	margin-bottom: 8px;
+	min-width: 160px;
+}
+
+.mini {
+	min-width: 100px;
+}
+
+.bar {
+	border-width: 1px;
+	border-color: white;
+	border-style: solid;
+	width: 100%;
+	height: 4px;
+	background-color: #ecf0f1;
+	text-align: center;
+	margin: 8px 1px 0 1px;
+	border-radius: 2px;
+	cursor: pointer;
+}

@@ -7,6 +7,7 @@ const KEY = "level";
 const INITIAL_STATE = () => ({
 	instance: null,
 	isSettingsOpen: false,
+	isChapterSelectOpen: false,
 });
 
 export default {
@@ -17,6 +18,9 @@ export default {
 		},
 		setSettingsOpen(state, isSettingsOpen) {
 			return { ...state, isSettingsOpen };
+		},
+		setChapterSelectOpen(state, isChapterSelectOpen) {
+			return { ...state, isChapterSelectOpen };
 		},
 		reset() {
 			return INITIAL_STATE();

@@ -100,7 +100,7 @@ export default class Book {
 				.value();
 
 			if (!_.isEmpty(pendingLevels)) {
-				nextLevel = _.first(pendingLevels);
+				nextLevel = pendingLevels[0];
 			}
 		}
 

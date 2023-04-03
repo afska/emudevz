@@ -85,6 +85,7 @@ export default {
 	save: "Save",
 	scroll_left: "Scroll left",
 	scroll_right: "Scroll right",
+	select_a_chapter: "Select a chapter",
 	settings: "Settings",
 	shell_command_not_found: "command not found",
 	stack: "Stack",

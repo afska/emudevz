@@ -9,7 +9,7 @@ import LevelScreen from "./LevelScreen";
 import styles from "./PlayScreen.module.css";
 
 const LEVELS_PATH = "levels";
-const BOOK_PATH = `${LEVELS_PATH}/book.json`;
+export const BOOK_PATH = `${LEVELS_PATH}/book.json`;
 const STATUS_OK = 200;
 
 class PlayScreen extends PureComponent {
