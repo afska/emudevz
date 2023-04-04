@@ -1,4 +1,3 @@
-import _escapeStringRegexp_ from "escape-string-regexp";
 import _sinon_ from "sinon";
 import _sinonChai_ from "sinon-chai";
 import _ from "lodash";
@@ -73,7 +72,6 @@ export default {
 				results.push({ name, passed: true });
 			} catch (e) {
 				let testCode = test.toString();
-				const isUserCode = e.stack != null && e.stack.includes("blob:");
 				let testErrorLine =
 					e.stack != null &&
 					!e.message?.startsWith("🐒") &&
@@ -86,48 +84,12 @@ export default {
 					passed: false,
 					testCode,
 					reason: e?.message || e?.toString() || "?",
-					stack:
-						isUserCode && $.modules != null
-							? this._buildStack(e.stack, $.modules)
-							: null,
+					fullStack: $.buildFullStack(e),
 				});
 			}
 		}
 
 		return _.orderBy(results, "passed", "desc");
-	},
-
-	_buildStack(originalTrace, modules) {
-		let trace = originalTrace
-			.split("\n")
-			.filter((it) => it.includes("blob:"))
-			.join("\n");
-
-		let location = null;
-		_.forEach(modules, (module, filePath) => {
-			const regexp = new RegExp(_escapeStringRegexp_(module), "g");
-			const index = trace.search(regexp);
-
-			// find error location (file + line)
-			if (location == null && index > -1) {
-				const endIndex = index + module.length;
-				if (trace[endIndex] === ":") {
-					const matches = trace.slice(endIndex).match(/\b(\d+)\b/);
-					if (matches.length === 2) {
-						const lineNumber = parseInt(matches[1]);
-						location = {
-							filePath,
-							lineNumber,
-						};
-					}
-				}
-			}
-
-			// replace blob with local file name
-			trace = trace.replace(regexp, filePath);
-		});
-
-		return { trace, location };
 	},
 
 	_markExactErrorLine(testErrorLine, _code_, testCode) {

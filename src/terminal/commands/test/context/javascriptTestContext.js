@@ -1,3 +1,4 @@
+import escapeStringRegexp from "escape-string-regexp";
 import { Linter } from "eslint-linter-browserify";
 import $path from "path";
 import _ from "lodash";
@@ -26,8 +27,11 @@ const MIXED_IMPORTS = [
 	/^import (\w+), ?{([^}]+)} from '(.+)';?$/m,
 ];
 
+let BLOB_TO_PATH_MAP = {};
+
 export default {
 	prepare(level) {
+		BLOB_TO_PATH_MAP = {};
 		const code = level.content;
 
 		const $ = {
@@ -43,8 +47,17 @@ export default {
 
 			const { module, modules } = this._compile(path ?? code.main);
 			$.modules = modules;
+			_.forEach(modules, (blobName, filePath) => {
+				BLOB_TO_PATH_MAP[blobName] = filePath;
+			});
 
 			return evaluateModule(module);
+		};
+
+		$.buildFullStack = (e) => {
+			const isUserCode = e.stack != null && e.stack.includes("blob:");
+
+			return isUserCode ? this._buildStack(e.stack) : null;
 		};
 
 		return $;
@@ -182,5 +195,38 @@ export default {
 		}
 
 		return absolutePath;
+	},
+
+	_buildStack(originalTrace) {
+		let trace = originalTrace
+			.split("\n")
+			.filter((it) => it.includes("blob:"))
+			.join("\n");
+
+		let location = null;
+		_.forEach(BLOB_TO_PATH_MAP, (filePath, module) => {
+			const regexp = new RegExp(escapeStringRegexp(module), "g");
+			const index = trace.search(regexp);
+
+			// find error location (file + line)
+			if (location == null && index > -1) {
+				const endIndex = index + module.length;
+				if (trace[endIndex] === ":") {
+					const matches = trace.slice(endIndex).match(/\b(\d+)\b/);
+					if (matches.length === 2) {
+						const lineNumber = parseInt(matches[1]);
+						location = {
+							filePath,
+							lineNumber,
+						};
+					}
+				}
+			}
+
+			// replace blob with local file name
+			trace = trace.replace(regexp, filePath);
+		});
+
+		return { trace, location };
 	},
 };
