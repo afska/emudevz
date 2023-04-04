@@ -4,21 +4,23 @@
 		"es": "🚧 Fin de la demo"
 	},
 	"ui": {
-		"layout": "mono",
+		"layout": "dual",
 		"components": {
-			"Main": [
+			"Left": [
 				"console",
 				{
-					"startup": "chat -f",
-					"availableCommands": ["chat"],
-					"subtitle": {
-						"en": "",
-						"es": ""
-					}
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
 				}
 			]
 		},
-		"focus": "Main"
+		"focus": "Left"
 	},
 	"memory": {
 		"content": {

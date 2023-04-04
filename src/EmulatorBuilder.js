@@ -69,7 +69,7 @@ export default class EmulatorBuilder {
 		try {
 			console.cpu = new mainModule.CPU();
 		} catch (e) {
-			throw new Error("🐒  Failure instantiating new CPU(): " + e.message);
+			throw new Error("🐒  Failure instantiating new CPU(): " + e?.message);
 		}
 
 		console.cpu.loadContext = ({ ppu, apu, mapper, controllers }) => {
@@ -80,16 +80,20 @@ export default class EmulatorBuilder {
 			if (!this.withUserAPU)
 				console.cpu.memory.apuRegisters = console.apu.registers.toMemory();
 
-			// TODO: MOVE TO USER CODE
-			console.cpu.memory.ppu = ppu;
-			console.cpu.memory.apu = apu;
-			console.cpu.memory.mapper = mapper;
-			console.cpu.memory.controllers = controllers;
+			try {
+				console.cpu.memory.onLoad(ppu, apu, mapper, controllers);
+			} catch (e) {
+				throw new Error("🐒  CPU::memory::onLoad(...) failed: " + e?.message);
+			}
 
-			console.cpu.interrupt({
-				id: "RESET",
-				vector: 0xfffc,
-			});
+			try {
+				console.cpu.interrupt({
+					id: "RESET",
+					vector: 0xfffc,
+				});
+			} catch (e) {
+				throw new Error("🐒  RESET interrupt failed: " + e?.message);
+			}
 		};
 
 		if (!console.cpu.memory) throw new Error("🐒  CPU::memory not found");

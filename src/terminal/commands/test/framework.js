@@ -75,7 +75,7 @@ export default {
 				let testCode = test.toString();
 				let testErrorLine =
 					e.stack != null &&
-					!e.message?.startsWith("🐒") &&
+					!e?.message?.startsWith("🐒") &&
 					e.stack.match(/<anonymous>:(\d+):\d+/);
 				if (testErrorLine != null)
 					testCode = this._markExactErrorLine(testErrorLine, _code_, testCode);
