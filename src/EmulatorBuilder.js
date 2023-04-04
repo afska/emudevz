@@ -2,8 +2,6 @@ import CursedNESEmu from "cursed-nes-emu";
 import Level from "./level/Level";
 import testContext from "./terminal/commands/test/context";
 
-const javascript = testContext.javascript;
-
 export default class EmulatorBuilder {
 	withUserCPU = false;
 	withUserPPU = false;
@@ -13,9 +11,6 @@ export default class EmulatorBuilder {
 	withUserMappers = false;
 
 	async build() {
-		const $ = javascript.prepare(Level.current);
-		const mainModule = (await $.evaluate()).default;
-
 		if (
 			!this.withUserCPU &&
 			!this.withUserPPU &&
@@ -26,6 +21,9 @@ export default class EmulatorBuilder {
 		)
 			return CursedNESEmu;
 
+		const javascript = testContext.javascript;
+		const $ = javascript.prepare(Level.current);
+		const mainModule = (await $.evaluate()).default;
 		const builder = this;
 
 		return class Console extends CursedNESEmu {
@@ -37,45 +35,59 @@ export default class EmulatorBuilder {
 		};
 	}
 
-	addUserCPU() {
-		this.withUserCPU = true;
+	addUserCPU(add = true) {
+		this.withUserCPU = add;
+		return this;
 	}
 
-	addUserPPU() {
-		this.withUserPPU = true;
+	addUserPPU(add = true) {
+		this.withUserPPU = add;
+		return this;
 	}
 
-	addUserAPU() {
-		this.withUserAPU = true;
+	addUserAPU(add = true) {
+		this.withUserAPU = add;
+		return this;
 	}
 
-	addUserController() {
-		this.withUserController = true;
+	addUserController(add = true) {
+		this.withUserController = add;
+		return this;
 	}
 
-	addUserConsole() {
-		this.withUserConsole = true;
+	addUserConsole(add = true) {
+		this.withUserConsole = add;
+		return this;
 	}
 
-	addUserMappers() {
-		this.withUserMappers = true;
+	addUserMappers(add = true) {
+		this.withUserMappers = add;
+		return this;
 	}
 
 	_patchCPU(console, mainModule) {
-		console.cpu = new mainModule.CPU();
-
-		if (!this.withUserPPU)
-			console.cpu.memory.ppuRegisters = console.ppu.registers.toMemory();
-		if (!this.withUserAPU)
-			console.cpu.memory.apuRegisters = console.apu.registers.toMemory();
+		try {
+			console.cpu = new mainModule.CPU();
+		} catch (e) {
+			throw new Error("🐒  Failure instantiating new CPU(): " + e.message);
+		}
 
 		console.cpu.loadContext = ({ ppu, apu, mapper, controllers }) => {
+			if (!console.cpu.memory) throw new Error("🐒  CPU::memory not found");
+
+			if (!this.withUserPPU)
+				console.cpu.memory.ppuRegisters = console.ppu.registers.toMemory();
+			if (!this.withUserAPU)
+				console.cpu.memory.apuRegisters = console.apu.registers.toMemory();
+
 			// TODO: MOVE TO USER CODE
 			console.cpu.memory.ppu = ppu;
 			console.cpu.memory.apu = apu;
 			console.cpu.memory.mapper = mapper;
 			console.cpu.memory.controllers = controllers;
 		};
+
+		if (!console.cpu.memory) throw new Error("🐒  CPU::memory not found");
 
 		const Memory = console.cpu.memory.constructor;
 		this._patchMemory(Memory);
@@ -105,6 +117,8 @@ export default class EmulatorBuilder {
 		const { withUserPPU, withUserAPU, withUserController } = this;
 
 		const read = Memory.prototype.read;
+		if (!read) throw new Error("🐒  CPU::memory::read(...) not found");
+
 		Memory.prototype.read = function (address) {
 			// PPU registers
 			if (!withUserPPU) {
@@ -145,6 +159,8 @@ export default class EmulatorBuilder {
 		const { withUserPPU, withUserAPU, withUserController } = this;
 
 		const write = Memory.prototype.write;
+		if (!write) throw new Error("🐒  CPU::memory::write(...) not found");
+
 		Memory.prototype.write = function (address, value) {
 			// PPU registers
 			if (!withUserPPU) {

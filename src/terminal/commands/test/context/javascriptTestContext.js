@@ -1,6 +1,7 @@
 import { Linter } from "eslint-linter-browserify";
 import $path from "path";
 import _ from "lodash";
+import EmulatorBuilder from "../../../../EmulatorBuilder";
 import filesystem from "../../../../filesystem";
 import { byte } from "../../../../utils";
 import { esLintConfig } from "../../../../utils/codemirror";
@@ -9,6 +10,7 @@ import {
 	evaluateModule,
 	moduleEval,
 } from "../../../../utils/eval";
+import testHelpers from "./testHelpers";
 
 const IMPORT_EXTENSION = ".js";
 const SINGLE_IMPORTS = [
@@ -30,6 +32,8 @@ export default {
 
 		const $ = {
 			modules: null,
+			EmulatorBuilder,
+			testHelpers,
 			filesystem,
 			byte,
 		};

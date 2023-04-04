@@ -75,7 +75,9 @@ export default {
 				let testCode = test.toString();
 				const isUserCode = e.stack != null && e.stack.includes("blob:");
 				let testErrorLine =
-					e.stack != null && e.stack.match(/<anonymous>:(\d+):\d+/);
+					e.stack != null &&
+					!e.message?.startsWith("🐒") &&
+					e.stack.match(/<anonymous>:(\d+):\d+/);
 				if (testErrorLine != null)
 					testCode = this._markExactErrorLine(testErrorLine, _code_, testCode);
 

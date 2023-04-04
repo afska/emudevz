@@ -1,45 +1,17 @@
-const { evaluate, byte } = $;
+const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
-let mainModule;
-let NROM = null;
+let mainModule, Console;
 beforeEach(async () => {
 	mainModule = await evaluate();
-	try {
-		NROM = (await evaluate("/lib/NROM.js")).default;
-	} catch {}
+	Console = await new EmulatorBuilder().addUserCPU().build();
 });
 
-// [!] Duplicated >>>
-const newHeader = (prgPages = 1, chrPages = 1, flags6 = 0, flags7 = 0) => {
-	// prettier-ignore
-	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, flags7, 0, 0, 0, 0, 0, 0, 0, 0];
-};
-
-const newRom = (prgBytes = [], header = newHeader()) => {
-	const prg = prgBytes;
-	const chr = [];
-	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
-	for (let i = 0; i < 8192; i++) chr.push(byte.random());
-	const bytes = new Uint8Array([...header, ...prg, ...chr]);
-
-	return bytes;
-};
-
-const newCPU = (prgBytes = []) => {
-	const CPU = mainModule.default.CPU;
-	const Cartridge = mainModule.default.Cartridge;
-
-	const cartridge = new Cartridge(newRom(prgBytes));
-
-	const areMappersImplemented = GLOBAL_LEVEL_ID >= Book.current.getId("5a.16");
-	if (areMappersImplemented && NROM != null) {
-		const mapper = new NROM({ cartridge });
-		return new CPU(mapper);
-	} else {
-		return new CPU(cartridge);
-	}
-};
-// [!] Duplicated <<<
+const { newHeader, newRom } = testHelpers;
+function newCPU(prgBytes = []) {
+	const console = new Console();
+	console.load(newRom(prgBytes));
+	return console.cpu;
+}
 
 // 5a.1 New CPU
 
@@ -57,11 +29,11 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 // 5a.2 Registers
 
 it("includes a `memory` property with a `CPUMemory` instance", async () => {
+	const CPU = mainModule.default.CPU;
 	const CPUMemory = (await evaluateModule($.modules["/code/CPUMemory.js"]))
 		.default;
 
-	const cpu = newCPU();
-
+	const cpu = new CPU();
 	cpu.should.include.key("memory");
 	cpu.memory.constructor.should.equal(CPUMemory);
 })({
