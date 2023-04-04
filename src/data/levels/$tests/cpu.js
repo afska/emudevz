@@ -44,7 +44,8 @@ it("includes a `memory` property with a `CPUMemory` instance", async () => {
 });
 
 it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
-	const cpu = newCPU();
+	const CPU = mainModule.default.CPU;
+	const cpu = new CPU();
 
 	["cycle", "extraCycles"].forEach((property) => {
 		cpu.should.include.key(property);
@@ -73,7 +74,8 @@ it("includes all the registers", () => {
 });
 
 it("all registers start from 0", () => {
-	const cpu = newCPU();
+	const CPU = mainModule.default.CPU;
+	const cpu = new CPU();
 
 	["a", "x", "y", "sp", "pc"].forEach((register) => {
 		cpu[register].getValue().should.equalN(0, register);
@@ -154,7 +156,8 @@ it("16-bit registers wrap with values outside the range", () => {
 // 5a.3 Flags
 
 it("includes a `flags` property with 6 booleans", () => {
-	const cpu = newCPU();
+	const CPU = mainModule.default.CPU;
+	const cpu = new CPU();
 
 	cpu.should.include.key("flags");
 	expect(cpu.flags).to.be.an("object");
