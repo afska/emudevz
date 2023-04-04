@@ -128,16 +128,16 @@ export default class EmulatorBuilder {
 			// PPU registers
 			if (!withUserPPU) {
 				if (address >= 0x2000 && address <= 0x2007)
-					return this.ppuRegisters[address - 0x2000].readAt(0);
+					return this.ppuRegisters.readAt(address - 0x2000);
 				else if (address >= 0x2008 && address <= 0x3fff)
-					return this.ppuRegisters[(address - 0x2008) % 0x0008].readAt(0);
+					return this.ppuRegisters.readAt((address - 0x2008) % 0x0008);
 				else if (address === 0x4014) return this.ppu.registers.oamDma.readAt(0);
 			}
 
 			// APU registers
 			if (!withUserAPU) {
 				if (address >= 0x4000 && address <= 0x4013)
-					return this.apuRegisters[address - 0x4000].readAt(0);
+					return this.apuRegisters.readAt(address - 0x4000);
 				else if (address === 0x4015)
 					return this.apu.registers.apuMain.readAt(0);
 			}
@@ -170,12 +170,9 @@ export default class EmulatorBuilder {
 			// PPU registers
 			if (!withUserPPU) {
 				if (address >= 0x2000 && address <= 0x2007)
-					return this.ppuRegisters[address - 0x2000].writeAt(0, value);
+					return this.ppuRegisters.writeAt(address - 0x2000, value);
 				else if (address >= 0x2008 && address <= 0x3fff)
-					return this.ppuRegisters[(address - 0x2008) % 0x0008].writeAt(
-						0,
-						value
-					);
+					return this.ppuRegisters.writeAt((address - 0x2008) % 0x0008, value);
 				else if (address === 0x4014)
 					return this.ppu.registers.oamDma.writeAt(0, value);
 			}
@@ -183,7 +180,7 @@ export default class EmulatorBuilder {
 			// APU registers
 			if (!withUserAPU) {
 				if (address >= 0x4000 && address <= 0x4013)
-					return this.apuRegisters[address - 0x4000].writeAt(0, value);
+					return this.apuRegisters.writeAt(address - 0x4000, value);
 				else if (address === 0x4015)
 					return this.apu.registers.apuMain.writeAt(0, value);
 			}
