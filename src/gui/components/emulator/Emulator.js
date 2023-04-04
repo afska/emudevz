@@ -217,7 +217,7 @@ export default class Emulator extends Component {
 			.addUserPPU(book.hasFinishedPPU)
 			.addUserAPU(book.hasFinishedAPU)
 			.addUserController(book.hasFinishedController)
-			.build()
+			.build(true)
 			.then((Console) => {
 				webWorker = !USE_WEB_WORKER
 					? new WebWorker(

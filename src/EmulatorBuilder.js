@@ -1,4 +1,5 @@
 import CursedNESEmu from "cursed-nes-emu";
+import filesystem from "./filesystem";
 import Level from "./level/Level";
 import testContext from "./terminal/commands/test/context";
 
@@ -10,7 +11,7 @@ export default class EmulatorBuilder {
 	withUserConsole = false;
 	withUserMappers = false;
 
-	async build() {
+	async build(withLastCode = false) {
 		if (
 			!this.withUserCPU &&
 			!this.withUserPPU &&
@@ -22,8 +23,15 @@ export default class EmulatorBuilder {
 			return CursedNESEmu;
 
 		const javascript = testContext.javascript;
-		const $ = javascript.prepare(Level.current);
-		const mainModule = (await $.evaluate()).default;
+		const symlinks = filesystem.symlinks;
+		let mainModule;
+		try {
+			if (withLastCode) filesystem.setSymlinks([]);
+			const $ = javascript.prepare(Level.current);
+			mainModule = (await $.evaluate()).default;
+		} finally {
+			if (withLastCode) filesystem.setSymlinks(symlinks);
+		}
 		const builder = this;
 
 		return class Console extends CursedNESEmu {
