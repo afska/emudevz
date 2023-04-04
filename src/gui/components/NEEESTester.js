@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
 import DiffViewer, { DiffMethod } from "react-diff-viewer";
 import { FaFastForward } from "react-icons/fa";
+import EmulatorBuilder from "../../EmulatorBuilder";
 import filesystem from "../../filesystem";
 import Level from "../../level/Level";
 import locales from "../../locales";
-import testContext from "../../terminal/commands/test/context";
 import { bus } from "../../utils";
 import { NEEESTestLogger } from "../../utils/nes";
 import IconButton from "./widgets/IconButton";
@@ -16,8 +16,6 @@ const NEWLINE = /\n|\r\n|\r/;
 const ENTRY_POINT = 0xc000;
 const LINES = 6;
 const PAGE_BOUNDARY_BUG_LINE = 3348;
-
-const javascript = testContext.javascript;
 
 export default class NEEESTester extends PureComponent {
 	state = {
@@ -133,13 +131,16 @@ export default class NEEESTester extends PureComponent {
 
 	_onCode = async () => {
 		try {
-			const $ = javascript.prepare(Level.current);
-			const mainModule = await $.evaluate();
-
 			const rom = new Uint8Array(
 				filesystem.read(NEEESTEST_PATH, { binary: true })
 			);
-			const neees = new mainModule.default.NEEES(rom);
+			const NEEES = await new EmulatorBuilder().addUserCPU().build();
+			const neees = new NEEES();
+			neees.load(rom);
+			neees.cpu.interrupt({
+				id: "RESET",
+				vector: 0xfffc,
+			});
 			neees.logger = new NEEESTestLogger();
 			neees.cpu.logger = (a, b, c, d, e) => neees.logger.log(a, b, c, d, e);
 			neees.cpu.pc.setValue(ENTRY_POINT);
