@@ -107,6 +107,16 @@ export default {
 		);
 	},
 
+	/** Returns an equivalent `address` from a mirrored memory section. */
+	getMirroredAddress(
+		address,
+		mirrorRangeStart,
+		targetRangeStart,
+		targetRangeSize
+	) {
+		return targetRangeStart + ((address - mirrorRangeStart) % targetRangeSize);
+	},
+
 	/** Returns a random byte ([0, `max`]). */
 	random(max = 255) {
 		return Math.floor(Math.random() * max);

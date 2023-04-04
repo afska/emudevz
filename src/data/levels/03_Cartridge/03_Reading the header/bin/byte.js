@@ -106,4 +106,9 @@ export default {
       ((bit7 & 1) << 7)
     );
   },
+
+  /** Returns an equivalent `address` from a mirrored memory section. */
+  getMirroredAddress(address, mirrorRangeStart, targetRangeStart, targetRangeSize) {
+    return targetRangeStart + (address - mirrorRangeStart) % targetRangeSize;
+  }
 };

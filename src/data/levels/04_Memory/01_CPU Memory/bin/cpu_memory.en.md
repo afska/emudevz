@@ -13,3 +13,15 @@
 | `$4017-$4017` | `$0001` | 🎮 Controller port 2 / 🔊 APUFrameCounter  |
 | `$4018-$401F` | `$0008` | 🧸 Unused                                  |
 | `$4020-$FFFF` | `$BFE0` | 💾 Cartridge space (PRG-ROM, mapper, etc.) |
+
+<br/>
+
+🚽 **Mirror hint:**
+
+```
+byte.getMirroredAddress(address, mirrorRangeStart, targetRangeStart, targetRangeSize)
+// ^ example:
+// read(0x2009) ==
+// read(byte.getMirroredAddress(0x2009, 0x2008, 0x2000, 0x0008)) ==
+// read(0x2001)
+```

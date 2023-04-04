@@ -1,16 +1,18 @@
 ---
 main:
   messages:
-  - you need to emulate a memory bus as well
+  - let's quickly recap the NEEES memory scheme
   - the CPU has 2 KiB of RAM 🐏
-  - but the full addressable space is 64 KiB
-  - we identify a memory location with a <memory address> (a 16-bit number)
+  - but memory addresses range from $0000 to $FFFF (65535)
+  - so the full addressable space would be 64 KiB
   responses:
-  - so, if only 2 KiB are actual RAM, what's in the other 62 KiB? 🤨 [other62]
+  - if only 2 KiB are actual RAM, what's in the other 62 KiB? 🤨 [other62]
 
 other62:
   messages:
   - other things, like RAM mirrors, memory-mapped I/O, and the cartridge data
+  - 🔗  everything is connected to the memory!
+  - that's how the machine code interacts with the devices
   - the memory map has a very specific structure, see 📄  ~/docs/cpu/cpu_memory.en.md~
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu/cpu_memory.en.md");
@@ -53,14 +55,23 @@ help:
   - and calling `write(0x0802, value)` should have the same effect as calling `write(0x0002, value)`
   - that's why the range $0800-$1FFF is called 🚽  <a mirror> of $0000-$07FF
   - to know which address you should read
-  - you have to subtract the range start
-  - then, use the ~%~ (remainder) operator with the size of the chunk we want to mirror
+  - you can use `byte.getMirroredAddress(...)`
+  responses:
+  - give me an example, please [example]
+
+example:
+  messages:
+  - check the "Mirror hint" at the end of the document
+  - let's use the 4th range ("🚽  Mirrors of $2000-$2007") as an example
+  - we have a <mirror range> ($2008-$3FFF) pointing to a <target range> ($2000-$2007)
   - |-
-    for example, let's look at the 4th range ("🚽  Mirrors of $2000-$2007")
-      range start => $2008
-      chunk we want to mirror => $2000-$2007
-      size of the chunk we want to mirror => $0008
+    `byte.getMirroredAddress(...)` takes 4 arguments
+      address => the read(...) and write(...) parameter
+      mirrorRangeStart => ~0x2008~
+      targetRangeStart => ~0x2000~
+      targetRangeSize  => ~0x0008~
   - |-
     then, we would do:
-      ```javascript (address - 0x2008) % 0x0008```
+      ```javascript address = byte.getMirroredAddress(address, 0x2008, 0x2000, 0x0008)```
+  - and finally, we proceed as if `address` was in the target range ($2000-$2007) 😃
   responses: []

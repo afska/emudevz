@@ -1,16 +1,18 @@
 ---
 main:
   messages:
-  - también necesitas emular el bus de memoria
+  - repasemos rápidamente el esquema de memoria de la NEEES
   - la CPU tiene 2 KiB de RAM 🐏
-  - pero el espacio direccionable completo es 64 KiB
-  - identificamos una ubicación de memoria con una <dirección de memoria> (un número de 16 bits)
+  - pero las direcciones de memoria van de $0000 a $FFFF (65535)
+  - por lo que el espacio direccionable completo es de 64 KiB
   responses:
-  - entonces, si solo 2 KiB son RAM de verdad, ¿qué hay en los otros 62 KiB? 🤨 [other62]
+  - si solo 2 KiB son RAM de verdad, ¿qué hay en los otros 62 KiB? 🤨 [other62]
 
 other62:
   messages:
   - otras cosas, como espejos de RAM, E/S mapeada en memoria y la información del cartucho
+  - 🔗  ¡todo está conectado a la memoria!
+  - así es como el código máquina interactúa con los dispositivos
   - el mapa de memoria tiene una estructura muy específica, mira 📄  ~/docs/cpu/cpu_memory.es.md~
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu/cpu_memory.es.md");
@@ -53,15 +55,23 @@ help:
   - y llamar a `write(0x0802, value)` debería tener el mismo efecto que tiene `write(0x0002, value)`
   - por eso es que el rango $0800-$1FFF es 🚽  <un espejo> de $0000-$07FF
   - para saber qué dirección leer
-  - tienes que sustraer el inicio del rango
-  - luego, usa el operador ~%~ (resto) con el tamaño de la sección de memoria que queremos espejar
+  - puedes usar `byte.getMirroredAddress(...)`
+  responses:
+  - dame un ejemplo, por favor [example]
+
+example:
+  messages:
+  - revisa la "Pista para espejos" al final del documento
+  - usemos el 4to rango ("🚽  Espejo de $2000-$2007") como ejemplo
+  - tenemos un <mirror range> ($2008-$3FFF) apuntando a un <target range> ($2000-$2007)
   - |-
-    por ejemplo, veamos el 4to rango ("🚽  Espejo de $2000-2007")
-      inicio del rango => $2008
-      rango a espejar => $2000-$2007
-      tamaño del rango a espejar => $0008
+    `byte.getMirroredAddress(...)` toma 4 argumentos
+      address => el parámetro de read(...) y write(...)
+      mirrorRangeStart => ~0x2008~
+      targetRangeStart => ~0x2000~
+      targetRangeSize  => ~0x0008~
   - |-
     entonces, haríamos:
-      ```javascript (address - 0x2008) % 0x0008```
-    
+      ```javascript address = byte.getMirroredAddress(address, 0x2008, 0x2000, 0x0008)```
+  - y finalmente, procedemos como si `address` ya estuviera en el <target range> ($2000-$2007) 😃
   responses: []
