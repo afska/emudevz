@@ -41,7 +41,7 @@ export default class Book {
 			return false;
 		} else {
 			const nextPendingLevel = this.nextPendingLevelOfChapter(chapter.id);
-			if (!nextPendingLevel) return false; // (should not happen)
+			if (!nextPendingLevel) return true;
 			return level.globalId <= nextPendingLevel.globalId;
 		}
 	}
