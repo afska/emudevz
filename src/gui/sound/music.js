@@ -13,7 +13,7 @@ const TRACKS = [
 		artist: "Synthenia",
 		title: "There is a lynx in the shower",
 	},
-	{ file: "7-irq.mp3", artist: "Synthenia", title: "IRQ Handler" },
+	{ file: "7-ffff.mp3", artist: "Synthenia", title: "Beyond $FFFF" },
 	{ file: "8-water.mp3", artist: "Synthenia", title: "Water Level" },
 	{ file: "9-voltage.mp3", artist: "Synthenia", title: "Voltage Overload" },
 ];
