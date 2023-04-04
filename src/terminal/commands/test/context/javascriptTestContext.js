@@ -54,12 +54,6 @@ export default {
 			return evaluateModule(module);
 		};
 
-		$.buildFullStack = (e) => {
-			const isUserCode = e.stack != null && e.stack.includes("blob:");
-
-			return isUserCode ? this._buildStack(e.stack) : null;
-		};
-
 		return $;
 	},
 
@@ -82,6 +76,43 @@ export default {
 				};
 			})
 			.filter((it) => !_.isEmpty(it.lint));
+	},
+
+	buildStack(error) {
+		const isUserCode = error?.stack != null && error.stack.includes("blob:");
+		if (!isUserCode) return null;
+		const originalTrace = error.stack;
+
+		let trace = originalTrace
+			.split("\n")
+			.filter((it) => it.includes("blob:"))
+			.join("\n");
+
+		let location = null;
+		_.forEach(BLOB_TO_PATH_MAP, (filePath, module) => {
+			const regexp = new RegExp(escapeStringRegexp(module), "g");
+			const index = trace.search(regexp);
+
+			// find error location (file + line)
+			if (location == null && index > -1) {
+				const endIndex = index + module.length;
+				if (trace[endIndex] === ":") {
+					const matches = trace.slice(endIndex).match(/\b(\d+)\b/);
+					if (matches.length === 2) {
+						const lineNumber = parseInt(matches[1]);
+						location = {
+							filePath,
+							lineNumber,
+						};
+					}
+				}
+			}
+
+			// replace blob with local file name
+			trace = trace.replace(regexp, filePath);
+		});
+
+		return { trace, location };
 	},
 
 	_compile(filePath, modules = {}) {
@@ -195,38 +226,5 @@ export default {
 		}
 
 		return absolutePath;
-	},
-
-	_buildStack(originalTrace) {
-		let trace = originalTrace
-			.split("\n")
-			.filter((it) => it.includes("blob:"))
-			.join("\n");
-
-		let location = null;
-		_.forEach(BLOB_TO_PATH_MAP, (filePath, module) => {
-			const regexp = new RegExp(escapeStringRegexp(module), "g");
-			const index = trace.search(regexp);
-
-			// find error location (file + line)
-			if (location == null && index > -1) {
-				const endIndex = index + module.length;
-				if (trace[endIndex] === ":") {
-					const matches = trace.slice(endIndex).match(/\b(\d+)\b/);
-					if (matches.length === 2) {
-						const lineNumber = parseInt(matches[1]);
-						location = {
-							filePath,
-							lineNumber,
-						};
-					}
-				}
-			}
-
-			// replace blob with local file name
-			trace = trace.replace(regexp, filePath);
-		});
-
-		return { trace, location };
 	},
 };

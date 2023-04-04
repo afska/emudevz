@@ -6,6 +6,7 @@ import _Level_ from "../../../level/Level";
 import _locales_ from "../../../locales";
 import { evaluateModule as _evaluateModule_ } from "../../../utils/eval";
 import _chai_ from "./chai";
+import testContext from "./context";
 
 export default {
 	async test(_code_, $ = {}) {
@@ -84,7 +85,7 @@ export default {
 					passed: false,
 					testCode,
 					reason: e?.message || e?.toString() || "?",
-					fullStack: $.buildFullStack(e),
+					fullStack: testContext.javascript.buildStack(e),
 				});
 			}
 		}

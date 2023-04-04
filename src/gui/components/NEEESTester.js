@@ -5,6 +5,7 @@ import EmulatorBuilder from "../../EmulatorBuilder";
 import filesystem from "../../filesystem";
 import Level from "../../level/Level";
 import locales from "../../locales";
+import testContext from "../../terminal/commands/test/context";
 import { bus } from "../../utils";
 import { NEEESTestLogger } from "../../utils/nes";
 import IconButton from "./widgets/IconButton";
@@ -60,7 +61,9 @@ export default class NEEESTester extends PureComponent {
 						{success ? (
 							<span>✔️ Your CPU rocks!</span>
 						) : (
-							<span>❌ {this.state._error}</span>
+							<span
+								dangerouslySetInnerHTML={{ __html: "❌ " + this.state._error }}
+							/>
 						)}
 					</div>
 				</div>
@@ -146,10 +149,16 @@ export default class NEEESTester extends PureComponent {
 			neees.cpu.pc.setValue(ENTRY_POINT);
 			this._neees = neees;
 
-			this.setState({ _error: null });
+			this.setState({
+				_error: null,
+				success: false,
+				lastLines: [],
+				diffLine: 0,
+			});
 			return true;
 		} catch (e) {
-			this.setState({ _error: e.message });
+			const message = this._getMessage(e);
+			this.setState({ _error: message });
 			return false;
 		}
 	};
@@ -172,7 +181,9 @@ export default class NEEESTester extends PureComponent {
 			try {
 				this._neees.cpu.step();
 			} catch (e) {
-				this.setState({ _error: e.message, line: 0 });
+				const message = this._getMessage(e);
+				this.setState({ _error: message });
+				return;
 			}
 
 			actual = this._neees.logger.lastLog;
@@ -195,4 +206,12 @@ export default class NEEESTester extends PureComponent {
 	_onContainerRef = (ref) => {
 		this._container = ref;
 	};
+
+	_getMessage(e) {
+		const fullStack = testContext.javascript.buildStack(e);
+		return (
+			(e?.message || "?") +
+			(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
+		);
+	}
 }
