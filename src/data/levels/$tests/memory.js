@@ -124,3 +124,27 @@ it("writing RAM mirror results in RAM writes", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
+
+// 4.2 Devices
+
+it("saves the devices received by `onLoad`", () => {
+	const CPUMemory = mainModule.default.CPUMemory;
+	const memory = new CPUMemory();
+
+	const ppu = {};
+	const apu = {};
+	const mapper = {};
+	const controllers = [];
+
+	memory.should.respondTo("onLoad");
+	memory.onLoad(ppu, apu, mapper, controllers);
+	memory.ppu.should.equal(ppu);
+	memory.apu.should.equal(apu);
+	memory.mapper.should.equal(mapper);
+	memory.controllers.should.equal(controllers);
+})({
+	locales: {
+		es: "guarda los dispositivos recibidos por `onLoad`",
+	},
+	use: ({ id }, book) => id >= book.getId("4.2"),
+});
