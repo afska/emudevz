@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import classNames from "classnames";
+import EmulatorBuilder from "../../../EmulatorBuilder";
 import locales from "../../../locales";
 import Tooltip from "../../components/widgets/Tooltip";
 import VolumeSlider from "../../components/widgets/VolumeSlider";
@@ -168,7 +169,7 @@ export default class Emulator extends Component {
 				: "none";
 		}
 
-		webWorker.postMessage([...input, this.speaker.bufferSize]);
+		if (webWorker) webWorker.postMessage([...input, this.speaker.bufferSize]);
 	};
 
 	setFps = (fps) => {
@@ -230,28 +231,31 @@ export default class Emulator extends Component {
 
 		const bytes = new Uint8Array(rom);
 
-		webWorker = !USE_WEB_WORKER
-			? new WebWorker(
-					(data) => this.onWorkerMessage({ data }),
-					this.speaker.writeSample,
-					this.speaker
-			  )
-			: NEW_WEB_WORKER();
+		new EmulatorBuilder().build().then((Console) => {
+			webWorker = !USE_WEB_WORKER
+				? new WebWorker(
+						Console,
+						(data) => this.onWorkerMessage({ data }),
+						this.speaker.writeSample,
+						this.speaker
+				  )
+				: NEW_WEB_WORKER();
 
-		webWorker.onmessage = this.onWorkerMessage;
+			webWorker.onmessage = this.onWorkerMessage;
 
-		webWorker.postMessage(bytes);
-		if (webWorker == null) return;
+			webWorker.postMessage(bytes);
+			if (webWorker == null) return;
 
-		webWorker.postMessage({
-			id: "saveState",
-			saveState: this._getSaveState(),
+			webWorker.postMessage({
+				id: "saveState",
+				saveState: this._getSaveState(),
+			});
+			if (webWorker == null) return;
+
+			this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
+			window.addEventListener("keydown", this._onKeyDown);
+			window.addEventListener("keyup", this._onKeyUp);
 		});
-		if (webWorker == null) return;
-
-		this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
-		window.addEventListener("keydown", this._onKeyDown);
-		window.addEventListener("keyup", this._onKeyUp);
 	}
 
 	_getSaveState() {
