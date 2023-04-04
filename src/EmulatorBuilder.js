@@ -85,6 +85,11 @@ export default class EmulatorBuilder {
 			console.cpu.memory.apu = apu;
 			console.cpu.memory.mapper = mapper;
 			console.cpu.memory.controllers = controllers;
+
+			console.cpu.interrupt({
+				id: "RESET",
+				vector: 0xfffc,
+			});
 		};
 
 		if (!console.cpu.memory) throw new Error("🐒  CPU::memory not found");

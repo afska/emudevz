@@ -140,10 +140,6 @@ export default class NEEESTester extends PureComponent {
 			const NEEES = await new EmulatorBuilder().addUserCPU().build();
 			const neees = new NEEES();
 			neees.load(rom);
-			neees.cpu.interrupt({
-				id: "RESET",
-				vector: 0xfffc,
-			});
 			neees.logger = new NEEESTestLogger();
 			neees.cpu.logger = (a, b, c, d, e) => neees.logger.log(a, b, c, d, e);
 			neees.cpu.pc.setValue(ENTRY_POINT);
