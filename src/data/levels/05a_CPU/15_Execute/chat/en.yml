@@ -31,7 +31,7 @@ accuracy:
 rightway:
   messages:
   - |-
-    📚  we'll rewrite this method in your `CPU`:
+    📚  we'll add this method to your `CPU`:
     **step()**:
       __-> remember the original value of PC
         (let's call this <originalPC>)
@@ -62,7 +62,7 @@ rightway:
       -> call operation.instruction.run(this, argument)
       -> calculate how many cycles it took (operation.cycles + this.extraCycles)
         (let's call this <cycles>)
-      -> (increment / reset) the cycle counters:
+      -> update the cycle counters:
         this.cycle += cycles;
         this.extraCycles = 0;
 

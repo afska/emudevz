@@ -31,7 +31,7 @@ accuracy:
 rightway:
   messages:
   - |-
-    📚  vamos a reescribir este método en tu `CPU`:
+    📚  vamos a agregar este método en tu `CPU`:
     **step()**:
       __-> recuerda el valor original de PC
         (llamemos esto <originalPC>)
@@ -62,7 +62,7 @@ rightway:
       -> llama a operation.instruction.run(this, argument)
       -> calcula cuántos ciclos tomó (operation.cycles + this.extraCycles)
         (llamemos esto <cycles>)
-      -> (incrementa / reinicia) los contadores de ciclos:
+      -> actualiza los contadores de ciclos:
         this.cycle += cycles;
         this.extraCycles = 0;
 
