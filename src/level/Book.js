@@ -1,6 +1,13 @@
 import _ from "lodash";
 import store from "../store";
 
+const CPU_ACTIVATION_LEVEL = "cpu-the-golden-log";
+const PPU_ACTIVATION_LEVEL = "?";
+const APU_ACTIVATION_LEVEL = "?";
+const CONTROLLER_ACTIVATION_LEVEL = "?";
+const CONSOLE_ACTIVATION_LEVEL = "?";
+const MAPPERS_ACTIVATION_LEVEL = "?";
+
 export default class Book {
 	constructor(metadata) {
 		_.extend(this, metadata);
@@ -8,6 +15,30 @@ export default class Book {
 
 	static get current() {
 		return store.getState().book.instance;
+	}
+
+	get hasFinishedCPU() {
+		return this.isFinished(CPU_ACTIVATION_LEVEL);
+	}
+
+	get hasFinishedPPU() {
+		return this.isFinished(PPU_ACTIVATION_LEVEL);
+	}
+
+	get hasFinishedAPU() {
+		return this.isFinished(APU_ACTIVATION_LEVEL);
+	}
+
+	get hasFinishedController() {
+		return this.isFinished(CONTROLLER_ACTIVATION_LEVEL);
+	}
+
+	get hasFinishedConsole() {
+		return this.isFinished(CONSOLE_ACTIVATION_LEVEL);
+	}
+
+	get hasFinishedMappers() {
+		return this.isFinished(MAPPERS_ACTIVATION_LEVEL);
 	}
 
 	getId(humanId) {

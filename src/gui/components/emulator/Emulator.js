@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import classNames from "classnames";
 import EmulatorBuilder from "../../../EmulatorBuilder";
+import Book from "../../../level/Book";
 import locales from "../../../locales";
 import Tooltip from "../../components/widgets/Tooltip";
 import VolumeSlider from "../../components/widgets/VolumeSlider";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
+import Unit from "./Unit";
 import Speaker from "./runner/Speaker";
 import WebWorker from "./runner/WebWorker";
 import gamepad from "./runner/gamepad";
@@ -40,6 +42,8 @@ export default class Emulator extends Component {
 	render() {
 		const { error } = this.state;
 
+		const book = Book.current;
+
 		return (
 			<div
 				className={styles.container}
@@ -55,64 +59,40 @@ export default class Emulator extends Component {
 				>
 					<div className={styles.column}>
 						<div className={styles.row}>
-							<Tooltip
-								title={`💻 CPU: ${locales.get("using_your_emulator")}`}
-								placement="right"
-							>
-								<span
-									className={styles.component}
-									style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
-								>
-									💻: ✔️
-								</span>
-							</Tooltip>
-							<Tooltip
-								title={`🖥️ PPU: ${locales.get("using_bugged_emulator")}`}
-								placement="right"
-							>
-								<span className={styles.component}>🖥️: ❌</span>
-							</Tooltip>
-							<Tooltip
-								title={`🔊 APU: ${locales.get("using_bugged_emulator")}`}
-								placement="right"
+							<Unit
+								icon="💻"
+								name="CPU"
+								completed={book.hasFinishedCPU}
+								style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
+							/>
+							<Unit icon="🖥️" name="PPU" completed={book.hasFinishedPPU} />
+							<Unit
+								icon="🔊"
+								name="APU"
+								completed={book.hasFinishedAPU}
 								style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
-							>
-								<span className={styles.component}>🔊: ❌</span>
-							</Tooltip>
+							/>
 						</div>
 						<div className={styles.row}>
-							<Tooltip
-								title={`🎮 ${locales.get("controller")}: ${locales.get(
-									"using_bugged_emulator"
-								)}`}
-								placement="right"
-							>
-								<span
-									className={styles.component}
-									style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
-								>
-									🎮: ❌
-								</span>
-							</Tooltip>
-							<Tooltip
-								title={`🕹️ ${locales.get("console")}: ${locales.get(
-									"using_bugged_emulator"
-								)}`}
-								placement="right"
-							>
-								<span className={styles.component}>🕹️: ❌</span>
-							</Tooltip>
-							<Tooltip
-								title={`🧠 Mappers: ${locales.get("using_default_emulator")}`}
-								placement="right"
-							>
-								<span
-									className={styles.component}
-									style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
-								>
-									🧠: ⚠️
-								</span>
-							</Tooltip>
+							<Unit
+								icon="🎮"
+								name={locales.get("controller")}
+								completed={book.hasFinishedController}
+								style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
+							/>
+							<Unit
+								icon="🕹️"
+								name={locales.get("console")}
+								completed={book.hasFinishedConsole}
+							/>
+							<Unit
+								icon="🧠"
+								name={"Mappers"}
+								completed={book.hasFinishedMappers}
+								style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
+								customIncompleteIcon="⚠️"
+								customIncompleteMessage="using_default_emulator"
+							/>
 						</div>
 					</div>
 					<div className={styles.row}>
@@ -230,32 +210,39 @@ export default class Emulator extends Component {
 		this.speaker.start();
 
 		const bytes = new Uint8Array(rom);
+		const book = Book.current;
 
-		new EmulatorBuilder().build().then((Console) => {
-			webWorker = !USE_WEB_WORKER
-				? new WebWorker(
-						Console,
-						(data) => this.onWorkerMessage({ data }),
-						this.speaker.writeSample,
-						this.speaker
-				  )
-				: NEW_WEB_WORKER();
+		new EmulatorBuilder()
+			.addUserCPU(book.hasFinishedCPU)
+			.addUserPPU(book.hasFinishedPPU)
+			.addUserAPU(book.hasFinishedAPU)
+			.addUserController(book.hasFinishedController)
+			.build()
+			.then((Console) => {
+				webWorker = !USE_WEB_WORKER
+					? new WebWorker(
+							Console,
+							(data) => this.onWorkerMessage({ data }),
+							this.speaker.writeSample,
+							this.speaker
+					  )
+					: NEW_WEB_WORKER();
 
-			webWorker.onmessage = this.onWorkerMessage;
+				webWorker.onmessage = this.onWorkerMessage;
 
-			webWorker.postMessage(bytes);
-			if (webWorker == null) return;
+				webWorker.postMessage(bytes);
+				if (webWorker == null) return;
 
-			webWorker.postMessage({
-				id: "saveState",
-				saveState: this._getSaveState(),
+				webWorker.postMessage({
+					id: "saveState",
+					saveState: this._getSaveState(),
+				});
+				if (webWorker == null) return;
+
+				this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
+				window.addEventListener("keydown", this._onKeyDown);
+				window.addEventListener("keyup", this._onKeyUp);
 			});
-			if (webWorker == null) return;
-
-			this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
-			window.addEventListener("keydown", this._onKeyDown);
-			window.addEventListener("keyup", this._onKeyUp);
-		});
 	}
 
 	_getSaveState() {
