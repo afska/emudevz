@@ -49,6 +49,7 @@ class VolumeSlider extends PureComponent {
 				{...rest}
 			>
 				<Slider
+					id="volume-slider"
 					className={className}
 					valueLabelDisplay="auto"
 					slots={{

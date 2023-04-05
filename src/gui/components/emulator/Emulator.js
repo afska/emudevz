@@ -96,7 +96,12 @@ export default class Emulator extends Component {
 							/>
 						</div>
 					</div>
-					<div className={styles.row}>
+					<div
+						className={styles.row}
+						ref={(ref) => {
+							this._config = ref;
+						}}
+					>
 						<span>⚡️&nbsp;</span>
 						<span id="fps">00</span>
 						<span>&nbsp;FPS</span>
@@ -205,9 +210,13 @@ export default class Emulator extends Component {
 		if (!rom) return;
 		this.screen = screen;
 
+		const volume = parseFloat(
+			this._config.querySelector("#volume-slider input").value
+		);
+
 		this.stop();
 		this.stateInterval = setInterval(this.sendState, STATE_POLL_INTERVAL);
-		this.speaker = new Speaker(INITIAL_VOLUME);
+		this.speaker = new Speaker(volume);
 		this.speaker.start();
 
 		const bytes = new Uint8Array(rom);
