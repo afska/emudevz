@@ -111,27 +111,20 @@ export default class EmulatorBuilder {
 	}
 
 	_patchMemory(Memory) {
-		this._patchMemoryAccessors(Memory);
 		this._patchMemoryReads(Memory);
 		this._patchMemoryWrites(Memory);
 	}
 
-	_patchMemoryAccessors(Memory) {
+	_patchMemoryReads(Memory) {
+		const { withUserPPU, withUserAPU, withUserController } = this;
+
 		Memory.prototype.readAt = function (address) {
 			return this.read(address);
-		};
-
-		Memory.prototype.writeAt = function (address, value) {
-			this.write(address, value);
 		};
 
 		Memory.prototype.read2BytesAt = function (address) {
 			return this.read16(address);
 		};
-	}
-
-	_patchMemoryReads(Memory) {
-		const { withUserPPU, withUserAPU, withUserController } = this;
 
 		const read = Memory.prototype.read;
 		if (!read) throw new Error("🐒  CPU::memory::read(...) not found");
@@ -178,7 +171,7 @@ export default class EmulatorBuilder {
 		const write = Memory.prototype.write;
 		if (!write) throw new Error("🐒  CPU::memory::write(...) not found");
 
-		Memory.prototype.write = function (address, value) {
+		Memory.prototype.writeAt = function (address, value) {
 			// PPU registers
 			if (!withUserPPU) {
 				if (address >= 0x2000 && address <= 0x2007)
@@ -208,12 +201,12 @@ export default class EmulatorBuilder {
 			// APU and I/O functionality that is normally disabled
 			if (address >= 0x4018 && address <= 0x401f) return 0;
 
-			// Cartridge space: PRG ROM, PRG RAM, and mapper registers
-			if (address >= 0x4020 && address <= 0xffff)
-				return this.mapper.cpuWriteAt(address, value);
-
 			// Original method call
 			return write.call(this, address, value);
+		};
+
+		Memory.prototype.write = function (address, value) {
+			return this.mapper.cpuWriteAt(address, value);
 		};
 	}
 }
