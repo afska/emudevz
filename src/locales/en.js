@@ -84,6 +84,7 @@ export default {
 	rollback: "Restore code using this snapshot",
 	rollback_sure: "This will DELETE data. Are you sure?",
 	run: "Run",
+	run_emulator: "Run emulator",
 	save: "Save",
 	scroll_left: "Scroll left",
 	scroll_right: "Scroll right",

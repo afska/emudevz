@@ -41,6 +41,7 @@ export default class Emulator extends Component {
 
 	render() {
 		const { error } = this.state;
+		const { rom } = this.props;
 
 		const book = Book.current;
 
@@ -121,7 +122,7 @@ export default class Emulator extends Component {
 					</div>
 				</div>
 				<div className={styles.content}>
-					{error == null ? (
+					{!!rom && error == null ? (
 						<Screen
 							className={styles.box}
 							ref={(screen) => {

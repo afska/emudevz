@@ -86,6 +86,7 @@ export default {
 	rollback: "Restaurar código usando esta copia",
 	rollback_sure: "Esto BORRARÁ datos. ¿Restaurar?",
 	run: "Ejecutar",
+	run_emulator: "Ejecutar emulador",
 	save: "Guardar",
 	scroll_left: "Scrollear a la izquierda",
 	scroll_right: "Scrollear a la derecha",

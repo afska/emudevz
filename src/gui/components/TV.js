@@ -13,7 +13,7 @@ export default class TV extends PureComponent {
 	state = { content: null, type: "media" };
 
 	async initialize(args, level) {
-		if (args.content != null && args.type != null)
+		if (args.type != null)
 			this.setState({ content: args.content, type: args.type });
 
 		this._level = level;
@@ -50,10 +50,10 @@ export default class TV extends PureComponent {
 	_renderContent() {
 		const { content, type } = this.state;
 
-		if (!content) return <TVNoise />;
-
 		switch (type) {
 			case "media": {
+				if (!content) return <TVNoise />;
+
 				return (
 					<PanZoom
 						src={content}
@@ -68,6 +68,8 @@ export default class TV extends PureComponent {
 				);
 			}
 			case "markdown": {
+				if (!content) return <TVNoise />;
+
 				return <MarkdownView content={content} />;
 			}
 			case "rom": {

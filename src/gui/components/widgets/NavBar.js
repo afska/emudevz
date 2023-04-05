@@ -9,6 +9,7 @@ import {
 	FaExclamationCircle,
 	FaHome,
 	FaMusic,
+	FaPlay,
 	FaTrash,
 	FaTrashRestore,
 } from "react-icons/fa";
@@ -16,8 +17,9 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
 import locales from "../../../locales";
-import { analytics } from "../../../utils";
+import { analytics, bus } from "../../../utils";
 import music from "../../sound/music";
+import TV from "../TV";
 import CalculatorModal from "./CalculatorModal";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
@@ -74,6 +76,12 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
+						<IconButton
+							style={{ marginRight: 8 }}
+							Icon={FaPlay}
+							tooltip={locales.get("run_emulator")}
+							onClick={this._runEmulator}
+						/>
 						<IconButton
 							style={{ marginRight: 32 }}
 							Icon={FaCalculator}
@@ -157,6 +165,14 @@ class NavBar extends PureComponent {
 
 	_closeCalculator = () => {
 		this.setState({ isCalculatorOpen: false });
+	};
+
+	_runEmulator = () => {
+		bus.emit("pin", {
+			Component: TV,
+			args: { content: null, type: "rom" },
+			level: this._level,
+		});
 	};
 }
 
