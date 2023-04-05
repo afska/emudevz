@@ -53,3 +53,9 @@
 	margin-top: 24px;
 	max-height: 300px;
 }
+
+.warning {
+	text-align: center;
+	margin-top: 28px;
+	color: #cccccc;
+}
