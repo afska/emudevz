@@ -3,6 +3,7 @@ import classNames from "classnames";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import Book from "../../../level/Book";
 import locales from "../../../locales";
+import store from "../../../store";
 import Tooltip from "../../components/widgets/Tooltip";
 import VolumeSlider from "../../components/widgets/VolumeSlider";
 import TVNoise from "../TVNoise";
@@ -29,7 +30,6 @@ const KEY_MAP = {
 	ArrowRight: "BUTTON_RIGHT",
 };
 
-const INITIAL_VOLUME = 0;
 const STATE_POLL_INTERVAL = 10;
 const SAVESTATE_KEY = "emudevz-savestate";
 const COMPONENT_BORDER_RADIUS = 8;
@@ -44,6 +44,7 @@ export default class Emulator extends Component {
 		const { rom } = this.props;
 
 		const book = Book.current;
+		const initialVolume = store.getState().savedata.emulatorVolume;
 
 		return (
 			<div
@@ -120,7 +121,7 @@ export default class Emulator extends Component {
 						<VolumeSlider
 							volume={null}
 							setVolume={this._updateVolume}
-							defaultVolume={INITIAL_VOLUME}
+							defaultVolume={initialVolume}
 							style={{ marginLeft: 8, width: 64 }}
 							className="emu-volume-slider"
 						/>
@@ -293,5 +294,6 @@ export default class Emulator extends Component {
 
 	_updateVolume = (v) => {
 		this.speaker.gainNode.gain.value = v;
+		store.dispatch.savedata.setEmulatorVolume(v);
 	};
 }

@@ -9,6 +9,7 @@ const INITIAL_STATE = () => ({
 	snapshots: [],
 	lastLevelId: "start",
 	language: "en",
+	emulatorVolume: 0,
 	musicVolume: 0.3,
 	musicTrack: 0,
 	trackInfo: null,
@@ -33,6 +34,9 @@ export default {
 		},
 		setLanguage(state, language) {
 			return { ...state, language };
+		},
+		setEmulatorVolume(state, emulatorVolume) {
+			return { ...state, emulatorVolume };
 		},
 		setMusicVolume(state, musicVolume) {
 			return { ...state, musicVolume };
