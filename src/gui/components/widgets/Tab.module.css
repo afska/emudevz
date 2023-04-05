@@ -9,6 +9,7 @@
 	border-top-right-radius: 8px;
 	border: 1px solid #ffffff00;
 	color: #b3c6df;
+	height: 40px; /* (tied to HorizontalDragList.js) */
 }
 
 .container:hover,

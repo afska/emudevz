@@ -5,6 +5,10 @@
 	margin-right: 1px;
 }
 
+.container:focus {
+	outline: none;
+}
+
 .innerContainer {
 	height: 100%;
 	-webkit-transition: 1s -webkit-filter linear;
