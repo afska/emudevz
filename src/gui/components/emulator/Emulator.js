@@ -44,7 +44,6 @@ export default class Emulator extends Component {
 		const { rom } = this.props;
 
 		const book = Book.current;
-		const initialVolume = store.getState().savedata.emulatorVolume;
 
 		return (
 			<div
@@ -120,8 +119,10 @@ export default class Emulator extends Component {
 						<span>&nbsp;|&nbsp;</span>
 						<VolumeSlider
 							volume={null}
-							setVolume={this._updateVolume}
-							defaultVolume={initialVolume}
+							setVolume={(v) => {
+								this._volume = v;
+							}}
+							defaultVolume={this._volume}
 							style={{ marginLeft: 8, width: 64 }}
 							className="emu-volume-slider"
 						/>
@@ -211,13 +212,9 @@ export default class Emulator extends Component {
 		if (!rom) return;
 		this.screen = screen;
 
-		const volume = parseFloat(
-			this._config.querySelector("#volume-slider input").value
-		);
-
 		this.stop();
 		this.stateInterval = setInterval(this.sendState, STATE_POLL_INTERVAL);
-		this.speaker = new Speaker(volume);
+		this.speaker = new Speaker(this._volume);
 		this.speaker.start();
 
 		const bytes = new Uint8Array(rom);
@@ -292,8 +289,12 @@ export default class Emulator extends Component {
 		this.keyboardInput[0][button] = false;
 	};
 
-	_updateVolume = (v) => {
-		this.speaker.gainNode.gain.value = v;
-		store.dispatch.savedata.setEmulatorVolume(v);
-	};
+	get _volume() {
+		return store.getState().savedata.emulatorVolume;
+	}
+
+	set _volume(value) {
+		if (this.speaker) this.speaker.setVolume(value);
+		store.dispatch.savedata.setEmulatorVolume(value);
+	}
 }
