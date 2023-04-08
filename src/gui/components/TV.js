@@ -60,7 +60,7 @@ export default class TV extends PureComponent {
 	}
 
 	_renderContent() {
-		const { content, type } = this.state;
+		const { content, type, _error } = this.state;
 
 		switch (type) {
 			case "media": {
@@ -85,7 +85,15 @@ export default class TV extends PureComponent {
 				return <MarkdownView content={content} />;
 			}
 			case "rom": {
-				return <Emulator rom={content} />;
+				return (
+					<Emulator
+						rom={content}
+						error={_error}
+						onError={(e) => {
+							this.setState({ content: null, _error: e });
+						}}
+					/>
+				);
 			}
 			default: {
 				return <TVNoise />;

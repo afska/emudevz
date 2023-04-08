@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import classNames from "classnames";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import Book from "../../../level/Book";
@@ -36,12 +36,9 @@ const COMPONENT_BORDER_RADIUS = 8;
 
 let webWorker = null;
 
-export default class Emulator extends Component {
-	state = { error: null };
-
+export default class Emulator extends PureComponent {
 	render() {
-		const { error } = this.state;
-		const { rom } = this.props;
+		const { rom /*, error*/ } = this.props;
 
 		const book = Book.current;
 
@@ -129,7 +126,7 @@ export default class Emulator extends Component {
 					</div>
 				</div>
 				<div className={styles.content}>
-					{!!rom && error == null ? (
+					{!!rom ? (
 						<Screen
 							className={styles.box}
 							ref={(screen) => {
@@ -267,7 +264,7 @@ export default class Emulator extends Component {
 
 	_onError(e) {
 		console.error(e);
-		this.setState({ error: e });
+		this.props.onError(e);
 		this.stop();
 	}
 
