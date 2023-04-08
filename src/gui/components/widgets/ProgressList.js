@@ -7,7 +7,10 @@ import styles from "./ProgressList.module.css";
 
 class ProgressList extends PureComponent {
 	render() {
-		const { selectedLevelId, maxLevelId, levelDefinitions, goTo } = this.props;
+		const { book, chapter, selectedLevelId, goTo } = this.props;
+
+		const levelDefinitions = chapter.levels;
+		const nextPendingLevel = book.nextPendingLevelOfChapter(chapter.id);
 
 		return (
 			<div className={styles.progressList}>
@@ -24,16 +27,18 @@ class ProgressList extends PureComponent {
 						>
 							<div
 								onClick={() => {
-									if (levelDefinition.id <= maxLevelId)
+									if (book.isUnlocked(levelDefinition.id))
 										goTo(levelDefinition.id);
 								}}
 								className={classNames(
 									styles.level,
-									levelDefinition.id < maxLevelId
+									levelDefinition.id === nextPendingLevel?.id
+										? styles.highlight
+										: book.isFinished(levelDefinition.id)
 										? styles.success
-										: levelDefinition.id > maxLevelId
-										? styles.locked
-										: styles.highlight,
+										: book.isUnlocked(levelDefinition.id)
+										? styles.unlocked
+										: styles.locked,
 									levelDefinition.id === selectedLevelId && styles.selected
 								)}
 							/>

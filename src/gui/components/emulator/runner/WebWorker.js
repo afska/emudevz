@@ -1,4 +1,3 @@
-import NES from "cursed-nes-emu";
 import FrameTimer from "./FrameTimer";
 
 const SYNC_TO_AUDIO = true;
@@ -11,7 +10,7 @@ const AUDIO_BUFFER_LIMIT = 4096;
  * This contains the communication logic between `Emulator` and `webWorkerRunner`.
  */
 export default class WebWorker {
-	constructor(postMessage) {
+	constructor(Console, postMessage) {
 		this.$postMessage = postMessage;
 
 		this.saveState = null;
@@ -26,7 +25,8 @@ export default class WebWorker {
 		this.availableSamples = 0;
 		this.samples = [];
 
-		this.nes = new NES(this.onFrame, this.onAudio);
+		this.nes = new Console(this.onFrame, this.onAudio);
+
 		this.frameTimer = new FrameTimer(
 			() => {
 				if (
@@ -100,6 +100,7 @@ export default class WebWorker {
 		try {
 			if (data instanceof Uint8Array) {
 				// rom bytes
+
 				this.nes.load(data);
 				this.frameTimer.start();
 			} else if (Array.isArray(data)) {

@@ -1,47 +1,19 @@
-const { evaluate, byte } = $;
+const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
-let mainModule;
-let NROM = null;
+let mainModule, Console;
 beforeEach(async () => {
 	mainModule = await evaluate();
-	try {
-		NROM = (await evaluate("/lib/NROM.js")).default;
-	} catch {}
+	Console = await new EmulatorBuilder().addUserCPU().build();
 });
 
-// [!] Duplicated >>>
-const newHeader = (prgPages = 1, chrPages = 1, flags6 = 0, flags7 = 0) => {
-	// prettier-ignore
-	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, flags7, 0, 0, 0, 0, 0, 0, 0, 0];
-};
+const { newHeader, newRom } = testHelpers;
+function newCPU(prgBytes = []) {
+	const console = new Console();
+	console.load(newRom(prgBytes));
+	return console.cpu;
+}
 
-const newRom = (prgBytes = [], header = newHeader()) => {
-	const prg = prgBytes;
-	const chr = [];
-	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
-	for (let i = 0; i < 8192; i++) chr.push(byte.random());
-	const bytes = new Uint8Array([...header, ...prg, ...chr]);
-
-	return bytes;
-};
-
-const newCPU = (prgBytes = []) => {
-	const CPU = mainModule.default.CPU;
-	const Cartridge = mainModule.default.Cartridge;
-
-	const cartridge = new Cartridge(newRom(prgBytes));
-
-	const areMappersImplemented = Level.current.id >= Book.current.getId("4.20");
-	if (areMappersImplemented && NROM != null) {
-		const mapper = new NROM({ cartridge });
-		return new CPU(mapper);
-	} else {
-		return new CPU(cartridge);
-	}
-};
-// [!] Duplicated <<<
-
-// 4.17 Addressing modes (2/2): Indexed
+// 5a.13 Addressing modes (2/2): Indexed
 
 ["x", "y"].forEach((register) => {
 	const name = register.toUpperCase();
@@ -58,7 +30,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`INDEXED_ZERO_PAGE_" + name + "`: inputSize == 1",
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -83,7 +55,7 @@ const newCPU = (prgBytes = []) => {
 				"` / `getAddress`: " +
 				`retorna la dirección + [${name}]`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -107,7 +79,7 @@ const newCPU = (prgBytes = []) => {
 				name +
 				"` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it("`INDEXED_ZERO_PAGE_" + name + "`: cannot cross the first page", () => {
@@ -122,7 +94,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`INDEXED_ZERO_PAGE_" + name + "`: no puede cruzar la primer página",
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 });
 
@@ -141,7 +113,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`INDEXED_ABSOLUTE_" + name + "`: inputSize == 2",
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -166,7 +138,7 @@ const newCPU = (prgBytes = []) => {
 				"` / `getAddress`: " +
 				`retorna la dirección + [${name}]`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -190,7 +162,7 @@ const newCPU = (prgBytes = []) => {
 				name +
 				"` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it("`INDEXED_ABSOLUTE_" + name + "`: cannot cross $FFFF", () => {
@@ -205,7 +177,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`INDEXED_ABSOLUTE_" + name + "`: no puede cruzar $FFFF",
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it("`INDEXED_ABSOLUTE_" + name + "`: adds 1 cycle if it crosses page", () => {
@@ -224,7 +196,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`INDEXED_ABSOLUTE_" + name + "`: agrega 1 ciclo si cruza de página",
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -246,7 +218,7 @@ const newCPU = (prgBytes = []) => {
 				name +
 				"`: no agrega ningún ciclo si no cruza de página",
 		},
-		use: ({ id }, book) => id >= book.getId("4.17"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 });
 
@@ -259,7 +231,7 @@ it("`INDEXED_INDIRECT`: inputSize == 1", () => {
 	locales: {
 		es: "`INDEXED_INDIRECT`: inputSize == 1",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDEXED_INDIRECT` / `getAddress`: grabs the (address + [X]) from memory", () => {
@@ -278,7 +250,7 @@ it("`INDEXED_INDIRECT` / `getAddress`: grabs the (address + [X]) from memory", (
 		es:
 			"`INDEXED_INDIRECT` / `getAddress`: toma la (dirección + [X]) desde la memoria",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDEXED_INDIRECT` / `getValue`: reads from memory the address returned by `getAddress`", () => {
@@ -298,7 +270,7 @@ it("`INDEXED_INDIRECT` / `getValue`: reads from memory the address returned by `
 		es:
 			"`INDEXED_INDIRECT` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDEXED_INDIRECT`: cannot cross the first page", () => {
@@ -316,7 +288,7 @@ it("`INDEXED_INDIRECT`: cannot cross the first page", () => {
 	locales: {
 		es: "`INDEXED_INDIRECT`: no puede cruzar la primer página",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDEXED_INDIRECT`: the 16-bit read wraps within the first page", () => {
@@ -335,7 +307,7 @@ it("`INDEXED_INDIRECT`: the 16-bit read wraps within the first page", () => {
 		es:
 			"`INDEXED_INDIRECT`: la lectura de 16 bits se envuelve dentro de la primer página",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: inputSize == 1", () => {
@@ -347,7 +319,7 @@ it("`INDIRECT_INDEXED`: inputSize == 1", () => {
 	locales: {
 		es: "`INDIRECT_INDEXED`: inputSize == 1",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED` / `getAddress`: grabs the address from memory, then adds [Y]", () => {
@@ -366,7 +338,7 @@ it("`INDIRECT_INDEXED` / `getAddress`: grabs the address from memory, then adds 
 		es:
 			"`INDIRECT_INDEXED` / `getAddress`: toma la dirección desde la memoria, luego suma [Y]",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED` / `getValue`: reads from memory the address returned by `getAddress`", () => {
@@ -386,7 +358,7 @@ it("`INDIRECT_INDEXED` / `getValue`: reads from memory the address returned by `
 		es:
 			"`INDIRECT_INDEXED` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: cannot cross $FFFF", () => {
@@ -404,7 +376,7 @@ it("`INDIRECT_INDEXED`: cannot cross $FFFF", () => {
 	locales: {
 		es: "`INDIRECT_INDEXED`: no puede cruzar $FFFF",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: the 16-bit read wraps within the first page", () => {
@@ -423,7 +395,7 @@ it("`INDIRECT_INDEXED`: the 16-bit read wraps within the first page", () => {
 		es:
 			"`INDIRECT_INDEXED`: la lectura de 16 bits se envuelve dentro de la primer página",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: adds 1 cycle if it crosses page", () => {
@@ -444,7 +416,7 @@ it("`INDIRECT_INDEXED`: adds 1 cycle if it crosses page", () => {
 	locales: {
 		es: "`INDIRECT_INDEXED`: agrega 1 ciclo si cruza de página",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: doesn't add any cycles if there's no page-cross", () => {
@@ -460,5 +432,5 @@ it("`INDIRECT_INDEXED`: doesn't add any cycles if there's no page-cross", () => 
 	locales: {
 		es: "`INDIRECT_INDEXED`: no agrega ningún ciclo si no cruza de página",
 	},
-	use: ({ id }, book) => id >= book.getId("4.17"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });

@@ -1,0 +1,41 @@
+{
+	"name": {
+		"en": "🐏 Instructions (2/5): Data",
+		"es": "🐏 Instrucciones (2/5): Datos"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": [
+			"cartridge.js",
+			"memory.js",
+			"cpu.js",
+			"cpu_instructions_1.js",
+			"cpu_instructions_2.js"
+		],
+		"mainTestFile": "cpu_instructions_2.js"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

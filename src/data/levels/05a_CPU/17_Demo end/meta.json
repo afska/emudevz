@@ -1,0 +1,30 @@
+{
+	"name": {
+		"en": "🚧 Demo end",
+		"es": "🚧 Fin de la demo"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

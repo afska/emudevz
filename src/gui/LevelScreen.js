@@ -9,7 +9,7 @@ class LevelScreen extends PureComponent {
 	$timeouts = [];
 
 	render() {
-		const { maxLevelId, chapter, level } = this.props;
+		const { chapter, level } = this.props;
 
 		const Layout = layouts[level.ui.layout];
 		const Components = _.mapValues(
@@ -20,7 +20,7 @@ class LevelScreen extends PureComponent {
 		return (
 			<>
 				<Layout {...Components} ref={this.onReady} />
-				<NavBar maxLevelId={maxLevelId} chapter={chapter} level={level} />
+				<NavBar chapter={chapter} level={level} />
 			</>
 		);
 	}

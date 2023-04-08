@@ -1,0 +1,6 @@
+---
+main:
+  messages:
+  - ¡próximamente!
+  responses:
+  - ok [end]

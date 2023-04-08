@@ -150,17 +150,17 @@ export default class TestCommand extends Command {
 		await this._terminal.writehlln(`${emoji} ${result.name}`);
 
 		if (!result.passed) {
-			if (this._isVerbose && result.stack?.location) {
+			if (this._isVerbose && result.fullStack?.location) {
 				await this._terminal.writeln(
-					`📌  ${result.stack.location.filePath}:${result.stack.location.lineNumber} 📌`,
+					`📌  ${result.fullStack.location.filePath}:${result.fullStack.location.lineNumber} 📌`,
 					theme.ACCENT
 				);
 			}
 			await this._terminal.writeln(result.reason, theme.ERROR);
 
 			if (this._isVerbose) {
-				if (result.stack != null)
-					await this._terminal.writeln(result.stack.trace, theme.ERROR);
+				if (result.fullStack != null)
+					await this._terminal.writeln(result.fullStack.trace, theme.ERROR);
 
 				await this._terminal.writeln("----------", theme.ACCENT);
 				await this._terminal.writeln(

@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import DiffViewer, { DiffMethod } from "react-diff-viewer";
 import { FaFastForward } from "react-icons/fa";
+import EmulatorBuilder from "../../EmulatorBuilder";
 import filesystem from "../../filesystem";
 import Level from "../../level/Level";
 import locales from "../../locales";
@@ -16,8 +17,6 @@ const NEWLINE = /\n|\r\n|\r/;
 const ENTRY_POINT = 0xc000;
 const LINES = 6;
 const PAGE_BOUNDARY_BUG_LINE = 3348;
-
-const javascript = testContext.javascript;
 
 export default class NEEESTester extends PureComponent {
 	state = {
@@ -62,7 +61,9 @@ export default class NEEESTester extends PureComponent {
 						{success ? (
 							<span>✔️ Your CPU rocks!</span>
 						) : (
-							<span>❌ {this.state._error}</span>
+							<span
+								dangerouslySetInnerHTML={{ __html: "❌ " + this.state._error }}
+							/>
 						)}
 					</div>
 				</div>
@@ -133,22 +134,27 @@ export default class NEEESTester extends PureComponent {
 
 	_onCode = async () => {
 		try {
-			const $ = javascript.prepare(Level.current);
-			const mainModule = await $.evaluate();
-
 			const rom = new Uint8Array(
 				filesystem.read(NEEESTEST_PATH, { binary: true })
 			);
-			const neees = new mainModule.default.NEEES(rom);
+			const NEEES = await new EmulatorBuilder().addUserCPU().build();
+			const neees = new NEEES();
+			neees.load(rom);
 			neees.logger = new NEEESTestLogger();
 			neees.cpu.logger = (a, b, c, d, e) => neees.logger.log(a, b, c, d, e);
 			neees.cpu.pc.setValue(ENTRY_POINT);
 			this._neees = neees;
 
-			this.setState({ _error: null });
+			this.setState({
+				_error: null,
+				success: false,
+				lastLines: [],
+				diffLine: 0,
+			});
 			return true;
 		} catch (e) {
-			this.setState({ _error: e.message });
+			const message = this._getMessage(e);
+			this.setState({ _error: message });
 			return false;
 		}
 	};
@@ -171,7 +177,9 @@ export default class NEEESTester extends PureComponent {
 			try {
 				this._neees.cpu.step();
 			} catch (e) {
-				this.setState({ _error: e.message, line: 0 });
+				const message = this._getMessage(e);
+				this.setState({ _error: message });
+				return;
 			}
 
 			actual = this._neees.logger.lastLog;
@@ -194,4 +202,12 @@ export default class NEEESTester extends PureComponent {
 	_onContainerRef = (ref) => {
 		this._container = ref;
 	};
+
+	_getMessage(e) {
+		const fullStack = testContext.javascript.buildStack(e);
+		return (
+			(e?.message || "?") +
+			(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
+		);
+	}
 }

@@ -3,6 +3,10 @@
 	height: 100%;
 }
 
+.topContainer:focus {
+	outline: none;
+}
+
 .container {
 	height: 100%;
 	user-select: none;

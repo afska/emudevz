@@ -1,6 +1,7 @@
 const fs = require("fs");
 const mkdirp = require("mkdirp");
 const archiver = require("archiver");
+const slug = require("slug");
 const $path = require("path");
 const _ = require("lodash");
 
@@ -12,7 +13,6 @@ const CHAPTER_HELP_FILES = { en: "$help/en.txt", es: "$help/es.txt" };
 const CHAPTER_METADATA_FILE = "chapter.json";
 const LEVEL_METADATA_FILE = "meta.json";
 const BOOK_FILE = "book.json";
-const ID_LENGTH = 3;
 const PREFIX = "level_";
 const EXTENSION = ".zip";
 const FORMAT = "zip";
@@ -29,18 +29,6 @@ function readDirs(path) {
 		.value();
 }
 
-function isIdValid(id) {
-	return id.length === ID_LENGTH && isFinite(parseInt(id));
-}
-
-function isNameValid(name) {
-	return name != null && name.length > 0;
-}
-
-function formattedId(id) {
-	return id.toString().padStart(ID_LENGTH, 0);
-}
-
 async function pkg() {
 	let globalLevelId = 0;
 	let globalChapterId = 0;
@@ -52,10 +40,6 @@ async function pkg() {
 	for (let chapterFolder of chapterFolders) {
 		const chapterPath = $path.join(LEVELS_PATH, chapterFolder);
 		const [chapterId, chapterName] = chapterFolder.split("_");
-		if (!isIdValid(chapterId) || !isNameValid(chapterName)) {
-			console.error(`❌ Invalid chapter folder name: ${chapterFolder}`);
-			process.exit(0);
-		}
 
 		let chapterMetadata;
 		try {
@@ -69,8 +53,12 @@ async function pkg() {
 			process.exit(0);
 		}
 
+		const chapterHumanId = chapterId.replace(/^0+/, "");
+
 		const chapter = {
-			number: globalChapterId + 1,
+			id: globalChapterId,
+			number: parseInt(chapterHumanId.replace(/\D/g, "")),
+			humanId: chapterHumanId,
 			name: chapterMetadata.name,
 			levels: [],
 			help: _.mapValues(CHAPTER_HELP_FILES, (helpFile) => {
@@ -88,11 +76,7 @@ async function pkg() {
 		const levelFolders = readDirs(chapterPath);
 		for (let levelFolder of levelFolders) {
 			const levelPath = $path.join(chapterPath, levelFolder);
-			const [levelId, levelName] = levelFolder.split("_");
-			if (!isIdValid(levelId) || !isNameValid(levelName)) {
-				console.error(`❌ Invalid level folder name: ${levelFolder}`);
-				process.exit(0);
-			}
+			const [__, levelName] = levelFolder.split("_");
 
 			let levelMetadata;
 			try {
@@ -109,39 +93,37 @@ async function pkg() {
 			if (levelMetadata.help?.addLines != null)
 				helpLines.push(...levelMetadata.help.addLines);
 
+			const id = slug((chapterName + "-" + levelName).replace(/_/g, " "));
+
 			chapter.levels.push({
-				id: globalLevelId,
-				humanId: `${chapter.number}.${localLevelId + 1}`,
+				id,
+				humanId: `${chapter.humanId}.${localLevelId + 1}`,
+				globalId: globalLevelId,
 				name: levelMetadata.name,
 				helpLines: _.sortBy([...helpLines]),
 			});
 
-			const outputPath = $path.join(
-				OUTPUT_PATH,
-				PREFIX + formattedId(globalLevelId) + EXTENSION
-			);
+			const outputPath = $path.join(OUTPUT_PATH, PREFIX + id + EXTENSION);
 			const output = fs.createWriteStream(outputPath);
 			const archive = archiver(FORMAT, {
 				zlib: { level: COMPRESSION_LEVEL },
 			});
 			archive.pipe(output);
 
-			const slug = chapterFolder + "/" + levelFolder;
-
 			await new Promise((resolve) => {
 				output.on("close", function () {
-					console.log("✔️  " + slug);
+					console.log("✔️  " + id);
 					resolve();
 				});
 
 				archive.on("warning", function (err) {
-					console.warn("⚠️  " + slug);
+					console.warn("⚠️  " + id);
 					console.warn(err);
 					process.exit(0);
 				});
 
 				archive.on("error", function (err) {
-					console.error("❌  " + slug);
+					console.error("❌  " + id);
 					console.error(err);
 					process.exit(0);
 				});

@@ -1,4 +1,3 @@
-import _escapeStringRegexp_ from "escape-string-regexp";
 import _sinon_ from "sinon";
 import _sinonChai_ from "sinon-chai";
 import _ from "lodash";
@@ -7,6 +6,7 @@ import _Level_ from "../../../level/Level";
 import _locales_ from "../../../locales";
 import { evaluateModule as _evaluateModule_ } from "../../../utils/eval";
 import _chai_ from "./chai";
+import testContext from "./context";
 
 export default {
 	async test(_code_, $ = {}) {
@@ -15,9 +15,11 @@ export default {
 		const _tests_ = [];
 
 		// eslint-disable-next-line
-		const Level = _Level_;
-		// eslint-disable-next-line
 		const Book = _Book_;
+		// eslint-disable-next-line
+		const GLOBAL_LEVEL_ID = Book.current.getLevelDefinitionOf(
+			_Level_.current.id
+		).globalId;
 
 		// eslint-disable-next-line
 		const beforeEach = (run) => {
@@ -41,7 +43,10 @@ export default {
 			return (options) => {
 				testDefinition.name = options.locales?.[_locales_.language] || name;
 
-				if (options.use && !options.use(_Level_.current, _Book_.current))
+				if (
+					options.use &&
+					!options.use({ id: GLOBAL_LEVEL_ID }, _Book_.current)
+				)
 					_tests_.pop();
 			};
 		};
@@ -68,9 +73,10 @@ export default {
 				results.push({ name, passed: true });
 			} catch (e) {
 				let testCode = test.toString();
-				const isUserCode = e.stack != null && e.stack.includes("blob:");
 				let testErrorLine =
-					e.stack != null && e.stack.match(/<anonymous>:(\d+):\d+/);
+					e.stack != null &&
+					!e?.message?.startsWith("🐒") &&
+					e.stack.match(/<anonymous>:(\d+):\d+/);
 				if (testErrorLine != null)
 					testCode = this._markExactErrorLine(testErrorLine, _code_, testCode);
 
@@ -79,48 +85,12 @@ export default {
 					passed: false,
 					testCode,
 					reason: e?.message || e?.toString() || "?",
-					stack:
-						isUserCode && $.modules != null
-							? this._buildStack(e.stack, $.modules)
-							: null,
+					fullStack: testContext.javascript.buildStack(e),
 				});
 			}
 		}
 
 		return _.orderBy(results, "passed", "desc");
-	},
-
-	_buildStack(originalTrace, modules) {
-		let trace = originalTrace
-			.split("\n")
-			.filter((it) => it.includes("blob:"))
-			.join("\n");
-
-		let location = null;
-		_.forEach(modules, (module, filePath) => {
-			const regexp = new RegExp(_escapeStringRegexp_(module), "g");
-			const index = trace.search(regexp);
-
-			// find error location (file + line)
-			if (location == null && index > -1) {
-				const endIndex = index + module.length;
-				if (trace[endIndex] === ":") {
-					const matches = trace.slice(endIndex).match(/\b(\d+)\b/);
-					if (matches.length === 2) {
-						const lineNumber = parseInt(matches[1]);
-						location = {
-							filePath,
-							lineNumber,
-						};
-					}
-				}
-			}
-
-			// replace blob with local file name
-			trace = trace.replace(regexp, filePath);
-		});
-
-		return { trace, location };
 	},
 
 	_markExactErrorLine(testErrorLine, _code_, testCode) {

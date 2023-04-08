@@ -1,0 +1,177 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.winOnEnd = true;
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+    });
+  messages:
+  - let me introduce you to the code editor
+  - well, it's not an <editor> yet 😅
+  - just a viewer
+  - it has an example of a basic NEEES program
+  responses:
+  - (*) the viewer doesn't scare me, what it does is the weird looking numbers at the bottom [debugger]
+  - what language is this? 😮 [language]
+  - ⏭️  I already know this [iknow]
+
+iknow:
+  messages:
+  - 🤔
+  - are you <really> familiar with 6502 assembly?
+  - (registers, flags, branching, addressing modes, stack and subroutines)
+  - if not, in the next chapter you will <suffer>
+  - meh, you can go back and play it whenever you want, anyway
+  - do you want to skip the WHOLE chapter?
+  responses:
+  - ⏭️  yes, skip [skip]
+  - ❌  no, I'm not sure [main]
+
+skip:
+  run: |
+    const book = store.getState().book.instance;
+    const chapter = book.getChapterOf(level.id);
+    const lastLevelId = _.last(chapter.levels).id;
+    const nextLevelId = book.nextIdOf(lastLevelId, true);
+    store.dispatch.savedata.advanceTo(nextLevelId);
+  messages: []
+  events:
+  - null [end]
+  
+debugger:
+  messages:
+  - the CPU debugger?
+  - don't you worry
+  - I'll explain everything!
+  responses:
+  - ...main
+
+language:
+  messages:
+  - it's assembly language!
+  - the lowest level of abstraction in computers 💻
+  - it translates directly to the bytes that are executed by the CPU
+  responses:
+  - so, after compiling, it'll become just a chunk of bytes? [machinecode]
+
+machinecode:
+  messages:
+  - correct
+  - you're actually seeing the compiled code, right now
+  - look at the Memory Viewer at the bottom right corner of the screen
+  - in this simulation, the code starts from the $4020 memory address
+  - if you place your mouse pointer over one of these addresses, it'll show where each instruction starts
+  responses:
+  - (*) what's a memory address? [address]
+  - what are the other numbers? 👀 [otherthings]
+
+address:
+  messages:
+  - a 2-byte number that represents a location in memory 🐏
+  - it can go from 0 ($0000) to 65535 ($FFFF)
+  responses:
+  - if the NEEES only had 2 KiB (2048 bytes) of memory, how can there be 65536 addresses? 😕 [butyousaid]
+  - ...machinecode
+
+butyousaid:
+  messages:
+  - it only has 2 KiB of real memory
+  - but the CPU can <see> up to 64 KiB
+  - so the first two kilobytes are actual RAM
+  - and the rest is used to interact with the hardware 💻
+  - that doesn't matter too much in this chapter
+  - we're simulating a 64 KiB RAM for simplicity's sake
+  responses:
+  - ...machinecode
+
+otherthings:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - let's run the code and discover it
+  - I've added a ⏩  button to the code section
+  - "can you click it? 🙏"
+  events:
+  - step [lda]
+
+lda:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+  - great!
+  - if you were watching carefully, you'll have noticed that [A] changed from $00 to $01
+  - and [PC] changed from $4020 to $4022 🤯
+  - those are CPU registers, quickly accessible locations
+  - each register can hold a single byte (8 bits) of data
+  - with the exception of [PC] (Program Counter) which is 2 bytes wide
+  responses:
+  - what's the purpose of each register? [registers]
+
+registers:
+  messages:
+  - well, [A] means Accumulator and its use depends on the program
+  - "[PC] always points to the next instruction to execute"
+  responses:
+  - "so, with `LDA #$01` you just told the processor to store the number $01 in [A]? 😲 [ldaexplanation]"
+  - "(*) I'm curious about the others: [X], [Y], and [SP] [theothers]"
+
+theothers:
+  run: |
+    set((m) => m.$others = true);
+  messages:
+  - I'll talk about that later, but basically
+  - "[X] and [Y] can store any value, just like [A]"
+  - they have a special meaning when working with memory addresses 🐏
+  - "and [SP] is the Stack Pointer"
+  responses:
+  - <!m.$hasEnded> ...registers
+  - <m.$hasEnded> ...finish
+
+ldaexplanation:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - exactly, LDA means "LoaD Accumulator"
+  - 💸  any numbers prefixed with $ are in hexadecimal notation
+  - "🔢  anything prefixed with # is a literal number value"
+  - 🐏  any other number refers to a memory location
+  - now run the next instruction! ⏩
+  events:
+  - step [sta]
+
+sta:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - STA means "STore Accumulator"
+  - and as you can see, it writes the content of [A] to a memory location
+  - in this example, to the address $4070
+  - so now the $4070 cell of the Memory Viewer has a $01
+  - try running the remaining instructions ⏩
+  events:
+  - end [finish]
+
+finish:
+  run: |
+    set((m) => m.$hasEnded = true);
+    {{Bottom}}.setDelay(500);
+  messages:
+  - awesome, now you know the basic workings of a CPU
+  - click the ⏮  button and run the simulation as many times as you need
+  - when you are ready, we can go to the next level
+  responses:
+  - 💪  I think I'm ready [end]
+  - <!m.$others> (*) what about [X], [Y], and [SP]? [theothers]
+  - (*) I don't like clicking buttons [clicking]
+
+clicking:
+  messages:
+  - hmm...
+  - you can navigate to the code section with `Alt+Up`
+  - then hit `Alt+Enter`
+  - and go back with `Alt+Left`
+  responses:
+  - ...finish

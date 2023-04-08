@@ -3,29 +3,17 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales, { LANGUAGES } from "../locales";
-import Button from "./components/widgets/Button";
 import VolumeSlider from "./components/widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
 
 class SettingsModal extends PureComponent {
-	state = { language: "en" };
-
-	componentDidMount() {
-		this.reset();
-	}
-
-	reset() {
-		const { language } = this.props;
-		this.setState({ language });
-	}
-
 	render() {
-		const { open } = this.props;
+		const { language, setLanguage, open } = this.props;
 
 		return (
 			<Modal
 				show={open}
-				onHide={this.onClose}
+				onHide={this._onClose}
 				centered
 				contentClassName={"crt " + styles.modalContent}
 			>
@@ -37,15 +25,15 @@ class SettingsModal extends PureComponent {
 						<Form.Group>
 							<Form.Label>{locales.get("language")}</Form.Label>
 							<div className={styles.language}>
-								{LANGUAGES.map((language) => (
-									<div key={`language-${language}`}>
+								{LANGUAGES.map((it) => (
+									<div key={`language-${it}`}>
 										<Form.Check
 											type="radio"
-											id={`language-${language}`}
-											label={locales.get(`language_${language}`)}
-											checked={language === this.state.language}
+											id={`language-${it}`}
+											label={locales.get(`language_${it}`)}
+											checked={it === language}
 											onChange={() => {
-												this.setState({ language });
+												setLanguage(it);
 											}}
 										/>
 									</div>
@@ -54,7 +42,7 @@ class SettingsModal extends PureComponent {
 						</Form.Group>
 						<Form.Group>
 							<Form.Label>{locales.get("music")}</Form.Label>
-							<VolumeSlider />
+							<VolumeSlider disableTooltip />
 						</Form.Group>
 						<Form.Label style={{ color: "gray" }}>Save file</Form.Label>
 						<div style={{ color: "gray", fontSize: 12, fontStyle: "italic" }}>
@@ -64,24 +52,17 @@ class SettingsModal extends PureComponent {
 						</div>
 					</Form>
 				</Modal.Body>
-				<Modal.Footer>
-					<Button onClick={this.onClose}>{locales.get("cancel")}</Button>
-					<Button onClick={this.onSave} primary>
-						{locales.get("save")}
-					</Button>
-				</Modal.Footer>
 			</Modal>
 		);
 	}
 
-	onSave = () => {
+	_onSave = () => {
 		this.props.setLanguage(this.state.language);
 		this.props.setSettingsOpen(false);
 	};
 
-	onClose = () => {
+	_onClose = () => {
 		this.props.setSettingsOpen(false);
-		this.reset();
 	};
 }
 

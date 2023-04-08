@@ -68,8 +68,8 @@ export default class CodeEditor extends PureComponent {
 			tooltip: locales.get("run"),
 			run: () => {
 				bus.emit("run", "test");
-				const { onRunFocus } = this._args;
-				if (onRunFocus != null) this._layout.focus(onRunFocus);
+				const focus = this._layout.constructor.pinLocation;
+				if (focus != null) this._layout.focus(focus);
 			},
 		},
 		step: {

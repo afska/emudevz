@@ -1,0 +1,77 @@
+---
+main:
+  messages:
+  - repasemos rápidamente el esquema de memoria de la NEEES
+  - la CPU tiene 2 KiB de RAM 🐏
+  - pero las direcciones de memoria van de $0000 a $FFFF (65535)
+  - por lo que el espacio direccionable completo es de 64 KiB
+  responses:
+  - si solo 2 KiB son RAM de verdad, ¿qué hay en los otros 62 KiB? 🤨 [other62]
+
+other62:
+  messages:
+  - otras cosas, como espejos de RAM, E/S mapeada en memoria y la información del cartucho
+  - 🔗  ¡todo está conectado a la memoria!
+  - así es como el código máquina interactúa con los dispositivos
+  - el mapa de memoria tiene una estructura muy específica, mira 📄  ~/docs/cpu/cpu_memory.es.md~
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/cpu/cpu_memory.es.md");
+  responses:
+  - (*) ¿qué es "E/S mapeada en memoria"? 🗺️ [io]
+  - 👌  ya veo... ¿qué necesito implementar? [implement]
+
+io:
+  messages:
+  - un esquema en el cual las direcciones de memoria están conectadas a dispositivos físicos
+  - por ejemplo...
+  - leer $4016 leerá los botones presionados del 🎮  mando
+  - escribir los registros de la 🖥️  PPU en $2000-$2007 modificará la pantalla
+  - escribir los registros de la 🔊  APU en $4000-$4013 producirá sonidos
+  - leer $8000 probablemente leerá el primer byte de <PRG-ROM> del 💾  cartucho
+  responses:
+  - ...other62
+
+implement:
+  messages:
+  - por ahora, solo vamos a implementar los dos primeros rangos del mapa de memoria
+  - 📚  crea una clase `CPUMemory` en 📄  ~/code/CPUMemory.js~ con un constructor
+  - debería asignar una propiedad `ram` (un `Uint8Array` de 2048 bytes)
+  - |-
+    implementa estos dos métodos:
+    **read(address)**:
+      __-> si <address> está dentro de $0000-$07FF, retorna el byte correspondiente de <ram>
+      -> si <address> está dentro de $0800-$1FFF, retorna un byte espejado de <ram>
+        (p. ej. $0802 se vuelve $0002, $1023 se vuelve $0023)
+      -> caso contrario, retorna 0__
+    **write(address, value)**:
+      __-> similar a *read*, pero escribe el <value> en lugar de retornar__
+  - luego, como hiciste con `Cartridge`, agrega la clase a ~/code/index.js~
+  responses:
+  - necesito ayuda con los bytes espejados 📐 [help]
+
+help:
+  messages:
+  - llamar a `read(0x0802)` debería retonar lo mismo que `read(0x0002)`
+  - y llamar a `write(0x0802, value)` debería tener el mismo efecto que tiene `write(0x0002, value)`
+  - por eso es que el rango $0800-$1FFF es 🚽  <un espejo> de $0000-$07FF
+  - para saber qué dirección leer
+  - puedes usar `byte.getMirroredAddress(...)`
+  responses:
+  - dame un ejemplo, por favor [example]
+
+example:
+  messages:
+  - revisa la "Pista para espejos" al final del documento
+  - usemos el 4to rango ("🚽  Espejo de $2000-$2007") como ejemplo
+  - tenemos un <mirror range> ($2008-$3FFF) apuntando a un <target range> ($2000-$2007)
+  - |-
+    `byte.getMirroredAddress(...)` toma 4 argumentos
+      address => el parámetro de read(...) y write(...)
+      mirrorRangeStart => ~0x2008~
+      targetRangeStart => ~0x2000~
+      targetRangeSize  => ~0x0008~
+  - |-
+    entonces, haríamos:
+      ```javascript address = byte.getMirroredAddress(address, 0x2008, 0x2000, 0x0008)```
+  - y finalmente, procedemos como si `address` ya estuviera en el <target range> ($2000-$2007) 😃
+  responses: []

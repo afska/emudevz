@@ -45,10 +45,6 @@ export default class Level {
 		return store.getState().level.instance;
 	}
 
-	static get maxLevelId() {
-		return store.getState().savedata.levelId;
-	}
-
 	get content() {
 		if (this.memory.content.multifile) return { main: Drive.MAIN_FILE };
 
@@ -107,8 +103,10 @@ export default class Level {
 		if (this.memory.content.multifile) {
 			const snapshotDir = Drive.snapshotDirOf(this.id);
 
-			if (!filesystem.exists(snapshotDir))
+			if (!filesystem.exists(snapshotDir)) {
 				filesystem.cpr(Drive.CODE_DIR, snapshotDir);
+				store.dispatch.savedata.addSnapshot(this.id);
+			}
 		}
 
 		if (!store.dispatch.savedata.advance(this.id)) {

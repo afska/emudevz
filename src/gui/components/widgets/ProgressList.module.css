@@ -26,11 +26,12 @@
 }
 
 .locked {
+	background-color: #acacac;
 	cursor: not-allowed;
 }
 
 .selected {
-	filter: brightness(2);
+	filter: brightness(2) drop-shadow(0px 0px 4px #ffffff);
 }
 
 .highlight {

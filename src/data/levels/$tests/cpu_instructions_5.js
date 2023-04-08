@@ -1,47 +1,19 @@
-const { evaluate, byte } = $;
+const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
-let mainModule;
-let NROM = null;
+let mainModule, Console;
 beforeEach(async () => {
 	mainModule = await evaluate();
-	try {
-		NROM = (await evaluate("/lib/NROM.js")).default;
-	} catch {}
+	Console = await new EmulatorBuilder().addUserCPU().build();
 });
 
-// [!] Duplicated >>>
-const newHeader = (prgPages = 1, chrPages = 1, flags6 = 0, flags7 = 0) => {
-	// prettier-ignore
-	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, flags7, 0, 0, 0, 0, 0, 0, 0, 0];
-};
+const { newHeader, newRom } = testHelpers;
+function newCPU(prgBytes = []) {
+	const console = new Console();
+	console.load(newRom(prgBytes));
+	return console.cpu;
+}
 
-const newRom = (prgBytes = [], header = newHeader()) => {
-	const prg = prgBytes;
-	const chr = [];
-	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
-	for (let i = 0; i < 8192; i++) chr.push(byte.random());
-	const bytes = new Uint8Array([...header, ...prg, ...chr]);
-
-	return bytes;
-};
-
-const newCPU = (prgBytes = []) => {
-	const CPU = mainModule.default.CPU;
-	const Cartridge = mainModule.default.Cartridge;
-
-	const cartridge = new Cartridge(newRom(prgBytes));
-
-	const areMappersImplemented = Level.current.id >= Book.current.getId("4.20");
-	if (areMappersImplemented && NROM != null) {
-		const mapper = new NROM({ cartridge });
-		return new CPU(mapper);
-	} else {
-		return new CPU(cartridge);
-	}
-};
-// [!] Duplicated <<<
-
-// 4.15 Instructions (5/5): System (interrupts)
+// 5a.11 Instructions (5/5): System (interrupts)
 
 it("the CPU can handle <RESET> interrupts", () => {
 	const cpu = newCPU();
@@ -71,7 +43,7 @@ it("the CPU can handle <RESET> interrupts", () => {
 	locales: {
 		es: "la CPU puede manejar interrupciones <RESET>",
 	},
-	use: ({ id }, book) => id >= book.getId("4.15"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("the CPU can handle <NMI> interrupts", () => {
@@ -103,7 +75,7 @@ it("the CPU can handle <NMI> interrupts", () => {
 	locales: {
 		es: "la CPU puede manejar interrupciones <NMI>",
 	},
-	use: ({ id }, book) => id >= book.getId("4.15"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("the CPU can handle <IRQ> interrupts", () => {
@@ -134,7 +106,7 @@ it("the CPU can handle <IRQ> interrupts", () => {
 	locales: {
 		es: "la CPU puede manejar interrupciones <IRQ>",
 	},
-	use: ({ id }, book) => id >= book.getId("4.15"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
@@ -166,7 +138,7 @@ it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
 	locales: {
 		es: "la CPU ignora interrupciones <IRQ> si la bandera ~I~ está encendida",
 	},
-	use: ({ id }, book) => id >= book.getId("4.15"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`BRK`: argument == 'no'", () => {
@@ -178,7 +150,7 @@ it("`BRK`: argument == 'no'", () => {
 	locales: {
 		es: "`BRK`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.15"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`BRK`: produces an <IRQ> interrupt (bit 4 from flags should be on)", () => {
@@ -207,7 +179,7 @@ it("`BRK`: produces an <IRQ> interrupt (bit 4 from flags should be on)", () => {
 		es:
 			"`BRK`: produce una interrupción <IRQ> (el bit 4 de las banderas debería estar encendido)",
 	},
-	use: ({ id }, book) => id >= book.getId("4.15"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
 it("`NOP`: argument == 'no'", () => {
@@ -219,5 +191,5 @@ it("`NOP`: argument == 'no'", () => {
 	locales: {
 		es: "`NOP`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.15"),
+	use: ({ id }, book) => id >= book.getId("5a.11"),
 });

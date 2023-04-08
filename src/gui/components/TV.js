@@ -13,7 +13,7 @@ export default class TV extends PureComponent {
 	state = { content: null, type: "media" };
 
 	async initialize(args, level) {
-		if (args.content != null && args.type != null)
+		if (args.type != null)
 			this.setState({ content: args.content, type: args.type });
 
 		this._level = level;
@@ -47,13 +47,25 @@ export default class TV extends PureComponent {
 		);
 	}
 
+	componentDidMount() {
+		window.addEventListener("dragover", this._ignore);
+		window.addEventListener("dragenter", this._ignore);
+		window.addEventListener("drop", this._onFileDrop);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("dragover", this._ignore);
+		window.removeEventListener("dragenter", this._ignore);
+		window.removeEventListener("drop", this._onFileDrop);
+	}
+
 	_renderContent() {
 		const { content, type } = this.state;
 
-		if (!content) return <TVNoise />;
-
 		switch (type) {
 			case "media": {
+				if (!content) return <TVNoise />;
+
 				return (
 					<PanZoom
 						src={content}
@@ -68,6 +80,8 @@ export default class TV extends PureComponent {
 				);
 			}
 			case "markdown": {
+				if (!content) return <TVNoise />;
+
 				return <MarkdownView content={content} />;
 			}
 			case "rom": {
@@ -78,6 +92,26 @@ export default class TV extends PureComponent {
 			}
 		}
 	}
+
+	_onFileDrop = (e) => {
+		e.preventDefault();
+
+		const file = e.dataTransfer.files[0];
+		const reader = new FileReader();
+		if (!file) return;
+
+		reader.onload = (event) => {
+			const rom = event.target.result;
+			this.setState({ content: rom });
+		};
+
+		reader.readAsArrayBuffer(file);
+	};
+
+	_ignore = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+	};
 
 	focus = () => {
 		this.ref.focus();

@@ -1,47 +1,19 @@
-const { evaluate, byte } = $;
+const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
-let mainModule;
-let NROM = null;
+let mainModule, Console;
 beforeEach(async () => {
 	mainModule = await evaluate();
-	try {
-		NROM = (await evaluate("/lib/NROM.js")).default;
-	} catch {}
+	Console = await new EmulatorBuilder().addUserCPU().build();
 });
 
-// [!] Duplicated >>>
-const newHeader = (prgPages = 1, chrPages = 1, flags6 = 0, flags7 = 0) => {
-	// prettier-ignore
-	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, flags7, 0, 0, 0, 0, 0, 0, 0, 0];
-};
+const { newHeader, newRom } = testHelpers;
+function newCPU(prgBytes = []) {
+	const console = new Console();
+	console.load(newRom(prgBytes));
+	return console.cpu;
+}
 
-const newRom = (prgBytes = [], header = newHeader()) => {
-	const prg = prgBytes;
-	const chr = [];
-	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
-	for (let i = 0; i < 8192; i++) chr.push(byte.random());
-	const bytes = new Uint8Array([...header, ...prg, ...chr]);
-
-	return bytes;
-};
-
-const newCPU = (prgBytes = []) => {
-	const CPU = mainModule.default.CPU;
-	const Cartridge = mainModule.default.Cartridge;
-
-	const cartridge = new Cartridge(newRom(prgBytes));
-
-	const areMappersImplemented = Level.current.id >= Book.current.getId("4.20");
-	if (areMappersImplemented && NROM != null) {
-		const mapper = new NROM({ cartridge });
-		return new CPU(mapper);
-	} else {
-		return new CPU(cartridge);
-	}
-};
-// [!] Duplicated <<<
-
-// 4.12 Instructions (2/5): Data
+// 5a.8 Instructions (2/5): Data
 
 [
 	{ instruction: "CLC", flag: "c" },
@@ -60,7 +32,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'no'",
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 
 	it("`" + instruction + "`: " + `clears the ~${name}~ flag`, () => {
@@ -74,7 +46,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: " + `apaga la bandera ~${name}~`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 });
 
@@ -94,7 +66,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 
 	it("`" + instruction + "`: " + `loads [${name}] (positive value)`, () => {
@@ -109,7 +81,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: " + `carga [${name}] (valor positivo)`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 
 	it("`" + instruction + "`: " + `loads [${name}] (negative value)`, () => {
@@ -125,7 +97,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: " + `loads [${name}] (valor negativo)`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 
 	it("`" + instruction + "`: " + `loads [${name}] (zero value)`, () => {
@@ -140,7 +112,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: " + `carga [${name}] (valor cero)`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 });
 
@@ -153,7 +125,7 @@ it("`PHA`: argument == 'no'", () => {
 	locales: {
 		es: "`PHA`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.12"),
+	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
 it("`PHA`: pushes [A] onto the stack", () => {
@@ -167,7 +139,7 @@ it("`PHA`: pushes [A] onto the stack", () => {
 	locales: {
 		es: "`PHA`: pone [A] en la pila",
 	},
-	use: ({ id }, book) => id >= book.getId("4.12"),
+	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
 it("`PHP`: argument == 'no'", () => {
@@ -179,7 +151,7 @@ it("`PHP`: argument == 'no'", () => {
 	locales: {
 		es: "`PHP`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.12"),
+	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
 it("`PHP`: pushes the flags onto the stack", () => {
@@ -198,7 +170,7 @@ it("`PHP`: pushes the flags onto the stack", () => {
 	locales: {
 		es: "`PHP`: pone las banderas en la pila",
 	},
-	use: ({ id }, book) => id >= book.getId("4.12"),
+	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
 it("`PLA`: argument == 'no'", () => {
@@ -210,7 +182,7 @@ it("`PLA`: argument == 'no'", () => {
 	locales: {
 		es: "`PLA`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.12"),
+	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
 it("`PLA`: sets [A] with a value from the stack", () => {
@@ -224,7 +196,7 @@ it("`PLA`: sets [A] with a value from the stack", () => {
 	locales: {
 		es: "`PLA`: asigna [A] con un valor de la pila",
 	},
-	use: ({ id }, book) => id >= book.getId("4.12"),
+	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
 it("`PLP`: argument == 'no'", () => {
@@ -236,7 +208,7 @@ it("`PLP`: argument == 'no'", () => {
 	locales: {
 		es: "`PLP`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.12"),
+	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
 it("`PLP`: sets the flags with a value from the stack", () => {
@@ -257,7 +229,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 	locales: {
 		es: "`PLP`: asigna las banderas con un valor de la pila",
 	},
-	use: ({ id }, book) => id >= book.getId("4.12"),
+	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
 [
@@ -276,7 +248,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'no'",
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 
 	it("`" + instruction + "`: " + `sets the ~${name}~ flag`, () => {
@@ -290,7 +262,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 		locales: {
 			es: "`" + instruction + "`: " + `enciende la bandera ~${name}~`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 });
 
@@ -310,7 +282,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 
 	it(
@@ -331,7 +303,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 				"`: " +
 				`escribe [${name}] en la dirección de memoria`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 });
 
@@ -379,7 +351,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'no'",
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 
 	it(
@@ -403,6 +375,6 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 				"`: " +
 				`transfiere el valor de [${sourceName}] a [${targetName}]`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.12"),
+		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
 });

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
 import filesystem, { fuzzy } from "../../../filesystem";
+import Level from "../../../level/Level";
 import locales from "../../../locales";
 import LsCommand from "../../../terminal/commands/fs/LsCommand";
 import styles from "./FileSearch.module.css";
@@ -56,7 +57,6 @@ export default function FileSearch(props) {
 					onKeyDown={_onKeyDown}
 					ref={inputRef}
 				/>
-
 				{matches.length === 0 && tree && (
 					<pre className={styles.tree}>{tree}</pre>
 				)}
@@ -83,6 +83,12 @@ export default function FileSearch(props) {
 						})}
 					</div>
 				)}
+				{!Level.current.$layout?.supportsPin &&
+					matches[selected]?.file.filePath.endsWith(".neees") && (
+						<pre className={styles.warning}>
+							{locales.get("cant_open_emulator")}
+						</pre>
+					)}
 			</div>
 		);
 	};

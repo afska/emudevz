@@ -7,7 +7,9 @@ import music from "../../sound/music";
 import Tooltip from "./Tooltip";
 
 function ValueLabel(props) {
-	const { children } = props;
+	const { disableTooltip = false, children } = props;
+
+	if (disableTooltip) return children;
 
 	return (
 		<Tooltip enterTouchDelay={0} placement="top" title={locales.get("volume")}>
@@ -22,6 +24,7 @@ class VolumeSlider extends PureComponent {
 			musicVolume,
 			volume = musicVolume,
 			defaultVolume,
+			disableTooltip,
 			setVolume = (v) => music.setVolume(v),
 			className = "menu-volume-slider",
 			dispatch,
@@ -50,7 +53,11 @@ class VolumeSlider extends PureComponent {
 					valueLabelDisplay="auto"
 					slots={{
 						valueLabel: React.forwardRef((props, ref) => (
-							<ValueLabel ref={ref} {...props} />
+							<ValueLabel
+								ref={ref}
+								disableTooltip={disableTooltip}
+								{...props}
+							/>
 						)),
 					}}
 					step={0.1}

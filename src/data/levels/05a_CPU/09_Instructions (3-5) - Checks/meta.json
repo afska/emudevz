@@ -1,0 +1,42 @@
+{
+	"name": {
+		"en": "✅ Instructions (3/5): Checks",
+		"es": "✅ Instrucciones (3/5): Verificaciones"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": [
+			"cartridge.js",
+			"memory.js",
+			"cpu.js",
+			"cpu_instructions_1.js",
+			"cpu_instructions_2.js",
+			"cpu_instructions_3.js"
+		],
+		"mainTestFile": "cpu_instructions_3.js"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

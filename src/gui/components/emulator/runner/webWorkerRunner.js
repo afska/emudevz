@@ -1,5 +1,9 @@
 const WebWorker = require("./WebWorker").default;
-const webWorker = new WebWorker((msg) => postMessage(msg));
+
+// DISABLED
+// WebWorkers are not supported.
+
+const webWorker = new WebWorker(/* Console, */ (msg) => postMessage(msg));
 
 onmessage = function (message) {
 	webWorker.$onMessage(message);

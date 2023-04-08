@@ -1,47 +1,19 @@
-const { evaluate, byte } = $;
+const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
-let mainModule;
-let NROM = null;
+let mainModule, Console;
 beforeEach(async () => {
 	mainModule = await evaluate();
-	try {
-		NROM = (await evaluate("/lib/NROM.js")).default;
-	} catch {}
+	Console = await new EmulatorBuilder().addUserCPU().build();
 });
 
-// [!] Duplicated >>>
-const newHeader = (prgPages = 1, chrPages = 1, flags6 = 0, flags7 = 0) => {
-	// prettier-ignore
-	return [0x4e, 0x45, 0x53, 0x1a, prgPages, chrPages, flags6, flags7, 0, 0, 0, 0, 0, 0, 0, 0];
-};
+const { newHeader, newRom } = testHelpers;
+function newCPU(prgBytes = []) {
+	const console = new Console();
+	console.load(newRom(prgBytes));
+	return console.cpu;
+}
 
-const newRom = (prgBytes = [], header = newHeader()) => {
-	const prg = prgBytes;
-	const chr = [];
-	for (let i = prgBytes.length; i < 16384; i++) prg.push(0);
-	for (let i = 0; i < 8192; i++) chr.push(byte.random());
-	const bytes = new Uint8Array([...header, ...prg, ...chr]);
-
-	return bytes;
-};
-
-const newCPU = (prgBytes = []) => {
-	const CPU = mainModule.default.CPU;
-	const Cartridge = mainModule.default.Cartridge;
-
-	const cartridge = new Cartridge(newRom(prgBytes));
-
-	const areMappersImplemented = Level.current.id >= Book.current.getId("4.20");
-	if (areMappersImplemented && NROM != null) {
-		const mapper = new NROM({ cartridge });
-		return new CPU(mapper);
-	} else {
-		return new CPU(cartridge);
-	}
-};
-// [!] Duplicated <<<
-
-// 4.14 Instructions (4/5): Branching
+// 5a.10 Instructions (4/5): Branching
 
 [
 	{ instruction: "BCC", flag: "c" },
@@ -60,7 +32,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
 		},
-		use: ({ id }, book) => id >= book.getId("4.14"),
+		use: ({ id }, book) => id >= book.getId("5a.10"),
 	});
 
 	it("`" + instruction + "`: " + `jumps if the ~${name}~ flag is clear`, () => {
@@ -80,7 +52,7 @@ const newCPU = (prgBytes = []) => {
 				"`: " +
 				`salta si la bandera ~${name}~ está apagada`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.14"),
+		use: ({ id }, book) => id >= book.getId("5a.10"),
 	});
 
 	it(
@@ -104,7 +76,7 @@ const newCPU = (prgBytes = []) => {
 				"`: " +
 				`no salta si la bandera ~${name}~ está encendida`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.14"),
+		use: ({ id }, book) => id >= book.getId("5a.10"),
 	});
 });
 
@@ -125,7 +97,7 @@ const newCPU = (prgBytes = []) => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
 		},
-		use: ({ id }, book) => id >= book.getId("4.14"),
+		use: ({ id }, book) => id >= book.getId("5a.10"),
 	});
 
 	it("`" + instruction + "`: " + `jumps if the ~${name}~ flag is set`, () => {
@@ -145,7 +117,7 @@ const newCPU = (prgBytes = []) => {
 				"`: " +
 				`salta si la bandera ~${name}~ está encendida`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.14"),
+		use: ({ id }, book) => id >= book.getId("5a.10"),
 	});
 
 	it(
@@ -169,7 +141,7 @@ const newCPU = (prgBytes = []) => {
 				"`: " +
 				`no salta si la bandera ~${name}~ está encendida`,
 		},
-		use: ({ id }, book) => id >= book.getId("4.14"),
+		use: ({ id }, book) => id >= book.getId("5a.10"),
 	});
 });
 
@@ -182,7 +154,7 @@ it("`JMP`: argument == 'address'", () => {
 	locales: {
 		es: "`JMP`: argument == 'address'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.14"),
+	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
 it("`JMP`: jumps to the address", () => {
@@ -196,7 +168,7 @@ it("`JMP`: jumps to the address", () => {
 	locales: {
 		es: "`JMP`: salta a la dirección",
 	},
-	use: ({ id }, book) => id >= book.getId("4.14"),
+	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
 it("`JSR`: argument == 'address'", () => {
@@ -208,7 +180,7 @@ it("`JSR`: argument == 'address'", () => {
 	locales: {
 		es: "`JSR`: argument == 'address'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.14"),
+	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
 it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
@@ -223,7 +195,7 @@ it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
 	locales: {
 		es: "`JSR`: pone [PC] - 1 en la pila y salta a la dirección",
 	},
-	use: ({ id }, book) => id >= book.getId("4.14"),
+	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
 it("`RTI`: argument == 'no'", () => {
@@ -235,7 +207,7 @@ it("`RTI`: argument == 'no'", () => {
 	locales: {
 		es: "`RTI`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.14"),
+	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
 it("`RTI`: updates the flags and [PC] from the stack", () => {
@@ -252,7 +224,7 @@ it("`RTI`: updates the flags and [PC] from the stack", () => {
 	locales: {
 		es: "`RTI`: actualiza las banderas y [PC] desde la pila",
 	},
-	use: ({ id }, book) => id >= book.getId("4.14"),
+	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
 it("`RTS`: argument == 'no'", () => {
@@ -264,7 +236,7 @@ it("`RTS`: argument == 'no'", () => {
 	locales: {
 		es: "`RTS`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("4.14"),
+	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
 it("`RTS`: updates [PC] from a value in the stack + 1", () => {
@@ -279,5 +251,5 @@ it("`RTS`: updates [PC] from a value in the stack + 1", () => {
 	locales: {
 		es: "`RTS`: actualiza [PC] desde un valor en la pila + 1",
 	},
-	use: ({ id }, book) => id >= book.getId("4.14"),
+	use: ({ id }, book) => id >= book.getId("5a.10"),
 });

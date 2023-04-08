@@ -9,6 +9,7 @@
 	border-top-right-radius: 8px;
 	border: 1px solid #ffffff00;
 	color: #b3c6df;
+	height: 40px; /* (tied to HorizontalDragList.js) */
 }
 
 .container:hover,
@@ -34,15 +35,7 @@
 	margin-right: -2px;
 }
 
-.pinButton:hover {
-	color: #466a8e;
-}
-
 .closeButton {
 	margin-left: 6px;
 	margin-right: 2px;
-}
-
-.closeButton:hover {
-	color: #466a8e;
 }

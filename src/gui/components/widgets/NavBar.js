@@ -6,16 +6,20 @@ import {
 	FaChevronLeft,
 	FaChevronRight,
 	FaComment,
+	FaExclamationCircle,
 	FaHome,
 	FaMusic,
+	FaPlay,
 	FaTrash,
+	FaTrashRestore,
 } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
 import locales from "../../../locales";
-import { analytics } from "../../../utils";
+import { analytics, bus } from "../../../utils";
 import music from "../../sound/music";
+import TV from "../TV";
 import CalculatorModal from "./CalculatorModal";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
@@ -23,20 +27,24 @@ import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
-	state = { isCalculatorOpen: false };
+	state = { isCalculatorOpen: false, areYouSureRollback: false };
 
 	render() {
 		const {
-			trackInfo,
-			maxLevelId,
 			chapter,
 			level,
+			book,
+			trackInfo,
 			goBack,
-			goTo,
+			goToPrevious,
+			goToNext,
 			resetLevel,
+			rollbackLevel,
 		} = this.props;
 
-		const levelIndex = _.findIndex(chapter.levels, (it) => it.id === level.id);
+		const levelDefinition = book.getLevelDefinitionOf(level.id);
+		const firstLevelDefinition = _.first(chapter.levels);
+		const lastLevelDefinition = _.last(chapter.levels);
 
 		return (
 			<div className={styles.navbar}>
@@ -51,16 +59,16 @@ class NavBar extends PureComponent {
 						tooltip={locales.get("go_back")}
 						onClick={goBack}
 					/>
-					{_.first(chapter.levels).id > 0 && (
+					{book.canGoToPreviousChapter(chapter) && (
 						<IconButton
 							Icon={FaChevronLeft}
 							tooltip={locales.get("chapter_previous")}
-							onClick={() => goTo(_.first(chapter.levels).id - 1)}
+							onClick={() => goToPrevious(firstLevelDefinition.id)}
 						/>
 					)}
 					<span>
-						{chapter.number}.{levelIndex + 1} / {chapter.name[locales.language]}{" "}
-						/ {level.name[locales.language]}
+						{levelDefinition.humanId} / {chapter.name[locales.language]} /{" "}
+						{level.name[locales.language]}
 					</span>
 					{level.isUsingSnapshot && (
 						<Badge bg="warning" text="dark" className={styles.warning}>
@@ -68,6 +76,12 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
+						<IconButton
+							style={{ marginRight: 8 }}
+							Icon={FaPlay}
+							tooltip={locales.get("run_emulator")}
+							onClick={this._runEmulator}
+						/>
 						<IconButton
 							style={{ marginRight: 32 }}
 							Icon={FaCalculator}
@@ -101,7 +115,7 @@ class NavBar extends PureComponent {
 								)
 							}
 						/>
-						{(!level.memory.content.multifile || level.id === maxLevelId) && (
+						{book.canReset(level) && (
 							<IconButton
 								style={{ marginLeft: 8 }}
 								Icon={FaTrash}
@@ -109,20 +123,36 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
-						{maxLevelId > _.last(chapter.levels).id && (
+						{book.canRollback(level) && !this.state.areYouSureRollback && (
+							<IconButton
+								style={{ marginLeft: 8 }}
+								Icon={FaTrashRestore}
+								tooltip={locales.get("rollback")}
+								onClick={() => this.setState({ areYouSureRollback: true })}
+							/>
+						)}
+						{book.canRollback(level) && this.state.areYouSureRollback && (
+							<IconButton
+								style={{ marginLeft: 8, color: "#ff2d2d" }}
+								Icon={FaExclamationCircle}
+								tooltip={locales.get("rollback_sure")}
+								onClick={rollbackLevel}
+							/>
+						)}
+						{book.canGoToNextChapter(chapter) && (
 							<IconButton
 								Icon={FaChevronRight}
 								tooltip={locales.get("chapter_next")}
-								onClick={() => goTo(_.last(chapter.levels).id + 1)}
+								onClick={() => goToNext(lastLevelDefinition.id)}
 							/>
 						)}
 					</div>
 				</div>
 				<div className={styles.item}>
 					<ProgressList
+						book={book}
+						chapter={chapter}
 						selectedLevelId={level.id}
-						maxLevelId={maxLevelId}
-						levelDefinitions={chapter.levels}
 					/>
 				</div>
 			</div>
@@ -136,16 +166,26 @@ class NavBar extends PureComponent {
 	_closeCalculator = () => {
 		this.setState({ isCalculatorOpen: false });
 	};
+
+	_runEmulator = () => {
+		bus.emit("pin", {
+			Component: TV,
+			args: { content: null, type: "rom" },
+			level: this._level,
+		});
+	};
 }
 
-const mapStateToProps = ({ savedata }) => ({
+const mapStateToProps = ({ book, savedata }) => ({
+	book: book.instance,
 	trackInfo: savedata.trackInfo,
 });
-
 const mapDispatchToProps = ({ level }) => ({
 	goBack: level.goHome,
-	goTo: level.goTo,
+	goToPrevious: level.goToPrevious,
+	goToNext: level.goToNext,
 	resetLevel: level.resetProgress,
+	rollbackLevel: level.rollback,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

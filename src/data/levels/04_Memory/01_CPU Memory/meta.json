@@ -1,0 +1,36 @@
+{
+	"name": {
+		"en": "🚌 Memory bus",
+		"es": "🚌 Bus de memoria"
+	},
+	"ui": {
+		"run": "copy.js",
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js"],
+		"mainTestFile": "memory.js"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

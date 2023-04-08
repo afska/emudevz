@@ -4,8 +4,12 @@ const DEFAULT_FILE = Drive.MAIN_FILE;
 
 const KEY = "savedata";
 const INITIAL_STATE = () => ({
-	levelId: 0,
+	maxChapterNumber: 1,
+	completedLevels: [],
+	snapshots: [],
+	lastLevelId: "start",
 	language: "en",
+	emulatorVolume: 0,
 	musicVolume: 0.3,
 	musicTrack: 0,
 	trackInfo: null,
@@ -16,11 +20,23 @@ const INITIAL_STATE = () => ({
 export default {
 	state: INITIAL_STATE(),
 	reducers: {
-		setLevelId(state, levelId) {
-			return { ...state, levelId };
+		setMaxChapterNumber(state, maxChapterNumber) {
+			return { ...state, maxChapterNumber };
+		},
+		addCompletedLevel(state, levelId) {
+			return { ...state, completedLevels: [...state.completedLevels, levelId] };
+		},
+		addSnapshot(state, snapshot) {
+			return { ...state, snapshots: [...state.snapshots, snapshot] };
+		},
+		setLastLevelId(state, lastLevelId) {
+			return { ...state, lastLevelId };
 		},
 		setLanguage(state, language) {
 			return { ...state, language };
+		},
+		setEmulatorVolume(state, emulatorVolume) {
+			return { ...state, emulatorVolume };
 		},
 		setMusicVolume(state, musicVolume) {
 			return { ...state, musicVolume };
@@ -47,34 +63,44 @@ export default {
 
 		return {
 			advance(currentLevelId, _state_) {
-				return this.advanceTo(currentLevelId + 1);
+				const book = _state_.book.instance;
+
+				if (!book.isFinished(currentLevelId))
+					this.addCompletedLevel(currentLevelId);
+
+				const nextLevelId = book.nextIdOf(currentLevelId);
+				return this.advanceTo(nextLevelId);
 			},
 			advanceTo(nextLevelId, _state_) {
 				const state = _state_[KEY];
 				const book = _state_.book.instance;
 
-				if (nextLevelId > book.maxLevelId) return false;
-				if (nextLevelId > state.levelId) dispatch.setLevelId(nextLevelId);
+				if (!book.exists(nextLevelId)) return false;
+
+				const chapter = book.getChapterOf(nextLevelId);
+				if (chapter.number > state.maxChapterNumber)
+					dispatch.setMaxChapterNumber(chapter.number);
 
 				_dispatch_.level.goTo(nextLevelId);
 				return true;
 			},
 			validate(levelId, _state_) {
 				const state = _state_[KEY];
+				const book = _state_.book.instance;
 
 				if (state.openFiles == null) {
 					this.setOpenFiles([DEFAULT_FILE]);
 					this.setSelectedFile(DEFAULT_FILE);
 				}
 
-				if (levelId > state.levelId) {
-					_dispatch_.level.goToReplacing(state.levelId);
+				if (!book.isUnlocked(levelId)) {
+					const firstLevel = book.chapters[0].levels[0];
+					_dispatch_.level.goToReplacing(firstLevel.id);
 					return false;
 				}
 
 				return true;
 			},
-
 			openFile(filePath, _state_) {
 				const state = _state_[KEY];
 				const { openFiles } = state;

@@ -48,6 +48,12 @@ export default class Speaker {
 		this.playerWorklet.port.postMessage(samples);
 	};
 
+	setVolume = (volume) => {
+		if (!this.gainNode) return;
+
+		this.gainNode.gain.value = volume;
+	};
+
 	stop() {
 		if (this.playerWorklet) {
 			this.playerWorklet.port.close();
