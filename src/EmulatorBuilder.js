@@ -189,12 +189,12 @@ export default class EmulatorBuilder {
 					return this.apu.registers.apuMain.writeAt(0, value);
 			}
 
-			// Controller ports
+			// Controller port && APU Frame Counter
 			if (!withUserController) {
 				if (address === 0x4016)
 					return this.controllers[0].port.writeAt(0, value);
 				else if (address === 0x4017)
-					return this.controllers[1].port.writeAt(0, value);
+					return this.apu.registers.apuFrameCounter.writeAt(0, value);
 			}
 
 			// APU and I/O functionality that is normally disabled
