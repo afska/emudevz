@@ -2,6 +2,7 @@ import _ from "lodash";
 import store from "../store";
 
 const EMULATOR_ACTIVATION_LEVEL = "memory-devices";
+const CARTRIDGE_ACTIVATION_LEVEL = "?";
 const CPU_ACTIVATION_LEVEL = "cpu-the-golden-log";
 const PPU_ACTIVATION_LEVEL = "?";
 const APU_ACTIVATION_LEVEL = "?";
@@ -20,6 +21,10 @@ export default class Book {
 
 	get canUseEmulator() {
 		return this.isFinished(EMULATOR_ACTIVATION_LEVEL);
+	}
+
+	get hasFinishedCartridge() {
+		return this.isFinished(CARTRIDGE_ACTIVATION_LEVEL);
 	}
 
 	get hasFinishedCPU() {

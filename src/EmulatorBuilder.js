@@ -4,6 +4,7 @@ import Level from "./level/Level";
 import testContext from "./terminal/commands/test/context";
 
 export default class EmulatorBuilder {
+	withUserCartridge = false;
 	withUserCPU = false;
 	withUserPPU = false;
 	withUserAPU = false;
@@ -13,6 +14,7 @@ export default class EmulatorBuilder {
 
 	async build(withLastCode = false) {
 		if (
+			!this.withUserCartridge &&
 			!this.withUserCPU &&
 			!this.withUserPPU &&
 			!this.withUserAPU &&
@@ -41,6 +43,11 @@ export default class EmulatorBuilder {
 				if (builder.withUserCPU) builder._patchCPU(this, mainModule);
 			}
 		};
+	}
+
+	addUserCartridge(add = true) {
+		this.withUserCartridge = add;
+		return this;
 	}
 
 	addUserCPU(add = true) {
@@ -187,14 +194,14 @@ export default class EmulatorBuilder {
 					return this.apuRegisters.writeAt(address - 0x4000, value);
 				else if (address === 0x4015)
 					return this.apu.registers.apuMain.writeAt(0, value);
+				else if (address === 0x4017)
+					return this.apu.registers.apuFrameCounter.writeAt(0, value);
 			}
 
-			// Controller port && APU Frame Counter
+			// Controller ports
 			if (!withUserController) {
 				if (address === 0x4016)
 					return this.controllers[0].port.writeAt(0, value);
-				else if (address === 0x4017)
-					return this.apu.registers.apuFrameCounter.writeAt(0, value);
 			}
 
 			// APU and I/O functionality that is normally disabled
