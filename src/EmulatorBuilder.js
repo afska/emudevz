@@ -106,30 +106,29 @@ export default class EmulatorBuilder {
 
 		if (!console.cpu.memory) throw new Error("🐒  CPU::memory not found");
 
-		const Memory = console.cpu.memory.constructor;
-		this._patchMemory(Memory);
+		this._patchMemory(console.cpu.memory);
 	}
 
-	_patchMemory(Memory) {
-		this._patchMemoryReads(Memory);
-		this._patchMemoryWrites(Memory);
+	_patchMemory(memory) {
+		this._patchMemoryReads(memory);
+		this._patchMemoryWrites(memory);
 	}
 
-	_patchMemoryReads(Memory) {
+	_patchMemoryReads(memory) {
 		const { withUserPPU, withUserAPU, withUserController } = this;
 
-		Memory.prototype.readAt = function (address) {
+		memory.readAt = function (address) {
 			return this.read(address);
 		};
 
-		Memory.prototype.read2BytesAt = function (address) {
+		memory.read2BytesAt = function (address) {
 			return this.read16(address);
 		};
 
-		const read = Memory.prototype.read;
+		const read = memory.read;
 		if (!read) throw new Error("🐒  CPU::memory::read(...) not found");
 
-		Memory.prototype.read = function (address) {
+		memory.read = function (address) {
 			// PPU registers
 			if (!withUserPPU) {
 				if (address >= 0x2000 && address <= 0x2007)
@@ -165,13 +164,13 @@ export default class EmulatorBuilder {
 		};
 	}
 
-	_patchMemoryWrites(Memory) {
+	_patchMemoryWrites(memory) {
 		const { withUserPPU, withUserAPU, withUserController } = this;
 
-		const write = Memory.prototype.write;
+		const write = memory.write;
 		if (!write) throw new Error("🐒  CPU::memory::write(...) not found");
 
-		Memory.prototype.writeAt = function (address, value) {
+		memory.writeAt = function (address, value) {
 			// PPU registers
 			if (!withUserPPU) {
 				if (address >= 0x2000 && address <= 0x2007)
@@ -201,11 +200,15 @@ export default class EmulatorBuilder {
 			// APU and I/O functionality that is normally disabled
 			if (address >= 0x4018 && address <= 0x401f) return 0;
 
+			// Cartridge space: PRG ROM, PRG RAM, and mapper registers
+			if (address >= 0x4020 && address <= 0xffff)
+				return this.mapper.segments.cpu.writeAt(address - 0x4020, value);
+
 			// Original method call
 			return write.call(this, address, value);
 		};
 
-		Memory.prototype.write = function (address, value) {
+		memory.write = function (address, value) {
 			return this.mapper.cpuWriteAt(address, value);
 		};
 	}
