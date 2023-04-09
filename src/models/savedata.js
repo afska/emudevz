@@ -15,6 +15,15 @@ const INITIAL_STATE = () => ({
 	trackInfo: null,
 	openFiles: [DEFAULT_FILE],
 	selectedFile: DEFAULT_FILE,
+	emulatorSettings: {
+		useCartridge: true,
+		useCPU: true,
+		usePPU: true,
+		useAPU: true,
+		useController: true,
+		useConsole: true,
+		useMappers: true,
+	},
 });
 
 export default {
@@ -52,6 +61,9 @@ export default {
 		},
 		setSelectedFile(state, selectedFile) {
 			return { ...state, selectedFile };
+		},
+		setEmulatorSettings(state, emulatorSettings) {
+			return { ...state, emulatorSettings };
 		},
 		reset() {
 			return INITIAL_STATE();

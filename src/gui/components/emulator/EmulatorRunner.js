@@ -15,7 +15,7 @@ import Unit from "./Unit";
 import Speaker from "./runner/Speaker";
 import WebWorker from "./runner/WebWorker";
 import gamepad from "./runner/gamepad";
-import styles from "./Emulator.module.css";
+import styles from "./EmulatorRunner.module.css";
 
 const NEW_WEB_WORKER = () =>
 	new Worker(new URL("./runner/webWorkerRunner.js", import.meta.url));
@@ -39,7 +39,7 @@ const COMPONENT_BORDER_RADIUS = 8;
 
 let webWorker = null;
 
-export default class Emulator extends PureComponent {
+export default class EmulatorRunner extends PureComponent {
 	render() {
 		const { rom, error } = this.props;
 
@@ -350,11 +350,11 @@ export default class Emulator extends PureComponent {
 	};
 
 	get _emulatorSettings() {
-		// TODO: IMPLEMENT
+		return store.getState().savedata.emulatorSettings;
 	}
 
 	set _emulatorSettings(value) {
-		// TODO: IMPLEMENT
+		store.dispatch.savedata.setEmulatorSettings(value);
 	}
 
 	get _volume() {

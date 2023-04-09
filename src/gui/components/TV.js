@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import TVNoise from "./TVNoise";
-import Emulator from "./emulator/Emulator";
+import EmulatorRunner from "./emulator/EmulatorRunner";
 import MarkdownView from "./widgets/MarkdownView";
 import PanZoom from "./widgets/PanZoom";
 import styles from "./TV.module.css";
@@ -86,7 +86,7 @@ export default class TV extends PureComponent {
 			}
 			case "rom": {
 				return (
-					<Emulator
+					<EmulatorRunner
 						rom={content}
 						error={_error}
 						onError={(e) => {
