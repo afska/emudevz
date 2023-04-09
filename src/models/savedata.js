@@ -105,6 +105,12 @@ export default {
 				const state = _state_[KEY];
 				const { openFiles } = state;
 
+				try {
+					if (!filesystem.exists(filePath)) return;
+				} catch (e) {
+					return;
+				}
+
 				if (!openFiles.includes(filePath))
 					this.setOpenFiles([...openFiles, filePath]);
 				this.setSelectedFile(filePath);

@@ -204,10 +204,6 @@ export default class NEEESTester extends PureComponent {
 	};
 
 	_getMessage(e) {
-		const fullStack = testContext.javascript.buildStack(e);
-		return (
-			(e?.message || "?") +
-			(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
-		);
+		return testContext.javascript.buildError(e);
 	}
 }

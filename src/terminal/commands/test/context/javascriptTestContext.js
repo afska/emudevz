@@ -4,6 +4,7 @@ import $path from "path";
 import _ from "lodash";
 import EmulatorBuilder from "../../../../EmulatorBuilder";
 import filesystem from "../../../../filesystem";
+import Level from "../../../../level/Level";
 import { byte } from "../../../../utils";
 import { esLintConfig } from "../../../../utils/codemirror";
 import {
@@ -26,6 +27,7 @@ const MIXED_IMPORTS = [
 	/^import (\w+), ?{([^}]+)} from "(.+)";?$/m,
 	/^import (\w+), ?{([^}]+)} from '(.+)';?$/m,
 ];
+const ERROR = 2;
 
 let BLOB_TO_PATH_MAP = {};
 
@@ -76,6 +78,39 @@ export default {
 				};
 			})
 			.filter((it) => !_.isEmpty(it.lint));
+	},
+
+	buildError(e) {
+		let fullStack = this.buildStack(e);
+
+		if (!fullStack) {
+			const warnings = this.getWarnings(Level.current).filter((it) =>
+				it.lint.some((lint) => lint.severity === ERROR)
+			);
+			if (!_.isEmpty(warnings)) {
+				fullStack = {
+					trace: warnings
+						.map((it) => {
+							return (
+								`\n📄 ${it.fileName}:\n` +
+								it.lint
+									.filter((lint) => lint.severity === ERROR)
+									.map(
+										(lint) =>
+											`&nbsp;&nbsp;(:${lint.line}:${lint.column}) ${lint.message}`
+									)
+									.join("\n")
+							);
+						})
+						.join("\n"),
+				};
+			}
+		}
+
+		return (
+			(e?.message || "?") +
+			(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
+		);
 	},
 
 	buildStack(error) {

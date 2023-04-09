@@ -1,9 +1,12 @@
 import React, { PureComponent } from "react";
 import classNames from "classnames";
+import _ from "lodash";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import Book from "../../../level/Book";
 import locales from "../../../locales";
 import store from "../../../store";
+import testContext from "../../../terminal/commands/test/context";
+import { bus } from "../../../utils";
 import Tooltip from "../../components/widgets/Tooltip";
 import VolumeSlider from "../../components/widgets/VolumeSlider";
 import TVNoise from "../TVNoise";
@@ -38,7 +41,7 @@ let webWorker = null;
 
 export default class Emulator extends PureComponent {
 	render() {
-		const { rom /*, error*/ } = this.props;
+		const { rom, error } = this.props;
 
 		const book = Book.current;
 
@@ -133,6 +136,14 @@ export default class Emulator extends PureComponent {
 								if (screen) this._initialize(screen);
 							}}
 						/>
+					) : error ? (
+						<div className={styles.message}>
+							<span
+								dangerouslySetInnerHTML={{
+									__html: "❌ " + error,
+								}}
+							/>
+						</div>
 					) : (
 						<TVNoise className={styles.box} />
 					)}
@@ -247,6 +258,9 @@ export default class Emulator extends PureComponent {
 				this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
 				window.addEventListener("keydown", this._onKeyDown);
 				window.addEventListener("keyup", this._onKeyUp);
+			})
+			.catch((e) => {
+				this._onError(e);
 			});
 	}
 
@@ -264,7 +278,18 @@ export default class Emulator extends PureComponent {
 
 	_onError(e) {
 		console.error(e);
-		this.props.onError(e);
+
+		const stack = testContext.javascript.buildStack(e);
+		if (stack?.location) {
+			const { filePath, lineNumber } = stack.location;
+
+			store.dispatch.savedata.openFile(filePath);
+			if (_.isFinite(lineNumber))
+				bus.emit("highlight", { line: lineNumber - 1 });
+		}
+
+		const error = testContext.javascript.buildError(e);
+		this.props.onError(error);
 		this.stop();
 	}
 
