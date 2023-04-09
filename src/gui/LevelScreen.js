@@ -62,9 +62,23 @@ class LevelScreen extends PureComponent {
 		);
 	};
 
+	componentDidMount() {
+		window.addEventListener("dragover", this._ignore);
+		window.addEventListener("dragenter", this._ignore);
+		window.addEventListener("drop", this._ignore);
+	}
+
 	componentWillUnmount() {
 		this.$timeouts.forEach((it) => clearTimeout(it));
+		window.removeEventListener("dragover", this._ignore);
+		window.removeEventListener("dragenter", this._ignore);
+		window.removeEventListener("drop", this._ignore);
 	}
+
+	_ignore = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+	};
 }
 
 export default LevelScreen;

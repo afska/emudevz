@@ -58,7 +58,7 @@ export default class Emulator extends PureComponent {
 						"d-none d-lg-flex d-xl-flex d-xxl-flex"
 					)}
 				>
-					<div className={styles.column}>
+					<div className={classNames(styles.column, styles.units)}>
 						<div className={styles.row}>
 							<Unit
 								icon="💻"
@@ -95,6 +95,14 @@ export default class Emulator extends PureComponent {
 								customIncompleteMessage="using_default_emulator"
 							/>
 						</div>
+					</div>
+					<div
+						className={classNames(
+							styles.dragMessage,
+							"d-none d-xl-flex d-xxl-flex"
+						)}
+					>
+						📦 {locales.get("drag_and_drop_here")}
 					</div>
 					<div
 						className={styles.row}

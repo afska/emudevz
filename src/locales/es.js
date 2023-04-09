@@ -37,6 +37,7 @@ export default {
 	deleting: "Borrando",
 	disconnected:
 		"🔌  Desconectado. ¡Usa el comando `chat` para hablar de nuevo!",
+	drag_and_drop_here: "¡Arrastra una ROM aquí!",
 	enter_a_file_name: "Ingresa un nombre de archivo...",
 	find_errors: "Encontrar errores",
 	go_back: "Volver",

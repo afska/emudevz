@@ -37,6 +37,7 @@ export default {
 	decimal: "Decimal",
 	deleting: "Deleting",
 	disconnected: "🔌  Disconnected. Use the `chat` command to talk again!",
+	drag_and_drop_here: "Drag a ROM here!",
 	enter_a_file_name: "Enter a file name...",
 	find_errors: "Find errors",
 	go_back: "Go back",
