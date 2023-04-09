@@ -64,13 +64,20 @@ export default class Emulator extends PureComponent {
 								icon="💻"
 								name="CPU"
 								completed={book.hasFinishedCPU}
+								active={book.hasFinishedCPU}
 								style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
 							/>
-							<Unit icon="🖥️" name="PPU" completed={book.hasFinishedPPU} />
+							<Unit
+								icon="🖥️"
+								name="PPU"
+								completed={book.hasFinishedPPU}
+								active={book.hasFinishedPPU}
+							/>
 							<Unit
 								icon="🔊"
 								name="APU"
 								completed={book.hasFinishedAPU}
+								active={book.hasFinishedAPU}
 								style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
 							/>
 						</div>
@@ -79,17 +86,20 @@ export default class Emulator extends PureComponent {
 								icon="🎮"
 								name={locales.get("controller")}
 								completed={book.hasFinishedController}
+								active={book.hasFinishedController}
 								style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
 							/>
 							<Unit
 								icon="🕹️"
 								name={locales.get("console")}
 								completed={book.hasFinishedConsole}
+								active={book.hasFinishedConsole}
 							/>
 							<Unit
 								icon="🧠"
 								name={"Mappers"}
 								completed={book.hasFinishedMappers}
+								active={book.hasFinishedMappers}
 								style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
 								customIncompleteIcon="⚠️"
 								customIncompleteMessage="using_default_emulator"
@@ -137,22 +147,7 @@ export default class Emulator extends PureComponent {
 					</div>
 				</div>
 				<div className={styles.content}>
-					<div
-						id="restart"
-						className={styles.warning}
-						onClick={this._onRestart}
-						style={{ display: "none" }}
-					>
-						⚠️ {locales.get("code_changed")} ⚠️
-					</div>
-					{!!rom ? (
-						<Screen
-							className={styles.box}
-							ref={(screen) => {
-								if (screen) this._initialize(screen);
-							}}
-						/>
-					) : error ? (
+					{error ? (
 						<div className={styles.message}>
 							<span
 								dangerouslySetInnerHTML={{
@@ -160,6 +155,13 @@ export default class Emulator extends PureComponent {
 								}}
 							/>
 						</div>
+					) : !!rom ? (
+						<Screen
+							className={styles.box}
+							ref={(screen) => {
+								if (screen) this._initialize(screen);
+							}}
+						/>
 					) : (
 						<TVNoise className={styles.box} />
 					)}
@@ -229,7 +231,7 @@ export default class Emulator extends PureComponent {
 
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
-			code: this._onCode,
+			"code-changed": this._onCodeChanged,
 		});
 	}
 
@@ -238,20 +240,15 @@ export default class Emulator extends PureComponent {
 		this._subscriber.release();
 	}
 
-	_onCode = () => {
-		if (!this._container || !this.props.rom || this.props.error) return;
+	_onCodeChanged = () => {
+		if (!this.props.rom) return;
 
-		const restart = this._container.querySelector("#restart");
-		restart.style.display = "block";
+		this._onRestart();
 	};
 
 	_onRestart = () => {
-		if (!this._container) return;
-
+		this.stop();
 		this.props.onRestart();
-
-		const restart = this._container.querySelector("#restart");
-		restart.style.display = "none";
 	};
 
 	_initialize(screen) {
@@ -274,6 +271,8 @@ export default class Emulator extends PureComponent {
 			.addUserController(book.hasFinishedController)
 			.build(true)
 			.then((Console) => {
+				if (!this.speaker) return;
+
 				webWorker = !USE_WEB_WORKER
 					? new WebWorker(
 							Console,
@@ -349,6 +348,14 @@ export default class Emulator extends PureComponent {
 
 		this.keyboardInput[0][button] = false;
 	};
+
+	get _emulatorSettings() {
+		// TODO: IMPLEMENT
+	}
+
+	set _emulatorSettings(value) {
+		// TODO: IMPLEMENT
+	}
 
 	get _volume() {
 		return store.getState().savedata.emulatorVolume;

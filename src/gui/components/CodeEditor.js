@@ -225,6 +225,7 @@ export default class CodeEditor extends PureComponent {
 
 		this.setState({ isCompiling: true, highlightedLine: -1 });
 		this._compile(code);
+		bus.emit("code-changed", code);
 	};
 
 	_compile = _.debounce((code) => {

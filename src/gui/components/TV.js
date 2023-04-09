@@ -90,11 +90,11 @@ export default class TV extends PureComponent {
 						rom={content}
 						error={_error}
 						onError={(e) => {
-							this.setState({ content: null, _error: e });
+							this.setState({ _error: e });
 						}}
 						onRestart={() => {
 							this.setState({ content: null }, () => {
-								this.setState({ content });
+								this.setState({ content, _error: null });
 							});
 						}}
 					/>
@@ -115,7 +115,7 @@ export default class TV extends PureComponent {
 
 		reader.onload = (event) => {
 			const rom = event.target.result;
-			this.setState({ content: rom });
+			this.setState({ content: rom, _error: null });
 		};
 
 		reader.readAsArrayBuffer(file);

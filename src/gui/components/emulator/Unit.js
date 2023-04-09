@@ -10,22 +10,25 @@ export default class Unit extends PureComponent {
 			icon,
 			name,
 			completed,
+			active,
 			customIncompleteIcon,
 			customIncompleteMessage,
 			className,
+			onToggle,
 			style,
 			...rest
 		} = this.props;
 
-		const message = completed
+		const message = active
 			? "using_your_emulator"
 			: customIncompleteMessage ?? "using_bugged_emulator";
-		const statusIcon = completed ? "✔️" : customIncompleteIcon ?? "❌";
+		const statusIcon = active ? "✔️" : customIncompleteIcon ?? "❌";
 
 		return (
 			<Tooltip
 				title={`${icon} ${name}: ${locales.get(message)}`}
 				placement="right"
+				onClick={onToggle}
 			>
 				<span
 					className={classNames(
