@@ -80,7 +80,7 @@ export default {
 			.filter((it) => !_.isEmpty(it.lint));
 	},
 
-	buildError(e) {
+	buildHTMLError(e) {
 		let fullStack = this.buildStack(e);
 
 		if (!fullStack) {
@@ -91,16 +91,15 @@ export default {
 				fullStack = {
 					trace: warnings
 						.map((it) => {
-							return (
-								`\n📄 ${it.fileName}:\n` +
-								it.lint
-									.filter((lint) => lint.severity === ERROR)
-									.map(
-										(lint) =>
-											`&nbsp;&nbsp;(:${lint.line}:${lint.column}) ${lint.message}`
-									)
-									.join("\n")
-							);
+							const errors = it.lint
+								.filter((lint) => lint.severity === ERROR)
+								.map(
+									(lint) =>
+										`&nbsp;&nbsp;(:${lint.line}:${lint.column}) ${lint.message}`
+								)
+								.join("\n");
+
+							return `\n📄 ${it.fileName}:\n` + errors;
 						})
 						.join("\n"),
 				};

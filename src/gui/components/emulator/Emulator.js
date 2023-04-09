@@ -288,7 +288,7 @@ export default class Emulator extends PureComponent {
 				bus.emit("highlight", { line: lineNumber - 1 });
 		}
 
-		const error = testContext.javascript.buildError(e);
+		const error = testContext.javascript.buildHTMLError(e);
 		this.props.onError(error);
 		this.stop();
 	}

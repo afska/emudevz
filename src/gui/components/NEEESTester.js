@@ -204,6 +204,6 @@ export default class NEEESTester extends PureComponent {
 	};
 
 	_getMessage(e) {
-		return testContext.javascript.buildError(e);
+		return testContext.javascript.buildHTMLError(e);
 	}
 }
