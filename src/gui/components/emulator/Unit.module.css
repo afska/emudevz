@@ -4,3 +4,7 @@
 	padding-right: 8px;
 	font-size: 11px;
 }
+
+.completed {
+	filter: brightness(2) drop-shadow(0px 0px 4px #ffffff);
+}

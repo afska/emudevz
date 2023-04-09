@@ -28,7 +28,11 @@ export default class Unit extends PureComponent {
 				placement="right"
 			>
 				<span
-					className={classNames(styles.unit, className)}
+					className={classNames(
+						styles.unit,
+						completed && styles.completed,
+						className
+					)}
 					style={style}
 					{...rest}
 				>
