@@ -40,20 +40,23 @@ export default class EmulatorRunner extends PureComponent {
 								icon="💻"
 								name="CPU"
 								completed={book.hasFinishedCPU}
-								active={book.hasFinishedCPU}
+								active={this._emulatorSettings.useCPU}
+								onToggle={() => this._onToggle("useCPU")}
 								style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
 							/>
 							<Unit
 								icon="🖥️"
 								name="PPU"
 								completed={book.hasFinishedPPU}
-								active={book.hasFinishedPPU}
+								active={this._emulatorSettings.usePPU}
+								onToggle={() => this._onToggle("usePPU")}
 							/>
 							<Unit
 								icon="🔊"
 								name="APU"
 								completed={book.hasFinishedAPU}
-								active={book.hasFinishedAPU}
+								active={this._emulatorSettings.useAPU}
+								onToggle={() => this._onToggle("useAPU")}
 								style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
 							/>
 						</div>
@@ -62,20 +65,23 @@ export default class EmulatorRunner extends PureComponent {
 								icon="🎮"
 								name={locales.get("controller")}
 								completed={book.hasFinishedController}
-								active={book.hasFinishedController}
+								active={this._emulatorSettings.useController}
+								onToggle={() => this._onToggle("useController")}
 								style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
 							/>
 							<Unit
 								icon="🕹️"
 								name={locales.get("console")}
 								completed={book.hasFinishedConsole}
-								active={book.hasFinishedConsole}
+								active={this._emulatorSettings.useController}
+								onToggle={() => this._onToggle("useController")}
 							/>
 							<Unit
 								icon="🧠"
 								name={"Mappers"}
 								completed={book.hasFinishedMappers}
-								active={book.hasFinishedMappers}
+								active={this._emulatorSettings.useMappers}
+								onToggle={() => this._onToggle("useMappers")}
 								style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
 								customIncompleteIcon="⚠️"
 								customIncompleteMessage="using_default_emulator"
@@ -133,6 +139,16 @@ export default class EmulatorRunner extends PureComponent {
 		);
 	}
 
+	componentDidMount() {
+		this._subscriber = bus.subscribe({
+			"code-changed": _.debounce(this._onCodeChanged, REFRESH_DEBOUNCE_MS),
+		});
+	}
+
+	componentWillUnmount() {
+		this._subscriber.release();
+	}
+
 	_setError = (e) => {
 		const stack = testContext.javascript.buildStack(e);
 		if (stack?.location) {
@@ -161,15 +177,15 @@ export default class EmulatorRunner extends PureComponent {
 		this._container.querySelector("#fps").textContent = formattedFps;
 	};
 
-	componentDidMount() {
-		this._subscriber = bus.subscribe({
-			"code-changed": _.debounce(this._onCodeChanged, REFRESH_DEBOUNCE_MS),
-		});
-	}
-
-	componentWillUnmount() {
-		this._subscriber.release();
-	}
+	_onToggle = (setting) => {
+		const currentSettings = this._emulatorSettings;
+		this._emulatorSettings = {
+			...currentSettings,
+			[setting]: !currentSettings[setting],
+		};
+		if (currentSettings[setting] !== this._emulatorSettings[setting])
+			this.forceUpdate();
+	};
 
 	_onCodeChanged = () => {
 		if (!this.props.rom) return;
