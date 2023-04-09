@@ -94,6 +94,10 @@ export default class TestCommand extends Command {
 				await this._terminal.writeln(locales.get("tests_failure"));
 
 				if (this._isVerbose) {
+					await this._terminal.writeln(
+						locales.get("press_any_key_to_continue"),
+						theme.SYSTEM
+					);
 					await this._terminal.waitForKey();
 				} else {
 					await this._terminal.writehlln(
