@@ -65,6 +65,9 @@ export default {
 		setEmulatorSettings(state, emulatorSettings) {
 			return { ...state, emulatorSettings };
 		},
+		_setKey(state, { key, value }) {
+			return { ...state, [key]: value };
+		},
 		reset() {
 			return INITIAL_STATE();
 		},
@@ -100,9 +103,10 @@ export default {
 				const state = _state_[KEY];
 				const book = _state_.book.instance;
 
-				if (state.openFiles == null) {
-					this.setOpenFiles([DEFAULT_FILE]);
-					this.setSelectedFile(DEFAULT_FILE);
+				for (let key in state) {
+					if (state[key] == null) {
+						this._setKey(key, INITIAL_STATE()[key]);
+					}
 				}
 
 				if (!book.isUnlocked(levelId)) {

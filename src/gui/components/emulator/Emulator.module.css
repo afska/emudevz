@@ -1,0 +1,33 @@
+.content {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	aspect-ratio: 256 / 240;
+}
+
+.box {
+	width: auto;
+	height: 85%;
+
+	border: 1px solid #466a8e;
+	border-radius: 8px;
+}
+
+.message {
+	width: 100%;
+	height: 100%;
+	font-family: monospace;
+	font-size: x-large;
+	user-select: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-left: 32px;
+	padding-right: 32px;
+}
