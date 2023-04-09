@@ -9,6 +9,7 @@ export default {
 	calculator: "Calculadora",
 	cancel: "Cancelar",
 	cant_open_emulator: "¡El emulador no puede abrirse con este esquema!",
+	cartridge: "Cartucho",
 	chapter_next: "Ir al siguiente capítulo",
 	chapter_previous: "Ir al capítulo anterior",
 	choose_an_answer: "Elige una respuesta.",

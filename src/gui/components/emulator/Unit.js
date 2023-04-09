@@ -39,7 +39,7 @@ export default class Unit extends PureComponent {
 					style={style}
 					{...rest}
 				>
-					{icon}: {statusIcon}
+					{icon} {statusIcon}
 				</span>
 			</Tooltip>
 		);

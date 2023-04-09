@@ -34,59 +34,70 @@ export default class EmulatorRunner extends PureComponent {
 						"d-none d-lg-flex d-xl-flex d-xxl-flex"
 					)}
 				>
-					<div className={classNames(styles.column, styles.units)}>
-						<div className={styles.row}>
-							<Unit
-								icon="💻"
-								name="CPU"
-								completed={book.hasFinishedCPU}
-								active={this._emulatorSettings.useCPU}
-								onToggle={() => this._onToggle("useCPU")}
-								style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
-							/>
-							<Unit
-								icon="🖥️"
-								name="PPU"
-								completed={book.hasFinishedPPU}
-								active={this._emulatorSettings.usePPU}
-								onToggle={() => this._onToggle("usePPU")}
-							/>
-							<Unit
-								icon="🔊"
-								name="APU"
-								completed={book.hasFinishedAPU}
-								active={this._emulatorSettings.useAPU}
-								onToggle={() => this._onToggle("useAPU")}
-								style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
-							/>
+					<div className={styles.unitGroup}>
+						<div className={classNames(styles.column, styles.units)}>
+							<div className={styles.row}>
+								<Unit
+									icon="💻"
+									name="CPU"
+									completed={book.hasFinishedCPU}
+									active={this._emulatorSettings.useCPU}
+									onToggle={() => this._onToggle("useCPU")}
+									style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
+								/>
+								<Unit
+									icon="🖥️"
+									name="PPU"
+									completed={book.hasFinishedPPU}
+									active={this._emulatorSettings.usePPU}
+									onToggle={() => this._onToggle("usePPU")}
+								/>
+								<Unit
+									icon="🔊"
+									name="APU"
+									completed={book.hasFinishedAPU}
+									active={this._emulatorSettings.useAPU}
+									onToggle={() => this._onToggle("useAPU")}
+									style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
+								/>
+							</div>
+							<div className={styles.row}>
+								<Unit
+									icon="💾"
+									name={locales.get("cartridge")}
+									completed={book.hasFinishedCartridge}
+									active={this._emulatorSettings.useCartridge}
+									onToggle={() => this._onToggle("useCartridge")}
+									style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
+								/>
+								<Unit
+									icon="🎮"
+									name={locales.get("controller")}
+									completed={book.hasFinishedController}
+									active={this._emulatorSettings.useController}
+									onToggle={() => this._onToggle("useController")}
+								/>
+								<Unit
+									icon="🕹️"
+									name={locales.get("console")}
+									completed={book.hasFinishedConsole}
+									active={this._emulatorSettings.useConsole}
+									onToggle={() => this._onToggle("useConsole")}
+									style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
+								/>
+							</div>
 						</div>
-						<div className={styles.row}>
-							<Unit
-								icon="🎮"
-								name={locales.get("controller")}
-								completed={book.hasFinishedController}
-								active={this._emulatorSettings.useController}
-								onToggle={() => this._onToggle("useController")}
-								style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
-							/>
-							<Unit
-								icon="🕹️"
-								name={locales.get("console")}
-								completed={book.hasFinishedConsole}
-								active={this._emulatorSettings.useController}
-								onToggle={() => this._onToggle("useController")}
-							/>
-							<Unit
-								icon="🧠"
-								name={"Mappers"}
-								completed={book.hasFinishedMappers}
-								active={this._emulatorSettings.useMappers}
-								onToggle={() => this._onToggle("useMappers")}
-								style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
-								customIncompleteIcon="⚠️"
-								customIncompleteMessage="using_default_emulator"
-							/>
-						</div>
+						<Unit
+							icon="🧠"
+							name={"Mappers"}
+							completed={book.hasFinishedMappers}
+							active={this._emulatorSettings.useMappers}
+							onToggle={() => this._onToggle("useMappers")}
+							className={classNames(styles.units, styles.mappersUnit)}
+							style={{ borderRadius: COMPONENT_BORDER_RADIUS }}
+							customIncompleteIcon="⚠️"
+							customIncompleteMessage="using_default_emulator"
+						/>
 					</div>
 					<div
 						className={classNames(

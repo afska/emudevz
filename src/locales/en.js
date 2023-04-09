@@ -9,6 +9,7 @@ export default {
 	calculator: "Calculator",
 	cancel: "Cancel",
 	cant_open_emulator: "The emulator can't be opened with this layout!",
+	cartridge: "Cartridge",
 	chapter_next: "Go to next chapter",
 	chapter_previous: "Go to previous chapter",
 	choose_an_answer: "Choose an answer.",
