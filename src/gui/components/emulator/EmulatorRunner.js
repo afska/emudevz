@@ -13,6 +13,7 @@ import Unit from "./Unit";
 import styles from "./EmulatorRunner.module.css";
 
 const COMPONENT_BORDER_RADIUS = 8;
+const REFRESH_DEBOUNCE_MS = 500;
 
 export default class EmulatorRunner extends PureComponent {
 	render() {
@@ -162,7 +163,7 @@ export default class EmulatorRunner extends PureComponent {
 
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
-			"code-changed": this._onCodeChanged,
+			"code-changed": _.debounce(this._onCodeChanged, REFRESH_DEBOUNCE_MS),
 		});
 	}
 
