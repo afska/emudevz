@@ -107,6 +107,7 @@ export default class TV extends PureComponent {
 	}
 
 	_onFileDrop = (e) => {
+		if (this.state.type !== "rom") return;
 		e.preventDefault();
 
 		const file = e.dataTransfer.files[0];

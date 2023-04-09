@@ -1,4 +1,5 @@
 import CursedNESEmu from "cursed-nes-emu";
+import mappers from "cursed-nes-emu/cartridge/mappers";
 import filesystem from "./filesystem";
 import Level from "./level/Level";
 import testContext from "./terminal/commands/test/context";
@@ -40,7 +41,31 @@ export default class EmulatorBuilder {
 			constructor(...args) {
 				super(...args);
 
+				if (builder.withUserCartridge && !mainModule.Cartridge)
+					throw new Error("🐒  `Cartridge` class not found");
+				if (builder.withUserCPU && !mainModule.CPU)
+					throw new Error("🐒  `CPU` class not found");
+				if (builder.withUserPPU && !mainModule.PPU)
+					throw new Error("🐒  `PPU` class not found");
+				if (builder.withUserAPU && !mainModule.APU)
+					throw new Error("🐒  `APU` class not found");
+				if (builder.withUserController && !mainModule.Controller)
+					throw new Error("🐒  `Controller` class not found");
+				if (builder.withUserConsole && !mainModule.Console)
+					throw new Error("🐒  `Controle` class not found");
+				if (builder.withUserMappers && !mainModule.mappers)
+					throw new Error("🐒  `mappers` object not found");
+
+				if (builder.withUserCartridge) builder._patchCartridge(mainModule);
 				if (builder.withUserCPU) builder._patchCPU(this, mainModule);
+			}
+
+			load(rom, saveFileBytes) {
+				return super.load(
+					rom,
+					saveFileBytes,
+					builder.withUserCartridge ? mainModule.Cartridge : undefined
+				);
 			}
 		};
 	}
@@ -78,6 +103,15 @@ export default class EmulatorBuilder {
 	addUserMappers(add = true) {
 		this.withUserMappers = add;
 		return this;
+	}
+
+	_patchCartridge(mainModule) {
+		mainModule.Cartridge.prototype.createMapper = function () {
+			const mapperId = this.header.mapperId;
+			const Mapper = mappers[mapperId];
+			if (!Mapper) throw new Error(`🐒  Unknown mapper: ${mapperId}.`);
+			return new Mapper();
+		};
 	}
 
 	_patchCPU(console, mainModule) {

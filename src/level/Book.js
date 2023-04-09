@@ -2,7 +2,7 @@ import _ from "lodash";
 import store from "../store";
 
 const EMULATOR_ACTIVATION_LEVEL = "memory-devices";
-const CARTRIDGE_ACTIVATION_LEVEL = "?";
+const CARTRIDGE_ACTIVATION_LEVEL = "memory-cpu-memory";
 const CPU_ACTIVATION_LEVEL = "cpu-the-golden-log";
 const PPU_ACTIVATION_LEVEL = "?";
 const APU_ACTIVATION_LEVEL = "?";
