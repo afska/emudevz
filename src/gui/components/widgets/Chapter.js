@@ -13,6 +13,7 @@ class Chapter extends PureComponent {
 			goTo,
 			comingSoon = false,
 			mini = false,
+			nested = false,
 			right = false,
 			left = false,
 			className,
@@ -33,19 +34,19 @@ class Chapter extends PureComponent {
 					!left && right ? styles.horizontalLinesRightOnly : false
 				)}
 			>
-				{mini && right && <div className={styles.horizontalLineRight} />}
-				{mini && left && <div className={styles.horizontalLineLeft} />}
+				{nested && right && <div className={styles.horizontalLineRight} />}
+				{nested && left && <div className={styles.horizontalLineLeft} />}
 			</div>
 		);
 
 		return (
 			<div className={styles.container}>
 				{lines}
-				{mini && <div className={styles.verticalLine} />}
+				{nested && <div className={styles.verticalLine} />}
 				<Button
 					className={classNames(
 						styles.chapter,
-						mini ? styles.mini : false,
+						nested || mini ? styles.mini : false,
 						!isUnlocked ? styles.locked : false,
 						className
 					)}
@@ -71,7 +72,7 @@ class Chapter extends PureComponent {
 						<div>🔒</div>
 					)}
 				</Button>
-				{mini && <div className={styles.verticalLine} />}
+				{nested && <div className={styles.verticalLine} />}
 				{lines}
 			</div>
 		);

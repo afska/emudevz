@@ -33,21 +33,26 @@ export default class ChapterSelectModal extends PureComponent {
 					{!book && <div>{locales.get("loading")}</div>}
 					{book && (
 						<div className={styles.levelMap}>
-							<Chapter book={book} chapter={book.getChapter(0)} />
+							<Chapter book={book} chapter={book.getChapter(0)} mini />
 							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(1)} />
 							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(2)} />
 							<div className={styles.verticalLine} />
-							<Chapter book={book} chapter={book.getChapter(3)} />
+							<Chapter book={book} chapter={book.getChapter(3)} mini />
 							<div className={styles.verticalLine} />
 							<div className={styles.horizontalLine} />
 							<div className={styles.chapterRow}>
-								<Chapter book={book} chapter={book.getChapter(4)} mini right />
+								<Chapter
+									book={book}
+									chapter={book.getChapter(4)}
+									nested
+									right
+								/>
 								<Chapter
 									book={book}
 									chapter={book.getChapter(5)}
-									mini
+									nested
 									left
 									right
 									comingSoon
@@ -55,7 +60,7 @@ export default class ChapterSelectModal extends PureComponent {
 								<Chapter
 									book={book}
 									chapter={book.getChapter(6)}
-									mini
+									nested
 									left
 									right
 									comingSoon
@@ -63,7 +68,7 @@ export default class ChapterSelectModal extends PureComponent {
 								<Chapter
 									book={book}
 									chapter={book.getChapter(7)}
-									mini
+									nested
 									left
 									comingSoon
 								/>
