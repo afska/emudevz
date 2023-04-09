@@ -13,6 +13,7 @@ export default {
 	chapter_previous: "Go to previous chapter",
 	choose_an_answer: "Choose an answer.",
 	close: "Close",
+	code_changed: "Code changed! Click here to restart",
 	coming_soon: "Coming soon!",
 	command_chat_already_open: "Already open.",
 	command_chat_description: "Runs the chat app.",

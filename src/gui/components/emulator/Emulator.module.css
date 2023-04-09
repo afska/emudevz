@@ -81,3 +81,11 @@
 	padding-left: 32px;
 	padding-right: 32px;
 }
+
+.warning {
+	font-family: monospace;
+	user-select: none;
+	margin-bottom: 8px;
+	cursor: pointer;
+	color: #e29d07;
+}

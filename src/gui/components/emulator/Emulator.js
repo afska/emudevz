@@ -137,6 +137,14 @@ export default class Emulator extends PureComponent {
 					</div>
 				</div>
 				<div className={styles.content}>
+					<div
+						id="restart"
+						className={styles.warning}
+						onClick={this._onRestart}
+						style={{ display: "none" }}
+					>
+						⚠️ {locales.get("code_changed")} ⚠️
+					</div>
 					{!!rom ? (
 						<Screen
 							className={styles.box}
@@ -219,9 +227,32 @@ export default class Emulator extends PureComponent {
 		window.removeEventListener("keyup", this._onKeyUp);
 	}
 
+	componentDidMount() {
+		this._subscriber = bus.subscribe({
+			code: this._onCode,
+		});
+	}
+
 	componentWillUnmount() {
 		this.stop();
+		this._subscriber.release();
 	}
+
+	_onCode = () => {
+		if (!this._container || !this.props.rom || this.props.error) return;
+
+		const restart = this._container.querySelector("#restart");
+		restart.style.display = "block";
+	};
+
+	_onRestart = () => {
+		if (!this._container) return;
+
+		this.props.onRestart();
+
+		const restart = this._container.querySelector("#restart");
+		restart.style.display = "none";
+	};
 
 	_initialize(screen) {
 		const { rom } = this.props;
