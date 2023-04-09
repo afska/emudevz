@@ -110,10 +110,24 @@ export default class Emulator extends PureComponent {
 		this.stop();
 	}
 
-	_initialize(screen) {
+	async _initialize(screen) {
 		const { rom, settings, volume } = this.props;
-		if (!rom) return;
 		this.screen = screen;
+		if (!rom) return;
+
+		let Console;
+		try {
+			Console = await new EmulatorBuilder()
+				.addUserCartridge(settings.useCartridge)
+				.addUserCPU(settings.useCPU)
+				.addUserPPU(settings.usePPU)
+				.addUserAPU(settings.useAPU)
+				.addUserController(settings.useController)
+				.build(true);
+		} catch (e) {
+			this._onError(e);
+			return;
+		}
 
 		this.stop();
 		this.stateInterval = setInterval(this.sendState, STATE_POLL_INTERVAL);
@@ -122,43 +136,29 @@ export default class Emulator extends PureComponent {
 
 		const bytes = new Uint8Array(rom);
 
-		new EmulatorBuilder()
-			.addUserCartridge(settings.useCartridge)
-			.addUserCPU(settings.useCPU)
-			.addUserPPU(settings.usePPU)
-			.addUserAPU(settings.useAPU)
-			.addUserController(settings.useController)
-			.build(true)
-			.then((Console) => {
-				if (!this.speaker) return;
+		webWorker = !USE_WEB_WORKER
+			? new WebWorker(
+					Console,
+					(data) => this.onWorkerMessage({ data }),
+					this.speaker.writeSample,
+					this.speaker
+			  )
+			: NEW_WEB_WORKER();
 
-				webWorker = !USE_WEB_WORKER
-					? new WebWorker(
-							Console,
-							(data) => this.onWorkerMessage({ data }),
-							this.speaker.writeSample,
-							this.speaker
-					  )
-					: NEW_WEB_WORKER();
+		webWorker.onmessage = this.onWorkerMessage;
 
-				webWorker.onmessage = this.onWorkerMessage;
+		webWorker.postMessage(bytes);
+		if (webWorker == null) return;
 
-				webWorker.postMessage(bytes);
-				if (webWorker == null) return;
+		webWorker.postMessage({
+			id: "saveState",
+			saveState: this._getSaveState(),
+		});
+		if (webWorker == null) return;
 
-				webWorker.postMessage({
-					id: "saveState",
-					saveState: this._getSaveState(),
-				});
-				if (webWorker == null) return;
-
-				this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
-				window.addEventListener("keydown", this._onKeyDown);
-				window.addEventListener("keyup", this._onKeyUp);
-			})
-			.catch((e) => {
-				this._onError(e);
-			});
+		this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
+		window.addEventListener("keydown", this._onKeyDown);
+		window.addEventListener("keyup", this._onKeyUp);
 	}
 
 	_getSaveState() {

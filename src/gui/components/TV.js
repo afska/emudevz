@@ -93,8 +93,8 @@ export default class TV extends PureComponent {
 							this.setState({ _error: e });
 						}}
 						onRestart={() => {
-							this.setState({ content: null }, () => {
-								this.setState({ content, _error: null });
+							this.setState({ content: null, _error: null }, () => {
+								this.setState({ content });
 							});
 						}}
 					/>
