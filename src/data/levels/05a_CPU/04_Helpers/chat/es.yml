@@ -11,7 +11,7 @@ main:
   - |-
     en tu `FlagsRegister`, implementa:
     **updateZero(value)**:
-      __-> asigna z=true si value es 0, o z=false en caso contrario__
+      __-> asigna z=true si <value> es 0, o z=false en caso contrario__
     **updateNegative(value)**:
       __-> asigna n=true si byte.isNegative(value), o n=false en caso contrario__
     **updateZeroAndNegative(value)**:

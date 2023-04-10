@@ -74,16 +74,16 @@ implement:
   - revisa 📄  ~/lib/interrupts.js~
   - |-
     📚  agrega este método a tu `CPU`:
-    **interrupt(interrupt, withBFlag = false)**:
+    **interrupt(interrupt, conBFlag = false)**:
       __-> si interrupt.id === "IRQ" y I=1, retorna 0
         (la interrupción es ignorada)
       -> pone [PC] en la pila
       -> pone las banderas en la pila
-        (si <withBFlag> es true, el byte de banderas tendría que tener el bit 4 encendido)
+        (si <conBFlag> es true, el byte de banderas tendría que tener el bit 4 encendido)
       -> incrementa 7 ciclos (this.cycles += 7)
       -> asigna I=1 en el registro de banderas
       -> asigna [PC] = al resultado de leer las direcciones (interrupt.vector) y (interrupt.vector + 1) en Little Endian
-        (recuerda que tienes un método *read16*)
+        (recuerda que tienes un método *read16* para eso)
       -> retorna 7__
   run-after-messages: |
     store.dispatch.savedata.openFile("/lib/interrupts.js");

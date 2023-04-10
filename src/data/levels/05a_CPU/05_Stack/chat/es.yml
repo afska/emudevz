@@ -7,9 +7,9 @@ main:
   - |-
     implementa estos métodos:
     **push(value)**:
-      __-> escribe <value> en <direcciónActual>, luego decrementa <sp>__
+      __-> escribe <value> en la dirección de memoria <direcciónActual>, luego decrementa <sp>__
     **pop()**:
-      __-> incrementa <sp> y retorna el contenido de <direcciónActual>__
+      __-> incrementa <sp> y retorna el resultado de leer <direcciónActual> de la memoria__
   - la <direcciónActual> siempre es $0100 (donde vive la pila en la RAM), más el valor en [SP]
   - |-
     cuando termines, agrega una nueva instancia de la pila a la CPU:

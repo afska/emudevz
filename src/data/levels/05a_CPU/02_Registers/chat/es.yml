@@ -6,7 +6,7 @@ main:
     tendrían que tener dos métodos:
     **getValue()**:
       __-> retorna el contenido del registro__
-    **setValue(valor)**:
+    **setValue(value)**:
       __-> asigna el contenido del registro__
   - el contenido del registro comienza en 0 y puede ser un número de 8 bits (0-255) o uno de 16 bits (0-65535), dependiendo de la clase
   responses:

@@ -83,7 +83,7 @@ implement:
       -> increments 7 cycles (this.cycles += 7)
       -> sets I=1 in the flags register
       -> sets [PC] = the result of reading the addresses (interrupt.vector) and (interrupt.vector + 1) in Little Endian
-        (remember that you have a *read16* method)
+        (remember that you have a *read16* method for that)
       -> returns 7__
   run-after-messages: |
     store.dispatch.savedata.openFile("/lib/interrupts.js");
