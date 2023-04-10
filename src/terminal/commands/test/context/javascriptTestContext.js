@@ -16,16 +16,16 @@ import testHelpers from "./testHelpers";
 
 const IMPORT_EXTENSION = ".js";
 const SINGLE_IMPORTS = [
-	/^import (\w+) from "(.+)";?$/m,
-	/^import (\w+) from '(.+)';?$/m,
+	/^ *import +(\w+) +from +"(.+)" *;?$/m,
+	/^ *import +(\w+) +from +'(.+)' *;?$/m,
 ];
 const MULTI_IMPORTS = [
-	/^import {([^}]+)} from "(.+)";?$/m,
-	/^import {([^}]+)} from '(.+)';?$/m,
+	/^ *import +{([^}]+)} +from +"(.+)" *;?$/m,
+	/^ *import +{([^}]+)} +from +'(.+)' *;?$/m,
 ];
 const MIXED_IMPORTS = [
-	/^import (\w+), ?{([^}]+)} from "(.+)";?$/m,
-	/^import (\w+), ?{([^}]+)} from '(.+)';?$/m,
+	/^ *import +(\w+), *{([^}]+)} +from +"(.+)" *;?$/m,
+	/^ *import +(\w+), *{([^}]+)} +from +'(.+)' *;?$/m,
 ];
 const ERROR = 2;
 
