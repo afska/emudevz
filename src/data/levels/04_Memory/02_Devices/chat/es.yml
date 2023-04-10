@@ -12,14 +12,15 @@ mapper:
   - son circuitos dentro del cartucho que controlan cómo la consola lee la información del ROM
   - cada juego usa un mapper específico
   - mientras más mappers admita tu emulador, más juegos serán compatibles 👾
-  - tratarás con ellos en el capítulo de Mappers
   responses:
-  - pero supongo que necesitamos codificar al menos un mapper, ¿verdad? [onemapper]
+  - entonces supongo que necesitamos codificar al menos un mapper, ¿verdad? [onemapper]
 
 onemapper:
   messages:
-  - nah, tengo un truco en mente
-  - vamos a concentrarnos en recibir un montón de dispositivos
+  - nah, <BrokenNEEES> soporta los mappers más comunes (0-4)
+  - ¡y todos funcionan bien! así que usarás esos por ahora
+  - (te enseñaré cómo implementarlos en el capítulo Mappers, para que puedas agregar más)
+  - ahora concentrémonos en recibir un montón de <dispositivos>
   - ¡los mapearemos más tarde!
   - |-
     📚  agrega a tu `CPUMemory` el siguiente método:

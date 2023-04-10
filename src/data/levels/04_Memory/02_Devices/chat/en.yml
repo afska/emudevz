@@ -12,14 +12,15 @@ mapper:
   - they're circuits inside the cartridge that control how the ROM data is read by the console
   - each game uses a specific mapper
   - the more mappers your emulator supports, the more games are compatible 👾
-  - you'll deal with them in the Mappers chapter
   responses:
-  - but I guess we need to code at least one mapper, right? [onemapper]
+  - then I guess we need to code at least one mapper, right? [onemapper]
 
 onemapper:
   messages:
-  - nah, I have a trick in mind
-  - let's focus on receiving a bunch of devices
+  - nah, <BrokenNEEES> supports the most common mappers (0-4)
+  - and they all work! so you'll be using those for now
+  - (I'll teach you how to implement them in the Mappers chapter, so you can add more)
+  - now let's focus on receiving a bunch of <devices>
   - we'll map them later!
   - |-
     📚  add to your `CPUMemory` the following method:
