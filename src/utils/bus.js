@@ -21,6 +21,8 @@ bus.subscribe = (events) => {
 		bus.on(event, listener);
 	});
 
+	bus.emit("new-listeners");
+
 	return subscriber;
 };
 

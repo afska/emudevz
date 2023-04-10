@@ -27,7 +27,10 @@ import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
 class NavBar extends PureComponent {
-	state = { isCalculatorOpen: false, areYouSureRollback: false };
+	state = {
+		isCalculatorOpen: false,
+		areYouSureRollback: false,
+	};
 
 	render() {
 		const {
@@ -45,6 +48,7 @@ class NavBar extends PureComponent {
 		const levelDefinition = book.getLevelDefinitionOf(level.id);
 		const firstLevelDefinition = _.first(chapter.levels);
 		const lastLevelDefinition = _.last(chapter.levels);
+		const canRunEmulator = bus.isListeningTo("pin");
 
 		return (
 			<div className={styles.navbar}>
@@ -76,12 +80,14 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
-						<IconButton
-							style={{ marginRight: 8 }}
-							Icon={FaPlay}
-							tooltip={locales.get("run_emulator")}
-							onClick={this._runEmulator}
-						/>
+						{canRunEmulator && (
+							<IconButton
+								style={{ marginRight: 8 }}
+								Icon={FaPlay}
+								tooltip={locales.get("run_emulator")}
+								onClick={this._runEmulator}
+							/>
+						)}
 						<IconButton
 							style={{ marginRight: 32 }}
 							Icon={FaCalculator}
@@ -168,16 +174,22 @@ class NavBar extends PureComponent {
 	};
 
 	_runEmulator = () => {
-		if (!bus.isListeningTo("pin")) {
-			return;
-		}
-
 		bus.emit("pin", {
 			Component: TV,
 			args: { content: null, type: "rom" },
 			level: this._level,
 		});
 	};
+
+	componentDidMount() {
+		this._subscriber = bus.subscribe({
+			"new-listeners": () => this.forceUpdate(),
+		});
+	}
+
+	componentWillUnmount() {
+		this._subscriber.release();
+	}
 }
 
 const mapStateToProps = ({ book, savedata }) => ({
