@@ -75,8 +75,9 @@ export default class EmulatorBuilder {
 		return this;
 	}
 
-	addUserCPU(add = true) {
+	addUserCPU(add = true, dontTriggerReset = false) {
 		this.withUserCPU = add;
+		this.dontTriggerReset = dontTriggerReset;
 		return this;
 	}
 
@@ -135,13 +136,15 @@ export default class EmulatorBuilder {
 				throw new Error("🐒  CPU::memory::onLoad(...) failed: " + e?.message);
 			}
 
-			try {
-				console.cpu.interrupt({
-					id: "RESET",
-					vector: 0xfffc,
-				});
-			} catch (e) {
-				throw new Error("🐒  RESET interrupt failed: " + e?.message);
+			if (!this.dontTriggerReset) {
+				try {
+					console.cpu.interrupt({
+						id: "RESET",
+						vector: 0xfffc,
+					});
+				} catch (e) {
+					throw new Error("🐒  RESET interrupt failed: " + e?.message);
+				}
 			}
 		};
 

@@ -3,7 +3,7 @@ const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 let mainModule, Console;
 beforeEach(async () => {
 	mainModule = await evaluate();
-	Console = await new EmulatorBuilder().addUserCPU().build();
+	Console = await new EmulatorBuilder().addUserCPU(true, true).build();
 });
 
 const { newHeader, newRom } = testHelpers;
