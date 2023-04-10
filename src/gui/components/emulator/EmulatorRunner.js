@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import classNames from "classnames";
 import _ from "lodash";
-import Book from "../../../level/Book";
 import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
@@ -18,8 +17,6 @@ const REFRESH_DEBOUNCE_MS = 500;
 export default class EmulatorRunner extends PureComponent {
 	render() {
 		const { rom, error } = this.props;
-
-		const book = Book.current;
 
 		return (
 			<div
@@ -40,7 +37,7 @@ export default class EmulatorRunner extends PureComponent {
 								<Unit
 									icon="💻"
 									name="CPU"
-									completed={book.hasFinishedCPU}
+									completed={this._unlockedUnits.useCPU}
 									active={this._emulatorSettings.useCPU}
 									onToggle={() => this._onToggle("useCPU")}
 									style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
@@ -48,14 +45,14 @@ export default class EmulatorRunner extends PureComponent {
 								<Unit
 									icon="🖥️"
 									name="PPU"
-									completed={book.hasFinishedPPU}
+									completed={this._unlockedUnits.usePPU}
 									active={this._emulatorSettings.usePPU}
 									onToggle={() => this._onToggle("usePPU")}
 								/>
 								<Unit
 									icon="🔊"
 									name="APU"
-									completed={book.hasFinishedAPU}
+									completed={this._unlockedUnits.useAPU}
 									active={this._emulatorSettings.useAPU}
 									onToggle={() => this._onToggle("useAPU")}
 									style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
@@ -65,7 +62,7 @@ export default class EmulatorRunner extends PureComponent {
 								<Unit
 									icon="💾"
 									name={locales.get("cartridge")}
-									completed={book.hasFinishedCartridge}
+									completed={this._unlockedUnits.useCartridge}
 									active={this._emulatorSettings.useCartridge}
 									onToggle={() => this._onToggle("useCartridge")}
 									style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
@@ -73,14 +70,14 @@ export default class EmulatorRunner extends PureComponent {
 								<Unit
 									icon="🎮"
 									name={locales.get("controller")}
-									completed={book.hasFinishedController}
+									completed={this._unlockedUnits.useController}
 									active={this._emulatorSettings.useController}
 									onToggle={() => this._onToggle("useController")}
 								/>
 								<Unit
 									icon="🕹️"
 									name={locales.get("console")}
-									completed={book.hasFinishedConsole}
+									completed={this._unlockedUnits.useConsole}
 									active={this._emulatorSettings.useConsole}
 									onToggle={() => this._onToggle("useConsole")}
 									style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
@@ -90,7 +87,7 @@ export default class EmulatorRunner extends PureComponent {
 						<Unit
 							icon="🧠"
 							name={"Mappers"}
-							completed={book.hasFinishedMappers}
+							completed={this._unlockedUnits.useMappers}
 							active={this._emulatorSettings.useMappers}
 							onToggle={() => this._onToggle("useMappers")}
 							className={classNames(styles.units, styles.mappersUnit)}
@@ -153,6 +150,7 @@ export default class EmulatorRunner extends PureComponent {
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
 			"code-changed": _.debounce(this._onCodeChanged, REFRESH_DEBOUNCE_MS),
+			"unit-unlocked": this._onUnitUnlocked,
 		});
 	}
 
@@ -204,23 +202,31 @@ export default class EmulatorRunner extends PureComponent {
 		this.props.onRestart();
 	};
 
+	_onUnitUnlocked = () => {
+		this.forceUpdate();
+	};
+
 	get _emulatorSettings() {
-		const book = Book.current;
 		const settings = store.getState().savedata.emulatorSettings;
+		const unlockedUnits = this._unlockedUnits;
 
 		return {
-			useCartridge: book.hasFinishedCartridge && settings.useCartridge,
-			useCPU: book.hasFinishedCPU && settings.useCPU,
-			usePPU: book.hasFinishedPPU && settings.usePPU,
-			useAPU: book.hasFinishedAPU && settings.useAPU,
-			useController: book.hasFinishedController && settings.useController,
-			useConsole: book.hasFinishedConsole && settings.useConsole,
-			useMappers: book.hasFinishedMappers && settings.useMappers,
+			useCartridge: unlockedUnits.useCartridge && settings.useCartridge,
+			useCPU: unlockedUnits.useCPU && settings.useCPU,
+			usePPU: unlockedUnits.usePPU && settings.usePPU,
+			useAPU: unlockedUnits.useAPU && settings.useAPU,
+			useController: unlockedUnits.useController && settings.useController,
+			useConsole: unlockedUnits.useConsole && settings.useConsole,
+			useMappers: unlockedUnits.useMappers && settings.useMappers,
 		};
 	}
 
 	set _emulatorSettings(value) {
 		store.dispatch.savedata.setEmulatorSettings(value);
+	}
+
+	get _unlockedUnits() {
+		return store.getState().savedata.unlockedUnits;
 	}
 
 	get _volume() {

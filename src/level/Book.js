@@ -1,5 +1,6 @@
 import _ from "lodash";
 import store from "../store";
+import { bus } from "../utils";
 
 const EMULATOR_ACTIVATION_LEVEL = "cartridge-cursedneees";
 
@@ -12,12 +13,9 @@ export default class Book {
 		return store.getState().book.instance;
 	}
 
-	startEarthquake() {
-		document.querySelector("body").className = "earthquake";
-	}
-
-	endEarthquake() {
-		document.querySelector("body").className = "";
+	unlock(unit) {
+		store.dispatch.savedata.unlockUnit(unit);
+		bus.emit("unit-unlocked");
 	}
 
 	getId(humanId) {
@@ -170,48 +168,6 @@ export default class Book {
 
 	get canUseEmulator() {
 		return this.isFinished(EMULATOR_ACTIVATION_LEVEL);
-	}
-
-	get hasFinishedCartridge() {
-		return this._savedata.unlockedUnits?.cartridge;
-	}
-
-	set hasFinishedCartridge(value) {
-		store.dispatch.savedata.setUnlockedUnits({
-			...this._savedata.unlockedUnits,
-			cartridge: value,
-		});
-	}
-
-	get hasFinishedCPU() {
-		return this._savedata.unlockedUnits?.cpu;
-	}
-
-	set hasFinishedCPU(value) {
-		store.dispatch.savedata.setUnlockedUnits({
-			...this._savedata.unlockedUnits,
-			cpu: value,
-		});
-	}
-
-	get hasFinishedPPU() {
-		return false;
-	}
-
-	get hasFinishedAPU() {
-		return false;
-	}
-
-	get hasFinishedController() {
-		return false;
-	}
-
-	get hasFinishedConsole() {
-		return false;
-	}
-
-	get hasFinishedMappers() {
-		return false;
 	}
 
 	get _savedata() {

@@ -128,6 +128,14 @@ export default class Level {
 		});
 	}
 
+	startEarthquake() {
+		document.querySelector("body").className = "earthquake";
+	}
+
+	stopEarthquake() {
+		document.querySelector("body").className = "";
+	}
+
 	init() {
 		this.validate();
 

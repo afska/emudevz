@@ -5,8 +5,8 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - our 💾  Cartridge is complete!
-  - that means, I can already patch your code, so <CursedNEEES> uses your implementation
-  - and we'll at least get rid of the broken <CHR-ROM> bug
+  - that means, I can now patch your code, so <CursedNEEES> uses your implementation
+  - and we'll at least get rid of the broken <CHR-ROM> bug 🐞
   - are you ready?
   responses:
   - sure, I wanna try it! [tryit]
@@ -14,9 +14,25 @@ main:
 tryit:
   messages:
   - ok, give me a few seconds
-  - this is a complex task
-  - here I go...
+  - this is a complex task 👀
+  - here I go
+  - " ... ... "
   run-after-messages: |
-    book.startEarthquake();
+    level.startEarthquake();
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 3000);
+  events:
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEarthquake();
+    book.unlock("useCartridge");
+  messages:
+  - ✔️  done!
+  - now, the 💾  icon in the emulator will glow ✨
+  - you can toggle between your implementation and the broken one by clicking on it
+  - try opening some games, they will look waaay better 😉
   responses:
-  - piola [end]
+  - ▶️  continue [end]

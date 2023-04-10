@@ -26,13 +26,13 @@ const INITIAL_STATE = () => ({
 		useMappers: true,
 	},
 	unlockedUnits: {
-		cartridge: false,
-		cpu: false,
-		ppu: false,
-		apu: false,
-		controller: false,
-		console: false,
-		mappers: false,
+		useCartridge: false,
+		useCPU: false,
+		usePPU: false,
+		useAPU: false,
+		useController: false,
+		useConsole: false,
+		useMappers: false,
 	},
 });
 
@@ -121,7 +121,7 @@ export default {
 
 				for (let key in INITIAL_STATE()) {
 					if (state[key] == null) {
-						this._setKey(key, INITIAL_STATE()[key]);
+						this._setKey({ key, value: INITIAL_STATE()[key] });
 					}
 				}
 
@@ -162,6 +162,12 @@ export default {
 				for (let openFile of openFiles) {
 					if (!filesystem.exists(openFile)) this.closeFile(openFile);
 				}
+			},
+			unlockUnit(name, _state_) {
+				const state = _state_[KEY];
+
+				this.setEmulatorSettings({ ...state.emulatorSettings, [name]: true });
+				this.setUnlockedUnits({ ...state.unlockedUnits, [name]: true });
 			},
 		};
 	},

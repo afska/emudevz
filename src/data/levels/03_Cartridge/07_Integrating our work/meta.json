@@ -21,7 +21,8 @@
 	},
 	"memory": {
 		"content": {
-			"multifile": true
+			"multifile": true,
+			"protected": true
 		}
 	}
 }
