@@ -10,11 +10,11 @@ export default class TV extends PureComponent {
 		return "📺 ";
 	}
 
-	state = { content: null, type: "media" };
+	state = { content: null, type: "media", _error: null };
 
 	async initialize(args, level) {
 		if (args.type != null)
-			this.setState({ content: args.content, type: args.type });
+			this.setState({ content: args.content, type: args.type, _error: null });
 
 		this._level = level;
 	}
