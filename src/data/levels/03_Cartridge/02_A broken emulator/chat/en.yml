@@ -21,7 +21,8 @@ works:
   - I sent you a bunch of these, they are in 📁  ~/roms~
   - you can launch them with the `open` command
   responses:
-  - what bugs did you find? 🐞 [bugs]
+  - (*) what bugs did you find? 🐞 [bugs]
+  - this is awful 👎 [awful]
 
 bugs:
   messages:
@@ -32,7 +33,7 @@ bugs:
   - finally, the 🖥️  PPU adds screen noise, moves the scroll registers in a weird way, and draws sprites in the wrong position
   - the 🧠  Mappers work fine, fortunately 😅
   responses:
-  - this is awful 👎 [awful]
+  - ...works
 
 awful:
   messages:

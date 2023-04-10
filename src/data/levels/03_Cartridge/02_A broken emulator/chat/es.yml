@@ -21,7 +21,8 @@ works:
   - te envié un montón de estos, están en 📁  ~/roms~
   - puedes iniciarlos con el comando `open`
   responses:
-  - ¿qué errores encontraste? 🐞 [bugs]
+  - (*) ¿qué errores encontraste? 🐞 [bugs]
+  - esto es horrible 👎 [awful]
 
 bugs:
   messages:
@@ -32,7 +33,7 @@ bugs:
   - finalmente, la 🖥️  PPU agrega ruido a la pantalla, mueve los registros de scrolling de una manera extraña y dibuja sprites en la posición incorrecta
   - los 🧠  Mappers funcionan bien, afortunadamente 😅
   responses:
-  - esto es horrible 👎 [awful]
+  - ...works
 
 awful:
   messages:
