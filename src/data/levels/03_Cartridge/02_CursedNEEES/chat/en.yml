@@ -25,12 +25,12 @@ works:
 
 bugs:
   messages:
-  - first, the 💾  Cartridge seems to start reading <CHR-ROM> bytes from the wrong byte, so all graphics look garbled
+  - first, the 💾  Cartridge seems to start reading <CHR-ROM> from the wrong byte, so all graphics look garbled
   - the 💻  CPU timing is completely random (causing sync problems) and the `BIT` instruction randomly fails
   - those CPU bugs also mess up the -already out of tune- 🔊  APU channels, so all sound is trash
   - they didn't even map the 🎮  Controller correctly! it's mapped backwards and doesn't allow buttons A and B to be pressed simultaneously
   - finally, the 🖥️  PPU adds screen noise, moves the scroll registers in a weird way, and draws sprites in the wrong position
-  - the 🧠  mappers work fine, fortunately 😅
+  - the 🧠  Mappers work fine, fortunately 😅
   responses:
   - this is awful 👎 [awful]
 
@@ -38,11 +38,11 @@ awful:
   messages:
   - I know, right?
   - but there's a good thing about it
-  - its designed in a <modular> way
+  - it's designed in a <modular> way
   - so we can reuse its components ♻️
   - that'll allow us to implement things in whatever order we want!
-  - you can start, for example, implementing the graphics (🖥️  PPU) and I'll patch your emulator so it uses the 💻  CPU, 🔊  APU, and 🎮  Controller from <CursedNEEES>
-  - and then continue fixing the other things at your pace
+  - you could start, for example, implementing the graphics (🖥️  PPU) and I'll patch your emulator so it uses the 💻  CPU, 🔊  APU, and 🎮  Controller from <CursedNEEES>
+  - then you can continue fixing the other things at your pace
   - let's fix the 💾  Cartridge first
   responses:
   - ▶️  continue [end]
