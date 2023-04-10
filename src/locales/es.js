@@ -87,7 +87,8 @@ export default {
 	rm_deleting_recursively: "💥  Borrando recursivamente...",
 	rm_recursive_flag: "(para omitir esta verificación, corre `rm -rf`)",
 	rollback: "Restaurar código usando esta copia",
-	rollback_sure: "Esto BORRARÁ datos. ¿Restaurar?",
+	rollback_sure:
+		"Tu código COMPLETO se reemplazará por esta copia. ¿Restaurar?",
 	run: "Ejecutar",
 	run_emulator: "Ejecutar emulador",
 	save: "Guardar",

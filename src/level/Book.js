@@ -105,8 +105,7 @@ export default class Book {
 
 	canRollback(level) {
 		const snapshots = this._savedata.snapshots;
-		const lastSnapshot = _.last(snapshots);
-		return level.memory.content.multifile && level.id === lastSnapshot;
+		return level.memory.content.multifile && snapshots.includes(level.id);
 	}
 
 	previousIdOf(levelId) {

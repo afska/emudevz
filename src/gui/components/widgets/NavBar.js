@@ -142,7 +142,7 @@ class NavBar extends PureComponent {
 								style={{ marginLeft: 8, color: "#ff2d2d" }}
 								Icon={FaExclamationCircle}
 								tooltip={locales.get("rollback_sure")}
-								onClick={rollbackLevel}
+								onClick={() => rollbackLevel(level)}
 							/>
 						)}
 						{book.canGoToNextChapter(chapter) && (

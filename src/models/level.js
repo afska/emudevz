@@ -1,5 +1,4 @@
 import { push, replace } from "connected-react-router";
-import _ from "lodash";
 import filesystem from "../filesystem";
 import { analytics } from "../utils";
 
@@ -70,10 +69,11 @@ export default {
 					this.goTo(state.instance.id);
 				});
 			},
-			rollback(__, _state_) {
+			rollback(level, _state_) {
 				const snapshots = _state_.savedata.snapshots;
-				const lastSnapshot = _.last(snapshots);
-				const snapshot = `/.snapshots/level-${lastSnapshot}`;
+				if (!snapshots.includes(level.id)) return;
+
+				const snapshot = `/.snapshots/level-${level.id}`;
 				if (!filesystem.exists(snapshot)) return;
 
 				filesystem.setSymlinks([]);

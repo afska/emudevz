@@ -85,7 +85,8 @@ export default {
 	rm_deleting_recursively: "💥  Deleting recursively...",
 	rm_recursive_flag: "(to skip this check, run `rm -rf`)",
 	rollback: "Restore code using this snapshot",
-	rollback_sure: "This will DELETE data. Are you sure?",
+	rollback_sure:
+		"Your ENTIRE code will be replaced by this snapshot. Are you sure?",
 	run: "Run",
 	run_emulator: "Run emulator",
 	save: "Save",
