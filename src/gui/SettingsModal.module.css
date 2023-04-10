@@ -5,7 +5,7 @@
 	user-select: none;
 }
 
-.language {
+.options {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;

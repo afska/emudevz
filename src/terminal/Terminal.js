@@ -1,6 +1,7 @@
 import { LinkProvider } from "xterm-link-provider";
 import _ from "lodash";
 import locales from "../locales";
+import store from "../store";
 import { async, bus } from "../utils";
 import { ansiEscapes } from "../utils/cli";
 import PendingInput, { PendingKey } from "./PendingInput";
@@ -100,6 +101,8 @@ export default class Terminal {
 	}
 
 	async write(text, style = theme.NORMAL, interval = 0, withHighlight = false) {
+		if (store.getState().savedata.speedUpChat) this._speedFlag = true;
+
 		text = this._normalize(text);
 
 		if (withHighlight) {

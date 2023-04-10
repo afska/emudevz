@@ -56,6 +56,7 @@ export default {
 	loading: "Cargando...",
 	memory_viewer: "Visor de Memoria",
 	music: "Música",
+	no: "No",
 	no_open_files:
 		"🚫 ¡Ningún archivo abierto!<br>🔍 Usa <code>Ctrl+P</code> para buscar.",
 	not_now: "⚠️  ¡Ahora no!",
@@ -97,6 +98,7 @@ export default {
 	select_a_chapter: "Selecciona un capítulo",
 	settings: "Opciones",
 	shell_command_not_found: "comando no encontrado",
+	speedUpChat: "Acelerar chat",
 	stack: "Pila",
 	step_forward: "Avanzar",
 	step_reset: "Reiniciar",
@@ -114,6 +116,7 @@ export default {
 	using_old_snapshot: "⚠️ Usando una copia solo lectura de tu código viejo.",
 	using_your_emulator: "Usando tu emulador ✔️",
 	volume: "Volumen",
+	yes: "Sí",
 	your_cpu_rocks: "¡Tu CPU es genial!",
 	your_emulator: "Tu emulador",
 };

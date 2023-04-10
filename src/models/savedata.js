@@ -9,6 +9,7 @@ const INITIAL_STATE = () => ({
 	snapshots: [],
 	lastLevelId: "start",
 	language: "en",
+	speedUpChat: false,
 	emulatorVolume: 0,
 	musicVolume: 0.3,
 	musicTrack: 0,
@@ -43,6 +44,9 @@ export default {
 		},
 		setLanguage(state, language) {
 			return { ...state, language };
+		},
+		setSpeedUpChat(state, speedUpChat) {
+			return { ...state, speedUpChat };
 		},
 		setEmulatorVolume(state, emulatorVolume) {
 			return { ...state, emulatorVolume };

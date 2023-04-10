@@ -6,9 +6,17 @@ import locales, { LANGUAGES } from "../locales";
 import VolumeSlider from "./components/widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
 
+const MARGIN = 16;
+
 class SettingsModal extends PureComponent {
 	render() {
-		const { language, setLanguage, open } = this.props;
+		const {
+			language,
+			setLanguage,
+			speedUpChat,
+			setSpeedUpChat,
+			open,
+		} = this.props;
 
 		return (
 			<Modal
@@ -24,7 +32,7 @@ class SettingsModal extends PureComponent {
 					<Form>
 						<Form.Group>
 							<Form.Label>{locales.get("language")}</Form.Label>
-							<div className={styles.language}>
+							<div className={styles.options}>
 								{LANGUAGES.map((it) => (
 									<div key={`language-${it}`}>
 										<Form.Check
@@ -40,11 +48,40 @@ class SettingsModal extends PureComponent {
 								))}
 							</div>
 						</Form.Group>
-						<Form.Group>
+						<Form.Group style={{ marginTop: MARGIN }}>
+							<Form.Label>{locales.get("speedUpChat")}</Form.Label>
+							<div className={styles.options}>
+								<div>
+									<Form.Check
+										type="radio"
+										id="speedUpChat-no"
+										label={locales.get("no")}
+										checked={!speedUpChat}
+										onChange={() => {
+											setSpeedUpChat(false);
+										}}
+									/>
+								</div>
+								<div>
+									<Form.Check
+										type="radio"
+										id="speedUpChat-yes"
+										label={locales.get("yes")}
+										checked={speedUpChat}
+										onChange={() => {
+											setSpeedUpChat(true);
+										}}
+									/>
+								</div>
+							</div>
+						</Form.Group>
+						<Form.Group style={{ marginTop: MARGIN }}>
 							<Form.Label>{locales.get("music")}</Form.Label>
 							<VolumeSlider disableTooltip />
 						</Form.Group>
-						<Form.Label style={{ color: "gray" }}>Save file</Form.Label>
+						<Form.Label style={{ color: "gray", marginTop: MARGIN }}>
+							Save file
+						</Form.Label>
 						<div style={{ color: "gray", fontSize: 12, fontStyle: "italic" }}>
 							The game's save file is in your LocalStorage. You can make a
 							backup using the <b>LocalStorage Manager</b> extension (on
@@ -68,9 +105,11 @@ class SettingsModal extends PureComponent {
 
 const mapStateToProps = ({ savedata }) => ({
 	language: savedata.language,
+	speedUpChat: savedata.speedUpChat,
 });
 const mapDispatchToProps = ({ savedata }) => ({
 	setLanguage: savedata.setLanguage,
+	setSpeedUpChat: savedata.setSpeedUpChat,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);

@@ -56,6 +56,7 @@ export default {
 	loading: "Loading...",
 	memory_viewer: "Memory Viewer",
 	music: "Music",
+	no: "No",
 	no_open_files: "🚫 No open files!<br>🔍 Use <code>Ctrl+P</code> to search.",
 	not_now: "⚠️  Not now!",
 	opening: "Opening",
@@ -95,6 +96,7 @@ export default {
 	select_a_chapter: "Select a chapter",
 	settings: "Settings",
 	shell_command_not_found: "command not found",
+	speedUpChat: "Speed up chat",
 	stack: "Stack",
 	step_forward: "Step",
 	step_reset: "Reset",
@@ -111,6 +113,7 @@ export default {
 	using_old_snapshot: "⚠️ Using a read-only snapshot of your old code.",
 	using_your_emulator: "Using your emulator ✔️",
 	volume: "Volume",
+	yes: "Yes",
 	your_cpu_rocks: "Your CPU rocks!",
 	your_emulator: "Your emulator",
 };
