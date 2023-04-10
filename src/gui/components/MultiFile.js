@@ -3,6 +3,7 @@ import $path from "path";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
+import _ from "lodash";
 import filesystem, { Drive } from "../../filesystem";
 import locales from "../../locales";
 import { bus } from "../../utils";
@@ -123,7 +124,7 @@ class MultiFile extends PureComponent {
 							const [Component, customArgs] = this._getOptions(it);
 							return this._renderTabbedFile(it, i, Component, customArgs);
 						})}
-						{!this.props.selectedFile && (
+						{_.isEmpty(this.props.openFiles) && (
 							<div
 								className={styles.empty}
 								dangerouslySetInnerHTML={{
