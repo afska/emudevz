@@ -1,6 +1,7 @@
 import _ from "lodash";
 import filesystem, { Drive } from "../filesystem";
 import components from "../gui/components";
+import TV from "../gui/components/TV";
 import layouts from "../gui/components/layouts";
 import locales from "../locales";
 import store from "../store";
@@ -116,6 +117,14 @@ export default class Level {
 			);
 			store.dispatch.level.goHome();
 		}
+	}
+
+	launchEmulator(rom = null) {
+		bus.emit("pin", {
+			Component: TV,
+			args: { content: rom, type: "rom" },
+			level: this,
+		});
 	}
 
 	init() {

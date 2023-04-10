@@ -23,6 +23,7 @@ const EXTENSIONS = {
 	".png": [TV, { type: "media" }],
 	".md": [TV, { type: "markdown" }],
 	".neees": [TV, { type: "rom", binary: true }],
+	".nes": [TV, { type: "rom", binary: true }],
 };
 
 class MultiFile extends PureComponent {
@@ -147,7 +148,7 @@ class MultiFile extends PureComponent {
 	}
 
 	_getOptions(filePath) {
-		const extension = $path.parse(filePath).ext;
+		const extension = $path.parse(filePath).ext.toLowerCase();
 		return EXTENSIONS[extension] ?? [CodeEditor, { language: "plaintext" }];
 	}
 

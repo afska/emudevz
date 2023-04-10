@@ -1,5 +1,20 @@
 ---
 main:
   messages:
-  - coming soon!
+  - bet you don't know what I found
+  - a working NEEES emulator!
+  - though \"working\" is a bit of a stretch 😅
+  responses:
+  - it works or not? 🤨 [works]
+
+works:
+  messages:
+  - it fails in almost every aspect
+  - tons of BUGS
+  - it's like the author was drunk or something
+  - I guess that's why they named it "CursedNEEES"
+  - you can try it anyway
+  - drag a rom into the TV or use one of my games
+  - I sent you a bunch of them, they are in 📁  ~/roms~
+  - you can launch them with the `open` command
   responses: []

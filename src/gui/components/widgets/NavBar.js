@@ -16,10 +16,10 @@ import {
 import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
+import Level from "../../../level/Level";
 import locales from "../../../locales";
 import { analytics, bus } from "../../../utils";
 import music from "../../sound/music";
-import TV from "../TV";
 import CalculatorModal from "./CalculatorModal";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
@@ -174,11 +174,7 @@ class NavBar extends PureComponent {
 	};
 
 	_runEmulator = () => {
-		bus.emit("pin", {
-			Component: TV,
-			args: { content: null, type: "rom" },
-			level: this._level,
-		});
+		Level.current.launchEmulator();
 	};
 
 	componentDidMount() {

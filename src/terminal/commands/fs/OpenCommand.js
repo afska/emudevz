@@ -1,4 +1,6 @@
+import $path from "path";
 import filesystem from "../../../filesystem";
+import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
 import { theme } from "../../style";
@@ -16,10 +18,17 @@ export default class OpenCommand extends FilesystemCommand {
 			if (stat.isDirectory)
 				throw new Error(`EISDIR: File is a directory., '${path}'`);
 
+			const extension = $path.parse(path).ext.toLowerCase();
 			await this._terminal.writeln(
 				`${locales.get("opening")} ${theme.ACCENT(arg)}...`
 			);
-			store.dispatch.savedata.openFile(path);
+
+			if (extension === ".neees" || extension === ".nes") {
+				const rom = filesystem.read(path, { binary: true });
+				Level.current.launchEmulator(rom);
+			} else {
+				store.dispatch.savedata.openFile(path);
+			}
 		}
 	}
 }
