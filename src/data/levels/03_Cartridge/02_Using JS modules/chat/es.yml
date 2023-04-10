@@ -36,6 +36,7 @@ play:
   - el editor de código está mostrando tu <archivo de código principal> (el punto de entrada de tu emulador)
   - está en 📄  ~/code/index.js~
   - ahora tienes varios nuevos comandos para manejar archivos 🚀
+  - aunque solo puedes modificar lo que hay en ~/code~
   - corre `help -a` y experimenta con ellos un poco
   - abre el chat nuevamente cuando los hayas aprendido a usar
   responses: []

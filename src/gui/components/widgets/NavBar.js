@@ -168,6 +168,10 @@ class NavBar extends PureComponent {
 	};
 
 	_runEmulator = () => {
+		if (!bus.isListeningTo("pin")) {
+			return;
+		}
+
 		bus.emit("pin", {
 			Component: TV,
 			args: { content: null, type: "rom" },

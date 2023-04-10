@@ -36,6 +36,7 @@ play:
   - the code editor is displaying your <main code file> (the entry point of your emulator)
   - it's in 📄  ~/code/index.js~
   - now you have a bunch of new commands to manage files 🚀
+  - though you can only modify what's in ~/code~
   - run `help -a` and play around with them for a little bit
   - open the chat again when you're ready
   responses: []

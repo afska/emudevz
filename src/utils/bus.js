@@ -3,6 +3,8 @@ import _ from "lodash";
 
 const bus = new EventEmitter();
 
+bus.isListeningTo = (eventName) => bus.listenerCount(eventName) > 0;
+
 bus.subscribe = (events) => {
 	const listeners = {};
 
