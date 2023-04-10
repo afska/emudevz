@@ -106,6 +106,10 @@ export default class Emulator extends PureComponent {
 		window.removeEventListener("keyup", this._onKeyUp);
 	}
 
+	componentDidUpdate() {
+		this.stop();
+	}
+
 	componentWillUnmount() {
 		this.stop();
 	}
