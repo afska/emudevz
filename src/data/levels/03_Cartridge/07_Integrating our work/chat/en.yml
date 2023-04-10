@@ -5,7 +5,7 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - our 💾  Cartridge is complete!
-  - that means, I can now patch your code, so <CursedNEEES> uses your implementation
+  - that means, I can now patch your code so that <CursedNEEES> uses your implementation
   - and we'll at least get rid of the broken <CHR-ROM> bug 🐞
   - are you ready?
   responses:

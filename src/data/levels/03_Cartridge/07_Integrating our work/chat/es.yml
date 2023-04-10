@@ -1,8 +1,38 @@
 ---
 main:
+  run: |
+    level.launchEmulator();
+    set((m) => m.chat.winOnEnd = true);
   messages:
-  - ahora, los gráficos 👾
-  - 📚  crea un método ```javascript chr()``` que retorne un `Uint8Array` con ellos
-  - los gráficos están justo después del programa, ¡pero recuerda que son opcionales!
-  - si la cabecera dice que el juego usa <CHR-RAM> en lugar de <CHR-ROM>, solo retorna un ```javascript new Uint8Array(8192)```
-  responses: []
+  - ¡nuestro 💾  Cartucho está completo!
+  - eso significa que ahora puedo parchear tu código para que <CursedNEEES> use tu implementación
+  - y al menos nos desharemos del error de la <CHR-ROM> rota 🐞
+  - ¿lo hacemos?
+  responses:
+  - claro, ¡quiero intentarlo! [tryit]
+
+tryit:
+  messages:
+  - ok, dame unos segundos
+  - esta es una tarea compleja 👀
+  - aquí voy
+  - " ... ... "
+  run-after-messages: |
+    level.startEarthquake();
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 3000);
+  events:
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEarthquake();
+    book.unlock("useCartridge");
+  messages:
+  - ✔️  ¡hecho!
+  - ahora, el ícono 💾  en el emulador brillará ✨
+  - puedes alternar entre tu implementación y la rota haciendo clic en él
+  - intenta abrir algunos juegos, se verán mucho mejor 😉
+  responses:
+  - ▶️  continuar [end]
