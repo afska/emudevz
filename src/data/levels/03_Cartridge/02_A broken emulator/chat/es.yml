@@ -15,7 +15,7 @@ works:
   - falla en casi todos los aspectos
   - montones de ERRORES
   - es como si el autor hubiera estado borracho o algo así 🙃 🔫
-  - supongo que por eso lo llamaron <CursedNEEES>
+  - supongo que por eso lo llamaron <BrokenNEEES>
   - puedes probarlo de todos modos...
   - arrastra una rom en la TV o usa uno de mis juegos
   - te envié un montón de estos, están en 📁  ~/roms~
@@ -41,7 +41,7 @@ awful:
   - está diseñado de manera <modular>
   - así que podemos reutilizar sus componentes ♻️
   - ¡eso nos permitirá implementar las cosas en el orden que queramos!
-  - podrías comenzar, por ejemplo, implementando los gráficos (🖥️  PPU) y yo parchearé tu emulador para que use la 💻  CPU, 🔊  APU y 🎮  Mando de <CursedNEEES>
+  - podrías comenzar, por ejemplo, implementando los gráficos (🖥️  PPU) y yo parchearé tu emulador para que use la 💻  CPU, 🔊  APU y 🎮  Mando de <BrokenNEEES>
   - luego puedes seguir arreglando las otras cosas a tu ritmo
   - vamos a arreglar el 💾  Cartucho primero
   responses:
