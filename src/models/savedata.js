@@ -25,6 +25,15 @@ const INITIAL_STATE = () => ({
 		useConsole: true,
 		useMappers: true,
 	},
+	unlockedUnits: {
+		cartridge: false,
+		cpu: false,
+		ppu: false,
+		apu: false,
+		controller: false,
+		console: false,
+		mappers: false,
+	},
 });
 
 export default {
@@ -69,6 +78,9 @@ export default {
 		setEmulatorSettings(state, emulatorSettings) {
 			return { ...state, emulatorSettings };
 		},
+		setUnlockedUnits(state, unlockedUnits) {
+			return { ...state, unlockedUnits };
+		},
 		_setKey(state, { key, value }) {
 			return { ...state, [key]: value };
 		},
@@ -107,7 +119,7 @@ export default {
 				const state = _state_[KEY];
 				const book = _state_.book.instance;
 
-				for (let key in state) {
+				for (let key in INITIAL_STATE()) {
 					if (state[key] == null) {
 						this._setKey(key, INITIAL_STATE()[key]);
 					}

@@ -34,6 +34,7 @@ export default class Level {
 				content: {
 					multifile: false,
 					useTemp: false,
+					protected: false,
 					temp: "",
 				},
 			},

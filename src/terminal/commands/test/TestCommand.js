@@ -87,9 +87,13 @@ export default class TestCommand extends Command {
 			});
 
 			if (overallResult.allGreen) {
-				await this._terminal.writeln(locales.get("tests_success"));
-				await this._terminal.waitForKey();
-				level.advance();
+				if (!level.memory.chat.winOnEnd) {
+					await this._terminal.writeln(locales.get("tests_success_continue"));
+					await this._terminal.waitForKey();
+					level.advance();
+				} else {
+					await this._terminal.writeln(locales.get("tests_success"));
+				}
 			} else {
 				await this._terminal.writeln(locales.get("tests_failure"));
 

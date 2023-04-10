@@ -1,3 +1,4 @@
+import Level from "../level/Level";
 import filesystem from "./Filesystem";
 
 const MAIN_FILE = "/code/index.js";
@@ -60,6 +61,7 @@ export default {
 
 	isReadOnlyDir(path) {
 		if (window.SUDO) return false;
+		if (Level.current.memory.content.protected) return true;
 		path = filesystem.process(path);
 		// ---
 
@@ -68,6 +70,7 @@ export default {
 
 	isProtectedFile(path) {
 		if (window.SUDO) return false;
+		if (Level.current.memory.content.protected) return true;
 		path = filesystem.process(path);
 		// ---
 

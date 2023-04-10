@@ -73,6 +73,7 @@ class LevelScreen extends PureComponent {
 		window.removeEventListener("dragover", this._ignore);
 		window.removeEventListener("dragenter", this._ignore);
 		window.removeEventListener("drop", this._ignore);
+		document.querySelector("body").className = "";
 	}
 
 	_ignore = (e) => {

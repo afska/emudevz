@@ -1,0 +1,22 @@
+---
+main:
+  run: |
+    level.launchEmulator();
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - our 💾  Cartridge is complete!
+  - that means, I can already patch your code, so <CursedNEEES> uses your implementation
+  - and we'll at least get rid of the broken <CHR-ROM> bug
+  - are you ready?
+  responses:
+  - sure, I wanna try it! [tryit]
+
+tryit:
+  messages:
+  - ok, give me a few seconds
+  - this is a complex task
+  - here I go...
+  run-after-messages: |
+    book.startEarthquake();
+  responses:
+  - piola [end]

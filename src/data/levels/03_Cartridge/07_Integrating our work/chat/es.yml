@@ -1,0 +1,8 @@
+---
+main:
+  messages:
+  - ahora, los gráficos 👾
+  - 📚  crea un método ```javascript chr()``` que retorne un `Uint8Array` con ellos
+  - los gráficos están justo después del programa, ¡pero recuerda que son opcionales!
+  - si la cabecera dice que el juego usa <CHR-RAM> en lugar de <CHR-ROM>, solo retorna un ```javascript new Uint8Array(8192)```
+  responses: []

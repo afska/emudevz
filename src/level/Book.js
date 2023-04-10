@@ -2,13 +2,6 @@ import _ from "lodash";
 import store from "../store";
 
 const EMULATOR_ACTIVATION_LEVEL = "cartridge-cursedneees";
-const CARTRIDGE_ACTIVATION_LEVEL = "memory-cpu-memory";
-const CPU_ACTIVATION_LEVEL = "cpu-the-golden-log";
-const PPU_ACTIVATION_LEVEL = "?";
-const APU_ACTIVATION_LEVEL = "?";
-const CONTROLLER_ACTIVATION_LEVEL = "?";
-const CONSOLE_ACTIVATION_LEVEL = "?";
-const MAPPERS_ACTIVATION_LEVEL = "?";
 
 export default class Book {
 	constructor(metadata) {
@@ -19,36 +12,12 @@ export default class Book {
 		return store.getState().book.instance;
 	}
 
-	get canUseEmulator() {
-		return this.isFinished(EMULATOR_ACTIVATION_LEVEL);
+	startEarthquake() {
+		document.querySelector("body").className = "earthquake";
 	}
 
-	get hasFinishedCartridge() {
-		return this.isFinished(CARTRIDGE_ACTIVATION_LEVEL);
-	}
-
-	get hasFinishedCPU() {
-		return this.isFinished(CPU_ACTIVATION_LEVEL);
-	}
-
-	get hasFinishedPPU() {
-		return this.isFinished(PPU_ACTIVATION_LEVEL);
-	}
-
-	get hasFinishedAPU() {
-		return this.isFinished(APU_ACTIVATION_LEVEL);
-	}
-
-	get hasFinishedController() {
-		return this.isFinished(CONTROLLER_ACTIVATION_LEVEL);
-	}
-
-	get hasFinishedConsole() {
-		return this.isFinished(CONSOLE_ACTIVATION_LEVEL);
-	}
-
-	get hasFinishedMappers() {
-		return this.isFinished(MAPPERS_ACTIVATION_LEVEL);
+	endEarthquake() {
+		document.querySelector("body").className = "";
 	}
 
 	getId(humanId) {
@@ -197,6 +166,52 @@ export default class Book {
 		if (!levelDefinition) return null;
 
 		return levelDefinition;
+	}
+
+	get canUseEmulator() {
+		return this.isFinished(EMULATOR_ACTIVATION_LEVEL);
+	}
+
+	get hasFinishedCartridge() {
+		return this._savedata.unlockedUnits?.cartridge;
+	}
+
+	set hasFinishedCartridge(value) {
+		store.dispatch.savedata.setUnlockedUnits({
+			...this._savedata.unlockedUnits,
+			cartridge: value,
+		});
+	}
+
+	get hasFinishedCPU() {
+		return this._savedata.unlockedUnits?.cpu;
+	}
+
+	set hasFinishedCPU(value) {
+		store.dispatch.savedata.setUnlockedUnits({
+			...this._savedata.unlockedUnits,
+			cpu: value,
+		});
+	}
+
+	get hasFinishedPPU() {
+		return false;
+	}
+
+	get hasFinishedAPU() {
+		return false;
+	}
+
+	get hasFinishedController() {
+		return false;
+	}
+
+	get hasFinishedConsole() {
+		return false;
+	}
+
+	get hasFinishedMappers() {
+		return false;
 	}
 
 	get _savedata() {

@@ -103,7 +103,8 @@ export default {
 	step_forward: "Avanzar",
 	step_reset: "Reiniciar",
 	testing: "Probando: ",
-	tests_success:
+	tests_success: "🎉  Todas las pruebas pasaron.",
+	tests_success_continue:
 		"🎉  Todas las pruebas pasaron. Presiona cualquier tecla para continuar.",
 	tests_failure: "💥  Algunas pruebas fallaron. Arregla tu código.",
 	tests_errors_found: "🚫  Errores encontrados.",

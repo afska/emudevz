@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "👻 CursedNEEES",
-		"es": "👻 CursedNEEES"
+		"en": "⚙️ Integrating our work",
+		"es": "⚙️ Integrando nuestro trabajo"
 	},
 	"ui": {
 		"layout": "dualFixedPin",
@@ -21,8 +21,7 @@
 	},
 	"memory": {
 		"content": {
-			"multifile": true,
-			"protected": true
+			"multifile": true
 		}
 	}
 }

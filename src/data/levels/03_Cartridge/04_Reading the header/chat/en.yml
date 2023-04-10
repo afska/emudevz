@@ -13,8 +13,8 @@ exercise:
     set((m) => m.$end = true);
   messages:
   - I've sent you some files
-  - two diagrams of the hardware architecture
-  - and a document describing the ~iNEEES~ format
+  - two diagrams of the 🏟️  hardware architecture
+  - and a document describing the 📑  ~iNEEES~ format
   - you can inspect them with the ~open~ command
   - I want you to read it and tell me if you understand it
   responses:
