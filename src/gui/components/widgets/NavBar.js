@@ -80,7 +80,7 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
-						{canRunEmulator && (
+						{book.canUseEmulator && canRunEmulator && (
 							<IconButton
 								style={{ marginRight: 8 }}
 								Icon={FaPlay}

@@ -1,5 +1,6 @@
 ---
 main:
+  run: level.launchEmulator();
   messages:
   - coming soon!
   responses: []

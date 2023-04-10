@@ -1,7 +1,7 @@
 import _ from "lodash";
 import store from "../store";
 
-const EMULATOR_ACTIVATION_LEVEL = "ccartridge-cursedneees";
+const EMULATOR_ACTIVATION_LEVEL = "cartridge-cursedneees";
 const CARTRIDGE_ACTIVATION_LEVEL = "memory-cpu-memory";
 const CPU_ACTIVATION_LEVEL = "cpu-the-golden-log";
 const PPU_ACTIVATION_LEVEL = "?";
