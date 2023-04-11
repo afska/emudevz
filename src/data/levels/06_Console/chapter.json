@@ -2,5 +2,9 @@
 	"name": {
 		"en": "🕹️ Console",
 		"es": "🕹️ Consola"
+	},
+	"description": {
+		"en": "🕹️ Integrate all your components here",
+		"es": "🕹️ Integra todos tus componentes aquí"
 	}
 }

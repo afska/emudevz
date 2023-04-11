@@ -60,6 +60,7 @@ async function pkg() {
 			number: parseInt(chapterHumanId.replace(/\D/g, "")),
 			humanId: chapterHumanId,
 			name: chapterMetadata.name,
+			description: chapterMetadata.description,
 			levels: [],
 			help: _.mapValues(CHAPTER_HELP_FILES, (helpFile) => {
 				try {

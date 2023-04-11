@@ -78,8 +78,8 @@ body {
 	color: rgb(184, 189, 197) !important;
 }
 
-.modal {
-	z-index: 9999;
+.bs-tooltip-top {
+	z-index: 1055;
 }
 
 /* MUI */

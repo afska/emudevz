@@ -2,5 +2,9 @@
 	"name": {
 		"en": "🐏 Memory",
 		"es": "🐏 Memoria"
+	},
+	"description": {
+		"en": "🐏 Connect everything to the memory",
+		"es": "🐏 Conecta todo a la memoria"
 	}
 }

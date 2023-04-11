@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import locales from "../../../locales";
 import Button from "./Button";
+import Tooltip from "./Tooltip";
 import styles from "./Chapter.module.css";
 
 class Chapter extends PureComponent {
@@ -40,41 +41,43 @@ class Chapter extends PureComponent {
 		);
 
 		return (
-			<div className={styles.container}>
-				{lines}
-				{nested && <div className={styles.verticalLine} />}
-				<Button
-					className={classNames(
-						styles.chapter,
-						nested || mini ? styles.mini : false,
-						!isUnlocked ? styles.locked : false,
-						className
-					)}
-					onClick={this._go}
-					{...rest}
-				>
-					<span>{chapter.name[locales.language]}</span>
+			<Tooltip title={chapter.description?.[locales.language]} placement="top">
+				<div className={styles.container}>
+					{lines}
+					{nested && <div className={styles.verticalLine} />}
+					<Button
+						className={classNames(
+							styles.chapter,
+							nested || mini ? styles.mini : false,
+							!isUnlocked ? styles.locked : false,
+							className
+						)}
+						onClick={this._go}
+						{...rest}
+					>
+						<span>{chapter.name[locales.language]}</span>
 
-					{comingSoon ? (
-						<div style={{ fontSize: "xx-small" }}>
-							🚧 {locales.get("coming_soon")}
-						</div>
-					) : isUnlocked ? (
-						<div className={styles.progress}>
-							<div className={styles.bar}>
-								<span
-									className={styles.barFill}
-									style={{ width: percentage + "%" }}
-								/>
+						{comingSoon ? (
+							<div style={{ fontSize: "xx-small" }}>
+								🚧 {locales.get("coming_soon")}
 							</div>
-						</div>
-					) : (
-						<div>🔒</div>
-					)}
-				</Button>
-				{nested && <div className={styles.verticalLine} />}
-				{lines}
-			</div>
+						) : isUnlocked ? (
+							<div className={styles.progress}>
+								<div className={styles.bar}>
+									<span
+										className={styles.barFill}
+										style={{ width: percentage + "%" }}
+									/>
+								</div>
+							</div>
+						) : (
+							<div>🔒</div>
+						)}
+					</Button>
+					{nested && <div className={styles.verticalLine} />}
+					{lines}
+				</div>
+			</Tooltip>
 		);
 	}
 

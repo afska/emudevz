@@ -2,5 +2,9 @@
 	"name": {
 		"en": "📜 Intro",
 		"es": "📜 Intro"
+	},
+	"description": {
+		"en": "📜 Introduction, tutorial, and NEEES hardware",
+		"es": "📜 Introducción, tutorial y hardware de NEEES"
 	}
 }

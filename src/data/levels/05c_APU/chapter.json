@@ -2,5 +2,9 @@
 	"name": {
 		"en": "🔊 APU",
 		"es": "🔊 APU"
+	},
+	"description": {
+		"en": "🔊 Produce sound and music",
+		"es": "🔊 Produce sonido y música"
 	}
 }

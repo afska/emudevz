@@ -2,5 +2,9 @@
 	"name": {
 		"en": "💾 Cartridge",
 		"es": "💾 Cartucho"
+	},
+	"description": {
+		"en": "💾 Read code and graphics from ROM files",
+		"es": "💾 Lee el código y gráficos de archivos ROM"
 	}
 }

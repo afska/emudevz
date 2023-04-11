@@ -2,5 +2,9 @@
 	"name": {
 		"en": "🏗️ Assembly",
 		"es": "🏗️ Ensamblador"
+	},
+	"description": {
+		"en": "🏗️ Learn 6502 assembly here",
+		"es": "🏗️ Aprende ensamblador 6502 aquí"
 	}
 }

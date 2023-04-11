@@ -2,5 +2,9 @@
 	"name": {
 		"en": "💻 CPU",
 		"es": "💻 CPU"
+	},
+	"description": {
+		"en": "💻 Emulate the console's brain",
+		"es": "💻 Emula el cerebro de la consola"
 	}
 }
