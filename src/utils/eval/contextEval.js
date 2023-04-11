@@ -8,7 +8,10 @@ export default {
 		let _clearGlobals_ = "";
 		for (let i = 0, len = _globals_.length; i < len; i++) {
 			if ((_include_ && _include_.indexOf(_globals_[i]) === -1) || !_include_) {
-				if (!_INVALID_CHARACTERS_.test(_globals_[i]))
+				if (
+					!_INVALID_CHARACTERS_.test(_globals_[i]) &&
+					/^[_A-Za-z]/.test(_globals_[i])
+				)
 					_clearGlobals_ += `var ${_globals_[i]} = undefined;\n`;
 			}
 		}
