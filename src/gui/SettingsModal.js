@@ -3,10 +3,12 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales, { LANGUAGES } from "../locales";
+import Button from "./components/widgets/Button";
 import VolumeSlider from "./components/widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
 
 const MARGIN = 16;
+const SAVEFILE_EXTENSION = ".devz";
 
 class SettingsModal extends PureComponent {
 	render() {
@@ -76,22 +78,84 @@ class SettingsModal extends PureComponent {
 							</div>
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
+							<Form.Label>{locales.get("save_file")}</Form.Label>
+							<div className={styles.options}>
+								<div>
+									<Button onClick={this._backupSavefile}>
+										💾 {locales.get("backup")}
+									</Button>
+								</div>
+								<div>
+									<Button onClick={this._restoreSavefile}>
+										📥 {locales.get("restore")}
+									</Button>
+								</div>
+							</div>
+						</Form.Group>
+						<Form.Group style={{ marginTop: MARGIN }}>
 							<Form.Label>{locales.get("music")}</Form.Label>
 							<VolumeSlider disableTooltip />
 						</Form.Group>
-						<Form.Label style={{ color: "gray", marginTop: MARGIN }}>
-							Save file
-						</Form.Label>
-						<div style={{ color: "gray", fontSize: 12, fontStyle: "italic" }}>
-							The game's save file is in your LocalStorage. You can make a
-							backup using the <b>LocalStorage Manager</b> extension (on
-							Chrome).
-						</div>
 					</Form>
 				</Modal.Body>
 			</Modal>
 		);
 	}
+
+	_getSave() {
+		const save = {};
+		for (let i = 0; i < localStorage.length; i++) {
+			const key = localStorage.key(i);
+			const value = localStorage.getItem(key);
+			save[key] = value;
+		}
+		return JSON.stringify(save);
+	}
+
+	_setSave(save) {
+		localStorage.clear();
+		const data = JSON.parse(save);
+		for (let key in data) {
+			const value = data[key];
+			localStorage.setItem(key, value);
+		}
+		window.location.reload();
+	}
+
+	_backupSavefile = () => {
+		const content = this._getSave();
+		const filename = new Date().toJSON().split("T")[0] + SAVEFILE_EXTENSION;
+
+		const link = document.createElement("a");
+		const file = new Blob([content], { type: "text/plain" });
+		link.href = URL.createObjectURL(file);
+		link.download = filename;
+		link.click();
+		URL.revokeObjectURL(link.href);
+	};
+
+	_restoreSavefile = () => {
+		const handleFileSelect = (event) => {
+			event.target.removeEventListener("change", handleFileSelect);
+			if (input.files.length === 0) return;
+
+			const file = event.target.files[0];
+			const reader = new FileReader();
+
+			reader.onload = (e) => {
+				const fileContent = e.target.result;
+				this._setSave(fileContent);
+			};
+
+			reader.readAsText(file);
+		};
+
+		const input = document.createElement("input");
+		input.type = "file";
+		input.accept = SAVEFILE_EXTENSION;
+		input.addEventListener("change", handleFileSelect);
+		input.click();
+	};
 
 	_onSave = () => {
 		this.props.setLanguage(this.state.language);

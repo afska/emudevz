@@ -1,6 +1,7 @@
 export default {
 	_created_by: "Creado por",
 	_music_by: "música por",
+	backup: "Resguardar",
 	binary: "Binario",
 	button_play: "Jugar",
 	button_quit: "Salir",
@@ -83,6 +84,7 @@ export default {
 		"💬  Inspecciona tu código principal usando el objeto ~$~.",
 	reset_level: "Reiniciar progreso del nivel",
 	resize_warning: "No se puede redimensionar y escribir a la vez.",
+	restore: "Restaurar",
 	rm_with_files:
 		"⚠️  Este directorio contiene ~archivos~. ¿Borrar todo? ~(y/N)~",
 	rm_deleting_recursively: "💥  Borrando recursivamente...",
@@ -93,6 +95,7 @@ export default {
 	run: "Ejecutar",
 	run_emulator: "Ejecutar emulador",
 	save: "Guardar",
+	save_file: "Archivo de partida",
 	scroll_left: "Scrollear a la izquierda",
 	scroll_right: "Scrollear a la derecha",
 	select_a_chapter: "Selecciona un capítulo",

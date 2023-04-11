@@ -1,6 +1,7 @@
 export default {
 	_created_by: "Created by",
 	_music_by: "music by",
+	backup: "Backup",
 	binary: "Binary",
 	button_play: "Play",
 	button_quit: "Quit",
@@ -81,6 +82,7 @@ export default {
 	repl_code_success: "💬  Inspect your main code using the ~$~ object.",
 	reset_level: "Reset level progress",
 	resize_warning: "Resizing is not supported while typing.",
+	restore: "Restore",
 	rm_with_files:
 		"⚠️  This directory contains ~files~. Delete everything? ~(y/N)~",
 	rm_deleting_recursively: "💥  Deleting recursively...",
@@ -91,6 +93,7 @@ export default {
 	run: "Run",
 	run_emulator: "Run emulator",
 	save: "Save",
+	save_file: "Save file",
 	scroll_left: "Scroll left",
 	scroll_right: "Scroll right",
 	select_a_chapter: "Select a chapter",
