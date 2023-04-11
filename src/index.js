@@ -33,10 +33,9 @@ const app = (
 // Render the React app
 ReactDOM.render(app, document.getElementById("root"));
 
-// Run music on click
-document.onclick = () => {
-	music.start();
-};
+// Run music on user interactions
+document.onkeydown = () => music.start();
+document.onclick = () => music.start();
 
 // Make the page visible once everything loaded
 window.addEventListener(
