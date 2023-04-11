@@ -60,3 +60,12 @@
 	margin-left: 8px;
 	margin-right: 8px;
 }
+
+.browserWarning {
+	margin-left: 8px;
+	margin-right: 8px;
+	user-select: none;
+	text-align: center;
+	padding-top: 16px;
+	color: #d98b25;
+}
