@@ -37,6 +37,7 @@ export default {
 	creating_file: "Creating file",
 	creating_directory: "Creating directory",
 	decimal: "Decimal",
+	delete: "Delete",
 	deleting: "Deleting",
 	disconnected: "🔌  Disconnected. Use the `chat` command to talk again!",
 	drag_and_drop_here: "Drag a ROM here!",

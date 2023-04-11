@@ -90,6 +90,11 @@ class SettingsModal extends PureComponent {
 										📥 {locales.get("restore")}
 									</Button>
 								</div>
+								<div>
+									<Button onClick={this._deleteSavefile}>
+										🗑️ {locales.get("delete")}
+									</Button>
+								</div>
 							</div>
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
@@ -119,10 +124,16 @@ class SettingsModal extends PureComponent {
 			const value = data[key];
 			localStorage.setItem(key, value);
 		}
+		this._reload();
+	}
+
+	_reload() {
 		window.location.reload();
 	}
 
-	_backupSavefile = () => {
+	_backupSavefile = (e) => {
+		e.preventDefault();
+
 		const content = this._getSave();
 		const filename = new Date().toJSON().split("T")[0] + SAVEFILE_EXTENSION;
 
@@ -134,7 +145,9 @@ class SettingsModal extends PureComponent {
 		URL.revokeObjectURL(link.href);
 	};
 
-	_restoreSavefile = () => {
+	_restoreSavefile = (e) => {
+		e.preventDefault();
+
 		const handleFileSelect = (event) => {
 			event.target.removeEventListener("change", handleFileSelect);
 			if (input.files.length === 0) return;
@@ -155,6 +168,12 @@ class SettingsModal extends PureComponent {
 		input.accept = SAVEFILE_EXTENSION;
 		input.addEventListener("change", handleFileSelect);
 		input.click();
+	};
+
+	_deleteSavefile = (e) => {
+		e.preventDefault();
+		localStorage.clear();
+		this._reload();
 	};
 
 	_onSave = () => {

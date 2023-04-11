@@ -36,6 +36,7 @@ export default {
 	controller: "Mando",
 	creating_directory: "Creando directorio",
 	decimal: "Decimal",
+	delete: "Borrar",
 	deleting: "Borrando",
 	disconnected:
 		"🔌  Desconectado. ¡Usa el comando `chat` para hablar de nuevo!",
