@@ -17,6 +17,10 @@
 	cursor: pointer;
 }
 
+.level:hover {
+	filter: brightness(2);
+}
+
 .success {
 	background-color: #5cb85c;
 }
@@ -32,6 +36,10 @@
 
 .selected {
 	filter: brightness(2) drop-shadow(0px 0px 4px #ffffff);
+}
+
+.selected:hover {
+	filter: brightness(4) drop-shadow(0px 0px 4px #ffffff);
 }
 
 .highlight {
