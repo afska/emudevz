@@ -99,6 +99,11 @@ body {
 	transform: scale(0.9) translate(2px, 2px) !important;
 }
 
+.MuiTooltip-popper {
+	user-select: none !important;
+	pointer-events: none !important;
+}
+
 /* CodeMirror */
 
 .cm-theme {
