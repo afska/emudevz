@@ -1,4 +1,5 @@
 import JSZip from "jszip";
+import _ from "lodash";
 
 const DB_NAME = "emudevz";
 const INDEXED_DB_FOLDER = "indexeddb";
@@ -40,6 +41,25 @@ export default {
 				reject(error);
 			};
 		});
+	},
+
+	async check(data) {
+		const zip = await JSZip.loadAsync(data);
+
+		// LocalStorage
+		const save = await zip.file(LOCALSTORAGE_FILE).async("string");
+		if (!_.isObject(JSON.parse(save))) throw new Error("Corrupted");
+
+		// IndexedDB
+		let hasDBFiles = false;
+		const prefix = INDEXED_DB_FOLDER + "/";
+		for (let file in zip.files) {
+			if (file !== prefix && file.startsWith(prefix)) {
+				hasDBFiles = true;
+			}
+		}
+
+		if (!hasDBFiles) throw new Error("Corrupted");
 	},
 
 	async import(data) {

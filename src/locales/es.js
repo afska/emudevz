@@ -97,6 +97,8 @@ export default {
 	run_emulator: "Ejecutar emulador",
 	save: "Guardar",
 	save_file: "Archivo de partida",
+	save_file_cannot_be_restored:
+		"Este archivo de partida no puede ser restaurado.",
 	scroll_left: "Scrollear a la izquierda",
 	scroll_right: "Scrollear a la derecha",
 	select_a_chapter: "Selecciona un capítulo",

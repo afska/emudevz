@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
 import _ from "lodash";
 import Book from "../level/Book";
@@ -51,6 +52,7 @@ class PlayScreen extends PureComponent {
 
 		return (
 			<div className={styles.container}>
+				<Toaster containerClassName="toaster-wrapper" />
 				<LevelScreen chapter={this.currentChapter} level={level} />
 			</div>
 		);

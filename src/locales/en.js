@@ -95,6 +95,7 @@ export default {
 	run_emulator: "Run emulator",
 	save: "Save",
 	save_file: "Save file",
+	save_file_cannot_be_restored: "This save file cannot be restored.",
 	scroll_left: "Scroll left",
 	scroll_right: "Scroll right",
 	select_a_chapter: "Select a chapter",

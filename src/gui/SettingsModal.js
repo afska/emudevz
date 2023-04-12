@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales, { LANGUAGES } from "../locales";
-import { savefile } from "../utils";
+import { savefile, toast } from "../utils";
 import Button from "./components/widgets/Button";
 import VolumeSlider from "./components/widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
@@ -12,6 +12,8 @@ const MARGIN = 16;
 const SAVEFILE_EXTENSION = ".devz";
 
 class SettingsModal extends PureComponent {
+	state = { areYouSureRestore: false, areYouSureDelete: false };
+
 	render() {
 		const {
 			language,
@@ -20,6 +22,7 @@ class SettingsModal extends PureComponent {
 			setSpeedUpChat,
 			open,
 		} = this.props;
+		const { areYouSureRestore, areYouSureDelete } = this.state;
 
 		return (
 			<Modal
@@ -88,12 +91,14 @@ class SettingsModal extends PureComponent {
 								</div>
 								<div>
 									<Button onClick={this._restoreSavefile}>
-										📥 {locales.get("restore")}
+										{areYouSureRestore ? "❗❗❗ " : "📥 "}
+										{locales.get("restore")}
 									</Button>
 								</div>
 								<div>
 									<Button onClick={this._deleteSavefile}>
-										🗑️ {locales.get("delete")}
+										{areYouSureDelete ? "❗❗❗ " : "🗑️ "}
+										{locales.get("delete")}
 									</Button>
 								</div>
 							</div>
@@ -121,6 +126,10 @@ class SettingsModal extends PureComponent {
 
 	_restoreSavefile = async (e) => {
 		e.preventDefault();
+		if (!this.state.areYouSureRestore) {
+			this.setState({ areYouSureRestore: true });
+			return;
+		}
 
 		const handleFileSelect = async (event) => {
 			event.target.removeEventListener("change", handleFileSelect);
@@ -131,9 +140,20 @@ class SettingsModal extends PureComponent {
 
 			reader.onload = async (e) => {
 				const fileContent = e.target.result;
-				await savefile.clear();
-				await savefile.import(fileContent);
-				this._reload();
+
+				try {
+					await savefile.check(fileContent);
+				} catch (e) {
+					toast.error(locales.get("save_file_cannot_be_restored"));
+					return;
+				}
+
+				try {
+					await savefile.clear();
+					await savefile.import(fileContent);
+				} finally {
+					this._reload();
+				}
 			};
 
 			reader.readAsArrayBuffer(file);
@@ -148,6 +168,11 @@ class SettingsModal extends PureComponent {
 
 	_deleteSavefile = async (e) => {
 		e.preventDefault();
+		if (!this.state.areYouSureDelete) {
+			this.setState({ areYouSureDelete: true });
+			return;
+		}
+
 		await savefile.clear();
 		this._reload();
 	};

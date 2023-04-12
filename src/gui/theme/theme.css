@@ -176,3 +176,12 @@ body {
 .tooltip:has(.memoryTooltip):hover {
 	opacity: 0.1 !important;
 }
+
+/* Hot Toasts */
+
+.toaster-wrapper > div {
+	display: none !important;
+}
+.toaster-wrapper > div:first-child {
+	display: flex !important;
+}

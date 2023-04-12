@@ -5,5 +5,6 @@ import bus from "./bus";
 import byte from "./byte";
 import hex from "./hex";
 import savefile from "./savefile";
+import toast from "./toast";
 
-export { analytics, async, blob, bus, byte, hex, savefile };
+export { analytics, async, blob, bus, byte, hex, savefile, toast };
