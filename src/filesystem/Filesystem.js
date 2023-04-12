@@ -26,7 +26,7 @@ class Filesystem {
 					},
 				},
 				(e) => {
-					if (e != null) reject(new Error("Failed to initialized BrowserFS"));
+					if (e != null) reject(e);
 					this.fs = BrowserFS.BFSRequire("fs");
 					resolve();
 				}

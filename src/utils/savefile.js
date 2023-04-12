@@ -22,7 +22,9 @@ export default {
 			cursor.onsuccess = (event) => {
 				const cursor = event.target.result;
 				if (cursor) {
-					zip.folder(INDEXED_DB_FOLDER).file(cursor.key, cursor.value);
+					zip
+						.folder(INDEXED_DB_FOLDER)
+						.file(window.btoa(cursor.key), cursor.value);
 					cursor.continue();
 				} else {
 					zip
@@ -55,6 +57,7 @@ export default {
 		const prefix = INDEXED_DB_FOLDER + "/";
 		for (let file in zip.files) {
 			if (file !== prefix && file.startsWith(prefix)) {
+				window.atob(file.replace(prefix, ""));
 				hasDBFiles = true;
 			}
 		}
@@ -74,12 +77,16 @@ export default {
 		const prefix = INDEXED_DB_FOLDER + "/";
 		for (let file in zip.files) {
 			if (file !== prefix && file.startsWith(prefix)) {
-				const key = file.replace(prefix, "");
+				const key = window.atob(file.replace(prefix, ""));
 				const content = await zip.file(file).async("uint8array");
 				const tx = db.transaction(DB_NAME, "readwrite");
 				const store = tx.objectStore(DB_NAME);
 				store.put(content, key);
-				await tx.done;
+				await new Promise((resolve, reject) => {
+					tx.oncomplete = resolve;
+					tx.onerror = reject;
+					tx.commit();
+				});
 			}
 		}
 	},
@@ -87,19 +94,17 @@ export default {
 	clear: async () => {
 		localStorage.clear();
 
-		const clearObjectStore = (db, objectStoreName) =>
+		const clearObjectStore = (db, storeName) =>
 			new Promise((resolve) => {
-				const transaction = db.transaction(objectStoreName, "readwrite");
-				const objectStore = transaction.objectStore(objectStoreName);
-				objectStore.clear();
-				transaction.oncomplete = () => resolve();
+				const tx = db.transaction(storeName, "readwrite");
+				const store = tx.objectStore(storeName);
+				store.clear();
+				tx.oncomplete = () => resolve();
 			});
 
 		const db = await openDB();
-		const objectStoreNames = Array.from(db.objectStoreNames);
-		await Promise.all(
-			objectStoreNames.map((name) => clearObjectStore(db, name))
-		);
+		const storeNames = Array.from(db.objectStoreNames);
+		await Promise.all(storeNames.map((name) => clearObjectStore(db, name)));
 	},
 };
 
