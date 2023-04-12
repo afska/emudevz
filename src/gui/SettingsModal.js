@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales, { LANGUAGES } from "../locales";
+import { savefile } from "../utils";
 import Button from "./components/widgets/Button";
 import VolumeSlider from "./components/widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
@@ -107,26 +108,6 @@ class SettingsModal extends PureComponent {
 		);
 	}
 
-	_getSave() {
-		const save = {};
-		for (let i = 0; i < localStorage.length; i++) {
-			const key = localStorage.key(i);
-			const value = localStorage.getItem(key);
-			save[key] = value;
-		}
-		return JSON.stringify(save);
-	}
-
-	_setSave(save) {
-		localStorage.clear();
-		const data = JSON.parse(save);
-		for (let key in data) {
-			const value = data[key];
-			localStorage.setItem(key, value);
-		}
-		this._reload();
-	}
-
 	_reload() {
 		window.location.reload();
 	}
@@ -134,33 +115,28 @@ class SettingsModal extends PureComponent {
 	_backupSavefile = (e) => {
 		e.preventDefault();
 
-		const content = this._getSave();
 		const filename = new Date().toJSON().split("T")[0] + SAVEFILE_EXTENSION;
-
-		const link = document.createElement("a");
-		const file = new Blob([content], { type: "text/plain" });
-		link.href = URL.createObjectURL(file);
-		link.download = filename;
-		link.click();
-		URL.revokeObjectURL(link.href);
+		savefile.export(filename);
 	};
 
-	_restoreSavefile = (e) => {
+	_restoreSavefile = async (e) => {
 		e.preventDefault();
 
-		const handleFileSelect = (event) => {
+		const handleFileSelect = async (event) => {
 			event.target.removeEventListener("change", handleFileSelect);
 			if (input.files.length === 0) return;
 
 			const file = event.target.files[0];
 			const reader = new FileReader();
 
-			reader.onload = (e) => {
+			reader.onload = async (e) => {
 				const fileContent = e.target.result;
-				this._setSave(fileContent);
+				await savefile.clear();
+				await savefile.import(fileContent);
+				this._reload();
 			};
 
-			reader.readAsText(file);
+			reader.readAsArrayBuffer(file);
 		};
 
 		const input = document.createElement("input");
@@ -170,9 +146,9 @@ class SettingsModal extends PureComponent {
 		input.click();
 	};
 
-	_deleteSavefile = (e) => {
+	_deleteSavefile = async (e) => {
 		e.preventDefault();
-		localStorage.clear();
+		await savefile.clear();
 		this._reload();
 	};
 
