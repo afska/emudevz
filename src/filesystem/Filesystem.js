@@ -13,22 +13,25 @@ class Filesystem {
 	constructor() {
 		const BrowserFS = require("browserfs");
 
-		BrowserFS.configure(
-			{
-				fs: "AsyncMirror",
-				options: {
-					sync: { fs: "InMemory" },
-					async: {
-						fs: "IndexedDB",
-						options: { storeName: INDEXED_DB_STORE_NAME },
+		this.load = new Promise((resolve, reject) => {
+			BrowserFS.configure(
+				{
+					fs: "AsyncMirror",
+					options: {
+						sync: { fs: "InMemory" },
+						async: {
+							fs: "IndexedDB",
+							options: { storeName: INDEXED_DB_STORE_NAME },
+						},
 					},
 				},
-			},
-			(e) => {
-				if (e != null) throw new Error("Failed to initialized BrowserFS");
-				this.fs = BrowserFS.BFSRequire("fs");
-			}
-		);
+				(e) => {
+					if (e != null) reject(new Error("Failed to initialized BrowserFS"));
+					this.fs = BrowserFS.BFSRequire("fs");
+					resolve();
+				}
+			);
+		});
 
 		this.symlinks = [];
 	}

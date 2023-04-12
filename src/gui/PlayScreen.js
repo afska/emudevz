@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
 import _ from "lodash";
+import filesystem from "../filesystem";
 import Book from "../level/Book";
 import LevelLoader from "../level/LevelLoader";
 import locales from "../locales";
@@ -85,12 +86,13 @@ class PlayScreen extends PureComponent {
 			.catch(this._onError);
 	}
 
-	_loadLevel() {
+	async _loadLevel() {
 		const { currentLevelId, setLevel } = this.props;
 
 		const levelPath = `${LEVELS_PATH}/level_${currentLevelId}.zip`;
 
-		fetch(levelPath)
+		await filesystem.load;
+		await fetch(levelPath)
 			.then((req) => {
 				if (req.status !== STATUS_OK) throw new Error("Level not found.");
 				return req.arrayBuffer();
