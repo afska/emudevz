@@ -63,6 +63,19 @@ body {
 	}
 }
 
+.cube {
+	animation: rotation3d 1s linear infinite;
+}
+
+@keyframes rotation3d {
+	from {
+		transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+	}
+	to {
+		transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+	}
+}
+
 /* Bootstrap */
 
 :root {
