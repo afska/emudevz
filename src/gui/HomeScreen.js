@@ -3,6 +3,7 @@ import { Layer, Stage } from "@pixi/layers";
 import { CRTFilter } from "pixi-filters";
 import { PointLight, lightGroup } from "pixi-lights";
 import * as PIXI from "pixi.js";
+import { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
 import locales from "../locales";
 import ChapterSelectModal from "./ChapterSelectModal";
@@ -43,6 +44,7 @@ class HomeScreen extends PureComponent {
 
 		return (
 			<>
+				<Toaster containerClassName="toaster-wrapper" />
 				<div className={styles.container} ref={this.onReady} />
 
 				<SettingsModal
