@@ -24,14 +24,16 @@ export default {
 	command_test_description: "Tests your solution.",
 	command_cd_description:
 		"Changes directory (usage: ~cd a_directory~, or ~cd ..~)",
+	command_cp_description: "Copies something (usage: ~cp orig_path dest_path~)",
 	command_ls_description: "Shows a file list (usage: ~ls~, or ~ls -r~)",
 	command_mkdir_description: "Creates directories (usage: ~mkdir dir1 dir2~)",
 	command_mv_description:
 		"Moves or renames something (usage: ~mv old_path new_path~)",
 	command_open_description:
-		"Opens files (usage: ~open file1 file2~, or ~open *~)",
+		"Opens files (usage: ~open file1.txt file2.js~, or ~open *~)",
 	command_rm_description: "Removes something (usage: ~rm something~)",
-	command_touch_description: "Creates files (usage: ~touch file1 file2~)",
+	command_touch_description:
+		"Creates files (usage: ~touch file1.txt file2.js~)",
 	console: "Console",
 	controller: "Controller",
 	creating_file: "Creating file",

@@ -24,13 +24,14 @@ export default {
 	command_test_description: "Prueba tu solución.",
 	command_cd_description:
 		"Cambia de directorio (uso: ~cd un_directorio~, o ~cd ..~)",
+	command_cp_description: "Copia algo (uso: ~cp ruta_orig ruta_dest~)",
 	command_ls_description: "Muestra una lista de archivos",
 	command_mkdir_description: "Crea directorios (uso: ~mkdir dir1 dir2~)",
 	command_mv_description:
 		"Mueve o renombra algo (uso: ~mv ruta_vieja ruta_nueva~)",
-	command_open_description: "Abre archivos (uso: ~open arch1 arch2~)",
+	command_open_description: "Abre archivos (uso: ~open arch1.txt arch2.js~)",
 	command_rm_description: "Remueve algo (uso: ~rm algo~)",
-	command_touch_description: "Crea archivos (uso: ~touch arch1 arch2~)",
+	command_touch_description: "Crea archivos (uso: ~touch arch1.txt arch2.js~)",
 	creating_file: "Creando archivo",
 	console: "Consola",
 	controller: "Mando",
