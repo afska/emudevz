@@ -47,7 +47,7 @@ class MultiFile extends PureComponent {
 
 		const { isSearching } = this.state;
 
-		const hotkeyProps = this.props.selectedFile
+		const hotkeyProps = !_.isEmpty(this.props.openFiles)
 			? {}
 			: {
 					tabIndex: 0,
