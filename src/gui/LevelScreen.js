@@ -73,7 +73,7 @@ class LevelScreen extends PureComponent {
 		window.removeEventListener("dragover", this._ignore);
 		window.removeEventListener("dragenter", this._ignore);
 		window.removeEventListener("drop", this._ignore);
-		this.props.level.stopEarthquake();
+		this.props.level.stopEffect();
 	}
 
 	_ignore = (e) => {

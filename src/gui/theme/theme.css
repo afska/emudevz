@@ -27,6 +27,12 @@ body {
 	pointer-events: none;
 }
 
+.slow-earthquake {
+	animation: shake 1s;
+	animation-iteration-count: infinite;
+	pointer-events: none;
+}
+
 @keyframes shake {
 	0% {
 		transform: translate(1px, 1px) rotate(0deg);
@@ -60,19 +66,6 @@ body {
 	}
 	100% {
 		transform: translate(1px, -2px) rotate(-1deg);
-	}
-}
-
-.cube {
-	animation: rotation3d 1s linear infinite;
-}
-
-@keyframes rotation3d {
-	from {
-		transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-	}
-	to {
-		transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
 	}
 }
 

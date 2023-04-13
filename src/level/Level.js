@@ -128,11 +128,11 @@ export default class Level {
 		});
 	}
 
-	startEarthquake() {
-		document.querySelector("body").className = "earthquake";
+	startEffect(effectName) {
+		document.querySelector("body").className = effectName;
 	}
 
-	stopEarthquake() {
+	stopEffect() {
 		document.querySelector("body").className = "";
 	}
 

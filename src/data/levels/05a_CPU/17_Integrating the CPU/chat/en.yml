@@ -1,0 +1,45 @@
+---
+main:
+  run: |
+    level.launchEmulator();
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - now I'm gonna integrate your 💻  CPU into the emulator
+  - this is a REALLY complex task
+  - so it might take a while
+  - tell me and I'll do it, whenever you want
+  responses:
+  - do it! 👀 [doit]
+
+doit:
+  run: |
+    level.startEffect("slow-earthquake");
+  messages:
+  - WOOOW
+  - omg
+  - this is so difficult
+  - let me check...
+  - oh crap
+  - I messed everything up 😅
+  - hmm...
+  - argh
+  - yesss
+  - "__* intensely types code *__"
+  run-after-messages: |
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 3000);
+  events:
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useCPU");
+  messages:
+  - ✔️  done!
+  - now, the 💻  icon in the emulator will glow ✨
+  - try running some games! you'll notice a big improvement
+  - the timing should be more consistent, and you won't face any bug that affects game logic
+  responses:
+  - ▶️  continue [end]

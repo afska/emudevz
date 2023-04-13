@@ -18,7 +18,7 @@ tryit:
   - aquí voy
   - " ... ... "
   run-after-messages: |
-    level.startEarthquake();
+    level.startEffect("earthquake");
     setTimeout(() => {
       bus.emit("patching-end");
     }, 3000);
@@ -27,7 +27,7 @@ tryit:
 
 done:
   run: |
-    level.stopEarthquake();
+    level.stopEffect();
     book.unlock("useCartridge");
   messages:
   - ✔️  ¡hecho!
