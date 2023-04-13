@@ -2,7 +2,7 @@ import _ from "lodash";
 import store from "../store";
 import { bus } from "../utils";
 
-const EMULATOR_ACTIVATION_LEVEL = "cartridge-cursedneees";
+const EMULATOR_ACTIVATION_LEVEL = "cartridge-a-broken-emulator";
 
 export default class Book {
 	constructor(metadata) {

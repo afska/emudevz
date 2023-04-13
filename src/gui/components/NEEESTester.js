@@ -119,7 +119,7 @@ export default class NEEESTester extends PureComponent {
 
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
-			code: this._onCode,
+			"code-changed": this._onCode,
 			"level-memory-changed": () => this.forceUpdate(),
 		});
 	}
