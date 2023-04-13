@@ -33,9 +33,22 @@ const app = (
 // Render the React app
 ReactDOM.render(app, document.getElementById("root"));
 
-// Run music on user interactions
-document.onkeydown = () => music.start();
-document.onclick = () => music.start();
+// On "keydown" events
+document.onkeydown = (e) => {
+	music.start(); // run music!
+
+	// Disable Print shortcut
+	const isCtrlP = e.ctrlKey && e.code === "KeyP";
+	if (isCtrlP) e.preventDefault();
+
+	// Disable Back/Forward shortcuts
+	const isBackOrForward =
+		e.altKey && (e.code === "ArrowLeft" || e.code === "ArrowRight");
+	if (isBackOrForward) e.preventDefault();
+};
+
+// On "click" events
+document.onclick = () => music.start(); // run music!
 
 // Make the page visible once everything loaded
 window.addEventListener(
