@@ -193,3 +193,13 @@ it("`NOP`: argument == 'no'", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
+
+it("`NOP`: implements `run(...)`", () => {
+	const instructions = mainModule.default.instructions;
+	instructions.NOP.should.respondTo("run");
+})({
+	locales: {
+		es: "`NOP`: implementa `run(...)`",
+	},
+	use: ({ id }, book) => id >= book.getId("5a.11"),
+});
