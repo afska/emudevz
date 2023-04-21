@@ -12,7 +12,7 @@ main:
 
 howmany:
   messages:
-  - son 16 en total, ¡pero ya programé 2 por ti! 😎
+  - son 16 en total, ¡pero ya programé 3 por ti! 😎
   - y algunas de ellas son muy similares
   - 📚  crea un objeto siguiendo el mismo formato que el ejemplo
   - implementa cada una de las 16 instrucciones aritméticas sobre él
