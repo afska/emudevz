@@ -18,28 +18,6 @@
 	cursor: not-allowed;
 }
 
-.progress {
-	width: 100%;
-	margin-top: 8px;
-}
-
-.bar {
-	width: 100%;
-	background-color: #ecf0f1;
-	border-width: 1px;
-	border-color: white;
-	border-style: solid;
-	border-radius: 2px;
-	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-.barFill {
-	display: block;
-	height: 4px;
-	background-color: #5cb85c;
-	border-radius: 3px;
-}
-
 .verticalLine {
 	width: 2px;
 	height: 8px;

@@ -34,6 +34,7 @@ export default {
 	command_rm_description: "Removes something (usage: ~rm something~)",
 	command_touch_description:
 		"Creates files (usage: ~touch file1.txt file2.js~)",
+	complete: "complete",
 	console: "Console",
 	controller: "Controller",
 	creating_file: "Creating file",
@@ -57,6 +58,7 @@ export default {
 	language: "Language",
 	language_en: "English",
 	language_es: "Spanish",
+	lets_play_neees_games: "Let's play NEEES games!",
 	loading: "Loading...",
 	memory_viewer: "Memory Viewer",
 	music: "Music",
@@ -121,6 +123,7 @@ export default {
 	using_old_snapshot: "⚠️ Using a read-only snapshot of your old code.",
 	using_your_emulator: "Using your emulator ✔️",
 	volume: "Volume",
+	win_games_here_to_unlock_roms: "Win games here to unlock new ROMs",
 	yes: "Yes",
 	your_cpu_rocks: "Your CPU rocks!",
 	your_emulator: "Your emulator",
