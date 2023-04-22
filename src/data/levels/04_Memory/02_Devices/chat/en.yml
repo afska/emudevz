@@ -18,7 +18,7 @@ mapper:
 onemapper:
   messages:
   - nah, <BrokenNEEES> supports the most common mappers (0-4)
-  - and they all work! so you'll be using those for now
+  - and surprisingly, they all work! so you'll be using those for now
   - (I'll teach you how to implement them in the Mappers chapter, so you can add more)
   - now let's focus on receiving a bunch of <devices>
   - we'll map them later!

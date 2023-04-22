@@ -18,7 +18,7 @@ mapper:
 onemapper:
   messages:
   - nah, <BrokenNEEES> soporta los mappers más comunes (0-4)
-  - ¡y todos funcionan bien! así que usarás esos por ahora
+  - y sorprendentemente, ¡todos funcionan bien! así que usarás esos por ahora
   - (te enseñaré cómo implementarlos en el capítulo Mappers, para que puedas agregar más)
   - ahora concentrémonos en recibir un montón de <dispositivos>
   - ¡los mapearemos más tarde!

@@ -6,7 +6,7 @@
 - 🐏: La instrucción recibe una `"address"` como _argumento_.
 - 🔢: La instrucción recibe un `"value"` como _argumento_.
 
-#### 🔢 Aritméticas
+#### 🧮 Aritméticas
 
 | Código | Nombre                                             | Arg | Descripción                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | ------ | -------------------------------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,7 +27,7 @@
 | `RORa` | Rotar Derecha (Acumulador)                         | 🚫  | Como `ROR`, pero funciona con `[A]` en vez de con una dirección de memoria.                                                                                                                                                                                                                                                                                                                                                                                   |
 | `SBC`  | Sustraer con Carry                                 | 🔢  | Sustrae el contenido de un `value` a `[A]` junto con el `not` de la bandera Carry (`[A]` = `[A]` - `value` - `!C`).<br><br>Las banderas `Z`, `N`, `C` (activada si no hay que "tomar prestado"), y `V` (activada cuando el signo quedó mal) se actualizan.<br><br>Puede ser implementada como una llamada a `ADC` con la representación negativa de `value` - 1.<br>Ej:<br>`SBC(cpu, value) { ADC(cpu, 256 - value - 1) }`                                    |
 
-#### 🐏 Datos
+#### 📈 Datos
 
 | Código | Nombre                         | Arg | Descripción                                                                      |
 | ------ | ------------------------------ | --- | -------------------------------------------------------------------------------- |

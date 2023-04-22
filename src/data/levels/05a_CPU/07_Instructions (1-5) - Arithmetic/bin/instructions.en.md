@@ -6,7 +6,7 @@
 - 🐏: The instruction receives a memory `"address"` as _argument_.
 - 🔢: The instruction receives a `"value"` as _argument_.
 
-#### 🔢 Arithmetic
+#### 🧮 Arithmetic
 
 | Code   | Name                                | Arg | Description                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | ------ | ----------------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -27,7 +27,7 @@
 | `RORa` | Rotate Right (Accumulator)          | 🚫  | Like `ROR`, but works with `[A]` instead of a memory address.                                                                                                                                                                                                                                                                                                                                                                  |
 | `SBC`  | Subtract with Carry                 | 🔢  | Subtracts the contents of a `value` to `[A]` together with the `not` of the Carry flag.<br><br>The `Z`, `N`, `C` (set if there was no borrow), and `V` (set when sign is wrong) flags are updated.<br><br>It can be implemented as an `ADC` call with the negative representation of `value` - 1.<br>Ex:<br>`SBC(cpu, value) { ADC(cpu, 256 - value - 1) }`                                                                    |
 
-#### 🐏 Data
+#### 📈 Data
 
 | Code  | Name                        | Arg | Description                                                             |
 | ----- | --------------------------- | --- | ----------------------------------------------------------------------- |
