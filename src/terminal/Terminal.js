@@ -405,6 +405,7 @@ export default class Terminal {
 
 				try {
 					this._isWritingRemoteCommand = true;
+					this._xterm.scrollToBottom();
 					await this.interrupt();
 					await async.sleep();
 					while (this._stopFlag) await async.sleep();
