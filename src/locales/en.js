@@ -58,7 +58,6 @@ export default {
 	language: "Language",
 	language_en: "English",
 	language_es: "Spanish",
-	lets_play_neees_games: "Let's play NEEES games!",
 	loading: "Loading...",
 	memory_viewer: "Memory Viewer",
 	music: "Music",

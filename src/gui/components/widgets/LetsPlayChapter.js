@@ -21,7 +21,7 @@ class LetsPlayChapter extends PureComponent {
 				title={
 					<div className={styles.tooltip}>
 						<div>
-							👾 <strong>{locales.get("lets_play_neees_games")}</strong>
+							<strong>{chapter.name[locales.language]}</strong>
 						</div>
 						<div className={styles.small}>
 							{locales.get("win_games_here_to_unlock_roms")}

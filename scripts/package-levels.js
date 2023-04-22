@@ -54,13 +54,15 @@ async function pkg() {
 		}
 
 		const chapterHumanId = chapterId.replace(/^0+/, "");
+		const chapterNumber = parseInt(chapterHumanId.replace(/\D/g, ""));
+		const isSpecialChapter = _.isNaN(chapterNumber);
 
 		const chapter = {
-			id: globalChapterId,
-			number: parseInt(chapterHumanId.replace(/\D/g, "")),
+			id: !isSpecialChapter ? globalChapterId : -1,
+			number: !isSpecialChapter ? chapterNumber : chapterId,
 			humanId: chapterHumanId,
 			name: chapterMetadata.name,
-			description: chapterMetadata.description,
+			description: chapterMetadata.description || null,
 			levels: [],
 			help: _.mapValues(CHAPTER_HELP_FILES, (helpFile) => {
 				try {
@@ -69,6 +71,7 @@ async function pkg() {
 					return "";
 				}
 			}),
+			isSpecial: isSpecialChapter,
 		};
 		book.chapters.push(chapter);
 

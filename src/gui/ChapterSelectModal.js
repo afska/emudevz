@@ -36,7 +36,7 @@ export default class ChapterSelectModal extends PureComponent {
 						<div className={styles.floating}>
 							<LetsPlayChapter
 								book={book}
-								chapter={book.getChapter(0)}
+								chapter={book.getChapter(-1)}
 								tabIndex={-1}
 							/>
 						</div>
