@@ -185,24 +185,15 @@ class MultiFile extends PureComponent {
 
 		bus.emit("pin", {
 			Component: React.forwardRef((props, ref) => {
-				return this._renderPinnedFile(
-					filePath,
-					Component,
-					{ ...customArgs, ...props },
-					ref
-				);
+				return this._renderPinnedFile(filePath, Component, ref);
 			}),
-			args,
+			args: { ...args, isPinned: true },
 			level: this._level,
 		});
 	}
 
-	_renderPinnedFile(filePath, Component, customArgs, ref) {
-		const { props } = this._getFileArgsAndProps(
-			filePath,
-			Component,
-			customArgs
-		);
+	_renderPinnedFile(filePath, Component, ref) {
+		const { props } = this._getFileArgsAndProps(filePath, Component);
 
 		return <Component ref={ref} {...props} />;
 	}
@@ -231,7 +222,7 @@ class MultiFile extends PureComponent {
 		);
 	}
 
-	_getFileArgsAndProps(filePath, Component, customArgs) {
+	_getFileArgsAndProps(filePath, Component, customArgs = {}) {
 		const isReadOnly = this._isReadOnly(filePath);
 		let props = {};
 

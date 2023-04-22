@@ -53,6 +53,7 @@ export default class CodeEditor extends PureComponent {
 		isReady: false,
 		errorStart: -1,
 		errorEnd: -1,
+		isPinned: false,
 		isReadOnly: false,
 		isDisabled: false,
 		isCompiling: false,
@@ -106,6 +107,7 @@ export default class CodeEditor extends PureComponent {
 
 		this.setState({
 			_isInitialized: true,
+			isPinned: !!args.isPinned,
 			isReadOnly: !!args.readOnly,
 			actionName: args.action || NULL_ACTION,
 			onlyShowActionWhen: args.onlyShowActionWhen || null,
@@ -258,11 +260,17 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	_isActionShown() {
-		const { actionName, isCompiling, onlyShowActionWhen } = this.state;
+		const {
+			isPinned,
+			actionName,
+			isCompiling,
+			onlyShowActionWhen,
+		} = this.state;
 
 		const isNullAction = actionName === NULL_ACTION;
 
 		return (
+			!isPinned &&
 			!isNullAction &&
 			!isCompiling &&
 			(onlyShowActionWhen == null || codeEval.eval(onlyShowActionWhen))
