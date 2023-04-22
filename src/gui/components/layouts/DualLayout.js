@@ -113,6 +113,7 @@ export default class DualLayout extends Layout {
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
 			pin: this._onPin,
+			unpin: this._closePin,
 		});
 	}
 
