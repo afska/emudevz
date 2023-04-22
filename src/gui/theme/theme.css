@@ -19,6 +19,12 @@ body {
 	height: 100%;
 }
 
+.embed-image {
+	display: flex;
+	justify-content: center;
+	pointer-events: none;
+}
+
 /* Effects */
 
 .earthquake {
