@@ -1,0 +1,24 @@
+{
+	"name": {
+		"en": "🌀 Non-platform games",
+		"es": "🌀 Juegos de no-plataformas"
+	},
+	"ui": {
+		"layout": "dualFixedPin",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat -f",
+					"availableCommands": ["chat"]
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"memory": {
+		"content": {
+			"protected": true
+		}
+	}
+}

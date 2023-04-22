@@ -1,0 +1,27 @@
+---
+main:
+  run: |
+    level.launchEmulator();
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - let's play a game
+  - it's called 🕊️ 🛰️  ~Spacegulls~
+  - if you complete it, I'll send you all my 🌀  <non-platform> games
+  - in the ~*.neees~ format
+  responses:
+  - our emulator is not ready yet, remember? 😕 [notready]
+
+notready:
+  messages:
+  - I have a working NEEES, remember? 😉
+  - it's modern age, I can just stream it to you
+  - let's turn on the <video chat>
+  responses:
+  - the **VIDEO CHAT**?! [videochat]
+
+videochat:
+  messages:
+  - yeah, you see my room there?
+  responses:
+  - hmm [end]
