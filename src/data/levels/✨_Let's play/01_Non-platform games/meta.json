@@ -4,13 +4,20 @@
 		"es": "🌀 Juegos de no-plataformas"
 	},
 	"ui": {
-		"layout": "dualFixedPin",
+		"layout": "dual",
 		"components": {
 			"Left": [
 				"console",
 				{
 					"startup": "chat -f",
 					"availableCommands": ["chat"]
+				}
+			],
+			"Right": [
+				"tv",
+				{
+					"content": null,
+					"type": "stream"
 				}
 			]
 		},

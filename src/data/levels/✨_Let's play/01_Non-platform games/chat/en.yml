@@ -1,7 +1,6 @@
 ---
 main:
   run: |
-    level.launchStream();
     set((m) => m.chat.winOnEnd = true);
   messages:
   - hey,

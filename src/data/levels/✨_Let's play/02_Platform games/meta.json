@@ -4,15 +4,28 @@
 		"es": "🐸 Juegos de plataformas"
 	},
 	"ui": {
-		"layout": "mono",
+		"layout": "dual",
 		"components": {
-			"Main": [
+			"Left": [
 				"console",
 				{
-					"startup": "chat"
+					"startup": "chat -f",
+					"availableCommands": ["chat"]
+				}
+			],
+			"Right": [
+				"tv",
+				{
+					"content": null,
+					"type": "stream"
 				}
 			]
 		},
-		"focus": "Main"
+		"focus": "Left"
+	},
+	"memory": {
+		"content": {
+			"protected": true
+		}
 	}
 }
