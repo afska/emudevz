@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import NES from "nes-emu";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
@@ -121,13 +122,15 @@ export default class Emulator extends PureComponent {
 
 		let Console;
 		try {
-			Console = await new EmulatorBuilder()
-				.addUserCartridge(settings.useCartridge)
-				.addUserCPU(settings.useCPU)
-				.addUserPPU(settings.usePPU)
-				.addUserAPU(settings.useAPU)
-				.addUserController(settings.useController)
-				.build(true);
+			Console = settings.useHardware
+				? NES
+				: await new EmulatorBuilder()
+						.addUserCartridge(settings.useCartridge)
+						.addUserCPU(settings.useCPU)
+						.addUserPPU(settings.usePPU)
+						.addUserAPU(settings.useAPU)
+						.addUserController(settings.useController)
+						.build(true);
 		} catch (e) {
 			this._onError(e);
 			return;

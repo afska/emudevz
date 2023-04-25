@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import TVNoise from "./TVNoise";
 import EmulatorRunner from "./emulator/EmulatorRunner";
+import GameStreamer from "./emulator/GameStreamer";
 import MarkdownView from "./widgets/MarkdownView";
 import PanZoom from "./widgets/PanZoom";
 import styles from "./TV.module.css";
@@ -99,6 +100,9 @@ export default class TV extends PureComponent {
 						}}
 					/>
 				);
+			}
+			case "stream": {
+				return <GameStreamer rom={content} />;
 			}
 			default: {
 				return <TVNoise />;

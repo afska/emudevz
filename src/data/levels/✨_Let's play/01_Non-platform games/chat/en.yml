@@ -1,7 +1,7 @@
 ---
 main:
   run: |
-    level.launchEmulator();
+    level.launchStream();
     set((m) => m.chat.winOnEnd = true);
   messages:
   - hey,
@@ -18,7 +18,7 @@ notready:
   - it's modern age, I can just stream it to you
   - let's turn on the <video chat>
   responses:
-  - the **VIDEO CHAT**?! [videochat]
+  - the VIDEO CHAT?! [videochat]
 
 videochat:
   messages:

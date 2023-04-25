@@ -128,6 +128,14 @@ export default class Level {
 		});
 	}
 
+	launchStream(rom = null) {
+		bus.emit("pin", {
+			Component: TV,
+			args: { content: rom, type: "stream" },
+			level: this,
+		});
+	}
+
 	startEffect(effectName) {
 		document.querySelector("body").className = effectName;
 	}
