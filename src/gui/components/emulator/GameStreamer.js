@@ -1,19 +1,37 @@
 import React, { PureComponent } from "react";
-import { FaVideo } from "react-icons/fa";
+import { FaGlasses, FaVideo } from "react-icons/fa";
 import classNames from "classnames";
 import locales from "../../../locales";
 import store from "../../../store";
 import Tooltip from "../../components/widgets/Tooltip";
 import VolumeSlider from "../../components/widgets/VolumeSlider";
+import IconButton from "../widgets/IconButton";
 import Emulator from "./Emulator";
 import styles from "./GameStreamer.module.css";
+
+const INITIAL_ZOOM_DELAY = 6000;
+const ZOOM_DELAY = 1000;
 
 export default class GameStreamer extends PureComponent {
 	state = { rom: null };
 
 	zoom = () => {
-		this._stream.classList.add(styles.zoom);
+		this._changeZoomTo(styles.zoom, "megaZoom", INITIAL_ZOOM_DELAY);
 	};
+
+	megaZoom = () => {
+		this._changeZoomTo(styles.megazoom, "megaZoomOut");
+	};
+
+	megaZoomOut = () => {
+		this._changeZoomTo(styles.megazoomout, "megaZoom");
+	};
+
+	clearZoom() {
+		this._stream.classList.remove(styles.zoom);
+		this._stream.classList.remove(styles.megazoom);
+		this._stream.classList.remove(styles.megazoomout);
+	}
 
 	render() {
 		const { rom: propsRom } = this.props;
@@ -33,11 +51,26 @@ export default class GameStreamer extends PureComponent {
 						"d-none d-lg-flex d-xl-flex d-xxl-flex"
 					)}
 				>
-					<Tooltip title={locales.get("streaming_video")} placement="top">
-						<span>
-							<FaVideo />
+					<div className={styles.row}>
+						<Tooltip title={locales.get("streaming_video")} placement="top">
+							<span>
+								<FaVideo />
+							</span>
+						</Tooltip>
+						<span
+							ref={(ref) => {
+								this._zoomButton = ref;
+							}}
+							style={{ display: "none", marginLeft: 8, marginBottom: 0 }}
+						>
+							<IconButton
+								Icon={FaGlasses}
+								onClick={() => {
+									if (this._nextZoom) this[this._nextZoom]();
+								}}
+							/>
 						</span>
-					</Tooltip>
+					</div>
 
 					<div className={styles.row}>
 						<Tooltip title={locales.get("using_keyboard")} placement="top">
@@ -156,6 +189,17 @@ export default class GameStreamer extends PureComponent {
 		inner.style.top = `${y}px`;
 		inner.style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
 	};
+
+	_changeZoomTo(style, next, delay = ZOOM_DELAY) {
+		this.clearZoom();
+		this._stream.classList.add(style);
+		this._nextZoom = undefined;
+		this._zoomButton.style.display = "none";
+		setTimeout(() => {
+			this._nextZoom = next;
+			this._zoomButton.style.display = "block";
+		}, delay);
+	}
 
 	get _unlockedUnits() {
 		return store.getState().savedata.unlockedUnits;

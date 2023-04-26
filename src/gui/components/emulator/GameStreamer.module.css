@@ -58,6 +58,18 @@
 	transform: scale(1.3);
 }
 
+.megazoom {
+	animation: megazoomin 1s;
+	transform: scale(1.8) translateX(-24px) translateY(24px);
+}
+
+.megazoomout {
+	animation: megazoomout, zoomloop infinite;
+	animation-duration: 1s, 5s;
+	animation-delay: 0s, 1s;
+	transform: scale(1.3);
+}
+
 @keyframes noise {
 	0% {
 		filter: brightness(100%) contrast(100%) saturate(100%);
@@ -118,6 +130,24 @@
 	}
 	100% {
 		transform: scale(1.3);
+	}
+}
+
+@keyframes megazoomin {
+	0% {
+		transform: scale(1.3) translateX(0) translateY(0);
+	}
+	100% {
+		transform: scale(1.8) translateX(-24px) translateY(24px);
+	}
+}
+
+@keyframes megazoomout {
+	0% {
+		transform: scale(1.8) translateX(-24px) translateY(24px);
+	}
+	100% {
+		transform: scale(1.3) translateX(0) translateY(0);
 	}
 }
 
