@@ -17,7 +17,12 @@ export default class LsCommand extends FilesystemCommand {
 
 		return content
 			.flatMap(({ name, isDirectory }, i) => {
-				const style = isDirectory && format ? theme.MESSAGE : theme.NORMAL;
+				const prefix = format ? "" : isDirectory ? "📁 " : "📄 ";
+				const formattedName = isDirectory ? prefix + name + "/" : prefix + name;
+				const styledName =
+					isDirectory && format
+						? theme.MESSAGE(formattedName)
+						: theme.NORMAL(formattedName);
 				const isLastItem = i === content.length - 1;
 				const indentSymbol = isLastItem ? " " : "│";
 				const newIndent = indent + indentSymbol + _.repeat(" ", INDENT + 1);
@@ -28,11 +33,7 @@ export default class LsCommand extends FilesystemCommand {
 				// (main)
 				const mainSymbol = isLastItem ? "└" : "├";
 				let entry =
-					indent +
-					mainSymbol +
-					_.repeat("─", INDENT) +
-					" " +
-					(isDirectory ? style(name) + "/" : style(name));
+					indent + mainSymbol + _.repeat("─", INDENT) + " " + styledName;
 
 				// (inner)
 				if (innerContent !== "") entry += "\n" + innerContent;
