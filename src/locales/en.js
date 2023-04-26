@@ -91,7 +91,7 @@ export default {
 		"⚠️  This directory contains ~files~. Delete everything? ~(y/N)~",
 	rm_deleting_recursively: "💥  Deleting recursively...",
 	rm_recursive_flag: "(to skip this check, run `rm -rf`)",
-	rollback: "Restore code using this snapshot",
+	rollback: "Restore /code using this snapshot",
 	rollback_sure:
 		"Your ENTIRE code will be replaced by this snapshot. Are you sure?",
 	run: "Run",
