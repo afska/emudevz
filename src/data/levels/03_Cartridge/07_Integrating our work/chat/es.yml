@@ -12,16 +12,16 @@ main:
   - claro, ¡quiero intentarlo! [tryit]
 
 tryit:
-  messages:
-  - ok, dame unos segundos
-  - esta es una tarea compleja 👀
-  - aquí voy
-  - " ... ... "
   run-after-messages: |
     level.startEffect("earthquake");
     setTimeout(() => {
       bus.emit("patching-end");
     }, 3000);
+  messages:
+  - ok, dame unos segundos
+  - esta es una tarea compleja 👀
+  - aquí voy
+  - " ... ... "
   events:
   - patching-end [done]
 

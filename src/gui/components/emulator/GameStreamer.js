@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
+import { FaVideo } from "react-icons/fa";
 import classNames from "classnames";
-import filesystem from "../../../filesystem";
 import locales from "../../../locales";
 import store from "../../../store";
 import Tooltip from "../../components/widgets/Tooltip";
@@ -9,10 +9,16 @@ import Emulator from "./Emulator";
 import styles from "./GameStreamer.module.css";
 
 export default class GameStreamer extends PureComponent {
-	render() {
-		let { rom } = this.props;
+	state = { rom: null };
 
-		rom = filesystem.read("/roms/test/NEEEStest.neees", { binary: true });
+	zoom = () => {
+		this._stream.classList.add(styles.zoom);
+	};
+
+	render() {
+		const { rom: propsRom } = this.props;
+		const { rom: stateRom } = this.state;
+		const rom = propsRom || stateRom;
 
 		return (
 			<div
@@ -27,6 +33,12 @@ export default class GameStreamer extends PureComponent {
 						"d-none d-lg-flex d-xl-flex d-xxl-flex"
 					)}
 				>
+					<Tooltip title={locales.get("streaming_video")} placement="top">
+						<span>
+							<FaVideo />
+						</span>
+					</Tooltip>
+
 					<div className={styles.row}>
 						<Tooltip title={locales.get("using_keyboard")} placement="top">
 							<span id="keyboard">⌨️</span>
@@ -68,7 +80,7 @@ export default class GameStreamer extends PureComponent {
 						<div className={styles.pointLight} />
 
 						<div
-							id="emulator"
+							id="tvScreen"
 							style={{
 								position: "absolute",
 								width: 256,
@@ -121,7 +133,7 @@ export default class GameStreamer extends PureComponent {
 		if (!this._stream) return;
 
 		const outer = this._stream;
-		const inner = outer.querySelector("#emulator");
+		const inner = outer.querySelector("#tvScreen");
 
 		const innerX = 178;
 		const innerY = 135;

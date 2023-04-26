@@ -108,6 +108,7 @@ export default {
 	stack: "Stack",
 	step_forward: "Step",
 	step_reset: "Reset",
+	streaming_video: "Streaming video",
 	testing: "Testing: ",
 	tests_success: "🎉  All tests passed.",
 	tests_success_continue: "🎉  All tests passed. Press any key to continue.",

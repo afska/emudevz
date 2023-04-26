@@ -19,6 +19,10 @@
 	border-radius: 8px;
 }
 
+.crtNoise {
+	background: #bbbbbb;
+}
+
 .message {
 	width: 100%;
 	height: 100%;

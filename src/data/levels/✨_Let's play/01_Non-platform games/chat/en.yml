@@ -9,7 +9,7 @@ main:
   - if you complete it, I'll send you all my 🌀  <non-platform> games
   - in the ~*.neees~ format
   responses:
-  - our emulator is not ready yet, remember? 😕 [notready]
+  - how are we gonna play? our emulator is not ready yet 😕 [notready]
 
 notready:
   messages:
@@ -20,7 +20,31 @@ notready:
   - the VIDEO CHAT?! [videochat]
 
 videochat:
+  run: |
+    {{Right}}.load(null, "stream");
   messages:
   - yeah, you see my room there?
+  - it's a bit messy, I know
+  - lemme move the camera a bit closer to the TV 🔍
+  run-after-messages: |
+    $.goTo("zoom");
+  responses: []
+
+zoom:
+  run: |
+    {{Right}}.stream.zoom();
+  messages:
+  - I've also patched the controller port so your inputs work on my real NEEES
   responses:
-  - hmm [end]
+  - so, can we play now? 👾 [play]
+
+play:
+  run: |
+    {{Right}}.load("Spacegulls.neees", "stream", "bin");
+  messages:
+  - yeah
+  - here's the game
+  - you can play using either your keyboard or a gamepad
+  - I'll be watching your progress 👀
+  events:
+  - asdasd [end]

@@ -13,13 +13,7 @@
 					"availableCommands": ["chat"]
 				}
 			],
-			"Right": [
-				"tv",
-				{
-					"content": null,
-					"type": "stream"
-				}
-			]
+			"Right": ["tv", {}]
 		},
 		"focus": "Left"
 	},

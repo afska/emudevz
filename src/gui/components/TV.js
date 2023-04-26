@@ -20,21 +20,22 @@ export default class TV extends PureComponent {
 		this._level = level;
 	}
 
-	load(fileName) {
-		const content = this._level?.media[fileName];
-		if (!content) throw new Error(`Media not found: ${fileName}`);
-
-		this.setState({ content, type: "media" });
+	load(fileName, type = "media", bucket = "media") {
+		const content = (fileName && this._level?.[bucket]?.[fileName]) || null;
+		this.setState({ content, type });
 	}
 
 	render() {
 		const { style, onKeyDown } = this.props;
 
-		const isEmulator = this.state.type === "rom";
+		const id =
+			this.state.type === "rom" || this.state.type === "stream"
+				? "emulator"
+				: undefined;
 
 		return (
 			<div
-				id={isEmulator ? "emulator" : undefined}
+				id={id}
 				className={styles.tvContainer}
 				tabIndex={0}
 				ref={(ref) => {
@@ -102,7 +103,14 @@ export default class TV extends PureComponent {
 				);
 			}
 			case "stream": {
-				return <GameStreamer rom={content} />;
+				return (
+					<GameStreamer
+						rom={content}
+						ref={(ref) => {
+							this.stream = ref;
+						}}
+					/>
+				);
 			}
 			default: {
 				return <TVNoise />;

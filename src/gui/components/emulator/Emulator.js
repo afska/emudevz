@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import NES from "nes-emu";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import TVNoise from "../TVNoise";
@@ -30,12 +30,12 @@ const SAVESTATE_KEY = "emudevz-savestate";
 
 let webWorker = null;
 
-export default class Emulator extends PureComponent {
+export default class Emulator extends Component {
 	render() {
 		const { rom, error, crt = false } = this.props;
 
 		const ScreenComponent = crt ? CRTScreen : Screen;
-		const innerClassName = crt ? undefined : styles.box;
+		const innerClassName = crt ? styles.crtNoise : styles.box;
 
 		return (
 			<div className={styles.content}>
@@ -111,8 +111,9 @@ export default class Emulator extends PureComponent {
 		window.removeEventListener("keyup", this._onKeyUp);
 	}
 
-	componentDidUpdate() {
+	shouldComponentUpdate() {
 		this.stop();
+		return true;
 	}
 
 	componentWillUnmount() {
