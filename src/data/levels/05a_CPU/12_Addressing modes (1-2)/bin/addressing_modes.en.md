@@ -29,4 +29,4 @@
 - In the **Relative** mode, `N` = 2
 - In the **indexed** modes, `N` = 1
 
-⚠️ Not all opcodes have this cross-page penalty, so the addressing modes receive a `hasPageCrossPenalty` boolean that indicates whether this extra cycles should be added.
+⚠️ Not all opcodes have this cross-page penalty, so the addressing modes receive a `hasPageCrossPenalty` boolean that indicates whether these extra cycles should be added.
