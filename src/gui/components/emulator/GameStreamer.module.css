@@ -30,3 +30,100 @@
 	flex-direction: row;
 	align-items: center;
 }
+
+.video {
+	height: 100%;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	margin-left: auto;
+	margin-right: auto;
+	aspect-ratio: 1;
+	overflow: clip;
+	border: 4px dashed #577295;
+	border-radius: 8px;
+}
+
+.stream {
+	position: relative;
+	width: 100%;
+	height: 100%;
+
+	animation: noise 5s infinite, zoomin 10s;
+	/* transform: scale(1.3); */
+}
+
+@keyframes noise {
+	0% {
+		filter: brightness(100%) contrast(100%) saturate(100%);
+		/* transform: scale(1.3); */
+	}
+	10% {
+		filter: brightness(98%) contrast(102%) saturate(98%);
+	}
+	20% {
+		filter: brightness(102%) contrast(98%) saturate(102%);
+	}
+	30% {
+		filter: brightness(100%) contrast(100%) saturate(100%);
+	}
+	40% {
+		filter: brightness(98%) contrast(102%) saturate(98%);
+	}
+	50% {
+		filter: brightness(102%) contrast(98%) saturate(102%);
+		/* transform: scale(1.31); */
+	}
+	60% {
+		filter: brightness(100%) contrast(100%) saturate(100%);
+	}
+	70% {
+		filter: brightness(98%) contrast(102%) saturate(98%);
+	}
+	80% {
+		filter: brightness(102%) contrast(98%) saturate(102%);
+	}
+	90% {
+		filter: brightness(100%) contrast(100%) saturate(100%);
+	}
+	100% {
+		filter: brightness(100%) contrast(100%) saturate(100%);
+		/* transform: scale(1.3); */
+	}
+}
+
+@keyframes zoomin {
+	0% {
+		/* transform: scale(1); */
+	}
+}
+
+.backgroundImage {
+	width: 100%;
+	height: 100%;
+	user-select: none;
+	pointer-events: none;
+}
+
+.pointLight {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0;
+	animation: lightflicker 3s infinite;
+}
+
+@keyframes lightflicker {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 0.45;
+	}
+	100% {
+		opacity: 0;
+	}
+}

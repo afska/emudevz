@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import NES from "nes-emu";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import TVNoise from "../TVNoise";
+import CRTScreen from "./CRTScreen";
 import Screen from "./Screen";
 import Speaker from "./runner/Speaker";
 import WebWorker from "./runner/WebWorker";
@@ -31,7 +32,10 @@ let webWorker = null;
 
 export default class Emulator extends PureComponent {
 	render() {
-		const { rom, error } = this.props;
+		const { rom, error, crt = false } = this.props;
+
+		const ScreenComponent = crt ? CRTScreen : Screen;
+		const innerClassName = crt ? undefined : styles.box;
 
 		return (
 			<div className={styles.content}>
@@ -44,14 +48,14 @@ export default class Emulator extends PureComponent {
 						/>
 					</div>
 				) : !!rom ? (
-					<Screen
-						className={styles.box}
+					<ScreenComponent
+						className={innerClassName}
 						ref={(screen) => {
 							if (screen) this._initialize(screen);
 						}}
 					/>
 				) : (
-					<TVNoise className={styles.box} />
+					<TVNoise className={innerClassName} />
 				)}
 			</div>
 		);
