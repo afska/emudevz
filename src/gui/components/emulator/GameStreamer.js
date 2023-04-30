@@ -9,7 +9,7 @@ import IconButton from "../widgets/IconButton";
 import Emulator from "./Emulator";
 import styles from "./GameStreamer.module.css";
 
-const INITIAL_ZOOM_DELAY = 6000;
+const INITIAL_ZOOM_DELAY = 3000;
 const ZOOM_DELAY = 1000;
 
 export default class GameStreamer extends PureComponent {
@@ -61,7 +61,7 @@ export default class GameStreamer extends PureComponent {
 							ref={(ref) => {
 								this._zoomButton = ref;
 							}}
-							style={{ display: "none", marginLeft: 8, marginBottom: 0 }}
+							style={{ opacity: 0, marginLeft: 8, marginBottom: 0 }}
 						>
 							<IconButton
 								Icon={FaGlasses}
@@ -72,18 +72,26 @@ export default class GameStreamer extends PureComponent {
 						</span>
 					</div>
 
+					<ProgressBar
+						percentage={0}
+						barFillColor="#3398dc"
+						style={{ marginTop: 0, width: "50%" }}
+					/>
+
 					<div className={styles.row}>
 						<Tooltip title={locales.get("using_keyboard")} placement="top">
-							<span id="keyboard">⌨️</span>
+							<span id="keyboard" style={{ marginTop: 3 }}>
+								⌨️
+							</span>
 						</Tooltip>
 						<Tooltip
 							title={locales.get("using_gamepad")}
 							placement="top"
-							style={{ display: "none" }}
+							style={{ display: "none", marginTop: 3 }}
 						>
 							<span id="gamepad">🎮</span>
 						</Tooltip>
-						<span>&nbsp;|&nbsp;</span>
+						<span>&nbsp;</span>
 						<VolumeSlider
 							volume={null}
 							setVolume={(v) => {
@@ -194,10 +202,10 @@ export default class GameStreamer extends PureComponent {
 		this.clearZoom();
 		this._stream.classList.add(style);
 		this._nextZoom = undefined;
-		this._zoomButton.style.display = "none";
+		this._zoomButton.style.opacity = 0;
 		setTimeout(() => {
 			this._nextZoom = next;
-			this._zoomButton.style.display = "block";
+			this._zoomButton.style.opacity = 1;
 		}, delay);
 	}
 

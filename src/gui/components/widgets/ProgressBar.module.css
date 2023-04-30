@@ -16,7 +16,6 @@
 .barFill {
 	display: block;
 	height: 4px;
-	background-color: #5cb85c;
 	border-radius: 3px;
 	animation: progress 1s;
 }

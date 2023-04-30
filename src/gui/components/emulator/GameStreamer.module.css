@@ -3,6 +3,16 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	animation: fadein 5s;
+}
+
+@keyframes fadein {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 .bar {
@@ -53,8 +63,8 @@
 
 .zoom {
 	animation: zoomin, zoomloop infinite;
-	animation-duration: 6s, 5s;
-	animation-delay: 0s, 6s;
+	animation-duration: 3s, 5s;
+	animation-delay: 0s, 3s;
 	transform: scale(1.3);
 }
 
@@ -111,10 +121,10 @@
 		transform: scale(1);
 	}
 	25% {
-		transform: rotateZ(-10deg) scale(1.1);
+		transform: rotateZ(-10deg) scale(1.2);
 	}
 	75% {
-		transform: rotateZ(10deg) scale(1.2);
+		transform: rotateZ(10deg) scale(1.25);
 	}
 	100% {
 		transform: rotateZ(0) scale(1.3);
