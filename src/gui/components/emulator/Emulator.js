@@ -127,11 +127,20 @@ export default class Emulator extends Component {
 		return true;
 	}
 
+	componentDidMount() {
+		window.addEventListener("beforeunload", this._saveProgress);
+	}
+
 	componentWillUnmount() {
-		if (this.neees != null) this._setSaveState(this.neees.getSaveState());
+		this._saveProgress();
+		window.removeEventListener("beforeunload", this._saveProgress);
 
 		this.stop();
 	}
+
+	_saveProgress = () => {
+		if (this.neees != null) this._setSaveState(this.neees.getSaveState());
+	};
 
 	async _initialize(screen) {
 		const { rom, settings, volume } = this.props;

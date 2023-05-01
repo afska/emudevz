@@ -34,7 +34,7 @@ zoom:
   run: |
     {{Right}}.stream.zoom();
   messages:
-  - I've also patched the controller port so your inputs work on my real NEEES
+  - ✨  I've also patched the controller port so your inputs work on my real NEEES
   responses:
   - so, can we play now? 👾 [play]
 
@@ -45,7 +45,17 @@ play:
   messages:
   - yeah
   - here's the game
-  - you can play using either your keyboard or a gamepad
-  - I'll be watching your progress 👀
+  - you can play using either your ⌨️  keyboard or a 🎮  gamepad
+  - 💾  your progress will be saved when you leave this level
+  - I'll be here, watching 👀
   events:
-  - asdasd [end]
+  - spacegulls-end [finish]
+
+finish:
+  messages:
+  - AWESOME!
+  - now you are a ~hero~
+  - as I promised, I put my ROMs in your 📁  ~/roms~ directory
+  - (if you don't know how to use files, you'll learn soon!)
+  responses:
+  - ▶️  continue [end]

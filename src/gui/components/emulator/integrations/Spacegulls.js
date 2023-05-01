@@ -1,4 +1,5 @@
 import React from "react";
+import { bus } from "../../../../utils";
 import ProgressBar from "../../widgets/ProgressBar";
 import Integration from "./Integration";
 
@@ -25,6 +26,7 @@ export default class Spacegulls extends Integration {
 		const zoneIndex = ZONES.indexOf(zone);
 		if (zoneIndex >= 0) {
 			const percentage = (zoneIndex / (ZONES.length - 1)) * 100;
+			if (percentage === 100) bus.emit("spacegulls-end");
 			this.setState({ percentage });
 		}
 	};
