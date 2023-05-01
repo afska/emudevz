@@ -6,7 +6,7 @@ const CODE_DIR = "/code";
 const LIB_DIR = "/lib";
 const DOCS_DIR = "/docs";
 const ROMS_DIR = "/roms";
-const TESTROMS_DIR = "/roms/test";
+const TESTROMS_DIR = "/roms/_test";
 const SNAPSHOTS_DIR = "/.snapshots";
 const READONLY_PATHS = [
 	/^\/$/,

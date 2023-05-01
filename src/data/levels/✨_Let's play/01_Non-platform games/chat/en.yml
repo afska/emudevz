@@ -52,6 +52,13 @@ play:
   - spacegulls-end [finish]
 
 finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}/non-platform`
+    try { filesystem.mkdir(directory); } catch (e) {}
+
+    ["Bobl.neees", "Spacegulls.neees", "Wolfling.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file]);
+    });
   messages:
   - AWESOME!
   - now you are a ~hero~
