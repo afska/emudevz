@@ -9,10 +9,12 @@ import Speaker from "./runner/Speaker";
 import gamepad from "./runner/gamepad";
 import styles from "./Emulator.module.css";
 
+const SAVESTATE_KEY_PREFIX = "persist:emudevz:savestate-";
+
 const NEW_WEB_WORKER = () =>
 	new Worker(new URL("./runner/emuWebWorkerRunner.js", import.meta.url));
 
-const USE_WEB_WORKER = false; // DISABLED: Web Workers are faster, but harder to debug
+const USE_WEB_WORKER = false; // DISABLED
 const KEY_MAP = {
 	" ": "BUTTON_A",
 	d: "BUTTON_B",
@@ -25,7 +27,6 @@ const KEY_MAP = {
 };
 
 const STATE_POLL_INTERVAL = 10;
-const SAVESTATE_KEY = "emudevz-savestate";
 
 let emuWebWorker = null;
 
@@ -62,6 +63,12 @@ export default class Emulator extends Component {
 
 	get neees() {
 		return emuWebWorker?.nes;
+	}
+
+	get saveStateKey() {
+		const { autoSaveAndRestore } = this.props;
+		if (!autoSaveAndRestore) return null;
+		return SAVESTATE_KEY_PREFIX + autoSaveAndRestore;
 	}
 
 	sendState = () => {
@@ -121,6 +128,8 @@ export default class Emulator extends Component {
 	}
 
 	componentWillUnmount() {
+		if (this.neees != null) this._setSaveState(this.neees.getSaveState());
+
 		this.stop();
 	}
 
@@ -166,11 +175,13 @@ export default class Emulator extends Component {
 		emuWebWorker.postMessage(bytes);
 		if (emuWebWorker == null) return;
 
+		const saveState = this._getSaveState();
 		emuWebWorker.postMessage({
 			id: "saveState",
-			saveState: this._getSaveState(),
+			saveState,
 		});
 		if (emuWebWorker == null) return;
+		if (saveState != null) this.neees.setSaveState(saveState);
 
 		this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
 		window.addEventListener("keydown", this._onKeyDown);
@@ -178,15 +189,19 @@ export default class Emulator extends Component {
 	}
 
 	_getSaveState() {
+		if (!this.saveStateKey) return null;
+
 		try {
-			return JSON.parse(localStorage.getItem(SAVESTATE_KEY));
+			return JSON.parse(localStorage.getItem(this.saveStateKey));
 		} catch (e) {
 			return null;
 		}
 	}
 
 	_setSaveState(saveState) {
-		localStorage.setItem(SAVESTATE_KEY, JSON.stringify(saveState));
+		if (!this.saveStateKey) return;
+
+		localStorage.setItem(this.saveStateKey, JSON.stringify(saveState));
 	}
 
 	_onError(e) {

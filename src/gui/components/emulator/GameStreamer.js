@@ -7,13 +7,18 @@ import Tooltip from "../../components/widgets/Tooltip";
 import VolumeSlider from "../../components/widgets/VolumeSlider";
 import IconButton from "../widgets/IconButton";
 import Emulator from "./Emulator";
+import integrations from "./integrations";
 import styles from "./GameStreamer.module.css";
 
 const INITIAL_ZOOM_DELAY = 3000;
 const ZOOM_DELAY = 1000;
 
 export default class GameStreamer extends PureComponent {
-	state = { rom: null };
+	state = { rom: null, integrationId: null };
+
+	setIntegration(integrationId) {
+		this.setState({ integrationId });
+	}
 
 	zoom = () => {
 		this._changeZoomTo(styles.zoom, "megaZoom", INITIAL_ZOOM_DELAY);
@@ -35,8 +40,10 @@ export default class GameStreamer extends PureComponent {
 
 	render() {
 		const { rom: propsRom } = this.props;
-		const { rom: stateRom } = this.state;
+		const { rom: stateRom, integrationId } = this.state;
 		const rom = propsRom || stateRom;
+
+		const Integration = integrations.get(integrationId);
 
 		return (
 			<div
@@ -72,11 +79,7 @@ export default class GameStreamer extends PureComponent {
 						</span>
 					</div>
 
-					{/* <ProgressBar
-						percentage={0}
-						barFillColor="#3398dc"
-						style={{ marginTop: 0, width: "50%" }}
-					/> */}
+					<Integration getNEEES={() => this._emulator?.neees} />
 
 					<div className={styles.row}>
 						<Tooltip title={locales.get("using_keyboard")} placement="top">
@@ -134,6 +137,7 @@ export default class GameStreamer extends PureComponent {
 						>
 							<Emulator
 								crt
+								autoSaveAndRestore={integrationId}
 								rom={rom}
 								error={null}
 								settings={{ useHardware: true }}
@@ -203,9 +207,11 @@ export default class GameStreamer extends PureComponent {
 		this._stream.classList.add(style);
 		this._nextZoom = undefined;
 		this._zoomButton.style.opacity = 0;
+		this._zoomButton.style.pointerEvents = "none";
 		setTimeout(() => {
 			this._nextZoom = next;
 			this._zoomButton.style.opacity = 1;
+			this._zoomButton.style.pointerEvents = "auto";
 		}, delay);
 	}
 

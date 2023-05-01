@@ -110,7 +110,7 @@ export default {
 	stack: "Pila",
 	step_forward: "Avanzar",
 	step_reset: "Reiniciar",
-	streaming_video: "Transmitiendo video",
+	streaming_video: "Recibiendo transmisión de video",
 	testing: "Probando: ",
 	tests_success: "🎉  Todas las pruebas pasaron.",
 	tests_success_continue:

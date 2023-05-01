@@ -18,6 +18,7 @@
 	height: 4px;
 	border-radius: 3px;
 	animation: progress 1s;
+	transition: width 1s;
 }
 
 @keyframes progress {
