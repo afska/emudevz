@@ -14,10 +14,10 @@ export default class TV extends PureComponent {
 	state = { content: null, type: "media", _error: null };
 
 	async initialize(args, level) {
+		this._level = level;
+
 		if (args.type != null)
 			this.setState({ content: args.content, type: args.type, _error: null });
-
-		this._level = level;
 	}
 
 	load(fileName, type = "media", bucket = "media") {
@@ -105,6 +105,7 @@ export default class TV extends PureComponent {
 			case "stream": {
 				return (
 					<GameStreamer
+						id={this._level.id}
 						rom={content}
 						ref={(ref) => {
 							this.stream = ref;

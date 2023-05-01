@@ -39,7 +39,7 @@ export default class GameStreamer extends PureComponent {
 	}
 
 	render() {
-		const { rom: propsRom } = this.props;
+		const { id, rom: propsRom } = this.props;
 		const { rom: stateRom, integrationId } = this.state;
 		const rom = propsRom || stateRom;
 
@@ -137,7 +137,7 @@ export default class GameStreamer extends PureComponent {
 						>
 							<Emulator
 								crt
-								autoSaveAndRestore={integrationId}
+								autoSaveAndRestore={id}
 								rom={rom}
 								error={null}
 								settings={{ useHardware: true }}

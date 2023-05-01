@@ -1,5 +1,9 @@
 import { push, replace } from "connected-react-router";
 import filesystem from "../filesystem";
+import {
+	SAVESTATE_KEY_PREFIX,
+	SAVESTATE_RESET_COMMAND,
+} from "../gui/components/emulator/Emulator";
 import { analytics } from "../utils";
 
 const KEY = "level";
@@ -62,10 +66,15 @@ export default {
 				_dispatch_(push("/"));
 			},
 			resetProgress(__, _state_) {
+				const state = _state_[KEY];
+
 				_dispatch_.content.setCurrentLevelContent("");
 
+				const saveStateKey = SAVESTATE_KEY_PREFIX + state.instance.id;
+				if (localStorage.getItem(saveStateKey) != null)
+					localStorage.setItem(saveStateKey, SAVESTATE_RESET_COMMAND);
+
 				setTimeout(() => {
-					const state = _state_[KEY];
 					this.goTo(state.instance.id);
 				});
 			},

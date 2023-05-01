@@ -9,7 +9,8 @@ import Speaker from "./runner/Speaker";
 import gamepad from "./runner/gamepad";
 import styles from "./Emulator.module.css";
 
-const SAVESTATE_KEY_PREFIX = "persist:emudevz:savestate-";
+export const SAVESTATE_KEY_PREFIX = "persist:emudevz:savestate-";
+export const SAVESTATE_RESET_COMMAND = "reset";
 
 const NEW_WEB_WORKER = () =>
 	new Worker(new URL("./runner/emuWebWorkerRunner.js", import.meta.url));
@@ -140,6 +141,10 @@ export default class Emulator extends Component {
 
 	_saveProgress = () => {
 		if (!this.saveStateKey) return;
+		if (this._getRawSaveState() === "reset") {
+			this._setSaveState(null);
+			return;
+		}
 
 		if (this.neees != null) this._setSaveState(this.neees.getSaveState());
 	};
@@ -203,10 +208,14 @@ export default class Emulator extends Component {
 		if (!this.saveStateKey) return null;
 
 		try {
-			return JSON.parse(localStorage.getItem(this.saveStateKey));
+			return JSON.parse(this._getRawSaveState());
 		} catch (e) {
 			return null;
 		}
+	}
+
+	_getRawSaveState() {
+		return localStorage.getItem(this.saveStateKey);
 	}
 
 	_setSaveState(saveState) {
