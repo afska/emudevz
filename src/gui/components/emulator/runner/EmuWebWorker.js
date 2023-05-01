@@ -7,9 +7,9 @@ const AUDIO_BUFFER_LIMIT = 4096;
 
 /**
  * An emulator instance running inside a Web Worker.
- * This contains the communication logic between `Emulator` and `webWorkerRunner`.
+ * This contains the communication logic between `Emulator` and `emuWebWorkerRunner`.
  */
-export default class WebWorker {
+export default class EmuWebWorker {
 	constructor(Console, postMessage) {
 		this.$postMessage = postMessage;
 

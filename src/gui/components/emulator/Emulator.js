@@ -4,16 +4,15 @@ import EmulatorBuilder from "../../../EmulatorBuilder";
 import TVNoise from "../TVNoise";
 import CRTScreen from "./CRTScreen";
 import Screen from "./Screen";
+import EmuWebWorker from "./runner/EmuWebWorker";
 import Speaker from "./runner/Speaker";
-import WebWorker from "./runner/WebWorker";
 import gamepad from "./runner/gamepad";
 import styles from "./Emulator.module.css";
 
 const NEW_WEB_WORKER = () =>
-	new Worker(new URL("./runner/webWorkerRunner.js", import.meta.url));
+	new Worker(new URL("./runner/emuWebWorkerRunner.js", import.meta.url));
 
-// Web Workers are faster, but hard to debug. When disabled, a mock is used.
-const USE_WEB_WORKER = false;
+const USE_WEB_WORKER = false; // DISABLED: Web Workers are faster, but harder to debug
 const KEY_MAP = {
 	" ": "BUTTON_A",
 	d: "BUTTON_B",
@@ -28,7 +27,7 @@ const KEY_MAP = {
 const STATE_POLL_INTERVAL = 10;
 const SAVESTATE_KEY = "emudevz-savestate";
 
-let webWorker = null;
+let emuWebWorker = null;
 
 export default class Emulator extends Component {
 	render() {
@@ -61,13 +60,18 @@ export default class Emulator extends Component {
 		);
 	}
 
+	get neees() {
+		return emuWebWorker?.nes;
+	}
+
 	sendState = () => {
 		const gamepadInput = gamepad.getInput();
 		const input = gamepadInput || this.keyboardInput;
 
 		this.props.onInputType(gamepadInput ? "gamepad" : "keyboard");
 
-		if (webWorker) webWorker.postMessage([...input, this.speaker.bufferSize]);
+		if (emuWebWorker)
+			emuWebWorker.postMessage([...input, this.speaker.bufferSize]);
 	};
 
 	setFps = (fps) => {
@@ -100,9 +104,9 @@ export default class Emulator extends Component {
 		if (this.speaker) this.speaker.stop();
 		this.speaker = null;
 
-		if (webWorker) {
-			webWorker.terminate();
-			webWorker = null;
+		if (emuWebWorker) {
+			emuWebWorker.terminate();
+			emuWebWorker = null;
 		}
 
 		this.setFps(0);
@@ -148,8 +152,8 @@ export default class Emulator extends Component {
 
 		const bytes = new Uint8Array(rom);
 
-		webWorker = !USE_WEB_WORKER
-			? new WebWorker(
+		emuWebWorker = !USE_WEB_WORKER
+			? new EmuWebWorker(
 					Console,
 					(data) => this.onWorkerMessage({ data }),
 					this.speaker.writeSample,
@@ -157,16 +161,16 @@ export default class Emulator extends Component {
 			  )
 			: NEW_WEB_WORKER();
 
-		webWorker.onmessage = this.onWorkerMessage;
+		emuWebWorker.onmessage = this.onWorkerMessage;
 
-		webWorker.postMessage(bytes);
-		if (webWorker == null) return;
+		emuWebWorker.postMessage(bytes);
+		if (emuWebWorker == null) return;
 
-		webWorker.postMessage({
+		emuWebWorker.postMessage({
 			id: "saveState",
 			saveState: this._getSaveState(),
 		});
-		if (webWorker == null) return;
+		if (emuWebWorker == null) return;
 
 		this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
 		window.addEventListener("keydown", this._onKeyDown);

@@ -72,11 +72,11 @@ export default class GameStreamer extends PureComponent {
 						</span>
 					</div>
 
-					<ProgressBar
+					{/* <ProgressBar
 						percentage={0}
 						barFillColor="#3398dc"
 						style={{ marginTop: 0, width: "50%" }}
-					/>
+					/> */}
 
 					<div className={styles.row}>
 						<Tooltip title={locales.get("using_keyboard")} placement="top">
