@@ -57,7 +57,7 @@ finish:
     try { filesystem.mkdir(directory); } catch (e) {}
 
     ["Bobl.neees", "Spacegulls.neees", "Wolfling.neees"].forEach((file) => {
-      filesystem.write(`${directory}/${file}`, level.bin[file]);
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
     });
   messages:
   - AWESOME!

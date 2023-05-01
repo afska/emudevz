@@ -139,6 +139,8 @@ export default class Emulator extends Component {
 	}
 
 	_saveProgress = () => {
+		if (!this.saveStateKey) return;
+
 		if (this.neees != null) this._setSaveState(this.neees.getSaveState());
 	};
 
