@@ -7,14 +7,22 @@ const STYLE = {
 };
 
 export default {
-	success(message) {
-		toast.success(message, {
+	normal(message, options = {}) {
+		toast(message, {
 			style: STYLE,
+			...options,
 		});
 	},
-	error(message) {
+	success(message, options = {}) {
+		toast.success(message, {
+			style: STYLE,
+			...options,
+		});
+	},
+	error(message, options = {}) {
 		toast.error(message, {
 			style: STYLE,
+			...options,
 		});
 	},
 };

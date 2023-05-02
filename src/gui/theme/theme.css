@@ -199,3 +199,8 @@ body {
 .toaster-wrapper > div:first-child {
 	display: flex !important;
 }
+
+.toast-link:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}

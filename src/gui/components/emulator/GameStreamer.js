@@ -143,7 +143,8 @@ export default class GameStreamer extends PureComponent {
 								settings={{ useHardware: true }}
 								volume={this._volume}
 								onError={(err) => {
-									throw err;
+									console.error(err);
+									alert("💥💥💥💥💥");
 								}}
 								onInputType={this._setInputType}
 								onFps={() => {}}

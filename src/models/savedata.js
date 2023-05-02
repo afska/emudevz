@@ -34,6 +34,7 @@ const INITIAL_STATE = () => ({
 		useConsole: false,
 		useMappers: false,
 	},
+	unlockedLetsPlayLevels: [],
 });
 
 export default {
@@ -80,6 +81,15 @@ export default {
 		},
 		setUnlockedUnits(state, unlockedUnits) {
 			return { ...state, unlockedUnits };
+		},
+		unlockLetsPlayLevel(state, letsPlayLevelId) {
+			return {
+				...state,
+				unlockedLetsPlayLevels: [
+					...state.unlockedLetsPlayLevels,
+					letsPlayLevelId,
+				],
+			};
 		},
 		_setKey(state, { key, value }) {
 			return { ...state, [key]: value };
