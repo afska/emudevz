@@ -39,7 +39,8 @@ class ProgressList extends PureComponent {
 										: book.isUnlocked(levelDefinition.id)
 										? styles.unlocked
 										: styles.locked,
-									levelDefinition.id === selectedLevelId && styles.selected
+									levelDefinition.id === selectedLevelId && styles.selected,
+									levelDefinition.unlocksGame && styles.unlocksGame
 								)}
 							/>
 						</Tooltip>

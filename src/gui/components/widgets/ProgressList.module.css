@@ -45,3 +45,9 @@
 .highlight {
 	background-color: #27afd7;
 }
+
+.unlocksGame:before {
+	content: "👾" !important;
+	position: relative;
+	top: -5px;
+}
