@@ -5,6 +5,7 @@ import filesystem, { fuzzy } from "../../../filesystem";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import LsCommand from "../../../terminal/commands/fs/LsCommand";
+import extensions from "../../extensions";
 import styles from "./FileSearch.module.css";
 
 const DIRECTORY = "";
@@ -63,6 +64,8 @@ export default function FileSearch(props) {
 				{matches.length > 0 && (
 					<div className={styles.results}>
 						{matches.map(({ file, groups }, i) => {
+							const icon = extensions.getTabIcon(file.originalFilePath) + " ";
+
 							return (
 								<div
 									key={i}
@@ -76,6 +79,7 @@ export default function FileSearch(props) {
 										_onSelect(file);
 									}}
 								>
+									<span>{icon}</span>
 									{_renderGroups(groups.file)}
 									{_renderGroups(groups.dir, true)}
 								</div>

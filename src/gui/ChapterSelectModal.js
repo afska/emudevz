@@ -4,6 +4,7 @@ import Book from "../level/Book";
 import locales from "../locales";
 import { BOOK_PATH } from "./PlayScreen";
 import Chapter from "./components/widgets/Chapter";
+import LetsPlayChapter from "./components/widgets/LetsPlayChapter";
 import styles from "./ChapterSelectModal.module.css";
 
 const STATUS_OK = 200;
@@ -31,6 +32,15 @@ export default class ChapterSelectModal extends PureComponent {
 				</Modal.Header>
 				<Modal.Body>
 					{!book && <div>{locales.get("loading")}</div>}
+					{book && (
+						<div className={styles.floating}>
+							<LetsPlayChapter
+								book={book}
+								chapter={book.getChapter(-1)}
+								tabIndex={-1}
+							/>
+						</div>
+					)}
 					{book && (
 						<div className={styles.levelMap}>
 							<Chapter book={book} chapter={book.getChapter(0)} mini />

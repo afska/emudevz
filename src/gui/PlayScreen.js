@@ -48,13 +48,14 @@ class PlayScreen extends PureComponent {
 
 		if (error) return <div className={styles.message}>❌ {error}</div>;
 
-		if (!book || !level || !this.currentChapter)
+		const chapter = this.currentChapter;
+		if (!book || !level || !chapter)
 			return <div className={styles.message}>⌛ {locales.get("loading")}</div>;
 
 		return (
 			<div className={styles.container}>
-				<Toaster containerClassName="toaster-wrapper" />
-				<LevelScreen chapter={this.currentChapter} level={level} />
+				{!chapter.isSpecial && <Toaster containerClassName="toaster-wrapper" />}
+				<LevelScreen chapter={chapter} level={level} />
 			</div>
 		);
 	}

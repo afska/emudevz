@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import TVNoise from "./TVNoise";
 import EmulatorRunner from "./emulator/EmulatorRunner";
+import GameStreamer from "./emulator/GameStreamer";
 import MarkdownView from "./widgets/MarkdownView";
 import PanZoom from "./widgets/PanZoom";
 import styles from "./TV.module.css";
@@ -13,27 +14,28 @@ export default class TV extends PureComponent {
 	state = { content: null, type: "media", _error: null };
 
 	async initialize(args, level) {
+		this._level = level;
+
 		if (args.type != null)
 			this.setState({ content: args.content, type: args.type, _error: null });
-
-		this._level = level;
 	}
 
-	load(fileName) {
-		const content = this._level?.media[fileName];
-		if (!content) throw new Error(`Media not found: ${fileName}`);
-
-		this.setState({ content, type: "media" });
+	load(fileName, type = "media", bucket = "media") {
+		const content = (fileName && this._level?.[bucket]?.[fileName]) || null;
+		this.setState({ content, type });
 	}
 
 	render() {
 		const { style, onKeyDown } = this.props;
 
-		const isEmulator = this.state.type === "rom";
+		const id =
+			this.state.type === "rom" || this.state.type === "stream"
+				? "emulator"
+				: undefined;
 
 		return (
 			<div
-				id={isEmulator ? "emulator" : undefined}
+				id={id}
 				className={styles.tvContainer}
 				tabIndex={0}
 				ref={(ref) => {
@@ -96,6 +98,17 @@ export default class TV extends PureComponent {
 							this.setState({ content: null, _error: null }, () => {
 								this.setState({ content });
 							});
+						}}
+					/>
+				);
+			}
+			case "stream": {
+				return (
+					<GameStreamer
+						id={this._level.id}
+						rom={content}
+						ref={(ref) => {
+							this.stream = ref;
 						}}
 					/>
 				);

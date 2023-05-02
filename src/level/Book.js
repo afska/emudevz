@@ -47,6 +47,8 @@ export default class Book {
 			return true;
 		} else if (chapter.number > maxChapterNumber) {
 			return false;
+		} else if (chapter.isSpecial) {
+			return this._savedata.unlockedLetsPlayLevels.includes(level.id);
 		} else {
 			const nextPendingLevel = this.nextPendingLevelOfChapter(chapter.id);
 			if (!nextPendingLevel) return true;
@@ -57,7 +59,11 @@ export default class Book {
 	nextPendingLevelOfChapter(chapterId) {
 		const chapter = this.getChapter(chapterId);
 		if (!chapter) return null;
-		const pendingLevel = chapter.levels.find((it) => !this.isFinished(it.id));
+		const pendingLevel = chapter.levels.find(
+			(it) =>
+				(!chapter.isSpecial || this.isUnlocked(it.id)) &&
+				!this.isFinished(it.id)
+		);
 		return pendingLevel || null;
 	}
 

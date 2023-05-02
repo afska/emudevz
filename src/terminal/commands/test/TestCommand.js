@@ -35,7 +35,9 @@ export default class TestCommand extends Command {
 			} catch (e) {}
 
 			const overallResult = { allGreen: true, passCount: 0, failCount: 0 };
-			const hasMultipleTests = _.keys(level.tests).length > 1;
+			const hasMultipleTestFiles =
+				_.keys(level.tests).length > 1 && !this._targetId;
+			const winOnTestPass = !level.memory.chat.winOnEnd;
 
 			let testFiles = _.sortBy(_.keys(level.tests));
 			if (inherit != null) testFiles = inherit;
@@ -44,17 +46,26 @@ export default class TestCommand extends Command {
 				testFiles = [..._.without(testFiles, mainTestFile), mainTestFile];
 			else mainTestFile = null;
 
-			for (let fileName of testFiles) {
+			const testDefinitions = await this._getTestDefinitions(
+				level,
+				$,
+				testFiles
+			);
+
+			for (let testDefinition of testDefinitions) {
+				const fileName = testDefinition.fileName;
 				const isMainTestFile =
-					mainTestFile == null || fileName === mainTestFile;
+					!hasMultipleTestFiles ||
+					mainTestFile == null ||
+					fileName === mainTestFile;
 				const test = level.tests[fileName];
 
-				if (hasMultipleTests)
+				if (hasMultipleTestFiles)
 					await this._terminal.writeln(
 						locales.get("testing") + theme.MESSAGE(fileName) + "..."
 					);
 
-				const results = await framework.test(test, $);
+				const results = await framework.test(test, testDefinition);
 
 				for (let result of results) {
 					if (isMainTestFile || !result.passed)
@@ -78,16 +89,18 @@ export default class TestCommand extends Command {
 					);
 			}
 
-			analytics.track("test_results", {
-				levelId: level.id,
-				levelName: level.name.en,
-				passed: overallResult.allGreen,
-				passCount: overallResult.passCount,
-				failCount: overallResult.failCount,
-			});
+			if (!this._targetId) {
+				analytics.track("test_results", {
+					levelId: level.id,
+					levelName: level.name.en,
+					passed: overallResult.allGreen,
+					passCount: overallResult.passCount,
+					failCount: overallResult.failCount,
+				});
+			}
 
 			if (overallResult.allGreen) {
-				if (!level.memory.chat.winOnEnd) {
+				if (winOnTestPass && !this._targetId) {
 					await this._terminal.writeln(locales.get("tests_success_continue"));
 					await this._terminal.waitForKey();
 					level.advance();
@@ -119,6 +132,33 @@ export default class TestCommand extends Command {
 		this._onClose();
 
 		return true;
+	}
+
+	async _getTestDefinitions(level, $, testFiles) {
+		const testDefinitions = [];
+
+		const idProvider = { id: 0 };
+		for (let fileName of testFiles) {
+			const test = level.tests[fileName];
+			let { _before_, _after_, _tests_ } = await framework.getTestDefinition(
+				test,
+				$,
+				idProvider
+			);
+
+			if (this._targetId)
+				_tests_ = _tests_.filter((it) => it.id === this._targetId);
+
+			if (!_.isEmpty(_tests_))
+				testDefinitions.push({
+					fileName,
+					_before_,
+					_after_,
+					_tests_,
+				});
+		}
+
+		return testDefinitions;
 	}
 
 	_setUpHyperlinkProvider() {
@@ -155,7 +195,7 @@ export default class TestCommand extends Command {
 			overallResult.failCount++;
 		} else overallResult.passCount++;
 
-		await this._terminal.writehlln(`${emoji} ${result.name}`);
+		await this._terminal.writehlln(`${emoji} (~${result.id}~) ${result.name}`);
 
 		if (!result.passed) {
 			if (this._isVerbose && result.fullStack?.location) {
@@ -196,6 +236,13 @@ export default class TestCommand extends Command {
 		}
 
 		await this._terminal.newline();
+	}
+
+	get _targetId() {
+		const argument = parseInt(
+			this._args.filter((it) => it.toLowerCase() !== "-v")[0]
+		);
+		return _.isFinite(argument) ? argument : null;
 	}
 
 	get _isVerbose() {

@@ -7,6 +7,7 @@ import _ from "lodash";
 import filesystem, { Drive } from "../../filesystem";
 import locales from "../../locales";
 import { bus } from "../../utils";
+import extensions from "../extensions";
 import CodeEditor from "./CodeEditor";
 import TV from "./TV";
 import FileSearch from "./widgets/FileSearch";
@@ -16,16 +17,6 @@ import Tab from "./widgets/Tab";
 import styles from "./MultiFile.module.css";
 
 const DELTA_SCROLL = 150;
-
-const EXTENSIONS = {
-	".js": [CodeEditor, { language: "javascript" }],
-	".asm": [CodeEditor, { language: "asm" }],
-	".webp": [TV, { type: "media" }],
-	".png": [TV, { type: "media" }],
-	".md": [TV, { type: "markdown" }],
-	".neees": [TV, { type: "rom", binary: true }],
-	".nes": [TV, { type: "rom", binary: true }],
-};
 
 class MultiFile extends PureComponent {
 	async initialize(args, level, layout) {
@@ -65,7 +56,7 @@ class MultiFile extends PureComponent {
 				<FileSearch
 					isSearching={isSearching}
 					onSelect={(filePath) => {
-						const [Component, customArgs] = this._getOptions(filePath);
+						const [Component, customArgs] = extensions.getOptions(filePath);
 
 						if (Component === TV && customArgs.type === "rom") {
 							this._openPinnedFile(filePath, Component, customArgs);
@@ -121,7 +112,7 @@ class MultiFile extends PureComponent {
 					</div>
 					<div className={styles.content}>
 						{this.props.openFiles.map((it, i) => {
-							const [Component, customArgs] = this._getOptions(it);
+							const [Component, customArgs] = extensions.getOptions(it);
 							return this._renderTabbedFile(it, i, Component, customArgs);
 						})}
 						{_.isEmpty(this.props.openFiles) && (
@@ -148,14 +139,9 @@ class MultiFile extends PureComponent {
 		return filePath ? Drive.isReadOnlyDir(parsedPath.dir) : true;
 	}
 
-	_getOptions(filePath) {
-		const extension = $path.parse(filePath).ext.toLowerCase();
-		return EXTENSIONS[extension] ?? [CodeEditor, { language: "plaintext" }];
-	}
-
 	_renderTab(filePath, isDragging) {
 		const isReadOnly = this._isReadOnly(filePath);
-		const [Component, customArgs] = this._getOptions(filePath);
+		const [Component, customArgs] = extensions.getOptions(filePath);
 
 		return (
 			<Tab

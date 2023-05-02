@@ -65,6 +65,22 @@
 	padding-right: 32px;
 }
 
+.boss {
+	animation: monster 1s infinite;
+}
+
+@keyframes monster {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(3);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
 .debugger {
 	position: absolute;
 	bottom: 28px;

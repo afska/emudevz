@@ -1,0 +1,28 @@
+.progress {
+	width: 100%;
+	margin-top: 8px;
+}
+
+.bar {
+	width: 100%;
+	background-color: #ecf0f1;
+	border-width: 1px;
+	border-color: white;
+	border-style: solid;
+	border-radius: 2px;
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.barFill {
+	display: block;
+	height: 4px;
+	border-radius: 3px;
+	animation: progress 1s;
+	transition: width 1s;
+}
+
+@keyframes progress {
+	0% {
+		width: 0;
+	}
+}

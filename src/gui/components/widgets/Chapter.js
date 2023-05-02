@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import locales from "../../../locales";
 import Button from "./Button";
+import ProgressBar from "./ProgressBar";
 import Tooltip from "./Tooltip";
 import styles from "./Chapter.module.css";
 
@@ -62,14 +63,7 @@ class Chapter extends PureComponent {
 								🚧 {locales.get("coming_soon")}
 							</div>
 						) : isUnlocked ? (
-							<div className={styles.progress}>
-								<div className={styles.bar}>
-									<span
-										className={styles.barFill}
-										style={{ width: percentage + "%" }}
-									/>
-								</div>
-							</div>
+							<ProgressBar percentage={percentage} />
 						) : (
 							<div>🔒</div>
 						)}

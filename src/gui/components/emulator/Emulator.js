@@ -1,17 +1,21 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
+import NES from "nes-emu";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import TVNoise from "../TVNoise";
+import CRTScreen from "./CRTScreen";
 import Screen from "./Screen";
+import EmuWebWorker from "./runner/EmuWebWorker";
 import Speaker from "./runner/Speaker";
-import WebWorker from "./runner/WebWorker";
 import gamepad from "./runner/gamepad";
 import styles from "./Emulator.module.css";
 
-const NEW_WEB_WORKER = () =>
-	new Worker(new URL("./runner/webWorkerRunner.js", import.meta.url));
+export const SAVESTATE_KEY_PREFIX = "persist:emudevz:savestate-";
+export const SAVESTATE_RESET_COMMAND = "reset";
 
-// Web Workers are faster, but hard to debug. When disabled, a mock is used.
-const USE_WEB_WORKER = false;
+const NEW_WEB_WORKER = () =>
+	new Worker(new URL("./runner/emuWebWorkerRunner.js", import.meta.url));
+
+const USE_WEB_WORKER = false; // DISABLED
 const KEY_MAP = {
 	" ": "BUTTON_A",
 	d: "BUTTON_B",
@@ -24,13 +28,15 @@ const KEY_MAP = {
 };
 
 const STATE_POLL_INTERVAL = 10;
-const SAVESTATE_KEY = "emudevz-savestate";
 
-let webWorker = null;
+let emuWebWorker = null;
 
-export default class Emulator extends PureComponent {
+export default class Emulator extends Component {
 	render() {
-		const { rom, error } = this.props;
+		const { rom, error, crt = false } = this.props;
+
+		const ScreenComponent = crt ? CRTScreen : Screen;
+		const innerClassName = crt ? styles.crtNoise : styles.box;
 
 		return (
 			<div className={styles.content}>
@@ -43,17 +49,27 @@ export default class Emulator extends PureComponent {
 						/>
 					</div>
 				) : !!rom ? (
-					<Screen
-						className={styles.box}
+					<ScreenComponent
+						className={innerClassName}
 						ref={(screen) => {
 							if (screen) this._initialize(screen);
 						}}
 					/>
 				) : (
-					<TVNoise className={styles.box} />
+					<TVNoise className={innerClassName} />
 				)}
 			</div>
 		);
+	}
+
+	get neees() {
+		return emuWebWorker?.nes;
+	}
+
+	get saveStateKey() {
+		const { autoSaveAndRestore } = this.props;
+		if (!autoSaveAndRestore) return null;
+		return SAVESTATE_KEY_PREFIX + autoSaveAndRestore;
 	}
 
 	sendState = () => {
@@ -62,7 +78,8 @@ export default class Emulator extends PureComponent {
 
 		this.props.onInputType(gamepadInput ? "gamepad" : "keyboard");
 
-		if (webWorker) webWorker.postMessage([...input, this.speaker.bufferSize]);
+		if (emuWebWorker)
+			emuWebWorker.postMessage([...input, this.speaker.bufferSize]);
 	};
 
 	setFps = (fps) => {
@@ -95,9 +112,9 @@ export default class Emulator extends PureComponent {
 		if (this.speaker) this.speaker.stop();
 		this.speaker = null;
 
-		if (webWorker) {
-			webWorker.terminate();
-			webWorker = null;
+		if (emuWebWorker) {
+			emuWebWorker.terminate();
+			emuWebWorker = null;
 		}
 
 		this.setFps(0);
@@ -106,13 +123,36 @@ export default class Emulator extends PureComponent {
 		window.removeEventListener("keyup", this._onKeyUp);
 	}
 
-	componentDidUpdate() {
+	shouldComponentUpdate() {
 		this.stop();
+		return true;
+	}
+
+	componentDidMount() {
+		window.addEventListener("beforeunload", this._saveProgress);
 	}
 
 	componentWillUnmount() {
+		this._saveProgress();
+		window.removeEventListener("beforeunload", this._saveProgress);
+
 		this.stop();
 	}
+
+	_saveProgress = () => {
+		if (!this.saveStateKey) return;
+		if (this._resetProgressIfNeeded()) return;
+
+		if (this.neees != null) this._setSaveState(this.neees.getSaveState());
+	};
+
+	_resetProgressIfNeeded = () => {
+		if (this._getRawSaveState() === SAVESTATE_RESET_COMMAND) {
+			this._setSaveState(null);
+			return true;
+		}
+		return false;
+	};
 
 	async _initialize(screen) {
 		const { rom, settings, volume } = this.props;
@@ -121,13 +161,15 @@ export default class Emulator extends PureComponent {
 
 		let Console;
 		try {
-			Console = await new EmulatorBuilder()
-				.addUserCartridge(settings.useCartridge)
-				.addUserCPU(settings.useCPU)
-				.addUserPPU(settings.usePPU)
-				.addUserAPU(settings.useAPU)
-				.addUserController(settings.useController)
-				.build(true);
+			Console = settings.useHardware
+				? NES
+				: await new EmulatorBuilder()
+						.addUserCartridge(settings.useCartridge)
+						.addUserCPU(settings.useCPU)
+						.addUserPPU(settings.usePPU)
+						.addUserAPU(settings.useAPU)
+						.addUserController(settings.useController)
+						.build(true);
 		} catch (e) {
 			this._onError(e);
 			return;
@@ -140,8 +182,8 @@ export default class Emulator extends PureComponent {
 
 		const bytes = new Uint8Array(rom);
 
-		webWorker = !USE_WEB_WORKER
-			? new WebWorker(
+		emuWebWorker = !USE_WEB_WORKER
+			? new EmuWebWorker(
 					Console,
 					(data) => this.onWorkerMessage({ data }),
 					this.speaker.writeSample,
@@ -149,16 +191,18 @@ export default class Emulator extends PureComponent {
 			  )
 			: NEW_WEB_WORKER();
 
-		webWorker.onmessage = this.onWorkerMessage;
+		emuWebWorker.onmessage = this.onWorkerMessage;
 
-		webWorker.postMessage(bytes);
-		if (webWorker == null) return;
+		emuWebWorker.postMessage(bytes);
+		if (emuWebWorker == null) return;
 
-		webWorker.postMessage({
+		const saveState = this._getSaveState();
+		emuWebWorker.postMessage({
 			id: "saveState",
-			saveState: this._getSaveState(),
+			saveState,
 		});
-		if (webWorker == null) return;
+		if (emuWebWorker == null) return;
+		if (saveState != null) this.neees.setSaveState(saveState);
 
 		this.keyboardInput = [gamepad.createInput(), gamepad.createInput()];
 		window.addEventListener("keydown", this._onKeyDown);
@@ -166,15 +210,24 @@ export default class Emulator extends PureComponent {
 	}
 
 	_getSaveState() {
+		if (!this.saveStateKey) return null;
+		if (this._resetProgressIfNeeded()) return null;
+
 		try {
-			return JSON.parse(localStorage.getItem(SAVESTATE_KEY));
+			return JSON.parse(this._getRawSaveState());
 		} catch (e) {
 			return null;
 		}
 	}
 
+	_getRawSaveState() {
+		return localStorage.getItem(this.saveStateKey);
+	}
+
 	_setSaveState(saveState) {
-		localStorage.setItem(SAVESTATE_KEY, JSON.stringify(saveState));
+		if (!this.saveStateKey) return;
+
+		localStorage.setItem(this.saveStateKey, JSON.stringify(saveState));
 	}
 
 	_onError(e) {

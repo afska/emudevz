@@ -9,7 +9,40 @@ import _chai_ from "./chai";
 import testContext from "./context";
 
 export default {
-	async test(_code_, $ = {}) {
+	async test(_code_, _testDefinition_) {
+		const { _before_, _after_, _tests_ } = _testDefinition_;
+
+		let results = [];
+		for (let { id, name, test } of _tests_) {
+			try {
+				if (_before_) await _before_();
+				await test();
+				if (_after_) await _after_();
+				results.push({ id, name, passed: true });
+			} catch (e) {
+				let testCode = test.toString();
+				let testErrorLine =
+					e.stack != null &&
+					!e?.message?.startsWith("🐒") &&
+					e.stack.match(/<anonymous>:(\d+):\d+/);
+				if (testErrorLine != null)
+					testCode = this._markExactErrorLine(testErrorLine, _code_, testCode);
+
+				results.push({
+					id,
+					name,
+					passed: false,
+					testCode,
+					reason: e?.message || e?.toString() || "?",
+					fullStack: testContext.javascript.buildStack(e),
+				});
+			}
+		}
+
+		return _.orderBy(results, "passed", "desc");
+	},
+
+	async getTestDefinition(_code_, $ = {}, _idProvider_ = { id: 0 }) {
 		let _before_ = null;
 		let _after_ = null;
 		const _tests_ = [];
@@ -34,6 +67,7 @@ export default {
 		// eslint-disable-next-line
 		const it = (name, test) => {
 			const testDefinition = {
+				id: ++_idProvider_.id,
 				name,
 				test,
 			};
@@ -64,33 +98,7 @@ export default {
 
 		eval(_code_);
 
-		let results = [];
-		for (let { name, test } of _tests_) {
-			try {
-				if (_before_) await _before_();
-				await test();
-				if (_after_) await _after_();
-				results.push({ name, passed: true });
-			} catch (e) {
-				let testCode = test.toString();
-				let testErrorLine =
-					e.stack != null &&
-					!e?.message?.startsWith("🐒") &&
-					e.stack.match(/<anonymous>:(\d+):\d+/);
-				if (testErrorLine != null)
-					testCode = this._markExactErrorLine(testErrorLine, _code_, testCode);
-
-				results.push({
-					name,
-					passed: false,
-					testCode,
-					reason: e?.message || e?.toString() || "?",
-					fullStack: testContext.javascript.buildStack(e),
-				});
-			}
-		}
-
-		return _.orderBy(results, "passed", "desc");
+		return { _before_, _after_, _tests_ };
 	},
 
 	_markExactErrorLine(testErrorLine, _code_, testCode) {

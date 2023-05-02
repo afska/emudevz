@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import DiffViewer, { DiffMethod } from "react-diff-viewer";
 import { FaFastForward } from "react-icons/fa";
+import classNames from "classnames";
 import EmulatorBuilder from "../../EmulatorBuilder";
 import filesystem from "../../filesystem";
 import Level from "../../level/Level";
@@ -11,8 +12,8 @@ import { NEEESTestLogger } from "../../utils/nes";
 import IconButton from "./widgets/IconButton";
 import styles from "./NEEESTester.module.css";
 
-const NEEESTEST_PATH = "/roms/test/NEEEStest.neees";
-const LOG_PATH = "/roms/test/golden.log";
+const NEEESTEST_PATH = "/roms/_test/NEEEStest.neees";
+const LOG_PATH = "/roms/_test/golden.log";
 const NEWLINE = /\n|\r\n|\r/;
 const ENTRY_POINT = 0xc000;
 const LINES = 6;
@@ -48,8 +49,6 @@ export default class NEEESTester extends PureComponent {
 		} = this.state;
 		if (!_isInitialized) return false;
 
-		const canRun = Level.current.memory.$canRun;
-
 		if (_error || success)
 			return (
 				<div
@@ -74,9 +73,10 @@ export default class NEEESTester extends PureComponent {
 				className={styles.topContainer}
 				tabIndex={0}
 				ref={this._onContainerRef}
+				onKeyDown={this._onKeyDown}
 			>
 				{lastLines.length === 0 && (
-					<div className={styles.message}>
+					<div className={classNames(styles.message, styles.boss)}>
 						<span>👹👹👹</span>
 					</div>
 				)}
@@ -88,7 +88,7 @@ export default class NEEESTester extends PureComponent {
 								Icon={FaFastForward}
 								tooltip={locales.get("find_errors")}
 								onClick={this._onRun}
-								disabled={!canRun}
+								disabled={!this._canRun()}
 								kind="rounded"
 							/>
 						</div>
@@ -159,9 +159,23 @@ export default class NEEESTester extends PureComponent {
 		}
 	};
 
+	_onKeyDown = (e) => {
+		const isAltEnter = e.altKey && e.code === "Enter";
+
+		if (isAltEnter) {
+			if (!this._canRun()) return;
+			this._onRun();
+			return;
+		}
+	};
+
+	_canRun() {
+		return Level.current.memory.$canRun;
+	}
+
 	_onRun = async () => {
-		if (!this._neees) return;
 		if (!(await this._onCode())) return;
+		if (!this._neees) return;
 
 		this.setState({ success: false, lastLines: [], diffLine: 0 });
 

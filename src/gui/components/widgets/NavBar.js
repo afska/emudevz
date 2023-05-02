@@ -48,7 +48,7 @@ class NavBar extends PureComponent {
 		const levelDefinition = book.getLevelDefinitionOf(level.id);
 		const firstLevelDefinition = _.first(chapter.levels);
 		const lastLevelDefinition = _.last(chapter.levels);
-		const canRunEmulator = bus.isListeningTo("pin");
+		const canRunEmulator = bus.isListeningTo("pin") && !chapter.isSpecial;
 
 		return (
 			<div className={styles.navbar}>

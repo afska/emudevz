@@ -199,6 +199,26 @@ it("`PLA`: sets [A] with a value from the stack", () => {
 	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
+it("`PLA`: updates the Zero and Negative flags", () => {
+	const cpu = newCPU();
+	const instructions = mainModule.default.instructions;
+
+	cpu.stack.push(240);
+	instructions.PLA.run(cpu);
+	cpu.flags.z.should.equalN(false, "z");
+	cpu.flags.n.should.equalN(true, "n");
+
+	cpu.stack.push(0);
+	instructions.PLA.run(cpu);
+	cpu.flags.z.should.equalN(true, "z");
+	cpu.flags.n.should.equalN(false, "n");
+})({
+	locales: {
+		es: "`PLA`: actualiza las banderas Zero y Negative",
+	},
+	use: ({ id }, book) => id >= book.getId("5a.8"),
+});
+
 it("`PLP`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.should.include.key("PLP");
@@ -377,4 +397,63 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 		},
 		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
+
+	if (instruction != "TXS") {
+		it(
+			"`" + instruction + "`: " + `updates the Zero and Negative flags`,
+			() => {
+				const cpu = newCPU();
+				const instructions = mainModule.default.instructions;
+
+				cpu[sourceRegister].setValue(240);
+				instructions[instruction].run(cpu);
+				cpu.flags.z.should.equalN(false, "z");
+				cpu.flags.n.should.equalN(true, "n");
+
+				cpu[sourceRegister].setValue(0);
+				instructions[instruction].run(cpu);
+				cpu.flags.z.should.equalN(true, "z");
+				cpu.flags.n.should.equalN(false, "n");
+			}
+		)({
+			locales: {
+				es:
+					"`" + instruction + "`: " + `actualiza las banderas Zero y Negative`,
+			},
+			use: ({ id }, book) => id >= book.getId("5a.8"),
+		});
+	} else {
+		it(
+			"`" +
+				instruction +
+				"`: " +
+				`does <NOT> update the Zero and Negative flags`,
+			() => {
+				const cpu = newCPU();
+				const instructions = mainModule.default.instructions;
+
+				cpu.flags.z = true;
+				cpu.flags.n = true;
+
+				cpu[sourceRegister].setValue(240);
+				instructions[instruction].run(cpu);
+				cpu.flags.z.should.equalN(true, "z");
+				cpu.flags.n.should.equalN(true, "n");
+
+				cpu[sourceRegister].setValue(0);
+				instructions[instruction].run(cpu);
+				cpu.flags.z.should.equalN(true, "z");
+				cpu.flags.n.should.equalN(true, "n");
+			}
+		)({
+			locales: {
+				es:
+					"`" +
+					instruction +
+					"`: " +
+					`<NO> actualiza las banderas Zero y Negative`,
+			},
+			use: ({ id }, book) => id >= book.getId("5a.8"),
+		});
+	}
 });

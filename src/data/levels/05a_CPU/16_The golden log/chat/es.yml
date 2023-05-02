@@ -13,7 +13,7 @@ main:
   - ejecutaré tu emulador y registraré cada instrucción
   - comparando cada línea con un "golden log"
   run-after-messages: |
-    store.dispatch.savedata.openFile("/roms/test/golden.log");
+    store.dispatch.savedata.openFile("/roms/_test/golden.log");
   responses:
   - ¿qué es un golden log? 🏆 [golden]
 

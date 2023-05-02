@@ -1,0 +1,68 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - let's play a game
+  - it's called 🕊️ 🛰️  ~Spacegulls~
+  - if you complete it, I'll send you all my 🌀  <non-platform> games
+  - in the ~*.neees~ format
+  responses:
+  - how are we gonna play? our emulator is not ready yet 😕 [notready]
+
+notready:
+  messages:
+  - I have a working NEEES, remember? 😉
+  - it's modern age, I can just stream it to you
+  - let's turn on the <video chat>
+  responses:
+  - the VIDEO CHAT?! [videochat]
+
+videochat:
+  run: |
+    {{Right}}.load(null, "stream");
+  messages:
+  - yeah, you see my room there?
+  - it's a bit messy, I know
+  - lemme move the camera a bit closer to the TV 🔍
+  run-after-messages: |
+    $.goTo("zoom");
+  responses: []
+
+zoom:
+  run: |
+    {{Right}}.stream.zoom();
+  messages:
+  - ✨  I've also patched the controller port so your inputs work on my real NEEES
+  responses:
+  - so, can we play now? 👾 [play]
+
+play:
+  run: |
+    {{Right}}.stream.setIntegration("Spacegulls");
+    {{Right}}.load("Spacegulls.neees", "stream", "bin");
+  messages:
+  - yeah
+  - here's the game
+  - you can play using either your ⌨️  keyboard or a 🎮  gamepad
+  - 💾  your progress will be saved when you leave this level
+  - I'll be here, watching 👀
+  events:
+  - spacegulls-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}/non-platform`
+    try { filesystem.mkdir(directory); } catch (e) {}
+
+    ["Bobl.neees", "Spacegulls.neees", "Wolfling.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+    });
+  messages:
+  - AWESOME!
+  - now you are a ~hero~
+  - as I promised, I put my ROMs in your 📁  ~/roms~ directory
+  - (if you don't know how to use files, you'll learn soon!)
+  responses:
+  - ▶️  continue [end]

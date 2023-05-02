@@ -207,8 +207,8 @@ it("`BIT`: argument == 'value'", () => {
 			cpu.a.setValue(value1);
 			instructions[instruction].run(cpu, value2);
 			cpu.a.getValue().should.equalN(result, "getValue()");
-			cpu.flags.z = zero;
-			cpu.flags.n = negative;
+			cpu.flags.z.should.equalN(zero, "z");
+			cpu.flags.n.should.equalN(negative, "n");
 		}
 	)({
 		locales: {
