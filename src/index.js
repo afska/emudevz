@@ -38,8 +38,12 @@ document.onkeydown = (e) => {
 	music.start(); // run music!
 
 	// Disable Print shortcut
-	const isCtrlP = e.ctrlKey && e.code === "KeyP";
+	const isCtrlP = (e.ctrlKey || e.metaKey) && e.code === "KeyP";
 	if (isCtrlP) e.preventDefault();
+
+	// Disable Save shortcut
+	const isCtrlS = (e.ctrlKey || e.metaKey) && e.code === "KeyS";
+	if (isCtrlS) e.preventDefault();
 
 	// Disable Back/Forward shortcuts
 	const isBackOrForward =
