@@ -59,7 +59,7 @@ cycle:
 iflag:
   messages:
   - it's the "Interrupt Disable" flag, and as the name says, it disables interrupts
-  - the systems sets ~I=1~ so interrupt handlers don't get... hmm... interrupted 😅
+  - the system sets ~I=1~ so interrupt handlers don't get... hmm... interrupted 😅
   - |-
     the thing is... only <IRQ> events can be disabled
     <RESET> can't be ignored for obvious reasons
