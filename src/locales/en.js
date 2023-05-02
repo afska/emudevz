@@ -115,7 +115,7 @@ export default {
 	tests_failure: "💥  Some tests are broken. Fix your code.",
 	tests_errors_found: "🚫  Errors found.",
 	tests_warnings_found: "⚠️  Warnings found.",
-	tests_more: "💬  For more info, run `test -v`",
+	tests_more: "💬  For more info, run `test -v [testNumber]`",
 	using_bugged_emulator: "Using BrokenNEEES ❌",
 	using_default_emulator: "Using BrokenNEEES ⚠️",
 	using_gamepad: "Using gamepad",
