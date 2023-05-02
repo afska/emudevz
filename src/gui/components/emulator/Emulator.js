@@ -141,12 +141,17 @@ export default class Emulator extends Component {
 
 	_saveProgress = () => {
 		if (!this.saveStateKey) return;
-		if (this._getRawSaveState() === "reset") {
-			this._setSaveState(null);
-			return;
-		}
+		if (this._resetProgressIfNeeded()) return;
 
 		if (this.neees != null) this._setSaveState(this.neees.getSaveState());
+	};
+
+	_resetProgressIfNeeded = () => {
+		if (this._getRawSaveState() === SAVESTATE_RESET_COMMAND) {
+			this._setSaveState(null);
+			return true;
+		}
+		return false;
 	};
 
 	async _initialize(screen) {
@@ -206,6 +211,7 @@ export default class Emulator extends Component {
 
 	_getSaveState() {
 		if (!this.saveStateKey) return null;
+		if (this._resetProgressIfNeeded()) return null;
 
 		try {
 			return JSON.parse(this._getRawSaveState());

@@ -54,6 +54,7 @@ export default {
 	help_shortcuts:
 		"🚀  General:\n  ♐  Cambiar panel activo:\n     `Alt+{DirectionalKey}` (o click del mouse)\n💻  Terminal:\n  🛑  Cerrar app:\n     `Ctrl+C`\n  🕑  Acelerar chat:\n     `Enter`\n  📜  Scrollear terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (o rueda del mouse)\n  📋  Copiar/pegar:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocompletar:\n     `Tab`\n📝  Editor de código:\n  ▶️  Ejecutar código:\n     `Alt+Enter`\n  🔍  Buscar archivo:\n     `Ctrl+P`",
 	hexadecimal: "Hexadecimal",
+	integration_zone: "Zona",
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",

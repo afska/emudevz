@@ -1,20 +1,31 @@
 import React from "react";
+import locales from "../../../../locales";
 import { bus } from "../../../../utils";
 import ProgressBar from "../../widgets/ProgressBar";
+import Tooltip from "../../widgets/Tooltip";
 import Integration from "./Integration";
 
 export default class Spacegulls extends Integration {
-	state = { percentage: 0 };
+	state = { percentage: 0, zoneIndex: 0 };
 
 	render() {
-		const { percentage } = this.state;
+		const { percentage, zoneIndex } = this.state;
 
 		return (
-			<ProgressBar
-				percentage={percentage}
-				barFillColor="#3398dc"
-				style={{ marginTop: 0, width: "50%" }}
-			/>
+			<Tooltip
+				title={`${locales.get("integration_zone")} ${zoneIndex + 1} / ${
+					ZONES.length
+				}`}
+				placement="top"
+			>
+				<div style={{ paddingTop: 8, paddingBottom: 8, width: "50%" }}>
+					<ProgressBar
+						percentage={percentage}
+						barFillColor="#3398dc"
+						style={{ marginTop: 0 }}
+					/>
+				</div>
+			</Tooltip>
 		);
 	}
 
@@ -27,7 +38,9 @@ export default class Spacegulls extends Integration {
 		if (zoneIndex >= 0) {
 			const percentage = (zoneIndex / (ZONES.length - 1)) * 100;
 			if (percentage === 100) bus.emit("spacegulls-end");
-			this.setState({ percentage });
+			this.setState({ percentage, zoneIndex });
+		} else {
+			this.setState({ percentage: 0, zoneIndex: 0 });
 		}
 	};
 }
