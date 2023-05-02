@@ -11,6 +11,8 @@ import bus from "../utils/bus";
 import Book from "./Book";
 import ChatScript from "./chat/ChatScript";
 
+const NEWLINE_REGEXP = /\n|\r\n|\r/;
+
 export default class Level {
 	constructor(id, metadata, chatScripts, { code, tests, media, bin }) {
 		_.extend(this, metadata);
@@ -81,7 +83,7 @@ export default class Level {
 		if (!help) return null;
 
 		const levelDefinition = book.getLevelDefinitionOf(this.id);
-		const lines = help.split("\n");
+		const lines = help.split(NEWLINE_REGEXP);
 
 		return lines
 			.map((it, i) =>
