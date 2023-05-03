@@ -37,7 +37,12 @@ export default class Spacegulls extends Integration {
 		const zoneIndex = ZONES.indexOf(zone);
 		if (zoneIndex >= 0) {
 			const percentage = (zoneIndex / (ZONES.length - 1)) * 100;
-			if (percentage === 100) bus.emit("spacegulls-end");
+
+			if (percentage === 100) {
+				this._disconnectControllers(neees);
+				bus.emit("spacegulls-end");
+			}
+
 			this.setState({ percentage, zoneIndex });
 		} else {
 			this.setState({ percentage: 0, zoneIndex: 0 });

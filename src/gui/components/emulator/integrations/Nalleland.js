@@ -43,8 +43,7 @@ export default class Nalleland extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		document.querySelector("#tvScreen canvas").style.transform =
-			"translateY(-15px)";
+		this._moveTV(-15);
 
 		const mode = neees.cpu.memory.readAt(0x0047);
 		const lives = neees.cpu.memory.readAt(0x03ca);

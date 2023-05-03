@@ -55,6 +55,7 @@ export default {
 	help_shortcuts:
 		"🚀  General:\n  ♐  Switch active pane:\n     `Alt+{DirectionalKey}` (or mouse click)\n💻  Terminal:\n  🛑  Close app:\n     `Ctrl+C`\n  🕑  Speed up chat:\n     `Enter`\n  📜  Scroll terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (or mouse wheel)\n  📋  Copy/paste:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocomplete:\n     `Tab`\n📝  Code editor:\n  ▶️  Run code:\n     `Alt+Enter`\n  🔍  Find file:\n     `Ctrl+P`",
 	hexadecimal: "Hexadecimal",
+	integration_jupiterscope2_wrong_difficulty: "Wrong difficulty level!",
 	integration_nalleland_limited_lives: "Limited lives",
 	integration_nalleland_lives: "lives",
 	integration_nalleland_wrong_mode_start1: "Wrong mode: ",

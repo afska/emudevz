@@ -24,6 +24,12 @@ export default class Integration extends PureComponent {
 		})();
 	}
 
+	_moveTV(dy) {
+		document.querySelector(
+			"#tvScreen canvas"
+		).style.transform = `translateY(${dy}px)`;
+	}
+
 	_disconnectControllers(neees) {
 		neees.context.controllers[0].update = () => {};
 		neees.context.controllers[1].update = () => {};

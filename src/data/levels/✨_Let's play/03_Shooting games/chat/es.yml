@@ -1,0 +1,44 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - juguemos un juego
+  - se llama 🚀 💥  ~Jupiter Scope 2~
+  - si superas mi puntuación más alta, te enviaré todos mis 🔫  juegos de <disparos>
+  - en el formato ~*.neees~
+  responses:
+  - ¿y cuál es tu puntuación más alta? 🤔 [highest]
+
+highest:
+  messages:
+  - exactamente ~10000~ puntos, en el nivel de dificultad <normal>
+  - alcanza esa puntuación (en modo <normal> o <hard>) y lo consideraré una victoria 🏆
+  responses:
+  - ¡no tienes oportunidad! 💪 [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("JupiterScope2");
+    {{Right}}.load("JupiterScope2.neees", "stream", "bin");
+  messages:
+  - veremos 😁
+  events:
+  - jupiterscope2-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}/shooting`
+    try { filesystem.mkdir(directory); } catch (e) {}
+
+    ["JupiterScope2.neees", "TroubleAt2A03.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+    });
+  messages:
+  - mmm... supongo que mi puntuación no era tan alta 😅
+  - como prometí, puse mis ROMs en tu directorio 📁  ~/roms~
+  - disfruta disparando 💣
+  responses:
+  - ▶️  continuar [end]
