@@ -7,4 +7,27 @@ main:
   - if you win my challenge, I'll send you all my 🐸  <platform> games
   - in the ~*.neees~ format
   responses:
-  - what challenge? 👀 [end]
+  - what challenge? 👀 [challenge]
+
+challenge:
+  messages:
+  - you'll need to complete the game using the "limited lives" mode
+  - enable it in the <modes> menu, and reach the end!
+  - (it would be advisable to practice the normal mode first 😅 )
+  responses:
+  - gotcha 👾 [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("Nalleland");
+    {{Right}}.load("Nalleland.neees", "stream", "bin");
+  messages:
+  - let's see what you can do 👀
+  events:
+  - nalleland-end [finish]
+
+finish:
+  messages:
+  - yay
+  responses: []
