@@ -30,6 +30,7 @@ iknow:
 
 skip:
   run: |
+    level.unlockLetsPlayLevelIfNeeded("lets-play-non-platform-games");
     const book = store.getState().book.instance;
     const chapter = book.getChapterOf(level.id);
     const lastLevelId = _.last(chapter.levels).id;

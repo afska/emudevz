@@ -105,7 +105,7 @@ export default class Level {
 
 	advance() {
 		this._saveSnapshotIfNeeded();
-		this._unlockLetsPlayLevelIfNeeded();
+		this.unlockLetsPlayLevelIfNeeded(this.letsPlayUnlock);
 
 		if (!store.dispatch.savedata.advance(this.id))
 			store.dispatch.level.goHome();
@@ -181,28 +181,17 @@ export default class Level {
 			throw new Error(`Invalid focus: ${this.ui.focus}`);
 	}
 
-	_saveSnapshotIfNeeded() {
-		if (!this.memory.content.multifile) return;
-
-		const snapshotDir = Drive.snapshotDirOf(this.id);
-
-		if (!filesystem.exists(snapshotDir)) {
-			filesystem.cpr(Drive.CODE_DIR, snapshotDir);
-			store.dispatch.savedata.addSnapshot(this.id);
-		}
-	}
-
-	_unlockLetsPlayLevelIfNeeded() {
-		if (this.letsPlayUnlock == null) return;
+	unlockLetsPlayLevelIfNeeded(letsPlayLevelId) {
+		if (letsPlayLevelId == null) return;
 
 		const book = Book.current;
-		if (!book.isUnlocked(this.letsPlayUnlock)) {
-			store.dispatch.savedata.unlockLetsPlayLevel(this.letsPlayUnlock);
+		if (book.isUnlocked(letsPlayLevelId)) {
+			store.dispatch.savedata.unlockLetsPlayLevel(letsPlayLevelId);
 
 			toast.normal(
 				<span
 					onClick={() => {
-						store.dispatch.level.goTo(this.letsPlayUnlock);
+						store.dispatch.level.goTo(letsPlayLevelId);
 						toast.normal(<span style={{ display: "none" }} />);
 					}}
 				>
@@ -217,6 +206,17 @@ export default class Level {
 					duration: 10000,
 				}
 			);
+		}
+	}
+
+	_saveSnapshotIfNeeded() {
+		if (!this.memory.content.multifile) return;
+
+		const snapshotDir = Drive.snapshotDirOf(this.id);
+
+		if (!filesystem.exists(snapshotDir)) {
+			filesystem.cpr(Drive.CODE_DIR, snapshotDir);
+			store.dispatch.savedata.addSnapshot(this.id);
 		}
 	}
 }
