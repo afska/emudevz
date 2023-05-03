@@ -13,9 +13,9 @@ export default class Spacegulls extends Integration {
 
 		return (
 			<Tooltip
-				title={`${locales.get("integration_zone")} ${zoneIndex + 1} / ${
-					ZONES.length
-				}`}
+				title={`${locales.get("integration_spacegulls_zone")} ${
+					zoneIndex + 1
+				} / ${ZONES.length}`}
 				placement="top"
 			>
 				<div style={{ paddingTop: 8, paddingBottom: 8, width: "50%" }}>

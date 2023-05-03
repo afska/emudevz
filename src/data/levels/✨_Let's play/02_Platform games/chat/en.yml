@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
   - hey,
   - let's play a game
@@ -28,6 +30,17 @@ play:
   - nalleland-end [finish]
 
 finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}/platform`
+    try { filesystem.mkdir(directory); } catch (e) {}
+
+    ["FilthyKitchen.neees", "Isostasy.neees", "Nalleland.neees", "WolfSpirit.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+    });
   messages:
-  - yay
-  responses: []
+  - wow!
+  - you've become an expert in this game 🤯
+  - as I promised, I put my ROMs in your 📁  ~/roms~ directory
+  - enjoy 😎
+  responses:
+  - ▶️  continue [end]

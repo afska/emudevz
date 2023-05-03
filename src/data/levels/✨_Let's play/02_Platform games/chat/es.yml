@@ -1,6 +1,46 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
-  - ¡próximamente!
+  - hey,
+  - juguemos un juego
+  - se llama 🧸 📍  ~Nalleland~
+  - si ganas mi desafío, te enviaré todos mis 🐸  juegos de <plataformas>
+  - en el formato ~*.neees~
   responses:
-  - ok [end]
+  - ¿qué desafío? 👀 [challenge]
+
+challenge:
+  messages:
+  - tendrás que completar el juego usando el modo "limited lives"
+  - actívalo en el menú <modes>, ¡y llega al final!
+  - (sería aconsejable practicar primero el modo normal 😅 )
+  responses:
+  - entendido 👾 [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("Nalleland");
+    {{Right}}.load("Nalleland.neees", "stream", "bin");
+  messages:
+  - veamos qué puedes hacer 👀
+  events:
+  - nalleland-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}/platform`
+    try { filesystem.mkdir(directory); } catch (e) {}
+
+    ["FilthyKitchen.neees", "Isostasy.neees", "Nalleland.neees", "WolfSpirit.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+    });
+  messages:
+  - ¡guau!
+  - te has convertido en un experto en este juego 🤯
+  - como prometí, puse mis ROMs en tu directorio 📁  ~/roms~
+  - disfruta 😎
+  responses:
+  - ▶️  continuar [end]
