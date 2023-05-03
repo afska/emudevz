@@ -185,7 +185,7 @@ export default class Level {
 		if (letsPlayLevelId == null) return;
 
 		const book = Book.current;
-		if (book.isUnlocked(letsPlayLevelId)) {
+		if (!book.isUnlocked(letsPlayLevelId)) {
 			store.dispatch.savedata.unlockLetsPlayLevel(letsPlayLevelId);
 
 			toast.normal(
