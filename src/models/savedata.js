@@ -117,6 +117,7 @@ export default {
 				const book = _state_.book.instance;
 
 				if (!book.exists(nextLevelId)) return false;
+				if (!book.isUnlocked(nextLevelId)) return false;
 
 				const chapter = book.getChapterOf(nextLevelId);
 				if (chapter.number > state.maxChapterNumber)

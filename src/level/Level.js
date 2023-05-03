@@ -6,7 +6,7 @@ import layouts from "../gui/components/layouts";
 import locales from "../locales";
 import store from "../store";
 import { theme } from "../terminal/style";
-import { analytics, toast } from "../utils";
+import { toast } from "../utils";
 import bus from "../utils/bus";
 import Book from "./Book";
 import ChatScript from "./chat/ChatScript";
@@ -107,13 +107,8 @@ export default class Level {
 		this._saveSnapshotIfNeeded();
 		this._unlockLetsPlayLevelIfNeeded();
 
-		if (!store.dispatch.savedata.advance(this.id)) {
-			analytics.requestFeedback(
-				"demo_end",
-				"That's all I have 😅\nAny feedback? 👀"
-			);
+		if (!store.dispatch.savedata.advance(this.id))
 			store.dispatch.level.goHome();
-		}
 	}
 
 	launchEmulator(rom = null) {
