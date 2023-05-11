@@ -33,7 +33,7 @@ finish:
     const directory = `${Drive.ROMS_DIR}/shooting`
     try { filesystem.mkdir(directory); } catch (e) {}
 
-    ["JupiterScope2.neees", "TroubleAt2A03.neees"].forEach((file) => {
+    ["JupiterScope2.neees", "StarPowerDemo.neees", "TroubleAt2A03.neees"].forEach((file) => {
       filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
     });
   messages:
