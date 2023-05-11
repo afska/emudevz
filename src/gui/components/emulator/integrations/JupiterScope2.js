@@ -13,7 +13,7 @@ export default class JupiterScope2 extends Integration {
 		const percentage = (points / HIGH_SCORE) * 100;
 
 		return (
-			<div style={{ width: "50%", textAlign: "center" }}>
+			<div style={{ width: "50%", textAlign: "center", whiteSpace: "nowrap" }}>
 				{victory ? (
 					<span>🏆🏆🏆</span>
 				) : difficulty >= MIN_DIFFICULTY ? (

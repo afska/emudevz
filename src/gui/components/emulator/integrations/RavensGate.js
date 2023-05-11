@@ -30,7 +30,7 @@ export default class RavensGate extends Integration {
 		} = this.state;
 
 		return (
-			<div style={{ width: "100%", textAlign: "center" }}>
+			<div style={{ width: "100%", textAlign: "center", whiteSpace: "nowrap" }}>
 				{gameOver ? (
 					<span>☠️☠️☠️</span>
 				) : victory ? (

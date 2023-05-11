@@ -12,7 +12,7 @@ export default class Nalleland extends Integration {
 		const isLimitedLivesDisabled = (mode & MODE_LIMITED_LIVES_MASK) === 0;
 
 		return (
-			<div style={{ width: "100%", textAlign: "center" }}>
+			<div style={{ width: "100%", textAlign: "center", whiteSpace: "nowrap" }}>
 				{victory ? (
 					<span>🏆🏆🏆</span>
 				) : mode === MODE_LIMITED_LIVES ? (
