@@ -60,7 +60,7 @@ export default class GameStreamer extends PureComponent {
 				>
 					<div className={styles.row}>
 						<Tooltip title={locales.get("streaming_video")} placement="top">
-							<span>
+							<span className="blink">
 								<FaVideo />
 							</span>
 						</Tooltip>

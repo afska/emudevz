@@ -19,7 +19,6 @@ export default class Nalleland extends Integration {
 					<span>
 						💓 <strong>{lives}</strong>{" "}
 						{locales.get("integration_nalleland_lives")}
-						{victory ? " 🏆 " : ""}
 					</span>
 				) : (
 					<span>
