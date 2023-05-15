@@ -1,0 +1,31 @@
+{
+	"name": {
+		"en": "💥 Battle games",
+		"es": "💥 Juegos de batalla"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat -f",
+					"availableCommands": ["chat"]
+				}
+			],
+			"Right": [
+				"tv",
+				{
+					"content": null,
+					"type": "stream"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"memory": {
+		"content": {
+			"protected": true
+		}
+	}
+}

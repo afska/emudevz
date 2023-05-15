@@ -3,6 +3,35 @@ main:
   run: |
     set((m) => m.chat.winOnEnd = true);
   messages:
-  - coming soon!
+  - hey,
+  - juguemos un juego
+  - se llama 🦅 ⛩️  ~Raven's Gate~
+  - si lo completas, te enviaré todos mis ⚔️  juegos de <aventura>
+  - en formato ~*.neees~
   responses:
-  - ok [end]
+  - ¡yo me encargo! [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("RavensGate");
+    {{Right}}.load("RavensGate.neees", "stream", "bin");
+  messages:
+  - aquí vamos 👀
+  events:
+  - ravensgate-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}/adventure`
+    try { filesystem.mkdir(directory); } catch (e) {}
+
+    ["Crowborg.neees", "MissingLands.neees", "RavensGate.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+    });
+  messages:
+  - ¡¡¡por fin!!!
+  - como prometí, puse mis ROMs en tu directorio 📁  ~/roms~
+  - felicitaciones 🙃
+  responses:
+  - ▶️  continuar [end]
