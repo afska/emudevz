@@ -46,7 +46,8 @@ export default class Nalleland extends Integration {
 
 		const mode = neees.cpu.memory.readAt(0x0047);
 		const lives = neees.cpu.memory.readAt(0x03ca);
-		const victory = this._checkTiles(neees, VICTORY);
+		const victory =
+			mode === MODE_LIMITED_LIVES && this._checkTiles(neees, VICTORY);
 
 		this.setState({ mode, lives, victory });
 
