@@ -11,6 +11,16 @@ export default class Spacegulls extends Integration {
 	render() {
 		const { percentage, zoneIndex } = this.state;
 
+		if (percentage === 100) {
+			return (
+				<div
+					style={{ width: "100%", textAlign: "center", whiteSpace: "nowrap" }}
+				>
+					<span>😲😲😲</span>
+				</div>
+			);
+		}
+
 		return (
 			<Tooltip
 				title={`${locales.get("integration_spacegulls_zone")} ${

@@ -14,7 +14,7 @@ export default class Nalleland extends Integration {
 		return (
 			<div style={{ width: "100%", textAlign: "center", whiteSpace: "nowrap" }}>
 				{victory ? (
-					<span>🏆🏆🏆</span>
+					<span>🥳🥳🥳</span>
 				) : mode === MODE_LIMITED_LIVES ? (
 					<span>
 						💓 <strong>{lives}</strong>{" "}

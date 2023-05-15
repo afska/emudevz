@@ -3,6 +3,45 @@ main:
   run: |
     set((m) => m.chat.winOnEnd = true);
   messages:
-  - coming soon!
+  - hey,
+  - let's play a game
+  - it's called 🦸 🤸  ~Super Tilt Bro~
+  - si ganas mi desafío, te enviaré todos mis 💥  juegos de <batalla>
+  - en formato ~*.neees~
   responses:
-  - ok [end]
+  - ¿qué desafío? 👀 [challenge]
+
+challenge:
+  messages:
+  - tendrás que jugar en el nivel de dificultad más alto
+  - elige <local>, luego configura <stocks> en "cinco" y <jugador 2> en "difícil"
+  - ah, y gana la partida 😅
+  responses:
+  - sí, puedo hacerlo 👾 [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("SuperTiltBro");
+    {{Right}}.load("SuperTiltBro.neees", "stream", "bin");
+  messages:
+  - ok
+  - ¡LUCHA! 👊
+  events:
+  - supertiltbro-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}/adventure`
+    try { filesystem.mkdir(directory); } catch (e) {}
+
+    ["SuperTiltBro.neees", "TestlaVsEdison.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+    });
+  messages:
+  - TÚ
+  - ¡GANAS!
+  - como prometí, puse mis ROMs en tu directorio 📁  ~/roms~
+  - sigue luchando 💪
+  responses:
+  - ▶️  continuar [end]
