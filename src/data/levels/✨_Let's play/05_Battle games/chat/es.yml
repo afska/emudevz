@@ -4,8 +4,8 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - hey,
-  - let's play a game
-  - it's called 🦸 🤸  ~Super Tilt Bro~
+  - juguemos un juego
+  - se llama 🦸 🤸  ~Super Tilt Bro~
   - si ganas mi desafío, te enviaré todos mis 💥  juegos de <batalla>
   - en formato ~*.neees~
   responses:
@@ -17,7 +17,7 @@ challenge:
   - elige <local>, luego configura <stocks> en "cinco" y <jugador 2> en "difícil"
   - ah, y gana la partida 😅
   responses:
-  - sí, puedo hacerlo 👾 [play]
+  - sí, puedo hacerlo 🥊 [play]
 
 play:
   run: |

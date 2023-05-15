@@ -5,34 +5,36 @@ main:
   messages:
   - hey,
   - let's play a game
-  - it's called 🦅 ⛩️  ~Raven's Gate~
-  - if you complete it, I'll send you all my ⚔️  <adventure> games
+  - it's called 🤖 🧗  ~Robo-Ninja Climb~
+  - if you complete it, I'll send you all my 🕹️  <arcade> games
   - in the ~*.neees~ format
   responses:
-  - I got this! 🤺 [play]
+  - that sounds easy 🙌 [play]
 
 play:
   run: |
     {{Right}}.stream.zoom();
-    {{Right}}.stream.setIntegration("RavensGate");
-    {{Right}}.load("RavensGate.neees", "stream", "bin");
+    {{Right}}.stream.setIntegration("RoboNinjaClimb");
+    {{Right}}.load("RoboNinjaClimb.neees", "stream", "bin");
   messages:
-  - here we go
-  - I'll watch your adventure 👀
+  - well, it's not 🙃
+  - actually, you'll die a lot
+  - I'll wait here 👀
   events:
-  - ravensgate-end [finish]
+  - roboninjaclimb-end [finish]
 
 finish:
   run: |
     const directory = `${Drive.ROMS_DIR}/adventure`
     try { filesystem.mkdir(directory); } catch (e) {}
 
-    ["Crowborg.neees", "MissingLands.neees", "RavensGate.neees"].forEach((file) => {
+    ["Heist.neees", "RoboNinjaClimb.neees", "Thwaite.neees"].forEach((file) => {
       filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
     });
   messages:
-  - YOU ARE ~GREAT~.
+  - WHOA!
+  - what a difficult game!
   - as I promised, I put my ROMs in your 📁  ~/roms~ directory
-  - congratulations 🙃
+  - well done 👏👏
   responses:
   - ▶️  continue [end]
