@@ -25,7 +25,7 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/adventure`
+    const directory = `${Drive.ROMS_DIR}/arcade`
     try { filesystem.mkdir(directory); } catch (e) {}
 
     ["Heist.neees", "RoboNinjaClimb.neees", "Thwaite.neees"].forEach((file) => {

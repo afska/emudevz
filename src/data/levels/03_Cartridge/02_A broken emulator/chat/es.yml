@@ -13,13 +13,13 @@ main:
 works:
   messages:
   - falla en casi todos los aspectos
-  - montones de ERRORES
+  - montones de <errores>
   - es como si el autor hubiera estado borracho o algo así 🙃 🔫
   - supongo que por eso lo llamaron <BrokenNEEES>
   - puedes probarlo de todos modos...
-  - arrastra una rom en la TV o usa uno de mis juegos
-  - te envié un montón de estos, están en 📁  ~/roms~
-  - puedes iniciarlos con el comando `open`
+  - 💡  arrastra una ROM a la TV o usa uno de los juegos en 📁  ~/roms~
+  - (si no tienes ninguno, ¡ve y juega el capítulo <👾 >!)
+  - puedes lanzar ROMs con el comando `open`
   responses:
   - (*) ¿qué errores encontraste? 🐞 [bugs]
   - esto es horrible 👎 [awful]

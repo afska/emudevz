@@ -65,7 +65,7 @@ export default {
 	integration_spacegulls_zone: "Zona",
 	integration_supertiltbro_shouldbesettofive: 'debería estar en "Five"',
 	integration_supertiltbro_shouldbesettohard: 'debería estar en "Hard"',
-	integration_supertiltbro_playing: "jugando desafío",
+	integration_supertiltbro_playing: "Jugando desafío",
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",
