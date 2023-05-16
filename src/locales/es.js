@@ -63,6 +63,7 @@ export default {
 	integration_nalleland_wrong_mode_end1: " está desactivado.",
 	integration_nalleland_wrong_mode_end2: "!",
 	integration_spacegulls_zone: "Zona",
+	integration_roboninjaclimb_level: "Nivel",
 	integration_supertiltbro_shouldbesettofive: 'debería estar en "Five"',
 	integration_supertiltbro_shouldbesettohard: 'debería estar en "Hard"',
 	integration_supertiltbro_playing: "Jugando desafío",

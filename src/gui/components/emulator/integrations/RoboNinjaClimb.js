@@ -1,13 +1,15 @@
 import React from "react";
+import locales from "../../../../locales";
 import { bus } from "../../../../utils";
 import ProgressBar from "../../widgets/ProgressBar";
+import Tooltip from "../../widgets/Tooltip";
 import Integration from "./Integration";
 
 export default class RoboNinjaClimb extends Integration {
-	state = { percentage: 0 };
+	state = { percentage: 0, level: 0 };
 
 	render() {
-		const { percentage } = this.state;
+		const { percentage, level } = this.state;
 
 		if (percentage === 100) {
 			return (
@@ -20,13 +22,19 @@ export default class RoboNinjaClimb extends Integration {
 		}
 
 		return (
-			<div style={{ paddingTop: 8, paddingBottom: 8, width: "50%" }}>
-				<ProgressBar
-					percentage={percentage}
-					barFillColor="#3398dc"
-					style={{ marginTop: 0 }}
-				/>
-			</div>
+			<Tooltip
+				title={`${locales.get(
+					"integration_roboninjaclimb_level"
+				)} ${level} / ${WIN_LEVEL}`}
+			>
+				<div style={{ paddingTop: 8, paddingBottom: 8, width: "50%" }}>
+					<ProgressBar
+						percentage={percentage}
+						barFillColor="#3398dc"
+						style={{ marginTop: 0 }}
+					/>
+				</div>
+			</Tooltip>
 		);
 	}
 
@@ -44,7 +52,7 @@ export default class RoboNinjaClimb extends Integration {
 			bus.emit("roboninjaclimb-end");
 		}
 
-		this.setState({ percentage });
+		this.setState({ percentage, level });
 	};
 }
 
