@@ -14,9 +14,6 @@ import styles from "./EmulatorRunner.module.css";
 const COMPONENT_BORDER_RADIUS = 8;
 const REFRESH_DEBOUNCE_MS = 500;
 
-const isChromeOrChromium =
-	/Chrome/i.test(navigator.userAgent) || /Chromium/i.test(navigator.userAgent);
-
 export default class EmulatorRunner extends PureComponent {
 	render() {
 		const { rom, error } = this.props;
@@ -134,16 +131,6 @@ export default class EmulatorRunner extends PureComponent {
 						/>
 					</div>
 				</div>
-				{!isChromeOrChromium && (
-					<div className={styles.browserWarning}>
-						😅 This doesn't work well on non Chromium-based web browsers
-						<br />
-						🤞 I'll try to fix this!
-						<br />
-						💡 Try using other browser. You can export your savefile from the
-						Settings menu.
-					</div>
-				)}
 				<Emulator
 					rom={rom}
 					error={error}
