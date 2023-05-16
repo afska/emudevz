@@ -6,7 +6,7 @@ import layouts from "../gui/components/layouts";
 import locales from "../locales";
 import store from "../store";
 import { theme } from "../terminal/style";
-import { toast } from "../utils";
+import { analytics, toast } from "../utils";
 import bus from "../utils/bus";
 import Book from "./Book";
 import ChatScript from "./chat/ChatScript";
@@ -106,6 +106,10 @@ export default class Level {
 	advance() {
 		this._saveSnapshotIfNeeded();
 		this.unlockLetsPlayLevelIfNeeded(this.letsPlayUnlock);
+		analytics.track("level_completed", {
+			id: this.id,
+			name: this.name.en,
+		});
 
 		if (!store.dispatch.savedata.advance(this.id))
 			store.dispatch.level.goHome();

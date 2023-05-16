@@ -46,10 +46,19 @@ export default {
 				const nextLevelId = book.nextIdOf(levelId);
 				return this.goTo(nextLevelId);
 			},
-			goTo(levelId) {
-				analytics.track("level", {
-					id: levelId,
-				});
+			goTo(levelId, _state_) {
+				const book = _state_.book.instance;
+				if (book != null) {
+					const levelDefinition = book.getLevelDefinitionOf(levelId);
+					if (levelDefinition != null) {
+						analytics.track("level", {
+							id: levelDefinition.id,
+							humanId: levelDefinition.humanId,
+							globalId: levelDefinition.globalId,
+							name: levelDefinition.name.en,
+						});
+					}
+				}
 
 				_dispatch_.savedata.setLastLevelId(levelId);
 				_dispatch_(push(`/levels/${levelId}?r=${Math.random()}`));

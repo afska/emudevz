@@ -1,4 +1,5 @@
 import _ from "lodash";
+import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
@@ -90,8 +91,11 @@ export default class TestCommand extends Command {
 			}
 
 			if (!this._targetId) {
+				const levelDefinition = Book.current.getLevelDefinitionOf(level.id);
 				analytics.track("test_results", {
 					levelId: level.id,
+					levelHumanId: levelDefinition.humanId,
+					levelGlobalId: levelDefinition.globalId,
 					levelName: level.name.en,
 					passed: overallResult.allGreen,
 					passCount: overallResult.passCount,
