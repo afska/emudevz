@@ -27,6 +27,21 @@ body {
 	pointer-events: none;
 }
 
+.link-button {
+	background-color: transparent;
+	color: var(--bs-link-color);
+	border: none;
+	cursor: pointer;
+	text-decoration: underline;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+.link-button:hover {
+	color: var(--bs-link-hover-color);
+}
+
 /* Effects */
 
 .earthquake {

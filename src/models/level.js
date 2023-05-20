@@ -11,6 +11,7 @@ const INITIAL_STATE = () => ({
 	instance: null,
 	isSettingsOpen: false,
 	isChapterSelectOpen: false,
+	isCreditsOpen: false,
 });
 
 export default {
@@ -24,6 +25,9 @@ export default {
 		},
 		setChapterSelectOpen(state, isChapterSelectOpen) {
 			return { ...state, isChapterSelectOpen };
+		},
+		setCreditsOpen(state, isCreditsOpen) {
+			return { ...state, isCreditsOpen };
 		},
 		reset() {
 			return INITIAL_STATE();

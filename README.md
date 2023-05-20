@@ -31,3 +31,9 @@ npm install
 
 - Run tests:
   `npm test`
+
+### Generate licenses
+
+```
+yarn licenses generate-disclaimer --prod > public/licenses.txt
+```

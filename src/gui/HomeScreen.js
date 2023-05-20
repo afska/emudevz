@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
 import locales from "../locales";
 import ChapterSelectModal from "./ChapterSelectModal";
+import CreditsModal from "./CreditsModal";
 import SettingsModal from "./SettingsModal";
 import Button from "./components/widgets/Button";
 import styles from "./HomeScreen.module.css";
@@ -38,8 +39,10 @@ class HomeScreen extends PureComponent {
 		const {
 			isSettingsOpen,
 			isChapterSelectOpen,
+			isCreditsOpen,
 			setSettingsOpen,
 			setChapterSelectOpen,
+			setCreditsOpen,
 		} = this.props;
 		const { fontsLoaded } = this.state;
 
@@ -59,6 +62,8 @@ class HomeScreen extends PureComponent {
 					open={isChapterSelectOpen}
 					setChapterSelectOpen={setChapterSelectOpen}
 				/>
+
+				<CreditsModal open={isCreditsOpen} setCreditsOpen={setCreditsOpen} />
 
 				<div id="ui" className={styles.ui}>
 					<h6 style={{ marginBottom: 22 }}>Demo</h6>
@@ -91,11 +96,11 @@ class HomeScreen extends PureComponent {
 					</div>
 
 					<div style={{ marginTop: 16, fontSize: 12 }}>
-						{locales.get("_created_by")}{" "}
+						🧪 {locales.get("_created_by")}{" "}
 						<a href="https://r-labs.io" target="_blank" rel="noreferrer">
 							[r]labs
-						</a>{" "}
-						{"//"} {locales.get("_music_by")}{" "}
+						</a>
+						{" 🎶 " + locales.get("_music_by") + " "}
 						<a
 							href="https://open.spotify.com/artist/7ewiTkC0wCMdpx1Wp1z140"
 							target="_blank"
@@ -103,6 +108,14 @@ class HomeScreen extends PureComponent {
 						>
 							Synthenia
 						</a>
+						{" 📜 "}
+						<button
+							type="button"
+							className="link-button"
+							onClick={this._openCredits}
+						>
+							[{locales.get("_credits")}]
+						</button>
 					</div>
 				</div>
 			</>
@@ -229,6 +242,10 @@ class HomeScreen extends PureComponent {
 		this.props.setSettingsOpen(true);
 	};
 
+	_openCredits = () => {
+		this.props.setCreditsOpen(true);
+	};
+
 	_play = () => {
 		if (this.props.maxChapterNumber > 1) this.props.setChapterSelectOpen(true);
 		else this.props.play();
@@ -243,11 +260,13 @@ const mapStateToProps = ({ level, savedata }) => ({
 	maxChapterNumber: savedata.maxChapterNumber,
 	isSettingsOpen: level.isSettingsOpen,
 	isChapterSelectOpen: level.isChapterSelectOpen,
+	isCreditsOpen: level.isCreditsOpen,
 });
 const mapDispatchToProps = ({ level }) => ({
 	play: level.goToLastLevel,
 	setSettingsOpen: level.setSettingsOpen,
 	setChapterSelectOpen: level.setChapterSelectOpen,
+	setCreditsOpen: level.setCreditsOpen,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

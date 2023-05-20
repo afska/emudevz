@@ -36,7 +36,7 @@ export default class CalculatorModal extends PureComponent {
 				contentClassName={"crt " + styles.modalContent}
 			>
 				<Modal.Header>
-					<Modal.Title>{locales.get("calculator")}</Modal.Title>
+					<Modal.Title>📟 {locales.get("calculator")}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>

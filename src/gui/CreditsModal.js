@@ -1,0 +1,229 @@
+import React, { PureComponent } from "react";
+import Modal from "react-bootstrap/Modal";
+import locales from "../locales";
+import styles from "./CreditsModal.module.css";
+
+const Section = ({ title, children, ...rest }) => {
+	return (
+		<div style={{ marginBottom: 16 }} {...rest}>
+			<h4>{title}</h4>
+			<div style={{ fontSize: "small", color: "#cfcfcf", paddingLeft: 16 }}>
+				{children}
+			</div>
+		</div>
+	);
+};
+
+const Game = ({ emojis, link, author, children, ...rest }) => {
+	return (
+		<div style={{ display: "flex" }} {...rest}>
+			<span style={{ width: 45 }}>{emojis}</span>
+			<div>
+				<a href={link} target="_blank" rel="noreferrer">
+					{children}
+				</a>{" "}
+				{!!author && (
+					<span>
+						(by <strong>{author}</strong>)
+					</span>
+				)}
+			</div>
+		</div>
+	);
+};
+
+export default class CreditsModal extends PureComponent {
+	render() {
+		const { open } = this.props;
+
+		return (
+			<Modal
+				show={open}
+				onHide={this._onClose}
+				centered
+				contentClassName={"crt " + styles.modalContent}
+			>
+				<Modal.Header>
+					<Modal.Title>📜 {locales.get("_credits")}</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Section title="🧪 Programming">
+						Rodrigo Alfonso <strong>(@afska)</strong> /{" "}
+						<a href="https://r-labs.io" target="_blank" rel="noreferrer">
+							[r]labs
+						</a>
+					</Section>
+					<Section title="🎼 Music">
+						Axel Rizzo <strong>(@Synthenia)</strong> /{" "}
+						<a
+							href="https://open.spotify.com/artist/7ewiTkC0wCMdpx1Wp1z140"
+							target="_blank"
+							rel="noreferrer"
+						>
+							Synthenia
+						</a>
+					</Section>
+					<Section title="👾 Homebrew games">
+						<div>
+							<div>
+								<Game
+									emojis="💦🏛️"
+									link="https://morphcatgames.itch.io/bobl"
+									author="Morphcat Games"
+								>
+									Böbl
+								</Game>
+								<Game
+									emojis="🦅🧷"
+									link="https://miau6502.itch.io/crowborg"
+									author="miau6502"
+								>
+									Crowborg
+								</Game>
+								<Game
+									emojis="🦟🍳"
+									link="https://dustmop.itch.io/filthy-kitchen"
+									author="dustmop"
+								>
+									Filthy Kitchen
+								</Game>
+								<Game
+									emojis="⛽💥"
+									link="https://johnybot.itch.io/heist"
+									author="johnybot"
+								>
+									Heist
+								</Game>
+								<Game
+									emojis="🌌🔫"
+									link="https://gravelstudios.itch.io/isostasy"
+									author="Gravel Studios"
+								>
+									Isostasy (Demo)
+								</Game>
+								<Game
+									emojis="🚀💥"
+									link="https://forums.nesdev.org/viewtopic.php?t=22135"
+									author="nin-kuuku"
+								>
+									Jupiter Scope 2
+								</Game>
+								<Game
+									emojis="🐸🌍"
+									link="https://cpprograms.net/classic-gaming/missing-lands"
+									author="chriscpp"
+								>
+									Missing Lands
+								</Game>
+								<Game
+									emojis="🧸 📍"
+									link="https://nallebeorn.itch.io/nalleland"
+									author="Nallebeorn"
+								>
+									Nalleland
+								</Game>
+								<Game
+									emojis="🦅⛩️"
+									link="https://mercurybd.itch.io/ravens-gate-nes"
+									author="MercuryBD"
+								>
+									Raven's Gate
+								</Game>
+								<Game
+									emojis="🤖🧗"
+									link="https://www.bitethechili.com/roboninja-climb"
+									author="Bite The Chilli"
+								>
+									Robo-Ninja Climb
+								</Game>
+								<Game
+									emojis="🕊️🛰️"
+									link="https://morphcatgames.itch.io/spacegulls"
+									author="Morphcat Games"
+								>
+									Spacegulls
+								</Game>
+								<Game
+									emojis="🧚🧹"
+									link="https://nia-prene.itch.io/star-power-demo"
+									author="nia-prene"
+								>
+									Star Power Demo
+								</Game>
+								<Game
+									emojis="🦸🤸"
+									link="https://sgadrat.itch.io/super-tilt-bro"
+									author="sgadrat"
+								>
+									Super Tilt Bro.
+								</Game>
+								<Game
+									emojis="📻💡"
+									link="https://forums.nesdev.org/viewtopic.php?t=18042"
+									author="samophlange"
+								>
+									Tesla Vs Edison
+								</Game>
+								<Game
+									emojis="🌳🏠"
+									link="https://github.com/pinobatch/thwaite-nes"
+									author="PinoBatch"
+								>
+									Thwaite
+								</Game>
+								<Game
+									emojis="🏭🔩"
+									link="https://team-disposable.itch.io/trouble-in-2a03"
+									author="Team Disposable"
+								>
+									Trouble At 2A03
+								</Game>
+								<Game
+									emojis="🐺⛓️"
+									link="https://lazycow.itch.io/wolfling"
+									author="Lazycow"
+								>
+									Wolfling
+								</Game>
+								<Game
+									emojis="🐺🌲"
+									link="https://valdirsalgueiro.itch.io/wolf-spirit"
+									author="valdirSalgueiro"
+								>
+									Wolf Spirit
+								</Game>
+							</div>
+							<div style={{ fontSize: "small", marginTop: 8 }}>
+								✔️ All these games were included with the permission of their
+								authors.
+							</div>
+						</div>
+					</Section>
+					<Section title="🙏 Thanks to...">
+						<Game emojis="🕹️🛠️" link="https://www.nesdev.org">
+							NesDev
+						</Game>
+						<Game
+							emojis="👌💻"
+							link="https://skilldrick.github.io/easy6502"
+							author="skilldrick"
+						>
+							Easy 6502
+						</Game>
+					</Section>
+					<Section title="📚 Open-source resources">
+						This game uses open-source software, check{" "}
+						<a href="licenses.txt" target="_blank" rel="noreferrer">
+							Licenses
+						</a>
+						.
+					</Section>
+				</Modal.Body>
+			</Modal>
+		);
+	}
+
+	_onClose = () => {
+		this.props.setCreditsOpen(false);
+	};
+}

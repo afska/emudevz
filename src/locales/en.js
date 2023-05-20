@@ -1,6 +1,7 @@
 export default {
 	_created_by: "Created by",
-	_music_by: "music by",
+	_music_by: "Music by",
+	_credits: "Credits",
 	backup: "Backup",
 	binary: "Binary",
 	button_play: "✨ Play",
