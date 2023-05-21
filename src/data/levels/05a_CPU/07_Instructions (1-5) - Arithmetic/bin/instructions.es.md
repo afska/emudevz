@@ -69,24 +69,24 @@
 
 #### 🔀 Bifurcaciones
 
-| Código | Nombre                      | Arg | Descripción                                                            |
-| ------ | --------------------------- | --- | ---------------------------------------------------------------------- |
-| `BCC`  | Saltar si no Carry          | 🐏  | Si la bandera `C` está apagada, salta a una `address`.                 |
-| `BCS`  | Saltar si Carry             | 🐏  | Si la bandera `C` está encendida, salta a una `address`.               |
-| `BEQ`  | Saltar si Igual             | 🐏  | Si la bandera `Z` está encendida, salta a una `address`.               |
-| `BMI`  | Saltar si Negativo          | 🐏  | Si la bandera `N` está encendida, salta a una `address`.               |
-| `BNE`  | Saltar si Distinto          | 🐏  | Si la bandera `Z` está apagada, salta a una `address`.                 |
-| `BPL`  | Saltar si Positivo          | 🐏  | Si la bandera `N` está apagada, salta a una `address`.                 |
-| `BVC`  | Saltar si no Overflow       | 🐏  | Si la bandera `V` está apagada, salta a una `address`.                 |
-| `BVS`  | Saltar si Overflow          | 🐏  | Si la bandera `V` está encendida, salta a una `address`.               |
-| `JMP`  | Saltar                      | 🐏  | Salta a una `address`.                                                 |
-| `JSR`  | Saltar a Subrutina          | 🐏  | Pone el `[PC]` actual (menos uno) en la pila y salta a una `address`.  |
-| `RTI`  | Retornar desde Interrupción | 🚫  | Saca el registro de banderas de la pila, luego saca `[PC]` de la pila. |
-| `RTS`  | Retornar desde Subrutina    | 🚫  | Saca `[PC]` (más uno) de la pila.                                      |
+| Código | Nombre                      | Arg | Descripción                                                                                                             |
+| ------ | --------------------------- | --- | ----------------------------------------------------------------------------------------------------------------------- |
+| `BCC`  | Saltar si no Carry          | 🐏  | Si la bandera `C` está apagada, salta a una `address`.                                                                  |
+| `BCS`  | Saltar si Carry             | 🐏  | Si la bandera `C` está encendida, salta a una `address`.                                                                |
+| `BEQ`  | Saltar si Igual             | 🐏  | Si la bandera `Z` está encendida, salta a una `address`.                                                                |
+| `BMI`  | Saltar si Negativo          | 🐏  | Si la bandera `N` está encendida, salta a una `address`.                                                                |
+| `BNE`  | Saltar si Distinto          | 🐏  | Si la bandera `Z` está apagada, salta a una `address`.                                                                  |
+| `BPL`  | Saltar si Positivo          | 🐏  | Si la bandera `N` está apagada, salta a una `address`.                                                                  |
+| `BVC`  | Saltar si no Overflow       | 🐏  | Si la bandera `V` está apagada, salta a una `address`.                                                                  |
+| `BVS`  | Saltar si Overflow          | 🐏  | Si la bandera `V` está encendida, salta a una `address`.                                                                |
+| `JMP`  | Saltar                      | 🐏  | Salta a una `address`.                                                                                                  |
+| `JSR`  | Saltar a Subrutina          | 🐏  | Pone el `[PC]` actual (menos uno) en la pila y salta a una `address`.                                                   |
+| `RTI`  | Retornar desde Interrupción | 🚫  | Saca un byte de la pila y lo guarda en el registro de banderas. Luego, saca un número de 16 bits y lo guarda en `[PC]`. |
+| `RTS`  | Retornar desde Subrutina    | 🚫  | Saca un número de 16 bits de la pila, y guarda ese valor (más uno) en `[PC]`.                                           |
 
 <br />
 
-Todas las instrucciones de bifurcación **condicionales** deben incrementar `cpu.extraCycles` si saltan, o asignarle `0` en caso contrario.
+Todas las instrucciones de bifurcación **condicionales** deben incrementar `cpu.extraCycles` si saltan, o asignarle `0` en caso contrario. Esto no aplica a las instrucciones que saltan siempre (como `JMP`, `JSR`, `RTI` o `RTS`).
 
 #### 🧙‍♂️ Sistema
 

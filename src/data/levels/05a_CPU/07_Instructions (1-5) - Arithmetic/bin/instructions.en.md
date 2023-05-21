@@ -69,24 +69,24 @@
 
 #### 🔀 Branching
 
-| Code  | Name                     | Arg | Description                                                                     |
-| ----- | ------------------------ | --- | ------------------------------------------------------------------------------- |
-| `BCC` | Branch if Carry Clear    | 🐏  | If the `C` flag is clear, jumps to an `address`.                                |
-| `BCS` | Branch if Carry Set      | 🐏  | If the `C` flag is set, jumps to an `address`.                                  |
-| `BEQ` | Branch if Equal          | 🐏  | If the `Z` flag is set, jumps to an `address`.                                  |
-| `BMI` | Branch if Minus          | 🐏  | If the `N` flag is set, jumps to an `address`.                                  |
-| `BNE` | Branch if Not Equal      | 🐏  | If the `Z` flag is clear, jumps to an `address`.                                |
-| `BPL` | Branch if Positive       | 🐏  | If the `N` flag is clear, jumps to an `address`.                                |
-| `BVC` | Branch if Overflow Clear | 🐏  | If the `V` flag is clear, jumps to an `address`.                                |
-| `BVS` | Branch if Overflow Set   | 🐏  | If the `V` flag is set, jumps to an `address`.                                  |
-| `JMP` | Jump                     | 🐏  | Jumps to an `address`.                                                          |
-| `JSR` | Jump to Subroutine       | 🐏  | Pushes the current `[PC]` (minus one) onto the stack and jumps to an `address`. |
-| `RTI` | Return from Interrupt    | 🚫  | Pulls the flags register from the stack, then pulls `[PC]` from the stack.      |
-| `RTS` | Return from Subroutine   | 🚫  | Pulls `[PC]` (plus one) from the stack.                                         |
+| Code  | Name                     | Arg | Description                                                                                             |
+| ----- | ------------------------ | --- | ------------------------------------------------------------------------------------------------------- |
+| `BCC` | Branch if Carry Clear    | 🐏  | If the `C` flag is clear, jumps to an `address`.                                                        |
+| `BCS` | Branch if Carry Set      | 🐏  | If the `C` flag is set, jumps to an `address`.                                                          |
+| `BEQ` | Branch if Equal          | 🐏  | If the `Z` flag is set, jumps to an `address`.                                                          |
+| `BMI` | Branch if Minus          | 🐏  | If the `N` flag is set, jumps to an `address`.                                                          |
+| `BNE` | Branch if Not Equal      | 🐏  | If the `Z` flag is clear, jumps to an `address`.                                                        |
+| `BPL` | Branch if Positive       | 🐏  | If the `N` flag is clear, jumps to an `address`.                                                        |
+| `BVC` | Branch if Overflow Clear | 🐏  | If the `V` flag is clear, jumps to an `address`.                                                        |
+| `BVS` | Branch if Overflow Set   | 🐏  | If the `V` flag is set, jumps to an `address`.                                                          |
+| `JMP` | Jump                     | 🐏  | Jumps to an `address`.                                                                                  |
+| `JSR` | Jump to Subroutine       | 🐏  | Pushes the current `[PC]` (minus one) onto the stack and jumps to an `address`.                         |
+| `RTI` | Return from Interrupt    | 🚫  | Pulls a byte from the stack into the flags register, then pulls a 16-bit value and stores it in `[PC]`. |
+| `RTS` | Return from Subroutine   | 🚫  | Pulls a 16-bit value from the stack, and stores that value (plus one) in `[PC]`.                        |
 
 <br />
 
-All **conditional** branching instructions must increment `cpu.extraCycles` if they branch, or assign it to `0` otherwise.
+All **conditional** branching instructions must increment `cpu.extraCycles` if they branch, or assign it to `0` otherwise. This doesn't apply to instructions that always jump (like `JMP`, `JSR`, `RTI`, or `RTS`).
 
 #### 🧙‍♂️ System
 
