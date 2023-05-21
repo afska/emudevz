@@ -196,7 +196,6 @@ export default class Level {
 				<span
 					onClick={() => {
 						store.dispatch.level.goTo(letsPlayLevelId);
-						toast.normal(<span style={{ display: "none" }} />);
 					}}
 				>
 					👾{" "}
