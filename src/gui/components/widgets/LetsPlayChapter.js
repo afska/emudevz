@@ -45,7 +45,7 @@ class LetsPlayChapter extends PureComponent {
 
 	get _isUnlocked() {
 		const { book, chapter } = this.props;
-		return book.isUnlocked(chapter.levels[0].id);
+		return chapter.levels.some((it) => book.isUnlocked(it.id));
 	}
 
 	_go = () => {
