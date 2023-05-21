@@ -83,9 +83,13 @@ export default {
 
 				_dispatch_.content.setCurrentLevelContent("");
 
-				const saveStateKey = SAVESTATE_KEY_PREFIX + state.instance.id;
-				if (localStorage.getItem(saveStateKey) != null)
+				const id = state.instance.id;
+				const book = _state_.book.instance;
+				const chapter = book.getChapterOf(id);
+				if (chapter.isSpecial) {
+					const saveStateKey = SAVESTATE_KEY_PREFIX + id;
 					localStorage.setItem(saveStateKey, SAVESTATE_RESET_COMMAND);
+				}
 
 				setTimeout(() => {
 					this.goTo(state.instance.id);
