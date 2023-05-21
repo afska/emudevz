@@ -78,8 +78,9 @@ implement:
       __-> if interrupt.id === "IRQ" and I=1, returns 0
         (the interrupt is ignored)
       -> pushes [PC] onto the stack
-      -> pushes the flags onto the stack
-        (if <withBFlag> is true, the flags byte should have bit 4 on)
+      -> pushes the flags byte onto the stack
+        (if <withBFlag> is true, the value is pushed with its bit 4 on)
+        (otherwise, the value is pushed as is)
       -> increments 7 cycles (this.cycles += 7)
       -> sets I=1 in the flags register
       -> sets [PC] = the result of reading the addresses (interrupt.vector) and (interrupt.vector + 1) in Little Endian
