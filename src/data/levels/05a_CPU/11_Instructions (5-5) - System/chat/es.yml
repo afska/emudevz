@@ -81,7 +81,7 @@ implement:
       -> pone el byte de banderas en la pila
         (si <withBFlag> es true, el valor se agrega a la pila con el bit 4 encendido)
         (de lo contrario, se agrega tal cual está)
-      -> incrementa 7 ciclos (this.cycles += 7)
+      -> incrementa 7 ciclos (this.cycle += 7)
       -> asigna I=1 en el registro de banderas
       -> asigna [PC] = al resultado de leer las direcciones (interrupt.vector) y (interrupt.vector + 1) en Little Endian
         (recuerda que tienes un método *read16* para eso)
