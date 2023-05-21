@@ -295,7 +295,7 @@ it("`RELATIVE`: doesn't add any cycles if there's no page-cross", () => {
 	const cpu = newCPU();
 
 	cpu.pc.setValue(0xfe10);
-	addressingModes.RELATIVE.getAddress(cpu, 4);
+	addressingModes.RELATIVE.getAddress(cpu, 4, true);
 	cpu.extraCycles.should.equalN(0, "extraCycles");
 })({
 	locales: {

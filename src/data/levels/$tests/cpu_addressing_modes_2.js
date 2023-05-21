@@ -426,7 +426,7 @@ it("`INDIRECT_INDEXED`: doesn't add any cycles if there's no page-cross", () => 
 	cpu.y.setValue(0xb4);
 	cpu.memory.write(130, 0x12);
 	cpu.memory.write(131, 0xfe);
-	addressingModes.INDIRECT_INDEXED.getAddress(cpu, 130);
+	addressingModes.INDIRECT_INDEXED.getAddress(cpu, 130, true);
 	cpu.extraCycles.should.equalN(0, "extraCycles");
 })({
 	locales: {
