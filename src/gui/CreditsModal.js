@@ -14,11 +14,12 @@ const Section = ({ title, children, ...rest }) => {
 	);
 };
 
-const Game = ({ emojis, link, author, children, ...rest }) => {
+const Game = ({ emojis, prefix = "", link, author, children, ...rest }) => {
 	return (
 		<div style={{ display: "flex" }} {...rest}>
 			<span style={{ width: 45 }}>{emojis}</span>
 			<div>
+				{prefix}
 				<a href={link} target="_blank" rel="noreferrer">
 					{children}
 				</a>{" "}
@@ -211,7 +212,40 @@ export default class CreditsModal extends PureComponent {
 							Easy 6502
 						</Game>
 					</Section>
-					<Section title="📚 Open-source resources">
+					<Section title="📚 Source code">
+						🛠️{" "}
+						<a
+							href="https://github.com/rodri042/emudevz"
+							target="_blank"
+							rel="noreferrer"
+						>
+							Fork me on GitHub!
+						</a>
+					</Section>
+					<Section title="🔑 Licenses">
+						<Game
+							emojis="💿💻"
+							prefix={
+								<span>
+									<strong>Code</strong> is licensed by{" "}
+								</span>
+							}
+							link="https://opensource.org/license/mit"
+						>
+							The MIT License
+						</Game>
+						<Game
+							emojis="📖✏️"
+							prefix={
+								<span>
+									<strong>Levels</strong> are licensed by{" "}
+								</span>
+							}
+							link="https://creativecommons.org/licenses/by-nc/4.0"
+						>
+							CC BY-NC 4.0
+						</Game>
+						<br />
 						This game uses open-source software, check{" "}
 						<a href="licenses.txt" target="_blank" rel="noreferrer">
 							Licenses
