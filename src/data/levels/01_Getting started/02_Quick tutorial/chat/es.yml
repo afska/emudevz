@@ -37,10 +37,10 @@ tv:
 
 turnontv:
   run: |
-    {{Right}}.load("conga.webp");
+    {{Right}}.load("spacegulls.webp");
   messages:
   - ahí tienes...
-  - "un video de un juego popular de NEEES: \"Conga\" 😉"
+  - "un video de un juego popular de NEEES: 🕊️ 🛰️  ~Spacegulls~"
   responses:
   - ...main
 
