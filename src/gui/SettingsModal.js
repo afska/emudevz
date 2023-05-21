@@ -12,7 +12,11 @@ const MARGIN = 16;
 const SAVEFILE_EXTENSION = ".devz";
 
 class SettingsModal extends PureComponent {
-	state = { areYouSureRestore: false, areYouSureDelete: false };
+	state = {
+		areYouSureRestore: false,
+		areYouSureDelete: false,
+		isLoadingSave: false,
+	};
 
 	render() {
 		const {
@@ -22,7 +26,7 @@ class SettingsModal extends PureComponent {
 			setSpeedUpChat,
 			open,
 		} = this.props;
-		const { areYouSureRestore, areYouSureDelete } = this.state;
+		const { areYouSureRestore, areYouSureDelete, isLoadingSave } = this.state;
 
 		return (
 			<Modal
@@ -85,8 +89,11 @@ class SettingsModal extends PureComponent {
 							<Form.Label>{locales.get("save_file")}</Form.Label>
 							<div className={styles.options}>
 								<div>
-									<Button onClick={this._backupSavefile}>
-										💾 {locales.get("backup")}
+									<Button
+										onClick={this._backupSavefile}
+										disabled={isLoadingSave}
+									>
+										{isLoadingSave ? "⌛" : "💾 " + locales.get("backup")}
 									</Button>
 								</div>
 								<div>
@@ -117,11 +124,17 @@ class SettingsModal extends PureComponent {
 		window.location.reload();
 	}
 
-	_backupSavefile = (e) => {
+	_backupSavefile = async (e) => {
 		e.preventDefault();
 
-		const filename = new Date().toJSON().split("T")[0] + SAVEFILE_EXTENSION;
-		savefile.export(filename);
+		this.setState({ isLoadingSave: true });
+
+		try {
+			const filename = new Date().toJSON().split("T")[0] + SAVEFILE_EXTENSION;
+			await savefile.export(filename);
+		} finally {
+			this.setState({ isLoadingSave: false });
+		}
 	};
 
 	_restoreSavefile = async (e) => {
