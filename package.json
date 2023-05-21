@@ -30,7 +30,6 @@
     "@codemirror/theme-one-dark": "6.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@fancyapps/ui": "^4.0.31",
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.16",
     "@neshacker/6502-tools": "github:rodri042/6502#3de7e48e797fe5e32745b467015d57b0755b96e8",
