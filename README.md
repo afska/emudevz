@@ -35,5 +35,6 @@ npm install
 ### Generate licenses
 
 ```
+cp pre-licenses.txt public/licenses.txt
 yarn licenses generate-disclaimer --prod > public/licenses.txt
 ```

@@ -1,0 +1,6 @@
+This software incorporates elements inspired by the "Easy 6502" guide by Nick Morgan (https://skilldrick.github.io/easy6502/). Portions of the guide have been adapted and significantly modified for our purposes.
+
+The guide is licensed under the Creative Commons Attribution 4.0 International License. For the license details, visit: https://creativecommons.org/licenses/by/4.0/
+
+-----
+
