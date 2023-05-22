@@ -2,6 +2,15 @@
 
 Un archivo iNEEES consiste de las siguientes secciones, en orden:
 
+<table style="margin-bottom: 16px; text-align: center;">
+  <tr>
+    <td>🗣️</td>
+    <td style="width: 50px">🧸</td>
+    <td style="width: 200px">🤖</td>
+		<td style="width: 150px">👾</td>
+  </tr>
+</table>
+
 - 🗣️ Cabecera (`16` bytes)
 - 🧸 Relleno, si existe (`0` or `512` bytes)
 - 🤖 Datos `PRG-ROM` (`16384` \* `x` bytes)
