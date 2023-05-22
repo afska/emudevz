@@ -48,7 +48,8 @@ export default {
 	find_errors: "Encontrar errores",
 	go_back: "Volver",
 	golden_log: "Golden log",
-	help_basic: "💬  Si te bloqueas, corre el comando `help`...",
+	help_basic:
+		"💬  Si te bloqueas, presiona `Ctrl+C` y corre el comando `help`...",
 	help_level: "✨  Ayuda del nivel:",
 	help_more: "💬  Para ayuda adicional, corre `help -a`",
 	help_keys: "🚀  Para atajos de teclado, corre `help keys`",

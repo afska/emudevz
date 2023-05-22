@@ -49,7 +49,8 @@ export default {
 	find_errors: "Find errors",
 	go_back: "Go back",
 	golden_log: "Golden log",
-	help_basic: "💬  If you're stuck, run the `help` command...",
+	help_basic:
+		"💬  If you're stuck, press `Ctrl+C` and run the `help` command...",
 	help_level: "✨  Level:",
 	help_more: "💬  For additional help, run `help -a`",
 	help_keys: "🚀  For keyboard shortcuts, run `help keys`",
