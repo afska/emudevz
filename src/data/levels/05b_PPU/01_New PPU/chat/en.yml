@@ -1,5 +1,88 @@
 ---
 main:
+  run: |
+    {{Top}}.load("rendering.png");
   messages:
-  - coming soon!
+  - buckle up, we're gonna start drawing <actual pixels> to the screen! 🖥️
+  - but first we need to learn some things
+  - you'll see... it's all about timing ⏱️
+  - 🚲  cycles, 🌠  scanlines, and 🖼️  frames!
+  responses:
+  - what do you mean? [wdym]
+
+wdym:
+  messages:
+  - 📈  the NEEES generates a 60FPS video signal
+  - 🖼️  each <frame> is a 256x240 image (think of it as a pixel grid)
+  - 🌠  a <scanline> would be one row of that grid
+  - 🚲  oh, and each scanline takes 341 PPU <cycles> to render
+  responses:
+  - and... what's a cycle? 🚲 [cycles]
+
+cycles:
+  messages:
+  - each operation that the PPU does takes a certain amount of time, which we measure in <cycles>
+  - these are just fractions of a second, and a lot happens in a single cycle!
+  - the PPU can read or write data, or even draw a pixel on the screen 🎨
+  responses:
+  - (*) are PPU cycles the same as CPU cycles? 🤔 [same]
+  - how does the drawing work? 🖌️ [drawing]
+
+same:
+  messages:
+  - conceptually, yes, but the 🖥️  PPU runs 3x faster than the 🧠  CPU
+  - so PPU cycles are faster (each PPU cycle is, in time, ~1/3~ of a CPU cycle)
+  responses:
+  - ...cycles
+
+drawing:
+  messages:
+  - it draws from top to bottom, one scanline at a time, one pixel per cycle
+  - the first 240 scanlines make up the visible part of the picture
+  - there are also some extra non-visible scanlines, which gives the PPU some time to rest 🏖️
+  responses:
+  - what do you mean by "time to rest"? [vblank_hblank]
+
+vblank_hblank:
+  messages:
+  - during each scanline (after it has drawn all the pixels), it gets a small break known as the Horizontal Blank, or <HBlank>
+  - and at the end of all visible scanlines, it gets a longer break, the Vertical Blank, or <VBlank> 🏝️
+  - during these periods, the PPU isn't drawing any pixels, and that gives the program a chance to update the screen
+  responses:
+  - got it, what's next? [next]
+
+next:
+  messages:
+  - 📚  create a file somewhere for the PPU code
+  - |-
+    it should export a class like this:
+      ```javascript
+      export default class PPU {
+        constructor(cpu) {
+          this.cpu = cpu;
+
+          this.cycle = 0;
+          this.scanline = 261;
+          this.frame = 0;
+        }
+      }
+      ```
+  - |-
+    and add this method (for now, it'll just keep track of the timing):
+      ```javascript
+      cycle() {
+        this.cycle++;
+        if (this.cycle >= 341) {
+          this.cycle = 0;
+          this.scanline++;
+
+          if (this.scanline >= 262) {
+            this.scanline = 0;
+            this.frame++;
+          }
+        }
+      }
+      ```
+  - then, import that file from 📄  ~/code/index.js~
+  - and add a `PPU` key (pointing to that class) to the exported object
   responses: []

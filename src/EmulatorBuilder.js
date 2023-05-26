@@ -75,9 +75,9 @@ export default class EmulatorBuilder {
 		return this;
 	}
 
-	addUserCPU(add = true, dontTriggerReset = false) {
+	addUserCPU(add = true, omitReset = false) {
 		this.withUserCPU = add;
-		this.dontTriggerReset = dontTriggerReset;
+		this.omitReset = omitReset;
 		return this;
 	}
 
@@ -136,7 +136,7 @@ export default class EmulatorBuilder {
 				throw new Error("🐒  CPU::memory::onLoad(...) failed: " + e?.message);
 			}
 
-			if (!this.dontTriggerReset) {
+			if (!this.omitReset) {
 				try {
 					console.cpu.interrupt({
 						id: "RESET",

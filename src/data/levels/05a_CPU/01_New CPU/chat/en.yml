@@ -1,7 +1,9 @@
 ---
 main:
   messages:
-  - 📚  create a file somewhere for the CPU code 🧠
+  - we'll now start coding the CPU, the console's <brain> 🧠
+  - at this point, you already have an idea of how it works
+  - 📚  create a file somewhere for the CPU code
   - its default export should be an empty class
   - then, import that file from 📄  ~/code/index.js~
   - and add a `CPU` key (pointing to that class) to the exported object

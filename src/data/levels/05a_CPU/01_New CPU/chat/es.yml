@@ -1,6 +1,8 @@
 ---
 main:
   messages:
+  - ahora comenzaremos a programar la CPU, el <cerebro> de la consola 🧠
+  - a esta altura, ya tienes una idea de cómo funciona
   - 📚  crea un archivo en algún lugar para el código de la CPU 🧠
   - su valor a exportar debería ser una clase vacía
   - luego, importa ese archivo desde 📄  ~/code/index.js~
