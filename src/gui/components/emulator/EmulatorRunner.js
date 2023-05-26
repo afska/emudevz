@@ -35,7 +35,7 @@ export default class EmulatorRunner extends PureComponent {
 						<div className={classNames(styles.column, styles.units)}>
 							<div className={styles.row}>
 								<Unit
-									icon="💻"
+									icon="🧠"
 									name="CPU"
 									completed={this._unlockedUnits.useCPU}
 									active={this._emulatorSettings.useCPU}
@@ -85,7 +85,7 @@ export default class EmulatorRunner extends PureComponent {
 							</div>
 						</div>
 						<Unit
-							icon="🧠"
+							icon="🗜️"
 							name={"Mappers"}
 							completed={this._unlockedUnits.useMappers}
 							active={this._emulatorSettings.useMappers}

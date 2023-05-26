@@ -19,7 +19,7 @@ exercise:
   - I want you to read it and tell me if you understand it
   responses:
   - 🤔  I think I understand [understand]
-  - (*) what's a mapper? 🧠 [mapper]
+  - (*) what's a mapper? 🗜️ [mapper]
   - (*) what's mirroring? 🚽 [mirroring]
   - (*) please define <PRG-ROM>, <CHR-ROM>, <PRG-RAM> and <CHR-RAM> 🐏 [memories]
   - (*) padding? 🧸 [padding]

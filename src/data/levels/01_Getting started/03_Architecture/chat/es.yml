@@ -5,11 +5,12 @@ main:
     {{Right}}.load("architecture.png");
   messages:
   - bueno, aparentemente, esta cosa tiene 3 componentes principales, bastante independientes uno del otro
-  - "estos son: 💻  CPU, 🖥️  PPU y 🔊  APU"
-  - para poder jugar juegos, tienes que conectar dos piezas de hardware
-  - 💾  un cartucho (¡el juego mismo!) y 🎮  un mando de 8 botones
+  - "estos son: 🧠  CPU, 🖥️  PPU y 🔊  APU"
+  - "para poder jugar juegos, tienes que conectar dos piezas de hardware:"
+  - 💾  un cartucho (¡el juego mismo!)
+  - 🎮  un mando de 8 botones
   responses:
-  - 💻  cuéntame sobre la CPU [cpu]
+  - 🧠  cuéntame sobre la CPU [cpu]
   - 🖥️  cuéntame sobre la PPU [ppu]
   - 🔊  cuéntame sobre la APU [apu]
   - ⏭️  ¿cuál es la mejor forma de empezar? [start]

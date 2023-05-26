@@ -27,11 +27,11 @@ works:
 bugs:
   messages:
   - primero, el 💾  Cartucho parece empezar a leer la <CHR-ROM> desde el byte incorrecto, por lo que todos los gráficos se ven distorsionados
-  - el timing de la 💻  CPU es completamente aleatorio (causando problemas de sincronización) y la instrucción `BIT` falla aleatoriamente
+  - el timing de la 🧠  CPU es completamente aleatorio (causando problemas de sincronización) y la instrucción `BIT` falla aleatoriamente
   - esos errores de CPU también estropean los canales de la 🔊  APU (¡que ya estaban desafinados!), por lo que todo el sonido es basura
   - ¡ni siquiera mapearon correctamente el 🎮  Mando! está mapeado al revés y no permite que los botones A y B se presionen simultáneamente
   - finalmente, la 🖥️  PPU agrega ruido a la pantalla, mueve los registros de scrolling de una manera extraña y dibuja sprites en la posición incorrecta
-  - los 🧠  Mappers funcionan bien, afortunadamente 😅
+  - los 🗜️  Mappers funcionan bien, afortunadamente 😅
   responses:
   - ...works
 
@@ -42,7 +42,7 @@ awful:
   - está diseñado de manera <modular>
   - así que podemos reutilizar sus componentes ♻️
   - ¡eso nos permitirá implementar las cosas en el orden que queramos!
-  - podrías comenzar, por ejemplo, implementando los gráficos (🖥️  PPU) y yo parchearé tu emulador para que use la 💻  CPU, 🔊  APU y 🎮  Mando de <BrokenNEEES>
+  - podrías comenzar, por ejemplo, implementando los gráficos (🖥️  PPU) y yo parchearé tu emulador para que use la 🧠  CPU, 🔊  APU y 🎮  Mando de <BrokenNEEES>
   - luego puedes seguir arreglando las otras cosas a tu ritmo
   - vamos a arreglar el 💾  Cartucho primero
   responses:

@@ -25,17 +25,17 @@ El formato de la cabecera es el siguiente:
 - `0-3`: Constante `$4E $45 $53 $1A`
 - `4`: Tamaño del 🤖 `PRG-ROM` en unidades de `16` KiB
 - `5`: Tamaño del 👾 `CHR-ROM` en unidades de `8` KiB (el valor `0` significa que la placa usa `8` KiB de 👾 `CHR-RAM`)
-- `6`: Flags 6 - 🧠 Mapper (nybble inferior), 🚽 mirroring, 🔋 guardado de progreso (`PRG-RAM`), 🧸 relleno
-- `7`: Flags 7 - 🧠 Mapper (nybble superior)
+- `6`: Flags 6 - 🗜️ Mapper (nybble inferior), 🚽 mirroring, 🔋 guardado de progreso (`PRG-RAM`), 🧸 relleno
+- `7`: Flags 7 - 🗜️ Mapper (nybble superior)
 - `8-15`: 🧸 Relleno sin uso
 
-🧠 Las placas de cartuchos se dividen en clases llamadas **mappers** basadas en similitudes de hardware y comportamiento, y cada mapper tiene asignado un número de 8 bits.
+🗜️ Las placas de cartuchos se dividen en clases llamadas **mappers** basadas en similitudes de hardware y comportamiento, y cada mapper tiene asignado un número de 8 bits.
 
 🚽 Cada cartucho también define un **tipo de mirroring** que afecta directamente al arreglo de pantallas y cómo el juego manejará el scrolling.
 
 Por ahora:
 
-- 🧠 El id de mapper puede ser cualquier número entre `0` y `255`.
+- 🗜️ El id de mapper puede ser cualquier número entre `0` y `255`.
 - 🚽 El tipo de mirroring puede ser cualquiera de estos: `HORIZONTAL`, `VERTICAL`, `FOUR_SCREENS`.
 
 ### Flags 6

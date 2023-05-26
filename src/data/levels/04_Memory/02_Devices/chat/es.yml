@@ -2,7 +2,7 @@
 main:
   messages:
   - la memoria de tu CPU tiene que estar conectada a todo
-  - por ejemplo, para mapear <PRG-ROM> en la memoria, necesitas conectar un 🧠  mapper
+  - por ejemplo, para mapear <PRG-ROM> en la memoria, necesitas conectar un 🗜️  mapper
   - pero hasta ahora, solo programamos algunos componentes y CERO mappers 😅
   responses:
   - ¿qué es un mapper? [mapper]

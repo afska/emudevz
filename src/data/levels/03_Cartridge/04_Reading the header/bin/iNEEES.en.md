@@ -25,17 +25,17 @@ The format of the header is as follows:
 - `0-3`: Constant `$4E $45 $53 $1A`
 - `4`: Size of 🤖 `PRG-ROM` in `16` KiB units
 - `5`: Size of 👾 `CHR-ROM` in `8` KiB units (value `0` means the board uses `8` KiB of 👾 `CHR-RAM`)
-- `6`: Flags 6 - 🧠 Mapper (lower nybble), 🚽 mirroring, 🔋 game saves (`PRG-RAM`), 🧸 padding
-- `7`: Flags 7 - 🧠 Mapper (upper nybble)
+- `6`: Flags 6 - 🗜️ Mapper (lower nybble), 🚽 mirroring, 🔋 game saves (`PRG-RAM`), 🧸 padding
+- `7`: Flags 7 - 🗜️ Mapper (upper nybble)
 - `8-15`: 🧸 Unused padding
 
-🧠 Cartridge boards are divided into classes called **mappers** based on similar board hardware and behavior, and each mapper has an assigned 8-bit number.
+🗜️ Cartridge boards are divided into classes called **mappers** based on similar board hardware and behavior, and each mapper has an assigned 8-bit number.
 
 🚽 Each cartridge also defines a **mirroring type** which directly affects the screen arrangement and how the game will handle scrolling.
 
 For now:
 
-- 🧠 Mapper id can be any number between `0` and `255`.
+- 🗜️ Mapper id can be any number between `0` and `255`.
 - 🚽 Mirroring type can be any of: `HORIZONTAL`, `VERTICAL`, `FOUR_SCREENS`.
 
 ### Flags 6
