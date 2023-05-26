@@ -2,7 +2,7 @@
 main:
   messages:
   - your CPU memory has to be connected to everything
-  - for example, to map <PRG-ROM> into memory, you need to connect a 🧠  mapper
+  - for example, to map <PRG-ROM> into memory, you need to connect a 🗜️  mapper
   - but so far, we've only coded a few components, and ZERO mappers 😅
   responses:
   - so, what's a mapper? [mapper]
