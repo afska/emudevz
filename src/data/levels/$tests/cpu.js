@@ -476,6 +476,7 @@ it("defines a list of 151 `operations`", () => {
 it("can run 4 simple operations, updating all counters, and calling a `logger` function", () => {
 	// NOP ; LDA #$05 ; STA $0201 ; LDX $0201
 	const cpu = newCPU([0xea, 0xa9, 0x05, 0x8d, 0x01, 0x02, 0xae, 0x01, 0x02]);
+	cpu.should.respondTo("step");
 	let cycles;
 	cpu.pc.setValue(0x8000);
 	cpu.cycle = 7;
