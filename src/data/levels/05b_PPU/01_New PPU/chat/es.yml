@@ -1,5 +1,96 @@
 ---
 main:
+  run: |
+    {{Top}}.load("rendering.png");
   messages:
-  - coming soon!
+  - abróchate el cinturón, ¡vamos a empezar a dibujar <pixels de verdad> en la pantalla! 🖥️
+  - pero primero necesitamos aprender algunas cosas
+  - verás... todo depende del timing ⏱️
+  - 🚲  ciclos, 🌠  scanlines y 🖼️  frames
+  responses:
+  - ¿a qué te refieres? [wdym]
+
+wdym:
+  messages:
+  - 📈  la NEEES genera una señal de video de 60FPS
+  - 🖼️  cada <frame> es una imagen de 256x240 (piensa en ello como una cuadrícula de píxeles)
+  - 🌠  una <scanline> sería una fila de esa cuadrícula
+  - 🚲  ah, y cada scanline toma 341 <ciclos> de PPU para renderizar
+  responses:
+  - ¿y... qué es un ciclo? 🚲 [cycles]
+
+cycles:
+  messages:
+  - cada operación que hace la PPU toma cierta cantidad de tiempo, que medimos en <ciclos>
+  - estos duran solo fracciones de segundo, ¡y pasan varias cosas en un ciclo!
+  - la PPU puede leer o escribir datos, o incluso dibujar un pixel en la pantalla 🎨
+  responses:
+  - (*) ¿los ciclos de PPU son los mismos que los ciclos de CPU? 🤔 [same]
+  - ¿cómo funciona el dibujado? 🖌️ [drawing]
+
+same:
+  messages:
+  - conceptualmente, sí, pero la 🖥️  PPU funciona 3 veces más rápido que la 🧠  CPU
+  - así que los ciclos de PPU son más rápidos (cada ciclo de PPU es, en tiempo, ~1/3~ de un ciclo de CPU)
+  responses:
+  - ...cycles
+
+drawing:
+  messages:
+  - dibuja de arriba a abajo, una scanline a la vez, un pixel por ciclo
+  - las primeras 240 scanlines conforman la parte visible de la imagen
+  - también hay algunas scanlines extras no visibles, lo que le da a la PPU algo de tiempo para descansar 🏖️
+  responses:
+  - ¿qué quieres decir con "tiempo para descansar"? [vblank_hblank]
+
+vblank_hblank:
+  messages:
+  - durante cada scanline (después de haber dibujado todos los píxeles), hay un pequeño descanso conocido como Horizontal Blank, o <HBlank>
+  - y al final de todas las scanlines visibles, hay un descanso más largo, el Vertical Blank, o <VBlank> 🏝️
+  - durante estos períodos, la PPU no está dibujando ningún pixel, y eso da la oportunidad al programa de actualizar la pantalla
+  responses:
+  - entendido, ¿qué sigue? [next]
+
+next:
+  messages:
+  - 📚  crea un archivo en algún lugar para el código de la PPU
+  - |-
+    debería exportar una clase así:
+      ```javascript
+      export default class PPU {
+        constructor(cpu) {
+          this.cpu = cpu;
+
+          this.cycle = 0;
+          this.scanline = -1;
+          this.frame = 0;
+        }
+      }
+      ```
+  - |-
+    y agrega este método (por ahora, solo mantendrá un registro del tiempo):
+      ```javascript
+      step() {
+        this.cycle++;
+        if (this.cycle >= 341) {
+          this.cycle = 0;
+          this.scanline++;
+
+          if (this.scanline >= 261) {
+            this.scanline = -1;
+            this.frame++;
+          }
+        }
+      }
+      ```
+  - luego, importa ese archivo desde 📄  ~/code/index.js~
+  - y agrega una clave `PPU` (que apunte a esa clase) al objeto exportado
+  responses:
+  - ¿por qué el contador de scanlines comienza en -1? 😕 [minus1]
+
+minus1:
+  messages:
+  - la scanline ~-1~ (también llamada <pre-line>) es una línea no visible, en la que la PPU prepara las cosas para el próximo frame
+  - durante este tiempo, reinicia algunas banderas de estado importantes
+  - ¡más sobre esto después! 🔜
   responses: []

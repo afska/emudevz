@@ -15,7 +15,7 @@ hacked:
   run-after-messages: |
     $.goTo("play");
   messages:
-  - ¿quién te dijo que ésta era <TU> computadora?
+  - ¿quién te dijo que esta era <TU> computadora?
   - ...notcool
   responses: []
 

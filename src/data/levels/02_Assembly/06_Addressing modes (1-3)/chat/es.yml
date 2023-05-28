@@ -100,7 +100,7 @@ relative:
     {{Bottom}}.setSelectedCells([0x4028, 0x4029]);
   messages:
   - las instrucciones de bifurcación usan el modo de direccionamiento "Relative"
-  - éstas toman un solo byte, que es usado como un desplazamiento desde la siguiente instrucción
+  - estas toman un solo byte, que es usado como un desplazamiento desde la siguiente instrucción
   - mira el código compilado de `BNE @label` en $4028
   - $D0 es el opcode de `BNE`, y el $02 de $4029 es el desplazamiento del salto 🦘
   - "esto significa que [PC] saltará a $402A + 2: directo hacia $402C, donde comienza @label"
