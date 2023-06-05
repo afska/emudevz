@@ -41,7 +41,16 @@ export default class TestCommand extends Command {
 			const winOnTestPass = !level.memory.chat.winOnEnd;
 
 			let testFiles = _.sortBy(_.keys(level.tests));
-			if (inherit != null) testFiles = inherit;
+			if (inherit != null)
+				testFiles = inherit.flatMap((fileName) => {
+					if (fileName.endsWith("*")) {
+						const prefix = fileName.slice(0, -1);
+						const matches = testFiles.filter((it) => it.startsWith(prefix));
+						return matches;
+					}
+
+					return fileName;
+				});
 
 			if (mainTestFile != null && testFiles.includes(mainTestFile))
 				testFiles = [..._.without(testFiles, mainTestFile), mainTestFile];

@@ -34,6 +34,10 @@ async function pkg() {
 	let globalChapterId = 0;
 	const book = { chapters: [] };
 
+	// global tests
+	const globalTestFiles = fs.readdirSync(GLOBAL_TEST_PATH);
+
+	// create output directory
 	mkdirp.sync(OUTPUT_PATH);
 
 	const chapterFolders = readDirs(LEVELS_PATH);
@@ -41,6 +45,7 @@ async function pkg() {
 		const chapterPath = $path.join(LEVELS_PATH, chapterFolder);
 		const [chapterId, chapterName] = chapterFolder.split("_");
 
+		// parse chapter metadata
 		let chapterMetadata;
 		try {
 			const chapterJSON = fs
@@ -57,6 +62,7 @@ async function pkg() {
 		const chapterNumber = parseInt(chapterHumanId.replace(/\D/g, ""));
 		const isSpecialChapter = _.isNaN(chapterNumber);
 
+		// chapter
 		const chapter = {
 			id: !isSpecialChapter ? globalChapterId : -1,
 			number: !isSpecialChapter ? chapterNumber : chapterId,
@@ -82,6 +88,7 @@ async function pkg() {
 			const levelPath = $path.join(chapterPath, levelFolder);
 			const [__, levelName] = levelFolder.split("_");
 
+			// parse level metadata
 			let levelMetadata;
 			try {
 				const levelJSON = fs
@@ -94,11 +101,12 @@ async function pkg() {
 				process.exit(0);
 			}
 
+			// build help lines
 			if (levelMetadata.help?.addLines != null)
 				helpLines.push(...levelMetadata.help.addLines);
 
+			// level
 			const id = slug((chapterName + "-" + levelName).replace(/_/g, " "));
-
 			chapter.levels.push({
 				id,
 				humanId: `${chapter.humanId}.${localLevelId + 1}`,
@@ -108,13 +116,13 @@ async function pkg() {
 				unlocksGame: levelMetadata.letsPlayUnlock != null,
 			});
 
+			// create compressed file
 			const outputPath = $path.join(OUTPUT_PATH, PREFIX + id + EXTENSION);
 			const output = fs.createWriteStream(outputPath);
 			const archive = archiver(FORMAT, {
 				zlib: { level: COMPRESSION_LEVEL },
 			});
 			archive.pipe(output);
-
 			await new Promise((resolve) => {
 				output.on("close", function () {
 					console.log("✔️  " + id);
@@ -133,14 +141,35 @@ async function pkg() {
 					process.exit(0);
 				});
 
-				archive.directory(levelPath, false);
+				// process test inheritance
 				if (levelMetadata.test?.inherit != null) {
+					// wildcards
+					levelMetadata.test.inherit = levelMetadata.test.inherit.flatMap(
+						(fileName) => {
+							if (fileName.endsWith("*")) {
+								const prefix = fileName.slice(0, -1);
+								const matches = globalTestFiles.filter((it) =>
+									it.startsWith(prefix)
+								);
+								return matches;
+							}
+
+							return fileName;
+						}
+					);
+
+					// copy files
 					levelMetadata.test?.inherit.forEach((file) => {
 						archive.file($path.join(GLOBAL_TEST_PATH, file), {
 							name: $path.join(LOCAL_TEST_FOLDER, file),
 						});
 					});
 				}
+
+				// add content
+				archive.directory(levelPath, false);
+
+				// write compressed file
 				archive.finalize();
 			});
 
