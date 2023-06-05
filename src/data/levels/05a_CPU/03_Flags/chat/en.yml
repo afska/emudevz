@@ -13,6 +13,7 @@ main:
   - all flags are represented by an uppercase letter
   responses:
   - not <all> of them 😑 [notall]
+  - <m.$exercise> 📚  take me to the exercise [what]
 
 notall:
   messages:
@@ -23,6 +24,8 @@ notall:
   - fair enough, what should I do? [what]
 
 what:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
   - 📚  create a `FlagsRegister` class with 6 boolean properties (called ~c~, ~z~, ~i~, ~d~, ~v~ and ~n~)
   - initialize them with ```javascript false```

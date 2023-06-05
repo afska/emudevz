@@ -9,6 +9,7 @@ main:
   - 🚲  cycles, 🌠  scanlines, and 🖼️  frames!
   responses:
   - what do you mean? [wdym]
+  - <m.$exercise> 📚  take me to the exercise [next]
 
 wdym:
   messages:
@@ -52,6 +53,8 @@ vblank_hblank:
   - got it, what's next? [next]
 
 next:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
   - 📚  create a file somewhere for the PPU code
   - |-

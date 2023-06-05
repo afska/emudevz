@@ -7,6 +7,7 @@ main:
   - and increment the cycle counters
   responses:
   - you promised you'd explain cycles 🚲 [cycles]
+  - <m.$exercise> 📚  take me to the exercise [rightway]
 
 cycles:
   messages:
@@ -29,6 +30,8 @@ accuracy:
   - ...cycles
 
 rightway:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
   - |-
     📚  we'll add this method to your `CPU`:

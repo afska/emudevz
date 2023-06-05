@@ -8,6 +8,7 @@ main:
   - así que, la última es `BRK`, que genera un <Pedido de Interrupción>
   responses:
   - ¿qué es una interrupción? [interrupt]
+  - <m.$exercise> 📚  llévame al ejercicio [implement]
 
 interrupt:
   messages:
@@ -68,6 +69,8 @@ iflag:
   - ...nmi
 
 implement:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
   - genial
   - vamos a modelar las interrupciones como objetos `{ id, vector }`

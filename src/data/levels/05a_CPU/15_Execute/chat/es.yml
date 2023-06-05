@@ -7,6 +7,7 @@ main:
   - e incrementaremos los contadores de ciclos
   responses:
   - prometiste que explicarías ciclos 🚲 [cycles]
+  - <m.$exercise> 📚  llévame al ejercicio [rightway]
 
 cycles:
   messages:
@@ -29,6 +30,8 @@ accuracy:
   - ...cycles
 
 rightway:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
   - |-
     📚  vamos a agregar este método en tu `CPU`:

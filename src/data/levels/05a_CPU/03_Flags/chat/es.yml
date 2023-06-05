@@ -13,6 +13,7 @@ main:
   - todas las banderas se representan con una letra en mayúscula
   responses:
   - no <todas> 😑 [notall]
+  - <m.$exercise> 📚  llévame al ejercicio [what]
 
 notall:
   messages:
@@ -23,6 +24,8 @@ notall:
   - está bien, ¿qué debería hacer? [what]
 
 what:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
   - 📚  crea una clase `FlagsRegister` con 6 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~d~, ~v~ y ~n~)
   - inicialízalas en ```javascript false```
