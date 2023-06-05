@@ -1,7 +1,7 @@
 const { evaluate, byte } = $;
 
 let mainModule, Console;
-beforeEach(async () => {
+before(async () => {
 	mainModule = await evaluate();
 });
 

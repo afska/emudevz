@@ -1,7 +1,7 @@
 const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
 let mainModule, NEEES;
-beforeEach(async () => {
+before(async () => {
 	mainModule = await evaluate();
 	NEEES = await new EmulatorBuilder().addUserCPU(true, true).build();
 });
@@ -29,6 +29,7 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 // 5a.2 Registers
 
 it("includes a `memory` property with a `CPUMemory` instance", async () => {
+	mainModule = await evaluate();
 	const CPU = mainModule.default.CPU;
 	const CPUMemory = (await evaluateModule($.modules["/code/CPUMemory.js"]))
 		.default;

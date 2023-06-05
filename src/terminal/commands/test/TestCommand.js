@@ -153,7 +153,7 @@ export default class TestCommand extends Command {
 		const idProvider = { id: 0 };
 		for (let fileName of testFiles) {
 			const test = level.tests[fileName];
-			let { _before_, _after_, _tests_ } = await framework.getTestDefinition(
+			let { _tests_, ...definition } = await framework.getTestDefinition(
 				test,
 				$,
 				idProvider
@@ -165,9 +165,8 @@ export default class TestCommand extends Command {
 			if (!_.isEmpty(_tests_))
 				testDefinitions.push({
 					fileName,
-					_before_,
-					_after_,
 					_tests_,
+					...definition,
 				});
 		}
 

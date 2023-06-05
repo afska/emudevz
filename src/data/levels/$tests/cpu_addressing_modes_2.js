@@ -1,7 +1,7 @@
 const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
 let mainModule, NEEES;
-beforeEach(async () => {
+before(async () => {
 	mainModule = await evaluate();
 	NEEES = await new EmulatorBuilder().addUserCPU(true, true).build();
 });

@@ -1,7 +1,7 @@
 const { evaluate, filesystem, byte } = $;
 
 let mainModule;
-beforeEach(async () => {
+before(async () => {
 	mainModule = await evaluate();
 });
 
@@ -33,6 +33,7 @@ it("`/code/index.js` imports the module from `/code/Cartridge.js`", () => {
 });
 
 it("`/code/index.js` exports an object containing the class", async () => {
+	mainModule = await evaluate();
 	const Cartridge = (await evaluateModule($.modules["/code/Cartridge.js"]))
 		.default;
 

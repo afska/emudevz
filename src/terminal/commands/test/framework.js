@@ -10,14 +10,31 @@ import testContext from "./context";
 
 export default {
 	async test(_code_, _testDefinition_) {
-		const { _before_, _after_, _tests_ } = _testDefinition_;
+		const {
+			_before_,
+			_beforeEach_,
+			_afterEach_,
+			_after_,
+			_tests_,
+		} = _testDefinition_;
 
 		let results = [];
+		let didBeforeRun = false;
+		let didAfterRun = false;
 		for (let { id, name, test } of _tests_) {
 			try {
-				if (_before_) await _before_();
+				if (!didBeforeRun && _before_) {
+					await _before_();
+					didBeforeRun = true;
+				}
+				if (_beforeEach_) await _beforeEach_();
 				await test();
-				if (_after_) await _after_();
+				if (_afterEach_) await _afterEach_();
+				if (!didAfterRun && _after_) {
+					await _after_();
+					didAfterRun = true;
+				}
+
 				results.push({ id, name, passed: true });
 			} catch (e) {
 				let testCode = test.toString();
@@ -44,6 +61,8 @@ export default {
 
 	async getTestDefinition(_code_, $ = {}, _idProvider_ = { id: 0 }) {
 		let _before_ = null;
+		let _beforeEach_ = null;
+		let _afterEach_ = null;
 		let _after_ = null;
 		const _tests_ = [];
 
@@ -51,12 +70,22 @@ export default {
 		const Book = _Book_;
 
 		// eslint-disable-next-line
-		const beforeEach = (run) => {
+		const before = (run) => {
 			_before_ = run;
 		};
 
 		// eslint-disable-next-line
+		const beforeEach = (run) => {
+			_beforeEach_ = run;
+		};
+
+		// eslint-disable-next-line
 		const afterEach = (run) => {
+			_afterEach_ = null;
+		};
+
+		// eslint-disable-next-line
+		const after = (run) => {
 			_after_ = null;
 		};
 
@@ -91,7 +120,7 @@ export default {
 
 		eval(_code_);
 
-		return { _before_, _after_, _tests_ };
+		return { _before_, _beforeEach_, _afterEach_, _after_, _tests_ };
 	},
 
 	_markExactErrorLine(testErrorLine, _code_, testCode) {
