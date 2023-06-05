@@ -21,7 +21,7 @@ export default class Book {
 	getId(humanId) {
 		for (let chapter of this.chapters) {
 			for (let level of chapter.levels) {
-				if (level.humanId === humanId) return level.id;
+				if (level.humanId === humanId) return level.globalId;
 			}
 		}
 
@@ -35,14 +35,6 @@ export default class Book {
 	canGoToNextChapter(chapter) {
 		const nextLevelId = this.nextIdOf(_.last(chapter.levels).id, true);
 		return this.isUnlocked(nextLevelId);
-	}
-
-	isUnlockedHumanId(humanId) {
-		return this.isUnlocked(this.getId(humanId));
-	}
-
-	isFinishedHumanId(humanId) {
-		return this.isFinished(this.getId(humanId));
 	}
 
 	isUnlocked(levelId) {

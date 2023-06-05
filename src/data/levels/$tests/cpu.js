@@ -23,7 +23,7 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 	locales: {
 		es: "`/code/index.js` exporta un objeto que contiene la clase `CPU`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.1"),
+	use: ({ id }, book) => id >= book.getId("5a.1"),
 });
 
 // 5a.2 Registers
@@ -41,7 +41,7 @@ it("includes a `memory` property with a `CPUMemory` instance", async () => {
 	locales: {
 		es: "incluye una propiedad `memory` con una instancia de `CPUMemory`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
@@ -56,7 +56,7 @@ it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
 	locales: {
 		es: "incluye dos propiedades misteriosas: `cycle` y `extraCycles`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 it("includes all the registers", () => {
@@ -71,7 +71,7 @@ it("includes all the registers", () => {
 	locales: {
 		es: "incluye todos los registros",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 it("all registers start from 0", () => {
@@ -85,7 +85,7 @@ it("all registers start from 0", () => {
 	locales: {
 		es: "todos los registros comienzan en 0",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 it("8-bit registers can save and read values (valid range)", () => {
@@ -101,7 +101,7 @@ it("8-bit registers can save and read values (valid range)", () => {
 	locales: {
 		es: "los registros de 8 bits pueden guardar y leer valores (rango válido)",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 it("8-bit registers wrap with values outside the range", () => {
@@ -121,7 +121,7 @@ it("8-bit registers wrap with values outside the range", () => {
 	locales: {
 		es: "los registros de 8 bits dan la vuelta con valores fuera del rango",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 it("16-bit registers can save and read values (valid range)", () => {
@@ -135,7 +135,7 @@ it("16-bit registers can save and read values (valid range)", () => {
 	locales: {
 		es: "los registros de 16 bits pueden guardar y leer valores (rango válido)",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 it("16-bit registers wrap with values outside the range", () => {
@@ -151,7 +151,7 @@ it("16-bit registers wrap with values outside the range", () => {
 	locales: {
 		es: "los registros de 16 bits dan la vuelta con valores fuera del rango",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
 // 5a.3 Flags
@@ -172,7 +172,7 @@ it("includes a `flags` property with 6 booleans", () => {
 	locales: {
 		es: "incluye una propiedad `flags` con 6 booleanos",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.3"),
+	use: ({ id }, book) => id >= book.getId("5a.3"),
 });
 
 it("flags register can be serialized into a byte", () => {
@@ -202,7 +202,7 @@ it("flags register can be serialized into a byte", () => {
 	locales: {
 		es: "el registro de flags puede ser serializado en un byte",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.3"),
+	use: ({ id }, book) => id >= book.getId("5a.3"),
 });
 
 it("flags register can be set from a byte", () => {
@@ -238,7 +238,7 @@ it("flags register can be set from a byte", () => {
 	locales: {
 		es: "el registro de flags puede ser asignado desde un byte",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.3"),
+	use: ({ id }, book) => id >= book.getId("5a.3"),
 });
 
 // 5a.4 Helpers
@@ -271,7 +271,7 @@ it("can increment and decrement registers", () => {
 	locales: {
 		es: "puede incrementar y decrementar registros",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.4"),
+	use: ({ id }, book) => id >= book.getId("5a.4"),
 });
 
 it("can update the Zero Flag", () => {
@@ -288,7 +288,7 @@ it("can update the Zero Flag", () => {
 	locales: {
 		es: "puede actualizar la Bandera Zero",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.4"),
+	use: ({ id }, book) => id >= book.getId("5a.4"),
 });
 
 it("can update the Negative Flag", () => {
@@ -305,7 +305,7 @@ it("can update the Negative Flag", () => {
 	locales: {
 		es: "puede actualizar la Bandera Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.4"),
+	use: ({ id }, book) => id >= book.getId("5a.4"),
 });
 
 it("can update the Zero and Negative flags", () => {
@@ -322,7 +322,7 @@ it("can update the Zero and Negative flags", () => {
 	locales: {
 		es: "puede actualizar las Banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.4"),
+	use: ({ id }, book) => id >= book.getId("5a.4"),
 });
 
 // 5a.5 Stack
@@ -339,7 +339,7 @@ it("includes a `stack` property with `push`/`pop` methods", () => {
 	locales: {
 		es: "incluye una propiedad `stack` con métodos `push`/`pop`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.5"),
+	use: ({ id }, book) => id >= book.getId("5a.5"),
 });
 
 it("the stack can push and pop values", () => {
@@ -356,7 +356,7 @@ it("the stack can push and pop values", () => {
 	locales: {
 		es: "la pila puede poner y sacar elementos",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.5"),
+	use: ({ id }, book) => id >= book.getId("5a.5"),
 });
 
 it("the stack updates RAM and decrements [SP] on push", () => {
@@ -371,7 +371,7 @@ it("the stack updates RAM and decrements [SP] on push", () => {
 	locales: {
 		es: "la pila actualiza RAM y [SP] al poner",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.5"),
+	use: ({ id }, book) => id >= book.getId("5a.5"),
 });
 
 it("the stack reads RAM and increments [SP] on pop", () => {
@@ -387,7 +387,7 @@ it("the stack reads RAM and increments [SP] on pop", () => {
 	locales: {
 		es: "la pila lee RAM e incrementa [SP] al sacar",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.5"),
+	use: ({ id }, book) => id >= book.getId("5a.5"),
 });
 
 // 5a.6 Little Endian
@@ -405,7 +405,7 @@ it("can read 16-bit values from the memory bus", () => {
 	locales: {
 		es: "puede leer valores de 16 bits del bus de memoria",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.6"),
+	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
 
 it("can push 16-bit values onto the stack", () => {
@@ -420,7 +420,7 @@ it("can push 16-bit values onto the stack", () => {
 	locales: {
 		es: "puede poner valores de 16 bits en la pila",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.6"),
+	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
 
 it("can pop 16-bit values from the stack", () => {
@@ -435,7 +435,7 @@ it("can pop 16-bit values from the stack", () => {
 	locales: {
 		es: "puede sacar valores de 16 bits de la pila",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.6"),
+	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
 
 // 5a.14 Operations
@@ -469,7 +469,7 @@ it("defines a list of 151 `operations`", () => {
 	locales: {
 		es: "define una lista con 151 `operations`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.14"),
+	use: ({ id }, book) => id >= book.getId("5a.14"),
 });
 
 // 5a.15 Execute
@@ -542,5 +542,5 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
 		es:
 			"puede ejecutar 4 operaciones simples, actualizando todos los contadores, y llamando a una función `logger`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.15"),
+	use: ({ id }, book) => id >= book.getId("5a.15"),
 });

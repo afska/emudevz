@@ -11,7 +11,7 @@ it("`/code/Cartridge.js` exists as a file", () => {
 	filesystem.exists("/code/Cartridge.js").should.be.true;
 })({
 	locales: { es: "`/code/Cartridge.js` existe como archivo" },
-	use: (book) => book.isUnlockedHumanId("3.1"),
+	use: ({ id }, book) => id >= book.getId("3.1"),
 });
 
 it("`/code/Cartridge.js` is a JS module that exports a class", async () => {
@@ -22,14 +22,14 @@ it("`/code/Cartridge.js` is a JS module that exports a class", async () => {
 	locales: {
 		es: "`/code/Cartridge.js` es un módulo JS que exporta una clase",
 	},
-	use: (book) => book.isUnlockedHumanId("3.1"),
+	use: ({ id }, book) => id >= book.getId("3.1"),
 });
 
 it("`/code/index.js` imports the module from `/code/Cartridge.js`", () => {
 	expect($.modules["/code/Cartridge.js"]).to.exist;
 })({
 	locales: { es: "`/code/index.js` importa el módulo de `/code/Cartridge.js`" },
-	use: (book) => book.isUnlockedHumanId("3.1"),
+	use: ({ id }, book) => id >= book.getId("3.1"),
 });
 
 it("`/code/index.js` exports an object containing the class", async () => {
@@ -44,7 +44,7 @@ it("`/code/index.js` exports an object containing the class", async () => {
 	locales: {
 		es: "`/code/index.js` exporta un objeto que contiene la clase",
 	},
-	use: (book) => book.isUnlockedHumanId("3.1"),
+	use: ({ id }, book) => id >= book.getId("3.1"),
 });
 
 // 3.3 The magic constant
@@ -59,7 +59,7 @@ it("instantiating a `Cartridge` with a valid header saves a `bytes` property", (
 		es:
 			"instanciar un `Cartridge` con una cabecera válida guarda una propiedad `bytes`",
 	},
-	use: (book) => book.isUnlockedHumanId("3.3"),
+	use: ({ id }, book) => id >= book.getId("3.3"),
 });
 
 it("instantiating a `Cartridge` with an invalid header throws an error", () => {
@@ -79,7 +79,7 @@ it("instantiating a `Cartridge` with an invalid header throws an error", () => {
 	locales: {
 		es: "instanciar un `Cartridge` con una cabecera inválida tira un error",
 	},
-	use: (book) => book.isUnlockedHumanId("3.3"),
+	use: ({ id }, book) => id >= book.getId("3.3"),
 });
 
 // 3.4 Reading the header
@@ -100,7 +100,7 @@ it("has a `header` property with metadata (PRG-ROM pages)", () => {
 	locales: {
 		es: "tiene una propiedad `header` con metadatos (páginas de PRG-ROM)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.4"),
+	use: ({ id }, book) => id >= book.getId("3.4"),
 });
 
 it("has a `header` property with metadata (CHR-ROM pages)", () => {
@@ -121,7 +121,7 @@ it("has a `header` property with metadata (CHR-ROM pages)", () => {
 	locales: {
 		es: "tiene una propiedad `header` con metadatos (páginas de CHR-ROM)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.4"),
+	use: ({ id }, book) => id >= book.getId("3.4"),
 });
 
 it("has a `header` property with metadata (512-byte padding)", () => {
@@ -146,7 +146,7 @@ it("has a `header` property with metadata (512-byte padding)", () => {
 	locales: {
 		es: "tiene una propiedad `header` con metadatos (padding de 512 bytes)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.4"),
+	use: ({ id }, book) => id >= book.getId("3.4"),
 });
 
 it("has a `header` property with metadata (PRG-RAM presence)", () => {
@@ -168,7 +168,7 @@ it("has a `header` property with metadata (PRG-RAM presence)", () => {
 	locales: {
 		es: "tiene una propiedad `header` con metadatos (presencia de PRG-RAM)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.4"),
+	use: ({ id }, book) => id >= book.getId("3.4"),
 });
 
 it("has a `header` property with metadata (mirroring)", () => {
@@ -192,7 +192,7 @@ it("has a `header` property with metadata (mirroring)", () => {
 	locales: {
 		es: "tiene una propiedad `header` con metadatos (mirroring)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.4"),
+	use: ({ id }, book) => id >= book.getId("3.4"),
 });
 
 it("has a `header` property with metadata (mapper id)", () => {
@@ -211,7 +211,7 @@ it("has a `header` property with metadata (mapper id)", () => {
 	locales: {
 		es: "tiene una propiedad `header` con metadatos (id de mapper)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.4"),
+	use: ({ id }, book) => id >= book.getId("3.4"),
 });
 
 // 3.5 Locating the program
@@ -250,7 +250,7 @@ it("has a `prg` method that returns the code (no padding)", () => {
 	locales: {
 		es: "tiene un método `prg` que retorna el código (sin relleno)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.5"),
+	use: ({ id }, book) => id >= book.getId("3.5"),
 });
 
 it("has a `prg` method that returns the code (with padding)", () => {
@@ -264,7 +264,7 @@ it("has a `prg` method that returns the code (with padding)", () => {
 	locales: {
 		es: "tiene un método `prg` que retorna el código (con relleno)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.5"),
+	use: ({ id }, book) => id >= book.getId("3.5"),
 });
 
 // 3.6 Locating the graphics
@@ -280,7 +280,7 @@ it("has a `chr` method that returns the graphics (using CHR-ROM)", () => {
 	locales: {
 		es: "tiene un método `chr` que retorna los gráficos (usando CHR-ROM)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.6"),
+	use: ({ id }, book) => id >= book.getId("3.6"),
 });
 
 it("has a `chr` method that returns the graphics (using CHR-RAM)", () => {
@@ -294,5 +294,5 @@ it("has a `chr` method that returns the graphics (using CHR-RAM)", () => {
 	locales: {
 		es: "tiene un método `chr` que retorna los gráficos (usando CHR-RAM)",
 	},
-	use: (book) => book.isUnlockedHumanId("3.6"),
+	use: ({ id }, book) => id >= book.getId("3.6"),
 });

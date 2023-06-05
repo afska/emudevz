@@ -30,7 +30,7 @@ function newCPU(prgBytes = []) {
 		locales: {
 			es: "`INDEXED_ZERO_PAGE_" + name + "`: inputSize == 1",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -55,7 +55,7 @@ function newCPU(prgBytes = []) {
 				"` / `getAddress`: " +
 				`retorna la dirección + [${name}]`,
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -79,7 +79,7 @@ function newCPU(prgBytes = []) {
 				name +
 				"` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it("`INDEXED_ZERO_PAGE_" + name + "`: cannot cross the first page", () => {
@@ -94,7 +94,7 @@ function newCPU(prgBytes = []) {
 		locales: {
 			es: "`INDEXED_ZERO_PAGE_" + name + "`: no puede cruzar la primer página",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 });
 
@@ -113,7 +113,7 @@ function newCPU(prgBytes = []) {
 		locales: {
 			es: "`INDEXED_ABSOLUTE_" + name + "`: inputSize == 2",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -138,7 +138,7 @@ function newCPU(prgBytes = []) {
 				"` / `getAddress`: " +
 				`retorna la dirección + [${name}]`,
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -162,7 +162,7 @@ function newCPU(prgBytes = []) {
 				name +
 				"` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it("`INDEXED_ABSOLUTE_" + name + "`: cannot cross $FFFF", () => {
@@ -177,7 +177,7 @@ function newCPU(prgBytes = []) {
 		locales: {
 			es: "`INDEXED_ABSOLUTE_" + name + "`: no puede cruzar $FFFF",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it("`INDEXED_ABSOLUTE_" + name + "`: adds 1 cycle if it crosses page", () => {
@@ -196,7 +196,7 @@ function newCPU(prgBytes = []) {
 		locales: {
 			es: "`INDEXED_ABSOLUTE_" + name + "`: agrega 1 ciclo si cruza de página",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 
 	it(
@@ -218,7 +218,7 @@ function newCPU(prgBytes = []) {
 				name +
 				"`: no agrega ningún ciclo si no cruza de página",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.13"),
+		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
 });
 
@@ -231,7 +231,7 @@ it("`INDEXED_INDIRECT`: inputSize == 1", () => {
 	locales: {
 		es: "`INDEXED_INDIRECT`: inputSize == 1",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDEXED_INDIRECT` / `getAddress`: grabs the (address + [X]) from memory", () => {
@@ -250,7 +250,7 @@ it("`INDEXED_INDIRECT` / `getAddress`: grabs the (address + [X]) from memory", (
 		es:
 			"`INDEXED_INDIRECT` / `getAddress`: toma la (dirección + [X]) desde la memoria",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDEXED_INDIRECT` / `getValue`: reads from memory the address returned by `getAddress`", () => {
@@ -270,7 +270,7 @@ it("`INDEXED_INDIRECT` / `getValue`: reads from memory the address returned by `
 		es:
 			"`INDEXED_INDIRECT` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDEXED_INDIRECT`: cannot cross the first page", () => {
@@ -288,7 +288,7 @@ it("`INDEXED_INDIRECT`: cannot cross the first page", () => {
 	locales: {
 		es: "`INDEXED_INDIRECT`: no puede cruzar la primer página",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDEXED_INDIRECT`: the 16-bit read wraps within the first page", () => {
@@ -307,7 +307,7 @@ it("`INDEXED_INDIRECT`: the 16-bit read wraps within the first page", () => {
 		es:
 			"`INDEXED_INDIRECT`: la lectura de 16 bits se envuelve dentro de la primer página",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: inputSize == 1", () => {
@@ -319,7 +319,7 @@ it("`INDIRECT_INDEXED`: inputSize == 1", () => {
 	locales: {
 		es: "`INDIRECT_INDEXED`: inputSize == 1",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED` / `getAddress`: grabs the address from memory, then adds [Y]", () => {
@@ -338,7 +338,7 @@ it("`INDIRECT_INDEXED` / `getAddress`: grabs the address from memory, then adds 
 		es:
 			"`INDIRECT_INDEXED` / `getAddress`: toma la dirección desde la memoria, luego suma [Y]",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED` / `getValue`: reads from memory the address returned by `getAddress`", () => {
@@ -358,7 +358,7 @@ it("`INDIRECT_INDEXED` / `getValue`: reads from memory the address returned by `
 		es:
 			"`INDIRECT_INDEXED` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: cannot cross $FFFF", () => {
@@ -376,7 +376,7 @@ it("`INDIRECT_INDEXED`: cannot cross $FFFF", () => {
 	locales: {
 		es: "`INDIRECT_INDEXED`: no puede cruzar $FFFF",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: the 16-bit read wraps within the first page", () => {
@@ -395,7 +395,7 @@ it("`INDIRECT_INDEXED`: the 16-bit read wraps within the first page", () => {
 		es:
 			"`INDIRECT_INDEXED`: la lectura de 16 bits se envuelve dentro de la primer página",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: adds 1 cycle if it crosses page", () => {
@@ -416,7 +416,7 @@ it("`INDIRECT_INDEXED`: adds 1 cycle if it crosses page", () => {
 	locales: {
 		es: "`INDIRECT_INDEXED`: agrega 1 ciclo si cruza de página",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
 
 it("`INDIRECT_INDEXED`: doesn't add any cycles if there's no page-cross", () => {
@@ -432,5 +432,5 @@ it("`INDIRECT_INDEXED`: doesn't add any cycles if there's no page-cross", () => 
 	locales: {
 		es: "`INDIRECT_INDEXED`: no agrega ningún ciclo si no cruza de página",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.13"),
+	use: ({ id }, book) => id >= book.getId("5a.13"),
 });

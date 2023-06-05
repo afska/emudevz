@@ -24,7 +24,7 @@ it("`BIT`: argument == 'value'", () => {
 	locales: {
 		es: "`BIT`: argument == 'value'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.9"),
+	use: ({ id }, book) => id >= book.getId("5a.9"),
 });
 
 [
@@ -56,7 +56,7 @@ it("`BIT`: argument == 'value'", () => {
 				value.toString(2).padStart(8, "0") +
 				"~",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.9"),
+		use: ({ id }, book) => id >= book.getId("5a.9"),
 	});
 });
 
@@ -109,7 +109,7 @@ it("`BIT`: argument == 'value'", () => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.9"),
+		use: ({ id }, book) => id >= book.getId("5a.9"),
 	});
 
 	it(
@@ -135,7 +135,7 @@ it("`BIT`: argument == 'value'", () => {
 				"`: " +
 				`compara y actualiza las banderas apropiadas con [${name}] = ${source} y value = ${value}`,
 		},
-		use: (book) => book.isUnlockedHumanId("5a.9"),
+		use: ({ id }, book) => id >= book.getId("5a.9"),
 	});
 });
 
@@ -149,7 +149,7 @@ it("`BIT`: argument == 'value'", () => {
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
 		},
-		use: (book) => book.isUnlockedHumanId("5a.9"),
+		use: ({ id }, book) => id >= book.getId("5a.9"),
 	});
 });
 
@@ -222,6 +222,6 @@ it("`BIT`: argument == 'value'", () => {
 					.toString(2)
 					.padStart(8, "0")} => ${result.toString(2).padStart(8, "0")}`,
 		},
-		use: (book) => book.isUnlockedHumanId("5a.9"),
+		use: ({ id }, book) => id >= book.getId("5a.9"),
 	});
 });

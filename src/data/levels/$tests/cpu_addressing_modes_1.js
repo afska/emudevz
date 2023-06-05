@@ -24,7 +24,7 @@ it("`/code/index.js` exports an object containing the `addressingModes` object",
 		es:
 			"`/code/index.js` exporta un objeto que contiene el objeto `addressingModes`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("every member of the `addressingModes` object has an `id`", () => {
@@ -38,7 +38,7 @@ it("every member of the `addressingModes` object has an `id`", () => {
 	locales: {
 		es: "cada miembro del objeto `addressingModes` tiene un `id`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`IMPLICIT`: inputSize == 0", () => {
@@ -50,7 +50,7 @@ it("`IMPLICIT`: inputSize == 0", () => {
 	locales: {
 		es: "`IMPLICIT`: inputSize == 0",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`IMPLICIT` / `getAddress`: returns null", () => {
@@ -62,7 +62,7 @@ it("`IMPLICIT` / `getAddress`: returns null", () => {
 	locales: {
 		es: "`IMPLICIT` / `getAddress`: retorna null",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`IMPLICIT` / `getValue`: unsupported", () => {
@@ -76,7 +76,7 @@ it("`IMPLICIT` / `getValue`: unsupported", () => {
 	locales: {
 		es: "`IMPLICIT` / `getValue`: no soportado",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`IMMEDIATE`: inputSize == 1", () => {
@@ -88,7 +88,7 @@ it("`IMMEDIATE`: inputSize == 1", () => {
 	locales: {
 		es: "`IMMEDIATE`: inputSize == 1",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`IMMEDIATE` / `getAddress`: unsupported", () => {
@@ -102,7 +102,7 @@ it("`IMMEDIATE` / `getAddress`: unsupported", () => {
 	locales: {
 		es: "`IMMEDIATE` / `getAddress`: no soportado",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`IMMEDIATE` / `getValue`: returns the same value", () => {
@@ -117,7 +117,7 @@ it("`IMMEDIATE` / `getValue`: returns the same value", () => {
 	locales: {
 		es: "`IMMEDIATE` / `getValue`: retorna el mismo valor",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`ABSOLUTE`: inputSize == 2", () => {
@@ -129,7 +129,7 @@ it("`ABSOLUTE`: inputSize == 2", () => {
 	locales: {
 		es: "`ABSOLUTE`: inputSize == 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`ABSOLUTE` / `getAddress`: returns the same address", () => {
@@ -144,7 +144,7 @@ it("`ABSOLUTE` / `getAddress`: returns the same address", () => {
 	locales: {
 		es: "`ABSOLUTE` / `getAddress`: retorna la misma dirección",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`ABSOLUTE` / `getValue`: reads from memory the address returned by `getAddress`", () => {
@@ -161,7 +161,7 @@ it("`ABSOLUTE` / `getValue`: reads from memory the address returned by `getAddre
 		es:
 			"`ABSOLUTE` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`ZERO_PAGE`: inputSize == 1", () => {
@@ -173,7 +173,7 @@ it("`ZERO_PAGE`: inputSize == 1", () => {
 	locales: {
 		es: "`ZERO_PAGE`: inputSize == 1",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`ZERO_PAGE` / `getAddress`: returns the same address", () => {
@@ -188,7 +188,7 @@ it("`ZERO_PAGE` / `getAddress`: returns the same address", () => {
 	locales: {
 		es: "`ZERO_PAGE` / `getAddress`: retorna la misma dirección",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`ZERO_PAGE` / `getValue`: reads from memory the address returned by `getAddress`", () => {
@@ -205,7 +205,7 @@ it("`ZERO_PAGE` / `getValue`: reads from memory the address returned by `getAddr
 		es:
 			"`ZERO_PAGE` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`RELATIVE`: inputSize == 1", () => {
@@ -217,7 +217,7 @@ it("`RELATIVE`: inputSize == 1", () => {
 	locales: {
 		es: "`RELATIVE`: inputSize == 1",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`RELATIVE` / `getAddress`: returns an address based on [PC] + offset", () => {
@@ -238,7 +238,7 @@ it("`RELATIVE` / `getAddress`: returns an address based on [PC] + offset", () =>
 		es:
 			"`RELATIVE` / `getAddress`: retorna una dirección basada en [PC] + desplazamiento",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`RELATIVE` / `getValue`: unsupported", () => {
@@ -252,7 +252,7 @@ it("`RELATIVE` / `getValue`: unsupported", () => {
 	locales: {
 		es: "`RELATIVE` / `getValue`: no soportado",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`RELATIVE`: cannot cross $FFFF", () => {
@@ -268,7 +268,7 @@ it("`RELATIVE`: cannot cross $FFFF", () => {
 	locales: {
 		es: "`RELATIVE`: no puede cruzar $FFFF",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`RELATIVE`: adds 2 cycles if it crosses page", () => {
@@ -287,7 +287,7 @@ it("`RELATIVE`: adds 2 cycles if it crosses page", () => {
 	locales: {
 		es: "`RELATIVE`: agrega 2 ciclos si cruza de página",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`RELATIVE`: doesn't add any cycles if there's no page-cross", () => {
@@ -301,7 +301,7 @@ it("`RELATIVE`: doesn't add any cycles if there's no page-cross", () => {
 	locales: {
 		es: "`RELATIVE`: no agrega ningún ciclo si no cruza de página",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`INDIRECT`: inputSize == 2", () => {
@@ -313,7 +313,7 @@ it("`INDIRECT`: inputSize == 2", () => {
 	locales: {
 		es: "`INDIRECT`: inputSize == 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`INDIRECT` / `getAddress`: grabs the address from memory", () => {
@@ -330,7 +330,7 @@ it("`INDIRECT` / `getAddress`: grabs the address from memory", () => {
 	locales: {
 		es: "`INDIRECT` / `getAddress`: toma la dirección desde la memoria",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 it("`INDIRECT` / `getValue`: unsupported", () => {
@@ -344,7 +344,7 @@ it("`INDIRECT` / `getValue`: unsupported", () => {
 	locales: {
 		es: "`INDIRECT` / `getValue`: no soportado",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.12"),
+	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 // --- After passing 5a.16 ---
@@ -363,5 +363,5 @@ it("`INDIRECT`: emulates the 'page boundary bug'", () => {
 	locales: {
 		es: "`INDIRECT`: emula el 'page boundary bug'",
 	},
-	use: (book) => book.isFinishedHumanId("5a.16"),
+	use: ({ id }, book) => id > book.getId("5a.16"),
 });

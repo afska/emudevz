@@ -24,7 +24,7 @@ it("`/code/index.js` exports an object containing the `instructions` object", ()
 		es:
 			"`/code/index.js` exporta un objeto que contiene el objeto `instructions`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("every member of the `instructions` object has an `id`", () => {
@@ -38,7 +38,7 @@ it("every member of the `instructions` object has an `id`", () => {
 	locales: {
 		es: "cada miembro del objeto `instructions` tiene un `id`",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ADC`: argument == 'value'", () => {
@@ -50,7 +50,7 @@ it("`ADC`: argument == 'value'", () => {
 	locales: {
 		es: "`ADC`: argument == 'value'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ADC`: adds the value to the Accumulator", () => {
@@ -64,7 +64,7 @@ it("`ADC`: adds the value to the Accumulator", () => {
 	locales: {
 		es: "`ADC`: suma el valor al Acumulador",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ADC`: adds the Carry bit", () => {
@@ -79,7 +79,7 @@ it("`ADC`: adds the Carry bit", () => {
 	locales: {
 		es: "`ADC`: suma el bit de Carry",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ADC`: updates the Zero and Negative flags", () => {
@@ -98,7 +98,7 @@ it("`ADC`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`ADC`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ADC`: updates the Carry and Overflow flags", () => {
@@ -125,7 +125,7 @@ it("`ADC`: updates the Carry and Overflow flags", () => {
 	locales: {
 		es: "`ADC`: actualiza las banderas Carry y Overflow",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ASL`: argument == 'address'", () => {
@@ -137,7 +137,7 @@ it("`ASL`: argument == 'address'", () => {
 	locales: {
 		es: "`ASL`: argument == 'address'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ASL`: multiplies the value by 2", () => {
@@ -152,7 +152,7 @@ it("`ASL`: multiplies the value by 2", () => {
 	locales: {
 		es: "`ASL`: multiplica el valor por 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ASL`: fills the Carry Flag with bit 7", () => {
@@ -167,7 +167,7 @@ it("`ASL`: fills the Carry Flag with bit 7", () => {
 	locales: {
 		es: "`ASL`: llena la Bandera Carry con el bit 7",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ASL`: updates the Zero and Negative flags", () => {
@@ -187,7 +187,7 @@ it("`ASL`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`ASL`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ASLa`: argument == 'no'", () => {
@@ -199,7 +199,7 @@ it("`ASLa`: argument == 'no'", () => {
 	locales: {
 		es: "`ASLa`: argument == 'no'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ASLa`: multiplies [A] by 2", () => {
@@ -214,7 +214,7 @@ it("`ASLa`: multiplies [A] by 2", () => {
 	locales: {
 		es: "`ASLa`: multiplica [A] por 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ASLa`: fills the Carry Flag with bit 7", () => {
@@ -229,7 +229,7 @@ it("`ASLa`: fills the Carry Flag with bit 7", () => {
 	locales: {
 		es: "`ASLa`: llena la Bandera Carry con el bit 7",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ASLa`: updates the Zero and Negative flags", () => {
@@ -249,7 +249,7 @@ it("`ASLa`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`ASLa`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`DEC`: argument == 'address'", () => {
@@ -261,7 +261,7 @@ it("`DEC`: argument == 'address'", () => {
 	locales: {
 		es: "`DEC`: argument == 'address'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`DEC`: decrements the value", () => {
@@ -275,7 +275,7 @@ it("`DEC`: decrements the value", () => {
 	locales: {
 		es: "`DEC`: decrementa el valor",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`DEC`: updates the Zero Flag", () => {
@@ -291,7 +291,7 @@ it("`DEC`: updates the Zero Flag", () => {
 	locales: {
 		es: "`DEC`: actualiza la Bandera Zero",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`DEC`: updates the Negative Flag", () => {
@@ -307,7 +307,7 @@ it("`DEC`: updates the Negative Flag", () => {
 	locales: {
 		es: "`DEC`: actualiza la Bandera Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`INC`: argument == 'address'", () => {
@@ -319,7 +319,7 @@ it("`INC`: argument == 'address'", () => {
 	locales: {
 		es: "`INC`: argument == 'address'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`INC`: increments the value in memory", () => {
@@ -333,7 +333,7 @@ it("`INC`: increments the value in memory", () => {
 	locales: {
 		es: "`INC`: incrementa el valor en memoria",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`INC`: sets the Zero Flag", () => {
@@ -349,7 +349,7 @@ it("`INC`: sets the Zero Flag", () => {
 	locales: {
 		es: "`INC`: actualiza la Bandera Zero",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`INC`: sets the Negative Flag", () => {
@@ -365,7 +365,7 @@ it("`INC`: sets the Negative Flag", () => {
 	locales: {
 		es: "`INC`: actualiza la Bandera Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`DEX`: argument == 'no'", () => {
@@ -377,7 +377,7 @@ it("`DEX`: argument == 'no'", () => {
 	locales: {
 		es: "`DEX`: argument == 'no'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`DEX`: decrements the [X] register and updates the flags", () => {
@@ -401,7 +401,7 @@ it("`DEX`: decrements the [X] register and updates the flags", () => {
 	locales: {
 		es: "`DEX`: decrementa el registro [X] y actualiza las banderas",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`DEY`: argument == 'no'", () => {
@@ -413,7 +413,7 @@ it("`DEY`: argument == 'no'", () => {
 	locales: {
 		es: "`DEY`: argument == 'no'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`DEY`: decrements the [Y] register and updates the flags", () => {
@@ -437,7 +437,7 @@ it("`DEY`: decrements the [Y] register and updates the flags", () => {
 	locales: {
 		es: "`DEY`: decrementa el registro [Y] y actualiza las banderas",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`INX`: argument == 'no'", () => {
@@ -449,7 +449,7 @@ it("`INX`: argument == 'no'", () => {
 	locales: {
 		es: "`INX`: argument == 'no'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`INX`: increments the [X] register and updates the flags", () => {
@@ -473,7 +473,7 @@ it("`INX`: increments the [X] register and updates the flags", () => {
 	locales: {
 		es: "`INX`: incrementa el registro [X] y actualiza las banderas",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`INY`: argument == 'no'", () => {
@@ -485,7 +485,7 @@ it("`INY`: argument == 'no'", () => {
 	locales: {
 		es: "`INY`: argument == 'no'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`INY`: increments the [Y] register and updates the flags", () => {
@@ -509,7 +509,7 @@ it("`INY`: increments the [Y] register and updates the flags", () => {
 	locales: {
 		es: "`INY`: incrementa el registro [Y] y actualiza las banderas",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`LSR`: argument == 'address'", () => {
@@ -521,7 +521,7 @@ it("`LSR`: argument == 'address'", () => {
 	locales: {
 		es: "`LSR`: argument == 'address'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`LSR`: divides the value by 2", () => {
@@ -536,7 +536,7 @@ it("`LSR`: divides the value by 2", () => {
 	locales: {
 		es: "`LSR`: divide el valor entre 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`LSR`: fills the Carry Flag with bit 0", () => {
@@ -551,7 +551,7 @@ it("`LSR`: fills the Carry Flag with bit 0", () => {
 	locales: {
 		es: "`LSR`: llena la Bandera Carry con el bit 0",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`LSR`: updates the Zero and Negative flags", () => {
@@ -571,7 +571,7 @@ it("`LSR`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`LSR`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`LSRa`: argument == 'no'", () => {
@@ -583,7 +583,7 @@ it("`LSRa`: argument == 'no'", () => {
 	locales: {
 		es: "`LSR`: argument == 'no'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`LSRa`: divides [A] by 2", () => {
@@ -598,7 +598,7 @@ it("`LSRa`: divides [A] by 2", () => {
 	locales: {
 		es: "`LSRa`: divide [A] entre 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`LSRa`: fills the Carry Flag with bit 0", () => {
@@ -613,7 +613,7 @@ it("`LSRa`: fills the Carry Flag with bit 0", () => {
 	locales: {
 		es: "`LSRa`: llena la Bandera Carry con el bit 0",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`LSRa`: updates the Zero and Negative flags", () => {
@@ -633,7 +633,7 @@ it("`LSRa`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`LSRa`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROL`: argument == 'address'", () => {
@@ -645,7 +645,7 @@ it("`ROL`: argument == 'address'", () => {
 	locales: {
 		es: "`ROL`: argument == 'address'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROL`: multiplies the value by 2", () => {
@@ -659,7 +659,7 @@ it("`ROL`: multiplies the value by 2", () => {
 	locales: {
 		es: "`ROL`: multiplica el valor por 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROL`: fills the Carry Flag with bit 7", () => {
@@ -674,7 +674,7 @@ it("`ROL`: fills the Carry Flag with bit 7", () => {
 	locales: {
 		es: "`ROL`: llena la Bandera Carry con el bit 7",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROL`: sets the bit 0 with the Carry Flag", () => {
@@ -689,7 +689,7 @@ it("`ROL`: sets the bit 0 with the Carry Flag", () => {
 	locales: {
 		es: "`ROL`: llena el bit 0 con la Bandera Carry",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROL`: updates the Zero and Negative flags", () => {
@@ -711,7 +711,7 @@ it("`ROL`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`ROL`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROLa`: argument == 'no'", () => {
@@ -723,7 +723,7 @@ it("`ROLa`: argument == 'no'", () => {
 	locales: {
 		es: "`ROLa`: argument == 'no'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROLa`: multiplies [A] by 2", () => {
@@ -737,7 +737,7 @@ it("`ROLa`: multiplies [A] by 2", () => {
 	locales: {
 		es: "`ROLa`: multiplica [A] por 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROLa`: fills the Carry Flag with bit 7", () => {
@@ -752,7 +752,7 @@ it("`ROLa`: fills the Carry Flag with bit 7", () => {
 	locales: {
 		es: "`ROLa`: llena la Bandera Carry con el bit 7",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROLa`: sets the bit 0 with the Carry Flag", () => {
@@ -767,7 +767,7 @@ it("`ROLa`: sets the bit 0 with the Carry Flag", () => {
 	locales: {
 		es: "`ROLa`: llena el bit 0 con la Bandera Carry",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROLa`: updates the Zero and Negative flags", () => {
@@ -789,7 +789,7 @@ it("`ROLa`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`ROLa`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROR`: argument == 'address'", () => {
@@ -801,7 +801,7 @@ it("`ROR`: argument == 'address'", () => {
 	locales: {
 		es: "`ROR`: argument == 'address'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROR`: divides the value by 2", () => {
@@ -815,7 +815,7 @@ it("`ROR`: divides the value by 2", () => {
 	locales: {
 		es: "`ROR`: divide el valor entre 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROR`: fills the Carry Flag with bit 0", () => {
@@ -830,7 +830,7 @@ it("`ROR`: fills the Carry Flag with bit 0", () => {
 	locales: {
 		es: "`ROR`: llena la Bandera Carry con el bit 0",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROR`: sets the bit 7 with the Carry Flag", () => {
@@ -845,7 +845,7 @@ it("`ROR`: sets the bit 7 with the Carry Flag", () => {
 	locales: {
 		es: "`ROR`: llena el bit 7 con la Bandera Carry",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`ROR`: updates the Zero and Negative flags", () => {
@@ -868,7 +868,7 @@ it("`ROR`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`ROR`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`RORa`: argument == 'no'", () => {
@@ -880,7 +880,7 @@ it("`RORa`: argument == 'no'", () => {
 	locales: {
 		es: "`RORa`: argument == 'address'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`RORa`: divides [A] by 2", () => {
@@ -894,7 +894,7 @@ it("`RORa`: divides [A] by 2", () => {
 	locales: {
 		es: "`RORa`: divide [A] entre 2",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`RORa`: fills the Carry Flag with bit 0", () => {
@@ -909,7 +909,7 @@ it("`RORa`: fills the Carry Flag with bit 0", () => {
 	locales: {
 		es: "`RORa`: llena la Bandera Carry con el bit 0",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`RORa`: sets the bit 7 with the Carry Flag", () => {
@@ -924,7 +924,7 @@ it("`RORa`: sets the bit 7 with the Carry Flag", () => {
 	locales: {
 		es: "`RORa`: llena el bit 7 con la Bandera Carry",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`RORa`: updates the Zero and Negative flags", () => {
@@ -947,7 +947,7 @@ it("`RORa`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`RORa`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`SBC`: argument == 'value'", () => {
@@ -959,7 +959,7 @@ it("`SBC`: argument == 'value'", () => {
 	locales: {
 		es: "`SBC`: argument == 'value'",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`SBC`: subtracts the value from the Accumulator - 1 when C is clear", () => {
@@ -973,7 +973,7 @@ it("`SBC`: subtracts the value from the Accumulator - 1 when C is clear", () => 
 	locales: {
 		es: "`SBC`: resta el valor del Acumulador - 1 cuando C está apagado",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`SBC`: subtracts the value from the Accumulator - 0 when C is set", () => {
@@ -988,7 +988,7 @@ it("`SBC`: subtracts the value from the Accumulator - 0 when C is set", () => {
 	locales: {
 		es: "`SBC`: resta el valor del Acumulador - 0 cuando C está encendido",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`SBC`: updates the Zero and Negative flags", () => {
@@ -1009,7 +1009,7 @@ it("`SBC`: updates the Zero and Negative flags", () => {
 	locales: {
 		es: "`SBC`: actualiza las banderas Zero y Negative",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
 it("`SBC`: updates the Carry and Overflow flags", () => {
@@ -1042,5 +1042,5 @@ it("`SBC`: updates the Carry and Overflow flags", () => {
 	locales: {
 		es: "`SBC`: actualiza las banderas Carry y Overflow",
 	},
-	use: (book) => book.isUnlockedHumanId("5a.7"),
+	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
