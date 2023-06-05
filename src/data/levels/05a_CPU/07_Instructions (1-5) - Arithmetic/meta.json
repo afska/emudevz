@@ -25,15 +25,7 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": [
-			"cartridge.js",
-			"memory.js",
-			"ppu*",
-			"apu*",
-			"controller*",
-			"cpu.js",
-			"cpu_instructions_1.js"
-		],
+		"inherit": ["cartridge.js", "memory.js", "cpu.js", "cpu_instructions_1.js"],
 		"mainTestFile": "cpu_instructions_1.js"
 	},
 	"memory": {

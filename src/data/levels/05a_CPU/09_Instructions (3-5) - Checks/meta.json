@@ -27,9 +27,6 @@
 		"inherit": [
 			"cartridge.js",
 			"memory.js",
-			"ppu*",
-			"apu*",
-			"controller*",
 			"cpu.js",
 			"cpu_instructions_1.js",
 			"cpu_instructions_2.js",
