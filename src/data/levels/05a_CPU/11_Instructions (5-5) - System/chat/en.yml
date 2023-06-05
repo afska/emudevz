@@ -8,7 +8,7 @@ main:
   - so, last one is `BRK` which generates an <Interrupt Request>
   responses:
   - what's an interrupt? [interrupt]
-  - <m.$exercise> 📚  take me to the exercise [implement]
+  - <level.isCompleted || m.$exercise> 📚  take me to the exercise [implement]
 
 interrupt:
   messages:

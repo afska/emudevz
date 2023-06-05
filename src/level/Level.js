@@ -93,6 +93,11 @@ export default class Level {
 			.join("\n");
 	}
 
+	get isCompleted() {
+		const book = Book.current;
+		return book.isFinished(this.id);
+	}
+
 	fillContentFromTemp() {
 		if (!this.hasStoredContent)
 			store.dispatch.content.setCurrentLevelContent(this.tempContent);

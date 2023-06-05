@@ -7,7 +7,7 @@ main:
   - and increment the cycle counters
   responses:
   - you promised you'd explain cycles 🚲 [cycles]
-  - <m.$exercise> 📚  take me to the exercise [rightway]
+  - <level.isCompleted || m.$exercise> 📚  take me to the exercise [rightway]
 
 cycles:
   messages:
