@@ -32,7 +32,7 @@ function newCPU(prgBytes = []) {
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
 		},
-		use: ({ id }, book) => id >= book.getId("5a.10"),
+		use: (book) => book.isUnlockedHumanId("5a.10"),
 	});
 
 	it("`" + instruction + "`: " + `jumps if the ~${name}~ flag is clear`, () => {
@@ -52,7 +52,7 @@ function newCPU(prgBytes = []) {
 				"`: " +
 				`salta si la bandera ~${name}~ está apagada`,
 		},
-		use: ({ id }, book) => id >= book.getId("5a.10"),
+		use: (book) => book.isUnlockedHumanId("5a.10"),
 	});
 
 	it(
@@ -76,7 +76,7 @@ function newCPU(prgBytes = []) {
 				"`: " +
 				`no salta si la bandera ~${name}~ está encendida`,
 		},
-		use: ({ id }, book) => id >= book.getId("5a.10"),
+		use: (book) => book.isUnlockedHumanId("5a.10"),
 	});
 });
 
@@ -97,7 +97,7 @@ function newCPU(prgBytes = []) {
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
 		},
-		use: ({ id }, book) => id >= book.getId("5a.10"),
+		use: (book) => book.isUnlockedHumanId("5a.10"),
 	});
 
 	it("`" + instruction + "`: " + `jumps if the ~${name}~ flag is set`, () => {
@@ -117,7 +117,7 @@ function newCPU(prgBytes = []) {
 				"`: " +
 				`salta si la bandera ~${name}~ está encendida`,
 		},
-		use: ({ id }, book) => id >= book.getId("5a.10"),
+		use: (book) => book.isUnlockedHumanId("5a.10"),
 	});
 
 	it(
@@ -141,7 +141,7 @@ function newCPU(prgBytes = []) {
 				"`: " +
 				`no salta si la bandera ~${name}~ está encendida`,
 		},
-		use: ({ id }, book) => id >= book.getId("5a.10"),
+		use: (book) => book.isUnlockedHumanId("5a.10"),
 	});
 });
 
@@ -154,7 +154,7 @@ it("`JMP`: argument == 'address'", () => {
 	locales: {
 		es: "`JMP`: argument == 'address'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.10"),
+	use: (book) => book.isUnlockedHumanId("5a.10"),
 });
 
 it("`JMP`: jumps to the address", () => {
@@ -168,7 +168,7 @@ it("`JMP`: jumps to the address", () => {
 	locales: {
 		es: "`JMP`: salta a la dirección",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.10"),
+	use: (book) => book.isUnlockedHumanId("5a.10"),
 });
 
 it("`JSR`: argument == 'address'", () => {
@@ -180,7 +180,7 @@ it("`JSR`: argument == 'address'", () => {
 	locales: {
 		es: "`JSR`: argument == 'address'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.10"),
+	use: (book) => book.isUnlockedHumanId("5a.10"),
 });
 
 it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
@@ -195,7 +195,7 @@ it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
 	locales: {
 		es: "`JSR`: pone [PC] - 1 en la pila y salta a la dirección",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.10"),
+	use: (book) => book.isUnlockedHumanId("5a.10"),
 });
 
 it("`RTI`: argument == 'no'", () => {
@@ -207,7 +207,7 @@ it("`RTI`: argument == 'no'", () => {
 	locales: {
 		es: "`RTI`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.10"),
+	use: (book) => book.isUnlockedHumanId("5a.10"),
 });
 
 it("`RTI`: updates the flags and [PC] from the stack", () => {
@@ -224,7 +224,7 @@ it("`RTI`: updates the flags and [PC] from the stack", () => {
 	locales: {
 		es: "`RTI`: actualiza las banderas y [PC] desde la pila",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.10"),
+	use: (book) => book.isUnlockedHumanId("5a.10"),
 });
 
 it("`RTS`: argument == 'no'", () => {
@@ -236,7 +236,7 @@ it("`RTS`: argument == 'no'", () => {
 	locales: {
 		es: "`RTS`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.10"),
+	use: (book) => book.isUnlockedHumanId("5a.10"),
 });
 
 it("`RTS`: updates [PC] from a value in the stack + 1", () => {
@@ -251,5 +251,5 @@ it("`RTS`: updates [PC] from a value in the stack + 1", () => {
 	locales: {
 		es: "`RTS`: actualiza [PC] desde un valor en la pila + 1",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.10"),
+	use: (book) => book.isUnlockedHumanId("5a.10"),
 });

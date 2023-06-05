@@ -11,7 +11,7 @@ it("`/code/CPUMemory.js` exists as a file", () => {
 	filesystem.exists("/code/CPUMemory.js").should.be.true;
 })({
 	locales: { es: "`/code/CPUMemory.js` existe como archivo" },
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: (book) => book.isUnlockedHumanId("4.1"),
 });
 
 it("`/code/CPUMemory.js` is a JS module that exports a class", async () => {
@@ -22,14 +22,14 @@ it("`/code/CPUMemory.js` is a JS module that exports a class", async () => {
 	locales: {
 		es: "`/code/CPUMemory.js` es un módulo JS que exporta una clase",
 	},
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: (book) => book.isUnlockedHumanId("4.1"),
 });
 
 it("`/code/index.js` imports the module from `/code/CPUMemory.js`", () => {
 	expect($.modules["/code/CPUMemory.js"]).to.exist;
 })({
 	locales: { es: "`/code/index.js` importa el módulo de `/code/CPUMemory.js`" },
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: (book) => book.isUnlockedHumanId("4.1"),
 });
 
 it("`/code/index.js` exports an object containing the class", async () => {
@@ -43,7 +43,7 @@ it("`/code/index.js` exports an object containing the class", async () => {
 	locales: {
 		es: "`/code/index.js` exporta un objeto que contiene la clase",
 	},
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: (book) => book.isUnlockedHumanId("4.1"),
 });
 
 it("has a `ram` property and `read`/`write` methods", () => {
@@ -57,7 +57,7 @@ it("has a `ram` property and `read`/`write` methods", () => {
 	locales: {
 		es: "incluye una propiedad `ram` y métodos `read`/`write`",
 	},
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: (book) => book.isUnlockedHumanId("4.1"),
 });
 
 it("can read from RAM", () => {
@@ -73,7 +73,7 @@ it("can read from RAM", () => {
 	locales: {
 		es: "puede leer de RAM",
 	},
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: (book) => book.isUnlockedHumanId("4.1"),
 });
 
 it("reading RAM mirror results in RAM reads", () => {
@@ -89,7 +89,7 @@ it("reading RAM mirror results in RAM reads", () => {
 	locales: {
 		es: "leer espejo de RAM ocasiona lecturas de RAM",
 	},
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: (book) => book.isUnlockedHumanId("4.1"),
 });
 
 it("can write to RAM", () => {
@@ -105,7 +105,7 @@ it("can write to RAM", () => {
 	locales: {
 		es: "puede escribir en RAM",
 	},
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: (book) => book.isUnlockedHumanId("4.1"),
 });
 
 it("writing RAM mirror results in RAM writes", () => {
@@ -122,7 +122,7 @@ it("writing RAM mirror results in RAM writes", () => {
 	locales: {
 		es: "escribir espejo de RAM ocasiona escrituras en RAM",
 	},
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: (book) => book.isUnlockedHumanId("4.1"),
 });
 
 // 4.2 Devices
@@ -146,5 +146,5 @@ it("saves the devices received by `onLoad`", () => {
 	locales: {
 		es: "guarda los dispositivos recibidos por `onLoad`",
 	},
-	use: ({ id }, book) => id >= book.getId("4.2"),
+	use: (book) => book.isUnlockedHumanId("4.2"),
 });

@@ -15,7 +15,7 @@ it("`/code/index.js` exports an object containing the `PPU` class", () => {
 	locales: {
 		es: "`/code/index.js` exporta un objeto que contiene la clase `PPU`",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.1"),
+	use: (book) => book.isUnlockedHumanId("5b.1"),
 });
 
 it("receives and saves the `cpu` property", () => {
@@ -28,7 +28,7 @@ it("receives and saves the `cpu` property", () => {
 	locales: {
 		es: "recibe y guarda una propiedad `cpu`",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.1"),
+	use: (book) => book.isUnlockedHumanId("5b.1"),
 });
 
 it("initializates the counters", () => {
@@ -46,7 +46,7 @@ it("initializates the counters", () => {
 	locales: {
 		es: "inicializa los contadores",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.1"),
+	use: (book) => book.isUnlockedHumanId("5b.1"),
 });
 
 it("has a `step` method that increments the counters", () => {
@@ -72,5 +72,5 @@ it("has a `step` method that increments the counters", () => {
 	locales: {
 		es: "tiene un método `step` que incrementa los contadores",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.1"),
+	use: (book) => book.isUnlockedHumanId("5b.1"),
 });

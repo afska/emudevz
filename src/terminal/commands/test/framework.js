@@ -49,10 +49,6 @@ export default {
 
 		// eslint-disable-next-line
 		const Book = _Book_;
-		// eslint-disable-next-line
-		const GLOBAL_LEVEL_ID = Book.current.getLevelDefinitionOf(
-			_Level_.current.id
-		).globalId;
 
 		// eslint-disable-next-line
 		const beforeEach = (run) => {
@@ -77,10 +73,7 @@ export default {
 			return (options) => {
 				testDefinition.name = options.locales?.[_locales_.language] || name;
 
-				if (
-					options.use &&
-					!options.use({ id: GLOBAL_LEVEL_ID }, _Book_.current)
-				)
+				if (options.use && !options.use(_Book_.current, _Level_.current))
 					_tests_.pop();
 			};
 		};

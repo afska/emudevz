@@ -43,7 +43,7 @@ it("the CPU can handle <RESET> interrupts", () => {
 	locales: {
 		es: "la CPU puede manejar interrupciones <RESET>",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.11"),
+	use: (book) => book.isUnlockedHumanId("5a.11"),
 });
 
 it("the CPU can handle <NMI> interrupts", () => {
@@ -75,7 +75,7 @@ it("the CPU can handle <NMI> interrupts", () => {
 	locales: {
 		es: "la CPU puede manejar interrupciones <NMI>",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.11"),
+	use: (book) => book.isUnlockedHumanId("5a.11"),
 });
 
 it("the CPU can handle <IRQ> interrupts", () => {
@@ -106,7 +106,7 @@ it("the CPU can handle <IRQ> interrupts", () => {
 	locales: {
 		es: "la CPU puede manejar interrupciones <IRQ>",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.11"),
+	use: (book) => book.isUnlockedHumanId("5a.11"),
 });
 
 it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
@@ -138,7 +138,7 @@ it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
 	locales: {
 		es: "la CPU ignora interrupciones <IRQ> si la bandera ~I~ está encendida",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.11"),
+	use: (book) => book.isUnlockedHumanId("5a.11"),
 });
 
 it("`BRK`: argument == 'no'", () => {
@@ -150,7 +150,7 @@ it("`BRK`: argument == 'no'", () => {
 	locales: {
 		es: "`BRK`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.11"),
+	use: (book) => book.isUnlockedHumanId("5a.11"),
 });
 
 it("`BRK`: produces an <IRQ> interrupt (bit 4 from flags should be on)", () => {
@@ -179,7 +179,7 @@ it("`BRK`: produces an <IRQ> interrupt (bit 4 from flags should be on)", () => {
 		es:
 			"`BRK`: produce una interrupción <IRQ> (el bit 4 de las banderas debería estar encendido)",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.11"),
+	use: (book) => book.isUnlockedHumanId("5a.11"),
 });
 
 it("`NOP`: argument == 'no'", () => {
@@ -191,7 +191,7 @@ it("`NOP`: argument == 'no'", () => {
 	locales: {
 		es: "`NOP`: argument == 'no'",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.11"),
+	use: (book) => book.isUnlockedHumanId("5a.11"),
 });
 
 it("`NOP`: implements `run(...)`", () => {
@@ -201,5 +201,5 @@ it("`NOP`: implements `run(...)`", () => {
 	locales: {
 		es: "`NOP`: implementa `run(...)`",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.11"),
+	use: (book) => book.isUnlockedHumanId("5a.11"),
 });
