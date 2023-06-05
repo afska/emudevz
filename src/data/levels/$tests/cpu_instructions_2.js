@@ -1,16 +1,16 @@
 const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
-let mainModule, Console;
+let mainModule, NEEES;
 beforeEach(async () => {
 	mainModule = await evaluate();
-	Console = await new EmulatorBuilder().addUserCPU(true, true).build();
+	NEEES = await new EmulatorBuilder().addUserCPU(true, true).build();
 });
 
 const { newHeader, newRom } = testHelpers;
 function newCPU(prgBytes = []) {
-	const console = new Console();
-	console.load(newRom(prgBytes));
-	return console.cpu;
+	const neees = new NEEES();
+	neees.load(newRom(prgBytes));
+	return neees.cpu;
 }
 
 // 5a.8 Instructions (2/5): Data
