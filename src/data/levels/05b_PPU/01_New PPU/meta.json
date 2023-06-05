@@ -31,7 +31,7 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": ["cartridge.js", "memory.js", "cpu*", "ppu.js"],
+		"inherit": ["cartridge.js", "memory.js", "ppu.js"],
 		"mainTestFile": "ppu.js"
 	},
 	"memory": {
