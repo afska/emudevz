@@ -25,7 +25,12 @@ export default class EmuWebWorker {
 		this.availableSamples = 0;
 		this.samples = [];
 
-		this.nes = new Console(this.onFrame, this.onAudio);
+		this.nes = null;
+		try {
+			this.nes = new Console(this.onFrame, this.onAudio);
+		} catch (error) {
+			this.$postMessage({ id: "error", error });
+		}
 
 		this.frameTimer = new FrameTimer(
 			() => {
@@ -97,6 +102,8 @@ export default class EmuWebWorker {
 	};
 
 	$onMessage = ({ data }) => {
+		if (!this.nes) return;
+
 		try {
 			if (data instanceof Uint8Array) {
 				// rom bytes

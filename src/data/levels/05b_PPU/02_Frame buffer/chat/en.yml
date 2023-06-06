@@ -1,0 +1,72 @@
+---
+main:
+  run: |
+    {{Top}}.load("frameBuffer.png");
+  messages:
+  - we'll store our image data in something called <frame buffer>
+  - it's basically a big array with the color of each pixel
+  - each element is a 32-bit number __$aabbggrr__
+  - "\"aa\" represents the opacity (in our NEEES it's always $FF)"
+  - "\"bb\", \"gg\" and \"rr\" represent the amount of <blue>, <green> and <red>"
+  responses:
+  - (*) can you give me some color examples? [examples]
+  - I want to draw something on the screen! 🖌️ [integrate]
+  - <level.isCompleted || m.$exercise> 📚  take me to the exercise [draw]
+
+examples:
+  messages:
+  - "here are some example colors:"
+  - "❤️  ```javascript 0xFF0000FF``` = red"
+  - "💚  ```javascript 0xFF00FF00``` = green"
+  - "💙  ```javascript 0xFFFF0000``` = blue"
+  - "⚪  ```javascript 0xFFFFFFFF``` = white"
+  - "🖤  ```javascript 0xFF000000``` = black"
+  - "🔘  ```javascript 0xFF989898``` = gray"
+  - "💛  ```javascript 0xFF00F0F0``` = yellow"
+  responses:
+  - ...main
+
+integrate:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - first of all, I'm gonna integrate your 🖥️  PPU into the emulator
+  - it should be quick...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 1000);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("usePPU");
+  messages:
+  - ✔️  done!
+  - now, the 🖥️  icon in the emulator will glow ✨
+  - as there's almost no PPU code, nothing we'll be shown for now
+  - but we'll get there!
+  responses:
+  - let's code this 🤟 [draw]
+
+draw:
+  run: |
+    set((m) => m.$exercise = true);
+    {{Top}}.load(null, "rom");
+  messages:
+  - |-
+    📚  ok, let's add this to your PPU's constructor:
+      ```javascript  this.frameBuffer = new Uint32Array(256*240);```
+  - modify your `step` method so it receives an `onFrame` callback
+  - |-
+    then, every time you detect a new frame (right after ```javascript this.frame++;```), call it with the frame buffer, like this:
+      ```javascript onFrame(this.frameBuffer);```
+  - you can now try drawing colors to the screen
+  - |-
+    for example, to paint the pixel located in __(10, 23)__ in red, you need to run:
+      ```javascript this.frameBuffer[23 * 256 + 10] = 0xff0000ff;```
+  - make it so the rows __0-199__ are painted in red, and rows __200-255__ are blue
+  responses: []

@@ -1,0 +1,42 @@
+{
+	"name": {
+		"en": "🖼️ Frame buffer",
+		"es": "🖼️ Frame buffer"
+	},
+	"ui": {
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "ppu.js"],
+		"mainTestFile": "ppu.js"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
