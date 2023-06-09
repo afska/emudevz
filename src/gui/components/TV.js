@@ -22,6 +22,10 @@ export default class TV extends PureComponent {
 
 	load(fileName, type = "media", bucket = "media") {
 		const content = (fileName && this._level?.[bucket]?.[fileName]) || null;
+		this.setContent(content, type);
+	}
+
+	setContent(content, type) {
 		this.setState({ content, type });
 	}
 

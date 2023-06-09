@@ -52,12 +52,13 @@ export default class EmulatorBuilder {
 				if (builder.withUserController && !mainModule.Controller)
 					throw new Error("🐒  `Controller` class not found");
 				if (builder.withUserConsole && !mainModule.Console)
-					throw new Error("🐒  `Controle` class not found");
+					throw new Error("🐒  `NEEES` class not found");
 				if (builder.withUserMappers && !mainModule.mappers)
 					throw new Error("🐒  `mappers` object not found");
 
 				if (builder.withUserCartridge) builder._patchCartridge(mainModule);
 				if (builder.withUserCPU) builder._patchCPU(this, mainModule);
+				if (builder.withUserPPU) builder._patchPPU(this, mainModule);
 			}
 
 			load(rom, saveFileBytes) {
@@ -151,6 +152,16 @@ export default class EmulatorBuilder {
 		if (!console.cpu.memory) throw new Error("🐒  CPU::memory not found");
 
 		this._patchMemory(console.cpu.memory);
+	}
+
+	_patchPPU(console, mainModule) {
+		try {
+			console.ppu = new mainModule.PPU(console.cpu);
+		} catch (e) {
+			throw new Error("🐒  Failure instantiating new PPU(cpu): " + e?.message);
+		}
+
+		console.ppu.loadContext = (context) => {};
 	}
 
 	_patchMemory(memory) {

@@ -3,5 +3,70 @@ main:
   run: |
     {{Top}}.load("frameBuffer.png");
   messages:
-  - coming soon!
+  - almacenaremos nuestros datos de imagen en algo llamado <frame buffer>
+  - es básicamente una gran matriz con el color de cada píxel
+  - cada elemento es un número de 32 bits __$aabbggrr__
+  - "\"aa\" representa la opacidad (en nuestra NEEES siempre es $FF)"
+  - "\"bb\", \"gg\" and \"rr\" representan la cantidad de <azul>, <verde> and <rojo>"
+  responses:
+  - (*) ¿puedes darme algunos ejemplos de colores? [examples]
+  - ¡quiero dibujar algo en la pantalla! 🖌️ [integrate]
+  - <level.isCompleted || m.$exercise> 📚  llévame a la acción [draw]
+
+examples:
+  messages:
+  - "aquí tienes algunos colores de ejemplo:"
+  - "❤️  ```javascript 0xFF0000FF``` = rojo"
+  - "💚  ```javascript 0xFF00FF00``` = verde"
+  - "💙  ```javascript 0xFFFF0000``` = azul"
+  - "⚪  ```javascript 0xFFFFFFFF``` = blanco"
+  - "🖤  ```javascript 0xFF000000``` = negro"
+  - "🔘  ```javascript 0xFF989898``` = gris"
+  - "💛  ```javascript 0xFF00F8F8``` = amarillo"
+  responses:
+  - ...main
+
+integrate:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - primero que nada, voy a integrar tu 🖥️  PPU en el emulador
+  - debería ser rápido...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 500);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("usePPU");
+  messages:
+  - ✔️  ¡listo!
+  - ahora, el ícono 🖥️  en el emulador brillará ✨
+  - como casi no hay código PPU, por ahora no se mostrará nada
+  - ¡pero llegaremos allí!
+  responses:
+  - programemos esto 🤟 [draw]
+
+draw:
+  run: |
+    set((m) => m.$exercise = true);
+    {{Top}}.load(null, "rom");
+  messages:
+  - |-
+    📚  ok, vamos a agregar esto al constructor de tu PPU:
+      ```javascript
+      this.frameBuffer = new Uint32Array(256*240);
+      // llenar las primeras 120 filas con rojo:
+      for (let i = 0; i < 256 * 120; i++)
+        this.frameBuffer[i] = 0xff0000ff;```
+  - modifica tu método `step` para que reciba un callback `onFrame`
+  - |-
+    luego, cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
+      ```javascript onFrame(this.frameBuffer);```
+  - ¡pruébalo! al iniciar una ROM, debería pintar en rojo la mitad superior de la pantalla 🔴
   responses: []
