@@ -65,13 +65,14 @@ example:
   - let's use the 4th range ("🚽  Mirrors of $2000-$2007") as an example
   - we have a <mirror range> ($2008-$3FFF) pointing to a <target range> ($2000-$2007)
   - |-
-    `byte.getMirroredAddress(...)` takes 4 arguments
+    `byte.getMirroredAddress(...)` takes 5 arguments
       address => the read(...) and write(...) parameter
       mirrorRangeStart => ~0x2008~
+      mirrorRangeEnd   => ~0x3fff~
       targetRangeStart => ~0x2000~
-      targetRangeSize  => ~0x0008~
+      targetRangeEnd   => ~0x2007~
   - |-
     then, we would do:
-      ```javascript address = byte.getMirroredAddress(address, 0x2008, 0x2000, 0x0008)```
+      ```javascript address = byte.getMirroredAddress(address, 0x2008, 0x3fff, 0x2000, 0x2007)```
   - and finally, we proceed as if `address` was in the target range ($2000-$2007) 😃
   responses: []

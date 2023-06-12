@@ -108,7 +108,10 @@ export default {
   },
 
   /** Returns an equivalent `address` from a mirrored memory section. */
-  getMirroredAddress(address, mirrorRangeStart, targetRangeStart, targetRangeSize) {
-    return targetRangeStart + (address - mirrorRangeStart) % targetRangeSize;
+  getMirroredAddress(address, mirrorRangeStart, mirrorRangeEnd, targetRangeStart, targetRangeEnd) {
+    const mirrorRangeSize = mirrorRangeEnd - mirrorRangeStart + 1;
+    const targetRangeSize = targetRangeEnd - targetRangeStart + 1;
+    const mirrorSize = Math.min(mirrorRangeSize, targetRangeSize);
+    return targetRangeStart + (address - mirrorRangeStart) % mirrorSize;
   }
 };

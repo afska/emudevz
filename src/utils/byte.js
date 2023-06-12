@@ -111,10 +111,14 @@ export default {
 	getMirroredAddress(
 		address,
 		mirrorRangeStart,
+		mirrorRangeEnd,
 		targetRangeStart,
-		targetRangeSize
+		targetRangeEnd
 	) {
-		return targetRangeStart + ((address - mirrorRangeStart) % targetRangeSize);
+		const mirrorRangeSize = mirrorRangeEnd - mirrorRangeStart + 1;
+		const targetRangeSize = targetRangeEnd - targetRangeStart + 1;
+		const mirrorSize = Math.min(mirrorRangeSize, targetRangeSize);
+		return targetRangeStart + ((address - mirrorRangeStart) % mirrorSize);
 	},
 
 	/** Returns a random byte ([0, `max`]). */

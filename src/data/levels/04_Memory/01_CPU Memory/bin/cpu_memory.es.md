@@ -19,9 +19,9 @@
 🚽 **Pista para espejos:**
 
 ```
-byte.getMirroredAddress(address, mirrorRangeStart, targetRangeStart, targetRangeSize)
+byte.getMirroredAddress(address, mirrorRangeStart, mirrorRangeEnd, targetRangeStart, targetRangeEnd)
 // ^ example:
 // read(0x2009) ==
-// read(byte.getMirroredAddress(0x2009, 0x2008, 0x2000, 0x0008)) ==
+// read(byte.getMirroredAddress(0x2009, 0x2008, 0x3fff, 0x2000, 0x2007)) ==
 // read(0x2001)
 ```
