@@ -1,4 +1,5 @@
 import { PureComponent } from "react";
+import _ from "lodash";
 
 export default class Layout extends PureComponent {
 	instances = {};
@@ -22,5 +23,10 @@ export default class Layout extends PureComponent {
 			if (this.props[requiredComponentName] == null)
 				throw new Error(`Missing required component: ${requiredComponentName}`);
 		});
+	}
+
+	findInstance(Type, condition = () => true) {
+		const components = _.values(this.instances);
+		return components.find((it) => it instanceof Type && condition(it));
 	}
 }

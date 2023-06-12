@@ -122,9 +122,9 @@ export default class Level {
 
 	launchEmulator(rom = null) {
 		if (!bus.isListeningTo("pin")) {
-			const components = _.values(this.$layout.instances);
-			const tvRom = components.find(
-				(it) => it instanceof TV && it.state.type === "rom"
+			const tvRom = this.$layout.findInstance(
+				TV,
+				(it) => it.state.type === "rom"
 			);
 			if (tvRom != null) tvRom.setContent(rom, "rom");
 		}
