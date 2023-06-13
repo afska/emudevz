@@ -75,7 +75,14 @@ class NavBar extends PureComponent {
 						{level.name[locales.language]}
 					</span>
 					{level.isUsingSnapshot && (
-						<Badge bg="warning" text="dark" className={styles.warning}>
+						<Badge
+							bg="warning"
+							text="dark"
+							className={classNames(
+								styles.warning,
+								"d-none d-lg-block d-xl-block"
+							)}
+						>
 							{locales.get("using_old_snapshot")}
 						</Badge>
 					)}
