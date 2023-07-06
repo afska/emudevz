@@ -5,8 +5,24 @@ import locales from "../../locales";
 import Terminal from "../../terminal/Terminal";
 import styles from "./Console.module.css";
 
+const ImageAddon = window.ImageAddon.ImageAddon;
+
+const imageAddonSettings = {
+	enableSizeReports: true, // whether to enable CSI t reports (see below)
+	pixelLimit: 16777216, // max. pixel size of a single image
+	sixelSupport: true, // enable sixel support
+	sixelScrolling: true, // whether to scroll on image output
+	sixelPaletteLimit: 256, // initial sixel palette size
+	sixelSizeLimit: 25000000, // size limit of a single sixel sequence
+	storageLimit: 128, // FIFO storage limit in MB
+	showPlaceholder: true, // whether to show a placeholder for evicted images
+	iipSupport: true, // enable iTerm IIP support
+	iipSizeLimit: 20000000, // size limit of a single IIP sequence
+};
+
 export default class Console extends PureComponent {
 	fitAddon = new FitAddon();
+	imageAddon = new ImageAddon(imageAddonSettings);
 
 	async initialize(args, level) {
 		this._level = level;
@@ -46,7 +62,7 @@ export default class Console extends PureComponent {
 							cursorAccent: "#111111",
 						},
 					}}
-					addons={[this.fitAddon]}
+					addons={[this.fitAddon, this.imageAddon]}
 					ref={(ref) => {
 						this.ref = ref;
 					}}
