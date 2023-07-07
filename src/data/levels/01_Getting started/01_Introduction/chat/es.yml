@@ -27,8 +27,7 @@ name:
   messages:
   - creo que significa <No Entiendo El Entretenimiento Saludable>, pero no puedo comprobarlo
   responses:
-  - ah, ya veo - ¿cómo sabes de estas cosas? [namehow]
-  - ...forwhat
+  - ¿cómo sabes de estas cosas? [namehow]
 
 namehow:
   messages:
@@ -36,7 +35,6 @@ namehow:
   - y estoy tratando de hacerle ingeniería inversa
   responses:
   - ¿TIENES UNA NEEES QUE FUNCIONA? [workingnes]
-  - ...forwhat
 
 workingnes:
   messages:
