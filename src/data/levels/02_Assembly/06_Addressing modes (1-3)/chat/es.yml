@@ -12,6 +12,7 @@ main:
   messages:
   - por si no te diste cuenta, todas las instrucciones toman uno o cero argumentos
   - y una instrucción compilada puede ocupar 1, 2 o 3 bytes
+  - <{compilation_full.png}>
   responses:
   - ¿por qué me estás contando esto? [why]
 
@@ -103,7 +104,7 @@ relative:
   - estas toman un solo byte, que es usado como un desplazamiento desde la siguiente instrucción
   - mira el código compilado de `BNE @label` en $4028
   - $D0 es el opcode de `BNE`, y el $02 de $4029 es el desplazamiento del salto 🦘
-  - "esto significa que [PC] saltará a $402A + 2: directo hacia $402C, donde comienza @label"
+  - "esto significa que [PC] saltará a $402A + 2: directo hacia $402C, donde comienza `@label`"
   - (omitirá los bytes de los dos `INY`s)
   responses:
   - interesante, conque así funcionan las bifurcaciones [whoa]
@@ -118,7 +119,7 @@ whoa:
   - "el modo de direccionamiento \"Indirect\" usa una dirección absoluta para buscar otra dirección"
   - al leer la primer dirección obtenemos el <byte menos significativo> (también llamado "low byte", ```raw $00```~XX~)
   - y leer el byte siguiente (dirección + 1) nos da el <byte más significativo> (también llamado "high byte", ```raw $```~XX~```raw 00```)
-  - eso puede ser difícil de entender completamente, así que ejecuta el ejemplo ⏩
+  - esto puede ser difícil de entender completamente, así que mejor ejecuta el ejemplo ⏩
   events:
   - step [step1]
 
@@ -145,6 +146,7 @@ step4:
   messages:
   - ahora $4080 contiene $21, y $4081 contiene $40
   - por lo que en este caso, `JMP ($4080)` saltará incondicionalmente a $4021"
+  - <{JMP_indirect.png}>
   - creando un bucle infinito ⏩
   events:
   - step [exercise]
@@ -161,10 +163,10 @@ exercise:
     {{Bottom}}.setSelectedCells([]);
   messages:
   - ahí está...
-  - 📚  como ejercicio, modifica el código agregando una instrucción `STY $1001` al final
-  - luego una instrucción `INX`
-  - y por último, cambia las líneas 10 y 12 para que el `JMP` indirecto vaya directamente a la nueva `INX` 👀
-  - cuando termines, ejecuta el comando `test`
+  - 📚  _-_como ejercicio, modifica el código agregando una instrucción `STY $1001` al final_--_
+  - _-_luego una instrucción `INX`_--_
+  - _-_y por último, cambia las líneas 10 y 12 para que el `JMP` indirecto vaya directamente a la nueva `INX` _--_👀
+  - _-_cuando termines, ejecuta el comando `test`_--_
   responses:
   - momento, ¿qué? [what]
 
