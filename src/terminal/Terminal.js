@@ -143,6 +143,7 @@ export default class Terminal {
 	}
 
 	async break() {
+		await this.write("", theme.BG_HIGHLIGHT_END);
 		await this.write(CTRL_C);
 	}
 
