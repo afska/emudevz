@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-07-07T08:39:34.576Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="lvk_Vo3YwJ1eqNMAn3l5" version="21.3.7" type="device">
+<mxfile host="app.diagrams.net" modified="2023-07-07T10:10:17.331Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="IBYZaQsQgkC8hHqF5WWB" version="21.6.1" type="device">
   <diagram name="Página-1" id="YGOn6PNyKOojVt_gOlFw">
-    <mxGraphModel dx="628" dy="294" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#121010" math="0" shadow="0">
+    <mxGraphModel dx="434" dy="203" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#121010" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -13,22 +13,22 @@
         <mxCell id="50ng9D4_0f_u_yrx_zgb-13" value="&lt;font size=&quot;1&quot; face=&quot;Courier New&quot; color=&quot;#e5c07b&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;🐏 RAM&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="240" y="220" width="90" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="GuFd90s4nYM4xiF0MHdx-3" value="&lt;font color=&quot;#ffffff&quot; size=&quot;1&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;2 KiB&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="GuFd90s4nYM4xiF0MHdx-3" value="&lt;font color=&quot;#ffffff&quot; size=&quot;1&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;2 KiB&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="240" y="200" width="90" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="GuFd90s4nYM4xiF0MHdx-5" value="&lt;b style=&quot;border-color: var(--border-color); color: rgb(229, 192, 123); font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;💻 Hardware&lt;/font&gt;&lt;/b&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="GuFd90s4nYM4xiF0MHdx-5" value="&lt;b style=&quot;border-color: var(--border-color); color: rgb(229, 192, 123); font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;💻 Hardware&lt;/font&gt;&lt;/b&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="220" width="170" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="GuFd90s4nYM4xiF0MHdx-6" value="&lt;font color=&quot;#ffffff&quot; size=&quot;1&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;62 KiB&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="GuFd90s4nYM4xiF0MHdx-6" value="&lt;font color=&quot;#ffffff&quot; size=&quot;1&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;62 KiB&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="200" width="201" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="GuFd90s4nYM4xiF0MHdx-7" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeColor=#e5c07b;" edge="1" parent="1">
+        <mxCell id="GuFd90s4nYM4xiF0MHdx-7" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeColor=#e5c07b;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="240" y="190" as="sourcePoint" />
             <mxPoint x="520" y="190" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="GuFd90s4nYM4xiF0MHdx-9" value="&lt;font color=&quot;#ffffff&quot; size=&quot;1&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;64 KiB&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="GuFd90s4nYM4xiF0MHdx-9" value="&lt;font color=&quot;#ffffff&quot; size=&quot;1&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;64 KiB&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="240" y="170" width="280" height="20" as="geometry" />
         </mxCell>
       </root>
