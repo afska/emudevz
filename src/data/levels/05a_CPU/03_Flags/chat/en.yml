@@ -13,7 +13,7 @@ main:
   - all flags are represented by an uppercase letter
   responses:
   - not <all> of them 😑 [notall]
-  - <level.isCompleted || m.$exercise> 📚  take me to the action [what]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [what]
 
 notall:
   messages:

@@ -9,7 +9,7 @@ main:
   - 🚲  ciclos, 🌠  scanlines y 🖼️  frames
   responses:
   - ¿a qué te refieres? [wdym]
-  - <level.isCompleted || m.$exercise> 📚  llévame a la acción [next]
+  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [next]
 
 wdym:
   messages:

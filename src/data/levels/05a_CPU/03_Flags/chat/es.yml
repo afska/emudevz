@@ -13,7 +13,7 @@ main:
   - todas las banderas se representan con una letra en mayúscula
   responses:
   - no <todas> 😑 [notall]
-  - <level.isCompleted || m.$exercise> 📚  llévame a la acción [what]
+  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [what]
 
 notall:
   messages:

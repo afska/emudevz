@@ -126,8 +126,8 @@ theothers:
   - tienen un significado especial cuando trabajas con direcciones de memoria 🐏
   - y [SP] es el "Stack Pointer"
   responses:
-  - <!m.$hasEnded> ...registers
-  - <m.$hasEnded> ...finish
+  - <<!m.$hasEnded>> ...registers
+  - <<m.$hasEnded>> ...finish
 
 ldaexplanation:
   run-after-messages: |
@@ -165,7 +165,7 @@ finish:
   - cuando quieras, podemos ir al siguiente nivel
   responses:
   - 💪  creo que ya entendí todo [end]
-  - <!m.$others> (*) ¿y qué onda con [X], [Y], y [SP]? [theothers]
+  - <<!m.$others>> (*) ¿y qué onda con [X], [Y], y [SP]? [theothers]
   - (*) no me gusta clickear botones [clicking]
 
 clicking:

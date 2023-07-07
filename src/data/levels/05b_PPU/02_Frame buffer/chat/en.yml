@@ -11,7 +11,7 @@ main:
   responses:
   - (*) can you give me some color examples? [examples]
   - I want to draw something on the screen! 🖌️ [integrate]
-  - <level.isCompleted || m.$exercise> 📚  take me to the action [draw]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [draw]
 
 examples:
   messages:
