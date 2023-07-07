@@ -65,6 +65,7 @@ machinecode:
   - fíjate en el Visor de Memoria en la parte inferior derecha de la pantalla
   - en esta simulación, el código empieza en la dirección de memoria $4020
   - si posas el cursor de tu mouse sobre una de estas direcciones, mostrará dónde empieza cada instrucción
+  - <{compilation.png}>
   responses:
   - (*) ¿qué es una dirección de memoria? [address]
   - ¿qué son los otros números? 👀 [otherthings]

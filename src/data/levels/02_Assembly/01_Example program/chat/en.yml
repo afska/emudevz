@@ -65,6 +65,7 @@ machinecode:
   - look at the Memory Viewer at the bottom right corner of the screen
   - in this simulation, the code starts from the $4020 memory address
   - if you place your mouse pointer over one of these addresses, it'll show where each instruction starts
+  - <{compilation.png}>
   responses:
   - (*) what's a memory address? [address]
   - what are the other numbers? 👀 [otherthings]
