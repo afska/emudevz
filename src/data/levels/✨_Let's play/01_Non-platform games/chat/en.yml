@@ -36,7 +36,7 @@ zoom:
   run: |
     {{Right}}.stream.zoom();
   messages:
-  - ✨  I've also hacked the controller port so your inputs work on my real NEEES
+  - ✨  I hacked the controller port so your inputs work on my real NEEES
   responses:
   - so, can we play now? 👾 [play]
 

@@ -25,7 +25,7 @@ export default {
 
 		const level = Level.current;
 		const content = (fileName && level?.media?.[fileName]) || null;
-		if (!content) return;
+		if (!content) throw new Error(`Invalid image: ${fileName}`);
 		const rawBase64 = content.split(";base64,")[1];
 		if (!rawBase64) return;
 
