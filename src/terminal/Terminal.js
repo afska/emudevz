@@ -126,6 +126,7 @@ export default class Terminal {
 			const characters = [...text];
 			let lastCharacter = " ";
 
+			await async.sleep();
 			for (let i = 0; i < characters.length; i++) {
 				this._interruptIfNeeded();
 

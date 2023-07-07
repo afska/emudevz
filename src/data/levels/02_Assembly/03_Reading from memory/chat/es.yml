@@ -21,6 +21,7 @@ read:
   messages:
   - "puedes pasarle una dirección de memoria a `LDX`, tan solo omitiendo el prefijo #"
   - p. ej. la instrucción `LDX $4080` cargará en [X] lo que sea que esté en la dirección de memoria $4080
+  - <{LDA_memory_ok.png}>
   responses:
   - ¿y después qué? 🤔 [then]
 

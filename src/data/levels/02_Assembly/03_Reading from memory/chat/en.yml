@@ -21,6 +21,7 @@ read:
   messages:
   - "you can pass a memory address to `LDX`, by just omitting the # prefix"
   - i.e. the instruction `LDX $4080` will load into [X] whatever value is in the memory address $4080
+  - <{LDA_memory_ok.png}>
   responses:
   - and then what? 🤔 [then]
 
