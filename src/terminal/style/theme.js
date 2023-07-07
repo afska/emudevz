@@ -42,4 +42,7 @@ export default {
 	INPUT: color(207),
 
 	BG_NEW: effect(45),
+	BG_HIGHLIGHT: effect(40),
+	BG_HIGHLIGHT_START: () => effectTag(40),
+	BG_HIGHLIGHT_END: () => effectTag(0),
 };
