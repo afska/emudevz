@@ -51,7 +51,7 @@ debugger:
 language:
   messages:
   - ¡es lenguaje ensamblador!
-  - el nivel más bajo de abstracción de las computadoras 🧠
+  - el nivel más bajo de abstracción de las computadoras 💻
   - se traduce directo a los bytes que son ejecutados por la CPU
   responses:
   - entonces, después de compilar, ¿se va a convertir en un conjunto raro de bytes? [machinecode]
@@ -82,7 +82,8 @@ butyousaid:
   - solo tiene 2 KiB de memoria real
   - pero la CPU puede <ver> hasta 64 KiB
   - así que los primeros dos kilobytes son RAM de verdad
-  - y el resto se usa para interactuar con el hardware 🧠
+  - y el resto se usa para interactuar con el hardware 💻
+  - <{memory.png}>
   - eso no importa mucho en este capítulo
   - estamos simulando una RAM de 64 KiB por simplicidad
   responses:

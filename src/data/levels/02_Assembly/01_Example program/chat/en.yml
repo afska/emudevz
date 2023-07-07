@@ -51,7 +51,7 @@ debugger:
 language:
   messages:
   - it's assembly language!
-  - the lowest level of abstraction in computers 🧠
+  - the lowest level of abstraction in computers 💻
   - it translates directly to the bytes that are executed by the CPU
   responses:
   - so, after compiling, it'll become just a chunk of bytes? [machinecode]
@@ -82,7 +82,8 @@ butyousaid:
   - it only has 2 KiB of real memory
   - but the CPU can <see> up to 64 KiB
   - so the first two kilobytes are actual RAM
-  - and the rest is used to interact with the hardware 🧠
+  - and the rest is used to interact with the hardware 💻
+  - <{memory.png}>
   - that doesn't matter too much in this chapter
   - we're simulating a 64 KiB RAM for simplicity's sake
   responses:
