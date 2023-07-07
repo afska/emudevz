@@ -5,7 +5,9 @@ main:
   messages:
   - hey,
   - juguemos un juego
-  - se llama 🤖 🧗  ~Robo-Ninja Climb~
+  - |-
+    se llama 🤖 🧗  ~Robo-Ninja Climb~
+    <{screenshot.png;30x30}>
   - si lo completas, te enviaré todos mis 🕹️  juegos de <arcade>
   - en formato ~*.neees~
   responses:

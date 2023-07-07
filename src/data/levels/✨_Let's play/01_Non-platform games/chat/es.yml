@@ -5,7 +5,9 @@ main:
   messages:
   - hey,
   - juguemos un juego
-  - se llama 🕊️ 🛰️  ~Spacegulls~
+  - |-
+    se llama 🕊️ 🛰️  ~Spacegulls~
+    <{screenshot.png;30x30}>
   - si lo completas, te enviaré todos mis 🌀  juegos de <no-plataformas>
   - en el formato ~*.neees~
   responses:
@@ -34,7 +36,7 @@ zoom:
   run: |
     {{Right}}.stream.zoom();
   messages:
-  - ✨  he parcheado el puerto del control para que tus entradas funcionen en mi NEEES real
+  - ✨  he hackeado el puerto del control para que tus entradas funcionen en mi NEEES real
   responses:
   - entonces, ¿podemos jugar ahora? 👾 [play]
 

@@ -5,7 +5,9 @@ main:
   messages:
   - hey,
   - let's play a game
-  - it's called 🚀 💥  ~Jupiter Scope 2~
+  - |-
+    it's called 🚀 💥  ~Jupiter Scope 2~
+    <{screenshot.png;30x30}>
   - if you beat my highest score, I'll send you all my 🔫  <shooting> games
   - in the ~*.neees~ format
   responses:

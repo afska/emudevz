@@ -5,7 +5,9 @@ main:
   messages:
   - hey,
   - juguemos un juego
-  - se llama 🦸 🤸  ~Super Tilt Bro~
+  - |-
+    se llama 🦸 🤸  ~Super Tilt Bro~
+    <{screenshot.png;30x30}>
   - si ganas mi desafío, te enviaré todos mis 💥  juegos de <batalla>
   - en formato ~*.neees~
   responses:

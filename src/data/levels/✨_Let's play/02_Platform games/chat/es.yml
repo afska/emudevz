@@ -5,7 +5,9 @@ main:
   messages:
   - hey,
   - juguemos un juego
-  - se llama 🧸 📍  ~Nalleland~
+  - |-
+    se llama 🧸 📍  ~Nalleland~
+    <{screenshot.png;30x30}>
   - si ganas mi desafío, te enviaré todos mis 🍄  juegos de <plataformas>
   - en el formato ~*.neees~
   responses:

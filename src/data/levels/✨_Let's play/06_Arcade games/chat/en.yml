@@ -5,7 +5,9 @@ main:
   messages:
   - hey,
   - let's play a game
-  - it's called 🤖 🧗  ~Robo-Ninja Climb~
+  - |-
+    it's called 🤖 🧗  ~Robo-Ninja Climb~
+    <{screenshot.png;30x30}>
   - if you complete it, I'll send you all my 🕹️  <arcade> games
   - in the ~*.neees~ format
   responses:

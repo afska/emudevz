@@ -5,7 +5,9 @@ main:
   messages:
   - hey,
   - juguemos un juego
-  - se llama 🦅 ⛩️  ~Raven's Gate~
+  - |-
+    se llama 🦅 ⛩️  ~Raven's Gate~
+    <{screenshot.png;30x30}>
   - si lo completas, te enviaré todos mis ⚔️  juegos de <aventura>
   - en formato ~*.neees~
   responses:
