@@ -14,7 +14,15 @@ export default {
 	FAINT: effect(2),
 	ITALIC: effect(3),
 	UNDERLINE: effect(4),
-	IMAGE: (fileName) => {
+	IMAGE: (imageCommand) => {
+		const [fileName, resolution] = imageCommand.split(";");
+		let args = "";
+		if (resolution != null) {
+			const [width, height] = resolution.split("x");
+			if (width != null && height != null)
+				args = `;width=${width};height=${height}`;
+		}
+
 		const level = Level.current;
 		const content = (fileName && level?.media?.[fileName]) || null;
 		if (!content) return;
@@ -22,7 +30,7 @@ export default {
 		if (!rawBase64) return;
 
 		const size = window.atob(rawBase64).length;
-		return `]1337;File=inline=1;size=${size}:${rawBase64}`;
+		return `]1337;File=inline=1;size=${size}${args}:${rawBase64}`;
 	},
 
 	ACCENT: color(180),
