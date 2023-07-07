@@ -51,7 +51,22 @@
 }
 
 .selectedCell {
-	filter: sepia(1);
+	animation: selectedCellLoop infinite 1s;
+}
+
+@keyframes selectedCellLoop {
+	0% {
+		transform: scale(1);
+		filter: sepia(0);
+	}
+	50% {
+		transform: scale(1.25);
+		filter: sepia(1);
+	}
+	100% {
+		transform: scale(1);
+		filter: sepia(0);
+	}
 }
 
 .sentence {

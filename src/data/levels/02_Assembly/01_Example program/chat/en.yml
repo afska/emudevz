@@ -57,6 +57,8 @@ language:
   - so, after compiling, it'll become just a chunk of bytes? [machinecode]
 
 machinecode:
+  run: |
+    {{Bottom}}.setSelectedCells([0x4020, 0x4021, 0x4022, 0x4023, 0x4024, 0x4025, 0x4026, 0x4027, 0x4028, 0x4029, 0x402A, 0x402B, 0x402C, 0x402D, 0x402E]);
   messages:
   - correct
   - you're actually seeing the compiled code, right now
@@ -88,6 +90,7 @@ butyousaid:
 
 otherthings:
   run-after-messages: |
+    {{Bottom}}.setSelectedCells([]);
     set((m) => m.$canRun = true);
   messages:
   - let's run the code and discover it
