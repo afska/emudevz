@@ -119,4 +119,5 @@ help:
   - 🛑  for that, you can put a label at the very end of the code
   - and use a branch instruction to jump to it
   - or more simply, just use the `BRK` instruction, which halts the execution 😉
+  - <{BRK.png}>
   responses: []

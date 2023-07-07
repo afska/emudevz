@@ -119,4 +119,5 @@ help:
   - 🛑  para eso, puedes poner una etiqueta al final del código
   - y usar una instrucción de bifurcación para saltar a ella
   - o más fácil, usa la instrucción `BRK`, que interrumpe la ejecución 😉
+  - <{BRK.png}>
   responses: []
