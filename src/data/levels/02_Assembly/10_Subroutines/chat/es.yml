@@ -15,6 +15,7 @@ where:
   - bueno, `JSR` pone la dirección de la siguiente instrucción (menos 1) en la pila antes de saltar a la ubicación dada
   - luego, `RTS` saca esta dirección, le suma 1, y salta a esa ubicación
   - el código de ejemplo ilustra cómo se pueden usar ambos para crear código modular 🗃️
+  - <{JSR_RTS.png}>
   responses:
   - (*) ¿por qué no usaste los nombres de las etiquetas? [label]
   - ¡genial! [awesome]
