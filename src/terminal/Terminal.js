@@ -6,6 +6,7 @@ import { async, bus } from "../utils";
 import { ansiEscapes } from "../utils/cli";
 import PendingInput, { PendingKey } from "./PendingInput";
 import Shell from "./Shell";
+import OpenCommand from "./commands/fs/OpenCommand";
 import { CANCELED, DISPOSED, INTERRUPTED } from "./errors";
 import highlighter from "./highlighter";
 import { theme } from "./style";
@@ -27,6 +28,7 @@ const TABULATION = "\t";
 const INDENTATION = "  ";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
+const LINK_FILE_REGEXP = /📄  ([^ ]+)/u;
 
 export default class Terminal {
 	constructor(xterm) {
@@ -46,6 +48,7 @@ export default class Terminal {
 
 		this._setUpXtermHooks();
 		this._setUpRemoteCommandSubscriber();
+		this._setUpFileLinks();
 
 		this.autocompleteOptions = [];
 	}
@@ -294,6 +297,7 @@ export default class Terminal {
 	dispose() {
 		this._disposeFlag = true;
 		this._subscriber.release();
+		this._fileLinkProvider.dispose();
 	}
 
 	get isExpectingInput() {
@@ -431,6 +435,15 @@ export default class Terminal {
 				await this.interrupt();
 			},
 		});
+	}
+
+	_setUpFileLinks() {
+		this._fileLinkProvider = this.registerLinkProvider(
+			LINK_FILE_REGEXP,
+			(__, filePath) => {
+				OpenCommand.open(filePath);
+			}
+		);
 	}
 
 	_requestInterrupt() {

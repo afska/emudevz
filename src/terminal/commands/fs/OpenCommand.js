@@ -1,5 +1,6 @@
-import $path from "path";
 import filesystem from "../../../filesystem";
+import TV from "../../../gui/components/TV";
+import extensions from "../../../gui/extensions";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
@@ -11,6 +12,18 @@ export default class OpenCommand extends FilesystemCommand {
 		return "open";
 	}
 
+	static open(filePath) {
+		if (!filesystem.exists(filePath)) return;
+		const [Component, customArgs] = extensions.getOptions(filePath);
+
+		if (Component === TV && customArgs.type === "rom") {
+			const rom = filesystem.read(filePath, { binary: true });
+			Level.current.launchEmulator(rom);
+		} else {
+			store.dispatch.savedata.openFile(filePath);
+		}
+	}
+
 	async _execute() {
 		for (let arg of this._fileArgs) {
 			const path = this._resolve(arg);
@@ -18,17 +31,11 @@ export default class OpenCommand extends FilesystemCommand {
 			if (stat.isDirectory)
 				throw new Error(`EISDIR: File is a directory., '${path}'`);
 
-			const extension = $path.parse(path).ext.toLowerCase();
 			await this._terminal.writeln(
 				`${locales.get("opening")} ${theme.ACCENT(arg)}...`
 			);
 
-			if (extension === ".neees" || extension === ".nes") {
-				const rom = filesystem.read(path, { binary: true });
-				Level.current.launchEmulator(rom);
-			} else {
-				store.dispatch.savedata.openFile(path);
-			}
+			OpenCommand.open(path);
 		}
 	}
 }

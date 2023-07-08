@@ -5,7 +5,7 @@ main:
   messages:
   - we're gonna start coding in JavaScript
   - by the way, your computer has been <upgraded>
-  - now you can use MULTIPLE files 🗃️ 📄 📁
+  - now you can use MULTIPLE files 🗃️ 📁
   - very cool, huh?
   responses:
   - that's a pretty normal feature [notcool]
