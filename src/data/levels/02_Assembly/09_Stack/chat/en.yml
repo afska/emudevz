@@ -60,9 +60,10 @@ exercise:
     });
   messages:
   - now, an exercise
-  - 📚  your stack will have 2 random preloaded values
-  - you just need to pull and load them into 2 consecutive memory addresses
-  - then, perform an indirect `JMP` 🦘
-  - e.g. if your stack has -from top to bottom- $C4 and $3E, when your program finishes, [PC] should be $3EC4
-  - run `test` when it's all done 😊
+  - 📚  _-_remove all the code_--_
+  - _-_your stack will have 2 random preloaded values_--_
+  - _-_you just need to pull and load them into 2 consecutive memory addresses_--_
+  - _-_then, perform an indirect `JMP` _--_🦘
+  - _-_e.g. if your stack has -from top to bottom- $C4 and $3E, when your program finishes, [PC] should be $3EC4_--_
+  - _-_run `test` when it's all done _--_😊
   responses: []

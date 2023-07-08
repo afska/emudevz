@@ -60,9 +60,10 @@ exercise:
     });
   messages:
   - ahora, un ejercicio
-  - 📚  tu pila tendrá 2 valores precargados aleatorios
-  - solo necesitas sacar y cargarlos en 2 direcciones de memoria consecutivas
-  - luego, hacer un salto indirecto `JMP` 🦘
-  - p. ej. si tu pila tiene -de arriba a abajo- $C4 y $3E, cuando tu programa finalice, [PC] debería valer $3EC4
-  - corre `test` cuando esté todo listo 😊
+  - 📚  _-_borra todo el código_--_
+  - _-_tu pila tendrá 2 valores precargados aleatorios_--_
+  - _-_solo necesitas sacar y cargarlos en 2 direcciones de memoria consecutivas_--_
+  - _-_luego, hacer un salto indirecto `JMP` _--_🦘
+  - _-_p. ej. si tu pila tiene -de arriba a abajo- $C4 y $3E, cuando tu programa finalice, [PC] debería valer $3EC4_--_
+  - _-_corre `test` cuando esté todo listo _--_😊
   responses: []

@@ -77,6 +77,7 @@ step7:
   - por lo que si sumamos [X], obtendríamos `STA ($0003)`
   - desde aquí, las cosas proceden como un direccionamiento "Indirect" estándar
   - esto termina escribiendo el valor de [A] en $4080
+  - <{STA_indexedindirect.png}>
   responses:
   - (*) ¿cómo es eso? 🤨 [whatwasthat]
   - tiene todo el sentido 👍 [makessense]
@@ -117,6 +118,7 @@ step9:
   - ese $BE fue cargado en [A] 🤯
   - como vimos anteriormente, en nuestra configuración actual ($0003) evalúa a $4080
   - la instrucción solo sumó [Y] a eso, así que la dirección final fue $4085
+  - <{LDA_indirectindexed.png}>
   responses:
   - creo que me estresé, ¿podemos omitir la práctica? 😓 [skip]
 
