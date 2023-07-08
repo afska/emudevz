@@ -61,9 +61,9 @@ machinecode:
     {{Bottom}}.setSelectedCells([0x4020, 0x4021, 0x4022, 0x4023, 0x4024, 0x4025, 0x4026, 0x4027, 0x4028, 0x4029, 0x402A, 0x402B, 0x402C, 0x402D, 0x402E]);
   messages:
   - correct
-  - you're actually seeing the compiled code, right now
+  - you're actually seeing the <compiled code>, right now
   - look at the Memory Viewer at the bottom right corner of the screen
-  - in this simulation, the code starts from the $4020 memory address
+  - in this simulation, the code starts from the $4020 memory <address>
   - if you place your mouse pointer over one of these addresses, it'll show where each instruction starts
   - <{compilation.png}>
   responses:
@@ -71,12 +71,17 @@ machinecode:
   - what are the other numbers? 👀 [otherthings]
 
 address:
+  run: |
+    set((m) => m.$address = true);
   messages:
   - a 2-byte number that represents a location in memory 🐏
   - it can go from 0 ($0000) to 65535 ($FFFF)
+  - every location (and pretty much everything on the NEEES) can store a single byte
+  - a byte can store any number between 0 ($00) and 255 ($FF)
   responses:
   - if the NEEES only had 2 KiB (2048 bytes) of memory, how can there be 65536 addresses? 😕 [butyousaid]
-  - ...machinecode
+  - <<!m.$hasEnded>> ...machinecode
+  - <<m.$hasEnded>> ...finish
 
 butyousaid:
   messages:
@@ -88,7 +93,8 @@ butyousaid:
   - that doesn't matter too much in this chapter
   - we're simulating a 64 KiB RAM for simplicity's sake
   responses:
-  - ...machinecode
+  - <<!m.$hasEnded>> ...machinecode
+  - <<m.$hasEnded>> ...finish
 
 otherthings:
   run-after-messages: |
@@ -108,7 +114,7 @@ lda:
   - great!
   - if you were watching carefully, you'll have noticed that [A] changed from $00 to $01
   - and [PC] changed from $4020 to $4022 🤯
-  - those are CPU registers, quickly accessible locations
+  - those are CPU <registers>, quickly accessible locations
   - each register can hold a single byte (8 bits) of data
   - with the exception of [PC] (Program Counter) which is 2 bytes wide
   responses:
@@ -139,9 +145,9 @@ ldaexplanation:
     set((m) => m.$canRun = true);
   messages:
   - exactly, LDA means "LoaD Accumulator"
-  - 💸  any numbers prefixed with $ are in hexadecimal notation
-  - "🔢  anything prefixed with # is a literal number value"
-  - 🐏  any other number refers to a memory location
+  - 💸  numbers prefixed with $ are in hexadecimal notation
+  - "🔢  numbers prefixed with # are literal values"
+  - "🐏  numbers without the # prefix refer to memory locations"
   - now run the next instruction! ⏩
   events:
   - step [sta]
@@ -171,6 +177,7 @@ finish:
   responses:
   - 💪  I think I'm ready [end]
   - <<!m.$others>> (*) what about [X], [Y], and [SP]? [theothers]
+  - <<!m.$address>> (*) again... what's a memory address? [address]
   - (*) I don't like clicking buttons [clicking]
 
 clicking:

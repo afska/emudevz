@@ -61,9 +61,9 @@ machinecode:
     {{Bottom}}.setSelectedCells([0x4020, 0x4021, 0x4022, 0x4023, 0x4024, 0x4025, 0x4026, 0x4027, 0x4028, 0x4029, 0x402A, 0x402B, 0x402C, 0x402D, 0x402E]);
   messages:
   - correcto
-  - de hecho, estás viendo el código compilado ahora mismo
+  - de hecho, estás viendo el <código compilado> ahora mismo
   - fíjate en el Visor de Memoria en la parte inferior derecha de la pantalla
-  - en esta simulación, el código empieza en la dirección de memoria $4020
+  - en esta simulación, el código empieza en la <dirección> de memoria $4020
   - si posas el cursor de tu mouse sobre una de estas direcciones, mostrará dónde empieza cada instrucción
   - <{compilation.png}>
   responses:
@@ -71,12 +71,17 @@ machinecode:
   - ¿qué son los otros números? 👀 [otherthings]
 
 address:
+  run: |
+    set((m) => m.$address = true);
   messages:
   - un número de 2 bytes que representa una ubicación dentro de la memoria 🐏
   - puede ir de 0 ($0000) a 65535 ($FFFF)
+  - cada ubicación (y prácticamente todo en la NEEES) puede guardar un solo byte
+  - un byte puede almacenar cualquier número entre 0 ($00) y 255 ($FF)
   responses:
   - si la NEEES solo tenía 2 KiB (2048 bytes) de memoria, ¿cómo puede ser que haya 65536 direcciones? 😕 [butyousaid]
-  - ...machinecode
+  - <<!m.$hasEnded>> ...machinecode
+  - <<m.$hasEnded>> ...finish
 
 butyousaid:
   messages:
@@ -88,7 +93,8 @@ butyousaid:
   - eso no importa mucho en este capítulo
   - estamos simulando una RAM de 64 KiB por simplicidad
   responses:
-  - ...machinecode
+  - <<!m.$hasEnded>> ...machinecode
+  - <<m.$hasEnded>> ...finish
 
 otherthings:
   run-after-messages: |
@@ -108,7 +114,7 @@ lda:
   - ¡genial!
   - si prestaste atención, seguramente viste que [A] cambió de $00 a $01
   - y [PC] cambió de $4020 a $4022 🤯
-  - estos son registros de CPU, ubicaciones rápidamente accesibles
+  - estos son <registros> de CPU, ubicaciones rápidamente accesibles
   - cada registro puede almacenar un solo byte (8 bits) de datos
   - con la excepción de [PC] ("Program Counter") que ocupa 2 bytes
   responses:
@@ -139,9 +145,9 @@ ldaexplanation:
     set((m) => m.$canRun = true);
   messages:
   - exactamente, LDA significa "LoaD Accumulator"
-  - 💸  todos los números con el prefijo $ están en notación hexadecimal
-  - "🔢  cualquier cosa con el prefijo # es un valor numérico literal"
-  - 🐏  cualquier otro número refiere a una ubicación de memoria
+  - 💸  los números con el prefijo $ están en notación hexadecimal
+  - "🔢  los números con el prefijo # son valores literales"
+  - "🐏  los números sin el prefijo # refieren a ubicaciones de memoria"
   - ¡ahora ejecuta la siguiente instrucción! ⏩
   events:
   - step [sta]
@@ -171,6 +177,7 @@ finish:
   responses:
   - 💪  creo que ya entendí todo [end]
   - <<!m.$others>> (*) ¿y qué onda con [X], [Y], y [SP]? [theothers]
+  - <<!m.$address>> (*) de nuevo... ¿qué es una dirección de memoria? [address]
   - (*) no me gusta clickear botones [clicking]
 
 clicking:
