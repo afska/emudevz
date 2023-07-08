@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import $path from "path";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaSearch } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
@@ -91,7 +91,7 @@ class MultiFile extends PureComponent {
 							Icon={FaChevronLeft}
 							tooltip={locales.get("scroll_left")}
 							onClick={() => this._onManualScrollTabs(-DELTA_SCROLL)}
-							className={styles.scrollButton}
+							className={styles.tabButton}
 						/>
 						<HorizontalDragList
 							items={this.props.openFiles.map((filePath) => ({
@@ -107,7 +107,13 @@ class MultiFile extends PureComponent {
 							Icon={FaChevronRight}
 							tooltip={locales.get("scroll_right")}
 							onClick={() => this._onManualScrollTabs(DELTA_SCROLL)}
-							className={styles.scrollButton}
+							className={styles.tabButton}
+						/>
+						<IconButton
+							Icon={FaSearch}
+							tooltip={locales.get("search_files")}
+							onClick={() => this.setState({ isSearching: true })}
+							className={styles.tabButton}
 						/>
 					</div>
 					<div className={styles.content}>

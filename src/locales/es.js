@@ -125,6 +125,7 @@ export default {
 		"Este archivo de partida no puede ser restaurado.",
 	scroll_left: "Scrollear a la izquierda",
 	scroll_right: "Scrollear a la derecha",
+	search_files: "Buscar archivos...",
 	select_a_chapter: "Selecciona un capítulo",
 	settings: "Opciones",
 	shell_command_not_found: "comando no encontrado",

@@ -122,6 +122,7 @@ export default {
 	save_file_cannot_be_restored: "This save file cannot be restored.",
 	scroll_left: "Scroll left",
 	scroll_right: "Scroll right",
+	search_files: "Search files...",
 	select_a_chapter: "Select a chapter",
 	settings: "Settings",
 	shell_command_not_found: "command not found",
