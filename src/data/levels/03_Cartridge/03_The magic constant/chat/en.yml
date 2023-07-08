@@ -3,7 +3,7 @@ main:
   run: |
     if (m.$end) $.goTo("exercise");
   messages:
-  - we preserve games in digital format with game files (also called ROMs) 👾
+  - we preserve games in digital format with <game files> (also called ROMs) 👾
   - these contain code, graphics, and a header that identifies the hardware
   responses:
   - they're the famous *.neees files, right? [neeesfiles]

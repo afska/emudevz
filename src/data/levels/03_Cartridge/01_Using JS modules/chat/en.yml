@@ -45,10 +45,10 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - 📚  create a file in 📄  ~/code/Cartridge.js~
-  - its default export should be an empty class
-  - then, import that file from 📄  ~/code/index.js~
-  - and export an object literal with only one key (`Cartridge`) pointing to that class
+  - 📚  _-_create a file in _--_📄 _-_ ~/code/Cartridge.js~_--_
+  - _-_its default export should be an empty class_--_
+  - _-_then, import that file from _--_📄 _-_ ~/code/index.js~_--_
+  - _-_and export an object literal with only one key (`Cartridge`) pointing to that class_--_
   - |-
     your ~index.js~ file should look like this:
       ```javascript

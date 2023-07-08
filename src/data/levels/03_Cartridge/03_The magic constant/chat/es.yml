@@ -3,7 +3,7 @@ main:
   run: |
     if (m.$end) $.goTo("exercise");
   messages:
-  - los juegos se suelen preservar en formato digital con archivos de juego (también llamados ROMs) 👾
+  - los juegos se suelen preservar en formato digital con <archivos de juego> (también llamados ROMs) 👾
   - estos contienen código, gráficos y una cabecera que identifica el hardware
   responses:
   - son los famosos archivos *.neees, ¿no? [neeesfiles]
