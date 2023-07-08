@@ -10,6 +10,26 @@ export default class FilesystemCommand extends Command {
 		return true;
 	}
 
+	static resolve(path, isWrite = false, workingDirectory = "/") {
+		if (path == null) throw new Error("A path is required");
+
+		const absolutePath = filesystem.resolve(path, workingDirectory);
+		const parsedPath = $path.parse(absolutePath);
+
+		if (Drive.INVALID_CHARACTERS.test(parsedPath.base))
+			throw new Error(`Invalid name: '${parsedPath.base}'`);
+
+		if (parsedPath.base.length > Drive.MAX_FILE_NAME_LENGTH)
+			throw new Error(`Name too long: '${parsedPath.base}'`);
+
+		const isProtectedFile = Drive.isProtectedFile(absolutePath);
+		const isReadOnlyDir = Drive.isReadOnlyDir(parsedPath.dir);
+		if (isWrite && (isProtectedFile || isReadOnlyDir))
+			throw new Error(`EPERM: operation not permitted., '${absolutePath}'`);
+
+		return absolutePath;
+	}
+
 	async execute() {
 		try {
 			await this._execute();
@@ -28,23 +48,11 @@ export default class FilesystemCommand extends Command {
 	}
 
 	_resolve(path, isWrite = false) {
-		if (path == null) throw new Error("A path is required");
-
-		const absolutePath = filesystem.resolve(path, this._shell.workingDirectory);
-		const parsedPath = $path.parse(absolutePath);
-
-		if (Drive.INVALID_CHARACTERS.test(parsedPath.base))
-			throw new Error(`Invalid name: '${parsedPath.base}'`);
-
-		if (parsedPath.base.length > Drive.MAX_FILE_NAME_LENGTH)
-			throw new Error(`Name too long: '${parsedPath.base}'`);
-
-		const isProtectedFile = Drive.isProtectedFile(absolutePath);
-		const isReadOnlyDir = Drive.isReadOnlyDir(parsedPath.dir);
-		if (isWrite && (isProtectedFile || isReadOnlyDir))
-			throw new Error(`EPERM: operation not permitted., '${absolutePath}'`);
-
-		return absolutePath;
+		return FilesystemCommand.resolve(
+			path,
+			isWrite,
+			this._shell.workingDirectory
+		);
 	}
 
 	get _fileArgs() {

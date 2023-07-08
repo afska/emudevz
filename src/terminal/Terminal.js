@@ -1,11 +1,13 @@
 import { LinkProvider } from "xterm-link-provider";
 import _ from "lodash";
+import filesystem from "../filesystem";
 import locales from "../locales";
 import store from "../store";
-import { async, bus } from "../utils";
+import { async, bus, toast } from "../utils";
 import { ansiEscapes } from "../utils/cli";
 import PendingInput, { PendingKey } from "./PendingInput";
 import Shell from "./Shell";
+import FilesystemCommand from "./commands/fs/FilesystemCommand";
 import OpenCommand from "./commands/fs/OpenCommand";
 import { CANCELED, DISPOSED, INTERRUPTED } from "./errors";
 import highlighter from "./highlighter";
@@ -441,7 +443,31 @@ export default class Terminal {
 		this._fileLinkProvider = this.registerLinkProvider(
 			LINK_FILE_REGEXP,
 			(__, filePath) => {
-				OpenCommand.open(filePath);
+				const result = OpenCommand.open(filePath);
+				if (result === -1) {
+					toast.error(
+						<span
+							onClick={() => {
+								try {
+									const resolvedFilePath = FilesystemCommand.resolve(
+										filePath,
+										true
+									);
+									filesystem.write(resolvedFilePath, "");
+									OpenCommand.open(filePath);
+									toast.success(locales.get("file_created"));
+								} catch (e) {
+									toast.error("file_created_error");
+								}
+							}}
+						>
+							<span className="toast-link">
+								{locales.get("file_doesnt_exist1")} <code>{filePath}</code>{" "}
+								{locales.get("file_doesnt_exist2")}
+							</span>
+						</span>
+					);
+				}
 			}
 		);
 	}

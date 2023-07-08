@@ -13,7 +13,8 @@ export default class OpenCommand extends FilesystemCommand {
 	}
 
 	static open(filePath) {
-		if (!filesystem.exists(filePath)) return;
+		if (!filesystem.exists(filePath)) return -1;
+		if (filesystem.stat(filePath).isDirectory) return -2;
 		const [Component, customArgs] = extensions.getOptions(filePath);
 
 		if (Component === TV && customArgs.type === "rom") {
@@ -22,6 +23,7 @@ export default class OpenCommand extends FilesystemCommand {
 		} else {
 			store.dispatch.savedata.openFile(filePath);
 		}
+		return true;
 	}
 
 	async _execute() {
