@@ -59,4 +59,8 @@
 	white-space: nowrap;
 	margin-left: 8px;
 	margin-right: 8px;
+
+	border-radius: 8px;
+	border: 1px dashed rgb(143, 143, 143);
+	padding: 4px;
 }
