@@ -15,6 +15,7 @@ main:
   - en un procesador 6502, vive en la memoria entre $0100 y $01FF 🐏
   - "[SP] inicialmente es $FF, que apunta al último byte de la pila ($01FF)"
   - cuando un byte se agrega a la pila, [SP] pasa a ser $FE (o ubicación de memoria $01FE), y así
+  - <{stack.png}>
   responses:
   - ¿y cómo puedo poner valores en ella? [put]
 
@@ -22,7 +23,9 @@ put:
   messages:
   - "puedes usar dos instrucciones:"
   - "⬆️  `PHA` (\"PusH Accumulator\"), que pone [A] en la pila"
+  - <{stack_PHA.png}>
   - "⬇️  `PLA` (\"PulL Accumulator\"), que saca el último byte de la pila, y lo carga en [A]"
+  - <{stack_PLA.png}>
   responses:
   - ¿puedes explicarme el código de ejemplo? [example]
 

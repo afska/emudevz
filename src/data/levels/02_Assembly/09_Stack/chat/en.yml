@@ -15,6 +15,7 @@ main:
   - in a 6502 processor, it lives in memory between $0100 and $01FF 🐏
   - "[SP] is initially $FF, which points to the last stack byte ($01FF)"
   - when a byte is pushed onto the stack, [SP] becomes $FE (or memory location $01FE), and so on
+  - <{stack.png}>
   responses:
   - and how can I put values on it? [put]
 
@@ -22,7 +23,9 @@ put:
   messages:
   - "you use two instructions:"
   - "⬆️  `PHA` (\"PusH Accumulator\"), which adds [A] to the stack"
-  - "⬇️  `PLA` (\"PulL Accumulator\"), which removes the last byte from the stack, and loads it in [A]"
+  - <{stack_PHA.png}>
+  - "⬇️  `PLA` (\"PulL Accumulator\"), which removes the last byte from the stack, and loads it into [A]"
+  - <{stack_PLA.png}>
   responses:
   - can you explain to me the example code? [example]
 
