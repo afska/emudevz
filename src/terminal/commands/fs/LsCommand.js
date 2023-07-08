@@ -1,3 +1,4 @@
+import $path from "path";
 import _ from "lodash";
 import filesystem from "../../../filesystem";
 import locales from "../../../locales";
@@ -17,8 +18,9 @@ export default class LsCommand extends FilesystemCommand {
 
 		return content
 			.flatMap(({ name, isDirectory }, i) => {
-				const prefix = format ? "" : isDirectory ? "📁 " : "📄 ";
-				const formattedName = isDirectory ? prefix + name + "/" : prefix + name;
+				const folderName = (format ? "" : "📁 ") + name + "/";
+				const fileName = format ? name : `[[[${$path.join(path, name)}]]]`;
+				const formattedName = isDirectory ? folderName : fileName;
 				const styledName =
 					isDirectory && format
 						? theme.MESSAGE(formattedName)
