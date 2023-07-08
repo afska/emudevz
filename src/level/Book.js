@@ -51,8 +51,11 @@ export default class Book {
 			return this._savedata.unlockedLetsPlayLevels.includes(level.id);
 		} else if (chapter.number < maxChapterNumber) {
 			return true;
-		} else if (chapter.number <= maxChapterNumber + 1) {
+		} else if (chapter.number === maxChapterNumber + 1) {
 			const nextPendingLevel = this.nextPendingLevelOfChapter(maxChapter.id);
+			return !nextPendingLevel;
+		} else if (chapter.number === maxChapterNumber) {
+			const nextPendingLevel = this.nextPendingLevelOfChapter(chapter.id);
 			if (!nextPendingLevel) return true;
 			return level.globalId <= nextPendingLevel.globalId;
 		} else {
