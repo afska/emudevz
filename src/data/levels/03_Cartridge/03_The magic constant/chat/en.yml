@@ -23,9 +23,9 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - 📚  add a constructor to the `Cartridge` class receiving the ROM bytes
-  - save them in a property called `bytes`
-  - if the magic constant doesn't match $4E $45 $53 $1A, throw an error with the "Invalid ROM." message
+  - 📚  _-_add a constructor to the `Cartridge` class receiving the ROM bytes_--_
+  - _-_save them in a property called `bytes`_--_
+  - _-_if the magic constant doesn't match $4E $45 $53 $1A, throw an error with the "Invalid ROM." message_--_
   responses:
   - how can I add a constructor? 😳 [constructor]
   - I need help checking the bytes 🥺 [help]

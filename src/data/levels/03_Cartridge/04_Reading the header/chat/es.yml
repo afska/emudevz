@@ -12,10 +12,10 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - te envié algunos archivos
-  - dos diagramas de la 🏟️  arquitectura de hardware
-  - y un documento que describe el 📑  formato ~iNEEES~
-  - puedes inspeccionarlos con el comando ~open~
+  - te envié algo de documentación 🤓
+  - revisa 📄  ~/docs/iNEEES.es.md~
+  - es un documento que describe el formato ~iNEEES~
+  - puedes inspeccionarlo con el comando ~open~, o <clickeando> en la ruta al archivo
   - quiero que lo veas y me digas si entiendes
   responses:
   - 🤔  creo que entiendo [understand]
@@ -44,6 +44,7 @@ mirroring:
 
 memories:
   messages:
+  - ok, intentaré...
   - "🤖  <PRG-ROM>: memoria de solo lectura que contiene el programa"
   - "👾  <CHR-ROM>: memoria de solo lectura que contiene los gráficos"
   - "👾  <CHR-RAM>: memoria escribible para poner gráficos en tiempo de ejecución"
@@ -71,7 +72,7 @@ understand:
   messages:
   - excelente 💪
   - |-
-    📚  agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
+    📚  _-_agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
     ```javascript {
       prgRomPages: 2, // (obtener esto del byte 4)
       chrRomPages: 1, // (obtener esto del byte 5)
@@ -80,7 +81,7 @@ understand:
       hasPrgRam: false, // (obtener esto de <Flags 6>)
       mirroring: "VERTICAL", // (obtener esto de <Flags 6>)
       mapperId: 4 // (obtener esto de <Flags 6> y <Flags 7>)
-    }```
+    }```_--_
   responses:
   - necesito un poco de ayuda 📐 [bits]
 

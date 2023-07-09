@@ -50,10 +50,10 @@ exercise:
   - _-_luego, importa ese archivo desde _--_📄 _-_ ~/code/index.js~_--_
   - _-_y exporta un objeto literal con una sola clave (`Cartridge`) apuntando a esa clase_--_
   - |-
-    tu archivo ~index.js~ debería verse así:
+    _-_tu archivo ~index.js~ debería verse así:
       ```javascript
       import Cartridge from "./Cartridge";
-      export default { Cartridge }```
+      export default { Cartridge }```_--_
   responses:
   - ¿exportar? ¿módulos? 🧐 [modules]
 

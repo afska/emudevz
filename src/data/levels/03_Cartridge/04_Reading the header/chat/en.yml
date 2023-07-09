@@ -12,11 +12,11 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - I've sent you some files
-  - two diagrams of the 🏟️  hardware architecture
-  - and a document describing the 📑  ~iNEEES~ format
-  - you can inspect them with the ~open~ command
-  - I want you to read it and tell me if you understand it
+  - I've sent you some documentation 🤓
+  - check out 📄  ~/docs/iNEEES.en.md~
+  - it's a document describing the ~iNEEES~ format
+  - you can inspect it with the ~open~ command, or by <clicking> on the file path
+  - I want you to read it and tell me if you understand
   responses:
   - 🤔  I think I understand [understand]
   - (*) what's a mapper? 🗜️ [mapper]
@@ -44,6 +44,7 @@ mirroring:
 
 memories:
   messages:
+  - ok, let's try...
   - "🤖  <PRG-ROM>: read-only memory that contains the program"
   - "👾  <CHR-ROM>: read-only memory that contains the graphics"
   - "👾  <CHR-RAM>: writable memory to store graphics in runtime"
@@ -71,7 +72,7 @@ understand:
   messages:
   - awesome 💪
   - |-
-    📚  let's add a `header` property to the `Cartridge` class, with the following form:
+    📚  _-_let's add a `header` property to the `Cartridge` class, with the following form:
     ```javascript {
       prgRomPages: 2, // (obtain this from byte 4)
       chrRomPages: 1, // (obtain this from byte 5)
@@ -80,7 +81,7 @@ understand:
       hasPrgRam: false, // (obtain this from <Flags 6>)
       mirroring: "VERTICAL", // (obtain this from <Flags 6>)
       mapperId: 4 // (obtain this from <Flags 6> and <Flags 7>)
-    }```
+    }```_--_
   responses:
   - I need a bit of help 📐 [bits]
 
