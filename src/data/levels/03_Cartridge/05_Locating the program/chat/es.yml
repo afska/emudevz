@@ -1,9 +1,10 @@
 ---
 main:
   messages:
-  - necesitamos acceder al código del programa fácilmente 🧠
-  - 📚  crea un método ```javascript prg()``` que retorne un `Uint8Array` con los bytes de <PRG-ROM>
-  - el código está justo después de la cabecera de 16 bytes, pero recuerda que podrías tener que omitir 512 bytes si la cabecera lo indica
+  - necesitamos acceder al código del programa fácilmente 🤖
+  - 📚  _-_crea un método ```javascript prg()``` que retorne un `Uint8Array` con los bytes de <PRG-ROM>_--_
+  - _-_el código está justo después de la cabecera de 16 bytes, pero recuerda que podrías tener que omitir 512 bytes si la cabecera lo indica_--_
+  - <{prg.png}>
   responses:
   - ¿cómo puedo cortar los bytes? ✂️ [cut]
 

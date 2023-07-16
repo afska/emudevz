@@ -71,6 +71,7 @@ nybble:
 understand:
   messages:
   - excelente 💪
+  - los primeros 16 bytes del archivo representan la 🗣️  cabecera
   - |-
     📚  _-_agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
     ```javascript {
