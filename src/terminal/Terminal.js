@@ -30,7 +30,7 @@ const TABULATION = "\t";
 const INDENTATION = "  ";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
-const LINK_FILE_REGEXP = /📄 {2}([^ ]+)/u;
+const LINK_FILE_REGEXP = /📄 {2}([a-z0-9/._-]+)/iu;
 
 export default class Terminal {
 	constructor(xterm) {
