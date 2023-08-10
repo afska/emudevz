@@ -2,6 +2,7 @@
 main:
   messages:
   - ¿recuerdas los <modos de direccionamiento> del capítulo de ensamblador?
+  - <{compilation_full.png}>
   - bueno... es hora de emularlos 😏
   - hice una guía rápida para ti
   - revisa 📄  ~/docs/cpu/addressing_modes.es.md~

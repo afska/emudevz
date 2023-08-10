@@ -6,6 +6,7 @@ main:
   - o al usar la instrucción `RTS` y la CPU tiene que restaurar [PC] desde la pila
   - en estos casos, se usa la convención <Little Endian> 🔌
   - "eso quiere decir: el byte menos significativo (\"low byte\") se guarda primero, luego el más significativo (\"high byte\")"
+  - <{little_endian.png}>
   - |-
     📚  _-_implementa este método en `CPUMemory`:_--_
     **read16(address)**:

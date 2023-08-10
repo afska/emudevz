@@ -2,6 +2,7 @@
 main:
   messages:
   - remember the stack? 🧱
+  - <{stack.png}>
   - 📚  _-_create a new class for it_--_
   - _-_it should receive the `memory` and `sp` from the CPU, as it will have to interact with them_--_
   - |-

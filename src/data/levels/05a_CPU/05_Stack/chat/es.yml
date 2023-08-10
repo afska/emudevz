@@ -2,6 +2,7 @@
 main:
   messages:
   - ¿recuerdas la pila? 🧱
+  - <{stack.png}>
   - 📚  _-_crea una nueva clase para ella_--_
   - _-_tendría que recibir `memory` y `sp` de la CPU, ya que va a tener que interactuar con ellos_--_
   - |-

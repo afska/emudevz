@@ -2,6 +2,7 @@
 main:
   messages:
   - remember the <addressing modes> from the assembly chapter?
+  - <{compilation_full.png}>
   - well... it's time to emulate them 😏
   - I made a quick reference for you
   - check out 📄  ~/docs/cpu/addressing_modes.en.md~
