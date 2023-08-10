@@ -493,7 +493,9 @@ export default class Terminal {
 			);
 			if (nextWordLength === -1) nextWordLength = remainingCharacters.length;
 
-			return this.buffer.x + nextWordLength > this.width - 1;
+			return (
+				characters[0] !== "/" && this.buffer.x + nextWordLength > this.width - 1
+			);
 		}
 
 		return false;
