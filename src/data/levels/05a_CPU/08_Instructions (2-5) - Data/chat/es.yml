@@ -3,7 +3,7 @@ main:
   messages:
   - las instrucciones de datos son muy simples
   - como el nombre sugiere, se tratan de guardar y mover datos 😉
-  - 📚  ¡implementa todas las instrucciones de datos en tu objeto `instructions`!
+  - 📚  _-_¡implementa todas las instrucciones de datos en tu objeto `instructions`!_--_
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu/instructions.es.md");
   responses:

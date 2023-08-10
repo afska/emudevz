@@ -23,7 +23,7 @@ onemapper:
   - ahora concentrémonos en recibir un montón de <dispositivos>
   - ¡los mapearemos más tarde!
   - |-
-    📚  agrega a tu `CPUMemory` el siguiente método:
+    📚  _-_agrega a tu `CPUMemory` el siguiente método:_--_
     **onLoad(ppu, apu, mapper, controllers)**:
       __-> guarda los parámetros como propiedades (this.ppu, this.apu, etc.)__
   responses: []

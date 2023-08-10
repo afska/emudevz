@@ -3,10 +3,10 @@ main:
   messages:
   - ahora comenzaremos a programar la CPU, el <cerebro> de la consola 🧠
   - a esta altura, ya tienes una idea de cómo funciona
-  - 📚  crea un archivo en algún lugar para el código de la CPU 🧠
-  - su valor a exportar debería ser una clase vacía
-  - luego, importa ese archivo desde 📄  ~/code/index.js~
-  - y agrega una clave `CPU` (apuntando a esa clase) al objeto exportado
+  - 📚  _-_crea un archivo en algún lugar para el código de la CPU _--_
+  - _-_su valor a exportar debería ser una clase vacía_--_
+  - _-_luego, importa ese archivo desde _--_📄 _-_ ~/code/index.js~_--_
+  - _-_y agrega una clave `CPU` (apuntando a esa clase) al objeto exportado_--_
   responses:
   - ¿dónde debería guardar el archivo? [where]
 

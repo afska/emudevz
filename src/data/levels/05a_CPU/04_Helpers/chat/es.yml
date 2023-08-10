@@ -3,13 +3,13 @@ main:
   messages:
   - vamos a definir algunas utilidades para simplificar futuras tareas
   - |-
-    📚  en tus clases `Register8Bit` y `Register16Bit`, implementa:
+    📚  _-_en tus clases `Register8Bit` y `Register16Bit`, implementa:_--_
     **increment()**:
       __-> llama a *setValue* con el resultado de getValue() + 1__
     **decrement()**:
       __-> llama a *setValue* con el resultado de getValue() - 1__
   - |-
-    en tu `FlagsRegister`, implementa:
+    _-_en tu `FlagsRegister`, implementa:_--_
     **updateZero(value)**:
       __-> asigna z=true si <value> es 0, o z=false en caso contrario__
     **updateNegative(value)**:

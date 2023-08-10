@@ -14,11 +14,11 @@ howmany:
   messages:
   - there are 16 of them, but I already coded 3 for you! 😎
   - and some of them are pretty similar
-  - 📚  create an object following the same format as the example
-  - implement all of the 16 arithmetic instructions on it
-  - and export it under the `instructions` key in ~/code/index.js~
-  - you need docs regarding what should each instruction do
-  - so check out 📄  ~/docs/cpu/instructions.en.md~
+  - 📚  _-_create an object following the same format as the example_--_
+  - _-_implement all of the 16 arithmetic instructions on it_--_
+  - _-_and export it under the `instructions` key in ~/code/index.js~_--_
+  - _-_you need docs regarding what should each instruction do_--_
+  - _-_so check out _--_📄 _-_ ~/docs/cpu/instructions.en.md~_--_
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu/instructions.en.md");
   responses:

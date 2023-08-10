@@ -34,7 +34,7 @@ rightway:
     set((m) => m.$exercise = true);
   messages:
   - |-
-    📚  we'll add this method to your `CPU`:
+    📚  _-_we'll add this method to your `CPU`:_--_
     **step()**:
       __-> remember the original value of PC
         (let's call this <originalPC>)

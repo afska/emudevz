@@ -56,9 +56,9 @@ next:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  crea un archivo en algún lugar para el código de la PPU
+  - 📚  _-_crea un archivo en algún lugar para el código de la PPU_--_
   - |-
-    debería exportar una clase así:
+    _-_debería exportar una clase así:
       ```javascript
       export default class PPU {
         constructor(cpu) {
@@ -69,9 +69,9 @@ next:
           this.frame = 0;
         }
       }
-      ```
+      ```_--_
   - |-
-    y agrega este método (por ahora, solo mantendrá un registro del tiempo):
+    _-_y agrega este método (por ahora, solo mantendrá un registro del tiempo):
       ```javascript
       step() {
         this.cycle++;
@@ -85,9 +85,9 @@ next:
           }
         }
       }
-      ```
-  - luego, importa ese archivo desde 📄  ~/code/index.js~
-  - y agrega una clave `PPU` (que apunte a esa clase) al objeto exportado
+      ```_--_
+  - _-_luego, importa ese archivo desde _--_📄 _-_ ~/code/index.js~_--_
+  - _-_y agrega una clave `PPU` (que apunte a esa clase) al objeto exportado_--_
   responses:
   - ¿por qué el contador de scanlines comienza en -1? 😕 [minus1]
 

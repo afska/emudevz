@@ -76,7 +76,7 @@ implement:
   - vamos a modelar las interrupciones como objetos `{ id, vector }`
   - revisa 📄  ~/lib/interrupts.js~
   - |-
-    📚  agrega este método a tu `CPU`:
+    📚  _-_agrega este método a tu `CPU`:_--_
     **interrupt(interrupt, withBFlag = false)**:
       __-> si interrupt.id === "IRQ" y I=1, retorna 0
         (la interrupción es ignorada)
