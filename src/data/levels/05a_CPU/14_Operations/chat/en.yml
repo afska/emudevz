@@ -24,6 +24,6 @@ multiple:
   - 📄  ~/lib/defineOperations.js~
   - you only need to call it, passing the `instructions` and the `addressingModes` objects
   - |-
-    📚  add the following property to your `CPU`:
-      ```javascript this.operations = defineOperations(instructions, addressingModes);```
+    📚  _-_add the following property to your `CPU`:
+      ```javascript this.operations = defineOperations(instructions, addressingModes);```_--_
   responses: []

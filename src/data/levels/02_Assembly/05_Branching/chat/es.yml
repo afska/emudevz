@@ -90,11 +90,11 @@ exercise:
   messages:
   - el opuesto de `BNE` es `BEQ`, que salta cuando los números son iguales
   - vamos a practicar 👾
-  - 📚  borra el código actual
-  - y construye un programa que lea el valor de $4080
-  - si tiene un 7, escribe $EE en $40BF
-  - si no, escribe $AA en $40BF
-  - luego, ejecuta el comando `test`
+  - 📚  _-_borra el código actual_--_
+  - _-_y construye un programa que lea el valor de $4080_--_
+  - _-_si tiene un 7, escribe $EE en $40BF_--_
+  - _-_si no, escribe $AA en $40BF_--_
+  - _-_luego, ejecuta el comando `test`_--_
   responses:
   - momento, ¿cómo pruebo esto? 🧪 [testing]
   - necesito ayuda 😅 [help]
@@ -113,9 +113,11 @@ help:
   messages:
   - 🔀  siempre querrás usar `BEQ` y `BNE` luego de una instrucción de comparación (como `CPX`)
   - "`CPX` asigna el flag Z=1 si [X] es igual al valor, y luego `BEQ`/`BNE` saltan dependiendo de si Z es 1 o 0"
+  - <{CPX_BEQ.png}>
   - 🏷️  recuerda que la ejecución siempre es de arriba hacia abajo, ignorando etiquetas
   - por lo que probablemente en algún momento necesites parar el programa (para evitar que "siga de largo")
   - 🛑  para eso, puedes poner una etiqueta al final del código
   - y usar una instrucción de bifurcación para saltar a ella
   - o más fácil, usa la instrucción `BRK`, que interrumpe la ejecución 😉
+  - <{BRK.png}>
   responses: []

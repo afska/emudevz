@@ -11,7 +11,7 @@ main:
   responses:
   - (*) can you give me some color examples? [examples]
   - I want to draw something on the screen! 🖌️ [integrate]
-  - <level.isCompleted || m.$exercise> 📚  take me to the action [draw]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [draw]
 
 examples:
   messages:
@@ -58,15 +58,15 @@ draw:
     {{Top}}.load(null, "rom");
   messages:
   - |-
-    📚  ok, let's add this to your PPU's constructor:
+    📚  _-_ok, let's add this to your PPU's constructor:
       ```javascript
       this.frameBuffer = new Uint32Array(256*240);
       // fill the first 120 rows with red:
       for (let i = 0; i < 256 * 120; i++)
-        this.frameBuffer[i] = 0xff0000ff;```
-  - modify your `step` method so it receives an `onFrame` callback
+        this.frameBuffer[i] = 0xff0000ff;```_--_
+  - _-_modify your `step` method so it receives an `onFrame` callback_--_
   - |-
-    then, every time you detect a new frame (right after ```javascript this.frame++;```), call it with the frame buffer, like this:
-      ```javascript onFrame(this.frameBuffer);```
-  - try it! when loading a ROM, it should paint in red the upper half of the screen 🔴
+    _-_then, every time you detect a new frame (right after ```javascript this.frame++;```), call it with the frame buffer, like this:
+      ```javascript onFrame(this.frameBuffer);```_--_
+  - _-_try it! when loading a ROM, it should paint in red the upper half of the screen _--_🔴
   responses: []

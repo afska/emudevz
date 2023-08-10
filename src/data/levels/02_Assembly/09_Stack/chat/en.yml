@@ -15,6 +15,8 @@ main:
   - in a 6502 processor, it lives in memory between $0100 and $01FF 🐏
   - "[SP] is initially $FF, which points to the last stack byte ($01FF)"
   - when a byte is pushed onto the stack, [SP] becomes $FE (or memory location $01FE), and so on
+  - here's an example of a stack with 2 values (in $01FF and $01FE), so [SP] points to $01FD
+  - <{stack.png}>
   responses:
   - and how can I put values on it? [put]
 
@@ -22,7 +24,9 @@ put:
   messages:
   - "you use two instructions:"
   - "⬆️  `PHA` (\"PusH Accumulator\"), which adds [A] to the stack"
-  - "⬇️  `PLA` (\"PulL Accumulator\"), which removes the last byte from the stack, and loads it in [A]"
+  - <{stack_PHA.png}>
+  - "⬇️  `PLA` (\"PulL Accumulator\"), which removes the last byte from the stack, and loads it into [A]"
+  - <{stack_PLA.png}>
   responses:
   - can you explain to me the example code? [example]
 
@@ -60,9 +64,10 @@ exercise:
     });
   messages:
   - now, an exercise
-  - 📚  your stack will have 2 random preloaded values
-  - you just need to pull and load them into 2 consecutive memory addresses
-  - then, perform an indirect `JMP` 🦘
-  - e.g. if your stack has -from top to bottom- $C4 and $3E, when your program finishes, [PC] should be $3EC4
-  - run `test` when it's all done 😊
+  - 📚  _-_remove all the code_--_
+  - _-_your stack will have 2 random preloaded values_--_
+  - _-_you just need to pull and load them into 2 consecutive memory addresses_--_
+  - _-_then, perform an indirect `JMP` _--_🦘
+  - _-_e.g. if your stack has -from top to bottom- $C4 and $3E, when your program finishes, [PC] should be $3EC4_--_
+  - _-_run `test` when it's all done _--_😊
   responses: []

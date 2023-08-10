@@ -6,17 +6,18 @@ main:
   - o al usar la instrucción `RTS` y la CPU tiene que restaurar [PC] desde la pila
   - en estos casos, se usa la convención <Little Endian> 🔌
   - "eso quiere decir: el byte menos significativo (\"low byte\") se guarda primero, luego el más significativo (\"high byte\")"
+  - <{little_endian.png}>
   - |-
-    📚  implementa este método en `CPUMemory`:
+    📚  _-_implementa este método en `CPUMemory`:_--_
     **read16(address)**:
       __-> retorna un número de 16 bits
         - el "low byte" se obtiene leyendo <address> de la memoria
         - el "high byte" se obtiene leyendo <address>+1__
   - |-
-    y estos dos métodos en `Stack`:
+    _-_y estos dos métodos en `Stack`:_--_
     **push16(bigNumber)**:
       __-> usa *push* primero con el "high byte" de <bigNumber>, y luego con su "low byte"__
     **pop16()**:
       __-> retorna un número de 16 bits como resultado de hacer *pop* dos veces (primero el "low byte", luego el "high byte")__
-  - 💡  ¡recuerda usar 📄  ~/lib/byte.js~!
+  - 💡  _-_¡recuerda usar _--_📄 _-_ ~/lib/byte.js~!_--_
   responses: []

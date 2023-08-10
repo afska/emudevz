@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import $path from "path";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
 import filesystem, { fuzzy } from "../../../filesystem";
@@ -43,7 +44,23 @@ export default function FileSearch(props) {
 		if (selected >= matches.length) setSelected(0);
 	}, [input, files, selected]);
 
-	const tree = LsCommand.getTree(DIRECTORY, false);
+	window._openPath_ = (filePath) => {
+		onSelect(filePath);
+	};
+
+	const tree = LsCommand.getTree(DIRECTORY, false).replace(
+		/\[\[\[(.+)\]\]\]/g,
+		(__, filePath) => {
+			const icon = extensions.getTabIcon(filePath);
+			const parsedPath = $path.parse(filePath);
+			const name = parsedPath.name + parsedPath.ext;
+
+			return (
+				icon +
+				`<span onclick="javascript:_openPath_('${filePath}')" class="${styles.treeLink}">${name}</span>`
+			);
+		}
+	);
 
 	const render = () => {
 		return (
@@ -59,7 +76,13 @@ export default function FileSearch(props) {
 					ref={inputRef}
 				/>
 				{matches.length === 0 && tree && (
-					<pre className={styles.tree}>{tree}</pre>
+					<pre
+						onMouseDown={(e) => {
+							e.preventDefault();
+						}}
+						className={styles.tree}
+						dangerouslySetInnerHTML={{ __html: tree }}
+					/>
 				)}
 				{matches.length > 0 && (
 					<div className={styles.results}>

@@ -18,6 +18,8 @@ export default class EmulatorRunner extends PureComponent {
 	render() {
 		const { rom, error } = this.props;
 
+		const isRunning = rom && !error;
+
 		return (
 			<div
 				className={styles.container}
@@ -105,21 +107,23 @@ export default class EmulatorRunner extends PureComponent {
 						📦 {locales.get("drag_and_drop_here")}
 					</div>
 					<div className={styles.row}>
-						<span>⚡️&nbsp;</span>
-						<span id="fps">00</span>
-						<span>&nbsp;FPS</span>
-						<span>&nbsp;|&nbsp;</span>
-						<Tooltip title={locales.get("using_keyboard")} placement="top">
-							<span id="keyboard">⌨️</span>
-						</Tooltip>
-						<Tooltip
-							title={locales.get("using_gamepad")}
-							placement="top"
-							style={{ display: "none" }}
-						>
-							<span id="gamepad">🎮</span>
-						</Tooltip>
-						<span>&nbsp;|&nbsp;</span>
+						<div style={{ opacity: isRunning ? 1 : 0 }} className={styles.row}>
+							<span>⚡️&nbsp;</span>
+							<span id="fps">00</span>
+							<span>&nbsp;FPS</span>
+							<span>&nbsp;|&nbsp;</span>
+							<Tooltip title={locales.get("using_keyboard")} placement="top">
+								<span id="keyboard">⌨️</span>
+							</Tooltip>
+							<Tooltip
+								title={locales.get("using_gamepad")}
+								placement="top"
+								style={{ display: "none" }}
+							>
+								<span id="gamepad">🎮</span>
+							</Tooltip>
+							<span>&nbsp;|&nbsp;</span>
+						</div>
 						<VolumeSlider
 							volume={null}
 							setVolume={(v) => {

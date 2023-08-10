@@ -1,3 +1,5 @@
+import Level from "../../level/Level";
+
 const DEFAULT_COLOR_ID = 255;
 
 const colorTag = (id) => `\u001b[38;5;${id}m`;
@@ -12,6 +14,24 @@ export default {
 	FAINT: effect(2),
 	ITALIC: effect(3),
 	UNDERLINE: effect(4),
+	IMAGE: (imageCommand) => {
+		const [fileName, resolution] = imageCommand.split(";");
+		let args = "";
+		if (resolution != null) {
+			const [width, height] = resolution.split("x");
+			if (width != null && height != null)
+				args = `;width=${width};height=${height}`;
+		}
+
+		const level = Level.current;
+		const content = (fileName && level?.media?.[fileName]) || null;
+		if (!content) throw new Error(`Invalid image: ${fileName}`);
+		const rawBase64 = content.split(";base64,")[1];
+		if (!rawBase64) return;
+
+		const size = window.atob(rawBase64).length;
+		return `]1337;File=inline=1;size=${size}${args}:${rawBase64}`;
+	},
 
 	ACCENT: color(180),
 	SYSTEM: color(45),
@@ -22,4 +42,7 @@ export default {
 	INPUT: color(207),
 
 	BG_NEW: effect(45),
+	BG_HIGHLIGHT: effect(40),
+	BG_HIGHLIGHT_START: () => effectTag(40),
+	BG_HIGHLIGHT_END: () => effectTag(0),
 };

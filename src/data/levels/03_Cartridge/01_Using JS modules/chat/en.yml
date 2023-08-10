@@ -5,7 +5,7 @@ main:
   messages:
   - we're gonna start coding in JavaScript
   - by the way, your computer has been <upgraded>
-  - now you can use MULTIPLE files 🗃️ 📄 📁
+  - now you can use MULTIPLE files 🗃️ 📁
   - very cool, huh?
   responses:
   - that's a pretty normal feature [notcool]
@@ -36,7 +36,7 @@ play:
   - the code editor is displaying your <main code file> (the entry point of your emulator)
   - it's in 📄  ~/code/index.js~
   - now you have a bunch of new commands to manage files 🚀
-  - though you can only modify what's in ~/code~
+  - though you can only modify what's in 📁  ~/code~
   - run `help -a` and play around with them for a little bit
   - open the chat again when you're ready
   responses: []
@@ -45,15 +45,15 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - 📚  create a file in 📄  ~/code/Cartridge.js~
-  - its default export should be an empty class
-  - then, import that file from 📄  ~/code/index.js~
-  - and export an object literal with only one key (`Cartridge`) pointing to that class
+  - 📚  _-_create a file in _--_📄 _-_ ~/code/Cartridge.js~_--_
+  - _-_its default export should be an empty class_--_
+  - _-_then, import that file from _--_📄 _-_ ~/code/index.js~_--_
+  - _-_and export an object literal with only one key (`Cartridge`) pointing to that class_--_
   - |-
-    your ~index.js~ file should look like this:
+    _-_your ~index.js~ file should look like this:
       ```javascript
       import Cartridge from "./Cartridge";
-      export default { Cartridge }```
+      export default { Cartridge }```_--_
   responses:
   - export? modules? 🧐 [modules]
 

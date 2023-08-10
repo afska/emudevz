@@ -3,7 +3,7 @@ main:
   messages:
   - data instructions are pretty simple
   - as the name suggests, they're all about storing and moving data 😉
-  - 📚  implement all the data instructions in your `instructions` object!
+  - 📚  _-_implement all the data instructions in your `instructions` object!_--_
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/cpu/instructions.en.md");
   responses:

@@ -7,7 +7,7 @@ main:
   - e incrementaremos los contadores de ciclos
   responses:
   - prometiste que explicarías ciclos 🚲 [cycles]
-  - <level.isCompleted || m.$exercise> 📚  llévame a la acción [rightway]
+  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [rightway]
 
 cycles:
   messages:
@@ -34,7 +34,7 @@ rightway:
     set((m) => m.$exercise = true);
   messages:
   - |-
-    📚  vamos a agregar este método en tu `CPU`:
+    📚  _-_vamos a agregar este método en tu `CPU`:_--_
     **step()**:
       __-> recuerda el valor original de PC
         (llamemos esto <originalPC>)

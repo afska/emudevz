@@ -2,10 +2,10 @@
 main:
   messages:
   - ahora es tu turno 😛
-  - 📚  haz un programa que escriba el número $7C en las direcciones $4055 y $4072
-  - luego, el número $18 en la dirección $40B8
-  - prueba el programa con el botón ⏩
-  - cuando esté listo, cierra el chat y ejecuta el comando `test`
+  - 📚  _-_haz un programa que escriba el número $7C en las direcciones $4055 y $4072_--_
+  - _-_luego, el número $18 en la dirección $40B8_--_
+  - _-_prueba el programa con el botón _--_⏩
+  - _-_cuando esté listo, cierra el chat y ejecuta el comando `test`_--_
   responses:
   - no, necesito ayuda 😔 [help]
   - ¿me puedes recordar cómo correr el otro comando? [othercommands]
@@ -21,8 +21,12 @@ othercommands:
 help:
   messages:
   - recuerda que antes de escribir en memoria, debes cargar el valor en [A]
-  - "y cuando escribes numeros literales, debes agregarles el prefijo #"
-  - "p. ej. si quieres cargar un $99, es `LDA #$99` en lugar de `LDA $99`"
-  - "(lo último cargaría en [A] lo que sea que esté en la dirección de memoria $0099)"
+  - por lo que es una operación de dos pasos
+  - <{LDA_STA.png}>
+  - "además, cuando escribes numeros literales, debes agregarles el prefijo #"
+  - "p. ej. si quieres cargar un $99 en [A], es `LDA #$99` en lugar de `LDA $99`"
+  - <{LDA_immediate.png}>
+  - "(de otra forma, cargaría en [A] lo que sea que esté en la dirección de memoria $0099)"
+  - <{LDA_memory.png}>
   responses:
   - gracias, voy a intentar [end]

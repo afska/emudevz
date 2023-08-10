@@ -2,16 +2,17 @@
 main:
   messages:
   - remember the stack? 🧱
-  - 📚  create a new class for it
-  - it should receive the `memory` and `sp` from the CPU, as it will have to interact with them
+  - <{stack.png}>
+  - 📚  _-_create a new class for it_--_
+  - _-_it should receive the `memory` and `sp` from the CPU, as it will have to interact with them_--_
   - |-
-    implement these methods:
+    _-_implement these methods:_--_
     **push(value)**:
       __-> writes <value> to the memory address <currentAddress>, then decrements <sp>__
     **pop()**:
       __-> increments <sp> and returns the result of reading <currentAddress> from memory__
-  - the <currentAddress> always equals $0100 (where the stack lives in RAM), plus the value in [SP]
+  - _-_the <currentAddress> always equals $0100 (where the stack lives in RAM), plus the value in [SP]_--_
   - |-
-    when you finish, add a new stack instance to the CPU:
-      ```javascript this.stack = new Stack(this.memory, this.sp);```
+    _-_when you finish, add a new stack instance to the CPU:
+      ```javascript this.stack = new Stack(this.memory, this.sp);```_--_
   responses: []

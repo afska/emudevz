@@ -9,7 +9,7 @@ main:
   - 🚲  cycles, 🌠  scanlines, and 🖼️  frames!
   responses:
   - what do you mean? [wdym]
-  - <level.isCompleted || m.$exercise> 📚  take me to the action [next]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [next]
 
 wdym:
   messages:
@@ -56,9 +56,9 @@ next:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  create a file somewhere for the PPU code
+  - 📚  _-_create a file somewhere for the PPU code_--_
   - |-
-    it should export a class like this:
+    _-_it should export a class like this:
       ```javascript
       export default class PPU {
         constructor(cpu) {
@@ -69,9 +69,9 @@ next:
           this.frame = 0;
         }
       }
-      ```
+      ```_--_
   - |-
-    and add this method (for now, it'll just keep track of the timing):
+    _-_and add this method (for now, it'll just keep track of the timing):
       ```javascript
       step() {
         this.cycle++;
@@ -85,9 +85,9 @@ next:
           }
         }
       }
-      ```
-  - then, import that file from 📄  ~/code/index.js~
-  - and add a `PPU` key (pointing to that class) to the exported object
+      ```_--_
+  - _-_then, import that file from _--_📄 _-_ ~/code/index.js~_--_
+  - _-_and add a `PPU` key (pointing to that class) to the exported object_--_
   responses:
   - why does the scanline counter start at -1? 😕 [minus1]
 

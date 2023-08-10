@@ -90,11 +90,11 @@ exercise:
   messages:
   - the opposite of `BNE` is `BEQ`, which jumps when the numbers are equal
   - let's practice 👾
-  - 📚  delete the current code
-  - and build a program that reads the value of $4080
-  - if it has a 7, writes $EE to $40BF
-  - if not, writes $AA to $40BF
-  - then, run the `test` command
+  - 📚  _-_delete the current code_--_
+  - _-_and build a program that reads the value of $4080_--_
+  - _-_if it has a 7, writes $EE to $40BF_--_
+  - _-_if not, writes $AA to $40BF_--_
+  - _-_then, run the `test` command_--_
   responses:
   - wait, how do I test this? 🧪 [testing]
   - I need help 😅 [help]
@@ -113,9 +113,11 @@ help:
   messages:
   - 🔀  you want to always use `BEQ` and `BNE` after a comparison instruction (like `CPX`)
   - "`CPX` sets the flag Z=1 if [X] equals the value, and then `BEQ`/`BNE` jump depending on whether Z is 1 or 0"
+  - <{CPX_BEQ.png}>
   - 🏷️  remember that execution always goes from top to bottom, ignoring labels
   - therefore, at some point, you may need to stop the program (to prevent it from advancing to the next label)
   - 🛑  for that, you can put a label at the very end of the code
   - and use a branch instruction to jump to it
   - or more simply, just use the `BRK` instruction, which halts the execution 😉
+  - <{BRK.png}>
   responses: []

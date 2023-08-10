@@ -23,7 +23,7 @@ onemapper:
   - now let's focus on receiving a bunch of <devices>
   - we'll map them later!
   - |-
-    📚  add to your `CPUMemory` the following method:
+    📚  _-_add to your `CPUMemory` the following method:_--_
     **onLoad(ppu, apu, mapper, controllers)**:
       __-> saves the parameters as properties (this.ppu, this.apu, etc.)__
   responses: []

@@ -5,7 +5,9 @@ main:
   messages:
   - hey,
   - let's play a game
-  - it's called 🦅 ⛩️  ~Raven's Gate~
+  - |-
+    it's called 🦅 ⛩️  ~Raven's Gate~
+    <{screenshot.png;30x30}>
   - if you complete it, I'll send you all my ⚔️  <adventure> games
   - in the ~*.neees~ format
   responses:

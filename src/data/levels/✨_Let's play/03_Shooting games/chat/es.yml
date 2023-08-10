@@ -5,7 +5,9 @@ main:
   messages:
   - hey,
   - juguemos un juego
-  - se llama 🚀 💥  ~Jupiter Scope 2~
+  - |-
+    se llama 🚀 💥  ~Jupiter Scope 2~
+    <{screenshot.png;30x30}>
   - si superas mi puntuación más alta, te enviaré todos mis 🔫  juegos de <disparos>
   - en el formato ~*.neees~
   responses:

@@ -62,7 +62,7 @@ fix:
   - puedes, pero estarías rompiendo la compatibilidad con algunos juegos que dependen (ya sea accidentalmente o intencionalmente) de ese bug
   - improvisé un archivo de documentación corto hablando sobre esto
   - está en 📄  ~/docs/cpu/page_boundary_bug.es.md~
-  - 📚  ¡introduce el bug e intenta de nuevo!
+  - 📚  _-_¡introduce el bug e intenta de nuevo!_--_
   run-after-messages: |
     set((m) => {
       m.$canRun = true;

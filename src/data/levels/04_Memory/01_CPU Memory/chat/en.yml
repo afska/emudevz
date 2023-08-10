@@ -34,10 +34,10 @@ io:
 implement:
   messages:
   - for now, we'll just implement the first two ranges of the memory map
-  - 📚  create a `CPUMemory` class in 📄  ~/code/CPUMemory.js~ with a constructor
-  - it should assign a `ram` property (a `Uint8Array` of 2048 bytes)
+  - 📚  _-_create a `CPUMemory` class in _--_📄 _-_ ~/code/CPUMemory.js~ with a constructor_--_
+  - _-_it should assign a `ram` property (a `Uint8Array` of 2048 bytes)_--_
   - |-
-    implement these two methods:
+    _-_implement these two methods:_--_
     **read(address)**:
       __-> if <address> is in $0000-$07FF, returns the corresponding byte from <ram>
       -> if <address> is in $0800-$1FFF, returns a mirrored byte from <ram>
@@ -45,7 +45,7 @@ implement:
       -> otherwise, returns 0__
     **write(address, value)**:
       __-> similar to *read*, but writes the <value> instead of returning__
-  - then, as you did with `Cartridge`, add the class to ~/code/index.js~
+  - _-_then, as you did with `Cartridge`, add the class to ~/code/index.js~_--_
   responses:
   - I need help with the mirrored bytes 📐 [help]
 

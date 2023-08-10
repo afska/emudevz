@@ -1,9 +1,10 @@
 ---
 main:
   messages:
-  - we need to access the program code easily 🧠
-  - 📚  create a ```javascript prg()``` method that returns an `Uint8Array` containing the <PRG-ROM> bytes
-  - the code is right after the 16-byte header, but remember that you might have to skip 512 bytes if the header says so
+  - we need to access the program code easily 🤖
+  - 📚  _-_create a ```javascript prg()``` method that returns an `Uint8Array` containing the <PRG-ROM> bytes_--_
+  - _-_the code is right after the 16-byte header, but remember that you might have to skip 512 bytes if the header says so_--_
+  - <{prg.png}>
   responses:
   - how can I cut the bytes? ✂️ [cut]
 

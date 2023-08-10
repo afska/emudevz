@@ -6,17 +6,18 @@ main:
   - or when using the `RTS` instruction and the CPU needs to restore [PC] from the stack
   - in these cases, the <Little Endian> convention is used 🔌
   - "that means: the least significant byte (\"low byte\") is stored first, then the most significant byte (\"high byte\")"
+  - <{little_endian.png}>
   - |-
-    📚  implement this method in `CPUMemory`:
+    📚  _-_implement this method in `CPUMemory`:_--_
     **read16(address)**:
       __-> returns a 16-bit number
         - the low byte is obtained by reading <address> from memory
         - the high byte is obtained by reading <address>+1__
   - |-
-    and these two methods in `Stack`:
+    _-_and these two methods in `Stack`:_--_
     **push16(bigNumber)**:
       __-> *pushes* the high byte of <bigNumber> first, then *pushes* its low byte__
     **pop16()**:
       __-> returns a 16-bit number as a result of *popping* from the stack two times (first the low byte, then the high one)__
-  - 💡  remember to use 📄  ~/lib/byte.js~!
+  - 💡  _-_remember to use _--_📄 _-_ ~/lib/byte.js~!_--_
   responses: []

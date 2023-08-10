@@ -25,3 +25,5 @@ byte.getMirroredAddress(address, mirrorRangeStart, mirrorRangeEnd, targetRangeSt
 // read(byte.getMirroredAddress(0x2009, 0x2008, 0x3fff, 0x2000, 0x2007)) ==
 // read(0x2001)
 ```
+
+<div class="embed-image" style="margin-bottom: 16px"><img alt="header" src="assets/memory_mirror.png" /></div>

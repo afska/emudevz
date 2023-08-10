@@ -13,7 +13,7 @@ main:
   - entonces, con el combo `LDA` + `STA` puedes escribir en memoria ✍️
   - "hay instrucciones similares que usan los registros [X] e [Y]:"
   - "`LDX`, `STX`, `LDY` y `STY`"
-  - ahora vamos a usar las variantes [X], solo por diversión
+  - ahora vamos a usar las variantes [X], solo por diversión 👾
   responses:
   - ¿qué pasa si quiero <leer> de la memoria? 📖 [read]
 
@@ -21,6 +21,7 @@ read:
   messages:
   - "puedes pasarle una dirección de memoria a `LDX`, tan solo omitiendo el prefijo #"
   - p. ej. la instrucción `LDX $4080` cargará en [X] lo que sea que esté en la dirección de memoria $4080
+  - <{LDX_memory.png}>
   responses:
   - ¿y después qué? 🤔 [then]
 
@@ -88,7 +89,7 @@ exercise:
     });
   messages:
   - vamos a refactorizar el código 💡
-  - 📚  haz que use `ADC` en vez de 3 instrucciones de incremento
-  - (recuerda reemplazar `LDX` y `STX` por `LDA` y `STA`)
-  - cuando esté listo, ejecuta el comando `test`
+  - 📚  _-_haz que use `ADC` en vez de 3 instrucciones de incremento_--_
+  - _-_(recuerda reemplazar `LDX` y `STX` por `LDA` y `STA`)_--_
+  - _-_cuando esté listo, ejecuta el comando `test`_--_
   responses: []

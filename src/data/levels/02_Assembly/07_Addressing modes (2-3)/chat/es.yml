@@ -40,6 +40,7 @@ zero2:
   messages:
   - esto terminó escribiendo $CD (el contenido de [A]) en $0062
   - que es el resultado de $60 + [X]
+  - <{STA_zeropagex.png}>
   - nota que hackeé tu Visor de Memoria para que muestre la página cero
   - puedes comprobarlo tú 👀
   - corre las siguientes dos instrucciones ⏩
@@ -122,8 +123,8 @@ exercise:
     });
     {{Bottom}}.setDelay(0);
   messages:
-  - 📚  borra todo el código
-  - construye un programa que grite por la memoria 😱
-  - eso significa, que escriba $AA exactamente 64 veces desde $4080 hasta $40BF
-  - como siempre, cuando esté listo, ejecuta el comando `test`
+  - 📚  _-_borra todo el código_--_
+  - _-_construye un programa que grite por la memoria _--_😱
+  - _-_eso significa, que escriba $AA exactamente 64 veces desde $4080 hasta $40BF_--_
+  - _-_como siempre, cuando esté listo, ejecuta el comando `test`_--_
   responses: []

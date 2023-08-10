@@ -77,6 +77,7 @@ step7:
   - so if we add [X], we'd have `STA ($0003)`
   - from here, things proceed like standard "Indirect" addressing
   - this end up writing the value of [A] to $4080
+  - <{STA_indexedindirect.png}>
   responses:
   - (*) what was that? 🤨 [whatwasthat]
   - makes total sense 👍 [makessense]
@@ -117,6 +118,7 @@ step9:
   - that $BE was loaded into [A] 🤯
   - as we saw earlier, in our current setup ($0003) evaluates to $4080
   - the instruction just added [Y] to it, so the final address was $4085
+  - <{LDA_indirectindexed.png}>
   responses:
   - I think I'm burnt out, can we skip the practice? 😓 [skip]
 

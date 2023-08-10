@@ -8,7 +8,7 @@ main:
   - so, last one is `BRK` which generates an <Interrupt Request>
   responses:
   - what's an interrupt? [interrupt]
-  - <level.isCompleted || m.$exercise> 📚  take me to the action [implement]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [implement]
 
 interrupt:
   messages:
@@ -76,7 +76,7 @@ implement:
   - we'll model interrupts as `{ id, vector }` objects
   - check out 📄  ~/lib/interrupts.js~
   - |-
-    📚  add this method to your `CPU`:
+    📚  _-_add this method to your `CPU`:_--_
     **interrupt(interrupt, withBFlag = false)**:
       __-> if interrupt.id === "IRQ" and I=1, returns 0
         (the interrupt is ignored)

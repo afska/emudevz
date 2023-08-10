@@ -1,7 +1,7 @@
 import codeEval from "../codeEval";
 
 const REGEXP = {
-	if: /^<(.+)> /,
+	if: /^<<(.+)>> /,
 	modifier: /^\(.\) /,
 	consumable: /^\(\*\) /,
 	key: /^\(k\) /,

@@ -1,11 +1,14 @@
 import { LinkProvider } from "xterm-link-provider";
 import _ from "lodash";
+import filesystem from "../filesystem";
 import locales from "../locales";
 import store from "../store";
-import { async, bus } from "../utils";
+import { async, bus, toast } from "../utils";
 import { ansiEscapes } from "../utils/cli";
 import PendingInput, { PendingKey } from "./PendingInput";
 import Shell from "./Shell";
+import FilesystemCommand from "./commands/fs/FilesystemCommand";
+import OpenCommand from "./commands/fs/OpenCommand";
 import { CANCELED, DISPOSED, INTERRUPTED } from "./errors";
 import highlighter from "./highlighter";
 import { theme } from "./style";
@@ -27,6 +30,7 @@ const TABULATION = "\t";
 const INDENTATION = "  ";
 const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
+const LINK_FILE_REGEXP = /📄 {2}([a-z0-9/._-]+)/iu;
 
 export default class Terminal {
 	constructor(xterm) {
@@ -46,6 +50,7 @@ export default class Terminal {
 
 		this._setUpXtermHooks();
 		this._setUpRemoteCommandSubscriber();
+		this._setUpFileLinks();
 
 		this.autocompleteOptions = [];
 	}
@@ -110,7 +115,7 @@ export default class Terminal {
 
 			for (let part of parts) {
 				if (part.isAccent) await this.write(part.text, part.style, interval);
-				else if (part.isCode) await this.write(part.text);
+				else if (part.isCode) await this.write(part.text, part.style);
 				else await this.write(part.text, style, interval);
 			}
 
@@ -126,6 +131,7 @@ export default class Terminal {
 			const characters = [...text];
 			let lastCharacter = " ";
 
+			await async.sleep();
 			for (let i = 0; i < characters.length; i++) {
 				this._interruptIfNeeded();
 
@@ -142,6 +148,7 @@ export default class Terminal {
 	}
 
 	async break() {
+		await this.write("", theme.BG_HIGHLIGHT_END);
 		await this.write(CTRL_C);
 	}
 
@@ -292,6 +299,7 @@ export default class Terminal {
 	dispose() {
 		this._disposeFlag = true;
 		this._subscriber.release();
+		this._fileLinkProvider.dispose();
 	}
 
 	get isExpectingInput() {
@@ -431,6 +439,39 @@ export default class Terminal {
 		});
 	}
 
+	_setUpFileLinks() {
+		this._fileLinkProvider = this.registerLinkProvider(
+			LINK_FILE_REGEXP,
+			(__, filePath) => {
+				const result = OpenCommand.open(filePath);
+				if (result === -1) {
+					toast.error(
+						<span
+							onClick={() => {
+								try {
+									const resolvedFilePath = FilesystemCommand.resolve(
+										filePath,
+										true
+									);
+									filesystem.write(resolvedFilePath, "");
+									OpenCommand.open(filePath);
+									toast.success(locales.get("file_created"));
+								} catch (e) {
+									toast.error("file_created_error");
+								}
+							}}
+						>
+							<span className="toast-link">
+								{locales.get("file_doesnt_exist1")} <code>{filePath}</code>{" "}
+								{locales.get("file_doesnt_exist2")}
+							</span>
+						</span>
+					);
+				}
+			}
+		);
+	}
+
 	_requestInterrupt() {
 		this._stopFlag = true;
 	}
@@ -452,7 +493,9 @@ export default class Terminal {
 			);
 			if (nextWordLength === -1) nextWordLength = remainingCharacters.length;
 
-			return this.buffer.x + nextWordLength > this.width - 1;
+			return (
+				characters[0] !== "/" && this.buffer.x + nextWordLength > this.width - 1
+			);
 		}
 
 		return false;

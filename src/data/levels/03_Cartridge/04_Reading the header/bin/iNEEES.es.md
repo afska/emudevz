@@ -18,15 +18,17 @@ Un archivo iNEEES consiste de las siguientes secciones, en orden:
 - 👾 Datos `CHR-ROM` (`8192` \* `y` bytes)
   - `y` = byte `5` de la cabecera
 
-## Cabecera
+## 🗣️ Cabecera
 
 El formato de la cabecera es el siguiente:
+
+<div class="embed-image" style="margin-bottom: 16px"><img alt="header" src="assets/header.png" /></div>
 
 - `0-3`: Constante `$4E $45 $53 $1A`
 - `4`: Tamaño del 🤖 `PRG-ROM` en unidades de `16` KiB
 - `5`: Tamaño del 👾 `CHR-ROM` en unidades de `8` KiB (el valor `0` significa que la placa usa `8` KiB de 👾 `CHR-RAM`)
 - `6`: Flags 6 - 🗜️ Mapper (nybble inferior), 🚽 mirroring, 🔋 guardado de progreso (`PRG-RAM`), 🧸 relleno
-- `7`: Flags 7 - 🗜️ Mapper (nybble superior)
+- `7`: Flags 7 - 🗜️ Mapper (nybble superior), 🧸 relleno
 - `8-15`: 🧸 Relleno sin uso
 
 🗜️ Las placas de cartuchos se dividen en clases llamadas **mappers** basadas en similitudes de hardware y comportamiento, y cada mapper tiene asignado un número de 8 bits.

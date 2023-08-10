@@ -13,22 +13,38 @@ export default {
 		parts = this._highlightCode(parts);
 		[
 			{
+				regexp: /(<\{[^*]+\}>)/,
+				silent: /(<\{([^*]+)\}>)/g,
+				style: theme.IMAGE,
+				raw: true,
+			}, // <{image}>
+			{
+				regexp: /(_-_)/,
+				silent: /(_-_)/g,
+				style: theme.BG_HIGHLIGHT_START,
+			}, // /highlight start/
+			{
+				regexp: /(_--_)/,
+				silent: /(_--_)/g,
+				style: theme.BG_HIGHLIGHT_END,
+			}, // /highlight end/
+			{
 				regexp: /(\*\*[^*]+\*\*)/,
 				silent: /(\*\*([^*]+)\*\*)/g,
 				style: theme.BOLD,
-			}, // quick bold
+			}, // **quick bold**
 			{
 				regexp: /(__[^_]+__)/,
 				silent: /(__([^_]+)__)/g,
 				style: theme.ITALIC,
-			}, // quick italic
-			{ regexp: /(~[^~]+~)/, silent: /(~([^~]+)~)/g }, // quick accent
-			{ regexp: /(`[^`]+`)/ }, // backticks
-			{ regexp: /("[^"]+")/ }, // double quotes
-			{ regexp: /(<[^>]+>)/ }, // angular brackets
-			{ regexp: /(\[[^\];]+\])/ }, // square brackets (ignoring terminal sequences)
-			{ regexp: /(#?\$[0-9a-fA-F]+)/ }, // [literal] hex numbers
-			{ regexp: /(#[0-9]+)/ }, // literal dec numbers
+			}, // __quick italic__
+			{ regexp: /(~[^~]+~)/, silent: /(~([^~]+)~)/g }, // ~quick accent~
+			{ regexp: /(`[^`]+`)/ }, // `backticks`
+			{ regexp: /("[^"]+")/ }, // "double quotes"
+			{ regexp: /(<[^>]+>)/ }, // <angular brackets>
+			{ regexp: /(\[[^\];]+\])/ }, // [square brackets] (ignoring terminal sequences)
+			{ regexp: /(#?\$[0-9a-fA-F]+)/ }, // #literal hex numbers
+			{ regexp: /(#[0-9]+)/ }, // #literal dec numbers
 			{ regexp: NUMBERS }, // numbers
 		].forEach((symbol) => {
 			parts = this._highlightAccent(parts, symbol);
@@ -38,27 +54,30 @@ export default {
 	},
 
 	_highlightAccent(parts, symbol) {
-		const { regexp, silent = null, style = theme.ACCENT } = symbol;
+		const { regexp, silent = null, style = theme.ACCENT, raw = false } = symbol;
 
 		return parts.flatMap((part) => {
 			if (part.isAccent || part.isCode) return part;
 
 			const subparts = part.text.split(regexp);
 			return subparts.map((part, i) => {
-				const isAccent = regexp.test(part);
+				const isMatch = regexp.test(part);
 				const isNumber = regexp === NUMBERS;
 				const previousCharacter = subparts[i - 1]?.slice(-1);
 				const isInvalidNumber =
 					isNumber &&
 					previousCharacter !== null &&
 					!/\s/.test(previousCharacter);
-				const isValidAccent = isAccent && !isInvalidNumber;
+				const isValid = isMatch && !isInvalidNumber;
+				const isValidAccent = !raw && isValid;
+				const isValidCode = raw && isValid;
 
 				return {
 					isAccent: isValidAccent,
+					isCode: isValidCode,
 					style,
 					text:
-						isValidAccent && silent != null
+						isValid && silent != null
 							? part.replace(silent, (__, ___, inner) => inner)
 							: part,
 					regexp,
@@ -79,6 +98,7 @@ export default {
 
 				return {
 					isCode: true,
+					style: theme.NORMAL,
 					text:
 						language === RAW
 							? code

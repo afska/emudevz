@@ -39,20 +39,27 @@ export default class Book {
 
 	isUnlocked(levelId) {
 		const maxChapterNumber = this._savedata.maxChapterNumber;
+		const maxChapter = this.getChapterByNumber(maxChapterNumber);
+		if (!maxChapter) return false;
+
 		const level = this.getLevelDefinitionOf(levelId);
 		if (!level) return false;
+
 		const chapter = this.getChapterOf(levelId);
 
-		if (chapter.number < maxChapterNumber) {
-			return true;
-		} else if (chapter.number > maxChapterNumber) {
-			return false;
-		} else if (chapter.isSpecial) {
+		if (chapter.isSpecial) {
 			return this._savedata.unlockedLetsPlayLevels.includes(level.id);
-		} else {
+		} else if (chapter.number < maxChapterNumber) {
+			return true;
+		} else if (chapter.number === maxChapterNumber + 1) {
+			const nextPendingLevel = this.nextPendingLevelOfChapter(maxChapter.id);
+			return !nextPendingLevel;
+		} else if (chapter.number === maxChapterNumber) {
 			const nextPendingLevel = this.nextPendingLevelOfChapter(chapter.id);
 			if (!nextPendingLevel) return true;
 			return level.globalId <= nextPendingLevel.globalId;
+		} else {
+			return false;
 		}
 	}
 
@@ -128,6 +135,10 @@ export default class Book {
 
 	getChapter(chapterId) {
 		return _.find(this.chapters, { id: chapterId }) || null;
+	}
+
+	getChapterByNumber(chapterNumber) {
+		return _.find(this.chapters, { number: chapterNumber }) || null;
 	}
 
 	getChapterOf(levelId) {

@@ -5,7 +5,7 @@ main:
   messages:
   - vamos a empezar a programar en JavaScript
   - por cierto, tu computadora ha sido <actualizada>
-  - ahora puedes usar MÚLTIPLES archivos 🗃️ 📄 📁
+  - ahora puedes usar MÚLTIPLES archivos 🗃️ 📁
   - muy bueno, ¿no?
   responses:
   - es una funcionalidad bastante común [notcool]
@@ -36,7 +36,7 @@ play:
   - el editor de código está mostrando tu <archivo de código principal> (el punto de entrada de tu emulador)
   - está en 📄  ~/code/index.js~
   - ahora tienes varios nuevos comandos para manejar archivos 🚀
-  - aunque solo puedes modificar lo que hay en ~/code~
+  - aunque solo puedes modificar lo que hay en 📁  ~/code~
   - corre `help -a` y experimenta con ellos un poco
   - abre el chat nuevamente cuando los hayas aprendido a usar
   responses: []
@@ -45,15 +45,15 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - 📚  crea un archivo en 📄  ~/code/Cartridge.js~
-  - su valor a exportar debería ser una clase vacía
-  - luego, importa ese archivo desde 📄  ~/code/index.js~
-  - y exporta un objeto literal con una sola clave (`Cartridge`) apuntando a esa clase
+  - 📚  _-_crea un archivo en _--_📄 _-_ ~/code/Cartridge.js~_--_
+  - _-_su valor a exportar debería ser una clase vacía_--_
+  - _-_luego, importa ese archivo desde _--_📄 _-_ ~/code/index.js~_--_
+  - _-_y exporta un objeto literal con una sola clave (`Cartridge`) apuntando a esa clase_--_
   - |-
-    tu archivo ~index.js~ debería verse así:
+    _-_tu archivo ~index.js~ debería verse así:
       ```javascript
       import Cartridge from "./Cartridge";
-      export default { Cartridge }```
+      export default { Cartridge }```_--_
   responses:
   - ¿exportar? ¿módulos? 🧐 [modules]
 

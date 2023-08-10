@@ -12,6 +12,7 @@ main:
   messages:
   - in case you didn't notice, all instructions can take one or zero arguments
   - and one compiled instruction can occupy 1, 2, or 3 bytes
+  - <{compilation_full.png}>
   responses:
   - why are you telling me this? [why]
 
@@ -103,7 +104,7 @@ relative:
   - these take a single byte, which is used as an offset from the following instruction
   - look at the compiled code of `BNE @label` in $4028
   - $D0 is the opcode of `BNE`, and the $02 from $4029 is the jump offset 🦘
-  - "this means that [PC] will jump to $402A + 2: directly into $402C, where @label starts"
+  - "this means that [PC] will jump to $402A + 2: directly into $402C, where `@label` starts"
   - (it'll skip the bytes of the two `INY`s)
   responses:
   - interesting, so that's how branching works [whoa]
@@ -118,7 +119,7 @@ whoa:
   - "\"Indirect\" addressing uses an absolute address to look up another address"
   - reading the first address gives the <least significant byte> (also called "low byte", ```raw $00```~XX~)
   - and reading the following byte (address + 1) gives the <most significant byte> (also called "high byte", ```raw $```~XX~```raw 00```)
-  - that can be hard to wrap your head around, so run the example ⏩
+  - that can be hard to wrap your head around, so let's run the example ⏩
   events:
   - step [step1]
 
@@ -145,6 +146,7 @@ step4:
   messages:
   - now $4080 contains $21, and $4081 contains $40
   - so, in this case, `JMP ($4080)` will unconditionally jump to $4021
+  - <{JMP_indirect.png}>
   - creating an infinite loop ⏩
   events:
   - step [exercise]
@@ -161,10 +163,10 @@ exercise:
     {{Bottom}}.setSelectedCells([]);
   messages:
   - there we go...
-  - 📚  as an exercise, modify the code by adding an `STY $1001` instruction at the end
-  - then an `INX` instruction
-  - and lastly, change lines 10 and 12, so the indirect `JMP` goes directly into the new `INX` 👀
-  - when you're done, run the `test` command
+  - 📚  _-_as an exercise, modify the code by adding an `STY $1001` instruction at the end_--_
+  - _-_then an `INX` instruction_--_
+  - _-_and lastly, change lines 10 and 12, so the indirect `JMP` goes directly into the new `INX` _--_👀
+  - _-_when you're done, run the `test` command_--_
   responses:
   - wait, what? [what]
 

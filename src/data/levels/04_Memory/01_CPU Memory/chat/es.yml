@@ -34,10 +34,10 @@ io:
 implement:
   messages:
   - por ahora, solo vamos a implementar los dos primeros rangos del mapa de memoria
-  - 📚  crea una clase `CPUMemory` en 📄  ~/code/CPUMemory.js~ con un constructor
-  - debería asignar una propiedad `ram` (un `Uint8Array` de 2048 bytes)
+  - 📚  _-_crea una clase `CPUMemory` en _--_📄 _-_ ~/code/CPUMemory.js~ con un constructor_--_
+  - _-_debería asignar una propiedad `ram` (un `Uint8Array` de 2048 bytes)_--_
   - |-
-    implementa estos dos métodos:
+    _-_implementa estos dos métodos:_--_
     **read(address)**:
       __-> si <address> está dentro de $0000-$07FF, retorna el byte correspondiente de <ram>
       -> si <address> está dentro de $0800-$1FFF, retorna un byte espejado de <ram>
@@ -45,7 +45,7 @@ implement:
       -> caso contrario, retorna 0__
     **write(address, value)**:
       __-> similar a *read*, pero escribe el <value> en lugar de retornar__
-  - luego, como hiciste con `Cartridge`, agrega la clase a ~/code/index.js~
+  - _-_luego, como hiciste con `Cartridge`, agrega la clase a ~/code/index.js~_--_
   responses:
   - necesito ayuda con los bytes espejados 📐 [help]
 

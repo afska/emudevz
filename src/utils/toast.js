@@ -6,20 +6,22 @@ const STYLE = {
 	color: "#fff",
 };
 
+const DEFAULT_DURATION = 1500;
+
 export default {
-	normal(message, options = {}) {
+	normal(message, options = { duration: DEFAULT_DURATION }) {
 		toast(message, {
 			style: STYLE,
 			...options,
 		});
 	},
-	success(message, options = {}) {
+	success(message, options = { duration: DEFAULT_DURATION }) {
 		toast.success(message, {
 			style: STYLE,
 			...options,
 		});
 	},
-	error(message, options = {}) {
+	error(message, options = { duration: DEFAULT_DURATION }) {
 		toast.error(message, {
 			style: STYLE,
 			...options,

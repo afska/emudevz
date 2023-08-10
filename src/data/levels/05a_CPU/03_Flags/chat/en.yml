@@ -13,7 +13,7 @@ main:
   - all flags are represented by an uppercase letter
   responses:
   - not <all> of them 😑 [notall]
-  - <level.isCompleted || m.$exercise> 📚  take me to the action [what]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [what]
 
 notall:
   messages:
@@ -27,13 +27,13 @@ what:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  create a `FlagsRegister` class with 6 boolean properties (called ~c~, ~z~, ~i~, ~d~, ~v~ and ~n~)
-  - initialize them with ```javascript false```
-  - then, implement ```javascript getValue()``` and ```javascript setValue(value)``` following the previous table
-  - "`getValue()` should return an 8-bit number with all the flags" 
-  - "`setValue(...)` should assign all the flags from the received 8-bit number" 
-  - i.e. with ~i~ and ~v~ on, ```javascript getValue()``` should return ```javascript 0b01100100```
-  - and ```javascript setValue(0b00000010)``` should set all booleans to ```javascript false```, except for ~z~
+  - 📚  _-_create a `FlagsRegister` class with 6 boolean properties (called ~c~, ~z~, ~i~, ~d~, ~v~ and ~n~)_--_
+  - _-_initialize them with ```javascript false```_--_
+  - _-_then, implement ```javascript getValue()``` and ```javascript setValue(value)``` following the previous table_--_
+  - "**getValue()** __should return an 8-bit number with all the flags__"
+  - "**setValue(...)** __should assign all the flags from the received 8-bit number__"
+  - _-_i.e. with ~i~ and ~v~ on, ```javascript getValue()``` should return ```javascript 0b01100100```_--_
+  - _-_and ```javascript setValue(0b00000010)``` should set all booleans to ```javascript false```, except for ~z~_--_
   responses:
   - (*) I need a bit of help 📐 [bits]
   - ✔️  I have the class [nowwhat]
