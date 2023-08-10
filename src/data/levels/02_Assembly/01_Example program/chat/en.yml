@@ -35,6 +35,7 @@ skip:
     const chapter = book.getChapterOf(level.id);
     const lastLevelId = _.last(chapter.levels).id;
     const nextLevelId = book.nextIdOf(lastLevelId, true);
+    store.dispatch.savedata.unlockChapter(nextLevelId);
     store.dispatch.savedata.advanceTo(nextLevelId);
   messages: []
   events:

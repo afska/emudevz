@@ -113,18 +113,22 @@ export default {
 				return this.advanceTo(nextLevelId);
 			},
 			advanceTo(nextLevelId, _state_) {
-				const state = _state_[KEY];
 				const book = _state_.book.instance;
 
 				if (!book.exists(nextLevelId)) return false;
 				if (!book.isUnlocked(nextLevelId)) return false;
 
-				const chapter = book.getChapterOf(nextLevelId);
-				if (chapter.number > state.maxChapterNumber)
-					dispatch.setMaxChapterNumber(chapter.number);
+				this.unlockChapter(nextLevelId);
 
 				_dispatch_.level.goTo(nextLevelId);
 				return true;
+			},
+			unlockChapter(levelId, _state_) {
+				const state = _state_[KEY];
+				const book = _state_.book.instance;
+				const chapter = book.getChapterOf(levelId);
+				if (chapter.number > state.maxChapterNumber)
+					dispatch.setMaxChapterNumber(chapter.number);
 			},
 			validate(levelId, _state_) {
 				const state = _state_[KEY];
