@@ -3,7 +3,7 @@ main:
   messages:
   - ahora, los gráficos 👾
   - 📚  _-_crea un método ```javascript chr()``` que retorne un `Uint8Array` con ellos_--_
-  - _-_los gráficos están justo después del programa, ¡pero recuerda que son opcionales!_--_
+  - _-_los gráficos están ubicados justo después del programa, ¡pero recuerda que son opcionales!_--_
   - <{chr.png}>
   - _-_si la cabecera dice que el juego usa <CHR-RAM> en lugar de <CHR-ROM>, solo retorna un ```javascript new Uint8Array(8192)```_--_
   responses: []

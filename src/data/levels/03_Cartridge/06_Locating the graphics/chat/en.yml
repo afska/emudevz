@@ -3,7 +3,7 @@ main:
   messages:
   - now, the graphics 👾
   - 📚  _-_create a ```javascript chr()``` method that returns an `Uint8Array` containing them_--_
-  - _-_graphics are right after the program, but remember they're optional!_--_
+  - _-_graphics are located right after the program, but remember they're optional!_--_
   - <{chr.png}>
   - _-_if the header says that the game uses <CHR-RAM> instead of <CHR-ROM>, just return a ```javascript new Uint8Array(8192)```_--_
   responses: []
