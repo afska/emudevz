@@ -1,7 +1,12 @@
+import { byte as _byte_ } from "../../utils";
+
 const _INVALID_CHARACTERS_ = /[^_$a-zA-Z0-9]/;
 
 export default {
 	create: ($ = {}, _include_ = _DEFAULT_SCOPE_) => {
+		// eslint-disable-next-line
+		const byte = _byte_;
+
 		let _firstTime_ = true;
 
 		const _globals_ = Object.getOwnPropertyNames(window);

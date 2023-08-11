@@ -92,19 +92,22 @@ bits:
   - está en 📄  ~/lib/byte.js~, solo impórtala como otro módulo más y úsala
   - los métodos que querrás usar son `getFlag`, `highNybbleOf`, `lowNybbleOf` y `buildU8`
   responses:
-  - ¿cómo puedo importar el módulo? [import]
+  - ¿cómo puedo usar el módulo? [import]
 
 import:
   messages:
   - |-
-    hazlo así:
+    solo impórtalo así:
       ```javascript import byte from "/lib/byte";```
-  - |-
-    opcionalmente, si lo agregas a tu objeto exportado en `index.js`...
-      ```javascript import Cartridge from "./Cartridge";
-      import byte from "/lib/byte";
-
-      export default { Cartridge, byte }```
-  - puedes probar la biblioteca con el comando ~repl~
+  - 💡 puedes probar la biblioteca con el comando ~repl~
   - ¡una consola JS interactiva! 🤯
+  - |-
+    intenta ejecutar estas líneas de código:
+      ```javascript
+      // (0x implica <hexadecimal> y 0b implica <binario>)
+      byte.getFlag(0b00000100, 2) // el bit 2 es 1 => true
+      byte.getFlag(0b00000100, 4) // el bit 4 es 0 => false
+      byte.highNybbleOf(0b00110100) // el high nybble es 0b0011 => 3
+      byte.lowNybbleOf(0b00110100) // el low nybble es 0b0100 => 4
+      byte.buildU8(0b0011, 0b0100) // 0b00110100 => 52```
   responses: []

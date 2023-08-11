@@ -57,10 +57,10 @@ export default {
     return (u8 >> startPosition) & (0xff >> (8 - size));
   },
 
-	/**
-	 * Inserts a `value` of `size` bits inside `u8`, starting at `startPosition`.
-	 * Returns the updated number.
-	 */
+  /**
+   * Inserts a `value` of `size` bits inside `u8`, starting at `startPosition`.
+   * Returns the updated number.
+   */
   setBits(u8, startPosition, size, value) {
     const mask = ((1 << size) - 1) << startPosition;
     return (u8 & ~mask) | ((value << startPosition) & mask);
@@ -116,5 +116,10 @@ export default {
     const targetRangeSize = targetRangeEnd - targetRangeStart + 1;
     const mirrorSize = Math.min(mirrorRangeSize, targetRangeSize);
     return targetRangeStart + (address - mirrorRangeStart) % mirrorSize;
-  }
+  },
+
+  /** Returns a random byte ([0, `max`]). */
+  random(max = 255) {
+    return Math.floor(Math.random() * max);
+  },
 };
