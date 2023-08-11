@@ -89,8 +89,6 @@ implement:
       -> asigna [PC] = al resultado de leer las direcciones (interrupt.vector) y (interrupt.vector + 1) en Little Endian
         (recuerda que tienes un método *read16* para eso)
       -> retorna 7__
-  run-after-messages: |
-    store.dispatch.savedata.openFile("/lib/interrupts.js");
   responses:
   - ¿y BRK? [brk]
 

@@ -6,8 +6,6 @@ main:
   - bueno... es hora de emularlos 😏
   - hice una guía rápida para ti
   - revisa 📄  ~/docs/cpu/addressing_modes.es.md~
-  run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu/addressing_modes.es.md");
   responses:
   - definitivamente voy a necesitar que me expliques esto un poco más [explain]
 

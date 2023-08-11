@@ -4,7 +4,6 @@ main:
   - solo hay unas pocas verificaciones
   - son, básicamente, instrucciones que comparan valores con un registro o realizan operaciones lógicas
   - no creo que necesites ayuda con estas
-  - 📚  _-_¡implementa todas las instrucciones de verificaciones en tu objeto `instructions`!_--_
-  run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu/instructions.es.md");
+  - 📚  _-_siguiendo _--_📄 _-_ ~/docs/cpu/instructions.es.md~,_--_
+  - _-_¡implementa todas las instrucciones de verificaciones en tu objeto `instructions`!_--_
   responses: []

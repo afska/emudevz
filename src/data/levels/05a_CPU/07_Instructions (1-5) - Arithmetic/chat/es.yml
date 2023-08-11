@@ -19,8 +19,6 @@ howmany:
   - _-_y expórtalo bajo la clave `instructions` en ~/code/index.js~_--_
   - _-_necesitas documentación acerca de qué debería hacer cada instrucción_--_
   - _-_así que revisa _--_📄 _-_ ~/docs/cpu/instructions.es.md~_--_
-  run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu/instructions.es.md");
   responses:
   - necesito ayuda para mover bits 😅 [bits]
   - necesito ayuda para actualizar las banderas Z y N 😅 [flags]

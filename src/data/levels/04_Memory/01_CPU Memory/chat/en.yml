@@ -14,8 +14,6 @@ other62:
   - 🔗  everything is connected to the memory!
   - that's how the machine code interacts with the devices
   - the memory map has a very specific structure, see 📄  ~/docs/cpu/cpu_memory.en.md~
-  run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu/cpu_memory.en.md");
   responses:
   - (*) what's "memory-mapped I/O"? 🗺️ [io]
   - 👌  I see... what do I need to implement? [implement]

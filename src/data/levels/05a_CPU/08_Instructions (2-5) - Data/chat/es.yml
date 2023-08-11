@@ -3,9 +3,8 @@ main:
   messages:
   - las instrucciones de datos son muy simples
   - como el nombre sugiere, se tratan de guardar y mover datos 😉
-  - 📚  _-_¡implementa todas las instrucciones de datos en tu objeto `instructions`!_--_
-  run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu/instructions.es.md");
+  - 📚  _-_siguiendo _--_📄 _-_ ~/docs/cpu/instructions.es.md~,_--_
+  - _-_¡implementa todas las instrucciones de datos en tu objeto `instructions`!_--_
   responses:
   - necesito ayuda con `PHP` 😅 [php]
 

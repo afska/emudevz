@@ -11,9 +11,8 @@ main:
   - ~NEEEStest~ is a homebrew that thoroughly tests CPU operation
   - it was created by someone called <kevtris>
   - I'll run your emulator and log every instruction
-  - comparing each line against a "golden log"
-  run-after-messages: |
-    store.dispatch.savedata.openFile("/roms/_test/golden.log");
+  - "comparing each line against the following \"golden log\":"
+  - 📄  ~/roms/_test/golden.log~
   responses:
   - what's a golden log? 🏆 [golden]
 
@@ -67,7 +66,6 @@ fix:
     set((m) => {
       m.$canRun = true;
     });
-    store.dispatch.savedata.openFile("/docs/cpu/page_boundary_bug.en.md");
   events:
   - ...golden
 

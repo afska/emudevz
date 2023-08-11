@@ -3,7 +3,6 @@ main:
   messages:
   - las bifurcaciones implican cambiar el valor de [PC] (el "Program Counter")
   - y eso es lo que todas estas instrucciones hacen
-  - 📚  _-_¡implementa todas las instrucciones de bifurcaciones en tu objeto `instructions`!_--_
-  run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/cpu_instructions.es.md");
+  - 📚  _-_siguiendo _--_📄 _-_ ~/docs/cpu/instructions.es.md~,_--_
+  - _-_¡implementa todas las instrucciones de bifurcaciones en tu objeto `instructions`!_--_
   responses: []
