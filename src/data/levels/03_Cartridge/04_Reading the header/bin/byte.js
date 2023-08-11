@@ -26,14 +26,14 @@ export default {
     return u8 >= 256;
   },
 
-  /** Returns whether `u8` is positive or not. */
-  isPositive(u8) {
-    return !((u8 >> 7) & 1);
+  /** Returns whether `s8` is positive or not. */
+  isPositive(s8) {
+    return !((s8 >> 7) & 1);
   },
 
-  /** Returns whether `u8` is negative or not. */
-  isNegative(u8) {
-    return !!((u8 >> 7) & 1);
+  /** Returns whether `s8` is negative or not. */
+  isNegative(s8) {
+    return !!((s8 >> 7) & 1);
   },
 
   /** Returns the bit located at `position` in `number`, as a boolean. */
@@ -46,21 +46,24 @@ export default {
     return (number >> position) & 1;
   },
 
-  /** Returns an updated `byte`, with a `bit` changed to `value` (0 or 1). */
-  setBit(byte, bit, value) {
+  /** Returns an updated `u8`, with a `bit` changed to `value` (0 or 1). */
+  setBit(u8, bit, value) {
     const mask = 1 << bit;
-    return (byte & ~mask) | ((value & 0b1) << bit);
+    return (u8 & ~mask) | ((value & 0b1) << bit);
   },
 
-  /** Returns a sub-number of `size` bits inside a `byte`, starting at `startPosition`. */
-  getBits(byte, startPosition, size) {
-    return (byte >> startPosition) & (0xff >> (8 - size));
+  /** Returns a sub-number of `size` bits inside `u8`, starting at `startPosition`. */
+  getBits(u8, startPosition, size) {
+    return (u8 >> startPosition) & (0xff >> (8 - size));
   },
 
-  /** Inserts a `value` of `size` bits inside a `byte`, starting at `startPosition`. */
-  setBits(byte, startPosition, size, value) {
+	/**
+	 * Inserts a `value` of `size` bits inside `u8`, starting at `startPosition`.
+	 * Returns the updated number.
+	 */
+  setBits(u8, startPosition, size, value) {
     const mask = ((1 << size) - 1) << startPosition;
-    return (byte & ~mask) | ((value << startPosition) & mask);
+    return (u8 & ~mask) | ((value << startPosition) & mask);
   },
 
   /** Returns the most significant byte of `u16`. */
