@@ -80,7 +80,7 @@ understand:
       usesChrRam: false, // (true if chrRomPages === 0)
       has512BytePadding: false, // (obtain this from <Flags 6>)
       hasPrgRam: false, // (obtain this from <Flags 6>)
-      mirroring: "VERTICAL", // (obtain this from <Flags 6>)
+      mirroringId: "VERTICAL", // (obtain this from <Flags 6>)
       mapperId: 4 // (obtain this from <Flags 6> and <Flags 7>)
     }```_--_
   responses:

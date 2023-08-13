@@ -171,7 +171,7 @@ it("has a `header` property with metadata (PRG-RAM presence)", () => {
 	use: ({ id }, book) => id >= book.getId("3.4"),
 });
 
-it("has a `header` property with metadata (mirroring)", () => {
+it("has a `header` property with metadata (mirroringId)", () => {
 	const Cartridge = mainModule.default.Cartridge;
 	// prettier-ignore
 	const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
@@ -181,16 +181,16 @@ it("has a `header` property with metadata (mirroring)", () => {
 		["VERTICAL", 0b00000001],
 		["FOUR_SCREENS", 0b00001001],
 		["FOUR_SCREENS", 0b00001000],
-	].forEach(([mirroring, flags6]) => {
+	].forEach(([mirroringId, flags6]) => {
 		bytes[6] = flags6;
 		const header = new Cartridge(bytes).header;
 		expect(header).to.be.an("object");
-		header.should.include.key("mirroring");
-		header.mirroring.should.equalN(mirroring, "mirroring");
+		header.should.include.key("mirroringId");
+		header.mirroringId.should.equalN(mirroringId, "mirroringId");
 	});
 })({
 	locales: {
-		es: "tiene una propiedad `header` con metadatos (mirroring)",
+		es: "tiene una propiedad `header` con metadatos (mirroringId)",
 	},
 	use: ({ id }, book) => id >= book.getId("3.4"),
 });
