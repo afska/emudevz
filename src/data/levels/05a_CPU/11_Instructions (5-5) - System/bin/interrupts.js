@@ -1,3 +1,4 @@
+/** CPU interrupts. */
 export default {
   // Non-maskable interrupt (used to detect vertical blanking)
   NMI: {

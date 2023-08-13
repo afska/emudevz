@@ -1,3 +1,4 @@
+/** Returns an array of operations, sorted by opcode. */
 export default (instructions, addressingModes) => {
   const operations = [
     {
@@ -943,4 +944,4 @@ export default (instructions, addressingModes) => {
   for (let i = 0; i < 256; i++)
     sortedOperations.push(operations.find((it) => it.id === i) || null);
   return sortedOperations;
-}
+};
