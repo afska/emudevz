@@ -169,6 +169,7 @@ export default class Emulator extends Component {
 						.addUserPPU(settings.usePPU)
 						.addUserAPU(settings.useAPU)
 						.addUserController(settings.useController)
+						.addUserMappers(settings.useMappers)
 						.build(true);
 		} catch (e) {
 			this._onError(e);

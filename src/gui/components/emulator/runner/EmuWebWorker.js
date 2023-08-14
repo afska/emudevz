@@ -1,6 +1,6 @@
 import FrameTimer from "./FrameTimer";
 
-const SYNC_TO_AUDIO = true;
+const SYNC_TO_AUDIO = false; // TODO: RESTORE
 const FPS = 60.098;
 const SAMPLE_RATE = 44100;
 const AUDIO_BUFFER_LIMIT = 4096;
