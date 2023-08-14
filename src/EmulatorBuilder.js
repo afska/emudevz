@@ -37,7 +37,14 @@ export default class EmulatorBuilder {
 		}
 
 		return BrokenNEEES({
-			CPUMemory: undefined, // TODO: IMPLEMENT
+			CPUMemory:
+				this.withUserCPU ||
+				this.withUserPPU ||
+				this.withUserAPU ||
+				this.withUserController ||
+				this.withUserMappers
+					? mainModule.CPUMemory
+					: undefined,
 			Cartridge: this.withUserCartridge ? mainModule.Cartridge : undefined,
 			CPU: this.withUserCPU ? mainModule.CPU : undefined,
 			PPU: this.withUserPPU ? mainModule.PPU : undefined,
