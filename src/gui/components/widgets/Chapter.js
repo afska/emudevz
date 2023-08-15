@@ -13,7 +13,7 @@ class Chapter extends PureComponent {
 			book,
 			chapter,
 			goTo,
-			comingSoon = false,
+			optional = false,
 			mini = false,
 			nested = false,
 			right = false,
@@ -33,7 +33,7 @@ class Chapter extends PureComponent {
 			<div
 				className={classNames(
 					styles.horizontalLines,
-					!left && right ? styles.horizontalLinesRightOnly : false
+					!left && right && styles.horizontalLinesRightOnly
 				)}
 			>
 				{nested && right && <div className={styles.horizontalLineRight} />}
@@ -41,16 +41,22 @@ class Chapter extends PureComponent {
 			</div>
 		);
 
+		const optionalSuffix = optional ? " " + locales.get("optional") : "";
+
 		return (
-			<Tooltip title={chapter.description?.[locales.language]} placement="top">
+			<Tooltip
+				title={chapter.description?.[locales.language] + optionalSuffix}
+				placement="top"
+			>
 				<div className={styles.container}>
 					{lines}
 					{nested && <div className={styles.verticalLine} />}
 					<Button
 						className={classNames(
 							styles.chapter,
-							nested || mini ? styles.mini : false,
-							!isUnlocked ? styles.locked : false,
+							optional && styles.optional,
+							(nested || mini) && styles.mini,
+							!isUnlocked && styles.locked,
 							className
 						)}
 						onClick={this._go}
@@ -58,11 +64,7 @@ class Chapter extends PureComponent {
 					>
 						<span>{chapter.name[locales.language]}</span>
 
-						{comingSoon ? (
-							<div style={{ fontSize: "xx-small" }}>
-								🚧 {locales.get("coming_soon")}
-							</div>
-						) : isUnlocked ? (
+						{isUnlocked ? (
 							<ProgressBar percentage={percentage} />
 						) : (
 							<div>🔒</div>
@@ -81,7 +83,7 @@ class Chapter extends PureComponent {
 	}
 
 	_go = () => {
-		if (!this._isUnlocked || this.props.comingSoon) return;
+		if (!this._isUnlocked) return;
 
 		const { book, chapter, goTo } = this.props;
 		const level =

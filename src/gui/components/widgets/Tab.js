@@ -24,8 +24,8 @@ export default class Tab extends PureComponent {
 			<div
 				className={classNames(
 					styles.container,
-					active ? styles.active : {},
-					dragging ? styles.dragging : {},
+					active && styles.active,
+					dragging && styles.dragging,
 					className
 				)}
 				onMouseDown={this._onMouseDown}

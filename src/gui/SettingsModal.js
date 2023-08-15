@@ -59,7 +59,7 @@ class SettingsModal extends PureComponent {
 							</div>
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
-							<Form.Label>{locales.get("speedUpChat")}</Form.Label>
+							<Form.Label>{locales.get("speed_up_chat")}</Form.Label>
 							<div className={styles.options}>
 								<div>
 									<Form.Check

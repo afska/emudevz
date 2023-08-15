@@ -23,6 +23,7 @@ export default class ChapterSelectModal extends PureComponent {
 		return (
 			<Modal
 				show={open}
+				size="lg"
 				onHide={this._onClose}
 				centered
 				contentClassName={"crt " + styles.modalContent}
@@ -45,7 +46,7 @@ export default class ChapterSelectModal extends PureComponent {
 						<div className={styles.levelMap}>
 							<Chapter book={book} chapter={book.getChapter(0)} mini />
 							<div className={styles.verticalLine} />
-							<Chapter book={book} chapter={book.getChapter(1)} />
+							<Chapter book={book} chapter={book.getChapter(1)} optional />
 							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(2)} />
 							<div className={styles.verticalLine} />
@@ -55,8 +56,16 @@ export default class ChapterSelectModal extends PureComponent {
 							<div className={styles.chapterRow}>
 								<Chapter
 									book={book}
+									chapter={book.getChapter(7)}
+									nested
+									right
+									optional
+								/>
+								<Chapter
+									book={book}
 									chapter={book.getChapter(4)}
 									nested
+									left
 									right
 								/>
 								<Chapter
@@ -72,19 +81,16 @@ export default class ChapterSelectModal extends PureComponent {
 									nested
 									left
 									right
-									comingSoon
 								/>
 								<Chapter
 									book={book}
-									chapter={book.getChapter(7)}
+									chapter={book.getChapter(8)}
 									nested
 									left
-									comingSoon
+									optional
 								/>
 							</div>
 							<div className={styles.horizontalLine} />
-							<div className={styles.verticalLine} />
-							<Chapter book={book} chapter={book.getChapter(8)} />
 							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(9)} />
 						</div>

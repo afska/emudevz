@@ -108,6 +108,10 @@ body {
 	--bs-code-color: #c39f79;
 }
 
+.modal-lg {
+	--bs-modal-width: 650px;
+}
+
 .form-control {
 	background-color: #435c69 !important;
 	color: white !important;

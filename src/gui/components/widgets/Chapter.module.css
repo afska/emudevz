@@ -5,6 +5,15 @@
 	align-items: center;
 }
 
+.optional {
+	background: #ffffff00;
+	font-size: 11px;
+}
+
+.optional:hover {
+	background: #e6e6e699;
+}
+
 .chapter {
 	flex-direction: column;
 	min-width: 160px;
