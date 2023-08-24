@@ -1,29 +1,19 @@
 ---
 main:
   messages:
-  - la memoria de tu CPU tiene que estar conectada a todo
-  - por ejemplo, para mapear <PRG-ROM> en la memoria, necesitas conectar un 🗜️  mapper
-  - pero hasta ahora, solo programamos algunos componentes y CERO mappers 😅
-  responses:
-  - ¿qué es un mapper? [mapper]
-
-mapper:
-  messages:
-  - son circuitos dentro del cartucho que controlan cómo la consola lee la información del ROM
-  - cada juego usa un mapper específico
-  - mientras más mappers admita tu emulador, más juegos serán compatibles 👾
-  responses:
-  - entonces supongo que necesitamos codificar al menos un mapper, ¿verdad? [onemapper]
-
-onemapper:
-  messages:
-  - nah, <BrokenNEEES> soporta los mappers más comunes (0-4)
-  - y sorprendentemente, ¡todos funcionan bien! así que usarás esos por ahora
-  - (te enseñaré cómo implementarlos en el capítulo Mappers, para que puedas agregar más)
-  - ahora concentrémonos en recibir un montón de <dispositivos>
+  - recuerda, cada componente tiene que estar conectado a la memoria
+  - en la medida que avances en tu desarrollo, tendrás que actualizar tu clase `CPUMemory`, agregando los mapeos correctos
+  - ahora solo concentrémonos en recibir un montón de <dispositivos> 📱
   - ¡los mapearemos más tarde!
   - |-
     📚  _-_agrega a tu `CPUMemory` el siguiente método:_--_
     **onLoad(ppu, apu, mapper, controllers)**:
       __-> guarda los parámetros como propiedades (this.ppu, this.apu, etc.)__
+  responses:
+  - ¿quién llama a ese método? [who]
+
+who:
+  messages:
+  - al cargar un juego, <BrokenNEEES> llamará a este método automáticamente
+  - para que la memoria tenga acceso al resto del hardware
   responses: []

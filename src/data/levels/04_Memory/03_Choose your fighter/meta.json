@@ -1,0 +1,24 @@
+{
+	"name": {
+		"en": "🤼‍♂️ Choose your fighter",
+		"es": "🤼‍♂️ Elige tu luchador"
+	},
+	"ui": {
+		"layout": "mono",
+		"components": {
+			"Main": [
+				"console",
+				{
+					"startup": "chat -f",
+					"availableCommands": ["chat"]
+				}
+			]
+		},
+		"focus": "Main"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
