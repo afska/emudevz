@@ -75,6 +75,7 @@ export default {
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",
+	level_history: "Historial de niveles",
 	letsplay_unlock_msg1: "¡Nuevo",
 	letsplay_unlock_msg2: "juego de NEEES",
 	letsplay_unlock_msg3: "desbloqueado!",

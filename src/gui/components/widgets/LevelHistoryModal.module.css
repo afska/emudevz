@@ -1,0 +1,17 @@
+.modalContent {
+	background-color: #373737cc !important;
+	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
+		0 0 8px rgba(200, 200, 200, 0.6);
+	user-select: none;
+}
+
+.modalBody {
+	display: flex;
+	flex-direction: column;
+}
+
+.level {
+	margin-bottom: 8px;
+	display: flex;
+	justify-content: space-between;
+}

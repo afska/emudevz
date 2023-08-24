@@ -115,7 +115,7 @@ const mapStateToProps = ({ router, book, level }) => {
 		level: level.instance,
 	};
 };
-const mapDispatchToProps = ({ book, savedata, level }) => ({
+const mapDispatchToProps = ({ book, level, savedata }) => ({
 	setBook: book.setBook,
 	setLevel: level.setLevel,
 	resetLevel: level.reset,

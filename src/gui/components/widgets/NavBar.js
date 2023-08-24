@@ -5,6 +5,7 @@ import {
 	FaCalculator,
 	FaChevronLeft,
 	FaChevronRight,
+	FaClock,
 	FaComment,
 	FaExclamationCircle,
 	FaHome,
@@ -22,6 +23,7 @@ import { analytics, bus } from "../../../utils";
 import music from "../../sound/music";
 import CalculatorModal from "./CalculatorModal";
 import IconButton from "./IconButton";
+import LevelHistoryModal from "./LevelHistoryModal";
 import ProgressList from "./ProgressList";
 import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
@@ -55,6 +57,11 @@ class NavBar extends PureComponent {
 				<CalculatorModal
 					open={this.state.isCalculatorOpen}
 					onClose={this._closeCalculator}
+				/>
+
+				<LevelHistoryModal
+					open={this.state.isLevelHistoryOpen}
+					onClose={this._closeLevelHistory}
 				/>
 
 				<div className={classNames(styles.item, styles.text)}>
@@ -136,6 +143,12 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
+						<IconButton
+							style={{ marginLeft: 8 }}
+							Icon={FaClock}
+							tooltip={locales.get("level_history")}
+							onClick={() => this._openLevelHistory()}
+						/>
 						{book.canRollback(level) && !this.state.areYouSureRollback && (
 							<IconButton
 								style={{ marginLeft: 8 }}
@@ -178,6 +191,14 @@ class NavBar extends PureComponent {
 
 	_closeCalculator = () => {
 		this.setState({ isCalculatorOpen: false });
+	};
+
+	_openLevelHistory = () => {
+		this.setState({ isLevelHistoryOpen: true });
+	};
+
+	_closeLevelHistory = () => {
+		this.setState({ isLevelHistoryOpen: false });
 	};
 
 	_runEmulator = () => {
