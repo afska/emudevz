@@ -2,7 +2,7 @@
 main:
   messages:
   - recuerda, cada componente tiene que estar conectado a la memoria
-  - en la medida que avances en tu desarrollo, tendrás que actualizar tu clase `CPUMemory`, agregando los mapeos correctos
+  - a medida que avances en tu desarrollo, tendrás que actualizar tu clase `CPUMemory`, agregando los mapeos correctos
   - ahora solo concentrémonos en recibir un montón de <dispositivos> 📱
   - ¡los mapearemos más tarde!
   - |-

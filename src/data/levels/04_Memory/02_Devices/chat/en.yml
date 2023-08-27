@@ -2,7 +2,7 @@
 main:
   messages:
   - remember, every component has to be connected to the memory
-  - as far as you make progress in your development, you will have to update your `CPUMemory` class, adding the correct mappings
+  - as you make progress in your development, you will have to update your `CPUMemory` class, adding the correct mappings
   - let's just focus on receiving a bunch of <devices> 📱
   - we'll map them later!
   - |-
