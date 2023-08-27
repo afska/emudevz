@@ -28,18 +28,18 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 
 // 5a.2 Registers
 
-it("includes a `memory` property with a `CPUMemory` instance", async () => {
+it("includes a `memory` property with the received `cpuMemory`", async () => {
 	mainModule = await evaluate();
 	const CPU = mainModule.default.CPU;
-	const CPUMemory = (await evaluateModule($.modules["/code/CPUMemory.js"]))
-		.default;
+	const CPUMemory = mainModule.default.CPUMemory;
+	const cpuMemory = new CPUMemory();
 
-	const cpu = new CPU();
+	const cpu = new CPU(cpuMemory);
 	cpu.should.include.key("memory");
-	cpu.memory.constructor.should.equal(CPUMemory);
+	cpu.memory.should.equal(cpuMemory);
 })({
 	locales: {
-		es: "incluye una propiedad `memory` con una instancia de `CPUMemory`",
+		es: "incluye una propiedad `memory` con la `cpuMemory` recibida",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
