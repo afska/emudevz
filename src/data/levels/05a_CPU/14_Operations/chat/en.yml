@@ -21,7 +21,7 @@ multiple:
   messages:
   - exactly that ✔️
   - "here's a function that defines all the opcodes for you:"
-  - 📄  ~/lib/defineOperations.js~
+  - 📄  ~/lib/cpu/defineOperations.js~
   - you only need to call it, passing the `instructions` and the `addressingModes` objects
   - |-
     📚  _-_add the following property to your `CPU`:
