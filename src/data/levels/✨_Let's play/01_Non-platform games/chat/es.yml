@@ -36,7 +36,7 @@ zoom:
   run: |
     {{Right}}.stream.zoom();
   messages:
-  - ✨  he hackeado el puerto del control para que tus entradas funcionen en mi NEEES real
+  - ✨  he hackeado el puerto del mando para que tus entradas funcionen en mi NEEES real
   responses:
   - entonces, ¿podemos jugar ahora? 👾 [play]
 
