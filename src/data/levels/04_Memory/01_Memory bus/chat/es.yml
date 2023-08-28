@@ -37,13 +37,13 @@ implement:
   - |-
     _-_implementa estos dos métodos:_--_
     **read(address)**:
-      __-> si <address> está dentro de $0000-$07FF, retorna el byte correspondiente de <ram>
-      -> si <address> está dentro de $0800-$1FFF, retorna un byte espejado de <ram>
+      **->** si ~address~ está dentro de $0000-$07FF, retorna el byte correspondiente de ~ram~
+      **->** si ~address~ está dentro de $0800-$1FFF, retorna un byte espejado de ~ram~
         (p. ej. $0802 se vuelve $0002, $1023 se vuelve $0023)
-      -> caso contrario, retorna 0__
+      **->** caso contrario, retorna 0
     **write(address, value)**:
-      __-> similar a *read*, pero escribe el <value> en lugar de retornar__
-  - _-_luego, como hiciste con `Cartridge`, agrega la clase a ~/code/index.js~_--_
+      **->** similar a ~read(...)~, pero escribe el <value> en lugar de retornar
+  - _-_luego, como hiciste con `Cartridge`, agrega la clase a _--_📄 _-_ ~/code/index.js~_--_
   responses:
   - necesito ayuda con los bytes espejados 📐 [help]
 

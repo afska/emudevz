@@ -34,40 +34,60 @@ rightway:
     set((m) => m.$exercise = true);
   messages:
   - |-
-    📚  _-_vamos a agregar este método en tu `CPU`:_--_
-    **step()**:
-      __-> recuerda el valor original de PC
-        (llamemos esto <originalPC>)
+    📚  _-_primero, vamos a agregar este método en tu `CPU`:_--_
+    **_fetchOperation()**:
+      **->** lee un byte de la ubicación de memoria apuntada por [PC]
+        (llamemos esto ~opcode~)
+      **->** encuentra la operación relacionada con ese opcode:
+        ~this.operations[opcode]~
+        (llamemos esto ~operation~)
+      **->** si ~operation~ no existe, tira un error "Invalid opcode."
+      **->** incrementa [PC]
+      **->** retorna ~operation~
+    **_fetchInput(operation)**:
+      **->** lee 0, 1 (usando ~read(...)~) o 2 bytes (usando ~read16(...)~) de la ubicación de memoria apuntada por [PC], dependiendo de ~operation.addressingMode.inputSize~
+        (llamemos esto ~input~)
+      **->** incrementa [PC] (0, 1, o 2 veces) para saltear esos bytes
+      **->** retorna ~input~
+    **_fetchArgument(operation, input)**:
+      **->** retorna el resultado de procesar ~input~ con el modo de direccionamiento
+        - si ~operation.instruction.argument === "value"~, debería ser:
+            ~operation.addressingMode.getValue(this, input, operation.hasPageCrossPenalty)~
+        - si no:
+            ~operation.addressingMode.getAddress(this, input, operation.hasPageCrossPenalty)~
+    **_addCycles(operation)**:
+      **->** calcula cuántos ciclos tomó la ~operation~:
+        ~operation.cycles + this.extraCycles~
+        (llamemos esto ~cycles~)
+      **->** actualiza los contadores de ciclos:
+        ~this.cycle += cycles;~
+        ~this.extraCycles = 0;~
+      **->** retorna ~cycles~
+  responses:
+  - ¿y el método `step()` que mencionaste? [step]
 
-      -> lee un byte de la ubicación de memoria apuntada por PC
-        (llamemos esto <opcode>)
-      -> encuentra la operación relacionada con ese opcode: this.operations[opcode]
-        (llamemos esto <operation>)
-      -> si <operation> no existe, tira un error "Invalid opcode."
-      -> incrementa PC
+step:
+  messages:
+  - |-
+    _-_nuestro método `step()` debería salir fácil, usando los otros:
+      ```javascript step() {
+        const originalPC = this.pc.getValue();
+        
+        const operation = this._fetchOperation();
+        const input = this._fetchInput(operation);
+        const argument = this._fetchArgument(operation, input);
 
-      -> lee 0, 1 (usando read) o 2 bytes (usando read16) de la ubicación de memoria apuntada por PC, dependiendo de operation.addressingMode.inputSize
-        (llamemos esto <input>)
-      -> incrementa PC (0, 1, o 2 veces) para saltear esos bytes
-
-      -> si operation.instruction.argument === "value", llama a operation.addressingMode.getValue(this, input, operation.hasPageCrossPenalty)
-         si no, en vez de a getValue, llama a getAddress (con los mismos argumentos)
-        (llamemos al valor resultante <argument>)
-
-      -> si this.logger != null, llama a this.logger(...) con:
-        1. la instancia de la CPU (this)
-        2. <originalPC>
-        3. <operation>
-        4. <input> (o null)
-        5. <argument> (o null)
-        (vamos a usar esto después)
-
-      -> llama a operation.instruction.run(this, argument)
-      -> calcula cuántos ciclos tomó (operation.cycles + this.extraCycles)
-        (llamemos esto <cycles>)
-      -> actualiza los contadores de ciclos:
-        this.cycle += cycles;
-        this.extraCycles = 0;
-
-      -> retorna <cycles>__
+        if (this.logger != null) {
+          this.logger(
+            this,
+            originalPC,
+            operation,
+            input,
+            argument
+          )
+        }
+        
+        operation.instruction.run(this, argument);
+        return this._addCycles(operation);
+      }```_--_
   responses: []

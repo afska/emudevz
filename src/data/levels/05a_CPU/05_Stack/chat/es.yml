@@ -8,10 +8,10 @@ main:
   - |-
     _-_implementa estos métodos:_--_
     **push(value)**:
-      __-> escribe <value> en la dirección de memoria <direcciónActual>, luego decrementa <sp>__
+      **->** escribe ~value~ en la dirección de memoria ~direcciónActual~, luego decrementa ~sp~
     **pop()**:
-      __-> incrementa <sp> y retorna el resultado de leer <direcciónActual> de la memoria__
-  - _-_la <direcciónActual> siempre es $0100 (donde vive la pila en la RAM), más el valor en [SP]_--_
+      **->** incrementa ~sp~ y retorna el resultado de leer ~direcciónActual~ de la memoria
+  - _-_la ~direcciónActual~ siempre es $0100 (donde vive la pila en la RAM), más el valor en [SP]_--_
   - |-
     _-_cuando termines, agrega una nueva instancia de la pila a la CPU:
       ```javascript this.stack = new Stack(this.memory, this.sp);```_--_

@@ -5,15 +5,15 @@ main:
   - |-
     📚  _-_en tus clases `Register8Bit` y `Register16Bit`, implementa:_--_
     **increment()**:
-      __-> llama a *setValue* con el resultado de getValue() + 1__
+      **->** llama a ~setValue(...)~ con el resultado de ~getValue() + 1~
     **decrement()**:
-      __-> llama a *setValue* con el resultado de getValue() - 1__
+      **->** llama a ~setValue(...)~ con el resultado de ~getValue() - 1~
   - |-
     _-_en tu `FlagsRegister`, implementa:_--_
     **updateZero(value)**:
-      __-> asigna z=true si <value> es 0, o z=false en caso contrario__
+      **->** asigna ~z=true~ si ~value~ es 0, o ~z=false~ en caso contrario
     **updateNegative(value)**:
-      __-> asigna n=true si byte.isNegative(value), o n=false en caso contrario__
+      **->** asigna ~n=true~ si ~byte.isNegative(value)~, o ~n=false~ en caso contrario
     **updateZeroAndNegative(value)**:
-      __-> llama a *updateZero* y *updateNegative* con <value>__
+      **->** llama a ~updateZero(...)~ y ~updateNegative(...)~ con ~value~
   responses: []

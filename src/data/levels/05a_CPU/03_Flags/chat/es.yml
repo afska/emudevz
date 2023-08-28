@@ -29,9 +29,12 @@ what:
   messages:
   - 📚  _-_crea una clase `FlagsRegister` con 6 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~d~, ~v~ y ~n~)_--_
   - _-_inicialízalas en ~false~_--_
-  - _-_luego, implementa ```javascript getValue()``` y ```javascript setValue(value)``` siguiendo la tabla anterior_--_
-  - "**getValue()** __tiene que retornar un número de 8 bits con todas las banderas__"
-  - "**setValue(...)** __tiene que asignar todas las banderas a partir del número de 8 bits que recibe__"
+  - |-
+    _-_luego implementa, siguiendo la tabla anterior:_--_
+    **getValue()**:
+      **->** tiene que retornar un número de 8 bits con todas las banderas
+    **setValue(value)**:
+      **->** tiene que asignar todas las banderas a partir del número de 8 bits que recibe
   - _-_p. ej. con ~i~ y ~v~ encendidas, ```javascript getValue()``` debería retornar ```javascript 0b01100100```_--_
   - _-_y ```javascript setValue(0b00000010)``` debería poner todos los booleanos en ~false~, menos ~z~_--_
   responses:

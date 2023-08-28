@@ -78,17 +78,17 @@ implement:
   - |-
     📚  _-_add this method to your `CPU`:_--_
     **interrupt(interrupt, withBFlag = false)**:
-      __-> if interrupt.id === "IRQ" and I=1, returns 0
+      **->** if ~interrupt.id === "IRQ"~ and ~I=1~, returns 0
         (the interrupt is ignored)
-      -> pushes [PC] onto the stack
-      -> pushes the flags byte onto the stack
-        (if <withBFlag> is true, the value is pushed with its bit 4 on)
+      **->** pushes [PC] onto the stack
+      **->** pushes the flags byte onto the stack
+        (if ~withBFlag~ is ~true~, the value is pushed with its bit 4 on)
         (otherwise, the value is pushed as is)
-      -> advances 7 cycles (this.cycle += 7)
-      -> sets I=1 in the flags register
-      -> sets [PC] = the result of reading the addresses (interrupt.vector) and (interrupt.vector + 1) in Little Endian
-        (remember that you have a *read16* method for that)
-      -> returns 7__
+      **->** advances 7 cycles (~this.cycle += 7~)
+      **->** sets ~I=1~ in the flags register
+      **->** sets [PC] = the result of reading the addresses ~interrupt.vector~ and ~interrupt.vector+1~ in Little Endian
+        (remember that you have a ~read16(...)~ method for that)
+      **->** returns 7
   responses:
   - and BRK? [brk]
 

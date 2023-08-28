@@ -8,10 +8,10 @@ main:
   - |-
     _-_implement these methods:_--_
     **push(value)**:
-      __-> writes <value> to the memory address <currentAddress>, then decrements <sp>__
+      **->** writes ~value~ to the memory address ~currentAddress~, then decrements ~sp~
     **pop()**:
-      __-> increments <sp> and returns the result of reading <currentAddress> from memory__
-  - _-_the <currentAddress> always equals $0100 (where the stack lives in RAM), plus the value in [SP]_--_
+      **->** increments ~sp~ and returns the result of reading ~currentAddress~ from memory
+  - _-_the ~currentAddress~ always equals $0100 (where the stack lives in RAM), plus the value in [SP]_--_
   - |-
     _-_when you finish, add a new stack instance to the CPU:
       ```javascript this.stack = new Stack(this.memory, this.sp);```_--_

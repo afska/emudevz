@@ -10,14 +10,14 @@ main:
   - |-
     📚  _-_implement this method in `CPUMemory`:_--_
     **read16(address)**:
-      __-> returns a 16-bit number
-        - the low byte is obtained by reading <address> from memory
-        - the high byte is obtained by reading <address>+1__
+      **->** returns a 16-bit number
+        - the low byte is obtained by reading ~address~ from memory
+        - the high byte is obtained by reading ~address+1~
   - |-
     _-_and these two methods in `Stack`:_--_
     **push16(bigNumber)**:
-      __-> *pushes* the high byte of <bigNumber> first, then *pushes* its low byte__
+      **->** calls ~push(...)~ twice (first with the high byte of ~bigNumber~, then with its low byte)
     **pop16()**:
-      __-> returns a 16-bit number as a result of *popping* from the stack two times (first the low byte, then the high one)__
+      **->** returns a 16-bit number as a result of calling ~pop()~ two times (first the low byte, then the high one)
   - 💡  _-_remember to use _--_📄 _-_ ~/lib/byte.js~!_--_
   responses: []

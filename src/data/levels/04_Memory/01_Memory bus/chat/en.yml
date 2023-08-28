@@ -37,13 +37,13 @@ implement:
   - |-
     _-_implement these two methods:_--_
     **read(address)**:
-      __-> if <address> is in $0000-$07FF, returns the corresponding byte from <ram>
-      -> if <address> is in $0800-$1FFF, returns a mirrored byte from <ram>
+      **->** if ~address~ is in $0000-$07FF, returns the corresponding byte from ~ram~
+      **->** if ~address~ is in $0800-$1FFF, returns a mirrored byte from ~ram~
         (e.g. $0802 becomes $0002, $1023 becomes $0023)
-      -> otherwise, returns 0__
+      **->** otherwise, returns 0
     **write(address, value)**:
-      __-> similar to *read*, but writes the <value> instead of returning__
-  - _-_then, as you did with `Cartridge`, add the class to ~/code/index.js~_--_
+      **->** similar to ~read(...)~, but writes the ~value~ instead of returning
+  - _-_then, as you did with `Cartridge`, add the class to _--_📄 _-_ ~/code/index.js~_--_
   responses:
   - I need help with the mirrored bytes 📐 [help]
 

@@ -29,9 +29,12 @@ what:
   messages:
   - 📚  _-_create a `FlagsRegister` class with 6 boolean properties (called ~c~, ~z~, ~i~, ~d~, ~v~ and ~n~)_--_
   - _-_initialize them with ~false~_--_
-  - _-_then, implement ```javascript getValue()``` and ```javascript setValue(value)``` following the previous table_--_
-  - "**getValue()** __should return an 8-bit number with all the flags__"
-  - "**setValue(...)** __should assign all the flags from the received 8-bit number__"
+  - |-
+    _-_then implement, following the previous table:_--_
+    **getValue()**:
+      **->** should return an 8-bit number with all the flags
+    **setValue(value)**:
+      **->** should assign all the flags from the received 8-bit number
   - _-_i.e. with ~i~ and ~v~ on, ```javascript getValue()``` should return ```javascript 0b01100100```_--_
   - _-_and ```javascript setValue(0b00000010)``` should set all booleans to ~false~, except for ~z~_--_
   responses:
