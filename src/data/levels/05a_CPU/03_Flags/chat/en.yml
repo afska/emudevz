@@ -48,5 +48,5 @@ bits:
 
 nowwhat:
   messages:
-  - "great, just add a new instance to the `CPU` class, below the other registers, like this:\n  ```javascript this.flags = new FlagsRegister();```"
+  - "_-_great, just add a new instance to the `CPU` class, below the other registers, like this:\n  ```javascript this.flags = new FlagsRegister();```_--_"
   responses: []

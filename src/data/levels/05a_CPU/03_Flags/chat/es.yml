@@ -48,5 +48,5 @@ bits:
 
 nowwhat:
   messages:
-  - "perfecto, solo agrega una nueva instancia a la clase `CPU`, debajo de los otros registros, así:\n  ```javascript this.flags = new FlagsRegister();```"
+  - "_-_perfecto, solo agrega una nueva instancia a la clase `CPU`, debajo de los otros registros, así:\n  ```javascript this.flags = new FlagsRegister();```_--_"
   responses: []

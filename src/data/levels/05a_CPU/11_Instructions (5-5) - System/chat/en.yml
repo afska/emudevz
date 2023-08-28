@@ -94,5 +94,5 @@ implement:
 
 brk:
   messages:
-  - you can implement the `BRK` instruction just by calling `cpu.interrupt(interrupts.IRQ, true)`
+  - _-_you can implement the `BRK` instruction just by calling `cpu.interrupt(interrupts.IRQ, true)`_--_
   responses: []

@@ -42,7 +42,7 @@ implement:
 nowwhat:
   messages:
   - |-
-    entonces, agrega el siguiente constructor a tu clase `CPU`:
+    _-_entonces, agrega el siguiente constructor a tu clase `CPU`:
       ```javascript
       export default class CPU {
         constructor(cpuMemory) {
@@ -56,5 +56,5 @@ nowwhat:
           this.sp = new Register8Bit();
           this.pc = new Register16Bit();
         }
-      }```
+      }```_--_
   responses: []
