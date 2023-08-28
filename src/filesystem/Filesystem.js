@@ -89,6 +89,12 @@ class Filesystem {
 		if (options.binary) data = blob.arrayBufferToBase64(data);
 		else if (data instanceof ArrayBuffer) data = new TextDecoder().decode(data);
 
+		if (options.parents) {
+			const parsedPath = $path.parse(path);
+			const parent = parsedPath.dir;
+			this.mkdirp(parent);
+		}
+
 		this.fs.writeFileSync(path, data);
 	}
 
@@ -116,6 +122,31 @@ class Filesystem {
 			if (entry.isDirectory) this.cpr(entry.filePath, newPath);
 			else this.cp(entry.filePath, newPath);
 		}
+	}
+
+	mkdirp(path) {
+		path = this.process(path);
+		// ---
+
+		let currentPath = path;
+		let success = false;
+		let didFail = false;
+		do {
+			try {
+				this.fs.mkdirSync(currentPath);
+				success = true;
+			} catch (e) {
+				if (e.code === "ENOENT") {
+					currentPath = $path.parse(currentPath).dir;
+					didFail = true;
+					continue;
+				}
+
+				throw e;
+			}
+		} while (!success && currentPath !== "/");
+
+		if (didFail) this.mkdirp(path);
 	}
 
 	mkdir(path) {

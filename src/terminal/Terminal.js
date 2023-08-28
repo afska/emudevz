@@ -453,11 +453,11 @@ export default class Terminal {
 										filePath,
 										true
 									);
-									filesystem.write(resolvedFilePath, "");
+									filesystem.write(resolvedFilePath, "", { parents: true });
 									OpenCommand.open(filePath);
 									toast.success(locales.get("file_created"));
 								} catch (e) {
-									toast.error("file_created_error");
+									toast.error(locales.get("file_created_error"));
 								}
 							}}
 						>

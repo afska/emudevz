@@ -103,11 +103,16 @@ export default {
 		const dispatch = _dispatch_[KEY];
 
 		return {
-			advance(currentLevelId, _state_) {
+			addCompletedLevelIfNeeded(currentLevelId, _state_) {
 				const book = _state_.book.instance;
 
 				if (!book.isFinished(currentLevelId))
 					this.addCompletedLevel(currentLevelId);
+			},
+			advance(currentLevelId, _state_) {
+				const book = _state_.book.instance;
+
+				this.addCompletedLevelIfNeeded(currentLevelId);
 
 				const nextLevelId = book.nextIdOf(currentLevelId);
 				return this.advanceTo(nextLevelId);
