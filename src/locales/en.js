@@ -81,6 +81,7 @@ export default {
 	letsplay_unlock_msg3: "unlocked!",
 	loading: "Loading...",
 	memory_viewer: "Memory Viewer",
+	mkdir_parent_flag: "(to create multiple directories at once, run `mkdir -p`)",
 	music: "Music",
 	no: "No",
 	no_open_files: "🚫 No open files!<br>🔍 Use <code>Ctrl+P</code> to search.",

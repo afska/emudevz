@@ -81,6 +81,8 @@ export default {
 	letsplay_unlock_msg3: "desbloqueado!",
 	loading: "Cargando...",
 	memory_viewer: "Visor de Memoria",
+	mkdir_parent_flag:
+		"(para crear varios directorios a la vez, corre `mkdir -p`)",
 	music: "Música",
 	no: "No",
 	no_open_files:

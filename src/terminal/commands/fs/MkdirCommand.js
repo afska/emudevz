@@ -15,7 +15,23 @@ export default class MkdirCommand extends FilesystemCommand {
 			await this._terminal.writeln(
 				`${locales.get("creating_directory")} ${theme.ACCENT(arg)}...`
 			);
-			filesystem.mkdir(path);
+
+			try {
+				if (this._isParent) filesystem.mkdirp(path);
+				else filesystem.mkdir(path);
+			} catch (e) {
+				if (e.code === "ENOENT" && !this._isParent) {
+					await this._terminal.writehlln(
+						locales.get("mkdir_parent_flag"),
+						theme.COMMENT
+					);
+				}
+				throw e;
+			}
 		}
+	}
+
+	get _isParent() {
+		return this._includes("-p");
 	}
 }

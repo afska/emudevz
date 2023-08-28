@@ -25,6 +25,7 @@ class LevelHistoryModal extends PureComponent {
 						.reverse()
 						.map((it, i) => {
 							const chapter = book.getChapterOf(it);
+							if (!chapter) return false;
 							const levelDefinition = book.getLevelDefinitionOf(it);
 
 							return (

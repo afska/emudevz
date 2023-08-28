@@ -22,8 +22,4 @@ export default class CpCommand extends FilesystemCommand {
 		this._resolve(newPath, true);
 		filesystem.cpr(oldPath, newPath);
 	}
-
-	get _isRecursive() {
-		return this._includes("-r");
-	}
 }
