@@ -128,25 +128,26 @@ class Filesystem {
 		path = this.process(path);
 		// ---
 
-		let currentPath = path;
-		let success = false;
-		let didFail = false;
-		do {
-			try {
-				this.fs.mkdirSync(currentPath);
-				success = true;
-			} catch (e) {
-				if (e.code === "ENOENT") {
-					currentPath = $path.parse(currentPath).dir;
-					didFail = true;
-					continue;
+		try {
+			let success = false;
+			do {
+				try {
+					this.fs.mkdirSync(path);
+					success = true;
+				} catch (e) {
+					if (e.code === "ENOENT") {
+						this.mkdirp(e.path);
+						continue;
+					}
+
+					throw e;
 				}
+			} while (!success);
+		} catch (e) {
+			if (e.code === "EEXIST") return;
 
-				throw e;
-			}
-		} while (!success && currentPath !== "/");
-
-		if (didFail) this.mkdirp(path);
+			throw e;
+		}
 	}
 
 	mkdir(path) {
