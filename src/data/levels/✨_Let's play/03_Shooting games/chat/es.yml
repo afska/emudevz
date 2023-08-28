@@ -32,8 +32,8 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/shooting`
-    try { filesystem.mkdir(directory); } catch (e) {}
+    const directory = `${Drive.ROMS_DIR}/shooting`;
+    filesystem.mkdirp(directory);
 
     ["JupiterScope2.neees", "StarPowerDemo.neees", "TroubleAt2A03.neees"].forEach((file) => {
       filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });

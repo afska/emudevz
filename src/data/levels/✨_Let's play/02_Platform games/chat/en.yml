@@ -33,8 +33,8 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/platform`
-    try { filesystem.mkdir(directory); } catch (e) {}
+    const directory = `${Drive.ROMS_DIR}/platform`;
+    filesystem.mkdirp(directory);
 
     ["FilthyKitchen.neees", "Isostasy.neees", "Nalleland.neees", "WolfSpirit.neees"].forEach((file) => {
       filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });

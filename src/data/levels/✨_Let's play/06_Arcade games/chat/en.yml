@@ -27,8 +27,8 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/arcade`
-    try { filesystem.mkdir(directory); } catch (e) {}
+    const directory = `${Drive.ROMS_DIR}/arcade`;
+    filesystem.mkdirp(directory);
 
     ["Heist.neees", "RoboNinjaClimb.neees", "Thwaite.neees"].forEach((file) => {
       filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });

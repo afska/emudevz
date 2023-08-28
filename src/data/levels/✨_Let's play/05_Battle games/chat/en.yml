@@ -34,8 +34,8 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/battle`
-    try { filesystem.mkdir(directory); } catch (e) {}
+    const directory = `${Drive.ROMS_DIR}/battle`;
+    filesystem.mkdirp(directory);
 
     ["SuperTiltBro.neees", "TeslaVsEdison.neees"].forEach((file) => {
       filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });

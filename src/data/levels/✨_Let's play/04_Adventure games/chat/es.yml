@@ -26,8 +26,8 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/adventure`
-    try { filesystem.mkdir(directory); } catch (e) {}
+    const directory = `${Drive.ROMS_DIR}/adventure`;
+    filesystem.mkdirp(directory);
 
     ["Crowborg.neees", "MissingLands.neees", "RavensGate.neees"].forEach((file) => {
       filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });

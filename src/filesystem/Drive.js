@@ -31,13 +31,13 @@ export default {
 	TESTROMS_DIR,
 
 	init(levelId) {
-		if (!filesystem.exists(CODE_DIR)) filesystem.mkdir(CODE_DIR);
-		if (!filesystem.exists(LIB_DIR)) filesystem.mkdir(LIB_DIR);
-		if (!filesystem.exists(DOCS_DIR)) filesystem.mkdir(DOCS_DIR);
-		if (!filesystem.exists(ROMS_DIR)) filesystem.mkdir(ROMS_DIR);
-		if (!filesystem.exists(TESTROMS_DIR)) filesystem.mkdir(TESTROMS_DIR);
+		filesystem.mkdirp(CODE_DIR);
+		filesystem.mkdirp(LIB_DIR);
+		filesystem.mkdirp(DOCS_DIR);
+		filesystem.mkdirp(ROMS_DIR);
+		filesystem.mkdirp(TESTROMS_DIR);
+		filesystem.mkdirp(SNAPSHOTS_DIR);
 		if (!filesystem.exists(MAIN_FILE)) filesystem.write(MAIN_FILE, "");
-		if (!filesystem.exists(SNAPSHOTS_DIR)) filesystem.mkdir(SNAPSHOTS_DIR);
 
 		const snapshotDir = this.snapshotDirOf(levelId);
 		const isUsingSnapshot = filesystem.exists(snapshotDir);
