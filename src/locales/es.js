@@ -20,6 +20,8 @@ export default {
 	command_chat_description: "Ejecuta la app de chat.",
 	command_clear_description: "Limpia la terminal.",
 	command_help_description: "Muestra esta ayuda.",
+	command_repl_avoid_collapsing:
+		"«para evitar colapsar objetos/arrays grandes, corre `repl -v`»",
 	command_repl_description: "Abre un REPL de JavaScript.",
 	command_test_description: "Prueba tu solución.",
 	command_cd_description:

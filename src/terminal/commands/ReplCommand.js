@@ -8,10 +8,13 @@ import theme from "../style/theme";
 import Command from "./Command";
 import testContext from "./test/context";
 
+const MAX_CHILDREN = 11;
 const PROMPT_SYMBOL = "> ";
 const FUNCTION = "<function>";
 const BINARY = "<binary>";
 const OBJECT = "<object>";
+const BIG_ARRAY = "<big-array>";
+const BIG_OBJECT = "<big-object>";
 
 export default class ReplCommand extends Command {
 	static get name() {
@@ -60,9 +63,20 @@ export default class ReplCommand extends Command {
 
 			try {
 				const result = context.eval(expression);
+				const formattedResult = this._format(result);
 				await this._terminal.writeln(
-					cliCodeHighlighter.highlight(this._format(result))
+					cliCodeHighlighter.highlight(formattedResult)
 				);
+				if (
+					!this._isVerbose &&
+					(formattedResult.includes(BIG_OBJECT) ||
+						formattedResult.includes(BIG_ARRAY))
+				) {
+					await this._terminal.writeln(
+						locales.get("command_repl_avoid_collapsing"),
+						theme.COMMENT
+					);
+				}
 			} catch (e) {
 				await this._terminal.writeln(
 					"❌  " + theme.ERROR(e?.message || e?.toString() || "?")
@@ -90,14 +104,25 @@ export default class ReplCommand extends Command {
 		switch (typeof expression) {
 			case "object":
 				try {
-					const sanitized = _.mapValues(expression, (v) => {
-						if (typeof v === "function") return FUNCTION;
-						if (v instanceof Uint8Array) return BINARY;
-						if (typeof v === "object") return JSON.parse(this._format(v));
-						return v;
-					});
-
-					return JSON.stringify(sanitized, null, 2);
+					if (Array.isArray(expression)) {
+						if (expression.length > MAX_CHILDREN && !this._isVerbose) {
+							return `"${BIG_ARRAY}"`;
+						} else {
+							const sanitized = expression.map((v) =>
+								JSON.parse(this._format(v))
+							);
+							return JSON.stringify(sanitized, null, 2);
+						}
+					} else {
+						if (_.keys(expression).length > MAX_CHILDREN && !this._isVerbose) {
+							return `"${BIG_OBJECT}"`;
+						} else {
+							const sanitized = _.mapValues(expression, (v) =>
+								JSON.parse(this._format(v))
+							);
+							return JSON.stringify(sanitized, null, 2);
+						}
+					}
 				} catch (e) {
 					if (e.message.includes("Converting circular structure to JSON"))
 						return OBJECT;
@@ -110,5 +135,9 @@ export default class ReplCommand extends Command {
 			default:
 				return `${expression}`;
 		}
+	}
+
+	get _isVerbose() {
+		return this._includes("-v");
 	}
 }
