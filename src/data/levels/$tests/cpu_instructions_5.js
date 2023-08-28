@@ -194,12 +194,13 @@ it("`NOP`: argument == 'no'", () => {
 	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
-it("`NOP`: implements `run(...)`", () => {
+it("`NOP`: implements `run(...)` as an empty function", () => {
 	const instructions = mainModule.default.instructions;
 	instructions.NOP.should.respondTo("run");
+	instructions.NOP.run.toString().replace(/\s/g, "").should.equal("run(){}");
 })({
 	locales: {
-		es: "`NOP`: implementa `run(...)`",
+		es: "`NOP`: implementa `run(...)` como una función vacía",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.11"),
 });

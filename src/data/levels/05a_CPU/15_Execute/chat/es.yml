@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - implementemos un método `step(...)` que ejecute la siguiente operación
+  - implementemos un método `step()` que ejecute la siguiente operación
   - leerá el siguiente opcode y argumentos desde 🤖  <PRG-ROM>
   - llamará a la <instrucción> correcta y al <modo de direccionamiento> adecuado
   - e incrementará los contadores de ciclos
@@ -34,7 +34,7 @@ rightway:
     set((m) => m.$exercise = true);
   messages:
   - |-
-    📚  _-_primero, vamos a agregar este método en tu `CPU`:_--_
+    📚  _-_primero, vamos a agregar estos métodos a tu `CPU`:_--_
     **_fetchOperation()**:
       **->** lee un byte de la ubicación de memoria apuntada por [PC]
         (llamemos esto ~opcode~)
