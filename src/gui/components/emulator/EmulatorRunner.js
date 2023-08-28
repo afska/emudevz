@@ -163,6 +163,8 @@ export default class EmulatorRunner extends PureComponent {
 	}
 
 	_setError = (e) => {
+		console.error(e);
+
 		const stack = testContext.javascript.buildStack(e);
 		if (stack?.location) {
 			const { filePath, lineNumber } = stack.location;
