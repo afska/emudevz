@@ -1,8 +1,8 @@
 ---
 main:
   messages:
-  - let's implement our `step(...)` method The Right Way™️
-  - here, we'll read the correct arguments from 🤖  <PRG-ROM>
+  - let's implement a `step()` method that runs the next operation
+  - it will read the next opcode and arguments from 🤖  <PRG-ROM>
   - call the right <instruction> and <addressing mode>
   - and increment the cycle counters
   responses:
@@ -18,7 +18,7 @@ cycles:
   - so every opcode knows how many cycles it should take
   responses:
   - (*) why don't we want to build a "cycle-accurate" emulator? [accuracy]
-  - ✔️  alright, what's The Right Way™️? [rightway]
+  - ✔️  alright, how should we proceed? [rightway]
 
 accuracy:
   messages:
@@ -34,40 +34,59 @@ rightway:
     set((m) => m.$exercise = true);
   messages:
   - |-
-    📚  _-_we'll add this method to your `CPU`:_--_
-    **step()**:
-      __-> remember the original value of PC
-        (let's call this <originalPC>)
-
-      -> read a byte from the memory location that PC points at
+    📚  _-_first, we'll add these helper methods to your `CPU`:_--_
+    **_fetchOperation()**:
+      __-> read a byte from the memory location that PC points at
         (let's call this <opcode>)
       -> find the operation related with that opcode: this.operations[opcode]
         (let's call this <operation>)
       -> if <operation> doesn't exist, throw an "Invalid opcode." error
       -> increment PC
-
-      -> read 0, 1 (using read) or 2 bytes (using read16) from the memory location that PC points at, depending on operation.addressingMode.inputSize
+      -> return <operation>__
+    **_fetchInput(operation)**:
+      __-> read 0, 1 (using read) or 2 bytes (using read16) from the memory location that PC points at, depending on operation.addressingMode.inputSize
         (let's call this <input>)
       -> increment PC (0, 1, or 2 times) to skip those bytes
-
-      -> if operation.instruction.argument === "value", call operation.addressingMode.getValue(this, input, operation.hasPageCrossPenalty)
-         else, instead of getValue, call getAddress (with the same arguments)
-        (let's call the resulting value <argument>)
-
-      -> if this.logger != null, call this.logger(...) with:
-        1. the CPU instance (this)
-        2. <originalPC>
-        3. <operation>
-        4. <input> (or null)
-        5. <argument> (or null)
-        (we'll use this later)
-
-      -> call operation.instruction.run(this, argument)
-      -> calculate how many cycles it took (operation.cycles + this.extraCycles)
+      -> return <input>__
+    **_fetchArgument(operation, input)**:
+      __-> return the result of processing the <input> with the addressing mode
+      -> if operation.instruction.argument === "value", it should be:
+        operation.addressingMode.getValue(this, input, operation.hasPageCrossPenalty)
+      -> else:
+        operation.addressingMode.getAddress(this, input, operation.hasPageCrossPenalty)__
+    **_addCycles(operation)**:
+      __-> calculate how many cycles the <operation> took (operation.cycles + this.extraCycles)
         (let's call this <cycles>)
       -> update the cycle counters:
         this.cycle += cycles;
         this.extraCycles = 0;
-
       -> return <cycles>__
+  responses:
+  - what about the `step()` method you mentioned? [step]
+
+step:
+  messages:
+  - |-
+    // TODO: TRADUCIR
+    _-_our `step()` method should come up easily, using the others:
+      ```javascript step() {
+        const originalPC = this.pc.getValue();
+        
+        const operation = this._fetchOperation();
+        const input = this._fetchInput(operation);
+        const argument = this._fetchArgument(operation, input);
+
+        if (this.logger != null) {
+          this.logger(
+            this,
+            originalPC,
+            operation,
+            input,
+            argument
+          )
+        }
+        
+        operation.instruction.run(this, argument);
+        return this._addCycles(operation);
+      }```_--_
   responses: []

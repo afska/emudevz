@@ -1,10 +1,10 @@
 ---
 main:
   messages:
-  - implementemos el método `step(...)` de La Forma Correcta™️
-  - aquí, leeremos los argumentos correctos desde 🤖  <PRG-ROM>
-  - llamaremos a la <instrucción> correcta y al <modo de direccionamiento> adecuado
-  - e incrementaremos los contadores de ciclos
+  - implementemos un método `step(...)` que ejecute la siguiente operación
+  - leerá el siguiente opcode y argumentos desde 🤖  <PRG-ROM>
+  - llamará a la <instrucción> correcta y al <modo de direccionamiento> adecuado
+  - e incrementará los contadores de ciclos
   responses:
   - prometiste que explicarías ciclos 🚲 [cycles]
   - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [rightway]
@@ -18,7 +18,7 @@ cycles:
   - por lo que cada opcode sabe cuántos ciclos debería tomar
   responses:
   - (*) ¿por qué no queremos construir un emulador "cycle-accurate"? [accuracy]
-  - ✔️  bueno, ¿y cuál es La Forma Correcta™️? [rightway]
+  - ✔️  bueno, ¿cómo hacemos? [rightway]
 
 accuracy:
   messages:
