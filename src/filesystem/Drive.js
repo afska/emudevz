@@ -6,6 +6,7 @@ const CODE_DIR = "/code";
 const LIB_DIR = "/lib";
 const DOCS_DIR = "/docs";
 const ROMS_DIR = "/roms";
+const TMPL_DIR = "/tmpl";
 const TESTROMS_DIR = "/roms/_test";
 const SNAPSHOTS_DIR = "/.snapshots";
 const READONLY_PATHS = [
@@ -35,6 +36,7 @@ export default {
 		filesystem.mkdirp(LIB_DIR);
 		filesystem.mkdirp(DOCS_DIR);
 		filesystem.mkdirp(ROMS_DIR);
+		filesystem.mkdirp(TMPL_DIR);
 		filesystem.mkdirp(TESTROMS_DIR);
 		filesystem.mkdirp(SNAPSHOTS_DIR);
 		if (!filesystem.exists(MAIN_FILE)) filesystem.write(MAIN_FILE, "");
