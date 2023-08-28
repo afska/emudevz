@@ -48,7 +48,7 @@ rightway:
       **->** lee 0, 1 (usando ~read(...)~) o 2 bytes (usando ~read16(...)~) de la ubicación de memoria apuntada por [PC], dependiendo de ~operation.addressingMode.inputSize~
         (llamemos esto ~input~)
       **->** incrementa [PC] (0, 1, o 2 veces) para saltear esos bytes
-      **->** retorna ~input~
+      **->** retorna ~input~ (o ~null~)
     **_fetchArgument(operation, input)**:
       **->** retorna el resultado de procesar ~input~ con el modo de direccionamiento
         - si ~operation.instruction.argument === "value"~, debería ser:

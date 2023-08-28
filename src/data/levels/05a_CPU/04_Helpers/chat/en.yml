@@ -5,9 +5,9 @@ main:
   - |-
     📚  _-_in your `Register8Bit` and `Register16Bit` classes, implement:_--_
     **increment()**:
-      **->** calls ~setValue(...)~ with the result of ~getValue() + 1~
+      **->** calls ~setValue(...)~ with the result of ~getValue()+1~
     **decrement()**:
-      **->** calls ~setValue(...)~ with the result of ~getValue() - 1~
+      **->** calls ~setValue(...)~ with the result of ~getValue()-1~
   - |-
     _-_in your `FlagsRegister`, implement:_--_
     **updateZero(value)**:

@@ -48,7 +48,7 @@ rightway:
       **->** reads 0, 1 (using ~read(...)~) or 2 bytes (using ~read16(...)~) from the memory location that [PC] points at, depending on ~operation.addressingMode.inputSize~
         (let's call this ~input~)
       **->** increments [PC] (0, 1, or 2 times) to skip those bytes
-      **->** returns ~input~
+      **->** returns ~input~ (or ~null~)
     **_fetchArgument(operation, input)**:
       **->** returns the result of processing ~input~ with the addressing mode
         - if ~operation.instruction.argument === "value"~, it should be:

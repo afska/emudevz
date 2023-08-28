@@ -73,7 +73,7 @@ it("instantiating a `Cartridge` with an invalid header throws an error", () => {
 		[0x4e, 0x45, 0x53, 0x99],
 	].forEach((wrongBytes) => {
 		const bytes = new Uint8Array(wrongBytes);
-		expect(() => new Cartridge(bytes)).to.throw(Error, "Invalid ROM.");
+		expect(() => new Cartridge(bytes)).to.throw(Error, /Invalid ROM/);
 	});
 })({
 	locales: {

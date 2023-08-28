@@ -70,7 +70,8 @@ it("`IMPLICIT` / `getValue`: unsupported", () => {
 	const cpu = newCPU();
 
 	(() => addressingModes.IMPLICIT.getValue(cpu, 0)).should.throw(
-		"Unsupported."
+		Error,
+		/Unsupported/
 	);
 })({
 	locales: {
@@ -96,7 +97,8 @@ it("`IMMEDIATE` / `getAddress`: unsupported", () => {
 	const cpu = newCPU();
 
 	(() => addressingModes.IMMEDIATE.getAddress(cpu, 0)).should.throw(
-		"Unsupported."
+		Error,
+		/Unsupported/
 	);
 })({
 	locales: {
@@ -246,7 +248,8 @@ it("`RELATIVE` / `getValue`: unsupported", () => {
 	const cpu = newCPU();
 
 	(() => addressingModes.RELATIVE.getValue(cpu, 0)).should.throw(
-		"Unsupported."
+		Error,
+		/Unsupported/
 	);
 })({
 	locales: {
@@ -338,7 +341,8 @@ it("`INDIRECT` / `getValue`: unsupported", () => {
 	const cpu = newCPU();
 
 	(() => addressingModes.INDIRECT.getValue(cpu, 0)).should.throw(
-		"Unsupported."
+		Error,
+		/Unsupported/
 	);
 })({
 	locales: {

@@ -1,5 +1,7 @@
 const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
+const $$ = (obj) => JSON.parse(JSON.stringify(obj));
+
 let mainModule, NEEES;
 before(async () => {
 	mainModule = await evaluate();
@@ -473,6 +475,121 @@ it("defines a list of 151 `operations`", () => {
 });
 
 // 5a.15 Execute
+
+it("can fetch the next operation", () => {
+	const { instructions, addressingModes } = mainModule.default;
+
+	// NOP ; LDA #$05 ; STA $0201 ; LDX $0201
+	const cpu = newCPU([0xea, 0xa9, 0x05, 0x8d, 0x01, 0x02, 0xae, 0x01, 0x02]);
+	cpu.pc.setValue(0x8000);
+	cpu.should.respondTo("_fetchOperation");
+
+	// NOP
+	$$(cpu._fetchOperation()).should.eql(
+		$$({
+			id: 0xea,
+			instruction: instructions.NOP,
+			cycles: 2,
+			addressingMode: addressingModes.IMPLICIT,
+		})
+	);
+
+	// LDA #$05
+	$$(cpu._fetchOperation()).should.eql(
+		$$({
+			id: 0xa9,
+			instruction: instructions.LDA,
+			cycles: 2,
+			addressingMode: addressingModes.IMMEDIATE,
+		})
+	);
+
+	// STA $0201
+	cpu.pc.increment(); // skip input
+	$$(cpu._fetchOperation()).should.eql(
+		$$({
+			id: 0x8d,
+			instruction: instructions.STA,
+			cycles: 4,
+			addressingMode: addressingModes.ABSOLUTE,
+		})
+	);
+})({
+	locales: {
+		es: "puede ir a buscar la próxima operación",
+	},
+	use: ({ id }, book) => id >= book.getId("5a.15"),
+});
+
+it("throws an error when it finds an invalid opcode", () => {
+	// ??? (0x02)
+	const cpu = newCPU([0x02]);
+	cpu.pc.setValue(0x8000);
+	cpu.should.respondTo("_fetchOperation");
+
+	// 0x02
+	expect(() => cpu._fetchOperation()).to.throw(Error, /Invalid opcode/);
+})({
+	locales: {
+		es: "tira un error cuando encuentra un opcode inválido",
+	},
+	use: ({ id }, book) => id >= book.getId("5a.15"),
+});
+
+it("can fetch the next input", () => {
+	// NOP ; LDA #$05 ; STA $0201 ; LDX $0201
+	const cpu = newCPU([0xea, 0xa9, 0x05, 0x8d, 0x01, 0x02, 0xae, 0x01, 0x02]);
+	cpu.pc.setValue(0x8000);
+	cpu.should.respondTo("_fetchInput");
+
+	// NOP
+	cpu.pc.increment(); // skip opcode
+	expect(cpu._fetchInput(cpu.operations[0xea])).to.equal(null);
+
+	// LDA #$05
+	cpu.pc.increment(); // skip opcode
+	cpu._fetchInput(cpu.operations[0xa9]).should.equalHex(0x05);
+
+	// STA $0201
+	cpu.pc.increment(); // skip opcode
+	cpu._fetchInput(cpu.operations[0x8d]).should.equalHex(0x0201);
+})({
+	locales: {
+		es: "puede ir a buscar el próximo input",
+	},
+	use: ({ id }, book) => id >= book.getId("5a.15"),
+});
+
+it("can fetch the argument based on `operation` and `input`", () => {
+	const cpu = newCPU();
+	cpu.should.respondTo("_fetchArgument");
+
+	// DEC $40,X
+	cpu.x.setValue(6);
+	cpu._fetchArgument(cpu.operations[0xd6], 0x40).should.equalHex(0x46);
+})({
+	locales: {
+		es: "puede ir a buscar el argumento basándose en `operation` e `input`",
+	},
+	use: ({ id }, book) => id >= book.getId("5a.15"),
+});
+
+it("can add cycles based on `operation`", () => {
+	const cpu = newCPU();
+	cpu.should.respondTo("_addCycles");
+
+	// DEC $40,X (6 cycles)
+	cpu.cycle = 3;
+	cpu.extraCycles = 9;
+	cpu._addCycles(cpu.operations[0xd6]).should.equalN(15);
+	cpu.cycle.should.equalN(18);
+	cpu.extraCycles.should.equalN(0);
+})({
+	locales: {
+		es: "puede agregar ciclos basándose en `operation`",
+	},
+	use: ({ id }, book) => id >= book.getId("5a.15"),
+});
 
 it("can run 4 simple operations, updating all counters, and calling a `logger` function", () => {
 	// NOP ; LDA #$05 ; STA $0201 ; LDX $0201
