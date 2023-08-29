@@ -4,6 +4,7 @@
 		"es": "🧠 Nueva CPU"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [

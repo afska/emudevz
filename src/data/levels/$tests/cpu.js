@@ -28,8 +28,6 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 	use: ({ id }, book) => id >= book.getId("5a.1"),
 });
 
-// 5a.2 Registers
-
 it("includes a `memory` property with the received `cpuMemory`", async () => {
 	mainModule = await evaluate();
 	const CPU = mainModule.default.CPU;
@@ -43,7 +41,7 @@ it("includes a `memory` property with the received `cpuMemory`", async () => {
 	locales: {
 		es: "incluye una propiedad `memory` con la `cpuMemory` recibida",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.1"),
 });
 
 it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
@@ -58,8 +56,10 @@ it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
 	locales: {
 		es: "incluye dos propiedades misteriosas: `cycle` y `extraCycles`",
 	},
-	use: ({ id }, book) => id >= book.getId("5a.2"),
+	use: ({ id }, book) => id >= book.getId("5a.1"),
 });
+
+// 5a.2 Registers
 
 it("includes all the registers", () => {
 	const cpu = newCPU();

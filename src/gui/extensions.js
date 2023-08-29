@@ -1,4 +1,5 @@
 import $path from "path";
+import Drive from "../filesystem/Drive";
 import CodeEditor from "./components/CodeEditor";
 import TV from "./components/TV";
 
@@ -12,6 +13,8 @@ export default {
 	".nes": [TV, { type: "rom", binary: true }],
 
 	getTabIcon(filePath) {
+		if (filePath.startsWith(Drive.TMPL_DIR)) return "📑 ";
+
 		return this.getOptions(filePath)[0].tabIcon;
 	},
 

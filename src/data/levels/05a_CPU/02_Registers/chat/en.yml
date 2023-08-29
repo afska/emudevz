@@ -42,19 +42,11 @@ implement:
 nowwhat:
   messages:
   - |-
-    _-_then, add the following constructor to your `CPU` class:
+    _-_then, add the following to your `CPU` class' constructor:
       ```javascript
-      export default class CPU {
-        constructor(cpuMemory) {
-          this.memory = cpuMemory;
-          this.cycle = 0;
-          this.extraCycles = 0;
-
-          this.a = new Register8Bit();
-          this.x = new Register8Bit();
-          this.y = new Register8Bit();
-          this.sp = new Register8Bit();
-          this.pc = new Register16Bit();
-        }
-      }```_--_
+      this.a = new Register8Bit();
+      this.x = new Register8Bit();
+      this.y = new Register8Bit();
+      this.sp = new Register8Bit();
+      this.pc = new Register16Bit();```_--_
   responses: []

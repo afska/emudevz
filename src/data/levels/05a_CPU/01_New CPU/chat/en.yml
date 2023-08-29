@@ -3,8 +3,7 @@ main:
   messages:
   - we'll now start coding the CPU, the console's <brain> 🧠
   - at this point, you already have an idea of how it works
-  - 📚  _-_create a file in _--_📄 _-_ ~/code/cpu/CPU.js~ for the CPU code_--_
-  - _-_its default export should be an empty class_--_
+  - 📚  _-_create a file for the CPU code, using _--_📄 _-_ ~/tmpl/cpu/CPU.js~ as template_--_
   - _-_then, import that file from _--_📄 _-_ ~/code/index.js~_--_
-  - _-_and add a `CPU` key (pointing to that class) to the exported object_--_
+  - _-_and add the corresponding `CPU` key to the exported object_--_
   responses: []

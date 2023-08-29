@@ -3,8 +3,7 @@ main:
   messages:
   - ahora comenzaremos a programar la CPU, el <cerebro> de la consola 🧠
   - a esta altura, ya tienes una idea de cómo funciona
-  - 📚  _-_crea un archivo en _--_📄 _-_ ~/code/cpu/CPU.js~ para el código de la CPU _--_
-  - _-_su valor a exportar debería ser una clase vacía_--_
+  - 📚  _-_crea un archivo para el código de la CPU, usando _--_📄 _-_ ~/tmpl/cpu/CPU.js~ como plantilla_--_
   - _-_luego, importa ese archivo desde _--_📄 _-_ ~/code/index.js~_--_
-  - _-_y agrega una clave `CPU` (apuntando a esa clase) al objeto exportado_--_
+  - _-_y agrega la correspondiente clave `CPU` al objeto exportado_--_
   responses: []

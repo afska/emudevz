@@ -149,11 +149,12 @@ class MultiFile extends PureComponent {
 
 	_renderTab(filePath, isDragging) {
 		const isReadOnly = this._isReadOnly(filePath);
+		const tabIcon = extensions.getTabIcon(filePath);
 		const [Component, customArgs] = extensions.getOptions(filePath);
 
 		return (
 			<Tab
-				title={Component.tabIcon + $path.parse(filePath).base}
+				title={tabIcon + $path.parse(filePath).base}
 				active={this.props.selectedFile === filePath}
 				dragging={isDragging}
 				onSelect={() => {
@@ -240,7 +241,7 @@ class MultiFile extends PureComponent {
 							: locales.get("template_file_click_unexisting")}
 					</span>
 					<br />
-					<strong className={styles.templateClick}>📄 {workingCopyPath}</strong>
+					<strong className={styles.templateClick}>📝 {workingCopyPath}</strong>
 				</span>
 			</div>
 		);
