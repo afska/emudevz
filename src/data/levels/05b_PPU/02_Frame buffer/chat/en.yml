@@ -7,7 +7,7 @@ main:
   - it's basically a big array with the color of each pixel
   - each element is a 32-bit number __$aabbggrr__
   - "\"aa\" represents the opacity (in our NEEES it's always $FF)"
-  - "\"bb\", \"gg\" and \"rr\" represent the amount of <blue>, <green> y <red>"
+  - "\"bb\", \"gg\" and \"rr\" represent the amount of <blue>, <green> and <red>"
   responses:
   - (*) can you give me some color examples? [examples]
   - I want to draw something on the screen! 🖌️ [integrate]

@@ -7,7 +7,7 @@ main:
   - es básicamente una gran matriz con el color de cada píxel
   - cada elemento es un número de 32 bits __$aabbggrr__
   - "\"aa\" representa la opacidad (en nuestra NEEES siempre es $FF)"
-  - "\"bb\", \"gg\" and \"rr\" representan la cantidad de <azul>, <verde> and <rojo>"
+  - "\"bb\", \"gg\" and \"rr\" representan la cantidad de <azul>, <verde> y <rojo>"
   responses:
   - (*) ¿puedes darme algunos ejemplos de colores? [examples]
   - ¡quiero dibujar algo en la pantalla! 🖌️ [integrate]

@@ -56,7 +56,7 @@ next:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  _-_crea un archivo en algún lugar para el código de la PPU_--_
+  - 📚  _-_crea un archivo en _--_📄 _-_ ~/code/ppu/PPU.js~ para el código de la PPU_--_
   - |-
     _-_debería exportar una clase así:
       ```javascript
