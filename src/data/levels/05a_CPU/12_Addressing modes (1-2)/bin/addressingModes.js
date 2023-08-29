@@ -33,7 +33,7 @@ const addressingModes = {
   RELATIVE: {
     inputSize: 1,
     getAddress: (cpu, offset, hasPageCrossPenalty) => {
-      // TODO: IMPLEMENT
+      /* TODO: IMPLEMENT */
       return 0;
     },
     getValue: unsupported
@@ -42,7 +42,7 @@ const addressingModes = {
   INDIRECT: {
     inputSize: 2,
     getAddress: (cpu, absoluteAddress) => {
-      // TODO: IMPLEMENT
+      /* TODO: IMPLEMENT */
       return 0;
     },
     getValue: unsupported
@@ -51,7 +51,7 @@ const addressingModes = {
   INDEXED_ZERO_PAGE_X: {
     inputSize: 1,
     getAddress: (cpu, zeroPageAddress) => {
-      // TODO: IMPLEMENT
+      /* TODO: IMPLEMENT */
       return 0;
     },
     getValue: read
@@ -60,7 +60,7 @@ const addressingModes = {
   INDEXED_ZERO_PAGE_Y: {
     inputSize: 1,
     getAddress: (cpu, zeroPageAddress) => {
-      // TODO: IMPLEMENT
+      /* TODO: IMPLEMENT */
       return 0;
     },
     getValue: read
@@ -69,7 +69,7 @@ const addressingModes = {
   INDEXED_ABSOLUTE_X: {
     inputSize: 2,
     getAddress: (cpu, absoluteAddress, hasPageCrossPenalty) => {
-      // TODO: IMPLEMENT
+      /* TODO: IMPLEMENT */
       return 0;
     },
     getValue: read
@@ -78,7 +78,7 @@ const addressingModes = {
   INDEXED_ABSOLUTE_Y: {
     inputSize: 2,
     getAddress: (cpu, absoluteAddress, hasPageCrossPenalty) => {
-      // TODO: IMPLEMENT
+      /* TODO: IMPLEMENT */
       return 0;
     },
     getValue: read
@@ -87,7 +87,7 @@ const addressingModes = {
   INDEXED_INDIRECT: {
     inputSize: 1,
     getAddress: (cpu, zeroPageAddress) => {
-      // TODO: IMPLEMENT
+      /* TODO: IMPLEMENT */
       return 0;
     },
     getValue: read
@@ -96,7 +96,7 @@ const addressingModes = {
   INDIRECT_INDEXED: {
     inputSize: 1,
     getAddress: (cpu, zeroPageAddress, hasPageCrossPenalty) => {
-      // TODO: IMPLEMENT
+      /* TODO: IMPLEMENT */
       return 0;
     },
     getValue: read

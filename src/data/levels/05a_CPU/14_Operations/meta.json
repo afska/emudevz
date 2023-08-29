@@ -1,7 +1,7 @@
 {
 	"name": {
 		"en": "📋 Operations",
-		"es": "📋 Operations"
+		"es": "📋 Operaciones"
 	},
 	"ui": {
 		"run": "copy.js",

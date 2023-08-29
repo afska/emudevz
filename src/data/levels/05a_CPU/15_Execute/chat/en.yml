@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - let's implement a `step()` method that runs the next operation
+  - let's implement a `step()` method that runs the next <operation>
   - it will read the next opcode and arguments from 🤖  <PRG-ROM>
   - call the right <instruction> and <addressing mode>
   - and increment the cycle counters

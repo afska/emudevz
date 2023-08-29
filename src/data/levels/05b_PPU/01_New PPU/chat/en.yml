@@ -56,37 +56,19 @@ next:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  _-_create a file in _--_📄 _-_ ~/code/ppu/PPU.js~ for the PPU code_--_
+  - "📚  _-_create a file for the PPU code using this template:_--_"
+  - 📄 _-_ ~/tmpl/ppu/PPU.js~_--_
   - |-
-    _-_it should export a class like this:
-      ```javascript
-      export default class PPU {
-        constructor(cpu) {
-          this.cpu = cpu;
-
-          this.cycle = 0;
-          this.scanline = -1;
-          this.frame = 0;
-        }
-      }
-      ```_--_
-  - |-
-    _-_and add this method (for now, it'll just keep track of the timing):
-      ```javascript
-      step() {
-        this.cycle++;
-        if (this.cycle >= 341) {
-          this.cycle = 0;
-          this.scanline++;
-
-          if (this.scanline >= 261) {
-            this.scanline = -1;
-            this.frame++;
-          }
-        }
-      }
-      ```_--_
-  - _-_then, import that file from _--_📄 _-_ ~/code/index.js~_--_
+    _-_and to keep track of the timing, add this method:_--_
+    **step()**:
+      **->** increments ~cycle~
+      **->** if ~cycle >= 341~:
+        **->** sets ~cycle = 0~
+        **->** increments ~scanline~
+        **->** if ~scanline >= 261~:
+          **->** sets ~scanline = -1~
+          **->** increments ~frame~
+  - _-_then, import your file from _--_📄 _-_ ~/code/index.js~_--_
   - _-_and add a `PPU` key (pointing to that class) to the exported object_--_
   responses:
   - why does the scanline counter start at -1? 😕 [minus1]

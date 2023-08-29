@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - implementemos un método `step()` que ejecute la siguiente operación
+  - implementemos un método `step()` que ejecute la siguiente <operación>
   - leerá el siguiente opcode y argumentos desde 🤖  <PRG-ROM>
   - llamará a la <instrucción> correcta y al <modo de direccionamiento> adecuado
   - e incrementará los contadores de ciclos

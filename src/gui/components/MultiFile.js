@@ -61,7 +61,7 @@ class MultiFile extends PureComponent {
 						const [Component, customArgs] = extensions.getOptions(filePath);
 
 						if (Component === TV && customArgs.type === "rom") {
-							this._openPinnedFile(filePath, Component, customArgs);
+							OpenCommand.open(filePath);
 						} else {
 							this.props.openFile(filePath);
 							this._refresh();
@@ -239,6 +239,8 @@ class MultiFile extends PureComponent {
 							? locales.get("template_file_click_existing")
 							: locales.get("template_file_click_unexisting")}
 					</span>
+					<br />
+					<strong className={styles.templateClick}>📄 {workingCopyPath}</strong>
 				</span>
 			</div>
 		);

@@ -4,6 +4,7 @@
 		"es": "🖥️ Nueva PPU"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
