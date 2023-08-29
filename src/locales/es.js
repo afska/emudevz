@@ -139,6 +139,11 @@ export default {
 	step_forward: "Avanzar",
 	step_reset: "Reiniciar",
 	streaming_video: "Recibiendo transmisión de video",
+	template_file: "📑 Esto es un archivo plantilla.",
+	template_file_click_existing:
+		"Clickea aquí para navegar a su copia de trabajo.",
+	template_file_click_unexisting:
+		"Clickea aquí para crear una copia de trabajo.",
 	testing: "Probando: ",
 	tests_success: "🎉  Todas las pruebas pasaron.",
 	tests_success_continue:

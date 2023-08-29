@@ -6,6 +6,8 @@ import classNames from "classnames";
 import _ from "lodash";
 import filesystem, { Drive } from "../../filesystem";
 import locales from "../../locales";
+import Terminal from "../../terminal/Terminal";
+import OpenCommand from "../../terminal/commands/fs/OpenCommand";
 import { bus } from "../../utils";
 import extensions from "../extensions";
 import CodeEditor from "./CodeEditor";
@@ -209,8 +211,35 @@ class MultiFile extends PureComponent {
 					this._views[filePath] = ref;
 				}}
 				{...props}
+				addon={this._renderTemplateAddon(filePath)}
 				onKeyDown={this._onKeyDown}
 			/>
+		);
+	}
+
+	_renderTemplateAddon(filePath) {
+		if (!filePath.startsWith(Drive.TMPL_DIR)) return false;
+
+		const workingCopyPath = filePath.replace(Drive.TMPL_DIR, Drive.CODE_DIR);
+		const isFileCreated = filesystem.exists(workingCopyPath);
+
+		const onClick = () => {
+			if (isFileCreated) OpenCommand.open(workingCopyPath);
+			else Terminal.tryCreateFile(workingCopyPath);
+		};
+
+		return (
+			<div className={styles.template} onClick={onClick}>
+				<span>
+					{locales.get("template_file")}
+					<br />
+					<span className={styles.templateClick}>
+						{isFileCreated
+							? locales.get("template_file_click_existing")
+							: locales.get("template_file_click_unexisting")}
+					</span>
+				</span>
+			</div>
 		);
 	}
 

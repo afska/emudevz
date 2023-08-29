@@ -16,6 +16,7 @@ const READONLY_PATHS = [
 	/^\/docs.*/,
 	/^\/lib.*/,
 	/^\/roms.*/,
+	/^\/tmpl.*/,
 ];
 const PROTECTED_PATHS = [MAIN_FILE];
 
@@ -29,6 +30,7 @@ export default {
 	LIB_DIR,
 	DOCS_DIR,
 	ROMS_DIR,
+	TMPL_DIR,
 	TESTROMS_DIR,
 
 	init(levelId) {

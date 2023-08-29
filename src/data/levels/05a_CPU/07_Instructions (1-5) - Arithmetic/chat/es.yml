@@ -6,7 +6,7 @@ main:
   - "🐏  instrucciones que esperan <una dirección de memoria>"
   - "🔢  instrucciones que esperan <un valor>"
   - voy a ejemplificar esto implementando 3 instrucciones comunes en un formato particular
-  - ¡mira tu archivo 📄  ~/docs/cpu/example_instructions.js~!
+  - ¡mira tu archivo 📄  ~/tmpl/cpu/instructions.js~!
   responses:
   - bueno... ¿cuántas instrucciones aritméticas hay? [howmany]
 

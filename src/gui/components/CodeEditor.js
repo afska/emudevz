@@ -117,7 +117,7 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	render() {
-		const { getCode, forceReadOnly = false, style } = this.props;
+		const { getCode, forceReadOnly = false, addon = false, style } = this.props;
 		const {
 			_isInitialized,
 			language,
@@ -140,6 +140,7 @@ export default class CodeEditor extends PureComponent {
 
 		return (
 			<div className={styles.container} style={style}>
+				{addon}
 				{isCompilingSpinnerShown && (
 					<div className={styles.spinner}>
 						<FaSpinner size={24} />

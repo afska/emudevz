@@ -302,6 +302,17 @@ export default class Terminal {
 		this._fileLinkProvider.dispose();
 	}
 
+	static tryCreateFile(filePath, initialContent = "") {
+		try {
+			const resolvedFilePath = FilesystemCommand.resolve(filePath, true);
+			filesystem.write(resolvedFilePath, initialContent, { parents: true });
+			OpenCommand.open(filePath);
+			toast.success(locales.get("file_created"));
+		} catch (e) {
+			toast.error(locales.get("file_created_error"));
+		}
+	}
+
 	get isExpectingInput() {
 		return this._input != null;
 	}
@@ -448,17 +459,7 @@ export default class Terminal {
 					toast.error(
 						<span
 							onClick={() => {
-								try {
-									const resolvedFilePath = FilesystemCommand.resolve(
-										filePath,
-										true
-									);
-									filesystem.write(resolvedFilePath, "", { parents: true });
-									OpenCommand.open(filePath);
-									toast.success(locales.get("file_created"));
-								} catch (e) {
-									toast.error(locales.get("file_created_error"));
-								}
+								this.constructor.tryCreateFile(filePath);
 							}}
 						>
 							<span className="toast-link">

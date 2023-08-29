@@ -6,7 +6,7 @@ main:
   - "🐏  instructions that expect <a memory address>"
   - "🔢  instructions that expect <a value>"
   - I'll exemplify this by implementing 3 common instructions in a particular format
-  - look at your 📄  ~/docs/cpu/example_instructions.js~ file!
+  - look at your 📄  ~/tmpl/cpu/instructions.js~ file!
   responses:
   - alright... how many arithmetic instructions are there? [howmany]
 

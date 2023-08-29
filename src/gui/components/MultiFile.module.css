@@ -56,6 +56,30 @@
 	text-align: center;
 }
 
+.template {
+	position: absolute;
+	z-index: 1;
+	top: 16px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #a67f35cc;
+	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
+		0 0 8px rgba(200, 200, 200, 0.6);
+	border-radius: 8px;
+	padding: 16px;
+	user-select: none;
+	cursor: pointer;
+	text-align: center;
+}
+
+.templateClick {
+	font-size: 14px;
+}
+
+.template:hover {
+	background-color: #e3ae49cc;
+}
+
 @keyframes select {
 	from {
 		filter: blur(2px);
