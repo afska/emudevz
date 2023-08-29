@@ -110,6 +110,8 @@ class Filesystem {
 	cpr(dirPath, newDirPath) {
 		dirPath = this.process(dirPath);
 		newDirPath = this.process(newDirPath);
+		const stat = this.stat(dirPath);
+		if (!stat.isDirectory) return this.cp(dirPath, newDirPath);
 		// ---
 
 		this.mkdir(newDirPath);
