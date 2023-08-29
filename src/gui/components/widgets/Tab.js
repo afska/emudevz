@@ -3,6 +3,7 @@ import { FaArrowAltCircleLeft, FaTimes } from "react-icons/fa";
 import classNames from "classnames";
 import locales from "../../../locales";
 import IconButton from "./IconButton";
+import Tooltip from "./Tooltip";
 import styles from "./Tab.module.css";
 
 export default class Tab extends PureComponent {
@@ -16,6 +17,7 @@ export default class Tab extends PureComponent {
 			active = false,
 			dragging = false,
 			className,
+			tooltip = "",
 			children,
 			...rest
 		} = this.props;
@@ -32,7 +34,10 @@ export default class Tab extends PureComponent {
 				onMouseUp={this._onMouseUp}
 				{...rest}
 			>
-				<span className={styles.title}>{title}</span>
+				<Tooltip title={tooltip}>
+					<span className={styles.title}>{title}</span>
+				</Tooltip>
+
 				{canPin && (
 					<IconButton
 						Icon={FaArrowAltCircleLeft}

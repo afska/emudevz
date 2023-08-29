@@ -170,6 +170,7 @@ class MultiFile extends PureComponent {
 					this.props.closeFile(filePath);
 					this._openPinnedFile(filePath, Component, customArgs);
 				}}
+				tooltip={filePath}
 			/>
 		);
 	}
