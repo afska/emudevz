@@ -33,6 +33,7 @@ same:
   messages:
   - conceptualmente, sí, pero la 🖥️  PPU funciona 3 veces más rápido que la 🧠  CPU
   - así que los ciclos de PPU son más rápidos (cada ciclo de PPU es, en tiempo, ~1/3~ de un ciclo de CPU)
+  - <{unit_speeds.png}>
   responses:
   - ...cycles
 

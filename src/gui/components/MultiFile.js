@@ -62,6 +62,7 @@ class MultiFile extends PureComponent {
 
 						if (Component === TV && customArgs.type === "rom") {
 							OpenCommand.open(filePath);
+							this._refresh();
 						} else {
 							this.props.openFile(filePath);
 							this._refresh();
