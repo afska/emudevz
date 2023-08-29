@@ -75,23 +75,27 @@ export default class EmulatorRunner extends PureComponent {
 									completed={this._unlockedUnits.useController}
 									active={this._emulatorSettings.useController}
 									onToggle={() => this._onToggle("useController")}
+									customIncompleteIcon="⚠️"
+									customIncompleteMessage="using_default_emulator"
 								/>
 								<Unit
-									icon="🕹️"
-									name={locales.get("console")}
-									completed={this._unlockedUnits.useConsole}
-									active={this._emulatorSettings.useConsole}
-									onToggle={() => this._onToggle("useConsole")}
+									icon="🗜️"
+									name={"Mappers"}
+									completed={this._unlockedUnits.useMappers}
+									active={this._emulatorSettings.useMappers}
+									onToggle={() => this._onToggle("useMappers")}
 									style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
+									customIncompleteIcon="⚠️"
+									customIncompleteMessage="using_default_emulator"
 								/>
 							</div>
 						</div>
 						<Unit
-							icon="🗜️"
-							name={"Mappers"}
-							completed={this._unlockedUnits.useMappers}
-							active={this._emulatorSettings.useMappers}
-							onToggle={() => this._onToggle("useMappers")}
+							icon="🕹️"
+							name={locales.get("console")}
+							completed={this._unlockedUnits.useConsole}
+							active={this._emulatorSettings.useConsole}
+							onToggle={() => this._onToggle("useConsole")}
 							className={classNames(styles.units, styles.mappersUnit)}
 							style={{ borderRadius: COMPONENT_BORDER_RADIUS }}
 							customIncompleteIcon="⚠️"

@@ -226,7 +226,7 @@ class MultiFile extends PureComponent {
 
 		const onClick = () => {
 			if (isFileCreated) OpenCommand.open(workingCopyPath);
-			else Terminal.tryCreateFile(workingCopyPath);
+			else Terminal.tryCreateFile(workingCopyPath, filesystem.read(filePath));
 		};
 
 		return (
