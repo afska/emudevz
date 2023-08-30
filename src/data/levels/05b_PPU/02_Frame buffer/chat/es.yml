@@ -61,12 +61,13 @@ draw:
     📚  _-_ok, vamos a agregar esto al constructor de tu PPU:
       ```javascript
       this.frameBuffer = new Uint32Array(256*240);
-      // llenar las primeras 120 filas con rojo:
-      for (let i = 0; i < 256 * 120; i++)
+
+      // llenar la pantalla entera de rojo:
+      for (let i = 0; i < 256 * 240; i++)
         this.frameBuffer[i] = 0xff0000ff;```_--_
-  - _-_modifica tu método `step` para que reciba un callback `onFrame`_--_
+  - _-_modifica tu método `step` para que reciba un callback `onFrame` como parámetro_--_
   - |-
     _-_luego, cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
       ```javascript onFrame(this.frameBuffer);```_--_
-  - _-_¡pruébalo! al iniciar una ROM, debería pintar en rojo la mitad superior de la pantalla _--_🔴
+  - _-_¡pruébalo! al iniciar una ROM, debería pintar de rojo la pantalla_--_🔴
   responses: []
