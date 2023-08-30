@@ -38,6 +38,8 @@ export default class Emulation {
 
 		this.neees = new NEEES(this._onFrame, this._onAudio);
 		this.frameTimer = new FrameTimer(() => {
+			this._updateInput(getInput());
+
 			if (
 				this.isDebugging &&
 				!this.isDebugStepFrameRequested &&
@@ -77,7 +79,6 @@ export default class Emulation {
 				}
 
 				this._updateSound();
-				this._updateInput(getInput());
 			} catch (error) {
 				onError(error);
 			}
