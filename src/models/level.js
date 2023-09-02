@@ -1,5 +1,6 @@
 import { push, replace } from "connected-react-router";
 import filesystem from "../filesystem";
+import Drive from "../filesystem/Drive";
 import {
 	SAVESTATE_KEY_PREFIX,
 	SAVESTATE_RESET_COMMAND,
@@ -96,10 +97,7 @@ export default {
 				});
 			},
 			rollback(level, _state_) {
-				const snapshots = _state_.savedata.snapshots;
-				if (!snapshots.includes(level.id)) return;
-
-				const snapshot = `/.snapshots/level-${level.id}`;
+				const snapshot = Drive.snapshotDirOf(level.id);
 				if (!filesystem.exists(snapshot)) return;
 
 				filesystem.setSymlinks([]);

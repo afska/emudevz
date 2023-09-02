@@ -6,7 +6,6 @@ const KEY = "savedata";
 const INITIAL_STATE = () => ({
 	maxChapterNumber: 1,
 	completedLevels: [],
-	snapshots: [],
 	lastLevelId: "start",
 	language: "en",
 	speedUpChat: false,
@@ -45,9 +44,6 @@ export default {
 		},
 		addCompletedLevel(state, levelId) {
 			return { ...state, completedLevels: [...state.completedLevels, levelId] };
-		},
-		addSnapshot(state, snapshot) {
-			return { ...state, snapshots: [...state.snapshots, snapshot] };
 		},
 		setLastLevelId(state, lastLevelId) {
 			return { ...state, lastLevelId };

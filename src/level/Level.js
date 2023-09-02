@@ -230,9 +230,7 @@ export default class Level {
 
 		const snapshotDir = Drive.snapshotDirOf(this.id);
 
-		if (!filesystem.exists(snapshotDir)) {
+		if (!filesystem.exists(snapshotDir))
 			filesystem.cpr(Drive.CODE_DIR, snapshotDir);
-			store.dispatch.savedata.addSnapshot(this.id);
-		}
 	}
 }
