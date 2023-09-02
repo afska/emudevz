@@ -202,8 +202,10 @@ export default class EmulatorRunner extends PureComponent {
 			...currentSettings,
 			[setting]: !currentSettings[setting],
 		};
-		if (currentSettings[setting] !== this._emulatorSettings[setting])
+		if (currentSettings[setting] !== this._emulatorSettings[setting]) {
 			this.forceUpdate();
+			this.props.onRestart();
+		}
 	};
 
 	_onCodeChanged = () => {

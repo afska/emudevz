@@ -26,7 +26,7 @@ export default class TV extends PureComponent {
 	}
 
 	setContent(content, type) {
-		this.setState({ content, type });
+		this.setState({ content, type, _error: null });
 	}
 
 	render() {
@@ -65,6 +65,12 @@ export default class TV extends PureComponent {
 		window.removeEventListener("drop", this._onFileDrop);
 	}
 
+	_resetContent(content) {
+		this.setState({ content: null, _error: null }, () => {
+			this.setState({ content });
+		});
+	}
+
 	_renderContent() {
 		const { content, type, _error } = this.state;
 
@@ -99,9 +105,7 @@ export default class TV extends PureComponent {
 							this.setState({ _error: e });
 						}}
 						onRestart={() => {
-							this.setState({ content: null, _error: null }, () => {
-								this.setState({ content });
-							});
+							this._resetContent(content);
 						}}
 					/>
 				);
@@ -133,7 +137,7 @@ export default class TV extends PureComponent {
 
 		reader.onload = (event) => {
 			const rom = event.target.result;
-			this.setState({ content: rom, _error: null });
+			this.setContent(rom, "rom");
 		};
 
 		reader.readAsArrayBuffer(file);
