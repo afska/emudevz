@@ -53,6 +53,7 @@ it("has a `step` method that increments the counters", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.should.respondTo("step");
+	const noop = () => {};
 
 	for (let frame = 0; frame < 1; frame++) {
 		for (let scanline = -1; scanline < 261; scanline++) {
@@ -60,7 +61,7 @@ it("has a `step` method that increments the counters", () => {
 				ppu.frame.should.equal(frame);
 				ppu.scanline.should.equal(scanline);
 				ppu.cycle.should.equal(cycle);
-				ppu.step();
+				ppu.step(noop, noop);
 			}
 		}
 	}
@@ -73,4 +74,69 @@ it("has a `step` method that increments the counters", () => {
 		es: "tiene un método `step` que incrementa los contadores",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.1"),
+});
+
+// 5b.2 Frame buffer
+
+it("defines a `frameBuffer` property", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	ppu.should.include.key("frameBuffer");
+	ppu.frameBuffer.should.be.a("Uint32Array");
+})({
+	locales: {
+		es: "define una propiedad `frameBuffer`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.2"),
+});
+
+it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.should.respondTo("step");
+	const onFrame = sinon.spy();
+	const noop = () => {};
+
+	for (let frame = 0; frame < 1; frame++) {
+		for (let scanline = -1; scanline < 261; scanline++) {
+			for (let cycle = 0; cycle < 341; cycle++) {
+				ppu.step(onFrame, noop);
+			}
+		}
+	}
+
+	onFrame.should.have.been.calledOnce;
+})({
+	locales: {
+		es: "llama a `onFrame` cada vez que `step(...)` alcanza un nuevo frame",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.2"),
+});
+
+it("calls `onFrame` with a red screen", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.should.respondTo("step");
+	const onFrame = sinon.spy();
+	const noop = () => {};
+
+	for (let frame = 0; frame < 1; frame++) {
+		for (let scanline = -1; scanline < 261; scanline++) {
+			for (let cycle = 0; cycle < 341; cycle++) {
+				ppu.step(onFrame, noop);
+			}
+		}
+	}
+
+	onFrame.should.have.been.calledOnce;
+	const frameBuffer = onFrame.getCall(0).args[0];
+	for (let i = 0; i < 256 * 240; i++) {
+		frameBuffer[i].should.equalHex(0xff0000ff, `frameBuffer[${i}]`);
+	}
+})({
+	locales: {
+		es: "llama a `onFrame` con una pantalla roja",
+	},
+	use: ({ id }, book) => id === book.getId("5b.2"),
 });
