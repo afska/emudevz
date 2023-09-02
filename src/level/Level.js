@@ -120,6 +120,13 @@ export default class Level {
 			store.dispatch.level.goHome();
 	}
 
+	canLaunchEmulator() {
+		return (
+			bus.isListeningTo("pin") ||
+			this.$layout.findInstance(TV, (it) => it.state.type === "rom") != null
+		);
+	}
+
 	launchEmulator(rom = null) {
 		if (!bus.isListeningTo("pin")) {
 			const tvRom = this.$layout.findInstance(

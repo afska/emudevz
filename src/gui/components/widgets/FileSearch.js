@@ -110,7 +110,7 @@ export default function FileSearch(props) {
 						})}
 					</div>
 				)}
-				{!Level.current.$layout?.supportsPin &&
+				{!Level.current.canLaunchEmulator() &&
 					matches[selected]?.file.filePath.endsWith(".neees") && (
 						<pre className={styles.warning}>
 							{locales.get("cant_open_emulator")}

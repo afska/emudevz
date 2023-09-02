@@ -1,5 +1,4 @@
 import BrokenNEEES from "broken-neees";
-import filesystem from "./filesystem";
 import Level from "./level/Level";
 import testContext from "./terminal/commands/test/context";
 
