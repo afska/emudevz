@@ -40,6 +40,20 @@ class Filesystem {
 		this.symlinks = symlinks;
 	}
 
+	withSymlinks(areSymlinksEnabled, action) {
+		if (areSymlinksEnabled) {
+			return action();
+		} else {
+			const symlinks = this.symlinks;
+			this.symlinks = [];
+			try {
+				return action();
+			} finally {
+				this.symlinks = symlinks;
+			}
+		}
+	}
+
 	ls(path, displayPath = path) {
 		const content = this.fs
 			.readdirSync(this.process(path || "/"))

@@ -32,7 +32,7 @@ const ERROR = 2;
 let BLOB_TO_PATH_MAP = {};
 
 export default {
-	prepare(level) {
+	prepare(level, withLastCode = false) {
 		BLOB_TO_PATH_MAP = {};
 		const code = level.content;
 
@@ -47,7 +47,10 @@ export default {
 		$.evaluate = (path = null) => {
 			if (!_.isObject(code)) return moduleEval(code);
 
-			const { module, modules } = this._compile(path ?? code.main);
+			const { module, modules } = this._compile(
+				path ?? code.main,
+				withLastCode
+			);
 			$.modules = modules;
 			_.forEach(modules, (blobName, filePath) => {
 				BLOB_TO_PATH_MAP[blobName] = filePath;
@@ -149,12 +152,15 @@ export default {
 		return { trace, location };
 	},
 
-	_compile(filePath, modules = {}) {
+	_compile(filePath, withLastCode = false, modules = {}) {
 		const context = {
 			filePath,
-			content: filesystem.read(filePath),
+			content: filesystem.withSymlinks(!withLastCode, () =>
+				filesystem.read(filePath)
+			),
 			matches: null,
 			hasImports: false,
+			withLastCode,
 		};
 
 		do {
@@ -227,11 +233,13 @@ export default {
 				const absolutePath = this._resolvePath(
 					context.filePath,
 					relativePath,
-					context.matches
+					context.matches,
+					context.withLastCode
 				);
 
 				const module =
-					modules[absolutePath] || this._compile(absolutePath, modules).module;
+					modules[absolutePath] ||
+					this._compile(absolutePath, context.withLastCode, modules).module;
 
 				context.content = context.content.replace(
 					regexp,
@@ -243,15 +251,19 @@ export default {
 		context.hasImports = context.hasImports || found;
 	},
 
-	_resolvePath(filePath, relativePath, matches) {
+	_resolvePath(filePath, relativePath, matches, withLastCode) {
 		if (!relativePath.endsWith(IMPORT_EXTENSION))
 			relativePath += IMPORT_EXTENSION;
 
 		const parsedPath = $path.parse(filePath);
-		const absolutePath = filesystem.resolve(relativePath, parsedPath.dir);
+		const absolutePath = filesystem.withSymlinks(!withLastCode, () =>
+			filesystem.resolve(relativePath, parsedPath.dir)
+		);
 
 		try {
-			const stat = filesystem.stat(absolutePath);
+			const stat = filesystem.withSymlinks(!withLastCode, () =>
+				filesystem.stat(absolutePath)
+			);
 			if (stat.isDirectory) throw new Error("Invalid");
 		} catch (e) {
 			throw new Error(
