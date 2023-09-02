@@ -11,6 +11,8 @@ export default class EmulatorBuilder {
 	withUserController = false;
 	withUserConsole = false;
 	withUserMappers = false;
+	withUsePartialPPU = false;
+	withUsePartialAPU = false;
 	omitReset = false;
 
 	async build(withLastCode = false) {
@@ -25,15 +27,16 @@ export default class EmulatorBuilder {
 		)
 			return BrokenNEEES();
 
-		const javascript = testContext.javascript;
-		const symlinks = filesystem.symlinks;
-		let mainModule;
-		try {
-			if (withLastCode) filesystem.setSymlinks([]);
-			const $ = javascript.prepare(Level.current);
-			mainModule = (await $.evaluate()).default;
-		} finally {
-			if (withLastCode) filesystem.setSymlinks(symlinks);
+		const mainModule = await this._evaluate(withLastCode);
+		let PPU = mainModule.PPU;
+		let APU = mainModule.APU;
+		if (withLastCode && this.withUserPPU && this.withUsePartialPPU) {
+			const partialModule = await this._evaluate(false);
+			PPU = partialModule.PPU;
+		}
+		if (withLastCode && this.withUserAPU && this.withUsePartialAPU) {
+			const partialModule = await this._evaluate(false);
+			APU = partialModule.APU;
 		}
 
 		return BrokenNEEES({
@@ -47,8 +50,8 @@ export default class EmulatorBuilder {
 					: undefined,
 			Cartridge: this.withUserCartridge ? mainModule.Cartridge : undefined,
 			CPU: this.withUserCPU ? mainModule.CPU : undefined,
-			PPU: this.withUserPPU ? mainModule.PPU : undefined,
-			APU: this.withUserAPU ? mainModule.APU : undefined,
+			PPU: this.withUserPPU ? PPU : undefined,
+			APU: this.withUserAPU ? APU : undefined,
 			Controller: this.withUserController ? mainModule.Controller : undefined,
 			mappers: this.withUserMappers ? mainModule.mappers : undefined,
 			omitReset: this.omitReset,
@@ -89,5 +92,30 @@ export default class EmulatorBuilder {
 	addUserMappers(add = true) {
 		this.withUserMappers = add;
 		return this;
+	}
+
+	usePartialPPU(use = true) {
+		this.withUsePartialPPU = use;
+		return this;
+	}
+
+	usePartialAPU(use = true) {
+		this.withUsePartialAPU = use;
+		return this;
+	}
+
+	async _evaluate(withLastCode) {
+		const javascript = testContext.javascript;
+		const symlinks = filesystem.symlinks;
+		let mainModule;
+		try {
+			if (withLastCode) filesystem.setSymlinks([]);
+			const $ = javascript.prepare(Level.current);
+			mainModule = (await $.evaluate()).default;
+		} finally {
+			if (withLastCode) filesystem.setSymlinks(symlinks);
+		}
+
+		return mainModule;
 	}
 }

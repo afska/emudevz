@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import NES from "nes-emu";
 import EmulatorBuilder from "../../../EmulatorBuilder";
+import Level from "../../../level/Level";
 import TVNoise from "../TVNoise";
 import CRTScreen from "./CRTScreen";
 import Screen from "./Screen";
@@ -90,6 +91,8 @@ export default class Emulator extends Component {
 		this.screen = screen;
 		if (!rom) return;
 
+		const currentLevel = Level.current;
+
 		let Console;
 		try {
 			Console = settings.useHardware
@@ -101,6 +104,8 @@ export default class Emulator extends Component {
 						.addUserAPU(settings.useAPU)
 						.addUserController(settings.useController)
 						.addUserMappers(settings.useMappers)
+						.usePartialPPU(currentLevel.id.startsWith("5b"))
+						.usePartialAPU(currentLevel.id.startsWith("5c"))
 						.build(true);
 		} catch (e) {
 			this._onError(e);
