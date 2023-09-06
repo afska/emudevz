@@ -23,8 +23,6 @@ const KEY_MAP = {
 	ArrowRight: "BUTTON_RIGHT",
 };
 
-let emulation = null;
-
 export default class Emulator extends Component {
 	render() {
 		const { rom, error, crt = false } = this.props;
@@ -57,11 +55,11 @@ export default class Emulator extends Component {
 	}
 
 	get neees() {
-		return emulation?.neees;
+		return this._emulation?.neees;
 	}
 
 	get speaker() {
-		return emulation?.speaker;
+		return this._emulation?.speaker;
 	}
 
 	get saveStateKey() {
@@ -87,7 +85,7 @@ export default class Emulator extends Component {
 	}
 
 	async _initialize(screen) {
-		const { rom, settings, volume } = this.props;
+		const { rom, settings, volume, onFrame } = this.props;
 		this.screen = screen;
 		if (!rom) return;
 
@@ -106,6 +104,9 @@ export default class Emulator extends Component {
 						.addUserMappers(settings.useMappers)
 						.usePartialPPU(currentLevel.id.startsWith("5b"))
 						.usePartialAPU(currentLevel.id.startsWith("5c"))
+						.setCustomPPU(settings.customPPU)
+						.setCustomAPU(settings.customAPU)
+						.setUnbroken(settings.unbroken)
 						.build(true);
 		} catch (e) {
 			this._onError(e);
@@ -119,7 +120,7 @@ export default class Emulator extends Component {
 
 		const bytes = new Uint8Array(rom);
 		const saveState = this._getSaveState();
-		emulation = new Emulation(
+		this._emulation = new Emulation(
 			Console,
 			bytes,
 			screen,
@@ -128,7 +129,8 @@ export default class Emulator extends Component {
 			this._setError,
 			this._setSaveState,
 			saveState,
-			volume
+			volume,
+			onFrame
 		);
 		if (saveState != null) this.neees.setSaveState(saveState);
 	}
@@ -156,9 +158,9 @@ export default class Emulator extends Component {
 	};
 
 	_stop() {
-		if (emulation) {
-			emulation.terminate();
-			emulation = null;
+		if (this._emulation) {
+			this._emulation.terminate();
+			this._emulation = null;
 		}
 
 		this._setFps(0);

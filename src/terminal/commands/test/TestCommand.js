@@ -1,10 +1,13 @@
 import _ from "lodash";
+import filesystem from "../../../filesystem";
+import TV from "../../../gui/components/TV";
 import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
 import { analytics, bus } from "../../../utils";
 import { cliCodeHighlighter } from "../../../utils/cli";
+import { moduleEval } from "../../../utils/eval";
 import theme from "../../style/theme";
 import Command from "../Command";
 import testContext from "./context";
@@ -21,6 +24,13 @@ export default class TestCommand extends Command {
 
 	async execute() {
 		const level = Level.current;
+
+		if (level.videoTest) {
+			// TODO: MOVE TO THE END
+			// TODO: PRINT RESULT
+			const isVideoTestSuccessful = await this._runVideoTest(level);
+			if (!isVideoTestSuccessful) return;
+		}
 
 		try {
 			this._setUpHyperlinkProvider();
@@ -143,6 +153,53 @@ export default class TestCommand extends Command {
 
 	onStop() {
 		this._onClose();
+
+		return true;
+	}
+
+	async _runVideoTest(level) {
+		const videoTest = level.videoTest;
+
+		const isPPUUnlocked = store.getState().savedata.unlockedUnits.usePPU;
+		if (!isPPUUnlocked) {
+			await this._terminal.writeln(locales.get("tests_video_ppu_not_unlocked"));
+			return false;
+		}
+
+		await this._terminal.writeln(locales.get("tests_video_running"));
+		const tv = level.$layout.findInstance(TV);
+		if (!tv) {
+			await this._terminal.writeln(locales.get("tests_video_no_tv"));
+			return false;
+		}
+
+		const rom = filesystem.read(videoTest.rom, {
+			binary: true,
+		});
+
+		const ppuCode = level.code[videoTest.ppu];
+		const PPU = (await moduleEval(ppuCode)).default;
+
+		await new Promise((resolve, reject) => {
+			tv.setContent(
+				{
+					PPU,
+					rom,
+					test: videoTest,
+					onEnd: (success) => {
+						resolve(success);
+
+						tv.setContent(null, "rom");
+					},
+					onError: (error) => {
+						reject(error);
+
+						tv.setContent(null, "rom");
+					},
+				},
+				"videoTest"
+			);
+		});
 
 		return true;
 	}

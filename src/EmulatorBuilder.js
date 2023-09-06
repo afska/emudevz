@@ -12,20 +12,12 @@ export default class EmulatorBuilder {
 	withUserMappers = false;
 	withUsePartialPPU = false;
 	withUsePartialAPU = false;
+	customPPU = null;
+	customAPU = null;
 	omitReset = false;
+	unbroken = false;
 
 	async build(withLastCode = false) {
-		if (
-			!this.withUserCartridge &&
-			!this.withUserCPU &&
-			!this.withUserPPU &&
-			!this.withUserAPU &&
-			!this.withUserController &&
-			!this.withUserConsole && // TODO: CONSOLE
-			!this.withUserMappers
-		)
-			return BrokenNEEES();
-
 		const mainModule = await this._evaluate(withLastCode);
 		let PPU = mainModule.PPU;
 		let APU = mainModule.APU;
@@ -49,11 +41,22 @@ export default class EmulatorBuilder {
 					: undefined,
 			Cartridge: this.withUserCartridge ? mainModule.Cartridge : undefined,
 			CPU: this.withUserCPU ? mainModule.CPU : undefined,
-			PPU: this.withUserPPU ? PPU : undefined,
-			APU: this.withUserAPU ? APU : undefined,
+			PPU:
+				this.customPPU != null
+					? this.customPPU
+					: this.withUserPPU
+					? PPU
+					: undefined,
+			APU:
+				this.customAPU != null
+					? this.customAPU
+					: this.withUserAPU
+					? APU
+					: undefined,
 			Controller: this.withUserController ? mainModule.Controller : undefined,
 			mappers: this.withUserMappers ? mainModule.mappers : undefined,
 			omitReset: this.omitReset,
+			unbroken: this.unbroken,
 		});
 	}
 
@@ -100,6 +103,21 @@ export default class EmulatorBuilder {
 
 	usePartialAPU(use = true) {
 		this.withUsePartialAPU = use;
+		return this;
+	}
+
+	setCustomPPU(customPPU = null) {
+		this.customPPU = customPPU;
+		return this;
+	}
+
+	setCustomAPU(customAPU = null) {
+		this.customAPU = customAPU;
+		return this;
+	}
+
+	setUnbroken(unbroken = false) {
+		this.unbroken = unbroken;
 		return this;
 	}
 

@@ -19,8 +19,11 @@ export default class Emulation {
 		onError = () => {},
 		onSaveState = () => {},
 		saveState = null,
-		volume = 1
+		volume = 1,
+		onFrame = () => {}
 	) {
+		this._onFrameCallback = onFrame;
+
 		this.screen = screen;
 		this.samples = [];
 
@@ -100,6 +103,7 @@ export default class Emulation {
 	_onFrame = (frameBuffer) => {
 		this.frameTimer.countNewFrame();
 		this.screen.setBuffer(frameBuffer);
+		this._onFrameCallback(frameBuffer);
 	};
 
 	_onAudio = (sample) => {

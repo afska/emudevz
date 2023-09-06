@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import TVNoise from "./TVNoise";
 import EmulatorRunner from "./emulator/EmulatorRunner";
 import GameStreamer from "./emulator/GameStreamer";
+import VideoTester from "./emulator/VideoTester";
 import MarkdownView from "./widgets/MarkdownView";
 import PanZoom from "./widgets/PanZoom";
 import styles from "./TV.module.css";
@@ -117,6 +118,19 @@ export default class TV extends PureComponent {
 						rom={content}
 						ref={(ref) => {
 							this.stream = ref;
+						}}
+					/>
+				);
+			}
+			case "videoTest": {
+				return (
+					<VideoTester
+						PPU={content.PPU}
+						rom={content.rom}
+						test={content.test}
+						onEnd={content.onEnd}
+						onError={(e) => {
+							content.onError(e);
 						}}
 					/>
 				);
