@@ -105,6 +105,8 @@ export default class VideoTester extends PureComponent {
 				if (frameA[i] !== frameB[i]) success = false;
 
 			if (!success) {
+				this._emulatorA.setBuffer(frameA);
+				this._emulatorB.setBuffer(frameB);
 				this._emulatorA.stop();
 				this._emulatorB.stop();
 				this._symbol.innerHTML = "❌";

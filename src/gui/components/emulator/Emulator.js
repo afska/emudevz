@@ -68,6 +68,10 @@ export default class Emulator extends Component {
 		return SAVESTATE_KEY_PREFIX + autoSaveAndRestore;
 	}
 
+	setBuffer(frameBuffer) {
+		this._emulation?.screen.setBuffer(frameBuffer);
+	}
+
 	stop() {
 		this._stop();
 	}
