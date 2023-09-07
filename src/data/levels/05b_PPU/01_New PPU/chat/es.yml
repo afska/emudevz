@@ -38,6 +38,8 @@ same:
   - ...cycles
 
 drawing:
+  run: |
+    {{Top}}.load("scanlines.gif");
   messages:
   - dibuja de arriba a abajo, una scanline a la vez, un pixel por ciclo
   - las primeras 240 scanlines conforman la parte visible de la imagen
@@ -46,6 +48,8 @@ drawing:
   - ¿qué quieres decir con "tiempo para descansar"? [vblank_hblank]
 
 vblank_hblank:
+  run: |
+    {{Top}}.load("rendering.png");
   messages:
   - durante cada scanline (después de haber dibujado todos los píxeles), hay un pequeño descanso conocido como Horizontal Blank, o <HBlank>
   - y al final de todas las scanlines visibles, hay un descanso más largo, el Vertical Blank, o <VBlank> 🏝️

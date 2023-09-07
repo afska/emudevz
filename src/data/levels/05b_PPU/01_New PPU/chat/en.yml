@@ -38,6 +38,8 @@ same:
   - ...cycles
 
 drawing:
+  run: |
+    {{Top}}.load("scanlines.gif");
   messages:
   - it draws from top to bottom, one scanline at a time, one pixel per cycle
   - the first 240 scanlines make up the visible part of the picture
@@ -46,6 +48,8 @@ drawing:
   - what do you mean by "time to rest"? [vblank_hblank]
 
 vblank_hblank:
+  run: |
+    {{Top}}.load("rendering.png");
   messages:
   - during each scanline (after it has drawn all the pixels), it gets a small break known as the Horizontal Blank, or <HBlank>
   - and at the end of all visible scanlines, it gets a longer break, the Vertical Blank, or <VBlank> 🏝️
