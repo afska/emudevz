@@ -227,7 +227,7 @@ export default class CreditsModal extends PureComponent {
 							emojis="💿💻"
 							prefix={
 								<span>
-									<strong>Code</strong> is licensed by{" "}
+									<strong>Code</strong> is licensed under{" "}
 								</span>
 							}
 							link="https://opensource.org/license/mit"
@@ -238,7 +238,7 @@ export default class CreditsModal extends PureComponent {
 							emojis="📖✏️"
 							prefix={
 								<span>
-									<strong>Levels</strong> are licensed by{" "}
+									<strong>Levels</strong> are licensed under{" "}
 								</span>
 							}
 							link="https://creativecommons.org/licenses/by-nc/4.0"
