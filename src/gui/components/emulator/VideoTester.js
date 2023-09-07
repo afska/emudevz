@@ -78,6 +78,8 @@ export default class VideoTester extends PureComponent {
 	};
 
 	_onExpectedFrame = (frameBuffer) => {
+		this.props.onFrame();
+
 		if (this._framesB.length < this._testFrames)
 			this._framesB.push(frameBuffer.slice());
 

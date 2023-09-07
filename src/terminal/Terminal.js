@@ -292,6 +292,16 @@ export default class Terminal {
 		);
 	}
 
+	tryInterrupt() {
+		if (this._stopFlag) {
+			this._stopFlag = false;
+			return INTERRUPTED;
+		}
+
+		if (this._disposeFlag) return DISPOSED;
+		return null;
+	}
+
 	clear() {
 		this._xterm.clear();
 	}
@@ -478,12 +488,8 @@ export default class Terminal {
 	}
 
 	_interruptIfNeeded() {
-		if (this._stopFlag) {
-			this._stopFlag = false;
-			throw INTERRUPTED;
-		}
-
-		if (this._disposeFlag) throw DISPOSED;
+		const interrupt = this.tryInterrupt();
+		if (interrupt != null) throw interrupt;
 	}
 
 	_needsWordWrap(characters, i, lastCharacter) {

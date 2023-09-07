@@ -129,6 +129,7 @@ export default class TV extends PureComponent {
 						rom={content.rom}
 						test={content.test}
 						onEnd={content.onEnd}
+						onFrame={content.onFrame}
 						onError={(e) => {
 							content.onError(e);
 						}}

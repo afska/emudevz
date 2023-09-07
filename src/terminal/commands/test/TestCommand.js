@@ -8,6 +8,7 @@ import store from "../../../store";
 import { analytics, bus } from "../../../utils";
 import { cliCodeHighlighter } from "../../../utils/cli";
 import { moduleEval } from "../../../utils/eval";
+import { INTERRUPTED } from "../../errors";
 import theme from "../../style/theme";
 import Command from "../Command";
 import testContext from "./context";
@@ -193,6 +194,11 @@ export default class TestCommand extends Command {
 						onError: (error) => {
 							reject(error);
 						},
+						onFrame: () => {
+							if (this._terminal.tryInterrupt() != null) {
+								reject(INTERRUPTED);
+							}
+						},
 					},
 					"videoTest"
 				);
@@ -214,6 +220,11 @@ export default class TestCommand extends Command {
 
 			return result.success;
 		} catch (e) {
+			if (e == INTERRUPTED) {
+				tv.setContent(null, "rom");
+				throw INTERRUPTED;
+			}
+
 			await this._terminal.writeln(
 				locales.get("tests_emulator_crashed"),
 				theme.ERROR

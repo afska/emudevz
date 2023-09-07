@@ -4,6 +4,7 @@
 		"es": "🖼️ Frame buffer"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
