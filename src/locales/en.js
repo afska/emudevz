@@ -154,7 +154,7 @@ export default {
 	tests_video_ppu_not_unlocked: "❌  PPU is not unlocked.",
 	tests_video_no_tv: "❌  There's no TV!",
 	tests_video_running: "🎥  Running video tests...",
-	tests_emulator_crashed: "❌  Emulator crashed.",
+	tests_emulator_crashed: "💥  Emulator crashed.",
 	tests_video_failed1: "❌  Wrong pixels (frame ",
 	tests_video_failed2: " of ",
 	tests_video_failed3: ")",

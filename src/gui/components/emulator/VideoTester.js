@@ -16,7 +16,7 @@ export default class VideoTester extends PureComponent {
 
 		return (
 			<div className={styles.row}>
-				<div className={styles.column}>
+				<div className={styles.column} style={{ flex: 3 }}>
 					<h6 className={styles.title}>
 						{locales.get("tests_video_ppu_output")}
 					</h6>
@@ -28,6 +28,7 @@ export default class VideoTester extends PureComponent {
 						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onActualFrame}
+						style={{ width: "auto", height: "auto" }}
 						ref={(ref) => {
 							this._emulatorA = ref;
 						}}
@@ -49,7 +50,7 @@ export default class VideoTester extends PureComponent {
 						}}
 					/>
 				</div>
-				<div className={styles.column}>
+				<div className={styles.column} style={{ flex: 3 }}>
 					<h6 className={styles.title}>
 						{locales.get("tests_video_expected_output")}
 					</h6>
@@ -61,6 +62,7 @@ export default class VideoTester extends PureComponent {
 						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onExpectedFrame}
+						style={{ width: "auto", height: "auto" }}
 						ref={(ref) => {
 							this._emulatorB = ref;
 						}}

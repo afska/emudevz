@@ -25,13 +25,13 @@ const KEY_MAP = {
 
 export default class Emulator extends Component {
 	render() {
-		const { rom, error, crt = false } = this.props;
+		const { rom, error, crt = false, style } = this.props;
 
 		const ScreenComponent = crt ? CRTScreen : Screen;
 		const innerClassName = crt ? styles.crtNoise : styles.box;
 
 		return (
-			<div className={styles.content}>
+			<div className={styles.content} style={style}>
 				{error ? (
 					<div className={styles.message}>
 						<span
