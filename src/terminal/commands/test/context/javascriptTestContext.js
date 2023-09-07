@@ -33,7 +33,6 @@ let BLOB_TO_PATH_MAP = {};
 
 export default {
 	prepare(level, withLastCode = false) {
-		BLOB_TO_PATH_MAP = {};
 		const code = level.content;
 
 		const $ = {

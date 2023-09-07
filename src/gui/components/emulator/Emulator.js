@@ -68,6 +68,10 @@ export default class Emulator extends Component {
 		return SAVESTATE_KEY_PREFIX + autoSaveAndRestore;
 	}
 
+	stop() {
+		this._stop();
+	}
+
 	shouldComponentUpdate() {
 		this._stop();
 		return true;

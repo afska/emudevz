@@ -113,30 +113,3 @@ it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("5b.2"),
 });
-
-it("calls `onFrame` with a red screen", () => {
-	const PPU = mainModule.default.PPU;
-	const ppu = new PPU({});
-	ppu.should.respondTo("step");
-	const onFrame = sinon.spy();
-	const noop = () => {};
-
-	for (let frame = 0; frame < 1; frame++) {
-		for (let scanline = -1; scanline < 261; scanline++) {
-			for (let cycle = 0; cycle < 341; cycle++) {
-				ppu.step(onFrame, noop);
-			}
-		}
-	}
-
-	onFrame.should.have.been.calledOnce;
-	const frameBuffer = onFrame.getCall(0).args[0];
-	for (let i = 0; i < 256 * 240; i++) {
-		frameBuffer[i].should.equalHex(0xff0000ff, `frameBuffer[${i}]`);
-	}
-})({
-	locales: {
-		es: "llama a `onFrame` con una pantalla roja",
-	},
-	use: ({ id }, book) => id === book.getId("5b.2"),
-});

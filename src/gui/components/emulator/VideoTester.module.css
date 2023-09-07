@@ -12,11 +12,11 @@
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
+	user-select: none;
 }
 
 .title {
 	text-align: center;
 	margin-top: 8px;
 	margin-bottom: 8px;
-	user-select: none;
 }

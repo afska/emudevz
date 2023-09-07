@@ -25,11 +25,10 @@ export default class TestCommand extends Command {
 	async execute() {
 		const level = Level.current;
 
-		if (level.videoTest) {
-			// TODO: MOVE TO THE END
-			// TODO: PRINT RESULT
-			const isVideoTestSuccessful = await this._runVideoTest(level);
-			if (!isVideoTestSuccessful) return;
+		let isVideoTestSuccessful = true;
+		if (level.videoTest && !this._targetId) {
+			isVideoTestSuccessful = await this._runVideoTest(level);
+			await this._terminal.newline();
 		}
 
 		try {
@@ -122,7 +121,7 @@ export default class TestCommand extends Command {
 				});
 			}
 
-			if (overallResult.allGreen) {
+			if (overallResult.allGreen && isVideoTestSuccessful) {
 				if (winOnTestPass && !this._targetId) {
 					await this._terminal.writeln(locales.get("tests_success_continue"));
 					await this._terminal.waitForKey();
@@ -180,26 +179,50 @@ export default class TestCommand extends Command {
 		const ppuCode = level.code[videoTest.ppu];
 		const PPU = (await moduleEval(ppuCode)).default;
 
-		await new Promise((resolve, reject) => {
-			tv.setContent(
-				{
-					PPU,
-					rom,
-					test: videoTest,
-					onEnd: (success) => {
-						// resolve(success);
-						// tv.setContent(null, "rom");
+		tv.setContent(null, "rom");
+		try {
+			const result = await new Promise((resolve, reject) => {
+				tv.setContent(
+					{
+						PPU,
+						rom,
+						test: videoTest,
+						onEnd: (result) => {
+							resolve(result);
+						},
+						onError: (error) => {
+							reject(error);
+						},
 					},
-					onError: (error) => {
-						// reject(error);
-						// tv.setContent(null, "rom");
-					},
-				},
-				"videoTest"
-			);
-		});
+					"videoTest"
+				);
+			});
 
-		return true;
+			if (result.success) {
+				await this._terminal.writeln("✔️ ");
+				tv.setContent(null, "rom");
+			} else {
+				await this._terminal.writeln(
+					locales.get("tests_video_failed1") +
+						(result.frame + 1) +
+						locales.get("tests_video_failed2") +
+						result.total +
+						locales.get("tests_video_failed3"),
+					theme.ERROR
+				);
+			}
+
+			return result.success;
+		} catch (e) {
+			await this._terminal.writeln(
+				locales.get("tests_emulator_crashed"),
+				theme.ERROR
+			);
+			await this._printError(e);
+			tv.setContent(null, "rom");
+		}
+
+		return false;
 	}
 
 	async _getTestDefinitions(level, $, testFiles) {
@@ -264,19 +287,23 @@ export default class TestCommand extends Command {
 
 		await this._terminal.writehlln(`${emoji} (~${result.id}~) ${result.name}`);
 
-		if (!result.passed) {
-			if (this._isVerbose && result.fullStack?.location) {
-				await this._terminal.writeln(
-					`📌  ${result.fullStack.location.filePath}:${result.fullStack.location.lineNumber} 📌`,
-					theme.ACCENT
-				);
-			}
-			await this._terminal.writeln(result.reason, theme.ERROR);
+		if (!result.passed) await this._printError(result, this._isVerbose, true);
+	}
 
-			if (this._isVerbose) {
-				if (result.fullStack != null)
-					await this._terminal.writeln(result.fullStack.trace, theme.ERROR);
+	async _printError(result, isVerbose = true, withTestCode = false) {
+		if (isVerbose && result.fullStack?.location) {
+			await this._terminal.writeln(
+				`📌  ${result.fullStack.location.filePath}:${result.fullStack.location.lineNumber} 📌`,
+				theme.ACCENT
+			);
+		}
+		await this._terminal.writeln(result.reason, theme.ERROR);
 
+		if (isVerbose) {
+			if (result.fullStack != null)
+				await this._terminal.writeln(result.fullStack.trace, theme.ERROR);
+
+			if (withTestCode) {
 				await this._terminal.writeln("----------", theme.ACCENT);
 				await this._terminal.writeln(
 					cliCodeHighlighter.highlight(result.testCode)

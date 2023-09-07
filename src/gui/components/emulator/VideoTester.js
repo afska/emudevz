@@ -1,9 +1,7 @@
 import React, { PureComponent } from "react";
 import _ from "lodash";
 import locales from "../../../locales";
-import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
-import { bus } from "../../../utils";
 import ProgressBar from "../widgets/ProgressBar";
 import Emulator from "./Emulator";
 import styles from "./VideoTester.module.css";
@@ -12,13 +10,9 @@ export default class VideoTester extends PureComponent {
 	_framesA = [];
 	_framesB = [];
 	_count = 0;
-	state = { hasEnded: false };
 
 	render() {
-		const { PPU, rom, error } = this.props;
-		const { hasEnded } = this.state;
-
-		// if (hasEnded) return false; // TODO: RESTORE
+		const { PPU, rom } = this.props;
 
 		return (
 			<div className={styles.row}>
@@ -28,17 +22,25 @@ export default class VideoTester extends PureComponent {
 					</h6>
 					<Emulator
 						rom={rom}
-						error={error}
 						settings={{ ...this._settings, usePPU: true }}
 						volume={0}
 						onError={this._setError}
 						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onActualFrame}
+						ref={(ref) => {
+							this._emulatorA = ref;
+						}}
 					/>
 				</div>
 				<div className={styles.column}>
-					<span>🧐</span>
+					<span
+						ref={(ref) => {
+							this._symbol = ref;
+						}}
+					>
+						🧐
+					</span>
 					<ProgressBar
 						percentage={0}
 						animated={false}
@@ -53,13 +55,15 @@ export default class VideoTester extends PureComponent {
 					</h6>
 					<Emulator
 						rom={rom}
-						error={error}
 						settings={{ ...this._settings, customPPU: PPU }}
 						volume={0}
-						onError={this._setError}
+						onError={() => {}}
 						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onExpectedFrame}
+						ref={(ref) => {
+							this._emulatorB = ref;
+						}}
 					/>
 				</div>
 			</div>
@@ -79,17 +83,30 @@ export default class VideoTester extends PureComponent {
 			const frameA = this._framesA.shift();
 			const frameB = this._framesB.shift();
 
-			// TODO: COMPARE FRAMES
-			const success = true;
+			let success = true;
+			for (let i = 0; i < 256 * 240; i++)
+				if (frameA[i] !== frameB[i]) success = false;
+
+			if (!success) {
+				this._emulatorA.stop();
+				this._emulatorB.stop();
+				this._symbol.innerHTML = "❌";
+				this.props.onEnd({
+					success,
+					frame: this._count,
+					total: this._testFrames,
+				});
+				return;
+			}
 
 			this._count++;
 
-			if (this._count >= this._testFrames) {
-				this.setState({ hasEnded: true });
-				this.props.onEnd(success);
-			} else {
+			if (this._count < this._testFrames) {
 				const percentage = (this._count / this._testFrames) * 100;
 				this._progressBar.setPercentage(percentage);
+			} else {
+				this._progressBar.setPercentage(100);
+				this.props.onEnd({ success: true });
 			}
 		}
 	};
@@ -97,17 +114,9 @@ export default class VideoTester extends PureComponent {
 	_setError = (e) => {
 		console.error(e);
 
-		const stack = testContext.javascript.buildStack(e);
-		if (stack?.location) {
-			const { filePath, lineNumber } = stack.location;
-
-			store.dispatch.savedata.openFile(filePath);
-			if (_.isFinite(lineNumber))
-				bus.emit("highlight", { line: lineNumber - 1 });
-		}
-
-		const error = testContext.javascript.buildHTMLError(e);
-		this.props.onError(error);
+		const reason = e?.message || e?.toString() || "?";
+		const fullStack = testContext.javascript.buildStack(e);
+		this.props.onError({ reason, fullStack });
 	};
 
 	_setInputType = () => {};
