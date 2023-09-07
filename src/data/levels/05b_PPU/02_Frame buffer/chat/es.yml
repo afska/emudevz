@@ -64,7 +64,7 @@ draw:
   - |-
     _-_implementa este método:_--_
     **plot(x, y, color)**:
-      **->** asigna el ~color~ al pixel ~(x,y)~ en el array ~frameBuffer~
+      **->** asigna el ~color~ al píxel ~(x,y)~ en el array ~frameBuffer~
         (el índice para ~(x,y)~ debería ser ~y * 256 + x~)
   - _-_luego, modifica tu método `step` para que reciba un callback `onFrame` como parámetro_--_
   - |-

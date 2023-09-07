@@ -41,7 +41,7 @@ ppu:
     {{Right}}.load("architecture.png");
   messages:
   - es la Unidad de Procesamiento de Imagen
-  - dibuja gráficos poniendo pixeles en la pantalla
+  - dibuja gráficos poniendo píxeles en la pantalla
   - ¡en la magnífica resolución de 256x240!
   - y tiene acceso a un banco de 2 KiB de VRAM (Video RAM)
   responses:

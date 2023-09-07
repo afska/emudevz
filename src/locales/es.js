@@ -162,7 +162,7 @@ export default {
 	tests_video_no_tv: "❌  ¡No hay TV!",
 	tests_video_running: "🎥  Corriendo tests de video...",
 	tests_emulator_crashed: "💥  El emulador falló.",
-	tests_video_failed1: "❌  Pixeles incorrectos (frame ",
+	tests_video_failed1: "❌  Píxeles incorrectos (frame ",
 	tests_video_failed2: " de ",
 	tests_video_failed3: ")",
 	using_bugged_emulator: "Usando BrokenNEEES ❌",

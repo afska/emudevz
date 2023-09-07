@@ -3,7 +3,7 @@ main:
   run: |
     {{Top}}.load("rendering.png");
   messages:
-  - abróchate el cinturón, ¡vamos a empezar a dibujar <pixels de verdad> en la pantalla! 🖥️
+  - abróchate el cinturón, ¡vamos a empezar a dibujar <píxeles de verdad> en la pantalla! 🖥️
   - pero primero necesitamos aprender algunas cosas
   - verás... todo depende del timing ⏱️
   - 🚲  ciclos, 🌠  scanlines y 🖼️  frames
@@ -24,7 +24,7 @@ cycles:
   messages:
   - cada operación que hace la PPU toma cierta cantidad de tiempo, que medimos en <ciclos>
   - estos duran solo fracciones de segundo, ¡y pasan varias cosas en un ciclo!
-  - la PPU puede leer o escribir datos, o incluso dibujar un pixel en la pantalla 🎨
+  - la PPU puede leer o escribir datos, o incluso dibujar un píxel en la pantalla 🎨
   responses:
   - (*) ¿los ciclos de PPU son los mismos que los ciclos de CPU? 🤔 [same]
   - ¿cómo funciona el dibujado? 🖌️ [drawing]
@@ -41,7 +41,7 @@ drawing:
   run: |
     {{Top}}.load("scanlines.gif");
   messages:
-  - dibuja de arriba a abajo, una scanline a la vez, un pixel por ciclo
+  - dibuja de arriba a abajo, una scanline a la vez, un píxel por ciclo
   - las primeras 240 scanlines conforman la parte visible de la imagen
   - también hay algunas scanlines extras no visibles, lo que le da a la PPU algo de tiempo para descansar 🏖️
   responses:
@@ -53,7 +53,7 @@ vblank_hblank:
   messages:
   - durante cada scanline (después de haber dibujado todos los píxeles), hay un pequeño descanso conocido como Horizontal Blank, o <HBlank>
   - y al final de todas las scanlines visibles, hay un descanso más largo, el Vertical Blank, o <VBlank> 🏝️
-  - durante estos períodos, la PPU no está dibujando ningún pixel, y eso da la oportunidad al programa de actualizar la pantalla
+  - durante estos períodos, la PPU no está dibujando ningún píxel, y eso da la oportunidad al programa de actualizar la pantalla
   responses:
   - entendido, ¿qué sigue? [next]
 
