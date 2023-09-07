@@ -21,7 +21,7 @@ examples:
   - "💙  ```javascript 0xFFFF0000``` = azul"
   - "⚪  ```javascript 0xFFFFFFFF``` = blanco"
   - "🖤  ```javascript 0xFF000000``` = negro"
-  - "🔘  ```javascript 0xFF989898``` = gris"
+  - "🦈  ```javascript 0xFF989898``` = gris"
   - "💛  ```javascript 0xFF00F8F8``` = amarillo"
   responses:
   - ...main
@@ -60,14 +60,25 @@ draw:
   - |-
     📚  _-_ok, vamos a agregar esto al constructor de tu PPU:
       ```javascript
-      this.frameBuffer = new Uint32Array(256*240);
-
-      // llenar la pantalla entera de rojo:
-      for (let i = 0; i < 256 * 240; i++)
-        this.frameBuffer[i] = 0xff0000ff;```_--_
-  - _-_modifica tu método `step` para que reciba un callback `onFrame` como parámetro_--_
+      this.frameBuffer = new Uint32Array(256*240);```_--_
   - |-
-    _-_luego, cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
+    _-_implementa este método:_--_
+    **plot(x, y, color)**:
+      **->** asigna el ~color~ al pixel ~(x,y)~ en el array ~frameBuffer~
+        (el índice para ~(x,y)~ debería ser ~y * 256 + x~)
+  - _-_luego, modifica tu método `step` para que reciba un callback `onFrame` como parámetro_--_
+  - |-
+    _-_y cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
       ```javascript onFrame(this.frameBuffer);```_--_
-  - _-_¡pruébalo! al iniciar una ROM, debería pintar de rojo la pantalla_--_🔴
+  - |-
+    para asegurarnos de que todo funciona correctamente, agrega este código antes de la llamada a `onFrame`:
+    ```javascript
+    // <test>
+    for (let x = 0; x < 256; x++) {
+      for (let y = 0; y < 240; y++) {
+        this.plot(x, y, 0xff000000 | this.frame % 0xff);
+      }
+    }
+    // </test>```
+  - _-_¡pruébalo! al iniciar una ROM, debería lentamente pintar la pantalla de rojo _--_🔴
   responses: []

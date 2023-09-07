@@ -91,6 +91,23 @@ it("defines a `frameBuffer` property", () => {
 	use: ({ id }, book) => id >= book.getId("5b.2"),
 });
 
+it("has a `plot` method that draws into the frame buffer", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.should.respondTo("plot");
+
+	ppu.plot(35, 20, 0xfffafafa);
+	ppu.frameBuffer[20 * 256 + 35].should.equalHex(
+		0xfffafafa,
+		"frameBuffer[5155]"
+	);
+})({
+	locales: {
+		es: "tiene un método `plot` que dibuja en el frame buffer",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.1"),
+});
+
 it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
