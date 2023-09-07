@@ -105,7 +105,7 @@ it("has a `plot` method that draws into the frame buffer", () => {
 	locales: {
 		es: "tiene un método `plot` que dibuja en el frame buffer",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.1"),
+	use: ({ id }, book) => id >= book.getId("5b.2"),
 });
 
 it("calls `onFrame` every time `step(...)` reaches a new frame", () => {

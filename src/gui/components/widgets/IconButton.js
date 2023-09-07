@@ -23,6 +23,7 @@ export default class IconButton extends PureComponent {
 			kind = "inline",
 			disabled = false,
 			className,
+			$ref,
 			...rest
 		} = this.props;
 
@@ -38,6 +39,7 @@ export default class IconButton extends PureComponent {
 					if (disabled) return;
 					onClick();
 				}}
+				ref={$ref}
 				{...rest}
 			>
 				<Icon />

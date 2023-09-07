@@ -133,6 +133,7 @@ export default class TV extends PureComponent {
 						onError={(e) => {
 							content.onError(e);
 						}}
+						onClose={() => this.setContent(null, "rom")}
 					/>
 				);
 			}

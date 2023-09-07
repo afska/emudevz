@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
+import { FaTimes } from "react-icons/fa";
 import _ from "lodash";
 import locales from "../../../locales";
 import testContext from "../../../terminal/commands/test/context";
+import IconButton from "../widgets/IconButton";
 import ProgressBar from "../widgets/ProgressBar";
 import Emulator from "./Emulator";
 import styles from "./VideoTester.module.css";
@@ -12,10 +14,21 @@ export default class VideoTester extends PureComponent {
 	_count = 0;
 
 	render() {
-		const { PPU, rom } = this.props;
+		const { PPU, rom, onClose } = this.props;
 
 		return (
 			<div className={styles.row}>
+				<IconButton
+					Icon={FaTimes}
+					tooltip={locales.get("close")}
+					onClick={onClose}
+					className={styles.closeButton}
+					style={{ display: "none" }}
+					$ref={(ref) => {
+						this._closeButton = ref;
+					}}
+				/>
+
 				<div className={styles.column} style={{ flex: 3 }}>
 					<h6 className={styles.title}>
 						{locales.get("tests_video_ppu_output")}
@@ -101,6 +114,7 @@ export default class VideoTester extends PureComponent {
 					total: this._testFrames,
 				});
 				this._progressBar.setBarFillColor("#d9534f");
+				this._closeButton.style.display = "block";
 				return;
 			}
 

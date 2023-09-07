@@ -1,8 +1,6 @@
 import mixpanel from "mixpanel-browser";
 
-mixpanel.init("e08d1345f64cc5e93e02e9cd0175bace", {
-	api_host: "https://reports.r-labs.io",
-});
+mixpanel.init("e08d1345f64cc5e93e02e9cd0175bace"); // TODO: USE CUSTOM PROXY
 
 export default {
 	requestFeedback(type, message) {
