@@ -98,6 +98,7 @@ export default class VideoTester extends PureComponent {
 					frame: this._count,
 					total: this._testFrames,
 				});
+				this._progressBar.setBarFillColor("#d9534f");
 				return;
 			}
 

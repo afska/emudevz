@@ -13,9 +13,13 @@ export default class ProgressBar extends PureComponent {
 			className,
 			...rest
 		} = this.props;
-		const { uncontrolledPercentage } = this.state;
+		const { uncontrolledPercentage, uncontrolledBarFillColor } = this.state;
 		const finalPercentage =
 			uncontrolledPercentage != null ? uncontrolledPercentage : percentage;
+		const finalBarFillColor =
+			uncontrolledBarFillColor != null
+				? uncontrolledBarFillColor
+				: barFillColor;
 
 		return (
 			<div className={classNames(styles.progress, className)} {...rest}>
@@ -24,7 +28,7 @@ export default class ProgressBar extends PureComponent {
 						className={classNames(styles.barFill, animated && styles.animated)}
 						style={{
 							width: finalPercentage + "%",
-							backgroundColor: barFillColor,
+							backgroundColor: finalBarFillColor,
 						}}
 					/>
 				</div>
@@ -34,5 +38,9 @@ export default class ProgressBar extends PureComponent {
 
 	setPercentage(percentage) {
 		this.setState({ uncontrolledPercentage: percentage });
+	}
+
+	setBarFillColor(barFillColor) {
+		this.setState({ uncontrolledBarFillColor: barFillColor });
 	}
 }
