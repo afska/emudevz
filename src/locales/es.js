@@ -2,6 +2,7 @@ export default {
 	_created_by: "Creado por",
 	_music_by: "Música por",
 	_credits: "Créditos",
+	apu: "APU",
 	backup: "Resguardar",
 	binary: "Binario",
 	button_play: "✨ Jugar",
@@ -38,6 +39,7 @@ export default {
 	complete: "completos",
 	console: "Consola",
 	controller: "Mando",
+	cpu: "CPU",
 	creating_directory: "Creando directorio",
 	decimal: "Decimal",
 	delete: "Borrar",
@@ -82,6 +84,7 @@ export default {
 	letsplay_unlock_msg2: "juego de NEEES",
 	letsplay_unlock_msg3: "desbloqueado!",
 	loading: "Cargando...",
+	mappers: "Mappers",
 	memory_viewer: "Visor de Memoria",
 	mkdir_parent_flag:
 		"(para crear varios directorios a la vez, corre `mkdir -p`)",
@@ -95,6 +98,7 @@ export default {
 	pin_left: "Fijar a la izquierda",
 	plot:
 		"En el año 2300, el mundo sufrió un ciberataque masivo que <b>destruyó</b> toda la Internet. Desde entonces, tu amigo online y tú están intentando entender las escasas piezas de documentación sobre la NEEES, una consola de videojuegos antigua lanzada en 1983. Con tus habilidades de programación, deberás crear un emulador que corra esos juegos viejos, ayudando a preservar la historia de los videojuegos.",
+	ppu: "PPU",
 	press_any_key_to_continue: "⌨️  Presiona cualquier tecla para continuar.",
 	register_A: "Registro Acumulador",
 	register_X: "Registro X",

@@ -187,14 +187,12 @@ export default class TestCommand extends Command {
 					rom,
 					test: videoTest,
 					onEnd: (success) => {
-						resolve(success);
-
-						tv.setContent(null, "rom");
+						// resolve(success);
+						// tv.setContent(null, "rom");
 					},
 					onError: (error) => {
-						reject(error);
-
-						tv.setContent(null, "rom");
+						// reject(error);
+						// tv.setContent(null, "rom");
 					},
 				},
 				"videoTest"

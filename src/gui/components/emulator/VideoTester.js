@@ -4,6 +4,7 @@ import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
 import { bus } from "../../../utils";
+import ProgressBar from "../widgets/ProgressBar";
 import Emulator from "./Emulator";
 import styles from "./VideoTester.module.css";
 
@@ -17,15 +18,10 @@ export default class VideoTester extends PureComponent {
 		const { PPU, rom, error } = this.props;
 		const { hasEnded } = this.state;
 
-		if (hasEnded) return false;
+		// if (hasEnded) return false; // TODO: RESTORE
 
 		return (
-			<div
-				className={styles.row}
-				ref={(ref) => {
-					this._container = ref;
-				}}
-			>
+			<div className={styles.row}>
 				<div className={styles.column}>
 					<h6 className={styles.title}>
 						{locales.get("tests_video_ppu_output")}
@@ -39,8 +35,15 @@ export default class VideoTester extends PureComponent {
 						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onActualFrame}
+					/>
+				</div>
+				<div className={styles.column}>
+					<span>🧐</span>
+					<ProgressBar
+						percentage={0}
+						animated={false}
 						ref={(ref) => {
-							this._emulator = ref;
+							this._progressBar = ref;
 						}}
 					/>
 				</div>
@@ -57,9 +60,6 @@ export default class VideoTester extends PureComponent {
 						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onExpectedFrame}
-						ref={(ref) => {
-							this._emulator = ref;
-						}}
 					/>
 				</div>
 			</div>
@@ -83,9 +83,13 @@ export default class VideoTester extends PureComponent {
 			const success = true;
 
 			this._count++;
+
 			if (this._count >= this._testFrames) {
 				this.setState({ hasEnded: true });
 				this.props.onEnd(success);
+			} else {
+				const percentage = (this._count / this._testFrames) * 100;
+				this._progressBar.setPercentage(percentage);
 			}
 		}
 	};

@@ -38,7 +38,7 @@ export default class EmulatorRunner extends PureComponent {
 							<div className={styles.row}>
 								<Unit
 									icon="🧠"
-									name="CPU"
+									name={locales.get("cpu")}
 									completed={this._unlockedUnits.useCPU}
 									active={this._emulatorSettings.useCPU}
 									onToggle={() => this._onToggle("useCPU")}
@@ -46,14 +46,14 @@ export default class EmulatorRunner extends PureComponent {
 								/>
 								<Unit
 									icon="🖥️"
-									name="PPU"
+									name={locales.get("ppu")}
 									completed={this._unlockedUnits.usePPU}
 									active={this._emulatorSettings.usePPU}
 									onToggle={() => this._onToggle("usePPU")}
 								/>
 								<Unit
 									icon="🔊"
-									name="APU"
+									name={locales.get("apu")}
 									completed={this._unlockedUnits.useAPU}
 									active={this._emulatorSettings.useAPU}
 									onToggle={() => this._onToggle("useAPU")}
@@ -80,7 +80,7 @@ export default class EmulatorRunner extends PureComponent {
 								/>
 								<Unit
 									icon="🗜️"
-									name={"Mappers"}
+									name={locales.get("mappers")}
 									completed={this._unlockedUnits.useMappers}
 									active={this._emulatorSettings.useMappers}
 									onToggle={() => this._onToggle("useMappers")}

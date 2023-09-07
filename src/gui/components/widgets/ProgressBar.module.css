@@ -17,6 +17,9 @@
 	display: block;
 	height: 4px;
 	border-radius: 3px;
+}
+
+.animated {
 	animation: progress 1s;
 	transition: width 1s;
 }

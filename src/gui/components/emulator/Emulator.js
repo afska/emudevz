@@ -226,6 +226,6 @@ export default class Emulator extends Component {
 	_onError(e) {
 		console.error(e);
 		this.props.onError(e);
-		this.stop();
+		this._stop();
 	}
 }
