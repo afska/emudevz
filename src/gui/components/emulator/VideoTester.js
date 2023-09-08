@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import { FaTimes } from "react-icons/fa";
-import _ from "lodash";
 import locales from "../../../locales";
 import testContext from "../../../terminal/commands/test/context";
 import IconButton from "../widgets/IconButton";

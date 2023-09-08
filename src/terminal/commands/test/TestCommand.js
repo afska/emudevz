@@ -220,7 +220,7 @@ export default class TestCommand extends Command {
 
 			return result.success;
 		} catch (e) {
-			if (e == INTERRUPTED) {
+			if (e === INTERRUPTED) {
 				tv.setContent(null, "rom");
 				throw INTERRUPTED;
 			}
