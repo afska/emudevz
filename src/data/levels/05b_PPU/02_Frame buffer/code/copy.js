@@ -1,3 +1,4 @@
-["frameBuffer.png"].forEach((file) => {
-	filesystem.write(`${Drive.DOCS_DIR}/ppu/${file}`, level.media[file]);
-});
+filesystem.write(
+	`${Drive.DOCS_DIR}/ppu/frame_buffer.png`,
+	level.media["frameBuffer.png"]
+);
