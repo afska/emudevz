@@ -14,9 +14,11 @@
 | `$4018-$401F` | `$0008` | 🧸 Unused                                  |
 | `$4020-$FFFF` | `$BFE0` | 💾 Cartridge space (PRG-ROM, mapper, etc.) |
 
-<br/>
+#### CPU memory chips
 
-🚽 **Mirror hint:**
+- 🐏 WRAM (`2` KiB)
+
+#### 🚽 Mirror hint
 
 ```
 byte.getMirroredAddress(address, mirrorRangeStart, mirrorRangeEnd, targetRangeStart, targetRangeEnd)
