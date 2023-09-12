@@ -9,7 +9,7 @@ main:
     📚  _-_add the following method to your `CPUMemory`:_--_
     *_-_*onLoad(ppu, apu, mapper, controllers)**:_--_
       *_-_*->** saves the parameters as properties (~this.ppu~, ~this.apu~, ~this.mapper~, and ~this.controllers~)_--_
-  - _-_then, as you did before with ~this.ram~, modify `read(...)` and `write(...)` to let ~this.mapper~ handle the range $4020-$FFFF_--_
+  - _-_then, as you did before with ~this.ram~, modify `read(...)` and `write(...)` to let ~this.mapper~ handle the range $4020-$FFFF (_--_💾 _-_ Cartridge space)_--_
   - _-_on reads, you should return ~this.mapper.cpuRead(address)~_--_
   - _-_on writes, you should call ~this.mapper.cpuWrite(address, value)~ and return_--_
   responses:

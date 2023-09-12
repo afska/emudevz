@@ -150,3 +150,50 @@ it("saves the devices received by `onLoad`", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("4.2"),
 });
+
+it("can read from the mapper", () => {
+	const CPUMemory = mainModule.default.CPUMemory;
+	const memory = new CPUMemory();
+	const random = byte.random();
+	const mapper = {
+		cpuRead: (address) => address * random,
+		cpuWrite: () => {},
+	};
+	memory.onLoad({}, {}, mapper, []);
+
+	for (let i = 0x4020; i <= 0xffff; i++) {
+		memory.read(i).should.equalHex(i * random, `read(${i})`);
+	}
+})({
+	locales: {
+		es: "puede leer del mapper",
+	},
+	use: ({ id }, book) => id >= book.getId("4.2"),
+});
+
+it("can write to the mapper", () => {
+	const CPUMemory = mainModule.default.CPUMemory;
+	const memory = new CPUMemory();
+	let arg1 = null,
+		arg2 = null;
+	const mapper = {
+		cpuRead: () => 0,
+		cpuWrite: (a, b) => {
+			arg1 = a;
+			arg2 = b;
+		},
+	};
+	memory.onLoad({}, {}, mapper, []);
+
+	for (let i = 0x4020; i <= 0xffff; i++) {
+		const value = byte.random();
+		memory.write(i, value);
+		arg1.should.equalHex(i, "address");
+		arg2.should.equalHex(value, "value");
+	}
+})({
+	locales: {
+		es: "puede escribir en el mapper",
+	},
+	use: ({ id }, book) => id >= book.getId("4.1"),
+});
