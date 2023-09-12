@@ -110,14 +110,6 @@ export default {
     );
   },
 
-  /** Returns an equivalent `address` from a mirrored memory section. */
-  getMirroredAddress(address, mirrorRangeStart, mirrorRangeEnd, targetRangeStart, targetRangeEnd) {
-    const mirrorRangeSize = mirrorRangeEnd - mirrorRangeStart + 1;
-    const targetRangeSize = targetRangeEnd - targetRangeStart + 1;
-    const mirrorSize = Math.min(mirrorRangeSize, targetRangeSize);
-    return targetRangeStart + (address - mirrorRangeStart) % mirrorSize;
-  },
-
   /** Returns a random byte ([0, `max`]). */
   random(max = 255) {
     return Math.floor(Math.random() * max);

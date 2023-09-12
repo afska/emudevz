@@ -4,7 +4,7 @@ export default class CPUMemory {
   }
 
   read(address) {
-    // 🐏 2 KiB internal RAM
+    // 🐏 WRAM (2 KiB)
     /* TODO: IMPLEMENT */
 
     // 🚽 Mirrors of $0000-$07FF
