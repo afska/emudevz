@@ -1,19 +1,35 @@
 ---
 main:
   messages:
-  - recuerda, cada componente tiene que estar conectado a la memoria
+  - recuerda, cada componente de hardware tiene que estar conectado a la memoria
   - a medida que avances en tu desarrollo, tendrás que actualizar tu clase `CPUMemory`, agregando los mapeos correctos
-  - ahora solo concentrémonos en recibir un montón de <dispositivos> 📱
-  - ¡los mapearemos más tarde!
+  - un dispositivo importante que tenemos que agregar es el 🗜️  Mapper, el cual manejará todas las interacciones con el código de juego (🤖  PRG-ROM)
+  - hagamos recibir a nuestra memoria un montón de <dispositivos> 📱
   - |-
     📚  _-_agrega a tu `CPUMemory` el siguiente método:_--_
     *_-_*onLoad(ppu, apu, mapper, controllers)**:_--_
-      *_-_*->** guarda los parámetros como propiedades (~this.ppu~, ~this.apu~, etc.)_--_
+      *_-_*->** guarda los parámetros como propiedades (~this.ppu~, ~this.apu~, ~this.mapper~, y ~this.controllers~)_--_
+  - _-_luego, como hiciste antes con ~this.ram~, modifica `read(...)` y `write(...)` para dejar que ~this.mapper~ maneje el rango $4020-$FFFF_--_
+  - _-_en lecturas, deberías retornar ~this.mapper.cpuRead(address)~_--_
+  - _-_en escrituras, deberías llamar a ~this.mapper.cpuWrite(address, value)~ y retornar_--_
   responses:
-  - ¿quién llama a ese método? [who]
+  - (*) ¿quién llama al método `onLoad`? 🤔 [who]
+  - (*) ¿qué es un <mapper>? 🗜️ [mapper]
 
 who:
   messages:
-  - al cargar un juego, <BrokenNEEES> llamará a este método automáticamente
+  - al cargar un juego, <BrokenNEEES> llamará a este método automáticamente ✨
   - para que la memoria tenga acceso al resto del hardware
-  responses: []
+  responses:
+  - ...main
+
+mapper:
+  messages:
+  - los <mappers> son circuitos dentro del cartucho que controlan cómo la consola lee la información del ROM
+  - cada juego usa un mapper específico
+  - mientras más mappers admita tu emulador, más juegos serán compatibles 👾
+  - <BrokenNEEES> soporta los mappers más comunes (0-4)
+  - sorprendentemente, ¡todos funcionan bien! 🤯  así que usarás esos por ahora
+  - y aprenderás cómo agregar más en el capítulo de 🗜️  Mappers
+  responses:
+  - ...main

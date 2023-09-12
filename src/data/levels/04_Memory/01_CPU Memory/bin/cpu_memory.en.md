@@ -2,7 +2,7 @@
 
 | Address range | Size    | Device                                     |
 | ------------- | ------- | ------------------------------------------ |
-| `$0000-$07FF` | `$0800` | 🐏 `2` KiB internal RAM                    |
+| `$0000-$07FF` | `$0800` | 🐏 WRAM (`2` KiB)                          |
 | `$0800-$1FFF` | `$1800` | 🚽 Mirrors of `$0000-$07FF`                |
 | `$2000-$2007` | `$0008` | 🖥️ PPU registers                           |
 | `$2008-$3FFF` | `$1FF8` | 🚽 Mirrors of `$2000-$2007`                |
@@ -17,15 +17,3 @@
 #### CPU memory chips
 
 - 🐏 WRAM (`2` KiB)
-
-#### 🚽 Mirror hint
-
-```
-byte.getMirroredAddress(address, mirrorRangeStart, mirrorRangeEnd, targetRangeStart, targetRangeEnd)
-// ^ example:
-// read(0x2009) ==
-// read(byte.getMirroredAddress(0x2009, 0x2008, 0x3fff, 0x2000, 0x2007)) ==
-// read(0x2001)
-```
-
-<div class="embed-image" style="margin-bottom: 16px"><img alt="header" src="assets/memory_mirror.png" /></div>

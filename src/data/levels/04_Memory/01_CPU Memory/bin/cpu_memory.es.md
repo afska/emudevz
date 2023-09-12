@@ -2,7 +2,7 @@
 
 | Rango de direcciones | Tamaño  | Dispositivo                                     |
 | -------------------- | ------- | ----------------------------------------------- |
-| `$0000-$07FF`        | `$0800` | 🐏 RAM interna de `2` KiB                       |
+| `$0000-$07FF`        | `$0800` | 🐏 WRAM (`2` KiB)                               |
 | `$0800-$1FFF`        | `$1800` | 🚽 Espejo de `$0000-$07FF`                      |
 | `$2000-$2007`        | `$0008` | 🖥️ Registros de la PPU                          |
 | `$2008-$3FFF`        | `$1FF8` | 🚽 Espejo de `$2000-$2007`                      |
@@ -17,13 +17,3 @@
 #### Chips de memoria de la CPU
 
 - 🐏 WRAM (`2` KiB)
-
-#### 🚽 Pista para espejos
-
-```
-byte.getMirroredAddress(address, mirrorRangeStart, mirrorRangeEnd, targetRangeStart, targetRangeEnd)
-// ^ example:
-// read(0x2009) ==
-// read(byte.getMirroredAddress(0x2009, 0x2008, 0x3fff, 0x2000, 0x2007)) ==
-// read(0x2001)
-```

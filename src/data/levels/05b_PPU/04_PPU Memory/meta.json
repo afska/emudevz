@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "🐏 PPU Memory",
-		"es": "🐏 PPU Memory"
+		"en": "🚌 PPU Memory",
+		"es": "🚌 Memoria de PPU"
 	},
 	"ui": {
 		"run": "copy.js",

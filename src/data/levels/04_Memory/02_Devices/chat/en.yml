@@ -1,19 +1,35 @@
 ---
 main:
   messages:
-  - remember, every component has to be connected to the memory
+  - remember, every hardware component has to be connected to the memory
   - as you make progress in your development, you will have to update your `CPUMemory` class, adding the correct mappings
-  - let's just focus on receiving a bunch of <devices> 📱
-  - we'll map them later!
+  - one important device we need to add is the 🗜️  Mapper, which will handle all the interactions with game code (🤖  PRG-ROM)
+  - let's make our memory receive a bunch of <devices> 📱
   - |-
-    📚  _-_add to your `CPUMemory` the following method:_--_
+    📚  _-_add the following method to your `CPUMemory`:_--_
     *_-_*onLoad(ppu, apu, mapper, controllers)**:_--_
-      *_-_*->** saves the parameters as properties (~this.ppu~, ~this.apu~, etc.)_--_
+      *_-_*->** saves the parameters as properties (~this.ppu~, ~this.apu~, ~this.mapper~, and ~this.controllers~)_--_
+  - _-_then, as you did before with ~this.ram~, modify `read(...)` and `write(...)` to let ~this.mapper~ handle the range $4020-$FFFF_--_
+  - _-_on reads, you should return ~this.mapper.cpuRead(address)~_--_
+  - _-_on writes, you should call ~this.mapper.cpuWrite(address, value)~ and return_--_
   responses:
-  - who calls that method? [who]
+  - (*) who calls the `onLoad` method? 🤔 [who]
+  - (*) what's a <mapper>? 🗜️ [mapper]
 
 who:
   messages:
-  - when a game is loaded, <BrokenNEEES> will call this method automatically
+  - when a game is loaded, <BrokenNEEES> will call this method automatically ✨
   - so that the memory has access to the rest of the hardware
-  responses: []
+  responses:
+  - ...main
+
+mapper:
+  messages:
+  - <mappers> are circuits inside the cartridge that control how the ROM data is read by the console
+  - each game uses a specific mapper
+  - the more mappers your emulator supports, the more games are compatible 👾
+  - <BrokenNEEES> supports the most common mappers (0-4)
+  - surprisingly, they all work! 🤯  so you'll be using those for now
+  - and you'll learn how to add more in the 🗜️  Mappers chapter
+  responses:
+  - ...main
