@@ -52,6 +52,7 @@ it("has a `ram` property and `read`/`write` methods", () => {
 	const memory = new CPUMemory();
 
 	memory.ram.should.be.a("Uint8Array");
+	memory.ram.length.should.equal(2048);
 	memory.should.respondTo("read");
 	memory.should.respondTo("write");
 })({

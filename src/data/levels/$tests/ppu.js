@@ -84,6 +84,7 @@ it("defines a `frameBuffer` property", () => {
 
 	ppu.should.include.key("frameBuffer");
 	ppu.frameBuffer.should.be.a("Uint32Array");
+	ppu.frameBuffer.length.should.equal(256 * 240);
 })({
 	locales: {
 		es: "define una propiedad `frameBuffer`",
