@@ -14,6 +14,6 @@
 | `$4018-$401F` | `$0008` | 🧸 Unused                                  |
 | `$4020-$FFFF` | `$BFE0` | 💾 Cartridge space (PRG-ROM, mapper, etc.) |
 
-#### CPU memory chips
+#### CPU memory regions
 
 - 🐏 WRAM (`2` KiB)

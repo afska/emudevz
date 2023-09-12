@@ -8,7 +8,7 @@
 | `$3F00-$3F1F`        | `$0020` | 🎨 Palette RAM                       |
 | `$3F20-$3FFF`        | `$00E0` | 🚽 Espejo de `$3F00-$3F1F`           |
 
-#### Chips de memoria de la PPU
+#### Regiones de memoria de la PPU
 
 - 🐏 VRAM (`2` KiB)
 - 🐏 Palette RAM (`32` bytes)
