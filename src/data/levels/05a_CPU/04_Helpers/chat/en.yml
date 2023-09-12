@@ -4,16 +4,16 @@ main:
   - we'll define some helpers to simplify future tasks
   - |-
     📚  _-_in your `Register8Bit` and `Register16Bit` classes, implement:_--_
-    **increment()**:
-      **->** calls ~setValue(...)~ with the result of ~getValue()+1~
-    **decrement()**:
-      **->** calls ~setValue(...)~ with the result of ~getValue()-1~
+    *_-_*increment()**:_--_
+      *_-_*->** calls ~setValue(...)~ with the result of ~getValue()+1~_--_
+    *_-_*decrement()**:_--_
+      *_-_*->** calls ~setValue(...)~ with the result of ~getValue()-1~_--_
   - |-
     _-_in your `FlagsRegister`, implement:_--_
-    **updateZero(value)**:
+    *_-_*updateZero(value)**:_--_
       **->** sets ~z=true~ if ~value~ is 0, or ~z=false~ otherwise
-    **updateNegative(value)**:
-      **->** sets ~n=true~ if ~byte.isNegative(value)~, or ~n=false~ otherwise
-    **updateZeroAndNegative(value)**:
-      **->** calls ~updateZero(...)~ and ~updateNegative(...)~ with the ~value~
+    *_-_*updateNegative(value)**:_--_
+      *_-_*->** sets ~n=true~ if ~byte.isNegative(value)~, or ~n=false~ otherwise_--_
+    *_-_*updateZeroAndNegative(value)**:_--_
+      *_-_*->** calls ~updateZero(...)~ and ~updateNegative(...)~ with the ~value~_--_
   responses: []

@@ -7,8 +7,8 @@ main:
   - ¡los mapearemos más tarde!
   - |-
     📚  _-_agrega a tu `CPUMemory` el siguiente método:_--_
-    **onLoad(ppu, apu, mapper, controllers)**:
-      **->** guarda los parámetros como propiedades (~this.ppu~, ~this.apu~, etc.)
+    *_-_*onLoad(ppu, apu, mapper, controllers)**:_--_
+      *_-_*->** guarda los parámetros como propiedades (~this.ppu~, ~this.apu~, etc.)_--_
   responses:
   - ¿quién llama a ese método? [who]
 

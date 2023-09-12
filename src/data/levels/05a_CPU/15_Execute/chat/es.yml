@@ -35,34 +35,34 @@ rightway:
   messages:
   - |-
     📚  _-_primero, vamos a agregar estos métodos a tu `CPU`:_--_
-    **_fetchOperation()**:
-      **->** lee un byte de la ubicación de memoria apuntada por [PC]
-        (llamemos esto ~opcode~)
-      **->** encuentra la operación relacionada con ese opcode:
-        ~this.operations[opcode]~
-        (llamemos esto ~operation~)
-      **->** si ~operation~ no existe, tira un error "Invalid opcode."
-      **->** incrementa [PC]
-      **->** retorna ~operation~
-    **_fetchInput(operation)**:
-      **->** lee 0, 1 (usando ~read(...)~) o 2 bytes (usando ~read16(...)~) de la ubicación de memoria apuntada por [PC], dependiendo de ~operation.addressingMode.inputSize~
-        (llamemos esto ~input~)
-      **->** incrementa [PC] (0, 1, o 2 veces) para saltear esos bytes
-      **->** retorna ~input~ (o ~null~)
-    **_fetchArgument(operation, input)**:
-      **->** retorna el resultado de procesar ~input~ con el modo de direccionamiento
-        - si ~operation.instruction.argument === "value"~, debería ser:
-            ~operation.addressingMode.getValue(this, input, operation.hasPageCrossPenalty)~
-        - si no:
-            ~operation.addressingMode.getAddress(this, input, operation.hasPageCrossPenalty)~
-    **_addCycles(operation)**:
-      **->** calcula cuántos ciclos tomó la ~operation~:
-        ~operation.cycles + this.extraCycles~
-        (llamemos esto ~cycles~)
-      **->** actualiza los contadores de ciclos:
-        ~this.cycle += cycles;~
-        ~this.extraCycles = 0;~
-      **->** retorna ~cycles~
+    *_-_*_fetchOperation()**:_--_
+      *_-_*->** lee un byte de la ubicación de memoria apuntada por [PC]_--_
+        _-_(llamemos esto ~opcode~)_--_
+      *_-_*->** encuentra la operación relacionada con ese opcode:_--_
+        _-_~this.operations[opcode]~_--_
+        _-_(llamemos esto ~operation~)_--_
+      *_-_*->** si ~operation~ no existe, tira un error "Invalid opcode."_--_
+      *_-_*->** incrementa [PC]_--_
+      *_-_*->** retorna ~operation~_--_
+    *_-_*_fetchInput(operation)**:_--_
+      *_-_*->** lee 0, 1 (usando ~read(...)~) o 2 bytes (usando ~read16(...)~) de la ubicación de memoria apuntada por [PC], dependiendo de ~operation.addressingMode.inputSize~_--_
+        _-_(llamemos esto ~input~)_--_
+      *_-_*->** incrementa [PC] (0, 1, o 2 veces) para saltear esos bytes_--_
+      *_-_*->** retorna ~input~ (o ~null~)_--_
+    *_-_*_fetchArgument(operation, input)**:_--_
+      *_-_*->** retorna el resultado de procesar ~input~ con el modo de direccionamiento_--_
+        _-_- si ~operation.instruction.argument === "value"~, debería ser:_--_
+            _-_~operation.addressingMode.getValue(this, input, operation.hasPageCrossPenalty)~_--_
+        _-_- si no:_--_
+            _-_~operation.addressingMode.getAddress(this, input, operation.hasPageCrossPenalty)~_--_
+    *_-_*_addCycles(operation)**:_--_
+      *_-_*->** calcula cuántos ciclos tomó la ~operation~:_--_
+        _-_~operation.cycles + this.extraCycles~_--_
+        _-_(llamemos esto ~cycles~)_--_
+      *_-_*->** actualiza los contadores de ciclos:_--_
+        _-_~this.cycle += cycles;~_--_
+        _-_~this.extraCycles = 0;~_--_
+      *_-_*->** retorna ~cycles~_--_
   responses:
   - ¿y el método `step()` que mencionaste? [step]
 

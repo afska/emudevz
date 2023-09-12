@@ -31,10 +31,10 @@ what:
   - _-_inicialízalas en ~false~_--_
   - |-
     _-_luego implementa, siguiendo la tabla anterior:_--_
-    **getValue()**:
-      **->** tiene que retornar un número de 8 bits con todas las banderas
-    **setValue(value)**:
-      **->** tiene que asignar todas las banderas a partir del número de 8 bits que recibe
+    *_-_*getValue()**:_--_
+      *_-_*->** tiene que retornar un número de 8 bits con todas las banderas_--_
+    *_-_*setValue(value)**:_--_
+      *_-_*->** tiene que asignar todas las banderas a partir del número de 8 bits que recibe_--_
   - _-_p. ej. con ~i~ y ~v~ encendidas, ```javascript getValue()``` debería retornar ```javascript 0b01100100```_--_
   - _-_y ```javascript setValue(0b00000010)``` debería poner todos los booleanos en ~false~, menos ~z~_--_
   responses:

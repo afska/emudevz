@@ -36,13 +36,13 @@ implement:
   - _-_it should assign a `ram` property (a `Uint8Array` of 2048 bytes)_--_
   - |-
     _-_implement these two methods:_--_
-    **read(address)**:
-      **->** if ~address~ is in $0000-$07FF, returns the corresponding byte from ~ram~
-      **->** if ~address~ is in $0800-$1FFF, returns a mirrored byte from ~ram~
-        (e.g. $0802 becomes $0002, $1023 becomes $0023)
-      **->** otherwise, returns 0
-    **write(address, value)**:
-      **->** similar to ~read(...)~, but writes the ~value~ instead of returning
+    *_-_*read(address)**:_--_
+      *_-_*->** if ~address~ is in $0000-$07FF, returns the corresponding byte from ~ram~_--_
+      *_-_*->** if ~address~ is in $0800-$1FFF, returns a mirrored byte from ~ram~_--_
+        _-_(e.g. $0802 becomes $0002, $1023 becomes $0023)_--_
+      *_-_*->** otherwise, returns 0_--_
+    *_-_*write(address, value)**:_--_
+      *_-_*->** similar to ~read(...)~, but writes the ~value~ instead of returning_--_
   - _-_then, as you did with `Cartridge`, add the class to _--_📄 _-_ ~/code/index.js~_--_
   responses:
   - I need help with the mirrored bytes 📐 [help]

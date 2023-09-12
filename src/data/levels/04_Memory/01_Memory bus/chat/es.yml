@@ -36,13 +36,13 @@ implement:
   - _-_debería asignar una propiedad `ram` (un `Uint8Array` de 2048 bytes)_--_
   - |-
     _-_implementa estos dos métodos:_--_
-    **read(address)**:
-      **->** si ~address~ está dentro de $0000-$07FF, retorna el byte correspondiente de ~ram~
-      **->** si ~address~ está dentro de $0800-$1FFF, retorna un byte espejado de ~ram~
-        (p. ej. $0802 se vuelve $0002, $1023 se vuelve $0023)
-      **->** caso contrario, retorna 0
-    **write(address, value)**:
-      **->** similar a ~read(...)~, pero escribe el <value> en lugar de retornar
+    *_-_*read(address)**:_--_
+      *_-_*->** si ~address~ está dentro de $0000-$07FF, retorna el byte correspondiente de ~ram~_--_
+      *_-_*->** si ~address~ está dentro de $0800-$1FFF, retorna un byte espejado de ~ram~_--_
+        _-_(p. ej. $0802 se vuelve $0002, $1023 se vuelve $0023)_--_
+      *_-_*->** caso contrario, retorna 0_--_
+    *_-_*write(address, value)**:_--_
+      *_-_*->** similar a ~read(...)~, pero escribe el <value> en lugar de retornar_--_
   - _-_luego, como hiciste con `Cartridge`, agrega la clase a _--_📄 _-_ ~/code/index.js~_--_
   responses:
   - necesito ayuda con los bytes espejados 📐 [help]

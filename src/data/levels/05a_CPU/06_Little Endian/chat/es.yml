@@ -9,15 +9,15 @@ main:
   - <{little_endian.png}>
   - |-
     📚  _-_implementa este método en `CPUMemory`:_--_
-    **read16(address)**:
-      **->** retorna un número de 16 bits
-        - el "low byte" se obtiene leyendo ~address~ de la memoria
-        - el "high byte" se obtiene leyendo ~address+1~
+    *_-_*read16(address)**:_--_
+      *_-_*->** retorna un número de 16 bits_--_
+        _-_- el "low byte" se obtiene leyendo ~address~ de la memoria_--_
+        _-_- el "high byte" se obtiene leyendo ~address+1~_--_
   - |-
     _-_y estos dos métodos en `Stack`:_--_
-    **push16(bigNumber)**:
-      **->** llama a ~push(...)~ dos veces (primero con el "high byte" de ~bigNumber~, luego con su "low byte")
-    **pop16()**:
-      **->** retorna un número de 16 bits como resultado de hacer ~pop()~ dos veces (primero el "low byte", luego el "high byte")
+    *_-_*push16(bigNumber)**:_--_
+      *_-_*->** llama a ~push(...)~ dos veces (primero con el "high byte" de ~bigNumber~, luego con su "low byte")_--_
+    *_-_*pop16()**:_--_
+      *_-_*->** retorna un número de 16 bits como resultado de hacer ~pop()~ dos veces (primero el "low byte", luego el "high byte")_--_
   - 💡  _-_¡recuerda usar _--_📄 _-_ ~/lib/byte.js~!_--_
   responses: []

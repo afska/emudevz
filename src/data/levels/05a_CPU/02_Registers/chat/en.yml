@@ -4,10 +4,10 @@ main:
   - "📚  _-_you'll start by creating two classes: `Register8Bit` and `Register16Bit` _--_🔢"
   - |-
     _-_they should have two methods:_--_
-    **getValue()**:
-      **->** returns the register's content
-    **setValue(value)**:
-      **->** sets the register's content
+    *_-_*getValue()**:_--_
+      *_-_*->** returns the register's content_--_
+    *_-_*setValue(value)**:_--_
+      *_-_*->** sets the register's content_--_
   - _-_the register's content starts from 0 and can be an 8-bit number (0-255) or a 16-bit number (0-65535), depending on the class_--_
   responses:
   - (*) what if I try to write off the limits? 🚫 [limit]

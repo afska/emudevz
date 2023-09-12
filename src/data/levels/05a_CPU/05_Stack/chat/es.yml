@@ -7,10 +7,10 @@ main:
   - _-_tendría que recibir `memory` y `sp` de la CPU, ya que va a tener que interactuar con ellos_--_
   - |-
     _-_implementa estos métodos:_--_
-    **push(value)**:
-      **->** escribe ~value~ en la dirección de memoria ~direcciónActual~, luego decrementa ~sp~
-    **pop()**:
-      **->** incrementa ~sp~ y retorna el resultado de leer ~direcciónActual~ de la memoria
+    *_-_*push(value)**:_--_
+      *_-_*->** escribe ~value~ en la dirección de memoria ~direcciónActual~, luego decrementa ~sp~_--_
+    *_-_*pop()**:_--_
+      *_-_*->** incrementa ~sp~ y retorna el resultado de leer ~direcciónActual~ de la memoria_--_
   - _-_la ~direcciónActual~ siempre es $0100 (donde vive la pila en la RAM), más el valor en [SP]_--_
   - |-
     _-_cuando termines, agrega una nueva instancia de la pila a la CPU:

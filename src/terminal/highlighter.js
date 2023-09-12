@@ -19,6 +19,11 @@ export default {
 				raw: true,
 			}, // <{image}>
 			{
+				regexp: /(\*_-_\*[^*]+\*\*)/,
+				silent: /(\*_-_\*([^*]+)\*\*)/g,
+				style: theme.HIGHLIGHTED_BOLD,
+			}, // **highlighted bold**
+			{
 				regexp: /(_-_)/,
 				silent: /(_-_)/g,
 				style: theme.BG_HIGHLIGHT_START,

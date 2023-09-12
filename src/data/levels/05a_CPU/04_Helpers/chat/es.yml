@@ -4,16 +4,16 @@ main:
   - vamos a definir algunas utilidades para simplificar futuras tareas
   - |-
     📚  _-_en tus clases `Register8Bit` y `Register16Bit`, implementa:_--_
-    **increment()**:
-      **->** llama a ~setValue(...)~ con el resultado de ~getValue() + 1~
-    **decrement()**:
-      **->** llama a ~setValue(...)~ con el resultado de ~getValue() - 1~
+    *_-_*increment()**:_--_
+      *_-_*->** llama a ~setValue(...)~ con el resultado de ~getValue() + 1~_--_
+    *_-_*decrement()**:_--_
+      *_-_*->** llama a ~setValue(...)~ con el resultado de ~getValue() - 1~_--_
   - |-
     _-_en tu `FlagsRegister`, implementa:_--_
-    **updateZero(value)**:
-      **->** asigna ~z=true~ si ~value~ es 0, o ~z=false~ en caso contrario
-    **updateNegative(value)**:
-      **->** asigna ~n=true~ si ~byte.isNegative(value)~, o ~n=false~ en caso contrario
-    **updateZeroAndNegative(value)**:
-      **->** llama a ~updateZero(...)~ y ~updateNegative(...)~ con ~value~
+    *_-_*updateZero(value)**:_--_
+      *_-_*->** asigna ~z=true~ si ~value~ es 0, o ~z=false~ en caso contrario_--_
+    *_-_*updateNegative(value)**:_--_
+      *_-_*->** asigna ~n=true~ si ~byte.isNegative(value)~, o ~n=false~ en caso contrario_--_
+    *_-_*updateZeroAndNegative(value)**:_--_
+      *_-_*->** llama a ~updateZero(...)~ y ~updateNegative(...)~ con ~value~_--_
   responses: []

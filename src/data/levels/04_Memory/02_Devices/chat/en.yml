@@ -7,8 +7,8 @@ main:
   - we'll map them later!
   - |-
     📚  _-_add to your `CPUMemory` the following method:_--_
-    **onLoad(ppu, apu, mapper, controllers)**:
-      **->** saves the parameters as properties (~this.ppu~, ~this.apu~, etc.)
+    *_-_*onLoad(ppu, apu, mapper, controllers)**:_--_
+      *_-_*->** saves the parameters as properties (~this.ppu~, ~this.apu~, etc.)_--_
   responses:
   - who calls that method? [who]
 
