@@ -4,14 +4,15 @@ main:
   - recuerda, cada componente de hardware tiene que estar conectado a la memoria
   - a medida que avances en tu desarrollo, tendrás que actualizar tu clase `CPUMemory`, agregando los mapeos correctos
   - un dispositivo importante que tenemos que agregar es el 🗜️  Mapper, el cual manejará todas las interacciones con el código de juego (🤖  PRG-ROM)
+  - la 🧠  CPU accede al código solo leyendo bytes dentro de $4020-$FFFF
   - hagamos recibir a nuestra memoria un montón de <dispositivos> 📱
   - |-
     📚  _-_agrega a tu `CPUMemory` el siguiente método:_--_
     *_-_*onLoad(ppu, apu, mapper, controllers)**:_--_
       *_-_*->** guarda los parámetros como propiedades (~this.ppu~, ~this.apu~, ~this.mapper~, y ~this.controllers~)_--_
   - _-_luego, como hiciste antes con ~this.ram~, modifica `read(...)` y `write(...)` para dejar que ~this.mapper~ maneje el rango $4020-$FFFF (_--_💾 _-_ Espacio del cartucho)_--_
-  - _-_en lecturas, deberías retornar ~this.mapper.cpuRead(address)~_--_
-  - _-_en escrituras, deberías llamar a ~this.mapper.cpuWrite(address, value)~ y retornar_--_
+  - _-_en <lecturas>, deberías retornar ~this.mapper.cpuRead(address)~_--_
+  - _-_en <escrituras>, deberías llamar a ~this.mapper.cpuWrite(address, value)~ y retornar_--_
   responses:
   - (*) ¿quién llama al método `onLoad`? 🤔 [who]
   - (*) ¿qué es un <mapper>? 🗜️ [mapper]

@@ -62,7 +62,7 @@ it("has a `ram` property and `read`/`write` methods", () => {
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("can read from RAM", () => {
+it("can read from RAM ($0000-$07FF)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
@@ -73,7 +73,7 @@ it("can read from RAM", () => {
 	}
 })({
 	locales: {
-		es: "puede leer de RAM",
+		es: "puede leer de RAM  ($0000-$07FF)",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
@@ -94,7 +94,7 @@ it("reading RAM mirror results in RAM reads", () => {
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("can write to RAM", () => {
+it("can write to RAM ($0000-$07FF)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
@@ -105,7 +105,7 @@ it("can write to RAM", () => {
 	}
 })({
 	locales: {
-		es: "puede escribir en RAM",
+		es: "puede escribir en RAM ($0000-$07FF)",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
@@ -151,7 +151,7 @@ it("saves the devices received by `onLoad`", () => {
 	use: ({ id }, book) => id >= book.getId("4.2"),
 });
 
-it("can read from the mapper", () => {
+it("can read from the mapper ($4020-$FFFF)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 	const random = byte.random();
@@ -166,12 +166,12 @@ it("can read from the mapper", () => {
 	}
 })({
 	locales: {
-		es: "puede leer del mapper",
+		es: "puede leer del mapper ($4020-$FFFF)",
 	},
 	use: ({ id }, book) => id >= book.getId("4.2"),
 });
 
-it("can write to the mapper", () => {
+it("can write to the mapper ($4020-$FFFF)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 	let arg1 = null,
@@ -193,7 +193,7 @@ it("can write to the mapper", () => {
 	}
 })({
 	locales: {
-		es: "puede escribir en el mapper",
+		es: "puede escribir en el mapper ($4020-$FFFF)",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
