@@ -11,7 +11,7 @@ howso:
   messages: 
   - the PPU has its own separate 16 KiB address space, specifically designed to fetch the 🕊️  tiles, 🏞️  backgrounds, and 🎨  palettes
   - check out 📄  ~/docs/ppu/ppu_memory.en.md~
-  - let's code this
+  - let's emulate this 🤟
   - 📚  _-_create a `PPUMemory` class, using _--_📄 _-_ ~/tmpl/ppu/PPUMemory.js~ as template_--_
   - _-_implement just the first range ($0000-$1FFF), for both `read(...)` and `write(...)` operations_--_
   - _-_on <reads>, you should return ~this.mapper.ppuRead(address)~_--_

@@ -1,5 +1,24 @@
 ---
 main:
   messages:
-  - test
+  - podrías preguntarte por qué nombramos la clase `CPUMemory` de esa manera
+  - y no simplemente `Memory` 🤷
+  - es porque hay 2 buses de memoria diferentes 🚌
+  responses:
+  - ¿cómo es eso? [howso]
+
+howso:
+  messages:
+  - la PPU tiene su propio espacio de direcciones de 16 KiB, diseñado específicamente para buscar los 🕊️  tiles, 🏞️  fondos y 🎨  paletas
+  - revisa 📄  ~/docs/ppu/ppu_memory.en.md~
+  - vamos a emular esto 🤟
+  - 📚  _-_crea una clase `PPUMemory`, utilizando _--_📄 _-_ ~/tmpl/ppu/PPUMemory.js~ como plantilla_--_
+  - _-_implementa solo el primer rango ($0000-$1FFF), tanto para las operaciones `read(...)` como `write(...)`_--_
+  - _-_en <lecturas>, deberías retornar ~this.mapper.ppuRead(address)~_--_
+  - _-_en <escrituras>, deberías llamar a ~this.mapper.ppuWrite(address, value)~ y retornar_--_
+  - |-
+    _-_luego, agrega esto al constructor de tu PPU:
+      ```javascript
+      this.memory = new PPUMemory();```_--_
+  - _-_¡recuerda importar el archivo!_--_
   responses: []
