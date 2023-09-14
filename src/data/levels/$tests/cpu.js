@@ -29,7 +29,6 @@ it("`/code/index.js` exports an object containing the `CPU` class", () => {
 });
 
 it("includes a `memory` property with the received `cpuMemory`", async () => {
-	mainModule = await evaluate();
 	const CPU = mainModule.default.CPU;
 	const CPUMemory = mainModule.default.CPUMemory;
 	const cpuMemory = new CPUMemory();

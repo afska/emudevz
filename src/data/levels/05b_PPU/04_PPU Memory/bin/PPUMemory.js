@@ -3,6 +3,11 @@ export default class PPUMemory {
     /* TODO: IMPLEMENT */
   }
 
+  onLoad(cartridge, mapper) {
+    this.cartridge = cartridge;
+    this.mapper = mapper;
+  }
+
   read(address) {
     // 🕊️ Pattern tables 0 and 1 (mapper)
     /* TODO: IMPLEMENT */

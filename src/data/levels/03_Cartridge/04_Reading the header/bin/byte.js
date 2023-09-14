@@ -108,10 +108,5 @@ export default {
       ((bit6 & 1) << 6) |
       ((bit7 & 1) << 7)
     );
-  },
-
-  /** Returns a random byte ([0, `max`]). */
-  random(max = 255) {
-    return Math.floor(Math.random() * max);
-  },
+  }
 };

@@ -110,8 +110,8 @@ export default {
 		);
 	},
 
-	/** Returns a random byte ([0, `max`]). */
-	random(max = 255) {
-		return Math.floor(Math.random() * max);
+	/** Returns a random byte ([1, `max`]). */
+	random(max = 254) {
+		return 1 + Math.floor(Math.random() * max);
 	},
 };
