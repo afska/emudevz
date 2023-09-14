@@ -10,7 +10,7 @@ main:
 howso:
   messages:
   - la PPU tiene su propio espacio de direcciones de 16 KiB, diseñado específicamente para buscar los 🕊️  tiles, 🏞️  fondos y 🎨  paletas
-  - revisa 📄  ~/docs/ppu/ppu_memory.en.md~
+  - revisa 📄  ~/docs/ppu/ppu_memory.es.md~
   - vamos a emular esto 🤟
   - 📚  _-_crea una clase `PPUMemory`, utilizando _--_📄 _-_ ~/tmpl/ppu/PPUMemory.js~ como plantilla_--_
   - _-_implementa solo el primer rango ($0000-$1FFF), tanto para las operaciones `read(...)` como `write(...)`_--_

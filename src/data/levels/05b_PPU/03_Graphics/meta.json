@@ -4,6 +4,7 @@
 		"es": "🖌️ Gráficos"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "mono",
 		"components": {
 			"Main": [

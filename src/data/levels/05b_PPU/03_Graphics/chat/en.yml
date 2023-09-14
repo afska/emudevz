@@ -39,7 +39,7 @@ moreabouttiles:
   - <{full.png;30x30}>
   - 🏞️  the background is static, but games can move it through scrolling
   - <{background.png;30x30}>
-  - 🛸  sprites are objects that can be easily moved or flipped, often drawn on top of the background
+  - 🛸  sprites are objects that can be easily moved or flipped, drawn on top of the background
   - <{sprites.png;30x30}>
   - both things use tiles to render
   responses:
@@ -56,5 +56,6 @@ enough:
   - 👾  all tiles are in <CHR-ROM> or <CHR-RAM>, with no color
   - 🎨  color is given through <palettes>
   - 👑 🎨  palettes reference entries of a fixed 64-color <master palette>
+  - "I'll write about this, with more details, here: 📄  /docs/ppu/definitions.en.md"
   responses:
   - awesome [end]

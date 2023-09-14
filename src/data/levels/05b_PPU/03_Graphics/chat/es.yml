@@ -39,7 +39,7 @@ moreabouttiles:
   - <{full.png;30x30}>
   - 🏞️  el fondo es estático, pero los juegos pueden moverlo mediante scrolling
   - <{background.png;30x30}>
-  - 🛸  los sprites son objetos que se pueden mover o voltear fácilmente, a menudo dibujados encima del fondo
+  - 🛸  los sprites son objetos que se pueden mover o voltear fácilmente, dibujados encima del fondo
   - <{sprites.png;30x30}>
   - ambas cosas usan tiles para renderizar
   responses:
@@ -56,5 +56,6 @@ enough:
   - 👾  todos los tiles están en <CHR-ROM> o <CHR-RAM>, sin color
   - 🎨  el color se da a través de <paletas>
   - 👑 🎨  las paletas hacen referencia a entradas de una <paleta maestra> de 64 colores fijos
+  - "escribiré sobre esto, con más detalles, aquí: 📄  /docs/ppu/definitions.es.md"
   responses:
   - genial [end]
