@@ -115,7 +115,7 @@ class MultiFile extends PureComponent {
 						<IconButton
 							Icon={FaSearch}
 							tooltip={locales.get("search_files")}
-							onClick={() => this.setState({ isSearching: true })}
+							onClick={this._search}
 							className={styles.tabButton}
 						/>
 					</div>
@@ -138,9 +138,29 @@ class MultiFile extends PureComponent {
 		);
 	}
 
+	componentDidMount() {
+		this._subscriber = bus.subscribe({
+			"file-search": this._focusAndSearch,
+		});
+	}
+
+	componentWillUnmount() {
+		this._subscriber.release();
+	}
+
 	focus = () => {
 		if (this._view) this._view.focus();
 		else this._container.focus();
+	};
+
+	_focusAndSearch = () => {
+		const name = this._layout.getInstanceName(this);
+		this._layout.focus(name);
+		this._search();
+	};
+
+	_search = () => {
+		this.setState({ isSearching: true });
 	};
 
 	_isReadOnly(filePath) {

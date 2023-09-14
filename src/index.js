@@ -9,6 +9,7 @@ import HomeScreen from "./gui/HomeScreen";
 import PlayScreen from "./gui/PlayScreen";
 import music from "./gui/sound/music";
 import store, { history } from "./store";
+import { bus } from "./utils";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
@@ -39,7 +40,10 @@ document.onkeydown = (e) => {
 
 	// Disable Print shortcut
 	const isCtrlP = (e.ctrlKey || e.metaKey) && e.code === "KeyP";
-	if (isCtrlP) e.preventDefault();
+	if (isCtrlP) {
+		bus.emit("file-search");
+		e.preventDefault();
+	}
 
 	// Disable Save shortcut
 	const isCtrlS = (e.ctrlKey || e.metaKey) && e.code === "KeyS";

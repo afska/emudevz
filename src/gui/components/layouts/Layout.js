@@ -18,6 +18,10 @@ export default class Layout extends PureComponent {
 		this.instances[instanceName].focus();
 	}
 
+	getInstanceName(instance) {
+		return _.findKey(this.instances, instance);
+	}
+
 	requireComponents() {
 		this.constructor.requiredComponentNames.forEach((requiredComponentName) => {
 			if (this.props[requiredComponentName] == null)

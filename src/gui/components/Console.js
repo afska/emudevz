@@ -3,6 +3,7 @@ import { XTerm } from "updated-xterm-for-react";
 import { FitAddon } from "xterm-addon-fit";
 import locales from "../../locales";
 import Terminal from "../../terminal/Terminal";
+import { bus } from "../../utils";
 import styles from "./Console.module.css";
 
 const ImageAddon = window.ImageAddon.ImageAddon;
@@ -93,6 +94,12 @@ export default class Console extends PureComponent {
 	};
 
 	_onKeyDownCapture = (e) => {
+		const isCtrlP = (e.ctrlKey || e.metaKey) && e.code === "KeyP";
+		if (isCtrlP) {
+			e.preventDefault();
+			bus.emit("file-search");
+		}
+
 		if (
 			(e.code === "ArrowLeft" ||
 				e.code === "ArrowRight" ||
