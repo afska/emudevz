@@ -1,9 +1,10 @@
 {
 	"name": {
-		"en": "EMOJI Tiles",
-		"es": "EMOJI Tiles"
+		"en": "🕊️ Tiles",
+		"es": "🕊️ Tiles"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
