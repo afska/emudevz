@@ -46,6 +46,8 @@ moreabouttiles:
   - ah, gotcha [enough]
 
 enough:
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/ppu/definitions.en.md");
   messages:
   - we'll analyze the memory structures for tiles, backgrounds, and sprites later
   - but now you have an idea of how graphics are arranged on the screen ✨

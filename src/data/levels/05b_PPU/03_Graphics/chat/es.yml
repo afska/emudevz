@@ -46,6 +46,8 @@ moreabouttiles:
   - ah, entiendo [enough]
 
 enough:
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/ppu/definitions.es.md");
   messages:
   - analizaremos las estructuras de memoria para tiles, fondos y sprites más tarde
   - pero ahora ya tienes una idea de cómo se organizan los gráficos en la pantalla ✨
