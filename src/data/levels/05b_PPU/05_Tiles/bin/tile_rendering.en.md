@@ -1,6 +1,6 @@
 # PPU: Tile rendering
 
-- A 🕊️📖 _pattern table_ is a list of `256` 🕊️ _tiles_.
+- A 🕊️📖 _pattern table_ is a list of `256` consecutive 🕊️ _tiles_.
 - Each 🕊️ _tile_ occupies `16` bytes...
 - ...so each _pattern table_ is `4096` bytes.
 - The 👾 `<CHR-ROM>` inside the 💾 `cartridge` contains `2` 🕊️📖 _pattern tables_.

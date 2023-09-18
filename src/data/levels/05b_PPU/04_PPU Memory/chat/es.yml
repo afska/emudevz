@@ -9,9 +9,16 @@ main:
 
 howso:
   messages:
-  - la PPU tiene su propio espacio de direcciones de 16 KiB, diseñado específicamente para buscar los 🕊️  tiles, 🏞️  fondos y 🎨  paletas
+  - la PPU tiene su propio <espacio de direcciones> de 16 KiB, diseñado específicamente para buscar los 🕊️  tiles, 🏞️  fondos y 🎨  paletas
   - revisa 📄  ~/docs/ppu/ppu_memory.es.md~
-  - vamos a emular esto 🤟
+  - la mayoría del tiempo, utilizará estas direcciones
+  - y solo usará las direcciones de la CPU como un puente para comunicarse con la CPU
+  - a partir de ahora, diremos algo como "dirección de PPU $1F2A" o "dirección de CPU $1F2A" para diferenciar los dos espacios
+  responses:
+  - ¿cómo podemos emular esto? 😮 [emulate]
+
+emulate:
+  messages:
   - 📚  _-_crea una clase `PPUMemory`, utilizando _--_📄 _-_ ~/tmpl/ppu/PPUMemory.js~ como plantilla_--_
   - _-_implementa solo el primer rango ($0000-$1FFF), tanto para las operaciones `read(...)` como `write(...)`_--_
   - _-_en <lecturas>, deberías retornar ~this.mapper.ppuRead(address)~_--_
