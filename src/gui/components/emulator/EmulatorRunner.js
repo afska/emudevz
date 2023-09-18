@@ -147,8 +147,16 @@ export default class EmulatorRunner extends PureComponent {
 					onError={this._setError}
 					onInputType={this._setInputType}
 					onFps={this._setFps}
+					onFrame={this._setInfo}
+					onStop={this._clearInfo}
 					ref={(ref) => {
 						this._emulator = ref;
+					}}
+				/>
+				<pre
+					className={styles.info}
+					ref={(ref) => {
+						this._info = ref;
 					}}
 				/>
 			</div>
@@ -194,6 +202,29 @@ export default class EmulatorRunner extends PureComponent {
 		if (!this._container) return;
 		const formattedFps = `${fps}`.padStart(2, "0");
 		this._container.querySelector("#fps").textContent = formattedFps;
+	};
+
+	_setInfo = (__, neees) => {
+		const header = neees?.context?.cartridge?.header;
+		const mapperId = header?.mapperId ?? "❓";
+		const mapperName = neees?.context?.mapper?.constructor?.name ?? "❓";
+		const mirroringId =
+			neees?.ppu?.memory?.mirroringId ?? header?.mirroringId ?? "❓";
+		const chr = header?.usesChrRam ? "RAM" : "ROM";
+		const prgRam = header?.hasPrgRam ? "✔️" : "❌";
+
+		this._info.innerText =
+			`🗜️ Mapper: ${mapperId} (${mapperName})` +
+			"\n" +
+			`🚽 Mirroring: ${mirroringId}` +
+			"\n" +
+			`👾 CHR: ${chr}` +
+			"\n" +
+			`🔋 PRG RAM: ${prgRam}`;
+	};
+
+	_clearInfo = () => {
+		this._info.innerText = "";
 	};
 
 	_onToggle = (setting) => {

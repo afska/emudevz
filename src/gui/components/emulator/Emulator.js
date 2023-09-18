@@ -175,6 +175,7 @@ export default class Emulator extends Component {
 
 		window.removeEventListener("keydown", this._onKeyDown);
 		window.removeEventListener("keyup", this._onKeyUp);
+		this.props.onStop?.();
 	}
 
 	_onKeyDown = (e) => {

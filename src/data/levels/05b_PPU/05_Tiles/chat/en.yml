@@ -56,5 +56,5 @@ test:
 chrram:
   messages:
   - those games load tiles dynamically through game code 🤖
-  - and right now, the 🧠  CPU has <no way> of writing our 🖥️ PPU memory
+  - and right now, the 🧠  CPU has <no way> of writing our 🖥️  PPU memory
   responses: []

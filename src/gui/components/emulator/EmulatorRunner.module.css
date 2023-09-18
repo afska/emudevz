@@ -65,3 +65,22 @@
 	border: 1px dashed rgb(143, 143, 143);
 	padding: 4px;
 }
+
+.info {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	user-select: none;
+	margin: 0;
+	font-size: xx-small;
+	opacity: 0.75;
+	padding: 8px;
+	border-top-right-radius: 8px;
+	cursor: crosshair;
+}
+
+.info:hover {
+	opacity: 1;
+	background-color: black;
+	transition: opacity 0.3s, background-color 0.3s;
+}
