@@ -5,22 +5,22 @@ main:
   - read 📄  ~/docs/ppu/tile_rendering.en.md~
   - it should explain how tiles are encoded in memory
   - we'll create a class to help us retrieve tile colors
-  - as the PPU renders by 🌠  scanlines, it will receive which row it should draw (`y`)
+  - as the PPU renders by 🌠  scanlines, it will receive a parameter (`y`) that represents the row index it should draw
   - |-
     📚  _-_create a `Tile` class with the following:_--_
     *_-_*constructor(ppu, patternTableId, tileId, y)**:_--_
       *_-_*->** calculates the start address of the pattern table:_--_
         _-_$0000 or $1000 depending on ~patternTableId~ (~0~ or ~1~)_--_
-        _-_(let's save that into ~this._tableAddress~)_--_
+        _-_(let's call this ~tableAddress~)_--_
       *_-_*->** calculates the start address of the tile's _--_💜 _-_ low plane:_--_
-        _-_~this._tableAddress + tileId * 16~_--_
-        _-_(let's save that into ~this._lowPlaneAddress~)_--_
+        _-_~tableAddress + tileId * 16~_--_
+        _-_(let's call this ~lowPlaneAddress~)_--_
       *_-_*->** calculates the start address of the tile's _--_💚 _-_ high plane:_--_
-        _-_~this._lowPlaneAddress + 8~_--_
-        _-_(let's save that into ~this._highPlaneAddress~)_--_
+        _-_~lowPlaneAddress + 8~_--_
+        _-_(let's call this ~highPlaneAddress~)_--_
       *_-_*->** reads the correct row of each bitplane:_--_
-        _-_~this._lowRow~ = read PPU address ~this._lowPlaneAddress + y~_--_
-        _-_~this._HighRow~ = read PPU address ~this._highPlaneAddress + y~_--_
+        _-_~this._lowRow~ = read PPU address ~lowPlaneAddress + y~_--_
+        _-_~this._highRow~ = read PPU address ~highPlaneAddress + y~_--_
     *_-_*getColorIndex(x)**:_--_
       *_-_*->** determines the bit position that corresponds to ~x~ (a number between 0 and 7)_--_
         _-_keep in mind that ~x=0~ is the leftmost pixel, and that would be ~bit 7~_--_
@@ -37,24 +37,38 @@ test:
     ```javascript
     // <test>
     const testPalette = [0xffffffff, 0xff999999, 0xff424242, 0xff000000];
-    for (let tileId = 0; tileId < 32; tileId++) {
+    
+    for (let tileId = 0; tileId < 64; tileId++) {
+      const startX = (tileId * 32) % 8;
+      const startY = Math.floor(tileId / 8) * 31;
+      
       for (let y = 0; y < 8; y++) {
         const tile = new Tile(this, 0, tileId, y);
         
         for (let x = 0; x < 8; x++) {
           const color = testPalette[tile.getColorIndex(x)];
-          this.plot(x + tileId * 8, y, color);
+          
+          for (let scaledY = 0; scaledY < 4; scaledY++) {
+            for (let scaledX = 0; scaledX < 4; scaledX++) {
+              this.plot(
+                startX + tileId * 32 + x * 4 + scaledX, 
+                startY + y * 4 + scaledY, 
+                color
+              );
+            }
+          }
         }
       }
     }
     // </test>```_--_
-  - this will draw the first 32 tiles from 👾  <CHR-ROM>
-  - ⚠️  it will <only> work on games that use 👾  <CHR-ROM>
+  - this will draw the first 64 tiles from 👾  <CHR-ROM>
+  - with a ~4x~ scale (32x32 tiles instead of 8x8)
+  - ⚠️  it will <only> work on games that use 👾  <CHR-ROM> ⚠️
   responses:
   - what happens with games that use 👾  <CHR-RAM>? [chrram]
 
 chrram:
   messages:
   - those games load tiles dynamically through game code 🤖
-  - and right now, the 🧠  CPU has <no way> of writing our 🖥️  PPU memory
+  - and currently, the 🧠  CPU has <no way> of writing our 🖥️  PPU memory
   responses: []
