@@ -27,8 +27,8 @@ export default class TestCommand extends Command {
 		const level = Level.current;
 
 		let isVideoTestSuccessful = true;
-		if (level.videoTest && !this._targetId) {
-			isVideoTestSuccessful = await this._runVideoTest(level);
+		if (!_.isEmpty(level.videoTests) && !this._targetId) {
+			isVideoTestSuccessful = await this._runVideoTests(level);
 			await this._terminal.newline();
 		}
 
@@ -157,9 +157,16 @@ export default class TestCommand extends Command {
 		return true;
 	}
 
-	async _runVideoTest(level) {
-		const videoTest = level.videoTest;
+	async _runVideoTests(level) {
+		for (let videoTest of level.videoTests) {
+			const success = await this._runVideoTest(level, videoTest);
+			if (!success) return false;
+		}
 
+		return true;
+	}
+
+	async _runVideoTest(level, videoTest) {
 		const isPPUUnlocked = store.getState().savedata.unlockedUnits.usePPU;
 		if (!isPPUUnlocked) {
 			await this._terminal.writeln(locales.get("tests_video_ppu_not_unlocked"));

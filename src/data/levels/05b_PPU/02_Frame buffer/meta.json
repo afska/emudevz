@@ -35,11 +35,13 @@
 		"inherit": ["cartridge.js", "memory.js", "ppu.js"],
 		"mainTestFile": "ppu.js"
 	},
-	"videoTest": {
-		"rom": "/roms/_test/NEEEStest.neees",
-		"frames": 180,
-		"ppu": "TestPPU.js"
-	},
+	"videoTests": [
+		{
+			"rom": "/roms/_test/NEEEStest.neees",
+			"frames": 180,
+			"ppu": "TestPPU.v1.js"
+		}
+	],
 	"memory": {
 		"content": {
 			"multifile": true

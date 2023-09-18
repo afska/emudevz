@@ -32,15 +32,19 @@ main:
 test:
   messages:
   - ¡buena pregunta! 😁
-  - |-
+  - |+
     _-_en tu `PPU`, reemplaza el código de prueba (antes de la llamada `onFrame`) con:
+
     ```javascript
     // <test>
     const testPalette = [0xffffffff, 0xff999999, 0xff424242, 0xff000000];
+    const scale = 2;
     
-    for (let tileId = 0; tileId < 64; tileId++) {
-      const startX = (tileId % 8) * 32;
-      const startY = Math.floor(tileId / 8) * 32;
+    for (let tileId = 0; tileId < 240; tileId++) {
+      const scaledSize = 8 * scale;
+      const tilesPerRow = 256 / scaledSize;
+      const startX = (tileId % tilesPerRow) * scaledSize;
+      const startY = Math.floor(tileId / tilesPerRow) * scaledSize;
       
       for (let y = 0; y < 8; y++) {
         const tile = new Tile(this, 0, tileId, y);
@@ -48,11 +52,11 @@ test:
         for (let x = 0; x < 8; x++) {
           const color = testPalette[tile.getColorIndex(x)];
           
-          for (let scaledY = 0; scaledY < 4; scaledY++) {
-            for (let scaledX = 0; scaledX < 4; scaledX++) {
+          for (let scaledY = 0; scaledY < scale; scaledY++) {
+            for (let scaledX = 0; scaledX < scale; scaledX++) {
               this.plot(
-                startX + x * 4 + scaledX, 
-                startY + y * 4 + scaledY, 
+                startX + x * scale + scaledX, 
+                startY + y * scale + scaledY, 
                 color
               );
             }
@@ -61,8 +65,8 @@ test:
       }
     }
     // </test>```_--_
-  - esto dibujará los primeros 64 tiles de 👾  <CHR-ROM>
-  - con una escala de ~4x~ (tiles de ~32x32~ en lugar de ~8x8~)
+  - esto dibujará los primeros 240 tiles de 👾  <CHR-ROM>
+  - con una escala de ~2x~ (tiles de ~16x16~ en lugar de ~8x8~)
   - ⚠️  funcionará <solo> en juegos que utilicen 👾  <CHR-ROM> ⚠️
   responses:
   - ¿qué pasa con los juegos que usan 👾  <CHR-RAM>? [chrram]

@@ -160,7 +160,7 @@ export default {
 	tests_video_expected_output: "Salida esperada",
 	tests_video_ppu_not_unlocked: "❌  La PPU no está desbloqueada.",
 	tests_video_no_tv: "❌  ¡No hay TV!",
-	tests_video_running: "🎥  Corriendo tests de video...",
+	tests_video_running: "🎥  Corriendo prueba de video...",
 	tests_emulator_crashed: "💥  El emulador falló.",
 	tests_video_failed1: "❌  Píxeles incorrectos (frame ",
 	tests_video_failed2: " de ",

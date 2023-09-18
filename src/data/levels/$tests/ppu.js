@@ -5,6 +5,12 @@ before(async () => {
 	mainModule = await evaluate();
 });
 
+const dummyCartridge = {};
+const dummyMapper = {
+	ppuRead: () => 0,
+	ppuWrite: () => {},
+};
+
 // 5b.1 New PPU
 
 it("`/code/index.js` exports an object containing the `PPU` class", () => {
@@ -52,6 +58,7 @@ it("initializates the counters", () => {
 it("has a `step` method that increments the counters", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 	ppu.should.respondTo("step");
 	const noop = () => {};
 
@@ -112,6 +119,7 @@ it("has a `plot` method that draws into the frame buffer", () => {
 it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 	ppu.should.respondTo("step");
 	const onFrame = sinon.spy();
 	const noop = () => {};
