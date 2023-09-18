@@ -19,8 +19,8 @@ main:
         _-_~lowPlaneAddress + 8~_--_
         _-_(let's call this ~highPlaneAddress~)_--_
       *_-_*->** reads the correct row of each bitplane:_--_
-        _-_~this._lowRow~ = read PPU address ~lowPlaneAddress + y~_--_
-        _-_~this._highRow~ = read PPU address ~highPlaneAddress + y~_--_
+        _-_~this._lowRow~ = read PPU address ~lowPlaneAddress + y~ from ~ppu.memory~_--_
+        _-_~this._highRow~ = read PPU address ~highPlaneAddress + y~ from ~ppu.memory~_--_
     *_-_*getColorIndex(x)**:_--_
       *_-_*->** determines the bit position that corresponds to ~x~ (a number between 0 and 7)_--_
         _-_keep in mind that ~x=0~ is the leftmost pixel, and that would be ~bit 7~_--_
@@ -62,7 +62,7 @@ test:
     }
     // </test>```_--_
   - this will draw the first 64 tiles from 👾  <CHR-ROM>
-  - with a ~4x~ scale (32x32 tiles instead of 8x8)
+  - with a ~4x~ scale (~32x32~ tiles instead of ~8x8~)
   - ⚠️  it will <only> work on games that use 👾  <CHR-ROM> ⚠️
   responses:
   - what happens with games that use 👾  <CHR-RAM>? [chrram]
