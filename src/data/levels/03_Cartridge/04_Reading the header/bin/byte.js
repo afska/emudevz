@@ -108,5 +108,10 @@ export default {
       ((bit6 & 1) << 6) |
       ((bit7 & 1) << 7)
     );
+  },
+
+  /** Returns a 2-bit number from `highBit` and `lowBit`. */
+  buildU2(highBit, lowBit) {
+    return (highBit << 1) | lowBit;
   }
 };

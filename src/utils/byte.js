@@ -110,6 +110,11 @@ export default {
 		);
 	},
 
+	/** Returns a 2-bit number from `highBit` and `lowBit`. */
+	buildU2(highBit, lowBit) {
+		return (highBit << 1) | lowBit;
+	},
+
 	/** Returns a random byte ([1, `max`]). */
 	random(max = 254) {
 		return 1 + Math.floor(Math.random() * max);

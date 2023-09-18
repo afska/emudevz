@@ -6,6 +6,8 @@
 - The 👾 `<CHR-ROM>` inside the 💾 `cartridge` contains `2` 🕊️📖 _pattern tables_.
   - (that's available in PPU addresses `$0000-$1FFF`)
 
+<div class="embed-image"><img alt="Pattern table memory" src="assets/graphics/tile_bitplanes.png" style="width: 100%" /></div>
+
 #### Pattern table example
 
 <div class="embed-image"><img alt="Pattern table" src="assets/graphics/tiles_grayscale.png" style="width: 30%" /></div>
@@ -17,7 +19,7 @@
 - ...so each pixel can be either `0`, `1`, `2` or `3`.
   - (in binary: `00`, `01`, `10` or `11`)
 
-To encode the pixels, the `16` bytes of the tile data are divided in **two** `8-byte` **bitplanes**.
+To encode the pixels, the `16` bytes of the tile data are divided in **two** `8-byte` **bitplanes** (<strong style="color: #7723ec">low plane</strong> and <strong style="color: #4eeebf">high plane</strong>).
 
 Here's an example of how a tile for **½** (one-half fraction) is encoded:
 

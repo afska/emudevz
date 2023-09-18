@@ -13,7 +13,6 @@ neeesfiles:
   - right, the format is called ~iNEEES~, and you should start by reading its header
   - "the first 4 bytes of a game file always contain the following:"
   - $4E $45 $53 $1A
-  - which represents the ASCII sequence of the console's name ("NEEES"), but only with one "E"
   - that's <the magic constant> ✨
   - you should look for these bytes to check whether a ROM is valid or not
   responses:

@@ -8,7 +8,7 @@
 
 #### Ejemplo de pattern table
 
-<div class="embed-image"><img alt="Pattern table" src="assets/graphics/tiles_grayscale.png" style="width: 30%" /></div>
+<div class="embed-image"><img alt="Pattern table memory" src="assets/graphics/tile_bitplanes.png" style="width: 100%" /></div>
 
 #### Renderizado
 
@@ -17,7 +17,7 @@
 - ...por lo tanto, cada píxel puede ser `0`, `1`, `2` o `3`.
   - (en binario: `00`, `01`, `10` o `11`)
 
-Para codificar los píxeles, los `16` bytes de los datos del tile se dividen en **dos** **bitplanes** de `8 bytes`.
+Para codificar los píxeles, los `16` bytes de los datos del tile se dividen en **dos** **bitplanes** de `8 bytes` (<strong style="color: #7723ec">low plane</strong> y <strong style="color: #4eeebf">high plane</strong>).
 
 Aquí tienes un ejemplo de cómo se codifica un tile para **½** (fracción de un medio):
 

@@ -22,7 +22,7 @@ An iNEEES file consists of the following sections, in order:
 
 The format of the header is as follows:
 
-<div class="embed-image" style="margin-bottom: 16px"><img alt="header" src="assets/header.png" /></div>
+<div class="embed-image" style="margin-bottom: 16px"><img alt="Header" src="assets/header.png" style="width: 75%" /></div>
 
 - `0-3`: Constant `$4E $45 $53 $1A`
 - `4`: Size of 🤖 `PRG-ROM` in `16` KiB units

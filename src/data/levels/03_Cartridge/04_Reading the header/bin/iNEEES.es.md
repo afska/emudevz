@@ -22,7 +22,7 @@ Un archivo iNEEES consiste de las siguientes secciones, en orden:
 
 El formato de la cabecera es el siguiente:
 
-<div class="embed-image" style="margin-bottom: 16px"><img alt="header" src="assets/header.png" /></div>
+<div class="embed-image" style="margin-bottom: 16px"><img alt="Header" src="assets/header.png" style="width: 75%" /></div>
 
 - `0-3`: Constante `$4E $45 $53 $1A`
 - `4`: Tamaño del 🤖 `PRG-ROM` en unidades de `16` KiB
