@@ -39,8 +39,8 @@ test:
     const testPalette = [0xffffffff, 0xff999999, 0xff424242, 0xff000000];
     
     for (let tileId = 0; tileId < 64; tileId++) {
-      const startX = (tileId * 32) % 8;
-      const startY = Math.floor(tileId / 8) * 31;
+      const startX = (tileId % 8) * 32;
+      const startY = Math.floor(tileId / 8) * 32;
       
       for (let y = 0; y < 8; y++) {
         const tile = new Tile(this, 0, tileId, y);
@@ -51,7 +51,7 @@ test:
           for (let scaledY = 0; scaledY < 4; scaledY++) {
             for (let scaledX = 0; scaledX < 4; scaledX++) {
               this.plot(
-                startX + tileId * 32 + x * 4 + scaledX, 
+                startX + x * 4 + scaledX, 
                 startY + y * 4 + scaledY, 
                 color
               );
