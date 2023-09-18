@@ -23,6 +23,6 @@ To encode the pixels, the `16` bytes of the tile data are divided in **two** `8-
 
 Here's an example of how a tile for **½** (one-half fraction) is encoded:
 
-<div class="embed-image"><img alt="Encoded tile" src="assets/graphics/one_half_fraction.png" style="width: 75%" /></div>
+<div class="embed-image"><img alt="Encoded tile" src="assets/graphics/one_half_fraction2.png" style="width: 75%" /></div>
 
 Each bit in the first plane controls <strong style="color: #7723ec">bit 0</strong> of a pixel's color; the corresponding bit in the second plane controls <strong style="color: #4eeebf">bit 1</strong>.
