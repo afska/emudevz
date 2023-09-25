@@ -215,7 +215,7 @@ export default class CreditsModal extends PureComponent {
 					<Section title="📚 Source code">
 						🛠️{" "}
 						<a
-							href="https://github.com/rodri042/emudevz"
+							href="https://github.com/afska/emudevz"
 							target="_blank"
 							rel="noreferrer"
 						>
