@@ -21,6 +21,10 @@ Para codificar los píxeles, los `16` bytes de los datos del tile se dividen en 
 
 Aquí tienes un ejemplo de cómo se codifica un tile para **½** (fracción de un medio):
 
+```
+$41 $C2 $44 $48 $10 $20 $40 $80 $01 $02 $04 $08 $16 $21 $42 $87
+```
+
 <div class="embed-image"><img alt="Encoded tile" src="assets/graphics/one_half_fraction2.png" style="width: 75%" /></div>
 
 Cada bit en el primer plano controla el <strong style="color: #7723ec">bit 0</strong> del color de un píxel; el bit correspondiente en el segundo plano controla el <strong style="color: #4eeebf">bit 1</strong>.

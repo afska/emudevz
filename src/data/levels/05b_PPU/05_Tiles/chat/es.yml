@@ -75,4 +75,5 @@ chrram:
   messages:
   - esos juegos cargan tiles dinámicamente a través del código del juego 🤖
   - y actualmente, la 🧠  CPU no tiene <ninguna forma> de escribir en nuestra 🖥️  memoria PPU
+  - por lo que en esos casos, solo verás una pantalla en blanco
   responses: []

@@ -75,4 +75,5 @@ chrram:
   messages:
   - those games load tiles dynamically through game code 🤖
   - and currently, the 🧠  CPU has <no way> of writing our 🖥️  PPU memory
+  - so in those cases, you will only see a blank screen
   responses: []
