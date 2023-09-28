@@ -1,5 +1,23 @@
 ---
 main:
   messages:
-  - coming soon!
-  responses: []
+  - the 🧠  CPU and 🖥️  PPU talk with each other via a set of 7 <memory-mapped registers>
+  - check out 📄  ~/docs/ppu/ppu_registers.en.md~
+  - some of them are 🔍  read-only (read by 🧠  CPU, written by 🖥️  PPU) 
+  - some are ✏️  write-only (read by 🖥️  PPU, written by 🧠  CPU)
+  - and a few are bidirectional  🔍 ✏️
+  responses:
+  - give me an example 🙏 [example]
+
+example:
+  messages:
+  - there are two 🕊️ 📖  pattern tables, remember?
+  - well, games' code need to tell the PPU which one it should use
+  - for backgrounds, this is handled by bit 4 of $2000 (🎛️  PPUCtrl)
+  - we call it ~B~ in our ~Bits~ column
+  - so, for example, if a game wants to use the second table, it would write a 16 (binary ```raw 000```~1~```raw 0000```) to $2000
+  - or any number that has bit 4 set!
+  - a write to $2000 affects 6 parameters at the same time (~V~, ~H~, ~B~, ~S~, ~I~, and ~NN~)
+  - so, writing that 16 would also set the other 5 parameters to 0
+  responses:
+  - so, these are like special variables, right? they hold values [variables]
