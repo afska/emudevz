@@ -2,7 +2,8 @@ import InMemoryRegister from "/lib/InMemoryRegister";
 
 class PPUCtrl extends InMemoryRegister.PPU {
   onLoad() {
-    this.addField("vramAddressIncrement32", 2)
+    this.addField("nameTableId", 0, 2)
+      .addField("vramAddressIncrement32", 2)
       .addField("sprite8x8PatternTableId", 3)
       .addField("backgroundPatternTableId", 4)
       .addField("spriteSize", 5)

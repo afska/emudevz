@@ -1,6 +1,7 @@
 ---
 main:
   messages:
+  - "// TODO: ADD EMOJIS AND GRAPHICS; TRANSLATE!"
   - the 🧠  CPU and 🖥️  PPU talk with each other via a set of 7 <memory-mapped registers>
   - check out 📄  ~/docs/ppu/ppu_registers.en.md~
   - some of them are 🔍  read-only (read by 🧠  CPU, written by 🖥️  PPU) 
@@ -20,4 +21,27 @@ example:
   - a write to $2000 affects 6 parameters at the same time (~V~, ~H~, ~B~, ~S~, ~I~, and ~NN~)
   - so, writing that 16 would also set the other 5 parameters to 0
   responses:
-  - so, these are like special variables, right? they hold values [variables]
+  - so, these registers only hold numbers? 🔢 [numbers]
+
+numbers:
+  messages: 
+  - yes, but some produce <special effects> when the 🧠  CPU reads or writes them
+  - these side effects can reset an internal buffer, increment counters, or even copying data!
+  - "I've coded a class that will help you implement this, feel free to use it 📖"
+  - 📄  ~/lib/InMemoryRegister.js~
+  responses:
+  - how can I use it? [useit]
+
+useit:
+  messages:
+  - have a look at 📄  ~/tmpl/ppu/VideoRegisters.js~ and use it as a template
+  - registers 🎛️  `PPUCtrl` and 📊  `PPUStatus` are already implemented
+  - note how they call to `addField` for each parameter defined in the ~Bits~ column of the doc file, indicating the starting bit, and its size (when they're larger than 1 bit)
+  - "this creates <magic properties>: after the `onWrite(...)` call, the PPU will be able to access their values (e.g. `ppuCtrl.spriteSize`)"
+  - in the case of 📊  `PPUStatus`, it uses `addWritableField` because the PPU needs to write them (e.g. `ppuStatus.isInVBlankInterval = 1`) so the CPU can read the updated values via `onRead()`
+  - 📚  _-_create a `VideoRegisters` class, using that template_--_
+  - _-_add a `registers` property to `PPU`, assigned to {ENTER} ```javascript new VideoRegisters(this)```_--_
+  - _-_lastly, map them in `CPUMemory`:_--_
+  - _-_<reads> should return ~this.ppu.registers.read(address)~_--_
+  - _-_<writes> should call ~this.ppu.registers.write(address, value)~ and return_--_
+  responses: []
