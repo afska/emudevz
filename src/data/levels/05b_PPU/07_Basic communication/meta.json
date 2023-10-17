@@ -1,0 +1,54 @@
+{
+	"name": {
+		"en": "🔗 Basic communication",
+		"es": "🔗 Comunicación básica"
+	},
+	"ui": {
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "ppu.js"],
+		"mainTestFile": "ppu.js"
+	},
+	"videoTests": [
+		{
+			"rom": "/roms/_test/NEEEStest.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v2.js"
+		},
+		{
+			"rom": "/roms/_test/hello_world.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v2.js"
+		}
+	],
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
