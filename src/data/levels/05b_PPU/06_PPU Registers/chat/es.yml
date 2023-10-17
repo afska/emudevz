@@ -1,5 +1,52 @@
 ---
 main:
   messages:
-  - coming soon!
+  - la 🧠  CPU y 🖥️  PPU se comunican entre ellas a través de un conjunto de 7 <registros mapeados en memoria>
+  - estos registros viven en las direcciones de CPU $2000-$2007 y $4014
+  - echa un vistazo a 📄  ~/docs/ppu/ppu_registers.es.md~
+  - algunos de ellos son 🔍  solo lectura (leídos por 🧠  CPU, escritos por 🖥️  PPU)
+  - algunos son ✏️  solo escritura (leídos por 🖥️  PPU, escritos por 🧠  CPU)
+  - y algunos son bidireccionales 🔍  ✏️
+  responses:
+  - dame un ejemplo 🙏 [example]
+  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [useit]
+
+example:
+  messages:
+  - hay dos 🕊️ 📖  pattern tables, ¿recuerdas?
+  - bueno, el código de un juego debe decirle al PPU cuál debería usar
+  - para fondos, esto es controlado por el bit 4 de $2000 (🎛️  PPUCtrl)
+  - lo llamamos ~B~ en nuestra columna ~Bits~
+  - entonces, por ejemplo, si un juego quiere usar la segunda tabla, escribiría un 16 (binario ```raw 000```~1~```raw 0000```) en $2000
+  - ¡o cualquier número que tenga el bit 4 activado!
+  - una escritura en $2000 afecta 6 parámetros al mismo tiempo (~V~, ~H~, ~B~, ~S~, ~I~, y ~NN~)
+  - por lo tanto, escribir ese 16 también establecería los otros 5 parámetros en 0
+  responses:
+  - ¿entonces, estos registros solo contienen números? 🔢 [numbers]
+
+numbers:
+  messages:
+  - sí, pero algunos producen <efectos especiales> cuando la 🧠  CPU los lee o escribe
+  - estos efectos secundarios pueden reiniciar un buffer interno, incrementar contadores, ¡o incluso copiar datos!
+  - "he programado una clase que te ayudará a implementar esto, siéntete libre de usarla 📖"
+  - 📄  ~/lib/InMemoryRegister.js~
+  responses:
+  - ¿cómo puedo usarla? [useit]
+
+useit:
+  run: |
+    set((m) => m.$exercise = true);
+  messages:
+  - abre 📄  ~/tmpl/ppu/VideoRegisters.js~ y úsalo como plantilla
+  - los registros 🎛️  `PPUCtrl` y 📊  `PPUStatus` ya están implementados
+  - observa cómo llaman a `addField` por cada parámetro definido en la columna ~Bits~ del archivo de documentación, indicando el bit de inicio y su tamaño (cuando son mayores a 1 bit)
+  - "esto crea <propiedades mágicas>: después de la llamada a `onWrite(...)`, la PPU podrá acceder a sus valores (p.ej. `ppuCtrl.spriteSize`)"
+  - en el caso de 📊  `PPUStatus`, usa `addWritableField` porque la PPU necesita escribirlos (p. ej. `ppuStatus.isInVBlankInterval = 1`) para que la CPU pueda leer los valores actualizados mediante `onRead()`
+  - 📚  _-_crea una clase `VideoRegisters`, utilizando esa plantilla_--_
+  - |-
+    _-_agrega una propiedad `registers` a `PPU`, asignada a:_--_
+         _-_```javascript new VideoRegisters(this)```_--_
+  - _-_finalmente, mapéalos en `CPUMemory`:_--_
+  - _-_las <lecturas> deberían retornar ~this.ppu.registers.read(address)~_--_
+  - _-_las <escrituras> deberían llamar a ~this.ppu.registers.write(address, value)~ y retornar_--_
   responses: []

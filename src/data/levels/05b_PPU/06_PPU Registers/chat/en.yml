@@ -1,19 +1,20 @@
 ---
 main:
   messages:
-  - "// TODO: ADD EMOJIS AND GRAPHICS; TRANSLATE!"
   - the 🧠  CPU and 🖥️  PPU talk with each other via a set of 7 <memory-mapped registers>
+  - these registers live in CPU addresses $2000-$2007 and $4014
   - check out 📄  ~/docs/ppu/ppu_registers.en.md~
   - some of them are 🔍  read-only (read by 🧠  CPU, written by 🖥️  PPU) 
   - some are ✏️  write-only (read by 🖥️  PPU, written by 🧠  CPU)
   - and a few are bidirectional  🔍 ✏️
   responses:
   - give me an example 🙏 [example]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [useit]
 
 example:
   messages:
   - there are two 🕊️ 📖  pattern tables, remember?
-  - well, games' code need to tell the PPU which one it should use
+  - well, a game's code need to tell the PPU which one it should use
   - for backgrounds, this is handled by bit 4 of $2000 (🎛️  PPUCtrl)
   - we call it ~B~ in our ~Bits~ column
   - so, for example, if a game wants to use the second table, it would write a 16 (binary ```raw 000```~1~```raw 0000```) to $2000
@@ -33,14 +34,18 @@ numbers:
   - how can I use it? [useit]
 
 useit:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
   - have a look at 📄  ~/tmpl/ppu/VideoRegisters.js~ and use it as a template
   - registers 🎛️  `PPUCtrl` and 📊  `PPUStatus` are already implemented
-  - note how they call to `addField` for each parameter defined in the ~Bits~ column of the doc file, indicating the starting bit, and its size (when they're larger than 1 bit)
+  - note how they call `addField` for each parameter defined in the ~Bits~ column of the doc file, indicating the starting bit, and its size (when they're larger than 1 bit)
   - "this creates <magic properties>: after the `onWrite(...)` call, the PPU will be able to access their values (e.g. `ppuCtrl.spriteSize`)"
   - in the case of 📊  `PPUStatus`, it uses `addWritableField` because the PPU needs to write them (e.g. `ppuStatus.isInVBlankInterval = 1`) so the CPU can read the updated values via `onRead()`
   - 📚  _-_create a `VideoRegisters` class, using that template_--_
-  - _-_add a `registers` property to `PPU`, assigned to {ENTER} ```javascript new VideoRegisters(this)```_--_
+  - |-
+    _-_add a `registers` property to `PPU`, assigned to:_--_
+         _-_```javascript new VideoRegisters(this)```_--_
   - _-_lastly, map them in `CPUMemory`:_--_
   - _-_<reads> should return ~this.ppu.registers.read(address)~_--_
   - _-_<writes> should call ~this.ppu.registers.write(address, value)~ and return_--_
