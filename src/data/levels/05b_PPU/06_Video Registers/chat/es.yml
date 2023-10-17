@@ -1,9 +1,9 @@
 ---
 main:
   messages:
-  - la 🧠  CPU y 🖥️  PPU se comunican entre ellas a través de un conjunto de 7 <registros mapeados en memoria>
+  - la 🧠  CPU y 🖥️  PPU se comunican entre ellas a través de un conjunto de 9 <registros mapeados en memoria>
   - estos registros viven en las direcciones de CPU $2000-$2007 y $4014
-  - echa un vistazo a 📄  ~/docs/ppu/ppu_registers.es.md~
+  - echa un vistazo a 📄  ~/docs/ppu/video_registers.es.md~
   - algunos de ellos son 🔍  solo lectura (leídos por 🧠  CPU, escritos por 🖥️  PPU)
   - algunos son ✏️  solo escritura (leídos por 🖥️  PPU, escritos por 🧠  CPU)
   - y algunos son bidireccionales 🔍  ✏️

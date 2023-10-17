@@ -5,6 +5,8 @@ before(async () => {
 	mainModule = await evaluate();
 });
 
+const dummyApu = {};
+const dummyControllers = [];
 const dummyCartridge = {};
 const dummyMapper = {
 	ppuRead: () => 0,
@@ -142,7 +144,7 @@ it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 
 // 5b.4 PPU Memory
 
-it("includes a `memory` property with a `PPUMemory` instance", async () => {
+it("includes a `memory` property with a `PPUMemory` instance", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU();
 
@@ -157,7 +159,7 @@ it("includes a `memory` property with a `PPUMemory` instance", async () => {
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("includes a `memory` property with a `PPUMemory` instance", async () => {
+it("includes a `memory` property with a `PPUMemory` instance", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU();
 
@@ -172,7 +174,7 @@ it("includes a `memory` property with a `PPUMemory` instance", async () => {
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("its `memory` saves devices in `onLoad`", async () => {
+it("its `memory` saves devices in `onLoad`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU();
 
@@ -189,7 +191,7 @@ it("its `memory` saves devices in `onLoad`", async () => {
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("connects the mapper into PPU memory (reads)", async () => {
+it("connects the mapper to PPU memory (reads)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU();
 
@@ -206,12 +208,12 @@ it("connects the mapper into PPU memory (reads)", async () => {
 	}
 })({
 	locales: {
-		es: "conecta el mapper en la memoria de PPU (lecturas)",
+		es: "conecta el mapper con la memoria de PPU (lecturas)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("connects the mapper into PPU memory (writes)", async () => {
+it("connects the mapper to PPU memory (writes)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU();
 
@@ -235,7 +237,290 @@ it("connects the mapper into PPU memory (writes)", async () => {
 	}
 })({
 	locales: {
-		es: "conecta el mapper en la memoria de PPU (escrituras)",
+		es: "conecta el mapper con la memoria de PPU (escrituras)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.4"),
+});
+
+// 5b.6 Video Registers
+
+it("includes a `registers` property with 9 video registers", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	ppu.should.include.key("registers");
+	expect(ppu.registers).to.be.an("object");
+	ppu.registers.should.respondTo("read");
+	ppu.registers.should.respondTo("write");
+
+	[
+		"ppuCtrl",
+		"ppuMask",
+		"ppuStatus",
+		"oamAddr",
+		"oamData",
+		"ppuScroll",
+		"ppuAddr",
+		"ppuData",
+		"oamDma",
+	].forEach((name, i) => {
+		const register = ppu.registers[name];
+
+		expect(register).to.be.an("object");
+		register.should.respondTo("onRead");
+		register.should.respondTo("onWrite");
+
+		sinon.spy(register, "onRead");
+		sinon.spy(register, "onWrite");
+		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
+		ppu.registers.read(address);
+		ppu.registers.write(address, 123);
+		register.onRead.should.have.been.calledOnce;
+		register.onWrite.should.have.been.calledWith(123);
+	});
+})({
+	locales: {
+		es: "incluye una propiedad `registers` con 9 registros de video",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("connects the video registers to CPU memory (reads)", () => {
+	const CPUMemory = mainModule.default.CPUMemory;
+	const cpuMemory = new CPUMemory();
+	const cpu = { memory: cpuMemory };
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU(cpu);
+	cpuMemory.onLoad(ppu, dummyApu, dummyMapper, dummyControllers);
+
+	[
+		"ppuCtrl",
+		"ppuMask",
+		"ppuStatus",
+		"oamAddr",
+		"oamData",
+		"ppuScroll",
+		"ppuAddr",
+		"ppuData",
+		"oamDma",
+	].forEach((name, i) => {
+		const register = ppu.registers[name];
+		sinon.spy(register, "onRead");
+		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
+		cpuMemory.read(address);
+		register.onRead.should.have.been.calledOnce;
+	});
+})({
+	locales: {
+		es: "conecta los registros de video con la memoria de CPU (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("connects the video registers to CPU memory (writes)", () => {
+	const CPUMemory = mainModule.default.CPUMemory;
+	const cpuMemory = new CPUMemory();
+	const cpu = { memory: cpuMemory };
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU(cpu);
+	cpuMemory.onLoad(ppu, dummyApu, dummyMapper, dummyControllers);
+
+	[
+		"ppuCtrl",
+		"ppuMask",
+		"ppuStatus",
+		"oamAddr",
+		"oamData",
+		"ppuScroll",
+		"ppuAddr",
+		"ppuData",
+		"oamDma",
+	].forEach((name, i) => {
+		const register = ppu.registers[name];
+		sinon.spy(register, "onWrite");
+		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
+		cpuMemory.write(address, 123);
+		register.onWrite.should.have.been.calledWith(123);
+	});
+})({
+	locales: {
+		es: "conecta los registros de video con la memoria de CPU (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUCtrl: write only", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	ppuCtrl.onWrite(120);
+	ppuCtrl.value.should.equal(120);
+	ppuCtrl.onRead().should.equal(0);
+})({
+	locales: {
+		es: "PPUCtrl: solo escritura",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUCtrl: writes nameTableId (bits 0-1)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	ppuCtrl.onWrite(0b10100000);
+	ppuCtrl.nameTableId.should.equal(0);
+	ppuCtrl.onWrite(0b10100001);
+	ppuCtrl.nameTableId.should.equal(1);
+	ppuCtrl.onWrite(0b10100010);
+	ppuCtrl.nameTableId.should.equal(2);
+	ppuCtrl.onWrite(0b10100011);
+	ppuCtrl.nameTableId.should.equal(3);
+})({
+	locales: {
+		es: "PPUCtrl: escribe nameTableId (bits 0-1)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUCtrl: writes vramAddressIncrement32 (bit 2)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	ppuCtrl.onWrite(0b10100011);
+	ppuCtrl.vramAddressIncrement32.should.equal(0);
+	ppuCtrl.onWrite(0b10100111);
+	ppuCtrl.vramAddressIncrement32.should.equal(1);
+})({
+	locales: {
+		es: "PPUCtrl: escribe vramAddressIncrement32 (bit 2)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUCtrl: writes sprite8x8PatternTableId (bit 3)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	ppuCtrl.onWrite(0b10100011);
+	ppuCtrl.sprite8x8PatternTableId.should.equal(0);
+	ppuCtrl.onWrite(0b10101111);
+	ppuCtrl.sprite8x8PatternTableId.should.equal(1);
+})({
+	locales: {
+		es: "PPUCtrl: escribe vramAddressIncrement32 (bit 3)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUCtrl: writes backgroundPatternTableId (bit 4)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	ppuCtrl.onWrite(0b10100011);
+	ppuCtrl.backgroundPatternTableId.should.equal(0);
+	ppuCtrl.onWrite(0b10111111);
+	ppuCtrl.backgroundPatternTableId.should.equal(1);
+})({
+	locales: {
+		es: "PPUCtrl: escribe backgroundPatternTableId (bit 4)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUCtrl: writes spriteSize (bit 5)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	ppuCtrl.onWrite(0b10000011);
+	ppuCtrl.spriteSize.should.equal(0);
+	ppuCtrl.onWrite(0b10111111);
+	ppuCtrl.spriteSize.should.equal(1);
+})({
+	locales: {
+		es: "PPUCtrl: escribe spriteSize (bit 5)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUCtrl: writes generateNMIOnVBlank (bit 7)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	ppuCtrl.onWrite(0b00000011);
+	ppuCtrl.generateNMIOnVBlank.should.equal(0);
+	ppuCtrl.onWrite(0b10111111);
+	ppuCtrl.generateNMIOnVBlank.should.equal(1);
+})({
+	locales: {
+		es: "PPUCtrl: escribe generateNMIOnVBlank (bit 7)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUStatus: read only", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuStatus = ppu.registers.ppuStatus;
+	ppuStatus.setValue(123);
+	ppuStatus.onRead().should.equal(123);
+	ppuStatus.onWrite(456);
+	ppuStatus.onRead().should.equal(123);
+})({
+	locales: {
+		es: "PPUStatus: solo lectura",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUStatus: reads spriteOverflow (bit 5)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuStatus = ppu.registers.ppuStatus;
+	byte.getBit(ppuStatus.onRead(), 5).should.equal(0);
+	ppuStatus.spriteOverflow = 1;
+	byte.getBit(ppuStatus.onRead(), 5).should.equal(1);
+})({
+	locales: {
+		es: "PPUStatus: lee spriteOverflow (bit 5)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUStatus: reads sprite0Hit (bit 6)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuStatus = ppu.registers.ppuStatus;
+	byte.getBit(ppuStatus.onRead(), 6).should.equal(0);
+	ppuStatus.sprite0Hit = 1;
+	byte.getBit(ppuStatus.onRead(), 6).should.equal(1);
+})({
+	locales: {
+		es: "PPUStatus: lee sprite0Hit (bit 6)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+it("PPUStatus: reads isInVBlankInterval (bit 7)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuStatus = ppu.registers.ppuStatus;
+	byte.getBit(ppuStatus.onRead(), 7).should.equal(0);
+	ppuStatus.isInVBlankInterval = 1;
+	byte.getBit(ppuStatus.onRead(), 7).should.equal(1);
+})({
+	locales: {
+		es: "PPUStatus: lee isInVBlankInterval (bit 7)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.6"),
 });

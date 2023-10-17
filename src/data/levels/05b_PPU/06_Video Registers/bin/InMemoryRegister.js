@@ -14,13 +14,11 @@ export default class InMemoryRegister {
 
   /** Called when the CPU reads the memory address. */
   onRead() {
-    return this.value;
+    return 0;
   }
 
   /** Called when the CPU writes the memory address. */
-  onWrite(value) {
-    this.setValue(value);
-  }
+  onWrite(value) { }
 
   /** Sets the value manually (updating internal accessors). */
   setValue(value) {

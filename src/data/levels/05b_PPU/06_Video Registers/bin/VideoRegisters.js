@@ -19,6 +19,10 @@ class PPUMask extends InMemoryRegister.PPU {
   onLoad() {
     /* TODO: IMPLEMENT */
   }
+
+  onWrite(value) {
+    return this.setValue(value);
+  }
 }
 
 class PPUStatus extends InMemoryRegister.PPU {
@@ -33,7 +37,11 @@ class PPUStatus extends InMemoryRegister.PPU {
   }
 }
 
-class OAMAddr extends InMemoryRegister.PPU {}
+class OAMAddr extends InMemoryRegister.PPU {
+  onWrite(value) {
+    this.setValue(value);
+  }
+}
 
 class OAMData extends InMemoryRegister.PPU {
   onRead() {

@@ -1,9 +1,9 @@
 ---
 main:
   messages:
-  - the 🧠  CPU and 🖥️  PPU talk with each other via a set of 7 <memory-mapped registers>
+  - the 🧠  CPU and 🖥️  PPU talk with each other via a set of 9 <memory-mapped registers>
   - these registers live in CPU addresses $2000-$2007 and $4014
-  - check out 📄  ~/docs/ppu/ppu_registers.en.md~
+  - check out 📄  ~/docs/ppu/video_registers.en.md~
   - some of them are 🔍  read-only (read by 🧠  CPU, written by 🖥️  PPU) 
   - some are ✏️  write-only (read by 🖥️  PPU, written by 🧠  CPU)
   - and a few are bidirectional  🔍 ✏️
