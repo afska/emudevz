@@ -1,0 +1,6 @@
+---
+main:
+  messages:
+  - with our video registers now connected, we'll allow some basic communication between the 🧠  CPU and 🖥️  PPU
+  
+  responses: []

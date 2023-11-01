@@ -35,36 +35,36 @@ test:
   - |+
     _-_in your `PPU`, replace the test code (before the `onFrame` call) with:
 
-    ```javascript
-    // <test>
-    const testPalette = [0xffffffff, 0xff999999, 0xff424242, 0xff000000];
-    const scale = 2;
-    
-    for (let tileId = 0; tileId < 240; tileId++) {
-      const scaledSize = 8 * scale;
-      const tilesPerRow = 256 / scaledSize;
-      const startX = (tileId % tilesPerRow) * scaledSize;
-      const startY = Math.floor(tileId / tilesPerRow) * scaledSize;
+      ```javascript
+      // <test>
+      const testPalette = [0xffffffff, 0xff999999, 0xff424242, 0xff000000];
+      const scale = 2;
       
-      for (let y = 0; y < 8; y++) {
-        const tile = new Tile(this, 0, tileId, y);
+      for (let tileId = 0; tileId < 240; tileId++) {
+        const scaledSize = 8 * scale;
+        const tilesPerRow = 256 / scaledSize;
+        const startX = (tileId % tilesPerRow) * scaledSize;
+        const startY = Math.floor(tileId / tilesPerRow) * scaledSize;
         
-        for (let x = 0; x < 8; x++) {
-          const color = testPalette[tile.getColorIndex(x)];
+        for (let y = 0; y < 8; y++) {
+          const tile = new Tile(this, 0, tileId, y);
           
-          for (let scaledY = 0; scaledY < scale; scaledY++) {
-            for (let scaledX = 0; scaledX < scale; scaledX++) {
-              this.plot(
-                startX + x * scale + scaledX, 
-                startY + y * scale + scaledY, 
-                color
-              );
+          for (let x = 0; x < 8; x++) {
+            const color = testPalette[tile.getColorIndex(x)];
+            
+            for (let scaledY = 0; scaledY < scale; scaledY++) {
+              for (let scaledX = 0; scaledX < scale; scaledX++) {
+                this.plot(
+                  startX + x * scale + scaledX, 
+                  startY + y * scale + scaledY, 
+                  color
+                );
+              }
             }
           }
         }
       }
-    }
-    // </test>```_--_
+      // </test>```_--_
   - this will draw the first 240 tiles from 👾  <CHR-ROM>
   - with a ~2x~ scale (~16x16~ tiles instead of ~8x8~)
   - ⚠️  it will <only> work on games that use 👾  <CHR-ROM> ⚠️

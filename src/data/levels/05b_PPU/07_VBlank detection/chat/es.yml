@@ -1,0 +1,49 @@
+---
+main:
+  messages:
+  - 🏝️  <VBlank> es un período en el que la 🖥️  PPU descansa al final de cada frame
+  - <{rendering.png}>
+  - los juegos necesitan saber cuándo comienza, para que puedan actualizar la pantalla sin errores visibles
+  - un programa puede saber si está dentro del período VBlank comprobando ~bit 7~ de 📊  `PPUStatus` (CPU $2002)
+  - (lo hemos mapeado como `📊  PPUStatus::isInVBlankInterval`)
+  - además, la 🖥️  PPU puede notificar a un juego que está entrando en VBlank usando <interrupciones de CPU>
+  responses:
+  - ¿interrupciones? [interrupts]
+
+interrupts:
+  messages:
+  - ¡sí! piensa en ellas como notificaciones
+  - si `🎛️  PPUCtrl::generateNMIOnVBlank` está activado, el sistema generará un evento <NMI> ("Interrupción no enmascarable") en 🏝️  VBlank
+  - y la 🧠  CPU lo manejará saltando al fragmento de código correcto
+  - de hecho, vamos a programarlo
+  - |-
+    📚  _-_modifica este método de `PPUStatus`:_--_
+      *_-_*onRead()**:_--_
+        *_-_*->** guarda el actual ~this.value~ en una constante ~value~_--_
+        *_-_*->** reinicia ~this.isInVBlankInterval~ a 0_--_
+          _-_(sí, leer este registro REINICIA parte de su valor _--_🤷 _-_)_--_
+        *_-_*->** devuelve el ~value~ guardado_--_
+  - |-
+    _-_y cambia este en `PPU`:_--_
+    *_-_*step(onFrame, onInterrupt)**:_--_
+      *_-_*->** si ~this.scanline~ es -1:_--_
+        *_-_*->** llama a ~this._onPreLine(onInterrupt)~_--_
+      *_-_*->** si ~this.scanline~ está entre 0 y 240:_--_
+        *_-_*->** llama a ~this._onVisibleLine(onInterrupt)~_--_
+      *_-_*->** si ~this.scanline~ es 241:_--_
+        *_-_*->** llama a ~this._onVBlankLine(onInterrupt)~_--_
+      *_-_*->** ...resto del código ~step(...)~..._--_
+      *_-_*[!]** nota que agregamos un parámetro ~onInterrupt~
+  - |-
+    _-_ahora, agrega estos métodos:_--_
+    *_-_*_onPreLine(onInterrupt)**:_--_
+      *_-_*->** si ~this.cycle~ es 1:_--_
+        *_-_*->** asigna ~this.registers.ppuStatus.isInVBlankInterval = 0~_--_
+    *_-_*_onVisibleLine(onInterrupt)**:_--_
+      *_-_*[!]** déjalo vacío por ahora_--_
+    *_-_*_onVBlankLine(onInterrupt)**:_--_
+      *_-_*->** si ~this.cycle~ es 1:_--_
+        *_-_*->** asigna ~this.registers.ppuStatus.isInVBlankInterval = 1~_--_
+        *_-_*->** llama a ~onInterrupt(interrupts.NMI)~_--_
+          _-_(debes importarlo desde _--_📄 _-_ ~/lib/cpu/interrupts.js~_--_)_--_
+  responses: []

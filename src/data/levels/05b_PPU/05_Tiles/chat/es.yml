@@ -35,36 +35,36 @@ test:
   - |+
     _-_en tu `PPU`, reemplaza el código de prueba (antes de la llamada `onFrame`) con:
 
-    ```javascript
-    // <test>
-    const testPalette = [0xffffffff, 0xff999999, 0xff424242, 0xff000000];
-    const scale = 2;
-    
-    for (let tileId = 0; tileId < 240; tileId++) {
-      const scaledSize = 8 * scale;
-      const tilesPerRow = 256 / scaledSize;
-      const startX = (tileId % tilesPerRow) * scaledSize;
-      const startY = Math.floor(tileId / tilesPerRow) * scaledSize;
+      ```javascript
+      // <test>
+      const testPalette = [0xffffffff, 0xff999999, 0xff424242, 0xff000000];
+      const scale = 2;
       
-      for (let y = 0; y < 8; y++) {
-        const tile = new Tile(this, 0, tileId, y);
+      for (let tileId = 0; tileId < 240; tileId++) {
+        const scaledSize = 8 * scale;
+        const tilesPerRow = 256 / scaledSize;
+        const startX = (tileId % tilesPerRow) * scaledSize;
+        const startY = Math.floor(tileId / tilesPerRow) * scaledSize;
         
-        for (let x = 0; x < 8; x++) {
-          const color = testPalette[tile.getColorIndex(x)];
+        for (let y = 0; y < 8; y++) {
+          const tile = new Tile(this, 0, tileId, y);
           
-          for (let scaledY = 0; scaledY < scale; scaledY++) {
-            for (let scaledX = 0; scaledX < scale; scaledX++) {
-              this.plot(
-                startX + x * scale + scaledX, 
-                startY + y * scale + scaledY, 
-                color
-              );
+          for (let x = 0; x < 8; x++) {
+            const color = testPalette[tile.getColorIndex(x)];
+            
+            for (let scaledY = 0; scaledY < scale; scaledY++) {
+              for (let scaledX = 0; scaledX < scale; scaledX++) {
+                this.plot(
+                  startX + x * scale + scaledX, 
+                  startY + y * scale + scaledY, 
+                  color
+                );
+              }
             }
           }
         }
       }
-    }
-    // </test>```_--_
+      // </test>```_--_
   - esto dibujará los primeros 240 tiles de 👾  <CHR-ROM>
   - con una escala de ~2x~ (tiles de ~16x16~ en lugar de ~8x8~)
   - ⚠️  funcionará <solo> en juegos que utilicen 👾  <CHR-ROM> ⚠️

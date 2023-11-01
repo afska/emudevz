@@ -1,9 +1,10 @@
 {
 	"name": {
-		"en": "🔗 Basic communication",
-		"es": "🔗 Comunicación básica"
+		"en": "🏝️ VBlank detection",
+		"es": "🏝️ Detección de VBlank"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
