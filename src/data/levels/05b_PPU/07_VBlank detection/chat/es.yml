@@ -45,5 +45,5 @@ interrupts:
       *_-_*->** si ~this.cycle~ es 1:_--_
         *_-_*->** asigna ~this.registers.ppuStatus.isInVBlankInterval = 1~_--_
         *_-_*->** llama a ~onInterrupt(interrupts.NMI)~_--_
-          _-_(debes importarlo desde _--_📄 _-_ ~/lib/cpu/interrupts.js~_--_)_--_
+          _-_(debes importarlo desde _--_📄 _-_ ~/lib/interrupts.js~_--_)_--_
   responses: []

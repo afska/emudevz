@@ -74,7 +74,7 @@ implement:
   messages:
   - genial
   - vamos a modelar las interrupciones como objetos `{ id, vector }`
-  - revisa 📄  ~/lib/cpu/interrupts.js~
+  - revisa 📄  ~/lib/interrupts.js~
   - |-
     📚  _-_agrega este método a tu `CPU`:_--_
     *_-_*interrupt(interrupt, withBFlag = false)**:_--_
