@@ -28,7 +28,7 @@ interrupts:
     *_-_*step(onFrame, onInterrupt)**:_--_
       *_-_*->** if ~this.scanline~ is -1:_--_
         *_-_*->** call ~this._onPreLine(onInterrupt)~_--_
-      *_-_*->** if ~this.scanline~ is between 0 and 240:_--_
+      *_-_*->** if ~this.scanline~ is lower than 240:_--_
         *_-_*->** call ~this._onVisibleLine(onInterrupt)~_--_
       *_-_*->** if ~this.scanline~ is 241:_--_
         *_-_*->** call ~this._onVBlankLine(onInterrupt)~_--_

@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "🏝️ VBlank detection",
-		"es": "🏝️ Detección de VBlank"
+		"en": "🌉 VRAM bridge",
+		"es": "🌉 Puente de VRAM"
 	},
 	"ui": {
 		"layout": "tripleRight",

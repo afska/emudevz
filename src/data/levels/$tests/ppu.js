@@ -12,6 +12,7 @@ const dummyMapper = {
 	ppuRead: () => 0,
 	ppuWrite: () => {},
 };
+const noop = () => {};
 
 // 5b.1 New PPU
 
@@ -62,7 +63,6 @@ it("has a `step` method that increments the counters", () => {
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 	ppu.should.respondTo("step");
-	const noop = () => {};
 
 	for (let frame = 0; frame < 1; frame++) {
 		for (let scanline = -1; scanline < 261; scanline++) {
@@ -124,7 +124,6 @@ it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 	ppu.should.respondTo("step");
 	const onFrame = sinon.spy();
-	const noop = () => {};
 
 	for (let frame = 0; frame < 1; frame++) {
 		for (let scanline = -1; scanline < 261; scanline++) {
@@ -523,4 +522,222 @@ it("PPUStatus: reads isInVBlankInterval (bit 7)", () => {
 		es: "PPUStatus: lee isInVBlankInterval (bit 7)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
+});
+
+// 5b.7 VBlank detection
+
+it("PPUStatus: resets isInVBlankInterval after reading", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+
+	const ppuStatus = ppu.registers.ppuStatus;
+	ppuStatus.isInVBlankInterval = 1;
+	byte.getBit(ppuStatus.onRead(), 7).should.equal(1);
+	ppuStatus.isInVBlankInterval.should.equal(0);
+})({
+	locales: {
+		es: "PPUStatus: reinicia isInVBlankInterval luego de leer",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.7"),
+});
+
+it("has methods: `_onPreLine`, `_onVisibleLine`, `onVBlankLine`", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.should.respondTo("_onPreLine");
+	ppu.should.respondTo("_onVisibleLine");
+	ppu.should.respondTo("_onVBlankLine");
+})({
+	locales: {
+		es: "tiene métodos `_onPreLine`, `onVisibleLine`, `onVBlankLine`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.7"),
+});
+
+it("calls `_onPreLine` on scanline -1, with the `onInterrupt` argument", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	sinon.spy(ppu, "_onPreLine");
+
+	const onInterrupt = () => {};
+
+	for (let scanline = -1; scanline < 261; scanline++) {
+		for (let cycle = 0; cycle < 341; cycle++) {
+			ppu._onPreLine.resetHistory();
+			ppu.scanline = scanline;
+			ppu.cycle = cycle;
+
+			ppu.step(noop, onInterrupt);
+
+			if (scanline === -1) {
+				try {
+					ppu._onPreLine.should.have.been.calledWith(onInterrupt);
+				} catch (e) {
+					throw new Error(
+						`_onPreLine should be called on scanline=${scanline}, cycle=${cycle}`
+					);
+				}
+			} else {
+				try {
+					ppu._onPreLine.should.have.not.been.called;
+				} catch (e) {
+					throw new Error(
+						`_onPreLine should NOT be called on scanline=${scanline}, cycle=${cycle}`
+					);
+				}
+			}
+		}
+	}
+})({
+	locales: {
+		es:
+			"llama a `_onPreLine` en la scanline -1, con el argumento `onInterrupt`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.7"),
+});
+
+it("calls `_onVisibleLine` on scanlines ~[0, 240)~, with the `onInterrupt` argument", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	sinon.spy(ppu, "_onVisibleLine");
+
+	const onInterrupt = () => {};
+
+	for (let scanline = -1; scanline < 261; scanline++) {
+		for (let cycle = 0; cycle < 341; cycle++) {
+			ppu._onVisibleLine.resetHistory();
+			ppu.scanline = scanline;
+			ppu.cycle = cycle;
+
+			ppu.step(noop, onInterrupt);
+
+			if (scanline >= 0 && scanline < 240) {
+				try {
+					ppu._onVisibleLine.should.have.been.calledWith(onInterrupt);
+				} catch (e) {
+					throw new Error(
+						`_onVisibleLine should be called on scanline=${scanline}, cycle=${cycle}`
+					);
+				}
+			} else {
+				try {
+					ppu._onVisibleLine.should.have.not.been.called;
+				} catch (e) {
+					throw new Error(
+						`_onVisibleLine should NOT be called on scanline=${scanline}, cycle=${cycle}`
+					);
+				}
+			}
+		}
+	}
+})({
+	locales: {
+		es:
+			"llama a `_onVisibleLine` en las scanlines ~[0, 240)~, con el argumento `onInterrupt`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.7"),
+});
+
+it("calls `_onVBlankLine` on scanline 241, with the `onInterrupt` argument", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	sinon.spy(ppu, "_onVBlankLine");
+
+	const onInterrupt = () => {};
+
+	for (let scanline = -1; scanline < 261; scanline++) {
+		for (let cycle = 0; cycle < 341; cycle++) {
+			ppu._onVBlankLine.resetHistory();
+			ppu.scanline = scanline;
+			ppu.cycle = cycle;
+
+			ppu.step(noop, onInterrupt);
+
+			if (scanline === 241) {
+				try {
+					ppu._onVBlankLine.should.have.been.calledWith(onInterrupt);
+				} catch (e) {
+					throw new Error(
+						`_onVBlankLine should be called on scanline=${scanline}, cycle=${cycle}`
+					);
+				}
+			} else {
+				try {
+					ppu._onVBlankLine.should.have.not.been.called;
+				} catch (e) {
+					throw new Error(
+						`_onVBlankLine should NOT be called on scanline=${scanline}, cycle=${cycle}`
+					);
+				}
+			}
+		}
+	}
+})({
+	locales: {
+		es:
+			"llama a `_onVBlankLine` en la scanline 241, con el argumento `onInterrupt`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.7"),
+});
+
+it("resets `PPUStatus::isInVBlankInterval` on scanline=-1, cycle=1", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	for (let cycle = 0; cycle < 341; cycle++) {
+		ppu.scanline = -1;
+		ppu.cycle = cycle;
+		ppu.registers.ppuStatus.isInVBlankInterval = 1;
+
+		ppu.step(noop, noop);
+
+		if (cycle === 1) {
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equal(0);
+		} else {
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equal(1);
+		}
+	}
+})({
+	locales: {
+		es: "reinicia `PPUStatus::isInVBlankInterval` en scanline=-1, cycle=1",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.7"),
+});
+
+it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cycle=1", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	const onInterrupt = sinon.spy();
+
+	for (let cycle = 0; cycle < 341; cycle++) {
+		onInterrupt.resetHistory();
+		ppu.scanline = 241;
+		ppu.cycle = cycle;
+		ppu.registers.ppuStatus.isInVBlankInterval = 0;
+
+		ppu.step(noop, onInterrupt);
+
+		if (cycle === 1) {
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equal(1);
+			onInterrupt.should.have.been.calledWith({
+				id: "NMI",
+				vector: 0xfffa,
+			});
+		} else {
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equal(0);
+			onInterrupt.should.have.not.been.called;
+		}
+	}
+})({
+	locales: {
+		es:
+			"asigna `PPUStatus::isInVBlankInterval` y dispara una NMI en scanline=241, cycle=1",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
