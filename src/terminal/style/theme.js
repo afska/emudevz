@@ -15,13 +15,12 @@ export default {
 	ITALIC: effect(3),
 	UNDERLINE: effect(4),
 	IMAGE: (imageCommand) => {
-		const [fileName, resolution] = imageCommand.split(";");
+		let [fileName, resolution] = imageCommand.split(";");
+		if (resolution == null) resolution = "75%x100%";
+		const [width, height] = resolution.split("x");
 		let args = "";
-		if (resolution != null) {
-			const [width, height] = resolution.split("x");
-			if (width != null && height != null)
-				args = `;width=${width};height=${height}`;
-		}
+		if (width != null && height != null)
+			args = `;width=${width};height=${height}`;
 
 		const level = Level.current;
 		const content = (fileName && level?.media?.[fileName]) || null;
