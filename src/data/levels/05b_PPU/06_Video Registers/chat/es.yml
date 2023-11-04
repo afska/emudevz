@@ -21,6 +21,7 @@ example:
   - ¡o cualquier número que tenga el bit 4 activado!
   - una escritura en $2000 afecta 6 parámetros al mismo tiempo (~V~, ~H~, ~B~, ~S~, ~I~, y ~NN~)
   - por lo tanto, escribir ese 16 también establecería los otros 5 parámetros en 0
+  - <{PPUCtrl.png}>
   responses:
   - ¿entonces, estos registros solo contienen números? 🔢 [numbers]
 

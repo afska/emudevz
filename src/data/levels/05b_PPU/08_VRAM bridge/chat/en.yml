@@ -13,6 +13,5 @@ how:
   - "(two consecutives writes: one for the <high byte>, and one for the <low byte>)"
   - then, they write to 📦  PPUData the byte they want to put in that address
   - <{PPUAddr_PPUData.png}>
-  - "// TODO: Add similar illustration to previous level? VideoRegisters"
   responses:
   - asd [end]

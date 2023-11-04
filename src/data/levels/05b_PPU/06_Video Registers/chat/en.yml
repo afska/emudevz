@@ -21,6 +21,7 @@ example:
   - or any number that has bit 4 set!
   - a write to $2000 affects 6 parameters at the same time (~V~, ~H~, ~B~, ~S~, ~I~, and ~NN~)
   - so, writing that 16 would also set the other 5 parameters to 0
+  - <{PPUCtrl.png}>
   responses:
   - so, these registers only hold numbers? 🔢 [numbers]
 
