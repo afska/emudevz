@@ -12,7 +12,8 @@ main:
 
 interrupts:
   messages:
-  - yeah! think of them as notifications
+  - yeah! think of them as notifications like...
+  - "\"NOW IT'S TIME TO DRAW!\""
   - if `🎛️  PPUCtrl::generateNMIOnVBlank` is set, the system will generate an <NMI> event ("Non-maskable interrupt") on 🏝️  VBlank
   - and the 🧠  CPU will handle that by jumping to the right piece of code
   - actually, let's code this

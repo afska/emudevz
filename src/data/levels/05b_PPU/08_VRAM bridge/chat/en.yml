@@ -1,6 +1,16 @@
 ---
 main:
   messages:
-  - with our video registers now connected, we'll allow some basic communication between the 🧠  CPU and 🖥️  PPU
-  
+  - games define, in runtime, how the background should look 🏞️
+  - they create a map using tiles, and store it in 🐏  VRAM
+  responses:
+  - how can a game write to 🐏  VRAM? [how]
+
+how:
+  messages:
+  - through the video registers called 📍  PPUAddr and 📦  PPUData
+  - first, they put the VRAM address they want to write in 📍  PPUAddr
+  - "(two consecutives writes: one for the <high byte>, and one for the <low byte>)"
+  - then, they write to 📦  PPUData the byte they want to put in that address
+  - <{PPUAddr_PPUData.png}>
   responses: []
