@@ -9,9 +9,51 @@ main:
 how:
   messages:
   - through the video registers called 📍  PPUAddr and 📦  PPUData
-  - first, they put the VRAM address they want to write in 📍  PPUAddr
+  - they are like a bridge that connects the 🧠  CPU and 🖥️  PPU
+  - first, games put the VRAM address they want to write in 📍  PPUAddr
   - "(two consecutives writes: one for the <high byte>, and one for the <low byte>)"
   - then, they write to 📦  PPUData the byte they want to put in that address
   - <{PPUAddr_PPUData.png}>
   responses:
-  - asd [end]
+  - nice, I guess I need to define the VRAM somewhere [define]
+
+define:
+  messages:
+  - yeah, let's start with that
+  - 📚  _-_like you did with `CPUMemory::ram`, add a property called `vram` in `PPUMemory`_--_
+  - _-_the array should store 4096 bytes_--_
+  - (I know I said multiple times that there's only 2 KiB of VRAM, but some games extend that memory using extra chips in their cartridge, and it's easier to emulate those by just allocating a big 4 KiB chunk 🤷 )
+  - _-_map the range $2000-$2FFF to VRAM (both reads and writes)_--_
+  - |-
+    _-_implement these methods in `PPUAddr`:_--_
+    *_-_*onLoad()**:_--_
+      *_-_*->** initializes two properties:_--_
+        _-_~this.latch = false~_--_
+        _-_~this.address = 0~_--_
+        _-_(we'll use these to modelate the alternating behavior between high byte / low byte on every write operation)_--_
+    *_-_*onWrite(value)**:_--_
+      *_-_*->** if ~latch~ is ~false~:_--_
+        *_-_*->** writes only the <high part> of ~address~, using ~value~_--_
+          _-_(leave the low part as it was before)_--_
+      *_-_*->** if it's ~true~:_--_
+        *_-_*->** writes only the <low part> of ~address~, using ~value~_--_
+          _-_(leave the high part as it was before)_--_
+      _-_(you can use ~buildU16(...)~, ~highByteOf(...)~, and ~lowByteOf(...)~_--_
+      *_-_*->** switches ~latch~ to the opposite value_--_
+  - |-
+    _-_implement these methods in `PPUData`:_--_
+    *_-_*onWrite(value)**:_--_
+      *_-_*->** writes ~value~ to the PPU memory address ~ppuAddr.address~_--_
+        _-_(you can access the `PPUMemory` instance with ~this.ppu.memory~)_--_
+        _-_(you can access the `PPUAddr` instance with ~this.ppu.registers.ppuAddr~)_--_
+      *_-_*->** calls ~this._incrementAddress()~_--_
+    *_-_*_incrementAddress()**:_--_
+      *_-_*->** // TODO: FINISH AND EXPLAIN ADDRESS INCREMENTS_--_
+      _incrementAddress() {
+        const { ppuAddr, ppuCtrl } = this.unit.registers;
+
+        ppuAddr.address = byte.toU16(
+          ppuAddr.address + (ppuCtrl.vramAddressIncrement32 ? 32 : 1)
+        );
+      }
+  responses: []
