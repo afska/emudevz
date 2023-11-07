@@ -1,5 +1,68 @@
 ---
 main:
   messages:
-  - coming soon!
+  - los juegos definen, en tiempo de ejecución, cómo debe lucir el fondo 🏞️
+  - crean un mapa usando tiles y lo almacenan en la 🐏  VRAM
+  responses:
+  - ¿cómo puede un juego escribir en la 🐏  VRAM? [how]
+
+how:
+  messages:
+  - a través de los registros de video llamados 📍  PPUAddr y 📦  PPUData
+  - son como un puente que conecta la 🧠  CPU y 🖥️  PPU
+  - primero, los juegos ponen la dirección de VRAM que quieren escribir en 📍  PPUAddr
+  - "(dos escrituras consecutivas: una para el <high byte>, y una para el <low byte>)"
+  - luego, escriben en 📦  PPUData el byte que quieren poner en esa dirección
+  - <{PPUAddr_PPUData.png}>
+  responses:
+  - bien, supongo que necesito definir la VRAM en algún lugar [define]
+
+define:
+  messages:
+  - sí, mejor empieza por eso
+  - 📚  _-_como hiciste con `CPUMemory::ram`, agrega una propiedad llamada `vram` en `PPUMemory`_--_
+  - _-_el array debería almacenar 4096 bytes_--_
+  - (sé que dije varias veces que solo hay 2 KiB de VRAM, pero algunos juegos extienden esa memoria usando chips extra en su cartucho, y es más fácil emular esos simplemente asignando un gran bloque de 4 KiB 🤷 )
+  - 📚  _-_mapea el rango $2000-$2FFF a VRAM (tanto lecturas como escrituras)_--_
+  - |-
+    📚  _-_implementa estos métodos en `PPUAddr`:_--_
+    *_-_*onLoad()**:_--_
+      *_-_*->** inicializa dos propiedades:_--_
+        _-_~this.latch = false~_--_
+        _-_~this.address = 0~_--_
+        _-_(usaremos estas para modelar el comportamiento alternante entre byte alto / byte bajo en cada operación de escritura)_--_
+    *_-_*onWrite(value)**:_--_
+      *_-_*->** si ~latch~ es ~false~:_--_
+        *_-_*->** escribe solo la <parte alta> de ~address~, usando ~value~_--_
+          _-_(deja la parte baja como estaba antes)_--_
+      *_-_*->** si es ~true~:_--_
+        *_-_*->** escribe solo la <parte baja> de ~address~, usando ~value~_--_
+          _-_(deja la parte alta como estaba antes)_--_
+      _-_(puedes usar ~buildU16(...)~, ~highByteOf(...)~, y ~lowByteOf(...)~)_--_
+      *_-_*->** cambia ~latch~ al valor opuesto_--_
+  - |-
+    📚  _-_implementa estos métodos en `PPUData`:_--_
+    *_-_*onWrite(value)**:_--_
+      *_-_*->** escribe ~value~ en la dirección de memoria PPU ~ppuAddr.address~_--_
+        _-_(puedes acceder a la instancia `PPUMemory` con ~this.ppu.memory~)_--_
+        _-_(puedes acceder a la instancia `PPUAddr` con ~this.ppu.registers.ppuAddr~)_--_
+      *_-_*->** llama a ~this._incrementAddress()~_--_
+    *_-_*_incrementAddress()**:_--_
+      *_-_*->** si ~ppuCtrl.vramAddressIncrement32~ es ~1~:_--_
+        *_-_*->** incrementa ~ppuAddr.address~ por 32_--_
+      *_-_*->** si no:_--_
+        *_-_*->** incrementa ~ppuAddr.address~ 1 vez_--_
+     *_-_*[!]** asegúrate de que la dirección nunca exceda 65535 usando `byte.toU16(...)`_--_
+  - |-
+    📚  _-_por último, modifica en `PPUStatus`:_--_
+    *_-_*onRead()**:_--_
+      *_-_*->** luego de resetear ~isInVBlankInterval~, también resetea el ~latch~ de `PPUAddr`_--_
+  responses:
+  - ¿qué es este incremento de dirección? 🤔 [increment]
+
+increment:
+  messages:
+  - sí, olvidé mencionarte
+  - la PPU incrementa la dirección automáticamente después de escribir en 📦  PPUData
+  - dependiendo de lo que esté en 🎛️  PPUCtrl, esto puede ser un ~+1~ o un ~+32~
   responses: []

@@ -60,6 +60,10 @@ class PPUScroll extends InMemoryRegister.PPU {
 }
 
 class PPUAddr extends InMemoryRegister.PPU {
+  onLoad() {
+    /* TODO: IMPLEMENT */
+  }
+
   onWrite(value) {
     /* TODO: IMPLEMENT */
   }
