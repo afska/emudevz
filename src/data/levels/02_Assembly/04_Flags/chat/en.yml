@@ -114,6 +114,6 @@ exercise:
   - 📚  _-_without deleting the current code, try subtracting 4 from [A], with the `SBC` instruction_--_
   - _-_it works the same as `ADC`, but it subtracts instead of adding_--_
   - _-_after that instruction, the Zero Flag should be 1 _--_😊
-  - _-_when you're ready, run the `test` command_--_
+  - 📚  _-_when you're ready, run the `test` command_--_
   responses:
   - ...carry

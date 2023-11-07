@@ -46,9 +46,9 @@ exercise:
     set((m) => m.$end = true);
   messages:
   - 📚  _-_crea un archivo en _--_📄 _-_ ~/code/Cartridge.js~_--_
-  - _-_su valor a exportar debería ser una clase vacía_--_
-  - _-_luego, importa ese archivo desde _--_📄 _-_ ~/code/index.js~_--_
-  - _-_y exporta un objeto literal con una sola clave (`Cartridge`) apuntando a esa clase_--_
+  - 📚  _-_su valor a exportar debería ser una clase vacía_--_
+  - 📚  _-_luego, importa ese archivo desde _--_📄 _-_ ~/code/index.js~_--_
+  - 📚  _-_y exporta un objeto literal con una sola clave (`Cartridge`) apuntando a esa clase_--_
   - |-
     _-_tu archivo ~index.js~ debería verse así:
       ```javascript

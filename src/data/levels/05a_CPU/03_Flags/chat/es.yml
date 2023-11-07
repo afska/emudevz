@@ -30,7 +30,7 @@ what:
   - 📚  _-_crea una clase `FlagsRegister` con 6 propiedades booleanas (llamadas ~c~, ~z~, ~i~, ~d~, ~v~ y ~n~)_--_
   - _-_inicialízalas en ~false~_--_
   - |-
-    _-_luego implementa, siguiendo la tabla anterior:_--_
+    📚  _-_luego implementa, siguiendo la tabla anterior:_--_
     *_-_*getValue()**:_--_
       *_-_*->** tiene que retornar un número de 8 bits con todas las banderas_--_
     *_-_*setValue(value)**:_--_
@@ -51,5 +51,5 @@ bits:
 
 nowwhat:
   messages:
-  - "_-_perfecto, solo agrega una nueva instancia a la clase `CPU`, debajo de los otros registros, así:\n  ```javascript this.flags = new FlagsRegister();```_--_"
+  - "📚  _-_perfecto, solo agrega una nueva instancia a la clase `CPU`, debajo de los otros registros, así:\n  ```javascript this.flags = new FlagsRegister();```_--_"
   responses: []

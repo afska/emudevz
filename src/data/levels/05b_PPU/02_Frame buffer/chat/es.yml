@@ -62,16 +62,16 @@ draw:
       ```javascript
       this.frameBuffer = new Uint32Array(256*240);```_--_
   - |-
-    _-_implementa este método:_--_
+    📚  _-_implementa este método:_--_
     *_-_*plot(x, y, color)**:_--_
       *_-_*->** asigna el ~color~ al píxel ~(x,y)~ en el array ~frameBuffer~_--_
         _-_(el índice para ~(x,y)~ debería ser ~y * 256 + x~)_--_
-  - _-_luego, modifica tu método `step` para que reciba un callback `onFrame` como parámetro_--_
+  - 📚  _-_luego, modifica tu método `step` para que reciba un callback `onFrame` como parámetro_--_
   - |-
-    _-_y cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
+    📚  _-_y cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
       ```javascript onFrame(this.frameBuffer);```_--_
   - |-
-    _-_para asegurarnos de que todo funciona correctamente, agrega este código antes de la llamada a `onFrame`:
+    📚  _-_para asegurarnos de que todo funciona correctamente, agrega este código antes de la llamada a `onFrame`:
       ```javascript
       // <test>
       for (let x = 0; x < 256; x++) {

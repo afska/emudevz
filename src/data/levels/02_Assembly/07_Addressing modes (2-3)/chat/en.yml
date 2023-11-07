@@ -124,7 +124,7 @@ exercise:
     {{Bottom}}.setDelay(0);
   messages:
   - 📚  _-_remove all the code_--_
-  - _-_build a program that screams through the memory addresses _--_😱
+  - 📚  _-_build a program that screams through the memory addresses _--_😱
   - _-_that means, it writes $AA exactly 64 times from $4080 to $40BF_--_
-  - _-_as always, when you're ready, run the `test` command_--_
+  - 📚  _-_as always, when you're ready, run the `test` command_--_
   responses: []

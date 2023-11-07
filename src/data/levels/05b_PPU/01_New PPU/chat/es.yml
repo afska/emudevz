@@ -63,7 +63,7 @@ next:
   messages:
   - 📚  _-_crea un archivo para el código de la PPU, usando _--_📄 _-_ ~/tmpl/ppu/PPU.js~ como plantilla_--_
   - |-
-    _-_para llevar un seguimiento del tiempo, agrega este método:_--_
+    📚  _-_para llevar un seguimiento del tiempo, agrega este método:_--_
     *_-_*step()**:_--_
       *_-_*->** incrementa ~cycle~_--_
       *_-_*->** si ~cycle >= 341~:_--_
@@ -72,7 +72,7 @@ next:
         *_-_*->** si ~scanline >= 261~:_--_
           *_-_*->** asigna ~scanline = -1~_--_
           *_-_*->** incrementa ~frame~_--_
-  - _-_luego, importa tu archivo desde _--_📄 _-_ ~/code/index.js~_--_
+  - 📚  _-_luego, importa tu archivo desde _--_📄 _-_ ~/code/index.js~_--_
   - _-_y agrega la correspondiente clave `PPU` al objeto exportado_--_
   responses:
   - ¿por qué el contador de scanlines comienza en -1? 😕 [minus1]

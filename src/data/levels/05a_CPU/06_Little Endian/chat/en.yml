@@ -14,7 +14,7 @@ main:
         _-_- the low byte is obtained by reading ~address~ from memory_--_
         _-_- the high byte is obtained by reading ~address+1~_--_
   - |-
-    _-_and these two methods in `Stack`:_--_
+    📚  _-_and these two methods in `Stack`:_--_
     *_-_*push16(bigNumber)**:_--_
       *_-_*->** calls ~push(...)~ twice (first with the high byte of ~bigNumber~, then with its low byte)_--_
     *_-_*pop16()**:_--_

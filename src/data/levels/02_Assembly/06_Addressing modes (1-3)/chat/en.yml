@@ -164,9 +164,9 @@ exercise:
   messages:
   - there we go...
   - 📚  _-_as an exercise, modify the code by adding an `STY $1001` instruction at the end_--_
-  - _-_then an `INX` instruction_--_
-  - _-_and lastly, change lines 10 and 12, so the indirect `JMP` goes directly into the new `INX` _--_👀
-  - _-_when you're done, run the `test` command_--_
+  - 📚  _-_then an `INX` instruction_--_
+  - 📚  _-_and lastly, change lines 10 and 12, so the indirect `JMP` goes directly into the new `INX` _--_👀
+  - 📚  _-_when you're done, run the `test` command_--_
   responses:
   - wait, what? [what]
 

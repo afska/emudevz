@@ -3,9 +3,9 @@ main:
   messages:
   - ahora es tu turno 😛
   - 📚  _-_haz un programa que escriba el número $7C en las direcciones $4055 y $4072_--_
-  - _-_luego, el número $18 en la dirección $40B8_--_
+  - 📚  _-_luego, el número $18 en la dirección $40B8_--_
   - _-_prueba el programa con el botón _--_⏩
-  - _-_cuando esté listo, cierra el chat y ejecuta el comando `test`_--_
+  - 📚  _-_cuando esté listo, cierra el chat y ejecuta el comando `test`_--_
   responses:
   - no, necesito ayuda 😔 [help]
   - ¿me puedes recordar cómo correr el otro comando? [othercommands]

@@ -9,9 +9,9 @@ main:
     *_-_*decrement()**:_--_
       *_-_*->** calls ~setValue(...)~ with the result of ~getValue()-1~_--_
   - |-
-    _-_in your `FlagsRegister`, implement:_--_
+    📚  _-_in your `FlagsRegister`, implement:_--_
     *_-_*updateZero(value)**:_--_
-      **->** sets ~z=true~ if ~value~ is 0, or ~z=false~ otherwise
+      *_-_*->** sets ~z=true~ if ~value~ is 0, or ~z=false~ otherwise_--_
     *_-_*updateNegative(value)**:_--_
       *_-_*->** sets ~n=true~ if ~byte.isNegative(value)~, or ~n=false~ otherwise_--_
     *_-_*updateZeroAndNegative(value)**:_--_

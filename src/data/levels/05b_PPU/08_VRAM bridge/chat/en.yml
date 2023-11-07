@@ -1,6 +1,7 @@
 ---
 main:
   messages:
+  - "TODO: BROKEN PARENTHESIS in \"you can use\""
   - games define, in runtime, how the background should look 🏞️
   - they create a map using tiles, and store it in 🐏  VRAM
   responses:
@@ -23,9 +24,9 @@ define:
   - 📚  _-_like you did with `CPUMemory::ram`, add a property called `vram` in `PPUMemory`_--_
   - _-_the array should store 4096 bytes_--_
   - (I know I said multiple times that there's only 2 KiB of VRAM, but some games extend that memory using extra chips in their cartridge, and it's easier to emulate those by just allocating a big 4 KiB chunk 🤷 )
-  - _-_map the range $2000-$2FFF to VRAM (both reads and writes)_--_
+  - 📚  _-_map the range $2000-$2FFF to VRAM (both reads and writes)_--_
   - |-
-    _-_implement these methods in `PPUAddr`:_--_
+    📚  _-_implement these methods in `PPUAddr`:_--_
     *_-_*onLoad()**:_--_
       *_-_*->** initializes two properties:_--_
         _-_~this.latch = false~_--_
@@ -38,10 +39,10 @@ define:
       *_-_*->** if it's ~true~:_--_
         *_-_*->** writes only the <low part> of ~address~, using ~value~_--_
           _-_(leave the high part as it was before)_--_
-      _-_(you can use ~buildU16(...)~, ~highByteOf(...)~, and ~lowByteOf(...)~_--_
+      _-_(you can use ~buildU16(...)~, ~highByteOf(...)~, and ~lowByteOf(...)~)_--_
       *_-_*->** switches ~latch~ to the opposite value_--_
   - |-
-    _-_implement these methods in `PPUData`:_--_
+    📚  _-_implement these methods in `PPUData`:_--_
     *_-_*onWrite(value)**:_--_
       *_-_*->** writes ~value~ to the PPU memory address ~ppuAddr.address~_--_
         _-_(you can access the `PPUMemory` instance with ~this.ppu.memory~)_--_

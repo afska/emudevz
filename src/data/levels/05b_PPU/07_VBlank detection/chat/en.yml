@@ -25,7 +25,7 @@ interrupts:
           _-_(yeah, reading this register RESETS part of its value _--_🤷 _-_)_--_
         *_-_*->** returns the saved ~value~_--_
   - |-
-    _-_and change this one on `PPU`:_--_
+    📚  _-_and change this one on `PPU`:_--_
     *_-_*step(onFrame, onInterrupt)**:_--_
       *_-_*->** if ~this.scanline~ is ~-1~:_--_
         *_-_*->** call ~this._onPreLine(onInterrupt)~_--_
@@ -34,9 +34,9 @@ interrupts:
       *_-_*->** if ~this.scanline~ is 241:_--_
         *_-_*->** call ~this._onVBlankLine(onInterrupt)~_--_
       *_-_*->** ...rest of the ~step(...)~ code..._--_
-      *_-_*[!]** note that we added an ~onInterrupt~ parameter
+      *_-_*[!]** note that we added an ~onInterrupt~ parameter_--_
   - |-
-    _-_now, add these methods:_--_
+    📚  _-_now, add these methods:_--_
     *_-_*_onPreLine(onInterrupt)**:_--_
       *_-_*->** if ~this.cycle~ is 1:_--_
         *_-_*->** sets ~this.registers.ppuStatus.isInVBlankInterval = 0~_--_

@@ -91,5 +91,5 @@ exercise:
   - vamos a refactorizar el código 💡
   - 📚  _-_haz que use `ADC` en vez de 3 instrucciones de incremento_--_
   - _-_(recuerda reemplazar `LDX` y `STX` por `LDA` y `STA`)_--_
-  - _-_cuando esté listo, ejecuta el comando `test`_--_
+  - 📚  _-_cuando esté listo, ejecuta el comando `test`_--_
   responses: []

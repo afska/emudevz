@@ -3,12 +3,12 @@ main:
   messages:
   - "📚  _-_vas a empezar creando dos clases: `Register8Bit` y `Register16Bit` _--_🔢"
   - |-
-    _-_tendrían que tener dos métodos:_--_
+    📚  _-_tendrían que tener dos métodos:_--_
     *_-_*getValue()**:_--_
       *_-_*->** retorna el contenido del registro_--_
     *_-_*setValue(value)**:_--_
       *_-_*->** asigna el contenido del registro_--_
-  - _-_el contenido del registro comienza en 0 y puede ser un número de 8 bits (0-255) o uno de 16 bits (0-65535), dependiendo de la clase_--_
+  - 📚  _-_el contenido del registro comienza en 0 y puede ser un número de 8 bits (0-255) o uno de 16 bits (0-65535), dependiendo de la clase_--_
   responses:
   - (*) ¿y si trato de escribir fuera de los límites? 🚫 [limit]
   - (*) ¿cuál es la mejor manera de implementar esto? 🤔 [implement]

@@ -6,13 +6,13 @@ main:
   - 📚  _-_crea una nueva clase para ella_--_
   - _-_tendría que recibir `memory` (~CPUMemory~) y `sp` (~Register8Bit~) de la CPU, ya que va a tener que interactuar con ellos_--_
   - |-
-    _-_implementa estos métodos:_--_
+    📚  _-_implementa estos métodos:_--_
     *_-_*push(value)**:_--_
       *_-_*->** escribe ~value~ en la dirección de memoria ~direcciónActual~, luego decrementa ~sp~_--_
     *_-_*pop()**:_--_
       *_-_*->** incrementa ~sp~ y retorna el resultado de leer ~direcciónActual~ de la memoria_--_
   - _-_la ~direcciónActual~ siempre es $0100 (donde vive la pila en la RAM), más el valor en [SP]_--_
   - |-
-    _-_cuando termines, agrega una nueva instancia de la pila a la CPU:
+    📚  _-_cuando termines, agrega una nueva instancia de la pila a la CPU:
       ```javascript this.stack = new Stack(this.memory, this.sp);```_--_
   responses: []

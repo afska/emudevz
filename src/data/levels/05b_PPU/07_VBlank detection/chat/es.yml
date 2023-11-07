@@ -25,7 +25,7 @@ interrupts:
           _-_(sí, leer este registro REINICIA parte de su valor _--_🤷 _-_)_--_
         *_-_*->** devuelve el ~value~ guardado_--_
   - |-
-    _-_y cambia este en `PPU`:_--_
+    📚  _-_y cambia este en `PPU`:_--_
     *_-_*step(onFrame, onInterrupt)**:_--_
       *_-_*->** si ~this.scanline~ es ~-1~:_--_
         *_-_*->** llama a ~this._onPreLine(onInterrupt)~_--_
@@ -34,9 +34,9 @@ interrupts:
       *_-_*->** si ~this.scanline~ es 241:_--_
         *_-_*->** llama a ~this._onVBlankLine(onInterrupt)~_--_
       *_-_*->** ...resto del código ~step(...)~..._--_
-      *_-_*[!]** nota que agregamos un parámetro ~onInterrupt~
+      *_-_*[!]** nota que agregamos un parámetro ~onInterrupt~_--_
   - |-
-    _-_ahora, agrega estos métodos:_--_
+    📚  _-_ahora, agrega estos métodos:_--_
     *_-_*_onPreLine(onInterrupt)**:_--_
       *_-_*->** si ~this.cycle~ es 1:_--_
         *_-_*->** asigna ~this.registers.ppuStatus.isInVBlankInterval = 0~_--_

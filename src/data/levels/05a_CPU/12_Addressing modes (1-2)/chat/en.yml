@@ -27,7 +27,7 @@ letscode:
   - so you'll only have to implement "Relative" and "Indirect"
   - you can grab the code from 📄  ~/tmpl/cpu/addressingModes.js~ and continue from there!
   - 📚  _-_implement the missing addressing modes_--_
-  - _-_and export the object under the `addressingModes` key in _--_📄 _-_ ~/code/index.js~_--_
+  - 📚  _-_and export the object under the `addressingModes` key in _--_📄 _-_ ~/code/index.js~_--_
   responses:
   - help me with the "Relative" mode 😅 [relative]
   - help me with the "Indirect" mode 😅 [indirect]

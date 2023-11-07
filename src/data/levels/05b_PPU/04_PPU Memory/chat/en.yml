@@ -20,11 +20,11 @@ howso:
 emulate:
   messages:
   - 📚  _-_create a `PPUMemory` class, using _--_📄 _-_ ~/tmpl/ppu/PPUMemory.js~ as template_--_
-  - _-_implement just the first range ($0000-$1FFF), for both `read(...)` and `write(...)` operations_--_
+  - 📚  _-_implement just the first range ($0000-$1FFF), for both `read(...)` and `write(...)` operations_--_
   - _-_on <reads>, you should return ~this.mapper.ppuRead(address)~_--_
   - _-_on <writes>, you should call ~this.mapper.ppuWrite(address, value)~ and return_--_
   - |-
-    _-_then, add this to your PPU's constructor:
+    📚  _-_then, add this to your PPU's constructor:
       ```javascript
       this.memory = new PPUMemory();```_--_
   - _-_remember to import the file!_--_

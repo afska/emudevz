@@ -30,7 +30,7 @@ what:
   - 📚  _-_create a `FlagsRegister` class with 6 boolean properties (called ~c~, ~z~, ~i~, ~d~, ~v~ and ~n~)_--_
   - _-_initialize them with ~false~_--_
   - |-
-    _-_then implement, following the previous table:_--_
+    📚  _-_then implement, following the previous table:_--_
     *_-_*getValue()**:_--_
       *_-_*->** should return an 8-bit number with all the flags_--_
     *_-_*setValue(value)**:_--_
@@ -51,5 +51,5 @@ bits:
 
 nowwhat:
   messages:
-  - "_-_great, just add a new instance to the `CPU` class, below the other registers, like this:\n  ```javascript this.flags = new FlagsRegister();```_--_"
+  - "📚  _-_great, just add a new instance to the `CPU` class, below the other registers, like this:\n  ```javascript this.flags = new FlagsRegister();```_--_"
   responses: []

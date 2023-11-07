@@ -33,7 +33,7 @@ test:
   messages:
   - ¡buena pregunta! 😁
   - |+
-    _-_en tu `PPU`, importa la clase `Tile` y reemplaza el código de prueba (antes de la llamada `onFrame`) con:
+    📚  _-_en tu `PPU`, importa la clase `Tile` y reemplaza el código de prueba (antes de la llamada `onFrame`) con:
 
       ```javascript
       // <test>

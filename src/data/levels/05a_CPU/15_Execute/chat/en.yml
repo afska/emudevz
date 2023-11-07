@@ -69,7 +69,7 @@ rightway:
 step:
   messages:
   - |-
-    _-_our `step()` method should come up easily, using the others:
+    📚  _-_our `step()` method should come up easily, using the others:
       ```javascript step() {
         const originalPC = this.pc.getValue();
         

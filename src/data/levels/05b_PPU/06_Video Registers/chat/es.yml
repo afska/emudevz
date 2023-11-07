@@ -44,9 +44,9 @@ useit:
   - en el caso de 📊  `PPUStatus`, usa `addWritableField` porque la PPU necesita escribirlos (p. ej. `ppuStatus.isInVBlankInterval = 1`) para que la CPU pueda leer los valores actualizados mediante `onRead()`
   - 📚  _-_crea una clase `VideoRegisters`, utilizando esa plantilla_--_
   - |-
-    _-_agrega una propiedad `registers` a `PPU`, asignada a:_--_
+    📚  _-_agrega una propiedad `registers` a `PPU`, asignada a:_--_
          _-_```javascript new VideoRegisters(this)```_--_
-  - _-_finalmente, mapéalos en `CPUMemory` (regiones $2000-$2007 y $4014):_--_
+  - 📚  _-_finalmente, mapéalos en `CPUMemory` (regiones $2000-$2007 y $4014):_--_
   - _-_las <lecturas> deberían retornar ~this.ppu.registers.read(address)~_--_
   - _-_las <escrituras> deberían llamar a ~this.ppu.registers.write(address, value)~ y retornar_--_
   responses: []

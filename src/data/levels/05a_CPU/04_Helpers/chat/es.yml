@@ -9,7 +9,7 @@ main:
     *_-_*decrement()**:_--_
       *_-_*->** llama a ~setValue(...)~ con el resultado de ~getValue() - 1~_--_
   - |-
-    _-_en tu `FlagsRegister`, implementa:_--_
+    📚  _-_en tu `FlagsRegister`, implementa:_--_
     *_-_*updateZero(value)**:_--_
       *_-_*->** asigna ~z=true~ si ~value~ es 0, o ~z=false~ en caso contrario_--_
     *_-_*updateNegative(value)**:_--_
