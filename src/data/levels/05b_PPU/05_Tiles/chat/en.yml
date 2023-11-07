@@ -33,7 +33,7 @@ test:
   messages:
   - good question! 😁
   - |+
-    _-_in your `PPU`, replace the test code (before the `onFrame` call) with:
+    _-_in your `PPU`, import the `Tile` class and replace the test code (before the `onFrame` call) with:
 
       ```javascript
       // <test>

@@ -18,9 +18,8 @@ example:
   - para fondos, esto es controlado por el bit 4 de $2000 (🎛️  PPUCtrl)
   - lo llamamos ~B~ en nuestra columna ~Bits~
   - entonces, por ejemplo, si un juego quiere usar la segunda tabla, escribiría un 16 (binario ```raw 000```~1~```raw 0000```) en $2000
-  - ¡o cualquier número que tenga el bit 4 activado!
+  - ¡o cualquier número que tenga el bit 4 encendido!
   - una escritura en $2000 afecta 6 parámetros al mismo tiempo (~V~, ~H~, ~B~, ~S~, ~I~, y ~NN~)
-  - por lo tanto, escribir ese 16 también establecería los otros 5 parámetros en 0
   - <{PPUCtrl.png}>
   responses:
   - ¿entonces, estos registros solo contienen números? 🔢 [numbers]
@@ -47,7 +46,7 @@ useit:
   - |-
     _-_agrega una propiedad `registers` a `PPU`, asignada a:_--_
          _-_```javascript new VideoRegisters(this)```_--_
-  - _-_finalmente, mapéalos en `CPUMemory`:_--_
+  - _-_finalmente, mapéalos en `CPUMemory` (regiones $2000-$2007 y $4014):_--_
   - _-_las <lecturas> deberían retornar ~this.ppu.registers.read(address)~_--_
   - _-_las <escrituras> deberían llamar a ~this.ppu.registers.write(address, value)~ y retornar_--_
   responses: []

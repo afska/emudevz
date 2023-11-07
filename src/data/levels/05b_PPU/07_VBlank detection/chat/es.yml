@@ -27,7 +27,7 @@ interrupts:
   - |-
     _-_y cambia este en `PPU`:_--_
     *_-_*step(onFrame, onInterrupt)**:_--_
-      *_-_*->** si ~this.scanline~ es -1:_--_
+      *_-_*->** si ~this.scanline~ es ~-1~:_--_
         *_-_*->** llama a ~this._onPreLine(onInterrupt)~_--_
       *_-_*->** si ~this.scanline~ es menor a 240:_--_
         *_-_*->** llama a ~this._onVisibleLine(onInterrupt)~_--_

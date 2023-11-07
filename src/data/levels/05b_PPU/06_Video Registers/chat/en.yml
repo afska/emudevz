@@ -20,7 +20,6 @@ example:
   - so, for example, if a game wants to use the second table, it would write a 16 (binary ```raw 000```~1~```raw 0000```) to $2000
   - or any number that has bit 4 set!
   - a write to $2000 affects 6 parameters at the same time (~V~, ~H~, ~B~, ~S~, ~I~, and ~NN~)
-  - so, writing that 16 would also set the other 5 parameters to 0
   - <{PPUCtrl.png}>
   responses:
   - so, these registers only hold numbers? 🔢 [numbers]
@@ -47,7 +46,7 @@ useit:
   - |-
     _-_add a `registers` property to `PPU`, assigned to:_--_
          _-_```javascript new VideoRegisters(this)```_--_
-  - _-_lastly, map them in `CPUMemory`:_--_
+  - _-_lastly, map them in `CPUMemory` (regions $2000-$2007 and $4014):_--_
   - _-_<reads> should return ~this.ppu.registers.read(address)~_--_
   - _-_<writes> should call ~this.ppu.registers.write(address, value)~ and return_--_
   responses: []

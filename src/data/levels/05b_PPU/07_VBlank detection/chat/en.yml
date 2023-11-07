@@ -27,7 +27,7 @@ interrupts:
   - |-
     _-_and change this one on `PPU`:_--_
     *_-_*step(onFrame, onInterrupt)**:_--_
-      *_-_*->** if ~this.scanline~ is -1:_--_
+      *_-_*->** if ~this.scanline~ is ~-1~:_--_
         *_-_*->** call ~this._onPreLine(onInterrupt)~_--_
       *_-_*->** if ~this.scanline~ is lower than 240:_--_
         *_-_*->** call ~this._onVisibleLine(onInterrupt)~_--_

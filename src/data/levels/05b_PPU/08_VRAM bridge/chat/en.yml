@@ -19,7 +19,7 @@ how:
 
 define:
   messages:
-  - yeah, let's start with that
+  - yeah, better start with that
   - 📚  _-_like you did with `CPUMemory::ram`, add a property called `vram` in `PPUMemory`_--_
   - _-_the array should store 4096 bytes_--_
   - (I know I said multiple times that there's only 2 KiB of VRAM, but some games extend that memory using extra chips in their cartridge, and it's easier to emulate those by just allocating a big 4 KiB chunk 🤷 )

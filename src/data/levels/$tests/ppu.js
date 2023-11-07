@@ -529,10 +529,14 @@ it("PPUStatus: reads isInVBlankInterval (bit 7)", () => {
 it("PPUStatus: resets isInVBlankInterval after reading", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU();
-
 	const ppuStatus = ppu.registers.ppuStatus;
+
 	ppuStatus.isInVBlankInterval = 1;
 	byte.getBit(ppuStatus.onRead(), 7).should.equal(1);
+	ppuStatus.isInVBlankInterval.should.equal(0);
+
+	ppuStatus.isInVBlankInterval = 0;
+	byte.getBit(ppuStatus.onRead(), 7).should.equal(0);
 	ppuStatus.isInVBlankInterval.should.equal(0);
 })({
 	locales: {
