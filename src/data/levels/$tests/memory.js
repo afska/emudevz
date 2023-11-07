@@ -195,5 +195,5 @@ it("can write to the mapper ($4020-$FFFF)", () => {
 	locales: {
 		es: "puede escribir en el mapper ($4020-$FFFF)",
 	},
-	use: ({ id }, book) => id >= book.getId("4.1"),
+	use: ({ id }, book) => id >= book.getId("4.2"),
 });
