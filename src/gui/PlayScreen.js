@@ -83,6 +83,7 @@ class PlayScreen extends PureComponent {
 			.then(() => {
 				if (!this.currentChapter)
 					throw new Error(`Unexisting level: ${this.props.currentLevelId}`);
+				this.props.validateSavedata();
 			})
 			.catch(this._onError);
 	}
