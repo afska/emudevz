@@ -48,9 +48,9 @@ it("initializates the counters", () => {
 	ppu.should.include.key("scanline");
 	ppu.should.include.key("frame");
 
-	ppu.cycle.should.equal(0);
-	ppu.scanline.should.equal(-1);
-	ppu.frame.should.equal(0);
+	ppu.cycle.should.equalN(0, "cycle");
+	ppu.scanline.should.equalN(-1, "scanline");
+	ppu.frame.should.equalN(0, "frame");
 })({
 	locales: {
 		es: "inicializa los contadores",
@@ -67,17 +67,17 @@ it("has a `step` method that increments the counters", () => {
 	for (let frame = 0; frame < 1; frame++) {
 		for (let scanline = -1; scanline < 261; scanline++) {
 			for (let cycle = 0; cycle < 341; cycle++) {
-				ppu.frame.should.equal(frame);
-				ppu.scanline.should.equal(scanline);
-				ppu.cycle.should.equal(cycle);
+				ppu.frame.should.equalN(frame, "frame");
+				ppu.scanline.should.equalN(scanline, "scanline");
+				ppu.cycle.should.equalN(cycle, "cycle");
 				ppu.step(noop, noop);
 			}
 		}
 	}
 
-	ppu.frame.should.equal(1);
-	ppu.scanline.should.equal(-1);
-	ppu.cycle.should.equal(0);
+	ppu.frame.should.equalN(1, "frame");
+	ppu.scanline.should.equalN(-1, "scanline");
+	ppu.cycle.should.equalN(0, "cycle");
 })({
 	locales: {
 		es: "tiene un método `step` que incrementa los contadores",
@@ -87,16 +87,16 @@ it("has a `step` method that increments the counters", () => {
 
 // 5b.2 Frame buffer
 
-it("defines a `frameBuffer` property", () => {
+it("has a `frameBuffer` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
 	ppu.should.include.key("frameBuffer");
 	ppu.frameBuffer.should.be.a("Uint32Array");
-	ppu.frameBuffer.length.should.equal(256 * 240);
+	ppu.frameBuffer.length.should.equalN(256 * 240, "length");
 })({
 	locales: {
-		es: "define una propiedad `frameBuffer`",
+		es: "tiene una propiedad `frameBuffer`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.2"),
 });
@@ -145,7 +145,7 @@ it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 
 it("includes a `memory` property with a `PPUMemory` instance", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	ppu.should.include.key("memory");
 	ppu.memory.should.respondTo("onLoad");
@@ -160,7 +160,7 @@ it("includes a `memory` property with a `PPUMemory` instance", () => {
 
 it("its `memory` saves devices in `onLoad`", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const cartridge = {};
 	const mapper = {};
@@ -177,7 +177,7 @@ it("its `memory` saves devices in `onLoad`", () => {
 
 it("connects the mapper to PPU memory (reads)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const cartridge = {};
 	const random = byte.random();
@@ -199,7 +199,7 @@ it("connects the mapper to PPU memory (reads)", () => {
 
 it("connects the mapper to PPU memory (writes)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const cartridge = {};
 	let arg1 = -1,
@@ -230,7 +230,7 @@ it("connects the mapper to PPU memory (writes)", () => {
 
 it("includes a `registers` property with 9 video registers", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	ppu.should.include.key("registers");
 	expect(ppu.registers).to.be.an("object");
@@ -335,12 +335,11 @@ it("connects the video registers to CPU memory (writes)", () => {
 
 it("PPUCtrl: write only", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
-	ppuCtrl.onWrite(120);
-	ppuCtrl.value.should.equal(120);
-	ppuCtrl.onRead().should.equal(0);
+	ppuCtrl.onWrite(byte.random());
+	ppuCtrl.onRead().should.equalN(0, "onRead()");
 })({
 	locales: {
 		es: "PPUCtrl: solo escritura",
@@ -350,17 +349,17 @@ it("PPUCtrl: write only", () => {
 
 it("PPUCtrl: writes nameTableId (bits 0-1)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10100000);
-	ppuCtrl.nameTableId.should.equal(0);
+	ppuCtrl.nameTableId.should.equalN(0, "nameTableId");
 	ppuCtrl.onWrite(0b10100001);
-	ppuCtrl.nameTableId.should.equal(1);
+	ppuCtrl.nameTableId.should.equalN(1, "nameTableId");
 	ppuCtrl.onWrite(0b10100010);
-	ppuCtrl.nameTableId.should.equal(2);
+	ppuCtrl.nameTableId.should.equalN(2, "nameTableId");
 	ppuCtrl.onWrite(0b10100011);
-	ppuCtrl.nameTableId.should.equal(3);
+	ppuCtrl.nameTableId.should.equalN(3, "nameTableId");
 })({
 	locales: {
 		es: "PPUCtrl: escribe nameTableId (bits 0-1)",
@@ -370,13 +369,13 @@ it("PPUCtrl: writes nameTableId (bits 0-1)", () => {
 
 it("PPUCtrl: writes vramAddressIncrement32 (bit 2)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10100011);
-	ppuCtrl.vramAddressIncrement32.should.equal(0);
+	ppuCtrl.vramAddressIncrement32.should.equalN(0, "vramAddressIncrement32");
 	ppuCtrl.onWrite(0b10100111);
-	ppuCtrl.vramAddressIncrement32.should.equal(1);
+	ppuCtrl.vramAddressIncrement32.should.equalN(1, "vramAddressIncrement32");
 })({
 	locales: {
 		es: "PPUCtrl: escribe vramAddressIncrement32 (bit 2)",
@@ -386,13 +385,13 @@ it("PPUCtrl: writes vramAddressIncrement32 (bit 2)", () => {
 
 it("PPUCtrl: writes sprite8x8PatternTableId (bit 3)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10100011);
-	ppuCtrl.sprite8x8PatternTableId.should.equal(0);
+	ppuCtrl.sprite8x8PatternTableId.should.equalN(0, "sprite8x8PatternTableId");
 	ppuCtrl.onWrite(0b10101111);
-	ppuCtrl.sprite8x8PatternTableId.should.equal(1);
+	ppuCtrl.sprite8x8PatternTableId.should.equalN(1, "sprite8x8PatternTableId");
 })({
 	locales: {
 		es: "PPUCtrl: escribe vramAddressIncrement32 (bit 3)",
@@ -402,13 +401,13 @@ it("PPUCtrl: writes sprite8x8PatternTableId (bit 3)", () => {
 
 it("PPUCtrl: writes backgroundPatternTableId (bit 4)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10100011);
-	ppuCtrl.backgroundPatternTableId.should.equal(0);
+	ppuCtrl.backgroundPatternTableId.should.equalN(0, "backgroundPatternTableId");
 	ppuCtrl.onWrite(0b10111111);
-	ppuCtrl.backgroundPatternTableId.should.equal(1);
+	ppuCtrl.backgroundPatternTableId.should.equalN(1, "backgroundPatternTableId");
 })({
 	locales: {
 		es: "PPUCtrl: escribe backgroundPatternTableId (bit 4)",
@@ -418,13 +417,13 @@ it("PPUCtrl: writes backgroundPatternTableId (bit 4)", () => {
 
 it("PPUCtrl: writes spriteSize (bit 5)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10000011);
-	ppuCtrl.spriteSize.should.equal(0);
+	ppuCtrl.spriteSize.should.equalN(0, "spriteSize");
 	ppuCtrl.onWrite(0b10111111);
-	ppuCtrl.spriteSize.should.equal(1);
+	ppuCtrl.spriteSize.should.equalN(1, "spriteSize");
 })({
 	locales: {
 		es: "PPUCtrl: escribe spriteSize (bit 5)",
@@ -434,13 +433,13 @@ it("PPUCtrl: writes spriteSize (bit 5)", () => {
 
 it("PPUCtrl: writes generateNMIOnVBlank (bit 7)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b00000011);
-	ppuCtrl.generateNMIOnVBlank.should.equal(0);
+	ppuCtrl.generateNMIOnVBlank.should.equalN(0, "generateNMIOnVBlank");
 	ppuCtrl.onWrite(0b10111111);
-	ppuCtrl.generateNMIOnVBlank.should.equal(1);
+	ppuCtrl.generateNMIOnVBlank.should.equalN(1, "generateNMIOnVBlank");
 })({
 	locales: {
 		es: "PPUCtrl: escribe generateNMIOnVBlank (bit 7)",
@@ -450,13 +449,13 @@ it("PPUCtrl: writes generateNMIOnVBlank (bit 7)", () => {
 
 it("PPUStatus: read only", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuStatus = ppu.registers.ppuStatus;
 	ppuStatus.setValue(123);
-	ppuStatus.onRead().should.equal(123);
+	ppuStatus.onRead().should.equalN(123, "onRead()");
 	ppuStatus.onWrite(456);
-	ppuStatus.onRead().should.equal(123);
+	ppuStatus.onRead().should.equalN(123, "onRead()");
 })({
 	locales: {
 		es: "PPUStatus: solo lectura",
@@ -466,12 +465,12 @@ it("PPUStatus: read only", () => {
 
 it("PPUStatus: reads spriteOverflow (bit 5)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuStatus = ppu.registers.ppuStatus;
-	byte.getBit(ppuStatus.onRead(), 5).should.equal(0);
+	byte.getBit(ppuStatus.onRead(), 5).should.equalN(0, "bit 5");
 	ppuStatus.spriteOverflow = 1;
-	byte.getBit(ppuStatus.onRead(), 5).should.equal(1);
+	byte.getBit(ppuStatus.onRead(), 5).should.equalN(1, "bit 5");
 })({
 	locales: {
 		es: "PPUStatus: lee spriteOverflow (bit 5)",
@@ -481,12 +480,12 @@ it("PPUStatus: reads spriteOverflow (bit 5)", () => {
 
 it("PPUStatus: reads sprite0Hit (bit 6)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuStatus = ppu.registers.ppuStatus;
-	byte.getBit(ppuStatus.onRead(), 6).should.equal(0);
+	byte.getBit(ppuStatus.onRead(), 6).should.equalN(0, "bit 6");
 	ppuStatus.sprite0Hit = 1;
-	byte.getBit(ppuStatus.onRead(), 6).should.equal(1);
+	byte.getBit(ppuStatus.onRead(), 6).should.equalN(1, "bit 6");
 })({
 	locales: {
 		es: "PPUStatus: lee sprite0Hit (bit 6)",
@@ -496,12 +495,12 @@ it("PPUStatus: reads sprite0Hit (bit 6)", () => {
 
 it("PPUStatus: reads isInVBlankInterval (bit 7)", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 
 	const ppuStatus = ppu.registers.ppuStatus;
-	byte.getBit(ppuStatus.onRead(), 7).should.equal(0);
+	byte.getBit(ppuStatus.onRead(), 7).should.equalN(0, "bit 7");
 	ppuStatus.isInVBlankInterval = 1;
-	byte.getBit(ppuStatus.onRead(), 7).should.equal(1);
+	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
 })({
 	locales: {
 		es: "PPUStatus: lee isInVBlankInterval (bit 7)",
@@ -513,16 +512,16 @@ it("PPUStatus: reads isInVBlankInterval (bit 7)", () => {
 
 it("PPUStatus: resets isInVBlankInterval after reading", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
+	const ppu = new PPU({});
 	const ppuStatus = ppu.registers.ppuStatus;
 
 	ppuStatus.isInVBlankInterval = 1;
-	byte.getBit(ppuStatus.onRead(), 7).should.equal(1);
-	ppuStatus.isInVBlankInterval.should.equal(0);
+	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
+	ppuStatus.isInVBlankInterval.should.equalN(0, "isInVBlankInterval");
 
 	ppuStatus.isInVBlankInterval = 0;
-	byte.getBit(ppuStatus.onRead(), 7).should.equal(0);
-	ppuStatus.isInVBlankInterval.should.equal(0);
+	byte.getBit(ppuStatus.onRead(), 7).should.equalN(0, "bit 7");
+	ppuStatus.isInVBlankInterval.should.equalN(0, "isInVBlankInterval");
 })({
 	locales: {
 		es: "PPUStatus: reinicia isInVBlankInterval luego de leer",
@@ -685,9 +684,15 @@ it("resets `PPUStatus::isInVBlankInterval` on scanline=-1, cycle=1", () => {
 		ppu.step(noop, noop);
 
 		if (cycle === 1) {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equal(0);
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+				0,
+				"isInVBlankInterval"
+			);
 		} else {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equal(1);
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+				1,
+				"isInVBlankInterval"
+			);
 		}
 	}
 })({
@@ -713,13 +718,19 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 		ppu.step(noop, onInterrupt);
 
 		if (cycle === 1) {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equal(1);
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+				1,
+				"isInVBlankInterval"
+			);
 			onInterrupt.should.have.been.calledWith({
 				id: "NMI",
 				vector: 0xfffa,
 			});
 		} else {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equal(0);
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+				0,
+				"isInVBlankInterval"
+			);
 			onInterrupt.should.have.not.been.called;
 		}
 	}
@@ -733,21 +744,103 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 
 // 5b.8 VRAM bridge
 
-it("PPUStatus: resets isInVBlankInterval after reading", () => {
+it("its `memory` has a `vram` property", () => {
 	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
-	const ppuStatus = ppu.registers.ppuStatus;
+	const ppu = new PPU({});
 
-	ppuStatus.isInVBlankInterval = 1;
-	byte.getBit(ppuStatus.onRead(), 7).should.equal(1);
-	ppuStatus.isInVBlankInterval.should.equal(0);
-
-	ppuStatus.isInVBlankInterval = 0;
-	byte.getBit(ppuStatus.onRead(), 7).should.equal(0);
-	ppuStatus.isInVBlankInterval.should.equal(0);
+	ppu.memory.should.include.key("vram");
+	ppu.memory.vram.should.be.a("Uint8Array");
+	ppu.memory.vram.length.should.equalN(4096, "length");
 })({
 	locales: {
-		es: "PPUStatus: reinicia isInVBlankInterval luego de leer",
+		es: "su `memory`incluye una propiedad `vram`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("connects VRAM to PPU memory (reads)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	for (let i = 0; i < 4096; i++) {
+		const value = byte.random();
+		ppu.memory.vram[i] = value;
+		ppu.memory.read(0x2000 + i).should.equalN(value, `read(${i})`);
+	}
+})({
+	locales: {
+		es: "conecta VRAM con la memoria de PPU (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("connects VRAM to PPU memory (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	for (let i = 0; i < 2048; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2000 + i, value);
+		ppu.memory.vram[i].should.equalN(value, `ram[${i}]`);
+	}
+})({
+	locales: {
+		es: "conecta VRAM con la memoria de PPU (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("PPUAddr: write only", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuAddr = ppu.registers.ppuAddr;
+	ppuAddr.onWrite(byte.random());
+	ppuAddr.onRead().should.equalN(0, "onRead()");
+})({
+	locales: {
+		es: "PPUAddr: solo escritura",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("PPUAddr: initializes two properties, `latch` and `address`", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuAddr = ppu.registers.ppuAddr;
+	ppuAddr.onLoad();
+
+	ppuAddr.should.include.key("latch");
+	ppuAddr.latch.should.equalN(false, "latch");
+
+	ppuAddr.should.include.key("address");
+	ppuAddr.address.should.equalN(0, "address");
+})({
+	locales: {
+		es: "PPUAddr: inicializa dos propiedades, `latch` y `address`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("PPUAddr: writes the MSB first, then the LSB", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuAddr = ppu.registers.ppuAddr;
+	ppuAddr.onLoad();
+
+	ppuAddr.onWrite(0x12);
+	ppuAddr.address.should.equalHex(0x1200, "address");
+
+	ppuAddr.onWrite(0x34);
+	ppuAddr.address.should.equalHex(0x1234, "address");
+
+	ppuAddr.onWrite(0x56);
+	ppuAddr.address.should.equalHex(0x5634, "address");
+})({
+	locales: {
+		es: "PPUAddr: escribe primero el MSB, luego el LSB",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
