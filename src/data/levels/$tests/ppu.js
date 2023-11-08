@@ -793,8 +793,8 @@ it("connects VRAM to PPU memory (writes)", () => {
 it("PPUAddr: write only", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
-
 	const ppuAddr = ppu.registers.ppuAddr;
+
 	ppuAddr.onWrite(byte.random());
 	ppuAddr.onRead().should.equalN(0, "onRead()");
 })({
@@ -807,9 +807,7 @@ it("PPUAddr: write only", () => {
 it("PPUAddr: initializes two properties, `latch` and `address`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
-
 	const ppuAddr = ppu.registers.ppuAddr;
-	ppuAddr.onLoad();
 
 	ppuAddr.should.include.key("latch");
 	ppuAddr.latch.should.equalN(false, "latch");
@@ -826,21 +824,131 @@ it("PPUAddr: initializes two properties, `latch` and `address`", () => {
 it("PPUAddr: writes the MSB first, then the LSB", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
-
 	const ppuAddr = ppu.registers.ppuAddr;
-	ppuAddr.onLoad();
 
 	ppuAddr.onWrite(0x12);
 	ppuAddr.address.should.equalHex(0x1200, "address");
+	ppuAddr.latch.should.equalN(true, "latch");
 
 	ppuAddr.onWrite(0x34);
 	ppuAddr.address.should.equalHex(0x1234, "address");
+	ppuAddr.latch.should.equalN(false, "latch");
 
 	ppuAddr.onWrite(0x56);
 	ppuAddr.address.should.equalHex(0x5634, "address");
+	ppuAddr.latch.should.equalN(true, "latch");
 })({
 	locales: {
 		es: "PPUAddr: escribe primero el MSB, luego el LSB",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("PPUData: writes the value at `PPUAddr::address`", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuData = ppu.registers.ppuData;
+
+	ppuAddr.address = 0x2023;
+
+	const value = byte.random();
+	ppuData.onWrite(value);
+	ppu.memory.read(0x2023).should.equal(value);
+})({
+	locales: {
+		es: "PPUData: escribe el valor en `PPUAddr::address`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("PPUData: autoincrements the address by 1 (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuData = ppu.registers.ppuData;
+
+	ppuAddr.address = 0x2023;
+
+	ppuData.onWrite(byte.random());
+	ppuAddr.address.should.equalHex(0x2024, "address");
+
+	ppuData.onWrite(byte.random());
+	ppuAddr.address.should.equalHex(0x2025, "address");
+})({
+	locales: {
+		es: "PPUData: autoincrementa la dirección por 1 (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32` (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuData = ppu.registers.ppuData;
+
+	ppuCtrl.vramAddressIncrement32 = 1;
+	ppuAddr.address = 0x2023;
+
+	ppuData.onWrite(byte.random());
+	ppuAddr.address.should.equalHex(0x2043, "address");
+
+	ppuData.onWrite(byte.random());
+	ppuAddr.address.should.equalHex(0x2063, "address");
+})({
+	locales: {
+		es:
+			"PPUData: autoincrementa la dirección por 32 si `PPUCtrl.vramAddressIncrement32` (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("PPUData: autoincrements the address without exceeding $FFFF (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuData = ppu.registers.ppuData;
+
+	ppuAddr.address = 0xffff;
+	ppuData.onWrite(byte.random());
+	ppuAddr.address.should.equalHex(0x0000, "address");
+
+	ppuAddr.address = 0xffff;
+	ppuCtrl.vramAddressIncrement32 = 1;
+	ppuData.onWrite(byte.random());
+	ppuAddr.address.should.equalN(31, "address");
+})({
+	locales: {
+		es:
+			"PPUData: autoincrementa la dirección sin excederse de $FFFF (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("PPUStatus: resets `PPUAddr::latch` after reading", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuStatus = ppu.registers.ppuStatus;
+
+	ppuAddr.latch = true;
+	ppuStatus.onRead();
+	ppuAddr.latch.should.equalN(false, "latch");
+
+	ppuAddr.latch = false;
+	ppuStatus.onRead();
+	ppuAddr.latch.should.equalN(false, "latch");
+})({
+	locales: {
+		es: "PPUStatus: reinicia `PPUAddr::latch` luego de leer",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
