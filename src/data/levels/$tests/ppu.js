@@ -158,21 +158,6 @@ it("includes a `memory` property with a `PPUMemory` instance", () => {
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("includes a `memory` property with a `PPUMemory` instance", () => {
-	const PPU = mainModule.default.PPU;
-	const ppu = new PPU();
-
-	ppu.should.include.key("memory");
-	ppu.memory.should.respondTo("onLoad");
-	ppu.memory.should.respondTo("read");
-	ppu.memory.should.respondTo("write");
-})({
-	locales: {
-		es: "incluye una propiedad `memory` con una instancia de `PPUMemory`",
-	},
-	use: ({ id }, book) => id >= book.getId("5b.4"),
-});
-
 it("its `memory` saves devices in `onLoad`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU();
@@ -744,4 +729,25 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 			"asigna `PPUStatus::isInVBlankInterval` y dispara una NMI en scanline=241, cycle=1",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
+});
+
+// 5b.8 VRAM bridge
+
+it("PPUStatus: resets isInVBlankInterval after reading", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU();
+	const ppuStatus = ppu.registers.ppuStatus;
+
+	ppuStatus.isInVBlankInterval = 1;
+	byte.getBit(ppuStatus.onRead(), 7).should.equal(1);
+	ppuStatus.isInVBlankInterval.should.equal(0);
+
+	ppuStatus.isInVBlankInterval = 0;
+	byte.getBit(ppuStatus.onRead(), 7).should.equal(0);
+	ppuStatus.isInVBlankInterval.should.equal(0);
+})({
+	locales: {
+		es: "PPUStatus: reinicia isInVBlankInterval luego de leer",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
