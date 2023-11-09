@@ -8,12 +8,14 @@
 	align-items: center;
 
 	aspect-ratio: 256 / 240;
+
+	overflow: auto;
+	padding: 8px;
 }
 
 .box {
 	width: auto;
 	max-width: 95%;
-	height: 95%;
 
 	border: 1px solid #466a8e;
 	border-radius: 8px;
