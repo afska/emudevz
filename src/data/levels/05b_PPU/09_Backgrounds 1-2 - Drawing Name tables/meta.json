@@ -4,6 +4,7 @@
 		"es": "🏞️ Fondos (1/2): Dibujando Name tables"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
