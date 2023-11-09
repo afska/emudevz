@@ -3,13 +3,13 @@
 - A 🏞️📖 _name table_ is a `32x30` matrix of 🕊️ _tile indexes_.
 - Since the screen resolution is `256x240`, and each 🕊️ _tile_ is `8x8` pixels, these `32x30` tiles represent the whole screen ✨.
 - Each 🕊️ _tile index_ occupies `1` byte, and there are `64` bytes of 🖍️ _additional metadata_ at the end of the name table.
-- So, including the metadata, each _name table_ totals `1024` bytes.
+- So, including the metadata, each _name table_ totals `1024` bytes (`32*30 + 64`).
 - The 🐏 `VRAM` contains `2` 🏞️📖 _name tables_.
   - (that's available in PPU addresses `$2000-$27FF`)
 
-<div class="embed-image"><img alt="Pattern table memory" src="assets/graphics/tile_bitplanes.png" style="width: 100%" /></div>
+<div class="embed-image"><img alt="Name table memory" src="assets/graphics/name_tables.png" style="width: 100%" /></div>
 
-// TODO: CONTINUE
+# // TODO: CONTINUE
 
 #### Pattern table example
 
