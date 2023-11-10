@@ -1,35 +1,29 @@
 # PPU: Background rendering
 
-- A 🏞️📖 _name table_ is a `32x30` matrix of 🕊️ _tile indexes_.
-- Since the screen resolution is `256x240`, and each 🕊️ _tile_ is `8x8` pixels, these `32x30` tiles represent the whole screen ✨.
-- Each 🕊️ _tile index_ occupies `1` byte, and there are `64` bytes of 🖍️ _additional metadata_ at the end of the name table.
-- So, including the metadata, each _name table_ totals `1024` bytes (`32*30 + 64`).
+- A 🏞️📖 _name table_ is a matrix of `32x30` 🕊️ _tile indexes_.
+- Since the screen resolution is `256x240`, and each 🕊️ _tile_ is `8x8` pixels, these `32x30` tiles cover the whole screen area ✨.
+- Each 🕊️ _tile index_ occupies `1` byte, and there are `64` bytes of 🖍️ _color metadata_ at the end of the name table.
+- So, each _name table_ totals `1024` bytes (`32*30*1 + 64`).
 - The 🐏 `VRAM` contains `2` 🏞️📖 _name tables_.
   - (that's available in PPU addresses `$2000-$27FF`)
 
 <div class="embed-image"><img alt="Name table memory" src="assets/graphics/name_tables.png" style="width: 100%" /></div>
 
-# // TODO: CONTINUE
+#### Name table example
 
-#### Pattern table example
-
-<div class="embed-image"><img alt="Pattern table" src="assets/graphics/tiles_grayscale.png" style="width: 30%" /></div>
+<div class="embed-image"><img alt="Name table" src="assets/graphics/nametable_debug.png" style="width: 75%" /></div>
 
 #### Rendering
 
-- A 🕊️ _tile_ is an 8x8 _grayscale_ pixel grid.
-- Those pixels are indexes of 🎨 _palette entries_...
-- ...so each pixel can be either `0`, `1`, `2` or `3`.
-  - (in binary: `00`, `01`, `10` or `11`)
+##### ⬛️⬜️ Grayscale (fixed palette)
 
-To encode the pixels, the `16` bytes of the tile data are divided in **two** `8-byte` **bitplanes** (<strong style="color: #7723ec">low plane</strong> and <strong style="color: #4eeebf">high plane</strong>).
+- Each byte is a 🕊️ _tile index_ (`0-255`).
+- Just draw, from top to bottom, `30` rows (`32` 🕊️ _tiles_ per row).
+- Use a fixed 🎨 _palette_:
+  - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
 
-Here's an example of how a tile for **½** (one-half fraction) is encoded:
+##### 🎨🌈 Color
 
-```
-$41 $C2 $44 $48 $10 $20 $40 $80 $01 $02 $04 $08 $16 $21 $42 $87
-```
+- Each block of `"color metadata"` is an 🖍️📖 _attribute table_ that defines which 🎨 _palette_ each tile should use.
 
-<div class="embed-image"><img alt="Encoded tile" src="assets/graphics/one_half_fraction2.png" style="width: 75%" /></div>
-
-Each bit in the first plane controls <strong style="color: #7723ec">bit 0</strong> of a pixel's color; the corresponding bit in the second plane controls <strong style="color: #4eeebf">bit 1</strong>.
+<div class="embed-image"><img alt="Attributes" src="assets/graphics/attributes.gif" style="width: 75%" /></div>
