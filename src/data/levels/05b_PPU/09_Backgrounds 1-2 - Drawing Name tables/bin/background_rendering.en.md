@@ -22,7 +22,7 @@
   - The table will be in the PPU address `0x2000 + nameTableId * 1024`.
 - Each of the next `960` bytes will be a 🕊️ _tile index_ (`0-255`).
   - Ignore 🖍️ _color metadata_ for now.
-- Draw, from top to bottom, `30` rows if `32` tiles each.
+- Draw, from top to bottom, `30` rows of `32` tiles each.
   - Use a fixed 🎨 _palette_:
     - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
 
@@ -30,7 +30,7 @@
 
 ###### **Obtaining palette ids**
 
-- Each block of `"color metadata"` is an 🖍️📖 _attribute table_ that defines which 🎨 _palette_ each tile should use.
+- Each section of `"color metadata"` is an 🖍️📖 _attribute table_ that defines which 🎨 _palette_ each tile should use.
 - 🎨 Palettes have `4` colors, and they are assigned to `blocks` of `2x2` tiles.
 
 <div class="embed-image"><img alt="Palette blocks" src="assets/graphics/palette-blocks.gif" style="width: 75%" /></div>
@@ -54,4 +54,4 @@
 - The 🐏 `Palette RAM` contains `4` palettes for backgrounds, and `4` palettes for sprites.
   - (background palettes are available in PPU addresses `$3F00-$3F0F`)
 
-<div>// TODO: Picture</div>
+<div class="embed-image"><img alt="Palette RAM" src="assets/graphics/palette_ram.png" style="width: 100%" /></div>
