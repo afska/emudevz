@@ -25,6 +25,8 @@ body {
 	display: flex;
 	justify-content: center;
 	pointer-events: none;
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
 
 .link-button {
@@ -189,7 +191,18 @@ body {
 /* Markdown */
 
 .markdown-view h4 {
-	margin-top: 8px;
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-view h5 {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-view h6 {
+	margin-top: 16px;
+	margin-bottom: 16px;
 }
 
 .markdown-view table {
