@@ -17,8 +17,8 @@
 <div class="embed-image"><img alt="Sprites" src="assets/graphics/sprites.png" style="width: 30%" /></div>
 <hr />
 - 🎨 **Paleta**: Una lista de **índices de colores**, almacenada en 🐏 `<Palette RAM>`.
-- 👑🎨 **Paleta del sistema**: Una lista de 64 **colores**, `hardcodeada`.
-<div class="embed-image"><img alt="System palette" src="assets/graphics/colors.png" style="width: 50%" /></div>
+- 👑🎨 **Paleta maestra**: Una lista de 64 **colores**, `hardcodeada`.
+<div class="embed-image"><img alt="Master palette" src="assets/graphics/colors.png" style="width: 50%" /></div>
 
 <hr />
 

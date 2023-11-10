@@ -22,7 +22,7 @@
   - The table will be in the PPU address `0x2000 + nameTableId * 1024`.
 - Each of the next `960` bytes will be a 🕊️ _tile index_ (`0-255`).
   - Ignore 🖍️ _color metadata_ for now.
-- Draw, from top to bottom, `30` rows of `32` tiles each.
+- On cycle `256` of every visible scanline (`0-239`), draw a row of pixels (composed by `32` tiles each).
   - Use a fixed 🎨 _palette_:
     - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
 
@@ -49,7 +49,7 @@
 
 ###### **Reading palette data**
 
-- A 🎨 _palette_ is an array of `4` 🖍️ _color indexes_ (`0-63`), pointing to the hardcoded 👑🎨 `system palette`.
+- A 🎨 _palette_ is an array of `4` 🖍️ _color indexes_ (`0-63`), pointing to the hardcoded 👑🎨 `master palette`.
 - Each 🖍️ _color index_ occupies `1` byte, so each 🎨 _palette_ totals `4` bytes.
 - The 🐏 `Palette RAM` contains `4` palettes for backgrounds, and `4` palettes for sprites.
   - (background palettes are available in PPU addresses `$3F00-$3F0F`)

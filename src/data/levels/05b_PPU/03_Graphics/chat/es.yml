@@ -29,7 +29,7 @@ anycolor:
   - bueno... no 😅
   - la NEEES solo puede mostrar 64 colores diferentes bien definidos
   - <{colors.png}>
-  - así que cada paleta hace referencia a entradas de este catálogo, conocido como la <paleta del sistema>
+  - así que cada paleta hace referencia a entradas de este catálogo, conocido como la <paleta maestra>
   responses:
   - cuéntame más sobre los tiles 👀 [moreabouttiles]
 
@@ -57,7 +57,7 @@ enough:
   - 🕊️  ambos usan <tiles> para renderizar
   - 👾  todos los tiles están en <CHR-ROM> o <CHR-RAM>, sin color
   - 🎨  el color se da a través de <paletas>
-  - 👑 🎨  las paletas hacen referencia a entradas de una <paleta del sistema> de 64 colores fijos
+  - 👑 🎨  las paletas hacen referencia a entradas de una <paleta maestra> de 64 colores fijos
   - "escribiré sobre esto, con más detalles, aquí: 📄  /docs/ppu/definitions.es.md"
   responses:
   - genial [end]

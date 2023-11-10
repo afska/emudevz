@@ -1,5 +1,19 @@
 ---
 main:
   messages:
-  - coming soon!
+  - now you are ready
+  - we'll start drawing 🏞️  backgrounds!
+  responses:
+  - freaking FINALLY! [finally]
+
+finally:
+  messages:
+  - I wouldn't be so happy about it 😅
+  - this time, I'll not guide you step by step
+  - you'll need to figure that out from the documentation
+  - 📚  _-_read _--_📄 _-_ ~/docs/ppu/background_rendering.en.md~_--_
+  - _-_and try to understand how to render backgrounds in <grayscale>_--_
+  - 📚  _-_when you are ready, remove the test code from `PPU::step`_--_
+  - 📚  _-_and add the necessary code to render a full scanline of the background in `PPU::_onVisibleLine`_--_
+  - bye!
   responses: []

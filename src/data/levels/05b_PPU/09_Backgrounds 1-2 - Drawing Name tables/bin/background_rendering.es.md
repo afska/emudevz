@@ -22,11 +22,11 @@
   - La tabla estará en la dirección PPU `0x2000 + nameTableId * 1024`.
 - Cada uno de los siguientes `960` bytes será un 🕊️ _tile index_ (`0-255`).
   - Ignora por ahora los 🖍️ _metadatos de color_.
-- Dibuja, de arriba a abajo, `30` filas de `32` _tiles_ cada una.
+- En el ciclo `256` de cada scanline visible (`0-239`), dibuja una fila de pixeles (compuesta por `32` tiles cada una).
   - Usa una 🎨 _paleta_ fija:
     - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
 
-##### 🎨🌈 Añadiendo color
+##### 🎨🌈 Agregando color
 
 ###### **Obtención de ids de paletas**
 
@@ -49,7 +49,7 @@
 
 ###### **Lectura de datos de paleta**
 
-- Una 🎨 _paleta_ es un arreglo de `4` 🖍️ _índices de color_ (`0-63`), apuntando a la 👑🎨 _paleta del sistema_ hardcodeada.
+- Una 🎨 _paleta_ es un arreglo de `4` 🖍️ _índices de color_ (`0-63`), apuntando a la 👑🎨 _paleta maestra_ hardcodeada.
 - Cada 🖍️ _índice de color_ ocupa `1` byte, por lo que cada 🎨 _paleta_ suma `4` bytes.
 - La 🐏 `Palette RAM` contiene `4` paletas para fondos y `4` paletas para sprites.
   - (las paletas de fondo están disponibles en las direcciones PPU `$3F00-$3F0F`)
