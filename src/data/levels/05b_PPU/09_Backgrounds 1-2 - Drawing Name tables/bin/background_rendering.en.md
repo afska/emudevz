@@ -49,7 +49,7 @@
 
 ###### **Reading palette data**
 
-- A 🎨 _palette_ is a array of `4` 🖍️ _color indexes_, pointing to the hardcoded 👑🎨 `system palette`.
+- A 🎨 _palette_ is an array of `4` 🖍️ _color indexes_ (`0-63`), pointing to the hardcoded 👑🎨 `system palette`.
 - Each 🖍️ _color index_ occupies `1` byte, so each 🎨 _palette_ totals `4` bytes.
 - The 🐏 `Palette RAM` contains `4` palettes for backgrounds, and `4` palettes for sprites.
   - (background palettes are available in PPU addresses `$3F00-$3F0F`)
