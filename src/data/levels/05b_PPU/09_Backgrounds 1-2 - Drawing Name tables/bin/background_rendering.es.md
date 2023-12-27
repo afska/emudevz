@@ -1,7 +1,7 @@
 # PPU: Renderizado de fondos
 
 - Una 🏞️📖 _name table_ es una matriz de `32x30` 🕊️ _índices de tile_.
-- Dado que la resolución de pantalla es `256x240`, y cada 🕊️ _tile_ es de `8x8` pixeles, estos `32x30` _tiles_ cubren toda el área de la pantalla ✨.
+- Dado que la resolución de pantalla es `256x240`, y cada 🕊️ _tile_ es de `8x8` píxeles, estos `32x30` _tiles_ cubren toda el área de la pantalla ✨.
 - Cada 🕊️ _índice de tile_ ocupa `1` byte, y hay `64` bytes de 🖍️ _metadatos de color_ al final de la _name table_.
 - Por lo tanto, cada _name table_ da un total de `1024` bytes (`32*30*1 + 64`).
 - La 🐏 `VRAM` contiene `2` 🏞️📖 _name tables_.
@@ -20,9 +20,11 @@
 - Encuentra la ubicación de la 🏞️📖 _name table_:
   - Los primeros `2` bits de 🎛️ `PPUCtrl` contienen el `nameTableId`.
   - La tabla estará en la dirección PPU `0x2000 + nameTableId * 1024`.
+- Encuentra cuál 🏞️📖 _pattern table_ deberíamos usar (`0` o `1`):
+  - Esto está en el bit `4` de 🎛️ `PPUCtrl`.
 - Cada uno de los siguientes `960` bytes será un 🕊️ _tile index_ (`0-255`).
   - Ignora por ahora los 🖍️ _metadatos de color_.
-- En el ciclo `256` de cada scanline visible (`0-239`), dibuja una fila de pixeles (compuesta por `32` tiles cada una).
+- En el ciclo `256` de cada scanline visible (`0-239`), dibuja una fila de píxeles (compuesta por `32` tiles cada una).
   - Usa una 🎨 _paleta_ fija:
     - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
 

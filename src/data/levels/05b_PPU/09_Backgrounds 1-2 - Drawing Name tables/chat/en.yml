@@ -8,7 +8,7 @@ main:
 
 finally:
   messages:
-  - you'll need to figure that out from the documentation
+  - this time, you'll need to follow the documentation
   - 📚  _-_read _--_📄 _-_ ~/docs/ppu/background_rendering.en.md~_--_
   - _-_and try to understand how to render backgrounds in <grayscale>_--_
   - 📚  _-_when you are ready, remove the test code from `PPU::step`_--_
@@ -47,7 +47,7 @@ math:
   - and that you have to draw from ~x = 0~  to ~x = 255~
   - you also know that the screen is a grid of ~32x32~ tiles (of ~8x8~ pixels each)
   - |-
-    one way of implementing this is doing something like this:
+    one way of implementing this is doing something like:
       ```javascript
       for (let x = 0; x < 256; x += 8) {
         const nameTableId = 0; // TODO: Get name table id
