@@ -180,9 +180,12 @@ export default class TestCommand extends Command {
 			return false;
 		}
 
-		const rom = filesystem.read(videoTest.rom, {
-			binary: true,
-		});
+		const rom =
+			videoTest.internalRom != null
+				? level.bin[videoTest.internalRom]
+				: filesystem.read(videoTest.rom, {
+						binary: true,
+				  });
 
 		const ppuCode = level.code[videoTest.ppu];
 		const PPU = (await moduleEval(ppuCode)).default;
