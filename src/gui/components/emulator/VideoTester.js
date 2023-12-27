@@ -70,7 +70,9 @@ export default class VideoTester extends PureComponent {
 						rom={rom}
 						settings={{ ...this._settings, customPPU: PPU }}
 						volume={0}
-						onError={() => {}}
+						onError={(e) => {
+							console.error(e);
+						}}
 						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onExpectedFrame}

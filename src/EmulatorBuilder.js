@@ -36,7 +36,9 @@ export default class EmulatorBuilder {
 				this.withUserPPU ||
 				this.withUserAPU ||
 				this.withUserController ||
-				this.withUserMappers
+				this.withUserMappers ||
+				this.customPPU ||
+				this.customAPU
 					? mainModule.CPUMemory
 					: undefined,
 			Cartridge: this.withUserCartridge ? mainModule.Cartridge : undefined,

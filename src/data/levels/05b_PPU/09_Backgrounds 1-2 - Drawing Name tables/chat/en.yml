@@ -8,12 +8,70 @@ main:
 
 finally:
   messages:
-  - I wouldn't be so happy about it 😅
-  - this time, I'll not guide you step by step
   - you'll need to figure that out from the documentation
   - 📚  _-_read _--_📄 _-_ ~/docs/ppu/background_rendering.en.md~_--_
   - _-_and try to understand how to render backgrounds in <grayscale>_--_
   - 📚  _-_when you are ready, remove the test code from `PPU::step`_--_
   - 📚  _-_and add the necessary code to render a full scanline of the background in `PPU::_onVisibleLine`_--_
-  - bye!
-  responses: []
+  responses:
+  - DON'T LEAVE ME 😭 [questions]
+
+questions:
+  messages:
+  - ok, ok 😅
+  - do you have some questions?
+  responses:
+  - so, how many pixels should I draw? ⏹ [howmany]
+  - how do I know the current line? 🌠 [line]
+  - help me with the math 🔢 [math]
+  - I did it, but some games don't seem to work 🤔 [work]
+
+howmany:
+  messages:
+  - the screen is ~256x240~
+  - you need to ~plot~ exactly 256 pixels for each visible line
+  - and in real life, the hardware renders one pixel per cycle, but here we'll do all at once (for simplicity)
+  - so, you should only render the line when ~this.cycle === 256~
+  responses:
+  - ...questions
+
+line:
+  messages:
+  - the current line is represented by ~this.scanline~
+  responses:
+  - ...questions
+
+math:
+  messages:
+  - you know that ~y = this.scanline~
+  - and that you have to draw from ~x = 0~  to ~x = 255~
+  - you also know that the screen is a grid of ~32x32~ tiles (of ~8x8~ pixels each)
+  - |-
+    one way of implementing this is doing something like this:
+      ```javascript
+      for (let x = 0; x < 256; x += 8) {
+        const nameTableId = 0; // TODO: Get name table id
+        const patternTableId = 0; // TODO: Get pattern table id
+
+        const tileX = Math.floor(x / 8);
+        const tileY = Math.floor(this.scanline / 8);
+        const tileIndex = tileY * 32 + tileX;
+        const tileId = 0; // TODO: Read tile id from memory
+
+        const tile = new Tile(this, patternTableId, tileId, this.scanline % 8);
+        for (let xx = 0; xx < 8; xx++) {
+          const colorIndex = tile.getColorIndex(xx);
+          // TODO: Plot
+        }
+      }```
+  responses:
+  - ...questions
+
+work:
+  messages:
+  - well, we still have a lot to do!
+  - the important thing is that some games should now display their background correctly
+  - for example, check out 📄  ~/roms/_test/hello_world.neees~
+  - and compare the output toggling between BrokenNEEES and your emulator ✨
+  responses:
+  - ...questions

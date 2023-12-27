@@ -20,6 +20,8 @@
 - Find the location of the 🏞️📖 _name table_:
   - The first `2` bits of 🎛️ `PPUCtrl` contain the `nameTableId`.
   - The table will be in the PPU address `0x2000 + nameTableId * 1024`.
+- Find out which 🏞️📖 _pattern table_ we should use (`0` or `1`):
+  - This is in bit `4` of 🎛️ `PPUCtrl`.
 - Each of the next `960` bytes will be a 🕊️ _tile index_ (`0-255`).
   - Ignore 🖍️ _color metadata_ for now.
 - On cycle `256` of every visible scanline (`0-239`), draw a row of pixels (composed by `32` tiles each).

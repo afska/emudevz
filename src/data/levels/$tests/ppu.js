@@ -950,5 +950,33 @@ it("PPUStatus: resets `PPUAddr::latch` after reading", () => {
 	locales: {
 		es: "PPUStatus: reinicia `PPUAddr::latch` luego de leer",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.7"),
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+// 5b.8 Backgrounds (1/2): Drawing Name tables
+
+it("calls `plot` 256 times on cycle 256 of every visible scanline", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	sinon.spy(ppu, "plot");
+
+	for (let frame = 0; frame < 1; frame++) {
+		for (let scanline = -1; scanline < 261; scanline++) {
+			for (let cycle = 0; cycle < 341; cycle++) {
+				ppu.plot.resetHistory();
+				ppu.step(noop, noop);
+
+				if (scanline >= 0 && scanline < 240) {
+					if (cycle !== 256) ppu.plot.should.not.have.been.called;
+					else ppu.plot.callCount.should.equal(256);
+				}
+			}
+		}
+	}
+})({
+	locales: {
+		es: "llama a `plot` 256 veces en el ciclo 256 de cada scanline visible",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
