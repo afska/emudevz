@@ -9,10 +9,26 @@ main:
 finally:
   messages:
   - this time, you'll need to follow the documentation
-  - 📚  _-_read _--_📄 _-_ ~/docs/ppu/background_rendering.en.md~_--_
-  - _-_and try to understand how to render backgrounds in <grayscale>_--_
-  - 📚  _-_when you are ready, remove the test code from `PPU::step`_--_
-  - 📚  _-_and add the necessary code to render a full scanline of the background in `PPU::_onVisibleLine`_--_
+  - read 📄  ~/docs/ppu/background_rendering.en.md~
+  - and try to understand how to render backgrounds in <grayscale>
+  - and when you are ready...
+  - 📚  _-_create a `BackgroundRenderer` class_--_
+  - 📚  _-_its constructor should assign a `ppu` property with the PPU instance_--_
+  - |-
+    📚  _-_make these changes to the `PPU` class:_--_
+    *_-_*constructor**:_--_
+      *_-_*->** instantiates the background renderer:_--_
+        _-_```javascript this.backgroundRenderer = new BackgroundRenderer(this)```_--_
+        _-_(remember to import it if you defined it in another file!)_--_
+    *_-_*step(...)**:_--_
+      *_-_*->** remove the test code (~<test>...</test>~)_--_
+    *_-_*_onVisibleLine(...)**:_--_
+      *_-_*->** if the cycle is ~256~, call ~backgroundRenderer.renderScanline()~_--_
+  - |-
+    📚  _-_now, in the `BackgroundRenderer` class:_--_
+    *_-_*renderScanline()**:_--_
+      *_-_*->** add the necessary code to render a full scanline of the background_--_
+  - bye!
   responses:
   - DON'T LEAVE ME 😭 [questions]
 
@@ -23,42 +39,44 @@ questions:
   responses:
   - so, how many pixels should I draw? ⏹ [howmany]
   - how do I know the current line? 🌠 [line]
-  - help me with the math 🔢 [math]
+  - help me a bit 🆘 [help]
   - I did it, but some games don't seem to work 🤔 [work]
 
 howmany:
   messages:
   - the screen is ~256x240~
   - you need to ~plot~ exactly 256 pixels for each visible line
-  - and in real life, the hardware renders one pixel per cycle, but here we'll do all at once (for simplicity)
-  - so, you should only render the line when ~this.cycle === 256~
+  - in real life, the hardware renders one pixel per cycle, but here we'll do all at once (for simplicity)
+  - therefore, you should only render the line when ~cycle~ is 256
   responses:
   - ...questions
 
 line:
   messages:
-  - the current line is represented by ~this.scanline~
+  - the current line is represented by ~this.ppu.scanline~
   responses:
   - ...questions
 
-math:
+help:
   messages:
-  - you know that ~y = this.scanline~
-  - and that you have to draw from ~x = 0~  to ~x = 255~
+  - you know that ~y = this.ppu.scanline~
+  - and that you need to draw from ~x = 0~ to ~x = 255~
   - you also know that the screen is a grid of ~32x32~ tiles (of ~8x8~ pixels each)
+  - and lastly, you know how to draw a tile using your `Tile` class!
   - |-
     one way of implementing this is doing something like:
       ```javascript
+      const y = this.ppu.scanline;
       for (let x = 0; x < 256; x += 8) {
         const nameTableId = 0; // TODO: Get name table id
         const patternTableId = 0; // TODO: Get pattern table id
 
         const tileX = Math.floor(x / 8);
-        const tileY = Math.floor(this.scanline / 8);
+        const tileY = Math.floor(y / 8);
         const tileIndex = tileY * 32 + tileX;
         const tileId = 0; // TODO: Read tile id from memory
 
-        const tile = new Tile(this, patternTableId, tileId, this.scanline % 8);
+        const tile = new Tile(this.ppu, patternTableId, tileId, y % 8);
         for (let xx = 0; xx < 8; xx++) {
           const colorIndex = tile.getColorIndex(xx);
           // TODO: Plot

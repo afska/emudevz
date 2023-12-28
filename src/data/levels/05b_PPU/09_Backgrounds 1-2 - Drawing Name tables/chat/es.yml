@@ -9,10 +9,26 @@ main:
 finally:
   messages:
   - esta vez, tendrás que seguir la documentación
-  - 📚  _-_lee _--_📄 _-_ ~/docs/ppu/background_rendering.es.md~_--_
-  - _-_y trata de entender cómo renderizar fondos en <escala de grises>_--_
-  - 📚  _-_cuando hayas terminado, elimina el código de prueba de `PPU::step`_--_
-  - 📚  _-_y añade el código necesario para renderizar una línea completa del fondo en `PPU::_onVisibleLine`_--_
+  - lee 📄  ~/docs/ppu/background_rendering.es.md~
+  - y trata de entender cómo renderizar fondos en <escala de grises>
+  - y cuando hayas terminado...
+  - 📚  _-_crea una clase `BackgroundRenderer`_--_
+  - 📚  _-_su constructor debe asignar una propiedad `ppu` con la instancia de PPU_--_
+  - |-
+    📚  _-_haz estos cambios en la clase `PPU`:_--_
+    *_-_*constructor**:_--_
+      *_-_*->** instanciar el renderizador de fondos:_--_
+        _-_```javascript this.backgroundRenderer = new BackgroundRenderer(this)```_--_
+        _-_(¡recuerda importarlo si lo definiste en otro archivo!)_--_
+    *_-_*step(...)**:_--_
+      *_-_*->** elimina el código de prueba (~<test>...</test>~)_--_
+    *_-_*_onVisibleLine(...)**:_--_
+      *_-_*->** si el ciclo es ~256~, llama a ~backgroundRenderer.renderScanline()~_--_
+  - |-
+    📚  _-_ahora, en la clase `BackgroundRenderer`:_--_
+    *_-_*renderScanline()**:_--_
+      *_-_*->** añade el código necesario para renderizar una línea completa del fondo_--_
+  - ¡adiós!
   responses:
   - NO ME DEJES 😭 [questions]
 
@@ -23,42 +39,44 @@ questions:
   responses:
   - entonces, ¿cuántos píxeles debería dibujar? ⏹ [howmany]
   - ¿cómo sé la línea actual? 🌠 [line]
-  - ayúdame con las matemáticas 🔢 [math]
+  - ayúdame un poco 🆘 [help]
   - lo hice, pero algunos juegos no parecen funcionar 🤔 [work]
 
 howmany:
   messages:
   - la pantalla es de ~256x240~
   - necesitas ~plot~ear exactamente 256 píxeles para cada línea visible
-  - y en la vida real, el hardware renderiza un píxel por ciclo, pero aquí lo haremos todo a la vez (por simplicidad)
-  - entonces, solo deberías renderizar la línea cuando ~this.cycle === 256~
+  - en la vida real, el hardware renderiza un píxel por ciclo, pero aquí lo haremos todo a la vez (por simplicidad)
+  - por lo tanto, solo deberías renderizar la línea cuando ~cycle~ sea 256
   responses:
   - ...questions
 
 line:
   messages:
-  - la línea actual está representada por ~this.scanline~
+  - la línea actual está representada por ~this.ppu.scanline~
   responses:
   - ...questions
 
-math:
+help:
   messages:
-  - sabes que ~y = this.scanline~
-  - y que tienes que dibujar desde ~x = 0~ hasta ~x = 255~
+  - sabes que ~y = this.ppu.scanline~
+  - y que necesitas dibujar desde ~x = 0~ hasta ~x = 255~
   - también sabes que la pantalla es una cuadrícula de ~32x32~ tiles (de ~8x8~ píxeles cada una)
+  - y por último, ¡sabes cómo dibujar un tile usando tu clase `Tile`!
   - |-
     una forma de implementar esto es hacer algo como:
       ```javascript
+      const y = this.ppu.scanline;
       for (let x = 0; x < 256; x += 8) {
         const nameTableId = 0; // TODO: Obtener el id de la name table
         const patternTableId = 0; // TODO: Obtener el id de la pattern table
 
         const tileX = Math.floor(x / 8);
-        const tileY = Math.floor(this.scanline / 8);
+        const tileY = Math.floor(y / 8);
         const tileIndex = tileY * 32 + tileX;
         const tileId = 0; // TODO: Leer el id del tile desde la memoria
 
-        const tile = new Tile(this, patternTableId, tileId, this.scanline % 8);
+        const tile = new Tile(this.ppu, patternTableId, tileId, y % 8);
         for (let xx = 0; xx < 8; xx++) {
           const colorIndex = tile.getColorIndex(xx);
           // TODO: Plotear

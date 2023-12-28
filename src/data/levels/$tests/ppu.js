@@ -955,28 +955,65 @@ it("PPUStatus: resets `PPUAddr::latch` after reading", () => {
 
 // 5b.8 Backgrounds (1/2): Drawing Name tables
 
-it("calls `plot` 256 times on cycle 256 of every visible scanline", () => {
+it("has a `backgroundRenderer` property", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	ppu.should.include.key("backgroundRenderer");
+	ppu.backgroundRenderer.should.include.key("ppu");
+	ppu.backgroundRenderer.ppu.should.equal(ppu);
+})({
+	locales: {
+		es: "tiene una propiedad `backgroundRenderer`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("BackgroundRenderer: step() calls `PPU::plot` 256 times", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 	sinon.spy(ppu, "plot");
 
+	ppu.backgroundRenderer.should.respondTo("renderScanline");
+	ppu.backgroundRenderer.renderScanline();
+	ppu.plot.callCount.should.equal(256);
+})({
+	locales: {
+		es: "BackgroundRenderer: step() llama a `PPU::plot` 256 veces",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.8"),
+});
+
+it("calls `backgroundRenderer.renderScanline()` on cycle 256 of every visible scanline", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	sinon.spy(ppu, "plot");
+	sinon.spy(ppu.backgroundRenderer, "renderScanline");
+
 	for (let frame = 0; frame < 1; frame++) {
 		for (let scanline = -1; scanline < 261; scanline++) {
 			for (let cycle = 0; cycle < 341; cycle++) {
 				ppu.plot.resetHistory();
+				ppu.backgroundRenderer.renderScanline.resetHistory();
 				ppu.step(noop, noop);
 
 				if (scanline >= 0 && scanline < 240) {
-					if (cycle !== 256) ppu.plot.should.not.have.been.called;
-					else ppu.plot.callCount.should.equal(256);
+					if (cycle !== 256) {
+						ppu.backgroundRenderer.renderScanline.should.not.have.been.called;
+						ppu.plot.should.not.have.been.called;
+					} else {
+						ppu.backgroundRenderer.renderScanline.callCount.should.equal(1);
+					}
 				}
 			}
 		}
 	}
 })({
 	locales: {
-		es: "llama a `plot` 256 veces en el ciclo 256 de cada scanline visible",
+		es:
+			"llama a `backgroundRenderer.renderScanline()` en el ciclo 256 de cada scanline visible",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
