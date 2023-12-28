@@ -63,7 +63,7 @@ export default {
 		"no-unsafe-negation": "warn",
 		"no-unsafe-optional-chaining": "warn",
 		"no-unused-labels": "warn",
-		"no-unused-vars": "warn",
+		"no-unused-vars": "off",
 		"no-useless-backreference": "warn",
 		"no-useless-catch": "warn",
 		"no-useless-escape": "warn",
