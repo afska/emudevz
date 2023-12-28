@@ -4,7 +4,7 @@ main:
   - to allow colors, first we need to allow games to write color information
   - in other words, we need to map 🐏  <Palette RAM> into our PPU memory
   - then, we'll add methods to read color palettes
-  - and finally, make `BackgroundRenderer` use palettes to render
+  - and finally, we'll make `BackgroundRenderer` use palettes to render
   - 📚  _-_like you did with `PPUMemory::vram`, add a property called `paletteRam` in `PPUMemory`_--_
   - _-_the array should store 32 bytes_--_
   - 📚  _-_map the range $3F00-$3F1F to Palette RAM (both reads and writes)_--_
@@ -15,7 +15,7 @@ main:
         _-_~$3F00 + paletteId * 4~_--_
         _-_(let's call this ~startAddress~)_--_
       *_-_*->** reads the color index from memory:_--_
-        _-_reads from address ~startAddress~ + ~paletteIndex~_--_
+        _-_reads from PPU address ~startAddress~ + ~paletteIndex~_--_
         _-_(let's call this ~colorIndex~)_--_
       *_-_*->** returns a color from the master palette, using ~colorIndex~_--_
         _-_(you can import and use _--_📄 _-_ ~/lib/ppu/masterPalette.js~ for the list of colors)_--_
@@ -35,6 +35,51 @@ main:
           colorIndex > 0 ? this.ppu.getColor(paletteId, colorIndex) : this.ppu.getColor(0, 0);
         this.plot(x + xx, y, color);
       }```
-  - note that when the color index is 0, a <background color> is rendered instead (located at the first index of the first palette)
+  - note that when the color index is 0, a <backdrop color> is rendered instead (located at the first index of the first palette)
   responses:
-  - ok [end]
+  - "\"add the necessary code\"? really? that's all? [help]"
+
+help:
+  messages:
+  - what, you need help? 🤣
+  - well... I'm listening
+  responses:
+  - help me with the math 🔢 [math]
+  - what's the backdrop color? 💧 [backdrop]
+
+math:
+  messages:
+  - 🔍  first, based on the ~(x, y)~ point, you need to know in which <metablock> you are
+  - a <metablock> is ~2x2 blocks~, ~4x4~ tiles, or ~32x32~ pixels (however you want to see it)
+  - so ```javascript Math.floor(x / 32)``` and ```javascript Math.floor(y / 32)``` will give you numbers that you can call ~metablockX~ and ~metablockY~
+  - since this is a matrix, to calculate the ~metablockIndex~ you can do ```javascript metablockY * 8 + metablockX```
+  - (we multiply by 8 because there are 8 metablocks per row)
+  - |-
+    📖  with this ~metablockIndex~, you can read the ~block~:
+      ```javascript this.ppu.memory.read(startAddress + metablockIndex);```
+  - (~startAddress~ would be the start address of the 🖍️ 📖  <attribute table>, aka the last 64 bytes of the 🏞️ 📖  <name table>)
+  - 🔍  with this ~block~, based on the ~(x, y)~ point, now you need to know in which <block> you are
+  - |-
+    a <block> is ~2x2~ tiles or ~16x16~ pixels, therefore:
+    ```javascript
+    const blockX = Math.floor((x % 32) / 16);
+    const blockY = Math.floor((y % 32) / 16);
+    const blockIndex = blockY * 2 + blockX;```
+  - 🕵️  with this ~blockIndex~, you can grab the required bits from ~block~ using `byte.getBits(...)`
+  - (you need to read 2 bits, starting from bit ~blockIndex * 2~)
+  - and that will give you the ~paletteId~ of that ~(x, y)~ point!
+  responses:
+  - oof [oof]
+
+oof:
+  messages:
+  - yeeeah... life sucks 😅
+  - well, good luck!
+  responses: []
+
+backdrop:
+  messages:
+  - you can think of it as a global "transparent" color
+  - index 0 of every palette will use it, and it's defined in ~palette 0, index 0~ (aka ~PPU $3F00~)
+  responses:
+  - ...help
