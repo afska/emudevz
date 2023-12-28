@@ -1,6 +1,40 @@
 ---
 main:
   messages:
-  - coming soon!
+  - to allow colors, first we need to allow games to write color information
+  - in other words, we need to map 🐏  <Palette RAM> into our PPU memory
+  - then, we'll add methods to read color palettes
+  - and finally, make `BackgroundRenderer` use palettes to render
+  - 📚  _-_like you did with `PPUMemory::vram`, add a property called `paletteRam` in `PPUMemory`_--_
+  - _-_the array should store 32 bytes_--_
+  - 📚  _-_map the range $3F00-$3F1F to Palette RAM (both reads and writes)_--_
+  - |-
+    📚  _-_implement this method in `PPU`:_--_
+    *_-_*getColor(paletteId, paletteIndex)**:_--_
+      *_-_*->** calculates the start address of the palette:_--_
+        _-_~$3F00 + paletteId * 4~_--_
+        _-_(let's call this ~startAddress~)_--_
+      *_-_*->** reads the color index from memory:_--_
+        _-_reads from address ~startAddress~ + ~paletteIndex~_--_
+        _-_(let's call this ~colorIndex~)_--_
+      *_-_*->** returns a color from the master palette, using ~colorIndex~_--_
+        _-_(you can import and use _--_📄 _-_ ~/lib/ppu/masterPalette.js~ for the list of colors)_--_
+  - |-
+    📚  _-_implement this method in `BackgroundRenderer`:_--_
+    *_-_*_getPaletteId(nameTableId, x, y)**:_--_
+      *_-_*->** add the necessary code to return the right palette id for the pixel ~(x, y)~_--_
+      *_-_*->** follow _--_📄 _-_ ~/docs/ppu/background_rendering.en.md~ for guidance on how palette ids are encoded_--_
+  - |-
+    📚  _-_change `BackgroundRenderer::renderScanline()` so it uses `_getPaletteId(...)` and draws the right color, like this:_--_
+      ```javascript
+      const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
+      const tile = new Tile(this, patternTableId, tileId, y % 8);
+      for (let xx = 0; xx < 8; xx++) {
+        const colorIndex = tile.getColorIndex(xx);
+        const color =
+          colorIndex > 0 ? this.ppu.getColor(paletteId, colorIndex) : this.ppu.getColor(0, 0);
+        this.plot(x + xx, y, color);
+      }```
+  - note that when the color index is 0, a <background color> is rendered instead (located at the first index of the first palette)
   responses:
   - ok [end]

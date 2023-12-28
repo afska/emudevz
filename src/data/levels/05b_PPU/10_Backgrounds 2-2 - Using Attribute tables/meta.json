@@ -4,6 +4,7 @@
 		"es": "🌈 Fondos (2/2): Usando Attribute tables"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
