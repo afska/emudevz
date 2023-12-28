@@ -296,6 +296,35 @@ class Tile {
 	}
 }
 
+class BackgroundRenderer {
+	constructor(ppu) {
+		this.ppu = ppu;
+	}
+
+	renderScanline() {
+		const FIXED_PALETTE = [0xffffffff, 0xffcecece, 0xff686868, 0xff000000];
+
+		const { scanline: y, registers, memory } = this.ppu;
+
+		const nameTableId = registers.ppuCtrl.nameTableId;
+		const patternTableId = registers.ppuCtrl.backgroundPatternTableId;
+		const nameTableAddress = 0x2000 + nameTableId * 1024;
+
+		for (let x = 0; x < 256; x += 8) {
+			const tileX = Math.floor(x / 8);
+			const tileY = Math.floor(y / 8);
+			const tileIndex = tileY * 32 + tileX;
+			const tileId = memory.read(nameTableAddress + tileIndex);
+
+			const tile = new Tile(this.ppu, patternTableId, tileId, y % 8);
+			for (let xx = 0; xx < 8; xx++) {
+				const colorIndex = tile.getColorIndex(xx);
+				this.ppu.plot(x + xx, y, FIXED_PALETTE[colorIndex]);
+			}
+		}
+	}
+}
+
 class PPUCtrl extends InMemoryRegister.PPU {
 	onLoad() {
 		this.addField("nameTableId", 0, 2)
@@ -464,6 +493,8 @@ export default class PPU {
 		this.memory = new PPUMemory();
 
 		this.registers = new VideoRegisters(this);
+
+		this.backgroundRenderer = new BackgroundRenderer(this);
 	}
 
 	plot(x, y, color) {
@@ -497,25 +528,7 @@ export default class PPU {
 
 	_onVisibleLine(onInterrupt) {
 		if (this.cycle === 256) {
-			const FIXED_PALETTE = [0xffffffff, 0xffcecece, 0xff686868, 0xff000000];
-			const y = this.scanline;
-
-			const nameTableId = this.registers.ppuCtrl.nameTableId;
-			const patternTableId = this.registers.ppuCtrl.backgroundPatternTableId;
-			const nameTableAddress = 0x2000 + nameTableId * 1024;
-
-			for (let x = 0; x < 256; x += 8) {
-				const tileX = Math.floor(x / 8);
-				const tileY = Math.floor(y / 8);
-				const tileIndex = tileY * 32 + tileX;
-				const tileId = this.memory.read(nameTableAddress + tileIndex);
-
-				const tile = new Tile(this, patternTableId, tileId, y % 8);
-				for (let xx = 0; xx < 8; xx++) {
-					const colorIndex = tile.getColorIndex(xx);
-					this.plot(x + xx, y, FIXED_PALETTE[colorIndex]);
-				}
-			}
+			this.backgroundRenderer.renderScanline();
 		}
 	}
 

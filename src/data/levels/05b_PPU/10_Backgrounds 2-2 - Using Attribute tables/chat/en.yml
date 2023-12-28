@@ -10,14 +10,14 @@ main:
   - 📚  _-_map the range $3F00-$3F1F to Palette RAM (both reads and writes)_--_
   - |-
     📚  _-_implement this method in `PPU`:_--_
-    *_-_*getColor(paletteId, paletteIndex)**:_--_
+    *_-_*getColor(paletteId, colorIndex)**:_--_
       *_-_*->** calculates the start address of the palette:_--_
         _-_~$3F00 + paletteId * 4~_--_
         _-_(let's call this ~startAddress~)_--_
       *_-_*->** reads the color index from memory:_--_
-        _-_reads from PPU address ~startAddress~ + ~paletteIndex~_--_
-        _-_(let's call this ~colorIndex~)_--_
-      *_-_*->** returns a color from the master palette, using ~colorIndex~_--_
+        _-_reads from PPU address ~startAddress~ + ~colorIndex~_--_
+        _-_(let's call this ~masterColorIndex~)_--_
+      *_-_*->** returns a color from the master palette, using ~masterColorIndex~_--_
         _-_(you can import and use _--_📄 _-_ ~/lib/ppu/masterPalette.js~ for the list of colors)_--_
   - |-
     📚  _-_implement this method in `BackgroundRenderer`:_--_

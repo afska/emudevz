@@ -5,6 +5,73 @@ before(async () => {
 	mainModule = await evaluate();
 });
 
+const masterPalette = [
+	/* 0x00 */ 0xff757575,
+	/* 0x01 */ 0xff8f1b27,
+	/* 0x02 */ 0xffab0000,
+	/* 0x03 */ 0xff9f0047,
+	/* 0x04 */ 0xff77008f,
+	/* 0x05 */ 0xff1300ab,
+	/* 0x06 */ 0xff0000a7,
+	/* 0x07 */ 0xff000b7f,
+	/* 0x08 */ 0xff002f43,
+	/* 0x09 */ 0xff004700,
+	/* 0x0a */ 0xff005100,
+	/* 0x0b */ 0xff173f00,
+	/* 0x0c */ 0xff5f3f1b,
+	/* 0x0d */ 0xff000000,
+	/* 0x0e */ 0xff000000,
+	/* 0x0f */ 0xff000000,
+	/* 0x10 */ 0xffbcbcbc,
+	/* 0x11 */ 0xffef7300,
+	/* 0x12 */ 0xffef3b23,
+	/* 0x13 */ 0xfff30083,
+	/* 0x14 */ 0xffbf00bf,
+	/* 0x15 */ 0xff5b00e7,
+	/* 0x16 */ 0xff002bdb,
+	/* 0x17 */ 0xff0f4fcb,
+	/* 0x18 */ 0xff00738b,
+	/* 0x19 */ 0xff009700,
+	/* 0x1a */ 0xff00ab00,
+	/* 0x1b */ 0xff3b9300,
+	/* 0x1c */ 0xff8b8300,
+	/* 0x1d */ 0xff000000,
+	/* 0x1e */ 0xff000000,
+	/* 0x1f */ 0xff000000,
+	/* 0x20 */ 0xffffffff,
+	/* 0x21 */ 0xffffbf3f,
+	/* 0x22 */ 0xffff975f,
+	/* 0x23 */ 0xfffd8ba7,
+	/* 0x24 */ 0xffff7bf7,
+	/* 0x25 */ 0xffb777ff,
+	/* 0x26 */ 0xff6377ff,
+	/* 0x27 */ 0xff3b9bff,
+	/* 0x28 */ 0xff3fbff3,
+	/* 0x29 */ 0xff13d383,
+	/* 0x2a */ 0xff4bdf4f,
+	/* 0x2b */ 0xff98f858,
+	/* 0x2c */ 0xffdbeb00,
+	/* 0x2d */ 0xff000000,
+	/* 0x2e */ 0xff000000,
+	/* 0x2f */ 0xff000000,
+	/* 0x30 */ 0xffffffff,
+	/* 0x31 */ 0xffffe7ab,
+	/* 0x32 */ 0xffffd7c7,
+	/* 0x33 */ 0xffffcbd7,
+	/* 0x34 */ 0xffffc7ff,
+	/* 0x35 */ 0xffdbc7ff,
+	/* 0x36 */ 0xffb3bfff,
+	/* 0x37 */ 0xffabdbff,
+	/* 0x38 */ 0xffa3e7ff,
+	/* 0x39 */ 0xffa3ffe3,
+	/* 0x3a */ 0xffbff3ab,
+	/* 0x3b */ 0xffcfffb3,
+	/* 0x3c */ 0xfff3ff9f,
+	/* 0x3d */ 0xff000000,
+	/* 0x3e */ 0xff000000,
+	/* 0x3f */ 0xff000000,
+];
+
 const dummyApu = {};
 const dummyControllers = [];
 const dummyCartridge = {};
@@ -953,7 +1020,7 @@ it("PPUStatus: resets `PPUAddr::latch` after reading", () => {
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
 
-// 5b.8 Backgrounds (1/2): Drawing Name tables
+// 5b.9 Backgrounds (1/2): Drawing Name tables
 
 it("has a `backgroundRenderer` property", () => {
 	const PPU = mainModule.default.PPU;
@@ -966,7 +1033,7 @@ it("has a `backgroundRenderer` property", () => {
 	locales: {
 		es: "tiene una propiedad `backgroundRenderer`",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.8"),
+	use: ({ id }, book) => id >= book.getId("5b.9"),
 });
 
 it("BackgroundRenderer: step() calls `PPU::plot` 256 times", () => {
@@ -977,12 +1044,12 @@ it("BackgroundRenderer: step() calls `PPU::plot` 256 times", () => {
 
 	ppu.backgroundRenderer.should.respondTo("renderScanline");
 	ppu.backgroundRenderer.renderScanline();
-	ppu.plot.callCount.should.equal(256);
+	ppu.plot.callCount.should.equalN(256, "plot.callCount");
 })({
 	locales: {
 		es: "BackgroundRenderer: step() llama a `PPU::plot` 256 veces",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.8"),
+	use: ({ id }, book) => id >= book.getId("5b.9"),
 });
 
 it("calls `backgroundRenderer.renderScanline()` on cycle 256 of every visible scanline", () => {
@@ -1004,7 +1071,10 @@ it("calls `backgroundRenderer.renderScanline()` on cycle 256 of every visible sc
 						ppu.backgroundRenderer.renderScanline.should.not.have.been.called;
 						ppu.plot.should.not.have.been.called;
 					} else {
-						ppu.backgroundRenderer.renderScanline.callCount.should.equal(1);
+						ppu.backgroundRenderer.renderScanline.callCount.should.equalN(
+							1,
+							"renderScanline.callCount"
+						);
 					}
 				}
 			}
@@ -1015,5 +1085,80 @@ it("calls `backgroundRenderer.renderScanline()` on cycle 256 of every visible sc
 		es:
 			"llama a `backgroundRenderer.renderScanline()` en el ciclo 256 de cada scanline visible",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.8"),
+	use: ({ id }, book) => id >= book.getId("5b.9"),
+});
+
+// 5b.10 Backgrounds (2/2): Using Attribute tables
+
+it("its `memory` has a `paletteRam` property", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	ppu.memory.should.include.key("paletteRam");
+	ppu.memory.paletteRam.should.be.a("Uint8Array");
+	ppu.memory.paletteRam.length.should.equalN(32, "length");
+})({
+	locales: {
+		es: "su `memory`incluye una propiedad `paletteRam`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.10"),
+});
+
+it("connects Palette RAM to PPU memory (reads)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	for (let i = 0; i < 32; i++) {
+		const value = byte.random();
+		ppu.memory.paletteRam[i] = value;
+		ppu.memory.read(0x3f00 + i).should.equalN(value, `read(${i})`);
+	}
+})({
+	locales: {
+		es: "conecta Palette RAM con la memoria de PPU (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.10"),
+});
+
+it("connects Palette RAM to PPU memory (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	for (let i = 0; i < 32; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x3f00 + i, value);
+		ppu.memory.paletteRam[i].should.equalN(value, `ram[${i}]`);
+	}
+})({
+	locales: {
+		es: "conecta Palette RAM con la memoria de PPU (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.10"),
+});
+
+it("has a `getColor` method that reads color palettes", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.should.respondTo("getColor");
+
+	for (let i = 0; i < 32; i++) {
+		ppu.memory.paletteRam[i] = byte.random(63);
+	}
+
+	for (let paletteId = 0; paletteId < 8; paletteId++) {
+		for (let i = 0; i < 4; i++) {
+			ppu
+				.getColor(paletteId, i)
+				.should.equalHex(
+					masterPalette[ppu.memory.paletteRam[paletteId * 4 + i]],
+					`getColor(${paletteId}, ${i})`
+				);
+		}
+	}
+})({
+	locales: {
+		es: "tiene un método `getColor` que lee paletas de colores",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.10"),
 });

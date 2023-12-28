@@ -10,20 +10,20 @@ main:
   - 📚  _-_mapea el rango $3F00-$3F1F a Palette RAM (tanto lecturas como escrituras)_--_
   - |-
     📚  _-_implementa este método en `PPU`:_--_
-    *_-_*getColor(paletteId, paletteIndex)**:_--_
+    *_-_*getColor(paletteId, colorIndex)**:_--_
       *_-_*->** calcula la dirección inicial de la paleta:_--_
         _-_~$3F00 + paletteId * 4~_--_
         _-_(llamemos a esto ~startAddress~)_--_
       *_-_*->** lee el índice de color de la memoria:_--_
-        _-_lee desde la dirección PPU ~startAddress~ + ~paletteIndex~_--_
-        _-_(llamemos a esto ~colorIndex~)_--_
-      *_-_*->** devuelve un color de la paleta maestra, usando ~colorIndex~_--_
+        _-_lee desde la dirección PPU ~startAddress~ + ~colorIndex~_--_
+        _-_(llamemos a esto ~masterColorIndex~)_--_
+      *_-_*->** devuelve un color de la paleta maestra, usando ~masterColorIndex~_--_
         _-_(puedes importar y usar _--_📄 _-_ ~/lib/ppu/masterPalette.js~ para la lista de colores)_--_
   - |-
     📚  _-_implementa este método en `BackgroundRenderer`:_--_
     *_-_*_getPaletteId(nameTableId, x, y)**:_--_
       *_-_*->** agrega el código necesario para devolver el id de paleta correcto para el píxel ~(x, y)~_--_
-      *_-_*->** sigue _--_📄 _-_ ~/docs/ppu/background_rendering.en.md~ para orientación sobre cómo se codifican los ids de paletas_--_
+      *_-_*->** sigue _--_📄 _-_ ~/docs/ppu/background_rendering.es.md~ para orientación sobre cómo se codifican los ids de paletas_--_
   - |-
     📚  _-_cambia `BackgroundRenderer::renderScanline()` para que use `_getPaletteId(...)` y dibuje el color correcto, así:_--_
       ```javascript

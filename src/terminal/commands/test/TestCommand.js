@@ -28,7 +28,11 @@ export default class TestCommand extends Command {
 
 		let isVideoTestSuccessful = true;
 		if (!_.isEmpty(level.videoTests) && !this._targetId) {
-			isVideoTestSuccessful = await this._runVideoTests(level);
+			try {
+				isVideoTestSuccessful = await this._runVideoTests(level);
+			} catch (e) {
+				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
+			}
 			await this._terminal.newline();
 		}
 
