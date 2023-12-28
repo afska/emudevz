@@ -1,0 +1,59 @@
+{
+	"name": {
+		"en": "🌈 Backgrounds (2/2): Using Attribute tables",
+		"es": "🌈 Fondos (2/2): Usando Attribute tables"
+	},
+	"ui": {
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "ppu.js"],
+		"mainTestFile": "ppu.js"
+	},
+	"videoTests": [
+		{
+			"rom": "/roms/_test/hello_world.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v3.js"
+		},
+		{
+			"internalRom": "SuperTiltBro.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v3.js"
+		},
+		{
+			"internalRom": "TeslaVsEdison.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v3.js"
+		}
+	],
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
