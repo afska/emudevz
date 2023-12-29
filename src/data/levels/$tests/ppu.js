@@ -76,6 +76,8 @@ const dummyApu = {};
 const dummyControllers = [];
 const dummyCartridge = {};
 const dummyMapper = {
+	cpuRead: () => 0,
+	cpuWrite: () => {},
 	ppuRead: () => 0,
 	ppuWrite: () => {},
 };
@@ -320,9 +322,9 @@ it("includes a `registers` property with 9 video registers", () => {
 		expect(register).to.be.an("object");
 		register.should.respondTo("onRead");
 		register.should.respondTo("onWrite");
+		register.onRead = sinon.spy();
+		register.onWrite = sinon.spy();
 
-		sinon.spy(register, "onRead");
-		sinon.spy(register, "onWrite");
 		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
 		ppu.registers.read(address);
 		ppu.registers.write(address, 123);
@@ -357,7 +359,7 @@ it("connects the video registers to CPU memory (reads)", () => {
 		"oamDma",
 	].forEach((name, i) => {
 		const register = ppu.registers[name];
-		sinon.spy(register, "onRead");
+		register.onRead = sinon.spy();
 		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
 		cpuMemory.read(address);
 		register.onRead.should.have.been.calledOnce;
@@ -389,7 +391,7 @@ it("connects the video registers to CPU memory (writes)", () => {
 		"oamDma",
 	].forEach((name, i) => {
 		const register = ppu.registers[name];
-		sinon.spy(register, "onWrite");
+		register.onWrite = sinon.spy();
 		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
 		cpuMemory.write(address, 123);
 		register.onWrite.should.have.been.calledWith(123);
@@ -912,7 +914,7 @@ it("PPUAddr: writes the MSB first, then the LSB", () => {
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
 
-it("PPUData: writes the value at `PPUAddr::address`", () => {
+it("PPUData: writes the value to VRAM using `PPUAddr::address`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -923,10 +925,10 @@ it("PPUData: writes the value at `PPUAddr::address`", () => {
 
 	const value = byte.random();
 	ppuData.onWrite(value);
-	ppu.memory.read(0x2023).should.equal(value);
+	ppu.memory.read(0x2023).should.equalN(value, "read(0x2023)");
 })({
 	locales: {
-		es: "PPUData: escribe el valor en `PPUAddr::address`",
+		es: "PPUData: escribe el valor en VRAM usando `PPUAddr::address`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
@@ -1275,4 +1277,103 @@ it("PPUData: autoincrements the address without exceeding $FFFF (reads)", () => 
 			"PPUData: autoincrementa la dirección sin excederse de $FFFF (lecturas)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.11"),
+});
+
+// 5b.12 OAM bridge
+
+it("its `memory` has a `oamRam` property", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	ppu.memory.should.include.key("oamRam");
+	ppu.memory.oamRam.should.be.a("Uint8Array");
+	ppu.memory.oamRam.length.should.equalN(256, "length");
+})({
+	locales: {
+		es: "su `memory`incluye una propiedad `oamRam`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.12"),
+});
+
+it("OAMData: writes the value to OAM RAM using `OAMAddr::value`", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const oamAddr = ppu.registers.oamAddr;
+	const oamData = ppu.registers.oamData;
+
+	oamAddr.setValue(23);
+
+	const value = byte.random();
+	oamData.onWrite(value);
+	ppu.memory.oamRam[23].should.equalN(value, "oamRam[23]");
+})({
+	locales: {
+		es: "OAMData: escribe el valor en OAM RAM usando `OAMAddr::value`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.12"),
+});
+
+it("OAMData: autoincrements the address by 1 (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const oamAddr = ppu.registers.oamAddr;
+	const oamData = ppu.registers.oamData;
+
+	oamAddr.setValue(23);
+
+	oamData.onWrite(byte.random());
+	oamAddr.value.should.equalN(24, "address");
+
+	oamData.onWrite(byte.random());
+	oamAddr.value.should.equalN(25, "address");
+})({
+	locales: {
+		es: "PPUData: autoincrementa la dirección por 1 (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.12"),
+});
+
+it("OAMData: autoincrements the address without exceeding $FF (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const oamAddr = ppu.registers.oamAddr;
+	const oamData = ppu.registers.oamData;
+
+	oamAddr.setValue(0xff);
+
+	oamData.onWrite(byte.random());
+	oamAddr.value.should.equalN(0, "address");
+})({
+	locales: {
+		es:
+			"OAMData: autoincrementa la dirección sin excederse de $FF (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.12"),
+});
+
+it("OAMDMA: copies the whole page to OAM and adds 513 cycles", () => {
+	const PPU = mainModule.default.PPU;
+	const CPUMemory = mainModule.default.CPUMemory;
+	const cpuMemory = new CPUMemory();
+	const cpu = { memory: cpuMemory, extraCycles: 3 };
+	const ppu = new PPU(cpu);
+
+	const oamDma = ppu.registers.oamDma;
+
+	for (let i = 0; i < 256; i++)
+		cpuMemory.write(byte.buildU16(0x06, i), 255 - i);
+
+	oamDma.onWrite(0x06);
+
+	for (let i = 0; i < 256; i++) ppu.memory.oamRam[i].should.equal(255 - i);
+	cpu.extraCycles.should.equalN(534, "extraCycles");
+})({
+	locales: {
+		es:
+			"OAMData: autoincrementa la dirección sin excederse de $FF (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.12"),
 });
