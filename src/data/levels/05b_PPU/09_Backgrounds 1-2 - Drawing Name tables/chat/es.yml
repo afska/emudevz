@@ -27,7 +27,7 @@ finally:
   - |-
     📚  _-_ahora, en la clase `BackgroundRenderer`:_--_
     *_-_*renderScanline()**:_--_
-      *_-_*->** añade el código necesario para renderizar una línea completa del fondo_--_
+      *_-_*->** agrega el código necesario para renderizar una línea completa del fondo_--_
   - ¡adiós!
   responses:
   - NO ME DEJES 😭 [questions]

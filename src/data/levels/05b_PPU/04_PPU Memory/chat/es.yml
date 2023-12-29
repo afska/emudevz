@@ -13,7 +13,7 @@ howso:
   - revisa 📄  ~/docs/ppu/ppu_memory.es.md~
   - la mayoría del tiempo, utilizará estas direcciones
   - y solo usará las direcciones de la CPU como un puente para comunicarse con la CPU
-  - a partir de ahora, diremos algo como "dirección de PPU $1F2A" o "dirección de CPU $1F2A" para diferenciar los dos espacios
+  - a partir de ahora, diremos algo como "dirección PPU $1F2A" o "dirección CPU $1F2A" para diferenciar los dos espacios
   responses:
   - ¿cómo podemos emular esto? 😮 [emulate]
 

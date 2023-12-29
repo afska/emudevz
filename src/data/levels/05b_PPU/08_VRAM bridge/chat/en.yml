@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - games define, in runtime, how the background should look 🏞️
+  - games define, at runtime, how the background should look 🏞️
   - they create a map using tiles, and store it in 🐏  VRAM
   responses:
   - how can a game write to 🐏  VRAM? [how]
