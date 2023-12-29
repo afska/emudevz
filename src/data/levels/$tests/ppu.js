@@ -343,6 +343,7 @@ it("connects the video registers to CPU memory (reads)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU(cpu);
 	cpuMemory.onLoad(ppu, dummyApu, dummyMapper, dummyControllers);
+	ppu.memory.onLoad(dummyCartridge, dummyMapper);
 
 	[
 		"ppuCtrl",
@@ -1161,4 +1162,117 @@ it("has a `getColor` method that reads color palettes", () => {
 		es: "tiene un método `getColor` que lee paletas de colores",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.10"),
+});
+
+// 5b.11 PPUData: Delayed reads
+
+it("PPUData: reads the value at `PPUAddr::address` with delay", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuData = ppu.registers.ppuData;
+
+	ppu.memory.write(0x2023, 0x8d);
+	ppuAddr.address = 0x2023;
+	ppuData.onRead().should.equalN(0, "first read");
+
+	ppu.memory.write(0x2023, 0x9e);
+	ppuAddr.address = 0x2023;
+	ppuData.onRead().should.equalHex(0x8d, "second read");
+
+	ppuAddr.address = 0x2023;
+	ppuData.onRead().should.equalHex(0x9e, "third read");
+})({
+	locales: {
+		es: "PPUData: lee el valor en `PPUAddr::address` con retraso",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.11"),
+});
+
+it("PPUData: reads from Palette RAM without delay", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuData = ppu.registers.ppuData;
+
+	ppu.memory.write(0x3f10, 123);
+	ppuAddr.address = 0x3f10;
+
+	ppuData.onRead().should.equalN(123, "first read");
+})({
+	locales: {
+		es: "PPUData: lee de Palette RAM sin retraso",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.11"),
+});
+
+it("PPUData: autoincrements the address by 1 (reads)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuData = ppu.registers.ppuData;
+
+	ppuAddr.address = 0x2023;
+
+	ppuData.onRead();
+	ppuAddr.address.should.equalHex(0x2024, "address");
+
+	ppuData.onRead();
+	ppuAddr.address.should.equalHex(0x2025, "address");
+})({
+	locales: {
+		es: "PPUData: autoincrementa la dirección por 1 (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.11"),
+});
+
+it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32` (reads)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuData = ppu.registers.ppuData;
+
+	ppuCtrl.vramAddressIncrement32 = 1;
+	ppuAddr.address = 0x2023;
+
+	ppuData.onRead();
+	ppuAddr.address.should.equalHex(0x2043, "address");
+
+	ppuData.onRead();
+	ppuAddr.address.should.equalHex(0x2063, "address");
+})({
+	locales: {
+		es:
+			"PPUData: autoincrementa la dirección por 32 si `PPUCtrl.vramAddressIncrement32` (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.11"),
+});
+
+it("PPUData: autoincrements the address without exceeding $FFFF (reads)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	const ppuAddr = ppu.registers.ppuAddr;
+	const ppuData = ppu.registers.ppuData;
+
+	ppuAddr.address = 0xffff;
+	ppuData.onRead();
+	ppuAddr.address.should.equalHex(0x0000, "address");
+
+	ppuAddr.address = 0xffff;
+	ppuCtrl.vramAddressIncrement32 = 1;
+	ppuData.onRead();
+	ppuAddr.address.should.equalN(31, "address");
+})({
+	locales: {
+		es:
+			"PPUData: autoincrementa la dirección sin excederse de $FFFF (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.11"),
 });
