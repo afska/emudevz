@@ -15,7 +15,7 @@ example:
   messages:
   - there are two 🕊️ 📖  pattern tables, remember?
   - well, a game's code need to tell the PPU which one it should use
-  - for backgrounds, this is handled by bit 4 of $2000 (🎛️  PPUCtrl)
+  - for backgrounds, this is handled by bit 4 of $2000 (🎛️  ~PPUCtrl~)
   - we call it ~B~ in our ~Bits~ column
   - so, for example, if a game wants to use the second table, it would write a 16 (binary ```raw 000```~1~```raw 0000```) to $2000
   - or any number that has bit 4 set!

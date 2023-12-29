@@ -8,11 +8,11 @@ main:
 
 how:
   messages:
-  - through the video registers called 📍  PPUAddr and 📦  PPUData
+  - through the video registers called 📍  ~PPUAddr~ and 📦  ~PPUData~
   - they are like a bridge that connects the 🧠  CPU and 🖥️  PPU
-  - first, games put the VRAM address they want to write in 📍  PPUAddr
+  - first, games put the VRAM address they want to write in 📍  ~PPUAddr~
   - "(two consecutive writes: one for the <high byte>, and one for the <low byte>)"
-  - then, they write to 📦  PPUData the byte they want to put in that address
+  - then, they write to 📦  ~PPUData~ the byte they want to put in that address
   - <{PPUAddr_PPUData.png}>
   responses:
   - nice, I guess I need to define the VRAM somewhere [define]
@@ -64,5 +64,5 @@ increment:
   messages:
   - yeah, I forgot to tell you
   - the PPU increments the address automatically after writing to 📦  PPUData
-  - depending on what's in 🎛️  PPUCtrl, this can be a ~+1~ or a ~+32~
+  - depending on what's in 🎛️  ~PPUCtrl~, this can be a ~+1~ or a ~+32~
   responses: []

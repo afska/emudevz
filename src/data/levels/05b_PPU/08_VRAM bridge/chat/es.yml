@@ -8,11 +8,11 @@ main:
 
 how:
   messages:
-  - a través de los registros de video llamados 📍  PPUAddr y 📦  PPUData
+  - a través de los registros de video llamados 📍  ~PPUAddr~ y 📦  ~PPUData~
   - son como un puente que conecta la 🧠  CPU y 🖥️  PPU
-  - primero, los juegos ponen la dirección de VRAM que quieren escribir en 📍  PPUAddr
+  - primero, los juegos ponen la dirección de VRAM que quieren escribir en 📍  ~PPUAddr~
   - "(dos escrituras consecutivas: una para el <high byte>, y una para el <low byte>)"
-  - luego, escriben en 📦  PPUData el byte que quieren poner en esa dirección
+  - luego, escriben en 📦  ~PPUData~ el byte que quieren poner en esa dirección
   - <{PPUAddr_PPUData.png}>
   responses:
   - bien, supongo que necesito definir la VRAM en algún lugar [define]
@@ -64,5 +64,5 @@ increment:
   messages:
   - sí, olvidé mencionarte
   - la PPU incrementa la dirección automáticamente después de escribir en 📦  PPUData
-  - dependiendo de lo que esté en 🎛️  PPUCtrl, esto puede ser un ~+1~ o un ~+32~
+  - dependiendo de lo que esté en 🎛️  ~PPUCtrl~, esto puede ser un ~+1~ o un ~+32~
   responses: []

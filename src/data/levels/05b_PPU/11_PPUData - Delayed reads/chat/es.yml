@@ -1,6 +1,25 @@
 ---
 main:
   messages:
-  - coming soon!
+  - ¿recuerdas cómo los juegos escriben en ~VRAM~?
+  - <{PPUAddr_PPUData.png}>
+  - ellos también pueden <leer> desde ~VRAM~, leyendo de 📦 ~PPUData~ en lugar de escribir
+  - "esta operación también incrementa la dirección en 📍 ~PPUAddr~, y tiene un pequeño truco:"
+  - todas las lecturas están <retrasadas> por 1, excepto para la sección ~Palette RAM~ y sus espejos
   responses:
-  - ok [end]
+  - ¿cómo podemos implementar el retraso? ⌛ [delay]
+
+delay:
+  messages:
+  - simple, cuando se solicita una <lectura>, lees en un buffer, pero luego devuelves el <valor anterior> de ese buffer
+  - |-
+    📚  _-_implementa estos métodos en `PPUData`:_--_
+    *_-_*onLoad**:_--_
+      *_-_*->** inicializa ~this.buffer = 0~_--_
+    *_-_*onRead()**:_--_
+      *_-_*->** guarda ~this.buffer~ en una variable llamada ~data~_--_
+      *_-_*->** lee desde la dirección PPU ~ppuAddr.address~ y guarda el resultado en ~this.buffer~_--_
+      *_-_*->** si la dirección está entre $3F00 y $3FFF, asigna ~data = this.buffer~ (omite el buffer)_--_
+      *_-_*->** llama a ~this._incrementAddress()~_--_
+      *_-_*->** devuelve ~data~_--_
+  responses: []
