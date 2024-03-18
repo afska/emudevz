@@ -34,7 +34,7 @@ implement:
   messages:
   - por ahora, solo vamos a implementar el primer rango (🐏  WRAM)
   - 📚  _-_crea una clase `CPUMemory`, usando _--_📄 _-_ ~/tmpl/CPUMemory.js~ como plantilla_--_
-  - 📚  _-_su constructor debería asignar una propiedad `ram` (un `Uint8Array` de 2048 bytes)_--_
+  - 📚  _-_su constructor debería recibir y asignar una propiedad `ram` (un `Uint8Array` de 2048 bytes)_--_
   - |-
     📚  _-_implementa el primer ~TODO~ de cada método:_--_
     *_-_*read(address)**:_--_

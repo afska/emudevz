@@ -1,0 +1,59 @@
+main:
+  messages:
+  - ahora que nuestro emulador es capaz de acceder a la 🛸 📖  ~OAM~
+  - ¡estamos listos para leer 🛸  ~sprites~!
+  responses:
+  - ¿qué hay en la OAM? [oam]
+
+oam:
+  messages:
+  - "aquí tienes un documento que explica el formato de la tabla OAM:"
+  - 📄  ~/docs/ppu/sprite_rendering.es.md~
+  - "también deberías hacer uso de mi clase `Sprite`:"
+  - 📄  ~/lib/ppu/Sprite.js~
+  - se encarga de algunas cosas como analizar los atributos
+  responses:
+  - gracias, pero todavía necesito leer la OAM, ¿verdad? [implement]
+
+implement:
+  messages:
+  - correcto ✅
+  - 📚  _-_crea una clase `SpriteRenderer`_--_
+  - 📚  _-_su constructor debe recibir y asignar una propiedad `ppu` con la instancia PPU_--_
+  - |-
+    📚  _-_haz este cambio en la clase `PPU`:_--_
+    *_-_*constructor**:_--_
+      *_-_*->** instancia el renderizador de sprites:_--_
+        _-_```javascript this.spriteRenderer = new SpriteRenderer(this)```_--_
+        _-_(¡recuerda importarlo si lo definiste en otro archivo!)_--_
+  - |-
+    📚  _-_ahora, en la clase `SpriteRenderer`, define:_--_
+    *_-_*_createSprite(id)**:_--_
+      *_-_*->** devuelve una nueva instancia de ~Sprite~, leyendo el índice OAM ~id~_--_
+      _-_(¡recuerda agregar 1 a la coordenada Y!)_--_
+  responses:
+  - ¿por qué debería agregar 1 a la coordenada Y? ➕ [addone]
+  - ¿cómo sé si el sprite es 8x8 o 8x16? 📏 [spritesize]
+  - ¿cómo sé el id de tile o de la tabla de patrones? 🕊️ 📖 [patterntable]
+
+addone:
+  messages:
+  - porque los datos de los sprites se retrasan por una línea de exploración 💤
+  - en el hardware real, los sprites se dibujan una línea más abajo de la coordenada Y que los juegos establecen en el OAM
+  - es decir, si el byte 0 de una entrada de OAM se establece en 0, se dibuja en la línea 1
+  - y no hay forma de dibujar un sprite comenzando desde la línea 0
+  responses:
+  - ...implement
+
+spritesize:
+  messages:
+  - eso es una configuración global, configurada en 🎛️  ~PPUCtrl~
+  - los sprites deben usar el modo 8x16 cuando ~ppu.registers.ppuCtrl.spriteSize === 1~
+  responses:
+  - ...implement
+
+patterntable:
+  messages:
+  - ¡RTFM!
+  responses:
+  - ...implement

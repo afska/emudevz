@@ -12,7 +12,7 @@
 - 🖍️📖 **Attribute tables**: A map of **palette indexes** for _backgrounds_, stored at the end of each 🏞️📖 `name table`.
 <div class="embed-image"><img alt="Background" src="assets/graphics/background.png" style="width: 30%" /></div>
 <hr />
-- 🛸 **Sprite**: A **game object** on top of the _background_ that can be moved or flipped, stored in 🛸📖 `OAM`.
+- 🛸 **Sprite**: A **game object** on top of the _background_ that can be moved or flipped, stored in 🛸📖 `OAM`. It can use one (`8x8` sprite) or two (`8x16` sprite) 🕊️ `tiles`.
 - 🛸📖 **OAM**: A list of **sprites**, stored in 🐏 `<OAM RAM>`.
 <div class="embed-image"><img alt="Sprites" src="assets/graphics/sprites.png" style="width: 30%" /></div>
 <hr />

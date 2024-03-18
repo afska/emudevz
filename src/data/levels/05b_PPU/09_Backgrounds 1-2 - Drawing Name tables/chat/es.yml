@@ -13,11 +13,11 @@ finally:
   - y trata de entender cómo renderizar fondos en <escala de grises>
   - y cuando hayas terminado...
   - 📚  _-_crea una clase `BackgroundRenderer`_--_
-  - 📚  _-_su constructor debe asignar una propiedad `ppu` con la instancia de PPU_--_
+  - 📚  _-_su constructor debe recibir y asignar una propiedad `ppu` con la instancia de PPU_--_
   - |-
     📚  _-_haz estos cambios en la clase `PPU`:_--_
     *_-_*constructor**:_--_
-      *_-_*->** instanciar el renderizador de fondos:_--_
+      *_-_*->** instancia el renderizador de fondos:_--_
         _-_```javascript this.backgroundRenderer = new BackgroundRenderer(this)```_--_
         _-_(¡recuerda importarlo si lo definiste en otro archivo!)_--_
     *_-_*step(...)**:_--_
@@ -25,7 +25,7 @@ finally:
     *_-_*_onVisibleLine(...)**:_--_
       *_-_*->** si el ciclo es ~256~, llama a ~backgroundRenderer.renderScanline()~_--_
   - |-
-    📚  _-_ahora, en la clase `BackgroundRenderer`:_--_
+    📚  _-_ahora, en la clase `BackgroundRenderer`, define:_--_
     *_-_*renderScanline()**:_--_
       *_-_*->** agrega el código necesario para renderizar una línea completa del fondo_--_
   - ¡adiós!

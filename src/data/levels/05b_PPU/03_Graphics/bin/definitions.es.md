@@ -12,7 +12,7 @@
 - 🖍️📖 **Attribute table**: Un mapa de **índices de paleta** para _fondos_, almacenado al final de cada 🏞️📖 `name table`.
 <div class="embed-image"><img alt="Background" src="assets/graphics/background.png" style="width: 30%" /></div>
 <hr />
-- 🛸 **Sprite**: Un **objeto del juego** encima del _fondo_ que puede ser movido o volteado, almacenado en 🛸📖 `OAM`.
+- 🛸 **Sprite**: Un **objeto del juego** encima del _fondo_ que puede ser movido o volteado, almacenado en 🛸📖 `OAM`. Puede usar uno (sprite de `8x8`) o dos (sprite de `8x16`) 🕊️ `tiles`.
 - 🛸📖 **OAM**: Una lista de **sprites**, almacenada en 🐏 `<OAM RAM>`.
 <div class="embed-image"><img alt="Sprites" src="assets/graphics/sprites.png" style="width: 30%" /></div>
 <hr />
