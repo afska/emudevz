@@ -1391,7 +1391,7 @@ it("has a `spriteRenderer` property", () => {
 	locales: {
 		es: "tiene una propiedad `spriteRenderer`",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.9"),
+	use: ({ id }, book) => id >= book.getId("5b.13"),
 });
 
 it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM data (8x8)", () => {
@@ -1433,7 +1433,7 @@ it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM da
 		es:
 			"SpriteRenderer: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (8x8)",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.9"),
+	use: ({ id }, book) => id >= book.getId("5b.13"),
 });
 
 it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM data (8x16)", () => {
@@ -1481,5 +1481,74 @@ it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM da
 		es:
 			"SpriteRenderer: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (8x16)",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.9"),
+	use: ({ id }, book) => id >= book.getId("5b.13"),
+});
+
+// 5b.14 Sprites (2/6): Evaluation
+
+it("SpriteRenderer: `_evaluate()` returns a sprite array", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	ppu.scanline = 46;
+
+	ppu.memory.oamRam[4 * 1 + 0] = 45;
+	ppu.memory.oamRam[4 * 1 + 1] = 20;
+	ppu.memory.oamRam[4 * 1 + 2] = 0b10000010;
+	ppu.memory.oamRam[4 * 1 + 3] = 91;
+
+	ppu.memory.oamRam[4 * 5 + 0] = 42;
+	ppu.memory.oamRam[4 * 5 + 1] = 29;
+	ppu.memory.oamRam[4 * 5 + 2] = 0b01100001;
+	ppu.memory.oamRam[4 * 5 + 3] = 77;
+
+	ppu.memory.oamRam[4 * 8 + 0] = 6;
+	ppu.memory.oamRam[4 * 8 + 1] = 79;
+	ppu.memory.oamRam[4 * 8 + 2] = 0b01100001;
+	ppu.memory.oamRam[4 * 8 + 3] = 17;
+
+	const sprites = ppu.spriteRenderer._evaluate();
+	expect(sprites).to.be.an("array");
+	sprites.length.should.equalN(2, "length");
+	sprites[0].id.should.equalN(5, "sprites[0].id");
+	sprites[0].x.should.equalN(77, "sprites[0].x");
+	sprites[0].y.should.equalN(43, "sprites[0].y");
+	sprites[1].id.should.equalN(1, "sprites[1].id");
+	sprites[1].x.should.equalN(91, "sprites[1].x");
+	sprites[1].y.should.equalN(46, "sprites[1].y");
+	ppu.registers.ppuStatus.spriteOverflow.should.equalN(0, "spriteOverflow");
+})({
+	locales: {
+		es: "SpriteRenderer: `_evaluate()` retorna una lista de sprites",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.14"),
+});
+
+it("SpriteRenderer: `_evaluate()` sets the sprite overflow flag when there are more than 8 candidate sprites", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	ppu.scanline = 45;
+
+	for (let i = 0; i < 9; i++) {
+		ppu.memory.oamRam[4 * i + 0] = 40;
+		ppu.memory.oamRam[4 * i + 1] = 91;
+		ppu.memory.oamRam[4 * i + 2] = 0b10000010;
+		ppu.memory.oamRam[4 * i + 3] = 20;
+	}
+
+	const sprites = ppu.spriteRenderer._evaluate();
+	expect(sprites).to.be.an("array");
+	sprites.length.should.equalN(8, "length");
+	sprites[0].id.should.equal(7, "sprites[0].id");
+	sprites[7].id.should.equal(0, "sprites[7].id");
+	ppu.registers.ppuStatus.spriteOverflow.should.equalN(1, "spriteOverflow");
+})({
+	locales: {
+		es:
+			"SpriteRenderer: `_evaluate()` enciende la bandera de sprite overflow cuando hay más de 8 sprites candidatos",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.14"),
 });
