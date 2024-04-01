@@ -29,6 +29,8 @@ ok:
             *_-_*->** sets ~this.ppu.registers.ppuStatus.spriteOverflow = 1~_--_
             *_-_*->** stops looping_--_
       *_-_*->** returns ~sprites~ in reversed order_--_
+  - 📚  _-_also, you need to reset `spriteOverflow` to 0 on ~scanline=-1; cycle=1~, like you previously did with ~isInVBlankInterval~_--_
+  - 📚  _-_do it in `PPU::_onPreLine(...)`_--_
   responses:
   - how do I know if a sprite should be rendered? [visible]
 

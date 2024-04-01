@@ -29,6 +29,8 @@ ok:
             *_-_*->** asigna ~this.ppu.registers.ppuStatus.spriteOverflow = 1~_--_
             *_-_*->** detiene el bucle_--_
       *_-_*->** devuelve ~sprites~ en orden inverso_--_
+  - 📚 _-_además, necesitas reiniciar `spriteOverflow` a 0 en ~scanline=-1; cycle=1~, como lo hiciste anteriormente con ~isInVBlankInterval~_--_
+  - 📚 _-_hazlo en `PPU::_onPreLine(...)`_--_
   responses:
   - ¿cómo sé si un sprite debe ser renderizado? [visible]
 

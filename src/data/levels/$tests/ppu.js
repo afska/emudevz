@@ -1552,3 +1552,28 @@ it("SpriteRenderer: `_evaluate()` sets the sprite overflow flag when there are m
 	},
 	use: ({ id }, book) => id >= book.getId("5b.14"),
 });
+
+it("resets `PPUStatus::spriteOverflow` on scanline=-1, cycle=1", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	for (let cycle = 0; cycle < 341; cycle++) {
+		ppu.scanline = -1;
+		ppu.cycle = cycle;
+		ppu.registers.ppuStatus.spriteOverflow = 1;
+
+		ppu.step(noop, noop);
+
+		if (cycle === 1) {
+			ppu.registers.ppuStatus.spriteOverflow.should.equalN(0, "spriteOverflow");
+		} else {
+			ppu.registers.ppuStatus.spriteOverflow.should.equalN(1, "spriteOverflow");
+		}
+	}
+})({
+	locales: {
+		es: "reinicia `PPUStatus::spriteOverflow` en scanline=-1, cycle=1",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.14"),
+});
