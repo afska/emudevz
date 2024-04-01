@@ -1,4 +1,39 @@
 main:
   messages:
-  - coming soon!
+  - en cada scanline, el renderizador de sprites realiza una ~evaluación de sprites~ 🕵️
+  - prepara los sprites que necesitan ser renderizados
+  responses:
+  - mhm... ¿cómo lo hace? [how]
+
+how:
+  messages:
+  - escanea toda la tabla OAM, comprobando si cada sprite debe dibujarse en la scanline actual (basado en ~x~, ~y~, y ~height~)
+  - elige los primeros 8 sprites
+  - después de encontrar 8 (el número máximo de sprites por scanline), si encuentra <más> sprites visibles, la 🏁  ~bandera de sprite overflow~ (bit 5 de 📊  ~PPUStatus~) se enciende para notificar el error al desarrollador del juego
+  - los sprites con identificadores más bajos se renderizan encima de los sprites con identificadores más altos, ¡así que deberías invertir la lista de sprites elegidos!
+  responses:
+  - ok creo que lo entendí [ok]
+
+ok:
+  messages:
+  - |-
+    📚  _-_genial, implementa el siguiente método en `SpriteRenderer`:_--_
+    *_-_*_evaluate()**:_--_
+      *_-_*->** define un array ~sprites~_--_
+      *_-_*->** para cada id de sprite posible (~0-63~):_--_
+        *_-_*->** crea un sprite usando ~this._createSprite(...)~_--_
+        *_-_*->** si el sprite debe renderizarse en la scanline actual, y ~sprites~ tiene menos de 9 elementos:_--_
+          *_-_*->** si ~sprites~ tiene menos de 8 elementos:_--_
+            *_-_*->** añade al arreglo ~sprites~_--_
+          *_-_*->** de lo contrario:_--_
+            *_-_*->** asigna ~this.ppu.registers.ppuStatus.spriteOverflow = 1~_--_
+            *_-_*->** detiene el bucle_--_
+      *_-_*->** devuelve ~sprites~ en orden inverso_--_
+  responses:
+  - ¿cómo sé si un sprite debe ser renderizado? [visible]
+
+visible:
+  messages:
+  - hay un método para verificar esto en mi biblioteca Sprite
+  - usa ~sprite.shouldRenderInScanline(this.ppu.scanline)~
   responses: []

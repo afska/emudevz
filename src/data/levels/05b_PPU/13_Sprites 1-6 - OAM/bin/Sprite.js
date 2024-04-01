@@ -1,6 +1,5 @@
 import byte from "../byte";
 
-
 const TILE_SIZE_PIXELS = 8;
 const PALETTE_FOREGROUND_START = 4;
 const SPRITE_ATTR_PALETTE_BITS_START = 0;
