@@ -1377,3 +1377,109 @@ it("OAMDMA: copies the whole page to OAM and adds 513 cycles", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("5b.12"),
 });
+
+// 5b.13 Sprites (1/6): OAM
+
+it("has a `spriteRenderer` property", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	ppu.should.include.key("spriteRenderer");
+	ppu.spriteRenderer.should.include.key("ppu");
+	ppu.spriteRenderer.ppu.should.equal(ppu);
+})({
+	locales: {
+		es: "tiene una propiedad `spriteRenderer`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.9"),
+});
+
+it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM data (8x8)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	ppu.memory.oamRam[4 * 31 + 0] = 5;
+	ppu.memory.oamRam[4 * 31 + 1] = 91;
+	ppu.memory.oamRam[4 * 31 + 2] = 0b10000010;
+	ppu.memory.oamRam[4 * 31 + 3] = 20;
+
+	ppu.spriteRenderer.should.respondTo("_createSprite");
+	const sprite = ppu.spriteRenderer._createSprite(31);
+	expect(sprite).to.exist;
+	sprite.id.should.equalN(31, "id");
+	sprite.x.should.equalN(20, "x");
+	sprite.y.should.equalN(6, "y");
+	sprite.is8x16.should.equalN(false, "is8x16");
+	sprite.patternTableId.should.equalN(0, "patternTableId");
+	sprite.tileId.should.equalN(91, "tileId");
+	sprite.attributes.should.equalBin(0b10000010, "attributes");
+
+	sprite.tileIdFor(0).should.equalN(91, "tileIdFor(...)");
+	sprite
+		.shouldRenderInScanline(2)
+		.should.equalN(false, "shouldRenderInScanline(...)");
+	sprite
+		.shouldRenderInScanline(6)
+		.should.equalN(true, "shouldRenderInScanline(...)");
+	sprite.diffY(8).should.equalN(2, "diffY(...)");
+	sprite.paletteId.should.equalN(6, "paletteId");
+	sprite.isInFrontOfBackground.should.equalN(true, "isInFrontOfBackground");
+	sprite.flipX.should.equalN(false, "flipX");
+	sprite.flipY.should.equalN(true, "flipY");
+	sprite.height.should.equalN(8, "height");
+})({
+	locales: {
+		es:
+			"SpriteRenderer: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (8x8)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.9"),
+});
+
+it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM data (8x16)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	ppu.registers.ppuCtrl.setValue(0b00101000);
+
+	ppu.memory.oamRam[4 * 9 + 0] = 129;
+	ppu.memory.oamRam[4 * 9 + 1] = 77;
+	ppu.memory.oamRam[4 * 9 + 2] = 0b01100001;
+	ppu.memory.oamRam[4 * 9 + 3] = 29;
+
+	ppu.spriteRenderer.should.respondTo("_createSprite");
+	const sprite = ppu.spriteRenderer._createSprite(9);
+	expect(sprite).to.exist;
+	sprite.id.should.equalN(9, "id");
+	sprite.x.should.equalN(29, "x");
+	sprite.y.should.equalN(130, "y");
+	sprite.is8x16.should.equalN(true, "is8x16");
+	sprite.patternTableId.should.equalN(1, "patternTableId");
+	sprite.tileId.should.equalN(76, "tileId");
+	sprite.attributes.should.equalBin(0b01100001, "attributes");
+
+	sprite.tileIdFor(3).should.equalN(76, "tileIdFor(...)");
+	sprite.tileIdFor(12).should.equalN(77, "tileIdFor(...)");
+	sprite
+		.shouldRenderInScanline(6)
+		.should.equalN(false, "shouldRenderInScanline(...)");
+	sprite
+		.shouldRenderInScanline(136)
+		.should.equalN(true, "shouldRenderInScanline(...)");
+	sprite
+		.shouldRenderInScanline(140)
+		.should.equalN(true, "shouldRenderInScanline(...)");
+	sprite.diffY(141).should.equalN(11, "diffY(...)");
+	sprite.paletteId.should.equalN(5, "paletteId");
+	sprite.isInFrontOfBackground.should.equalN(false, "isInFrontOfBackground");
+	sprite.flipX.should.equalN(true, "flipX");
+	sprite.flipY.should.equalN(false, "flipY");
+	sprite.height.should.equalN(16, "height");
+})({
+	locales: {
+		es:
+			"SpriteRenderer: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (8x16)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.9"),
+});

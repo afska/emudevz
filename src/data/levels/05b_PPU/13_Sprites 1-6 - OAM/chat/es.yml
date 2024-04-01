@@ -34,7 +34,7 @@ implement:
   responses:
   - ¿por qué debería agregar 1 a la coordenada Y? ➕ [addone]
   - ¿cómo sé si el sprite es 8x8 o 8x16? 📏 [spritesize]
-  - ¿cómo sé el id de tile o de la tabla de patrones? 🕊️ 📖 [patterntable]
+  - ¿cómo sé el id de tile o de la pattern table? 🕊️ 📖 [patterntable]
 
 addone:
   messages:
@@ -54,6 +54,7 @@ spritesize:
 
 patterntable:
   messages:
-  - ¡RTFM!
+  - en modo 8x8, el ~id de tile~ es el ~byte1~ de la entrada OAM, y el ~id de pattern table~ es ~ppu.registers.ppuCtrl.sprite8x8PatternTableId~
+  - en modo 8x16, the ~id de tile~ es ~(byte1 & 0b11111110)~ y el ~id de pattern table~ es ~(byte1 & 0b00000001)~
   responses:
   - ...implement

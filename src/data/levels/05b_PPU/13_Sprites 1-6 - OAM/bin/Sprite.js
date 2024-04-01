@@ -1,4 +1,4 @@
-import byte from "./byte";
+import byte from "../byte";
 
 
 const TILE_SIZE_PIXELS = 8;
@@ -19,8 +19,7 @@ const SPRITE_ATTR_VERTICAL_FLIP_BIT = 7;
  *                                     +-------- verticalFlip
  */
 export default class Sprite {
-  constructor(ppu, id, x, y, is8x16, patternTableId, topTileId, attributes) {
-    this.ppu = ppu;
+  constructor(id, x, y, is8x16, patternTableId, topTileId, attributes) {
     this.id = id;
     this.x = x;
     this.y = y;
