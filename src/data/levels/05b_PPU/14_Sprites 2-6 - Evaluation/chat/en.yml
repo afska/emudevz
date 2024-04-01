@@ -1,0 +1,39 @@
+main:
+  messages:
+  - on each scanline, the sprite renderer performs a ~sprite evaluation~ 🕵️
+  - it prepares the sprites that need to be rendered
+  responses:
+  - mhm... how does it do it? [how]
+
+how:
+  messages:
+  - it scans the entire OAM table, checking for each sprite if it should be drawn in the current scanline (based on ~x~, ~y~, and ~height~)
+  - it chooses the first 8 sprites
+  - if after finding 8 (maximum number of sprites per scanline), it finds <more> visible sprites, it sets the 🏁  ~sprite overflow flag~ (bit 5 of 📊  ~PPUStatus~) to notify the error to the game developer
+  - sprites with lower ids are rendered on top of sprites with higher ids, so you should revert the chosen sprite list!
+  responses:
+  - ok I think I got it [ok]
+
+ok:
+  messages:
+  - |-
+    📚  _-_cool, implement this method in `SpriteRenderer`:_--_
+    *_-_*_evaluate()**:_--_
+      *_-_*->** defines a ~sprites~ array_--_
+      *_-_*->** for each possible sprite id (~0-63~):_--_
+        *_-_*->** creates a sprite using ~this.createSprite(...)~_--_
+        *_-_*->** if the sprite should render in the current scanline, and ~sprites~ has less than 9 items:_--_
+          *_-_*->** if ~sprites~ has less than 8 items:_--_
+            *_-_*->** pushes to ~sprites~_--_
+          *_-_*->** else:_--_
+            *_-_*->** sets ~this.ppu.registers.ppuStatus.spriteOverflow = 1~_--_
+            *_-_*->** stops looping_--_
+      *_-_*->** returns the ~sprites~ array in reversed order_--_
+  responses:
+  - how do I know if a sprite should be rendered? [visible]
+
+visible:
+  messages:
+  - there's a method to check this in my Sprite library
+  - use ~sprite.shouldRenderInScanline(this.ppu.scanline)~
+  messages: []
