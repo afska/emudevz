@@ -42,7 +42,7 @@ awful:
   - it's designed in a <modular> way
   - so we can reuse its components ♻️
   - that'll allow us to implement things in whatever order we want!
-  - you could start, for example, implementing the graphics (🖥️  PPU) and can patch your emulator so it uses the 🧠  CPU and 🔊  APU from <BrokenNEEES>
+  - you could start, for example, implementing the graphics (🖥️  PPU) and I can patch your emulator so it uses the 🧠  CPU and 🔊  APU from <BrokenNEEES>
   - then you can continue fixing the other things at your pace
   - let's fix the 💾  Cartridge first
   responses:
