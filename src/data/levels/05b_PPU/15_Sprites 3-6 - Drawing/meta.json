@@ -38,17 +38,17 @@
 		{
 			"rom": "/roms/_test/hello_world.neees",
 			"frames": 60,
-			"ppu": "TestPPU.v4.js"
-		},
-		{
-			"internalRom": "SuperTiltBro.neees",
-			"frames": 60,
-			"ppu": "TestPPU.v4.js"
+			"ppu": "TestPPU.v5.js"
 		},
 		{
 			"internalRom": "TeslaVsEdison.neees",
 			"frames": 60,
-			"ppu": "TestPPU.v4.js"
+			"ppu": "TestPPU.v5.js"
+		},
+		{
+			"internalRom": "SuperTiltBro.neees",
+			"frames": 180,
+			"ppu": "TestPPU.v5.js"
 		}
 	],
 	"memory": {
