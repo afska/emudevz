@@ -3,8 +3,8 @@ main:
   messages:
   - ¿recuerdas cómo los juegos escriben en ~VRAM~?
   - <{PPUAddr_PPUData.png}>
-  - ellos también pueden <leer> desde ~VRAM~, leyendo de 📦 ~PPUData~ en lugar de escribir
-  - "esta operación también incrementa la dirección en 📍 ~PPUAddr~, y tiene un pequeño truco:"
+  - ellos también pueden <leer> desde ~VRAM~, leyendo de 📦  ~PPUData~ en lugar de escribir
+  - "esta operación también incrementa la dirección en 📍  ~PPUAddr~, y tiene un pequeño truco:"
   - todas las lecturas están <retrasadas> por 1, excepto para la sección ~Palette RAM~ y sus espejos
   responses:
   - ¿cómo podemos implementar el retraso? ⌛ [delay]

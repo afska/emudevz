@@ -3,7 +3,7 @@ main:
   - since we already know which sprites we need to draw and how to render tiles,
   - drawing sprites will be fairly easy
   - |-
-    our method to render a single scanline will look like this:
+    our method to render a single 🌠  scanline will look like this:
     ```javascript
     renderScanline() {
       const sprites = this._evaluate();
@@ -17,20 +17,25 @@ easy:
   messages:
   - we're gonna do the following
   - |-
-      📚  _-_implement these methods in `SpriteRenderer`:_--_
+      📚  _-_in the `PPU` class, change:_--_
+      *_-_*onVisibleLine(...)**:_--_
+        *_-_*->** just below the ~renderScanline()~ call to ~backgroundRenderer~..._--_
+        *_-_*->** ...do the same with ~spriteRenderer~_--_
+  - |-
+      📚  _-_and now, implement these methods in `SpriteRenderer`:_--_
       *_-_*renderScanline()**:_--_
         *_-_*->** use the code from my previous message!_--_
       *_-_*_render(sprites)**:_--_
         *_-_*->** for each sprite in ~sprites~:_--_
           *_-_*->** calculates the "inside" Y coordinate:_--_
-            _-_~sprite.diffY(this.ppu.scanline)~_--_
+            _-_```javascript sprite.diffY(this.ppu.scanline)```_--_
             _-_(let's call this ~insideY~)_--_
           *_-_*->** instantiates a ~Tile~ passing the ppu, the pattern table id, the tile id, and the ~insideY~_--_
             _-_(let's call this ~tile~)_--_
           *_-_*->** creates an array with the 4 palette colors of ~sprite.paletteId~_--_
             _-_(let's call this ~paletteColors~)_--_
           *_-_*->** ```javascript for (let insideX = 0; insideX < 8; insideX++)```:_--_
-            *_-_*->** retrieves the color index for this pixel using ~tile.getColorIndex(...)~_--_
+            *_-_*->** retrieves the color index for this pixel using ~tile.getColorIndex(insideX)~_--_
               _-_(let's call this ~colorIndex~)_--_
             *_-_*->** if ~colorIndex > 0~ (meaning, the pixel is not transparent):_--_
               *_-_*->** calls ~this.ppu.plot(...)~ to draw the pixel_--_
@@ -50,7 +55,7 @@ patterntable:
 
 tileid:
   messages:
-  - ask the sprite!
+  - the sprite knows!
   - "```javascript sprite.tileIdFor(insideY)```"
   responses:
   - ...easy

@@ -1,4 +1,82 @@
 main:
   messages:
-  - coming soon
-  responses: []
+  - ya que ya sabemos qué sprites necesitamos dibujar y cómo renderizar los tiles,
+  - dibujar sprites será bastante fácil
+  - |-
+    nuestro método para renderizar una sola 🌠  scanline se verá así:
+    ```javascript
+    renderScanline() {
+      const sprites = this._evaluate();
+      this._render(sprites); // ¡necesitamos definir esto!
+    }
+    ```
+  responses:
+  - fácil... ¿eh? [easy]
+
+easy:
+  messages:
+  - vamos a hacer lo siguiente
+  - |-
+      📚  _-_en la clase `PPU`, cambia:_--_
+      *_-_*_onVisibleLine(...)**:_--_
+        *_-_*->** justo debajo de la llamada ~renderScanline()~ a ~backgroundRenderer~..._--_
+        *_-_*->** ...haz lo mismo con ~spriteRenderer~_--_
+  - |-
+      📚  _-_implementa estos métodos en `SpriteRenderer`:_--_
+      *_-_*renderScanline()**:_--_
+        *_-_*->** ¡usa el código de mi mensaje anterior!_--_
+      *_-_*_render(sprites)**:_--_
+        *_-_*->** para cada sprite en ~sprites~:_--_
+          *_-_*->** calcula la coordenada Y "interna":_--_
+            _-_```javascript sprite.diffY(this.ppu.scanline)```_--_
+            _-_(llamemos a esto ~insideY~)_--_
+          *_-_*->** instancia un ~Tile~ pasando la ppu, el id de la pattern table, el id del tile y el ~insideY~_--_
+            _-_(llamemos a esto ~tile~)_--_
+          *_-_*->** crea un array con los 4 colores de paleta de ~sprite.paletteId~_--_
+            _-_(llamemos a esto ~paletteColors~)_--_
+          *_-_*->** ```javascript for (let insideX = 0; insideX < 8; insideX++)```:_--_
+            *_-_*->** obtiene el índice de color para este píxel usando ~tile.getColorIndex(insideX)~_--_
+              _-_(llamemos a esto ~colorIndex~)_--_
+            *_-_*->** si ~colorIndex > 0~ (es decir, el píxel no es transparente):_--_
+              *_-_*->** llama a ~this.ppu.plot(...)~ para dibujar el píxel_--_
+  responses:
+  - ¿qué pattern table debería usar? [patterntable]
+  - ¿qué id de tile debería usar? [tileid]
+  - ¿cómo puedo obtener los colores de la paleta? [palette]
+  - ¿qué X y Y debería usar al dibujar píxeles? [coordinates]
+  - ¿qué color debería usar al dibujar píxeles? [color]
+
+patterntable:
+  messages:
+  - ¡pregúntale al sprite!
+  - "```javascript sprite.patternTableId```"
+  responses:
+  - ...easy
+
+tileid:
+  messages:
+  - ¡el sprite sabe!
+  - "```javascript sprite.tileIdFor(insideY)```"
+  responses:
+  - ...easy
+
+palette:
+  messages:
+  - |-
+    puedes obtener, por ejemplo, el <color 2> usando:
+    ```javascript this.ppu.getColor(sprite.paletteId, 2)```
+  responses:
+  - ...easy
+
+coordinates:
+  messages:
+  - la posición ~x~ debería ser ```javascript sprite.x + insideX```
+  - la posición ~y~ debería ser la scanline actual
+  responses:
+  - ...easy
+
+color:
+  messages:
+  - leer ~paletteColors~ con el ~colorIndex~ te dará el ~color~
+  responses:
+  - ...easy
