@@ -1,4 +1,34 @@
 main:
   messages:
-  - coming soon!
+  - as you saw in the OAM level, sprites can be 🤸  <flipped>, both horizontally and vertically
+  - this is represented in our `Sprite` class with the `flipX` and `flipY` attributes
+  - 📚  _-_change your `SpriteRenderer` so it plots the right pixels, depending on these attributes_--_
+  responses:
+  - I need help with the horizontal flip [horizontal]
+
+horizontal:
+  messages:
+  - see, when you call `tile.getColorIndex(...)` you are passing the `insideX` coordinate
+  - when the sprite is horizontally flipped, you should use the <opposite> pixel
+  - for example, if `insideX` is 0, you use 7; if it's 1, you use 6
+  - |-
+    following this logic:
+      0 => 7
+      1 => 6
+      2 => 5
+      3 => 4
+      4 => 3
+      5 => 2
+      6 => 1
+      7 => 0
+  - so basically you need to do `7 - insideX`
+  responses:
+  - what about the vertical flip? [vertical]
+
+vertical:
+  messages:
+  - vertical flip is similar, but it has a little quirk
+  - to take into account 8x16 sprites, we should use the Y coordinate <inside the current tile>
+  - first define a ~tileInsideY = insideY % 8;~
+  - "then, as the last argument of `Tile`'s constructor, use ~sprite.flipY ? 7 - tileInsideY : tileInsideY~"
   responses: []

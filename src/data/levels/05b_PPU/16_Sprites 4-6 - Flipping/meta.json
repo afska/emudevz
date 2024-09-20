@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "🤸🏼‍♀️ Sprites (4/6): Flipping",
-		"es": "🤸🏼‍♀️ Sprites (4/6): Volteado"
+		"en": "🤸 Sprites (4/6): Flipping",
+		"es": "🤸 Sprites (4/6): Volteado"
 	},
 	"ui": {
 		"layout": "tripleRight",
@@ -38,17 +38,17 @@
 		{
 			"rom": "/roms/_test/hello_world.neees",
 			"frames": 60,
-			"ppu": "TestPPU.v5.js"
+			"ppu": "TestPPU.v6.js"
+		},
+		{
+			"internalRom": "SuperTiltBro.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v6.js"
 		},
 		{
 			"internalRom": "TeslaVsEdison.neees",
 			"frames": 60,
-			"ppu": "TestPPU.v5.js"
-		},
-		{
-			"internalRom": "SuperTiltBro.neees",
-			"frames": 180,
-			"ppu": "TestPPU.v5.js"
+			"ppu": "TestPPU.v6.js"
 		}
 	],
 	"memory": {
