@@ -36,7 +36,7 @@ finish:
     filesystem.mkdirp(directory);
 
     ["JupiterScope2.neees", "StarPowerDemo.neees", "TroubleAt2A03.neees"].forEach((file) => {
-      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - mmm... supongo que mi puntuación no era tan alta 😅

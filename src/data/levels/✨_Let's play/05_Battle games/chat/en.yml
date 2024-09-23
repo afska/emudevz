@@ -38,7 +38,7 @@ finish:
     filesystem.mkdirp(directory);
 
     ["SuperTiltBro.neees", "TeslaVsEdison.neees"].forEach((file) => {
-      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - YOU

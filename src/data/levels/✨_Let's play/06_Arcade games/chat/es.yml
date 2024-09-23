@@ -31,7 +31,7 @@ finish:
     filesystem.mkdirp(directory);
 
     ["Heist.neees", "RoboNinjaClimb.neees", "Thwaite.neees"].forEach((file) => {
-      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - ¡WOW!

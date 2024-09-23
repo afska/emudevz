@@ -7,6 +7,7 @@ const LIB_DIR = "/lib";
 const DOCS_DIR = "/docs";
 const ROMS_DIR = "/roms";
 const TMPL_DIR = "/tmpl";
+const ALLROMS_DIR = "/roms/.all";
 const TESTROMS_DIR = "/roms/_test";
 const SNAPSHOTS_DIR = "/.snapshots";
 const READONLY_PATHS = [
@@ -31,6 +32,7 @@ export default {
 	DOCS_DIR,
 	ROMS_DIR,
 	TMPL_DIR,
+	ALLROMS_DIR,
 	TESTROMS_DIR,
 
 	init(levelId) {
@@ -39,6 +41,7 @@ export default {
 		filesystem.mkdirp(DOCS_DIR);
 		filesystem.mkdirp(ROMS_DIR);
 		filesystem.mkdirp(TMPL_DIR);
+		filesystem.mkdirp(ALLROMS_DIR);
 		filesystem.mkdirp(TESTROMS_DIR);
 		filesystem.mkdirp(SNAPSHOTS_DIR);
 		if (!filesystem.exists(MAIN_FILE)) filesystem.write(MAIN_FILE, "");

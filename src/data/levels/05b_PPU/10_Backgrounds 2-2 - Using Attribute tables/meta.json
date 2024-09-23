@@ -42,12 +42,12 @@
 			"ppu": "TestPPU.v4.js"
 		},
 		{
-			"internalRom": "SuperTiltBro.neees",
+			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 60,
 			"ppu": "TestPPU.v4.js"
 		},
 		{
-			"internalRom": "TeslaVsEdison.neees",
+			"rom": "/roms/.all/TeslaVsEdison.neees",
 			"frames": 60,
 			"ppu": "TestPPU.v4.js"
 		}
