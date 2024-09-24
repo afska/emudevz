@@ -13,7 +13,7 @@ export default class VideoTester extends PureComponent {
 	_count = 0;
 
 	render() {
-		const { PPU, rom, onClose } = this.props;
+		const { PPU, rom, saveState, onClose } = this.props;
 
 		return (
 			<div className={styles.row}>
@@ -34,6 +34,7 @@ export default class VideoTester extends PureComponent {
 					</h6>
 					<Emulator
 						rom={rom}
+						saveState={saveState}
 						settings={{ ...this._settings, usePPU: true }}
 						volume={0}
 						onError={this._setError}
@@ -68,6 +69,7 @@ export default class VideoTester extends PureComponent {
 					</h6>
 					<Emulator
 						rom={rom}
+						saveState={saveState}
 						settings={{ ...this._settings, customPPU: PPU }}
 						volume={0}
 						onError={(e) => {

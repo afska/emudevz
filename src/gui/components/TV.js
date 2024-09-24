@@ -127,6 +127,7 @@ export default class TV extends PureComponent {
 					<VideoTester
 						PPU={content.PPU}
 						rom={content.rom}
+						saveState={content.saveState}
 						test={content.test}
 						onEnd={content.onEnd}
 						onFrame={content.onFrame}

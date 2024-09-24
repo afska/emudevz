@@ -127,7 +127,10 @@ export default class Emulator extends Component {
 		window.addEventListener("keyup", this._onKeyUp);
 
 		const bytes = new Uint8Array(rom);
-		const saveState = this._getSaveState();
+		const saveState =
+			this.props.saveState != null
+				? this.props.saveState
+				: this._getSaveState();
 		this._emulation = new Emulation(
 			Console,
 			bytes,

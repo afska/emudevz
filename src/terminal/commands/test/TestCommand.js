@@ -31,6 +31,7 @@ export default class TestCommand extends Command {
 			try {
 				isVideoTestSuccessful = await this._runVideoTests(level);
 			} catch (e) {
+				console.error(e);
 				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
 			}
 			await this._terminal.newline();
@@ -191,6 +192,11 @@ export default class TestCommand extends Command {
 						binary: true,
 				  });
 
+		const saveState =
+			videoTest.saveState != null
+				? JSON.parse(level.code[videoTest.saveState])
+				: null;
+
 		const ppuCode = level.code[videoTest.ppu];
 		const PPU = (await moduleEval(ppuCode)).default;
 
@@ -201,6 +207,7 @@ export default class TestCommand extends Command {
 					{
 						PPU,
 						rom,
+						saveState,
 						test: videoTest,
 						onEnd: (result) => {
 							resolve(result);
