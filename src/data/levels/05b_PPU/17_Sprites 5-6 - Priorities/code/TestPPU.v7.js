@@ -868,6 +868,7 @@ export default class PPU {
 	_onPreLine(onInterrupt) {
 		if (this.cycle === 1) {
 			this.registers.ppuStatus.isInVBlankInterval = 0;
+			this.registers.ppuStatus.spriteOverflow = 0;
 		}
 	}
 

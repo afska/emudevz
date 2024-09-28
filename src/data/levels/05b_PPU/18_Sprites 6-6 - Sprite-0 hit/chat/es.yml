@@ -1,4 +1,25 @@
 main:
   messages:
-  - coming soon!
+  - el hardware tiene un mecanismo para detectar colisiones entre el primer sprite en OAM (sprite 0) y el fondo
+  - se llama <sprite-0 hit>, y se activa cuando un píxel opaco de <sprite 0> se superpone a un píxel opaco del <fondo>
+  - cuando eso ocurre, la PPU establece la bandera de sprite-0 hit en 📊  `PPUStatus` y los juegos pueden leerla
+  responses:
+  - ¿para qué se utiliza? [usage]
+
+usage:
+  messages:
+  - los juegos lo utilizan para realizar <efectos de pantalla dividida> (por ejemplo, tener un HUD estático en la parte superior y un fondo desplazándose en la parte inferior)
+  - había un juego de un plomero que usaba ese truco 👨🏻‍🔧
+  - al colocar el sprite 0 en una posición específica en el fondo, la PPU activa un sprite-0 hit cuando esa parte de la pantalla se renderiza
+  - esto permite a los juegos detectar el momento en que la PPU alcanza una scanline específica, y luego cambiar las coordenadas de scrolling a mitad del frame
+  responses:
+  - aaah [aahh]
+
+aahh:
+  messages:
+  - |-
+    📚  _-_en `SpriteRenderer`, modifica el método ~_render(...)~; debajo de ~buffer[x] = ...~, agrega:_--_
+    *_-_*->** si el ~sprite.id~ es 0 Y el píxel de fondo en ~(x, y)~ es opaco:_--_
+      *_-_*->** asigna ~this.ppu.registers.ppuStatus.sprite0Hit = 1~_--_
+  - 📚  _-_ah, y reinicia ~sprite0Hit~ en ~PPU::_onPreLine(...)~, ¡igual que hiciste con las otras dos banderas!_--_
   responses: []

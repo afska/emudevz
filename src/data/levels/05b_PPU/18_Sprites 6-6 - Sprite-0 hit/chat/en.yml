@@ -1,4 +1,25 @@
 main:
   messages:
-  - coming soon!
+  - the hardware has a mechanism to detect collisions between the first sprite in OAM (sprite 0) and the background
+  - it's called the <sprite-0 hit>, and it's triggered when an opaque pixel of <sprite 0> overlaps an opaque pixel of the <background>
+  - when that happens, the PPU sets the sprite-0 hit flag in 📊  `PPUStatus` and games can read it
+  responses:
+  - what's it used for? [usage]
+
+usage:
+  messages:
+  - games use it to perform <split-screen effects> (for example, having a static HUD at the top and a scrolling background at the bottom)
+  - there was a game about a plumber that used that trick 👨🏻‍🔧
+  - by placing sprite 0 at a specific position in the background, the PPU would trigger a sprite-0 hit when that part of the screen was rendered
+  - this allows games to detect the moment the PPU has reached a specific scanline, and then change the scroll coordinates mid-frame
+  responses:
+  - aahh [aahh]
+
+aahh:
+  messages:
+  - |-
+    📚  _-_in `SpriteRenderer`, change the ~_render(...)~ method; below ~buffer[x] = ...~, add:_--_
+    *_-_*->** if the ~sprite.id~ is 0 AND the background pixel in ~(x, y)~ is opaque:_--_
+      *_-_*->** sets ~this.ppu.registers.ppuStatus.sprite0Hit = 1~_--_
+  - 📚  _-_ah, and reset ~sprite0Hit~ in ~PPU::_onPreLine(...)~, just like you did with the other two flags!_--_
   responses: []
