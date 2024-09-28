@@ -5,6 +5,18 @@ main:
   - 📚  _-_cambia tu `SpriteRenderer` para que dibuje los píxeles correctos, dependiendo de estos atributos_--_
   responses:
   - necesito ayuda con el volteo horizontal [horizontal]
+  - ¿qué es voltear? [whats]
+
+whats:
+  messages:
+  - supongamos que el sprite original se ve así
+  - <{tile.png;8x8}>
+  - cuando su entrada de OAM tiene el bit de <flip horizontal> encendido (byte 2, bit 6), se ve así
+  - <{tile_hflip.png;8x8}>
+  - y cuando tiene el bit de <flip vertical> encendido (byte 2, bit 7), se ve así
+  - <{tile_vflip.png;8x8}>
+  responses:
+  - ...main
 
 horizontal:
   messages:

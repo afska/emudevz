@@ -5,6 +5,18 @@ main:
   - 📚  _-_change your `SpriteRenderer` so it plots the right pixels, depending on these attributes_--_
   responses:
   - I need help with the horizontal flip [horizontal]
+  - what's flipping? [whats]
+
+whats:
+  messages:
+  - let's say the original sprite looks like this
+  - <{tile.png;8x8}>
+  - when its OAM entry has the <horizontal flip> bit ON (byte 2, bit 6), it looks like this
+  - <{tile_hflip.png;8x8}>
+  - and when it has the <vertical flip> bit ON (byte 2, bit 7), it looks like this
+  - <{tile_vflip.png;8x8}>
+  responses:
+  - ...main
 
 horizontal:
   messages:
