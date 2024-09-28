@@ -26,9 +26,12 @@ easy:
       *_-_*renderScanline()**:_--_
         *_-_*->** ¡usa el código de mi mensaje anterior!_--_
       *_-_*_render(sprites)**:_--_
+        *_-_*->** determina la coordenada y:_--_
+          _-_```javascript this.ppu.scanline;```_--_
+          _-_(llamemos a esto ~y~)_--_
         *_-_*->** para cada sprite en ~sprites~:_--_
           *_-_*->** calcula la coordenada Y "interna":_--_
-            _-_```javascript sprite.diffY(this.ppu.scanline)```_--_
+            _-_```javascript sprite.diffY(y)```_--_
             _-_(llamemos a esto ~insideY~)_--_
           *_-_*->** instancia un ~Tile~ pasando la ppu, el id de la pattern table, el id del tile y el ~insideY~_--_
             _-_(llamemos a esto ~tile~)_--_

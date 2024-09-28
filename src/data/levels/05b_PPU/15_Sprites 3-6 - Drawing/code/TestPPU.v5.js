@@ -561,8 +561,10 @@ class SpriteRenderer {
 	}
 
 	_render(sprites) {
+		const y = this.ppu.scanline;
+
 		for (let sprite of sprites) {
-			const insideY = sprite.diffY(this.ppu.scanline);
+			const insideY = sprite.diffY(y);
 			const tile = new Tile(
 				this.ppu,
 				sprite.patternTableId,

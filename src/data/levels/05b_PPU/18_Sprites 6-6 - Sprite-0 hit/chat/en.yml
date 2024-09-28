@@ -9,7 +9,7 @@ main:
 usage:
   messages:
   - games use it to perform <split-screen effects> (for example, having a static HUD at the top and a scrolling background at the bottom)
-  - there was a game about a plumber that used that trick 👨🏻‍🔧
+  - there was a game about a plumber that used that trick 👨 🔧
   - by placing sprite 0 at a specific position in the background, the PPU would trigger a sprite-0 hit when that part of the screen was rendered
   - this allows games to detect the moment the PPU has reached a specific scanline, and then change the scroll coordinates mid-frame
   responses:

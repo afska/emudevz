@@ -9,7 +9,7 @@ main:
 usage:
   messages:
   - los juegos lo utilizan para realizar <efectos de pantalla dividida> (por ejemplo, tener un HUD estático en la parte superior y un fondo desplazándose en la parte inferior)
-  - había un juego de un plomero que usaba ese truco 👨🏻‍🔧
+  - había un juego de un plomero que usaba ese truco 👨 🔧
   - al colocar el sprite 0 en una posición específica en el fondo, la PPU activa un sprite-0 hit cuando esa parte de la pantalla se renderiza
   - esto permite a los juegos detectar el momento en que la PPU alcanza una scanline específica, y luego cambiar las coordenadas de scrolling a mitad del frame
   responses:
