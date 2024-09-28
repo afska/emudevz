@@ -38,17 +38,17 @@
 		{
 			"rom": "/roms/_test/hello_world.neees",
 			"frames": 60,
-			"ppu": "TestPPU.v6.js"
+			"ppu": "TestPPU.v7.js"
 		},
 		{
 			"rom": "/roms/.all/TeslaVsEdison.neees",
 			"frames": 60,
-			"ppu": "TestPPU.v6.js"
+			"ppu": "TestPPU.v7.js"
 		},
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 180,
-			"ppu": "TestPPU.v6.js",
+			"ppu": "TestPPU.v7.js",
 			"saveState": "supertiltbro_win.ss"
 		}
 	],

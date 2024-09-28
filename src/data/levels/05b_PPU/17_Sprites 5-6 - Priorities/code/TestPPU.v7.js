@@ -479,7 +479,7 @@ class BackgroundRenderer {
 					colorIndex > 0
 						? this.ppu.getColor(paletteId, colorIndex)
 						: this.ppu.getColor(0, 0);
-				this.ppu.plot(x + xx, y, color);
+				this.ppu.plotBG(x + xx, y, color, colorIndex);
 			}
 		}
 	}
@@ -532,7 +532,8 @@ class SpriteRenderer {
 
 	renderScanline() {
 		const sprites = this._evaluate();
-		this._render(sprites);
+		const buffer = this._render(sprites);
+		this._draw(buffer);
 	}
 
 	_evaluate() {
@@ -561,6 +562,8 @@ class SpriteRenderer {
 	}
 
 	_render(sprites) {
+		const buffer = [];
+
 		for (let sprite of sprites) {
 			const insideY = sprite.diffY(this.ppu.scanline);
 			const tileInsideY = insideY % 8;
@@ -581,12 +584,27 @@ class SpriteRenderer {
 				const colorIndex = tile.getColorIndex(
 					sprite.flipX ? 7 - insideX : insideX
 				);
-				if (colorIndex > 0)
-					this.ppu.plot(
-						sprite.x + insideX,
-						this.ppu.scanline,
-						paletteColors[colorIndex]
-					);
+				if (colorIndex > 0) {
+					const x = sprite.x + insideX;
+					const color = paletteColors[colorIndex];
+					buffer[x] = { x, sprite, color };
+				}
+			}
+		}
+
+		return buffer;
+	}
+
+	_draw(buffer) {
+		const y = this.ppu.scanline;
+
+		for (let element of buffer) {
+			if (element !== undefined) {
+				const isInFront = element.sprite.isInFrontOfBackground;
+				const isBGOpaque = this.ppu.isBackgroundPixelOpaque(element.x, y);
+
+				if (isInFront || !isBGOpaque)
+					this.ppu.plot(element.x, y, element.color);
 			}
 		}
 	}
@@ -799,6 +817,7 @@ export default class PPU {
 		this.frame = 0;
 
 		this.frameBuffer = new Uint32Array(256 * 240);
+		this.colorIndexes = new Uint8Array(256 * 240);
 		this.memory = new PPUMemory();
 
 		this.registers = new VideoRegisters(this);
@@ -807,8 +826,17 @@ export default class PPU {
 		this.spriteRenderer = new SpriteRenderer(this);
 	}
 
+	plotBG(x, y, color, colorIndex) {
+		this.colorIndexes[y * 256 + x] = colorIndex;
+		this.plot(x, y, color);
+	}
+
 	plot(x, y, color) {
 		this.frameBuffer[y * 256 + x] = color;
+	}
+
+	isBackgroundPixelOpaque(x, y) {
+		return this.colorIndexes[y * 256 + x] > 0;
 	}
 
 	getColor(paletteId, colorIndex) {

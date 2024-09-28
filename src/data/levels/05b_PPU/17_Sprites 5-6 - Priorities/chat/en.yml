@@ -1,4 +1,74 @@
 main:
   messages:
-  - coming soon!
+  - as we saw in the <sprite evaluation>, sprites with lower OAM indices are drawn in front
+  - additionally, there's the <sprite-to-background> priority bit (byte 2, bit 5), which makes the sprites appear behind the background
+  - when the background covers a sprite, only opaque pixels are taken into account
+  responses:
+  - show me an example [example]
+
+example:
+  run: |-
+    {{Top}}.load("SuperTiltBro.neees", "rom", "bin");
+  messages:
+  - take a look at the <cloud> in the middle
+  - the cloud is a <sprite> and the game title is part of the <background>
+  - at some point, it covers the "TILT" and "BRO" words, while it should be behind them
+  - this is because we are not using the correct sprite priorities
+  - and <BrokenNEEES> got it wrong too, so it doesn't matter which PPU you use!
+  responses:
+  - how can we fix it? [fix]
+
+fix:
+  messages:
+  - first, we need to remember which background pixels are transparent
+  - that is, when the <color index> is 0
+  - then, we'll save current scanline's colors and sprites into a temporary buffer
+  - and we'll only plot the pixels from that buffer if the sprite priority is <front> or the background pixel is transparent
+  responses:
+  - sounds clear enough [clear]
+
+clear:
+  messages:
+  - |-
+    📚  _-_alright, in the `PPU` class, add to the constructor:
+      ```javascript
+      this.colorIndexes = new Uint8Array(256*240);```_--_
+  - |-
+    📚  _-_implement these methods:_--_
+    *_-_*plotBG(x, y, color, colorIndex)**:_--_
+      *_-_*->** saves the ~colorIndex~:_--_
+        _-_```javascript this.colorIndexes[y * 256 + x] = colorIndex;```_--_
+      *_-_*->** draws the pixel:_--_
+        _-_```javascript this.plot(x, y, color);```_--_
+    *_-_*isBackgroundPixelOpaque(x, y)**:_--_
+      *_-_*->** returns whether the ~(x, y)~ pixel in ~colorIndexes~ is greater than 0_--_
+  - 📚  _-_in `BackgroundRenderer`, instead of calling the `plot` method, call `plotBG` passing the `colorIndex` as the last argument_--_
+  - |-
+    📚  _-_in `SpriteRenderer`, modify these methods:_--_
+      *_-_*_render(...)**:_--_
+        *_-_*->** at the start, declare a ~buffer~ empty array_--_
+        *_-_*->** instead of calling ~this.ppu.plot(...)~, save the information in the ~buffer~:_--_
+          _-_```javascript const x = sprite.x + insideX;```_--_
+          _-_```javascript const color = paletteColors[colorIndex];```_--_
+          _-_```javascript buffer[x] = { x, sprite, color };```_--_
+        *_-_*->** at the end, ```javascript return buffer;```_--_
+      *_-_*renderScanline()**:_--_
+        *_-_*->** assigns the return value of ~this._render(sprites)~ to a ~buffer~ constant_--_
+        *_-_*->** calls ~this._draw(buffer);~_--_
+  - |-
+    📚  _-_and define:_--_
+      *_-_*_draw(buffer)**:_--_
+        *_-_*->** determine the y coordinate:_--_
+          _-_```javascript this.ppu.scanline;```_--_
+          _-_(let's call this ~y~)_--_
+        *_-_*->** for each ~element~ in the ~buffer~ array:_--_
+          *_-_*->** if the ~element~ is not ~undefined~:_--_
+            *_-_*->** determine if the sprite is in front of background:_--_
+              _-_```javascript element.sprite.isInFrontOfBackground;```_--_
+              _-_(let's call this ~isInFront~)_--_
+            *_-_*->** determine if the corresponding background pixel is opaque:_--_
+              _-_```javascript this.ppu.isBackgroundPixelOpaque(element.x, y);```_--_
+              _-_(let's call this ~isBGOpaque~)_--_
+            *_-_*->** if ~isInFront || !isBGOpaque~:_--_
+              *_-_*->** call ```javascript this.ppu.plot(element.x, y, element.color);```_--_
   responses: []

@@ -1,4 +1,74 @@
 main:
   messages:
-  - coming soon!
+  - como vimos en la <evaluación de sprites>, los sprites con índices OAM más bajos se dibujan al frente
+  - además, está el bit de prioridad <sprite-to-background> (byte 2, bit 5), que hace que los sprites aparezcan detrás del fondo
+  - cuando el fondo cubre un sprite, solo se toman en cuenta los píxeles opacos
+  responses:
+  - muéstrame un ejemplo [example]
+
+example:
+  run: |-
+    {{Top}}.load("SuperTiltBro.neees", "rom", "bin");
+  messages:
+  - presta atención a la <nube> en el medio
+  - la nube es un <sprite> y el título del juego es parte del <fondo>
+  - llegado a un punto, cubre las palabras "TILT" y "BRO", cuando debería estar detrás de ellas
+  - esto es porque no estamos usando las prioridades correctas de los sprites
+  - y <BrokenNEEES> también lo hizo mal, ¡así que no importa qué PPU uses!
+  responses:
+  - ¿cómo podemos arreglarlo? [fix]
+
+fix:
+  messages:
+  - primero, necesitamos recordar qué píxeles del fondo son transparentes
+  - es decir, cuando el <índice de color> es 0
+  - luego, guardaremos los colores y sprites de la scanline actual en un buffer temporal
+  - y solo dibujaremos los píxeles de ese buffer si la prioridad del sprite es <front> o si el píxel del fondo es transparente
+  responses:
+  - suena bastante claro [clear]
+
+clear:
+  messages:
+  - |-
+    📚  _-_de acuerdo, en la clase `PPU`, agrega al constructor:
+      ```javascript
+      this.colorIndexes = new Uint8Array(256*240);```_--_
+  - |-
+    📚  _-_implementa estos métodos:_--_
+    *_-_*plotBG(x, y, color, colorIndex)**:_--_
+      *_-_*->** guarda el ~colorIndex~:_--_
+        _-_```javascript this.colorIndexes[y * 256 + x] = colorIndex;```_--_
+      *_-_*->** dibuja el píxel:_--_
+        _-_```javascript this.plot(x, y, color);```_--_
+    *_-_*isBackgroundPixelOpaque(x, y)**:_--_
+      *_-_*->** devuelve si el píxel ~(x, y)~ en ~colorIndexes~ es mayor que 0_--_
+  - 📚  _-_en `BackgroundRenderer`, en lugar de llamar al método `plot`, llama a `plotBG` pasando el `colorIndex` como último argumento_--_
+  - |-
+    📚  _-_en `SpriteRenderer`, modifica estos métodos:_--_
+      *_-_*_render(...)**:_--_
+        *_-_*->** al inicio, declara un ~buffer~ como un array vacío_--_
+        *_-_*->** en lugar de llamar a ~this.ppu.plot(...)~, guarda la información en el ~buffer~:_--_
+          _-_```javascript const x = sprite.x + insideX;```_--_
+          _-_```javascript const color = paletteColors[colorIndex];```_--_
+          _-_```javascript buffer[x] = { x, sprite, color };```_--_
+        *_-_*->** al final, ```javascript return buffer;```_--_
+      *_-_*renderScanline()**:_--_
+        *_-_*->** asigna el valor devuelto por ~this._render(sprites)~ a una constante ~buffer~_--_
+        *_-_*->** llama a ~this._draw(buffer);~_--_
+  - |-
+    📚  _-_y define:_--_
+      *_-_*_draw(buffer)**:_--_
+        *_-_*->** determina la coordenada y:_--_
+          _-_```javascript this.ppu.scanline;```_--_
+          _-_(llamemos a esto ~y~)_--_
+        *_-_*->** para cada ~element~ en el array ~buffer~:_--_
+          *_-_*->** si el ~element~ no es ~undefined~:_--_
+            *_-_*->** determina si el sprite está al frente del fondo:_--_
+              _-_```javascript element.sprite.isInFrontOfBackground;```_--_
+              _-_(llamemos a esto ~isInFront~)_--_
+            *_-_*->** determina si el píxel correspondiente del fondo es opaco:_--_
+              _-_```javascript this.ppu.isBackgroundPixelOpaque(element.x, y);```_--_
+              _-_(llamemos a esto ~isBGOpaque~)_--_
+            *_-_*->** si ~isInFront || !isBGOpaque~:_--_
+              *_-_*->** llama a ```javascript this.ppu.plot(element.x, y, element.color);```_--_
   responses: []
