@@ -1399,10 +1399,10 @@ it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM da
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
-	ppu.memory.oamRam[4 * 31 + 0] = 5;
-	ppu.memory.oamRam[4 * 31 + 1] = 91;
-	ppu.memory.oamRam[4 * 31 + 2] = 0b10000010;
-	ppu.memory.oamRam[4 * 31 + 3] = 20;
+	ppu.memory.oamRam[4 * 31 + 0] = 5; // y
+	ppu.memory.oamRam[4 * 31 + 1] = 91; // tile
+	ppu.memory.oamRam[4 * 31 + 2] = 0b10000010; // attr
+	ppu.memory.oamRam[4 * 31 + 3] = 20; // x
 
 	ppu.spriteRenderer.should.respondTo("_createSprite");
 	const sprite = ppu.spriteRenderer._createSprite(31);
@@ -1443,10 +1443,10 @@ it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM da
 
 	ppu.registers.ppuCtrl.setValue(0b00101000);
 
-	ppu.memory.oamRam[4 * 9 + 0] = 129;
-	ppu.memory.oamRam[4 * 9 + 1] = 77;
-	ppu.memory.oamRam[4 * 9 + 2] = 0b01100001;
-	ppu.memory.oamRam[4 * 9 + 3] = 29;
+	ppu.memory.oamRam[4 * 9 + 0] = 129; // y
+	ppu.memory.oamRam[4 * 9 + 1] = 77; // tile
+	ppu.memory.oamRam[4 * 9 + 2] = 0b01100001; // attr
+	ppu.memory.oamRam[4 * 9 + 3] = 29; // x
 
 	ppu.spriteRenderer.should.respondTo("_createSprite");
 	const sprite = ppu.spriteRenderer._createSprite(9);
@@ -1493,20 +1493,20 @@ it("SpriteRenderer: `_evaluate()` returns a sprite array", () => {
 
 	ppu.scanline = 46;
 
-	ppu.memory.oamRam[4 * 1 + 0] = 45;
-	ppu.memory.oamRam[4 * 1 + 1] = 20;
-	ppu.memory.oamRam[4 * 1 + 2] = 0b10000010;
-	ppu.memory.oamRam[4 * 1 + 3] = 91;
+	ppu.memory.oamRam[4 * 1 + 0] = 45; // y
+	ppu.memory.oamRam[4 * 1 + 1] = 20; // tile
+	ppu.memory.oamRam[4 * 1 + 2] = 0b10000010; // attr
+	ppu.memory.oamRam[4 * 1 + 3] = 91; // x
 
-	ppu.memory.oamRam[4 * 5 + 0] = 42;
-	ppu.memory.oamRam[4 * 5 + 1] = 29;
-	ppu.memory.oamRam[4 * 5 + 2] = 0b01100001;
-	ppu.memory.oamRam[4 * 5 + 3] = 77;
+	ppu.memory.oamRam[4 * 5 + 0] = 42; // y
+	ppu.memory.oamRam[4 * 5 + 1] = 29; // tile
+	ppu.memory.oamRam[4 * 5 + 2] = 0b01100001; // attr
+	ppu.memory.oamRam[4 * 5 + 3] = 77; // x
 
-	ppu.memory.oamRam[4 * 8 + 0] = 6;
-	ppu.memory.oamRam[4 * 8 + 1] = 79;
-	ppu.memory.oamRam[4 * 8 + 2] = 0b01100001;
-	ppu.memory.oamRam[4 * 8 + 3] = 17;
+	ppu.memory.oamRam[4 * 8 + 0] = 6; // y
+	ppu.memory.oamRam[4 * 8 + 1] = 79; // tile
+	ppu.memory.oamRam[4 * 8 + 2] = 0b01100001; // attr
+	ppu.memory.oamRam[4 * 8 + 3] = 17; // x
 
 	const sprites = ppu.spriteRenderer._evaluate();
 	expect(sprites).to.be.an("array");
@@ -1533,10 +1533,10 @@ it("SpriteRenderer: `_evaluate()` sets the sprite overflow flag when there are m
 	ppu.scanline = 45;
 
 	for (let i = 0; i < 9; i++) {
-		ppu.memory.oamRam[4 * i + 0] = 40;
-		ppu.memory.oamRam[4 * i + 1] = 91;
-		ppu.memory.oamRam[4 * i + 2] = 0b10000010;
-		ppu.memory.oamRam[4 * i + 3] = 20;
+		ppu.memory.oamRam[4 * i + 0] = 40; // y
+		ppu.memory.oamRam[4 * i + 1] = 91; // tile
+		ppu.memory.oamRam[4 * i + 2] = 0b10000010; // attr
+		ppu.memory.oamRam[4 * i + 3] = 20; // x
 	}
 
 	const sprites = ppu.spriteRenderer._evaluate();
@@ -1576,4 +1576,90 @@ it("resets `PPUStatus::spriteOverflow` on scanline=-1, cycle=1", () => {
 		es: "reinicia `PPUStatus::spriteOverflow` en scanline=-1, cycle=1",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.14"),
+});
+
+// 5b.18 Sprites (6/6): Sprite-0 hit
+
+it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pixel from sprite 0 is drawn over an opaque pixel from background", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	// set scanline
+	ppu.scanline = 45;
+
+	// mock mapper so it returns CHRs for tile 91
+	ppu.memory.mapper.ppuRead = (address) => {
+		return address >= 91 * 16 && address < 91 * 16 + 16 ? 0xff : 0;
+	};
+
+	// plot background
+	for (let x = 0; x < 256; x++) ppu.plotBG(x, ppu.scanline, 0xff000000, 1);
+
+	// sprite 0 (in y=47) => no hit
+	ppu.registers.ppuStatus.sprite0Hit = 0;
+	ppu.memory.oamRam[4 * 0 + 0] = 47; // y
+	ppu.memory.oamRam[4 * 0 + 1] = 91; // tile
+	ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
+	ppu.memory.oamRam[4 * 0 + 3] = 20; // x
+	ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+	ppu.registers.ppuStatus.sprite0Hit.should.equalN(0, "sprite0Hit");
+
+	// sprite 1 (in y=43) => no hit
+	ppu.registers.ppuStatus.sprite0Hit = 0;
+	ppu.memory.oamRam[4 * 1 + 0] = 43; // y
+	ppu.memory.oamRam[4 * 1 + 1] = 91; // tile
+	ppu.memory.oamRam[4 * 1 + 2] = 0b10; // attr
+	ppu.memory.oamRam[4 * 1 + 3] = 20; // x
+	ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+	ppu.registers.ppuStatus.sprite0Hit.should.equalN(0, "sprite0Hit");
+
+	// sprite 0 (in y=43) => hit
+	ppu.registers.ppuStatus.sprite0Hit = 0;
+	ppu.memory.oamRam[4 * 0 + 0] = 43; // y
+	ppu.memory.oamRam[4 * 0 + 1] = 91; // tile
+	ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
+	ppu.memory.oamRam[4 * 0 + 3] = 20; // x
+	ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+	ppu.registers.ppuStatus.sprite0Hit.should.equalN(1, "sprite0Hit");
+
+	// sprite 0 (in y=43) (wrong tile) => no hit
+	ppu.registers.ppuStatus.sprite0Hit = 0;
+	ppu.memory.oamRam[4 * 0 + 0] = 43; // y
+	ppu.memory.oamRam[4 * 0 + 1] = 92; // tile
+	ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
+	ppu.memory.oamRam[4 * 0 + 3] = 20; // x
+	ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+	ppu.registers.ppuStatus.sprite0Hit.should.equalN(0, "sprite0Hit");
+})({
+	locales: {
+		es:
+			"SpriteRenderer: `_render(...)` enciende la bandera de sprite-0 hit cuando un pixel opaco del sprite 0 es dibujado sobre un pixel opaco del fondo",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.18"),
+});
+
+it("resets `PPUStatus::sprite0Hit` on scanline=-1, cycle=1", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	for (let cycle = 0; cycle < 341; cycle++) {
+		ppu.scanline = -1;
+		ppu.cycle = cycle;
+		ppu.registers.ppuStatus.spriteOverflow = 1;
+
+		ppu.step(noop, noop);
+
+		if (cycle === 1) {
+			ppu.registers.ppuStatus.spriteOverflow.should.equalN(0, "sprite0Hit");
+		} else {
+			ppu.registers.ppuStatus.spriteOverflow.should.equalN(1, "sprite0Hit");
+		}
+	}
+})({
+	locales: {
+		es: "reinicia `PPUStatus::sprite0Hit` en scanline=-1, cycle=1",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.18"),
 });
