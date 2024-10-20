@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import $path from "path";
+import $path from "path-browserify-esm";
 import { FaChevronLeft, FaChevronRight, FaSearch } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";

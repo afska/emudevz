@@ -1,5 +1,5 @@
 import escapeStringRegexp from "escape-string-regexp";
-import $path from "path";
+import $path from "path-browserify-esm";
 import _ from "lodash";
 import locales from "../locales";
 import store from "../store";
@@ -240,7 +240,7 @@ class Filesystem {
 	}
 
 	resolve(path, workingDirectory) {
-		process.$setCwd(workingDirectory);
+		$path.setCWD(workingDirectory);
 		return $path.resolve(path);
 	}
 

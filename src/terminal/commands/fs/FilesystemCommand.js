@@ -1,4 +1,4 @@
-import $path from "path";
+import $path from "path-browserify-esm";
 import filesystem, { Drive } from "../../../filesystem";
 import { theme } from "../../style";
 import Command from "../Command";

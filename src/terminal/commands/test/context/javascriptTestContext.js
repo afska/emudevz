@@ -1,6 +1,6 @@
 import escapeStringRegexp from "escape-string-regexp";
 import { Linter } from "eslint-linter-browserify";
-import $path from "path";
+import $path from "path-browserify-esm";
 import _ from "lodash";
 import EmulatorBuilder from "../../../../EmulatorBuilder";
 import filesystem from "../../../../filesystem";

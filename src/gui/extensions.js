@@ -1,4 +1,4 @@
-import $path from "path";
+import $path from "path-browserify-esm";
 import Drive from "../filesystem/Drive";
 import CodeEditor from "./components/CodeEditor";
 import TV from "./components/TV";

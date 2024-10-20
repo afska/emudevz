@@ -1,4 +1,4 @@
-import $path from "path";
+import $path from "path-browserify-esm";
 import _ from "lodash";
 import filesystem from "../../../filesystem";
 import locales from "../../../locales";

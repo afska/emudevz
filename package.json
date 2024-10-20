@@ -5,19 +5,18 @@
   "scripts": {
     "start": "npm run web",
     "dev": "npm run web",
-    "web": "react-app-rewired start",
-    "desktop": "concurrently \"cross-env BROWSER=none react-app-rewired start\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
+    "web": "react-scripts start",
+    "desktop": "concurrently \"cross-env BROWSER=none react-scripts start\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
     "package": "rm -rf public/levels && node ./scripts/package-levels.js",
     "deploy": "bash ./scripts/deploy.sh",
-    "build:web": "cross-env GENERATE_SOURCEMAP=false react-app-rewired build",
+    "build:web": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "build:windows": "bash ./scripts/build-desktop-windows.sh",
     "build:linux": "bash ./scripts/build-desktop-linux.sh",
     "___": "___",
-    "test": "react-app-rewired test",
+    "test": "react-scripts test",
     "electron": "electron",
-    "react-app-rewired": "react-app-rewired",
-    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/emudevz react-app-rewired build",
-    "build:electron": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=./ react-app-rewired build"
+    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/emudevz react-scripts build",
+    "build:electron": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=./ react-scripts build"
   },
   "//": [
     "[!] Packages with fixed versions are conflictive. Do not update them."
@@ -46,7 +45,7 @@
     "cli-highlight": "^2.1.11",
     "connected-react-router": "^6.9.3",
     "escape-string-regexp": "^5.0.0",
-    "eslint-linter-browserify": "^8.25.0",
+    "eslint-linter-browserify": "^9.13.0",
     "eventemitter3": "^4.0.7",
     "history": "^4.10.1",
     "jszip": "^3.10.1",
@@ -54,7 +53,7 @@
     "marked": "^4.2.3",
     "mixpanel-browser": "^2.45.0",
     "nes-emu": "^1.0.15",
-    "path-browserify": "^1.0.1",
+    "path-browserify-esm": "^1.0.6",
     "pixi-filters": "^4.2.0",
     "pixi-lights": "^3.0.0",
     "pixi.js": "^6.3.0",
@@ -143,7 +142,6 @@
     "mkdirp": "^1.0.4",
     "prettier": "2.2.1",
     "pretty-quick": "^1.10.0",
-    "react-app-rewired": "^2.2.1",
     "slug": "^8.2.2",
     "worklet-loader": "^2.0.0"
   }

@@ -1,4 +1,4 @@
-import $path from "path";
+import $path from "path-browserify-esm";
 import filesystem from "../../../filesystem";
 import FilesystemCommand from "./FilesystemCommand";
 

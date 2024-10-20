@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import $path from "path";
+import $path from "path-browserify-esm";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
 import filesystem, { fuzzy } from "../../../filesystem";
