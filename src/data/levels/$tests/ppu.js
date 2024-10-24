@@ -851,7 +851,7 @@ it("connects VRAM to PPU memory (writes)", () => {
 	for (let i = 0; i < 2048; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2000 + i, value);
-		ppu.memory.vram[i].should.equalN(value, `ram[${i}]`);
+		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
 	}
 })({
 	locales: {
@@ -1112,9 +1112,18 @@ it("connects Palette RAM to PPU memory (reads)", () => {
 	const ppu = new PPU({});
 
 	for (let i = 0; i < 32; i++) {
+		const address = 0x3f00 + i;
 		const value = byte.random();
+		if (
+			address === 0x3f10 ||
+			address === 0x3f14 ||
+			address === 0x3f18 ||
+			address === 0x3f1c
+		)
+			continue;
+
 		ppu.memory.paletteRam[i] = value;
-		ppu.memory.read(0x3f00 + i).should.equalN(value, `read(${i})`);
+		ppu.memory.read(address).should.equalN(value, `read(0x3f00 + ${i})`);
 	}
 })({
 	locales: {
@@ -1128,9 +1137,18 @@ it("connects Palette RAM to PPU memory (writes)", () => {
 	const ppu = new PPU({});
 
 	for (let i = 0; i < 32; i++) {
+		const address = 0x3f00 + i;
 		const value = byte.random();
-		ppu.memory.write(0x3f00 + i, value);
-		ppu.memory.paletteRam[i].should.equalN(value, `ram[${i}]`);
+		if (
+			address === 0x3f10 ||
+			address === 0x3f14 ||
+			address === 0x3f18 ||
+			address === 0x3f1c
+		)
+			continue;
+
+		ppu.memory.write(address, value);
+		ppu.memory.paletteRam[i].should.equalN(value, `paletteRam[${i}]`);
 	}
 })({
 	locales: {
@@ -1147,6 +1165,10 @@ it("has a `getColor` method that reads color palettes", () => {
 
 	for (let i = 0; i < 32; i++) {
 		ppu.memory.paletteRam[i] = byte.random(63);
+		if (i == 16 + 0) ppu.memory.paletteRam[i] = ppu.memory.paletteRam[0];
+		if (i == 16 + 4) ppu.memory.paletteRam[i] = ppu.memory.paletteRam[4];
+		if (i == 16 + 8) ppu.memory.paletteRam[i] = ppu.memory.paletteRam[8];
+		if (i == 16 + 12) ppu.memory.paletteRam[i] = ppu.memory.paletteRam[12];
 	}
 
 	for (let paletteId = 0; paletteId < 8; paletteId++) {
@@ -1662,4 +1684,46 @@ it("resets `PPUStatus::sprite0Hit` on scanline=-1, cycle=1", () => {
 		es: "reinicia `PPUStatus::sprite0Hit` en scanline=-1, cycle=1",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.18"),
+});
+
+// 5b.19 Mirroring (1/2): Palette RAM
+
+it("mirrors Palette RAM correctly in PPU memory (reads)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	ppu.memory.paletteRam[0] = 1;
+	ppu.memory.paletteRam[4] = 2;
+	ppu.memory.paletteRam[8] = 3;
+	ppu.memory.paletteRam[12] = 4;
+
+	ppu.memory.read(0x3f10).should.equalN(1, "read(0x3f10)");
+	ppu.memory.read(0x3f14).should.equalN(2, "read(0x3f14)");
+	ppu.memory.read(0x3f18).should.equalN(3, "read(0x3f18)");
+	ppu.memory.read(0x3f1c).should.equalN(4, "read(0x3f1c)");
+})({
+	locales: {
+		es: "espeja la Palette RAM correctamente en la memoria de PPU (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.19"),
+});
+
+it("mirrors Palette RAM correctly in PPU memory (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	ppu.memory.write(0x3f10, 1);
+	ppu.memory.write(0x3f14, 2);
+	ppu.memory.write(0x3f18, 3);
+	ppu.memory.write(0x3f1c, 4);
+
+	ppu.memory.paletteRam[0].should.equalN(1, "paletteRam[0]");
+	ppu.memory.paletteRam[4].should.equalN(2, "paletteRam[4]");
+	ppu.memory.paletteRam[8].should.equalN(3, "paletteRam[8]");
+	ppu.memory.paletteRam[12].should.equalN(4, "paletteRam[12]");
+})({
+	locales: {
+		es: "espeja la Palette RAM correctamente en la memoria de PPU (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.19"),
 });
