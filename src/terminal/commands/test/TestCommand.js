@@ -97,7 +97,7 @@ export default class TestCommand extends Command {
 						await this._printResult(result, overallResult);
 				}
 				if (!isMainTestFile && _.every(results, "passed"))
-					await this._terminal.writeln("✔️ ");
+					await this._terminal.writeln("✅ ");
 
 				await this._terminal.newline();
 			}
@@ -226,7 +226,7 @@ export default class TestCommand extends Command {
 			});
 
 			if (result.success) {
-				await this._terminal.writeln("✔️ ");
+				await this._terminal.writeln("✅ ");
 				tv.setContent(null, "rom");
 			} else {
 				await this._terminal.writeln(
@@ -309,7 +309,7 @@ export default class TestCommand extends Command {
 	}
 
 	async _printResult(result, overallResult) {
-		const emoji = result.passed ? "✔️ " : "❌ ";
+		const emoji = result.passed ? "✅ " : "❌ ";
 
 		if (!result.passed) {
 			await this._terminal.newline();

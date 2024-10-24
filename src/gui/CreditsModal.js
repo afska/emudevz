@@ -195,7 +195,7 @@ export default class CreditsModal extends PureComponent {
 								</Game>
 							</div>
 							<div style={{ fontSize: "small", marginTop: 8 }}>
-								✔️ All these games were included with the permission of their
+								✅ All these games were included with the permission of their
 								authors.
 							</div>
 						</div>

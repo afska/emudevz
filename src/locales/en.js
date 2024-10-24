@@ -163,7 +163,7 @@ export default {
 	using_gamepad: "Using gamepad",
 	using_keyboard: "Using keyboard: arrows, D, [space], [enter], [supr]",
 	using_old_snapshot: "⚠️ Using a read-only snapshot of your old code.",
-	using_your_emulator: "Using your emulator ✔️",
+	using_your_emulator: "Using your emulator ✅",
 	volume: "Volume",
 	win_games_here_to_unlock_roms: "Win games here to unlock new ROMs",
 	yes: "Yes",

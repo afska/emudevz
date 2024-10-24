@@ -125,7 +125,7 @@ async function pkg() {
 			archive.pipe(output);
 			await new Promise((resolve) => {
 				output.on("close", function () {
-					console.log("✔️  " + id);
+					console.log("✅  " + id);
 					resolve();
 				});
 
@@ -183,7 +183,7 @@ async function pkg() {
 	const serializedBook = JSON.stringify(book, null, 2);
 	const bookPath = $path.join(OUTPUT_PATH, BOOK_FILE);
 	fs.writeFileSync(bookPath, serializedBook);
-	console.log("✔️  " + BOOK_FILE);
+	console.log("✅  " + BOOK_FILE);
 }
 
 pkg();

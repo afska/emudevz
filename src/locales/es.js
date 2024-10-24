@@ -170,7 +170,7 @@ export default {
 	using_gamepad: "Usando joystick",
 	using_keyboard: "Usando teclado: flechas, D, [space], [enter], [supr]",
 	using_old_snapshot: "⚠️ Usando una copia solo lectura de tu código viejo.",
-	using_your_emulator: "Usando tu emulador ✔️",
+	using_your_emulator: "Usando tu emulador ✅",
 	volume: "Volumen",
 	win_games_here_to_unlock_roms:
 		"Gana juegos aquí para desbloquear nuevas ROMs",

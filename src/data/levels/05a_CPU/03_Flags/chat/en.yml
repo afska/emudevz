@@ -39,7 +39,7 @@ what:
   - _-_and ```javascript setValue(0b00000010)``` should set all booleans to ~false~, except for ~z~_--_
   responses:
   - (*) I need a bit of help 📐 [bits]
-  - ✔️  I have the class [nowwhat]
+  - ✅  I have the class [nowwhat]
 
 bits:
   messages:

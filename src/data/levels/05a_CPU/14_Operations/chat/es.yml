@@ -19,7 +19,7 @@ main:
 
 multiple:
   messages:
-  - exactamente eso ✔️
+  - exactamente eso ✅
   - "aquí hay una función que define todos los opcodes por ti:"
   - 📄  ~/lib/cpu/defineOperations.js~
   - solo necesitas llamarla, pasando los objetos `instructions` y `addressingModes`

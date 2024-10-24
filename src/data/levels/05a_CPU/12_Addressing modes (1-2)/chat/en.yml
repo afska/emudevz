@@ -19,7 +19,7 @@ explain:
   - (the `address` argument in your `JMP` instruction's `run(...)` function)
   - in this case, the <output> would be the result of performing a 16-bit read to address $4080
   responses:
-  - ✔️  ok, let's code this [letscode]
+  - ✅  ok, let's code this [letscode]
 
 letscode:
   messages:

@@ -12,7 +12,7 @@ main:
   responses:
   - (*) ¿y si trato de escribir fuera de los límites? 🚫 [limit]
   - (*) ¿cuál es la mejor manera de implementar esto? 🤔 [implement]
-  - ✔️  ya creé las clases, ¿ahora qué? [nowwhat]
+  - ✅  ya creé las clases, ¿ahora qué? [nowwhat]
 
 limit:
   messages:

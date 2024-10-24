@@ -63,7 +63,7 @@ explodes:
 
 a4:
   messages:
-  - ¡correcto! ✔️
+  - ¡correcto! ✅
   - pero en realidad el procesador no es tonto
   - le notifica al programa que el valor no calzó bien
   - cargando la <Bandera Carry> en 1

@@ -58,7 +58,7 @@ export default class NEEESTester extends PureComponent {
 				>
 					<div className={styles.message}>
 						{success ? (
-							<span>✔️ Your CPU rocks!</span>
+							<span>✅ Your CPU rocks!</span>
 						) : (
 							<span
 								dangerouslySetInnerHTML={{ __html: "❌ " + this.state._error }}

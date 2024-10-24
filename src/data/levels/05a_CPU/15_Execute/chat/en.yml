@@ -18,7 +18,7 @@ cycles:
   - so every opcode knows how many cycles it should take
   responses:
   - (*) why don't we want to build a "cycle-accurate" emulator? [accuracy]
-  - ✔️  alright, how should we proceed? [rightway]
+  - ✅  alright, how should we proceed? [rightway]
 
 accuracy:
   messages:

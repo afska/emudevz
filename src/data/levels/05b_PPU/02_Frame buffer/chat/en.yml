@@ -45,7 +45,7 @@ done:
     level.stopEffect();
     book.unlock("usePPU");
   messages:
-  - ✔️  done!
+  - ✅  done!
   - now, the 🖥️  icon in the emulator will glow ✨
   - as there's almost no PPU code, nothing will be shown for now
   - but we'll get there!

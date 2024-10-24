@@ -22,7 +22,7 @@ export default class Unit extends PureComponent {
 		const message = active
 			? "using_your_emulator"
 			: customIncompleteMessage ?? "using_bugged_emulator";
-		const statusIcon = active ? "✔️" : customIncompleteIcon ?? "❌";
+		const statusIcon = active ? "✅" : customIncompleteIcon ?? "❌";
 
 		return (
 			<Tooltip

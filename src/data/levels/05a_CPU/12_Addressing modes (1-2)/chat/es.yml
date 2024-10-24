@@ -19,7 +19,7 @@ explain:
   - (el argumento `address` en la función `run(...)` de tu instrucción `JMP`)
   - en este caso, la <salida> sería el resultado de realizar una lectura de 16 bits a la dirección $4080
   responses:
-  - ✔️  ok, programemos esto [letscode]
+  - ✅  ok, programemos esto [letscode]
 
 letscode:
   messages:

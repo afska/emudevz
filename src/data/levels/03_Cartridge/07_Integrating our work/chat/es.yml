@@ -30,7 +30,7 @@ done:
     level.stopEffect();
     book.unlock("useCartridge");
   messages:
-  - ✔️  ¡hecho!
+  - ✅  ¡hecho!
   - ahora, el ícono 💾  en el emulador brillará ✨
   - puedes alternar entre tu implementación y la rota haciendo clic en él
   - intenta abrir algunos juegos, se verán mucho mejor 😉

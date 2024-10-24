@@ -39,7 +39,7 @@ what:
   - _-_y ```javascript setValue(0b00000010)``` debería poner todos los booleanos en ~false~, menos ~z~_--_
   responses:
   - (*) necesito un poco de ayuda 📐 [bits]
-  - ✔️  ya tengo la clase [nowwhat]
+  - ✅  ya tengo la clase [nowwhat]
 
 bits:
   messages:

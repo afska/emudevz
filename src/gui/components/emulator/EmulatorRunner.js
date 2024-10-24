@@ -211,7 +211,7 @@ export default class EmulatorRunner extends PureComponent {
 		const mirroringId =
 			neees?.ppu?.memory?.mirroringId ?? header?.mirroringId ?? "❓";
 		const chr = header?.usesChrRam ? "RAM" : "ROM";
-		const prgRam = header?.hasPrgRam ? "✔️" : "❌";
+		const prgRam = header?.hasPrgRam ? "✅" : "❌";
 
 		this._info.innerText =
 			`🗜️ Mapper: ${mapperId} (${mapperName})` +

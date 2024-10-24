@@ -63,7 +63,7 @@ explodes:
 
 a4:
   messages:
-  - correct! ✔️
+  - correct! ✅
   - but the processor isn't actually dumb
   - it notifies the program that the value didn't fit
   - by setting the <Carry Flag> to 1

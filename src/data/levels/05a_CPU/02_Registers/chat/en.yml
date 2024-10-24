@@ -12,7 +12,7 @@ main:
   responses:
   - (*) what if I try to write off the limits? 🚫 [limit]
   - (*) what's the best way to implement this? 🤔 [implement]
-  - ✔️  I created the classes, now what? [nowwhat]
+  - ✅  I created the classes, now what? [nowwhat]
 
 limit:
   messages:
