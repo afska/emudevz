@@ -1,4 +1,29 @@
 main:
   messages:
-  - coming soon!
+  - accessing Palette RAM is a bit weird on the NEEES
+  - some addresses mirror other addresses
+  - let's fix it quickly
+  - |-
+    📚  _-_in `PPUMemory`, look for the _--_🎨 _-_ ~Palette RAM~ section in `read(...)` and replace it with this code:
+    ```javascript
+    if (address >= 0x3f00 && address <= 0x3f1f) {
+      if (address === 0x3f10) return this.read(0x3f00);
+      if (address === 0x3f14) return this.read(0x3f04);
+      if (address === 0x3f18) return this.read(0x3f08);
+      if (address === 0x3f1c) return this.read(0x3f0c);
+      return this.paletteRam[address - 0x3f00];
+    }
+    ```_--_
+  - |-
+    📚  _-_do the same with `write(...)`, but use this instead:
+    ```javascript
+    if (address >= 0x3f00 && address <= 0x3f1f) {
+      if (address === 0x3f10) return this.write(0x3f00, value);
+      if (address === 0x3f14) return this.write(0x3f04, value);
+      if (address === 0x3f18) return this.write(0x3f08, value);
+      if (address === 0x3f1c) return this.write(0x3f0c, value);
+      this.paletteRam[address - 0x3f00] = value;
+      return;
+    }
+    ```_--_
   responses: []
