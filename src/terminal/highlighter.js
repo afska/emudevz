@@ -44,9 +44,9 @@ export default {
 				style: theme.ITALIC,
 			}, // __quick italic__
 			{ regexp: /(~[^~]+~)/, silent: /(~([^~]+)~)/g }, // ~quick accent~
-			{ regexp: /(`[^`]+`)/ }, // `backticks`
+			{ regexp: /(`[^`]+`)/, silent: /(`([^~]+)`)/g }, // `backticks`
 			{ regexp: /("[^"]+")/ }, // "double quotes"
-			{ regexp: /(<[^>]+>)/ }, // <angular brackets>
+			{ regexp: /(<[^>]+>)/, silent: /(<([^~]+)>)/g }, // <angular brackets>
 			{ regexp: /(\[[^\];]+\])/ }, // [square brackets] (ignoring terminal sequences)
 			{ regexp: /(#?\$[0-9a-fA-F]+)/ }, // #literal hex numbers
 			{ regexp: /(#[0-9]+)/ }, // #literal dec numbers
