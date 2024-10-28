@@ -4,6 +4,7 @@
 		"es": "🏞️ Mirroring (2/2): Name tables"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [

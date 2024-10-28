@@ -1,7 +1,7 @@
 main:
   messages:
   - acceder a la Palette RAM es un poco raro en la NEEES
-  - algunas direcciones son espejos de otras direcciones
+  - algunas direcciones son espejos de otras direcciones 🚽
   - arreglémoslo rápidamente
   - |-
     📚  _-_en `PPUMemory`, busca la sección _--_🎨 _-_  ~Palette RAM~ en `read(...)` y reemplázala con este código:

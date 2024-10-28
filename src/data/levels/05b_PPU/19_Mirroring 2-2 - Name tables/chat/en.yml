@@ -3,18 +3,18 @@ main:
   - the PPU memory map has a dedicated section for 4 name tables, in ~PPU $2000-$2FFF~
   - each nametable is 1024 bytes (or $400 in hexadecimal), so these 4 name tables are in the addresses $2000, $2400, $2800, and $2C00
   - but the actual NEEES hardware only has VRAM for <two> of them
-  - what ends up happening is that the mapper mirrors the others in funny ways
+  - what ends up happening is that the mapper mirrors the others in fun ways ✨
   - and that mirroring is useful for games to implement scrolling
   - let's review them
   responses:
-  - cool, show me [show]
+  - cool, show me 👀 [show]
 
 show:
   messages:
-  - let's call the "physical" name tables (these we can actually store in VRAM) "A" and "B"
+  - let's call the "physical" name tables (those we can actually store in VRAM) "A" and "B"
   - "\"HORIZONTAL\" mirroring connects $2000 and $2400 to the first physical name table (\"A\") and $2800 and $2C00 to the second physical name table (\"B\")"
   - <{horizontal.png}>
-  - get it? they are horizontally mirrored :)
+  - get it? they are horizontally mirrored 😉
   responses:
   - yeah! [vertical]
 
@@ -22,7 +22,7 @@ vertical:
   messages:
   - "\"VERTICAL\" mirroring connects $2000 to \"A\" and $2400 to \"B\", then repeats the whole thing in $2800 and $2C00"
   - <{vertical.png}>
-  - and now they are vertically mirrored
+  - and now they are vertically mirrored 😊
   responses:
   - of course [single]
 
@@ -37,8 +37,51 @@ single:
 
 fourscreen:
   messages:
-  - finally, there are game cartridges that contain extra RAM for 2 more physical name tables
+  - finally, there are some game cartridges that contain extra RAM for 2 more physical name tables
   - allowing them to use a "FOUR_SCREEN" mapping
   - <{4screen.png}>
   - this is the reason why we defined our `vram` array property in `PPUScreen` as 4096 bytes
+  responses:
+  - let's implement this [implement]
+
+implement:
+  messages:
+  - I translated the mapping types into a nice table, here 📄  ~/lib/ppu/mirroringTypes.js~
+  - the keys (`$2000`, `$2400`, `$2800` and `$2C00`) represent the logical PPU addresses
+  - and the values (mostly `0x000` and `0x400`) are the offsets of the physical name tables inside the `PPUMemory::vram` array
+  - 📚  _-_in `PPUMemory`, import the `mirroringTypes` file_--_
+  - |-
+    📚  _-_define this method:_--_
+    *_-_*changeNameTableMirroringTo(mirroringId)**:_--_
+      *_-_*->** if ~this.cartridge.header.mirroringId === "FOUR_SCREEN"~_--_
+        *_-_*->** sets ~mirroringId = "FOUR_SCREEN"~_--_
+      *_-_*->** sets ~this.mirroringId = mirroringId~_--_
+      *_-_*->** sets ~this._mirroring = mirroringTypes[mirroringId]~_--_
+      _-_(mappers will call this method to change the mirroring type whenever they need it)_--_
+  - 📚  _-_change `onLoad(...)` so it calls the new method with the initial mirroring (remember that this is stored in `cartridge.header.mirroringId`)_--_
+  - 📚  _-_map the ranges $2000-$23FF, $2400-$27FF, $2800-$2BFF and $2C00-$2FFF to VRAM, based on the current `mirroring` (both reads and writes)_--_
+  responses:
+  - for example? 🧐 [example]
+
+example:
+  messages:
+  - look for the "Name tables 0 to 3 (VRAM + mirror)" section in both `read(...)` and `write(...)` methods
+  - |-
+    right now, `read(...)` should look like this:
+    ```javascript
+    if (address >= 0x2000 && address <= 0x2fff)
+      return this.vram[address - 0x2000];
+    ```
+  - you need to map the 4 sections based on where `this._mirroring` points to
+  - |-
+    let's implement the first two cases
+    ```javascript
+    if (address >= 0x2000 && address <= 0x2fff) {
+      if (address >= 0x2000 && address < 0x2400)
+        return this.vram[this._mirroring.$2000 + (address - 0x2000)];
+      if (address >= 0x2400 && address < 0x2800)
+        return this.vram[this._mirroring.$2400 + (address - 0x2400)];
+      // TODO: Finish the others!
+    }
+    ```
   responses: []

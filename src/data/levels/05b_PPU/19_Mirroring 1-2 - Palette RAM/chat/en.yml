@@ -1,7 +1,7 @@
 main:
   messages:
   - accessing Palette RAM is a bit weird on the NEEES
-  - some addresses mirror other addresses
+  - some addresses mirror other addresses 🚽
   - let's fix it quickly
   - |-
     📚  _-_in `PPUMemory`, look for the _--_🎨 _-_ ~Palette RAM~ section in `read(...)` and replace it with this code:
