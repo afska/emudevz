@@ -179,8 +179,8 @@ it("has a `header` property with metadata (mirroringId)", () => {
 	[
 		["HORIZONTAL", 0b00000000],
 		["VERTICAL", 0b00000001],
-		["FOUR_SCREENS", 0b00001001],
-		["FOUR_SCREENS", 0b00001000],
+		["FOUR_SCREEN", 0b00001001],
+		["FOUR_SCREEN", 0b00001000],
 	].forEach(([mirroringId, flags6]) => {
 		bytes[6] = flags6;
 		const header = new Cartridge(bytes).header;

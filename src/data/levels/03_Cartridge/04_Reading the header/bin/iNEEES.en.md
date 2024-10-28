@@ -38,7 +38,7 @@ The format of the header is as follows:
 For now:
 
 - 🗜️ Mapper id can be any number between `0` and `255`.
-- 🚽 Mirroring type can be any of: `HORIZONTAL`, `VERTICAL`, `FOUR_SCREENS`.
+- 🚽 Mirroring type can be any of: `HORIZONTAL`, `VERTICAL`, `FOUR_SCREEN`.
 
 ### Flags 6
 
@@ -49,7 +49,7 @@ For now:
 |||||||              1: VERTICAL (for horizontal scrolling)
 ||||||+-- 1: Cartridge contains PRG-RAM (for save files)
 |||||+--- 1: File contains 512-byte padding before PRG-ROM data
-||||+---- 1: Ignore bit 0 and use FOUR_SCREENS mirroring
+||||+---- 1: Ignore bit 0 and use FOUR_SCREEN mirroring
 ++++----- Lower nybble of mapper number
 ```
 

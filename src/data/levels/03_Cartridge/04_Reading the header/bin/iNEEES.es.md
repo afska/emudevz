@@ -38,7 +38,7 @@ El formato de la cabecera es el siguiente:
 Por ahora:
 
 - 🗜️ El id de mapper puede ser cualquier número entre `0` y `255`.
-- 🚽 El tipo de mirroring puede ser cualquiera de estos: `HORIZONTAL`, `VERTICAL`, `FOUR_SCREENS`.
+- 🚽 El tipo de mirroring puede ser cualquiera de estos: `HORIZONTAL`, `VERTICAL`, `FOUR_SCREEN`.
 
 ### Flags 6
 
@@ -49,7 +49,7 @@ Por ahora:
 |||||||              1: VERTICAL (para scroll horizontal)
 ||||||+-- 1: El cartucho contiene PRG-RAM (para guardado de progreso)
 |||||+--- 1: El archivo contiene relleno de 512 bytes antes de los datos PRG-ROM
-||||+---- 1: Ignorar el bit 0 y usar el mirroring FOUR_SCREENS
+||||+---- 1: Ignorar el bit 0 y usar el mirroring FOUR_SCREEN
 ++++----- Nybble inferior del número de mapper
 ```
 

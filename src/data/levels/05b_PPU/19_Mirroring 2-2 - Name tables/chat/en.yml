@@ -1,4 +1,44 @@
 main:
   messages:
-  - coming soon!
+  - the PPU memory map has a dedicated section for 4 name tables, in ~PPU $2000-$2FFF~
+  - each nametable is 1024 bytes (or $400 in hexadecimal), so these 4 name tables are in the addresses $2000, $2400, $2800, and $2C00
+  - but the actual NEEES hardware only has VRAM for <two> of them
+  - what ends up happening is that the mapper mirrors the others in funny ways
+  - and that mirroring is useful for games to implement scrolling
+  - let's review them
+  responses:
+  - cool, show me [show]
+
+show:
+  messages:
+  - let's call the "physical" name tables (these we can actually store in VRAM) "A" and "B"
+  - "\"HORIZONTAL\" mirroring connects $2000 and $2400 to the first physical name table (\"A\") and $2800 and $2C00 to the second physical name table (\"B\")"
+  - <{horizontal.png}>
+  - get it? they are horizontally mirrored :)
+  responses:
+  - yeah! [vertical]
+
+vertical:
+  messages:
+  - "\"VERTICAL\" mirroring connects $2000 to \"A\" and $2400 to \"B\", then repeats the whole thing in $2800 and $2C00"
+  - <{vertical.png}>
+  - and now they are vertically mirrored
+  responses:
+  - of course [single]
+
+single:
+  messages:
+  - there are also games that use a single name table, repeated 4 times (leaving the other physical name table unused)
+  - <{single.png}>
+  - depending on the mapper, this could also be "B" four times
+  - we call the former "ONE_SCREEN_LOWER_BANK" and the latter "ONE_SCREEN_UPPER_BANK"
+  responses:
+  - makes sense [fourscreen]
+
+fourscreen:
+  messages:
+  - finally, there are game cartridges that contain extra RAM for 2 more physical name tables
+  - allowing them to use a "FOUR_SCREEN" mapping
+  - <{4screen.png}>
+  - this is the reason why we defined our `vram` array property in `PPUScreen` as 4096 bytes
   responses: []
