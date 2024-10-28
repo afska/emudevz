@@ -8,6 +8,7 @@ main:
   - revisémoslas
   responses:
   - genial, a ver 👀 [show]
+  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [implement]
 
 show:
   messages:
@@ -45,6 +46,8 @@ fourscreen:
   - implementemos esto [implement]
 
 implement:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
   - traduje los tipos de mapeo en una linda tabla aquí 📄  ~/lib/ppu/mirroringTypes.js~
   - las claves (`$2000`, `$2400`, `$2800` y `$2C00`) representan las direcciones lógicas de la PPU

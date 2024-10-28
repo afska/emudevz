@@ -74,7 +74,11 @@ const masterPalette = [
 
 const dummyApu = {};
 const dummyControllers = [];
-const dummyCartridge = {};
+const dummyCartridge = {
+	header: {
+		mirroringId: "VERTICAL",
+	},
+};
 const dummyMapper = {
 	cpuRead: () => 0,
 	cpuWrite: () => {},
@@ -231,12 +235,10 @@ it("its `memory` saves devices in `onLoad`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	const cartridge = {};
-	const mapper = {};
-	ppu.memory.onLoad(cartridge, mapper);
+	ppu.memory.onLoad(dummyCartridge, dummyMapper);
 
-	ppu.memory.cartridge.should.equal(cartridge);
-	ppu.memory.mapper.should.equal(mapper);
+	ppu.memory.cartridge.should.equal(dummyCartridge);
+	ppu.memory.mapper.should.equal(dummyMapper);
 })({
 	locales: {
 		es: "su `memory` guarda dispositivos en `onLoad`",
@@ -248,13 +250,12 @@ it("connects the mapper to PPU memory (reads)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	const cartridge = {};
 	const random = byte.random();
 	const mapper = {
 		ppuRead: (address) => address * random,
 		ppuWrite: () => {},
 	};
-	ppu.memory.onLoad(cartridge, mapper);
+	ppu.memory.onLoad(dummyCartridge, mapper);
 
 	for (let i = 0x0000; i <= 0x1fff; i++) {
 		ppu.memory.read(i).should.equalHex(i * random, `read(${i})`);
@@ -270,7 +271,6 @@ it("connects the mapper to PPU memory (writes)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	const cartridge = {};
 	let arg1 = -1,
 		arg2 = -1;
 	const mapper = {
@@ -280,7 +280,7 @@ it("connects the mapper to PPU memory (writes)", () => {
 			arg2 = b;
 		},
 	};
-	ppu.memory.onLoad(cartridge, mapper);
+	ppu.memory.onLoad(dummyCartridge, mapper);
 
 	for (let i = 0x0000; i <= 0x1fff; i++) {
 		const value = byte.random();
@@ -841,14 +841,14 @@ it("connects VRAM to PPU memory (reads)", () => {
 	locales: {
 		es: "conecta VRAM con la memoria de PPU (lecturas)",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.8"),
+	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.20"),
 });
 
 it("connects VRAM to PPU memory (writes)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	for (let i = 0; i < 2048; i++) {
+	for (let i = 0; i < 4096; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2000 + i, value);
 		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
@@ -857,7 +857,7 @@ it("connects VRAM to PPU memory (writes)", () => {
 	locales: {
 		es: "conecta VRAM con la memoria de PPU (escrituras)",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.8"),
+	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.20"),
 });
 
 it("PPUAddr: write only", () => {
@@ -1727,3 +1727,171 @@ it("mirrors Palette RAM correctly in PPU memory (writes)", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("5b.19"),
 });
+
+// 5b.20 Mirroring (2/2): Name tables
+
+it("can change the name table mirroring", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	ppu.memory.should.respondTo("changeNameTableMirroringTo");
+
+	ppu.memory.changeNameTableMirroringTo("HORIZONTAL");
+	ppu.memory.mirroringId.should.equalN("HORIZONTAL", "mirroringId");
+	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
+	ppu.memory._mirroring.$2400.should.equalHex(0x000, "_mirroring.$2400");
+	ppu.memory._mirroring.$2800.should.equalHex(0x400, "_mirroring.$2800");
+	ppu.memory._mirroring.$2C00.should.equalHex(0x400, "_mirroring.$2C00");
+
+	ppu.memory.changeNameTableMirroringTo("FOUR_SCREEN");
+	ppu.memory.mirroringId.should.equalN("FOUR_SCREEN", "mirroringId");
+	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
+	ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
+	ppu.memory._mirroring.$2800.should.equalHex(0x800, "_mirroring.$2800");
+	ppu.memory._mirroring.$2C00.should.equalHex(0xc00, "_mirroring.$2C00");
+})({
+	locales: {
+		es: "puede cambiar el mirroring de name tables",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
+
+it("can change the name table mirroring", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	ppu.memory.should.respondTo("changeNameTableMirroringTo");
+
+	ppu.memory.changeNameTableMirroringTo("HORIZONTAL");
+	ppu.memory.mirroringId.should.equalN("HORIZONTAL", "mirroringId");
+	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
+	ppu.memory._mirroring.$2400.should.equalHex(0x000, "_mirroring.$2400");
+	ppu.memory._mirroring.$2800.should.equalHex(0x400, "_mirroring.$2800");
+	ppu.memory._mirroring.$2C00.should.equalHex(0x400, "_mirroring.$2C00");
+
+	ppu.memory.changeNameTableMirroringTo("VERTICAL");
+	ppu.memory.mirroringId.should.equalN("VERTICAL", "mirroringId");
+	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
+	ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
+	ppu.memory._mirroring.$2800.should.equalHex(0x000, "_mirroring.$2800");
+	ppu.memory._mirroring.$2C00.should.equalHex(0x400, "_mirroring.$2C00");
+
+	ppu.memory.changeNameTableMirroringTo("ONE_SCREEN_LOWER_BANK");
+	ppu.memory.mirroringId.should.equalN("ONE_SCREEN_LOWER_BANK", "mirroringId");
+	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
+	ppu.memory._mirroring.$2400.should.equalHex(0x000, "_mirroring.$2400");
+	ppu.memory._mirroring.$2800.should.equalHex(0x000, "_mirroring.$2800");
+	ppu.memory._mirroring.$2C00.should.equalHex(0x000, "_mirroring.$2C00");
+
+	ppu.memory.changeNameTableMirroringTo("ONE_SCREEN_UPPER_BANK");
+	ppu.memory.mirroringId.should.equalN("ONE_SCREEN_UPPER_BANK", "mirroringId");
+	ppu.memory._mirroring.$2000.should.equalHex(0x400, "_mirroring.$2000");
+	ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
+	ppu.memory._mirroring.$2800.should.equalHex(0x400, "_mirroring.$2800");
+	ppu.memory._mirroring.$2C00.should.equalHex(0x400, "_mirroring.$2C00");
+
+	ppu.memory.changeNameTableMirroringTo("FOUR_SCREEN");
+	ppu.memory.mirroringId.should.equalN("FOUR_SCREEN", "mirroringId");
+	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
+	ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
+	ppu.memory._mirroring.$2800.should.equalHex(0x800, "_mirroring.$2800");
+	ppu.memory._mirroring.$2C00.should.equalHex(0xc00, "_mirroring.$2C00");
+})({
+	locales: {
+		es: "puede cambiar el mirroring de name tables",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
+
+it("ignores name table mirroring changes if the cartridge header sets FOUR_SCREEN mode", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.({ header: { mirroringId: "FOUR_SCREEN" } }, dummyMapper);
+
+	[
+		"HORIZONTAL",
+		"VERTICAL",
+		"SINGLE_SCREEN_LOWER_BANK",
+		"SINGLE_SCREEN_UPPER_BANK",
+	].forEach((mirroringId) => {
+		ppu.memory.changeNameTableMirroringTo(mirroringId);
+		ppu.memory.mirroringId.should.equalN("FOUR_SCREEN", "mirroringId");
+		ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
+		ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
+		ppu.memory._mirroring.$2800.should.equalHex(0x800, "_mirroring.$2800");
+		ppu.memory._mirroring.$2C00.should.equalHex(0xc00, "_mirroring.$2C00");
+	});
+})({
+	locales: {
+		es:
+			"ignora cambios de mirroring de name tables si la cabecera del cartucho establece el modo FOUR_SCREEN",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
+
+it("autosets the mirroring type based on the cartridge header", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	ppu.memory?.onLoad?.({ header: { mirroringId: "VERTICAL" } }, dummyMapper);
+	ppu.memory.mirroringId.should.equalN("VERTICAL", "mirroringId");
+
+	ppu.memory?.onLoad?.({ header: { mirroringId: "HORIZONTAL" } }, dummyMapper);
+	ppu.memory.mirroringId.should.equalN("HORIZONTAL", "mirroringId");
+
+	ppu.memory?.onLoad?.(
+		{ header: { mirroringId: "ONE_SCREEN_LOWER_BANK" } },
+		dummyMapper
+	);
+	ppu.memory.mirroringId.should.equalN("ONE_SCREEN_LOWER_BANK", "mirroringId");
+
+	ppu.memory?.onLoad?.(
+		{ header: { mirroringId: "ONE_SCREEN_UPPER_BANK" } },
+		dummyMapper
+	);
+	ppu.memory.mirroringId.should.equalN("ONE_SCREEN_UPPER_BANK", "mirroringId");
+
+	ppu.memory?.onLoad?.({ header: { mirroringId: "FOUR_SCREEN" } }, dummyMapper);
+	ppu.memory.mirroringId.should.equalN("FOUR_SCREEN", "mirroringId");
+})({
+	locales: {
+		es: "autoasigna el tipo de mirroring basado en la cabecera del cartucho",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
+
+// FIXME: Finish!
+
+// it("connects VRAM to PPU memory (reads)", () => {
+// 	const PPU = mainModule.default.PPU;
+// 	const ppu = new PPU({});
+
+// 	for (let i = 0; i < 4096; i++) {
+// 		const value = byte.random();
+// 		ppu.memory.vram[i] = value;
+// 		ppu.memory.read(0x2000 + i).should.equalN(value, `read(${i})`);
+// 	}
+// })({
+// 	locales: {
+// 		es: "conecta VRAM con la memoria de PPU (lecturas)",
+// 	},
+// 	use: ({ id }, book) => id >= book.getId("5b.20"),
+// });
+
+// it("connects VRAM to PPU memory (writes)", () => {
+// 	const PPU = mainModule.default.PPU;
+// 	const ppu = new PPU({});
+
+// 	for (let i = 0; i < 4096; i++) {
+// 		const value = byte.random();
+// 		ppu.memory.write(0x2000 + i, value);
+// 		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+// 	}
+// })({
+// 	locales: {
+// 		es: "conecta VRAM con la memoria de PPU (escrituras)",
+// 	},
+// 	use: ({ id }, book) => id >= book.getId("5b.20"),
+// });
