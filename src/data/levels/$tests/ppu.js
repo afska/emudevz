@@ -835,7 +835,7 @@ it("connects VRAM to PPU memory (reads)", () => {
 	for (let i = 0; i < 4096; i++) {
 		const value = byte.random();
 		ppu.memory.vram[i] = value;
-		ppu.memory.read(0x2000 + i).should.equalN(value, `read(${i})`);
+		ppu.memory.read(0x2000 + i).should.equalN(value, `read(0x2000 + ${i})`);
 	}
 })({
 	locales: {
@@ -917,6 +917,7 @@ it("PPUAddr: writes the MSB first, then the LSB", () => {
 it("PPUData: writes the value to VRAM using `PPUAddr::address`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
 	const ppuAddr = ppu.registers.ppuAddr;
 	const ppuData = ppu.registers.ppuData;
@@ -936,6 +937,7 @@ it("PPUData: writes the value to VRAM using `PPUAddr::address`", () => {
 it("PPUData: autoincrements the address by 1 (writes)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
 	const ppuAddr = ppu.registers.ppuAddr;
 	const ppuData = ppu.registers.ppuData;
@@ -957,6 +959,7 @@ it("PPUData: autoincrements the address by 1 (writes)", () => {
 it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32` (writes)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	const ppuAddr = ppu.registers.ppuAddr;
@@ -981,6 +984,7 @@ it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32
 it("PPUData: autoincrements the address without exceeding $FFFF (writes)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	const ppuAddr = ppu.registers.ppuAddr;
@@ -1193,6 +1197,7 @@ it("has a `getColor` method that reads color palettes", () => {
 it("PPUData: reads the value at `PPUAddr::address` with delay", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
 	const ppuAddr = ppu.registers.ppuAddr;
 	const ppuData = ppu.registers.ppuData;
@@ -1217,6 +1222,7 @@ it("PPUData: reads the value at `PPUAddr::address` with delay", () => {
 it("PPUData: reads from Palette RAM without delay", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
 	const ppuAddr = ppu.registers.ppuAddr;
 	const ppuData = ppu.registers.ppuData;
@@ -1235,6 +1241,7 @@ it("PPUData: reads from Palette RAM without delay", () => {
 it("PPUData: autoincrements the address by 1 (reads)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
 	const ppuAddr = ppu.registers.ppuAddr;
 	const ppuData = ppu.registers.ppuData;
@@ -1256,6 +1263,7 @@ it("PPUData: autoincrements the address by 1 (reads)", () => {
 it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32` (reads)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	const ppuAddr = ppu.registers.ppuAddr;
@@ -1280,6 +1288,7 @@ it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32
 it("PPUData: autoincrements the address without exceeding $FFFF (reads)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	const ppuAddr = ppu.registers.ppuAddr;
@@ -1862,36 +1871,313 @@ it("autosets the mirroring type based on the cartridge header", () => {
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
 
-// FIXME: Finish!
+it("[HORIZONTAL mirroring] connects VRAM to PPU memory (reads)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.({ header: { mirroringId: "HORIZONTAL" } }, dummyMapper);
 
-// it("connects VRAM to PPU memory (reads)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+	for (let i = 0; i < 4096; i++) {
+		const value = byte.random();
+		ppu.memory.vram[i] = value;
+	}
 
-// 	for (let i = 0; i < 4096; i++) {
-// 		const value = byte.random();
-// 		ppu.memory.vram[i] = value;
-// 		ppu.memory.read(0x2000 + i).should.equalN(value, `read(${i})`);
-// 	}
-// })({
-// 	locales: {
-// 		es: "conecta VRAM con la memoria de PPU (lecturas)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5b.20"),
-// });
+	// $2000
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2000 + i)
+			.should.equalN(ppu.memory.vram[i], `read(0x2000 + ${i})`);
+	// $2400
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2400 + i)
+			.should.equalN(ppu.memory.vram[i], `read(0x2400 + ${i})`);
+	// $2800
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2800 + i)
+			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2800 + ${i})`);
+	// $2C00
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2c00 + i)
+			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2C00 + ${i})`);
+})({
+	locales: {
+		es: "[HORIZONTAL mirroring] conecta VRAM con la memoria de PPU (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
 
-// it("connects VRAM to PPU memory (writes)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+it("[HORIZONTAL mirroring] connects VRAM to PPU memory (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.({ header: { mirroringId: "HORIZONTAL" } }, dummyMapper);
 
-// 	for (let i = 0; i < 4096; i++) {
-// 		const value = byte.random();
-// 		ppu.memory.write(0x2000 + i, value);
-// 		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
-// 	}
-// })({
-// 	locales: {
-// 		es: "conecta VRAM con la memoria de PPU (escrituras)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5b.20"),
-// });
+	// $2000
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2000 + i, value);
+		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+	}
+	// $2400
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2400 + i, value);
+		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+	}
+	// $2800
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2800 + i, value);
+		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+	}
+	// $2C00
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2c00 + i, value);
+		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+	}
+})({
+	locales: {
+		es:
+			"[HORIZONTAL mirroring] conecta VRAM con la memoria de PPU (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
+
+it("[VERTICAL mirroring] connects VRAM to PPU memory (reads)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.({ header: { mirroringId: "VERTICAL" } }, dummyMapper);
+
+	for (let i = 0; i < 4096; i++) {
+		const value = byte.random();
+		ppu.memory.vram[i] = value;
+	}
+
+	// $2000
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2000 + i)
+			.should.equalN(ppu.memory.vram[i], `read(0x2000 + ${i})`);
+	// $2400
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2400 + i)
+			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2400 + ${i})`);
+	// $2800
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2800 + i)
+			.should.equalN(ppu.memory.vram[i], `read(0x2800 + ${i})`);
+	// $2C00
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2c00 + i)
+			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2C00 + ${i})`);
+})({
+	locales: {
+		es: "[VERTICAL mirroring] conecta VRAM con la memoria de PPU (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
+
+it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.({ header: { mirroringId: "VERTICAL" } }, dummyMapper);
+
+	// $2000
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2000 + i, value);
+		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+	}
+	// $2400
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2400 + i, value);
+		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+	}
+	// $2800
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2800 + i, value);
+		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+	}
+	// $2C00
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2c00 + i, value);
+		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+	}
+})({
+	locales: {
+		es: "[VERTICAL mirroring] conecta VRAM con la memoria de PPU (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
+
+[
+	["ONE_SCREEN_LOWER_BANK", 0],
+	["ONE_SCREEN_UPPER_BANK", 0x400],
+].forEach(([mirroringId, offset]) => {
+	it(`[${mirroringId} mirroring] connects VRAM to PPU memory (reads)`, () => {
+		const PPU = mainModule.default.PPU;
+		const ppu = new PPU({});
+		ppu.memory?.onLoad?.({ header: { mirroringId } }, dummyMapper);
+
+		for (let i = 0; i < 4096; i++) {
+			const value = byte.random();
+			ppu.memory.vram[i] = value;
+		}
+
+		// $2000
+		for (let i = 0; i < 0x400; i++)
+			ppu.memory
+				.read(0x2000 + i)
+				.should.equalN(ppu.memory.vram[offset + i], `read(0x2000 + ${i})`);
+		// $2400
+		for (let i = 0; i < 0x400; i++)
+			ppu.memory
+				.read(0x2400 + i)
+				.should.equalN(ppu.memory.vram[offset + i], `read(0x2400 + ${i})`);
+		// $2800
+		for (let i = 0; i < 0x400; i++)
+			ppu.memory
+				.read(0x2800 + i)
+				.should.equalN(ppu.memory.vram[offset + i], `read(0x2800 + ${i})`);
+		// $2C00
+		for (let i = 0; i < 0x400; i++)
+			ppu.memory
+				.read(0x2c00 + i)
+				.should.equalN(ppu.memory.vram[offset + i], `read(0x2C00 + ${i})`);
+	})({
+		locales: {
+			es: `[${mirroringId} mirroring] conecta VRAM con la memoria de PPU (lecturas)`,
+		},
+		use: ({ id }, book) => id >= book.getId("5b.20"),
+	});
+
+	it(`[${mirroringId} mirroring] connects VRAM to PPU memory (writes)`, () => {
+		const PPU = mainModule.default.PPU;
+		const ppu = new PPU({});
+		ppu.memory?.onLoad?.({ header: { mirroringId: mirroringId } }, dummyMapper);
+
+		// $2000
+		for (let i = 0; i < 0x400; i++) {
+			const value = byte.random();
+			ppu.memory.write(0x2000 + i, value);
+			ppu.memory.vram[offset + i].should.equalN(
+				value,
+				`vram[${offset} + ${i}]`
+			);
+		}
+		// $2400
+		for (let i = 0; i < 0x400; i++) {
+			const value = byte.random();
+			ppu.memory.write(0x2400 + i, value);
+			ppu.memory.vram[offset + i].should.equalN(
+				value,
+				`vram[${offset} + ${i}]`
+			);
+		}
+		// $2800
+		for (let i = 0; i < 0x400; i++) {
+			const value = byte.random();
+			ppu.memory.write(0x2800 + i, value);
+			ppu.memory.vram[offset + i].should.equalN(
+				value,
+				`vram[${offset} + ${i}]`
+			);
+		}
+		// $2C00
+		for (let i = 0; i < 0x400; i++) {
+			const value = byte.random();
+			ppu.memory.write(0x2c00 + i, value);
+			ppu.memory.vram[offset + i].should.equalN(
+				value,
+				`vram[${offset} + ${i}]`
+			);
+		}
+	})({
+		locales: {
+			es: `[${mirroringId} mirroring] conecta VRAM con la memoria de PPU (escrituras)`,
+		},
+		use: ({ id }, book) => id >= book.getId("5b.20"),
+	});
+});
+
+it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (reads)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.({ header: { mirroringId: "FOUR_SCREEN" } }, dummyMapper);
+
+	for (let i = 0; i < 4096; i++) {
+		const value = byte.random();
+		ppu.memory.vram[i] = value;
+	}
+
+	// $2000
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2000 + i)
+			.should.equalN(ppu.memory.vram[i], `read(0x2000 + ${i})`);
+	// $2400
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2400 + i)
+			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2400 + ${i})`);
+	// $2800
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2800 + i)
+			.should.equalN(ppu.memory.vram[0x800 + i], `read(0x2800 + ${i})`);
+	// $2C00
+	for (let i = 0; i < 0x400; i++)
+		ppu.memory
+			.read(0x2c00 + i)
+			.should.equalN(ppu.memory.vram[0xc00 + i], `read(0x2C00 + ${i})`);
+})({
+	locales: {
+		es: "[FOUR_SCREEN mirroring] conecta VRAM con la memoria de PPU (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
+
+it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (writes)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.({ header: { mirroringId: "FOUR_SCREEN" } }, dummyMapper);
+
+	// $2000
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2000 + i, value);
+		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+	}
+	// $2400
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2400 + i, value);
+		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+	}
+	// $2800
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2800 + i, value);
+		ppu.memory.vram[0x800 + i].should.equalN(value, `vram[0x800 + ${i}]`);
+	}
+	// $2C00
+	for (let i = 0; i < 0x400; i++) {
+		const value = byte.random();
+		ppu.memory.write(0x2c00 + i, value);
+		ppu.memory.vram[0xc00 + i].should.equalN(value, `vram[0xc00 + ${i}]`);
+	}
+})({
+	locales: {
+		es:
+			"[FOUR_SCREEN mirroring] conecta VRAM con la memoria de PPU (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.20"),
+});
