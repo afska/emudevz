@@ -66,5 +66,73 @@ long:
 
 proceed:
   messages:
-  - coming soon!
+  - (again, THIS IS NOT EXACTLY CORRECT, but it'll work for now!)
+  - |-
+    📚  _-_modify these methods of `PPUScroll`:_--_
+      *_-_*onLoad()**:_--_
+        *_-_*->** sets ~this.x = 0~_--_
+        *_-_*->** sets ~this.y = 0~_--_
+      *_-_*onWrite(value)**:_--_
+        *_-_*->** if PPUAddr's ~latch~ is ~false~:_--_
+          *_-_*->** writes the ~value~ to ~this.x~_--_
+        *_-_*->** if it's ~true~:_--_
+          *_-_*->** writes the ~value~ to ~this.y~_--_
+        _-_(you can access the ~latch~ with ~this.ppu.registers.ppuAddr.latch~)_--_
+        *_-_*->** switches the ~latch~ to the opposite value_--_
+  responses:
+  - alright, then what? [then]
+
+then:
+  messages:
+  - then you will have in ~ppuScroll.x~ and ~ppuScroll.y~ the scroll coordinates!
+  - you can apply the scrolling to the backgrounds now!
+  - |-
+    📚  _-_go to `BackgroundRenderer` and change `renderScanline()`:
+      *_-_*->** if you previously had something like...
+      ```javascript
+        for (let x = 0; x < 256; x += 8)
+      ```
+      ...replace it with...
+      ```javascript
+        for (let x = 0; x < 256;)
+      ```
+      you won't be drawing in 8-pixel chunks anymore, you need to be prepared to draw only a part of certain tiles!_--_
+  - |-
+    📚  _-_let's define a few things:
+    ```javascript
+    // scroll coordinates:
+    const scrollX = this.ppu.registers.ppuScroll.x;
+    const scrollY = registers.ppuScroll.y;
+    // current point to draw:
+    const scrolledX = x + scrollX;
+    const scrolledY = y + scrollY;
+    // base name table address:
+    const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
+    const scrolledNameTableId = nameTableId + Math.floor(scrolledX / 256) + Math.floor(scrolledY / 240) * 2;
+    const nameTableAddress = 0x2000 + scrolledNameTableId * 1024;
+    // current point, relative to the name table:
+    const nameTableX = scrolledX % 256;
+    const nameTableY = scrolledY % 240;
+    ```
+      from now on, every usage of ~x~ and ~y~ should be replaced by ~nameTableX~ and ~nameTableY~
+      (for example: the name table read index, the `this._getBackgroundPaletteId` call, and `new Tile(...)` should be updated)
+      (the only exception is the `plotBG` call: that one should still plot things at the same spot)_--_
+  - |-
+    📚  _-_lastly, define:
+      ```javascript
+      const tileStartX = nameTableX % 8;
+      const tileStartY = nameTableY % 8;
+      const tilePixels = Math.min(
+        8 - tileStartX,
+        256 - nameTableX
+      );
+      ```
+      you won't be drawing 8 pixels per loop iteration anymore, you will only draw `tilePixels`
+      make sure you change inner loop to something like:
+      ```javascript
+        for (let xx = 0; xx < tilePixels; xx++)
+      ```
+      and at the very end, increment the main loop index manually:
+      ```javascript
+        x += tilePixels;```_--_
   responses: []
