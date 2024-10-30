@@ -1,4 +1,70 @@
 main:
   messages:
+  - scrolling is a PPU feature that allows developers to move the background
+  - implementing it in a NEEES emulator is hard
+  - not because it's hard to move the background, but because the scroll registers behave in odd ways
+  - a lot of people has tried, but only the chosen ones were able to do it
+  responses:
+  - do you have a plan? [plan]
+
+plan:
+  messages:
+  - yeah, we can do it together
+  - I'll try to help you abstracting the tricky parts into a library
+  - it will take a while
+  - in the meantime, you can add a basic implementation of scrolling that won't work for all games
+  - but it will be fine for the majority of them!
+  responses:
+  - sounds good, how does scrolling work? [good]
+
+good:
+  messages:
+  - well, the games don't actually move <the background>
+  - they move an imaginary viewport against the static background
+  - that's enough to create the idea of movement
+  responses:
+  - and how does the viewport move? [viewport]
+
+viewport:
+  messages:
+  - like this
+  - <{3rdparty_nametable_scrolling.png}>
+  - games write into 📜  `PPUScroll` the position of the viewport
+  - they write twice, first for the <X coordinate>, then for the <Y coordinate>
+  - and the PPU will move the viewport and only draw part of the affected name tables
+  responses:
+  - so... if games write twice, the PPU has to remember what coordinate they are setting, right? [twice]
+
+twice:
+  messages:
+  - exactly
+  - remember how 📍  `PPUAddr` works? with a `latch` that is switched after every write?
+  - well, like that
+  - actually, it uses that same `latch`!
+  responses:
+  - I see... [isee]
+
+isee:
+  messages:
+  - first NEEES games only scrolled in one direction
+  - games with <horizontal> name table mirroring would only scroll <vertically>
+  - and games with <vertical> name table mirroring would only scroll <horizontally>
+  - <{3rdparty_vertical_horizontal.png}>
+  responses:
+  - I don't get it, if there are only two physical name tables, how did games achieve long maps? [long]
+
+long:
+  messages:
+  - they update background parts progressively when the viewport is not focusing it
+  - btw, the viewport position is based on the <base name table>
+  - remember that the first two bits of 🎛️  `PPUCtrl` select the current name table
+  - (you have that mapped as `registers.ppuCtrl.nameTableId`)
+  - so, if the base name table is 1, it means that the viewport should start at the name table positioned in $2400
+  - <{3rdparty_scrolled_nametables.png}>
+  responses:
+  - enough talk, how do we proceed? [proceed]
+
+proceed:
+  messages:
   - coming soon!
   responses: []
