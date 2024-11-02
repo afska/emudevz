@@ -678,6 +678,10 @@ class OAMData extends InMemoryRegister.PPU {
 }
 
 class PPUScroll extends InMemoryRegister.PPU {
+	onLoad() {
+		/* TODO: IMPLEMENT */
+	}
+
 	onWrite(value) {
 		/* TODO: IMPLEMENT */
 	}

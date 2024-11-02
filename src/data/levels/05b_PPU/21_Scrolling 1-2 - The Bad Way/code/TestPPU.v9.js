@@ -202,6 +202,39 @@ const masterPalette = [
 	/* 0x3f */ 0xff000000,
 ];
 
+const mirroringTypes = {
+	HORIZONTAL: {
+		$2000: 0x000,
+		$2400: 0x000,
+		$2800: 0x400,
+		$2C00: 0x400,
+	},
+	VERTICAL: {
+		$2000: 0x000,
+		$2400: 0x400,
+		$2800: 0x000,
+		$2C00: 0x400,
+	},
+	ONE_SCREEN_LOWER_BANK: {
+		$2000: 0x000,
+		$2400: 0x000,
+		$2800: 0x000,
+		$2C00: 0x000,
+	},
+	ONE_SCREEN_UPPER_BANK: {
+		$2000: 0x400,
+		$2400: 0x400,
+		$2800: 0x400,
+		$2C00: 0x400,
+	},
+	FOUR_SCREEN: {
+		$2000: 0x000,
+		$2400: 0x400,
+		$2800: 0x800,
+		$2C00: 0xc00,
+	},
+};
+
 class InMemoryRegister {
 	constructor() {
 		this.value = 0;
@@ -297,6 +330,7 @@ class PPUMemory {
 	onLoad(cartridge, mapper) {
 		this.cartridge = cartridge;
 		this.mapper = mapper;
+		this.changeNameTableMirroringTo(cartridge.header.mirroringId);
 	}
 
 	read(address) {
@@ -305,16 +339,29 @@ class PPUMemory {
 			return this.mapper.ppuRead(address);
 
 		// 🏞️ Name tables 0 to 3 (VRAM + mirror)
-		if (address >= 0x2000 && address <= 0x2fff)
-			return this.vram[address - 0x2000];
+		if (address >= 0x2000 && address <= 0x2fff) {
+			if (address >= 0x2000 && address < 0x2400)
+				return this.vram[this._mirroring.$2000 + address - 0x2000];
+			if (address >= 0x2400 && address < 0x2800)
+				return this.vram[this._mirroring.$2400 + address - 0x2400];
+			if (address >= 0x2800 && address < 0x2c00)
+				return this.vram[this._mirroring.$2800 + address - 0x2800];
+			if (address >= 0x2c00 && address < 0x3000)
+				return this.vram[this._mirroring.$2C00 + address - 0x2c00];
+		}
 
 		// 🚽 Mirrors of $2000-$2EFF
 		if (address >= 0x3000 && address <= 0xeff)
 			return this.read(0x2000 + ((address - 0x3000) % 0x1000));
 
 		// 🎨 Palette RAM
-		if (address >= 0x3f00 && address <= 0x3f1f)
+		if (address >= 0x3f00 && address <= 0x3f1f) {
+			if (address === 0x3f10) return this.read(0x3f00);
+			if (address === 0x3f14) return this.read(0x3f04);
+			if (address === 0x3f18) return this.read(0x3f08);
+			if (address === 0x3f1c) return this.read(0x3f0c);
 			return this.paletteRam[address - 0x3f00];
+		}
 
 		// 🚽 Mirrors of $3F00-$3F1F
 		if (address >= 0x3f20 && address <= 0x3fff)
@@ -330,8 +377,14 @@ class PPUMemory {
 
 		// 🏞️ Name tables 0 to 3 (VRAM + mirror)
 		if (address >= 0x2000 && address <= 0x2fff) {
-			this.vram[address - 0x2000] = value;
-			return;
+			if (address >= 0x2000 && address < 0x2400)
+				return (this.vram[this._mirroring.$2000 + address - 0x2000] = value);
+			if (address >= 0x2400 && address < 0x2800)
+				return (this.vram[this._mirroring.$2400 + address - 0x2400] = value);
+			if (address >= 0x2800 && address < 0x2c00)
+				return (this.vram[this._mirroring.$2800 + address - 0x2800] = value);
+			if (address >= 0x2c00 && address < 0x3000)
+				return (this.vram[this._mirroring.$2C00 + address - 0x2c00] = value);
 		}
 
 		// 🚽 Mirrors of $2000-$2EFF
@@ -340,6 +393,10 @@ class PPUMemory {
 
 		// 🎨 Palette RAM
 		if (address >= 0x3f00 && address <= 0x3f1f) {
+			if (address === 0x3f10) return this.write(0x3f00, value);
+			if (address === 0x3f14) return this.write(0x3f04, value);
+			if (address === 0x3f18) return this.write(0x3f08, value);
+			if (address === 0x3f1c) return this.write(0x3f0c, value);
 			this.paletteRam[address - 0x3f00] = value;
 			return;
 		}
@@ -347,6 +404,14 @@ class PPUMemory {
 		// 🚽 Mirrors of $3F00-$3F1F
 		if (address >= 0x3f20 && address <= 0x3fff)
 			return this.write(0x3f00 + ((address - 0x3f20) % 0x0020), value);
+	}
+
+	changeNameTableMirroringTo(mirroringId) {
+		if (this.cartridge.header.mirroringId === "FOUR_SCREEN")
+			mirroringId = "FOUR_SCREEN";
+
+		this.mirroringId = mirroringId;
+		this._mirroring = mirroringTypes[mirroringId];
 	}
 }
 
@@ -461,19 +526,38 @@ class BackgroundRenderer {
 	renderScanline() {
 		const { scanline: y, registers, memory } = this.ppu;
 
-		const nameTableId = registers.ppuCtrl.nameTableId;
 		const patternTableId = registers.ppuCtrl.backgroundPatternTableId;
-		const nameTableAddress = 0x2000 + nameTableId * 1024;
 
-		for (let x = 0; x < 256; x += 8) {
-			const tileX = Math.floor(x / 8);
-			const tileY = Math.floor(y / 8);
+		for (let x = 0; x < 256; ) {
+			const scrollX = this.ppu.registers.ppuScroll.x;
+			const scrollY = registers.ppuScroll.y;
+			const scrolledX = x + scrollX;
+			const scrolledY = y + scrollY;
+			const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
+			const scrolledNameTableId =
+				nameTableId +
+				Math.floor(scrolledX / 256) +
+				Math.floor(scrolledY / 240) * 2;
+			const nameTableX = scrolledX % 256;
+			const nameTableY = scrolledY % 240;
+			const nameTableAddress = 0x2000 + scrolledNameTableId * 1024;
+
+			const tileX = Math.floor(nameTableX / 8);
+			const tileY = Math.floor(nameTableY / 8);
 			const tileIndex = tileY * 32 + tileX;
 			const tileId = memory.read(nameTableAddress + tileIndex);
-			const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
+			const paletteId = this._getBackgroundPaletteId(
+				nameTableId,
+				nameTableX,
+				nameTableY
+			);
 
-			const tile = new Tile(this.ppu, patternTableId, tileId, y % 8);
-			for (let xx = 0; xx < 8; xx++) {
+			const tileStartX = nameTableX % 8;
+			const tileStartY = nameTableY % 8;
+			const tilePixels = Math.min(8 - tileStartX, 256 - nameTableX);
+
+			const tile = new Tile(this.ppu, patternTableId, tileId, nameTableY % 8);
+			for (let xx = 0; xx < tilePixels; xx++) {
 				const colorIndex = tile.getColorIndex(xx);
 				const color =
 					colorIndex > 0
@@ -481,6 +565,8 @@ class BackgroundRenderer {
 						: this.ppu.getColor(0, 0);
 				this.ppu.plotBG(x + xx, y, color, colorIndex);
 			}
+
+			x += tilePixels;
 		}
 	}
 
@@ -701,8 +787,16 @@ class OAMData extends InMemoryRegister.PPU {
 }
 
 class PPUScroll extends InMemoryRegister.PPU {
+	onLoad() {
+		this.x = 0;
+		this.y = 0;
+	}
+
 	onWrite(value) {
-		/* TODO: IMPLEMENT */
+		if (this.ppu.registers.ppuAddr.latch) this.y = value;
+		else this.x = value;
+
+		this.ppu.registers.ppuAddr.latch = !this.ppu.registers.ppuAddr.latch;
 	}
 }
 

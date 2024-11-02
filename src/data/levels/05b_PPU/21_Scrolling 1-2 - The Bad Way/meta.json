@@ -38,18 +38,24 @@
 		{
 			"rom": "/roms/_test/hello_world.neees",
 			"frames": 60,
-			"ppu": "TestPPU.v8.js"
+			"ppu": "TestPPU.v9.js"
 		},
 		{
 			"rom": "/roms/.all/TeslaVsEdison.neees",
 			"frames": 60,
-			"ppu": "TestPPU.v8.js"
+			"ppu": "TestPPU.v9.js"
 		},
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 60,
-			"ppu": "TestPPU.v8.js",
+			"ppu": "TestPPU.v9.js",
 			"saveState": "supertiltbro_win.ss"
+		},
+		{
+			"rom": "/roms/_test/240p_test_suite.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v9.js",
+			"saveState": "240ptestsuite_scroll.ss"
 		}
 	],
 	"memory": {

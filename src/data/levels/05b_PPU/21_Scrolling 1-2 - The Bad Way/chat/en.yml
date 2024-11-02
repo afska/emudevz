@@ -6,6 +6,7 @@ main:
   - a lot of people has tried, but only the chosen ones were able to do it
   responses:
   - do you have a plan? [plan]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [proceed]
 
 plan:
   messages:
@@ -65,6 +66,8 @@ long:
   - enough talk, how do we proceed? [proceed]
 
 proceed:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
   - (again, THIS IS NOT EXACTLY CORRECT, but it'll work for now!)
   - |-
@@ -115,7 +118,7 @@ then:
     const nameTableY = scrolledY % 240;
     ```
       from now on, every usage of ~x~ and ~y~ should be replaced by ~nameTableX~ and ~nameTableY~
-      (for example: the name table read index, the `this._getBackgroundPaletteId` call, and `new Tile(...)` should be updated)
+      (for example: the name table read index, the `this._getBackgroundPaletteId(...)` call, and `new Tile(...)` should be updated)
       (the only exception is the `plotBG` call: that one should still plot things at the same spot)_--_
   - |-
     📚  _-_lastly, define:
@@ -135,4 +138,5 @@ then:
       and at the very end, increment the main loop index manually:
       ```javascript
         x += tilePixels;```_--_
-  responses: []
+  responses:
+  - "// FIXME: Add questions and improve guide [end]"
