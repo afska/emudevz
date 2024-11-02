@@ -1,4 +1,141 @@
 main:
   messages:
-  - coming soon!
+  - el scrolling es una característica de la PPU que permite a los desarrolladores mover el fondo
+  - implementarlo en un emulador NEEES es difícil
+  - no porque sea difícil mover el fondo, sino porque los registros de desplazamiento se comportan de maneras extrañas
+  - mucha gente lo ha intentado, pero solo los elegidos pudieron lograrlo
+  responses:
+  - ¿tienes un plan? [plan]
+  - <<level.isCompleted || m.$exercise>> 📚 llévame a la acción [proceed]
+
+plan:
+  messages:
+  - sí, podemos hacerlo juntos
+  - intentaré ayudarte al abstraer las partes complicadas en una biblioteca
+  - tomará un tiempo
+  - mientras tanto, puedes agregar una implementación básica del scrolling que no funcionará para todos los juegos
+  - ¡pero será suficiente para la mayoría de ellos!
+  responses:
+  - suena bien, ¿cómo funciona el scrolling? [good]
+
+good:
+  messages:
+  - bueno, los juegos en realidad no mueven <el fondo>
+  - mueven una ventana imaginaria contra el fondo estático
+  - eso es suficiente para crear la idea de movimiento
+  responses:
+  - ¿y cómo se mueve la ventana? [viewport]
+
+viewport:
+  messages:
+  - así
+  - <{3rdparty_nametable_scrolling.png}>
+  - los juegos escriben en 📜  `PPUScroll` la posición de la ventana
+  - escriben dos veces, primero para la <coordenada X>, luego para la <coordenada Y>
+  - y la PPU mueve la ventana, dibujando solo parte de las name tables afectadas
+  responses:
+  - entonces... si los juegos escriben dos veces, la PPU tiene que recordar qué coordenada están configurando, ¿cierto? [twice]
+
+twice:
+  messages:
+  - exacto
+  - ¿recuerdas cómo funciona 📍  `PPUAddr`? ¿con un `latch` que cambia después de cada escritura?
+  - bueno, así
+  - ¡de hecho, usa ese mismo `latch`!
+  responses:
+  - entiendo... [isee]
+
+isee:
+  messages:
+  - los primeros juegos de NEEES solo se desplazaban en una dirección
+  - los juegos con <mirroring horizontal> de name tables solo se desplazaban <verticalmente>
+  - y los juegos con <mirroring vertical> de name tables solo se desplazaban <horizontalmente>
+  - <{3rdparty_vertical_horizontal.png}>
+  responses:
+  - no entiendo, si solo hay dos name tables físicas, ¿cómo logran los juegos tener mapas largos? [long]
+
+long:
+  messages:
+  - actualizan partes del fondo progresivamente cuando la ventana no está enfocada en ellas
+  - por cierto, la posición de la ventana se basa en la <name table base>
+  - recuerda que los primeros dos bits de 🎛️  `PPUCtrl` seleccionan la name table actual
+  - (tienes eso mapeado como `registers.ppuCtrl.nameTableId`)
+  - así que, si la name table base es 1, significa que la ventana debería comenzar en la name table posicionada en $2400
+  - <{3rdparty_scrolled_nametables.png}>
+  responses:
+  - suficiente charla, ¿cómo procedemos? [proceed]
+
+proceed:
+  run: |
+    set((m) => m.$exercise = true);
+  messages:
+  - (de nuevo, ESTO NO ES EXACTAMENTE CORRECTO, ¡pero funcionará por ahora!)
+  - |-
+    📚  _-_modifica estos métodos de `PPUScroll`:_--_
+      *_-_*onLoad()**:_--_
+        *_-_*->** establece ~this.x = 0~_--_
+        *_-_*->** establece ~this.y = 0~_--_
+      *_-_*onWrite(value)**:_--_
+        *_-_*->** si el ~latch~ de PPUAddr es ~false~:_--_
+          *_-_*->** escribe el ~valor~ en ~this.x~_--_
+        *_-_*->** si es ~true~:_--_
+          *_-_*->** escribe el ~valor~ en ~this.y~_--_
+        _-_(puedes acceder al ~latch~ con ~this.ppu.registers.ppuAddr.latch~)_--_
+        *_-_*->** cambia el ~latch~ al valor opuesto_--_
+  responses:
+  - bien, ¿y después qué? [then]
+
+then:
+  messages:
+  - tendrás en ~ppuScroll.x~ y ~ppuScroll.y~ las coordenadas de desplazamiento
+  - ¡ahora puedes aplicar el scrolling a los fondos!
+  - |-
+    📚  _-_ve a `BackgroundRenderer` y cambia `renderScanline()`:
+      *_-_*->** si antes tenías algo como...
+      ```javascript
+        for (let x = 0; x < 256; x += 8)
+      ```
+      ...reemplázalo con...
+      ```javascript
+        for (let x = 0; x < 256;)
+      ```
+      ya no dibujarás en bloques de 8 píxeles, debes estar preparado para dibujar solo una parte de ciertos tiles_--_
+  - |-
+    📚  _-_definamos algunas cosas:
+    ```javascript
+    // coordenadas de scrolling:
+    const scrollX = this.ppu.registers.ppuScroll.x;
+    const scrollY = registers.ppuScroll.y;
+    // punto actual para dibujar:
+    const scrolledX = x + scrollX;
+    const scrolledY = y + scrollY;
+    // dirección de la name table base:
+    const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
+    const scrolledNameTableId = nameTableId + Math.floor(scrolledX / 256) + Math.floor(scrolledY / 240) * 2;
+    const nameTableAddress = 0x2000 + scrolledNameTableId * 1024;
+    // punto actual, relativo a la name table:
+    const nameTableX = scrolledX % 256;
+    const nameTableY = scrolledY % 240;
+    ```
+      a partir de ahora, cada uso de ~x~ y ~y~ debería ser reemplazado por ~nameTableX~ y ~nameTableY~
+      (por ejemplo: el índice de lectura de la name table, la llamada `this._getBackgroundPaletteId(...)` y `new Tile(...)` deben ser actualizados)
+      la única excepción es la llamada `plotBG`, que aún necesita trazarse en el punto ~(x,y)~ de la pantalla_--_
+  - |-
+    📚  _-_finalmente, define:
+      ```javascript
+      const tileStartX = nameTableX % 8;
+      const tileStartY = nameTableY % 8;
+      const tilePixels = Math.min(
+        8 - tileStartX,
+        256 - nameTableX
+      );
+      ```
+      recuerda, ya no dibujarás 8 píxeles por iteración de bucle, solo dibujarás `tilePixels`
+      así que, asegúrate de cambiar el bucle interno a algo como:
+      ```javascript
+        for (let xx = 0; xx < tilePixels; xx++)
+      ```
+      y al final, incrementa manualmente el índice del bucle principal:
+      ```javascript
+        x += tilePixels;```_--_
   responses: []

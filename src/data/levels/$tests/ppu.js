@@ -1665,7 +1665,7 @@ it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pix
 })({
 	locales: {
 		es:
-			"SpriteRenderer: `_render(...)` enciende la bandera de sprite-0 hit cuando un pixel opaco del sprite 0 es dibujado sobre un pixel opaco del fondo",
+			"SpriteRenderer: `_render(...)` enciende la bandera de sprite-0 hit cuando un píxel opaco del sprite 0 es dibujado sobre un píxel opaco del fondo",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.18"),
 });

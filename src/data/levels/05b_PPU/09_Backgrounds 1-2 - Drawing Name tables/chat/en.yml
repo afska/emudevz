@@ -79,7 +79,7 @@ help:
         const tile = new Tile(this.ppu, patternTableId, tileId, y % 8);
         for (let xx = 0; xx < 8; xx++) {
           const colorIndex = tile.getColorIndex(xx);
-          // TODO: Plot
+          // TODO: Plot each tile pixel
         }
       }```
   responses:

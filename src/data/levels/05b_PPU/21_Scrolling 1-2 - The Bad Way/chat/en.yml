@@ -3,7 +3,7 @@ main:
   - scrolling is a PPU feature that allows developers to move the background
   - implementing it in a NEEES emulator is hard
   - not because it's hard to move the background, but because the scroll registers behave in odd ways
-  - a lot of people has tried, but only the chosen ones were able to do it
+  - a lot of people have tried, but only the chosen ones were able to do it
   responses:
   - do you have a plan? [plan]
   - <<level.isCompleted || m.$exercise>> 📚  take me to the action [proceed]
@@ -11,7 +11,7 @@ main:
 plan:
   messages:
   - yeah, we can do it together
-  - I'll try to help you abstracting the tricky parts into a library
+  - I'll try to help you by abstracting the tricky parts into a library
   - it will take a while
   - in the meantime, you can add a basic implementation of scrolling that won't work for all games
   - but it will be fine for the majority of them!
@@ -32,7 +32,7 @@ viewport:
   - <{3rdparty_nametable_scrolling.png}>
   - games write into 📜  `PPUScroll` the position of the viewport
   - they write twice, first for the <X coordinate>, then for the <Y coordinate>
-  - and the PPU will move the viewport and only draw part of the affected name tables
+  - and the PPU moves the viewport, only drawing part of the affected name tables
   responses:
   - so... if games write twice, the PPU has to remember what coordinate they are setting, right? [twice]
 
@@ -52,11 +52,11 @@ isee:
   - and games with <vertical> name table mirroring would only scroll <horizontally>
   - <{3rdparty_vertical_horizontal.png}>
   responses:
-  - I don't get it, if there are only two physical name tables, how did games achieve long maps? [long]
+  - I don't get it, if there are only two physical name tables, how do games achieve long maps? [long]
 
 long:
   messages:
-  - they update background parts progressively when the viewport is not focusing it
+  - they update background parts progressively when the viewport isn't focused on them
   - btw, the viewport position is based on the <base name table>
   - remember that the first two bits of 🎛️  `PPUCtrl` select the current name table
   - (you have that mapped as `registers.ppuCtrl.nameTableId`)
@@ -119,7 +119,7 @@ then:
     ```
       from now on, every usage of ~x~ and ~y~ should be replaced by ~nameTableX~ and ~nameTableY~
       (for example: the name table read index, the `this._getBackgroundPaletteId(...)` call, and `new Tile(...)` should be updated)
-      (the only exception is the `plotBG` call: that one should still plot things at the same spot)_--_
+      the only exception is the `plotBG` call, which still needs to plot in the ~(x,y)~ point of the screen_--_
   - |-
     📚  _-_lastly, define:
       ```javascript
@@ -130,13 +130,12 @@ then:
         256 - nameTableX
       );
       ```
-      you won't be drawing 8 pixels per loop iteration anymore, you will only draw `tilePixels`
-      make sure you change inner loop to something like:
+      remember, you won't be drawing 8 pixels per loop iteration anymore, you will only draw `tilePixels`
+      so, make sure you change the inner loop to something like:
       ```javascript
         for (let xx = 0; xx < tilePixels; xx++)
       ```
       and at the very end, increment the main loop index manually:
       ```javascript
         x += tilePixels;```_--_
-  responses:
-  - "// FIXME: Add questions and improve guide [end]"
+  responses: []
