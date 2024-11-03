@@ -1,7 +1,7 @@
 main:
   messages:
   - el scrolling es una característica de la PPU que permite a los desarrolladores mover el fondo
-  - implementarlo en un emulador NEEES es difícil
+  - implementarlo en un emulador NEEES es difícil 🥵
   - no porque sea difícil mover el fondo, sino porque los registros de desplazamiento se comportan de maneras extrañas
   - mucha gente lo ha intentado, pero solo los elegidos pudieron lograrlo
   responses:
@@ -22,7 +22,7 @@ good:
   messages:
   - bueno, los juegos en realidad no mueven <el fondo>
   - mueven una ventana imaginaria contra el fondo estático
-  - eso es suficiente para crear la idea de movimiento
+  - eso es suficiente para crear la idea de movimiento 🌀
   responses:
   - ¿y cómo se mueve la ventana? [viewport]
 

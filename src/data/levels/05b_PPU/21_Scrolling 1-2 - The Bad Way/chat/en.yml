@@ -1,7 +1,7 @@
 main:
   messages:
   - scrolling is a PPU feature that allows developers to move the background
-  - implementing it in a NEEES emulator is hard
+  - implementing it in a NEEES emulator is hard 🥵
   - not because it's hard to move the background, but because the scroll registers behave in odd ways
   - a lot of people have tried, but only the chosen ones were able to do it
   responses:
@@ -22,7 +22,7 @@ good:
   messages:
   - well, the games don't actually move <the background>
   - they move an imaginary viewport against the static background
-  - that's enough to create the idea of movement
+  - that's enough to create the idea of movement 🌀
   responses:
   - and how does the viewport move? [viewport]
 
