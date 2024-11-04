@@ -10,7 +10,7 @@ export default {
 
 const plain = (t) => `\x1B[37m${t}\x1B[39m`;
 const chalk = {
-	blue: (t) => `\x1B[94m${t}\x1B[39m`,
+	blue: (t) => `\u001b[38;5;10m${t}\x1B[39m`, // (green) // `\x1B[94m${t}\x1B[39m`,
 	cyan: (t) => `\x1B[36m${t}\x1B[39m`,
 	cyanDim: (t) => `\x1B[36m\x1B[2m${t}\x1B[22m\x1B[39m`,
 	aqua: (t) => `\u001b[38;5;48m${t}\x1B[39m`,
