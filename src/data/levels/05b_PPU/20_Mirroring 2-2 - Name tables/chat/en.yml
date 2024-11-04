@@ -71,20 +71,20 @@ example:
   - look for the "Name tables 0 to 3 (VRAM + mirror)" section in both `read(...)` and `write(...)` methods
   - |-
     right now, `read(...)` should look like this:
-    ```javascript
-    if (address >= 0x2000 && address <= 0x2fff)
-      return this.vram[address - 0x2000];
-    ```
+      ```javascript
+      if (address >= 0x2000 && address <= 0x2fff)
+        return this.vram[address - 0x2000];
+      ```
   - you need to map the 4 sections based on where `this._mirroring` points to
   - |-
     let's implement the first two cases
-    ```javascript
-    if (address >= 0x2000 && address <= 0x2fff) {
-      if (address >= 0x2000 && address < 0x2400)
-        return this.vram[this._mirroring.$2000 + (address - 0x2000)];
-      if (address >= 0x2400 && address < 0x2800)
-        return this.vram[this._mirroring.$2400 + (address - 0x2400)];
-      // TODO: Finish the others!
-    }
-    ```
+      ```javascript
+      if (address >= 0x2000 && address <= 0x2fff) {
+        if (address >= 0x2000 && address < 0x2400)
+          return this.vram[this._mirroring.$2000 + (address - 0x2000)];
+        if (address >= 0x2400 && address < 0x2800)
+          return this.vram[this._mirroring.$2400 + (address - 0x2400)];
+        // TODO: Finish the others!
+      }
+      ```
   responses: []

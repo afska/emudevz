@@ -92,34 +92,32 @@ then:
   - |-
     📚  _-_ve a `BackgroundRenderer` y cambia `renderScanline()`:
       *_-_*->** si antes tenías algo como...
-      ```javascript
-        for (let x = 0; x < 256; x += 8)
-      ```
+        ```javascript
+          for (let x = 0; x < 256; x += 8)```
       ...reemplázalo con...
-      ```javascript
-        for (let x = 0; x < 256;)
-      ```
+        ```javascript
+          for (let x = 0; x < 256;)```
       ya no dibujarás en bloques de 8 píxeles, debes estar preparado para dibujar solo una parte de ciertos tiles_--_
   - |-
     📚  _-_definamos algunas cosas:
-    ```javascript
-    // coordenadas de scrolling:
-    const scrollX = this.ppu.registers.ppuScroll.x;
-    const scrollY = registers.ppuScroll.y;
-    // punto actual para dibujar:
-    const scrolledX = x + scrollX;
-    const scrolledY = y + scrollY;
-    // dirección de la name table base:
-    const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
-    const scrolledNameTableId = nameTableId + Math.floor(scrolledX / 256) + Math.floor(scrolledY / 240) * 2;
-    const nameTableAddress = 0x2000 + scrolledNameTableId * 1024;
-    // punto actual, relativo a la name table:
-    const nameTableX = scrolledX % 256;
-    const nameTableY = scrolledY % 240;
-    ```
-      a partir de ahora, cada uso de ~x~ y ~y~ debería ser reemplazado por ~nameTableX~ y ~nameTableY~
-      (por ejemplo: el índice de lectura de la name table, la llamada `this._getBackgroundPaletteId(...)` y `new Tile(...)` deben ser actualizados)
-      la única excepción es la llamada `plotBG`, que aún necesita trazarse en el punto ~(x,y)~ de la pantalla_--_
+      ```javascript
+      // coordenadas de scrolling:
+      const scrollX = this.ppu.registers.ppuScroll.x;
+      const scrollY = registers.ppuScroll.y;
+      // punto actual para dibujar:
+      const scrolledX = x + scrollX;
+      const scrolledY = y + scrollY;
+      // dirección de la name table base:
+      const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
+      const scrolledNameTableId = nameTableId + Math.floor(scrolledX / 256) + Math.floor(scrolledY / 240) * 2;
+      const nameTableAddress = 0x2000 + scrolledNameTableId * 1024;
+      // punto actual, relativo a la name table:
+      const nameTableX = scrolledX % 256;
+      const nameTableY = scrolledY % 240;```
+    
+    a partir de ahora, cada uso de ~x~ y ~y~ debería ser reemplazado por ~nameTableX~ y ~nameTableY~
+    (por ejemplo: el índice de lectura de la name table, la llamada `this._getBackgroundPaletteId(...)` y `new Tile(...)` deben ser actualizados)
+    la única excepción es la llamada `plotBG`, que aún necesita trazarse en el punto ~(x,y)~ de la pantalla_--_
   - |-
     📚  _-_finalmente, define:
       ```javascript
@@ -128,14 +126,13 @@ then:
       const tilePixels = Math.min(
         8 - tileStartX,
         256 - nameTableX
-      );
-      ```
-      recuerda, ya no dibujarás 8 píxeles por iteración de bucle, solo dibujarás `tilePixels`
-      así que, asegúrate de cambiar el bucle interno a algo como:
+      );```
+    
+    recuerda, ya no dibujarás 8 píxeles por iteración de bucle, solo dibujarás `tilePixels`
+    así que, asegúrate de cambiar el bucle interno a algo como:
       ```javascript
-        for (let xx = 0; xx < tilePixels; xx++)
-      ```
-      y al final, incrementa manualmente el índice del bucle principal:
+        for (let xx = 0; xx < tilePixels; xx++)```
+    y al final, incrementa manualmente el índice del bucle principal:
       ```javascript
         x += tilePixels;```_--_
   responses: []
