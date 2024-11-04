@@ -4,6 +4,7 @@
 		"es": "🎯 Scrolling (2/2): Haciéndolo bien"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [

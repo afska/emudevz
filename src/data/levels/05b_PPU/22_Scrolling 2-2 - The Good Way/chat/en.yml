@@ -1,4 +1,5 @@
 main:
   messages:
   - coming soon!
+  - "// TODO: FIX LoopyRegister glitch"
   responses: []
