@@ -772,11 +772,12 @@ it("resets `PPUStatus::isInVBlankInterval` on scanline=-1, cycle=1", () => {
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cycle=1", () => {
+it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cycle=1 when `PPUCtrl::generateNMIOnVBlank` is on,", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
+	ppu.registers.ppuCtrl.setValue(0b10000000); // (generate NMI on VBlank)
 	const onInterrupt = sinon.spy();
 
 	for (let cycle = 0; cycle < 341; cycle++) {
@@ -807,7 +808,44 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 })({
 	locales: {
 		es:
-			"asigna `PPUStatus::isInVBlankInterval` y dispara una NMI en scanline=241, cycle=1",
+			"asigna `PPUStatus::isInVBlankInterval` y dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está encendido",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.7"),
+});
+
+it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on scanline=241, cycle=1 when `PPUCtrl::generateNMIOnVBlank` is off,", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+	const onInterrupt = sinon.spy();
+
+	for (let cycle = 0; cycle < 341; cycle++) {
+		onInterrupt.resetHistory();
+		ppu.scanline = 241;
+		ppu.cycle = cycle;
+		ppu.registers.ppuStatus.isInVBlankInterval = 0;
+
+		ppu.step(noop, onInterrupt);
+
+		if (cycle === 1) {
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+				1,
+				"isInVBlankInterval"
+			);
+			onInterrupt.should.have.not.been.called;
+		} else {
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+				0,
+				"isInVBlankInterval"
+			);
+			onInterrupt.should.have.not.been.called;
+		}
+	}
+})({
+	locales: {
+		es:
+			"asigna `PPUStatus::isInVBlankInterval` y no dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está apagado",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
@@ -956,7 +994,7 @@ it("PPUData: autoincrements the address by 1 (writes)", () => {
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
 
-it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32` (writes)", () => {
+it("PPUData: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement32` (writes)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -976,7 +1014,7 @@ it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32
 })({
 	locales: {
 		es:
-			"PPUData: autoincrementa la dirección por 32 si `PPUCtrl.vramAddressIncrement32` (escrituras)",
+			"PPUData: autoincrementa la dirección por 32 si `PPUCtrl::vramAddressIncrement32` (escrituras)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
