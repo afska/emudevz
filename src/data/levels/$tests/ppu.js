@@ -1097,7 +1097,7 @@ it("BackgroundRenderer: step() calls `PPU::plot` 256 times", () => {
 	use: ({ id }, book) => id >= book.getId("5b.9"),
 });
 
-it("calls `backgroundRenderer.renderScanline()` on cycle 256 of every visible scanline", () => {
+it("calls `backgroundRenderer.renderScanline()` on cycle 0 of every visible scanline", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1112,7 +1112,7 @@ it("calls `backgroundRenderer.renderScanline()` on cycle 256 of every visible sc
 				ppu.step(noop, noop);
 
 				if (scanline >= 0 && scanline < 240) {
-					if (cycle !== 256) {
+					if (cycle !== 0) {
 						ppu.backgroundRenderer.renderScanline.should.not.have.been.called;
 						ppu.plot.should.not.have.been.called;
 					} else {
@@ -1128,7 +1128,7 @@ it("calls `backgroundRenderer.renderScanline()` on cycle 256 of every visible sc
 })({
 	locales: {
 		es:
-			"llama a `backgroundRenderer.renderScanline()` en el ciclo 256 de cada scanline visible",
+			"llama a `backgroundRenderer.renderScanline()` en el ciclo 0 de cada scanline visible",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.9"),
 });

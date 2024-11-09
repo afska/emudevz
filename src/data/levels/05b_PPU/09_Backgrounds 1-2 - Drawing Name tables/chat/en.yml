@@ -23,7 +23,7 @@ finally:
     *_-_*step(...)**:_--_
       *_-_*->** remove the test code (~<test>...</test>~)_--_
     *_-_*_onVisibleLine(...)**:_--_
-      *_-_*->** if the cycle is ~256~, call ~backgroundRenderer.renderScanline()~_--_
+      *_-_*->** if the cycle is ~0~, call ~backgroundRenderer.renderScanline()~_--_
   - |-
     📚  _-_now, in the `BackgroundRenderer` class, define:_--_
     *_-_*renderScanline()**:_--_

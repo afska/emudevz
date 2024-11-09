@@ -24,7 +24,7 @@
   - Esto está en el bit `4` de 🎛️ `PPUCtrl`.
 - Cada uno de los siguientes `960` bytes será un 🕊️ _tile index_ (`0-255`).
   - Ignora por ahora los 🖍️ _metadatos de color_.
-- En el ciclo `256` de cada scanline visible (`0-239`), dibuja una fila de píxeles (compuesta por `32` tiles cada una).
+- En el ciclo `0` de cada scanline visible (`0-239`), dibuja una fila de píxeles (compuesta por `32` tiles cada una).
   - Usa una 🎨 _paleta_ fija:
     - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
 

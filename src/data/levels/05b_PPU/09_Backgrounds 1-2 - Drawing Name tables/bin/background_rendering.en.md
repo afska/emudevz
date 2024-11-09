@@ -24,7 +24,7 @@
   - This is in bit `4` of 🎛️ `PPUCtrl`.
 - Each of the next `960` bytes will be a 🕊️ _tile index_ (`0-255`).
   - Ignore 🖍️ _color metadata_ for now.
-- On cycle `256` of every visible scanline (`0-239`), draw a row of pixels (composed by `32` tiles each).
+- On cycle `0` of every visible scanline (`0-239`), draw a row of pixels (composed by `32` tiles each).
   - Use a fixed 🎨 _palette_:
     - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
 
