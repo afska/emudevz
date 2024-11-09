@@ -972,7 +972,7 @@ export default class PPU {
 	}
 
 	_onVisibleLine(onInterrupt) {
-		if (this.cycle === 256) {
+		if (this.cycle === 0) {
 			this.backgroundRenderer.renderScanline();
 			this.spriteRenderer.renderScanline();
 		}
