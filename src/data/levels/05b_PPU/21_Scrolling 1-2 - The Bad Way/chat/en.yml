@@ -127,7 +127,9 @@ then:
         8 - tileStartX,
         256 - nameTableX
       );```
-    
+      // FIXME: Also explain tile.getColorIndex(tileStartX + xx);
+      // FIXME: Use tileStartY instead of nameTableX % 8 on previous levels
+      
     remember, you won't be drawing 8 pixels per loop iteration anymore, you will only draw `tilePixels`
     so, make sure you change the inner loop to something like:
       ```javascript

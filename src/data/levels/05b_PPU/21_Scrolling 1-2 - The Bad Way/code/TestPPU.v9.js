@@ -556,9 +556,9 @@ class BackgroundRenderer {
 			const tileStartY = nameTableY % 8;
 			const tilePixels = Math.min(8 - tileStartX, 256 - nameTableX);
 
-			const tile = new Tile(this.ppu, patternTableId, tileId, nameTableY % 8);
+			const tile = new Tile(this.ppu, patternTableId, tileId, tileStartY);
 			for (let xx = 0; xx < tilePixels; xx++) {
-				const colorIndex = tile.getColorIndex(xx);
+				const colorIndex = tile.getColorIndex(tileStartX + xx);
 				const color =
 					colorIndex > 0
 						? this.ppu.getColor(paletteId, colorIndex)

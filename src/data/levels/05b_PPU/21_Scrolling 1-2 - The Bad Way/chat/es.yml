@@ -127,6 +127,8 @@ then:
         8 - tileStartX,
         256 - nameTableX
       );```
+      // FIXME: Also explain tile.getColorIndex(tileStartX + xx);
+      // FIXME: Use tileStartY instead of nameTableX % 8 on previous levels
     
     recuerda, ya no dibujarás 8 píxeles por iteración de bucle, solo dibujarás `tilePixels`
     así que, asegúrate de cambiar el bucle interno a algo como:
