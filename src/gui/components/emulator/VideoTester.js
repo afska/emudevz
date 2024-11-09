@@ -35,7 +35,11 @@ export default class VideoTester extends PureComponent {
 					<Emulator
 						rom={rom}
 						saveState={saveState}
-						settings={{ ...this._settings, usePPU: true }}
+						settings={{
+							...this._settings,
+							usePPU: true,
+							withLatestCode: false,
+						}}
 						volume={0}
 						onError={this._setError}
 						onInputType={this._setInputType}
@@ -70,7 +74,11 @@ export default class VideoTester extends PureComponent {
 					<Emulator
 						rom={rom}
 						saveState={saveState}
-						settings={{ ...this._settings, customPPU: PPU }}
+						settings={{
+							...this._settings,
+							customPPU: PPU,
+							withLatestCode: false,
+						}}
 						volume={0}
 						onError={(e) => {
 							console.error(e);

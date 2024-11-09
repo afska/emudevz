@@ -30,17 +30,18 @@ export default class EmulatorBuilder {
 			APU = partialModule.APU;
 		}
 
+		const useCPUMemory = !!(
+			this.withUserCPU ||
+			this.withUserPPU ||
+			this.withUserAPU ||
+			this.withUserController ||
+			this.withUserMappers ||
+			this.customPPU ||
+			this.customAPU
+		);
+
 		return BrokenNEEES({
-			CPUMemory:
-				this.withUserCPU ||
-				this.withUserPPU ||
-				this.withUserAPU ||
-				this.withUserController ||
-				this.withUserMappers ||
-				this.customPPU ||
-				this.customAPU
-					? mainModule.CPUMemory
-					: undefined,
+			CPUMemory: useCPUMemory ? mainModule.CPUMemory : undefined,
 			Cartridge: this.withUserCartridge ? mainModule.Cartridge : undefined,
 			CPU: this.withUserCPU ? mainModule.CPU : undefined,
 			PPU:

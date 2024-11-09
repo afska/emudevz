@@ -115,7 +115,7 @@ export default class Emulator extends Component {
 						.setCustomPPU(settings.customPPU)
 						.setCustomAPU(settings.customAPU)
 						.setUnbroken(settings.unbroken)
-						.build(true);
+						.build(settings.withLatestCode);
 		} catch (e) {
 			this._onError(e);
 			return;

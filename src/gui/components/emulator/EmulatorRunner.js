@@ -261,6 +261,7 @@ export default class EmulatorRunner extends PureComponent {
 			useController: unlockedUnits.useController && settings.useController,
 			useConsole: unlockedUnits.useConsole && settings.useConsole,
 			useMappers: unlockedUnits.useMappers && settings.useMappers,
+			withLatestCode: true,
 		};
 	}
 
