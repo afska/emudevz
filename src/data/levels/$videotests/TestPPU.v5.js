@@ -646,6 +646,8 @@ class PPUStatus extends InMemoryRegister.PPU {
 		this.addWritableField("spriteOverflow", 5)
 			.addWritableField("sprite0Hit", 6)
 			.addWritableField("isInVBlankInterval", 7);
+
+		this.setValue(0b10000000);
 	}
 
 	onRead() {
