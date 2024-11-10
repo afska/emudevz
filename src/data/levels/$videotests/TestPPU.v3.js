@@ -316,7 +316,9 @@ class BackgroundRenderer {
 			const tileIndex = tileY * 32 + tileX;
 			const tileId = memory.read(nameTableAddress + tileIndex);
 
-			const tile = new Tile(this.ppu, patternTableId, tileId, y % 8);
+			const tileInsideY = y % 8;
+
+			const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
 			for (let xx = 0; xx < 8; xx++) {
 				const colorIndex = tile.getColorIndex(xx);
 				this.ppu.plot(x + xx, y, FIXED_PALETTE[colorIndex]);

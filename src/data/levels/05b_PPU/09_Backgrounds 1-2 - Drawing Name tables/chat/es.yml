@@ -62,7 +62,7 @@ help:
   - sabes que ~y = this.ppu.scanline~
   - y que necesitas dibujar desde ~x = 0~ hasta ~x = 255~
   - también sabes que la pantalla es una cuadrícula de ~32x32~ tiles (de ~8x8~ píxeles cada uno)
-  - y por último, ¡sabes cómo dibujar un tile usando tu clase `Tile`!
+  - y por último, ¡ya sabes cómo dibujar un tile usando tu clase `Tile`!
   - |-
     una forma de implementar esto es hacer algo como:
       ```javascript
@@ -76,7 +76,9 @@ help:
         const tileIndex = tileY * 32 + tileX;
         const tileId = 0; // TODO: Leer el id del tile desde la memoria
 
-        const tile = new Tile(this.ppu, patternTableId, tileId, y % 8);
+        const tileInsideY = y % 8;
+
+        const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
         for (let xx = 0; xx < 8; xx++) {
           const colorIndex = tile.getColorIndex(xx);
           // TODO: Plotear cada pixel del tile

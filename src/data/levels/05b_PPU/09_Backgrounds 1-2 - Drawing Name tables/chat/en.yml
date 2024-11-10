@@ -62,7 +62,7 @@ help:
   - you know that ~y = this.ppu.scanline~
   - and that you need to draw from ~x = 0~ to ~x = 255~
   - you also know that the screen is a grid of ~32x32~ tiles (of ~8x8~ pixels each)
-  - and lastly, you know how to draw a tile using your `Tile` class!
+  - and lastly, you already know how to draw a tile using your `Tile` class!
   - |-
     one way of implementing this is doing something like:
       ```javascript
@@ -76,7 +76,9 @@ help:
         const tileIndex = tileY * 32 + tileX;
         const tileId = 0; // TODO: Read tile id from memory
 
-        const tile = new Tile(this.ppu, patternTableId, tileId, y % 8);
+        const tileInsideY = y % 8;
+
+        const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
         for (let xx = 0; xx < 8; xx++) {
           const colorIndex = tile.getColorIndex(xx);
           // TODO: Plot each tile pixel

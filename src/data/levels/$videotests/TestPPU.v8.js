@@ -472,7 +472,9 @@ class BackgroundRenderer {
 			const tileId = memory.read(nameTableAddress + tileIndex);
 			const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
 
-			const tile = new Tile(this.ppu, patternTableId, tileId, y % 8);
+			const tileInsideY = y % 8;
+
+			const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
 			for (let xx = 0; xx < 8; xx++) {
 				const colorIndex = tile.getColorIndex(xx);
 				const color =
