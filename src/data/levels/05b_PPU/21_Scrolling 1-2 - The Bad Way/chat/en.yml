@@ -126,13 +126,15 @@ then:
         8 - tileStartX,
         256 - nameTableX
       );```
-      // FIXME: Also explain tile.getColorIndex(tileStartX + xx);
       
-    remember, you won't be drawing 8 pixels per loop iteration anymore, you will only draw `tilePixels`
+    remember, you won't be drawing 8 pixels per loop iteration anymore, you will only draw `tilePixels`, starting from `tileStartX`
     so, make sure you change the inner loop to something like:
       ```javascript
         for (let xx = 0; xx < tilePixels; xx++)```
-    and at the very end, increment the main loop index manually:
+    the `getColorIndex` call should use `tileStartX`:
+      ```javascript
+        tile.getColorIndex(tileStartX + xx);```
+    and at the very end, once the inner loop ends, increment the main loop index manually:
       ```javascript
         x += tilePixels;```_--_
   responses: []

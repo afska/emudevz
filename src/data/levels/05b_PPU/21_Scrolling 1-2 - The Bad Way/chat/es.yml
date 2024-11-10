@@ -126,13 +126,15 @@ then:
         8 - tileStartX,
         256 - nameTableX
       );```
-      // FIXME: Also explain tile.getColorIndex(tileStartX + xx);
     
-    recuerda, ya no dibujarás 8 píxeles por iteración de bucle, solo dibujarás `tilePixels`
+    recuerda, ya no dibujarás 8 píxeles por iteración de bucle, solo dibujarás `tilePixels`, empezando desde `tileStartX`
     así que, asegúrate de cambiar el bucle interno a algo como:
       ```javascript
         for (let xx = 0; xx < tilePixels; xx++)```
-    y al final, incrementa manualmente el índice del bucle principal:
+    la llamada a `getColorIndex` tendría que usar `tileStartX`:
+      ```javascript
+        tile.getColorIndex(tileStartX + xx);```
+    y al final, una vez que el bucle interno termine, incrementa manualmente el índice del bucle principal:
       ```javascript
         x += tilePixels;```_--_
   responses: []
