@@ -563,17 +563,19 @@ it("PPUStatus: reads sprite0Hit (bit 6)", () => {
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUStatus: reads isInVBlankInterval (bit 7)", () => {
+it("PPUStatus: reads isInVBlankInterval (bit 7) (ON by default)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
 	const ppuStatus = ppu.registers.ppuStatus;
+	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
+	ppuStatus.isInVBlankInterval = 0;
 	byte.getBit(ppuStatus.onRead(), 7).should.equalN(0, "bit 7");
 	ppuStatus.isInVBlankInterval = 1;
 	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
 })({
 	locales: {
-		es: "PPUStatus: lee isInVBlankInterval (bit 7)",
+		es: "PPUStatus: lee isInVBlankInterval (bit 7) (encendido por defecto)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
