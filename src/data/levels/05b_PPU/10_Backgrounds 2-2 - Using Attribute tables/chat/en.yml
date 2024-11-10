@@ -25,7 +25,7 @@ main:
       *_-_*->** add the necessary code to return the right palette id for the pixel ~(x, y)~_--_
       *_-_*->** follow _--_📄 _-_ ~/docs/ppu/background_rendering.en.md~ for guidance on how palette ids are encoded_--_
   - |-
-    📚  _-_change `BackgroundRenderer::renderScanline()` so it uses `_getPaletteId(...)` and draws the right color, like this:_--_
+    📚  _-_change `BackgroundRenderer::renderScanline()` so it uses `_getPaletteId(...)` and draws the right color, like this:
       ```javascript
       const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
 
@@ -37,7 +37,7 @@ main:
         const color =
           colorIndex > 0 ? this.ppu.getColor(paletteId, colorIndex) : this.ppu.getColor(0, 0);
         this.plot(x + xx, y, color);
-      }```
+      }```_--_
   - note that when the color index is 0, a <backdrop color> is rendered instead (located at the first index of the first palette)
   responses:
   - "\"add the necessary code\"? really? that's all? [help]"

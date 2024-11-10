@@ -25,7 +25,7 @@ main:
       *_-_*->** agrega el código necesario para devolver el id de paleta correcto para el píxel ~(x, y)~_--_
       *_-_*->** sigue _--_📄 _-_ ~/docs/ppu/background_rendering.es.md~ para orientación sobre cómo se codifican los ids de paletas_--_
   - |-
-    📚  _-_cambia `BackgroundRenderer::renderScanline()` para que use `_getPaletteId(...)` y dibuje el color correcto, así:_--_
+    📚  _-_cambia `BackgroundRenderer::renderScanline()` para que use `_getPaletteId(...)` y dibuje el color correcto, así:
       ```javascript
       const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
 
@@ -37,7 +37,7 @@ main:
         const color =
           colorIndex > 0 ? this.ppu.getColor(paletteId, colorIndex) : this.ppu.getColor(0, 0);
         this.plot(x + xx, y, color);
-      }```
+      }```_--_
   - ten en cuenta que cuando el índice de color es 0, se renderiza un <color de fondo> en su lugar (ubicado en el primer índice de la primera paleta)
   responses:
   - "\"¿agrega el código necesario\"? ¿en serio? ¿eso es todo? [help]"
