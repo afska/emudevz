@@ -534,13 +534,9 @@ class BackgroundRenderer {
 			const scrolledX = x + scrollX;
 			const scrolledY = y + scrollY;
 			const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
-			const scrolledNameTableId =
-				nameTableId +
-				Math.floor(scrolledX / 256) +
-				Math.floor(scrolledY / 240) * 2;
 			const nameTableX = scrolledX % 256;
 			const nameTableY = scrolledY % 240;
-			const nameTableAddress = 0x2000 + scrolledNameTableId * 1024;
+			const nameTableAddress = 0x2000 + nameTableId * 1024;
 
 			const tileX = Math.floor(nameTableX / 8);
 			const tileY = Math.floor(nameTableY / 8);

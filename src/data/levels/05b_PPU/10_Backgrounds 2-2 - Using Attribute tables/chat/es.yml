@@ -28,7 +28,10 @@ main:
     📚  _-_cambia `BackgroundRenderer::renderScanline()` para que use `_getPaletteId(...)` y dibuje el color correcto, así:_--_
       ```javascript
       const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
-      const tile = new Tile(this, patternTableId, tileId, y % 8);
+
+      const tileInsideY = y % 8;
+
+      const tile = new Tile(this, patternTableId, tileId, tileInsideY);
       for (let xx = 0; xx < 8; xx++) {
         const colorIndex = tile.getColorIndex(xx);
         const color =
