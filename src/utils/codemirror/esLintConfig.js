@@ -1,12 +1,10 @@
+import globals from "globals";
+
 export default {
-	parserOptions: {
+	languageOptions: {
 		ecmaVersion: 2022,
 		sourceType: "module",
-	},
-	env: {
-		browser: true,
-		node: false,
-		es6: true,
+		globals: globals.browser,
 	},
 	/* eslint:recommended */
 	rules: {
