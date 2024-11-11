@@ -618,6 +618,7 @@ it("calls `_onPreLine` on scanline -1, with the `onInterrupt` argument", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "_onPreLine");
 
 	const onInterrupt = () => {};
@@ -661,6 +662,7 @@ it("calls `_onVisibleLine` on scanlines ~[0, 240)~, with the `onInterrupt` argum
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "_onVisibleLine");
 
 	const onInterrupt = () => {};
@@ -704,6 +706,7 @@ it("calls `_onVBlankLine` on scanline 241, with the `onInterrupt` argument", () 
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "_onVBlankLine");
 
 	const onInterrupt = () => {};
@@ -747,6 +750,7 @@ it("resets `PPUStatus::isInVBlankInterval` on scanline=-1, cycle=1", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	for (let cycle = 0; cycle < 341; cycle++) {
 		ppu.scanline = -1;
@@ -778,6 +782,7 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	ppu.registers.ppuCtrl.setValue(0b10000000); // (generate NMI on VBlank)
 	const onInterrupt = sinon.spy();
@@ -819,6 +824,7 @@ it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on scanline=
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	const onInterrupt = sinon.spy();
 
@@ -1087,6 +1093,7 @@ it("BackgroundRenderer: step() calls `PPU::plot` 256 times", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "plot");
 
 	ppu.backgroundRenderer.should.respondTo("renderScanline");
@@ -1103,6 +1110,7 @@ it("calls `backgroundRenderer.renderScanline()` on cycle 0 of every visible scan
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "plot");
 	sinon.spy(ppu.backgroundRenderer, "renderScanline");
 
@@ -1628,6 +1636,7 @@ it("resets `PPUStatus::spriteOverflow` on scanline=-1, cycle=1", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	for (let cycle = 0; cycle < 341; cycle++) {
 		ppu.scanline = -1;
@@ -1655,6 +1664,7 @@ it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pix
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	// set scanline
 	ppu.scanline = 45;
@@ -1714,6 +1724,7 @@ it("resets `PPUStatus::sprite0Hit` on scanline=-1, cycle=1", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	for (let cycle = 0; cycle < 341; cycle++) {
 		ppu.scanline = -1;
@@ -1778,33 +1789,6 @@ it("mirrors Palette RAM correctly in PPU memory (writes)", () => {
 });
 
 // 5b.20 Mirroring (2/2): Name tables
-
-it("can change the name table mirroring", () => {
-	const PPU = mainModule.default.PPU;
-	const ppu = new PPU({});
-	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
-
-	ppu.memory.should.respondTo("changeNameTableMirroringTo");
-
-	ppu.memory.changeNameTableMirroringTo("HORIZONTAL");
-	ppu.memory.mirroringId.should.equalN("HORIZONTAL", "mirroringId");
-	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
-	ppu.memory._mirroring.$2400.should.equalHex(0x000, "_mirroring.$2400");
-	ppu.memory._mirroring.$2800.should.equalHex(0x400, "_mirroring.$2800");
-	ppu.memory._mirroring.$2C00.should.equalHex(0x400, "_mirroring.$2C00");
-
-	ppu.memory.changeNameTableMirroringTo("FOUR_SCREEN");
-	ppu.memory.mirroringId.should.equalN("FOUR_SCREEN", "mirroringId");
-	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
-	ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
-	ppu.memory._mirroring.$2800.should.equalHex(0x800, "_mirroring.$2800");
-	ppu.memory._mirroring.$2C00.should.equalHex(0xc00, "_mirroring.$2C00");
-})({
-	locales: {
-		es: "puede cambiar el mirroring de name tables",
-	},
-	use: ({ id }, book) => id >= book.getId("5b.20"),
-});
 
 it("can change the name table mirroring", () => {
 	const PPU = mainModule.default.PPU;
