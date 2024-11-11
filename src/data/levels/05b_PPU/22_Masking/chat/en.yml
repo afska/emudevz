@@ -1,4 +1,57 @@
 main:
   messages:
-  - coming soon!
+  - the 🎭  ~PPUMask~ video register ($2001) lets programs enable or disable parts of the rendering
+  - check out again 📄  ~/docs/ppu/video_registers.en.md~
+  - 🏛️  the ~m~ and ~M~ bits controls whether the first 8px column should be visible or not for backgrounds and sprites respectively
+  - 🏞️  ~b~ enables background rendering
+  - 🛸  and ~s~ enables sprite rendering
+  responses:
+  - (*) why would a game want to disable rendering? [why]
+  - let's do it [lets]
+
+why:
+  messages:
+  - for example, to fill VRAM faster using VDraw time, hiding possible glitches result of not doing it on VBlank
+  - games tipically write $00 outside gameplay to do that
+  - and then $1E to enable rendering during gameplay
+  responses:
+  - ...main
+
+lets:
+  messages:
+  - 📚  _-_in `PPUMask`, implement the `onLoad()` method, using `addField(...)` to map the mentioned bits_--_
+  - |-
+    _-_use these names:_--_
+      _-_`showBackgroundInFirst8Pixels`_--_
+      _-_`showSpritesInFirst8Pixels`_--_
+      _-_`showBackground`_--_
+      _-_`showSprites`_--_
+  - |-
+    📚  _-_also, add an extra method:_--_
+      *_-_*isRenderingEnabled()**:_--_
+        *_-_*->** returns ~this.showBackground || this.showSprites~_--_
+  - |-
+    📚  _-_in `PPU`, you want to <not do anything> if the rendering is disabled:_--_
+      _-_```javascript if (!this.registers.ppuMask.isRenderingEnabled())
+        return;```_--_
+    add that at the beggining to both `onPreLine` and `onVisibleLine`!
+  - |-
+    📚  _-_only call `BackgroundRenderer::renderScanline` if `showBackground` is enabled,_--_
+    _-_and only call `SpriteRenderer::renderScanline` if `showSprites` is enabled_--_
+  responses:
+  - shouldn't I also change the renderers? [renderers]
+
+renderers:
+  messages:
+  - yeah, so...
+  - |-
+    📚  _-_in `BackgroundRenderer`, change `renderScanline`:_--_
+    _-_if `showBackgroundInFirst8Pixels` is off and `x < 8`, just plot the backdrop color, increment ~x~, and ~continue~! don't do anything else!_--_
+    _-_(remember that the backdrop color is `this.ppu.getColor(0, 0)`)_--_
+  - |-
+    📚  _-_in `SpriteRenderer`, change `_render(...)`:_--_
+    _-_you want a similar logic:_--_
+    _-_```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
+      continue;```_--_
+    _-_in the sprite-0 hit `if`, add `showBackground` and `showSprites` as conditions: if one of them is disabled, it shouldn't be triggered!_--_
   responses: []
