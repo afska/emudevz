@@ -1433,6 +1433,20 @@ it("OAMData: autoincrements the address without exceeding $FF (writes)", () => {
 	use: ({ id }, book) => id >= book.getId("5b.12"),
 });
 
+it("OAMDMA: write only", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuCtrl = ppu.registers.ppuCtrl;
+	ppuCtrl.onWrite(byte.random());
+	ppuCtrl.onRead().should.equalN(0, "onRead()");
+})({
+	locales: {
+		es: "OAMDMA: solo escritura",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.12"),
+});
+
 it("OAMDMA: copies the whole page to OAM and adds 513 cycles", () => {
 	const PPU = mainModule.default.PPU;
 	const CPUMemory = mainModule.default.CPUMemory;
@@ -2205,3 +2219,5 @@ it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (writes)", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
+
+// 5b.22 Masking
