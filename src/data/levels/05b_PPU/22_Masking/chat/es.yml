@@ -1,5 +1,59 @@
 main:
   messages:
-  - coming soon!
-  - "// FIXME: English QA and translate"
+  - el registro de video 🎭  ~PPUMask~ ($2001) permite a los programas habilitar o deshabilitar partes de la renderización
+  - revisa nuevamente 📄  ~/docs/ppu/video_registers.en.md~
+  - 🏛️  los bits ~m~ y ~M~ controlan si la primera columna de 8px debe ser visible o no para los fondos y sprites respectivamente
+  - 🏞️  ~b~ habilita la renderización de fondos
+  - 🛸  y ~s~ habilita la renderización de sprites
+  responses:
+  - (*) ¿por qué un juego querría deshabilitar la renderización? [why]
+  - hagámoslo [lets]
+
+why:
+  messages:
+  - por ejemplo, para llenar VRAM más rápido usando el tiempo de VDraw, ocultando posibles glitches resultado de no hacerlo en 🏝️  VBlank
+  - los juegos típicamente escriben $00 fuera de gameplay para hacer eso
+  - y luego $1E para habilitar la renderización durante el gameplay
+  responses:
+  - ...main
+
+lets:
+  messages:
+  - 📚  _-_en `PPUMask`, implementa el método `onLoad()`, usando `addField(...)` para mapear los bits mencionados_--_
+  - |-
+    _-_usa estos nombres:_--_
+      _-_`showBackgroundInFirst8Pixels`_--_
+      _-_`showSpritesInFirst8Pixels`_--_
+      _-_`showBackground`_--_
+      _-_`showSprites`_--_
+  - |-
+    📚  _-_también, agrega estos métodos:_--_
+      *_-_*onWrite(value)**:_--_
+        *_-_*->** llama a ~this.setValue(value)~_--_
+      *_-_*isRenderingEnabled()**:_--_
+        *_-_*->** retorna ~this.showBackground || this.showSprites~_--_
+  - |-
+    📚  _-_en `PPU`, quieres <no hacer nada> si la renderización está deshabilitada:_--_
+      _-_```javascript if (!this.registers.ppuMask.isRenderingEnabled())
+        return;```_--_
+    _-_agrega eso al comienzo de `onPreLine` y `onVisibleLine`!_--_
+  - |-
+    📚  _-_solo llama a `BackgroundRenderer::renderScanline` si `showBackground` está habilitado,_--_
+    _-_y solo llama a `SpriteRenderer::renderScanline` si `showSprites` está habilitado_--_
+  responses:
+  - ¿no debería también cambiar los renderizadores? [renderers]
+
+renderers:
+  messages:
+  - yep, veamos...
+  - |-
+    📚  _-_en `BackgroundRenderer`, cambia `renderScanline()`:_--_
+    _-_si `showBackgroundInFirst8Pixels` está apagado y `x < 8`, solo dibuja el color de fondo, incrementa ~x~ y después haz ~continue~! ¡no proceses más!_--_
+    _-_(recuerda que el color de fondo es `this.ppu.getColor(0, 0)`)_--_
+  - |-
+    📚  _-_en `SpriteRenderer`, cambia `_render(...)`..._--_
+    _-_necesitas una lógica similar:_--_
+    _-_```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
+      continue;```_--_
+    _-_en el `if` del sprite-0 hit, agrega `showBackground` y `showSprites` como condiciones: si uno de ellos está deshabilitado, ¡no debería activarse!_--_
   responses: []

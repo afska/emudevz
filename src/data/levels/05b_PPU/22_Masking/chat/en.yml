@@ -11,8 +11,8 @@ main:
 
 why:
   messages:
-  - for example, to fill VRAM faster using VDraw time, hiding possible glitches result of not doing it on VBlank
-  - games tipically write $00 outside gameplay to do that
+  - for example, to fill VRAM faster using VDraw time, hiding possible glitches result of not doing it on 🏝️  VBlank
+  - games typically write $00 outside gameplay to do that
   - and then $1E to enable rendering during gameplay
   responses:
   - ...main
@@ -36,7 +36,7 @@ lets:
     📚  _-_in `PPU`, you want to <not do anything> if the rendering is disabled:_--_
       _-_```javascript if (!this.registers.ppuMask.isRenderingEnabled())
         return;```_--_
-    _-_add that at the beggining to both `onPreLine` and `onVisibleLine`!_--_
+    _-_add that at the beginning of both `onPreLine` and `onVisibleLine`!_--_
   - |-
     📚  _-_only call `BackgroundRenderer::renderScanline` if `showBackground` is enabled,_--_
     _-_and only call `SpriteRenderer::renderScanline` if `showSprites` is enabled_--_
@@ -45,14 +45,14 @@ lets:
 
 renderers:
   messages:
-  - yeah, so...
+  - yup, let's see...
   - |-
-    📚  _-_in `BackgroundRenderer`, change `renderScanline`:_--_
-    _-_if `showBackgroundInFirst8Pixels` is off and `x < 8`, just plot the backdrop color, increment ~x~, and ~continue~! don't do anything else!_--_
+    📚  _-_in `BackgroundRenderer`, change `renderScanline()`:_--_
+    _-_if `showBackgroundInFirst8Pixels` is off and `x < 8`, just plot the backdrop color, increment ~x~, and ~continue~! don't process further!_--_
     _-_(remember that the backdrop color is `this.ppu.getColor(0, 0)`)_--_
   - |-
     📚  _-_in `SpriteRenderer`, change `_render(...)`..._--_
-    _-_you want a similar logic:_--_
+    _-_you need a similar logic:_--_
     _-_```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
       continue;```_--_
     _-_in the sprite-0 hit `if`, add `showBackground` and `showSprites` as conditions: if one of them is disabled, it shouldn't be triggered!_--_
