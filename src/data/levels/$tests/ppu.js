@@ -417,7 +417,7 @@ it("PPUCtrl: write only", () => {
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes nameTableId (bits 0-1)", () => {
+it("PPUCtrl: writes `nameTableId` (bits 0-1)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -432,12 +432,12 @@ it("PPUCtrl: writes nameTableId (bits 0-1)", () => {
 	ppuCtrl.nameTableId.should.equalN(3, "nameTableId");
 })({
 	locales: {
-		es: "PPUCtrl: escribe nameTableId (bits 0-1)",
+		es: "PPUCtrl: escribe `nameTableId` (bits 0-1)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes vramAddressIncrement32 (bit 2)", () => {
+it("PPUCtrl: writes `vramAddressIncrement32` (bit 2)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -448,12 +448,12 @@ it("PPUCtrl: writes vramAddressIncrement32 (bit 2)", () => {
 	ppuCtrl.vramAddressIncrement32.should.equalN(1, "vramAddressIncrement32");
 })({
 	locales: {
-		es: "PPUCtrl: escribe vramAddressIncrement32 (bit 2)",
+		es: "PPUCtrl: escribe `vramAddressIncrement32` (bit 2)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes sprite8x8PatternTableId (bit 3)", () => {
+it("PPUCtrl: writes `sprite8x8PatternTableId` (bit 3)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -464,12 +464,12 @@ it("PPUCtrl: writes sprite8x8PatternTableId (bit 3)", () => {
 	ppuCtrl.sprite8x8PatternTableId.should.equalN(1, "sprite8x8PatternTableId");
 })({
 	locales: {
-		es: "PPUCtrl: escribe vramAddressIncrement32 (bit 3)",
+		es: "PPUCtrl: escribe `vramAddressIncrement32` (bit 3)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes backgroundPatternTableId (bit 4)", () => {
+it("PPUCtrl: writes `backgroundPatternTableId` (bit 4)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -480,12 +480,12 @@ it("PPUCtrl: writes backgroundPatternTableId (bit 4)", () => {
 	ppuCtrl.backgroundPatternTableId.should.equalN(1, "backgroundPatternTableId");
 })({
 	locales: {
-		es: "PPUCtrl: escribe backgroundPatternTableId (bit 4)",
+		es: "PPUCtrl: escribe `backgroundPatternTableId` (bit 4)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes spriteSize (bit 5)", () => {
+it("PPUCtrl: writes `spriteSize` (bit 5)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -496,12 +496,12 @@ it("PPUCtrl: writes spriteSize (bit 5)", () => {
 	ppuCtrl.spriteSize.should.equalN(1, "spriteSize");
 })({
 	locales: {
-		es: "PPUCtrl: escribe spriteSize (bit 5)",
+		es: "PPUCtrl: escribe `spriteSize` (bit 5)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes generateNMIOnVBlank (bit 7)", () => {
+it("PPUCtrl: writes `generateNMIOnVBlank` (bit 7)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -512,7 +512,7 @@ it("PPUCtrl: writes generateNMIOnVBlank (bit 7)", () => {
 	ppuCtrl.generateNMIOnVBlank.should.equalN(1, "generateNMIOnVBlank");
 })({
 	locales: {
-		es: "PPUCtrl: escribe generateNMIOnVBlank (bit 7)",
+		es: "PPUCtrl: escribe `generateNMIOnVBlank` (bit 7)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
@@ -533,7 +533,7 @@ it("PPUStatus: read only", () => {
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUStatus: reads spriteOverflow (bit 5)", () => {
+it("PPUStatus: reads `spriteOverflow` (bit 5)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -543,12 +543,12 @@ it("PPUStatus: reads spriteOverflow (bit 5)", () => {
 	byte.getBit(ppuStatus.onRead(), 5).should.equalN(1, "bit 5");
 })({
 	locales: {
-		es: "PPUStatus: lee spriteOverflow (bit 5)",
+		es: "PPUStatus: lee `spriteOverflow` (bit 5)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUStatus: reads sprite0Hit (bit 6)", () => {
+it("PPUStatus: reads `sprite0Hit` (bit 6)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -558,12 +558,12 @@ it("PPUStatus: reads sprite0Hit (bit 6)", () => {
 	byte.getBit(ppuStatus.onRead(), 6).should.equalN(1, "bit 6");
 })({
 	locales: {
-		es: "PPUStatus: lee sprite0Hit (bit 6)",
+		es: "PPUStatus: lee `sprite0Hit` (bit 6)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUStatus: reads isInVBlankInterval (bit 7) (ON by default)", () => {
+it("PPUStatus: reads `isInVBlankInterval` (bit 7) (ON by default)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -575,14 +575,14 @@ it("PPUStatus: reads isInVBlankInterval (bit 7) (ON by default)", () => {
 	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
 })({
 	locales: {
-		es: "PPUStatus: lee isInVBlankInterval (bit 7) (encendido por defecto)",
+		es: "PPUStatus: lee `isInVBlankInterval` (bit 7) (encendido por defecto)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
 // 5b.7 VBlank detection
 
-it("PPUStatus: resets isInVBlankInterval after reading", () => {
+it("PPUStatus: resets `isInVBlankInterval` after reading", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	const ppuStatus = ppu.registers.ppuStatus;
@@ -596,7 +596,7 @@ it("PPUStatus: resets isInVBlankInterval after reading", () => {
 	ppuStatus.isInVBlankInterval.should.equalN(0, "isInVBlankInterval");
 })({
 	locales: {
-		es: "PPUStatus: reinicia isInVBlankInterval luego de leer",
+		es: "PPUStatus: reinicia `isInVBlankInterval` luego de leer",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
@@ -1300,7 +1300,7 @@ it("PPUData: autoincrements the address by 1 (reads)", () => {
 	use: ({ id }, book) => id >= book.getId("5b.11"),
 });
 
-it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32` (reads)", () => {
+it("PPUData: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement32` (reads)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1320,7 +1320,7 @@ it("PPUData: autoincrements the address by 32 if `PPUCtrl.vramAddressIncrement32
 })({
 	locales: {
 		es:
-			"PPUData: autoincrementa la dirección por 32 si `PPUCtrl.vramAddressIncrement32` (lecturas)",
+			"PPUData: autoincrementa la dirección por 32 si `PPUCtrl::vramAddressIncrement32` (lecturas)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.11"),
 });
