@@ -27,14 +27,16 @@ lets:
       _-_`showBackground`_--_
       _-_`showSprites`_--_
   - |-
-    📚  _-_also, add an extra method:_--_
+    📚  _-_also, add these methods:_--_
+      *_-_*onWrite(value)**:_--_
+        *_-_*->** calls ~this.setValue(value)~_--_
       *_-_*isRenderingEnabled()**:_--_
         *_-_*->** returns ~this.showBackground || this.showSprites~_--_
   - |-
     📚  _-_in `PPU`, you want to <not do anything> if the rendering is disabled:_--_
       _-_```javascript if (!this.registers.ppuMask.isRenderingEnabled())
         return;```_--_
-    add that at the beggining to both `onPreLine` and `onVisibleLine`!
+    _-_add that at the beggining to both `onPreLine` and `onVisibleLine`!_--_
   - |-
     📚  _-_only call `BackgroundRenderer::renderScanline` if `showBackground` is enabled,_--_
     _-_and only call `SpriteRenderer::renderScanline` if `showSprites` is enabled_--_
@@ -49,7 +51,7 @@ renderers:
     _-_if `showBackgroundInFirst8Pixels` is off and `x < 8`, just plot the backdrop color, increment ~x~, and ~continue~! don't do anything else!_--_
     _-_(remember that the backdrop color is `this.ppu.getColor(0, 0)`)_--_
   - |-
-    📚  _-_in `SpriteRenderer`, change `_render(...)`:_--_
+    📚  _-_in `SpriteRenderer`, change `_render(...)`..._--_
     _-_you want a similar logic:_--_
     _-_```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
       continue;```_--_
