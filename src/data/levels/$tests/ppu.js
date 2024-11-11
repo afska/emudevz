@@ -1089,7 +1089,7 @@ it("has a `backgroundRenderer` property", () => {
 	use: ({ id }, book) => id >= book.getId("5b.9"),
 });
 
-it("BackgroundRenderer: step() calls `PPU::plot` 256 times", () => {
+it("BackgroundRenderer: renderScanline() calls `PPU::plot` 256 times", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1101,7 +1101,7 @@ it("BackgroundRenderer: step() calls `PPU::plot` 256 times", () => {
 	ppu.plot.callCount.should.equalN(256, "plot.callCount");
 })({
 	locales: {
-		es: "BackgroundRenderer: step() llama a `PPU::plot` 256 veces",
+		es: "BackgroundRenderer: renderScanline() llama a `PPU::plot` 256 veces",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.9"),
 });
@@ -1672,6 +1672,45 @@ it("resets `PPUStatus::spriteOverflow` on scanline=-1, cycle=1", () => {
 	use: ({ id }, book) => id >= book.getId("5b.14"),
 });
 
+// 5b.15 Sprites (3/6): Drawing
+
+it("calls `spriteRenderer.renderScanline()` on cycle 0 of every visible scanline", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
+	sinon.spy(ppu, "plot");
+	sinon.spy(ppu.spriteRenderer, "renderScanline");
+
+	for (let frame = 0; frame < 1; frame++) {
+		for (let scanline = -1; scanline < 261; scanline++) {
+			for (let cycle = 0; cycle < 341; cycle++) {
+				ppu.plot.resetHistory();
+				ppu.spriteRenderer.renderScanline.resetHistory();
+				ppu.step(noop, noop);
+
+				if (scanline >= 0 && scanline < 240) {
+					if (cycle !== 0) {
+						ppu.spriteRenderer.renderScanline.should.not.have.been.called;
+						ppu.plot.should.not.have.been.called;
+					} else {
+						ppu.spriteRenderer.renderScanline.callCount.should.equalN(
+							1,
+							"renderScanline.callCount"
+						);
+					}
+				}
+			}
+		}
+	}
+})({
+	locales: {
+		es:
+			"llama a `spriteRenderer.renderScanline()` en el ciclo 0 de cada scanline visible",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.15"),
+});
+
 // 5b.18 Sprites (6/6): Sprite-0 hit
 
 it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pixel from sprite 0 is drawn over an opaque pixel from background", () => {
@@ -2221,3 +2260,223 @@ it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (writes)", () => {
 });
 
 // 5b.22 Masking
+
+it("PPUMask: write only", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.onWrite(byte.random());
+	ppuMask.onRead().should.equalN(0, "onRead()");
+})({
+	locales: {
+		es: "PPUMask: solo escritura",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.22"),
+});
+
+it("PPUMask: writes `showBackgroundInFirst8Pixels` (bit 1)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.onWrite(0b10100001);
+	ppuMask.showBackgroundInFirst8Pixels.should.equalN(
+		0,
+		"showBackgroundInFirst8Pixels"
+	);
+	ppuMask.onWrite(0b10100111);
+	ppuMask.showBackgroundInFirst8Pixels.should.equalN(
+		1,
+		"showBackgroundInFirst8Pixels"
+	);
+})({
+	locales: {
+		es: "PPUMask: escribe `showBackgroundInFirst8Pixels` (bit 1)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.22"),
+});
+
+it("PPUMask: writes `showSpritesInFirst8Pixels` (bit 2)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.onWrite(0b10100011);
+	ppuMask.showSpritesInFirst8Pixels.should.equalN(
+		0,
+		"showSpritesInFirst8Pixels"
+	);
+	ppuMask.onWrite(0b10100111);
+	ppuMask.showSpritesInFirst8Pixels.should.equalN(
+		1,
+		"showSpritesInFirst8Pixels"
+	);
+})({
+	locales: {
+		es: "PPUMask: escribe `showSpritesInFirst8Pixels` (bit 2)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.22"),
+});
+
+it("PPUMask: writes `showBackground` (bit 3)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.onWrite(0b10100011);
+	ppuMask.showBackground.should.equalN(0, "showBackground");
+	ppuMask.onWrite(0b10101111);
+	ppuMask.showBackground.should.equalN(1, "showBackground");
+})({
+	locales: {
+		es: "PPUMask: escribe `showBackground` (bit 3)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.22"),
+});
+
+it("PPUMask: writes `showSprites` (bit 4)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.onWrite(0b10100011);
+	ppuMask.showSprites.should.equalN(0, "showSprites");
+	ppuMask.onWrite(0b10111111);
+	ppuMask.showSprites.should.equalN(1, "showSprites");
+})({
+	locales: {
+		es: "PPUMask: escribe `showSprites` (bit 4)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.22"),
+});
+
+it("PPUMask: has an `isRenderingEnabled` method that returns true if the background or sprites are enabled", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.should.respondTo("isRenderingEnabled");
+
+	ppuMask.onWrite(0b00000000);
+	ppuMask.isRenderingEnabled().should.equalN(0, "isRenderingEnabled()");
+	ppuMask.onWrite(0b00001000);
+	ppuMask.isRenderingEnabled().should.equalN(1, "isRenderingEnabled()");
+	ppuMask.onWrite(0b00000000);
+	ppuMask.isRenderingEnabled().should.equalN(0, "isRenderingEnabled()");
+	ppuMask.onWrite(0b00011000);
+	ppuMask.isRenderingEnabled().should.equalN(1, "isRenderingEnabled()");
+	ppuMask.onWrite(0b00000000);
+	ppuMask.isRenderingEnabled().should.equalN(0, "isRenderingEnabled()");
+	ppuMask.onWrite(0b00010000);
+	ppuMask.isRenderingEnabled().should.equalN(1, "isRenderingEnabled()");
+})({
+	locales: {
+		es:
+			"PPUMask: tiene un método `isRenderingEnabled` que retorna true si el fondo o los sprites están habilitados",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.22"),
+});
+
+it("doesn't reset anything on scanline=-1, cycle=1 if rendering is off", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x00);
+
+	for (let cycle = 0; cycle < 341; cycle++) {
+		ppu.scanline = -1;
+		ppu.cycle = cycle;
+		ppu.registers.ppuStatus.isInVBlankInterval = 1;
+		ppu.registers.ppuStatus.spriteOverflow = 1;
+		ppu.registers.ppuStatus.sprite0Hit = 1;
+
+		ppu.step(noop, noop);
+
+		if (cycle === 1) {
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+				1,
+				"isInVBlankInterval"
+			);
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+				1,
+				"spriteOverflow"
+			);
+			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(1, "sprite0Hit");
+		}
+	}
+})({
+	locales: {
+		es:
+			"no reinicia nada en scanline=-1, cycle=1 si el renderizado está apagado",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.22"),
+});
+
+it("doesn't call `backgroundRenderer.renderScanline()` if background rendering is disabled", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0b00010000);
+	sinon.spy(ppu, "plot");
+	sinon.spy(ppu.backgroundRenderer, "renderScanline");
+
+	for (let frame = 0; frame < 1; frame++) {
+		for (let scanline = -1; scanline < 261; scanline++) {
+			for (let cycle = 0; cycle < 341; cycle++) {
+				ppu.plot.resetHistory();
+				ppu.backgroundRenderer.renderScanline.resetHistory();
+				ppu.step(noop, noop);
+
+				if (scanline >= 0 && scanline < 240) {
+					if (cycle !== 0) {
+						ppu.backgroundRenderer.renderScanline.should.not.have.been.called;
+						ppu.plot.should.not.have.been.called;
+					} else {
+						ppu.backgroundRenderer.renderScanline.should.not.have.been.called;
+					}
+				}
+			}
+		}
+	}
+})({
+	locales: {
+		es:
+			"no lama a `backgroundRenderer.renderScanline()` si el renderizado de fondos está desactivado",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.22"),
+});
+
+it("doesn't call `spriteRenderer.renderScanline()` if sprite rendering is disabled", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0b00001000);
+	sinon.spy(ppu, "plot");
+	sinon.spy(ppu.spriteRenderer, "renderScanline");
+
+	for (let frame = 0; frame < 1; frame++) {
+		for (let scanline = -1; scanline < 261; scanline++) {
+			for (let cycle = 0; cycle < 341; cycle++) {
+				ppu.plot.resetHistory();
+				ppu.spriteRenderer.renderScanline.resetHistory();
+				ppu.step(noop, noop);
+
+				if (scanline >= 0 && scanline < 240) {
+					if (cycle !== 0) {
+						ppu.spriteRenderer.renderScanline.should.not.have.been.called;
+						ppu.plot.should.not.have.been.called;
+					} else {
+						ppu.spriteRenderer.renderScanline.should.not.have.been.called;
+					}
+				}
+			}
+		}
+	}
+})({
+	locales: {
+		es:
+			"no llama a `spriteRenderer.renderScanline()` si el renderizado de sprites está desactivado",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.22"),
+});
