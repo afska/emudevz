@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "🎯 Scrolling (2/2): The Good Way",
-		"es": "🎯 Scrolling (2/2): Haciéndolo bien"
+		"en": "🎯 Scrolling (2/2): The Good Way™",
+		"es": "🎯 Scrolling (2/2): Haciéndolo bien™"
 	},
 	"ui": {
 		"run": "copy.js",

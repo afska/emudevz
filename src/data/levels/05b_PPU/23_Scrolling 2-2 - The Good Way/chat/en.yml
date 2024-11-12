@@ -3,4 +3,22 @@ main:
   - yes!
   - I just finished it
   - look, 📄  ~/lib/ppu/LoopyRegister.js~
-  responses: []
+  responses:
+  - who's loopy? [loopy]
+
+loopy:
+  messages:
+  - a user who reverse engineered how the PPU scrolling register <really> works
+  - the sad truth is...
+  - PPU scrolling doesn't work like we have it implemented right now 😅
+  - it's way more complicated than that
+  - luckily, with my code, you can easily implement scrolling The Right Way™ ✨
+  responses:
+  - what do we need to change? [changes]
+
+changes:
+  messages:
+  - "// FIXME: Specify instructions"
+  responses: [
+
+  ]

@@ -434,7 +434,7 @@ it("PPUCtrl: writes `nameTableId` (bits 0-1)", () => {
 	locales: {
 		es: "PPUCtrl: escribe `nameTableId` (bits 0-1)",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.6"),
+	use: ({ id }, book) => id >= book.getId("5b.6") && id < book.getId("5b.23"),
 });
 
 it("PPUCtrl: writes `vramAddressIncrement32` (bit 2)", () => {
@@ -450,7 +450,7 @@ it("PPUCtrl: writes `vramAddressIncrement32` (bit 2)", () => {
 	locales: {
 		es: "PPUCtrl: escribe `vramAddressIncrement32` (bit 2)",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.6"),
+	use: ({ id }, book) => id >= book.getId("5b.6") && id < book.getId("5b.23"),
 });
 
 it("PPUCtrl: writes `sprite8x8PatternTableId` (bit 3)", () => {
@@ -934,7 +934,7 @@ it("PPUAddr: initializes two properties, `latch` and `address`", () => {
 	locales: {
 		es: "PPUAddr: inicializa dos propiedades, `latch` y `address`",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.8"),
+	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
 });
 
 it("PPUAddr: writes the MSB first, then the LSB", () => {
@@ -957,7 +957,7 @@ it("PPUAddr: writes the MSB first, then the LSB", () => {
 	locales: {
 		es: "PPUAddr: escribe primero el MSB, luego el LSB",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.8"),
+	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
 });
 
 it("PPUData: writes the value to VRAM using `PPUAddr::address`", () => {
@@ -1070,7 +1070,7 @@ it("PPUStatus: resets `PPUAddr::latch` after reading", () => {
 	locales: {
 		es: "PPUStatus: reinicia `PPUAddr::latch` luego de leer",
 	},
-	use: ({ id }, book) => id >= book.getId("5b.8"),
+	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
 });
 
 // 5b.9 Backgrounds (1/2): Drawing Name tables
