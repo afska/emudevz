@@ -13,7 +13,7 @@ const TILE_SIZE_PIXELS = 8;
 const SCREEN_WIDTH = 256;
 
 /**
- * PPU's internal register (discovered by a user called `loopy` on nesdev).
+ * PPU's internal register (discovered by `loopy`).
  * It contains important data related to Name table scrolling.
  * Every write to `PPUAddr`, `PPUScroll`, and `PPUCtrl` changes its state.
  * It's also changed multiple times by the PPU during render.

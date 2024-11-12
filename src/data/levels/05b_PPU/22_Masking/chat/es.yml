@@ -1,7 +1,7 @@
 main:
   messages:
   - el registro de video 🎭  ~PPUMask~ ($2001) permite a los programas habilitar o deshabilitar partes de la renderización
-  - revisa nuevamente 📄  ~/docs/ppu/video_registers.en.md~
+  - revisa nuevamente 📄  ~/docs/ppu/video_registers.es.md~
   - 🏛️  los bits ~m~ y ~M~ controlan si la primera columna de 8px debe ser visible o no para los fondos y sprites respectivamente
   - 🏞️  ~b~ habilita la renderización de fondos
   - 🛸  y ~s~ habilita la renderización de sprites
