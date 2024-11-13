@@ -10,7 +10,7 @@ loopy:
   messages:
   - a user who reverse engineered how the PPU scrolling register <really> works
   - the sad truth is...
-  - PPU scrolling doesn't work like we have it implemented right now 😅
+  - PPU scrolling doesn't work the way we have it implemented right now 😅
   - it's way more complicated than that
   - luckily, with my code, you can easily implement scrolling The Right Way™ ✨
   responses:
@@ -18,7 +18,40 @@ loopy:
 
 changes:
   messages:
-  - "// FIXME: Specify instructions"
-  responses: [
+  - |-
+    📚  _-_import the library and add a `loopy` property to `PPU`'s constructor, assigned to:_--_
+         _-_```javascript new LoopyRegister()```_--_
+  - |-
+    📚  _-_at the end of the `onPreLine(...)` method, call:_--_
+      _-_```javascript this.loopy.onPreLine(this.cycle);```_--_
+  - |-
+    📚  _-_at the end of the `onVisibleLine(...)` method, call:_--_
+      _-_```javascript this.loopy.onVisibleLine(this.cycle);```_--_
+  - |-
+    📚  _-_at the end of the `plotBG(...)` method, call:_--_
+      _-_```javascript this.loopy.onPlot(x);```_--_
+  - |-
+    📚 🎛️  _-_in `PPUCtrl`, remove the `nameTableId` field; replace its assignment in the `onWrite(...)` method with:_--_
+      _-_```javascript this.ppu.loopy.onPPUCtrlWrite(value);```_--_
+  - |-
+    📚 📊  _-_in `PPUStatus`, replace the code that disables `PPUAdrr`'s `latch` with:_--_
+      _-_```javascript this.ppu.loopy.onPPUStatusRead();```_--_
+  - |-
+    📚 📜  _-_in `PPUScroll`, remove the `onLoad()` method and replace `onWrite(...)` with:_--_
+      _-_```javascript onWrite(value) {
+        this.ppu.loopy.onPPUScrollWrite(value);
+      }```_--_
+  - |-
+    📚 📍  _-_in `PPUAddr`, remove the `onLoad()` method and replace `onWrite(...)` with:_--_
+      _-_```javascript onWrite(value) {
+        this.ppu.loopy.onPPUAddrWrite(value);
+      }```_--_
+    lastly, add this dynamic property:
+      _-_```javascript get address() {
+        return this.ppu.loopy.vAddress.getValue()
+      }
 
-  ]
+      set address(value) {
+        this.ppu.loopy.vAddress.setValue(value);
+      }```_--_
+  responses: []

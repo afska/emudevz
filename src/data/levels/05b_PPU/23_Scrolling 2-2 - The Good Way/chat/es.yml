@@ -1,4 +1,57 @@
 main:
   messages:
-  - coming soon!
+  - ¡sí!
+  - acabo de terminarlo
+  - mira, 📄  ~/lib/ppu/LoopyRegister.js~
+  responses:
+  - ¿quién es loopy? [loopy]
+
+loopy:
+  messages:
+  - un usuario que realizó ingeniería inversa para descubrir cómo <realmente> funciona el registro de scrolling de la PPU
+  - la triste verdad es...
+  - el scrolling de la PPU no funciona como lo tenemos implementado ahora mismo 😅
+  - es mucho más complicado que eso
+  - afortunadamente, con mi código, puedes implementar el desplazamiento Haciéndolo Bien™ ✨
+  responses:
+  - ¿qué necesitamos cambiar? [changes]
+
+changes:
+  messages:
+  - |-
+    📚  _-_importa la biblioteca y añade una propiedad `loopy` en el constructor de `PPU`, asignada a:_--_
+         _-_```javascript new LoopyRegister()```_--_
+  - |-
+    📚  _-_al final del método `onPreLine(...)`, llama a:_--_
+      _-_```javascript this.loopy.onPreLine(this.cycle);```_--_
+  - |-
+    📚  _-_al final del método `onVisibleLine(...)`, llama a:_--_
+      _-_```javascript this.loopy.onVisibleLine(this.cycle);```_--_
+  - |-
+    📚  _-_al final del método `plotBG(...)`, llama a:_--_
+      _-_```javascript this.loopy.onPlot(x);```_--_
+  - |-
+    📚 🎛️  _-_en `PPUCtrl`, elimina el campo `nameTableId`; reemplaza su asignación en el método `onWrite(...)` con:_--_
+      _-_```javascript this.ppu.loopy.onPPUCtrlWrite(value);```_--_
+  - |-
+    📚 📊  _-_en `PPUStatus`, reemplaza el código que desactiva el `latch` de `PPUAddr` con:_--_
+      _-_```javascript this.ppu.loopy.onPPUStatusRead();```_--_
+  - |-
+    📚 📜  _-_en `PPUScroll`, elimina el método `onLoad()` y reemplaza `onWrite(...)` con:_--_
+      _-_```javascript onWrite(value) {
+        this.ppu.loopy.onPPUScrollWrite(value);
+      }```_--_
+  - |-
+    📚 📍  _-_en `PPUAddr`, elimina el método `onLoad()` y reemplaza `onWrite(...)` con:_--_
+      _-_```javascript onWrite(value) {
+        this.ppu.loopy.onPPUAddrWrite(value);
+      }```_--_
+    por último, añade esta propiedad dinámica:
+      _-_```javascript get address() {
+        return this.ppu.loopy.vAddress.getValue()
+      }
+
+      set address(value) {
+        this.ppu.loopy.vAddress.setValue(value);
+      }```_--_
   responses: []

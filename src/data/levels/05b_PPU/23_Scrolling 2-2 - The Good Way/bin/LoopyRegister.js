@@ -13,7 +13,7 @@ const TILE_SIZE_PIXELS = 8;
 const SCREEN_WIDTH = 256;
 
 /**
- * PPU's internal register (discovered by `loopy`).
+ * PPU's internal register (discovered by a user called `loopy`).
  * It contains important data related to Name table scrolling.
  * Every write to `PPUAddr`, `PPUScroll`, and `PPUCtrl` changes its state.
  * It's also changed multiple times by the PPU during render.
@@ -129,11 +129,17 @@ export default class LoopyRegister {
      */
     if (cycle >= 280 && cycle <= 304) this._copyY();
 
-    this.onLine(cycle);
+    this._onLine(cycle);
+  }
+
+  /** Executed multiple times for each visible line. */
+  onVisibleLine(cycle) {
+    this._onLine(cycle);
   }
 
   /** Executed multiple times for each visible line (prefetch dots were ignored). */
-  onVisibleLine(cycle) {
+  onPlot(x) {
+    const cycle = x + 1;
     /**
      * Between dot 328 of a scanline, and 256 of the next scanline
      * If rendering is enabled, the PPU increments the horizontal position in v many times
@@ -147,7 +153,7 @@ export default class LoopyRegister {
   }
 
   /** Executed multiple times for each line. */
-  onLine(cycle) {
+  _onLine(cycle) {
     /**
      * At dot 256 of each scanline
      * If rendering is enabled, the PPU increments the vertical position in v. The effective Y

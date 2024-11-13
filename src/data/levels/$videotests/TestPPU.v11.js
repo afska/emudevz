@@ -926,6 +926,7 @@ const LOOPY_ADDR_FINE_Y_OFFSET = 12;
 const LOOPY_ADDR_FINE_Y_MASK = 0b111;
 const NAME_TABLE_OFFSETS = [1, -1, 1, -1];
 const SCREEN_WIDTH = 256;
+
 /**
  * PPU's internal register (discovered by a user called `loopy` on nesdev).
  * It contains important data related to Name table scrolling.
@@ -939,6 +940,7 @@ class LoopyRegister {
 		this.fineX = 0; //                     x (fine X scroll)
 		this.latch = false; //                 w (first or second write toggle)
 	}
+
 	/**
 	 * Returns the scrolled X in Name table coordinates ([0..262]).
 	 * If this value overflows (> 255), switch the horizontal Name table.
@@ -947,11 +949,13 @@ class LoopyRegister {
 		const { vAddress, fineX } = this;
 		return vAddress.coarseX * TILE_SIZE_PIXELS + fineX + (x % TILE_SIZE_PIXELS);
 	}
+
 	/** Returns the scrolled X in Name table coordinates ([0..255]). */
 	scrolledY() {
 		const { vAddress } = this;
 		return vAddress.coarseY * TILE_SIZE_PIXELS + vAddress.fineY;
 	}
+
 	/**
 	 * Returns the appropriate Name table id for a `scrolledX`.
 	 * It switches the horizontal Name table if scrolledX has overflowed.
@@ -962,6 +966,7 @@ class LoopyRegister {
 			scrolledX >= SCREEN_WIDTH ? NAME_TABLE_OFFSETS[baseNameTableId] : 0;
 		return baseNameTableId + offset;
 	}
+
 	/** Executed on `PPUCtrl` writes (updates `nameTableId` of `t`). */
 	onPPUCtrlWrite(value) {
 		// $2000 write
@@ -969,12 +974,14 @@ class LoopyRegister {
 		//    <used elsewhere> <- d: ABCDEF..
 		this.tAddress.nameTableId = byte.getBits(value, 0, 2);
 	}
+
 	/** Executed on `PPUStatus` reads (resets `latch`). */
 	onPPUStatusRead() {
 		// $2002 read
 		// w:                  <- 0
 		this.latch = false;
 	}
+
 	/** Executed on `PPUScroll` writes (updates X and Y scrolling on `t`). */
 	onPPUScrollWrite(value) {
 		if (!this.latch) {
@@ -982,17 +989,21 @@ class LoopyRegister {
 			// t: ....... ...ABCDE <- d: ABCDE...
 			// x:              FGH <- d: .....FGH
 			// w:                  <- 1
+
 			this.tAddress.coarseX = byte.getBits(value, 3, 5);
 			this.fineX = byte.getBits(value, 0, 3);
 		} else {
 			// $2005 second write (w is 1)
 			// t: FGH..AB CDE..... <- d: ABCDEFGH
 			// w:                  <- 0
+
 			this.tAddress.coarseY = byte.getBits(value, 3, 5);
 			this.tAddress.fineY = byte.getBits(value, 0, 3);
 		}
+
 		this.latch = !this.latch;
 	}
+
 	/** Executed on `PPUAddr` writes (updates everything in a weird way, copying `t` to `v`). */
 	onPPUAddrWrite(value) {
 		if (!this.latch) {
@@ -1001,6 +1012,7 @@ class LoopyRegister {
 			//        <unused>     <- d: AB......
 			// t: Z...... ........ <- 0 (bit Z is cleared)
 			// w:                  <- 1
+
 			let number = this.tAddress.toNumber();
 			let high = byte.highByteOf(number);
 			high = byte.setBits(high, 0, 6, byte.getBits(value, 0, 6));
@@ -1012,13 +1024,16 @@ class LoopyRegister {
 			// t: ....... ABCDEFGH <- d: ABCDEFGH
 			// v: <...all bits...> <- t: <...all bits...>
 			// w:                  <- 0
+
 			let number = this.tAddress.toNumber();
 			number = byte.buildU16(byte.highByteOf(number), value);
 			this.tAddress.setValue(number);
 			this.vAddress.setValue(number);
 		}
+
 		this.latch = !this.latch;
 	}
+
 	/** Executed multiple times for each pre line. */
 	onPreLine(cycle) {
 		/**
@@ -1028,10 +1043,18 @@ class LoopyRegister {
 		 * dots 280 to 304, completing the full initialization of v from t.
 		 */
 		if (cycle >= 280 && cycle <= 304) this._copyY();
-		this.onLine(cycle);
+
+		this._onLine(cycle);
 	}
-	/** Executed multiple times for each visible line (prefetch dots were ignored). */
+
+	/** Executed multiple times for each visible line. */
 	onVisibleLine(cycle) {
+		this._onLine(cycle);
+	}
+
+	/** Executed multiple times for each visible line (prefetch dots were ignored). */
+	onPlot(x) {
+		const cycle = x + 1;
 		/**
 		 * Between dot 328 of a scanline, and 256 of the next scanline
 		 * If rendering is enabled, the PPU increments the horizontal position in v many times
@@ -1043,8 +1066,9 @@ class LoopyRegister {
 		if (cycle >= 8 && cycle <= 256 && cycle % 8 === 0)
 			this.vAddress.incrementX();
 	}
+
 	/** Executed multiple times for each line. */
-	onLine(cycle) {
+	_onLine(cycle) {
 		/**
 		 * At dot 256 of each scanline
 		 * If rendering is enabled, the PPU increments the vertical position in v. The effective Y
@@ -1052,27 +1076,33 @@ class LoopyRegister {
 		 * the attribute table memory regions, and wrap to the next nametable appropriately.
 		 */
 		if (cycle === 256) this.vAddress.incrementY();
+
 		/**
 		 * At dot 257 of each scanline
 		 * If rendering is enabled, the PPU copies all bits related to horizontal position from t to v.
 		 */
 		if (cycle === 257) this._copyX();
 	}
+
 	_copyX() {
 		// (copies all bits related to horizontal position from `t` to `v`)
 		const v = this.vAddress.toNumber();
 		const t = this.tAddress.toNumber();
+
 		// v: ....A.. ...BCDEF <- t: ....A.. ...BCDEF
 		this.vAddress.setValue((v & 0b111101111100000) | (t & 0b000010000011111));
 	}
+
 	_copyY() {
 		// (copies all bits related to vertical position from `t` to `v`)
 		const v = this.vAddress.toNumber();
 		const t = this.tAddress.toNumber();
+
 		// v: GHIA.BC DEF..... <- t: GHIA.BC DEF.....
 		this.vAddress.setValue((v & 0b000010000011111) | (t & 0b111101111100000));
 	}
 }
+
 /**
  * A VRAM address, used for fetching the right tile during render.
  * yyy NN YYYYY XXXXX
@@ -1088,6 +1118,7 @@ class LoopyAddress {
 		this.nameTableId = 0;
 		this.fineY = 0;
 	}
+
 	/** Increments X, wrapping when needed. */
 	incrementX() {
 		if (this.coarseX === 31) {
@@ -1097,12 +1128,14 @@ class LoopyAddress {
 			this.coarseX++;
 		}
 	}
+
 	/** Increments Y, wrapping when needed. */
 	incrementY() {
 		if (this.fineY < 7) {
 			this.fineY++;
 		} else {
 			this.fineY = 0;
+
 			if (this.coarseY === 29) {
 				this.coarseY = 0;
 				this._switchVerticalNameTable();
@@ -1113,6 +1146,7 @@ class LoopyAddress {
 			}
 		}
 	}
+
 	/** Converts the address to a 15-bit number. */
 	toNumber() {
 		return (
@@ -1122,6 +1156,7 @@ class LoopyAddress {
 			(this.fineY << LOOPY_ADDR_FINE_Y_OFFSET)
 		);
 	}
+
 	/**
 	 * Returns the value as a 14-bit number.
 	 * The v register has 15 bits, but the PPU memory space is only 14 bits wide.
@@ -1130,6 +1165,7 @@ class LoopyAddress {
 	getValue() {
 		return this.toNumber() & 0b11111111111111;
 	}
+
 	/** Updates the address from a 15-bit number. */
 	setValue(number) {
 		this.coarseX =
@@ -1141,9 +1177,11 @@ class LoopyAddress {
 			LOOPY_ADDR_BASE_NAME_TABLE_ID_MASK;
 		this.fineY = (number >> LOOPY_ADDR_FINE_Y_OFFSET) & LOOPY_ADDR_FINE_Y_MASK;
 	}
+
 	_switchHorizontalNameTable() {
 		this.nameTableId = this.nameTableId ^ 0b1;
 	}
+
 	_switchVerticalNameTable() {
 		this.nameTableId = this.nameTableId ^ 0b10;
 	}
@@ -1171,7 +1209,7 @@ export default class PPU {
 	plotBG(x, y, color, colorIndex) {
 		this.colorIndexes[y * 256 + x] = colorIndex;
 		this.plot(x, y, color);
-		this.loopy.onVisibleLine(x + 1);
+		this.loopy.onPlot(x);
 	}
 
 	plot(x, y, color) {
@@ -1230,7 +1268,7 @@ export default class PPU {
 				this.spriteRenderer.renderScanline();
 		}
 
-		this.loopy.onLine(this.cycle);
+		this.loopy.onVisibleLine(this.cycle);
 	}
 
 	_onVBlankLine(onInterrupt) {
