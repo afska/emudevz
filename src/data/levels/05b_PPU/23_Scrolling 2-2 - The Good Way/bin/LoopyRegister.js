@@ -152,6 +152,24 @@ export default class LoopyRegister {
       this.vAddress.incrementX();
   }
 
+  /** Returns a snapshot of the current state. */
+  getSaveState() {
+    return {
+      v: this.vAddress.toNumber(),
+      t: this.tAddress.toNumber(),
+      x: this.fineX,
+      w: this.latch
+    };
+  }
+
+  /** Restores state from a snapshot. */
+  setSaveState(saveState) {
+    this.vAddress.setValue(saveState.v);
+    this.tAddress.setValue(saveState.t);
+    this.fineX = saveState.x;
+    this.latch = saveState.w;
+  }
+
   /** Executed multiple times for each line. */
   _onLine(cycle) {
     /**
