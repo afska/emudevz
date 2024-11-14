@@ -143,7 +143,6 @@ export default class Emulator extends Component {
 			volume,
 			onFrame
 		);
-		if (saveState != null) this.neees.setSaveState(saveState);
 	}
 
 	_getInput = () => {

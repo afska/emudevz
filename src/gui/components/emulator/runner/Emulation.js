@@ -89,6 +89,7 @@ export default class Emulation {
 
 		try {
 			this.neees.load(bytes);
+			if (this.saveState != null) this.neees.setSaveState(this.saveState);
 			this.frameTimer.start();
 		} catch (error) {
 			onError(error);
