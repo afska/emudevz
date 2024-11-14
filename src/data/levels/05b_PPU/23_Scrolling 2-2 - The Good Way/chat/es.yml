@@ -46,7 +46,7 @@ changes:
       _-_```javascript onWrite(value) {
         this.ppu.loopy.onPPUAddrWrite(value);
       }```_--_
-    por último, añade esta propiedad dinámica:
+    además, añade esta propiedad dinámica:
       _-_```javascript get address() {
         return this.ppu.loopy.vAddress.getValue()
       }
@@ -54,4 +54,9 @@ changes:
       set address(value) {
         this.ppu.loopy.vAddress.setValue(value);
       }```_--_
+  - |-
+    📚  _-_por último, en `BackgroundRenderer`, remplaza las constantes `scrolledX`, `scrolledY` and `nameTableId` con:_--_
+      _-_```javascript const scrolledX = this.ppu.loopy.scrolledX(x);
+      const scrolledY = this.ppu.loopy.scrolledY(y);
+      const nameTableId = this.ppu.loopy.nameTableId(scrolledX);```_--_
   responses: []
