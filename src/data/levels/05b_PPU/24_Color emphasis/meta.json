@@ -1,0 +1,66 @@
+{
+	"name": {
+		"en": "🍭 Color emphasis",
+		"es": "🍭 Énfasis de color"
+	},
+	"ui": {
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "ppu.js"],
+		"mainTestFile": "ppu.js"
+	},
+	"videoTests": [
+		{
+			"rom": "/roms/_test/hello_world.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v11.js"
+		},
+		{
+			"rom": "/roms/.all/TeslaVsEdison.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v11.js"
+		},
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v11.js",
+			"saveState": "supertiltbro_win.ss"
+		},
+		{
+			"rom": "/roms/_test/240p_test_suite.neees",
+			"frames": 60,
+			"ppu": "TestPPU.v11.js",
+			"saveState": "240ptestsuite_scroll2.ss"
+		}
+	],
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
