@@ -2480,3 +2480,69 @@ it("doesn't call `spriteRenderer.renderScanline()` if sprite rendering is disabl
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
+
+// 5b.24 Color emphasis
+
+it("PPUMask: writes `grayscale` (bit 0)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.onWrite(0b00000110);
+	ppuMask.grayscale.should.equalN(0, "grayscale");
+	ppuMask.onWrite(0b00000111);
+	ppuMask.grayscale.should.equalN(1, "grayscale");
+})({
+	locales: {
+		es: "PPUMask: escribe `grayscale` (bit 1)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.24"),
+});
+
+it("PPUMask: writes `emphasizeRed` (bit 5)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.onWrite(0b00000110);
+	ppuMask.emphasizeRed.should.equalN(0, "emphasizeRed");
+	ppuMask.onWrite(0b00100110);
+	ppuMask.emphasizeRed.should.equalN(1, "emphasizeRed");
+})({
+	locales: {
+		es: "PPUMask: escribe `emphasizeRed` (bit 5)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.24"),
+});
+
+it("PPUMask: writes `emphasizeGreen` (bit 6)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.onWrite(0b00000110);
+	ppuMask.emphasizeGreen.should.equalN(0, "emphasizeGreen");
+	ppuMask.onWrite(0b01000110);
+	ppuMask.emphasizeGreen.should.equalN(1, "emphasizeGreen");
+})({
+	locales: {
+		es: "PPUMask: escribe `emphasizeGreen` (bit 6)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.24"),
+});
+
+it("PPUMask: writes `emphasizeBlue` (bit 7)", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	const ppuMask = ppu.registers.ppuMask;
+	ppuMask.onWrite(0b00000110);
+	ppuMask.emphasizeBlue.should.equalN(0, "emphasizeBlue");
+	ppuMask.onWrite(0b10000110);
+	ppuMask.emphasizeBlue.should.equalN(1, "emphasizeBlue");
+})({
+	locales: {
+		es: "PPUMask: escribe `emphasizeBlue` (bit 7)",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.24"),
+});

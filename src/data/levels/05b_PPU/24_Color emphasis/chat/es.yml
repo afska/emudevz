@@ -44,5 +44,5 @@ so:
 
       *_-_*->** devuelve el color actualizado:
         _-_```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```_--_
-- 📚  _-_y lo más importante, ahora `PPU::plot(...)` necesita llamar al método transform de `PPUMask` en lugar de usar directamente el `color`_--_
+  - 📚  _-_y lo más importante, ahora `PPU::plot(...)` necesita llamar al método transform de `PPUMask` en lugar de usar directamente el `color`_--_
   responses: []
