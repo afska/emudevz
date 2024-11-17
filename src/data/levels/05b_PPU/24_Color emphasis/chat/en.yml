@@ -1,6 +1,6 @@
 main:
   messages:
-  - the PPU is capable of 'transforming' the output colors to some degree
+  - the PPU is capable of "transforming" the output colors to some degree
   - 🎭  ~PPUMask~ has some bits that enable <grayscale mode> or <color emphasis>
   - that is, emphasizing the red, green, or blue components of each color
   responses:
@@ -13,7 +13,7 @@ how:
   - bit 6 emphasizes green (darkening red and blue by 25%)
   - bit 7 emphasizes blue (darkening red and green by 25%)
   - if the three emphasis bits are enabled at the same time, all colors will be 25% darker
-  - <color emphasis> is independent from <grayscale mode>, so it will still tint the color of the gray image
+  - <color emphasis> is independent from <grayscale mode>, so the emphasis bits still tint the color of the gray image
   responses:
   - so... [so]
 
@@ -24,21 +24,25 @@ so:
   - |-
     📚  _-_add this method:_--_
     *_-_*transform(color)**:_--_
-      *_-_*->** ```javascript let r = (color >> 0) & 0xff;```_--_
-      *_-_*->** ```javascript let g = (color >> 8) & 0xff;```_--_
-      *_-_*->** ```javascript let b = (color >> 16) & 0xff;```_--_
+      *_-_*->** splits the color into `r`, `g`, and `b` components:_--_
+        _-_```javascript let r = (color >> 0) & 0xff;```_--_
+        _-_```javascript let g = (color >> 8) & 0xff;```_--_
+        _-_```javascript let b = (color >> 16) & 0xff;```_--_
 
       *_-_*->** if ~this.grayscale~:_--_
-        *_-_*->** calculates `Math.floor((r + g + b) / 3)`_--_
-          _-_(let's call this ~gray~)_--_
-        *_-_*->** `r = g = b = gray`_--_
+        *_-_*->** `r = g = b = Math.floor((r + g + b) / 3)`_--_
 
-      *_-_*->** if any emphasis bit is set:_--_
+      *_-_*->** if ANY emphasis bit is set:_--_
         *_-_*->** checks if ALL emphasis bits are set_--_
           _-_(let's call this ~all~)_--_
-        *_-_*->** ```javascript r = this.emphasizeRed && !all ? r : Math.floor(r * 0.75);```_--_
-        *_-_*->** ```javascript g = this.emphasizeGreen && !all ? g : Math.floor(g * 0.75);```_--_
-        *_-_*->** ```javascript b = this.emphasizeBlue && !all ? b : Math.floor(b * 0.75);```_--_
+        
+        *_-_*->** for each `r`, `g`, and `b`:
+          *_-_*->** if the bit is NOT enabled or `all` are enabled:_--_
+           *_-_*->** decreases the component brightness by 25%:_--_
+              _-_for example, red would be:_--_
+              _-_```javascript r = Math.floor(r * 0.75)```_--_
 
-      *_-_*->** returns ```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```_--_
+      *_-_*->** returns the updated color:
+        _-_```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```_--_
+  - 📚  _-_and most importantly, `PPU::plot(...)` now needs to call `PPUMask`'s transform method instead of using the `color` directly_--_
   responses: []

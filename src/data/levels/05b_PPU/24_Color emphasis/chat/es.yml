@@ -1,4 +1,48 @@
 main:
   messages:
-  - coming soon!
+  - el PPU es capaz de "transformar" los colores de salida hasta cierto punto
+  - 🎭  ~PPUMask~ tiene algunos bits que activan el <modo de escala de grises> o <énfasis de color>
+  - es decir, enfatizando los componentes rojo, verde o azul de cada color
+  responses:
+  - ¿cómo funciona? [how]
+
+how:
+  messages:
+  - el bit 0 convierte la salida a escala de grises
+  - el bit 5 enfatiza el rojo (oscureciendo el verde y el azul en un 25%)
+  - el bit 6 enfatiza el verde (oscureciendo el rojo y el azul en un 25%)
+  - el bit 7 enfatiza el azul (oscureciendo el rojo y el verde en un 25%)
+  - si los tres bits de énfasis están habilitados al mismo tiempo, todos los colores estarán un 25% más oscuros
+  - el <énfasis de color> es independiente del <modo de escala de grises>, por lo que los bits de énfasis aún tiñen el color de la imagen en escala de grises
+  responses:
+  - entonces... [so]
+
+so:
+  messages:
+  - abre 📄  ~/docs/ppu/video_registers.en.md~
+  - 📚  _-_en `PPUMask`, edita el método `onLoad()` y usa `addField(...)` para mapear los bits `grayscale`, `emphasizeRed`, `emphasizeGreen` y `emphasizeBlue`_--_
+  - |-
+    📚  _-_agrega este método:_--_
+    *_-_*transform(color)**:_--_
+      *_-_*->** divide el color en componentes `r`, `g` y `b`:_--_
+        _-_```javascript let r = (color >> 0) & 0xff;```_--_
+        _-_```javascript let g = (color >> 8) & 0xff;```_--_
+        _-_```javascript let b = (color >> 16) & 0xff;```_--_
+
+      *_-_*->** si ~this.grayscale~:_--_
+        *_-_*->** `r = g = b = Math.floor((r + g + b) / 3)`_--_
+
+      *_-_*->** si ALGÚN bit de énfasis está habilitado:_--_
+        *_-_*->** verifica si TODOS los bits de énfasis están habilitados_--_
+          _-_(llamemos a esto ~all~)_--_
+        
+        *_-_*->** para cada `r`, `g` y `b`:
+          *_-_*->** si el bit NO está habilitado o todos (`all`) están habilitados:_--_
+           *_-_*->** disminuye el brillo del componente en un 25%:_--_
+              _-_por ejemplo, el rojo sería:_--_
+              _-_```javascript r = Math.floor(r * 0.75)```_--_
+
+      *_-_*->** devuelve el color actualizado:
+        _-_```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```_--_
+- 📚  _-_y lo más importante, ahora `PPU::plot(...)` necesita llamar al método transform de `PPUMask` en lugar de usar directamente el `color`_--_
   responses: []
