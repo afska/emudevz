@@ -136,6 +136,7 @@ it("has a `step` method that increments the counters", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.should.respondTo("step");
 
 	for (let frame = 0; frame < 1; frame++) {
@@ -196,6 +197,7 @@ it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.should.respondTo("step");
 	const onFrame = sinon.spy();
 
@@ -619,6 +621,7 @@ it("calls `_onPreLine` on scanline -1", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "_onPreLine");
 
@@ -662,6 +665,7 @@ it("calls `_onVisibleLine` on scanlines ~[0, 240)~", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "_onVisibleLine");
 
@@ -705,6 +709,7 @@ it("calls `_onVBlankLine` on scanline 241, with the `onInterrupt` argument", () 
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "_onVBlankLine");
 
@@ -749,6 +754,7 @@ it("resets `PPUStatus::isInVBlankInterval` on scanline=-1, cycle=1", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	for (let cycle = 0; cycle < 341; cycle++) {
@@ -781,6 +787,7 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	ppu.registers.ppuCtrl.setValue(0b10000000); // (generate NMI on VBlank)
@@ -823,6 +830,7 @@ it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on scanline=
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	const onInterrupt = sinon.spy();
@@ -963,6 +971,7 @@ it("PPUData: writes the value to VRAM using `PPUAddr::address`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 
 	const ppuAddr = ppu.registers.ppuAddr;
 	const ppuData = ppu.registers.ppuData;
@@ -983,6 +992,7 @@ it("PPUData: autoincrements the address by 1 (writes)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 
 	const ppuAddr = ppu.registers.ppuAddr;
 	const ppuData = ppu.registers.ppuData;
@@ -1005,6 +1015,7 @@ it("PPUData: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement3
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	const ppuAddr = ppu.registers.ppuAddr;
@@ -1030,6 +1041,7 @@ it("PPUData: autoincrements the address without exceeding $FFFF (writes)", () =>
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	const ppuAddr = ppu.registers.ppuAddr;
@@ -1092,6 +1104,7 @@ it("BackgroundRenderer: renderScanline() calls `PPU::plot` 256 times", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "plot");
 
@@ -1109,6 +1122,7 @@ it("calls `backgroundRenderer.renderScanline()` on cycle 0 of every visible scan
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "plot");
 	sinon.spy(ppu.backgroundRenderer, "renderScanline");
@@ -1649,6 +1663,7 @@ it("resets `PPUStatus::spriteOverflow` on scanline=-1, cycle=1", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	for (let cycle = 0; cycle < 341; cycle++) {
@@ -1677,6 +1692,7 @@ it("calls `spriteRenderer.renderScanline()` on cycle 0 of every visible scanline
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "plot");
 	sinon.spy(ppu.spriteRenderer, "renderScanline");
@@ -1776,6 +1792,7 @@ it("resets `PPUStatus::sprite0Hit` on scanline=-1, cycle=1", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 
 	for (let cycle = 0; cycle < 341; cycle++) {
@@ -2416,6 +2433,7 @@ it("doesn't call `backgroundRenderer.renderScanline()` if background rendering i
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0b00010000);
 	sinon.spy(ppu, "plot");
 	sinon.spy(ppu.backgroundRenderer, "renderScanline");
@@ -2450,6 +2468,7 @@ it("doesn't call `spriteRenderer.renderScanline()` if sprite rendering is disabl
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
 	ppu.registers?.ppuMask?.onWrite?.(0b00001000);
 	sinon.spy(ppu, "plot");
 	sinon.spy(ppu.spriteRenderer, "renderScanline");
