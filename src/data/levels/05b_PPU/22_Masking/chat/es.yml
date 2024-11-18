@@ -48,7 +48,7 @@ renderers:
   - yep, veamos...
   - |-
     📚  _-_en `BackgroundRenderer`, cambia `renderScanline()`:_--_
-    _-_si `showBackgroundInFirst8Pixels` está apagado y `x < 8`, solo dibuja el color de fondo, incrementa ~x~ y después haz ~continue~! ¡no proceses más!_--_
+    _-_si `showBackgroundInFirst8Pixels` está apagado y `x < 8`, solo dibuja (con `PPU::plotBG(...)`) el color de fondo, incrementa ~x~ y después haz ~continue~! ¡no proceses más!_--_
     _-_(recuerda que el color de fondo es `this.ppu.getColor(0, 0)`)_--_
   - |-
     📚  _-_en `SpriteRenderer`, cambia `_render(...)`..._--_

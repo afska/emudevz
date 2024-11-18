@@ -48,7 +48,7 @@ renderers:
   - yup, let's see...
   - |-
     📚  _-_in `BackgroundRenderer`, change `renderScanline()`:_--_
-    _-_if `showBackgroundInFirst8Pixels` is off and `x < 8`, just plot the backdrop color, increment ~x~, and ~continue~! don't process further!_--_
+    _-_if `showBackgroundInFirst8Pixels` is off and `x < 8`, just plot (with `PPU::plotBG(...)`) the backdrop color, increment ~x~, and ~continue~! don't process further!_--_
     _-_(remember that the backdrop color is `this.ppu.getColor(0, 0)`)_--_
   - |-
     📚  _-_in `SpriteRenderer`, change `_render(...)`..._--_

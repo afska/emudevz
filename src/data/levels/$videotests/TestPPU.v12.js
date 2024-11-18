@@ -530,7 +530,7 @@ class BackgroundRenderer {
 
 		for (let x = 0; x < 256; ) {
 			if (!this.ppu.registers.ppuMask.showBackgroundInFirst8Pixels && x < 8) {
-				this.ppu.plot(x, y, this.ppu.getColor(0, 0), 0);
+				this.ppu.plotBG(x, y, this.ppu.getColor(0, 0), 0);
 				x++;
 				continue;
 			}
