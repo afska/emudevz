@@ -28,19 +28,19 @@ interrupts:
     📚  _-_and change this one on `PPU`:_--_
     *_-_*step(onFrame, onInterrupt)**:_--_
       *_-_*->** if ~this.scanline~ is ~-1~:_--_
-        *_-_*->** call ~this._onPreLine(onInterrupt)~_--_
+        *_-_*->** call ~this._onPreLine()~_--_
       *_-_*->** if ~this.scanline~ is lower than 240:_--_
-        *_-_*->** call ~this._onVisibleLine(onInterrupt)~_--_
+        *_-_*->** call ~this._onVisibleLine()~_--_
       *_-_*->** if ~this.scanline~ is 241:_--_
         *_-_*->** call ~this._onVBlankLine(onInterrupt)~_--_
       *_-_*->** ...rest of the ~step(...)~ code..._--_
       *_-_*[!]** note that we added an ~onInterrupt~ parameter_--_
   - |-
     📚  _-_now, add these methods:_--_
-    *_-_*_onPreLine(onInterrupt)**:_--_
+    *_-_*_onPreLine()**:_--_
       *_-_*->** if ~this.cycle~ is 1:_--_
         *_-_*->** sets ~this.registers.ppuStatus.isInVBlankInterval = 0~_--_
-    *_-_*_onVisibleLine(onInterrupt)**:_--_
+    *_-_*_onVisibleLine()**:_--_
       *_-_*[!]** leave empty for now_--_
     *_-_*_onVBlankLine(onInterrupt)**:_--_
       *_-_*->** if ~this.cycle~ is 1:_--_

@@ -2564,3 +2564,89 @@ it("PPUMask: writes `emphasizeBlue` (bit 7)", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("5b.24"),
 });
+
+// 5b.25 Mapper tick
+
+it("saves the `mapper` `onLoad`", () => {
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+
+	ppu.onLoad(dummyMapper);
+
+	ppu.mapper.should.equal(dummyMapper);
+})({
+	locales: {
+		es: "guarda el `mapper` en `onLoad`",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.25"),
+});
+
+it("calls `mapper.tick()` on cycle 260 if scanline < 240", () => {
+	const dummyMapper = {
+		cpuRead: () => 0,
+		cpuWrite: () => {},
+		ppuRead: () => 0,
+		ppuWrite: () => {},
+		tick: () => {},
+	};
+
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x1e);
+	sinon.spy(ppu.mapper, "tick");
+
+	for (let frame = 0; frame < 1; frame++) {
+		for (let scanline = -1; scanline < 261; scanline++) {
+			for (let cycle = 0; cycle < 341; cycle++) {
+				ppu.mapper.tick.resetHistory();
+				ppu.step(noop, noop);
+
+				if (scanline < 240 && cycle === 260) {
+					ppu.mapper.tick.callCount.should.equalN(1, "tick.callCount");
+				} else {
+					ppu.mapper.tick.should.not.have.been.called;
+				}
+			}
+		}
+	}
+})({
+	locales: {
+		es: "llama a `mapper.tick()` en el ciclo 260 si scanline < 240",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.25"),
+});
+
+it("doesn't call `mapper.tick()` if rendering is disabled", () => {
+	const dummyMapper = {
+		cpuRead: () => 0,
+		cpuWrite: () => {},
+		ppuRead: () => 0,
+		ppuWrite: () => {},
+		tick: () => {},
+	};
+
+	const PPU = mainModule.default.PPU;
+	const ppu = new PPU({});
+	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+	ppu.onLoad?.(dummyMapper);
+	ppu.registers?.ppuMask?.onWrite?.(0x00);
+	sinon.spy(ppu.mapper, "tick");
+
+	for (let frame = 0; frame < 1; frame++) {
+		for (let scanline = -1; scanline < 261; scanline++) {
+			for (let cycle = 0; cycle < 341; cycle++) {
+				ppu.mapper.tick.resetHistory();
+				ppu.step(noop, noop);
+
+				ppu.mapper.tick.should.not.have.been.called;
+			}
+		}
+	}
+})({
+	locales: {
+		es: "no llama a `mapper.tick()` si el renderizado está apagado",
+	},
+	use: ({ id }, book) => id >= book.getId("5b.25"),
+});
