@@ -56,13 +56,13 @@
 			"rom": "/roms/_test/240p_test_suite.neees",
 			"frames": 120,
 			"ppu": "TestPPU.v11.js",
-			"saveState": "240ptestsuite_scroll3.ss"
+			"saveState": "240ptestsuite_scroll_vertical.ss"
 		},
 		{
 			"rom": "/roms/_test/240p_test_suite.neees",
 			"frames": 120,
 			"ppu": "TestPPU.v11.js",
-			"saveState": "240ptestsuite_scroll2.ss"
+			"saveState": "240ptestsuite_scroll_hill.ss"
 		}
 	],
 	"memory": {
