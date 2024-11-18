@@ -84,6 +84,7 @@ const dummyMapper = {
 	cpuWrite: () => {},
 	ppuRead: () => 0,
 	ppuWrite: () => {},
+	tick: () => {},
 };
 const noop = () => {};
 
@@ -614,7 +615,7 @@ it("has methods: `_onPreLine`, `_onVisibleLine`, `onVBlankLine`", () => {
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("calls `_onPreLine` on scanline -1, with the `onInterrupt` argument", () => {
+it("calls `_onPreLine` on scanline -1", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -633,7 +634,7 @@ it("calls `_onPreLine` on scanline -1, with the `onInterrupt` argument", () => {
 
 			if (scanline === -1) {
 				try {
-					ppu._onPreLine.should.have.been.calledWith(onInterrupt);
+					ppu._onPreLine.should.have.been.called;
 				} catch (e) {
 					throw new Error(
 						`_onPreLine should be called on scanline=${scanline}, cycle=${cycle}`
@@ -652,13 +653,12 @@ it("calls `_onPreLine` on scanline -1, with the `onInterrupt` argument", () => {
 	}
 })({
 	locales: {
-		es:
-			"llama a `_onPreLine` en la scanline -1, con el argumento `onInterrupt`",
+		es: "llama a `_onPreLine` en la scanline -1",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("calls `_onVisibleLine` on scanlines ~[0, 240)~, with the `onInterrupt` argument", () => {
+it("calls `_onVisibleLine` on scanlines ~[0, 240)~", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -677,7 +677,7 @@ it("calls `_onVisibleLine` on scanlines ~[0, 240)~, with the `onInterrupt` argum
 
 			if (scanline >= 0 && scanline < 240) {
 				try {
-					ppu._onVisibleLine.should.have.been.calledWith(onInterrupt);
+					ppu._onVisibleLine.should.have.been.called;
 				} catch (e) {
 					throw new Error(
 						`_onVisibleLine should be called on scanline=${scanline}, cycle=${cycle}`
@@ -696,8 +696,7 @@ it("calls `_onVisibleLine` on scanlines ~[0, 240)~, with the `onInterrupt` argum
 	}
 })({
 	locales: {
-		es:
-			"llama a `_onVisibleLine` en las scanlines ~[0, 240)~, con el argumento `onInterrupt`",
+		es: "llama a `_onVisibleLine` en las scanlines ~[0, 240)~",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });

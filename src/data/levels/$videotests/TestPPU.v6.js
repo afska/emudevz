@@ -829,8 +829,8 @@ export default class PPU {
 	}
 
 	step(onFrame, onInterrupt) {
-		if (this.scanline === -1) this._onPreLine(onInterrupt);
-		else if (this.scanline < 240) this._onVisibleLine(onInterrupt);
+		if (this.scanline === -1) this._onPreLine();
+		else if (this.scanline < 240) this._onVisibleLine();
 		else if (this.scanline === 241) this._onVBlankLine(onInterrupt);
 
 		this.cycle++;
@@ -847,14 +847,14 @@ export default class PPU {
 		}
 	}
 
-	_onPreLine(onInterrupt) {
+	_onPreLine() {
 		if (this.cycle === 1) {
 			this.registers.ppuStatus.isInVBlankInterval = 0;
 			this.registers.ppuStatus.spriteOverflow = 0;
 		}
 	}
 
-	_onVisibleLine(onInterrupt) {
+	_onVisibleLine() {
 		if (this.cycle === 0) {
 			this.backgroundRenderer.renderScanline();
 			this.spriteRenderer.renderScanline();

@@ -21,5 +21,5 @@ aahh:
     📚  _-_en `SpriteRenderer`, modifica el método ~_render(...)~; debajo de ~buffer[x] = ...~, agrega:_--_
     *_-_*->** si el ~sprite.id~ es 0 Y el píxel de fondo en ~(x, y)~ es opaco:_--_
       *_-_*->** asigna ~this.ppu.registers.ppuStatus.sprite0Hit = 1~_--_
-  - 📚  _-_ah, y reinicia ~sprite0Hit~ en ~PPU::_onPreLine(...)~, ¡igual que hiciste con las otras dos banderas!_--_
+  - 📚  _-_ah, y reinicia ~sprite0Hit~ en ~PPU::_onPreLine()~, ¡igual que hiciste con las otras dos banderas!_--_
   responses: []

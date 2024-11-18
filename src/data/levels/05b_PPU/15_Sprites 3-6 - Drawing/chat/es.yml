@@ -18,7 +18,7 @@ easy:
   - vamos a hacer lo siguiente
   - |-
       📚  _-_en la clase `PPU`, cambia:_--_
-      *_-_*_onVisibleLine(...)**:_--_
+      *_-_*_onVisibleLine()**:_--_
         *_-_*->** justo debajo de la llamada ~renderScanline()~ a ~backgroundRenderer~..._--_
         *_-_*->** ...haz lo mismo con ~spriteRenderer~_--_
   - |-

@@ -968,8 +968,8 @@ export default class PPU {
 	}
 
 	step(onFrame, onInterrupt) {
-		if (this.scanline === -1) this._onPreLine(onInterrupt);
-		else if (this.scanline < 240) this._onVisibleLine(onInterrupt);
+		if (this.scanline === -1) this._onPreLine();
+		else if (this.scanline < 240) this._onVisibleLine();
 		else if (this.scanline === 241) this._onVBlankLine(onInterrupt);
 
 		this.cycle++;
@@ -986,7 +986,7 @@ export default class PPU {
 		}
 	}
 
-	_onPreLine(onInterrupt) {
+	_onPreLine() {
 		if (!this.registers.ppuMask.isRenderingEnabled()) return;
 
 		if (this.cycle === 1) {
@@ -996,7 +996,7 @@ export default class PPU {
 		}
 	}
 
-	_onVisibleLine(onInterrupt) {
+	_onVisibleLine() {
 		if (!this.registers.ppuMask.isRenderingEnabled()) return;
 
 		if (this.cycle === 0) {

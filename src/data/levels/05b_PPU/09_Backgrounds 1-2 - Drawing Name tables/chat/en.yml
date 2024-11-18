@@ -22,7 +22,7 @@ finally:
         _-_(remember to import it if you defined it in another file!)_--_
     *_-_*step(...)**:_--_
       *_-_*->** remove the test code (~<test>...</test>~)_--_
-    *_-_*_onVisibleLine(...)**:_--_
+    *_-_*_onVisibleLine()**:_--_
       *_-_*->** if the cycle is ~0~, call ~backgroundRenderer.renderScanline()~_--_
   - |-
     📚  _-_now, in the `BackgroundRenderer` class, define:_--_
