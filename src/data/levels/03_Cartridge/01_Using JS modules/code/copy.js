@@ -3,6 +3,8 @@
 	["golden.log", false],
 	["hello_world.neees", true],
 	["240p_test_suite.neees", true],
+	["ppu_emphasis.neees", true],
+	["ppu_mapper_irq.neees", true],
 ].forEach(([file, binary]) => {
 	const path = `${Drive.TESTROMS_DIR}/${file}`;
 	filesystem.write(path, level.bin[file], { binary });
