@@ -1,4 +1,20 @@
 main:
   messages:
-  - coming soon!
+  - a final touch 🪄
+  - some mappers feature a <scanline counter>
+  - "we'll implement that as simply as we can:"
+  - just call a `tick()` function on cycle 260 of every pre-line and visible scanline
+  responses:
+  - is it that simple? [simple]
+
+simple:
+  messages:
+  - yeah!
+  - |-
+    📚  _-_in `PPU`, add this method:_--_
+      *_-_*onLoad(mapper)**:_--_
+        *_-_*->** saves the parameter as a property (~this.mapper~)_--_
+  - |-
+    📚  _-_add at the end of the `_onPreLine()` and `_onVisibleLine():_--_
+      _-_```javascript if (this.cycle === 260) this.mapper.tick();```_--_
   responses: []
