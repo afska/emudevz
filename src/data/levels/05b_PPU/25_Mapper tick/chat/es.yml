@@ -15,6 +15,6 @@ simple:
       *_-_*onLoad(mapper)**:_--_
         *_-_*->** guarda el parámetro como una propiedad (~this.mapper~)_--_
   - |-
-    📚  _-_añade al final de `_onPreLine()` y `_onVisibleLine():_--_
+    📚  _-_añade al final de `_onPreLine()` y `_onVisibleLine()`:_--_
       _-_```javascript if (this.cycle === 260) this.mapper.tick();```_--_
   responses: []
