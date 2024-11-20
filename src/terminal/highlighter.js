@@ -7,7 +7,7 @@ const CODE_PARSE_REGEXP = /```(\S+)\s+([^`]+)```/;
 const RAW = "raw";
 
 export default {
-	highlightText(text) {
+	highlightText(text, dictionaryRegexp = null) {
 		let parts = [{ text }];
 
 		parts = this._highlightCode(parts);
@@ -54,6 +54,13 @@ export default {
 		].forEach((symbol) => {
 			parts = this._highlightAccent(parts, symbol);
 		});
+
+		if (dictionaryRegexp != null) {
+			parts = this._highlightAccent(parts, {
+				regexp: dictionaryRegexp,
+				style: theme.DICTIONARY,
+			});
+		}
 
 		return parts;
 	},

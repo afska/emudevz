@@ -113,7 +113,10 @@ export default class Terminal {
 		text = this._normalize(text);
 
 		if (withHighlight) {
-			const parts = highlighter.highlightText(text);
+			const parts = highlighter.highlightText(
+				text,
+				this._dictionaryLinkProvider?.regexp
+			);
 
 			for (let part of parts) {
 				if (part.isAccent) await this.write(part.text, part.style, interval);
@@ -501,7 +504,7 @@ export default class Terminal {
 			toast.normal(dictionary.getDefinition(text));
 		};
 		this._dictionaryLinkProvider = this.registerLinkProvider(regexp, handler);
-		this._dictionaryLinkProvider.entries = entries; // TODO: FIX WORD WRAP
+		this._dictionaryLinkProvider.regexp = regexp;
 	}
 
 	_requestInterrupt() {
