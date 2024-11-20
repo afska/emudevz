@@ -1,3 +1,4 @@
+import escapeStringRegexp from "escape-string-regexp";
 import { LinkProvider } from "xterm-link-provider";
 import _ from "lodash";
 import filesystem from "../filesystem";
@@ -33,7 +34,7 @@ const BACKSPACE = "\b \b";
 const LINK_FILE_REGEXP = /📄 {2}([a-z0-9/._-]+)/iu;
 
 export default class Terminal {
-	constructor(xterm) {
+	constructor(xterm, dictionary) {
 		this._xterm = xterm;
 		this._input = null;
 		this._keyInput = null;
@@ -51,6 +52,7 @@ export default class Terminal {
 		this._setUpXtermHooks();
 		this._setUpRemoteCommandSubscriber();
 		this._setUpFileLinks();
+		if (dictionary != null) this._setUpDictionaryLinks(dictionary);
 
 		this.autocompleteOptions = [];
 	}
@@ -310,6 +312,8 @@ export default class Terminal {
 		this._disposeFlag = true;
 		this._subscriber.release();
 		this._fileLinkProvider.dispose();
+		if (this._dictionaryLinkProvider != null)
+			this._dictionaryLinkProvider.dispose();
 	}
 
 	static tryCreateFile(filePath, initialContent = "") {
@@ -481,6 +485,20 @@ export default class Terminal {
 				}
 			}
 		);
+	}
+
+	_setUpDictionaryLinks(dictionary) {
+		const entries = dictionary.getEntries();
+		let regexp = new RegExp(
+			_.template("(${entries})")({
+				entries: entries.map(escapeStringRegexp).join("|"),
+			}),
+			"iu"
+		);
+		const handler = (__, text) => {
+			toast.normal(dictionary.getDefinition(text));
+		};
+		this._dictionaryLinkProvider = this.registerLinkProvider(regexp, handler); // TODO: FIX WORD WRAP (name table)
 	}
 
 	_requestInterrupt() {

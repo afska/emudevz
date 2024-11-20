@@ -14,7 +14,7 @@ const SELECTION_SYMBOL = "=> ";
 const MESSAGE_SPEED = 30;
 
 // eslint-disable-next-line
-const LINK_DETECT_REGEXP = _.template("^(${responses}$)");
+const LINK_DETECT_REGEXP = _.template("(^${responses}$)");
 const LINK_PARSE_REGEXP = /^(\d\d?)\) .+/u;
 
 export default class ChatCommand extends Command {
