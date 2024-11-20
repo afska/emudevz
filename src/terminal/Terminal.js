@@ -1,4 +1,5 @@
 import escapeStringRegexp from "escape-string-regexp";
+import { marked } from "marked";
 import { LinkProvider } from "xterm-link-provider";
 import _ from "lodash";
 import filesystem from "../filesystem";
@@ -500,8 +501,18 @@ export default class Terminal {
 			}),
 			"iu"
 		);
-		const handler = (__, text) => {
-			toast.normal(dictionary.getDefinition(text));
+		const handler = (__, word) => {
+			const { icon, name, text } = dictionary.getDefinition(word);
+			const markdown = `<h5>${icon} ${name}</h5>\n${text}`;
+			const html = marked.parseInline(markdown, []);
+			toast.normal(
+				<span
+					style={{ textAlign: "center" }}
+					dangerouslySetInnerHTML={{
+						__html: html,
+					}}
+				/>
+			);
 		};
 		this._dictionaryLinkProvider = this.registerLinkProvider(regexp, handler);
 		this._dictionaryLinkProvider.regexp = regexp;

@@ -40,7 +40,14 @@ export default {
 		});
 		if (key == null) return null;
 
-		return this[key][locales.language];
+		const data = this[key];
+		const name = this._getUsableKeysOf(key)[0];
+
+		return {
+			icon: data.icon,
+			name,
+			text: this[key][locales.language],
+		};
 	},
 
 	_getUsableKeysOf(key) {
