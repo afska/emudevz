@@ -489,16 +489,19 @@ export default class Terminal {
 
 	_setUpDictionaryLinks(dictionary) {
 		const entries = dictionary.getEntries();
-		let regexp = new RegExp(
+		const regexp = new RegExp(
 			_.template("(${entries})")({
-				entries: entries.map(escapeStringRegexp).join("|"),
+				entries: entries
+					.map((it) => `(?:\\b${escapeStringRegexp(it)}\\b)`)
+					.join("|"),
 			}),
 			"iu"
 		);
 		const handler = (__, text) => {
 			toast.normal(dictionary.getDefinition(text));
 		};
-		this._dictionaryLinkProvider = this.registerLinkProvider(regexp, handler); // TODO: FIX WORD WRAP (name table)
+		this._dictionaryLinkProvider = this.registerLinkProvider(regexp, handler);
+		this._dictionaryLinkProvider.entries = entries; // TODO: FIX WORD WRAP
 	}
 
 	_requestInterrupt() {

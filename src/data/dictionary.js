@@ -46,7 +46,7 @@ export default {
 	_getUsableKeysOf(key) {
 		const localizedKey = this[key].also?.[locales.language];
 		const usableKey = localizedKey != null ? localizedKey : key;
-		return _.reverse(usableKey.split("|"));
+		return usableKey.split("|");
 	},
 
 	_keys() {
