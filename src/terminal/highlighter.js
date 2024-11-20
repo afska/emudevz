@@ -7,7 +7,7 @@ const CODE_PARSE_REGEXP = /```(\S+)\s+([^`]+)```/;
 const RAW = "raw";
 
 export default {
-	highlightText(text) {
+	highlightText(text, dictionaryRegexp = null) {
 		let parts = [{ text }];
 
 		parts = this._highlightCode(parts);
@@ -44,9 +44,9 @@ export default {
 				style: theme.ITALIC,
 			}, // __quick italic__
 			{ regexp: /(~[^~]+~)/, silent: /(~([^~]+)~)/g }, // ~quick accent~
+			{ regexp: /(<[^>]+>)/, silent: /(<([^~]+)>)/g }, // <angular brackets>
 			{ regexp: /(`[^`]+`)/, silent: /(`([^~]+)`)/g }, // `backticks`
 			{ regexp: /("[^"]+")/ }, // "double quotes"
-			{ regexp: /(<[^>]+>)/, silent: /(<([^~]+)>)/g }, // <angular brackets>
 			{ regexp: /(\[[^\];]+\])/ }, // [square brackets] (ignoring terminal sequences)
 			{ regexp: /(#?\$[0-9a-fA-F]+)/ }, // #literal hex numbers
 			{ regexp: /(#[0-9]+)/ }, // #literal dec numbers
@@ -54,6 +54,13 @@ export default {
 		].forEach((symbol) => {
 			parts = this._highlightAccent(parts, symbol);
 		});
+
+		if (dictionaryRegexp != null) {
+			parts = this._highlightAccent(parts, {
+				regexp: dictionaryRegexp,
+				style: theme.DICTIONARY,
+			});
+		}
 
 		return parts;
 	},

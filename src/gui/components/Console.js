@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { XTerm } from "updated-xterm-for-react";
 import { FitAddon } from "xterm-addon-fit";
+import dictionary from "../../data/dictionary";
 import locales from "../../locales";
 import Terminal from "../../terminal/Terminal";
 import { bus } from "../../utils";
@@ -81,7 +82,7 @@ export default class Console extends PureComponent {
 		this._onResize();
 
 		const xterm = this.ref.terminal;
-		this.terminal = new Terminal(xterm);
+		this.terminal = new Terminal(xterm, dictionary);
 	}
 
 	componentWillUnmount() {

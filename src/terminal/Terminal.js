@@ -1,3 +1,5 @@
+import escapeStringRegexp from "escape-string-regexp";
+import { marked } from "marked";
 import { LinkProvider } from "xterm-link-provider";
 import _ from "lodash";
 import filesystem from "../filesystem";
@@ -33,7 +35,7 @@ const BACKSPACE = "\b \b";
 const LINK_FILE_REGEXP = /📄 {2}([a-z0-9/._-]+)/iu;
 
 export default class Terminal {
-	constructor(xterm) {
+	constructor(xterm, dictionary) {
 		this._xterm = xterm;
 		this._input = null;
 		this._keyInput = null;
@@ -51,6 +53,7 @@ export default class Terminal {
 		this._setUpXtermHooks();
 		this._setUpRemoteCommandSubscriber();
 		this._setUpFileLinks();
+		if (dictionary != null) this._setUpDictionaryLinks(dictionary);
 
 		this.autocompleteOptions = [];
 	}
@@ -111,7 +114,10 @@ export default class Terminal {
 		text = this._normalize(text);
 
 		if (withHighlight) {
-			const parts = highlighter.highlightText(text);
+			const parts = highlighter.highlightText(
+				text,
+				this._dictionaryLinkProvider?.regexp
+			);
 
 			for (let part of parts) {
 				if (part.isAccent) await this.write(part.text, part.style, interval);
@@ -310,6 +316,8 @@ export default class Terminal {
 		this._disposeFlag = true;
 		this._subscriber.release();
 		this._fileLinkProvider.dispose();
+		if (this._dictionaryLinkProvider != null)
+			this._dictionaryLinkProvider.dispose();
 	}
 
 	static tryCreateFile(filePath, initialContent = "") {
@@ -481,6 +489,33 @@ export default class Terminal {
 				}
 			}
 		);
+	}
+
+	_setUpDictionaryLinks(dictionary) {
+		const entries = dictionary.getEntries();
+		const regexp = new RegExp(
+			_.template("(${entries})")({
+				entries: entries
+					.map((it) => `(?:\\b${escapeStringRegexp(it)}\\b)`)
+					.join("|"),
+			}),
+			"iu"
+		);
+		const handler = (__, word) => {
+			const { icon, name, text } = dictionary.getDefinition(word);
+			const markdown = `<h5>${icon} ${name}</h5>\n${text}`;
+			const html = marked.parseInline(markdown, []);
+			toast.normal(
+				<span
+					style={{ textAlign: "center" }}
+					dangerouslySetInnerHTML={{
+						__html: html,
+					}}
+				/>
+			);
+		};
+		this._dictionaryLinkProvider = this.registerLinkProvider(regexp, handler);
+		this._dictionaryLinkProvider.regexp = regexp;
 	}
 
 	_requestInterrupt() {
