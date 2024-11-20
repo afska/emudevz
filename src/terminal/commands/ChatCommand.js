@@ -6,6 +6,7 @@ import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import { bus } from "../../utils";
 import { CANCELED } from "../errors";
+import highlighter from "../highlighter";
 import { theme } from "../style";
 import Command from "./Command";
 
@@ -197,7 +198,10 @@ export default class ChatCommand extends Command {
 				responses: responses
 					.map((response) => {
 						const escapedText = escapeStringRegexp(
-							this._buildResponseText(response)
+							this._buildResponseText(response).replace(
+								highlighter.SILENT_CHARACTERS,
+								""
+							)
 						);
 						return `(${escapedText})`;
 					})

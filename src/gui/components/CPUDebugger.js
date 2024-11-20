@@ -313,7 +313,9 @@ export default class CPUDebugger extends PureComponent {
 			>
 				<td
 					className={
-						this.state._selectedCells.includes(address) && styles.selectedCell
+						this.state._selectedCells.includes(address)
+							? styles.selectedCell
+							: ""
 					}
 				>
 					<Value

@@ -7,6 +7,8 @@ const CODE_PARSE_REGEXP = /```(\S+)\s+([^`]+)```/;
 const RAW = "raw";
 
 export default {
+	SILENT_CHARACTERS: /[~<>`]/g,
+
 	highlightText(text, dictionaryRegexp = null) {
 		let parts = [{ text }];
 
