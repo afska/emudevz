@@ -6,7 +6,7 @@ const STYLE = {
 	color: "#fff",
 };
 
-const DEFAULT_DURATION = 1500;
+const DEFAULT_DURATION = 3000;
 
 export default {
 	normal(message, options = { duration: DEFAULT_DURATION }) {
