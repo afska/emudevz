@@ -15,8 +15,8 @@ import testContext from "./context";
 import framework from "./framework";
 
 const ERROR = 2;
-const LOCATION_DETECT_REGEXP = /📌 {2}(.+:?\d*) 📌/gu;
-const LOCATION_PARSE_REGEXP = /([^:]+):?(\d*)/;
+const LOCATION_DETECT_REGEXP = /📌 {2}(.+:?\d*) 📌/u;
+const LOCATION_PARSE_REGEXP = /(\/[^:]+):?(\d*)\b/;
 
 export default class TestCommand extends Command {
 	static get name() {

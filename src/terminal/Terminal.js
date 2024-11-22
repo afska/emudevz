@@ -1,12 +1,12 @@
 import escapeStringRegexp from "escape-string-regexp";
 import { marked } from "marked";
-import { LinkProvider } from "xterm-link-provider";
 import _ from "lodash";
 import filesystem from "../filesystem";
 import locales from "../locales";
 import store from "../store";
 import { async, bus, toast } from "../utils";
 import { ansiEscapes } from "../utils/cli";
+import { WebLinkProvider } from "../utils/cli/WebLinkProvider";
 import PendingInput, { PendingKey } from "./PendingInput";
 import Shell from "./Shell";
 import FilesystemCommand from "./commands/fs/FilesystemCommand";
@@ -294,7 +294,7 @@ export default class Terminal {
 
 	registerLinkProvider(regexp, callback) {
 		return this._xterm.registerLinkProvider(
-			new LinkProvider(this._xterm, regexp, callback)
+			new WebLinkProvider(this._xterm, regexp, callback)
 		);
 	}
 
@@ -471,7 +471,9 @@ export default class Terminal {
 	_setUpFileLinks() {
 		this._fileLinkProvider = this.registerLinkProvider(
 			LINK_FILE_REGEXP,
-			(__, filePath) => {
+			(__, link) => {
+				const matches = link.match(LINK_FILE_REGEXP);
+				const filePath = matches[1];
 				const result = OpenCommand.open(filePath);
 				if (result === -1) {
 					toast.error(

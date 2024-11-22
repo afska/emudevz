@@ -207,7 +207,7 @@ export default class ChatCommand extends Command {
 					})
 					.join("|"),
 			}),
-			"gu"
+			"u"
 		);
 		const handler = async (__, text) => {
 			if (command.hasEnded) return;
