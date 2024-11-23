@@ -26,6 +26,7 @@ export default {
 					address,
 					line: lir.source,
 					lineNumber: lir.line.lineNumber - 1,
+					size: lir.bytes.length,
 				});
 			}
 		});

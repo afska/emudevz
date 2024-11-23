@@ -299,12 +299,24 @@ export default class CPUDebugger extends PureComponent {
 							)}
 							${hex.format(address, 4)}
 							{(() => {
-								const line = _mappings.find(
-									(it) => asm.CODE_ADDRESS + it.address === address
-								)?.line;
+								const instruction = _.findLast(_mappings, (it) => {
+									const instructionAddress = asm.CODE_ADDRESS + it.address;
+									return (
+										address >= instructionAddress &&
+										address < instructionAddress + it.size
+									);
+								});
+								const line = instruction?.line;
 
 								return line != null ? (
-									<div className={styles.sentence}>${line}</div>
+									<div className={styles.sentence}>
+										${line}
+										<div className={styles.sentenceByteCount}>
+											({locales.get("byte")}{" "}
+											{1 + address - (asm.CODE_ADDRESS + instruction.address)}/
+											{instruction.size})
+										</div>
+									</div>
 								) : null;
 							})()}
 						</div>

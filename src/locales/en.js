@@ -8,6 +8,7 @@ export default {
 	button_play: "✨ Play",
 	button_quit: "🚪 Quit",
 	button_settings: "⚙️ Settings",
+	byte: "byte",
 	bytes: "bytes",
 	calculator: "Calculator",
 	cancel: "Cancel",

@@ -73,6 +73,11 @@
 	color: #c678dd;
 }
 
+.sentenceByteCount {
+	color: gray;
+	font-size: small;
+}
+
 .message {
 	width: 100%;
 	height: 100%;
