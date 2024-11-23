@@ -168,7 +168,7 @@ export default {
 	using_bugged_emulator: "Usando BrokenNEEES ❌",
 	using_default_emulator: "Usando BrokenNEEES ⚠️",
 	using_gamepad: "Usando joystick",
-	using_keyboard: "Usando teclado: flechas, D, [space], [enter], [supr]",
+	using_keyboard: "Usando teclado: flechas, D, [space], [enter], [backspace]",
 	using_old_snapshot: "⚠️ Usando una copia solo lectura de tu código viejo.",
 	using_your_emulator: "Usando tu emulador ✅",
 	volume: "Volumen",

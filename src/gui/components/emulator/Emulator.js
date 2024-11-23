@@ -15,7 +15,7 @@ export const SAVESTATE_RESET_COMMAND = "reset";
 const KEY_MAP = {
 	" ": "BUTTON_A",
 	d: "BUTTON_B",
-	Delete: "BUTTON_SELECT",
+	Backspace: "BUTTON_SELECT",
 	Enter: "BUTTON_START",
 	ArrowUp: "BUTTON_UP",
 	ArrowDown: "BUTTON_DOWN",

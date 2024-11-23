@@ -161,7 +161,7 @@ export default {
 	using_bugged_emulator: "Using BrokenNEEES ❌",
 	using_default_emulator: "Using BrokenNEEES ⚠️",
 	using_gamepad: "Using gamepad",
-	using_keyboard: "Using keyboard: arrows, D, [space], [enter], [supr]",
+	using_keyboard: "Using keyboard: arrows, D, [space], [enter], [backspace]",
 	using_old_snapshot: "⚠️ Using a read-only snapshot of your old code.",
 	using_your_emulator: "Using your emulator ✅",
 	volume: "Volume",
