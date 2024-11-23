@@ -23,7 +23,7 @@ help:
   - recuerda que antes de escribir en memoria, debes cargar el valor en [A]
   - por lo que es una operación de dos pasos
   - <{LDA_STA.png}>
-  - "además, cuando escribes numeros literales, debes agregarles el prefijo #"
+  - "además, cuando escribes numeros literales, debes agregarles el prefijo ~#~"
   - "p. ej. si quieres cargar un $99 en [A], es `LDA #$99` en lugar de `LDA $99`"
   - <{LDA_immediate.png}>
   - "(de otra forma, cargaría en [A] lo que sea que esté en la dirección de memoria $0099)"

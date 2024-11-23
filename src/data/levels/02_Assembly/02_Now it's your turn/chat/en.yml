@@ -23,7 +23,7 @@ help:
   - remember that before writing to memory, you need to load the value into [A]
   - so it's a two-step operation
   - <{LDA_STA.png}>
-  - "also, when you type literal numbers, you must prefix them with #"
+  - "also, when you type literal numbers, you must prefix them with ~#~"
   - "e.g. if you want to load a $99 into [A], it's `LDA #$99` instead of `LDA $99`"
   - <{LDA_immediate.png}>
   - "(otherwise, it would load into [A] whatever value is in the memory address $0099)"
