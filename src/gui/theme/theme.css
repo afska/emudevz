@@ -129,19 +129,21 @@ body {
 
 /* MUI */
 
-.navbar-volume-slider > .MuiSlider-thumb:before {
-	content: "🎵" !important;
-	transform: scale(0.75) !important;
-}
-
-.menu-volume-slider > .MuiSlider-thumb:before {
-	content: "🎵" !important;
-	transform: scale(0.6) translate(-2px, -2px) !important;
+.navbar-volume-slider > .MuiSlider-thumb:before,
+.menu-volume-slider > .MuiSlider-thumb:before,
+.emu-volume-slider > .MuiSlider-thumb:before {
+	content: "🎵";
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 14px;
+	width: 14px;
+	line-height: 14px;
 }
 
 .emu-volume-slider > .MuiSlider-thumb:before {
-	content: "🔊" !important;
-	transform: scale(0.9) translate(2px, 2px) !important;
+	content: "🔊";
 }
 
 .MuiTooltip-popper {
