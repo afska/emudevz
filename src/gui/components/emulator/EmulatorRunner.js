@@ -75,7 +75,7 @@ export default class EmulatorRunner extends PureComponent {
 									completed={this._unlockedUnits.useController}
 									active={this._emulatorSettings.useController}
 									onToggle={() => this._onToggle("useController")}
-									customIncompleteIcon="❗"
+									customIncompleteIcon="⚠️"
 									customIncompleteMessage="using_default_emulator"
 								/>
 								<Unit
@@ -85,7 +85,7 @@ export default class EmulatorRunner extends PureComponent {
 									active={this._emulatorSettings.useMappers}
 									onToggle={() => this._onToggle("useMappers")}
 									style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
-									customIncompleteIcon="❗"
+									customIncompleteIcon="⚠️"
 									customIncompleteMessage="using_default_emulator"
 								/>
 							</div>
@@ -98,7 +98,7 @@ export default class EmulatorRunner extends PureComponent {
 							onToggle={() => this._onToggle("useConsole")}
 							className={classNames(styles.units, styles.mappersUnit)}
 							style={{ borderRadius: COMPONENT_BORDER_RADIUS }}
-							customIncompleteIcon="❗"
+							customIncompleteIcon="⚠️"
 							customIncompleteMessage="using_default_emulator"
 						/>
 					</div>
