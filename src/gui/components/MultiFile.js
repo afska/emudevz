@@ -312,13 +312,26 @@ class MultiFile extends PureComponent {
 		});
 	};
 
+	_closeSelectedFile = () => {
+		if (_.isEmpty(this.props.openFiles)) return;
+
+		this.props.closeFile(this.props.selectedFile);
+	};
+
 	_onKeyDown = (e) => {
-		const isCtrlP = e.ctrlKey && e.code === "KeyP";
+		const isCtrlP = (e.ctrlKey || e.metaKey) && e.code === "KeyP";
+		const isCtrlE = (e.ctrlKey || e.metaKey) && e.code === "KeyE";
 		const isEsc = e.code === "Escape";
 
 		if (isCtrlP) {
 			e.preventDefault();
 			this.setState({ isSearching: true });
+			return;
+		}
+
+		if (isCtrlE) {
+			e.preventDefault();
+			this._closeSelectedFile();
 			return;
 		}
 

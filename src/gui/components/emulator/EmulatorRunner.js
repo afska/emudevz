@@ -181,6 +181,7 @@ export default class EmulatorRunner extends PureComponent {
 		if (stack?.location) {
 			const { filePath, lineNumber } = stack.location;
 
+			// FIXME: MOVE TO A BUTTON
 			store.dispatch.savedata.openFile(filePath);
 			if (_.isFinite(lineNumber))
 				bus.emit("highlight", { line: lineNumber - 1 });

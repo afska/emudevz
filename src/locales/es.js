@@ -62,7 +62,7 @@ export default {
 	help_more: "💬  Para ayuda adicional, corre `help -a`",
 	help_keys: "🚀  Para atajos de teclado, corre `help keys`",
 	help_shortcuts:
-		"🚀  General:\n  ♐  Cambiar panel activo:\n     `Alt+{DirectionalKey}` (o click del mouse)\n💻  Terminal:\n  🛑  Cerrar app:\n     `Ctrl+C`\n  🕑  Acelerar chat:\n     `Enter`\n  📜  Scrollear terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (o rueda del mouse)\n  📋  Copiar/pegar:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocompletar:\n     `Tab`\n📝  Editor de código:\n  ▶️  Ejecutar código:\n     `Alt+Enter`\n  🔍  Buscar archivo:\n     `Ctrl+P`",
+		"🚀  General:\n  ♐  Cambiar panel activo:\n     `Alt+{DirectionalKey}` (o click del mouse)\n💻  Terminal:\n  🛑  Cerrar app:\n     `Ctrl+C`\n  🕑  Acelerar chat:\n     `Enter`\n  📜  Scrollear terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (o rueda del mouse)\n  📋  Copiar/pegar:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocompletar:\n     `Tab`\n📝  Editor de código:\n  ▶️  Ejecutar código:\n     `Alt+Enter`\n  🔍  Buscar archivo:\n     `Ctrl+P`\n  ❌  Cerrar archivo:\n     `Ctrl+E`",
 	hexadecimal: "Hexadecimal",
 	integration_jupiterscope2_wrong_difficulty:
 		"¡Nivel de dificultad incorrecto!",
