@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { esLint, javascript } from "@codemirror/lang-javascript";
 import { lintGutter, linter } from "@codemirror/lint";
 import { oneDark } from "@codemirror/theme-one-dark";
+import { EditorView } from "@codemirror/view";
 import CodeMirror from "@uiw/react-codemirror";
 import { Linter } from "eslint-linter-browserify";
 import {
@@ -217,9 +218,11 @@ export default class CodeEditor extends PureComponent {
 	};
 
 	_onHighlight = ({ line, nextAction }) => {
-		this.setState({
-			highlightedLine: line,
-			actionName: nextAction != null ? nextAction : this.state.actionName,
+		this.setState({ highlightedLine: -1 }, () => {
+			this.setState({
+				highlightedLine: line,
+				actionName: nextAction != null ? nextAction : this.state.actionName,
+			});
 		});
 	};
 
@@ -302,6 +305,15 @@ export default class CodeEditor extends PureComponent {
 
 		setTimeout(() => {
 			lineHighlighter.highlightLine(this.ref, this.props.getCode(), line);
+			if (line > 0) {
+				const { view, state } = this.ref;
+				const position = state.doc.line(line).from;
+				view.dispatch({
+					effects: EditorView.scrollIntoView(position, {
+						y: "center",
+					}),
+				});
+			}
 		});
 	}
 }

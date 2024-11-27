@@ -27,6 +27,7 @@
     "@codemirror/language": "6.1.0",
     "@codemirror/lint": "6.0.0",
     "@codemirror/theme-one-dark": "6.1.0",
+    "@codemirror/view": "6.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.16",

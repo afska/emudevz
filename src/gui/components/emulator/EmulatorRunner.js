@@ -255,7 +255,10 @@ export default class EmulatorRunner extends PureComponent {
 	_debug = () => {
 		const { filePath, lineNumber } = this.props.error.debugInfo;
 		store.dispatch.savedata.openFile(filePath);
-		if (_.isFinite(lineNumber)) bus.emit("highlight", { line: lineNumber - 1 });
+		setTimeout(() => {
+			if (_.isFinite(lineNumber))
+				bus.emit("highlight", { line: lineNumber - 1 });
+		});
 	};
 
 	_reload = () => {
