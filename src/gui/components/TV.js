@@ -68,7 +68,7 @@ export default class TV extends PureComponent {
 
 	_resetContent(content) {
 		this.setState({ content: null, _error: null }, () => {
-			this.setState({ content });
+			if (content != null) this.setState({ content });
 		});
 	}
 
@@ -107,6 +107,9 @@ export default class TV extends PureComponent {
 						}}
 						onRestart={() => {
 							this._resetContent(content);
+						}}
+						onStop={() => {
+							this._resetContent(null);
 						}}
 					/>
 				);

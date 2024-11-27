@@ -1,12 +1,14 @@
 import React, { PureComponent } from "react";
+import { FaBug, FaStop, FaSync } from "react-icons/fa";
 import classNames from "classnames";
 import _ from "lodash";
 import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
 import { bus } from "../../../utils";
-import Tooltip from "../../components/widgets/Tooltip";
-import VolumeSlider from "../../components/widgets/VolumeSlider";
+import IconButton from "../widgets/IconButton";
+import Tooltip from "../widgets/Tooltip";
+import VolumeSlider from "../widgets/VolumeSlider";
 import Emulator from "./Emulator";
 import Unit from "./Unit";
 import styles from "./EmulatorRunner.module.css";
@@ -139,9 +141,10 @@ export default class EmulatorRunner extends PureComponent {
 						/>
 					</div>
 				</div>
+
 				<Emulator
 					rom={rom}
-					error={error}
+					error={error?.html}
 					settings={this._emulatorSettings}
 					volume={this._volume}
 					onError={this._setError}
@@ -153,12 +156,40 @@ export default class EmulatorRunner extends PureComponent {
 						this._emulator = ref;
 					}}
 				/>
+
 				<pre
 					className={styles.info}
 					ref={(ref) => {
 						this._info = ref;
 					}}
 				/>
+
+				<div className={styles.controlButtons}>
+					{!!rom && !!error && !!error.debugInfo && (
+						<IconButton
+							style={{ marginRight: 8 }}
+							Icon={FaBug}
+							tooltip={locales.get("emulation_debug")}
+							onClick={this._debug}
+						/>
+					)}
+					{!!rom && !error && (
+						<IconButton
+							style={{ marginRight: 8 }}
+							Icon={FaSync}
+							tooltip={locales.get("emulation_reload")}
+							onClick={this._reload}
+						/>
+					)}
+					{!!rom && (
+						<IconButton
+							style={{ marginRight: 8 }}
+							Icon={FaStop}
+							tooltip={locales.get("emulation_stop")}
+							onClick={this._stop}
+						/>
+					)}
+				</div>
 			</div>
 		);
 	}
@@ -178,17 +209,10 @@ export default class EmulatorRunner extends PureComponent {
 		console.error(e);
 
 		const stack = testContext.javascript.buildStack(e);
-		if (stack?.location) {
-			const { filePath, lineNumber } = stack.location;
+		const debugInfo = stack?.location; // format: { filePath, lineNumber }
 
-			// FIXME: MOVE TO A BUTTON
-			store.dispatch.savedata.openFile(filePath);
-			if (_.isFinite(lineNumber))
-				bus.emit("highlight", { line: lineNumber - 1 });
-		}
-
-		const error = testContext.javascript.buildHTMLError(e);
-		this.props.onError(error);
+		const html = testContext.javascript.buildHTMLError(e);
+		this.props.onError({ html, debugInfo });
 	};
 
 	_setInputType = (inputType) => {
@@ -226,6 +250,20 @@ export default class EmulatorRunner extends PureComponent {
 
 	_clearInfo = () => {
 		this._info.innerText = "";
+	};
+
+	_debug = () => {
+		const { filePath, lineNumber } = this.props.error.debugInfo;
+		store.dispatch.savedata.openFile(filePath);
+		if (_.isFinite(lineNumber)) bus.emit("highlight", { line: lineNumber - 1 });
+	};
+
+	_reload = () => {
+		this.props.onRestart();
+	};
+
+	_stop = () => {
+		this.props.onStop();
 	};
 
 	_onToggle = (setting) => {

@@ -60,6 +60,7 @@
 	white-space: nowrap;
 	margin-left: 8px;
 	margin-right: 8px;
+	cursor: pointer;
 
 	border-radius: 8px;
 	border: 1px dashed rgb(143, 143, 143);
@@ -80,6 +81,24 @@
 }
 
 .info:hover {
+	opacity: 1;
+	background-color: black;
+	transition: opacity 0.3s, background-color 0.3s;
+}
+
+.controlButtons {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	user-select: none;
+	margin: 0;
+	opacity: 0.75;
+	padding: 8px;
+	border-top-left-radius: 8px;
+	cursor: crosshair;
+}
+
+.controlButtons:hover {
 	opacity: 1;
 	background-color: black;
 	transition: opacity 0.3s, background-color 0.3s;
