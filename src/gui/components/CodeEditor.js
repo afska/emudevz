@@ -218,12 +218,15 @@ export default class CodeEditor extends PureComponent {
 	};
 
 	_onHighlight = ({ line, nextAction }) => {
-		this.setState({ highlightedLine: -1 }, () => {
-			this.setState({
+		this.setState(
+			{
 				highlightedLine: line,
 				actionName: nextAction != null ? nextAction : this.state.actionName,
-			});
-		});
+			},
+			() => {
+				this._scrollTo(line);
+			}
+		);
 	};
 
 	_setCode = (code) => {
@@ -305,15 +308,18 @@ export default class CodeEditor extends PureComponent {
 
 		setTimeout(() => {
 			lineHighlighter.highlightLine(this.ref, this.props.getCode(), line);
-			if (line > 0) {
-				const { view, state } = this.ref;
-				const position = state.doc.line(line).from;
-				view.dispatch({
-					effects: EditorView.scrollIntoView(position, {
-						y: "center",
-					}),
-				});
-			}
+		});
+	}
+
+	_scrollTo(line) {
+		if (line === -1) return;
+
+		const { view, state } = this.ref;
+		const position = state.doc.line(line + 1).from;
+		view.dispatch({
+			effects: EditorView.scrollIntoView(position, {
+				y: "center",
+			}),
 		});
 	}
 }
