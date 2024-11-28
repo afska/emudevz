@@ -119,27 +119,30 @@ export default {
 		if (!isUserCode) return null;
 		const originalTrace = error.stack;
 
-		let trace = originalTrace
+		const traceLines = originalTrace
 			.split("\n")
-			.filter((it) => it.includes("blob:"))
-			.join("\n");
+			.filter((it) => it.includes("blob:"));
+		const mainTraceLine = _.first(traceLines);
+		let trace = traceLines.join("\n");
 
 		let location = null;
 		_.forEach(BLOB_TO_PATH_MAP, (filePath, module) => {
 			const regexp = new RegExp(escapeStringRegexp(module), "g");
-			const index = trace.search(regexp);
 
 			// find error location (file + line)
-			if (location == null && index > -1) {
-				const endIndex = index + module.length;
-				if (trace[endIndex] === ":") {
-					const matches = trace.slice(endIndex).match(/\b(\d+)\b/);
-					if (matches.length === 2) {
-						const lineNumber = parseInt(matches[1]);
-						location = {
-							filePath,
-							lineNumber,
-						};
+			if (location == null) {
+				const index = mainTraceLine.search(regexp);
+				if (index > -1) {
+					const endIndex = index + module.length;
+					if (mainTraceLine[endIndex] === ":") {
+						const matches = mainTraceLine.slice(endIndex).match(/\b(\d+)\b/);
+						if (matches.length === 2) {
+							const lineNumber = parseInt(matches[1]);
+							location = {
+								filePath,
+								lineNumber,
+							};
+						}
 					}
 				}
 			}
