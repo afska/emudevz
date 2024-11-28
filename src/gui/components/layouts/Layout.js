@@ -29,8 +29,10 @@ export default class Layout extends PureComponent {
 		});
 	}
 
-	findInstance(Type, condition = () => true) {
+	findInstance(typeId, condition = () => true) {
 		const components = _.values(this.instances);
-		return components.find((it) => it instanceof Type && condition(it));
+		return components.find(
+			(it) => it.constructor.id === typeId && condition(it)
+		);
 	}
 }

@@ -124,14 +124,14 @@ export default class Level {
 	canLaunchEmulator() {
 		return (
 			bus.isListeningTo("pin") ||
-			this.$layout.findInstance(TV, (it) => it.state.type === "rom") != null
+			this.$layout.findInstance("TV", (it) => it.state.type === "rom") != null
 		);
 	}
 
 	launchEmulator(rom = null) {
 		if (!bus.isListeningTo("pin")) {
 			const tvRom = this.$layout.findInstance(
-				TV,
+				"TV",
 				(it) => it.state.type === "rom"
 			);
 			if (tvRom != null) tvRom.setContent(rom, "rom");
@@ -142,6 +142,13 @@ export default class Level {
 			args: { content: rom, type: "rom" },
 			level: this,
 		});
+	}
+
+	highlightMultiFileEditor() {
+		const instance = this.$layout.findInstance("MultiFile");
+		if (instance == null) return;
+		const instanceName = this.$layout.getInstanceName(instance);
+		this.$layout.focus(instanceName);
 	}
 
 	launchStream(rom = null) {

@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { FaBug, FaStop, FaSync } from "react-icons/fa";
 import classNames from "classnames";
 import _ from "lodash";
+import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
@@ -259,6 +260,7 @@ export default class EmulatorRunner extends PureComponent {
 			if (_.isFinite(lineNumber))
 				bus.emit("highlight", { line: lineNumber - 1 });
 		});
+		Level.current.highlightMultiFileEditor();
 	};
 
 	_reload = () => {

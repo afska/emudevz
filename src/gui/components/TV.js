@@ -8,6 +8,10 @@ import PanZoom from "./widgets/PanZoom";
 import styles from "./TV.module.css";
 
 export default class TV extends PureComponent {
+	static get id() {
+		return "TV";
+	}
+
 	static get tabIcon() {
 		return "📺 ";
 	}

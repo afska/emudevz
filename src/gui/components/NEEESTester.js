@@ -20,6 +20,10 @@ const LINES = 6;
 const PAGE_BOUNDARY_BUG_LINE = 3348;
 
 export default class NEEESTester extends PureComponent {
+	static get id() {
+		return "NEEESTester";
+	}
+
 	state = {
 		_isInitialized: false,
 		_error: null,

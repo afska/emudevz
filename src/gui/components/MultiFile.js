@@ -21,6 +21,10 @@ import styles from "./MultiFile.module.css";
 const DELTA_SCROLL = 150;
 
 class MultiFile extends PureComponent {
+	static get id() {
+		return "MultiFile";
+	}
+
 	async initialize(args, level, layout) {
 		this._args = args;
 		this._level = level;

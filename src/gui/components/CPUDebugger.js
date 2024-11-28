@@ -37,6 +37,10 @@ const CUSTOM_STYLES = {
 const asm = testContext.asm;
 
 export default class CPUDebugger extends PureComponent {
+	static get id() {
+		return "CPUDebugger";
+	}
+
 	state = {
 		_isInitialized: false,
 		_hasCode: false,

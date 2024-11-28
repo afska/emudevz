@@ -43,6 +43,10 @@ const LANGUAGES = {
 };
 
 export default class CodeEditor extends PureComponent {
+	static get id() {
+		return "CodeEditor";
+	}
+
 	static get tabIcon() {
 		return "📝 ";
 	}

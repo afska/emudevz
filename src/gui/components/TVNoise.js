@@ -6,6 +6,10 @@ const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
 
 export default class TVNoise extends Component {
+	static get id() {
+		return "TVNoise";
+	}
+
 	render() {
 		const { className } = this.props;
 

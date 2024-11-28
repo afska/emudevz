@@ -1,6 +1,5 @@
 import _ from "lodash";
 import filesystem from "../../../filesystem";
-import TV from "../../../gui/components/TV";
 import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
@@ -179,7 +178,7 @@ export default class TestCommand extends Command {
 		}
 
 		await this._terminal.writeln(locales.get("tests_video_running"));
-		const tv = level.$layout.findInstance(TV);
+		const tv = level.$layout.findInstance("TV");
 		if (!tv) {
 			await this._terminal.writeln(locales.get("tests_video_no_tv"));
 			return false;

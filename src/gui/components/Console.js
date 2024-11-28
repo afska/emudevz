@@ -23,6 +23,10 @@ const imageAddonSettings = {
 };
 
 export default class Console extends PureComponent {
+	static get id() {
+		return "Console";
+	}
+
 	fitAddon = new FitAddon();
 	imageAddon = new ImageAddon(imageAddonSettings);
 
