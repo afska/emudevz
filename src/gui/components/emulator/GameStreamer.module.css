@@ -48,7 +48,7 @@
 	margin-left: auto;
 	margin-right: auto;
 	aspect-ratio: 1;
-	overflow: clip;
+	overflow: hidden;
 	border: 4px dashed #577295;
 	border-radius: 8px;
 }
