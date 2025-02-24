@@ -279,7 +279,14 @@ class MultiFile extends PureComponent {
 		switch (Component) {
 			case CodeEditor: {
 				props = {
-					getCode: () => filesystem.read(filePath),
+					getCode: () => {
+						try {
+							const code = filesystem.read(filePath);
+							return code;
+						} catch (e) {
+							return "";
+						}
+					},
 					setCode: (code) => {
 						filesystem.write(filePath, code);
 					},
@@ -290,10 +297,18 @@ class MultiFile extends PureComponent {
 			default:
 		}
 
+		let content = null;
+		try {
+			content = filesystem.read(filePath, { binary: !!customArgs.binary });
+		} catch (e) {
+			console.error(`❌ Cannot read file: ${filePath}`);
+			console.error(e);
+		}
+
 		const args = {
 			...this._args,
 			...customArgs,
-			content: filesystem.read(filePath, { binary: !!customArgs.binary }),
+			content,
 		};
 
 		return { args, props };
