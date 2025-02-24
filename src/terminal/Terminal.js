@@ -245,13 +245,11 @@ export default class Terminal {
 	}
 
 	async clearInput() {
-		while (!this._input.isEmpty()) {
-			await async.sleep();
-			await this.backspace();
-		}
+		while (!this._input.isEmpty()) await this.backspace();
 	}
 
 	async backspace() {
+		await async.sleep();
 		if (this.isExpectingInput) {
 			const { x, y, ybase } = this.buffer;
 			const absY = y + ybase;
@@ -496,6 +494,7 @@ export default class Terminal {
 	_setUpDictionaryLinks(dictionary) {
 		const entries = dictionary.getEntries();
 		const regexp = new RegExp(
+			// eslint-disable-next-line
 			_.template("(${entries})")({
 				entries: entries
 					.map((it) => `(?:\\b${escapeStringRegexp(it)}\\b)`)
