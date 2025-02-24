@@ -16,7 +16,7 @@ export default class TV extends PureComponent {
 		return "📺 ";
 	}
 
-	state = { content: null, type: "media", _error: null };
+	state = { content: null, type: "media", _error: null, _saveState: null };
 
 	async initialize(args, level) {
 		this._level = level;
@@ -70,14 +70,14 @@ export default class TV extends PureComponent {
 		window.removeEventListener("drop", this._onFileDrop);
 	}
 
-	_resetContent(content) {
-		this.setState({ content: null, _error: null }, () => {
-			if (content != null) this.setState({ content });
+	_resetContent(content, saveState = null) {
+		this.setState({ content: null, _error: null, _saveState: null }, () => {
+			if (content != null) this.setState({ content, _saveState: saveState });
 		});
 	}
 
 	_renderContent() {
-		const { content, type, _error } = this.state;
+		const { content, type, _error, _saveState } = this.state;
 
 		switch (type) {
 			case "media": {
@@ -106,11 +106,12 @@ export default class TV extends PureComponent {
 					<EmulatorRunner
 						rom={content}
 						error={_error}
+						saveState={_saveState}
 						onError={(e) => {
 							this.setState({ _error: e });
 						}}
-						onRestart={() => {
-							this._resetContent(content);
+						onRestart={(saveState) => {
+							this._resetContent(content, saveState);
 						}}
 						onStop={() => {
 							this._resetContent(null);

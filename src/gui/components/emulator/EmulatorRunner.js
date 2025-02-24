@@ -19,7 +19,7 @@ const REFRESH_DEBOUNCE_MS = 500;
 
 export default class EmulatorRunner extends PureComponent {
 	render() {
-		const { rom, error } = this.props;
+		const { rom, error, saveState } = this.props;
 
 		const isRunning = rom && !error;
 
@@ -78,8 +78,8 @@ export default class EmulatorRunner extends PureComponent {
 									completed={this._unlockedUnits.useController}
 									active={this._emulatorSettings.useController}
 									onToggle={() => this._onToggle("useController")}
-									customIncompleteIcon="⚠️"
-									customIncompleteMessage="using_default_emulator"
+									customInactiveIcon="⚠️"
+									customInactiveMessage="using_default_emulator"
 								/>
 								<Unit
 									icon="🗜️"
@@ -88,21 +88,21 @@ export default class EmulatorRunner extends PureComponent {
 									active={this._emulatorSettings.useMappers}
 									onToggle={() => this._onToggle("useMappers")}
 									style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
-									customIncompleteIcon="⚠️"
-									customIncompleteMessage="using_default_emulator"
+									customInactiveIcon="⚠️"
+									customInactiveMessage="using_default_emulator"
 								/>
 							</div>
 						</div>
 						<Unit
-							icon="🕹️"
-							name={locales.get("console")}
-							completed={this._unlockedUnits.useConsole}
-							active={this._emulatorSettings.useConsole}
-							onToggle={() => this._onToggle("useConsole")}
-							className={classNames(styles.units, styles.mappersUnit)}
+							icon="🔥"
+							name={locales.get("hot_reload")}
+							completed={true}
+							active={this._emulatorSettings.withHotReload}
+							onToggle={() => this._onToggle("withHotReload")}
+							className={classNames(styles.units, styles.standaloneUnit)}
 							style={{ borderRadius: COMPONENT_BORDER_RADIUS }}
-							customIncompleteIcon="⚠️"
-							customIncompleteMessage="using_default_emulator"
+							customActiveMessage="yes"
+							customInactiveMessage="no"
 						/>
 					</div>
 					<div
@@ -146,6 +146,7 @@ export default class EmulatorRunner extends PureComponent {
 				<Emulator
 					rom={rom}
 					error={error?.html}
+					saveState={saveState}
 					settings={this._emulatorSettings}
 					volume={this._volume}
 					onError={this._setError}
@@ -263,8 +264,14 @@ export default class EmulatorRunner extends PureComponent {
 		Level.current.highlightMultiFileEditor();
 	};
 
-	_reload = () => {
-		this.props.onRestart();
+	_reload = (useSaveStateIfPossible = false) => {
+		const saveState =
+			(useSaveStateIfPossible &&
+				this._emulatorSettings.withHotReload &&
+				this._emulator?.neees?.getSaveState()) ||
+			null;
+
+		this.props.onRestart(saveState);
 	};
 
 	_stop = () => {
@@ -279,14 +286,14 @@ export default class EmulatorRunner extends PureComponent {
 		};
 		if (currentSettings[setting] !== this._emulatorSettings[setting]) {
 			this.forceUpdate();
-			this.props.onRestart();
+			this._reload(true);
 		}
 	};
 
 	_onCodeChanged = () => {
 		if (!this.props.rom) return;
 
-		this.props.onRestart();
+		this._reload(true);
 	};
 
 	_onUnitUnlocked = () => {
@@ -306,6 +313,7 @@ export default class EmulatorRunner extends PureComponent {
 			useConsole: unlockedUnits.useConsole && settings.useConsole,
 			useMappers: unlockedUnits.useMappers && settings.useMappers,
 			withLatestCode: true,
+			withHotReload: settings.withHotReload,
 		};
 	}
 

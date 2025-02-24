@@ -46,7 +46,7 @@
 	flex-direction: row;
 }
 
-.mappersUnit {
+.standaloneUnit {
 	height: fit-content;
 	align-self: center;
 	margin-left: 8px;

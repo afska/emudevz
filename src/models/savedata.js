@@ -23,6 +23,7 @@ const INITIAL_STATE = () => ({
 		useController: true,
 		useConsole: true,
 		useMappers: true,
+		withHotReload: true,
 	},
 	unlockedUnits: {
 		useCartridge: false,

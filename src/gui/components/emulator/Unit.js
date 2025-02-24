@@ -11,8 +11,9 @@ export default class Unit extends PureComponent {
 			name,
 			completed,
 			active,
-			customIncompleteIcon,
-			customIncompleteMessage,
+			customInactiveIcon,
+			customInactiveMessage,
+			customActiveMessage,
 			className,
 			onToggle,
 			style,
@@ -20,9 +21,9 @@ export default class Unit extends PureComponent {
 		} = this.props;
 
 		const message = active
-			? "using_your_emulator"
-			: customIncompleteMessage ?? "using_bugged_emulator";
-		const statusIcon = active ? "✅" : customIncompleteIcon ?? "❌";
+			? customActiveMessage ?? "using_your_emulator"
+			: customInactiveMessage ?? "using_bugged_emulator";
+		const statusIcon = active ? "✅" : customInactiveIcon ?? "❌";
 
 		return (
 			<Tooltip
