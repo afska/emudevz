@@ -141,7 +141,14 @@ export default class Terminal {
 			for (let i = 0; i < characters.length; i++) {
 				this._interruptIfNeeded();
 
-				if (this._needsWordWrap(characters, i, lastCharacter))
+				const isSpecialMarker =
+					style === theme.BG_HIGHLIGHT_START ||
+					style === theme.BG_HIGHLIGHT_END;
+
+				if (
+					!isSpecialMarker &&
+					this._needsWordWrap(characters, i, lastCharacter)
+				)
 					await this.newline();
 
 				lastCharacter = characters[i];
