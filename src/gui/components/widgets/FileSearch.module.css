@@ -1,16 +1,21 @@
 .container {
 	background: #2e3c49;
 	width: 75%;
+	max-height: 75%;
 	position: absolute;
 	top: 56px;
 	left: 50%;
 	transform: translate(-50%, 0);
 	padding: 12px;
+	padding-bottom: 0;
 	border-radius: 8px;
 	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
 		0 0 8px rgba(200, 200, 200, 0.6);
 	z-index: 10;
 	user-select: none;
+
+	display: flex;
+	flex-direction: column;
 }
 
 .input {
@@ -20,6 +25,10 @@
 
 .results {
 	margin-top: 8px;
+	margin-bottom: 8px;
+	flex: 1;
+	overflow-y: auto;
+	padding-right: 8px;
 }
 
 .result {
@@ -30,6 +39,7 @@
 	border: 1px solid #577295;
 	color: #b7bbc7;
 	cursor: pointer;
+	flex: 1;
 }
 
 .path {
@@ -51,13 +61,17 @@
 
 .tree {
 	margin-top: 24px;
-	max-height: 300px;
+	flex: 1;
 }
 
 .warning {
+	position: fixed;
+	bottom: -8px;
+	border-radius: 4px;
+	padding: 4px;
 	text-align: center;
-	margin-top: 28px;
 	color: #cccccc;
+	background: #d03636ab;
 }
 
 .treeLink:hover {
