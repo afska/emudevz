@@ -15,7 +15,9 @@ class SettingsModal extends PureComponent {
 	state = {
 		areYouSureRestore: false,
 		areYouSureDelete: false,
-		isLoadingSave: false,
+		isLoadingSaveBackup: false,
+		isLoadingSaveRestore: false,
+		isLoadingSaveDelete: false,
 	};
 
 	render() {
@@ -26,7 +28,13 @@ class SettingsModal extends PureComponent {
 			setSpeedUpChat,
 			open,
 		} = this.props;
-		const { areYouSureRestore, areYouSureDelete, isLoadingSave } = this.state;
+		const {
+			areYouSureRestore,
+			areYouSureDelete,
+			isLoadingSaveBackup,
+			isLoadingSaveRestore,
+			isLoadingSaveDelete,
+		} = this.state;
 
 		return (
 			<Modal
@@ -91,21 +99,31 @@ class SettingsModal extends PureComponent {
 								<div>
 									<Button
 										onClick={this._backupSavefile}
-										disabled={isLoadingSave}
+										disabled={isLoadingSaveBackup}
 									>
-										{isLoadingSave ? "⌛" : "💾 " + locales.get("backup")}
+										{isLoadingSaveBackup ? "⌛" : "💾 " + locales.get("backup")}
 									</Button>
 								</div>
 								<div>
-									<Button onClick={this._restoreSavefile}>
-										{areYouSureRestore ? "❗❗❗ " : "📥 "}
-										{locales.get("restore")}
+									<Button
+										onClick={this._restoreSavefile}
+										disabled={isLoadingSaveRestore}
+									>
+										{isLoadingSaveRestore
+											? "⌛"
+											: (areYouSureRestore ? "❗❗❗ " : "📥 ") +
+											  locales.get("restore")}
 									</Button>
 								</div>
 								<div>
-									<Button onClick={this._deleteSavefile}>
-										{areYouSureDelete ? "❗❗❗ " : "🗑️ "}
-										{locales.get("delete")}
+									<Button
+										onClick={this._deleteSavefile}
+										disabled={isLoadingSaveDelete}
+									>
+										{isLoadingSaveDelete
+											? "⌛"
+											: (areYouSureDelete ? "❗❗❗ " : "🗑️ ") +
+											  locales.get("delete")}
 									</Button>
 								</div>
 							</div>
@@ -127,13 +145,13 @@ class SettingsModal extends PureComponent {
 	_backupSavefile = async (e) => {
 		e.preventDefault();
 
-		this.setState({ isLoadingSave: true });
+		this.setState({ isLoadingSaveBackup: true });
 
 		try {
 			const filename = new Date().toJSON().split("T")[0] + SAVEFILE_EXTENSION;
 			await savefile.export(filename);
 		} finally {
-			this.setState({ isLoadingSave: false });
+			this.setState({ isLoadingSaveBackup: false });
 		}
 	};
 
@@ -154,18 +172,24 @@ class SettingsModal extends PureComponent {
 			reader.onload = async (e) => {
 				const fileContent = e.target.result;
 
-				try {
-					await savefile.check(fileContent);
-				} catch (e) {
-					toast.error(locales.get("save_file_cannot_be_restored"));
-					return;
-				}
+				this.setState({ isLoadingSaveRestore: true });
 
 				try {
-					await savefile.clear();
-					await savefile.import(fileContent);
+					try {
+						await savefile.check(fileContent);
+					} catch (e) {
+						toast.error(locales.get("save_file_cannot_be_restored"));
+						return;
+					}
+
+					try {
+						await savefile.clear();
+						await savefile.import(fileContent);
+					} finally {
+						this._reload();
+					}
 				} finally {
-					this._reload();
+					this.setState({ isLoadingSaveRestore: false });
 				}
 			};
 
@@ -186,8 +210,14 @@ class SettingsModal extends PureComponent {
 			return;
 		}
 
-		await savefile.clear();
-		this._reload();
+		this.setState({ isLoadingSaveDelete: true });
+
+		try {
+			await savefile.clear();
+			this._reload();
+		} catch (e) {
+			this.setState({ isLoadingSaveDelete: false });
+		}
 	};
 
 	_onSave = () => {
