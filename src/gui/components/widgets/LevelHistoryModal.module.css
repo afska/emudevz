@@ -15,3 +15,8 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.current {
+	background: #1c3554;
+	filter: brightness(2);
+}
