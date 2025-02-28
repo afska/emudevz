@@ -76,7 +76,7 @@ export default class Book {
 
 	isFinished(levelId) {
 		const completedLevels = this._savedata.completedLevels;
-		return completedLevels.includes(levelId);
+		return completedLevels.some((it) => it.levelId === levelId);
 	}
 
 	canReset(level) {

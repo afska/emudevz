@@ -20,3 +20,11 @@
 	background: #1c3554;
 	filter: brightness(2);
 }
+
+.chapter {
+	margin-right: 8px;
+}
+
+.time {
+	font-size: x-small;
+}

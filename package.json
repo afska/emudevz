@@ -50,6 +50,7 @@
     "eventemitter3": "^4.0.7",
     "globals": "^15.12.0",
     "history": "^4.10.1",
+    "javascript-time-ago": "^2.5.11",
     "jszip": "^3.10.1",
     "lodash": "^4.17.21",
     "marked": "^4.2.3",

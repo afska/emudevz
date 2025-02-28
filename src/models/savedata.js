@@ -44,10 +44,19 @@ export default {
 			return { ...state, maxChapterNumber };
 		},
 		addCompletedLevel(state, levelId) {
-			return { ...state, completedLevels: [...state.completedLevels, levelId] };
+			return {
+				...state,
+				completedLevels: [
+					...state.completedLevels,
+					{ levelId, date: Date.now() },
+				],
+			};
 		},
 		setLastLevelId(state, lastLevelId) {
-			return { ...state, lastLevelId };
+			return {
+				...state,
+				lastLevelId,
+			};
 		},
 		setLanguage(state, language) {
 			return { ...state, language };

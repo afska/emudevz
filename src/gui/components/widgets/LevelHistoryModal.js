@@ -25,10 +25,10 @@ class LevelHistoryModal extends PureComponent {
 					{completedLevels
 						.slice()
 						.reverse()
-						.map((it, i) => {
-							const chapter = book.getChapterOf(it);
+						.map(({ levelId, date }, i) => {
+							const chapter = book.getChapterOf(levelId);
 							if (!chapter) return false;
-							const levelDefinition = book.getLevelDefinitionOf(it);
+							const levelDefinition = book.getLevelDefinitionOf(levelId);
 							const isCurrent = levelDefinition.id === Level.current.id;
 
 							return (
@@ -38,10 +38,15 @@ class LevelHistoryModal extends PureComponent {
 										styles.level,
 										isCurrent && styles.current
 									)}
-									onClick={() => goTo(it)}
+									onClick={() => goTo(levelId)}
 								>
-									<span>{chapter.name[locales.language]}</span>
-									<span>{levelDefinition.name[locales.language]}</span>
+									<div>
+										<span className={styles.chapter}>
+											{chapter.name[locales.language]}
+										</span>
+										<span>{levelDefinition.name[locales.language]}</span>
+									</div>
+									<div className={styles.time}>{locales.timeAgo(date)}</div>
 								</Button>
 							);
 						})}
