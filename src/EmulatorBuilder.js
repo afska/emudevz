@@ -16,18 +16,25 @@ export default class EmulatorBuilder {
 	customAPU = null;
 	omitReset = false;
 	unbroken = false;
+	hardware = false;
 
 	async build(withLastCode = false) {
-		const mainModule = await this._evaluate(withLastCode);
-		let PPU = mainModule.PPU;
-		let APU = mainModule.APU;
-		if (withLastCode && this.withUserPPU && this.withUsePartialPPU) {
-			const partialModule = await this._evaluate(false);
-			PPU = partialModule.PPU;
-		}
-		if (withLastCode && this.withUserAPU && this.withUsePartialAPU) {
-			const partialModule = await this._evaluate(false);
-			APU = partialModule.APU;
+		let mainModule = null;
+		let PPU = null;
+		let APU = null;
+
+		if (!this.hardware) {
+			mainModule = await this._evaluate(withLastCode);
+			PPU = mainModule.PPU;
+			APU = mainModule.APU;
+			if (withLastCode && this.withUserPPU && this.withUsePartialPPU) {
+				const partialModule = await this._evaluate(false);
+				PPU = partialModule.PPU;
+			}
+			if (withLastCode && this.withUserAPU && this.withUsePartialAPU) {
+				const partialModule = await this._evaluate(false);
+				APU = partialModule.APU;
+			}
 		}
 
 		const useCPUMemory = !!(
@@ -116,6 +123,11 @@ export default class EmulatorBuilder {
 
 	setCustomAPU(customAPU = null) {
 		this.customAPU = customAPU;
+		return this;
+	}
+
+	setHardware(hardware = false) {
+		this.hardware = hardware;
 		return this;
 	}
 

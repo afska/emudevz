@@ -42,13 +42,13 @@ export default class JupiterScope2 extends Integration {
 
 		this._moveTV(-15);
 
-		const difficulty = neees.cpu.memory.readAt(0x07f8);
-		const digit1 = neees.cpu.memory.readAt(0x0303);
-		const digit2 = neees.cpu.memory.readAt(0x0304);
-		const digit3 = neees.cpu.memory.readAt(0x0305);
-		const digit4 = neees.cpu.memory.readAt(0x0306);
-		const digit5 = neees.cpu.memory.readAt(0x0307);
-		const digit6 = neees.cpu.memory.readAt(0x0308);
+		const difficulty = neees.cpu.memory.read(0x07f8);
+		const digit1 = neees.cpu.memory.read(0x0303);
+		const digit2 = neees.cpu.memory.read(0x0304);
+		const digit3 = neees.cpu.memory.read(0x0305);
+		const digit4 = neees.cpu.memory.read(0x0306);
+		const digit5 = neees.cpu.memory.read(0x0307);
+		const digit6 = neees.cpu.memory.read(0x0308);
 		const points =
 			digit1 * 100000 +
 			digit2 * 10000 +

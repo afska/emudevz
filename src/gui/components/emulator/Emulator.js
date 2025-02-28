@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import NES from "nes-emu";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import Level from "../../../level/Level";
 import TVNoise from "../TVNoise";
@@ -102,7 +101,10 @@ export default class Emulator extends Component {
 		let Console;
 		try {
 			Console = settings.useHardware
-				? NES
+				? await new EmulatorBuilder()
+						.setHardware(true)
+						.setUnbroken(true)
+						.build()
 				: await new EmulatorBuilder()
 						.addUserCartridge(settings.useCartridge)
 						.addUserCPU(settings.useCPU)

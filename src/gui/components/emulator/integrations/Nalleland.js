@@ -44,8 +44,8 @@ export default class Nalleland extends Integration {
 
 		this._moveTV(-15);
 
-		const mode = neees.cpu.memory.readAt(0x0047);
-		const lives = neees.cpu.memory.readAt(0x03ca);
+		const mode = neees.cpu.memory.read(0x0047);
+		const lives = neees.cpu.memory.read(0x03ca);
 		const victory =
 			mode === MODE_LIMITED_LIVES && this._checkTiles(neees, VICTORY);
 

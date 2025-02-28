@@ -43,7 +43,7 @@ export default class Spacegulls extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		const zone = neees.cpu.memory.readAt(0x0477);
+		const zone = neees.cpu.memory.read(0x0477);
 		const zoneIndex = ZONES.indexOf(zone);
 		if (zoneIndex >= 0) {
 			const percentage = (zoneIndex / (ZONES.length - 1)) * 100;

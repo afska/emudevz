@@ -87,14 +87,14 @@ export default class RavensGate extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		const life = neees.cpu.memory.readAt(0x045f);
-		const maxLife = neees.cpu.memory.readAt(0x0462);
-		const coins = neees.cpu.memory.readAt(0x0460);
-		const keys = neees.cpu.memory.readAt(0x0461);
-		const weaponB = neees.cpu.memory.readAt(0x0321);
-		const weaponA = neees.cpu.memory.readAt(0x0322);
-		const roomId = neees.cpu.memory.readAt(0x0449);
-		const gameOver = neees.cpu.memory.readAt(0x045d) === 1;
+		const life = neees.cpu.memory.read(0x045f);
+		const maxLife = neees.cpu.memory.read(0x0462);
+		const coins = neees.cpu.memory.read(0x0460);
+		const keys = neees.cpu.memory.read(0x0461);
+		const weaponB = neees.cpu.memory.read(0x0321);
+		const weaponA = neees.cpu.memory.read(0x0322);
+		const roomId = neees.cpu.memory.read(0x0449);
+		const gameOver = neees.cpu.memory.read(0x045d) === 1;
 		const victory = this._checkTiles(neees, VICTORY);
 
 		this.setState({

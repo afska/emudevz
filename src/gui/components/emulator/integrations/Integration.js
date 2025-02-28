@@ -44,10 +44,28 @@ export default class Integration extends PureComponent {
 	}
 
 	_getTileId(neees, x, y) {
-		return neees.ppu.nameTable.getTileIdOf(
-			neees.ppu.registers.ppuCtrl.patternTableAddressIdForBackground,
+		return this._getTileIdOf(
+			neees,
+			neees.ppu.registers.ppuCtrl.backgroundPatternTableId,
 			x * TILE_SIZE,
 			y * TILE_SIZE
 		);
+	}
+
+	_getTileIdOf(neees, nameTableId, x, y) {
+		const SCREEN_WIDTH = 256;
+		const TILE_LENGTH = 8;
+		const NAME_TABLES_START_ADDRESS = 0x2000;
+		const NAME_TABLE_TOTAL_TILES_X = SCREEN_WIDTH / TILE_LENGTH;
+		const NAME_TABLE_SIZE = 1024;
+
+		const startAddress =
+			NAME_TABLES_START_ADDRESS + nameTableId * NAME_TABLE_SIZE;
+
+		const tileX = Math.floor(x / TILE_LENGTH);
+		const tileY = Math.floor(y / TILE_LENGTH);
+		const tileIndex = tileY * NAME_TABLE_TOTAL_TILES_X + tileX;
+
+		return neees.ppu.memory.read(startAddress + tileIndex);
 	}
 }

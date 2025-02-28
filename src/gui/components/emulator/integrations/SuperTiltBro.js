@@ -34,8 +34,8 @@ export default class SuperTiltBro extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		const stocks = neees.cpu.memory.readAt(0x00d9);
-		const player2 = neees.cpu.memory.readAt(0x00da);
+		const stocks = neees.cpu.memory.read(0x00d9);
+		const player2 = neees.cpu.memory.read(0x00da);
 		const victory =
 			stocks === MODE_STOCKS_FIVE &&
 			player2 === MODE_PLAYER2_HARD &&
