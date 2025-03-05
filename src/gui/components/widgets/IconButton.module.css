@@ -11,6 +11,13 @@
 	color: #466a8e;
 }
 
+.inlinenomargin {
+}
+
+.inlinenomargin:hover {
+	color: #466a8e;
+}
+
 .disabled {
 	background: #929292 !important;
 	cursor: not-allowed;

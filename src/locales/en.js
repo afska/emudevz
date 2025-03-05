@@ -16,6 +16,7 @@ export default {
 	cartridge: "Cartridge",
 	chapter_next: "Go to next chapter",
 	chapter_previous: "Go to previous chapter",
+	check_diffs: "Check diffs",
 	choose_an_answer: "Choose an answer.",
 	close: "Close",
 	command_chat_already_open: "Already open.",

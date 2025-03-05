@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaSearch, FaTimes } from "react-icons/fa";
 import locales from "../../../locales";
 import testContext from "../../../terminal/commands/test/context";
 import IconButton from "../widgets/IconButton";
@@ -66,6 +66,17 @@ export default class VideoTester extends PureComponent {
 							this._progressBar = ref;
 						}}
 					/>
+					<IconButton
+						Icon={FaSearch}
+						tooltip={locales.get("check_diffs")}
+						onClick={this._checkDiffs}
+						kind="inline-no-margin"
+						className={styles.checkDiffs}
+						style={{ display: "none" }}
+						$ref={(ref) => {
+							this._checkDiffsButton = ref;
+						}}
+					/>
 				</div>
 				<div className={styles.column} style={{ flex: 3 }}>
 					<h6 className={styles.title}>
@@ -128,6 +139,8 @@ export default class VideoTester extends PureComponent {
 				});
 				this._progressBar.setBarFillColor("#d9534f");
 				this._closeButton.style.display = "block";
+
+				this._checkDiffsButton.style.display = "block";
 				return;
 			}
 
@@ -141,6 +154,11 @@ export default class VideoTester extends PureComponent {
 				this.props.onEnd({ success: true });
 			}
 		}
+	};
+
+	_checkDiffs = () => {
+		// TODO: IMPLEMENT
+		alert("todo");
 	};
 
 	_setError = (e) => {

@@ -51,6 +51,8 @@ export default class IconButton extends PureComponent {
 		switch (name) {
 			case "inline":
 				return styles.inline;
+			case "inline-no-margin":
+				return styles.inlinenomargin;
 			case "rounded":
 				return styles.rounded;
 			default:

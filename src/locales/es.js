@@ -16,6 +16,7 @@ export default {
 	cartridge: "Cartucho",
 	chapter_next: "Ir al siguiente capítulo",
 	chapter_previous: "Ir al capítulo anterior",
+	check_diffs: "Analizar diferencias",
 	choose_an_answer: "Elige una respuesta.",
 	close: "Cerrar",
 	command_chat_already_open: "Ya abierto.",
