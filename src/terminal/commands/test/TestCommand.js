@@ -196,6 +196,13 @@ export default class TestCommand extends Command {
 				? JSON.parse(level.code[videoTest.saveState])
 				: null;
 
+		// HACK: Retrocompatibility fix
+		if (saveState != null) {
+			if (!saveState.cpu.memory.apuRegisters)
+				saveState.cpu.memory.apuRegisters = _.range(0, 19).map(() => 0);
+			if (!saveState.apu) saveState.apu = {};
+		}
+
 		const ppuCode = level.code[videoTest.ppu];
 		const PPU = (await moduleEval(ppuCode)).default;
 
