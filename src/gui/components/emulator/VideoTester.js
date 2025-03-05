@@ -129,6 +129,8 @@ export default class VideoTester extends PureComponent {
 			if (!success) {
 				this._emulatorA.setBuffer(frameA);
 				this._emulatorB.setBuffer(frameB);
+				this._screenshotA = this._emulatorA.getScreenshot();
+				this._screenshotB = this._emulatorB.getScreenshot();
 				this._emulatorA.stop();
 				this._emulatorB.stop();
 				this._symbol.innerHTML = "❌";
@@ -158,7 +160,7 @@ export default class VideoTester extends PureComponent {
 
 	_checkDiffs = () => {
 		// TODO: IMPLEMENT
-		alert("todo");
+		alert(this._screenshotA);
 	};
 
 	_setError = (e) => {
