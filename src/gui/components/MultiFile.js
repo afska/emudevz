@@ -288,7 +288,12 @@ class MultiFile extends PureComponent {
 						}
 					},
 					setCode: (code) => {
-						filesystem.write(filePath, code);
+						try {
+							filesystem.write(filePath, code);
+						} catch (e) {
+							console.error(e);
+							this._closeSelectedFile();
+						}
 					},
 					forceReadOnly: isReadOnly,
 				};

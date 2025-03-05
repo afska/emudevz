@@ -14,35 +14,39 @@ export default class LsCommand extends FilesystemCommand {
 	}
 
 	static getTree(path, format = true, indent = "") {
-		const content = filesystem.ls(path);
+		try {
+			const content = filesystem.ls(path);
 
-		return content
-			.flatMap(({ name, isDirectory }, i) => {
-				const folderName = (format ? "" : "📁 ") + name + "/";
-				const fileName = format ? name : `[[[${$path.join(path, name)}]]]`;
-				const formattedName = isDirectory ? folderName : fileName;
-				const styledName =
-					isDirectory && format
-						? theme.MESSAGE(formattedName)
-						: theme.NORMAL(formattedName);
-				const isLastItem = i === content.length - 1;
-				const indentSymbol = isLastItem ? " " : "│";
-				const newIndent = indent + indentSymbol + _.repeat(" ", INDENT + 1);
-				const innerContent = isDirectory
-					? LsCommand.getTree(`${path}/${name}`, format, newIndent)
-					: "";
+			return content
+				.flatMap(({ name, isDirectory }, i) => {
+					const folderName = (format ? "" : "📁 ") + name + "/";
+					const fileName = format ? name : `[[[${$path.join(path, name)}]]]`;
+					const formattedName = isDirectory ? folderName : fileName;
+					const styledName =
+						isDirectory && format
+							? theme.MESSAGE(formattedName)
+							: theme.NORMAL(formattedName);
+					const isLastItem = i === content.length - 1;
+					const indentSymbol = isLastItem ? " " : "│";
+					const newIndent = indent + indentSymbol + _.repeat(" ", INDENT + 1);
+					const innerContent = isDirectory
+						? LsCommand.getTree(`${path}/${name}`, format, newIndent)
+						: "";
 
-				// (main)
-				const mainSymbol = isLastItem ? "└" : "├";
-				let entry =
-					indent + mainSymbol + _.repeat("─", INDENT) + " " + styledName;
+					// (main)
+					const mainSymbol = isLastItem ? "└" : "├";
+					let entry =
+						indent + mainSymbol + _.repeat("─", INDENT) + " " + styledName;
 
-				// (inner)
-				if (innerContent !== "") entry += "\n" + innerContent;
+					// (inner)
+					if (innerContent !== "") entry += "\n" + innerContent;
 
-				return entry;
-			})
-			.join("\n");
+					return entry;
+				})
+				.join("\n");
+		} catch (e) {
+			return "";
+		}
 	}
 
 	async _execute() {

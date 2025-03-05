@@ -23,7 +23,14 @@ export default function FileSearch(props) {
 	const inputRef = useRef(null);
 	useEffect(() => {
 		if (isSearching) {
-			const newFiles = filesystem.lsr(DIRECTORY).map((file) => {
+			let files = [];
+			try {
+				files = filesystem.lsr(DIRECTORY);
+			} catch (e) {
+				console.error(`❌ Cannot list directory: ${DIRECTORY}`);
+				console.error(e);
+			}
+			const newFiles = files.map((file) => {
 				return {
 					...file,
 					originalFilePath: file.filePath,
