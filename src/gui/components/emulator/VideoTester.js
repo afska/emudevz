@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import locales from "../../../locales";
 import testContext from "../../../terminal/commands/test/context";
+import { bus } from "../../../utils";
 import IconButton from "../widgets/IconButton";
 import ProgressBar from "../widgets/ProgressBar";
 import Emulator from "./Emulator";
@@ -159,8 +160,7 @@ export default class VideoTester extends PureComponent {
 	};
 
 	_checkDiffs = () => {
-		// TODO: IMPLEMENT
-		alert(this._screenshotA);
+		bus.emit("image-diff", this._screenshotA, this._screenshotB);
 	};
 
 	_setError = (e) => {
