@@ -1,0 +1,11 @@
+.options {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.mainDiff {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
