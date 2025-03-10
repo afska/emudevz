@@ -160,7 +160,7 @@ export default class VideoTester extends PureComponent {
 	};
 
 	_checkDiffs = () => {
-		bus.emit("image-diff", this._screenshotA, this._screenshotB);
+		bus.emit("image-diff", this._screenshotB, this._screenshotA);
 	};
 
 	_setError = (e) => {
