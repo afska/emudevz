@@ -1,7 +1,6 @@
 import _ from "lodash";
 import filesystem, { Drive } from "../filesystem";
 import components from "../gui/components";
-import MultiFile from "../gui/components/MultiFile";
 import TV from "../gui/components/TV";
 import layouts from "../gui/components/layouts";
 import locales from "../locales";

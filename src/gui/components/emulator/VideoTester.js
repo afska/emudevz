@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaSearch, FaTimes } from "react-icons/fa";
 import locales from "../../../locales";
 import testContext from "../../../terminal/commands/test/context";
+import { bus } from "../../../utils";
 import IconButton from "../widgets/IconButton";
 import ProgressBar from "../widgets/ProgressBar";
 import Emulator from "./Emulator";
@@ -52,18 +53,35 @@ export default class VideoTester extends PureComponent {
 					/>
 				</div>
 				<div className={styles.column}>
-					<span
+					<div
 						ref={(ref) => {
 							this._symbol = ref;
 						}}
 					>
 						🧐
-					</span>
+					</div>
 					<ProgressBar
 						percentage={0}
 						animated={false}
 						ref={(ref) => {
 							this._progressBar = ref;
+						}}
+					/>
+					<code
+						ref={(ref) => {
+							this._detail = ref;
+						}}
+						className={styles.frameDetails}
+					></code>
+					<IconButton
+						Icon={FaSearch}
+						tooltip={locales.get("check_diffs")}
+						onClick={this._checkDiffs}
+						kind="inline-no-margin"
+						className={styles.checkDiffs}
+						style={{ display: "none" }}
+						$ref={(ref) => {
+							this._checkDiffsButton = ref;
 						}}
 					/>
 				</div>
@@ -118,6 +136,8 @@ export default class VideoTester extends PureComponent {
 			if (!success) {
 				this._emulatorA.setBuffer(frameA);
 				this._emulatorB.setBuffer(frameB);
+				this._screenshotA = this._emulatorA.getScreenshot();
+				this._screenshotB = this._emulatorB.getScreenshot();
 				this._emulatorA.stop();
 				this._emulatorB.stop();
 				this._symbol.innerHTML = "❌";
@@ -128,6 +148,8 @@ export default class VideoTester extends PureComponent {
 				});
 				this._progressBar.setBarFillColor("#d9534f");
 				this._closeButton.style.display = "block";
+
+				this._checkDiffsButton.style.display = "block";
 				return;
 			}
 
@@ -136,11 +158,17 @@ export default class VideoTester extends PureComponent {
 			if (this._count < this._testFrames) {
 				const percentage = (this._count / this._testFrames) * 100;
 				this._progressBar.setPercentage(percentage);
+				this._detail.innerHTML = this._count + " / " + this._testFrames;
 			} else {
 				this._progressBar.setPercentage(100);
 				this.props.onEnd({ success: true });
+				this._detail.innerHTML = this._count + " / " + this._testFrames;
 			}
 		}
+	};
+
+	_checkDiffs = () => {
+		bus.emit("image-diff", this._screenshotB, this._screenshotA);
 	};
 
 	_setError = (e) => {

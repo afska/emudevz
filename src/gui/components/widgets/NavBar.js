@@ -23,6 +23,7 @@ import { analytics, bus } from "../../../utils";
 import music from "../../sound/music";
 import CalculatorModal from "./CalculatorModal";
 import IconButton from "./IconButton";
+import ImageDiffModal from "./ImageDiffModal";
 import LevelHistoryModal from "./LevelHistoryModal";
 import ProgressList from "./ProgressList";
 import VolumeSlider from "./VolumeSlider";
@@ -32,6 +33,7 @@ class NavBar extends PureComponent {
 	state = {
 		isCalculatorOpen: false,
 		areYouSureRollback: false,
+		imageDiffUrl: null,
 	};
 
 	render() {
@@ -62,6 +64,11 @@ class NavBar extends PureComponent {
 				<LevelHistoryModal
 					open={this.state.isLevelHistoryOpen}
 					onClose={this._closeLevelHistory}
+				/>
+
+				<ImageDiffModal
+					imageUrls={this.state.imageDiffUrl}
+					onClose={this._closeImageDiff}
 				/>
 
 				<div className={classNames(styles.item, styles.text)}>
@@ -205,9 +212,25 @@ class NavBar extends PureComponent {
 		Level.current.launchEmulator();
 	};
 
+	_showImageDiff = async (oldImageUrl, newImageUrl) => {
+		this.setState({
+			imageDiffUrl: {
+				old: oldImageUrl,
+				new: newImageUrl,
+			},
+		});
+	};
+
+	_closeImageDiff = () => {
+		this.setState({
+			imageDiffUrl: null,
+		});
+	};
+
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
 			"new-listeners": () => this.forceUpdate(),
+			"image-diff": this._showImageDiff,
 		});
 	}
 

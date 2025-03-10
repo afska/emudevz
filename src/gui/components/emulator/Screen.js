@@ -28,6 +28,7 @@ export default class Screen extends Component {
 	};
 
 	_initCanvas(canvas) {
+		this.canvas = canvas;
 		this.context = canvas.getContext("2d");
 		this.imageData = this.context.getImageData(
 			0,

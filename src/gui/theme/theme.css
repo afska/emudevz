@@ -248,3 +248,13 @@ body {
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+/* ImageDiff */
+
+.ImageDiff__before {
+	box-sizing: content-box;
+}
+
+.ImageDiff__after {
+	box-sizing: content-box;
+}
