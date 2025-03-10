@@ -75,6 +75,17 @@ export default class ImageDiffModal extends PureComponent {
 								}}
 								disabled={isDifference}
 							/>
+							<div className={styles.faderDetail}>
+								<span className={styles.expected}>
+									{locales.get("tests_video_expected_output")}:{" "}
+									{((1 - fader) * 100).toFixed(0)}%
+								</span>{" "}
+								-{" "}
+								<span className={styles.actual}>
+									{locales.get("tests_video_ppu_output")}:
+									{(fader * 100).toFixed(0)}%
+								</span>
+							</div>
 						</Form.Group>
 						<Form.Group
 							className={styles.mainDiff}
@@ -82,8 +93,9 @@ export default class ImageDiffModal extends PureComponent {
 						>
 							{isOpen && (
 								<ImageDiff
-									before={imageUrls.old}
-									after={imageUrls.new}
+									/* // HACK: Flipped on purpose */
+									before={imageUrls.new}
+									after={imageUrls.old}
 									type={diffMode}
 									value={fader}
 								/>

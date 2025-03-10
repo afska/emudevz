@@ -16,3 +16,16 @@
 	flex-direction: column;
 	align-items: center;
 }
+
+.faderDetail {
+	text-align: center;
+	font-size: small;
+}
+
+.expected {
+	color: rgb(99, 195, 99);
+}
+
+.actual {
+	color: rgb(255, 119, 119);
+}
