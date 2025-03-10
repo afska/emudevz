@@ -53,13 +53,13 @@ export default class VideoTester extends PureComponent {
 					/>
 				</div>
 				<div className={styles.column}>
-					<span
+					<div
 						ref={(ref) => {
 							this._symbol = ref;
 						}}
 					>
 						🧐
-					</span>
+					</div>
 					<ProgressBar
 						percentage={0}
 						animated={false}
@@ -67,6 +67,12 @@ export default class VideoTester extends PureComponent {
 							this._progressBar = ref;
 						}}
 					/>
+					<code
+						ref={(ref) => {
+							this._detail = ref;
+						}}
+						className={styles.frameDetails}
+					></code>
 					<IconButton
 						Icon={FaSearch}
 						tooltip={locales.get("check_diffs")}
@@ -152,9 +158,11 @@ export default class VideoTester extends PureComponent {
 			if (this._count < this._testFrames) {
 				const percentage = (this._count / this._testFrames) * 100;
 				this._progressBar.setPercentage(percentage);
+				this._detail.innerHTML = this._count + " / " + this._testFrames;
 			} else {
 				this._progressBar.setPercentage(100);
 				this.props.onEnd({ success: true });
+				this._detail.innerHTML = this._count + " / " + this._testFrames;
 			}
 		}
 	};
