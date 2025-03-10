@@ -2,6 +2,5 @@
 	width: 100%;
 	height: 100%;
 
-	image-rendering: pixelated; /* webkit */
-	image-rendering: optimizespeed; /* firefox */
+	image-rendering: pixelated;
 }

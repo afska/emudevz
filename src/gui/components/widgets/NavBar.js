@@ -212,7 +212,7 @@ class NavBar extends PureComponent {
 		Level.current.launchEmulator();
 	};
 
-	_showImageDiff = (oldImageUrl, newImageUrl) => {
+	_showImageDiff = async (oldImageUrl, newImageUrl) => {
 		this.setState({
 			imageDiffUrl: {
 				old: oldImageUrl,

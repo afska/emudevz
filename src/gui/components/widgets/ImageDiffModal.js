@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import classNames from "classnames";
 import locales from "../../../locales";
 import ValueSlider from "./ValueSlider";
 import styles from "./ImageDiffModal.module.css";
@@ -13,6 +14,9 @@ React.PropTypes = undefined;
 
 const DIFF_MODES = ["fade", "swipe", "difference"];
 const MARGIN = 16;
+const SCREEN_WIDTH = 256;
+const SCREEN_HEIGHT = 240;
+const SCALE = 1;
 
 export default class ImageDiffModal extends PureComponent {
 	state = {
@@ -74,6 +78,7 @@ export default class ImageDiffModal extends PureComponent {
 									this.setState({ fader: e.target.value });
 								}}
 								disabled={isDifference}
+								step={0.01}
 							/>
 							<div className={styles.faderDetail}>
 								<span className={styles.expected}>
@@ -82,13 +87,16 @@ export default class ImageDiffModal extends PureComponent {
 								</span>{" "}
 								-{" "}
 								<span className={styles.actual}>
-									{locales.get("tests_video_ppu_output")}:
+									{locales.get("tests_video_ppu_output")}:{" "}
 									{(fader * 100).toFixed(0)}%
 								</span>
 							</div>
 						</Form.Group>
 						<Form.Group
-							className={styles.mainDiff}
+							className={classNames(
+								styles.mainDiff,
+								isDifference ? styles.smooth : styles.pixelated
+							)}
 							style={{ marginTop: MARGIN }}
 						>
 							{isOpen && (
@@ -98,6 +106,8 @@ export default class ImageDiffModal extends PureComponent {
 									after={imageUrls.old}
 									type={diffMode}
 									value={fader}
+									width={SCREEN_WIDTH * SCALE}
+									height={SCREEN_HEIGHT * SCALE}
 								/>
 							)}
 						</Form.Group>

@@ -29,3 +29,11 @@
 .actual {
 	color: rgb(255, 119, 119);
 }
+
+.smooth {
+	image-rendering: auto;
+}
+
+.pixelated {
+	image-rendering: pixelated;
+}
