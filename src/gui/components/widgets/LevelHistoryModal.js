@@ -32,22 +32,25 @@ class LevelHistoryModal extends PureComponent {
 							const isCurrent = levelDefinition.id === Level.current.id;
 
 							return (
-								<Button
-									key={i}
-									className={classNames(
-										styles.level,
-										isCurrent && styles.current
-									)}
-									onClick={() => goTo(levelId)}
-								>
-									<div>
-										<span className={styles.chapter}>
-											{chapter.name[locales.language]}
-										</span>
-										<span>{levelDefinition.name[locales.language]}</span>
-									</div>
+								<div key={i}>
+									<Button
+										className={classNames(
+											styles.level,
+											isCurrent && styles.current
+										)}
+										onClick={() => goTo(levelId)}
+									>
+										<div>
+											<span className={styles.chapter}>
+												{chapter.name[locales.language]}
+											</span>
+											<span className={styles.levelName}>
+												{levelDefinition.name[locales.language]}
+											</span>
+										</div>
+									</Button>
 									<div className={styles.time}>{locales.timeAgo(date)}</div>
-								</Button>
+								</div>
 							);
 						})}
 				</Modal.Body>
