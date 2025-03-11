@@ -8,22 +8,25 @@ export default {
 				.map((it) => this._findMatches(it, input))
 				.filter((it) => it != null),
 			[
+				(it) => this._sanitize(it.file.name).startsWith(this._sanitize(input)),
 				(it) => it.groups.length,
 				(it) => it.file.filePath.split("/").length,
 				(it) => it.file.filePath,
 			],
-			["asc", "asc", "asc"]
+			["desc", "asc", "asc", "asc"]
 		);
+	},
+
+	_sanitize(input) {
+		return input.replace(Drive.PATH_INVALID_CHARACTERS, "").toLowerCase();
 	},
 
 	_findMatches(file, input) {
 		if (file.isDirectory) return null;
 
-		const cleanInput = input
-			.replace(Drive.PATH_INVALID_CHARACTERS, "")
-			.toLowerCase();
+		const cleanInput = this._sanitize(input);
 		const indexes = [];
-		let path = file.filePath.toLowerCase();
+		let path = this._sanitize(file.filePath);
 		let baseIndex = 0;
 
 		if (cleanInput.length === 0) return null;
