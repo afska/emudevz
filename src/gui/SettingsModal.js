@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales, { LANGUAGES } from "../locales";
-import { savefile, toast } from "../utils";
+import { filepicker, savefile, toast } from "../utils";
 import Button from "./components/widgets/Button";
 import VolumeSlider from "./components/widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
@@ -162,45 +162,27 @@ class SettingsModal extends PureComponent {
 			return;
 		}
 
-		const handleFileSelect = async (event) => {
-			event.target.removeEventListener("change", handleFileSelect);
-			if (input.files.length === 0) return;
+		filepicker.open(SAVEFILE_EXTENSION, async (fileContent) => {
+			this.setState({ isLoadingSaveRestore: true });
 
-			const file = event.target.files[0];
-			const reader = new FileReader();
-
-			reader.onload = async (e) => {
-				const fileContent = e.target.result;
-
-				this.setState({ isLoadingSaveRestore: true });
+			try {
+				try {
+					await savefile.check(fileContent);
+				} catch (e) {
+					toast.error(locales.get("save_file_cannot_be_restored"));
+					return;
+				}
 
 				try {
-					try {
-						await savefile.check(fileContent);
-					} catch (e) {
-						toast.error(locales.get("save_file_cannot_be_restored"));
-						return;
-					}
-
-					try {
-						await savefile.clear();
-						await savefile.import(fileContent);
-					} finally {
-						this._reload();
-					}
+					await savefile.clear();
+					await savefile.import(fileContent);
 				} finally {
-					this.setState({ isLoadingSaveRestore: false });
+					this._reload();
 				}
-			};
-
-			reader.readAsArrayBuffer(file);
-		};
-
-		const input = document.createElement("input");
-		input.type = "file";
-		input.accept = SAVEFILE_EXTENSION;
-		input.addEventListener("change", handleFileSelect);
-		input.click();
+			} finally {
+				this.setState({ isLoadingSaveRestore: false });
+			}
+		});
 	};
 
 	_deleteSavefile = async (e) => {

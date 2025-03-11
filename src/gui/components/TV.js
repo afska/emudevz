@@ -110,6 +110,9 @@ export default class TV extends PureComponent {
 						onError={(e) => {
 							this.setState({ _error: e });
 						}}
+						onLoadROM={(fileContent) => {
+							this._resetContent(fileContent);
+						}}
 						onRestart={(saveState) => {
 							this._resetContent(content, saveState);
 						}}

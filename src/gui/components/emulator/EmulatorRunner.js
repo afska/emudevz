@@ -6,7 +6,7 @@ import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
-import { bus } from "../../../utils";
+import { bus, filepicker } from "../../../utils";
 import IconButton from "../widgets/IconButton";
 import Tooltip from "../widgets/Tooltip";
 import VolumeSlider from "../widgets/VolumeSlider";
@@ -110,6 +110,7 @@ export default class EmulatorRunner extends PureComponent {
 							styles.dragMessage,
 							"d-none d-xl-flex d-xxl-flex"
 						)}
+						onClick={this._openROM}
 					>
 						📦 {locales.get("drag_and_drop_here")}
 					</div>
@@ -276,6 +277,12 @@ export default class EmulatorRunner extends PureComponent {
 
 	_stop = () => {
 		this.props.onStop();
+	};
+
+	_openROM = () => {
+		filepicker.open(".neees,.nes", (fileContent) => {
+			this.props.onLoadROM(fileContent);
+		});
 	};
 
 	_onToggle = (setting) => {
