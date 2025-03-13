@@ -116,21 +116,27 @@ export default class EmulatorRunner extends PureComponent {
 					</div>
 					<div className={styles.row}>
 						<div style={{ opacity: isRunning ? 1 : 0 }} className={styles.row}>
-							<span>⚡️&nbsp;</span>
-							<span id="fps">00</span>
-							<span>&nbsp;FPS</span>
-							<span>&nbsp;|&nbsp;</span>
+							<span className={styles.label}>⚡️</span>
+							<span id="fps" className={styles.label}>
+								00
+							</span>
+							<span className={styles.label}>FPS</span>
+							<span className={styles.label}>|</span>
 							<Tooltip title={locales.get("using_keyboard")} placement="top">
-								<span id="keyboard">⌨️</span>
+								<span id="keyboard" className={styles.label}>
+									⌨️
+								</span>
 							</Tooltip>
 							<Tooltip
 								title={locales.get("using_gamepad")}
 								placement="top"
 								style={{ display: "none" }}
 							>
-								<span id="gamepad">🎮</span>
+								<span id="gamepad" className={styles.label}>
+									🎮
+								</span>
 							</Tooltip>
-							<span>&nbsp;|&nbsp;</span>
+							<span className={styles.label}>|</span>
 						</div>
 						<VolumeSlider
 							volume={null}
