@@ -56,6 +56,7 @@ export default {
 	disconnected: "🔌  Disconnected. Use the `chat` command to talk again!",
 	drag_and_drop_here: "Drag a ROM here!",
 	emulation_debug: "Go to error line",
+	emulation_fullscreen: "Go fullscreen",
 	emulation_reload: "Reload ROM",
 	emulation_stop: "Stop emulation",
 	enter_a_file_name: "Enter a file name...",

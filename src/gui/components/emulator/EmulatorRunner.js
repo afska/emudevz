@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { FaBug, FaStop, FaSync } from "react-icons/fa";
+import { FaBug, FaExpand, FaStop, FaSync } from "react-icons/fa";
 import classNames from "classnames";
 import _ from "lodash";
 import Level from "../../../level/Level";
@@ -185,6 +185,14 @@ export default class EmulatorRunner extends PureComponent {
 					{!!rom && !error && (
 						<IconButton
 							style={{ marginRight: 8 }}
+							Icon={FaExpand}
+							tooltip={locales.get("emulation_fullscreen")}
+							onClick={this._goFullscreen}
+						/>
+					)}
+					{!!rom && !error && (
+						<IconButton
+							style={{ marginRight: 8 }}
 							Icon={FaSync}
 							tooltip={locales.get("emulation_reload")}
 							onClick={this._reload}
@@ -269,6 +277,10 @@ export default class EmulatorRunner extends PureComponent {
 				bus.emit("highlight", { line: lineNumber - 1 });
 		});
 		Level.current.highlightMultiFileEditor();
+	};
+
+	_goFullscreen = () => {
+		this._emulator.toggleFullscreen();
 	};
 
 	_reload = (useSaveStateIfPossible = false) => {

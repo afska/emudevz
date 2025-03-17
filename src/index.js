@@ -58,6 +58,12 @@ document.onkeydown = (e) => {
 // On "click" events
 document.onclick = () => music.start(); // run music!
 
+// On "fullscreenchange" events
+document.onfullscreenchange = (event) => {
+	const isFullscreen = document.fullscreenElement != null;
+	document.body.style.filter = isFullscreen ? "blur(4px)" : "none";
+};
+
 // Make the page visible once everything loaded
 window.addEventListener(
 	"load",

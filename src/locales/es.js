@@ -56,6 +56,7 @@ export default {
 	drag_and_drop_here: "¡Arrastra una ROM aquí!",
 	emulation_debug: "Ir a la línea del error",
 	emulation_reload: "Recargar ROM",
+	emulation_fullscreen: "Activar pantalla completa",
 	emulation_stop: "Detener emulación",
 	enter_a_file_name: "Ingresa un nombre de archivo...",
 	file_created: "¡Archivo creado!",

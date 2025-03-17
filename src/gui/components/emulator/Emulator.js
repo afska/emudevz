@@ -75,6 +75,10 @@ export default class Emulator extends Component {
 		this._emulation?.screen.setBuffer(frameBuffer);
 	}
 
+	toggleFullscreen = () => {
+		this._emulation.toggleFullscreen();
+	};
+
 	stop() {
 		this._stop();
 	}
@@ -187,7 +191,8 @@ export default class Emulator extends Component {
 	}
 
 	_onKeyDown = (e) => {
-		if (document.activeElement.id !== "emulator") return;
+		if (!document.fullscreenElement && document.activeElement.id !== "emulator")
+			return;
 
 		const button = KEY_MAP[e.key];
 		if (!button) return;
@@ -196,7 +201,8 @@ export default class Emulator extends Component {
 	};
 
 	_onKeyUp = (e) => {
-		if (document.activeElement.id !== "emulator") return;
+		if (!document.fullscreenElement && document.activeElement.id !== "emulator")
+			return;
 
 		const button = KEY_MAP[e.key];
 		if (!button) return;

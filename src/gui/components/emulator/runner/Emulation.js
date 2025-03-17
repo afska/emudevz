@@ -96,6 +96,10 @@ export default class Emulation {
 		}
 	}
 
+	toggleFullscreen = () => {
+		this.screen.toggleFullscreen();
+	};
+
 	terminate = () => {
 		this.frameTimer.stop();
 		this.speaker.stop();

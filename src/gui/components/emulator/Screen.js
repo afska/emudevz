@@ -27,6 +27,14 @@ export default class Screen extends Component {
 		this.context.putImageData(this.imageData, 0, 0);
 	};
 
+	toggleFullscreen = () => {
+		if (!document.fullscreenElement) {
+			if (this.canvas.requestFullscreen) this.canvas.requestFullscreen();
+		} else {
+			if (document.exitFullscreen) document.exitFullscreen();
+		}
+	};
+
 	_initCanvas(canvas) {
 		this.canvas = canvas;
 		this.context = canvas.getContext("2d");
