@@ -1,7 +1,7 @@
 import FrameTimer from "./FrameTimer";
 import Speaker from "./Speaker";
 
-const SYNC_TO_AUDIO = false; // FIXME: ROLLBACK
+const SYNC_TO_AUDIO = true;
 const APU_SAMPLE_RATE = 44100;
 const AUDIO_BUFFER_LIMIT = 4096;
 const FPS = 60.098;
