@@ -135,6 +135,7 @@ export default class Emulator extends Component {
 		this.keyboardInput = gamepad.createInput();
 		window.addEventListener("keydown", this._onKeyDown);
 		window.addEventListener("keyup", this._onKeyUp);
+		window.addEventListener("fullscreenchange", this._onFullscreenChange);
 
 		const bytes = new Uint8Array(rom);
 		const saveState =
@@ -187,6 +188,7 @@ export default class Emulator extends Component {
 
 		window.removeEventListener("keydown", this._onKeyDown);
 		window.removeEventListener("keyup", this._onKeyUp);
+		window.removeEventListener("fullscreenchange", this._onFullscreenChange);
 		this.props.onStop?.();
 	}
 
@@ -208,6 +210,16 @@ export default class Emulator extends Component {
 		if (!button) return;
 
 		this.keyboardInput[button] = false;
+	};
+
+	_onFullscreenChange = () => {
+		this._clearInput();
+	};
+
+	_clearInput = () => {
+		for (let key in this.keyboardInput) {
+			this.keyboardInput[key] = false;
+		}
 	};
 
 	_saveProgress = () => {

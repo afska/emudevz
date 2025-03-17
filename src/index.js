@@ -62,6 +62,7 @@ document.onclick = () => music.start(); // run music!
 document.onfullscreenchange = (event) => {
 	const isFullscreen = document.fullscreenElement != null;
 	document.body.style.filter = isFullscreen ? "blur(4px)" : "none";
+	if (!isFullscreen) document.getElementById("emulator")?.focus();
 };
 
 // Make the page visible once everything loaded
