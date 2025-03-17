@@ -316,7 +316,7 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	_scrollTo(line) {
-		if (line === -1) return;
+		if (line === -1 || line == null) return;
 
 		const { view, state } = this.ref;
 		const position = state.doc.line(line + 1).from;
