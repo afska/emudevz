@@ -314,7 +314,7 @@ export default class CPUDebugger extends PureComponent {
 
 								return line != null ? (
 									<div className={styles.sentence}>
-										${line}
+										{line}
 										<div className={styles.sentenceByteCount}>
 											({locales.get("byte")}{" "}
 											{1 + address - (asm.CODE_ADDRESS + instruction.address)}/
