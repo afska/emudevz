@@ -40,8 +40,9 @@ document.onkeydown = (e) => {
 
 	// Disable Print shortcut
 	const isCtrlP = (e.ctrlKey || e.metaKey) && e.code === "KeyP";
+	const isFullscreen = document.fullscreenElement != null;
 	if (isCtrlP) {
-		bus.emit("file-search");
+		if (!isFullscreen) bus.emit("file-search");
 		e.preventDefault();
 	}
 
