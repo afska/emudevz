@@ -186,7 +186,10 @@ export default class CodeEditor extends PureComponent {
 		this._subscriber = bus.subscribe({
 			"run-enabled": this._onRunEnabled,
 			highlight: this._onHighlight,
-			"level-memory-changed": () => this.forceUpdate(),
+			"level-memory-changed": () => {
+				if (!Level.current.memory.content.useTemp)
+					this._setCode(this.props.getCode());
+			},
 		});
 	}
 
@@ -318,13 +321,17 @@ export default class CodeEditor extends PureComponent {
 	_scrollTo(line) {
 		if (line === -1 || line == null) return;
 
-		const { view, state } = this.ref;
-		const position = state.doc.line(line + 1).from;
-		view.dispatch({
-			effects: EditorView.scrollIntoView(position, {
-				y: "center",
-			}),
-		});
+		try {
+			const { view } = this.ref;
+			const position = view.state.doc.line(line + 1).from;
+			view.dispatch({
+				effects: EditorView.scrollIntoView(position, {
+					y: "center",
+				}),
+			});
+		} catch (e) {
+			console.warn("Failed to scroll", e);
+		}
 	}
 }
 
