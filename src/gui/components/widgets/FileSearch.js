@@ -6,6 +6,7 @@ import filesystem, { fuzzy } from "../../../filesystem";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import LsCommand from "../../../terminal/commands/fs/LsCommand";
+import { toast } from "../../../utils";
 import extensions from "../../extensions";
 import styles from "./FileSearch.module.css";
 
@@ -51,8 +52,23 @@ export default function FileSearch(props) {
 		if (selected >= matches.length) setSelected(0);
 	}, [input, files, selected]);
 
-	window._openPath_ = (filePath) => {
+	const _onSelect = (filePath) => {
+		onBlur();
+
+		if (!Level.current.canLaunchEmulator() && filePath.endsWith(".neees")) {
+			toast.error(locales.get("cant_open_emulator"));
+			return;
+		}
+
 		onSelect(filePath);
+	};
+
+	const _onSelectFile = (file) => {
+		_onSelect(file.originalFilePath);
+	};
+
+	window._openPath_ = (filePath) => {
+		_onSelect(filePath);
 	};
 
 	const tree = LsCommand.getTree(DIRECTORY, false).replace(
@@ -106,7 +122,7 @@ export default function FileSearch(props) {
 									onMouseMove={() => setSelected(i)}
 									onMouseDown={(e) => {
 										e.preventDefault();
-										_onSelect(file);
+										_onSelectFile(file);
 									}}
 								>
 									<span>{icon}</span>
@@ -117,12 +133,6 @@ export default function FileSearch(props) {
 						})}
 					</div>
 				)}
-				{!Level.current.canLaunchEmulator() &&
-					matches[selected]?.file.filePath.endsWith(".neees") && (
-						<pre className={styles.warning}>
-							{locales.get("cant_open_emulator")}
-						</pre>
-					)}
 			</div>
 		);
 	};
@@ -173,15 +183,10 @@ export default function FileSearch(props) {
 
 		if (isEnter) {
 			const match = matches[selected];
-			if (match != null) _onSelect(match.file);
+			if (match != null) _onSelectFile(match.file);
 			e.preventDefault();
 			return;
 		}
-	};
-
-	const _onSelect = (file) => {
-		onSelect(file.originalFilePath);
-		onBlur();
 	};
 
 	if (!isSearching) return false;

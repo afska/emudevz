@@ -64,16 +64,6 @@
 	flex: 1;
 }
 
-.warning {
-	position: fixed;
-	bottom: -8px;
-	border-radius: 4px;
-	padding: 4px;
-	text-align: center;
-	color: #cccccc;
-	background: #d03636ab;
-}
-
 .treeLink:hover {
 	text-decoration: underline;
 	cursor: pointer;
