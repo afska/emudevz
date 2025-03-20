@@ -31,7 +31,7 @@ export default class TV extends PureComponent {
 	}
 
 	setContent(content, type) {
-		this.setState({ content, type, _error: null });
+		this.setState({ content, type, _error: null, _saveState: null });
 	}
 
 	render() {

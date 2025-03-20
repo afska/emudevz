@@ -190,12 +190,12 @@ export default class EmulatorRunner extends PureComponent {
 							onClick={this._goFullscreen}
 						/>
 					)}
-					{!!rom && !error && (
+					{!!rom && (
 						<IconButton
 							style={{ marginRight: 8 }}
 							Icon={FaSync}
 							tooltip={locales.get("emulation_reload")}
-							onClick={this._reload}
+							onClick={() => this._reload(false)}
 						/>
 					)}
 					{!!rom && (
