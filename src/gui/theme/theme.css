@@ -62,6 +62,10 @@ body {
 	animation: blinker 0.5s step-start infinite;
 }
 
+.running {
+	animation: pulse 1.5s ease-in-out infinite;
+}
+
 @keyframes shake {
 	0% {
 		transform: translate(1px, 1px) rotate(0deg);
@@ -101,6 +105,16 @@ body {
 @keyframes blinker {
 	50% {
 		opacity: 0;
+	}
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
 	}
 }
 

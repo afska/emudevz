@@ -89,7 +89,13 @@ export default class TestCommand extends Command {
 						locales.get("testing") + theme.MESSAGE(fileName) + "..."
 					);
 
-				const results = await framework.test(test, testDefinition);
+				Level.current.startEffect("running");
+				let results;
+				try {
+					results = await framework.test(test, testDefinition);
+				} finally {
+					Level.current.stopEffect();
+				}
 
 				for (let result of results) {
 					if (isMainTestFile || !result.passed)
