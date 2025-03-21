@@ -108,6 +108,9 @@ export default class DualLayoutFixedPin extends Layout {
 	_onPin = (pin) => {
 		this.setState({ Pin: pin.Component }, () => {
 			this.instances.Pin.initialize(pin.args, pin.level, this);
+			setTimeout(() => {
+				this.focus(this.constructor.pinLocation);
+			});
 		});
 	};
 }

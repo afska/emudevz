@@ -128,19 +128,19 @@ export default class Level {
 	}
 
 	launchEmulator(rom = null) {
-		if (!bus.isListeningTo("pin")) {
+		if (bus.isListeningTo("pin")) {
+			bus.emit("pin", {
+				Component: TV,
+				args: { content: rom, type: "rom" },
+				level: this,
+			});
+		} else {
 			const tvRom = this.$layout.findInstance(
 				"TV",
 				(it) => it.state.type === "rom"
 			);
 			if (tvRom != null) tvRom.setContent(rom, "rom");
 		}
-
-		bus.emit("pin", {
-			Component: TV,
-			args: { content: rom, type: "rom" },
-			level: this,
-		});
 	}
 
 	highlightMultiFileEditor() {
