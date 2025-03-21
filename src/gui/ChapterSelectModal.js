@@ -60,6 +60,7 @@ export default class ChapterSelectModal extends PureComponent {
 									nested
 									right
 									optional
+									comingSoon
 								/>
 								<Chapter
 									book={book}
@@ -81,6 +82,7 @@ export default class ChapterSelectModal extends PureComponent {
 									nested
 									left
 									right
+									comingSoon
 								/>
 								<Chapter
 									book={book}
@@ -88,11 +90,12 @@ export default class ChapterSelectModal extends PureComponent {
 									nested
 									left
 									optional
+									comingSoon
 								/>
 							</div>
 							<div className={styles.horizontalLine} />
 							<div className={styles.verticalLine} />
-							<Chapter book={book} chapter={book.getChapter(9)} />
+							<Chapter book={book} chapter={book.getChapter(9)} comingSoon />
 						</div>
 					)}
 				</Modal.Body>

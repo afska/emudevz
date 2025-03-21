@@ -24,6 +24,7 @@ export default {
 	check_diffs_balance: "Balance",
 	choose_an_answer: "Elige una respuesta.",
 	close: "Cerrar",
+	coming_soon: "¡Próximamente!",
 	command_chat_already_open: "Ya abierto.",
 	command_chat_description: "Ejecuta la app de chat.",
 	command_clear_description: "Limpia la terminal.",

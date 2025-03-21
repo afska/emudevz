@@ -24,6 +24,7 @@ export default {
 	check_diffs_balance: "Balance",
 	choose_an_answer: "Choose an answer.",
 	close: "Close",
+	coming_soon: "Coming soon!",
 	command_chat_already_open: "Already open.",
 	command_chat_description: "Runs the chat app.",
 	command_clear_description: "Clears the terminal.",

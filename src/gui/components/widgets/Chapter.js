@@ -14,6 +14,7 @@ class Chapter extends PureComponent {
 			chapter,
 			goTo,
 			optional = false,
+			comingSoon = false,
 			mini = false,
 			nested = false,
 			right = false,
@@ -64,7 +65,11 @@ class Chapter extends PureComponent {
 					>
 						<span>{chapter.name[locales.language]}</span>
 
-						{isUnlocked ? (
+						{comingSoon ? (
+							<div style={{ fontSize: "xx-small" }}>
+								🚧 {locales.get("coming_soon")}
+							</div>
+						) : isUnlocked ? (
 							<ProgressBar percentage={percentage} />
 						) : (
 							<div>🔒</div>
