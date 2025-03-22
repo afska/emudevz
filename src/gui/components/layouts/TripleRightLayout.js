@@ -155,6 +155,7 @@ export default class TripleLayout extends Layout {
 		this._subscriber = bus.subscribe({
 			pin: this._onPin,
 			unpin: this._closePin,
+			"do-not-pin-emulator": () => {},
 		});
 	}
 

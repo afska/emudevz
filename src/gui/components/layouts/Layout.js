@@ -32,7 +32,7 @@ export default class Layout extends PureComponent {
 	findInstance(typeId, condition = () => true) {
 		const components = _.values(this.instances);
 		return components.find(
-			(it) => it.constructor.id === typeId && condition(it)
+			(it) => it?.constructor.id === typeId && condition(it)
 		);
 	}
 }

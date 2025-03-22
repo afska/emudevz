@@ -134,8 +134,7 @@ export default class Level {
 	canLaunchEmulatorFromNavbar(chapter) {
 		return (
 			bus.isListeningTo("pin") &&
-			this.$layout.findInstance("TV", (it) => it.state.type === "rom") ==
-				null &&
+			!bus.isListeningTo("do-not-pin-emulator") &&
 			!chapter.isSpecial
 		);
 	}
