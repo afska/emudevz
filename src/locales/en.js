@@ -171,6 +171,7 @@ export default {
 	tests_video_failed1: "❌  Wrong pixels (frame ",
 	tests_video_failed2: " of ",
 	tests_video_failed3: ")",
+	unlocks: "Unlocks",
 	using_bugged_emulator: "Using BrokenNEEES ❌",
 	using_default_emulator: "Using BrokenNEEES ⚠️",
 	using_gamepad: "Using gamepad",

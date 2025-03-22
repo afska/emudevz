@@ -178,6 +178,7 @@ export default {
 	tests_video_failed1: "❌  Píxeles incorrectos (frame ",
 	tests_video_failed2: " de ",
 	tests_video_failed3: ")",
+	unlocks: "Desbloquea",
 	using_bugged_emulator: "Usando BrokenNEEES ❌",
 	using_default_emulator: "Usando BrokenNEEES ⚠️",
 	using_gamepad: "Usando joystick",

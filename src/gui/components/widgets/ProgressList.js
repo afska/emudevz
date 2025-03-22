@@ -15,13 +15,31 @@ class ProgressList extends PureComponent {
 		return (
 			<div className={styles.progressList}>
 				{levelDefinitions.map((levelDefinition, i) => {
+					const unlockableLevel =
+						levelDefinition.unlocksGame != null
+							? book.getLevelDefinitionOf(levelDefinition.unlocksGame)
+							: null;
+
 					return (
 						<Tooltip
 							key={i}
 							title={
-								levelDefinition.humanId +
-								" " +
-								levelDefinition.name[locales.language]
+								<div className={styles.tooltip}>
+									<div>
+										{levelDefinition.humanId}{" "}
+										{levelDefinition.name[locales.language]}
+									</div>
+									{unlockableLevel != null && (
+										<div>
+											<div className={styles.unlocksText}>
+												{locales.get("unlocks")}:
+											</div>
+											<div className={styles.unlockableName}>
+												{unlockableLevel.name[locales.language]}
+											</div>
+										</div>
+									)}
+								</div>
 							}
 							placement="top"
 						>
@@ -40,7 +58,7 @@ class ProgressList extends PureComponent {
 										? styles.unlocked
 										: styles.locked,
 									levelDefinition.id === selectedLevelId && styles.selected,
-									levelDefinition.unlocksGame && styles.unlocksGame
+									unlockableLevel != null && styles.unlocksGame
 								)}
 							/>
 						</Tooltip>
