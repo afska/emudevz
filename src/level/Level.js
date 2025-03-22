@@ -104,8 +104,12 @@ export default class Level {
 	}
 
 	setMemory(change) {
+		const wasUsingTemp = this.memory.content.useTemp;
 		change(this.memory);
-		bus.emit("level-memory-changed");
+		const isUsingTemp = this.memory.content.useTemp;
+		bus.emit("level-memory-changed", {
+			didTempChange: wasUsingTemp !== isUsingTemp,
+		});
 	}
 
 	advance() {

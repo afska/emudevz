@@ -186,8 +186,8 @@ export default class CodeEditor extends PureComponent {
 		this._subscriber = bus.subscribe({
 			"run-enabled": this._onRunEnabled,
 			highlight: this._onHighlight,
-			"level-memory-changed": () => {
-				if (!Level.current.memory.content.useTemp)
+			"level-memory-changed": ({ didTempChange }) => {
+				if (didTempChange && !Level.current.memory.content.useTemp)
 					this._setCode(this.props.getCode());
 			},
 		});
