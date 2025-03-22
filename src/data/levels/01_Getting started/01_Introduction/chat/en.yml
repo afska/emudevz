@@ -20,7 +20,7 @@ forwhat:
   messages:
   - we are going to build a NEEES emulator, remember?
   responses:
-  - (*) first of all, why is it called "NEEES"? [name]
+  - (*) first of all, why is it called NEEES? [name]
   - but I don't know how to build an emulator 😳 [idontknow]
 
 name:
