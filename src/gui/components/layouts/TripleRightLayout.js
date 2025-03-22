@@ -1,5 +1,9 @@
 import React from "react";
+import { FaTimes } from "react-icons/fa";
 import classNames from "classnames";
+import locales from "../../../locales";
+import { bus } from "../../../utils";
+import IconButton from "../widgets/IconButton";
 import Layout from "./Layout";
 import styles from "./Layout.module.css";
 
@@ -8,16 +12,23 @@ export default class TripleLayout extends Layout {
 		return ["Right", "Top", "Bottom"];
 	}
 
-	state = { selected: "Right", lastVerticalSelection: "Bottom" };
+	static get pinLocation() {
+		return "Top";
+	}
+
+	state = { selected: "Right", lastVerticalSelection: "Bottom", Pin: null };
 
 	render() {
 		this.requireComponents();
 		const { Right, Top, Bottom } = this.props;
-		const { selected } = this.state;
+		const { selected, Pin } = this.state;
 
 		return (
 			<div className={styles.container} onKeyDownCapture={this.onKeyDown}>
-				<div className={classNames(styles.leftColumn, styles.column)}>
+				<div
+					className={classNames(styles.leftColumn, styles.column)}
+					style={{ display: Pin ? "none" : "block" }}
+				>
 					<div
 						className={classNames(
 							styles.topRow,
@@ -53,6 +64,31 @@ export default class TripleLayout extends Layout {
 					</div>
 				</div>
 
+				{Pin && (
+					<div
+						className={classNames(
+							styles.leftColumn,
+							styles.column,
+							selected === "Top" ? styles.selected : styles.unselected
+						)}
+						onMouseDown={(e) => {
+							this.setState({ selected: "Top" });
+						}}
+					>
+						<IconButton
+							Icon={FaTimes}
+							tooltip={locales.get("close")}
+							onClick={this._closePin}
+							className={styles.closePinButton}
+						/>
+						<Pin
+							ref={(ref) => {
+								this.instances.Pin = ref;
+							}}
+						/>
+					</div>
+				)}
+
 				<div
 					className={classNames(
 						styles.rightColumn,
@@ -74,16 +110,21 @@ export default class TripleLayout extends Layout {
 	}
 
 	focus(instanceName) {
+		if (!!this.state.Pin && instanceName === "Bottom") return;
+
 		this.setState({ selected: instanceName });
 
 		super.focus(instanceName);
 	}
 
 	onKeyDown = (e) => {
-		const { selected, lastVerticalSelection } = this.state;
+		const { selected, lastVerticalSelection, Pin } = this.state;
 
 		if (e.key === "ArrowLeft" && e.altKey) {
-			if (selected === "Right") this.focus(lastVerticalSelection);
+			if (selected === "Right")
+				this.focus(
+					!!Pin ? this.constructor.pinLocation : lastVerticalSelection
+				);
 			e.preventDefault();
 			e.stopPropagation();
 		}
@@ -98,15 +139,44 @@ export default class TripleLayout extends Layout {
 		}
 
 		if (e.key === "ArrowUp" && e.altKey) {
-			if (selected !== "Top") this.focus("Top");
+			if (!Pin && selected !== "Top") this.focus("Top");
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
 		if (e.key === "ArrowDown" && e.altKey) {
-			if (selected !== "Bottom") this.focus("Bottom");
+			if (!Pin && selected !== "Bottom") this.focus("Bottom");
 			e.preventDefault();
 			e.stopPropagation();
 		}
+	};
+
+	componentDidMount() {
+		this._subscriber = bus.subscribe({
+			pin: this._onPin,
+			unpin: this._closePin,
+		});
+	}
+
+	componentWillUnmount() {
+		this._subscriber.release();
+	}
+
+	_onPin = (pin) => {
+		this.setState({ Pin: pin.Component }, () => {
+			this.instances.Pin.initialize(pin.args, pin.level, this);
+			setTimeout(() => {
+				this.focus(this.constructor.pinLocation);
+			});
+		});
+	};
+
+	_closePin = () => {
+		this.instances.Pin = null;
+		this.setState({ Pin: null }, () => {
+			setTimeout(() => {
+				this.focus("Top");
+			});
+		});
 	};
 }
