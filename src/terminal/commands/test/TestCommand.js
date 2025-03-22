@@ -26,7 +26,10 @@ export default class TestCommand extends Command {
 		const level = Level.current;
 
 		let isVideoTestSuccessful = true;
-		if (!_.isEmpty(level.videoTests) && !this._targetId) {
+		if (
+			!_.isEmpty(level.videoTests) &&
+			(!this._targetId || this._targetId === "video")
+		) {
 			try {
 				isVideoTestSuccessful = await this._runVideoTests(level);
 			} catch (e) {
@@ -51,7 +54,8 @@ export default class TestCommand extends Command {
 
 			const overallResult = { allGreen: true, passCount: 0, failCount: 0 };
 			const hasMultipleTestFiles =
-				_.keys(level.tests).length > 1 && !this._targetId;
+				_.keys(level.tests).length > 1 &&
+				(!this._targetId || this._targetId === "unit");
 			const winOnTestPass = !level.memory.chat.winOnEnd;
 
 			let testFiles = _.sortBy(_.keys(level.tests));
@@ -202,13 +206,6 @@ export default class TestCommand extends Command {
 				? JSON.parse(level.code[videoTest.saveState])
 				: null;
 
-		// HACK: Retrocompatibility fix
-		if (saveState != null) {
-			if (!saveState.cpu.memory.apuRegisters)
-				saveState.cpu.memory.apuRegisters = _.range(0, 19).map(() => 0);
-			if (!saveState.apu) saveState.apu = {};
-		}
-
 		const ppuCode = level.code[videoTest.ppu];
 		const PPU = (await moduleEval(ppuCode)).default;
 
@@ -281,7 +278,7 @@ export default class TestCommand extends Command {
 				idProvider
 			);
 
-			if (this._targetId)
+			if (this._targetId && isFinite(this._targetId))
 				_tests_ = _tests_.filter((it) => it.id === this._targetId);
 
 			if (!_.isEmpty(_tests_))
@@ -377,10 +374,10 @@ export default class TestCommand extends Command {
 	}
 
 	get _targetId() {
-		const argument = parseInt(
-			this._args.filter((it) => it.toLowerCase() !== "-v")[0]
-		);
-		return _.isFinite(argument) ? argument : null;
+		const argument = this._args.filter((it) => it.toLowerCase() !== "-v")[0];
+		if (argument === "video" || argument === "unit") return argument;
+		let int = parseInt(argument);
+		return _.isFinite(int) ? int : null;
 	}
 
 	get _isVerbose() {
