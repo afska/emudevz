@@ -19,15 +19,16 @@
     "build:electron": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=./ react-scripts build"
   },
   "//": [
-    "[!] Packages with fixed versions are conflictive. Do not update them."
+    "[!] Packages with fixed versions are conflictive. Do not update them.",
+    "For example, updating @codemirror breaks highlighting somehow."
   ],
   "dependencies": {
     "@avinlab/react-flash-change": "^1.2.0",
-    "@codemirror/lang-javascript": "6.2.3",
-    "@codemirror/language": "6.11.0",
-    "@codemirror/lint": "6.8.4",
-    "@codemirror/theme-one-dark": "6.1.2",
-    "@codemirror/view": "6.36.4",
+    "@codemirror/lang-javascript": "6.1.0",
+    "@codemirror/language": "6.1.0",
+    "@codemirror/lint": "6.0.0",
+    "@codemirror/theme-one-dark": "6.1.0",
+    "@codemirror/view": "6.1.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.16",
@@ -37,8 +38,8 @@
     "@rematch/core": "^2.2.0",
     "@rematch/loading": "^2.1.2",
     "@rematch/persist": "^2.1.2",
-    "@uiw/codemirror-extensions-langs": "4.23.10",
-    "@uiw/react-codemirror": "4.23.10",
+    "@uiw/codemirror-extensions-langs": "4.12.3",
+    "@uiw/react-codemirror": "4.11.6",
     "bootstrap": "^5.2.0",
     "broken-neees": "^1.0.28",
     "browserfs": "^1.4.3",
