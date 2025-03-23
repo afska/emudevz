@@ -52,15 +52,15 @@ class Music {
 	}
 
 	pause() {
-		if (this._audio && !this._audio.paused) this._audio.pause();
+		if (this._audio && !this.isPaused) {
+			this._audio.pause();
+			this.isPaused = true;
+		}
 	}
 
 	resume() {
 		if (this._audio && this._audio.paused) this._audio.play();
-	}
-
-	isPaused() {
-		return this._audio ? this._audio.paused : false;
+		this.isPaused = false;
 	}
 
 	_playCurrentTrack() {

@@ -120,7 +120,7 @@ class NavBar extends PureComponent {
 							<VolumeSlider className="navbar-volume-slider" />
 						</div>
 						<IconButton
-							Icon={music.isPaused() ? FaPause : FaMusic}
+							Icon={music.isPaused ? FaPause : FaMusic}
 							tooltip={
 								trackInfo ? (
 									<Marquee style={{ width: 150 }} gradient={false}>
@@ -131,7 +131,7 @@ class NavBar extends PureComponent {
 								)
 							}
 							onClick={() => {
-								if (music.isPaused()) music.resume();
+								if (music.isPaused) music.resume();
 								else music.next();
 
 								this.forceUpdate();

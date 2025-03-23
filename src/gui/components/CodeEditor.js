@@ -189,6 +189,7 @@ export default class CodeEditor extends PureComponent {
 			"level-memory-changed": ({ didTempChange }) => {
 				if (didTempChange && !Level.current.memory.content.useTemp)
 					this._setCode(this.props.getCode());
+				this.forceUpdate();
 			},
 		});
 	}
