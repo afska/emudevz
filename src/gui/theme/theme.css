@@ -124,6 +124,14 @@ body {
 	color: #f57e3a;
 }
 
+.dictionary-link {
+	color: #d48f72;
+}
+
+.dictionary-link:hover {
+	color: #fab08f;
+}
+
 /* Bootstrap */
 
 :root {

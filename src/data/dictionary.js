@@ -1,5 +1,8 @@
+import escapeStringRegexp from "escape-string-regexp";
+import { marked } from "marked";
 import _ from "lodash";
 import locales from "../locales";
+import { toast } from "../utils";
 
 export default {
 	NEEES: {
@@ -10,8 +13,8 @@ export default {
 			"La pieza de hardware que estamos tratando de emular. La gente piensa que significa _'No Entiendo' El Entretenimiento Saludable_.",
 	},
 
-	Register: {
-		also: { es: "registro" },
+	"Register|Registers": {
+		also: { es: "Registro|Registros" },
 		icon: "🔢",
 		en: "A CPU value holder",
 		es: "Un contenedor de valor de la CPU",
@@ -24,10 +27,37 @@ export default {
 		es: "LA TABLA DE NOMBRES",
 	},
 
+	showDefinition(word) {
+		const { icon, name, text } = this.getDefinition(word);
+		const markdown = `<h5 class="dictionary-entry">${icon} ${name}</h5>\n${text}`;
+		const html = marked.parseInline(markdown, []);
+		toast.normal(
+			<span
+				style={{ textAlign: "center" }}
+				dangerouslySetInnerHTML={{
+					__html: html,
+				}}
+			/>
+		);
+	},
+
 	getEntries() {
 		const keys = this._keys();
 		const localizedKeys = _.flatMap(keys, (key) => this._getUsableKeysOf(key));
 		return localizedKeys;
+	},
+
+	getRegexp() {
+		const entries = this.getEntries();
+		return new RegExp(
+			// eslint-disable-next-line
+			_.template("(${entries})")({
+				entries: entries
+					.map((it) => `(?:\\b${escapeStringRegexp(it)}\\b)`)
+					.join("|"),
+			}),
+			"iu"
+		);
 	},
 
 	getDefinition(entry) {
@@ -59,7 +89,14 @@ export default {
 	_keys() {
 		return _(this)
 			.keys()
-			.without("getEntries", "getDefinition", "_getUsableKeysOf", "_keys")
+			.without(
+				"showDefinition",
+				"getEntries",
+				"getRegexp",
+				"getDefinition",
+				"_getUsableKeysOf",
+				"_keys"
+			)
 			.value();
 	},
 };

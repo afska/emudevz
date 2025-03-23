@@ -1,5 +1,3 @@
-import escapeStringRegexp from "escape-string-regexp";
-import { marked } from "marked";
 import _ from "lodash";
 import filesystem from "../filesystem";
 import locales from "../locales";
@@ -499,28 +497,9 @@ export default class Terminal {
 	}
 
 	_setUpDictionaryLinks(dictionary) {
-		const entries = dictionary.getEntries();
-		const regexp = new RegExp(
-			// eslint-disable-next-line
-			_.template("(${entries})")({
-				entries: entries
-					.map((it) => `(?:\\b${escapeStringRegexp(it)}\\b)`)
-					.join("|"),
-			}),
-			"iu"
-		);
+		const regexp = dictionary.getRegexp();
 		const handler = (__, word) => {
-			const { icon, name, text } = dictionary.getDefinition(word);
-			const markdown = `<h5 class="dictionary-entry">${icon} ${name}</h5>\n${text}`;
-			const html = marked.parseInline(markdown, []);
-			toast.normal(
-				<span
-					style={{ textAlign: "center" }}
-					dangerouslySetInnerHTML={{
-						__html: html,
-					}}
-				/>
-			);
+			dictionary.showDefinition(word);
 		};
 		this._dictionaryLinkProvider = this.registerLinkProvider(regexp, handler);
 		this._dictionaryLinkProvider.regexp = regexp;
