@@ -10,6 +10,7 @@ import {
 	FaExclamationCircle,
 	FaHome,
 	FaMusic,
+	FaPause,
 	FaPlay,
 	FaTrash,
 	FaTrashRestore,
@@ -119,7 +120,7 @@ class NavBar extends PureComponent {
 							<VolumeSlider className="navbar-volume-slider" />
 						</div>
 						<IconButton
-							Icon={FaMusic}
+							Icon={music.isPaused() ? FaPause : FaMusic}
 							tooltip={
 								trackInfo ? (
 									<Marquee style={{ width: 150 }} gradient={false}>
@@ -129,7 +130,12 @@ class NavBar extends PureComponent {
 									"?"
 								)
 							}
-							onClick={() => music.next()}
+							onClick={() => {
+								if (music.isPaused()) music.resume();
+								else music.next();
+
+								this.forceUpdate();
+							}}
 						/>
 						<IconButton
 							style={{ marginLeft: 8 }}
@@ -231,6 +237,14 @@ class NavBar extends PureComponent {
 		this._subscriber = bus.subscribe({
 			"new-listeners": () => this.forceUpdate(),
 			"image-diff": this._showImageDiff,
+			"pause-music": () => {
+				music.pause();
+				this.forceUpdate();
+			},
+			"resume-music": () => {
+				music.resume();
+				this.forceUpdate();
+			},
 		});
 	}
 

@@ -142,6 +142,7 @@ export default class EmulatorRunner extends PureComponent {
 							volume={null}
 							setVolume={(v) => {
 								this._volume = v;
+								bus.emit("pause-music");
 							}}
 							defaultVolume={this._volume}
 							style={{ marginLeft: 8, width: 64 }}

@@ -51,6 +51,18 @@ class Music {
 		this._playCurrentTrack();
 	}
 
+	pause() {
+		if (this._audio && !this._audio.paused) this._audio.pause();
+	}
+
+	resume() {
+		if (this._audio && this._audio.paused) this._audio.play();
+	}
+
+	isPaused() {
+		return this._audio ? this._audio.paused : false;
+	}
+
 	_playCurrentTrack() {
 		this._saveTrackInfo();
 		this._audio = new Audio(MUSIC_DIR + TRACKS[this._track].file);
