@@ -118,6 +118,12 @@ body {
 	}
 }
 
+/* Dictionary entries */
+
+.dictionary-entry {
+	color: #f57e3a;
+}
+
 /* Bootstrap */
 
 :root {

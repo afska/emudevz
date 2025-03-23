@@ -511,7 +511,7 @@ export default class Terminal {
 		);
 		const handler = (__, word) => {
 			const { icon, name, text } = dictionary.getDefinition(word);
-			const markdown = `<h5>${icon} ${name}</h5>\n${text}`;
+			const markdown = `<h5 class="dictionary-entry">${icon} ${name}</h5>\n${text}`;
 			const html = marked.parseInline(markdown, []);
 			toast.normal(
 				<span
