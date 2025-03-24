@@ -8,7 +8,7 @@ main:
   - "these are: 🧠  CPU, 🖥️  PPU, and 🔊  APU"
   - "in order to play games, you must connect two pieces of hardware:"
   - 💾  a cartridge (the game itself!)
-  - 🎮  an 8-button gamepad
+  - 🎮  the controller, an 8-button gamepad
   responses:
   - 🧠  tell me about the CPU [cpu]
   - 🖥️  tell me about the PPU [ppu]
@@ -32,7 +32,7 @@ thecode:
     {{Right}}.load("cartridge.png");
   messages:
   - in the cartridge!
-  - specifically, in a chip called 🤖  <PRG-ROM> (Program ROM)
+  - specifically, in a chip called 🤖  PRG-ROM (Program ROM)
   responses:
   - ...main
 
@@ -53,7 +53,7 @@ thegraphics:
     {{Right}}.load("cartridge.png");
   messages:
   - in the cartridge! :)
-  - specifically, in a chip called 👾  <CHR-ROM> (Character ROM)
+  - specifically, in a chip called 👾  CHR-ROM (Character ROM)
   responses:
   - ...main
 

@@ -11,6 +11,29 @@ const dictionary = {
 		es:
 			"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
 	},
+	"Cartridge|Cartridges": {
+		also: { es: "Cartucho|Cartuchos" },
+		icon: "💾",
+		en:
+			"A removable piece of hardware that contains the all the game chips, such as PRG-ROM, CHR-ROM, PRG-RAM, and the Mapper.",
+		es:
+			"Una pieza de hardware removible que contiene todos los chips del juego, como PRG-ROM, CHR-ROM, PRG-RAM, y el Mapper.",
+	},
+	"Controller|Controllers": {
+		also: { es: "Mando|Mandos" },
+		icon: "🎮",
+		en:
+			"An 8-bit gamepad (_D-pad + A,B + START,SELECT_). The NEEES accepts _(without extra hardware)_ up to two controllers.",
+		es:
+			"Un joystick de 8 botones (_D-pad + A,B + START,SELECT_). La NEEES acepta _(sin hardware extra)_ hasta dos mandos.",
+	},
+	"CHR-ROM": {
+		icon: "👾",
+		en:
+			"_(Character ROM)_ A ROM chip that contains the game graphics, inside the cartridge.",
+		es:
+			"_(Character ROM)_ Un chip de ROM que contiene los gráficos del juego, dentro del cartucho.",
+	},
 	CPU: {
 		icon: "🧠",
 		en:
@@ -37,6 +60,20 @@ const dictionary = {
 			"The _Picture Processing Unit_. It draws graphics by putting pixels on the screen.",
 		es:
 			"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
+	},
+	"PRG-ROM": {
+		icon: "🤖",
+		en:
+			"_(Program ROM)_ A ROM chip that contains the game code, inside the cartridge.",
+		es:
+			"_(Program ROM)_ Un chip de ROM que contiene el código del juego, dentro del cartucho.",
+	},
+	"PRG-RAM": {
+		icon: "🔋",
+		en:
+			"_(Program RAM)_ A battery-backed RAM chip that contains the save file, inside the cartridge.",
+		es:
+			"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
 	},
 	"Register|Registers": {
 		also: { es: "Registro|Registros" },

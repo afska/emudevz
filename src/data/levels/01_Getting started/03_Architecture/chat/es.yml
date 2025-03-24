@@ -8,7 +8,7 @@ main:
   - "estos son: 🧠  CPU, 🖥️  PPU y 🔊  APU"
   - "para poder jugar juegos, tienes que conectar dos piezas de hardware:"
   - 💾  un cartucho (¡el juego mismo!)
-  - 🎮  un mando de 8 botones
+  - 🎮  el mando, un joystick de 8 botones
   responses:
   - 🧠  cuéntame sobre la CPU [cpu]
   - 🖥️  cuéntame sobre la PPU [ppu]
