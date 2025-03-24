@@ -136,7 +136,9 @@ const dictionary = {
 						(word) =>
 							!exclude.some((it) => it.toLowerCase() === word.toLowerCase())
 					)
-					.map((it) => `(?<!\\.)\\b${escapeStringRegexp(it)}\\b`)
+					.map((it) => `(?<![^\\s])${escapeStringRegexp(it)}(?=[\\s,.]|$)`)
+					// before: whitespace or string start
+					// after: whitespace, comma, dot, or end of string
 					.join("|"),
 			}),
 			"iu"
