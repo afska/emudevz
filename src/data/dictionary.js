@@ -4,7 +4,7 @@ import _ from "lodash";
 import locales from "../locales";
 import { toast } from "../utils";
 
-export default {
+const dictionary = {
 	APU: {
 		icon: "🔊",
 		en: "The _Audio Processing Unit_. It handles sound, producing audio waves.",
@@ -60,9 +60,9 @@ export default {
 	},
 
 	showDefinition(word) {
-		const { icon, name, text } = this.getDefinition(word);
+		const { icon, name, text, usableKeys } = this.getDefinition(word);
 		const markdown = `<h5 class="dictionary-entry">${icon} ${name}</h5>\n${text}`;
-		const html = marked.parseInline(markdown, []);
+		const html = this.parseLinks(marked.parseInline(markdown, []), usableKeys);
 		toast.normal(
 			<span
 				style={{ textAlign: "center" }}
@@ -73,18 +73,32 @@ export default {
 		);
 	},
 
+	parseLinks(html, exclude = []) {
+		const regexp = dictionary.getRegexp(exclude);
+		const globalRegexp = new RegExp(regexp.source, regexp.flags + "g");
+		return html.replace(
+			globalRegexp,
+			(word) =>
+				`<a class="dictionary-link" href="javascript:_showDefinition_('${word}')">${word}</a>`
+		);
+	},
+
 	getEntries() {
 		const keys = this._keys();
 		const localizedKeys = _.flatMap(keys, (key) => this._getUsableKeysOf(key));
 		return localizedKeys;
 	},
 
-	getRegexp() {
+	getRegexp(exclude = []) {
 		const entries = this.getEntries();
 		return new RegExp(
 			// eslint-disable-next-line
 			_.template("(${entries})")({
 				entries: entries
+					.filter(
+						(word) =>
+							!exclude.some((it) => it.toLowerCase() === word.toLowerCase())
+					)
 					.map((it) => `(?<!\\.)\\b${escapeStringRegexp(it)}\\b`)
 					.join("|"),
 			}),
@@ -103,12 +117,14 @@ export default {
 		if (key == null) return null;
 
 		const data = this[key];
-		const name = this._getUsableKeysOf(key)[0];
+		const usableKeys = this._getUsableKeysOf(key);
+		const name = usableKeys[0];
 
 		return {
 			icon: data.icon,
 			name,
 			text: this[key][locales.language],
+			usableKeys,
 		};
 	},
 
@@ -123,6 +139,7 @@ export default {
 			.keys()
 			.without(
 				"showDefinition",
+				"parseLinks",
 				"getEntries",
 				"getRegexp",
 				"getDefinition",
@@ -132,3 +149,9 @@ export default {
 			.value();
 	},
 };
+
+window._showDefinition_ = (word) => {
+	dictionary.showDefinition(word);
+};
+
+export default dictionary;

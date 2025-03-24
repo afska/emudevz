@@ -18,18 +18,7 @@ export default class MarkdownView extends PureComponent {
 	}
 
 	_htmlContent(content) {
-		let parsedContent = marked.parse(content);
-
-		window._showDefinition_ = (word) => {
-			dictionary.showDefinition(word);
-		};
-
-		const regexp = dictionary.getRegexp();
-		parsedContent = parsedContent.replace(
-			regexp,
-			(word) =>
-				`<a class="dictionary-link" href="javascript:_showDefinition_('${word}')">${word}</a>`
-		);
-		return parsedContent;
+		const parsedContent = marked.parse(content);
+		return dictionary.parseLinks(parsedContent);
 	}
 }
