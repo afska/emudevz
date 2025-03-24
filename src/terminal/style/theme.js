@@ -33,7 +33,7 @@ export default {
 	},
 
 	ACCENT: color(180),
-	ACCENT2: color(121),
+	ACCENT2: color(123),
 	SYSTEM: color(45),
 	ERROR: color(202),
 	WARNING: color(214),

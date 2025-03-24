@@ -53,7 +53,7 @@ export default {
 			// eslint-disable-next-line
 			_.template("(${entries})")({
 				entries: entries
-					.map((it) => `(?:\\b${escapeStringRegexp(it)}\\b)`)
+					.map((it) => `(?<!\\.)\\b${escapeStringRegexp(it)}\\b`)
 					.join("|"),
 			}),
 			"iu"
