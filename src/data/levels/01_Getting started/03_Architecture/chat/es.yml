@@ -42,7 +42,7 @@ ppu:
   messages:
   - es la <Unidad de Procesamiento de Imagen>
   - dibuja gráficos poniendo píxeles en la pantalla
-  - ¡en la magnífica resolución de 256x240!
+  - ¡en la magnífica resolución de ~256x240~!
   - y tiene acceso a un banco de 2 KiB de VRAM (Video RAM)
   responses:
   - ¿y dónde están almacenados esos gráficos? [thegraphics]
@@ -71,7 +71,7 @@ apu:
 start:
   messages:
   - para emular la CPU, tendrás que interpretar el código de los juegos
-  - están escritos en lenguaje ensamblador, por lo que deberás estudiar eso primero
+  - están escritos en ~lenguaje ensamblador~, por lo que deberás estudiar eso primero
   - ¡adentrémonos en ello!
   - ¿vamos?
   responses:

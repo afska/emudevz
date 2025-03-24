@@ -42,7 +42,7 @@ ppu:
   messages:
   - it's the <Picture Processing Unit>
   - draws graphics by putting pixels on the screen
-  - in the magnificent resolution of 256x240!
+  - in the magnificent resolution of ~256x240~!
   - and it has access to a 2 KiB bank of VRAM (Video RAM)
   responses:
   - and where are those graphics located? [thegraphics]
@@ -71,7 +71,7 @@ apu:
 start:
   messages:
   - to emulate the CPU, we'll have to interpret games' code
-  - they're written in assembly, so you need to study that first
+  - they're written in ~assembly~, so you need to study that first
   - let's jump into it!
   - are you ready?
   responses:

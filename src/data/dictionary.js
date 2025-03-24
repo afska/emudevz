@@ -5,26 +5,58 @@ import locales from "../locales";
 import { toast } from "../utils";
 
 export default {
+	APU: {
+		icon: "🔊",
+		en: "The _Audio Processing Unit_. It handles sound, producing audio waves.",
+		es:
+			"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
+	},
+	CPU: {
+		icon: "🧠",
+		en:
+			"The _Central Processing Unit_. It reads games' code and executes their instructions.",
+		es:
+			"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
+	},
+	"Name table|Name tables": {
+		also: { es: "Tabla de nombres|Tablas de nombres" },
+		icon: "🏞️📖",
+		en: "THE NAME TABLE",
+		es: "LA TABLA DE NOMBRES",
+	},
 	NEEES: {
-		icon: "🕹",
+		icon: "🕹️",
 		en:
 			"The piece of hardware we're trying to emulate. People think it means _'No Entiendo' Enigmatic Enjoyment Solution_.",
 		es:
 			"La pieza de hardware que estamos tratando de emular. La gente piensa que significa _'No Entiendo' El Entretenimiento Saludable_.",
 	},
-
+	PPU: {
+		icon: "🖥️",
+		en:
+			"The _Picture Processing Unit_. It draws graphics by putting pixels on the screen.",
+		es:
+			"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
+	},
 	"Register|Registers": {
 		also: { es: "Registro|Registros" },
 		icon: "🔢",
 		en: "A CPU value holder",
 		es: "Un contenedor de valor de la CPU",
 	},
-
-	"Name table|Name tables": {
-		also: { es: "Tabla de nombres|Tablas de nombres" },
-		icon: "🏞️📖",
-		en: "THE NAME TABLE",
-		es: "LA TABLA DE NOMBRES",
+	VRAM: {
+		icon: "🐏",
+		en:
+			"_(Video RAM)_ A RAM chip of _2 KiB_ that lives in the PPU. It holds name tables.",
+		es:
+			"_(Video RAM)_ Un chip de RAM de _2 KiB_ que vive en la PPU. Almacena name tables.",
+	},
+	WRAM: {
+		icon: "🐏",
+		en:
+			"_(Work RAM)_ A RAM chip of _2 KiB_ that lives in the CPU. General purpose.",
+		es:
+			"_(Work RAM)_ Un chip de RAM de _2 KiB_ que vive en la CPU. Propósito general.",
 	},
 
 	showDefinition(word) {
