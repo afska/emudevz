@@ -21,7 +21,7 @@ forwhat:
   - vamos a armar un emulador de NEEES, ¿recuerdas?
   responses:
   - (*) antes que nada, ¿por qué se llama "NEEES"? [name]
-  - pero yo no sé nada de emuladores 😳 [idontknow]
+  - no sé cómo hacer un emulador 😳 [idontknow]
 
 name:
   messages:

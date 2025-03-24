@@ -45,7 +45,7 @@ export default {
 				silent: /(__([^_]+)__)/g,
 				style: theme.ITALIC,
 			}, // __quick italic__
-			{ regexp: /(~[^~]+~)/, silent: /(~([^~]+)~)/g }, // ~quick accent~
+			{ regexp: /(~[^~]+~)/, silent: /(~([^~]+)~)/g, style: theme.ACCENT2 }, // ~quick accent~
 			{ regexp: /(<[^>]+>)/, silent: /(<([^~]+)>)/g }, // <angular brackets>
 			{ regexp: /(`[^`]+`)/, silent: /(`([^~]+)`)/g }, // `backticks`
 			{ regexp: /("[^"]+")/ }, // "double quotes"

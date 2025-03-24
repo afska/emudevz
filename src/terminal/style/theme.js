@@ -33,13 +33,14 @@ export default {
 	},
 
 	ACCENT: color(180),
+	ACCENT2: color(121),
 	SYSTEM: color(45),
 	ERROR: color(202),
 	WARNING: color(214),
 	COMMENT: color(230),
 	MESSAGE: color(111),
 	INPUT: color(207),
-	DICTIONARY: color(216),
+	DICTIONARY: (text) => effect(4)(color(216)(text)),
 
 	HIGHLIGHTED_BOLD: (text) =>
 		effectTag(40) + effectTag(1) + text + effectTag(0) + effectTag(40),
