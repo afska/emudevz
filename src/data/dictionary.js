@@ -128,13 +128,12 @@ const dictionary = {
 
 	showDefinition(word) {
 		const { icon, name, text, usableKeys } = this.getDefinition(word);
-		const markdown = `<h5 class="dictionary-entry">${icon} ${name}</h5>\n${text}`;
-		const html = this.parseLinks(marked.parseInline(markdown, []), usableKeys);
+		const html = this.parseLinks(marked.parseInline(text, []), usableKeys);
 		toast.normal(
 			<span
 				style={{ textAlign: "center" }}
 				dangerouslySetInnerHTML={{
-					__html: html,
+					__html: `<h5 class="dictionary-entry">${icon} ${name}</h5>\n${html}`,
 				}}
 			/>
 		);
@@ -153,7 +152,7 @@ const dictionary = {
 	getEntries() {
 		const keys = this._keys();
 		const localizedKeys = _.flatMap(keys, (key) => this._getUsableKeysOf(key));
-		return localizedKeys;
+		return _.orderBy(localizedKeys, [(entry) => entry.length], ["desc"]);
 	},
 
 	getRegexp(exclude = []) {
