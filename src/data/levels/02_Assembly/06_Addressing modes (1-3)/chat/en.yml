@@ -149,8 +149,18 @@ step4:
   - <{JMP_indirect.png}>
   - creating an infinite loop ⏩
   events:
-  - step [exercise]
+  - step [seeit]
 
+seeit:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - see it? it jumped, and now [PC] now points to $4021
+  responses:
+  - I see [exercise]
+  
 exercise:
   run: |
     level.fillContentFromTemp();

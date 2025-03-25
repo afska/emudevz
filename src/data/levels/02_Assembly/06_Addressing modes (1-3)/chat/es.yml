@@ -149,7 +149,17 @@ step4:
   - <{JMP_indirect.png}>
   - creando un bucle infinito ⏩
   events:
-  - step [exercise]
+  - step [seeit]
+
+seeit:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - ¿lo ves? saltó, y ahora [PC] apunta a $4021
+  responses:
+  - ya veo [exercise]
 
 exercise:
   run: |
