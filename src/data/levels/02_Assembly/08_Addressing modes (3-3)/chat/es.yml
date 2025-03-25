@@ -87,8 +87,8 @@ whatwasthat:
   - ¿recuerdas el modo "Indirect"?
   - construye una dirección leyendo otra dirección y su byte consecutivo
   - en este caso, leyó un $80 de $0003 y un $40 de $0004
-  - usó el primero como el <byte menos significativo>
-  - y el último como el <byte más significativo>
+  - usó el primero como el byte menos significativo
+  - y el último como el byte más significativo
   - por lo que la dirección resultante fue $4080 ✨
   responses:
   - ...step7

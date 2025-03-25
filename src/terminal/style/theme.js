@@ -49,7 +49,13 @@ export default {
 	COMMENT: color(230),
 	MESSAGE: color(111),
 	INPUT: color(207),
-	DICTIONARY: (text) => effect(4, RESET.UNDERLINE)(color(195)(text)),
+	DICTIONARY: (text) => {
+		const shouldUnderline = Level.current.id === "getting-started-architecture";
+
+		return shouldUnderline
+			? effect(4, RESET.UNDERLINE)(color(195)(text))
+			: color(195)(text);
+	},
 
 	HIGHLIGHTED_BOLD: (text) =>
 		effectTag(40) + effectTag(1) + text + effectTag(0) + effectTag(40),

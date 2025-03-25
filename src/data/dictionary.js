@@ -119,8 +119,10 @@ const dictionary = {
 	"Flag|Flags": {
 		also: { es: "Bandera|Banderas" },
 		icon: "🏁",
-		en: "A field that stores a value that can be either `true` or `false`.",
-		es: "Un campo que almacena un valor que puede ser `true` o `false`.",
+		en:
+			"A field that stores a value that can be either `true` or `false`. <br /><br />See also: CPU Flag.",
+		es:
+			"Un campo que almacena un valor que puede ser `true` o `false`. <br /><br />Ver también: Bandera de CPU.",
 	},
 	"Flags Register": {
 		also: { es: "Registro de Banderas" },
@@ -135,6 +137,16 @@ const dictionary = {
 			"A command that tells the CPU to do something, like adding numbers or jumping to another part of the program.",
 		es:
 			"Una orden que le dice a la CPU qué hacer, como sumar números o saltar a otra parte del programa.",
+	},
+	"Least significant byte|Low byte": {
+		also: {
+			es: "Byte menos significativo|Low byte",
+		},
+		icon: "🔢",
+		en:
+			"The byte with the lowest positional value in a multi-byte number. <br /><br />For example, the LSB of `$AB15` is `$15`.",
+		es:
+			"El byte con el valor posicional más bajo en un número multibyte. <br /><br />Por ejemplo, el LSB de `$AB15` es `$15`.",
 	},
 	"Machine code": {
 		also: { es: "Código máquina" },
@@ -153,6 +165,16 @@ const dictionary = {
 			"A number that represents a location in memory. <br /><br />In the NEEES, they take up `2` bytes, so they can go from `0` (`$0000`) to `65535` (`$FFFF`).",
 		es:
 			"Un número que representa una ubicación dentro de la memoria. <br /><br />En la NEEES, ocupan `2` bytes, por lo que pueden ir de `0` (`$0000`) a `65535` (`$FFFF`).",
+	},
+	"Most significant byte|High byte": {
+		also: {
+			es: "Byte más significativo|High byte",
+		},
+		icon: "🔢",
+		en:
+			"The byte with the highest positional value in a multi-byte number. <br /><br />For example, the MSB of `$AB15` is `$AB`.",
+		es:
+			"El byte con el valor posicional más alto en un número multibyte. <br /><br />Por ejemplo, el MSB de `$AB15` es `$AB`.",
 	},
 	NEEES: {
 		icon: "🕹️",

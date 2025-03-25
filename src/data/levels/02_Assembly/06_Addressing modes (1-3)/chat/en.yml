@@ -102,7 +102,7 @@ relative:
   messages:
   - branching instructions use the "Relative" addressing mode
   - these take a single byte, which is used as an offset from the following instruction
-  - look at the compiled code of `BNE @label` in $4028
+  - look at the machine code of `BNE @label` in $4028
   - $D0 is the opcode of `BNE`, and the $02 from $4029 is the jump offset 🦘
   - "this means that [PC] will jump to $402A + 2: directly into $402C, where `@label` starts"
   - (it'll skip the bytes of the two `INY`s)
@@ -117,8 +117,8 @@ whoa:
   messages:
   - last one is a bit tricky 😶
   - "\"Indirect\" addressing uses an absolute address to look up another address"
-  - reading the first address gives the <least significant byte> (also called "low byte", ```raw $00```~XX~)
-  - and reading the following byte (address + 1) gives the <most significant byte> (also called "high byte", ```raw $```~XX~```raw 00```)
+  - reading the first address gives the least significant byte (also called "low byte", ```raw $00```~XX~)
+  - and reading the following byte (address + 1) gives the most significant byte (also called "high byte", ```raw $```~XX~```raw 00```)
   - that can be hard to wrap your head around, so let's run the example ⏩
   events:
   - step [step1]
@@ -174,5 +174,5 @@ what:
   messages:
   - after your change, instead of jumping backwards, it should skip the `STY $1001` and jump to our new last instruction
   - ⚠️  don't change the `JMP` itself, the idea is that the same `JMP ($4080)` jumps to another place
-  - you'll need to look the address of the last `INX` inside the compiled code 😉
+  - you'll need to look the address of the last `INX` inside the machine code 😉
   responses: []

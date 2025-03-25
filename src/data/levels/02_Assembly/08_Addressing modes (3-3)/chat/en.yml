@@ -87,8 +87,8 @@ whatwasthat:
   - remember the "Indirect" mode?
   - it builds an address by reading another address and the consecutive byte
   - in this case, it read an $80 from $0003 and a $40 from $0004
-  - it used the former as <least significant byte>
-  - and the latter as <most significant byte>
+  - it used the former as least significant byte
+  - and the latter as most significant byte
   - so the resulting new address was $4080 ✨
   responses:
   - ...step7

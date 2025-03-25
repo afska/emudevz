@@ -102,7 +102,7 @@ relative:
   messages:
   - las instrucciones de bifurcación usan el modo de direccionamiento "Relative"
   - estas toman un solo byte, que es usado como un desplazamiento desde la siguiente instrucción
-  - mira el código compilado de `BNE @label` en $4028
+  - mira el código máquina de `BNE @label` en $4028
   - $D0 es el opcode de `BNE`, y el $02 de $4029 es el desplazamiento del salto 🦘
   - "esto significa que [PC] saltará a $402A + 2: directo hacia $402C, donde comienza `@label`"
   - (omitirá los bytes de los dos `INY`s)
@@ -117,8 +117,8 @@ whoa:
   messages:
   - la última es un poco complicada 😶
   - "el modo de direccionamiento \"Indirect\" usa una dirección absoluta para buscar otra dirección"
-  - al leer la primer dirección obtenemos el <byte menos significativo> (también llamado "low byte", ```raw $00```~XX~)
-  - y leer el byte siguiente (dirección + 1) nos da el <byte más significativo> (también llamado "high byte", ```raw $```~XX~```raw 00```)
+  - al leer la primer dirección obtenemos el byte menos significativo (también llamado "low byte", ```raw $00```~XX~)
+  - y leer el byte siguiente (dirección + 1) nos da el byte más significativo (también llamado "high byte", ```raw $```~XX~```raw 00```)
   - esto puede ser difícil de entender completamente, así que mejor ejecuta el ejemplo ⏩
   events:
   - step [step1]
@@ -174,5 +174,5 @@ what:
   messages:
   - luego de tu cambio, en vez de saltar hacia atrás, debería omitir `STY $1001` y saltar a nuestra nueva última instrucción
   - ⚠️  no cambies el `JMP` en sí mismo, la idea es que el mismo `JMP ($4080)` salte a otro lugar
-  - necesitarás mirar la dirección del último `INX` dentro del código compilado 😉
+  - necesitarás mirar la dirección del último `INX` dentro del código máquina 😉
   responses: []
