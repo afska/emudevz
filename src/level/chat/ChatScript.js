@@ -1,3 +1,4 @@
+import dictionary from "../../data/dictionary";
 import codeEval from "../codeEval";
 
 const REGEXP = {
@@ -80,7 +81,9 @@ export default class ChatScript {
 
 				return [
 					{
-						content: content.replace(REGEXP.modifier, ""),
+						content: dictionary.escapeLinks(
+							content.replace(REGEXP.modifier, "")
+						),
 						link,
 						isConsumable,
 						isKey,

@@ -37,6 +37,13 @@ const dictionary = {
 		es:
 			"_(Contador de Programa)_ Un registro de CPU usado para almacenar la dirección de la próxima instrucción a ejecutar.",
 	},
+	"Addressing mode|Addressing modes": {
+		also: { es: "Modo de direccionamiento|Modos de direccionamiento" },
+		icon: "📍",
+		en: "A way for an instruction to specify where its data is located.",
+		es:
+			"Una forma que tiene una instrucción de especificar dónde está el dato que necesita.",
+	},
 	APU: {
 		icon: "🔊",
 		en: "The _Audio Processing Unit_. It handles sound, producing audio waves.",
@@ -121,6 +128,14 @@ const dictionary = {
 		en: "A CPU register used to store multiple CPU flags.",
 		es: "Un registro de CPU usado para almacenar múltiples banderas de CPU.",
 	},
+	"Instruction|Instructions": {
+		also: { es: "Instrucción|Instrucciones" },
+		icon: "📖",
+		en:
+			"A command that tells the CPU to do something, like adding numbers or jumping to another part of the program.",
+		es:
+			"Una orden que le dice a la CPU qué hacer, como sumar números o saltar a otra parte del programa.",
+	},
 	"Machine code": {
 		also: { es: "Código máquina" },
 		icon: "🔢",
@@ -145,6 +160,13 @@ const dictionary = {
 			"The piece of hardware we're trying to emulate. People think it means _'No Entiendo' Enigmatic Enjoyment Solution_.",
 		es:
 			"La pieza de hardware que estamos tratando de emular. La gente piensa que significa _'No Entiendo' El Entretenimiento Saludable_.",
+	},
+	Opcode: {
+		icon: "🔢",
+		en:
+			"_(Operation code)_ A number that, inside the machine code, represents an instruction code. <br /><br />In the NEEES, it defines both the instruction and the addressing mode.",
+		es:
+			"_(Código de operación)_ Un número que, dentro del código máquina, define un código de instrucción. <br /><br />En la NEEES, define tanto la instrucción como el modo de direccionamiento.",
 	},
 	PPU: {
 		icon: "🖥️",
@@ -210,6 +232,12 @@ const dictionary = {
 			(word) =>
 				`<a class="dictionary-link" href="javascript:_showDefinition_('${word}')">${word}</a>`
 		);
+	},
+
+	escapeLinks(text) {
+		const regexp = dictionary.getRegexp();
+		const globalRegexp = new RegExp(regexp.source, regexp.flags + "g");
+		return text.replace(globalRegexp, (word) => `\`${word}\``);
 	},
 
 	getEntries() {

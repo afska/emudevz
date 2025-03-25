@@ -10,7 +10,7 @@ main:
       });
     }
   messages:
-  - in case you didn't notice, all instructions can take one or zero arguments
+  - in case you didn't notice, all instructions can take one or zero <arguments>
   - and one compiled instruction can occupy 1, 2, or 3 bytes
   - <{compilation_full.png}>
   responses:
@@ -21,7 +21,7 @@ why:
     set((m) => m.$canRun = true);
   messages:
   - there are various ways to refer to these arguments
-  - and they're called "addressing modes"
+  - and they're called addressing modes
   - run the first instruction ⏩
   events:
   - step [implicit]
@@ -49,7 +49,7 @@ immediate:
     set((m) => m.$canRun = true);
   messages:
   - "here, `LDA #$08` takes 1 byte as argument, so it's 2-byte long"
-  - the "operation code" (<opcode>) and the 8
+  - the "operation code" (opcode) and the 8
   - that's the "Immediate" addressing mode
   - where the argument is a <literal> byte
   - keep going ⏩

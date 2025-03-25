@@ -14,7 +14,8 @@ export class WebLinkProvider {
 			y,
 			this._regex,
 			this._terminal,
-			this._handler
+			this._handler,
+			this._options?.ignore // [!]
 		);
 		callback(this._addCallbacks(links));
 	}
@@ -52,7 +53,8 @@ export class WebLinkProvider {
 // }
 
 export class LinkComputer {
-	static computeLink(y, regex, terminal, activate) {
+	// [!] ------------------------------------------v
+	static computeLink(y, regex, terminal, activate, ignore) {
 		const rex = new RegExp(regex.source, (regex.flags || "") + "g");
 
 		const [lines, startLineIndex] = LinkComputer._getWindowedLineStrings(
@@ -66,6 +68,9 @@ export class LinkComputer {
 
 		while ((match = rex.exec(line))) {
 			const text = match[0];
+
+			// [!]
+			if (!!ignore && ignore.test(line)) continue;
 
 			// check via URL if the matched text would form a proper url
 			// [!]
@@ -165,6 +170,7 @@ export class LinkComputer {
 				}
 			}
 		}
+
 		return [lines, topIdx];
 	}
 

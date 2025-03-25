@@ -295,9 +295,9 @@ export default class Terminal {
 		this._speedFlag = false;
 	}
 
-	registerLinkProvider(regexp, callback) {
+	registerLinkProvider(regexp, callback, options = {}) {
 		return this._xterm.registerLinkProvider(
-			new WebLinkProvider(this._xterm, regexp, callback)
+			new WebLinkProvider(this._xterm, regexp, callback, options)
 		);
 	}
 
@@ -501,7 +501,9 @@ export default class Terminal {
 		const handler = (__, word) => {
 			dictionary.showDefinition(word);
 		};
-		this._dictionaryLinkProvider = this.registerLinkProvider(regexp, handler);
+		this._dictionaryLinkProvider = this.registerLinkProvider(regexp, handler, {
+			ignore: /^\d\d?\) /,
+		});
 		this._dictionaryLinkProvider.regexp = regexp;
 	}
 

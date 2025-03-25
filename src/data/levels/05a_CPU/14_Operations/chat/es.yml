@@ -1,9 +1,9 @@
 ---
 main:
   messages:
-  - "\"opcode\" significa \"código de operación\""
+  - "opcode significa \"código de operación\""
   - entonces... ¿qué es una <operación>? 🤔
-  - es la combinación entre una 📖  <instrucción> y un 📍  <modo de direccionamiento>
+  - es la combinación entre una 📖  instrucción y un 📍  modo de direccionamiento
   - "listemos algunos ejemplos:"
   - |-
     `STA $4080`: la instrucción `STA` + el modo `ABSOLUTE`
