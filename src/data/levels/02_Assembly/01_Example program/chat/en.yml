@@ -82,7 +82,7 @@ address:
   - every location (and pretty much everything on the NEEES) can store a single byte
   - a byte can store any number between 0 ($00) and 255 ($FF)
   responses:
-  - if the NEEES only had 2 KiB (2048 bytes) of memory, how can there be 65536 addresses? 😕 [butyousaid]
+  - the NEEES only had 2048 bytes of WRAM, why there are 65536 addresses? [butyousaid]
   - <<!m.$hasEnded>> ...machinecode
   - <<m.$hasEnded>> ...finish
 
@@ -91,7 +91,7 @@ butyousaid:
   - great question!
   - it only has 2 KiB of real memory
   - but the CPU can <see> up to 64 KiB
-  - so the first two kilobytes are actual RAM
+  - so the first two kilobytes are <actual RAM>
   - and the rest is used to interact with the hardware 💻
   - <{memory.png}>
   - that doesn't matter too much in this chapter
@@ -106,6 +106,7 @@ otherthings:
     set((m) => m.$canRun = true);
   messages:
   - let's run the code and discover it
+  - <! Execution enabled.
   - I've added a ⏩  button to the code section
   - "can you click it? 🙏"
   events:
@@ -118,9 +119,9 @@ lda:
   - great!
   - if you were watching carefully, you'll have noticed that [A] changed from $00 to $01
   - and [PC] changed from $4020 to $4022 🤯
-  - those are CPU <registers>, quickly accessible locations
+  - those are CPU registers, quickly accessible locations
   - each register can hold a single byte (8 bits) of data
-  - with the exception of [PC] (Program Counter) which is 2 bytes wide
+  - with the exception of [PC] ("Program Counter") which is 2 bytes wide
   responses:
   - what's the purpose of each register? [registers]
 
@@ -139,7 +140,7 @@ theothers:
   - I'll talk about that later, but basically
   - "[X] and [Y] can store any value, just like [A]"
   - they have a special meaning when working with memory addresses 🐏
-  - "and [SP] is the Stack Pointer"
+  - and [SP] is the "Stack Pointer"
   responses:
   - <<!m.$hasEnded>> ...registers
   - <<m.$hasEnded>> ...finish
@@ -148,10 +149,10 @@ ldaexplanation:
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
-  - exactly, LDA means "LoaD Accumulator"
-  - 💸  numbers prefixed with $ are in hexadecimal notation
-  - "🔢  numbers prefixed with # are literal values"
-  - "🐏  numbers without the # prefix refer to memory locations"
+  - exactly, `LDA` means "LoaD Accumulator"
+  - 💸  numbers prefixed with ~$~ are in hexadecimal notation
+  - "🔢  numbers prefixed with ~#~ are literal values"
+  - "🐏  numbers without the ~#~ prefix refer to memory addresses"
   - now run the next instruction! ⏩
   events:
   - step [sta]
@@ -162,7 +163,7 @@ sta:
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
-  - STA means "STore Accumulator"
+  - "`STA` means \"STore Accumulator\""
   - and as you can see, it writes the content of [A] to a memory location
   - in this example, to the address $4070
   - so now the $4070 cell of the <Memory Viewer> has a $01

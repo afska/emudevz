@@ -82,7 +82,7 @@ address:
   - cada ubicación (y prácticamente todo en la NEEES) puede guardar un solo byte
   - un byte puede almacenar cualquier número entre 0 ($00) y 255 ($FF)
   responses:
-  - si la NEEES solo tenía 2 KiB (2048 bytes) de memoria, ¿cómo puede ser que haya 65536 direcciones? 😕 [butyousaid]
+  - la NEEES solo tenía 2048 bytes de WRAM, ¿por qué hay 65536 direcciones? [butyousaid]
   - <<!m.$hasEnded>> ...machinecode
   - <<m.$hasEnded>> ...finish
 
@@ -106,6 +106,7 @@ otherthings:
     set((m) => m.$canRun = true);
   messages:
   - vamos a ejecutar el código y descubrirlo
+  - <! Ejecución habilitada.
   - agregué un botón ⏩  a la sección de código
   - "¿podrás clickearlo? 🙏"
   events:
@@ -118,7 +119,7 @@ lda:
   - ¡genial!
   - si prestaste atención, seguramente viste que [A] cambió de $00 a $01
   - y [PC] cambió de $4020 a $4022 🤯
-  - estos son <registros> de CPU, ubicaciones rápidamente accesibles
+  - estos son registros de CPU, ubicaciones rápidamente accesibles
   - cada registro puede almacenar un solo byte (8 bits) de datos
   - con la excepción de [PC] ("Program Counter") que ocupa 2 bytes
   responses:
@@ -149,9 +150,9 @@ ldaexplanation:
     set((m) => m.$canRun = true);
   messages:
   - exactamente, LDA significa "LoaD Accumulator"
-  - 💸  los números con el prefijo $ están en notación hexadecimal
-  - "🔢  los números con el prefijo # son valores literales"
-  - "🐏  los números sin el prefijo # refieren a ubicaciones de memoria"
+  - 💸  los números con el prefijo ~$~ están en notación hexadecimal
+  - "🔢  los números con el prefijo ~#~ son valores literales"
+  - "🐏  los números sin el prefijo ~#~ refieren a direcciones de memoria"
   - ¡ahora ejecuta la siguiente instrucción! ⏩
   events:
   - step [sta]

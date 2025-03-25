@@ -5,13 +5,47 @@ import locales from "../locales";
 import { toast } from "../utils";
 
 const dictionary = {
-	"Address|Addresses": {
-		also: { es: "Dirección|Direcciones" },
+	"[A]": {
+		icon: "🔢",
+		en:
+			"_(Accummulator Register)_ A CPU register used to store the result of arithmetic and logic operations.",
+		es:
+			"_(Registro Acumulador)_ Un registro de CPU usado para almacenar el resultado de operaciones aritméticas y lógicas.",
+	},
+	"[X]": {
+		icon: "🔢",
+		en: "_(X Register)_ A CPU register used to index memory and control loops.",
+		es:
+			"_(Registro X)_ Un registro de CPU usado para indexar memoria y controlar ciclos.",
+	},
+	"[Y]": {
+		icon: "🔢",
+		en: "_(Y Register)_ A CPU register used for indexing and comparisons.",
+		es:
+			"_(Registro Y)_ Un registro de CPU usado para indexar memoria y hacer comparaciones.",
+	},
+	"[SP]": {
+		icon: "🔢",
+		en: "_(Stack Pointer)_ A CPU register used to track the top of the stack.",
+		es:
+			"_(Puntero de Pila)_ Un registro de CPU usado para localizar la cima de la pila.",
+	},
+	"[PC]": {
+		icon: "🔢",
+		en:
+			"_(Program Counter)_ A CPU register used to store the address of the next instruction to execute.",
+		es:
+			"_(Contador de Programa)_ Un registro de CPU usado para almacenar la dirección de la próxima instrucción a ejecutar.",
+	},
+	"Memory address|Memory addresses|Address|Addresses": {
+		also: {
+			es: "Dirección de memoria|Direcciones de memoria|Dirección|Direcciones",
+		},
 		icon: "🐏",
 		en:
-			"A number that represents a location in memory. In the NEEES, they take up `2` bytes, so they can go from `0` (`$0000`) to `65535` (`$FFFF`).",
+			"A number that represents a location in memory. <br /><br />In the NEEES, they take up `2` bytes, so they can go from `0` (`$0000`) to `65535` (`$FFFF`).",
 		es:
-			"Un número que representa una ubicación dentro de la memoria. En la NEEES, ocupan `2` bytes, por lo que pueden ir de `0` (`$0000`) a `65535` (`$FFFF`).",
+			"Un número que representa una ubicación dentro de la memoria. <br /><br />En la NEEES, ocupan `2` bytes, por lo que pueden ir de `0` (`$0000`) a `65535` (`$FFFF`).",
 	},
 	APU: {
 		icon: "🔊",
@@ -45,9 +79,9 @@ const dictionary = {
 		also: { es: "Mando|Mandos" },
 		icon: "🎮",
 		en:
-			"An 8-bit gamepad (_D-pad + A,B + START,SELECT_). The NEEES accepts _(without extra hardware)_ up to two controllers.",
+			"An 8-bit gamepad (_D-pad + A,B + START,SELECT_). <br /><br />The NEEES accepts _(without extra hardware)_ up to two controllers.",
 		es:
-			"Un joystick de 8 botones (_D-pad + A,B + START,SELECT_). La NEEES acepta _(sin hardware extra)_ hasta dos mandos.",
+			"Un joystick de 8 botones (_D-pad + A,B + START,SELECT_). <br /><br />La NEEES acepta _(sin hardware extra)_ hasta dos mandos.",
 	},
 	"CHR-ROM": {
 		icon: "👾",
@@ -62,6 +96,14 @@ const dictionary = {
 			"The _Central Processing Unit_. It reads games' code and executes their instructions.",
 		es:
 			"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
+	},
+	"CPU register|CPU registers|Register|Registers": {
+		also: { es: "Registro de CPU|Registros de CPU|Registro|Registros" },
+		icon: "🔢",
+		en:
+			"A small, fast storage location inside the CPU used to hold data temporarily (like numbers, memory addresses, or results of operations) while it's working. <br /><br />In the NEEES, each register can hold a single byte (`8` bits) of data, with the exception of [PC] which is `2` bytes wide.",
+		es:
+			"Una ubicación pequeña y de rápido acceso dentro de la CPU usada para almacenar datos temporalmente (como números, direcciones de memoria, o resultados de operaciones) mientras está operando. <br /><br />En la NEEES, cada registro puede almacenar un solo byte (`8` bits) de datos, con la excepción de [PC] que ocupa `2` bytes.",
 	},
 	"Machine code": {
 		also: { es: "Código máquina" },
@@ -104,12 +146,6 @@ const dictionary = {
 			"_(Program RAM)_ A battery-backed RAM chip that contains the save file, inside the cartridge.",
 		es:
 			"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
-	},
-	"Register|Registers": {
-		also: { es: "Registro|Registros" },
-		icon: "🔢",
-		en: "A CPU value holder",
-		es: "Un contenedor de valor de la CPU",
 	},
 	VRAM: {
 		icon: "🐏",
