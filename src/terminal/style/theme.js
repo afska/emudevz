@@ -1,19 +1,28 @@
 import Level from "../../level/Level";
 
 const DEFAULT_COLOR_ID = 255;
+const RESET = {
+	BOLD: 22,
+	ITALIC: 23,
+	UNDERLINE: 24,
+	COLOR: 39,
+	BG_COLOR: 49,
+	EVERYTHING: 0,
+};
 
 const colorTag = (id) => `\u001b[38;5;${id}m`;
 const effectTag = (id) => `\u001b[${id}m`;
 const color = (id) => (text) =>
 	colorTag(id) + text + colorTag(DEFAULT_COLOR_ID);
-const effect = (id) => (text) => effectTag(id) + text + effectTag(0);
+const effect = (id, reset = RESET.EVERYTHING) => (text) =>
+	effectTag(id) + text + effectTag(reset);
 
 export default {
 	NORMAL: (x) => x,
-	BOLD: effect(1),
-	FAINT: effect(2),
-	ITALIC: effect(3),
-	UNDERLINE: effect(4),
+	BOLD: effect(1, RESET.BOLD),
+	FAINT: effect(2, RESET.BOLD),
+	ITALIC: effect(3, RESET.ITALIC),
+	UNDERLINE: effect(4, RESET.UNDERLINE),
 	IMAGE: (imageCommand) => {
 		let [fileName, resolution] = imageCommand.split(";");
 		if (resolution == null) resolution = "75%x100%";
@@ -40,12 +49,12 @@ export default {
 	COMMENT: color(230),
 	MESSAGE: color(111),
 	INPUT: color(207),
-	DICTIONARY: (text) => effect(4)(color(216)(text)),
+	DICTIONARY: (text) => effect(4, RESET.UNDERLINE)(color(216)(text)),
 
 	HIGHLIGHTED_BOLD: (text) =>
 		effectTag(40) + effectTag(1) + text + effectTag(0) + effectTag(40),
-	BG_NEW: effect(45),
-	BG_HIGHLIGHT: effect(40),
+	BG_NEW: effect(45, RESET.BG_COLOR),
+	BG_HIGHLIGHT: effect(40, RESET.BG_COLOR),
 	BG_HIGHLIGHT_START: () => effectTag(40),
-	BG_HIGHLIGHT_END: () => effectTag(0),
+	BG_HIGHLIGHT_END: () => effectTag(RESET.BG_COLOR),
 };
