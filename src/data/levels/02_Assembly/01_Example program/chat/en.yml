@@ -9,7 +9,7 @@ main:
   messages:
   - let me introduce you to the code editor
   - well, it's not an <editor> yet 😅
-  - just a viewer
+  - just a <viewer>
   - it has an example of a basic NEEES program
   responses:
   - (*) the viewer doesn't scare me, what it does is the weird looking numbers at the bottom [debugger]
@@ -55,16 +55,17 @@ language:
   - the lowest level of abstraction in computers 💻
   - it translates directly to the bytes that are executed by the CPU
   responses:
-  - so, after compiling, it'll become just a chunk of bytes? [machinecode]
+  - "\"translates\"? [machinecode]"
 
 machinecode:
   run: |
     {{Bottom}}.setSelectedCells([0x4020, 0x4021, 0x4022, 0x4023, 0x4024, 0x4025, 0x4026, 0x4027, 0x4028, 0x4029, 0x402A, 0x402B, 0x402C, 0x402D, 0x402E]);
   messages:
   - correct
-  - you're actually seeing the <compiled code>, right now
-  - look at the Memory Viewer at the bottom right corner of the screen
-  - in this simulation, the code starts from the $4020 memory <address>
+  - an ~assembler~ converts the assembly code to bytes in memory
+  - we call these bytes the machine code, and that's what the CPU understands
+  - look at the <Memory Viewer> at the bottom right corner of the screen!
+  - in this simulation, the code starts from the $4020 memory address
   - if you place your mouse pointer over one of these addresses, it'll show where each instruction starts
   - <{compilation.png}>
   responses:
@@ -75,8 +76,9 @@ address:
   run: |
     set((m) => m.$address = true);
   messages:
-  - a 2-byte number that represents a location in memory 🐏
-  - it can go from 0 ($0000) to 65535 ($FFFF)
+  - a number that represents a location in memory 🐏
+  - in the NEEES, they take up 2 bytes
+  - so they can go from 0 ($0000) to 65535 ($FFFF)
   - every location (and pretty much everything on the NEEES) can store a single byte
   - a byte can store any number between 0 ($00) and 255 ($FF)
   responses:
@@ -86,6 +88,7 @@ address:
 
 butyousaid:
   messages:
+  - great question!
   - it only has 2 KiB of real memory
   - but the CPU can <see> up to 64 KiB
   - so the first two kilobytes are actual RAM
@@ -162,7 +165,7 @@ sta:
   - STA means "STore Accumulator"
   - and as you can see, it writes the content of [A] to a memory location
   - in this example, to the address $4070
-  - so now the $4070 cell of the Memory Viewer has a $01
+  - so now the $4070 cell of the <Memory Viewer> has a $01
   - try running the remaining instructions ⏩
   events:
   - end [finish]

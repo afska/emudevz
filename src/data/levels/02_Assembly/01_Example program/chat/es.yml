@@ -9,7 +9,7 @@ main:
   messages:
   - déjame presentarte al editor de código
   - bueno, aún no es <editor> 😅
-  - solo un visor
+  - solo un <visor>
   - tiene un ejemplo de un programa básico de NEEES
   responses:
   - (*) el visor no me asusta, lo que sí lo hace son los números raros de abajo [debugger]
@@ -55,16 +55,17 @@ language:
   - el nivel más bajo de abstracción de las computadoras 💻
   - se traduce directo a los bytes que son ejecutados por la CPU
   responses:
-  - entonces, después de compilar, ¿se va a convertir en un conjunto raro de bytes? [machinecode]
+  - "¿\"traduce\"? [machinecode]"
 
 machinecode:
   run: |
     {{Bottom}}.setSelectedCells([0x4020, 0x4021, 0x4022, 0x4023, 0x4024, 0x4025, 0x4026, 0x4027, 0x4028, 0x4029, 0x402A, 0x402B, 0x402C, 0x402D, 0x402E]);
   messages:
   - correcto
-  - de hecho, estás viendo el <código compilado> ahora mismo
-  - fíjate en el Visor de Memoria en la parte inferior derecha de la pantalla
-  - en esta simulación, el código empieza en la <dirección> de memoria $4020
+  - un ~ensamblador~ convierte el código ensamblador a bytes en memoria
+  - a esos bytes los llamamos el código máquina, y eso es lo que la CPU entiende
+  - ¡fíjate en el <Visor de Memoria> en la parte inferior derecha de la pantalla!
+  - en esta simulación, el código empieza en la dirección de memoria $4020
   - si posas el cursor de tu mouse sobre una de estas direcciones, mostrará dónde empieza cada instrucción
   - <{compilation.png}>
   responses:
@@ -75,8 +76,9 @@ address:
   run: |
     set((m) => m.$address = true);
   messages:
-  - un número de 2 bytes que representa una ubicación dentro de la memoria 🐏
-  - puede ir de 0 ($0000) a 65535 ($FFFF)
+  - un número que representa una ubicación dentro de la memoria 🐏
+  - en la NEEES, ocupan 2 bytes
+  - por lo que pueden ir de 0 ($0000) a 65535 ($FFFF)
   - cada ubicación (y prácticamente todo en la NEEES) puede guardar un solo byte
   - un byte puede almacenar cualquier número entre 0 ($00) y 255 ($FF)
   responses:
@@ -86,6 +88,7 @@ address:
 
 butyousaid:
   messages:
+  - ¡buena pregunta!
   - solo tiene 2 KiB de memoria real
   - pero la CPU puede <ver> hasta 64 KiB
   - así que los primeros dos kilobytes son RAM de verdad
@@ -162,7 +165,7 @@ sta:
   - STA significa "STore Accumulator"
   - y como puedes ver, escribe el contenido de [A] en una ubicación de memoria
   - en este ejemplo, en la dirección $4070
-  - así que ahora la celda $4070 del Visor de Memoria tiene un $01
+  - así que ahora la celda $4070 del <Visor de Memoria> tiene un $01
   - intenta ejecutar las instrucciones restantes ⏩
   events:
   - end [finish]

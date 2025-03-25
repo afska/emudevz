@@ -41,7 +41,7 @@ zero2:
   - esto terminó escribiendo $CD (el contenido de [A]) en $0062
   - que es el resultado de $60 + [X]
   - <{STA_zeropagex.png}>
-  - nota que hackeé tu Visor de Memoria para que muestre la página cero
+  - nota que hackeé tu <Visor de Memoria> para que muestre la página cero
   - puedes comprobarlo tú 👀
   - corre las siguientes dos instrucciones ⏩
   events:
@@ -86,7 +86,7 @@ wrap2:
   - como viste, escribió $CD en $05
   - el próximo modo de direccionamiento se llama "Absolute,X"
   - es la versión absoluta de "Zero Page,X"
-  - voy a cambiar el Visor de Memoria de vuelta a $4020 para que puedas verlo
+  - voy a cambiar el <Visor de Memoria> de vuelta a $4020 para que puedas verlo
   - termina de correr el código ⏩
   events:
   - step [rest1]

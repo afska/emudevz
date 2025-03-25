@@ -5,11 +5,33 @@ import locales from "../locales";
 import { toast } from "../utils";
 
 const dictionary = {
+	"Address|Addresses": {
+		also: { es: "Dirección|Direcciones" },
+		icon: "🐏",
+		en:
+			"A number that represents a location in memory. In the NEEES, they take up `2` bytes, so they can go from `0` (`$0000`) to `65535` (`$FFFF`).",
+		es:
+			"Un número que representa una ubicación dentro de la memoria. En la NEEES, ocupan `2` bytes, por lo que pueden ir de `0` (`$0000`) a `65535` (`$FFFF`).",
+	},
 	APU: {
 		icon: "🔊",
 		en: "The _Audio Processing Unit_. It handles sound, producing audio waves.",
 		es:
 			"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
+	},
+	Assembly: {
+		also: { es: "Ensamblador" },
+		icon: "🔨",
+		en:
+			"A low-level programming language that maps very closely to the machine code understood by the CPU.",
+		es:
+			"Un lenguaje de programación de bajo nivel que se asemeja mucho al código máquina que la CPU entiende.",
+	},
+	"Assembly code": {
+		also: { es: "Código ensamblador" },
+		icon: "🔨",
+		en: "Code written in assembly language.",
+		es: "Código escrito en lenguaje ensamblador.",
 	},
 	"Cartridge|Cartridges": {
 		also: { es: "Cartucho|Cartuchos" },
@@ -40,6 +62,14 @@ const dictionary = {
 			"The _Central Processing Unit_. It reads games' code and executes their instructions.",
 		es:
 			"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
+	},
+	"Machine code": {
+		also: { es: "Código máquina" },
+		icon: "🔢",
+		en:
+			"The bytes that the CPU interpret as code. It's often the product of translating assembly code, written by humans.",
+		es:
+			"Los bytes que la CPU interpreta cómo código. A menudo es el producto de traducir lenguaje ensamblador escrito por humanos.",
 	},
 	"Name table|Name tables": {
 		also: { es: "Tabla de nombres|Tablas de nombres" },
@@ -84,16 +114,16 @@ const dictionary = {
 	VRAM: {
 		icon: "🐏",
 		en:
-			"_(Video RAM)_ A RAM chip of _2 KiB_ that lives in the PPU. It holds name tables.",
+			"_(Video RAM)_ A RAM chip of `2` KiB that lives in the PPU. It holds name tables.",
 		es:
-			"_(Video RAM)_ Un chip de RAM de _2 KiB_ que vive en la PPU. Almacena name tables.",
+			"_(Video RAM)_ Un chip de RAM de `2` KiB que vive en la PPU. Almacena name tables.",
 	},
 	WRAM: {
 		icon: "🐏",
 		en:
-			"_(Work RAM)_ A RAM chip of _2 KiB_ that lives in the CPU. General purpose.",
+			"_(Work RAM)_ A RAM chip of `2` KiB that lives in the CPU. General purpose.",
 		es:
-			"_(Work RAM)_ Un chip de RAM de _2 KiB_ que vive en la CPU. Propósito general.",
+			"_(Work RAM)_ Un chip de RAM de `2` KiB que vive en la CPU. Propósito general.",
 	},
 
 	showDefinition(word) {
@@ -136,9 +166,9 @@ const dictionary = {
 						(word) =>
 							!exclude.some((it) => it.toLowerCase() === word.toLowerCase())
 					)
-					.map((it) => `(?<![^\\s])${escapeStringRegexp(it)}(?=[\\s,.]|$)`)
-					// before: whitespace or string start
-					// after: whitespace, comma, dot, or end of string
+					.map((it) => `(?<![^\\s(])${escapeStringRegexp(it)}(?=[\\s,.)?]|$)`)
+					// before: string start, whitespace, parenthesis
+					// after: whitespace, comma, dot, parenthesis, question mark, or end of string
 					.join("|"),
 			}),
 			"iu"

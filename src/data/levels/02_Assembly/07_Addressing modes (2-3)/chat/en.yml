@@ -41,7 +41,7 @@ zero2:
   - this ended up writing $CD (the content of [A]) to $0062
   - which is the result of $60 + [X]
   - <{STA_zeropagex.png}>
-  - note that I hacked your Memory Viewer to show the zero page
+  - note that I hacked your <Memory Viewer> to show the zero page
   - you can check it out for yourself 👀
   - run the next two instructions ⏩
   events:
@@ -86,7 +86,7 @@ wrap2:
   - as you saw, it wrote $CD to $05
   - the next addressing mode is called "Absolute,X"
   - it's the absolute version of "Zero Page,X"
-  - I'm gonna switch the Memory Viewer back to $4020 so you can see it
+  - I'm gonna switch the <Memory Viewer> back to $4020 so you can see it
   - run the rest of the code ⏩
   events:
   - step [rest1]

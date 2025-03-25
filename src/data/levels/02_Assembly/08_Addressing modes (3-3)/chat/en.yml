@@ -50,7 +50,7 @@ step4:
   - we've set up the memory for indirect addressing
   - in the address $0003, we have an $80
   - in the address $0004, we have a $40
-  - now I'll switch the Memory Viewer to the usual section
+  - now I'll switch the <Memory Viewer> to the usual section
   - run the other 3 instructions ⏩
   events:
   - step [step5]

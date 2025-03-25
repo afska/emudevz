@@ -50,7 +50,7 @@ step4:
   - hemos configurado la memoria para direccionamiento indirecto
   - en la dirección $0003, tenemos un $80
   - en la dirección $0004, tenemos un $40
-  - ahora voy a cambiar el Visor de Memoria a la sección habitual
+  - ahora voy a cambiar el <Visor de Memoria> a la sección habitual
   - ejecuta las otras 3 instrucciones ⏩
   events:
   - step [step5]
