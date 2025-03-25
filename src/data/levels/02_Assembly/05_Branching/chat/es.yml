@@ -10,7 +10,7 @@ main:
       });
     }
   messages:
-  - hasta ahora, solo corrimos programas sin bifurcaciones
+  - hasta ahora, solo corrimos programas sin <bifurcaciones>
   - vamos a cambiar eso
   - el lenguaje ensamblador para 6502 tiene multiples instrucciones para bifurcar 🌲
   - todas ellas saltan cuando ciertas banderas están activadas o no
@@ -62,8 +62,8 @@ step5:
     set((m) => m.$canRun = false);
   messages:
   - esto es lo que pasó
-  - "`CPX #3` 'ComPara' [X] con 3, y activa la Bandera Zero si son iguales"
-  - "[X] tiene un 7, y eso no es igual a 3, así que Z = 0"
+  - "`CPX #3` \"ComPara\" [X] con 3, y activa la Bandera Zero si son iguales"
+  - "[X] tiene un 7, y eso no es igual a 3, así que ~Z~ = 0"
   - "`BNE @decrement` salta a esa etiqueta si la Bandera Zero no está activada"
   - ¡que no lo está! así que saltó 🦘
   - ([X] y 3 eran "Not Equal", por eso el nombre)
@@ -88,7 +88,7 @@ exercise:
       m.content.useTemp = false;
     });
   messages:
-  - el opuesto de `BNE` es `BEQ`, que salta cuando los números son iguales
+  - el opuesto de `BNE` es `BEQ`, que salta cuando los números son <iguales>
   - vamos a practicar 👾
   - 📚  _-_borra el código actual_--_
   - 📚  _-_y construye un programa que lea el valor de $4080_--_
@@ -101,7 +101,7 @@ exercise:
 
 testing:
   messages:
-  - configuré un generador de números aleatorios 🔢
+  - configuré un <generador de números aleatorios> 🔢
   - cada vez que cambies/corras tu código, escribirá un 7 o un byte aleatorio en $4080
   - con 50% de probabilidades cada cosa
   - así que cuando sea 7, tu código debería escribir $EE
@@ -112,10 +112,10 @@ testing:
 help:
   messages:
   - 🔀  siempre querrás usar `BEQ` y `BNE` luego de una instrucción de comparación (como `CPX`)
-  - "`CPX` asigna el flag Z=1 si [X] es igual al valor, y luego `BEQ`/`BNE` saltan dependiendo de si Z es 1 o 0"
+  - "`CPX` asigna el flag ~Z~=1 si [X] es igual al valor, y luego `BEQ`/`BNE` saltan dependiendo de si ~Z~ es 1 o 0"
   - <{CPX_BEQ.png}>
   - 🏷️  recuerda que la ejecución siempre es de arriba hacia abajo, ignorando etiquetas
-  - por lo que probablemente en algún momento necesites parar el programa (para evitar que "siga de largo")
+  - por lo que probablemente en algún momento necesites <frenar el programa> (para evitar que "siga de largo")
   - 🛑  para eso, puedes poner una etiqueta al final del código
   - y usar una instrucción de bifurcación para saltar a ella
   - o más fácil, usa la instrucción `BRK`, que interrumpe la ejecución 😉

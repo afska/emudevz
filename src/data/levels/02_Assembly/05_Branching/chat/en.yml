@@ -10,7 +10,7 @@ main:
       });
     }
   messages:
-  - so far, we only ran programs without any branching logic
+  - so far, we only ran programs without any <branching> logic
   - let's change that
   - 6502 assembly has multiple branching instructions 🌲
   - all of which branch on whether certain flags are set or not
@@ -62,8 +62,8 @@ step5:
     set((m) => m.$canRun = false);
   messages:
   - here's what happened
-  - "`CPX #3` 'ComPares' [X] with 3, and sets the Zero Flag if they're equal"
-  - "[X] has a 7, and that's not equal to 3, so Z = 0"
+  - "`CPX #3` \"ComPares\" [X] with 3, and sets the Zero Flag if they're equal"
+  - "[X] has a 7, and that's not equal to 3, so ~Z~ = 0"
   - "`BNE @decrement` jumps to that label if the Zero Flag is not set"
   - which is not! so it jumped 🦘
   - ([X] and 3 were "Not Equal", hence the name)
@@ -88,7 +88,7 @@ exercise:
       m.content.useTemp = false;
     });
   messages:
-  - the opposite of `BNE` is `BEQ`, which jumps when the numbers are equal
+  - the opposite of `BNE` is `BEQ`, which jumps when the numbers are <equal>
   - let's practice 👾
   - 📚  _-_delete the current code_--_
   - 📚  _-_and build a program that reads the value of $4080_--_
@@ -101,7 +101,7 @@ exercise:
 
 testing:
   messages:
-  - I've set up a random number generator 🔢
+  - I've set up a <random number generator> 🔢
   - every time you change/run your code, it'll set either a 7 or another random byte on $4080
   - with 50% of chances each
   - so when it's 7, your code should write $EE
@@ -112,10 +112,10 @@ testing:
 help:
   messages:
   - 🔀  you want to always use `BEQ` and `BNE` after a comparison instruction (like `CPX`)
-  - "`CPX` sets the flag Z=1 if [X] equals the value, and then `BEQ`/`BNE` jump depending on whether Z is 1 or 0"
+  - "`CPX` sets the flag ~Z~=1 if [X] equals the value, and then `BEQ`/`BNE` jump depending on whether ~Z~ is 1 or 0"
   - <{CPX_BEQ.png}>
   - 🏷️  remember that execution always goes from top to bottom, ignoring labels
-  - therefore, at some point, you may need to stop the program (to prevent it from advancing to the next label)
+  - therefore, at some point, you may need to <stop the program> (to prevent it from advancing to the next label)
   - 🛑  for that, you can put a label at the very end of the code
   - and use a branch instruction to jump to it
   - or more simply, just use the `BRK` instruction, which halts the execution 😉
