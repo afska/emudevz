@@ -49,7 +49,7 @@ export default {
 	COMMENT: color(230),
 	MESSAGE: color(111),
 	INPUT: color(207),
-	DICTIONARY: (text) => effect(4, RESET.UNDERLINE)(color(216)(text)),
+	DICTIONARY: (text) => effect(4, RESET.UNDERLINE)(color(195)(text)),
 
 	HIGHLIGHTED_BOLD: (text) =>
 		effectTag(40) + effectTag(1) + text + effectTag(0) + effectTag(40),

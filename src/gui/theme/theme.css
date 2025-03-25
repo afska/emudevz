@@ -121,15 +121,15 @@ body {
 /* Dictionary entries */
 
 .dictionary-entry {
-	color: #f57e3a;
+	color: #d4d5de;
 }
 
 .dictionary-link {
-	color: #d48f72;
+	color: #bdbfc9;
 }
 
 .dictionary-link:hover {
-	color: #fab08f;
+	color: #e2e5ff;
 }
 
 /* Bootstrap */
