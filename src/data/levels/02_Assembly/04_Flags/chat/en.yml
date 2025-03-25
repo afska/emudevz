@@ -12,7 +12,7 @@ main:
   run-after-messages: |
     $.goTo("question");
   messages:
-  - as I said, each register can hold a single byte
+  - as I said, each register can hold a <single byte>
   - so their values are always between 0 ($00) and 255 ($FF)
   - you can't, for example, set the number 260 to them 👮
   responses: []
@@ -45,7 +45,7 @@ a255:
 
 error:
   messages:
-  - CPUs don't <throw errors> 🙄
+  - CPUs don't <throw errors>
   - try again
   - ...question
   responses:
@@ -66,7 +66,7 @@ a4:
   - correct! ✅
   - but the processor isn't actually dumb
   - it notifies the program that the value didn't fit
-  - by setting the <Carry Flag> to 1
+  - by setting the Carry Flag to 1
   responses:
   - what's a flag? 🏁 [flags]
 
@@ -77,7 +77,7 @@ flags:
   - it's a boolean (1-bit value) set by the processor
   - it gives information about the previous instruction
   - there are 6 flags, so they all live in a single byte
-  - (that byte is called <flags register>)
+  - (that byte is called flags register)
   - try running the code ⏩
   events:
   - end [carry]
@@ -95,8 +95,8 @@ decimal:
   - "📝  so, quick recap:"
   - "#$20 refers to the number 32 (decimal) or $20 (hexadecimal)"
   - "#20 refers to the number 20 (decimal) or $14 (hexadecimal)"
-  - "$20 refers to the 33rd byte in memory, with the address 32 (decimal) or $20 (hexadecimal)"
-  - "20 refers to the 21st byte in memory, with the address 20 (decimal) or $14 (hexadecimal)"
+  - "$20 refers to the ~33rd~ byte in memory, with the address 32 (decimal) or $20 (hexadecimal)"
+  - "20 refers to the ~21st~ byte in memory, with the address 20 (decimal) or $14 (hexadecimal)"
   responses:
   - ...carry
 
@@ -110,7 +110,7 @@ exercise:
       m.content.useTemp = false;
     });
   messages:
-  - yup, there's a Zero Flag, which is set by all instructions to 1 when the result is zero
+  - yup, there's a Zero Flag, which is set by all instructions to 1 when the result is ~zero~
   - 📚  _-_without deleting the current code, try subtracting 4 from [A], with the `SBC` instruction_--_
   - _-_it works the same as `ADC`, but it subtracts instead of adding_--_
   - _-_after that instruction, the Zero Flag should be 1 _--_😊

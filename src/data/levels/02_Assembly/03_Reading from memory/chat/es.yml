@@ -19,7 +19,7 @@ main:
 
 read:
   messages:
-  - "puedes pasarle una dirección de memoria a `LDX`, tan solo omitiendo el prefijo #"
+  - "puedes pasarle una dirección de memoria a `LDX`, tan solo omitiendo el prefijo ~#~"
   - p. ej. la instrucción `LDX $4080` cargará en [X] lo que sea que esté en la dirección de memoria $4080
   - <{LDX_memory.png}>
   responses:
@@ -28,7 +28,7 @@ read:
 then:
   messages:
   - una vez que cargas algo en un registro, puedes hacer lo que tú quieras
-  - algo común es mutar el valor y copiarlo a otro registro
+  - algo común es <mutar> el valor y copiarlo a otro registro
   - ¡o a otra ubicación de memoria! 🐏
   - "`INX`, por ejemplo, incrementa el valor en [X]"
   responses:
@@ -54,14 +54,14 @@ result:
 8times:
   messages:
   - "en ese caso, escribes:"
-  - INX
-  - INX
-  - INX
-  - INX
-  - INX
-  - INX
-  - INX
-  - INX
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
   - nah, mentira 😂
   - hay una instrucción para sumar
   - "puedes escribir `ADC #$08` para incrementar [A] ocho veces"

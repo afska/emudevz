@@ -12,7 +12,7 @@ main:
   run-after-messages: |
     $.goTo("question");
   messages:
-  - como dije, cada registro puede almacenar un solo byte
+  - como dije, cada registro puede almacenar <un solo byte>
   - así que sus valores están siempre entre 0 ($00) y 255 ($FF)
   - no puedes, por ejemplo, guardar el número 260 en ellos 👮
   responses: []
@@ -45,7 +45,7 @@ a255:
 
 error:
   messages:
-  - las CPUs no <tiran errores> 🙄
+  - las CPUs no <tiran errores>
   - intenta de nuevo
   - ...question
   responses:
@@ -66,7 +66,7 @@ a4:
   - ¡correcto! ✅
   - pero en realidad el procesador no es tonto
   - le notifica al programa que el valor no calzó bien
-  - cargando la <Bandera Carry> en 1
+  - cargando la Bandera Carry en 1
   responses:
   - ¿qué es una bandera? 🏁 [flags]
 
@@ -77,7 +77,7 @@ flags:
   - es un booleano (valor de 1 bit) que carga el procesador
   - da información sobre la instrucción anterior
   - hay 6 banderas, así que todas viven en un solo byte
-  - (ese byte se llama <registro de banderas>)
+  - (ese byte se llama registro de banderas)
   - intenta ejecutar el código ⏩
   events:
   - end [carry]
@@ -95,8 +95,8 @@ decimal:
   - "📝  así que, resúmen rápido:"
   - "#$20 representa al número 32 (decimal) o $20 (hexadecimal)"
   - "#20 representa al número 20 (decimal) o $14 (hexadecimal)"
-  - "$20 representa al 33avo byte en memoria, con la dirección 32 (decimal) o $20 (hexadecimal)"
-  - "20 representa al 21avo byte en memoria, con la dirección 20 (decimal) o $14 (hexadecimal)"
+  - "$20 representa al ~33avo~ byte en memoria, con la dirección 32 (decimal) o $20 (hexadecimal)"
+  - "20 representa al ~21avo~ byte en memoria, con la dirección 20 (decimal) o $14 (hexadecimal)"
   responses:
   - ...carry
 
@@ -110,7 +110,7 @@ exercise:
       m.content.useTemp = false;
     });
   messages:
-  - yep, está la Bandera Zero, que todas las instrucciones la ponen en 1 cuando el resultado es cero
+  - yep, está la Bandera Zero, que todas las instrucciones la ponen en 1 cuando el resultado es ~cero~
   - 📚  _-_sin eliminar el código actual, intenta sustraer 4 a [A], con la instrucción `SBC`_--_
   - _-_funciona igual que `ADC`, pero resta en lugar de sumar_--_
   - _-_luego de la instrucción, la Bandera Zero debería estar en 1 _--_😊

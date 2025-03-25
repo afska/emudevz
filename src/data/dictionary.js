@@ -37,16 +37,6 @@ const dictionary = {
 		es:
 			"_(Contador de Programa)_ Un registro de CPU usado para almacenar la dirección de la próxima instrucción a ejecutar.",
 	},
-	"Memory address|Memory addresses|Address|Addresses": {
-		also: {
-			es: "Dirección de memoria|Direcciones de memoria|Dirección|Direcciones",
-		},
-		icon: "🐏",
-		en:
-			"A number that represents a location in memory. <br /><br />In the NEEES, they take up `2` bytes, so they can go from `0` (`$0000`) to `65535` (`$FFFF`).",
-		es:
-			"Un número que representa una ubicación dentro de la memoria. <br /><br />En la NEEES, ocupan `2` bytes, por lo que pueden ir de `0` (`$0000`) a `65535` (`$FFFF`).",
-	},
 	APU: {
 		icon: "🔊",
 		en: "The _Audio Processing Unit_. It handles sound, producing audio waves.",
@@ -66,6 +56,14 @@ const dictionary = {
 		icon: "🔨",
 		en: "Code written in assembly language.",
 		es: "Código escrito en lenguaje ensamblador.",
+	},
+	"Carry Flag": {
+		also: { es: "Bandera Carry" },
+		icon: "🏁",
+		en:
+			"A CPU flag that indicates when an arithmetic operation has produced a _carry_. <br /><br />In the NEEES, that happens when the result exceeds the 8-bit capacity (`255` for unsigned numbers).",
+		es:
+			"Una bandera de CPU que indica cuando una operación aritmética produjo un _carry_. <br /><br />En la NEEES, esto ocurre cuando el resultado sobrepasa el límite de 8 bits (`255` para números sin signo).",
 	},
 	"Cartridge|Cartridges": {
 		also: { es: "Cartucho|Cartuchos" },
@@ -97,6 +95,12 @@ const dictionary = {
 		es:
 			"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
 	},
+	"CPU flag|CPU flags": {
+		also: { es: "Bandera de CPU|Banderas de CPU" },
+		icon: "🏁",
+		en: "A flag stored using one bit inside the Flags Register.",
+		es: "Una bandera almacenada usando un bit dentro del Registro de Banderas.",
+	},
 	"CPU register|CPU registers|Register|Registers": {
 		also: { es: "Registro de CPU|Registros de CPU|Registro|Registros" },
 		icon: "🔢",
@@ -104,6 +108,18 @@ const dictionary = {
 			"A small, fast storage location inside the CPU used to hold data temporarily (like numbers, memory addresses, or results of operations) while it's working. <br /><br />In the NEEES, each register can hold a single byte (`8` bits) of data, with the exception of [PC] which is `2` bytes wide.",
 		es:
 			"Una ubicación pequeña y de rápido acceso dentro de la CPU usada para almacenar datos temporalmente (como números, direcciones de memoria, o resultados de operaciones) mientras está operando. <br /><br />En la NEEES, cada registro puede almacenar un solo byte (`8` bits) de datos, con la excepción de [PC] que ocupa `2` bytes.",
+	},
+	"Flag|Flags": {
+		also: { es: "Bandera|Banderas" },
+		icon: "🏁",
+		en: "A field that stores a value that can be either `true` or `false`.",
+		es: "Un campo que almacena un valor que puede ser `true` o `false`.",
+	},
+	"Flags Register": {
+		also: { es: "Registro de Banderas" },
+		icon: "🔢",
+		en: "A CPU register used to store multiple CPU flags.",
+		es: "Un registro de CPU usado para almacenar múltiples banderas de CPU.",
 	},
 	"Machine code": {
 		also: { es: "Código máquina" },
@@ -113,11 +129,15 @@ const dictionary = {
 		es:
 			"Los bytes que la CPU interpreta cómo código. A menudo es el producto de traducir lenguaje ensamblador escrito por humanos.",
 	},
-	"Name table|Name tables": {
-		also: { es: "Tabla de nombres|Tablas de nombres" },
-		icon: "🏞️📖",
-		en: "THE NAME TABLE",
-		es: "LA TABLA DE NOMBRES",
+	"Memory address|Memory addresses|Address|Addresses": {
+		also: {
+			es: "Dirección de memoria|Direcciones de memoria|Dirección|Direcciones",
+		},
+		icon: "🐏",
+		en:
+			"A number that represents a location in memory. <br /><br />In the NEEES, they take up `2` bytes, so they can go from `0` (`$0000`) to `65535` (`$FFFF`).",
+		es:
+			"Un número que representa una ubicación dentro de la memoria. <br /><br />En la NEEES, ocupan `2` bytes, por lo que pueden ir de `0` (`$0000`) a `65535` (`$FFFF`).",
 	},
 	NEEES: {
 		icon: "🕹️",
@@ -160,6 +180,13 @@ const dictionary = {
 			"_(Work RAM)_ A RAM chip of `2` KiB that lives in the CPU. General purpose.",
 		es:
 			"_(Work RAM)_ Un chip de RAM de `2` KiB que vive en la CPU. Propósito general.",
+	},
+	"Zero Flag": {
+		also: { es: "Bandera Zero" },
+		icon: "🏁",
+		en: "A CPU flag that indicates when the result of an operation is `0`.",
+		es:
+			"Una bandera de CPU que indica cuando el resultado de una operación es `0`.",
 	},
 
 	showDefinition(word) {

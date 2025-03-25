@@ -19,7 +19,7 @@ main:
 
 read:
   messages:
-  - "you can pass a memory address to `LDX`, by just omitting the # prefix"
+  - "you can pass a memory address to `LDX`, by just omitting the ~#~ prefix"
   - i.e. the instruction `LDX $4080` will load into [X] whatever value is in the memory address $4080
   - <{LDX_memory.png}>
   responses:
@@ -28,7 +28,7 @@ read:
 then:
   messages:
   - once you load something into a register, you can do whatever you want
-  - a common thing to do is mutating the value and copying it to another register
+  - a common thing to do is <mutating> the value and copying it to another register
   - or another memory location! 🐏
   - "`INX`, for example, increments the value on [X]"
   responses:
@@ -54,14 +54,14 @@ result:
 8times:
   messages:
   - "then, you write:"
-  - INX
-  - INX
-  - INX
-  - INX
-  - INX
-  - INX
-  - INX
-  - INX
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
   - lol, just kiddin' 😂
   - there's an instruction for addition
   - "you can write `ADC #$08` to increment [A] eight times"
