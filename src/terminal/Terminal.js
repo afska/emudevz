@@ -140,6 +140,7 @@ export default class Terminal {
 				this._interruptIfNeeded();
 
 				const isSpecialMarker =
+					style === theme.DICTIONARY ||
 					style === theme.BG_HIGHLIGHT_START ||
 					style === theme.BG_HIGHLIGHT_END;
 
