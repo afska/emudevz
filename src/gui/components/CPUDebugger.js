@@ -88,7 +88,7 @@ export default class CPUDebugger extends PureComponent {
 
 	setMemoryStart(memoryStart) {
 		this.setState({ _memoryStart: memoryStart }, () => {
-			this._updateState();
+			this._updateState("change-memory-start");
 		});
 	}
 
@@ -389,7 +389,7 @@ export default class CPUDebugger extends PureComponent {
 				{ _lastCode: code, _mappings: instructions, _error: null },
 				() => {
 					setTimeout(() => {
-						this._updateState();
+						this._updateState("code-changed");
 					});
 				}
 			);
@@ -414,7 +414,7 @@ export default class CPUDebugger extends PureComponent {
 		}, this.state._delay);
 
 		this._cpu.step();
-		this._updateState();
+		this._updateState("step");
 	};
 
 	_onReset = () => {
@@ -441,7 +441,7 @@ export default class CPUDebugger extends PureComponent {
 		this._div.style.transform = `scale(${scale})`;
 	};
 
-	_updateState() {
+	_updateState(reason) {
 		if (!this._cpu) return;
 
 		const memory = new Uint8Array(BYTES_MEMORY);
@@ -478,6 +478,7 @@ export default class CPUDebugger extends PureComponent {
 		bus.emit("highlight", {
 			line: lineNumber,
 			nextAction: lineNumber == null ? "reset" : "step",
+			reason,
 		});
 		if (lineNumber == null) bus.emit("end");
 	}

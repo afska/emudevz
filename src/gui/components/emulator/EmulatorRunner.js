@@ -275,7 +275,7 @@ export default class EmulatorRunner extends PureComponent {
 		store.dispatch.savedata.openFile(filePath);
 		setTimeout(() => {
 			if (_.isFinite(lineNumber))
-				bus.emit("highlight", { line: lineNumber - 1 });
+				bus.emit("highlight", { line: lineNumber - 1, reason: "debug-button" });
 		});
 		Level.current.highlightMultiFileEditor();
 	};

@@ -301,7 +301,7 @@ export default class TestCommand extends Command {
 
 			store.dispatch.savedata.openFile(filePath);
 			if (_.isFinite(lineNumber))
-				bus.emit("highlight", { line: lineNumber - 1 });
+				bus.emit("highlight", { line: lineNumber - 1, reason: "test-command" });
 		};
 		this._linkProvider = this._terminal.registerLinkProvider(
 			LOCATION_DETECT_REGEXP,
