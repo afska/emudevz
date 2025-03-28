@@ -4,6 +4,7 @@ main:
     if (m.$end) $.goTo("exercise");
   messages:
   - we're gonna start coding in JavaScript
+  - <! Computer upgraded.
   - by the way, your computer has been <upgraded>
   - now you can use MULTIPLE files 🗃️ 📁
   - very cool, huh?
@@ -25,7 +26,7 @@ notcool:
   messages:
   - argh, this kids can't appreciate cool things nowadays 😔
   - |+
-    anywho, I need to make sure you know how to create JS modules
+    anywho, I need to make sure you know how to create <JS modules>
   responses: []
 
 play:
@@ -39,6 +40,7 @@ play:
   - though you can only modify what's in 📁  ~/code~
   - run `help -a` and play around with them for a little bit
   - open the chat again when you're ready
+  - <! Disconnected.
   responses: []
 
 exercise:
@@ -46,9 +48,9 @@ exercise:
     set((m) => m.$end = true);
   messages:
   - 📚  _-_create a file in _--_📄 _-_ ~/code/Cartridge.js~_--_
-  - 📚  _-_its default export should be an empty class_--_
+  - 📚  _-_its <default export> should be an <empty class>_--_
   - 📚  _-_then, import that file from _--_📄 _-_ ~/code/index.js~_--_
-  - 📚  _-_and export an object literal with only one key (`Cartridge`) pointing to that class_--_
+  - 📚  _-_and export an <object literal> with only one key (`Cartridge`) pointing to that class_--_
   - |-
     _-_your ~index.js~ file should look like this:
       ```javascript
@@ -60,7 +62,7 @@ exercise:
 modules:
   messages:
   - yeah, every file is a module, and it has an <exported> value
-  - that value can be any JS expression, and it can be used elsewhere by <importing> the module
+  - that value can be any <JS expression>, and it can be used elsewhere by <importing> the module
   - |-
     here's some help...
 
