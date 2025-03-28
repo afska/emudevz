@@ -211,6 +211,14 @@ const dictionary = {
 		es:
 			"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
 	},
+	Stack: {
+		also: { es: "Pila" },
+		icon: "🧱",
+		en:
+			"A LIFO _(Last In, First Out)_ structure which programs can use to store values. The current depth is measured by [SP]. <br /><br />In the NEEES, the stack lives in WRAM between addresses `$0100` and `$01FF`.",
+		es:
+			"Una estructura LIFO _(Last In, First Out)_ que los programas usan para almacenar valores. La longitud actual es medida por el [SP]. <br /><br />En la NEEES, la pila vive en WRAM entre las direcciones `$0100` y `$01FF`.",
+	},
 	VRAM: {
 		icon: "🐏",
 		en:
@@ -231,6 +239,14 @@ const dictionary = {
 		en: "A CPU flag that indicates when the result of an operation is `0`.",
 		es:
 			"Una bandera de CPU que indica cuando el resultado de una operación es `0`.",
+	},
+	"Zero Page|First page": {
+		also: { es: "Página cero|Primera página" },
+		icon: "🐏",
+		en:
+			"The first `256` bytes of WRAM, located in addresses `$0000` - `$00FF`.",
+		es:
+			"Los primeros `256` bytes de WRAM, ubicados en las direcciones `$0000` - `$00FF`.",
 	},
 
 	showDefinition(word) {

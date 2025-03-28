@@ -21,7 +21,7 @@ lda:
     set((m) => m.$canRun = true);
   messages:
   - this is where addressing gets interesting 🧐
-  - in "Zero Page,X" addressing, a zero page address is given
+  - in "Zero Page,X" addressing mode, a zero page address is given
   - and then the value of [X] is added
   - run the first two instructions ⏩
   events:

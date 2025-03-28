@@ -10,7 +10,7 @@
   BNE @save
 @load:
   PLA          ; Pulls from the Stack to [A]
-  STA $4080,X  ; = STA $4080+X (puts the number in memory)
+  STA $4090,X  ; = STA $4090+X (puts the number in memory)
   INX          ; (position++)
   CPX #16      ; (loops until [X] is #16)
   BNE @load

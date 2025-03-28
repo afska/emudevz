@@ -116,7 +116,7 @@ step8:
 step9:
   messages:
   - that $BE was loaded into [A] 🤯
-  - as we saw earlier, in our current setup ($0003) evaluates to $4080
+  - as we saw earlier, in our current setup ~($0003)~ evaluates to $4080
   - the instruction just added [Y] to it, so the final address was $4085
   - <{LDA_indirectindexed.png}>
   responses:

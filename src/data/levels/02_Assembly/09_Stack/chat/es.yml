@@ -36,7 +36,7 @@ example:
   messages:
   - crea dos bucles ➰
   - "`@save` pone números impares entre $4080 y $4087"
-  - y `@load` pone esos números en orden inverso desde $4088 hasta $408F
+  - y `@load` pone esos números en orden inverso desde $4098 hasta $409F
   - el primero <pone> valores en la pila, el segundo <saca> valores de la pila
   - ahora tu depurador tiene una sección Pila 👀
   - ejecuta el código y compruébalo con tus propios ojos ⏩

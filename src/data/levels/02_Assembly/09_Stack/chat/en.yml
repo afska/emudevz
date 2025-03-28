@@ -36,7 +36,7 @@ example:
   messages:
   - it creates two loops ➰
   - "`@save` puts odd numbers from $4080 to $4087"
-  - and `@load` puts those numbers in reverse order from $4088 to $408F
+  - and `@load` puts those numbers in reverse order from $4098 to $409F
   - the former <pushes> values onto the stack, the latter <pulls> values from the stack
   - now your debugger has a Stack section 👀
   - run the code and check it out for yourself ⏩

@@ -23,8 +23,8 @@ where:
 label:
   messages:
   - el ensamblador que encontré no soporta eso 😔
-  - pero eso tiene que ser posible con otros ensambladores
-  - y generarían exactamente el mismo código binario
+  - pero eso es posible con otros ensambladores
+  - y ~JSR @init~ generaría el mismo código máquina que ~JSR $4029~
   responses:
   - ...where
 
