@@ -142,6 +142,13 @@ const dictionary = {
 			en: "A CPU register used to store multiple CPU flags.",
 			es: "Un registro de CPU usado para almacenar múltiples banderas de CPU.",
 		},
+		iNEEES: {
+			icon: "📝",
+			en:
+				"A format that describes a NEEES cartridge. It contains its code (PRG-ROM), graphics (CHR-ROM), and a metadata header.",
+			es:
+				"Un formato que describe un cartucho de NEEES. Contiene su código (PRG-ROM), gráficos (CHR-ROM), y un header con metadatos.",
+		},
 		"Instruction|Instructions": {
 			also: { es: "Instrucción|Instrucciones" },
 			icon: "📖",

@@ -3,14 +3,14 @@ main:
   run: |
     if (m.$end) $.goTo("exercise");
   messages:
-  - los juegos se suelen preservar en formato digital con <archivos de juego> (también llamados ROMs) 👾
-  - estos contienen código, gráficos y una cabecera que identifica el hardware
+  - los juegos se suelen preservar en formato digital con <archivos de juego> (también llamados <ROMs>)
+  - estos contienen 🤖  <código>, 👾  <gráficos> y una 🗣️  <cabecera> que identifica el hardware
   responses:
-  - son los famosos archivos *.neees, ¿no? [neeesfiles]
+  - son los famosos archivos <*.neees>, ¿no? [neeesfiles]
 
 neeesfiles:
   messages:
-  - correcto, el formato se llama <iNEEES>, y deberías empezar leyendo su cabecera
+  - correcto, el formato se llama iNEEES, y deberías empezar leyendo su <cabecera>
   - "los primeros 4 bytes de un archivo de juego siempre contienen lo siguiente:"
   - $4E $45 $53 $1A
   - esa es <la constante mágica> ✨

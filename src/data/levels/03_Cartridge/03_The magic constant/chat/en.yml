@@ -3,14 +3,14 @@ main:
   run: |
     if (m.$end) $.goTo("exercise");
   messages:
-  - we preserve games in digital format with <game files> (also called ROMs) 👾
-  - these contain code, graphics, and a header that identifies the hardware
+  - we preserve games in digital format with <game files> (also called <ROMs>)
+  - these contain 🤖  <code>, 👾  <graphics>, and a 🗣️  <header> that identifies the hardware
   responses:
-  - they're the famous *.neees files, right? [neeesfiles]
+  - they're the famous <*.neees> files, right? [neeesfiles]
 
 neeesfiles:
   messages:
-  - right, the format is called ~iNEEES~, and you should start by reading its header
+  - right, the format is called iNEEES, and you should start by reading its <header>
   - "the first 4 bytes of a game file always contain the following:"
   - $4E $45 $53 $1A
   - that's <the magic constant> ✨

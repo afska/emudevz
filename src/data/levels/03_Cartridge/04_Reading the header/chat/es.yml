@@ -14,7 +14,7 @@ exercise:
   messages:
   - te envié algo de documentación 🤓
   - revisa 📄  ~/docs/iNEEES.es.md~
-  - es un documento que describe el formato ~iNEEES~
+  - es un documento que describe el formato iNEEES
   - puedes inspeccionarlo con el comando ~open~, o <clickeando> en la ruta al archivo
   - quiero que lo veas y me digas si entiendes
   responses:
@@ -50,7 +50,7 @@ memories:
   - "👾  <CHR-RAM>: memoria escribible para poner gráficos en tiempo de ejecución"
   - "🔋  <PRG-RAM>: (opcional) memoria escribible para almacenar el progreso del juego"
   - cada juego usa <CHR-ROM> o <CHR-RAM>
-  - si usa <CHR-RAM>, el archivo ~iNEEES~ no contendrá su última sección de <CHR-ROM>
+  - si usa <CHR-RAM>, el archivo iNEEES no contendrá su última sección de <CHR-ROM>
   responses:
   - ...exercise
 
