@@ -138,6 +138,13 @@ const dictionary = {
 		es:
 			"Una orden que le dice a la CPU qué hacer, como sumar números o saltar a otra parte del programa.",
 	},
+	JavaScript: {
+		icon: "🗣️",
+		en:
+			'A programming language created so that websites can proudly announce _"Welcome!"_ via an unstoppable alert box, but some people create emulators with it.',
+		es:
+			'Un lenguaje de programación creado para que los sitios web puedan anunciar orgullosamente _"¡Bienvenido!"_ mediante una caja de alerta imposible de cerrar, pero algunas personas hacen emuladores con él.',
+	},
 	"Least significant byte|Low byte": {
 		also: {
 			es: "Byte menos significativo|Low byte",
