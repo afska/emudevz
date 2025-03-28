@@ -182,6 +182,13 @@ const dictionary = {
 			es:
 				"Los bytes que la CPU interpreta cómo código. A menudo es el producto de traducir lenguaje ensamblador escrito por humanos.",
 		},
+		"Mapper|Mappers": {
+			icon: "🗜️",
+			en:
+				"A chip in the cartridge that extends what the console can do, like adding more PRG-ROM or CHR-ROM banks or providing features such as switching mirroring types.",
+			es:
+				"Un chip en el cartucho que extiende lo que la consola puede hacer, como agregar más bancos de PRG-ROM o CHR-ROM, o proporcionar funciones como cambiar el tipo de mirroring.",
+		},
 		"Memory address|Memory addresses|Address|Addresses": {
 			also: {
 				es: "Dirección de memoria|Direcciones de memoria|Dirección|Direcciones",
@@ -209,7 +216,7 @@ const dictionary = {
 			es:
 				"La pieza de hardware que estamos tratando de emular. La gente piensa que significa _'No Entiendo' El Entretenimiento Saludable_.",
 		},
-		Opcode: {
+		"Opcode|Opcodes": {
 			icon: "🔢",
 			en:
 				"_(Operation code)_ A number that, inside the machine code, represents an instruction code. <br /><br />In the NEEES, it defines both the instruction and the addressing mode.",
@@ -321,9 +328,9 @@ const dictionary = {
 						(word) =>
 							!exclude.some((it) => it.toLowerCase() === word.toLowerCase())
 					)
-					.map((it) => `(?<![^\\s(])${escapeStringRegexp(it)}(?=[\\s,.)?]|$)`)
+					.map((it) => `(?<![^\\s(])${escapeStringRegexp(it)}(?=[\\s,.)?:]|$)`)
 					// before: string start, whitespace, parenthesis
-					// after: whitespace, comma, dot, parenthesis, question mark, or end of string
+					// after: whitespace, comma, dot, parenthesis, question mark, colon, or end of string
 					.join("|"),
 			}),
 			"iu"

@@ -15,7 +15,7 @@ main:
   - _-_on <writes>, you should call ~this.mapper.cpuWrite(address, value)~ and return_--_
   responses:
   - (*) who calls the `onLoad` method? 🤔 [who]
-  - (*) what's a <mapper>? 🗜️ [mapper]
+  - (*) what's a mapper? 🗜️ [mapper]
 
 who:
   messages:
@@ -26,7 +26,7 @@ who:
 
 mapper:
   messages:
-  - <mappers> are circuits inside the cartridge that control how the ROM data is read by the console
+  - mappers are circuits inside the cartridge that control how the ROM data is read by the console
   - each game uses a specific mapper
   - the more mappers your emulator supports, the more games are compatible 👾
   - BrokenNEEES supports the most common mappers (0-4)

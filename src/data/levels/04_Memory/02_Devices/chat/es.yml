@@ -15,7 +15,7 @@ main:
   - _-_en <escrituras>, deberías llamar a ~this.mapper.cpuWrite(address, value)~ y retornar_--_
   responses:
   - (*) ¿quién llama al método `onLoad`? 🤔 [who]
-  - (*) ¿qué es un <mapper>? 🗜️ [mapper]
+  - (*) ¿qué es un mapper? 🗜️ [mapper]
 
 who:
   messages:
@@ -26,7 +26,7 @@ who:
 
 mapper:
   messages:
-  - los <mappers> son circuitos dentro del cartucho que controlan cómo la consola lee la información del ROM
+  - los mappers son circuitos dentro del cartucho que controlan cómo la consola lee la información del ROM
   - cada juego usa un mapper específico
   - mientras más mappers admita tu emulador, más juegos serán compatibles 👾
   - BrokenNEEES soporta los mappers más comunes (0-4)
