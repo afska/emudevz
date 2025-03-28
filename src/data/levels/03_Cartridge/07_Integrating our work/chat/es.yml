@@ -6,7 +6,7 @@ main:
   messages:
   - ¡nuestro 💾  Cartucho está completo!
   - eso significa que ahora puedo parchear tu código para que BrokenNEEES use tu implementación
-  - y al menos nos desharemos del error de la <CHR-ROM> rota 🐞
+  - y al menos nos desharemos del error de la CHR-ROM rota 🐞
   - ¿lo hacemos?
   responses:
   - claro, ¡quiero intentarlo! [tryit]

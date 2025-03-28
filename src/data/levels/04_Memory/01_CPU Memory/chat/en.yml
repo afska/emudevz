@@ -25,7 +25,7 @@ io:
   - reading $4016 will read the 🎮  controller's pressed buttons
   - writing the 🖥️  PPU registers at $2000-$2007 will modify the screen
   - writing the 🔊  APU registers at $4000-$4013 will produce sounds
-  - reading $8000 will probably read the first byte of <PRG-ROM> from the 💾  cartridge
+  - reading $8000 will probably read the first byte of PRG-ROM from the 💾  cartridge
   responses:
   - ...other62
 

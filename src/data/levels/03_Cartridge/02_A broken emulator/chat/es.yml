@@ -27,7 +27,7 @@ works:
 
 bugs:
   messages:
-  - primero, el 💾  Cartucho parece empezar a leer la <CHR-ROM> desde el byte incorrecto, por lo que todos los gráficos se ven distorsionados
+  - primero, el 💾  Cartucho parece empezar a leer la CHR-ROM desde el byte incorrecto, por lo que todos los gráficos se ven distorsionados
   - el timing de la 🧠  CPU es completamente aleatorio (causando problemas de sincronización) y las instrucciones `ADC` y `BIT` fallan aleatoriamente
   - además, la 🖥️  PPU agrega ruido a la pantalla, mueve los registros de scrolling de una manera extraña y dibuja sprites en la posición incorrecta
   - por último, los canales principales de la 🔊  APU están <desafinados>, por lo que todo el sonido es basura

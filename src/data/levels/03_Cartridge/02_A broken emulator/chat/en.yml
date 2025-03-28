@@ -27,7 +27,7 @@ works:
 
 bugs:
   messages:
-  - first, the 💾  Cartridge seems to start reading <CHR-ROM> from the wrong byte, so all graphics look garbled
+  - first, the 💾  Cartridge seems to start reading CHR-ROM from the wrong byte, so all graphics look garbled
   - the 🧠  CPU timing is completely random (causing sync problems) and the `ADC` and `BIT` instructions randomly fail
   - also, the 🖥️  PPU adds screen noise, moves the scroll registers in a weird way, and draws sprites in the wrong position
   - finally, the main 🔊  APU channels are <out of tune>, so basically all sound is trash

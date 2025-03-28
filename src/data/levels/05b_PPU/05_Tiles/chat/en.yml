@@ -65,11 +65,11 @@ test:
         }
       }
       // </test>```_--_
-  - this will draw the first 240 tiles from 👾  <CHR-ROM>
+  - this will draw the first 240 tiles from 👾  CHR-ROM
   - with a ~2x~ scale (~16x16~ tiles instead of ~8x8~)
-  - ⚠️  it will <only> work on games that use 👾  <CHR-ROM> ⚠️
+  - ⚠️  it will <only> work on games that use 👾  CHR-ROM ⚠️
   responses:
-  - what happens with games that use 👾  <CHR-RAM>? [chrram]
+  - what happens with games that use 👾  CHR-RAM? [chrram]
 
 chrram:
   messages:

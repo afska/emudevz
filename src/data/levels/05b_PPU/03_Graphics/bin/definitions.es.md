@@ -4,7 +4,7 @@
 
 - 🕊️ **Tile**: Una cuadrícula de 8x8 píxeles en _escala de grises_ que representa un **patrón**. Los tiles se almacenan en 🕊️📖 `pattern tables`.
 <div class="embed-image"><img alt="Tile" src="assets/graphics/tile_grayscale.png" style="width: 30%" /></div>
-- 🕊️📖 **Pattern table**: Una lista de **tiles**, almacenada en 👾 `<CHR-ROM>` o 👾 `<CHR-RAM>` (dentro del 💾 `cartucho`, gestionada por su 🗜️ `mapper`).
+- 🕊️📖 **Pattern table**: Una lista de **tiles**, almacenada en 👾 CHR-ROM o 👾 CHR-RAM (dentro del 💾 `cartucho`, gestionada por su 🗜️ `mapper`).
 <div class="embed-image"><img alt="Pattern table" src="assets/graphics/tiles_grayscale.png" style="width: 30%" /></div>
 <hr />
 - 🏞️ **Fondo**: Una **imagen estática** detrás de los _sprites_, almacenada en una 🏞️📖 `name table`.

@@ -21,7 +21,7 @@ exercise:
   - 🤔  creo que entiendo [understand]
   - (*) ¿qué es un mapper? 🗜️ [mapper]
   - (*) ¿qué es mirroring? 🚽 [mirroring]
-  - (*) por favor, define <PRG-ROM>, <CHR-ROM>, <PRG-RAM> y <CHR-RAM> 🐏 [memories]
+  - (*) por favor, define PRG-ROM, CHR-ROM, PRG-RAM y CHR-RAM 🐏 [memories]
   - (*) ¿relleno? 🧸 [padding]
   - (*) ¿qué demonios es un "nybble"? 🦴 [nybble]
 
@@ -36,21 +36,21 @@ mapper:
 
 mirroring:
   messages:
-  - no importa demasiado por ahora
   - el mirroring define qué se va a mostrar pasado el borde derecho e inferior de la pantalla
   - dependiendo del tipo de mirroring, la PPU usará diferentes secciones de memoria para dibujar fondos 🎨
+  - no importa demasiado por ahora
   responses:
   - ...exercise
 
 memories:
   messages:
   - ok, intentaré...
-  - "🤖  <PRG-ROM>: memoria de solo lectura que contiene el programa"
-  - "👾  <CHR-ROM>: memoria de solo lectura que contiene los gráficos"
-  - "👾  <CHR-RAM>: memoria escribible para poner gráficos en tiempo de ejecución"
-  - "🔋  <PRG-RAM>: (opcional) memoria escribible para almacenar el progreso del juego"
-  - cada juego usa <CHR-ROM> o <CHR-RAM>
-  - si usa <CHR-RAM>, el archivo iNEEES no contendrá su última sección de <CHR-ROM>
+  - "🤖  PRG-ROM: memoria de solo lectura que contiene el programa"
+  - "👾  CHR-ROM: memoria de solo lectura que contiene los gráficos"
+  - "👾  CHR-RAM: memoria escribible para poner gráficos en tiempo de ejecución"
+  - "🔋  PRG-RAM: (opcional) memoria escribible para almacenar el progreso del juego"
+  - cada juego usa CHR-ROM o CHR-RAM
+  - si usa CHR-RAM, el archivo iNEEES no contendrá su última sección de CHR-ROM
   responses:
   - ...exercise
 

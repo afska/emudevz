@@ -3,7 +3,7 @@
 - Una 🕊️📖 _pattern table_ es una lista de `256` 🕊️ _tiles_ consecutivos.
 - Cada 🕊️ _tile_ ocupa `16` bytes...
 - ...por lo tanto, cada _pattern table_ es de `4096` bytes.
-- El 👾 `<CHR-ROM>` dentro del 💾 `cartucho` contiene `2` 🕊️📖 _pattern tables_.
+- El 👾 CHR-ROM dentro del 💾 `cartucho` contiene `2` 🕊️📖 _pattern tables_.
   - (eso está disponible en las direcciones PPU `$0000-$1FFF`)
 
 #### Ejemplo de pattern table

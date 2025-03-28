@@ -13,9 +13,9 @@ Un archivo iNEEES consiste de las siguientes secciones, en orden:
 
 - 🗣️ Cabecera (`16` bytes)
 - 🧸 Relleno, si existe (`0` or `512` bytes)
-- 🤖 Datos `PRG-ROM` (`16384` \* `x` bytes)
+- 🤖 Datos PRG-ROM (`16384` \* `x` bytes)
   - `x` = byte `4` de la cabecera
-- 👾 Datos `CHR-ROM` (`8192` \* `y` bytes)
+- 👾 Datos CHR-ROM (`8192` \* `y` bytes)
   - `y` = byte `5` de la cabecera
 
 ## 🗣️ Cabecera
@@ -25,9 +25,9 @@ El formato de la cabecera es el siguiente:
 <div class="embed-image" style="margin-bottom: 16px"><img alt="Header" src="assets/header.png" style="width: 75%" /></div>
 
 - `0-3`: Constante `$4E $45 $53 $1A`
-- `4`: Tamaño del 🤖 `PRG-ROM` en unidades de `16` KiB
-- `5`: Tamaño del 👾 `CHR-ROM` en unidades de `8` KiB (el valor `0` significa que la placa usa `8` KiB de 👾 `CHR-RAM`)
-- `6`: Flags 6 - 🗜️ Mapper (nybble inferior), 🚽 mirroring, 🔋 guardado de progreso (`PRG-RAM`), 🧸 relleno
+- `4`: Tamaño del 🤖 PRG-ROM en unidades de `16` KiB
+- `5`: Tamaño del 👾 CHR-ROM en unidades de `8` KiB (el valor `0` significa que la placa usa `8` KiB de 👾 CHR-RAM)
+- `6`: Flags 6 - 🗜️ Mapper (nybble inferior), 🚽 mirroring, 🔋 guardado de progreso (PRG-RAM), 🧸 relleno
 - `7`: Flags 7 - 🗜️ Mapper (nybble superior), 🧸 relleno
 - `8-15`: 🧸 Relleno sin uso
 

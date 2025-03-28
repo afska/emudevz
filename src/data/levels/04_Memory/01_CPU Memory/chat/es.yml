@@ -25,7 +25,7 @@ io:
   - leer $4016 leerá los botones presionados del 🎮  mando
   - escribir los registros de la 🖥️  PPU en $2000-$2007 modificará la pantalla
   - escribir los registros de la 🔊  APU en $4000-$4013 producirá sonidos
-  - leer $8000 probablemente leerá el primer byte de <PRG-ROM> del 💾  cartucho
+  - leer $8000 probablemente leerá el primer byte de PRG-ROM del 💾  cartucho
   responses:
   - ...other62
 

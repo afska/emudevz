@@ -3,7 +3,7 @@
 - A 🕊️📖 _pattern table_ is a list of `256` consecutive 🕊️ _tiles_.
 - Each 🕊️ _tile_ occupies `16` bytes...
 - ...so each _pattern table_ is `4096` bytes.
-- The 👾 `<CHR-ROM>` inside the 💾 `cartridge` contains `2` 🕊️📖 _pattern tables_.
+- The 👾 CHR-ROM inside the 💾 `cartridge` contains `2` 🕊️📖 _pattern tables_.
   - (that's available in PPU addresses `$0000-$1FFF`)
 
 <div class="embed-image"><img alt="Pattern table memory" src="assets/graphics/tile_bitplanes.png" style="width: 100%" /></div>

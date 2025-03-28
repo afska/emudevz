@@ -65,11 +65,11 @@ test:
         }
       }
       // </test>```_--_
-  - esto dibujará los primeros 240 tiles de 👾  <CHR-ROM>
+  - esto dibujará los primeros 240 tiles de 👾  CHR-ROM
   - con una escala de ~2x~ (tiles de ~16x16~ en lugar de ~8x8~)
-  - ⚠️  funcionará <solo> en juegos que utilicen 👾  <CHR-ROM> ⚠️
+  - ⚠️  funcionará <solo> en juegos que utilicen 👾  CHR-ROM ⚠️
   responses:
-  - ¿qué pasa con los juegos que usan 👾  <CHR-RAM>? [chrram]
+  - ¿qué pasa con los juegos que usan 👾  CHR-RAM? [chrram]
 
 chrram:
   messages:

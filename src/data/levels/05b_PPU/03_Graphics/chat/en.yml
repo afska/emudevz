@@ -8,7 +8,7 @@ main:
   - a tile is an 8x8 pixel grid
   - <{tile_grayscale.png;8x8}>
   - and 8x8 is a really small size! so one tile usually represents a part of a bigger picture
-  - they are all stored in the cartridge's 👾  <CHR-ROM> (or <CHR-RAM>)
+  - they are all stored in the cartridge's 👾  CHR-ROM (or CHR-RAM)
   - <{tiles_grayscale.png;30x30}>
   responses:
   - what about the colors? 🌈 [colors]
@@ -55,7 +55,7 @@ enough:
   - 🏞️  there's a <background> image
   - 🛸  there are multiple <sprites>
   - 🕊️  both use <tiles> to render
-  - 👾  all tiles are in <CHR-ROM> or <CHR-RAM>, with no color
+  - 👾  all tiles are in CHR-ROM or CHR-RAM, with no color
   - 🎨  color is given through <palettes>
   - 👑 🎨  palettes reference entries of a fixed 64-color <master palette>
   - "I'll write about this, with more details, here: 📄  /docs/ppu/definitions.en.md"

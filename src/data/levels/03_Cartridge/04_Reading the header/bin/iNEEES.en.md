@@ -13,9 +13,9 @@ An iNEEES file consists of the following sections, in order:
 
 - 🗣️ Header (`16` bytes)
 - 🧸 Padding, if present (`0` or `512` bytes)
-- 🤖 `PRG-ROM` data (`16384` \* `x` bytes)
+- 🤖 PRG-ROM data (`16384` \* `x` bytes)
   - `x` = byte `4` from header
-- 👾 `CHR-ROM` data (`8192` \* `y` bytes)
+- 👾 CHR-ROM data (`8192` \* `y` bytes)
   - `y` = byte `5` from header
 
 ## 🗣️ Header
@@ -25,9 +25,9 @@ The format of the header is as follows:
 <div class="embed-image" style="margin-bottom: 16px"><img alt="Header" src="assets/header.png" style="width: 75%" /></div>
 
 - `0-3`: Constant `$4E $45 $53 $1A`
-- `4`: Size of 🤖 `PRG-ROM` in `16` KiB units
-- `5`: Size of 👾 `CHR-ROM` in `8` KiB units (value `0` means the board uses `8` KiB of 👾 `CHR-RAM`)
-- `6`: Flags 6 - 🗜️ Mapper (lower nybble), 🚽 mirroring, 🔋 game saves (`PRG-RAM`), 🧸 padding
+- `4`: Size of 🤖 PRG-ROM in `16` KiB units
+- `5`: Size of 👾 CHR-ROM in `8` KiB units (value `0` means the board uses `8` KiB of 👾 CHR-RAM)
+- `6`: Flags 6 - 🗜️ Mapper (lower nybble), 🚽 mirroring, 🔋 game saves (PRG-RAM), 🧸 padding
 - `7`: Flags 7 - 🗜️ Mapper (upper nybble), 🧸 padding
 - `8-15`: 🧸 Unused padding
 

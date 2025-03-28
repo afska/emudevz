@@ -99,6 +99,13 @@ const dictionary = {
 			es:
 				"Un joystick de 8 botones (_D-pad + A,B + START,SELECT_). <br /><br />La NEEES acepta _(sin hardware extra)_ hasta dos mandos.",
 		},
+		"CHR-RAM": {
+			icon: "👾",
+			en:
+				"_(Character RAM)_ A RAM chip where some games write their graphics through code. Some cartridges use this type of memory instead of CHR-ROM.",
+			es:
+				"_(Character RAM)_ Un chip de RAM donde algunos juegos escriben sus gráficos vía código. Algunos cartuchos usan este tipo de memoria en lugar de CHR-ROM.",
+		},
 		"CHR-ROM": {
 			icon: "👾",
 			en:
