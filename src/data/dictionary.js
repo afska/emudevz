@@ -68,6 +68,13 @@ const dictionary = {
 			en: "Code written in assembly language.",
 			es: "Código escrito en lenguaje ensamblador.",
 		},
+		BrokenNEEES: {
+			icon: "🕹️",
+			en:
+				"A NEEES emulator found online. It's buggy as hell, but has a modular design, so components like Cartridge, CPU, PPU and APU can be replaced.",
+			es:
+				"Un emulador de NEEES encontrado en línea. Está lleno de bugs, pero tiene un diseño modular, por lo que se le pueden reemplazar componentes como el Cartucho, la CPU, PPU y APU.",
+		},
 		"Carry Flag": {
 			also: { es: "Bandera Carry" },
 			icon: "🏁",

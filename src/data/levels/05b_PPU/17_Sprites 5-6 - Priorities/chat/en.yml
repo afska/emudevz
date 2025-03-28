@@ -14,7 +14,7 @@ example:
   - the cloud is a <sprite> and the game title is part of the <background>
   - at some point, it covers the "TILT" and "BRO" words, while it should be behind them
   - this is because we are not using the correct sprite priorities
-  - and <BrokenNEEES> got it wrong too, so it doesn't matter which PPU you use!
+  - and BrokenNEEES got it wrong too, so it doesn't matter which PPU you use!
   responses:
   - how can we fix it? [fix]
 

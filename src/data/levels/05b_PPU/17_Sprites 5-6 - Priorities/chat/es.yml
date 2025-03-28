@@ -14,7 +14,7 @@ example:
   - la nube es un <sprite> y el título del juego es parte del <fondo>
   - llegado a un punto, cubre las palabras "TILT" y "BRO", cuando debería estar detrás de ellas
   - esto es porque no estamos usando las prioridades correctas de los sprites
-  - y <BrokenNEEES> también lo hizo mal, ¡así que no importa qué PPU uses!
+  - y BrokenNEEES también lo hizo mal, ¡así que no importa qué PPU uses!
   responses:
   - ¿cómo podemos arreglarlo? [fix]
 

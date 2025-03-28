@@ -19,7 +19,7 @@ main:
 
 who:
   messages:
-  - al cargar un juego, <BrokenNEEES> llamará a este método automáticamente ✨
+  - al cargar un juego, BrokenNEEES llamará a este método automáticamente ✨
   - para que la memoria tenga acceso al resto del hardware
   responses:
   - ...main
@@ -29,7 +29,7 @@ mapper:
   - los <mappers> son circuitos dentro del cartucho que controlan cómo la consola lee la información del ROM
   - cada juego usa un mapper específico
   - mientras más mappers admita tu emulador, más juegos serán compatibles 👾
-  - <BrokenNEEES> soporta los mappers más comunes (0-4)
+  - BrokenNEEES soporta los mappers más comunes (0-4)
   - sorprendentemente, ¡todos funcionan bien! 🤯  así que usarás esos por ahora
   - y aprenderás cómo agregar más en el capítulo de 🗜️  Mappers
   responses:

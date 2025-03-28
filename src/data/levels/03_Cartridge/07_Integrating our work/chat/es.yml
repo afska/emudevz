@@ -5,7 +5,7 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - ¡nuestro 💾  Cartucho está completo!
-  - eso significa que ahora puedo parchear tu código para que <BrokenNEEES> use tu implementación
+  - eso significa que ahora puedo parchear tu código para que BrokenNEEES use tu implementación
   - y al menos nos desharemos del error de la <CHR-ROM> rota 🐞
   - ¿lo hacemos?
   responses:

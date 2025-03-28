@@ -4,7 +4,7 @@ main:
   - tienes que empezar por algún lado 😅
   - <{architecture_unified.png;100x100}>
   - como dije anteriormente, puedes empezar a programar las cosas en cualquier orden
-  - y yo parchearé <BrokenNEEES> para que utilice partes de tu emulador...
+  - y yo parchearé BrokenNEEES para que utilice partes de tu emulador...
   run-after-messages: |
     $.goTo("components");
   responses: []
@@ -14,8 +14,8 @@ components:
   - "🧠  <CPU>: Elige esto si quieres emular conceptos que has aprendido en el capítulo de Ensamblador."
   - "🖥️  <PPU>: Elige esto si quieres ir directamente a la acción y mostrar gráficos en la pantalla."
   - "🔊  <APU>: Elige esto si tienes curiosidad por aprender cómo reproducir el sonido en los juegos."
-  - "🎮  <Mando>: Elige esto si prefieres empezar mapeando los inputs del usuario en la memoria, para que los juegos puedan leerlos. El soporte de <BrokenNEEES> para mandos funciona bien, por lo que __este capítulo es opcional__."
-  - "🗜️  <Mappers>: Elige esto si tienes la obsesión de soportar tantos juegos como sea posible. <BrokenNEEES> soporta los mappers más comunes (0-4), así que __este capítulo es opcional__."
+  - "🎮  <Mando>: Elige esto si prefieres empezar mapeando los inputs del usuario en la memoria, para que los juegos puedan leerlos. El soporte de BrokenNEEES para mandos funciona bien, por lo que __este capítulo es opcional__."
+  - "🗜️  <Mappers>: Elige esto si tienes la obsesión de soportar tantos juegos como sea posible. BrokenNEEES soporta los mappers más comunes (0-4), así que __este capítulo es opcional__."
   responses:
   - 🧠  Me gustaría empezar con la CPU [cpu]
   - 🖥️  Me gustaría empezar con el PPU [ppu]

@@ -16,7 +16,7 @@ works:
   - it fails in almost every aspect
   - tons of <bugs>
   - it's like the author was drunk or something 🙃 🔫
-  - I guess that's why they named it <BrokenNEEES>
+  - I guess that's why they named it BrokenNEEES
   - you can try it anyway...
   - 💡  drag a ROM into the TV or use one of the games in 📁  ~/roms~
   - (if you don't have any, go back and play the <👾 > chapter!)
@@ -28,7 +28,7 @@ works:
 bugs:
   messages:
   - first, the 💾  Cartridge seems to start reading <CHR-ROM> from the wrong byte, so all graphics look garbled
-  - the 🧠  CPU timing is completely random (causing sync problems) and the `BIT` instruction randomly fails
+  - the 🧠  CPU timing is completely random (causing sync problems) and the `ADC` and `BIT` instructions randomly fail
   - also, the 🖥️  PPU adds screen noise, moves the scroll registers in a weird way, and draws sprites in the wrong position
   - finally, the main 🔊  APU channels are <out of tune>, so basically all sound is trash
   - the 🎮  Controller and 🗜️  Mappers work fine, fortunately 😅
@@ -42,7 +42,7 @@ awful:
   - it's designed in a <modular> way
   - so we can reuse its components ♻️
   - that'll allow us to implement things in whatever order we want!
-  - you could start, for example, implementing the graphics (🖥️  PPU) and I can patch your emulator so it uses the 🧠  CPU and 🔊  APU from <BrokenNEEES>
+  - you could start, for example, implementing the graphics (🖥️  PPU) and I can patch your emulator so it uses the 🧠  CPU and 🔊  APU from BrokenNEEES
   - then you can continue fixing the other things at your pace
   - let's fix the 💾  Cartridge first
   responses:

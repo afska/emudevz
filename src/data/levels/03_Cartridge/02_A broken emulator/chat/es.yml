@@ -16,7 +16,7 @@ works:
   - falla en casi todos los aspectos
   - montones de <errores>
   - es como si el autor hubiera estado borracho o algo así 🙃 🔫
-  - supongo que por eso lo llamaron <BrokenNEEES>
+  - supongo que por eso lo llamaron BrokenNEEES
   - puedes probarlo de todos modos...
   - 💡  arrastra una ROM a la TV o usa uno de los juegos en 📁  ~/roms~
   - (si no tienes ninguno, ¡ve hacia atrás y juega el capítulo <👾 >!)
@@ -28,7 +28,7 @@ works:
 bugs:
   messages:
   - primero, el 💾  Cartucho parece empezar a leer la <CHR-ROM> desde el byte incorrecto, por lo que todos los gráficos se ven distorsionados
-  - el timing de la 🧠  CPU es completamente aleatorio (causando problemas de sincronización) y la instrucción `BIT` falla aleatoriamente
+  - el timing de la 🧠  CPU es completamente aleatorio (causando problemas de sincronización) y las instrucciones `ADC` y `BIT` fallan aleatoriamente
   - además, la 🖥️  PPU agrega ruido a la pantalla, mueve los registros de scrolling de una manera extraña y dibuja sprites en la posición incorrecta
   - por último, los canales principales de la 🔊  APU están <desafinados>, por lo que todo el sonido es basura
   - el 🎮  Mando y los 🗜️  Mappers funcionan bien, afortunadamente 😅
@@ -42,7 +42,7 @@ awful:
   - está diseñado de manera <modular>
   - así que podemos reutilizar sus componentes ♻️
   - ¡eso nos permitirá implementar las cosas en el orden que queramos!
-  - podrías comenzar, por ejemplo, implementando los gráficos (🖥️  PPU) y yo puedo parchear tu emulador para que use la 🧠  CPU y 🔊  APU de <BrokenNEEES>
+  - podrías comenzar, por ejemplo, implementando los gráficos (🖥️  PPU) y yo puedo parchear tu emulador para que use la 🧠  CPU y 🔊  APU de BrokenNEEES
   - luego puedes seguir arreglando las otras cosas a tu ritmo
   - vamos a arreglar el 💾  Cartucho primero
   responses:
