@@ -54,6 +54,14 @@ const dictionary = {
 			es:
 				"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
 		},
+		"APU register|APU registers": {
+			also: { es: "Registro de APU|Registros de APU" },
+			icon: "🔢",
+			en:
+				"A memory-mapped register used to control sound channels or volume. <br /><br />In the NEEES, they are mapped to addresses `$4000` - `$4013`, and `$4015` (APUControl / APUStatus).",
+			es:
+				"Un registro mapeado en memoria usado para controlar los canales de sonido o el volumen. <br /><br />En la NEEES, están mapeados en las direcciones `$4000` - `$4013`, y `$4015` (APUControl / APUStatus).",
+		},
 		Assembly: {
 			also: { es: "Ensamblador" },
 			icon: "🔨",
@@ -95,7 +103,7 @@ const dictionary = {
 			also: { es: "Mando|Mandos" },
 			icon: "🎮",
 			en:
-				"An 8-bit gamepad (_D-pad + A,B + START,SELECT_). <br /><br />The NEEES accepts _(without extra hardware)_ up to two controllers.",
+				"An 8-button gamepad (_D-pad + A,B + START,SELECT_). <br /><br />The NEEES accepts _(without extra hardware)_ up to two controllers.",
 			es:
 				"Un joystick de 8 botones (_D-pad + A,B + START,SELECT_). <br /><br />La NEEES acepta _(sin hardware extra)_ hasta dos mandos.",
 		},
@@ -244,6 +252,14 @@ const dictionary = {
 			es:
 				"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
 		},
+		"PPU register|PPU registers": {
+			also: { es: "Registro de PPU|Registros de PPU" },
+			icon: "🔢",
+			en:
+				"A memory-mapped register used to control the PPU or read its state. <br /><br />In the NEEES, they are mapped to addresses `$2000` - `$2007`, and `$4014` (OAMDMA).",
+			es:
+				"Un registro mapeado en memoria usado para controlar la PPU o leer su estado. <br /><br />En la NEEES, están mapeados en las direcciones `$2000` - `$2007`, y `$4014` (OAMDMA).",
+		},
 		"PRG-ROM": {
 			icon: "🤖",
 			en:
@@ -342,9 +358,11 @@ const dictionary = {
 						(word) =>
 							!exclude.some((it) => it.toLowerCase() === word.toLowerCase())
 					)
-					.map((it) => `(?<![^\\s(])${escapeStringRegexp(it)}(?=[\\s,.)?:]|$)`)
+					.map(
+						(it) => `(?<![^\\s(])${escapeStringRegexp(it)}(?=[\\s,.)?:'<&]|$)`
+					)
 					// before: string start, whitespace, parenthesis
-					// after: whitespace, comma, dot, parenthesis, question mark, colon, or end of string
+					// after: whitespace, comma, dot, parenthesis, question mark, colon, apostrophe, minor, ampersand, or end of string
 					.join("|"),
 			}),
 			"iu"

@@ -33,7 +33,7 @@ implement:
   messages:
   - for now, we'll just implement the first range (🐏  WRAM)
   - 📚  _-_create a `CPUMemory` class, using _--_📄 _-_ ~/tmpl/CPUMemory.js~ as template_--_
-  - 📚  _-_its constructor should receive and assign a `ram` property (a `Uint8Array` of 2048 bytes)_--_
+  - 📚  _-_its constructor should initialize a `ram` property (a `Uint8Array` of 2048 bytes)_--_
   - |-
     📚  _-_implement the first ~TODO~ of each method:_--_
     *_-_*read(address)**:_--_
