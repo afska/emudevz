@@ -11,7 +11,7 @@ main:
 cut:
   messages:
   - all arrays have a `slice(start, end)` method 🍕
-  - it extracts a subarray from `start` to `end`-1
+  - it extracts a subarray from `start` to `end-1`
   - "i.e. ```javascript [\"a\", \"b\", \"c\", \"d\"].slice(1, 3)``` returns ```javascript [\"b\", \"c\"]```"
   - (it doesn't include the element at index 3, "d")
   responses:
@@ -20,5 +20,7 @@ cut:
 morehelp:
   messages:
   - remember, the second argument is the <end> index, not a length
-  - if you want 30 bytes, starting from byte 5, you need to write ```javascript array.slice(5, 5 + 30)```
+  - |-
+    if you want 30 bytes, starting from byte 5, you need to write
+      ```javascript array.slice(5, 5 + 30)```
   responses: []
