@@ -206,6 +206,13 @@ const dictionary = {
 			es:
 				"Un número que representa una ubicación dentro de la memoria. <br /><br />En la NEEES, ocupan `2` bytes, por lo que pueden ir de `0` (`$0000`) a `65535` (`$FFFF`).",
 		},
+		Mirroring: {
+			icon: "🚽",
+			en:
+				"The mirroring type affects the screen arrangement and how the game will handle scrolling.",
+			es:
+				"El tipo de mirroring afecta la disposición de la pantalla y cómo el juego maneja el scrolling.",
+		},
 		"Most significant byte|High byte": {
 			also: {
 				es: "Byte más significativo|High byte",
