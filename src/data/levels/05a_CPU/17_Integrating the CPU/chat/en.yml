@@ -5,7 +5,7 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - now I'm gonna integrate your 🧠  CPU into the emulator
-  - this is a REALLY complex task
+  - this is a <REALLY> complex task
   - so it might take a while
   - tell me and I'll do it, whenever you want
   responses:
@@ -37,6 +37,7 @@ done:
     book.unlock("useCPU");
   messages:
   - ✅  done!
+  - <! 🧠  CPU integrated.
   - now, the 🧠  icon in the emulator will glow ✨
   - try running some games! you'll notice a big improvement
   - the timing should be more consistent, and you won't face any bugs that affect game logic

@@ -31,6 +31,7 @@ done:
     book.unlock("useCartridge");
   messages:
   - ✅  done!
+  - <! 💾  Cartridge integrated.
   - now, the 💾  icon in the emulator will glow ✨
   - you can toggle between your implementation and the broken one by clicking on it
   - try opening some games, they will look waaay better 😉

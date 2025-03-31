@@ -183,6 +183,13 @@ const dictionary = {
 			es:
 				"Una imagen completa dibujada en la pantalla, compuesta por múltiples scanlines. <br /><br />En la NEEES, mide 256×240 píxeles, y la PPU renderiza 60 por segundo.",
 		},
+		"Frame buffer": {
+			icon: "🔢",
+			en:
+				"A block of memory that stores the color of each pixel on the screen. It's where the frame image is built before being displayed.",
+			es:
+				"Un bloque de memoria que almacena el color de cada píxel en pantalla. Es donde se construye la imagen del frame antes de mostrarse.",
+		},
 		HBlank: {
 			icon: "🏝️",
 			en:

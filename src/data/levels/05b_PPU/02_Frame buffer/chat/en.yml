@@ -3,7 +3,7 @@ main:
   run: |
     {{Top}}.load("frameBuffer.png");
   messages:
-  - we'll store our image data in something called <frame buffer>
+  - we'll store our image data in something called frame buffer
   - it's basically a big array with the color of each pixel
   - each element is a 32-bit number __$aabbggrr__
   - "\"aa\" represents the opacity (in our NEEES it's always $FF)"
@@ -46,6 +46,7 @@ done:
     book.unlock("usePPU");
   messages:
   - ✅  done!
+  - <! 🖥️  PPU integrated.
   - now, the 🖥️  icon in the emulator will glow ✨
   - as there's almost no PPU code, nothing will be shown for now
   - but we'll get there!
