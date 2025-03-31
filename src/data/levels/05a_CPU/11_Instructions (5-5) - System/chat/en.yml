@@ -13,12 +13,12 @@ main:
 interrupt:
   messages:
   - it's a signal that interrupts the current program in order to handle a specific event
-  - when such an event happens, the CPU saves its state ([PC] and flags) in the stack
+  - when such an event happens, the CPU saves its state ([PC] and flags register) in the stack
   - and jumps to a well-known memory location (called "vector") associated with that event
   - "in the NEEES, there are 3 events:"
   - "🔁  <RESET>: Triggered when the system is turned on"
   - "📹  <NMI>: Triggered when the PPU finishes drawing a frame"
-  - "✋  <IRQ>: Triggered after a `BRK` instruction"
+  - "✋  <IRQ>: Triggered by a `BRK` instruction, the APU, or external hardware like mappers"
   responses:
   - can you give me an example? 🤔 [example]
 
@@ -28,7 +28,7 @@ example:
   - you need to move your sprites when the PPU finishes rendering its current frame, to avoid doing it while it's drawing (causing glitches 💥 )
   - so, you put your sprite moving code in -for example- address $90CC
   - that will be the location of your <interrupt handler>
-  - and then you "subscribe" to the <NMI> event by placing a pointer to $90CC in <NMI>'s vector (which is $FFFA/B)
+  - and then you "subscribe" to the <NMI> event by placing a pointer to $90CC in <NMI>'s vector (which is ~$FFFA/B~)
   - (in Little Endian, so $FFFA holds $CC and $FFFB holds $90)
   responses:
   - what would happen when an <NMI> occurs? [nmi]
@@ -38,13 +38,13 @@ nmi:
   - "in this example, when the <NMI> is triggered, the CPU will:"
   - 🧱  push [PC] and the flags onto the stack
   - 🏁  set ~I=1~, which disables user interrupts
-  - 🧱  grab the value $90CC by reading $FFFA and $FFFB (<NMI>'s vector)
+  - 🐏  grab the value $90CC by reading $FFFA and $FFFB (<NMI>'s vector)
   - 🦘  jump to $90CC
   - 🚲  consume 7 cycles while doing all this
   - then, the interrupt handler will move the sprites and run `RTI` ("Return from Interrupt") to restore the previous state
   responses:
   - (*) what about the 7-cycle stuff? 🚲 [cycle]
-  - (*) what's the purpose of the I flag? 🏁 [iflag]
+  - (*) what's the purpose of the ~I~ flag? 🏁 [iflag]
   - great! I think I'm ready to implement it 😎 [implement]
 
 cycle:
@@ -90,9 +90,11 @@ implement:
         (remember that you have a ~read16(...)~ method for that)_--_
       *_-_*->** returns 7_--_
   responses:
-  - and BRK? [brk]
+  - and ~BRK~? [brk]
 
 brk:
   messages:
-  - 📚  _-_you can implement the `BRK` instruction just by calling `cpu.interrupt(interrupts.IRQ, true)`_--_
+  - |-
+    📚  _-_you can implement the `BRK` instruction just by calling
+      ```javascript cpu.interrupt(interrupts.IRQ, true)```_--_
   responses: []

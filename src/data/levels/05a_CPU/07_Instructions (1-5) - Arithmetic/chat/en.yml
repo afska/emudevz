@@ -22,6 +22,7 @@ howmany:
   responses:
   - I need help moving bits 😅 [bits]
   - I need help updating the ~Z~ and ~N~ flags 😅 [flags]
+  - understood [end]
 
 bits:
   messages:

@@ -13,12 +13,12 @@ main:
 interrupt:
   messages:
   - es una señal que interrumpe el programa actual para manejar un evento específico
-  - cuando tal evento ocurre, la CPU guarda su estado ([PC] y banderas) en la pila
+  - cuando tal evento ocurre, la CPU guarda su estado ([PC] y registro de banderas) en la pila
   - y salta a una dirección de memoria conocida (llamada "vector") asociada a ese evento
   - "en la NEEES, hay 3 eventos:"
   - "🔁  <RESET>: Disparado cuando el sistema se enciende"
   - "📹  <NMI>: Disparado cuando la PPU termina de dibujar un frame"
-  - "✋  <IRQ>: Disparado luego de una instrucción `BRK`"
+  - "✋  <IRQ>: Disparado por una instrucción `BRK`, la APU, o hardware externo como mappers"
   responses:
   - ¿puedes darme un ejemplo? 🤔 [example]
 
@@ -28,7 +28,7 @@ example:
   - necesitas mover tus sprites cuando la PPU termina de renderizar su frame actual, para evitar hacerlo mientras está dibujando (causando glitches 💥 )
   - así que, pones tu código que mueve sprites en -por ejemplo- la dirección $90CC
   - esa será la ubicación de tu <manejador de interrupciones>
-  - y luego te "suscribes" al evento <NMI> poniendo un puntero a $90CC en el vector de <NMI> (que es $FFFA/B)
+  - y luego te "suscribes" al evento <NMI> poniendo un puntero a $90CC en el vector de <NMI> (que es ~$FFFA/B~)
   - (en Little Endian, por lo que $FFFA guarda $CC y $FFFB guarda $90)
   responses:
   - ¿qué pasaría cuando un <NMI> ocurre? [nmi]
@@ -38,13 +38,13 @@ nmi:
   - "en este ejemplo, cuando un <NMI> es disparado, la CPU:"
   - 🧱  pone [PC] y las banderas en la pila
   - 🏁  asigna ~I=1~, que desactiva las interrupciones del usuario
-  - 🧱  toma el valor $90CC de leer $FFFA y $FFFB (el vector de <NMI>)
+  - 🐏  toma el valor $90CC de leer $FFFA y $FFFB (el vector de <NMI>)
   - 🦘  salta a $90CC
   - 🚲  consume 7 ciclos haciendo todo esto
   - luego, el manejador de interrupciones moverá los sprites y ejecutará `RTI` ("Return from Interrupt") para restaurar el estado anterior
   responses:
   - (*) ¿qué es eso de los 7 ciclos? 🚲 [cycle]
-  - (*) ¿cuál es el propósito de la bandera I? 🏁 [iflag]
+  - (*) ¿cuál es el propósito de la bandera ~I~? 🏁 [iflag]
   - ¡genial! creo que ya podría implementarlo 😎 [implement]
 
 cycle:
@@ -90,9 +90,11 @@ implement:
         _-_(recuerda que tienes un método ~read16(...)~ para eso)_--_
       *_-_*->** retorna 7_--_
   responses:
-  - ¿y BRK? [brk]
+  - ¿y ~BRK~? [brk]
 
 brk:
   messages:
-  - 📚  _-_puedes implementar la instrucción `BRK` solo llamando `cpu.interrupt(interrupts.IRQ, true)`_--_
+  - |-
+    📚  _-_puedes implementar la instrucción `BRK` solo llamando
+      ```javascript cpu.interrupt(interrupts.IRQ, true)```_--_
   responses: []

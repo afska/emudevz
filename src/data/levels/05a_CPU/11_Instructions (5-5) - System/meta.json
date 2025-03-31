@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "🧙‍♂️ Instructions (5/5): System (interrupts)",
-		"es": "🧙‍♂️ Instrucciones (5/5): Sistema (interrupciones)"
+		"en": "🧙 Instructions (5/5): System (interrupts)",
+		"es": "🧙 Instrucciones (5/5): Sistema (interrupciones)"
 	},
 	"ui": {
 		"run": "copy.js",
