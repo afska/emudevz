@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - as you saw in the Assembly chapter, there's also a 🏁  <Flags> register that represents the processor status
+  - as you saw in the Assembly chapter, there's also a 🏁  Flags Register that represents the processor status
   - |-
     it's an 8-bit register, in which each bit has a special meaning:
      ```raw _______________________________```
@@ -9,7 +9,7 @@ main:
     ```raw |---|---|---|---|---|---|---|---|```
     ```raw |``` ~N~ ```raw |``` ~V~ ```raw |``` ```raw 1``` ```raw |``` ```raw b``` ```raw |``` ~D~ ```raw |``` ~I~ ```raw |``` ~Z~ ```raw |``` ~C~ ```raw |```
      ```raw ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾```
-  - we already covered C ("Carry") and Z ("Zero") in the past, and we'll talk about the others when we start coding CPU instructions
+  - we already covered ~C~ ("Carry") and ~Z~ ("Zero") in the past, and we'll talk about the others when we start coding CPU instructions
   - all flags are represented by an uppercase letter
   responses:
   - not <all> of them 😑 [notall]
@@ -35,7 +35,7 @@ what:
       *_-_*->** should return an 8-bit number with all the flags_--_
     *_-_*setValue(value)**:_--_
       *_-_*->** should assign all the flags from the received 8-bit number_--_
-  - _-_i.e. with ~i~ and ~v~ on, ```javascript getValue()``` should return ```javascript 0b01100100```_--_
+  - _-_i.e. with ~i~ and ~v~ set, ```javascript getValue()``` should return ```javascript 0b01100100```_--_
   - _-_and ```javascript setValue(0b00000010)``` should set all booleans to ~false~, except for ~z~_--_
   responses:
   - (*) I need a bit of help 📐 [bits]
@@ -44,8 +44,8 @@ what:
 bits:
   messages:
   - 📄  ~/lib/byte.js~ comes to the rescue 🙌
-  - to build the value on ```javascript getValue()```, use `bitfield`
-  - to get the flags on ```javascript setValue(value)```, use `getFlag`
+  - to build the value on ```javascript getValue()```, use `bitfield(...)`
+  - to get the flags on ```javascript setValue(value)```, use `getFlag(...)`
   responses:
   - ...what
 

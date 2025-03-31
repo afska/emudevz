@@ -39,7 +39,7 @@ relative:
   - they use the "Two's component" notation, which is explained briefly in 📄  ~/lib/byte.js~
   - for example, if the offset is ~-3~, you would receive a 253
   - you can convert that 253 to ~-3~ using the `toS8` method
-  - 💡  also, to check for page crossing events, you will need `highByteOf`
+  - 💡  also, to check for page crossing events, you will need `highByteOf(...)`
   responses:
   - ...letscode
 

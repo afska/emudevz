@@ -90,7 +90,7 @@ bits:
   messages:
   - if you don't know how to operate with bits, you can use my library 📖
   - it's in 📄  ~/lib/byte.js~, just import it as another module and use it
-  - the methods you'd want to use are `getFlag`, `highNybbleOf`, `lowNybbleOf`, and `buildU8`
+  - the methods you'd want to use are `getFlag(...)`, `highNybbleOf(...)`, `lowNybbleOf(...)`, and `buildU8(...)`
   responses:
   - how can I use the module? [import]
 

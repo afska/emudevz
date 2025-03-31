@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - como viste en el capítulo de Ensamblador, también existe un registro 🏁  <Flags> que representa el estado del procesador
+  - como viste en el capítulo de Ensamblador, también existe un 🏁  Registro de Banderas que representa el estado del procesador
   - |-
     es un registro de 8 bits, en el cual cada bit tiene un significado especial
      ```raw _______________________________```
@@ -9,7 +9,7 @@ main:
     ```raw |---|---|---|---|---|---|---|---|```
     ```raw |``` ~N~ ```raw |``` ~V~ ```raw |``` ```raw 1``` ```raw |``` ```raw b``` ```raw |``` ~D~ ```raw |``` ~I~ ```raw |``` ~Z~ ```raw |``` ~C~ ```raw |```
      ```raw ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾```
-  - ya cubrimos C ("Carry") y Z ("Zero") anteriormente, y hablaremos de los demás cuando empecemos a programar instrucciones de CPU
+  - ya cubrimos ~C~ ("Carry") y ~Z~ ("Zero") anteriormente, y hablaremos de los demás cuando empecemos a programar instrucciones de CPU
   - todas las banderas se representan con una letra en mayúscula
   responses:
   - no <todas> 😑 [notall]
@@ -44,8 +44,8 @@ what:
 bits:
   messages:
   - 📄  ~/lib/byte.js~ al rescate 🙌
-  - para construir el valor en ```javascript getValue()```, usa `bitfield`
-  - para obtener las banderas en ```javascript setValue(value)```, usa `getFlag`
+  - para construir el valor en ```javascript getValue()```, usa `bitfield(...)`
+  - para obtener las banderas en ```javascript setValue(value)```, usa `getFlag(...)`
   responses:
   - ...what
 

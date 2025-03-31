@@ -39,7 +39,7 @@ relative:
   - usan la notación "Two's component", que está explicada brevemente en 📄  ~/lib/byte.js~
   - por ejemplo, si el desplazamiento es ~-3~, recibirías un 253
   - puedes convertir ese 253 en ~-3~ usando el método `toS8`
-  - 💡  además, para detectar si se cruza de página, vas a necesitar `highByteOf`
+  - 💡  además, para detectar si se cruza de página, vas a necesitar `highByteOf(...)`
   responses:
   - ...letscode
 

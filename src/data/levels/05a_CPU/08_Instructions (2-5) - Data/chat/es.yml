@@ -10,7 +10,8 @@ main:
 
 php:
   messages:
-  - ¡ese lenguaje apesta! 🧦
+  - ¿eh?
+  - ¿la gente todavía usa ese lenguaje?
   responses:
   - no, me refiero a la instrucción [inst]
 

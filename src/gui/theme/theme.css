@@ -132,6 +132,7 @@ code {
 
 .dictionary-link {
 	color: #bdbfc9;
+	-webkit-user-drag: none;
 }
 
 .dictionary-link:hover {

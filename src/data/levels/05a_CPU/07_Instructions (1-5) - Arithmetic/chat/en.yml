@@ -17,24 +17,24 @@ howmany:
   - 📚  _-_create an object following the same format as the example_--_
   - 📚  _-_implement all of the 16 arithmetic instructions on it_--_
   - 📚  _-_and export it under the `instructions` key in _--_📄 _-_ ~/code/index.js~_--_
-  - _-_you need docs regarding what should each instruction do_--_
+  - _-_you need docs regarding what each instruction should do_--_
   - _-_so check out _--_📄 _-_ ~/docs/cpu/instructions.en.md~_--_
   responses:
   - I need help moving bits 😅 [bits]
-  - I need help updating the Z and N flags 😅 [flags]
+  - I need help updating the ~Z~ and ~N~ flags 😅 [flags]
 
 bits:
   messages:
   - use the ~<<~ operator to move bits to the left, and ~>>~ to move bits to the right
   - for example
-  - ~0b00001100 << 1~ would produce ~0b00011000~
-  - and ~0b01000001 >> 1~ would produce ~0b00100000~
+  - "```javascript 0b00001100 << 1``` would produce ```javascript 0b00011000```"
+  - and ```javascript 0b01000001 >> 1``` would produce ```javascript 0b00100000```
   responses:
   - that's how you shift bits, what about rotation? [rotation]
 
 rotation:
   messages:
-  - to rotate bits to the right (let's say, ~0b00000001 >> 1~), you have to put bit 0 (which gets lost after the shift) in the last position (bit 7) 
+  - to rotate bits to the right (let's say, ```javascript 0b00000001 >> 1```), you have to put bit 0 (which gets lost after the shift) in the last position (bit 7) 
   - |-
     so, if you have a `number`, you can do:
       ```javascript byte.setBit(number >> 1, 7, byte.getBit(number, 0))```

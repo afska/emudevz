@@ -164,8 +164,10 @@ const dictionary = {
 			es:
 				"Un formato que describe un cartucho de NEEES. Contiene su código (PRG-ROM), gráficos (CHR-ROM), y un header con metadatos.",
 		},
-		"Instruction|Instructions": {
-			also: { es: "Instrucción|Instrucciones" },
+		"Instruction|Instructions|CPU instruction|CPU instructions": {
+			also: {
+				es: "Instrucción|Instrucciones|Instrucción de CPU|Instrucciones de CPU",
+			},
 			icon: "📖",
 			en:
 				"A command that tells the CPU to do something, like adding numbers or jumping to another part of the program.",

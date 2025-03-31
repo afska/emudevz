@@ -86,7 +86,7 @@ implement:
         _-_(otherwise, the value is pushed as is)_--_
       *_-_*->** advances 7 cycles (~this.cycle += 7~)_--_
       *_-_*->** sets ~I=1~ in the flags register_--_
-      *_-_*->** sets [PC] = the result of reading the addresses ~interrupt.vector~ and ~interrupt.vector+1~ in Little Endian_--_
+      *_-_*->** sets [PC] = the result of reading the addresses ~interrupt.vector~ and ~interrupt.vector+1~ in <Little Endian>_--_
         (remember that you have a ~read16(...)~ method for that)_--_
       *_-_*->** returns 7_--_
   responses:

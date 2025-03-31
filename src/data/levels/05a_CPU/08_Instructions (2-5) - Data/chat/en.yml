@@ -10,7 +10,8 @@ main:
 
 php:
   messages:
-  - that language sucks! 🧦
+  - eh?
+  - do people still use that language?
   responses:
   - no, I mean the instruction [inst]
 

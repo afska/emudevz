@@ -86,7 +86,7 @@ implement:
         _-_(de lo contrario, se agrega tal cual está)_--_
       *_-_*->** avanza 7 ciclos (~this.cycle += 7~)_--_
       *_-_*->** asigna ~I=1~ en el registro de banderas_--_
-      *_-_*->** asigna [PC] = al resultado de leer las direcciones ~interrupt.vector~ y ~interrupt.vector+1~ en Little Endian_--_
+      *_-_*->** asigna [PC] = al resultado de leer las direcciones ~interrupt.vector~ y ~interrupt.vector+1~ en <Little Endian>_--_
         _-_(recuerda que tienes un método ~read16(...)~ para eso)_--_
       *_-_*->** retorna 7_--_
   responses:
