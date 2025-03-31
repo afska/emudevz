@@ -320,7 +320,7 @@ const dictionary = {
 			<span
 				style={{ textAlign: "center" }}
 				dangerouslySetInnerHTML={{
-					__html: `<h5 class="dictionary-entry">${icon} ${name}</h5>\n${html}`,
+					__html: `<h5 class="dictionary-entry-name">${icon} ${name}</h5>\n${html}`,
 				}}
 			/>
 		);
@@ -359,9 +359,9 @@ const dictionary = {
 							!exclude.some((it) => it.toLowerCase() === word.toLowerCase())
 					)
 					.map(
-						(it) => `(?<![^\\s(])${escapeStringRegexp(it)}(?=[\\s,.)?:'<&]|$)`
+						(it) => `(?<![^\\s(>])${escapeStringRegexp(it)}(?=[\\s,.)?:'<&]|$)`
 					)
-					// before: string start, whitespace, parenthesis
+					// before: string start, whitespace, parenthesis, major
 					// after: whitespace, comma, dot, parenthesis, question mark, colon, apostrophe, minor, ampersand, or end of string
 					.join("|"),
 			}),

@@ -120,8 +120,14 @@ body {
 
 /* Dictionary entries */
 
-.dictionary-entry {
+.dictionary-entry-name {
 	color: #d4d5de;
+}
+
+code {
+	.dictionary-link {
+		color: inherit;
+	}
 }
 
 .dictionary-link {
