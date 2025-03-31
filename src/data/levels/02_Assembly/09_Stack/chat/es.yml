@@ -14,7 +14,7 @@ main:
   - la longitud actual de la pila es medida por el "Stack Pointer" ([SP])
   - en un procesador 6502, vive en la memoria entre $0100 y $01FF 🐏
   - "[SP] inicialmente es $FF, que apunta al último byte de la pila ($01FF)"
-  - cuando un byte se agrega a la pila, [SP] pasa a ser $FE (o ubicación de memoria $01FE), y así
+  - cuando un byte se agrega a la pila, [SP] pasa a ser $FE (o dirección de memoria $01FE), y así
   - aquí hay un ejemplo de una pila con 2 valores (en $01FF y $01FE), por lo que [SP] apunta a $01FD
   - <{stack.png}>
   responses:

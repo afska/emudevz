@@ -164,7 +164,7 @@ sta:
     set((m) => m.$canRun = true);
   messages:
   - STA significa "STore Accumulator"
-  - y como puedes ver, escribe el contenido de [A] en una ubicación de memoria
+  - y como puedes ver, escribe el contenido de [A] en una dirección de memoria
   - en este ejemplo, en la dirección $4070
   - así que ahora la celda $4070 del <Visor de Memoria> tiene un $01
   - intenta ejecutar las instrucciones restantes ⏩

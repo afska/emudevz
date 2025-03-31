@@ -29,7 +29,7 @@ then:
   messages:
   - una vez que cargas algo en un registro, puedes hacer lo que tú quieras
   - algo común es <mutar> el valor y copiarlo a otro registro
-  - ¡o a otra ubicación de memoria! 🐏
+  - ¡o a otra dirección de memoria! 🐏
   - "`INX`, por ejemplo, incrementa el valor en [X]"
   responses:
   - ¿puedo probarlo? [tryit]

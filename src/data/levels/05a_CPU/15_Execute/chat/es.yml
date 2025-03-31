@@ -36,7 +36,7 @@ rightway:
   - |-
     📚  _-_primero, vamos a agregar estos métodos a tu `CPU`:_--_
     *_-_*_fetchOperation()**:_--_
-      *_-_*->** lee un byte de la ubicación de memoria apuntada por [PC]_--_
+      *_-_*->** lee un byte de la dirección de memoria apuntada por [PC]_--_
         _-_(llamemos a esto ~opcode~)_--_
       *_-_*->** encuentra la operación relacionada con ese opcode:_--_
         _-_~this.operations[opcode]~_--_
@@ -45,7 +45,7 @@ rightway:
       *_-_*->** incrementa [PC]_--_
       *_-_*->** retorna ~operation~_--_
     *_-_*_fetchInput(operation)**:_--_
-      *_-_*->** lee 0, 1 (usando ~read(...)~) o 2 bytes (usando ~read16(...)~) de la ubicación de memoria apuntada por [PC], dependiendo de ~operation.addressingMode.inputSize~_--_
+      *_-_*->** lee 0, 1 (usando ~read(...)~) o 2 bytes (usando ~read16(...)~) de la dirección de memoria apuntada por [PC], dependiendo de ~operation.addressingMode.inputSize~_--_
         _-_(llamemos a esto ~input~)_--_
       *_-_*->** incrementa [PC] (0, 1, o 2 veces) para saltear esos bytes_--_
       *_-_*->** retorna ~input~ (o ~null~)_--_

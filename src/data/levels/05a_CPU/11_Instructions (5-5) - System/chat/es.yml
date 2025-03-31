@@ -12,9 +12,10 @@ main:
 
 interrupt:
   messages:
-  - es una señal que interrumpe el programa actual para manejar un evento específico
+  - es una señal que pausa el programa actual para manejar un evento específico
   - cuando tal evento ocurre, la CPU guarda su estado ([PC] y registro de banderas) en la pila
-  - y salta a una dirección de memoria conocida (llamada "vector") asociada a ese evento
+  - y salta a una dirección de memoria conocida (llamada vector) asociada a ese evento
+  - luego de manejar el evento, la ejecución suele continuar desde donde se interrumpió
   - "en la NEEES, hay 3 eventos:"
   - "🔁  <RESET>: Disparado cuando el sistema se enciende"
   - "📹  <NMI>: Disparado cuando la PPU termina de dibujar un frame"

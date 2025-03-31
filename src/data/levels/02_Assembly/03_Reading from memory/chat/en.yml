@@ -29,7 +29,7 @@ then:
   messages:
   - once you load something into a register, you can do whatever you want
   - a common thing to do is <mutating> the value and copying it to another register
-  - or another memory location! 🐏
+  - or another memory address! 🐏
   - "`INX`, for example, increments the value on [X]"
   responses:
   - can I try it? [tryit]

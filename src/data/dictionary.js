@@ -135,6 +135,17 @@ const dictionary = {
 			es:
 				"Una bandera almacenada usando un bit dentro del Registro de Banderas.",
 		},
+		"CPU interrupt|CPU interrupts|Interrupt|Interrupts": {
+			also: {
+				es:
+					"Interrupción de CPU|Interrupciones de CPU|Interrupción|Interrupciones",
+			},
+			icon: "✋",
+			en:
+				"A signal that pauses the current program in order to handle a specific events. <br /><br />When such an event happens, the CPU saves its state ([PC] and flags register) in the stack and jumps to the vector associated with that event. <br /><br />After handling the event, the execution usually returns to where it was left off.",
+			es:
+				"Una señal que pausa el programa actual para manejar un evento específico. <br /><br />Cuando tal evento ocurre, la CPU guarda su estado ([PC] y registro de banderas) en la pila y salta al vector asociado con ese evento. <br /><br />Luego de manejar el evento, la ejecución suele continuar desde donde se interrumpió.",
+		},
 		"CPU register|CPU registers|Register|Registers": {
 			also: { es: "Registro de CPU|Registros de CPU|Registro|Registros" },
 			icon: "🔢",
@@ -163,6 +174,16 @@ const dictionary = {
 				"A format that describes a NEEES cartridge. It contains its code (PRG-ROM), graphics (CHR-ROM), and a metadata header.",
 			es:
 				"Un formato que describe un cartucho de NEEES. Contiene su código (PRG-ROM), gráficos (CHR-ROM), y un header con metadatos.",
+		},
+		"Interrupt vector|Vector": {
+			also: {
+				es: "Vector de interrupción|Vector",
+			},
+			icon: "🔢",
+			en:
+				"A well-known memory address associated with an event that triggers an interrupt.",
+			es:
+				"Una dirección de memoria conocida asociada a un evento que dispara una interrupción.",
 		},
 		"Instruction|Instructions|CPU instruction|CPU instructions": {
 			also: {

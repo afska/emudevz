@@ -14,7 +14,7 @@ main:
   - the current stack depth is measured by the "Stack Pointer" ([SP])
   - in a 6502 processor, it lives in memory between $0100 and $01FF 🐏
   - "[SP] is initially $FF, which points to the last stack byte ($01FF)"
-  - when a byte is pushed onto the stack, [SP] becomes $FE (or memory location $01FE), and so on
+  - when a byte is pushed onto the stack, [SP] becomes $FE (or memory address $01FE), and so on
   - here's an example of a stack with 2 values (in $01FF and $01FE), so [SP] points to $01FD
   - <{stack.png}>
   responses:
