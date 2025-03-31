@@ -12,7 +12,7 @@ main:
 cycles:
   messages:
   - and I will!
-  - the time it takes for the CPU to execute an action is measured in <cycles>
+  - the time it takes for the CPU to execute an action is measured in cycles
   - cycles are very important if we want to build a "cycle-accurate" emulator (we don't!)
   - but they still matter to keep the different units (CPU, PPU, APU) on sync 🔄
   - so every opcode knows how many cycles it should take

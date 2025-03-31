@@ -176,6 +176,20 @@ const dictionary = {
 			en: "A CPU register used to store multiple CPU flags.",
 			es: "Un registro de CPU usado para almacenar múltiples banderas de CPU.",
 		},
+		"Frame|Frames": {
+			icon: "🖼️",
+			en:
+				"A full image drawn on the screen, made of multiple scanlines. <br /><br />In the NEEES, it's 256×240 pixels, and the PPU renders 60 of them per second.",
+			es:
+				"Una imagen completa dibujada en la pantalla, compuesta por múltiples scanlines. <br /><br />En la NEEES, mide 256×240 píxeles, y la PPU renderiza 60 por segundo.",
+		},
+		HBlank: {
+			icon: "🏝️",
+			en:
+				"Short period after each scanline is drawn, where the PPU is idle before starting the next one.",
+			es:
+				"Período corto después de dibujar cada scanline, donde la PPU queda inactiva antes de comenzar la siguiente.",
+		},
 		iNEEES: {
 			icon: "📝",
 			en:
@@ -291,6 +305,13 @@ const dictionary = {
 			es:
 				"Un registro mapeado en memoria usado para controlar la PPU o leer su estado. <br /><br />En la NEEES, están mapeados en las direcciones `$2000` - `$2007`, y `$4014` (OAMDMA).",
 		},
+		"Pre-line": {
+			icon: "🌠",
+			en:
+				'A non-visible scanline where the PPU gets things ready for the upcoming frame. Also called "_scanline -1_".',
+			es:
+				'Una scanline no visible en la que la PPU prepara todo para el próximo frame. También se la llama "_scanline -1_".',
+		},
 		"PRG-ROM": {
 			icon: "🤖",
 			en:
@@ -305,6 +326,13 @@ const dictionary = {
 			es:
 				"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
 		},
+		"Scanline|Scanlines": {
+			icon: "🌠",
+			en:
+				"A single horizontal line of pixels drawn on the screen. The PPU draws one scanline at a time, from top to bottom, until the whole frame is complete.",
+			es:
+				"Una línea horizontal de píxeles dibujada en la pantalla. La PPU dibuja una scanline a la vez, de arriba hacia abajo, hasta completar todo el frame.",
+		},
 		Stack: {
 			also: { es: "Pila" },
 			icon: "🧱",
@@ -312,6 +340,13 @@ const dictionary = {
 				"A LIFO _(Last In, First Out)_ structure which programs can use to store values. The current depth is measured by [SP]. <br /><br />In the NEEES, the stack lives in WRAM between addresses `$0100` and `$01FF`.",
 			es:
 				"Una estructura LIFO _(Last In, First Out)_ que los programas usan para almacenar valores. La longitud actual es medida por el [SP]. <br /><br />En la NEEES, la pila vive en WRAM entre las direcciones `$0100` y `$01FF`.",
+		},
+		VBlank: {
+			icon: "🏝️",
+			en:
+				"Longer period after the last scanline of a frame, where the PPU is idle before starting a new frame. It's the best time to update graphics safely.",
+			es:
+				"Período más largo después de la última scanline de un frame, donde la PPU queda inactiva antes de comenzar uno nuevo. Es el mejor momento para actualizar gráficos sin problemas.",
 		},
 		VRAM: {
 			icon: "🐏",
@@ -390,10 +425,10 @@ const dictionary = {
 							!exclude.some((it) => it.toLowerCase() === word.toLowerCase())
 					)
 					.map(
-						(it) => `(?<![^\\s(>])${escapeStringRegexp(it)}(?=[\\s,.)?:'<&]|$)`
+						(it) => `(?<![^\\s(>])${escapeStringRegexp(it)}(?=[\\s,.)?!:'<&]|$)`
 					)
 					// before: string start, whitespace, parenthesis, major
-					// after: whitespace, comma, dot, parenthesis, question mark, colon, apostrophe, minor, ampersand, or end of string
+					// after: whitespace, comma, dot, parenthesis, question mark, exclamation mark, colon, apostrophe, minor, ampersand, or end of string
 					.join("|"),
 			}),
 			"iu"

@@ -12,7 +12,7 @@ main:
 cycles:
   messages:
   - ¡y lo haré!
-  - el tiempo que le toma a la CPU ejecutar una acción se mide en <ciclos>
+  - el tiempo que le toma a la CPU ejecutar una acción se mide en ciclos
   - los ciclos son muy importantes si queremos construir un emulador "cycle-accurate" (¡no queremos!)
   - pero igualmente sirven para mantener las diferentes unidades (CPU, PPU, APU) en sincronía 🔄
   - por lo que cada opcode sabe cuántos ciclos debería tomar

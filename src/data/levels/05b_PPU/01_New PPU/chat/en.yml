@@ -14,15 +14,15 @@ main:
 wdym:
   messages:
   - 📈  the NEEES generates a 60FPS video signal
-  - 🖼️  each <frame> is a 256x240 image (think of it as a pixel grid)
-  - 🌠  a <scanline> would be one row of that grid
-  - 🚲  oh, and each scanline takes 341 PPU <cycles> to render
+  - 🖼️  each frame is a ~256x240~ image (think of it as a pixel grid)
+  - 🌠  a scanline would be one row of that grid
+  - 🚲  oh, and each scanline takes 341 PPU cycles to render
   responses:
   - and... what's a cycle? 🚲 [cycles]
 
 cycles:
   messages:
-  - each operation that the PPU does takes a certain amount of time, which we measure in <cycles>
+  - each operation that the PPU does takes a certain amount of time, which we measure in cycles
   - these are just fractions of a second, and a lot happens in a single cycle!
   - the PPU can read or write data, or even draw a pixel on the screen 🎨
   responses:
@@ -51,8 +51,8 @@ vblank_hblank:
   run: |
     {{Top}}.load("rendering.png");
   messages:
-  - during each scanline (after it has drawn all the pixels), it gets a small break known as the Horizontal Blank, or <HBlank>
-  - and at the end of all visible scanlines, it gets a longer break, the Vertical Blank, or <VBlank> 🏝️
+  - during each scanline (after it has drawn all the pixels), it gets a small break known as the Horizontal Blank, or HBlank
+  - and at the end of all visible scanlines, it gets a longer break, the Vertical Blank, or VBlank 🏝️
   - during these periods, the PPU isn't drawing any pixels, and that gives the program a chance to update the screen
   responses:
   - got it, what's next? [next]
@@ -79,7 +79,7 @@ next:
 
 minus1:
   messages:
-  - the scanline ~-1~ (also called <pre-line>) is a non-visible line, in which the PPU gets things ready for the upcoming frame
+  - the scanline ~-1~ (also called pre-line) is a non-visible line, in which the PPU gets things ready for the upcoming frame
   - during this time, it resets some important status flags
   - more on that later! 🔜
   responses: []

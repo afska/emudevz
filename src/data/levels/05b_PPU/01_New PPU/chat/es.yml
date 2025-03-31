@@ -14,15 +14,15 @@ main:
 wdym:
   messages:
   - 📈  la NEEES genera una señal de video de 60FPS
-  - 🖼️  cada <frame> es una imagen de 256x240 (piensa en ello como una cuadrícula de píxeles)
-  - 🌠  una <scanline> sería una fila de esa cuadrícula
-  - 🚲  ah, y cada scanline toma 341 <ciclos> de PPU para renderizar
+  - 🖼️  cada frame es una imagen de ~256x240~ (piensa en ello como una cuadrícula de píxeles)
+  - 🌠  una scanline sería una fila de esa cuadrícula
+  - 🚲  ah, y cada scanline toma 341 ciclos de PPU para renderizar
   responses:
   - ¿y... qué es un ciclo? 🚲 [cycles]
 
 cycles:
   messages:
-  - cada operación que hace la PPU toma cierta cantidad de tiempo, que medimos en <ciclos>
+  - cada operación que hace la PPU toma cierta cantidad de tiempo, que medimos en ciclos
   - estos duran solo fracciones de segundo, ¡y pasan varias cosas en un ciclo!
   - la PPU puede leer o escribir datos, o incluso dibujar un píxel en la pantalla 🎨
   responses:
@@ -51,8 +51,8 @@ vblank_hblank:
   run: |
     {{Top}}.load("rendering.png");
   messages:
-  - durante cada scanline (después de haber dibujado todos los píxeles), hay un pequeño descanso conocido como Horizontal Blank, o <HBlank>
-  - y al final de todas las scanlines visibles, hay un descanso más largo, el Vertical Blank, o <VBlank> 🏝️
+  - durante cada scanline (después de haber dibujado todos los píxeles), hay un pequeño descanso conocido como Horizontal Blank, o HBlank
+  - y al final de todas las scanlines visibles, hay un descanso más largo, el Vertical Blank, o VBlank 🏝️
   - durante estos períodos, la PPU no está dibujando ningún píxel, y eso da la oportunidad al programa de actualizar la pantalla
   responses:
   - entendido, ¿qué sigue? [next]
@@ -79,7 +79,7 @@ next:
 
 minus1:
   messages:
-  - la scanline ~-1~ (también llamada <pre-line>) es una línea no visible, en la que la PPU prepara las cosas para el próximo frame
+  - la scanline ~-1~ (también llamada pre-line) es una línea no visible, en la que la PPU prepara las cosas para el próximo frame
   - durante este tiempo, reinicia algunas banderas de estado importantes
   - ¡más sobre esto después! 🔜
   responses: []
