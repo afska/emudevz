@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - remember the <addressing modes> from the assembly chapter?
+  - remember the addressing modes from the assembly chapter?
   - <{compilation_full.png}>
   - well... it's time to emulate them 😏
   - I made a quick reference for you
@@ -13,11 +13,11 @@ explain:
   messages:
   - yeah
   - you can see every addressing mode has an <input> and an <output>
-  - ⬅️  the <input> is the operation's argument (what follows the opcode, remember?)
+  - ⬅️  the <input> is the operation's argument (what follows the opcode inside the machine code, remember?)
   - in `JMP ($4080)` the <input> would be $4080
   - ➡️  the <output> is what the instructions end up actually receiving
   - (the `address` argument in your `JMP` instruction's `run(...)` function)
-  - in this case, the <output> would be the result of performing a 16-bit read to address $4080
+  - in this case, the <output> would be the result of performing a <16-bit read> from address $4080
   responses:
   - ✅  ok, let's code this [letscode]
 
@@ -31,6 +31,7 @@ letscode:
   responses:
   - help me with the "Relative" mode 😅 [relative]
   - help me with the "Indirect" mode 😅 [indirect]
+  - ok [end]
 
 relative:
   messages:

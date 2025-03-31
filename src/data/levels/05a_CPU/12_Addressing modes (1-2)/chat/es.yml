@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - ¿recuerdas los <modos de direccionamiento> del capítulo de ensamblador?
+  - ¿recuerdas los modos de direccionamiento del capítulo de ensamblador?
   - <{compilation_full.png}>
   - bueno... es hora de emularlos 😏
   - hice una guía rápida para ti
@@ -13,11 +13,11 @@ explain:
   messages:
   - seh
   - puedes ver que cada modo de direccionamiento tiene una <entrada> y una <salida>
-  - ⬅️  la <entrada> es el argumento de la operación (lo que sigue después del opcode, ¿recuerdas?)
+  - ⬅️  la <entrada> es el argumento de la operación (lo que sigue después del opcode dentro del código máquina, ¿recuerdas?)
   - en `JMP ($4080)` la <entrada> sería $4080
   - ➡️  la <salida> es lo que las instrucciones terminan recibiendo en realidad
   - (el argumento `address` en la función `run(...)` de tu instrucción `JMP`)
-  - en este caso, la <salida> sería el resultado de realizar una lectura de 16 bits a la dirección $4080
+  - en este caso, la <salida> sería el resultado de realizar una <lectura de 16 bits> a la dirección $4080
   responses:
   - ✅  ok, programemos esto [letscode]
 
@@ -31,6 +31,7 @@ letscode:
   responses:
   - ayúdame con el modo "Relative" 😅 [relative]
   - ayúdame con el modo "Indirect" 😅 [indirect]
+  - ok [end]
 
 relative:
   messages:

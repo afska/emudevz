@@ -9,7 +9,6 @@ main:
   - if this was a weird game in which you have to code an emulator
   - this would be a <final boss> 👹
   - ~NEEEStest~ is a homebrew that thoroughly tests CPU operation
-  - it was created by someone called <kevtris>
   - I'll run your emulator and log every instruction
   - "comparing each line against the following \"golden log\":"
   - 📄  ~/roms/_test/golden.log~
@@ -40,13 +39,13 @@ pageboundary:
     });
   messages:
   - ah... the <page boundary bug> 😅
+  - I totally forgot about it!
   responses:
   - the what? [thewhat]
 
 thewhat:
   messages:
   - there's a bug in how the NEEES processes the "Indirect" addressing mode
-  - and I totally forgot about it!
   responses:
   - a bug in the hardware?! 🤔 [hardware]
 

@@ -181,6 +181,6 @@ export default {
 	volume: "Volume",
 	win_games_here_to_unlock_roms: "Win games here to unlock new ROMs",
 	yes: "Yes",
-	your_cpu_rocks: "Your CPU rocks!",
+	your_cpu_works: "Your CPU works!",
 	your_emulator: "Your emulator",
 };

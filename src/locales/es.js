@@ -189,6 +189,6 @@ export default {
 	win_games_here_to_unlock_roms:
 		"Gana juegos aquí para desbloquear nuevas ROMs",
 	yes: "Sí",
-	your_cpu_rocks: "¡Tu CPU es genial!",
+	your_cpu_works: "¡Tu CPU funciona!",
 	your_emulator: "Tu emulador",
 };

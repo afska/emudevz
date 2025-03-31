@@ -99,14 +99,6 @@ const dictionary = {
 			es:
 				"Una pieza de hardware removible que contiene todos los chips del juego, como PRG-ROM, CHR-ROM, PRG-RAM, y el Mapper.",
 		},
-		"Controller|Controllers": {
-			also: { es: "Mando|Mandos" },
-			icon: "🎮",
-			en:
-				"An 8-button gamepad (_D-pad + A,B + START,SELECT_). <br /><br />The NEEES accepts _(without extra hardware)_ up to two controllers.",
-			es:
-				"Un joystick de 8 botones (_D-pad + A,B + START,SELECT_). <br /><br />La NEEES acepta _(sin hardware extra)_ hasta dos mandos.",
-		},
 		"CHR-RAM": {
 			icon: "👾",
 			en:
@@ -120,6 +112,14 @@ const dictionary = {
 				"_(Character ROM)_ A ROM chip that contains the game graphics, inside the cartridge.",
 			es:
 				"_(Character ROM)_ Un chip de ROM que contiene los gráficos del juego, dentro del cartucho.",
+		},
+		"Controller|Controllers": {
+			also: { es: "Mando|Mandos" },
+			icon: "🎮",
+			en:
+				"An 8-button gamepad (_D-pad + A,B + START,SELECT_). <br /><br />The NEEES accepts _(without extra hardware)_ up to two controllers.",
+			es:
+				"Un joystick de 8 botones (_D-pad + A,B + START,SELECT_). <br /><br />La NEEES acepta _(sin hardware extra)_ hasta dos mandos.",
 		},
 		CPU: {
 			icon: "🧠",
@@ -153,6 +153,14 @@ const dictionary = {
 				"A small, fast storage location inside the CPU used to hold data temporarily (like numbers, memory addresses, or results of operations) while it's working. <br /><br />In the NEEES, each register can hold a single byte (`8` bits) of data, with the exception of [PC] which is `2` bytes wide.",
 			es:
 				"Una ubicación pequeña y de rápido acceso dentro de la CPU usada para almacenar datos temporalmente (como números, direcciones de memoria, o resultados de operaciones) mientras está operando. <br /><br />En la NEEES, cada registro puede almacenar un solo byte (`8` bits) de datos, con la excepción de [PC] que ocupa `2` bytes.",
+		},
+		"Cycle|Cycles": {
+			also: { es: "Ciclo|Ciclos" },
+			icon: "🚲",
+			en:
+				"A unit used to measure time in the system. The CPU, PPU, and APU all do work cycle by cycle. <br /><br />The duration of a cycle depends on the speed of each unit.",
+			es:
+				"Una unidad usada para medir el tiempo en el sistema. La CPU, la PPU y la APU hacen su trabajo ciclo a ciclo. <br /><br />La duración de un ciclo depende de la velocidad de cada unidad.",
 		},
 		"Flag|Flags": {
 			also: { es: "Bandera|Banderas" },

@@ -9,7 +9,6 @@ main:
   - si esto fuera un juego extraño en el que tienes que programar un emulador
   - este sería un <jefe final> 👹
   - ~NEEEStest~ es un homebrew que prueba exhaustivamente el funcionamiento de la CPU
-  - fue creado por alguien llamado <kevtris>
   - ejecutaré tu emulador y registraré cada instrucción
   - "comparando cada línea con el siguiente \"golden log\":"
   - 📄  ~/roms/_test/golden.log~
@@ -40,13 +39,13 @@ pageboundary:
     });
   messages:
   - ah... el <page boundary bug> 😅
+  - ¡me olvidé completamente de él!
   responses:
   - ¿el qué? [thewhat]
 
 thewhat:
   messages:
   - hay un bug en cómo la NEEES procesa el modo de direccionamiento "Indirect"
-  - ¡y me olvidé completamente de él!
   responses:
   - ¡¿un bug en el hardware?! 🤔 [hardware]
 

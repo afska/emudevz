@@ -22,7 +22,7 @@ howmany:
   responses:
   - necesito ayuda para mover bits 😅 [bits]
   - necesito ayuda para actualizar las banderas ~Z~ y ~N~ 😅 [flags]
-  - entendido [end]
+  - ok [end]
 
 bits:
   messages:
