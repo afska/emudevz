@@ -20,22 +20,9 @@ export default class EmulatorBuilder {
 
 	async build(withLastCode = false) {
 		let mainModule = null;
+		let CPUMemory = null;
 		let PPU = null;
 		let APU = null;
-
-		if (!this.hardware) {
-			mainModule = await this._evaluate(withLastCode);
-			PPU = mainModule.PPU;
-			APU = mainModule.APU;
-			if (withLastCode && this.withUserPPU && this.withUsePartialPPU) {
-				const partialModule = await this._evaluate(false);
-				PPU = partialModule.PPU;
-			}
-			if (withLastCode && this.withUserAPU && this.withUsePartialAPU) {
-				const partialModule = await this._evaluate(false);
-				APU = partialModule.APU;
-			}
-		}
 
 		const useCPUMemory = !!(
 			this.withUserCPU ||
@@ -47,8 +34,26 @@ export default class EmulatorBuilder {
 			this.customAPU
 		);
 
+		if (!this.hardware) {
+			mainModule = await this._evaluate(withLastCode);
+			CPUMemory = mainModule.CPUMemory;
+			PPU = mainModule.PPU;
+			APU = mainModule.APU;
+
+			if (withLastCode && this.withUserPPU && this.withUsePartialPPU) {
+				const partialModule = await this._evaluate(false);
+				CPUMemory = partialModule.CPUMemory;
+				PPU = partialModule.PPU;
+			}
+			if (withLastCode && this.withUserAPU && this.withUsePartialAPU) {
+				const partialModule = await this._evaluate(false);
+				CPUMemory = partialModule.CPUMemory;
+				APU = partialModule.APU;
+			}
+		}
+
 		return BrokenNEEES({
-			CPUMemory: useCPUMemory ? mainModule.CPUMemory : undefined,
+			CPUMemory: useCPUMemory ? CPUMemory : undefined,
 			Cartridge: this.withUserCartridge ? mainModule.Cartridge : undefined,
 			CPU: this.withUserCPU ? mainModule.CPU : undefined,
 			PPU:
