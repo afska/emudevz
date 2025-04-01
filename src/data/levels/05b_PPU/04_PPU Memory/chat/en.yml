@@ -9,7 +9,7 @@ main:
 
 howso:
   messages: 
-  - the PPU has its own separate 16 KiB <address space>, specifically designed to fetch the 🕊️  tiles, 🏞️  backgrounds, and 🎨  palettes
+  - the PPU has its own separate 16 KiB address space, specifically designed to fetch the 🕊️  tiles, 🏞️  backgrounds, and 🎨  palettes
   - check out 📄  ~/docs/ppu/ppu_memory.en.md~
   - most of the time, it will use these addresses
   - and it will only use the CPU addresses as a bridge to communicate with the CPU

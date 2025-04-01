@@ -1,7 +1,7 @@
 main:
   messages:
   - games also define, at runtime, how the sprites should look 🛸
-  - they do so by writing a table called <OAM> ("Object Attribute Memory")
+  - they do so by writing a table called OAM ("Object Attribute Memory")
   - this table lives in an <internal> memory region called 🐏  OAM RAM
   responses:
   - how can a game write to 🐏  OAM RAM? [how]

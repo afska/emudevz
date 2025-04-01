@@ -9,7 +9,7 @@ main:
 
 howso:
   messages:
-  - la PPU tiene su propio <espacio de direcciones> de 16 KiB, diseñado específicamente para buscar los 🕊️  tiles, 🏞️  fondos y 🎨  paletas
+  - la PPU tiene su propio espacio de direcciones de 16 KiB, diseñado específicamente para buscar los 🕊️  tiles, 🏞️  fondos y 🎨  paletas
   - revisa 📄  ~/docs/ppu/ppu_memory.es.md~
   - la mayoría del tiempo, utilizará estas direcciones
   - y solo usará las direcciones de la CPU como un puente para comunicarse con la CPU

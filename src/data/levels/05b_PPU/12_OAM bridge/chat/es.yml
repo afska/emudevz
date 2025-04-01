@@ -1,7 +1,7 @@
 main:
   messages:
   - los juegos también definen, en tiempo de ejecución, cómo deben lucir los sprites 🛸
-  - lo hacen escribiendo una tabla llamada <OAM> ("Object Attribute Memory")
+  - lo hacen escribiendo una tabla llamada OAM ("Object Attribute Memory")
   - esta tabla se encuentra en una región de memoria <interna> llamada 🐏  OAM RAM
   responses:
   - ¿cómo puede un juego escribir en 🐏  OAM RAM? [how]

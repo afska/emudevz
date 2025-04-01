@@ -40,6 +40,14 @@ const dictionary = {
 			es:
 				"_(Contador de Programa)_ Un registro de CPU usado para almacenar la dirección de la próxima instrucción a ejecutar.",
 		},
+		"Address space": {
+			also: { es: "Espacio de direcciones" },
+			icon: "🐏",
+			en:
+				'The full range of memory addresses a component is able to access directly. <br /><br />In the NEEES, the CPU and the PPU each have their own address space. <br /><br />We differentiate these two spaces by saying `"CPU address $xxxx"` or `"PPU address $xxxx"`.',
+			es:
+				'El rango completo de direcciones de memoria que un componente puede acceder directamente. <br /><br />En la NEEES, tanto la CPU como la PPU tienen su propio espacio de direcciones. <br /><br />Distinguimos estos espacios diciendo `"dirección CPU $xxxx"` o `"dirección PPU $xxxx"`.',
+		},
 		"Addressing mode|Addressing modes": {
 			also: { es: "Modo de direccionamiento|Modos de direccionamiento" },
 			icon: "📍",
@@ -141,6 +149,14 @@ const dictionary = {
 				"The _Central Processing Unit_. It reads games' code and executes their instructions.",
 			es:
 				"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
+		},
+		"CPU address|CPU addresses": {
+			also: { es: "Dirección CPU|Direcciones CPU" },
+			icon: "🐏",
+			en:
+				"A memory address seen from the CPU's address space. <br /><br />In the NEEES, the CPU can access addresses from `$0000` to `$FFFF` (`64` KiB).",
+			es:
+				"Una dirección de memoria vista desde el espacio de direcciones de la CPU. <br /><br />En la NEEES, la CPU puede acceder a direcciones entre `$0000` y `$FFFF` (`64` KiB).",
 		},
 		"CPU flag|CPU flags": {
 			also: { es: "Bandera de CPU|Banderas de CPU" },
@@ -286,6 +302,14 @@ const dictionary = {
 			es:
 				"Un número que representa una ubicación dentro de la memoria. <br /><br />En la NEEES, ocupan `2` bytes, por lo que pueden ir de `0` (`$0000`) a `65535` (`$FFFF`).",
 		},
+		"Memory bus|Memory buses": {
+			also: { es: "Bus de memoria|Buses de memoria" },
+			icon: "🚌",
+			en:
+				"The set of connections that link components to memory, enabling them to read or write data.",
+			es:
+				"El conjunto de conexiones que enlaza los componentes con la memoria, permitiéndoles leer o escribir datos.",
+		},
 		Mirroring: {
 			icon: "🚽",
 			en:
@@ -321,6 +345,13 @@ const dictionary = {
 			es:
 				"_(Object Attribute Memory)_ Una lista de sprites, almacenada en OAM RAM.",
 		},
+		"OAM RAM": {
+			icon: "🐏",
+			en:
+				"A dedicated RAM area used to store the contents of OAM. <br /><br />In the NEEES, it's `256` bytes and holds all the sprite data.",
+			es:
+				"Una RAM dedicada usada para almacenar el contenido de OAM. <br /><br />En la NEEES, son `256` bytes que contienen todos los datos de los sprites.",
+		},
 		"Opcode|Opcodes": {
 			icon: "🔢",
 			en:
@@ -334,6 +365,13 @@ const dictionary = {
 			en: "A list of color indexes, stored in Palette RAM.",
 			es: "Una lista de índices de colores, almacenada en Palette RAM.",
 		},
+		"Palette RAM": {
+			icon: "🐏",
+			en:
+				"A small RAM area used to store palettes. <br /><br />In the NEEES, it holds `32` bytes for background and sprite color indexes.",
+			es:
+				"Una pequeña área de RAM usada para almacenar paletas. <br /><br />En la NEEES, contiene 32 bytes para los índices de color de fondo y sprites.",
+		},
 		"Pattern table|Pattern tables": {
 			icon: "🕊️📖",
 			en: "A list of tiles stored in CHR-ROM or CHR-RAM.",
@@ -345,6 +383,14 @@ const dictionary = {
 				"The _Picture Processing Unit_. It draws graphics by putting pixels on the screen.",
 			es:
 				"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
+		},
+		"PPU address|PPU addresses": {
+			also: { es: "Dirección PPU|Direcciones PPU" },
+			icon: "🐏",
+			en:
+				"A memory address seen from the PPU's address space. <br /><br />In the NEEES, valid addresses go from `$0000` to `$3FFF`, with many regions being mirrored.",
+			es:
+				"Una dirección de memoria vista desde el espacio de direcciones de la PPU. <br /><br />En la NEEES, las direcciones válidas van de `$0000` a `$3FFF`, con muchas regiones espejadas.",
 		},
 		"PPU register|PPU registers": {
 			also: { es: "Registro de PPU|Registros de PPU" },
@@ -381,6 +427,13 @@ const dictionary = {
 				"A single horizontal line of pixels drawn on the screen. The PPU draws one scanline at a time, from top to bottom, until the whole frame is complete.",
 			es:
 				"Una línea horizontal de píxeles dibujada en la pantalla. La PPU dibuja una scanline a la vez, de arriba hacia abajo, hasta completar todo el frame.",
+		},
+		Scrolling: {
+			icon: "📜",
+			en:
+				"A PPU feature that allows developers to move the background by adjusting the visible portion of the name table.",
+			es:
+				"Una función de la PPU que permite a los desarrolladores mover el fondo ajustando la porción visible de la name table.",
 		},
 		"Sprite|Sprites": {
 			icon: "🛸",
