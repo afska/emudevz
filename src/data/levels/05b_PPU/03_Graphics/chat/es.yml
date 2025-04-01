@@ -4,20 +4,20 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - ¡una breve introducción a los gráficos de NEEES! 🖌️
-  - todos los gráficos están compuestos de 🕊️  <tiles>
+  - todos los gráficos están compuestos de 🕊️  tiles
   - un tile es una cuadrícula de 8x8 píxeles
   - <{tile_grayscale.png;8x8}>
   - ¡y 8x8 es un tamaño realmente pequeño! así que un tile generalmente representa una parte de una imagen más grande
-  - todos están almacenados en la 👾  CHR-ROM (o CHR-RAM) del cartucho
+  - todos están almacenados en 🕊️ 📖  pattern tables, dentro de la 👾  CHR-ROM (o CHR-RAM) del cartucho
   - <{tiles_grayscale.png;30x30}>
   responses:
   - ¿y qué hay de los colores? 🌈 [colors]
 
 colors:
   messages:
-  - los tiles pueden usar 4 colores (2 bits por píxel), pero no saben qué <colores reales> tendrán
+  - los tiles pueden usar 4 colores (~2~ bits por píxel), pero no saben qué <colores reales> tendrán
   - solo saben que un píxel determinado es del "color 0", "color 1", "color 2" o "color 3"
-  - el color se agrega en tiempo de ejecución mediante el uso de 🎨  <paletas>, que definen qué debe ser cada color
+  - el color se agrega en tiempo de ejecución mediante el uso de 🎨  paletas, que definen qué debe ser cada color
   - "después de aplicar una paleta, los tiles pueden verse así:"
   - <{tile.png;8x8}>
   - <{tiles.png;30x30}>
@@ -29,13 +29,13 @@ anycolor:
   - bueno... no 😅
   - la NEEES solo puede mostrar 64 colores diferentes bien definidos
   - <{colors.png}>
-  - así que cada paleta hace referencia a entradas de este catálogo, conocido como la <paleta maestra>
+  - así que cada paleta hace referencia a entradas de este catálogo, conocido como la paleta maestra
   responses:
   - cuéntame más sobre los tiles 👀 [moreabouttiles]
 
 moreabouttiles:
   messages:
-  - un frame está formado por un 🏞️  <fondo> y múltiples 🛸  <sprites>
+  - un frame está formado por un 🏞️  fondo y múltiples 🛸  sprites
   - <{full.png;30x30}>
   - 🏞️  el fondo es estático, pero los juegos pueden moverlo mediante scrolling
   - <{background.png;30x30}>
@@ -52,12 +52,12 @@ enough:
   - analizaremos las estructuras de memoria para tiles, fondos y sprites más tarde
   - pero ahora ya tienes una idea de cómo se organizan los gráficos en la pantalla ✨
   - "aquí dejo un resumen..."
-  - 🏞️  hay una imagen de <fondo>
-  - 🛸  hay múltiples <sprites>
-  - 🕊️  ambos usan <tiles> para renderizar
+  - 🏞️  hay una imagen de fondo
+  - 🛸  hay múltiples sprites
+  - 🕊️  ambos usan tiles para renderizar
   - 👾  todos los tiles están en CHR-ROM o CHR-RAM, sin color
-  - 🎨  el color se da a través de <paletas>
-  - 👑 🎨  las paletas hacen referencia a entradas de una <paleta maestra> de 64 colores fijos
+  - 🎨  el color se da a través de paletas
+  - 👑 🎨  las paletas hacen referencia a entradas de una paleta maestra de 64 colores fijos
   - "escribiré sobre esto, con más detalles, aquí: 📄  /docs/ppu/definitions.es.md"
   responses:
   - genial [end]

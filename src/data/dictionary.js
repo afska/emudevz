@@ -76,6 +76,20 @@ const dictionary = {
 			en: "Code written in assembly language.",
 			es: "Código escrito en lenguaje ensamblador.",
 		},
+		"Attribute table|Attribute tables": {
+			icon: "🖍️📖",
+			en:
+				"A map of palette indexes for backgrounds, stored at the end of each name table.",
+			es:
+				"Un mapa de índices de paleta para fondos, almacenado al final de cada name table.",
+		},
+		"Background|Backgrounds": {
+			also: { es: "Fondo|Fondos" },
+			icon: "🏞️",
+			en: "A static image behind the sprites, stored in a name table.",
+			es:
+				"Una imagen estática detrás de los sprites, almacenada en una name table.",
+		},
 		BrokenNEEES: {
 			icon: "🕹️",
 			en:
@@ -256,6 +270,12 @@ const dictionary = {
 			es:
 				"Un chip en el cartucho que extiende lo que la consola puede hacer, como agregar más bancos de PRG-ROM o CHR-ROM, o proporcionar funciones como cambiar el tipo de mirroring.",
 		},
+		"Master palette": {
+			also: { es: "Paleta maestra" },
+			icon: "👑🎨",
+			en: "A list of 64 colors, hardcoded.",
+			es: "Una lista de 64 colores, hardcodeada.",
+		},
 		"Memory address|Memory addresses|Address|Addresses": {
 			also: {
 				es: "Dirección de memoria|Direcciones de memoria|Dirección|Direcciones",
@@ -283,6 +303,11 @@ const dictionary = {
 			es:
 				"El byte con el valor posicional más alto en un número multibyte. <br /><br />Por ejemplo, el MSB de `$AB15` es `$AB`.",
 		},
+		"Name table|Name tables": {
+			icon: "🏞️📖",
+			en: "A map of tile indexes for backgrounds, stored in VRAM.",
+			es: "Un mapa de índices de tiles para fondos, almacenado en VRAM.",
+		},
 		NEEES: {
 			icon: "🕹️",
 			en:
@@ -290,12 +315,29 @@ const dictionary = {
 			es:
 				"La pieza de hardware que estamos tratando de emular. La gente piensa que significa _'No Entiendo' El Entretenimiento Saludable_.",
 		},
+		OAM: {
+			icon: "🛸📖",
+			en: "_(Object Attribute Memory)_ A list of sprites, stored in OAM RAM.",
+			es:
+				"_(Object Attribute Memory)_ Una lista de sprites, almacenada en OAM RAM.",
+		},
 		"Opcode|Opcodes": {
 			icon: "🔢",
 			en:
 				"_(Operation code)_ A number that, inside the machine code, represents an instruction code. <br /><br />In the NEEES, it defines both the instruction and the addressing mode.",
 			es:
 				"_(Código de operación)_ Un número que, dentro del código máquina, define un código de instrucción. <br /><br />En la NEEES, define tanto la instrucción como el modo de direccionamiento.",
+		},
+		"Palette|Palettes": {
+			also: { es: "Paleta|Paletas" },
+			icon: "🎨",
+			en: "A list of color indexes, stored in Palette RAM.",
+			es: "Una lista de índices de colores, almacenada en Palette RAM.",
+		},
+		"Pattern table|Pattern tables": {
+			icon: "🕊️📖",
+			en: "A list of tiles stored in CHR-ROM or CHR-RAM.",
+			es: "Una lista de tiles almacenada en CHR-ROM o CHR-RAM.",
 		},
 		PPU: {
 			icon: "🖥️",
@@ -340,6 +382,13 @@ const dictionary = {
 			es:
 				"Una línea horizontal de píxeles dibujada en la pantalla. La PPU dibuja una scanline a la vez, de arriba hacia abajo, hasta completar todo el frame.",
 		},
+		"Sprite|Sprites": {
+			icon: "🛸",
+			en:
+				"A game object on top (or behind!) of the background that can be moved or flipped, stored in OAM. It can use one tile (`8×8` sprite) or two (`8×16` sprite).",
+			es:
+				"Un objeto del juego encima (¡o detrás!) del fondo que puede ser movido o volteado, almacenado en OAM. Puede usar un tile (sprite de `8×8`) o dos (sprite de `8×16`).",
+		},
 		Stack: {
 			also: { es: "Pila" },
 			icon: "🧱",
@@ -347,6 +396,13 @@ const dictionary = {
 				"A LIFO _(Last In, First Out)_ structure which programs can use to store values. The current depth is measured by [SP]. <br /><br />In the NEEES, the stack lives in WRAM between addresses `$0100` and `$01FF`.",
 			es:
 				"Una estructura LIFO _(Last In, First Out)_ que los programas usan para almacenar valores. La longitud actual es medida por el [SP]. <br /><br />En la NEEES, la pila vive en WRAM entre las direcciones `$0100` y `$01FF`.",
+		},
+		"Tile|Tiles": {
+			icon: "🕊️",
+			en:
+				"An 8×8 grayscale pixel grid that represents a pattern. Tiles are stored in pattern tables.",
+			es:
+				"Una cuadrícula de 8×8 píxeles en escala de grises que representa un patrón. Los tiles se almacenan en pattern tables.",
 		},
 		VBlank: {
 			icon: "🏝️",

@@ -2,7 +2,7 @@
 
 - Una 🛸📖 _OAM table_ es un array de `64` 🛸 _entradas OAM_.
 - Cada 🛸 _entrada OAM_ representa un _sprite_ y ocupa `4` bytes.
-- La 🐏 `OAM RAM` contiene la _OAM table_ completa (`256` bytes).
+- La 🐏 OAM RAM contiene la _OAM table_ completa (`256` bytes).
   - (solo puede ser accedida via 🏠 `OAMAddr` / 📝 `OAMData` / ⚡ `OAMDMA`)
 - Si el bit `5` de 🎛️ `PPUCtrl` (_altura de sprites_) está encendido, los sprites se renderizan en modo `8x16` en lugar de `8x8`.
 

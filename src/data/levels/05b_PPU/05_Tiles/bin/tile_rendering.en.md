@@ -3,7 +3,7 @@
 - A 🕊️📖 _pattern table_ is a list of `256` consecutive 🕊️ _tiles_.
 - Each 🕊️ _tile_ occupies `16` bytes...
 - ...so each _pattern table_ is `4096` bytes.
-- The 👾 CHR-ROM inside the 💾 `cartridge` contains `2` 🕊️📖 _pattern tables_.
+- The 👾 CHR-ROM inside the 💾 cartridge contains `2` 🕊️📖 _pattern tables_.
   - (that's available in PPU addresses `$0000-$1FFF`)
 
 <div class="embed-image"><img alt="Pattern table memory" src="assets/graphics/tile_bitplanes.png" style="width: 100%" /></div>
@@ -15,8 +15,7 @@
 #### Rendering
 
 - A 🕊️ _tile_ is an 8x8 _grayscale_ pixel grid.
-- Those pixels are indexes of 🎨 _palette entries_...
-- ...so each pixel can be either `0`, `1`, `2` or `3`.
+- Those pixels can be `0`, `1`, `2` or `3` depending on their color.
   - (in binary: `00`, `01`, `10` or `11`)
 
 To encode the pixels, the `16` bytes of the tile data are divided in **two** `8-byte` **bitplanes** (<strong style="color: #7723ec">low plane</strong> and <strong style="color: #4eeebf">high plane</strong>).

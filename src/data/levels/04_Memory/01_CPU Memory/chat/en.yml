@@ -3,7 +3,7 @@ main:
   messages:
   - let's quickly recap the NEEES memory scheme
   - the CPU has 2 KiB of RAM 🐏
-  - but memory addresses range from $0000 to $FFFF (65535)
+  - but memory addresses range from $0000 to $FFFF (~65535~)
   - so the full addressable space would be 64 KiB
   responses:
   - if only 2 KiB are actual RAM, what's in the other 62 KiB? 🤨 [other62]

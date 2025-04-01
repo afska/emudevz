@@ -4,7 +4,7 @@
 - Since the screen resolution is `256x240`, and each 🕊️ _tile_ is `8x8` pixels, these `32x30` tiles cover the whole screen area ✨.
 - Each 🕊️ _tile index_ occupies `1` byte, and there are `64` bytes of 🖍️ _color metadata_ at the end of the name table.
 - So, each _name table_ totals `1024` bytes (`32*30*1 + 64`).
-- The 🐏 `VRAM` contains `2` 🏞️📖 _name tables_.
+- The 🐏 VRAM contains `2` 🏞️📖 _name tables_.
   - (that's available in PPU addresses `$2000-$27FF`)
 
 <div class="embed-image"><img alt="Name table memory" src="assets/graphics/name_tables.png" style="width: 100%" /></div>
@@ -53,7 +53,7 @@
 
 - A 🎨 _palette_ is an array of `4` 🖍️ _color indexes_ (`0-63`), pointing to the hardcoded 👑🎨 `master palette`.
 - Each 🖍️ _color index_ occupies `1` byte, so each 🎨 _palette_ totals `4` bytes.
-- The 🐏 `Palette RAM` contains `4` palettes for backgrounds, and `4` palettes for sprites.
+- The 🐏 Palette RAM contains `4` palettes for backgrounds, and `4` palettes for sprites.
   - (background palettes are available in PPU addresses `$3F00-$3F0F`)
 
 <div class="embed-image"><img alt="Palette RAM" src="assets/graphics/palette_ram.png" style="width: 100%" /></div>

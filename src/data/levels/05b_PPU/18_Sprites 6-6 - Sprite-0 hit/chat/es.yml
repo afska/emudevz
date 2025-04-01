@@ -1,7 +1,7 @@
 main:
   messages:
   - el hardware tiene un mecanismo para detectar colisiones entre el primer sprite en OAM (sprite 0) y el fondo
-  - se llama <sprite-0 hit>, y se activa cuando un píxel opaco de <sprite 0> se superpone a un píxel opaco del <fondo>
+  - se llama <sprite-0 hit>, y se activa cuando un píxel opaco de <sprite 0> se superpone a un píxel opaco del fondo
   - cuando eso ocurre, la PPU establece la bandera de sprite-0 hit en 📊  `PPUStatus` y los juegos pueden leerla
   responses:
   - ¿para qué se utiliza? [usage]

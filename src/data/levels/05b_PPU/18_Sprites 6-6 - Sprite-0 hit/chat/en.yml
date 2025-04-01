@@ -1,7 +1,7 @@
 main:
   messages:
   - the hardware has a mechanism to detect collisions between the first sprite in OAM (sprite 0) and the background
-  - it's called the <sprite-0 hit>, and it's triggered when an opaque pixel of <sprite 0> overlaps an opaque pixel of the <background>
+  - it's called the <sprite-0 hit>, and it's triggered when an opaque pixel of <sprite 0> overlaps an opaque pixel of the background
   - when that happens, the PPU sets the sprite-0 hit flag in 📊  `PPUStatus` and games can read it
   responses:
   - what's it used for? [usage]

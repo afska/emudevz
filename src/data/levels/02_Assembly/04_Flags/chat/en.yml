@@ -74,7 +74,7 @@ flags:
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
-  - it's a boolean (1-bit value) set by the processor
+  - it's a boolean (~1~-bit value) set by the processor
   - it gives information about the previous instruction
   - there are 6 flags, so they all live in a single byte
   - (that byte is called flags register)

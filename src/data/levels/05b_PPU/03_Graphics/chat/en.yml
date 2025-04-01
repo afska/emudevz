@@ -4,20 +4,20 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - a brief intro to NEEES graphics! 🖌️
-  - all graphics are composed of 🕊️  <tiles>
+  - all graphics are composed of 🕊️  tiles
   - a tile is an 8x8 pixel grid
   - <{tile_grayscale.png;8x8}>
   - and 8x8 is a really small size! so one tile usually represents a part of a bigger picture
-  - they are all stored in the cartridge's 👾  CHR-ROM (or CHR-RAM)
+  - they are all stored in 🕊️ 📖  pattern tables, inside the cartridge's 👾  CHR-ROM (or CHR-RAM)
   - <{tiles_grayscale.png;30x30}>
   responses:
   - what about the colors? 🌈 [colors]
 
 colors:
   messages:
-  - tiles can use 4 colors (2 bits per pixel), but they don't know what <actual colors> they'll have
+  - tiles can use 4 colors (~2~ bits per pixel), but they don't know what <actual colors> they'll have
   - they only know that a certain pixel is "color 0", "color 1", "color 2" or "color 3"
-  - color is added at runtime by the use of 🎨  <palettes>, which define what each color should be
+  - color is added at runtime by the use of 🎨  palettes, which define what each color should be
   - "after applying a palette, tiles can look like this:"
   - <{tile.png;8x8}>
   - <{tiles.png;30x30}>
@@ -29,13 +29,13 @@ anycolor:
   - well... no 😅
   - the NEEES can only display 64 different well-defined colors
   - <{colors.png}>
-  - so each palette references entries from this catalog, known as the <master palette>
+  - so each palette references entries from this catalog, known as the master palette
   responses:
   - tell me more about tiles 👀 [moreabouttiles]
 
 moreabouttiles:
   messages:
-  - a frame is made by one 🏞️  <background> and multiple 🛸  <sprites>
+  - a frame is made by one 🏞️  background and multiple 🛸  sprites
   - <{full.png;30x30}>
   - 🏞️  the background is static, but games can move it through scrolling
   - <{background.png;30x30}>
@@ -52,12 +52,12 @@ enough:
   - we'll analyze the memory structures for tiles, backgrounds, and sprites later
   - but now you have an idea of how graphics are arranged on the screen ✨
   - "here's a summary..."
-  - 🏞️  there's a <background> image
-  - 🛸  there are multiple <sprites>
-  - 🕊️  both use <tiles> to render
+  - 🏞️  there's a background image
+  - 🛸  there are multiple sprites
+  - 🕊️  both use tiles to render
   - 👾  all tiles are in CHR-ROM or CHR-RAM, with no color
-  - 🎨  color is given through <palettes>
-  - 👑 🎨  palettes reference entries of a fixed 64-color <master palette>
+  - 🎨  color is given through palettes
+  - 👑 🎨  palettes reference entries of a fixed 64-color master palette
   - "I'll write about this, with more details, here: 📄  /docs/ppu/definitions.en.md"
   responses:
   - awesome [end]

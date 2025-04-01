@@ -3,7 +3,7 @@ main:
   messages:
   - repasemos rápidamente el esquema de memoria de la NEEES
   - la CPU tiene 2 KiB de RAM 🐏
-  - pero las direcciones de memoria van de $0000 a $FFFF (65535)
+  - pero las direcciones de memoria van de $0000 a $FFFF (~65535~)
   - por lo que el espacio direccionable completo es de 64 KiB
   responses:
   - si solo 2 KiB son RAM de verdad, ¿qué hay en los otros 62 KiB? 🤨 [other62]

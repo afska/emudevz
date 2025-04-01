@@ -120,7 +120,7 @@ lda:
   - si prestaste atención, seguramente viste que [A] cambió de $00 a $01
   - y [PC] cambió de $4020 a $4022 🤯
   - estos son registros de CPU, ubicaciones rápidamente accesibles
-  - cada registro puede almacenar un solo byte (8 bits) de datos
+  - cada registro puede almacenar un solo byte (~8~ bits) de datos
   - con la excepción de [PC] ("Program Counter") que ocupa 2 bytes
   responses:
   - ¿cuál es el propósito de cada registro? [registers]
