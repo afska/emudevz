@@ -13,7 +13,7 @@ main:
 othercommands:
   messages:
   - seguro
-  - presiona `Ctrl+C`
+  - presiona ~Ctrl+C~
   - escribe `test`, luego Enter
   responses:
   - entendido [main]

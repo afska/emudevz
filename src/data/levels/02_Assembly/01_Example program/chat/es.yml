@@ -188,8 +188,8 @@ finish:
 clicking:
   messages:
   - mmm...
-  - puedes navegar a la sección de código con `Alt+Up`
-  - luego, presionar `Alt+Enter`
-  - y volver con `Alt+Left`
+  - puedes navegar a la sección de código con ~Alt+Up~
+  - luego, presionar ~Alt+Enter~
+  - y volver con ~Alt+Left~
   responses:
   - ...finish

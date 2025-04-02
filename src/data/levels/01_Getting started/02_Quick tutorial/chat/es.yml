@@ -15,14 +15,14 @@ main:
 app:
   messages:
   - ahora estás ejecutando la app `chat`
-  - puedes cerrarla con `Ctrl+C`
-  - y abrirla de nuevo simplemente escribiendo `chat`, luego `Enter`
+  - puedes cerrarla con ~Ctrl+C~
+  - y abrirla de nuevo simplemente escribiendo `chat`, luego ~Enter~
   responses:
   - ...main
 
 otherapps:
   messages:
-  - para ver qué comandos están disponibles, presiona `Ctrl+C` y ejecuta la app `help`
+  - para ver qué comandos están disponibles, presiona ~Ctrl+C~ y ejecuta la app `help`
   - listará todos ellos junto a una breve explicación de lo que hacen
   responses:
   - ...main

@@ -188,8 +188,8 @@ finish:
 clicking:
   messages:
   - hmm...
-  - you can navigate to the code section with `Alt+Up`
-  - then hit `Alt+Enter`
-  - and go back with `Alt+Left`
+  - you can navigate to the code section with ~Alt+Up~
+  - then hit ~Alt+Enter~
+  - and go back with ~Alt+Left~
   responses:
   - ...finish

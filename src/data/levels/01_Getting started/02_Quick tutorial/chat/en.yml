@@ -15,14 +15,14 @@ main:
 app:
   messages:
   - you're now running the `chat` app
-  - you can close it with `Ctrl+C`
-  - and open it again by simply typing `chat`, then `Enter`
+  - you can close it with ~Ctrl+C~
+  - and open it again by simply typing `chat`, then ~Enter~
   responses:
   - ...main
 
 otherapps:
   messages:
-  - to see what commands are available, hit `Ctrl+C` and run the `help` app
+  - to see what commands are available, hit ~Ctrl+C~ and run the `help` app
   - it will list them all along with a brief explanation of what they do
   responses:
   - ...main

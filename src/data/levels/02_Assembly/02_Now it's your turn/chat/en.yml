@@ -13,7 +13,7 @@ main:
 othercommands:
   messages:
   - sure
-  - press `Ctrl+C`
+  - press ~Ctrl+C~
   - type `test`, then Enter
   responses:
   - gotcha [main]
