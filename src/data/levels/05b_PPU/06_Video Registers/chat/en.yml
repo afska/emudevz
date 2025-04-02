@@ -1,12 +1,12 @@
 ---
 main:
   messages:
-  - the 🧠  CPU and 🖥️  PPU talk with each other via a set of 9 <memory-mapped registers>
-  - these registers live in CPU addresses $2000-$2007 and $4014
+  - the 🧠  CPU and 🖥️  PPU talk with each other via a set of 9 memory-mapped registers
+  - they live in CPU addresses $2000-$2007 and $4014
   - check out 📄  ~/docs/ppu/video_registers.en.md~
-  - some of them are 🔍  read-only (read by 🧠  CPU, written by 🖥️  PPU) 
-  - some are ✏️  write-only (read by 🖥️  PPU, written by 🧠  CPU)
-  - and a few are bidirectional  🔍 ✏️
+  - some of them are 🔍  <read-only> (read by 🧠  CPU, written by 🖥️  PPU) 
+  - some are ✏️  <write-only> (read by 🖥️  PPU, written by 🧠  CPU)
+  - and a few are <bidirectional>  🔍 ✏️
   responses:
   - give me an example 🙏 [example]
   - <<level.isCompleted || m.$exercise>> 📚  take me to the action [useit]
@@ -28,7 +28,7 @@ numbers:
   messages: 
   - yes, but some produce <special effects> when the 🧠  CPU reads or writes them
   - these side effects can reset an internal buffer, increment counters, or even copying data!
-  - "I've coded a class that will help you implement this, feel free to use it 📖"
+  - "I've coded a class that will help you implement this, you should use it 📖"
   - 📄  ~/lib/InMemoryRegister.js~
   responses:
   - how can I use it? [useit]

@@ -1,12 +1,12 @@
 ---
 main:
   messages:
-  - la 🧠  CPU y 🖥️  PPU se comunican entre ellas a través de un conjunto de 9 <registros mapeados en memoria>
-  - estos registros viven en las direcciones CPU $2000-$2007 y $4014
+  - la 🧠  CPU y 🖥️  PPU se comunican entre ellas a través de un conjunto de 9 registros mapeados en memoria
+  - estos viven en las direcciones CPU $2000-$2007 y $4014
   - echa un vistazo a 📄  ~/docs/ppu/video_registers.es.md~
-  - algunos de ellos son 🔍  solo lectura (leídos por 🧠  CPU, escritos por 🖥️  PPU)
-  - algunos son ✏️  solo escritura (leídos por 🖥️  PPU, escritos por 🧠  CPU)
-  - y algunos son bidireccionales 🔍  ✏️
+  - algunos de ellos son 🔍  <solo lectura> (leídos por 🧠  CPU, escritos por 🖥️  PPU)
+  - algunos son ✏️  <solo escritura> (leídos por 🖥️  PPU, escritos por 🧠  CPU)
+  - y algunos son <bidireccionales> 🔍  ✏️
   responses:
   - dame un ejemplo 🙏 [example]
   - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [useit]
@@ -28,7 +28,7 @@ numbers:
   messages:
   - sí, pero algunos producen <efectos especiales> cuando la 🧠  CPU los lee o escribe
   - estos efectos secundarios pueden reiniciar un buffer interno, incrementar contadores, ¡o incluso copiar datos!
-  - "he programado una clase que te ayudará a implementar esto, siéntete libre de usarla 📖"
+  - "he programado una clase que te ayudará a implementar esto, deberías usarla 📖"
   - 📄  ~/lib/InMemoryRegister.js~
   responses:
   - ¿cómo puedo usarla? [useit]

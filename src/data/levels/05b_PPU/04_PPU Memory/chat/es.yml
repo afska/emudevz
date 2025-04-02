@@ -11,9 +11,9 @@ howso:
   messages:
   - la PPU tiene su propio espacio de direcciones de 16 KiB, diseñado específicamente para buscar los 🕊️  tiles, 🏞️  fondos y 🎨  paletas
   - revisa 📄  ~/docs/ppu/ppu_memory.es.md~
-  - la mayoría del tiempo, utilizará estas direcciones
-  - y solo usará las direcciones de la CPU como un puente para comunicarse con la CPU
-  - a partir de ahora, diremos algo como "dirección PPU $1F2A" o "dirección CPU $1F2A" para diferenciar los dos espacios
+  - la mayoría del tiempo, utilizará direcciones PPU
+  - y solo usará las direcciones CPU como un puente para comunicarse con la CPU
+  - a partir de ahora, diremos algo como `dirección PPU $1F2A` o `dirección CPU $1F2A` para diferenciar los dos espacios
   responses:
   - ¿cómo podemos emular esto? 😮 [emulate]
 

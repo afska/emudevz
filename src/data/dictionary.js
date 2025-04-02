@@ -44,9 +44,9 @@ const dictionary = {
 			also: { es: "Espacio de direcciones" },
 			icon: "🐏",
 			en:
-				'The full range of memory addresses a component is able to access directly. <br /><br />In the NEEES, the CPU and the PPU each have their own address space. <br /><br />We differentiate these two spaces by saying `"CPU address $xxxx"` or `"PPU address $xxxx"`.',
+				"The full range of memory addresses a component is able to access directly. <br /><br />In the NEEES, the CPU and the PPU each have their own address space. <br /><br />We differentiate these two spaces by saying `CPU address $xxxx` or `PPU address $xxxx`.",
 			es:
-				'El rango completo de direcciones de memoria que un componente puede acceder directamente. <br /><br />En la NEEES, tanto la CPU como la PPU tienen su propio espacio de direcciones. <br /><br />Distinguimos estos espacios diciendo `"dirección CPU $xxxx"` o `"dirección PPU $xxxx"`.',
+				"El rango completo de direcciones de memoria que un componente puede acceder directamente. <br /><br />En la NEEES, tanto la CPU como la PPU tienen su propio espacio de direcciones. <br /><br />Distinguimos estos espacios diciendo `dirección CPU $xxxx` o `dirección PPU $xxxx`.",
 		},
 		"Addressing mode|Addressing modes": {
 			also: { es: "Modo de direccionamiento|Modos de direccionamiento" },
@@ -310,6 +310,14 @@ const dictionary = {
 			es:
 				"El conjunto de conexiones que enlaza los componentes con la memoria, permitiéndoles leer o escribir datos.",
 		},
+		"Memory-mapped register|Memory-mapped registers": {
+			also: { es: "Registro mapeado en memoria|Registros mapeados en memoria" },
+			icon: "🐏",
+			en:
+				"A special memory address used to interact with hardware. Unlike CPU registers, reading or writing to them may trigger hardware behavior rather than just storing a value. <br /><br />In the NEEES, the PPU, APU, Controller, and Mappers expose these addresses so the game code can interact with the units through them.",
+			es:
+				"Una dirección de memoria especial usada para interactuar con el hardware. A diferencia de los registros de CPU, leer o escribir en ellos puede activar comportamientos del hardware en lugar de simplemente almacenar un valor. <br /><br />En la NEEES, la PPU, la APU, el Mando y los Mappers exponen estas direcciones para que el código del juego pueda comunicarse con ellos.",
+		},
 		Mirroring: {
 			icon: "🚽",
 			en:
@@ -327,7 +335,7 @@ const dictionary = {
 			es:
 				"El byte con el valor posicional más alto en un número multibyte. <br /><br />Por ejemplo, el MSB de `$AB15` es `$AB`.",
 		},
-		"Name table|Name tables": {
+		"Name table|Name tables|Nametable|Nametables": {
 			icon: "🏞️📖",
 			en: "A map of tile indexes for backgrounds, stored in VRAM.",
 			es: "Un mapa de índices de tiles para fondos, almacenado en VRAM.",
@@ -338,6 +346,13 @@ const dictionary = {
 				"The piece of hardware we're trying to emulate. People think it means _'No Entiendo' Enigmatic Enjoyment Solution_.",
 			es:
 				"La pieza de hardware que estamos tratando de emular. La gente piensa que significa _'No Entiendo' El Entretenimiento Saludable_.",
+		},
+		NMI: {
+			icon: "📹",
+			en:
+				"_(Non-maskable interrupt)_ A CPU interrupt triggered at the start of VBlank, when the PPU finishes drawing a frame.",
+			es:
+				"Una interrupción de CPU disparada al principio del VBlank, cuando la PPU termina de dibujar un frame.",
 		},
 		OAM: {
 			icon: "🛸📖",
