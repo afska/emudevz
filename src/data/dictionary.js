@@ -150,7 +150,7 @@ const dictionary = {
 			es:
 				"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
 		},
-		"CPU address|CPU addresses": {
+		"CPU address|CPU addresses|CPU $": {
 			also: { es: "Dirección CPU|Direcciones CPU" },
 			icon: "🐏",
 			en:
@@ -399,8 +399,8 @@ const dictionary = {
 			es:
 				"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
 		},
-		"PPU address|PPU addresses": {
-			also: { es: "Dirección PPU|Direcciones PPU" },
+		"PPU address|PPU addresses|PPU $": {
+			also: { es: "Dirección PPU|Direcciones PPU|PPU $" },
 			icon: "🐏",
 			en:
 				"A memory address seen from the PPU's address space. <br /><br />In the NEEES, valid addresses go from `$0000` to `$3FFF`, with many regions being mirrored.",
@@ -556,10 +556,13 @@ const dictionary = {
 							!exclude.some((it) => it.toLowerCase() === word.toLowerCase())
 					)
 					.map(
-						(it) => `(?<![^\\s(>])${escapeStringRegexp(it)}(?=[\\s,.)?!:'<&]|$)`
+						(it) =>
+							`(?<![^\\s(>])${escapeStringRegexp(
+								it
+							)}(?=[\\s1234567890,.)?!:'<&]|$)`
 					)
 					// before: string start, whitespace, parenthesis, major
-					// after: whitespace, comma, dot, parenthesis, question mark, exclamation mark, colon, apostrophe, minor, ampersand, or end of string
+					// after: whitespace, numbers, comma, dot, parenthesis, question mark, exclamation mark, colon, apostrophe, minor, ampersand, or end of string
 					.join("|"),
 			}),
 			"iu"

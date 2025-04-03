@@ -64,10 +64,10 @@ math:
   - 🔍  con este `block`, basado en el punto ~(x, y)~, ahora necesitas saber en qué <block> estás
   - |-
     un <block> es ~2x2~ tiles o ~16x16~ píxeles, por lo tanto:
-    ```javascript
-    const blockX = Math.floor((x % 32) / 16);
-    const blockY = Math.floor((y % 32) / 16);
-    const blockIndex = blockY * 2 + blockX;```
+      ```javascript
+      const blockX = Math.floor((x % 32) / 16);
+      const blockY = Math.floor((y % 32) / 16);
+      const blockIndex = blockY * 2 + blockX;```
   - 🕵️  con este `blockIndex`, puedes tomar los bits requeridos de `block` usando `byte.getBits(...)`
   - (necesitas leer 2 bits, comenzando desde el bit `blockIndex * 2`)
   - ¡y eso te dará el `paletteId` de ese punto ~(x, y)~!
