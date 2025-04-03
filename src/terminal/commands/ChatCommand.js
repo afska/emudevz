@@ -13,6 +13,7 @@ import Command from "./Command";
 const MESSAGE_SYMBOL = ">> ";
 const SELECTION_SYMBOL = "=> ";
 const SYSTEM_PREFIX = "<! ";
+const EXERCISE_PREFIX = "📚";
 const MESSAGE_SPEED = 30;
 
 // eslint-disable-next-line
@@ -121,7 +122,10 @@ export default class ChatCommand extends Command {
 	}
 
 	async _showMessages(messages) {
-		for (let message of messages) {
+		let wasExerciseFound = false;
+
+		for (let i = 0; i < messages.length; i++) {
+			const message = messages[i];
 			const isSystemMessage = message.startsWith(SYSTEM_PREFIX);
 
 			if (isSystemMessage) {
@@ -130,6 +134,11 @@ export default class ChatCommand extends Command {
 				await this._terminal.writeln(rawMessage, theme.COMMENT);
 				await this._terminal.newline();
 			} else {
+				if (!wasExerciseFound && message.startsWith(EXERCISE_PREFIX)) {
+					wasExerciseFound = true;
+					if (i > 0) await this._terminal.newline();
+				}
+
 				await this._terminal.writeln(
 					MESSAGE_SYMBOL + message,
 					theme.MESSAGE,

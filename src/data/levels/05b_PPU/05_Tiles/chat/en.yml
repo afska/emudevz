@@ -5,8 +5,7 @@ main:
   - read 📄  ~/docs/ppu/tile_rendering.en.md~
   - it should explain how tiles are encoded in memory
   - we'll create a class to help us retrieve tile colors
-  - |+
-    as the PPU renders by 🌠  scanlines, it will receive a parameter (`y`) that represents the row index it should draw
+  - as the PPU renders by 🌠  scanlines, it will receive a parameter (`y`) that represents the row index it should draw
   - |-
     📚  create a `Tile` class with the following:
     **constructor(ppu, patternTableId, tileId, y)**:

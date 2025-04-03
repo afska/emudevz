@@ -41,8 +41,7 @@ useit:
   - registers 🎛️  `PPUCtrl` and 📊  `PPUStatus` are already implemented
   - note how they call `addField` for each parameter defined in the ~Bits~ column of the doc file, indicating the starting bit, and its size (when they're larger than 1 bit)
   - "this creates <magic properties>: after the `onWrite(...)` call, the PPU will be able to access their values (e.g. `ppuCtrl.spriteSize`)"
-  - |+
-    in the case of 📊  `PPUStatus`, it uses `addWritableField` because the PPU needs to write them (e.g. `ppuStatus.isInVBlankInterval = 1`) so the CPU can read the updated values via `onRead()`
+  - in the case of 📊  `PPUStatus`, it uses `addWritableField` because the PPU needs to write them (e.g. `ppuStatus.isInVBlankInterval = 1`) so the CPU can read the updated values via `onRead()`
   - 📚  create a `VideoRegisters` class, using that template
   - |-
     📚  add a `registers` property to `PPU`, assigned to:

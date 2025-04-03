@@ -5,8 +5,7 @@ main:
   - lee 📄  ~/docs/ppu/tile_rendering.es.md~
   - debería explicar cómo los tiles están codificados en memoria
   - vamos a crear una clase para ayudarnos a recuperar los colores de los tiles
-  - |+
-    dado que la PPU renderiza por 🌠  scanlines, recibirá un parámetro (`y`) que representa el índice de la fila que debe dibujar
+  - dado que la PPU renderiza por 🌠  scanlines, recibirá un parámetro (`y`) que representa el índice de la fila que debe dibujar
   - |-
     📚  crea una clase `Tile` con lo siguiente:
     **constructor(ppu, patternTableId, tileId, y)**:
