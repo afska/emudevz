@@ -48,8 +48,8 @@ const dictionary = {
 			es:
 				"El rango completo de direcciones de memoria que un componente puede acceder directamente. <br /><br />En la NEEES, tanto la CPU como la PPU tienen su propio espacio de direcciones. <br /><br />Distinguimos estos espacios diciendo `dirección CPU $xxxx` o `dirección PPU $xxxx`.",
 		},
-		"Addressing mode|Addressing modes": {
-			also: { es: "Modo de direccionamiento|Modos de direccionamiento" },
+		"Addressing mode|_Addressing modes": {
+			also: { es: "Modo de direccionamiento|_Modos de direccionamiento" },
 			icon: "📍",
 			en: "A way for an instruction to specify where its data is located.",
 			es:
@@ -62,8 +62,8 @@ const dictionary = {
 			es:
 				"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
 		},
-		"APU register|APU registers": {
-			also: { es: "Registro de APU|Registros de APU" },
+		"APU register|_APU registers": {
+			also: { es: "Registro de APU|_Registros de APU" },
 			icon: "🔢",
 			en:
 				"A memory-mapped register used to control sound channels or volume. <br /><br />In the NEEES, they are mapped to addresses `$4000` - `$4013`, and `$4015` (APUControl / APUStatus).",
@@ -91,8 +91,8 @@ const dictionary = {
 			es:
 				"Un mapa de índices de paleta para fondos, almacenado al final de cada name table.",
 		},
-		"Background|Backgrounds": {
-			also: { es: "Fondo|Fondos" },
+		"Background|_Backgrounds": {
+			also: { es: "Fondo|_Fondos" },
 			icon: "🏞️",
 			en: "A static image behind the sprites, stored in a name table.",
 			es:
@@ -113,8 +113,8 @@ const dictionary = {
 			es:
 				"Una bandera de CPU que indica cuando una operación aritmética produjo un _carry_. <br /><br />En la NEEES, esto ocurre cuando el resultado sobrepasa el límite de 8 bits (`255` para números sin signo).",
 		},
-		"Cartridge|Cartridges": {
-			also: { es: "Cartucho|Cartuchos" },
+		"Cartridge|_Cartridges": {
+			also: { es: "Cartucho|_Cartuchos" },
 			icon: "💾",
 			en:
 				"A removable piece of hardware that contains the all the game chips, such as PRG-ROM, CHR-ROM, PRG-RAM, and the Mapper.",
@@ -135,8 +135,8 @@ const dictionary = {
 			es:
 				"_(Character ROM)_ Un chip de ROM que contiene los gráficos del juego, dentro del cartucho.",
 		},
-		"Controller|Controllers": {
-			also: { es: "Mando|Mandos" },
+		"Controller|_Controllers": {
+			also: { es: "Mando|_Mandos" },
 			icon: "🎮",
 			en:
 				"An 8-button gamepad (_D-pad + A,B + START,SELECT_). <br /><br />The NEEES accepts _(without extra hardware)_ up to two controllers.",
@@ -150,25 +150,25 @@ const dictionary = {
 			es:
 				"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
 		},
-		"CPU address|CPU addresses|CPU $": {
-			also: { es: "Dirección CPU|Direcciones CPU" },
+		"CPU address|_CPU addresses|CPU $": {
+			also: { es: "Dirección CPU|_Direcciones CPU|CPU $" },
 			icon: "🐏",
 			en:
 				"A memory address seen from the CPU's address space. <br /><br />In the NEEES, the CPU can access addresses from `$0000` to `$FFFF` (`64` KiB).",
 			es:
 				"Una dirección de memoria vista desde el espacio de direcciones de la CPU. <br /><br />En la NEEES, la CPU puede acceder a direcciones entre `$0000` y `$FFFF` (`64` KiB).",
 		},
-		"CPU flag|CPU flags": {
-			also: { es: "Bandera de CPU|Banderas de CPU" },
+		"CPU flag|_CPU flags": {
+			also: { es: "Bandera de CPU|_Banderas de CPU" },
 			icon: "🏁",
 			en: "A flag stored using one bit inside the Flags Register.",
 			es:
 				"Una bandera almacenada usando un bit dentro del Registro de Banderas.",
 		},
-		"CPU interrupt|CPU interrupts|Interrupt|Interrupts": {
+		"CPU interrupt|_CPU interrupts|Interrupt|_Interrupts": {
 			also: {
 				es:
-					"Interrupción de CPU|Interrupciones de CPU|Interrupción|Interrupciones",
+					"Interrupción de CPU|_Interrupciones de CPU|Interrupción|_Interrupciones",
 			},
 			icon: "✋",
 			en:
@@ -176,24 +176,24 @@ const dictionary = {
 			es:
 				"Una señal que pausa el programa actual para manejar un evento específico. <br /><br />Cuando tal evento ocurre, la CPU guarda su estado ([PC] y registro de banderas) en la pila y salta al vector asociado con ese evento. <br /><br />Luego de manejar el evento, la ejecución suele continuar desde donde se interrumpió.",
 		},
-		"CPU register|CPU registers|Register|Registers": {
-			also: { es: "Registro de CPU|Registros de CPU|Registro|Registros" },
+		"CPU register|_CPU registers|Register|_Registers": {
+			also: { es: "Registro de CPU|_Registros de CPU|Registro|_Registros" },
 			icon: "🔢",
 			en:
 				"A small, fast storage location inside the CPU used to hold data temporarily (like numbers, memory addresses, or results of operations) while it's working. <br /><br />In the NEEES, each register can hold a single byte (`8` bits) of data, with the exception of [PC] which is `2` bytes wide.",
 			es:
 				"Una ubicación pequeña y de rápido acceso dentro de la CPU usada para almacenar datos temporalmente (como números, direcciones de memoria, o resultados de operaciones) mientras está operando. <br /><br />En la NEEES, cada registro puede almacenar un solo byte (`8` bits) de datos, con la excepción de [PC] que ocupa `2` bytes.",
 		},
-		"Cycle|Cycles": {
-			also: { es: "Ciclo|Ciclos" },
+		"Cycle|_Cycles": {
+			also: { es: "Ciclo|_Ciclos" },
 			icon: "🚲",
 			en:
 				"A unit used to measure time in the system. The CPU, PPU, and APU all do work cycle by cycle. <br /><br />The duration of a cycle depends on the speed of each unit.",
 			es:
 				"Una unidad usada para medir el tiempo en el sistema. La CPU, la PPU y la APU hacen su trabajo ciclo a ciclo. <br /><br />La duración de un ciclo depende de la velocidad de cada unidad.",
 		},
-		"Flag|Flags": {
-			also: { es: "Bandera|Banderas" },
+		"Flag|_Flags": {
+			also: { es: "Bandera|_Banderas" },
 			icon: "🏁",
 			en:
 				"A field that stores a value that can be either `true` or `false`. <br /><br />See also: CPU Flag.",
@@ -206,7 +206,7 @@ const dictionary = {
 			en: "A CPU register used to store multiple CPU flags.",
 			es: "Un registro de CPU usado para almacenar múltiples banderas de CPU.",
 		},
-		"Frame|Frames": {
+		"Frame|_Frames": {
 			icon: "🖼️",
 			en:
 				"A full image drawn on the screen, made of multiple scanlines. <br /><br />In the NEEES, it's 256×240 pixels, and the PPU renders 60 of them per second.",
@@ -234,9 +234,9 @@ const dictionary = {
 			es:
 				"Un formato que describe un cartucho de NEEES. Contiene su código (PRG-ROM), gráficos (CHR-ROM), y un header con metadatos.",
 		},
-		"Interrupt vector|Vector": {
+		"Interrupt vector|_Interrupt vectors|Vector|_Vectors": {
 			also: {
-				es: "Vector de interrupción|Vector",
+				es: "Vector de interrupción|_Vectores de interrupción|Vector|_Vectores",
 			},
 			icon: "🔢",
 			en:
@@ -244,9 +244,10 @@ const dictionary = {
 			es:
 				"Una dirección de memoria conocida asociada a un evento que dispara una interrupción.",
 		},
-		"Instruction|Instructions|CPU instruction|CPU instructions": {
+		"Instruction|_Instructions|CPU instruction|_CPU instructions": {
 			also: {
-				es: "Instrucción|Instrucciones|Instrucción de CPU|Instrucciones de CPU",
+				es:
+					"Instrucción|_Instrucciones|Instrucción de CPU|_Instrucciones de CPU",
 			},
 			icon: "📖",
 			en:
@@ -279,7 +280,7 @@ const dictionary = {
 			es:
 				"Los bytes que la CPU interpreta cómo código. A menudo es el producto de traducir lenguaje ensamblador escrito por humanos.",
 		},
-		"Mapper|Mappers": {
+		"Mapper|_Mappers": {
 			icon: "🗜️",
 			en:
 				"A chip in the cartridge that extends what the console can do, like adding more PRG-ROM or CHR-ROM banks or providing features such as switching mirroring types.",
@@ -292,7 +293,7 @@ const dictionary = {
 			en: "A list of 64 colors, hardcoded.",
 			es: "Una lista de 64 colores, hardcodeada.",
 		},
-		"Memory address|Memory addresses|Address|Addresses": {
+		"Memory address|_Memory addresses|Address|_Addresses": {
 			also: {
 				es: "Dirección de memoria|Direcciones de memoria|Dirección|Direcciones",
 			},
@@ -302,16 +303,18 @@ const dictionary = {
 			es:
 				"Un número que representa una ubicación dentro de la memoria. <br /><br />En la NEEES, ocupan `2` bytes, por lo que pueden ir de `0` (`$0000`) a `65535` (`$FFFF`).",
 		},
-		"Memory bus|Memory buses": {
-			also: { es: "Bus de memoria|Buses de memoria" },
+		"Memory bus|_Memory buses": {
+			also: { es: "Bus de memoria|_Buses de memoria" },
 			icon: "🚌",
 			en:
 				"The set of connections that link components to memory, enabling them to read or write data.",
 			es:
 				"El conjunto de conexiones que enlaza los componentes con la memoria, permitiéndoles leer o escribir datos.",
 		},
-		"Memory-mapped register|Memory-mapped registers": {
-			also: { es: "Registro mapeado en memoria|Registros mapeados en memoria" },
+		"Memory-mapped register|_Memory-mapped registers": {
+			also: {
+				es: "Registro mapeado en memoria|_Registros mapeados en memoria",
+			},
 			icon: "🐏",
 			en:
 				"A special memory address used to interact with hardware. Unlike CPU registers, reading or writing to them may trigger hardware behavior rather than just storing a value. <br /><br />In the NEEES, the PPU, APU, Controller, and Mappers expose these addresses so the game code can interact with the units through them.",
@@ -335,7 +338,7 @@ const dictionary = {
 			es:
 				"El byte con el valor posicional más alto en un número multibyte. <br /><br />Por ejemplo, el MSB de `$AB15` es `$AB`.",
 		},
-		"Name table|Name tables|Nametable|Nametables": {
+		"Name table|_Name tables|_Nametable|_Nametables": {
 			icon: "🏞️📖",
 			en: "A map of tile indexes for backgrounds, stored in VRAM.",
 			es: "Un mapa de índices de tiles para fondos, almacenado en VRAM.",
@@ -367,15 +370,15 @@ const dictionary = {
 			es:
 				"Una RAM dedicada usada para almacenar el contenido de OAM. <br /><br />En la NEEES, son `256` bytes que contienen todos los datos de los sprites.",
 		},
-		"Opcode|Opcodes": {
+		"Opcode|_Opcodes": {
 			icon: "🔢",
 			en:
 				"_(Operation code)_ A number that, inside the machine code, represents an instruction code. <br /><br />In the NEEES, it defines both the instruction and the addressing mode.",
 			es:
 				"_(Código de operación)_ Un número que, dentro del código máquina, define un código de instrucción. <br /><br />En la NEEES, define tanto la instrucción como el modo de direccionamiento.",
 		},
-		"Palette|Palettes": {
-			also: { es: "Paleta|Paletas" },
+		"Palette|_Palettes": {
+			also: { es: "Paleta|_Paletas" },
 			icon: "🎨",
 			en: "A list of color indexes, stored in Palette RAM.",
 			es: "Una lista de índices de colores, almacenada en Palette RAM.",
@@ -387,7 +390,7 @@ const dictionary = {
 			es:
 				"Una pequeña área de RAM usada para almacenar paletas. <br /><br />En la NEEES, contiene 32 bytes para los índices de color de fondo y sprites.",
 		},
-		"Pattern table|Pattern tables": {
+		"Pattern table|_Pattern tables": {
 			icon: "🕊️📖",
 			en: "A list of tiles stored in CHR-ROM or CHR-RAM.",
 			es: "Una lista de tiles almacenada en CHR-ROM o CHR-RAM.",
@@ -399,16 +402,16 @@ const dictionary = {
 			es:
 				"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
 		},
-		"PPU address|PPU addresses|PPU $": {
-			also: { es: "Dirección PPU|Direcciones PPU|PPU $" },
+		"PPU address|_PPU addresses|PPU $": {
+			also: { es: "Dirección PPU|_Direcciones PPU|PPU $" },
 			icon: "🐏",
 			en:
 				"A memory address seen from the PPU's address space. <br /><br />In the NEEES, valid addresses go from `$0000` to `$3FFF`, with many regions being mirrored.",
 			es:
 				"Una dirección de memoria vista desde el espacio de direcciones de la PPU. <br /><br />En la NEEES, las direcciones válidas van de `$0000` a `$3FFF`, con muchas regiones espejadas.",
 		},
-		"PPU register|PPU registers": {
-			also: { es: "Registro de PPU|Registros de PPU" },
+		"PPU register|_PPU registers": {
+			also: { es: "Registro de PPU|_Registros de PPU" },
 			icon: "🔢",
 			en:
 				"A memory-mapped register used to control the PPU or read its state. <br /><br />In the NEEES, they are mapped to addresses `$2000` - `$2007`, and `$4014` (OAMDMA).",
@@ -436,7 +439,7 @@ const dictionary = {
 			es:
 				"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
 		},
-		"Scanline|Scanlines": {
+		"Scanline|_Scanlines": {
 			icon: "🌠",
 			en:
 				"A single horizontal line of pixels drawn on the screen. The PPU draws one scanline at a time, from top to bottom, until the whole frame is complete.",
@@ -450,7 +453,7 @@ const dictionary = {
 			es:
 				"Una función de la PPU que permite a los desarrolladores mover el fondo ajustando la porción visible de la name table.",
 		},
-		"Sprite|Sprites": {
+		"Sprite|_Sprites": {
 			icon: "🛸",
 			en:
 				"A game object on top (or behind!) of the background that can be moved or flipped, stored in OAM. It can use one tile (`8×8` sprite) or two (`8×16` sprite).",
@@ -465,7 +468,7 @@ const dictionary = {
 			es:
 				"Una estructura LIFO _(Last In, First Out)_ que los programas usan para almacenar valores. La longitud actual es medida por el [SP]. <br /><br />En la NEEES, la pila vive en WRAM entre las direcciones `$0100` y `$01FF`.",
 		},
-		"Tile|Tiles": {
+		"Tile|_Tiles": {
 			icon: "🕊️",
 			en:
 				"An 8×8 grayscale pixel grid that represents a pattern. Tiles are stored in pattern tables.",
@@ -511,13 +514,23 @@ const dictionary = {
 	},
 
 	showDefinition(word) {
-		const { icon, name, text, usableKeys } = this.getDefinition(word);
+		const { icon, name, text, usableKeys, otherKeys } = this.getDefinition(
+			word
+		);
 		const html = this.parseLinks(marked.parseInline(text, []), usableKeys);
+		const also = locales.get("also");
+		const subtitle =
+			otherKeys.length > 0
+				? `<br /><span class="dictionary-entry-alt-names">(${also}: ${otherKeys.join(
+						", "
+				  )})</span>`
+				: "";
+
 		toast.normal(
 			<span
 				style={{ textAlign: "center" }}
 				dangerouslySetInnerHTML={{
-					__html: `<h5 class="dictionary-entry-name">${icon} ${name}</h5>\n${html}`,
+					__html: `<h5 class="dictionary-entry-name">${icon} ${name}${subtitle}</h5>\n${html}`,
 				}}
 			/>
 		);
@@ -526,6 +539,7 @@ const dictionary = {
 	parseLinks(html, exclude = []) {
 		const regexp = dictionary.getRegexp(exclude);
 		const globalRegexp = new RegExp(regexp.source, regexp.flags + "g");
+
 		return html.replace(
 			globalRegexp,
 			(word) =>
@@ -551,16 +565,13 @@ const dictionary = {
 			// eslint-disable-next-line
 			_.template("(${entries})")({
 				entries: entries
-					.filter(
-						(word) =>
-							!exclude.some((it) => it.toLowerCase() === word.toLowerCase())
-					)
-					.map(
-						(it) =>
-							`(?<![^\\s(>])${escapeStringRegexp(
-								it
-							)}(?=[\\s1234567890,.)?!:'<&]|$)`
-					)
+					.filter((word) => !exclude.some((it) => this._matchesKey(it, word)))
+					.map((key) => {
+						key = this._stripPrivateSymbol(key);
+						return `(?<![^\\s(>])${escapeStringRegexp(
+							key
+						)}(?=[\\s0-9,.)?!:'<&]|$)`;
+					})
 					// before: string start, whitespace, parenthesis, major
 					// after: whitespace, numbers, comma, dot, parenthesis, question mark, exclamation mark, colon, apostrophe, minor, ampersand, or end of string
 					.join("|"),
@@ -573,14 +584,15 @@ const dictionary = {
 		const keys = this._keys();
 		const key = keys.find((key) => {
 			const usableKeys = this._getUsableKeysOf(key);
-			return usableKeys.some(
-				(usableKey) => usableKey.toLowerCase() === entry.toLowerCase()
-			);
+			return usableKeys.some((usableKey) => this._matchesKey(usableKey, entry));
 		});
 		if (key == null) return null;
 
 		const data = this.entries[key];
 		const usableKeys = this._getUsableKeysOf(key);
+		const otherKeys = usableKeys.filter((it) => {
+			return !this._matchesKey(it, entry) && !it.startsWith("_");
+		});
 		const name = usableKeys[0];
 
 		return {
@@ -588,7 +600,17 @@ const dictionary = {
 			name,
 			text: this.entries[key][locales.language],
 			usableKeys,
+			otherKeys,
 		};
+	},
+
+	_matchesKey(key, entry) {
+		key = this._stripPrivateSymbol(key);
+		return key.toLowerCase() === entry.toLowerCase();
+	},
+
+	_stripPrivateSymbol(key) {
+		return key.startsWith("_") ? key.replace("_", "") : key;
 	},
 
 	_getUsableKeysOf(key) {

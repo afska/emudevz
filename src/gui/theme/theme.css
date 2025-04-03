@@ -124,6 +124,11 @@ body {
 	color: #d4d5de;
 }
 
+.dictionary-entry-alt-names {
+	color: #b3b3b3;
+	font-size: x-small;
+}
+
 code {
 	.dictionary-link {
 		color: inherit;

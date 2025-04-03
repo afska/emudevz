@@ -3,6 +3,7 @@ export default {
 	_music_by: "Música por",
 	_credits: "Créditos",
 	apu: "APU",
+	also: "también",
 	backup: "Resguardar",
 	binary: "Binario",
 	button_play: "✨ Jugar",

@@ -18,10 +18,10 @@
 ##### ⬛️⬜️ Escala de grises
 
 - Encuentra la ubicación de la 🏞️📖 _name table_:
-  - Los primeros `2` bits de 🎛️ `PPUCtrl` contienen el `nameTableId`.
+  - Los primeros `2` bits de 🎛️ PPUCtrl contienen el `nameTableId`.
   - La tabla estará en la dirección PPU `0x2000 + nameTableId * 1024`.
 - Encuentra cuál 🏞️📖 _pattern table_ deberíamos usar (`0` o `1`):
-  - Esto está en el bit `4` de 🎛️ `PPUCtrl`.
+  - Esto está en el bit `4` de 🎛️ PPUCtrl.
 - Cada uno de los siguientes `960` bytes será un 🕊️ _tile index_ (`0-255`).
   - Ignora por ahora los 🖍️ _metadatos de color_.
 - En el ciclo `0` de cada scanline visible (`0-239`), dibuja una fila de píxeles (compuesta por `32` tiles cada una).
