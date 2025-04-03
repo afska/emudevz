@@ -136,12 +136,13 @@ code {
 }
 
 .dictionary-link {
-	color: #bdbfc9;
+	color: #9db5dc;
+	text-decoration: none;
 	-webkit-user-drag: none;
 }
 
 .dictionary-link:hover {
-	color: #e2e5ff;
+	color: #ccd1f9;
 }
 
 /* Bootstrap */
