@@ -9,12 +9,12 @@ main:
   - |-
     📚  agrega a tu `CPUMemory` el siguiente método:
     **onLoad(ppu, apu, mapper, controllers)**:
-      **->** guarda los parámetros como propiedades (`this.ppu`, `this.apu`, `this.mapper`, y `this.controllers`)
-  - 📚  luego, como hiciste antes con `this.ram`, modifica `read(...)` y `write(...)` para dejar que `this.mapper` maneje el rango $4020-$FFFF (💾  Espacio del cartucho)
-  - en <lecturas>, deberías retornar `this.mapper.cpuRead(address)`
-  - en <escrituras>, deberías llamar a `this.mapper.cpuWrite(address, value)` y retornar
+      **->** guarda los parámetros como propiedades (```javascript this.ppu```, ```javascript this.apu```, ```javascript this.mapper```, y ```javascript this.controllers```)
+  - 📚  luego, como hiciste antes con ```javascript this.ram```, modifica `read(...)` y `write(...)` para dejar que ```javascript this.mapper``` maneje el rango $4020-$FFFF (💾  Espacio del cartucho)
+  - en <lecturas>, deberías retornar ```javascript this.mapper.cpuRead(address)```
+  - en <escrituras>, deberías llamar a ```javascript this.mapper.cpuWrite(address, value)``` y retornar
   responses:
-  - (*) ¿quién llama al método `onLoad`? 🤔 [who]
+  - (*) ¿quién llama al método `onLoad(...)`? 🤔 [who]
   - (*) ¿qué es un mapper? 🗜️ [mapper]
 
 who:
@@ -29,7 +29,7 @@ mapper:
   - los mappers son circuitos dentro del cartucho que controlan cómo la consola lee la información del ROM
   - cada juego usa un mapper específico
   - mientras más mappers admita tu emulador, más juegos serán compatibles 👾
-  - BrokenNEEES soporta los mappers más comunes (0-4)
+  - BrokenNEEES soporta los mappers más comunes (~0-4~)
   - sorprendentemente, ¡todos funcionan bien! 🤯  así que usarás esos por ahora
   - y aprenderás cómo agregar más en el capítulo de 🗜️  Mappers
   responses:
