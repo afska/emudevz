@@ -46,7 +46,7 @@ it("the CPU can handle <RESET> interrupts", () => {
 	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
-it("the CPU can handle <NMI> interrupts", () => {
+it("the CPU can handle NMI interrupts", () => {
 	const cpu = newCPU();
 	cpu.cycle = 8;
 	cpu.pc.setValue(0x1234);
@@ -73,7 +73,7 @@ it("the CPU can handle <NMI> interrupts", () => {
 	cpu.pc.getValue().should.equalHex(0x3125, "getValue()");
 })({
 	locales: {
-		es: "la CPU puede manejar interrupciones <NMI>",
+		es: "la CPU puede manejar interrupciones NMI",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.11"),
 });

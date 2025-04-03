@@ -261,9 +261,9 @@ const dictionary = {
 			es:
 				'Un lenguaje de programación creado para que los sitios web puedan anunciar orgullosamente _"¡Bienvenido!"_ mediante una caja de alerta imposible de cerrar, pero algunas personas hacen emuladores con él.',
 		},
-		"Least significant byte|Low byte": {
+		"Least significant byte|LSB|Low byte": {
 			also: {
-				es: "Byte menos significativo|Low byte",
+				es: "Byte menos significativo|LSB|Low byte",
 			},
 			icon: "🔢",
 			en:
@@ -325,9 +325,9 @@ const dictionary = {
 			es:
 				"El tipo de mirroring afecta la disposición de la pantalla y cómo el juego maneja el scrolling.",
 		},
-		"Most significant byte|High byte": {
+		"Most significant byte|MSB|High byte": {
 			also: {
-				es: "Byte más significativo|High byte",
+				es: "Byte más significativo|MSB|High byte",
 			},
 			icon: "🔢",
 			en:
@@ -501,7 +501,7 @@ const dictionary = {
 				"Una bandera de CPU que indica cuando el resultado de una operación es `0`.",
 		},
 		"Zero Page|First page": {
-			also: { es: "Página cero|Primera página" },
+			also: { es: "Página Cero|Primera página" },
 			icon: "🐏",
 			en:
 				"The first `256` bytes of WRAM, located in addresses `$0000` - `$00FF`.",

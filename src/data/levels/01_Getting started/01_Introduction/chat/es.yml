@@ -55,7 +55,7 @@ idontknow:
   - sabes cómo programar, ¿no?
   - ¿no? 🤔
   responses:
-  - puedo escribir algo de <JavaScript> [javascript]
+  - puedo escribir algo de JavaScript [javascript]
   - mmm... [hmm]
 
 hmm:

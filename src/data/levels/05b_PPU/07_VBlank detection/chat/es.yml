@@ -14,7 +14,7 @@ interrupts:
   messages:
   - ¡sí! piensa en ellas como notificaciones al estilo...
   - "\"¡AHORA ES HORA DE DIBUJAR!\""
-  - si `🎛️  PPUCtrl::generateNMIOnVBlank` está activado, el sistema generará un evento <NMI> ("Interrupción no enmascarable") en 🏝️  VBlank
+  - si `🎛️  PPUCtrl::generateNMIOnVBlank` está activado, el sistema generará un evento NMI ("Interrupción no enmascarable") en 🏝️  VBlank
   - y la 🧠  CPU lo manejará saltando al fragmento de código correcto
   - de hecho, vamos a programarlo
   - |-
