@@ -40,7 +40,9 @@ horizontal:
 vertical:
   messages:
   - vertical flip is similar, but it has a little quirk
-  - to take into account 8x16 sprites, we should use the Y coordinate <inside the current tile>
+  - to take into account ~8x16~ sprites, we should use the Y coordinate <inside the current tile>
   - first define a `tileInsideY = insideY % 8;`
-  - "then, as the last argument of `Tile`'s constructor, use `sprite.flipY ? 7 - tileInsideY : tileInsideY`"
+  - |-
+    then, as the last argument of `Tile`'s constructor, use:
+      `sprite.flipY ? 7 - tileInsideY : tileInsideY`
   responses: []

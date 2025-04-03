@@ -5,9 +5,9 @@ main:
   messages:
   - ¡una breve introducción a los gráficos de NEEES! 🖌️
   - todos los gráficos están compuestos de 🕊️  tiles
-  - un tile es una cuadrícula de 8x8 píxeles
+  - un tile es una cuadrícula de ~8x8~ píxeles
   - <{tile_grayscale.png;8x8}>
-  - ¡y 8x8 es un tamaño realmente pequeño! así que un tile generalmente representa una parte de una imagen más grande
+  - ¡y ~8x8~ es un tamaño realmente pequeño! así que un tile generalmente representa una parte de una imagen más grande
   - todos están almacenados en 🕊️ 📖  pattern tables, dentro de la 👾  CHR-ROM (o CHR-RAM) del cartucho
   - <{tiles_grayscale.png;30x30}>
   responses:

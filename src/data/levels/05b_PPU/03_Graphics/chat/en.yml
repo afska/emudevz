@@ -5,9 +5,9 @@ main:
   messages:
   - a brief intro to NEEES graphics! 🖌️
   - all graphics are composed of 🕊️  tiles
-  - a tile is an 8x8 pixel grid
+  - a tile is an ~8x8~ pixel grid
   - <{tile_grayscale.png;8x8}>
-  - and 8x8 is a really small size! so one tile usually represents a part of a bigger picture
+  - and ~8x8~ is a really small size! so one tile usually represents a part of a bigger picture
   - they are all stored in 🕊️ 📖  pattern tables, inside the cartridge's 👾  CHR-ROM (or CHR-RAM)
   - <{tiles_grayscale.png;30x30}>
   responses:
