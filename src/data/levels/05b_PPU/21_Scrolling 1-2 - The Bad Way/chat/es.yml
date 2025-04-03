@@ -71,35 +71,35 @@ proceed:
   messages:
   - (de nuevo, ESTO NO ES EXACTAMENTE CORRECTO, ¡pero funcionará por ahora!)
   - |-
-    📚  _-_modifica estos métodos de `PPUScroll`:_--_
-      *_-_*onLoad()**:_--_
-        *_-_*->** establece ~this.x = 0~_--_
-        *_-_*->** establece ~this.y = 0~_--_
-      *_-_*onWrite(value)**:_--_
-        *_-_*->** si el ~latch~ de PPUAddr es ~false~:_--_
-          *_-_*->** escribe el ~valor~ en ~this.x~_--_
-        *_-_*->** si es ~true~:_--_
-          *_-_*->** escribe el ~valor~ en ~this.y~_--_
-        _-_(puedes acceder al ~latch~ con ~this.ppu.registers.ppuAddr.latch~)_--_
-        *_-_*->** cambia el ~latch~ al valor opuesto_--_
+    📚  modifica estos métodos de `PPUScroll`:
+      **onLoad()**:
+        **->** asigna `this.x = 0`
+        **->** asigna `this.y = 0`
+      **onWrite(value)**:
+        **->** si el `latch` de PPUAddr es `false`:
+          **->** escribe el `valor` en `this.x`
+        **->** si es `true`:
+          **->** escribe el `valor` en `this.y`
+        (puedes acceder al `latch` con `this.ppu.registers.ppuAddr.latch`)
+        **->** cambia el `latch` al valor opuesto
   responses:
   - bien, ¿y después qué? [then]
 
 then:
   messages:
-  - tendrás en ~ppuScroll.x~ y ~ppuScroll.y~ las coordenadas de desplazamiento
+  - tendrás en `ppuScroll.x` y `ppuScroll.y` las coordenadas de desplazamiento
   - ¡ahora puedes aplicar el scrolling a los fondos!
   - |-
-    📚  _-_ve a `BackgroundRenderer` y cambia `renderScanline()`:
-      *_-_*->** si antes tenías algo como...
+    📚  ve a `BackgroundRenderer` y cambia `renderScanline()`:
+      **->** si antes tenías algo como...
         ```javascript
           for (let x = 0; x < 256; x += 8)```
       ...reemplázalo con...
         ```javascript
           for (let x = 0; x < 256;)```
-      ya no dibujarás en bloques de 8 píxeles, debes estar preparado para dibujar solo una parte de ciertos tiles_--_
+      ya no dibujarás en bloques de 8 píxeles, debes estar preparado para dibujar solo una parte de ciertos tiles
   - |-
-    📚  _-_definamos algunas cosas:
+    📚  definamos algunas cosas:
       ```javascript
       // coordenadas de scrolling:
       const scrollX = this.ppu.registers.ppuScroll.x;
@@ -114,11 +114,11 @@ then:
       const nameTableX = scrolledX % 256;
       const nameTableY = scrolledY % 240;```
     
-    a partir de ahora, cada uso de ~x~ y ~y~ debería ser reemplazado por ~nameTableX~ y ~nameTableY~
+    a partir de ahora, cada uso de `x` y `y` debería ser reemplazado por `nameTableX` y `nameTableY`
     (por ejemplo: el índice de lectura de la name table, la llamada `this._getBackgroundPaletteId(...)` y `new Tile(...)` deben ser actualizados)
-    la única excepción es la llamada `plotBG`, que aún necesita trazarse en el punto ~(x,y)~ de la pantalla_--_
+    la única excepción es la llamada `plotBG`, que aún necesita trazarse en el punto ~(x,y)~ de la pantalla
   - |-
-    📚  _-_finalmente, define:
+    📚  finalmente, define:
       ```javascript
       const tileStartX = nameTableX % 8;
       const tileInsideY = nameTableY % 8;
@@ -136,5 +136,5 @@ then:
         tile.getColorIndex(tileStartX + xx);```
     y al final, una vez que el bucle interno termine, incrementa manualmente el índice del bucle principal:
       ```javascript
-        x += tilePixels;```_--_
+        x += tilePixels;```
   responses: []

@@ -20,43 +20,43 @@ how:
 define:
   messages:
   - yeah, better start with that
-  - 📚  _-_like you did with `CPUMemory::ram`, add a property called `vram` in `PPUMemory`_--_
-  - _-_the array should store 4096 bytes_--_
+  - 📚  like you did with `CPUMemory::ram`, add a property called `vram` in `PPUMemory`
+  - the array should store 4096 bytes
   - (I know I said multiple times that there's only 2 KiB of VRAM, but some games extend that memory using extra chips in their cartridge, and it's easier to emulate those by just allocating a big 4 KiB chunk 🤷 )
-  - 📚  _-_map the range $2000-$2FFF to VRAM (both reads and writes)_--_
+  - 📚  map the range $2000-$2FFF to VRAM (both reads and writes)
   - |-
-    📚  _-_implement these methods in `PPUAddr`:_--_
-    *_-_*onLoad()**:_--_
-      *_-_*->** initializes two properties:_--_
-        _-_~this.latch = false~_--_
-        _-_~this.address = 0~_--_
-        _-_(we'll use these to model the alternating behavior between high byte / low byte on every write operation)_--_
-    *_-_*onWrite(value)**:_--_
-      *_-_*->** if ~latch~ is ~false~:_--_
-        *_-_*->** writes only the <high part> of ~address~, using ~value~_--_
-          _-_(leave the low part as it was before)_--_
-      *_-_*->** if it's ~true~:_--_
-        *_-_*->** writes only the <low part> of ~address~, using ~value~_--_
-          _-_(leave the high part as it was before)_--_
-      _-_(you can use ~buildU16(...)~, ~highByteOf(...)~, and ~lowByteOf(...)~)_--_
-      *_-_*->** switches ~latch~ to the opposite value_--_
+    📚  implement these methods in `PPUAddr`:
+    **onLoad()**:
+      **->** initializes two properties:
+        `this.latch = false`
+        `this.address = 0`
+        (we'll use these to model the alternating behavior between high byte / low byte on every write operation)
+    **onWrite(value)**:
+      **->** if `latch` is `false`:
+        **->** writes only the high byte of `address`, using `value`
+          (leave the low part as it was before)
+      **->** if it's `true`:
+        **->** writes only the low byte of `address`, using `value`
+          (leave the high part as it was before)
+      (you can use `buildU16(...)`, `highByteOf(...)`, and `lowByteOf(...)`)
+      **->** switches `latch` to the opposite value
   - |-
-    📚  _-_implement these methods in `PPUData`:_--_
-    *_-_*onWrite(value)**:_--_
-      *_-_*->** writes ~value~ to the PPU memory address ~ppuAddr.address~_--_
-        _-_(you can access the `PPUMemory` instance with ~this.ppu.memory~)_--_
-        _-_(you can access the `PPUAddr` instance with ~this.ppu.registers.ppuAddr~)_--_
-      *_-_*->** calls ~this._incrementAddress()~_--_
-    *_-_*_incrementAddress()**:_--_
-      *_-_*->** if ~ppuCtrl.vramAddressIncrement32~ is ~1~:_--_
-        *_-_*->** increments ~ppuAddr.address~ by 32_--_
-      *_-_*->** if not:_--_
-        *_-_*->** increments ~ppuAddr.address~ 1 time_--_
-     *_-_*[!]** make sure the address never exceeds 65535 by using `byte.toU16(...)`_--_
+    📚  implement these methods in `PPUData`:
+    **onWrite(value)**:
+      **->** writes `value` to the PPU memory address `ppuAddr.address`
+        (you can access the `PPUMemory` instance with `this.ppu.memory`)
+        (you can access the `PPUAddr` instance with `this.ppu.registers.ppuAddr`)
+      **->** calls `this._incrementAddress()`
+    **_incrementAddress()**:
+      **->** if `ppuCtrl.vramAddressIncrement32` is ~1~:
+        **->** increments `ppuAddr.address` by 32
+      **->** if not:
+        **->** increments `ppuAddr.address` 1 time
+     **[!]** make sure the address never exceeds 65535 by using `byte.toU16(...)`
   - |-
-    📚  _-_lastly, modify in `PPUStatus`:_--_
-    *_-_*onRead()**:_--_
-      *_-_*->** after resetting ~isInVBlankInterval~, it also resets the ~latch~ from `PPUAddr`_--_
+    📚  lastly, modify in `PPUStatus`:
+    **onRead()**:
+      **->** after resetting `isInVBlankInterval`, it also resets the `latch` from `PPUAddr`
   responses:
   - what's this address increment? 🤔 [increment]
 

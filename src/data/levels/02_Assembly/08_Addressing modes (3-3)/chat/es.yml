@@ -116,7 +116,7 @@ step8:
 step9:
   messages:
   - ese $BE fue cargado en [A] 🤯
-  - como vimos anteriormente, en nuestra configuración actual ~($0003)~ evalúa a $4080
+  - como vimos anteriormente, en nuestra configuración actual `($0003)` evalúa a $4080
   - la instrucción solo sumó [Y] a eso, así que la dirección final fue $4085
   - <{LDA_indirectindexed.png}>
   responses:

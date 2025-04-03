@@ -32,17 +32,17 @@ io:
 implement:
   messages:
   - for now, we'll just implement the first range (🐏  WRAM)
-  - 📚  _-_create a `CPUMemory` class, using _--_📄 _-_ ~/tmpl/CPUMemory.js~ as template_--_
-  - 📚  _-_its constructor should initialize a `ram` property (a `Uint8Array` of 2048 bytes)_--_
+  - 📚  create a `CPUMemory` class, using 📄  ~/tmpl/CPUMemory.js~ as template
+  - 📚  its constructor should initialize a `ram` property (a `Uint8Array` of 2048 bytes)
   - |-
-    📚  _-_implement the first ~TODO~ of each method:_--_
-    *_-_*read(address)**:_--_
-      *_-_*->** if ~address~ is in the $0000-$07FF range, returns the corresponding byte from ~ram~_--_
-        _-_(leave the rest of the code as it is)_--_
-    *_-_*write(address, value)**:_--_
-      *_-_*->** if ~address~ is in the $0000-$07FF range, writes the ~value~ to the corresponding byte from ~ram~ and returns_--_
-        _-_(leave the rest of the code as it is)_--_
-  - 📚  _-_then, as you did with `Cartridge`, add the class to _--_📄 _-_ ~/code/index.js~_--_
+    📚  implement the first `// TODO` of each method:
+    **read(address)**:
+      **->** if `address` is in the $0000-$07FF range, returns the corresponding byte from `ram`
+        (leave the rest of the code as it is)
+    **write(address, value)**:
+      **->** if `address` is in the $0000-$07FF range, writes the `value` to the corresponding byte from `ram` and returns
+        (leave the rest of the code as it is)
+  - 📚  then, as you did with `Cartridge`, add the class to 📄  ~/code/index.js~
   responses:
   - what about the mirrored bytes? 📐 [help]
 

@@ -2,7 +2,7 @@ main:
   messages:
   - as you saw in the OAM level, sprites can be 🤸  <flipped>, both horizontally and vertically
   - this is represented in our `Sprite` class with the `flipX` and `flipY` attributes
-  - 📚  _-_change your `SpriteRenderer` so it plots the right pixels, depending on these attributes_--_
+  - 📚  change your `SpriteRenderer` so it plots the right pixels, depending on these attributes
   responses:
   - I need help with the horizontal flip [horizontal]
   - what's flipping? [whats]
@@ -41,6 +41,6 @@ vertical:
   messages:
   - vertical flip is similar, but it has a little quirk
   - to take into account 8x16 sprites, we should use the Y coordinate <inside the current tile>
-  - first define a ~tileInsideY = insideY % 8;~
-  - "then, as the last argument of `Tile`'s constructor, use ~sprite.flipY ? 7 - tileInsideY : tileInsideY~"
+  - first define a `tileInsideY = insideY % 8;`
+  - "then, as the last argument of `Tile`'s constructor, use `sprite.flipY ? 7 - tileInsideY : tileInsideY`"
   responses: []

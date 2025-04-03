@@ -5,27 +5,28 @@ main:
   - read 📄  ~/docs/ppu/tile_rendering.en.md~
   - it should explain how tiles are encoded in memory
   - we'll create a class to help us retrieve tile colors
-  - as the PPU renders by 🌠  scanlines, it will receive a parameter (`y`) that represents the row index it should draw
+  - |+
+    as the PPU renders by 🌠  scanlines, it will receive a parameter (`y`) that represents the row index it should draw
   - |-
-    📚  _-_create a `Tile` class with the following:_--_
-    *_-_*constructor(ppu, patternTableId, tileId, y)**:_--_
-      *_-_*->** calculates the start address of the pattern table:_--_
-        _-_$0000 or $1000 depending on ~patternTableId~ (~0~ or ~1~)_--_
-        _-_(let's call this ~tableAddress~)_--_
-      *_-_*->** calculates the start address of the tile's _--_💜 _-_ low plane:_--_
-        _-_~tableAddress + tileId * 16~_--_
-        _-_(let's call this ~lowPlaneAddress~)_--_
-      *_-_*->** calculates the start address of the tile's _--_💚 _-_ high plane:_--_
-        _-_~lowPlaneAddress + 8~_--_
-        _-_(let's call this ~highPlaneAddress~)_--_
-      *_-_*->** reads the correct row of each bitplane:_--_
-        _-_~this._lowRow~ = read PPU address ~lowPlaneAddress + y~ from ~ppu.memory~_--_
-        _-_~this._highRow~ = read PPU address ~highPlaneAddress + y~ from ~ppu.memory~_--_
-    *_-_*getColorIndex(x)**:_--_
-      *_-_*->** determines the bit position that corresponds to ~x~ (a number between 0 and 7)_--_
-        _-_keep in mind that ~x=0~ is the leftmost pixel, and that would be ~bit 7~_--_
-      *_-_*->** grabs that bit from ~this._lowRow~ and ~this._highRow~ using `byte.getBit(...)`_--_
-      *_-_*->** returns the resulting color index, combining the two bits with `byte.buildU2(...)`_--_
+    📚  create a `Tile` class with the following:
+    **constructor(ppu, patternTableId, tileId, y)**:
+      **->** calculates the start address of the pattern table:
+        $0000 or $1000 depending on `patternTableId` (~0~ or ~1~)
+        (let's call this `tableAddress`)
+      **->** calculates the start address of the tile's 💜  low plane:
+        `tableAddress + tileId * 16`
+        (let's call this `lowPlaneAddress`)
+      **->** calculates the start address of the tile's 💚  high plane:
+        `lowPlaneAddress + 8`
+        (let's call this `highPlaneAddress`)
+      **->** reads the correct row of each bitplane:
+        `this._lowRow` = read PPU address `lowPlaneAddress + y` from `ppu.memory`
+        `this._highRow` = read PPU address `highPlaneAddress + y` from `ppu.memory`
+    **getColorIndex(x)**:
+      **->** determines the bit position that corresponds to `x` (a number between 0 and 7)
+        keep in mind that ~x=0~ is the leftmost pixel, and that would be ~bit 7~
+      **->** grabs that bit from `this._lowRow` and `this._highRow` using `byte.getBit(...)`
+      **->** returns the resulting color index, combining the two bits with `byte.buildU2(...)`
   responses:
   - how will we test this? 🧐 [test]
 
@@ -33,7 +34,7 @@ test:
   messages:
   - good question! 😁
   - |+
-    📚  _-_in your `PPU`, import the `Tile` class and replace the test code (before the `onFrame` call) with:
+    📚  in your `PPU`, import the `Tile` class and replace the test code (before the `onFrame` call) with:
 
       ```javascript
       // <test>
@@ -64,7 +65,7 @@ test:
           }
         }
       }
-      // </test>```_--_
+      // </test>```
   - this will draw the first 240 tiles from 👾  CHR-ROM
   - with a ~2x~ scale (~16x16~ tiles instead of ~8x8~)
   - ⚠️  it will <only> work on games that use 👾  CHR-ROM ⚠️

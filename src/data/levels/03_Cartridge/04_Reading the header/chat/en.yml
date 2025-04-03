@@ -15,7 +15,7 @@ exercise:
   - I've sent you some documentation 🤓
   - check out 📄  ~/docs/iNEEES.en.md~
   - it's a document describing the iNEEES format
-  - you can inspect it with the ~open~ command, or by <clicking> on the file path
+  - you can inspect it with the `open` command, or by <clicking> on the file path
   - I want you to read it and tell me if you understand
   responses:
   - 🤔  I think I understand [understand]
@@ -73,7 +73,7 @@ understand:
   - awesome 💪
   - the first 16 bytes of the file represent the 🗣️  header
   - |-
-    📚  _-_let's add a `header` property to the `Cartridge` class, with the following form:
+    📚  let's add a `header` property to the `Cartridge` class, with the following form:
     ```javascript {
       prgRomPages: 2, // (obtain this from byte 4)
       chrRomPages: 1, // (obtain this from byte 5)
@@ -82,7 +82,7 @@ understand:
       hasPrgRam: false, // (obtain this from <Flags 6>)
       mirroringId: "VERTICAL", // (obtain this from <Flags 6>)
       mapperId: 4 // (obtain this from <Flags 6> and <Flags 7>)
-    }```_--_
+    }```
   responses:
   - I need a bit of help 📐 [bits]
 
@@ -99,7 +99,7 @@ import:
   - |-
     just import it like this:
       ```javascript import byte from "/lib/byte";```
-  - 💡 you can test the library by using the ~repl~ command
+  - 💡 you can test the library by using the `repl` command
   - an interactive JS prompt! 🤯
   - |-
     try running these lines of code:

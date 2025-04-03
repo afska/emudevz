@@ -3,16 +3,16 @@ main:
   messages:
   - remember the stack? 🧱
   - <{stack.png}>
-  - 📚  _-_create a new class for it_--_
-  - _-_it should receive the `memory` (~CPUMemory~) and `sp` (~Register8Bit~) from the CPU, as it will have to interact with them_--_
+  - 📚  create a new class for it
+  - it should receive the `memory` (`CPUMemory`) and `sp` (`Register8Bit`) from the CPU, as it will have to interact with them
   - |-
-    📚  _-_implement these methods:_--_
-    *_-_*push(value)**:_--_
-      *_-_*->** writes ~value~ to the memory address ~currentAddress~, then decrements ~sp~_--_
-    *_-_*pop()**:_--_
-      *_-_*->** increments ~sp~ and returns the result of reading ~currentAddress~ from memory_--_
-  - _-_the ~currentAddress~ always equals $0100 (where the stack lives in RAM), plus the value in [SP]_--_
+    📚  implement these methods:
+    **push(value)**:
+      **->** writes `value` to the memory address `currentAddress`, then decrements `sp`
+    **pop()**:
+      **->** increments `sp` and returns the result of reading `currentAddress` from memory
+  - the `currentAddress` always equals $0100 (where the stack lives in RAM), plus the value in [SP]
   - |-
-    📚  _-_when you finish, add a new stack instance to the CPU:
-      ```javascript this.stack = new Stack(this.memory, this.sp);```_--_
+    📚  when you finish, add a new stack instance to the CPU:
+      ```javascript this.stack = new Stack(this.memory, this.sp);```
   responses: []

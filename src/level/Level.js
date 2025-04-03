@@ -79,7 +79,8 @@ export default class Level {
 		const book = Book.current;
 		const chapter = book.getChapterOf(this.id);
 
-		const help = chapter.help[locales.language];
+		let help = chapter.help[locales.language];
+		help = help.replace(/`/g, "~"); // replace `code` syntax with ~quick highlight~
 		if (!help) return null;
 
 		const levelDefinition = book.getLevelDefinitionOf(this.id);

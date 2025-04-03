@@ -3,6 +3,6 @@ main:
   messages:
   - las bifurcaciones implican cambiar el valor de [PC] (el "Program Counter")
   - y eso es lo que todas estas instrucciones hacen
-  - 📚  _-_siguiendo _--_📄 _-_ ~/docs/cpu/instructions.es.md~,_--_
-  - _-_¡implementa todas las instrucciones de bifurcaciones en tu objeto `instructions`!_--_
+  - 📚  siguiendo 📄  ~/docs/cpu/instructions.es.md~,
+  - ¡implementa todas las instrucciones de bifurcaciones en tu objeto `instructions`!
   responses: []

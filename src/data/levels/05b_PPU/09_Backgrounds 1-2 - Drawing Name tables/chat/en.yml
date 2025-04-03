@@ -12,22 +12,22 @@ finally:
   - read 📄  ~/docs/ppu/background_rendering.en.md~
   - and try to understand how to render backgrounds in <grayscale>
   - and when you are ready...
-  - 📚  _-_create a `BackgroundRenderer` class_--_
-  - 📚  _-_its constructor should receive and assign a `ppu` property with the PPU instance_--_
+  - 📚  create a `BackgroundRenderer` class
+  - 📚  its constructor should receive and assign a `ppu` property with the PPU instance
   - |-
-    📚  _-_make these changes to the `PPU` class:_--_
-    *_-_*constructor**:_--_
-      *_-_*->** instantiates the background renderer:_--_
-        _-_```javascript this.backgroundRenderer = new BackgroundRenderer(this)```_--_
-        _-_(remember to import it if you defined it in another file!)_--_
-    *_-_*step(...)**:_--_
-      *_-_*->** remove the test code (~<test>...</test>~)_--_
-    *_-_*_onVisibleLine()**:_--_
-      *_-_*->** if the cycle is ~0~, call ~backgroundRenderer.renderScanline()~_--_
+    📚  make these changes to the `PPU` class:
+    **constructor**:
+      **->** instantiates the background renderer:
+        ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
+        (remember to import it if you defined it in another file!)
+    **step(...)**:
+      **->** remove the test code (`<test>...</test>`)
+    **_onVisibleLine()**:
+      **->** if the cycle is ~0~, call `backgroundRenderer.renderScanline()`
   - |-
-    📚  _-_now, in the `BackgroundRenderer` class, define:_--_
-    *_-_*renderScanline()**:_--_
-      *_-_*->** add the necessary code to render a full scanline of the background_--_
+    📚  now, in the `BackgroundRenderer` class, define:
+    **renderScanline()**:
+      **->** add the necessary code to render a full scanline of the background
   - bye!
   responses:
   - DON'T LEAVE ME 😭 [questions]
@@ -45,21 +45,21 @@ questions:
 howmany:
   messages:
   - the screen is ~256x240~
-  - you need to ~plot~ exactly 256 pixels for each visible line
+  - you need to `plot` exactly 256 pixels for each visible line
   - in real life, the hardware renders one pixel per cycle, but here we'll do all at once (for simplicity)
-  - therefore, you should only render the line when ~cycle~ is 256
+  - therefore, you should only render the line when `cycle` is 256
   responses:
   - ...questions
 
 line:
   messages:
-  - the current line is represented by ~this.ppu.scanline~
+  - the current line is represented by `this.ppu.scanline`
   responses:
   - ...questions
 
 help:
   messages:
-  - you know that ~y = this.ppu.scanline~
+  - you know that `y = this.ppu.scanline`
   - and that you need to draw from ~x = 0~ to ~x = 255~
   - you also know that the screen is a grid of ~32x32~ tiles (of ~8x8~ pixels each)
   - and lastly, you already know how to draw a tile using your `Tile` class!

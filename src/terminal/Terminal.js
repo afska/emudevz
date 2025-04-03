@@ -139,10 +139,7 @@ export default class Terminal {
 			for (let i = 0; i < characters.length; i++) {
 				this._interruptIfNeeded();
 
-				const isSpecialMarker =
-					style === theme.DICTIONARY ||
-					style === theme.BG_HIGHLIGHT_START ||
-					style === theme.BG_HIGHLIGHT_END;
+				const isSpecialMarker = style === theme.DICTIONARY;
 
 				if (
 					!isSpecialMarker &&

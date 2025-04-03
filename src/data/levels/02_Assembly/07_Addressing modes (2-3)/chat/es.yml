@@ -123,8 +123,8 @@ exercise:
     });
     {{Bottom}}.setDelay(0);
   messages:
-  - 📚  _-_borra todo el código_--_
-  - 📚  _-_construye un programa que grite por la memoria _--_😱
-  - _-_eso significa, que escriba $AA exactamente 64 veces desde $4080 hasta $40BF_--_
-  - 📚  _-_como siempre, cuando esté listo, ejecuta el comando `test`_--_
+  - 📚  borra todo el código
+  - 📚  construye un programa que grite por la memoria 😱
+  - eso significa, que escriba $AA exactamente 64 veces desde $4080 hasta $40BF
+  - 📚  como siempre, cuando esté listo, ejecuta el comando `test`
   responses: []

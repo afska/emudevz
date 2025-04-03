@@ -173,10 +173,10 @@ exercise:
     {{Bottom}}.setSelectedCells([]);
   messages:
   - ahí está...
-  - 📚  _-_como ejercicio, modifica el código agregando una instrucción `STY $1001` al final_--_
-  - 📚  _-_luego una instrucción `INX`_--_
-  - 📚  _-_y por último, cambia las líneas 10 y 12 para que el `JMP` indirecto vaya directamente a la nueva `INX` _--_👀
-  - 📚  _-_cuando termines, ejecuta el comando `test`_--_
+  - 📚  como ejercicio, modifica el código agregando una instrucción `STY $1001` al final
+  - 📚  luego una instrucción `INX`
+  - 📚  y por último, cambia las líneas 10 y 12 para que el `JMP` indirecto vaya directamente a la nueva `INX` 👀
+  - 📚  cuando termines, ejecuta el comando `test`
   responses:
   - momento, ¿qué? [what]
 

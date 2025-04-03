@@ -52,17 +52,17 @@ implement:
   - traduje los tipos de mapeo en una linda tabla aquí 📄  ~/lib/ppu/mirroringTypes.js~
   - las claves (`$2000`, `$2400`, `$2800` y `$2C00`) representan las direcciones lógicas de la PPU
   - y los valores (principalmente `0x000` y `0x400`) son los desplazamientos de las name tables físicas dentro del array `PPUMemory::vram`
-  - 📚  _-_en `PPUMemory`, importa el archivo `mirroringTypes`_--_
+  - 📚  en `PPUMemory`, importa el archivo `mirroringTypes`
   - |-
-    📚  _-_define este método:_--_
-    *_-_*changeNameTableMirroringTo(mirroringId)**:_--_
-      *_-_*->** si ~this.cartridge.header.mirroringId === "FOUR_SCREEN"~_--_
-        *_-_*->** asigna ~mirroringId = "FOUR_SCREEN"~_--_
-      *_-_*->** asigna ~this.mirroringId = mirroringId~_--_
-      *_-_*->** asigna ~this._mirroring = mirroringTypes[mirroringId]~_--_
-      _-_(los mappers llamarán a este método para cambiar el tipo de mirroring cuando lo necesiten)_--_
-  - 📚  _-_cambia `onLoad(...)` para que llame al nuevo método con el mirroring inicial (recuerda que esto está guardado en `cartridge.header.mirroringId`)_--_
-  - 📚  _-_mapea los rangos $2000-$23FF, $2400-$27FF, $2800-$2BFF y $2C00-$2FFF a VRAM, basado en el `mirroring` actual (tanto lecturas como escrituras)_--_
+    📚  define este método:
+    **changeNameTableMirroringTo(mirroringId)**:
+      **->** si `this.cartridge.header.mirroringId === "FOUR_SCREEN"`
+        **->** asigna `mirroringId = "FOUR_SCREEN"`
+      **->** asigna `this.mirroringId = mirroringId`
+      **->** asigna `this._mirroring = mirroringTypes[mirroringId]`
+      (los mappers llamarán a este método para cambiar el tipo de mirroring cuando lo necesiten)
+  - 📚  cambia `onLoad(...)` para que llame al nuevo método con el mirroring inicial (recuerda que esto está guardado en `cartridge.header.mirroringId`)
+  - 📚  mapea los rangos $2000-$23FF, $2400-$27FF, $2800-$2BFF y $2C00-$2FFF a VRAM, basado en el `mirroring` actual (tanto lecturas como escrituras)
   responses:
   - ¿por ejemplo? 🧐 [example]
 

@@ -24,7 +24,7 @@ label:
   messages:
   - el ensamblador que encontré no soporta eso 😔
   - pero eso es posible con otros ensambladores
-  - y ~JSR @init~ generaría el mismo código máquina que ~JSR $4029~
+  - y `JSR @init` generaría el mismo código máquina que `JSR $4029`
   responses:
   - ...where
 

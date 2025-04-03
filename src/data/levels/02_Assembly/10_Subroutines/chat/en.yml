@@ -24,7 +24,7 @@ label:
   messages:
   - the assembler I found doesn't support that 😔
   - but I'm sure that's possible with other assemblers
-  - and ~JSR @init~ would generate the same machine code as ~JSR $4029~
+  - and `JSR @init` would generate the same machine code as `JSR $4029`
   responses:
   - ...where
 

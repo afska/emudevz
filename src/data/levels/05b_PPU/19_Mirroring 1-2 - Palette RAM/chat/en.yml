@@ -4,7 +4,7 @@ main:
   - some addresses mirror other addresses 🚽
   - let's fix it quickly
   - |-
-    📚  _-_in `PPUMemory`, look for the _--_🎨 _-_ ~Palette RAM~ section in `read(...)` and replace it with this code:
+    📚  in `PPUMemory`, look for the 🎨  Palette RAM section in `read(...)` and replace it with this code:
       ```javascript
       if (address >= 0x3f00 && address <= 0x3f1f) {
         if (address === 0x3f10) return this.read(0x3f00);
@@ -13,9 +13,9 @@ main:
         if (address === 0x3f1c) return this.read(0x3f0c);
         return this.paletteRam[address - 0x3f00];
       }
-      ```_--_
+      ```
   - |-
-    📚  _-_do the same with `write(...)`, but use this instead:
+    📚  do the same with `write(...)`, but use this instead:
       ```javascript
       if (address >= 0x3f00 && address <= 0x3f1f) {
         if (address === 0x3f10) return this.write(0x3f00, value);
@@ -25,5 +25,5 @@ main:
         this.paletteRam[address - 0x3f00] = value;
         return;
       }
-      ```_--_
+      ```
   responses: []

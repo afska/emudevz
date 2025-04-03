@@ -17,31 +17,31 @@ easy:
   messages:
   - we're gonna do the following
   - |-
-      📚  _-_in the `PPU` class, change:_--_
-      *_-_*onVisibleLine(...)**:_--_
-        *_-_*->** just below the ~renderScanline()~ call to ~backgroundRenderer~..._--_
-        *_-_*->** ...do the same with ~spriteRenderer~_--_
+      📚  in the `PPU` class, change:
+      **onVisibleLine(...)**:
+        **->** just below the `renderScanline()` call to `backgroundRenderer`...
+        **->** ...do the same with `spriteRenderer`
   - |-
-      📚  _-_and now, implement these methods in `SpriteRenderer`:_--_
-      *_-_*renderScanline()**:_--_
-        *_-_*->** use the code from my previous message!_--_
-      *_-_*_render(sprites)**:_--_
-        *_-_*->** determine the y coordinate:_--_
-          _-_```javascript this.ppu.scanline;```_--_
-          _-_(let's call this ~y~)_--_
-        *_-_*->** for each sprite in ~sprites~:_--_
-          *_-_*->** calculates the "inside" Y coordinate:_--_
-            _-_```javascript sprite.diffY(y)```_--_
-            _-_(let's call this ~insideY~)_--_
-          *_-_*->** instantiates a ~Tile~ passing the ppu, the pattern table id, the tile id, and the ~insideY~_--_
-            _-_(let's call this ~tile~)_--_
-          *_-_*->** creates an array with the 4 palette colors of ~sprite.paletteId~_--_
-            _-_(let's call this ~paletteColors~)_--_
-          *_-_*->** ```javascript for (let insideX = 0; insideX < 8; insideX++)```:_--_
-            *_-_*->** retrieves the color index for this pixel using ~tile.getColorIndex(insideX)~_--_
-              _-_(let's call this ~colorIndex~)_--_
-            *_-_*->** if ~colorIndex > 0~ (meaning, the pixel is not transparent):_--_
-              *_-_*->** calls ~this.ppu.plot(...)~ to draw the pixel_--_
+      📚  and now, implement these methods in `SpriteRenderer`:
+      **renderScanline()**:
+        **->** use the code from my previous message!
+      **_render(sprites)**:
+        **->** determine the y coordinate:
+          ```javascript this.ppu.scanline;```
+          (let's call this `y`)
+        **->** for each sprite in `sprites`:
+          **->** calculates the "inside" Y coordinate:
+            ```javascript sprite.diffY(y)```
+            (let's call this `insideY`)
+          **->** instantiates a `Tile` passing the ppu, the pattern table id, the tile id, and the `insideY`
+            (let's call this `tile`)
+          **->** creates an array with the 4 palette colors of `sprite.paletteId`
+            (let's call this `paletteColors`)
+          **->** ```javascript for (let insideX = 0; insideX < 8; insideX++)```:
+            **->** retrieves the color index for this pixel using `tile.getColorIndex(insideX)`
+              (let's call this `colorIndex`)
+            **->** if `colorIndex > 0` (meaning, the pixel is not transparent):
+              **->** calls `this.ppu.plot(...)` to draw the pixel
   responses:
   - what pattern table should I use? [patterntable]
   - what tile id should I use? [tileid]
@@ -80,6 +80,6 @@ coordinates:
 
 color:
   messages:
-  - reading ~paletteColors~ with the ~colorIndex~ will give you the ~color~
+  - reading `paletteColors` with the `colorIndex` will give you the ~color~
   responses:
   - ...easy

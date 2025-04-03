@@ -18,34 +18,34 @@ interrupts:
   - and the 🧠  CPU will handle that by jumping to the right piece of code
   - actually, let's code this
   - |-
-    📚  _-_modify this method of `PPUStatus`:_--_
-      *_-_*onRead()**:_--_
-        *_-_*->** saves the current ~this.value~ in a ~value~ constant_--_
-        *_-_*->** resets ~this.isInVBlankInterval~ to 0_--_
-          _-_(yeah, reading this register RESETS part of its value _--_🤷 _-_)_--_
-        *_-_*->** returns the saved ~value~_--_
+    📚  modify this method of `PPUStatus`:
+      **onRead()**:
+        **->** saves the current `this.value` in a `value` constant
+        **->** resets `this.isInVBlankInterval` to 0
+          (yeah, reading this register <RESETS> part of its value 🤷 )
+        **->** returns the saved `value`
   - |-
-    📚  _-_and change this one on `PPU`:_--_
-    *_-_*step(onFrame, onInterrupt)**:_--_
-      *_-_*->** if ~this.scanline~ is ~-1~:_--_
-        *_-_*->** call ~this._onPreLine()~_--_
-      *_-_*->** if ~this.scanline~ is lower than 240:_--_
-        *_-_*->** call ~this._onVisibleLine()~_--_
-      *_-_*->** if ~this.scanline~ is 241:_--_
-        *_-_*->** call ~this._onVBlankLine(onInterrupt)~_--_
-      *_-_*->** ...rest of the ~step(...)~ code..._--_
-      *_-_*[!]** note that we added an ~onInterrupt~ parameter_--_
+    📚  and change this one on `PPU`:
+    **step(onFrame, onInterrupt)**:
+      **->** if `this.scanline` is ~-1~:
+        **->** call `this._onPreLine()`
+      **->** if `this.scanline` is lower than 240:
+        **->** call `this._onVisibleLine()`
+      **->** if `this.scanline` is 241:
+        **->** call `this._onVBlankLine(onInterrupt)`
+      **->** ...rest of the `step(...)` code...
+      **[!]** note that we added an `onInterrupt` parameter
   - |-
-    📚  _-_now, add these methods:_--_
-    *_-_*_onPreLine()**:_--_
-      *_-_*->** if ~this.cycle~ is 1:_--_
-        *_-_*->** sets ~this.registers.ppuStatus.isInVBlankInterval = 0~_--_
-    *_-_*_onVisibleLine()**:_--_
-      *_-_*[!]** leave empty for now_--_
-    *_-_*_onVBlankLine(onInterrupt)**:_--_
-      *_-_*->** if ~this.cycle~ is 1:_--_
-        *_-_*->** sets ~this.registers.ppuStatus.isInVBlankInterval = 1~_--_
-        *_-_*->** if ~this.registers.ppuCtrl.generateNMIOnVBlank~:_--_
-          *_-_*->** calls ~onInterrupt(interrupts.NMI)~_--_
-          _-_(you need to import it from _--_📄 _-_ ~/lib/interrupts.js~_--_)_--_
+    📚  now, add these methods:
+    **_onPreLine()**:
+      **->** if `this.cycle` is 1:
+        **->** sets `this.registers.ppuStatus.isInVBlankInterval = 0`
+    **_onVisibleLine()**:
+      **[!]** leave empty for now
+    **_onVBlankLine(onInterrupt)**:
+      **->** if `this.cycle` is 1:
+        **->** sets `this.registers.ppuStatus.isInVBlankInterval = 1`
+        **->** if `this.registers.ppuCtrl.generateNMIOnVBlank`:
+          **->** calls `onInterrupt(interrupts.NMI)`
+          (you need to import it from 📄  ~/lib/interrupts.js~)
   responses: []

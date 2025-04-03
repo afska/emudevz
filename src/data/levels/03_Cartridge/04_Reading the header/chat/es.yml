@@ -15,7 +15,7 @@ exercise:
   - te envié algo de documentación 🤓
   - revisa 📄  ~/docs/iNEEES.es.md~
   - es un documento que describe el formato iNEEES
-  - puedes inspeccionarlo con el comando ~open~, o <clickeando> en la ruta al archivo
+  - puedes inspeccionarlo con el comando `open`, o <clickeando> en la ruta al archivo
   - quiero que lo veas y me digas si entiendes
   responses:
   - 🤔  creo que entiendo [understand]
@@ -73,7 +73,7 @@ understand:
   - excelente 💪
   - los primeros 16 bytes del archivo representan la 🗣️  cabecera
   - |-
-    📚  _-_agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
+    📚  agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
     ```javascript {
       prgRomPages: 2, // (obtener esto del byte 4)
       chrRomPages: 1, // (obtener esto del byte 5)
@@ -82,7 +82,7 @@ understand:
       hasPrgRam: false, // (obtener esto de <Flags 6>)
       mirroringId: "VERTICAL", // (obtener esto de <Flags 6>)
       mapperId: 4 // (obtener esto de <Flags 6> y <Flags 7>)
-    }```_--_
+    }```
   responses:
   - necesito un poco de ayuda 📐 [bits]
 
@@ -99,7 +99,7 @@ import:
   - |-
     solo impórtalo así:
       ```javascript import byte from "/lib/byte";```
-  - 💡 puedes probar la biblioteca con el comando ~repl~
+  - 💡 puedes probar la biblioteca con el comando `repl`
   - ¡una consola JS interactiva! 🤯
   - |-
     intenta ejecutar estas líneas de código:

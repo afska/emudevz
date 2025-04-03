@@ -2,7 +2,7 @@ main:
   messages:
   - como viste en el nivel de OAM, los sprites pueden 🤸  <voltearse>, tanto horizontal como verticalmente
   - esto está representado en nuestra clase `Sprite` con los atributos `flipX` y `flipY`
-  - 📚  _-_cambia tu `SpriteRenderer` para que dibuje los píxeles correctos, dependiendo de estos atributos_--_
+  - 📚  cambia tu `SpriteRenderer` para que dibuje los píxeles correctos, dependiendo de estos atributos
   responses:
   - necesito ayuda con el volteo horizontal [horizontal]
   - ¿qué es voltear? [whats]
@@ -41,6 +41,6 @@ vertical:
   messages:
   - el volteo vertical es similar, pero tiene una pequeña peculiaridad
   - para tener en cuenta los sprites de 8x16, debemos usar la coordenada Y <dentro del tile actual>
-  - primero define ~tileInsideY = insideY % 8;~
-  - "luego, como último argumento del constructor de `Tile`, usa ~sprite.flipY ? 7 - tileInsideY : tileInsideY~"
+  - primero define `tileInsideY = insideY % 8;`
+  - "luego, como último argumento del constructor de `Tile`, usa `sprite.flipY ? 7 - tileInsideY : tileInsideY`"
   responses: []

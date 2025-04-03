@@ -77,25 +77,25 @@ implement:
   - we'll model interrupts as `{ id, vector }` objects
   - check out 📄  ~/lib/interrupts.js~
   - |-
-    📚  _-_add this method to your `CPU`:_--_
-    *_-_*interrupt(interrupt, withBFlag = false)**:_--_
-      *_-_*->** if ~interrupt.id === "IRQ"~ and ~I=1~, returns 0_--_
-        _-_(the interrupt is ignored)_--_
-      *_-_*->** pushes [PC] onto the stack_--_
-      *_-_*->** pushes the flags byte onto the stack_--_
-        _-_(if ~withBFlag~ is ~true~, the value is pushed with its bit 4 on)_--_
-        _-_(otherwise, the value is pushed as is)_--_
-      *_-_*->** advances 7 cycles (~this.cycle += 7~)_--_
-      *_-_*->** sets ~I=1~ in the flags register_--_
-      *_-_*->** sets [PC] = the result of reading the addresses ~interrupt.vector~ and ~interrupt.vector+1~ in <Little Endian>_--_
-        (remember that you have a ~read16(...)~ method for that)_--_
-      *_-_*->** returns 7_--_
+    📚  add this method to your `CPU`:
+    **interrupt(interrupt, withBFlag = false)**:
+      **->** if `interrupt.id === "IRQ"` and ~I=1~, returns 0
+        (the interrupt is ignored)
+      **->** pushes [PC] onto the stack
+      **->** pushes the flags byte onto the stack
+        (if `withBFlag` is `true`, the value is pushed with its bit 4 on)
+        (otherwise, the value is pushed as is)
+      **->** advances 7 cycles (`this.cycle += 7`)
+      **->** sets ~I=1~ in the flags register
+      **->** sets [PC] = the result of reading the addresses `interrupt.vector` and `interrupt.vector+1` in <Little Endian>
+        (remember that you have a `read16(...)` method for that)
+      **->** returns 7
   responses:
-  - and ~BRK~? [brk]
+  - and `BRK`? [brk]
 
 brk:
   messages:
   - |-
-    📚  _-_you can implement the `BRK` instruction just by calling
-      ```javascript cpu.interrupt(interrupts.IRQ, true)```_--_
+    📚  you can implement the `BRK` instruction just by calling
+      ```javascript cpu.interrupt(interrupts.IRQ, true)```
   responses: []

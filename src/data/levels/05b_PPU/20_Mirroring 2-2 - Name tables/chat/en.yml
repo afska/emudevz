@@ -52,17 +52,17 @@ implement:
   - I translated the mapping types into a nice table, here 📄  ~/lib/ppu/mirroringTypes.js~
   - the keys (`$2000`, `$2400`, `$2800` and `$2C00`) represent the logical PPU addresses
   - and the values (mostly `0x000` and `0x400`) are the offsets of the physical name tables inside the `PPUMemory::vram` array
-  - 📚  _-_in `PPUMemory`, import the `mirroringTypes` file_--_
+  - 📚  in `PPUMemory`, import the `mirroringTypes` file
   - |-
-    📚  _-_define this method:_--_
-    *_-_*changeNameTableMirroringTo(mirroringId)**:_--_
-      *_-_*->** if ~this.cartridge.header.mirroringId === "FOUR_SCREEN"~_--_
-        *_-_*->** sets ~mirroringId = "FOUR_SCREEN"~_--_
-      *_-_*->** sets ~this.mirroringId = mirroringId~_--_
-      *_-_*->** sets ~this._mirroring = mirroringTypes[mirroringId]~_--_
-      _-_(mappers will call this method to change the mirroring type whenever they need it)_--_
-  - 📚  _-_change `onLoad(...)` so it calls the new method with the initial mirroring (remember that this is stored in `cartridge.header.mirroringId`)_--_
-  - 📚  _-_map the ranges $2000-$23FF, $2400-$27FF, $2800-$2BFF and $2C00-$2FFF to VRAM, based on the current `mirroring` (both reads and writes)_--_
+    📚  define this method:
+    **changeNameTableMirroringTo(mirroringId)**:
+      **->** if `this.cartridge.header.mirroringId === "FOUR_SCREEN"`
+        **->** sets `mirroringId = "FOUR_SCREEN"`
+      **->** sets `this.mirroringId = mirroringId`
+      **->** sets `this._mirroring = mirroringTypes[mirroringId]`
+      (mappers will call this method to change the mirroring type whenever they need it)
+  - 📚  change `onLoad(...)` so it calls the new method with the initial mirroring (remember that this is stored in `cartridge.header.mirroringId`)
+  - 📚  map the ranges $2000-$23FF, $2400-$27FF, $2800-$2BFF and $2C00-$2FFF to VRAM, based on the current `mirroring` (both reads and writes)
   responses:
   - for example? 🧐 [example]
 

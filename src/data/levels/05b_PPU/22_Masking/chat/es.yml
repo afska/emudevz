@@ -19,27 +19,27 @@ why:
 
 lets:
   messages:
-  - 📚  _-_en `PPUMask`, implementa el método `onLoad()`, usando `addField(...)` para mapear los bits mencionados_--_
+  - 📚  en `PPUMask`, implementa el método `onLoad()`, usando `addField(...)` para mapear los bits mencionados
   - |-
-    _-_usa estos nombres:_--_
-      _-_`showBackgroundInFirst8Pixels`_--_
-      _-_`showSpritesInFirst8Pixels`_--_
-      _-_`showBackground`_--_
-      _-_`showSprites`_--_
+    usa estos nombres:
+      `showBackgroundInFirst8Pixels`
+      `showSpritesInFirst8Pixels`
+      `showBackground`
+      `showSprites`
   - |-
-    📚  _-_también, agrega estos métodos:_--_
-      *_-_*onWrite(value)**:_--_
-        *_-_*->** llama a ~this.setValue(value)~_--_
-      *_-_*isRenderingEnabled()**:_--_
-        *_-_*->** retorna ~this.showBackground || this.showSprites~_--_
+    📚  también, agrega estos métodos:
+      **onWrite(value)**:
+        **->** llama a `this.setValue(value)`
+      **isRenderingEnabled()**:
+        **->** retorna `this.showBackground || this.showSprites`
   - |-
-    📚  _-_en `PPU`, quieres <no hacer nada> si la renderización está deshabilitada:_--_
-      _-_```javascript if (!this.registers.ppuMask.isRenderingEnabled())
-        return;```_--_
-    _-_agrega eso al comienzo de `onPreLine` y `onVisibleLine`!_--_
+    📚  en `PPU`, quieres <no hacer nada> si la renderización está deshabilitada:
+      ```javascript if (!this.registers.ppuMask.isRenderingEnabled())
+        return;```
+    agrega eso al comienzo de `onPreLine` y `onVisibleLine`!
   - |-
-    📚  _-_solo llama a `BackgroundRenderer::renderScanline` si `showBackground` está habilitado,_--_
-    _-_y solo llama a `SpriteRenderer::renderScanline` si `showSprites` está habilitado_--_
+    📚  solo llama a `BackgroundRenderer::renderScanline` si `showBackground` está habilitado,
+    y solo llama a `SpriteRenderer::renderScanline` si `showSprites` está habilitado
   responses:
   - ¿no debería también cambiar los renderizadores? [renderers]
 
@@ -47,13 +47,13 @@ renderers:
   messages:
   - yep, veamos...
   - |-
-    📚  _-_en `BackgroundRenderer`, cambia `renderScanline()`:_--_
-    _-_si `showBackgroundInFirst8Pixels` está apagado y `x < 8`, solo dibuja (con `PPU::plotBG(...)`) el color de fondo, incrementa ~x~ y después haz ~continue~! ¡no proceses más!_--_
-    _-_(recuerda que el color de fondo es `this.ppu.getColor(0, 0)`)_--_
+    📚  en `BackgroundRenderer`, cambia `renderScanline()`:
+    si `showBackgroundInFirst8Pixels` está apagado y `x < 8`, solo dibuja (con `PPU::plotBG(...)`) el color de fondo, incrementa `x` y después haz `continue`! ¡no proceses más!
+    (recuerda que el color de fondo es `this.ppu.getColor(0, 0)`)
   - |-
-    📚  _-_en `SpriteRenderer`, cambia `_render(...)`..._--_
-    _-_necesitas una lógica similar:_--_
-    _-_```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
-      continue;```_--_
-    _-_en el `if` del sprite-0 hit, agrega `showBackground` y `showSprites` como condiciones: si uno de ellos está deshabilitado, ¡no debería activarse!_--_
+    📚  en `SpriteRenderer`, cambia `_render(...)`...
+    necesitas una lógica similar:
+    ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
+      continue;```
+    en el `if` del sprite-0 hit, agrega `showBackground` y `showSprites` como condiciones: si uno de ellos está deshabilitado, ¡no debería activarse!
   responses: []

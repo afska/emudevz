@@ -3,8 +3,8 @@ main:
   messages:
   - las instrucciones de datos son muy simples
   - como el nombre sugiere, se tratan de guardar y mover datos 😉
-  - 📚  _-_siguiendo _--_📄 _-_ ~/docs/cpu/instructions.es.md~,_--_
-  - _-_¡implementa todas las instrucciones de datos en tu objeto `instructions`!_--_
+  - 📚  siguiendo 📄  ~/docs/cpu/instructions.es.md~,
+  - ¡implementa todas las instrucciones de datos en tu objeto `instructions`!
   responses:
   - necesito ayuda con `PHP` 😅 [php]
 

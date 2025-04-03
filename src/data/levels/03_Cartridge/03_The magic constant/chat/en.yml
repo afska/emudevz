@@ -22,9 +22,9 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - 📚  _-_add a constructor to the `Cartridge` class receiving the ROM bytes_--_
-  - 📚  _-_save them in a property called `bytes`_--_
-  - 📚  _-_if the magic constant doesn't match $4E $45 $53 $1A, throw an error with the "Invalid ROM." message_--_
+  - 📚  add a constructor to the `Cartridge` class receiving the ROM bytes
+  - 📚  save them in a property called `bytes`
+  - 📚  if the magic constant doesn't match $4E $45 $53 $1A, throw an error with the "Invalid ROM." message
   responses:
   - how can I add a constructor? 😳 [constructor]
   - I need help checking the bytes 🥺 [help]
@@ -48,7 +48,7 @@ help:
   messages:
   - you'll receive a `Uint8Array`, which works similar to regular arrays!
   - so ```javascript bytes[0]``` represents the first byte, ```javascript bytes[1]``` the second one, and so on
-  - remember that you can express hexadecimal notation with the ~0x~ prefix, i.e. ~0x4e~
+  - remember that you can express hexadecimal notation with the ~0x~ prefix, i.e. `0x4e`
   responses: []
 
 errors:

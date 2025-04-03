@@ -11,10 +11,10 @@ simple:
   messages:
   - yeah!
   - |-
-    📚  _-_in `PPU`, add this method:_--_
-      *_-_*onLoad(mapper)**:_--_
-        *_-_*->** saves the parameter as a property (~this.mapper~)_--_
+    📚  in `PPU`, add this method:
+      **onLoad(mapper)**:
+        **->** saves the parameter as a property (`this.mapper`)
   - |-
-    📚  _-_add at the end of the `_onPreLine()` and `_onVisibleLine()`:_--_
-      _-_```javascript if (this.cycle === 260) this.mapper.tick();```_--_
+    📚  add at the end of the `_onPreLine()` and `_onVisibleLine()`:
+      ```javascript if (this.cycle === 260) this.mapper.tick();```
   responses: []

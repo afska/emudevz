@@ -111,9 +111,9 @@ exercise:
     });
   messages:
   - yep, está la Bandera Zero, que todas las instrucciones la ponen en 1 cuando el resultado es ~cero~
-  - 📚  _-_sin eliminar el código actual, intenta sustraer 4 a [A], con la instrucción `SBC`_--_
-  - _-_funciona igual que `ADC`, pero resta en lugar de sumar_--_
-  - _-_luego de la instrucción, la Bandera Zero debería estar en 1 _--_😊
-  - 📚  _-_cuando esté listo, ejecuta el comando `test`_--_
+  - 📚  sin eliminar el código actual, intenta sustraer 4 a [A], con la instrucción `SBC`
+  - funciona igual que `ADC`, pero resta en lugar de sumar
+  - luego de la instrucción, la Bandera Zero debería estar en 1 😊
+  - 📚  cuando esté listo, ejecuta el comando `test`
   responses:
   - ...carry

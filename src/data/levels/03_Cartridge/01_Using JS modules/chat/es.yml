@@ -47,15 +47,15 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - 📚  _-_crea un archivo en _--_📄 _-_ ~/code/Cartridge.js~_--_
-  - 📚  _-_su <valor a exportar> debería ser una <clase vacía>_--_
-  - 📚  _-_luego, importa ese archivo desde _--_📄 _-_ ~/code/index.js~_--_
-  - 📚  _-_y exporta un <objeto literal> con una sola clave (`Cartridge`) apuntando a esa clase_--_
+  - 📚  crea un archivo en 📄  ~/code/Cartridge.js~
+  - 📚  su <valor a exportar> debería ser una <clase vacía>
+  - 📚  luego, importa ese archivo desde 📄  ~/code/index.js~
+  - 📚  y exporta un <objeto literal> con una sola clave (`Cartridge`) apuntando a esa clase
   - |-
-    _-_tu archivo ~index.js~ debería verse así:
+    tu archivo ~index.js~ debería verse así:
       ```javascript
       import Cartridge from "./Cartridge";
-      export default { Cartridge }```_--_
+      export default { Cartridge }```
   responses:
   - ¿exportar? ¿módulos? 🧐 [modules]
 

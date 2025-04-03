@@ -21,21 +21,6 @@ export default {
 				raw: true,
 			}, // <{image}>
 			{
-				regexp: /(\*_-_\*[^*]+\*\*)/,
-				silent: /(\*_-_\*([^*]+)\*\*)/g,
-				style: theme.HIGHLIGHTED_BOLD,
-			}, // **highlighted bold**
-			{
-				regexp: /(_-_)/,
-				silent: /(_-_)/g,
-				style: theme.BG_HIGHLIGHT_START,
-			}, // /highlight start/
-			{
-				regexp: /(_--_)/,
-				silent: /(_--_)/g,
-				style: theme.BG_HIGHLIGHT_END,
-			}, // /highlight end/
-			{
 				regexp: /(\*\*[^*]+\*\*)/,
 				silent: /(\*\*([^*]+)\*\*)/g,
 				style: theme.BOLD,
@@ -47,7 +32,11 @@ export default {
 			}, // __quick italic__
 			{ regexp: /(~[^~]+~)/, silent: /(~([^~]+)~)/g }, // ~quick accent~
 			{ regexp: /(<[^>]+>)/, silent: /(<([^~]+)>)/g }, // <angular brackets> (same as ~~)
-			{ regexp: /(`[^`]+`)/, silent: /(`([^~]+)`)/g }, // `backticks`
+			{
+				regexp: /(`[^`]+`)/,
+				silent: /(`([^~]+)`)/g,
+				style: theme.BG_HIGHLIGHT,
+			}, // `code`
 			{ regexp: /("[^"]+")/ }, // "double quotes"
 			// { regexp: /(\[[^\];]+\])/ }, // [square brackets] (ignoring terminal sequences)
 			// ^^^ used for register, we'll use the dictionary instead
@@ -113,7 +102,7 @@ export default {
 
 				return {
 					isCode: true,
-					style: theme.NORMAL,
+					style: language === RAW ? theme.NORMAL : theme.BG_HIGHLIGHT,
 					text:
 						language === RAW
 							? code

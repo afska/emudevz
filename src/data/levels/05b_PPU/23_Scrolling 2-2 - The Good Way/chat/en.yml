@@ -19,44 +19,44 @@ loopy:
 changes:
   messages:
   - |-
-    📚  _-_import the library and add a `loopy` property to `PPU`'s constructor, assigned to:_--_
-         _-_```javascript new LoopyRegister()```_--_
+    📚  import the library and add a `loopy` property to `PPU`'s constructor, assigned to:
+         ```javascript new LoopyRegister()```
   - |-
-    📚  _-_at the end of the `onPreLine(...)` method, call:_--_
-      _-_```javascript this.loopy.onPreLine(this.cycle);```_--_
+    📚  at the end of the `onPreLine(...)` method, call:
+      ```javascript this.loopy.onPreLine(this.cycle);```
   - |-
-    📚  _-_at the end of the `onVisibleLine(...)` method, call:_--_
-      _-_```javascript this.loopy.onVisibleLine(this.cycle);```_--_
+    📚  at the end of the `onVisibleLine(...)` method, call:
+      ```javascript this.loopy.onVisibleLine(this.cycle);```
   - |-
-    📚  _-_at the end of the `plotBG(...)` method, call:_--_
-      _-_```javascript this.loopy.onPlot(x);```_--_
+    📚  at the end of the `plotBG(...)` method, call:
+      ```javascript this.loopy.onPlot(x);```
   - |-
-    📚 🎛️  _-_in `PPUCtrl`, remove the `nameTableId` field; replace its assignment in the `onWrite(...)` method with:_--_
-      _-_```javascript this.ppu.loopy.onPPUCtrlWrite(value);```_--_
+    📚 🎛️  in `PPUCtrl`, remove the `nameTableId` field; replace its assignment in the `onWrite(...)` method with:
+      ```javascript this.ppu.loopy.onPPUCtrlWrite(value);```
   - |-
-    📚 📊  _-_in `PPUStatus`, replace the code that disables `PPUAdrr`'s `latch` with:_--_
-      _-_```javascript this.ppu.loopy.onPPUStatusRead();```_--_
+    📚 📊  in `PPUStatus`, replace the code that disables `PPUAdrr`'s `latch` with:
+      ```javascript this.ppu.loopy.onPPUStatusRead();```
   - |-
-    📚 📜  _-_in `PPUScroll`, remove the `onLoad()` method and replace `onWrite(...)` with:_--_
-      _-_```javascript onWrite(value) {
+    📚 📜  in `PPUScroll`, remove the `onLoad()` method and replace `onWrite(...)` with:
+      ```javascript onWrite(value) {
         this.ppu.loopy.onPPUScrollWrite(value);
-      }```_--_
+      }```
   - |-
-    📚 📍  _-_in `PPUAddr`, remove the `onLoad()` method and replace `onWrite(...)` with:_--_
-      _-_```javascript onWrite(value) {
+    📚 📍  in `PPUAddr`, remove the `onLoad()` method and replace `onWrite(...)` with:
+      ```javascript onWrite(value) {
         this.ppu.loopy.onPPUAddrWrite(value);
-      }```_--_
+      }```
     also, add this dynamic property:
-      _-_```javascript get address() {
+      ```javascript get address() {
         return this.ppu.loopy.vAddress.getValue()
       }
 
       set address(value) {
         this.ppu.loopy.vAddress.setValue(value);
-      }```_--_
+      }```
   - |-
-    📚  _-_lastly, in `BackgroundRenderer`, replace the `scrolledX`, `scrolledY` and `nameTableId` constants with:_--_
-      _-_```javascript const scrolledX = this.ppu.loopy.scrolledX(x);
+    📚  lastly, in `BackgroundRenderer`, replace the `scrolledX`, `scrolledY` and `nameTableId` constants with:
+      ```javascript const scrolledX = this.ppu.loopy.scrolledX(x);
       const scrolledY = this.ppu.loopy.scrolledY(y);
-      const nameTableId = this.ppu.loopy.nameTableId(scrolledX);```_--_
+      const nameTableId = this.ppu.loopy.nameTableId(scrolledX);```
   responses: []

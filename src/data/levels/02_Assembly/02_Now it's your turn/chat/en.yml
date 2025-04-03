@@ -2,10 +2,10 @@
 main:
   messages:
   - now it's your turn 😛
-  - 📚  _-_make a program that writes the number $7C to the addresses $4055 and $4072_--_
-  - 📚  _-_then, the number $18 to the address $40B8_--_
-  - _-_test your program with the _--_⏩ _-_ button_--_
-  - 📚  _-_when you're ready, close the chat and run the `test` command_--_
+  - 📚  make a program that writes the number $7C to the addresses $4055 and $4072
+  - 📚  then, the number $18 to the address $40B8
+  - test your program with the ⏩  button
+  - 📚  when you're ready, close the chat and run the `test` command
   responses:
   - no, I need help 😔 [help]
   - can you tell me again how to run the other command? [othercommands]

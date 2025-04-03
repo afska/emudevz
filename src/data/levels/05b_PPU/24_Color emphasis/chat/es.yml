@@ -20,29 +20,29 @@ how:
 so:
   messages:
   - abre 📄  ~/docs/ppu/video_registers.en.md~
-  - 📚  _-_en `PPUMask`, edita el método `onLoad()` y usa `addField(...)` para mapear los bits `grayscale`, `emphasizeRed`, `emphasizeGreen` y `emphasizeBlue`_--_
+  - 📚  en `PPUMask`, edita el método `onLoad()` y usa `addField(...)` para mapear los bits `grayscale`, `emphasizeRed`, `emphasizeGreen` y `emphasizeBlue`
   - |-
-    📚  _-_agrega este método:_--_
-    *_-_*transform(color)**:_--_
-      *_-_*->** divide el color en componentes `r`, `g` y `b`:_--_
-        _-_```javascript let r = (color >> 0) & 0xff;```_--_
-        _-_```javascript let g = (color >> 8) & 0xff;```_--_
-        _-_```javascript let b = (color >> 16) & 0xff;```_--_
+    📚  agrega este método:
+    **transform(color)**:
+      **->** divide el color en componentes `r`, `g` y `b`:
+        ```javascript let r = (color >> 0) & 0xff;```
+        ```javascript let g = (color >> 8) & 0xff;```
+        ```javascript let b = (color >> 16) & 0xff;```
 
-      *_-_*->** si ~this.grayscale~:_--_
-        *_-_*->** `r = g = b = Math.floor((r + g + b) / 3)`_--_
+      **->** si `this.grayscale`:
+        **->** `r = g = b = Math.floor((r + g + b) / 3)`
 
-      *_-_*->** si ALGÚN bit de énfasis está habilitado:_--_
-        *_-_*->** verifica si TODOS los bits de énfasis están habilitados_--_
-          _-_(llamemos a esto ~all~)_--_
+      **->** si ALGÚN bit de énfasis está habilitado:
+        **->** verifica si TODOS los bits de énfasis están habilitados
+          (llamemos a esto `all`)
         
-        *_-_*->** para cada `r`, `g` y `b`:
-          *_-_*->** si el bit NO está habilitado o todos (`all`) están habilitados:_--_
-           *_-_*->** disminuye el brillo del componente en un 25%:_--_
-              _-_por ejemplo, el rojo sería:_--_
-              _-_```javascript r = Math.floor(r * 0.75)```_--_
+        **->** para cada `r`, `g` y `b`:
+          **->** si el bit NO está habilitado o todos (`all`) están habilitados:
+           **->** disminuye el brillo del componente en un 25%:
+              por ejemplo, el rojo sería:
+              ```javascript r = Math.floor(r * 0.75)```
 
-      *_-_*->** devuelve el color actualizado:
-        _-_```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```_--_
-  - 📚  _-_y lo más importante, ahora `PPU::plot(...)` necesita llamar al método transform de `PPUMask` en lugar de usar directamente el `color`_--_
+      **->** devuelve el color actualizado:
+        ```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```
+  - 📚  y lo más importante, ahora `PPU::plot(...)` necesita llamar al método transform de `PPUMask` en lugar de usar directamente el `color`
   responses: []

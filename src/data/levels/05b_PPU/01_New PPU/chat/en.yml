@@ -61,19 +61,19 @@ next:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  _-_create a file for the PPU code, using _--_📄 _-_ ~/tmpl/ppu/PPU.js~ as template_--_
+  - 📚  create a file for the PPU code, using 📄  ~/tmpl/ppu/PPU.js~ as template
   - |-
-    📚  _-_to keep track of the timing, add this method:_--_
-    *_-_*step()**:_--_
-      *_-_*->** increments ~cycle~_--_
-      *_-_*->** if ~cycle >= 341~:_--_
-        *_-_*->** sets ~cycle = 0~_--_
-        *_-_*->** increments ~scanline~_--_
-        *_-_*->** if ~scanline >= 261~:_--_
-          *_-_*->** sets ~scanline = -1~_--_
-          *_-_*->** increments ~frame~_--_
-  - 📚  _-_then, import your file from _--_📄 _-_ ~/code/index.js~_--_
-  - _-_and add the corresponding `PPU` key to the exported object_--_
+    📚  to keep track of the timing, add this method:
+    **step()**:
+      **->** increments `cycle`
+      **->** if `cycle >= 341`:
+        **->** sets `cycle = 0`
+        **->** increments `scanline`
+        **->** if `scanline >= 261`:
+          **->** sets `scanline = -1`
+          **->** increments `frame`
+  - 📚  then, import your file from 📄  ~/code/index.js~
+  - and add the corresponding `PPU` key to the exported object
   responses:
   - why does the scanline counter start at -1? 😕 [minus1]
 

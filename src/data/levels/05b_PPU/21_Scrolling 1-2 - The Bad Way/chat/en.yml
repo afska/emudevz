@@ -71,35 +71,35 @@ proceed:
   messages:
   - (again, THIS IS NOT EXACTLY CORRECT, but it'll work for now!)
   - |-
-    📚  _-_modify these methods of `PPUScroll`:_--_
-      *_-_*onLoad()**:_--_
-        *_-_*->** sets ~this.x = 0~_--_
-        *_-_*->** sets ~this.y = 0~_--_
-      *_-_*onWrite(value)**:_--_
-        *_-_*->** if PPUAddr's ~latch~ is ~false~:_--_
-          *_-_*->** writes the ~value~ to ~this.x~_--_
-        *_-_*->** if it's ~true~:_--_
-          *_-_*->** writes the ~value~ to ~this.y~_--_
-        _-_(you can access the ~latch~ with ~this.ppu.registers.ppuAddr.latch~)_--_
-        *_-_*->** switches the ~latch~ to the opposite value_--_
+    📚  modify these methods of `PPUScroll`:
+      **onLoad()**:
+        **->** sets `this.x = 0`
+        **->** sets `this.y = 0`
+      **onWrite(value)**:
+        **->** if PPUAddr's `latch` is `false`:
+          **->** writes the `value` to `this.x`
+        **->** if it's `true`:
+          **->** writes the `value` to `this.y`
+        (you can access the `latch` with `this.ppu.registers.ppuAddr.latch`)
+        **->** switches the `latch` to the opposite value
   responses:
   - alright, then what? [then]
 
 then:
   messages:
-  - then you will have in ~ppuScroll.x~ and ~ppuScroll.y~ the scroll coordinates!
+  - then you will have in `ppuScroll.x` and `ppuScroll.y` the scroll coordinates!
   - you can apply the scrolling to the backgrounds now!
   - |-
-    📚  _-_go to `BackgroundRenderer` and change `renderScanline()`:
-      *_-_*->** if you previously had something like...
+    📚  go to `BackgroundRenderer` and change `renderScanline()`:
+      **->** if you previously had something like...
         ```javascript
           for (let x = 0; x < 256; x += 8)```
       ...replace it with...
         ```javascript
           for (let x = 0; x < 256;)```
-      you won't be drawing in 8-pixel chunks anymore, you need to be prepared to draw only a part of certain tiles!_--_
+      you won't be drawing in 8-pixel chunks anymore, you need to be prepared to draw only a part of certain tiles!
   - |-
-    📚  _-_let's define a few things:
+    📚  let's define a few things:
       ```javascript
       // scroll coordinates:
       const scrollX = this.ppu.registers.ppuScroll.x;
@@ -114,11 +114,11 @@ then:
       const nameTableX = scrolledX % 256;
       const nameTableY = scrolledY % 240;```
     
-    from now on, every usage of ~x~ and ~y~ should be replaced by ~nameTableX~ and ~nameTableY~
+    from now on, every usage of `x` and `y` should be replaced by `nameTableX` and `nameTableY`
     (for example: the name table read index, the `this._getBackgroundPaletteId(...)` call, and `new Tile(...)` should be updated)
-    the only exception is the `plotBG` call, which still needs to plot in the ~(x,y)~ point of the screen_--_
+    the only exception is the `plotBG` call, which still needs to plot in the ~(x,y)~ point of the screen
   - |-
-    📚  _-_lastly, define:
+    📚  lastly, define:
       ```javascript
       const tileStartX = nameTableX % 8;
       const tileInsideY = nameTableY % 8;
@@ -136,5 +136,5 @@ then:
         tile.getColorIndex(tileStartX + xx);```
     and at the very end, once the inner loop ends, increment the main loop index manually:
       ```javascript
-        x += tilePixels;```_--_
+        x += tilePixels;```
   responses: []

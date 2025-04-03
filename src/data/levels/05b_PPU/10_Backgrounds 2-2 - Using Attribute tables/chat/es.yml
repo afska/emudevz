@@ -5,27 +5,27 @@ main:
   - en otras palabras, necesitamos mapear 🐏  Palette RAM en nuestra memoria PPU
   - luego, agregaremos métodos para leer paletas de colores
   - y finalmente, haremos que `BackgroundRenderer` use paletas para renderizar
-  - 📚  _-_como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `paletteRam` en `PPUMemory`_--_
-  - _-_el array debería almacenar 32 bytes_--_
-  - 📚  _-_mapea el rango $3F00-$3F1F a Palette RAM (tanto lecturas como escrituras)_--_
+  - 📚  como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `paletteRam` en `PPUMemory`
+  - el array debería almacenar 32 bytes
+  - 📚  mapea el rango $3F00-$3F1F a Palette RAM (tanto lecturas como escrituras)
   - |-
-    📚  _-_implementa este método en `PPU`:_--_
-    *_-_*getColor(paletteId, colorIndex)**:_--_
-      *_-_*->** calcula la dirección inicial de la paleta:_--_
-        _-_~$3F00 + paletteId * 4~_--_
-        _-_(llamemos a esto ~startAddress~)_--_
-      *_-_*->** lee el índice de color de la memoria:_--_
-        _-_lee desde la dirección PPU ~startAddress~ + ~colorIndex~_--_
-        _-_(llamemos a esto ~masterColorIndex~)_--_
-      *_-_*->** devuelve un color de la paleta maestra, usando ~masterColorIndex~_--_
-        _-_(puedes importar y usar _--_📄 _-_ ~/lib/ppu/masterPalette.js~ para la lista de colores)_--_
+    📚  implementa este método en `PPU`:
+    **getColor(paletteId, colorIndex)**:
+      **->** calcula la dirección inicial de la paleta:
+        `0x3F00 + paletteId * 4`
+        (llamemos a esto `startAddress`)
+      **->** lee el índice de color de la memoria:
+        lee desde la dirección PPU `startAddress` + `colorIndex`
+        (llamemos a esto `masterColorIndex`)
+      **->** devuelve un color de la paleta maestra, usando `masterColorIndex`
+        (puedes importar y usar 📄  ~/lib/ppu/masterPalette.js~ para la lista de colores)
   - |-
-    📚  _-_implementa este método en `BackgroundRenderer`:_--_
-    *_-_*_getPaletteId(nameTableId, x, y)**:_--_
-      *_-_*->** agrega el código necesario para devolver el id de paleta correcto para el píxel ~(x, y)~_--_
-      *_-_*->** sigue _--_📄 _-_ ~/docs/ppu/background_rendering.es.md~ para orientación sobre cómo se codifican los ids de paletas_--_
+    📚  implementa este método en `BackgroundRenderer`:
+    **_getPaletteId(nameTableId, x, y)**:
+      **->** agrega el código necesario para devolver el id de paleta correcto para el píxel ~(x, y)~
+      **->** sigue 📄  ~/docs/ppu/background_rendering.es.md~ para orientación sobre cómo se codifican los ids de paletas
   - |-
-    📚  _-_cambia `BackgroundRenderer::renderScanline()` para que use `_getPaletteId(...)` y dibuje el color correcto, así:
+    📚  cambia `BackgroundRenderer::renderScanline()` para que use `_getPaletteId(...)` y dibuje el color correcto, así:
       ```javascript
       const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
 
@@ -37,7 +37,7 @@ main:
         const color =
           colorIndex > 0 ? this.ppu.getColor(paletteId, colorIndex) : this.ppu.getColor(0, 0);
         this.plot(x + xx, y, color);
-      }```_--_
+      }```
   - ten en cuenta que cuando el índice de color es 0, se renderiza un <color de fondo> en su lugar (ubicado en el primer índice de la primera paleta)
   responses:
   - "\"¿agrega el código necesario\"? ¿en serio? ¿eso es todo? [help]"
@@ -54,23 +54,23 @@ math:
   messages:
   - 🔍  primero, basado en el punto ~(x, y)~, necesitas saber en qué <metabloque> estás
   - un <metabloque> es ~2x2 bloques~, ~4x4~ tiles, o ~32x32~ píxeles (como quieras verlo)
-  - así que ```javascript Math.floor(x / 32)``` y ```javascript Math.floor(y / 32)``` te darán números que puedes llamar ~metablockX~ y ~metablockY~
-  - ya que esto es una matriz, para calcular el ~metablockIndex~ puedes hacer ```javascript metablockY * 8 + metablockX```
+  - así que ```javascript Math.floor(x / 32)``` y ```javascript Math.floor(y / 32)``` te darán números que puedes llamar `metablockX` y `metablockY`
+  - ya que esto es una matriz, para calcular el `metablockIndex` puedes hacer ```javascript metablockY * 8 + metablockX```
   - (multiplicamos por 8 porque hay 8 metabloques por fila)
   - |-
-    📖  con este ~metablockIndex~, puedes leer el ~block~:
+    📖  con este `metablockIndex`, puedes leer el `block`:
       ```javascript this.ppu.memory.read(startAddress + metablockIndex);```
-  - (~startAddress~ sería la dirección inicial de la 🖍️ 📖  <attribute table>, también conocida como los últimos 64 bytes de la 🏞️ 📖  <name table>)
-  - 🔍  con este ~block~, basado en el punto ~(x, y)~, ahora necesitas saber en qué <block> estás
+  - (`startAddress` sería la dirección inicial de la 🖍️ 📖  attribute table, también conocida como los últimos 64 bytes de la 🏞️ 📖  name table)
+  - 🔍  con este `block`, basado en el punto ~(x, y)~, ahora necesitas saber en qué <block> estás
   - |-
     un <block> es ~2x2~ tiles o ~16x16~ píxeles, por lo tanto:
     ```javascript
     const blockX = Math.floor((x % 32) / 16);
     const blockY = Math.floor((y % 32) / 16);
     const blockIndex = blockY * 2 + blockX;```
-  - 🕵️  con este ~blockIndex~, puedes tomar los bits requeridos de ~block~ usando `byte.getBits(...)`
-  - (necesitas leer 2 bits, comenzando desde el bit ~blockIndex * 2~)
-  - ¡y eso te dará el ~paletteId~ de ese punto ~(x, y)~!
+  - 🕵️  con este `blockIndex`, puedes tomar los bits requeridos de `block` usando `byte.getBits(...)`
+  - (necesitas leer 2 bits, comenzando desde el bit `blockIndex * 2`)
+  - ¡y eso te dará el `paletteId` de ese punto ~(x, y)~!
   responses:
   - uff [oof]
 

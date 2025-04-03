@@ -57,10 +57,6 @@ export default {
 			: color(195)(text);
 	},
 
-	HIGHLIGHTED_BOLD: (text) =>
-		effectTag(40) + effectTag(1) + text + effectTag(0) + effectTag(40),
 	BG_NEW: effect(45, RESET.BG_COLOR),
 	BG_HIGHLIGHT: effect(40, RESET.BG_COLOR),
-	BG_HIGHLIGHT_START: () => effectTag(40),
-	BG_HIGHLIGHT_END: () => effectTag(RESET.BG_COLOR),
 };

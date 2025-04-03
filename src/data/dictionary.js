@@ -536,7 +536,7 @@ const dictionary = {
 	escapeLinks(text) {
 		const regexp = dictionary.getRegexp();
 		const globalRegexp = new RegExp(regexp.source, regexp.flags + "g");
-		return text.replace(globalRegexp, (word) => `\`${word}\``);
+		return text.replace(globalRegexp, (word) => `<${word}>`);
 	},
 
 	getEntries() {

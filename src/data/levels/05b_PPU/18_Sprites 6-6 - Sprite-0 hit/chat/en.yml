@@ -18,8 +18,8 @@ usage:
 aahh:
   messages:
   - |-
-    📚  _-_in `SpriteRenderer`, change the ~_render(...)~ method; below ~buffer[x] = ...~, add:_--_
-    *_-_*->** if the ~sprite.id~ is 0 AND the background pixel in ~(x, y)~ is opaque:_--_
-      *_-_*->** sets ~this.ppu.registers.ppuStatus.sprite0Hit = 1~_--_
-  - 📚  _-_ah, and reset ~sprite0Hit~ in ~PPU::_onPreLine()~, just like you did with the other two flags!_--_
+    📚  in `SpriteRenderer`, change the `_render(...)` method; below `buffer[x] = ...`, add:
+    **->** if the `sprite.id` is 0 AND the background pixel in ~(x, y)~ is opaque:
+      **->** sets `this.ppu.registers.ppuStatus.sprite0Hit = 1`
+  - 📚  ah, and reset `sprite0Hit` in `PPU::_onPreLine()`, just like you did with the other two flags!
   responses: []

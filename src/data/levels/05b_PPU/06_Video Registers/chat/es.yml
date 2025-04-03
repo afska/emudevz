@@ -41,12 +41,13 @@ useit:
   - los registros 🎛️  `PPUCtrl` y 📊  `PPUStatus` ya están implementados
   - observa cómo llaman a `addField` por cada parámetro definido en la columna ~Bits~ del archivo de documentación, indicando el bit de inicio y su tamaño (cuando son mayores a 1 bit)
   - "esto crea <propiedades mágicas>: después de la llamada a `onWrite(...)`, la PPU podrá acceder a sus valores (p.ej. `ppuCtrl.spriteSize`)"
-  - en el caso de 📊  `PPUStatus`, usa `addWritableField` porque la PPU necesita escribirlos (p. ej. `ppuStatus.isInVBlankInterval = 1`) para que la CPU pueda leer los valores actualizados mediante `onRead()`
-  - 📚  _-_crea una clase `VideoRegisters`, utilizando esa plantilla_--_
+  - |+
+    en el caso de 📊  `PPUStatus`, usa `addWritableField` porque la PPU necesita escribirlos (p. ej. `ppuStatus.isInVBlankInterval = 1`) para que la CPU pueda leer los valores actualizados mediante `onRead()`
+  - 📚  crea una clase `VideoRegisters`, utilizando esa plantilla
   - |-
-    📚  _-_agrega una propiedad `registers` a `PPU`, asignada a:_--_
-         _-_```javascript new VideoRegisters(this)```_--_
-  - 📚  _-_finalmente, mapéalos en `CPUMemory` (regiones $2000-$2007 y $4014):_--_
-  - _-_las <lecturas> deberían retornar ~this.ppu.registers.read(address)~_--_
-  - _-_las <escrituras> deberían llamar a ~this.ppu.registers.write(address, value)~ y retornar_--_
+    📚  agrega una propiedad `registers` a `PPU`, asignada a:
+         ```javascript new VideoRegisters(this)```
+  - "📚  finalmente, mapéalos en `CPUMemory` (regiones $2000-$2007 y $4014):"
+  - las <lecturas> deberían retornar `this.ppu.registers.read(address)`
+  - las <escrituras> deberían llamar a `this.ppu.registers.write(address, value)` y retornar
   responses: []

@@ -20,29 +20,29 @@ how:
 so:
   messages:
   - open 📄  ~/docs/ppu/video_registers.en.md~
-  - 📚  _-_in `PPUMask`, edit the `onLoad()` method and use `addField(...)` to map the `grayscale`, `emphasizeRed`, `emphasizeGreen`, and `emphasizeBlue` bits_--_
+  - 📚  in `PPUMask`, edit the `onLoad()` method and use `addField(...)` to map the `grayscale`, `emphasizeRed`, `emphasizeGreen`, and `emphasizeBlue` bits
   - |-
-    📚  _-_add this method:_--_
-    *_-_*transform(color)**:_--_
-      *_-_*->** splits the color into `r`, `g`, and `b` components:_--_
-        _-_```javascript let r = (color >> 0) & 0xff;```_--_
-        _-_```javascript let g = (color >> 8) & 0xff;```_--_
-        _-_```javascript let b = (color >> 16) & 0xff;```_--_
+    📚  add this method:
+    **transform(color)**:
+      **->** splits the color into `r`, `g`, and `b` components:
+        ```javascript let r = (color >> 0) & 0xff;```
+        ```javascript let g = (color >> 8) & 0xff;```
+        ```javascript let b = (color >> 16) & 0xff;```
 
-      *_-_*->** if ~this.grayscale~:_--_
-        *_-_*->** `r = g = b = Math.floor((r + g + b) / 3)`_--_
+      **->** if `this.grayscale`:
+        **->** `r = g = b = Math.floor((r + g + b) / 3)`
 
-      *_-_*->** if ANY emphasis bit is set:_--_
-        *_-_*->** checks if ALL emphasis bits are set_--_
-          _-_(let's call this ~all~)_--_
+      **->** if ANY emphasis bit is set:
+        **->** checks if ALL emphasis bits are set
+          (let's call this `all`)
         
-        *_-_*->** for each `r`, `g`, and `b`:
-          *_-_*->** if the bit is NOT enabled or `all` are enabled:_--_
-           *_-_*->** decreases the component brightness by 25%:_--_
-              _-_for example, red would be:_--_
-              _-_```javascript r = Math.floor(r * 0.75)```_--_
+        **->** for each `r`, `g`, and `b`:
+          **->** if the bit is NOT enabled or `all` are enabled:
+           **->** decreases the component brightness by 25%:
+              for example, red would be:
+              ```javascript r = Math.floor(r * 0.75)```
 
-      *_-_*->** returns the updated color:
-        _-_```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```_--_
-  - 📚  _-_and most importantly, `PPU::plot(...)` now needs to call `PPUMask`'s transform method instead of using the `color` directly_--_
+      **->** returns the updated color:
+        ```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```
+  - 📚  and most importantly, `PPU::plot(...)` now needs to call `PPUMask`'s transform method instead of using the `color` directly
   responses: []

@@ -13,13 +13,13 @@ delay:
   messages:
   - simple, when a <read> is requested, you read into a buffer, but then you return the <previous value> of that buffer
   - |-
-    📚  _-_implement these methods in `PPUData`:_--_
-    *_-_*onLoad**:_--_
-      *_-_*->** initializes ~this.buffer = 0~_--_
-    *_-_*onRead()**:_--_
-      *_-_*->** saves ~this.buffer~ in a variable named ~data~_--_
-      *_-_*->** reads from the PPU address ~ppuAddr.address~ and saves the result into ~this.buffer~_--_
-      *_-_*->** if the address is between $3F00 and $3FFF, assigns ~data = this.buffer~ (skips the buffer)_--_
-      *_-_*->** calls ~this._incrementAddress()~_--_
-      *_-_*->** returns ~data~_--_
+    📚  implement these methods in `PPUData`:
+    **onLoad**:
+      **->** initializes `this.buffer = 0`
+    **onRead()**:
+      **->** saves `this.buffer` in a variable named `data`
+      **->** reads from the PPU address `ppuAddr.address` and saves the result into `this.buffer`
+      **->** if the address is between $3F00 and $3FFF, assigns `data = this.buffer` (skips the buffer)
+      **->** calls `this._incrementAddress()`
+      **->** returns `data`
   responses: []

@@ -33,17 +33,17 @@ io:
 implement:
   messages:
   - por ahora, solo vamos a implementar el primer rango (🐏  WRAM)
-  - 📚  _-_crea una clase `CPUMemory`, usando _--_📄 _-_ ~/tmpl/CPUMemory.js~ como plantilla_--_
-  - 📚  _-_su constructor debería inicializar una propiedad `ram` (un `Uint8Array` de 2048 bytes)_--_
+  - 📚  crea una clase `CPUMemory`, usando 📄  ~/tmpl/CPUMemory.js~ como plantilla
+  - 📚  su constructor debería inicializar una propiedad `ram` (un `Uint8Array` de 2048 bytes)
   - |-
-    📚  _-_implementa el primer ~TODO~ de cada método:_--_
-    *_-_*read(address)**:_--_
-      *_-_*->** si ~address~ está dentro del rango $0000-$07FF, retorna el byte correspondiente de ~ram~_--_
-        _-_(deja el resto del código como está)_--_
-    *_-_*write(address, value)**:_--_
-      *_-_*->** si ~address~ está dentro del rango $0000-$07FF, escribe ~value~ al byte correspondiente de ~ram~ y retorna_--_
-        _-_(deja el resto del código como está)_--_
-  - 📚  _-_luego, como hiciste con `Cartridge`, agrega la clase a _--_📄 _-_ ~/code/index.js~_--_
+    📚  implementa el primer `// TODO` de cada método:
+    **read(address)**:
+      **->** si `address` está dentro del rango $0000-$07FF, retorna el byte correspondiente de `ram`
+        (deja el resto del código como está)
+    **write(address, value)**:
+      **->** si `address` está dentro del rango $0000-$07FF, escribe `value` al byte correspondiente de `ram` y retorna
+        (deja el resto del código como está)
+  - 📚  luego, como hiciste con `Cartridge`, agrega la clase a 📄  ~/code/index.js~
   responses:
   - ¿cómo es eso de los bytes espejados? 📐 [help]
 

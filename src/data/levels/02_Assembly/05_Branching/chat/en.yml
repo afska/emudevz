@@ -90,11 +90,11 @@ exercise:
   messages:
   - the opposite of `BNE` is `BEQ`, which jumps when the numbers are <equal>
   - let's practice 👾
-  - 📚  _-_delete the current code_--_
-  - 📚  _-_and build a program that reads the value of $4080_--_
-  - 📚  _-_if it has a 7, writes $EE to $40BF_--_
-  - 📚  _-_if not, writes $AA to $40BF_--_
-  - 📚  _-_then, run the `test` command_--_
+  - 📚  delete the current code
+  - 📚  and build a program that reads the value of $4080
+  - 📚  if it has a 7, writes $EE to $40BF
+  - 📚  if not, writes $AA to $40BF
+  - 📚  then, run the `test` command
   responses:
   - wait, how do I test this? 🧪 [testing]
   - I need help 😅 [help]

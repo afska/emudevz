@@ -7,12 +7,12 @@ main:
   - la 🧠  CPU accede al código solo leyendo bytes dentro de $4020-$FFFF
   - hagamos recibir a nuestra memoria un montón de <dispositivos> 📱
   - |-
-    📚  _-_agrega a tu `CPUMemory` el siguiente método:_--_
-    *_-_*onLoad(ppu, apu, mapper, controllers)**:_--_
-      *_-_*->** guarda los parámetros como propiedades (~this.ppu~, ~this.apu~, ~this.mapper~, y ~this.controllers~)_--_
-  - 📚  _-_luego, como hiciste antes con ~this.ram~, modifica `read(...)` y `write(...)` para dejar que ~this.mapper~ maneje el rango $4020-$FFFF (_--_💾 _-_ Espacio del cartucho)_--_
-  - _-_en <lecturas>, deberías retornar ~this.mapper.cpuRead(address)~_--_
-  - _-_en <escrituras>, deberías llamar a ~this.mapper.cpuWrite(address, value)~ y retornar_--_
+    📚  agrega a tu `CPUMemory` el siguiente método:
+    **onLoad(ppu, apu, mapper, controllers)**:
+      **->** guarda los parámetros como propiedades (`this.ppu`, `this.apu`, `this.mapper`, y `this.controllers`)
+  - 📚  luego, como hiciste antes con `this.ram`, modifica `read(...)` y `write(...)` para dejar que `this.mapper` maneje el rango $4020-$FFFF (💾  Espacio del cartucho)
+  - en <lecturas>, deberías retornar `this.mapper.cpuRead(address)`
+  - en <escrituras>, deberías llamar a `this.mapper.cpuWrite(address, value)` y retornar
   responses:
   - (*) ¿quién llama al método `onLoad`? 🤔 [who]
   - (*) ¿qué es un mapper? 🗜️ [mapper]

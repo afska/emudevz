@@ -35,27 +35,27 @@ dma:
 
 implement:
   messages:
-  - 📚  _-_como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `oamRam` en `PPUMemory`_--_
-  - _-_el array debe almacenar 256 bytes_--_
-  - _-_esta vez, no tienes que mapearla, la OAM es muy <interna>_--_
+  - 📚  como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `oamRam` en `PPUMemory`
+  - el array debe almacenar 256 bytes
+  - esta vez, no tienes que mapearla, la OAM es muy <interna>
   - |-
-    📚  _-_implementa estos métodos en `OAMData`:_--_
-    *_-_*onRead()**:_--_
-      *_-_*->** guarda la dirección OAM actual:_--_
-        _-_```javascript const oamAddress = this.ppu.registers.oamAddr.value;```_--_
-        _-_(el campo `value` está definido en `InMemoryRegister` y representa el valor actual)_--_
-      *_-_*->** devuelve el byte correspondiente de OAM RAM, usando ~oamAddress~_--_
-    *_-_*onWrite(value)**:_--_
-      *_-_*->** guarda la dirección OAM actual (~oamAddress~)_--_
-      *_-_*->** escribe ~value~ en el byte correspondiente de OAM RAM, usando ~oamAddress~_--_
-      *_-_*->** incrementa la dirección OAM:_--_
-        _-_```javascript this.ppu.registers.oamAddr.setValue(oamAddress + 1);```_--_
+    📚  implementa estos métodos en `OAMData`:
+    **onRead()**:
+      **->** guarda la dirección OAM actual:
+        ```javascript const oamAddress = this.ppu.registers.oamAddr.value;```
+        (el campo `value` está definido en `InMemoryRegister` y representa el valor actual)
+      **->** devuelve el byte correspondiente de OAM RAM, usando `oamAddress`
+    **onWrite(value)**:
+      **->** guarda la dirección OAM actual (`oamAddress`)
+      **->** escribe `value` en el byte correspondiente de OAM RAM, usando `oamAddress`
+      **->** incrementa la dirección OAM:
+        ```javascript this.ppu.registers.oamAddr.setValue(oamAddress + 1);```
   - |-
-    📚  _-_implementa este método en `OAMDMA`:_--_
-    *_-_*onWrite(value)**:_--_
-      *_-_*->** ~for i = 0; i < 256; i++~:_--_
-        *_-_*->** construye la dirección (byte alto: ~value~, byte bajo: ~i~)_--_
-        *_-_*->** lee la dirección de la memoria de la CPU (~this.ppu.cpu~ devuelve la CPU)_--_
-        *_-_*->** asigna el byte obtenido a ~oamRam[i]~_--_
-      *_-_*->** suma 513 a ~this.ppu.cpu.extraCycles~_--_
+    📚  implementa este método en `OAMDMA`:
+    **onWrite(value)**:
+      **->** `for (i = 0; i < 256; i++)`:
+        **->** construye la dirección (high byte: `value`, low byte: `i`)
+        **->** lee la dirección de la memoria de la CPU (`this.ppu.cpu` devuelve la `CPU`)
+        **->** asigna el byte obtenido a `oamRam[i]`
+      **->** suma 513 a `this.ppu.cpu.extraCycles`
   responses: []

@@ -26,8 +26,8 @@ letscode:
   - en realidad ya codifiqué algunos de estos modos
   - por lo que solo tendrás que implementar "Relative" e "Indirect"
   - ¡puedes tomar el código de 📄  ~/tmpl/cpu/addressingModes.js~ y continuar desde ahí!
-  - 📚  _-_implementa los modos de direccionamiento restantes_--_
-  - 📚  _-_y exporta el objeto bajo la clave `addressingModes` en _--_📄 _-_ ~/code/index.js~_--_
+  - 📚  implementa los modos de direccionamiento restantes
+  - 📚  y exporta el objeto bajo la clave `addressingModes` en 📄  ~/code/index.js~
   responses:
   - ayúdame con el modo "Relative" 😅 [relative]
   - ayúdame con el modo "Indirect" 😅 [indirect]

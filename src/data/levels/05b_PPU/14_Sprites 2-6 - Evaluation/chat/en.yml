@@ -17,25 +17,25 @@ how:
 ok:
   messages:
   - |-
-    📚  _-_cool, implement the following method in `SpriteRenderer`:_--_
-    *_-_*_evaluate()**:_--_
-      *_-_*->** defines a ~sprites~ array_--_
-      *_-_*->** for each possible sprite id (~0-63~):_--_
-        *_-_*->** creates a sprite using ~this._createSprite(...)~_--_
-        *_-_*->** if the sprite should render in the current scanline, and ~sprites~ has less than 9 items:_--_
-          *_-_*->** if ~sprites~ has less than 8 items:_--_
-            *_-_*->** pushes to ~sprites~_--_
-          *_-_*->** else:_--_
-            *_-_*->** sets ~this.ppu.registers.ppuStatus.spriteOverflow = 1~_--_
-            *_-_*->** stops looping_--_
-      *_-_*->** returns ~sprites~ in reversed order_--_
-  - 📚  _-_also, you need to reset `spriteOverflow` to 0 on ~scanline=-1; cycle=1~, like you previously did with ~isInVBlankInterval~_--_
-  - 📚  _-_do it in `PPU::_onPreLine()`_--_
+    📚  cool, implement the following method in `SpriteRenderer`:
+    **_evaluate()**:
+      **->** defines a `sprites` array
+      **->** for each possible sprite id (~0-63~):
+        **->** creates a sprite using `this._createSprite(...)`
+        **->** if the sprite should render in the current scanline, and `sprites` has less than 9 items:
+          **->** if `sprites` has less than 8 items:
+            **->** pushes to `sprites`
+          **->** else:
+            **->** sets `this.ppu.registers.ppuStatus.spriteOverflow = 1`
+            **->** stops looping
+      **->** returns `sprites` in reversed order
+  - 📚  also, you need to reset `spriteOverflow` to 0 on ~scanline=-1; cycle=1~, like you previously did with `isInVBlankInterval`
+  - 📚  do it in `PPU::_onPreLine()`
   responses:
   - how do I know if a sprite should be rendered? [visible]
 
 visible:
   messages:
   - there's a method to check this in my Sprite library
-  - use ~sprite.shouldRenderInScanline(this.ppu.scanline)~
+  - use `sprite.shouldRenderInScanline(this.ppu.scanline)`
   responses: []

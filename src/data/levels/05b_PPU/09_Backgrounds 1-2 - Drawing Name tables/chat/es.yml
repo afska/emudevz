@@ -12,22 +12,22 @@ finally:
   - lee 📄  ~/docs/ppu/background_rendering.es.md~
   - y trata de entender cómo renderizar fondos en <escala de grises>
   - y cuando hayas terminado...
-  - 📚  _-_crea una clase `BackgroundRenderer`_--_
-  - 📚  _-_su constructor debe recibir y asignar una propiedad `ppu` con la instancia de PPU_--_
+  - 📚  crea una clase `BackgroundRenderer`
+  - 📚  su constructor debe recibir y asignar una propiedad `ppu` con la instancia de PPU
   - |-
-    📚  _-_haz estos cambios en la clase `PPU`:_--_
-    *_-_*constructor**:_--_
-      *_-_*->** instancia el renderizador de fondos:_--_
-        _-_```javascript this.backgroundRenderer = new BackgroundRenderer(this)```_--_
-        _-_(¡recuerda importarlo si lo definiste en otro archivo!)_--_
-    *_-_*step(...)**:_--_
-      *_-_*->** elimina el código de prueba (~<test>...</test>~)_--_
-    *_-_*_onVisibleLine()**:_--_
-      *_-_*->** si el ciclo es ~0~, llama a ~backgroundRenderer.renderScanline()~_--_
+    📚  haz estos cambios en la clase `PPU`:
+    **constructor**:
+      **->** instancia el renderizador de fondos:
+        ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
+        (¡recuerda importarlo si lo definiste en otro archivo!)
+    **step(...)**:
+      **->** elimina el código de prueba (`<test>...</test>`)
+    **_onVisibleLine()**:
+      **->** si el ciclo es ~0~, llama a `backgroundRenderer.renderScanline()`
   - |-
-    📚  _-_ahora, en la clase `BackgroundRenderer`, define:_--_
-    *_-_*renderScanline()**:_--_
-      *_-_*->** agrega el código necesario para renderizar una línea completa del fondo_--_
+    📚  ahora, en la clase `BackgroundRenderer`, define:
+    **renderScanline()**:
+      **->** agrega el código necesario para renderizar una línea completa del fondo
   - ¡adiós!
   responses:
   - NO ME DEJES 😭 [questions]
@@ -45,21 +45,21 @@ questions:
 howmany:
   messages:
   - la pantalla es de ~256x240~
-  - necesitas ~plot~ear exactamente 256 píxeles para cada línea visible
+  - necesitas `plot`ear exactamente 256 píxeles para cada línea visible
   - en la vida real, el hardware renderiza un píxel por ciclo, pero aquí lo haremos todo a la vez (por simplicidad)
-  - por lo tanto, solo deberías renderizar la línea cuando ~cycle~ sea 256
+  - por lo tanto, solo deberías renderizar la línea cuando `cycle` sea 256
   responses:
   - ...questions
 
 line:
   messages:
-  - la línea actual está representada por ~this.ppu.scanline~
+  - la línea actual está representada por `this.ppu.scanline`
   responses:
   - ...questions
 
 help:
   messages:
-  - sabes que ~y = this.ppu.scanline~
+  - sabes que `y = this.ppu.scanline`
   - y que necesitas dibujar desde ~x = 0~ hasta ~x = 255~
   - también sabes que la pantalla es una cuadrícula de ~32x32~ tiles (de ~8x8~ píxeles cada uno)
   - y por último, ¡ya sabes cómo dibujar un tile usando tu clase `Tile`!

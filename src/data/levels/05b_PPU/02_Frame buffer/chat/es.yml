@@ -59,20 +59,20 @@ draw:
     {{Top}}.load(null, "rom");
   messages:
   - |-
-    📚  _-_ok, vamos a agregar esto al constructor de tu PPU:
+    📚  ok, vamos a agregar esto al constructor de tu PPU:
       ```javascript
-      this.frameBuffer = new Uint32Array(256*240);```_--_
+      this.frameBuffer = new Uint32Array(256*240);```
   - |-
-    📚  _-_implementa este método:_--_
-    *_-_*plot(x, y, color)**:_--_
-      *_-_*->** asigna el ~color~ al píxel ~(x,y)~ en el array ~frameBuffer~_--_
-        _-_(el índice para ~(x,y)~ debería ser ~y * 256 + x~)_--_
-  - 📚  _-_luego, modifica tu método `step` para que reciba un callback `onFrame` como parámetro_--_
+    📚  implementa este método:
+    **plot(x, y, color)**:
+      **->** asigna el `color` al píxel ~(x,y)~ en el array `frameBuffer`
+        (el índice para ~(x,y)~ debería ser `y * 256 + x`)
+  - 📚  luego, modifica tu método `step` para que reciba un callback `onFrame` como parámetro
   - |-
-    📚  _-_y cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
-      ```javascript onFrame(this.frameBuffer);```_--_
+    📚  y cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
+      ```javascript onFrame(this.frameBuffer);```
   - |-
-    📚  _-_para asegurarnos de que todo funciona correctamente, agrega este código antes de la llamada a `onFrame`:
+    📚  para asegurarnos de que todo funciona correctamente, agrega este código antes de la llamada a `onFrame`:
       ```javascript
       // <test>
       for (let x = 0; x < 256; x++) {
@@ -80,6 +80,6 @@ draw:
           this.plot(x, y, 0xff000000 | this.frame % 0xff);
         }
       }
-      // </test>```_--_
-  - _-_¡pruébalo! al iniciar una ROM, debería lentamente pintar la pantalla de rojo _--_🔴
+      // </test>```
+  - ¡pruébalo! al iniciar una ROM, debería lentamente pintar la pantalla de rojo 🔴
   responses: []
