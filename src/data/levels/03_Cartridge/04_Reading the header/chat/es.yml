@@ -103,11 +103,11 @@ import:
   - ¡una consola JS interactiva! 🤯
   - |-
     intenta ejecutar estas líneas de código:
-      ```javascript
-      // (0x implica <hexadecimal> y 0b implica <binario>)
-      byte.getFlag(0b00000100, 2) // el bit 2 es 1 => true
-      byte.getFlag(0b00000100, 4) // el bit 4 es 0 => false
-      byte.highNybbleOf(0b00110100) // el high nybble es 0b0011 => 3
-      byte.lowNybbleOf(0b00110100) // el low nybble es 0b0100 => 4
-      byte.buildU8(0b0011, 0b0100) // 0b00110100 => 52```
+    ```javascript
+    // (0x implica <hexadecimal> y 0b implica <binario>)
+    byte.getFlag(0b00000100, 2) // el bit 2 es 1 => true
+    byte.getFlag(0b00000100, 4) // el bit 4 es 0 => false
+    byte.highNybbleOf(0b00110100) // el high nybble es 0b0011 => 3
+    byte.lowNybbleOf(0b00110100) // el low nybble es 0b0100 => 4
+    byte.buildU8(0b0011, 0b0100) // 0b00110100 => 52```
   responses: []
