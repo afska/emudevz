@@ -192,6 +192,14 @@ const dictionary = {
 			es:
 				"Una unidad usada para medir el tiempo en el sistema. La CPU, la PPU y la APU hacen su trabajo ciclo a ciclo. <br /><br />La duración de un ciclo depende de la velocidad de cada unidad.",
 		},
+		"DMA|DMA transfer": {
+			also: { es: "DMA|Transferencia DMA" },
+			icon: "⚡",
+			en:
+				"_(Direct Memory Access)_ A mechanism that copies data from one memory area to another without using the CPU to move each byte manually. <br /><br />In the NEEES, DMA is only available to transfer OAM data through the OAMDMA register.",
+			es:
+				"_(Direct Memory Access)_ Un mecanismo que copia datos de una zona de memoria a otra sin que la CPU tenga que mover cada byte manualmente. <br /><br />En la NEEES, el DMA solo está disponible para transferir datos de OAM usando el registro OAMDMA.",
+		},
 		"Flag|_Flags": {
 			also: { es: "Bandera|_Banderas" },
 			icon: "🏁",
@@ -321,12 +329,20 @@ const dictionary = {
 			es:
 				"Una dirección de memoria especial usada para interactuar con el hardware. A diferencia de los registros de CPU, leer o escribir en ellos puede activar comportamientos del hardware en lugar de simplemente almacenar un valor. <br /><br />En la NEEES, la PPU, la APU, el Mando y los Mappers exponen estas direcciones para que el código del juego pueda comunicarse con ellos.",
 		},
+		"Memory mirror|_Memory mirrors|Mirror|_Mirrors": {
+			also: { es: "Espejo de memoria|_Espejos de memoria|Espejo|_Espejos" },
+			icon: "🚽",
+			en:
+				"A copy of a memory region that appears at another address. They are used to fill unused address space or to provide alternative access points. <br /><br />In the NEEES, many CPU and PPU regions are mirrored across the address space. <br /><br />See also: Mirroring.",
+			es:
+				"Una copia de una región de memoria que aparece en otra dirección. Se usan para llenar espacio sin usar o para ofrecer accesos alternativos. <br /><br />En la NEEES, muchas regiones de la CPU y la PPU están espejadas a lo largo del espacio de direcciones. <br /><br />Ver también: Mirroring.",
+		},
 		Mirroring: {
 			icon: "🚽",
 			en:
-				"The mirroring type affects the screen arrangement and how the game will handle scrolling.",
+				"The mirroring type affects the screen arrangement and how the game will handle scrolling. <br /><br />See also: Memory mirror.",
 			es:
-				"El tipo de mirroring afecta la disposición de la pantalla y cómo el juego maneja el scrolling.",
+				"El tipo de mirroring afecta la disposición de la pantalla y cómo el juego maneja el scrolling. <br /><br />Ver también: Espejo de memoria",
 		},
 		"Most significant byte|MSB|High byte": {
 			also: {
@@ -362,6 +378,27 @@ const dictionary = {
 			en: "_(Object Attribute Memory)_ A list of sprites, stored in OAM RAM.",
 			es:
 				"_(Object Attribute Memory)_ Una lista de sprites, almacenada en OAM RAM.",
+		},
+		OAMAddr: {
+			icon: "🏠",
+			en:
+				"A video register that sets the address inside OAM where the next sprite data will be read or written. <br /><br />It is available in CPU address `$2003`.",
+			es:
+				"Un registro de video que establece la dirección dentro de OAM donde se leerán o escribirán los datos del próximo sprite. <br /><br />Está disponible en la dirección de CPU `$2003`.",
+		},
+		OAMData: {
+			icon: "📝",
+			en:
+				"A video register that reads or writes OAM data at the address pointed by OAMAddr. After each read/write, OAMAddr is auto-incremented. <br /><br />It is available in CPU address `$2004`.",
+			es:
+				"Un registro de video que lee o escribe datos OAM en la dirección apuntada por OAMAddr. Luego de cada lectura/escritura, OAMAddr es autoincrementada. <br /><br />Está disponible en la dirección de CPU `$2004`.",
+		},
+		OAMDMA: {
+			icon: "⚡",
+			en:
+				"A video register that triggers a DMA transfer, copying 256 bytes from CPU memory into OAM to update all sprite data quickly. <br /><br />It is available in CPU address `$4014`.",
+			es:
+				"Un registro de video que dispara una transferencia DMA, copiando 256 bytes desde la memoria de CPU hacia OAM para actualizar todos los datos de sprites rápidamente. <br /><br />Está disponible en la dirección de CPU `$4014`.",
 		},
 		"OAM RAM": {
 			icon: "🐏",
@@ -401,6 +438,48 @@ const dictionary = {
 				"The _Picture Processing Unit_. It draws graphics by putting pixels on the screen.",
 			es:
 				"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
+		},
+		PPUAddr: {
+			icon: "📍",
+			en:
+				"A video register that sets the PPU address for future reads or writes. <br /><br />Must be written twice: high byte first, then low byte. <br /><br />It is available in CPU address `$2006`.",
+			es:
+				"Un registro de video que establece la dirección PPU para futuras lecturas o escrituras. <br /><br />Debe escribirse dos veces: primero el byte alto, luego el byte bajo. <br /><br />Está disponible en la dirección de CPU `$2006`.",
+		},
+		PPUCtrl: {
+			icon: "🎛️",
+			en:
+				"A video register that sets basic PPU settings like NMI enable, sprite size, pattern table selection, and nametable base. <br /><br />It is available in CPU address `$2000`.",
+			es:
+				"Un registro de video que configura ajustes básicos de la PPU como la habilitación de NMI, el tamaño de los sprites, la selección de pattern tables y la base del name table. <br /><br />Está disponible en la dirección de CPU `$2000`.",
+		},
+		PPUData: {
+			icon: "📦",
+			en:
+				"A video register that reads or writes a byte of data from/to the PPU address pointed by PPUAddr. After each read/write, PPUAddr is auto-incremented. <br /><br />It is available in CPU address `$2007`.",
+			es:
+				"Un registro de video que lee o escribe un byte de datos desde/hacia la dirección PPU apuntada por PPUAddr. Luego de cada lectura/escritura, PPUAddr es autoincrementada. <br /><br />Está disponible en la dirección de CPU `$2007`.",
+		},
+		PPUMask: {
+			icon: "🎭",
+			en:
+				"A video register used to enable or disable parts of the background and sprites, as well as apply color effects like greyscale or emphasis. <br /><br />It is available in CPU address `$2001`.",
+			es:
+				"Un registro de video usado para habilitar o deshabilitar partes del fondo y los sprites, además de aplicar efectos de color como escala de grises o énfasis. <br /><br />Está disponible en la dirección de CPU `$2001`.",
+		},
+		PPUScroll: {
+			icon: "📜",
+			en:
+				"A video register that sets the background scroll position. <br /><br />Written twice per frame: once for X scroll, once for Y. <br /><br />It is available in CPU address `$2005`.",
+			es:
+				"Un registro de video que establece la posición de scroll del fondo. <br /><br />Se escribe dos veces por frame: una para el scroll horizontal, otra para el vertical. <br /><br />Está disponible en la dirección de CPU `$2005`.",
+		},
+		PPUStatus: {
+			icon: "📊",
+			en:
+				"A video register that shows whether the PPU is in VBlank, if sprite 0 hit occurred, or if there's sprite overflow. Reading it also resets internal latches. <br /><br />It is available in CPU address `$2002`.",
+			es:
+				"Un registro de video que muestra si la PPU está en VBlank, si ocurrió un sprite 0 hit, o si hay desbordamiento de sprites. Leerlo también reinicia latches internos. <br /><br />Está disponible en la dirección de CPU `$2002`.",
 		},
 		"PPU address|_PPU addresses|PPU $": {
 			also: { es: "Dirección PPU|_Direcciones PPU|PPU $" },
@@ -481,6 +560,14 @@ const dictionary = {
 				"Longer period after the last scanline of a frame, where the PPU is idle before starting a new frame. It's the best time to update graphics safely.",
 			es:
 				"Período más largo después de la última scanline de un frame, donde la PPU queda inactiva antes de comenzar uno nuevo. Es el mejor momento para actualizar gráficos sin problemas.",
+		},
+		"Video register|_Video registers": {
+			also: { es: "Registro de video|_Registros de video" },
+			icon: "📺",
+			en:
+				"A memory-mapped register that the PPU uses to control rendering and expose its internal state.",
+			es:
+				"Un registro mapeado en memoria que la PPU usa para controlar el renderizado y exponer su estado interno.",
 		},
 		VRAM: {
 			icon: "🐏",
@@ -590,8 +677,8 @@ const dictionary = {
 
 		const data = this.entries[key];
 		const usableKeys = this._getUsableKeysOf(key);
-		const otherKeys = usableKeys.filter((it) => {
-			return !this._matchesKey(it, entry) && !it.startsWith("_");
+		const otherKeys = usableKeys.filter((it, i) => {
+			return i > 0 && !it.startsWith("_");
 		});
 		const name = usableKeys[0];
 
