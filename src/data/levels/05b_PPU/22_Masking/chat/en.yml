@@ -29,14 +29,14 @@ lets:
   - |-
     📚  also, add these methods:
       **onWrite(value)**:
-        **->** calls `this.setValue(value)`
+        **->** calls ```javascript this.setValue(value)```
       **isRenderingEnabled()**:
-        **->** returns `this.showBackground || this.showSprites`
+        **->** returns ```javascript this.showBackground || this.showSprites```
   - |-
     📚  in `PPU`, you want to <not do anything> if the rendering is disabled:
       ```javascript if (!this.registers.ppuMask.isRenderingEnabled())
         return;```
-    add that at the beginning of both `onPreLine` and `onVisibleLine`!
+    add that at the beginning of both `onPreLine(...)` and `onVisibleLine(...)`!
   - |-
     📚  only call `BackgroundRenderer::renderScanline` if `showBackground` is enabled,
     and only call `SpriteRenderer::renderScanline` if `showSprites` is enabled
@@ -49,7 +49,7 @@ renderers:
   - |-
     📚  in `BackgroundRenderer`, change `renderScanline()`:
     if `showBackgroundInFirst8Pixels` is off and `x < 8`, just plot (with `PPU::plotBG(...)`) the backdrop color, increment `x`, and `continue`! don't process further!
-    (remember that the backdrop color is `this.ppu.getColor(0, 0)`)
+    (remember that the backdrop color is ```javascript this.ppu.getColor(0, 0)```)
   - |-
     📚  in `SpriteRenderer`, change `_render(...)`...
     you need a similar logic:

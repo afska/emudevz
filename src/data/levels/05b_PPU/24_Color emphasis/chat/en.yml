@@ -29,7 +29,7 @@ so:
         ```javascript let g = (color >> 8) & 0xff;```
         ```javascript let b = (color >> 16) & 0xff;```
 
-      **->** if `this.grayscale`:
+      **->** if ```javascript this.grayscale```:
         **->** `r = g = b = Math.floor((r + g + b) / 3)`
 
       **->** if ANY emphasis bit is set:
@@ -38,7 +38,7 @@ so:
         
         **->** for each `r`, `g`, and `b`:
           **->** if the bit is NOT enabled or `all` are enabled:
-           **->** decreases the component brightness by 25%:
+           **->** decreases the component brightness by ~25%~:
               for example, red would be:
               ```javascript r = Math.floor(r * 0.75)```
 

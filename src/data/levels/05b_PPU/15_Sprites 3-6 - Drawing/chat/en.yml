@@ -4,12 +4,11 @@ main:
   - drawing sprites will be fairly easy
   - |-
     our method to render a single 🌠  scanline will look like this:
-    ```javascript
-    renderScanline() {
-      const sprites = this._evaluate();
-      this._render(sprites); // we need to define this!
-    }
-    ```
+      ```javascript
+      renderScanline() {
+        const sprites = this._evaluate();
+        this._render(sprites); // we need to define this!
+      }```
   responses:
   - easy... huh? [easy]
 
@@ -35,13 +34,13 @@ easy:
             (let's call this `insideY`)
           **->** instantiates a `Tile` passing the ppu, the pattern table id, the tile id, and the `insideY`
             (let's call this `tile`)
-          **->** creates an array with the 4 palette colors of `sprite.paletteId`
+          **->** creates an array with the 4 palette colors of ```javascript sprite.paletteId```
             (let's call this `paletteColors`)
           **->** ```javascript for (let insideX = 0; insideX < 8; insideX++)```:
-            **->** retrieves the color index for this pixel using `tile.getColorIndex(insideX)`
+            **->** retrieves the color index for this pixel using ```javascript tile.getColorIndex(insideX)```
               (let's call this `colorIndex`)
-            **->** if `colorIndex > 0` (meaning, the pixel is not transparent):
-              **->** calls `this.ppu.plot(...)` to draw the pixel
+            **->** if ```javascript colorIndex > 0``` (meaning, the pixel is not transparent):
+              **->** calls ```javascript this.ppu.plot(...)``` to draw the pixel
   responses:
   - what pattern table should I use? [patterntable]
   - what tile id should I use? [tileid]

@@ -29,7 +29,7 @@ so:
         ```javascript let g = (color >> 8) & 0xff;```
         ```javascript let b = (color >> 16) & 0xff;```
 
-      **->** si `this.grayscale`:
+      **->** si ```javascript this.grayscale```:
         **->** `r = g = b = Math.floor((r + g + b) / 3)`
 
       **->** si ALGÚN bit de énfasis está habilitado:
@@ -38,7 +38,7 @@ so:
         
         **->** para cada `r`, `g` y `b`:
           **->** si el bit NO está habilitado o todos (`all`) están habilitados:
-           **->** disminuye el brillo del componente en un 25%:
+           **->** disminuye el brillo del componente en un ~25%~:
               por ejemplo, el rojo sería:
               ```javascript r = Math.floor(r * 0.75)```
 

@@ -53,9 +53,9 @@ implement:
   - |-
     📚  implementa este método en `OAMDMA`:
     **onWrite(value)**:
-      **->** `for (i = 0; i < 256; i++)`:
+      **->** ```javascript for (i = 0; i < 256; i++)```:
         **->** construye la dirección (high byte: `value`, low byte: `i`)
-        **->** lee la dirección de la memoria de la CPU (`this.ppu.cpu` devuelve la `CPU`)
-        **->** asigna el byte obtenido a `oamRam[i]`
-      **->** suma 513 a `this.ppu.cpu.extraCycles`
+        **->** lee la dirección de la memoria de la CPU (```javascript this.ppu.cpu``` devuelve la `CPU`)
+        **->** asigna el byte obtenido a ```javascript oamRam[i]```
+      **->** suma 513 a ```javascript this.ppu.cpu.extraCycles```
   responses: []

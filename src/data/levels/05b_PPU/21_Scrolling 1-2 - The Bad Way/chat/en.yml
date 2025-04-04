@@ -69,25 +69,25 @@ proceed:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - (again, THIS IS NOT EXACTLY CORRECT, but it'll work for now!)
+  - (again, ~THIS IS NOT EXACTLY CORRECT~, but it'll work for now!)
   - |-
     📚  modify these methods of `PPUScroll`:
       **onLoad()**:
-        **->** sets `this.x = 0`
-        **->** sets `this.y = 0`
+        **->** sets ```javascript this.x = 0```
+        **->** sets ```javascript this.y = 0```
       **onWrite(value)**:
         **->** if PPUAddr's `latch` is ```javascript false```:
-          **->** writes the `value` to `this.x`
+          **->** writes the `value` to ```javascript this.x```
         **->** if it's ```javascript true```:
-          **->** writes the `value` to `this.y`
-        (you can access the `latch` with `this.ppu.registers.ppuAddr.latch`)
+          **->** writes the `value` to ```javascript this.y```
+        (you can access the `latch` with ```javascript this.ppu.registers.ppuAddr.latch```)
         **->** switches the `latch` to the opposite value
   responses:
   - alright, then what? [then]
 
 then:
   messages:
-  - then you will have in `ppuScroll.x` and `ppuScroll.y` the scroll coordinates!
+  - then you will have in ```javascript ppuScroll.x``` and ```javascript ppuScroll.y``` the scroll coordinates!
   - you can apply the scrolling to the backgrounds now!
   - |-
     📚  go to `BackgroundRenderer` and change `renderScanline()`:
@@ -115,8 +115,8 @@ then:
       const nameTableY = scrolledY % 240;```
     
     from now on, every usage of `x` and `y` should be replaced by `nameTableX` and `nameTableY`
-    (for example: the name table read index, the `this._getBackgroundPaletteId(...)` call, and `new Tile(...)` should be updated)
-    the only exception is the `plotBG` call, which still needs to plot in the ~(x,y)~ point of the screen
+    (for example: the name table read index, the ```javascript this._getBackgroundPaletteId(...)``` call, and ```javascript new Tile(...)``` should be updated)
+    the only exception is the `plotBG(...)` call, which still needs to plot in the ~(x,y)~ point of the screen
   - |-
     📚  lastly, define:
       ```javascript

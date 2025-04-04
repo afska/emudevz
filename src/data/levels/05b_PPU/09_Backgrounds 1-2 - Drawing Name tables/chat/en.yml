@@ -53,7 +53,7 @@ howmany:
 
 line:
   messages:
-  - the current line is represented by `this.ppu.scanline`
+  - the current line is represented by ```javascript this.ppu.scanline```
   responses:
   - ...questions
 

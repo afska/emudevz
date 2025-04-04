@@ -42,19 +42,19 @@ clear:
         ```javascript this.plot(x, y, color);```
     **isBackgroundPixelOpaque(x, y)**:
       **->** devuelve si el píxel ~(x, y)~ en `colorIndexes` es mayor que 0
-  - 📚  en `BackgroundRenderer`, en lugar de llamar al método `plot`, llama a `plotBG` pasando el `colorIndex` como último argumento
+  - 📚  en `BackgroundRenderer`, en lugar de llamar al método `plot(...)`, llama a `plotBG(...)` pasando el `colorIndex` como último argumento
   - |-
     📚  en `SpriteRenderer`, modifica estos métodos:
       **_render(...)**:
         **->** al inicio, declara un `buffer` como un array vacío
-        **->** en lugar de llamar a `this.ppu.plot(...)`, guarda la información en el `buffer`:
+        **->** en lugar de llamar a ```javascript this.ppu.plot(...)```, guarda la información en el `buffer`:
           ```javascript const x = sprite.x + insideX;```
           ```javascript const color = paletteColors[colorIndex];```
           ```javascript buffer[x] = { x, sprite, color };```
         **->** al final, ```javascript return buffer;```
       **renderScanline()**:
-        **->** asigna el valor devuelto por `this._render(sprites)` a una constante `buffer`
-        **->** llama a `this._draw(buffer);`
+        **->** asigna el valor devuelto por ```javascript this._render(sprites)``` a una constante `buffer`
+        **->** llama a ```javascript this._draw(buffer);```
   - |-
     📚  y define:
       **_draw(buffer)**:
@@ -62,13 +62,13 @@ clear:
           ```javascript this.ppu.scanline;```
           (llamemos a esto `y`)
         **->** para cada `element` en el array `buffer`:
-          **->** si el `element` no es `undefined`:
+          **->** si el `element` no es ```javascript undefined```:
             **->** determina si el sprite está al frente del fondo:
               ```javascript element.sprite.isInFrontOfBackground;```
               (llamemos a esto `isInFront`)
             **->** determina si el píxel correspondiente del fondo es opaco:
               ```javascript this.ppu.isBackgroundPixelOpaque(element.x, y);```
               (llamemos a esto `isBGOpaque`)
-            **->** si `isInFront || !isBGOpaque`:
+            **->** si ```javascript isInFront || !isBGOpaque```:
               **->** llama a ```javascript this.ppu.plot(element.x, y, element.color);```
   responses: []

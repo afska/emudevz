@@ -41,8 +41,8 @@ vertical:
   messages:
   - el volteo vertical es similar, pero tiene una pequeña peculiaridad
   - para tener en cuenta los sprites de ~8x16~, debemos usar la coordenada Y <dentro del tile actual>
-  - primero define `tileInsideY = insideY % 8;`
+  - primero define ```javascript tileInsideY = insideY % 8;```
   - |-
     luego, como último argumento del constructor de `Tile`, usa:
-      `sprite.flipY ? 7 - tileInsideY : tileInsideY`
+      ```javascript sprite.flipY ? 7 - tileInsideY : tileInsideY```
   responses: []

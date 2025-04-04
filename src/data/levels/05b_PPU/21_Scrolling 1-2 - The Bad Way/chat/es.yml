@@ -73,21 +73,21 @@ proceed:
   - |-
     📚  modifica estos métodos de `PPUScroll`:
       **onLoad()**:
-        **->** asigna `this.x = 0`
-        **->** asigna `this.y = 0`
+        **->** asigna ```javascript this.x = 0```
+        **->** asigna ```javascript this.y = 0```
       **onWrite(value)**:
         **->** si el `latch` de PPUAddr es ```javascript false```:
-          **->** escribe el `valor` en `this.x`
+          **->** escribe el `valor` en ```javascript this.x```
         **->** si es ```javascript true```:
-          **->** escribe el `valor` en `this.y`
-        (puedes acceder al `latch` con `this.ppu.registers.ppuAddr.latch`)
+          **->** escribe el `valor` en ```javascript this.y```
+        (puedes acceder al `latch` con ```javascript this.ppu.registers.ppuAddr.latch```)
         **->** cambia el `latch` al valor opuesto
   responses:
   - bien, ¿y después qué? [then]
 
 then:
   messages:
-  - tendrás en `ppuScroll.x` y `ppuScroll.y` las coordenadas de desplazamiento
+  - tendrás en ```javascript ppuScroll.x``` y ```javascript ppuScroll.y``` las coordenadas de desplazamiento
   - ¡ahora puedes aplicar el scrolling a los fondos!
   - |-
     📚  ve a `BackgroundRenderer` y cambia `renderScanline()`:
@@ -115,8 +115,8 @@ then:
       const nameTableY = scrolledY % 240;```
     
     a partir de ahora, cada uso de `x` y `y` debería ser reemplazado por `nameTableX` y `nameTableY`
-    (por ejemplo: el índice de lectura de la name table, la llamada `this._getBackgroundPaletteId(...)` y `new Tile(...)` deben ser actualizados)
-    la única excepción es la llamada `plotBG`, que aún necesita trazarse en el punto ~(x,y)~ de la pantalla
+    (por ejemplo: el índice de lectura de la name table, la llamada ```javascript this._getBackgroundPaletteId(...)``` y ```javascript new Tile(...)``` deben ser actualizados)
+    la única excepción es la llamada `plotBG(...)`, que aún necesita trazarse en el punto ~(x,y)~ de la pantalla
   - |-
     📚  finalmente, define:
       ```javascript

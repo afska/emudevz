@@ -56,12 +56,12 @@ implement:
   - |-
     📚  define este método:
     **changeNameTableMirroringTo(mirroringId)**:
-      **->** si `this.cartridge.header.mirroringId === "FOUR_SCREEN"`
-        **->** asigna `mirroringId = "FOUR_SCREEN"`
-      **->** asigna `this.mirroringId = mirroringId`
-      **->** asigna `this._mirroring = mirroringTypes[mirroringId]`
+      **->** si ```javascript this.cartridge.header.mirroringId === "FOUR_SCREEN"```
+        **->** asigna ```javascript mirroringId = "FOUR_SCREEN"```
+      **->** asigna ```javascript this.mirroringId = mirroringId```
+      **->** asigna ```javascript this._mirroring = mirroringTypes[mirroringId]```
       (los mappers llamarán a este método para cambiar el tipo de mirroring cuando lo necesiten)
-  - 📚  cambia `onLoad(...)` para que llame al nuevo método con el mirroring inicial (recuerda que esto está guardado en `cartridge.header.mirroringId`)
+  - 📚  cambia `onLoad(...)` para que llame al nuevo método con el mirroring inicial (recuerda que esto está guardado en ```javascript cartridge.header.mirroringId```)
   - 📚  mapea los rangos $2000-$23FF, $2400-$27FF, $2800-$2BFF y $2C00-$2FFF a VRAM, basado en el `mirroring` actual (tanto lecturas como escrituras)
   responses:
   - ¿por ejemplo? 🧐 [example]
@@ -73,9 +73,8 @@ example:
     actualmente, `read(...)` debería verse así:
       ```javascript
       if (address >= 0x2000 && address <= 0x2fff)
-        return this.vram[address - 0x2000];
-      ```
-  - necesitas mapear las 4 secciones según a dónde apunte `this._mirroring`
+        return this.vram[address - 0x2000];```
+  - necesitas mapear las 4 secciones según a dónde apunte ```javascript this._mirroring```
   - |-
     implementemos los primeros dos casos
       ```javascript
@@ -85,6 +84,5 @@ example:
         if (address >= 0x2400 && address < 0x2800)
           return this.vram[this._mirroring.$2400 + (address - 0x2400)];
         // TODO: ¡Termina los demás!
-      }
-      ```
+      }```
   responses: []

@@ -29,14 +29,14 @@ lets:
   - |-
     📚  también, agrega estos métodos:
       **onWrite(value)**:
-        **->** llama a `this.setValue(value)`
+        **->** llama a ```javascript this.setValue(value)```
       **isRenderingEnabled()**:
-        **->** retorna `this.showBackground || this.showSprites`
+        **->** retorna ```javascript this.showBackground || this.showSprites```
   - |-
     📚  en `PPU`, quieres <no hacer nada> si la renderización está deshabilitada:
       ```javascript if (!this.registers.ppuMask.isRenderingEnabled())
         return;```
-    agrega eso al comienzo de `onPreLine` y `onVisibleLine`!
+    agrega eso al comienzo de `onPreLine(...)` y `onVisibleLine(...)`!
   - |-
     📚  solo llama a `BackgroundRenderer::renderScanline` si `showBackground` está habilitado,
     y solo llama a `SpriteRenderer::renderScanline` si `showSprites` está habilitado
@@ -49,7 +49,7 @@ renderers:
   - |-
     📚  en `BackgroundRenderer`, cambia `renderScanline()`:
     si `showBackgroundInFirst8Pixels` está apagado y `x < 8`, solo dibuja (con `PPU::plotBG(...)`) el color de fondo, incrementa `x` y después haz `continue`! ¡no proceses más!
-    (recuerda que el color de fondo es `this.ppu.getColor(0, 0)`)
+    (recuerda que el color de fondo es ```javascript this.ppu.getColor(0, 0)```)
   - |-
     📚  en `SpriteRenderer`, cambia `_render(...)`...
     necesitas una lógica similar:

@@ -20,6 +20,6 @@ aahh:
   - |-
     📚  in `SpriteRenderer`, change the `_render(...)` method; below `buffer[x] = ...`, add:
     **->** if the `sprite.id` is 0 AND the background pixel in ~(x, y)~ is opaque:
-      **->** sets `this.ppu.registers.ppuStatus.sprite0Hit = 1`
+      **->** sets ```javascript this.ppu.registers.ppuStatus.sprite0Hit = 1```
   - 📚  ah, and reset `sprite0Hit` in `PPU::_onPreLine()`, just like you did with the other two flags!
   responses: []

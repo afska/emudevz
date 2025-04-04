@@ -15,11 +15,11 @@ delay:
   - |-
     📚  implement these methods in `PPUData`:
     **onLoad**:
-      **->** initializes `this.buffer = 0`
+      **->** initializes ```javascript this.buffer = 0```
     **onRead()**:
-      **->** saves `this.buffer` in a variable named `data`
-      **->** reads from the PPU address `ppuAddr.address` and saves the result into `this.buffer`
-      **->** if the address is between $3F00 and $3FFF, assigns `data = this.buffer` (skips the buffer)
-      **->** calls `this._incrementAddress()`
+      **->** saves ```javascript this.buffer``` in a variable named `data`
+      **->** reads from the PPU address ```javascript ppuAddr.address``` and saves the result into ```javascript this.buffer```
+      **->** if the address is between $3F00 and $3FFF, assigns ```javascript data = this.buffer``` (skips the buffer)
+      **->** calls ```javascript this._incrementAddress()```
       **->** returns `data`
   responses: []

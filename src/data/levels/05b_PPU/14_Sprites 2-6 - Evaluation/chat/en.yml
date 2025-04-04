@@ -21,12 +21,12 @@ ok:
     **_evaluate()**:
       **->** defines a `sprites` array
       **->** for each possible sprite id (~0-63~):
-        **->** creates a sprite using `this._createSprite(...)`
+        **->** creates a sprite using ```javascript this._createSprite(...)```
         **->** if the sprite should render in the current scanline, and `sprites` has less than 9 items:
           **->** if `sprites` has less than 8 items:
             **->** pushes to `sprites`
           **->** else:
-            **->** sets `this.ppu.registers.ppuStatus.spriteOverflow = 1`
+            **->** sets ```javascript this.ppu.registers.ppuStatus.spriteOverflow = 1```
             **->** stops looping
       **->** returns `sprites` in reversed order
   - 📚  also, you need to reset `spriteOverflow` to 0 on ~scanline=-1; cycle=1~, like you previously did with `isInVBlankInterval`
@@ -37,5 +37,5 @@ ok:
 visible:
   messages:
   - there's a method to check this in my Sprite library
-  - use `sprite.shouldRenderInScanline(this.ppu.scanline)`
+  - use ```javascript sprite.shouldRenderInScanline(this.ppu.scanline)```
   responses: []

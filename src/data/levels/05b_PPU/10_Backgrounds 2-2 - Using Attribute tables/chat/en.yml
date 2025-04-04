@@ -15,7 +15,7 @@ main:
         `0x3F00 + paletteId * 4`
         (let's call this `startAddress`)
       **->** reads the color index from memory:
-        reads from PPU address `startAddress` + `colorIndex`
+        reads from PPU address ```javascript startAddress + colorIndex```
         (let's call this `masterColorIndex`)
       **->** returns a color from the master palette, using `masterColorIndex`
         (you can import and use 📄  ~/lib/ppu/masterPalette.js~ for the list of colors)

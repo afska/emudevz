@@ -28,8 +28,8 @@ define:
     📚  implementa estos métodos en `PPUAddr`:
     **onLoad()**:
       **->** inicializa dos propiedades:
-        `this.latch = false`
-        `this.address = 0`
+        ```javascript this.latch = false```
+        ```javascript this.address = 0```
         (usaremos estas para modelar el comportamiento alternante entre byte alto / byte bajo en cada operación de escritura)
     **onWrite(value)**:
       **->** si `latch` es ```javascript false```:
@@ -43,15 +43,15 @@ define:
   - |-
     📚  implementa estos métodos en `PPUData`:
     **onWrite(value)**:
-      **->** escribe `value` en la dirección de memoria PPU `ppuAddr.address`
-        (puedes acceder a la instancia `PPUMemory` con `this.ppu.memory`)
-        (puedes acceder a la instancia `PPUAddr` con `this.ppu.registers.ppuAddr`)
-      **->** llama a `this._incrementAddress()`
+      **->** escribe `value` en la dirección de memoria PPU ```javascript ppuAddr.address```
+        (puedes acceder a la instancia `PPUMemory` con ```javascript this.ppu.memory```)
+        (puedes acceder a la instancia `PPUAddr` con ```javascript this.ppu.registers.ppuAddr```)
+      **->** llama a ```javascript this._incrementAddress()```
     **_incrementAddress()**:
-      **->** si `ppuCtrl.vramAddressIncrement32` es ~1~:
-        **->** incrementa `ppuAddr.address` por 32
+      **->** si ```javascript ppuCtrl.vramAddressIncrement32``` es ~1~:
+        **->** incrementa ```javascript ppuAddr.address``` por 32
       **->** si no:
-        **->** incrementa `ppuAddr.address` 1 vez
+        **->** incrementa ```javascript ppuAddr.address``` 1 vez
      **[!]** asegúrate de que la dirección nunca exceda 65535 usando `byte.toU16(...)`
   - |-
     📚  por último, modifica en `PPUStatus`:

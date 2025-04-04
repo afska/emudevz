@@ -48,13 +48,13 @@ addone:
 spritesize:
   messages:
   - that's a global setting, configured in 🎛️  ~PPUCtrl~
-  - sprites should use the ~8x16~ mode when `ppu.registers.ppuCtrl.spriteSize === 1`
+  - when ```javascript ppu.registers.ppuCtrl.spriteSize === 1```, sprites should use the ~8x16~ mode
   responses:
   - ...implement
 
 patterntable:
   messages:
-  - in ~8x8~ mode, the ~tile id~ is `byte1` of the OAM entry, and the ~pattern table id~ is `ppu.registers.ppuCtrl.sprite8x8PatternTableId`
-  - in ~8x16~ mode, the ~tile id~ is `(byte1 & 0b11111110)` and the ~pattern table id~ is `(byte1 & 0b00000001)`
+  - in ~8x8~ mode, the ~tile id~ is `byte1` of the OAM entry, and the ~pattern table id~ is ```javascript ppu.registers.ppuCtrl.sprite8x8PatternTableId```
+  - in ~8x16~ mode, the ~tile id~ is ```javascript (byte1 & 0b11111110)``` and the ~pattern table id~ is ```javascript (byte1 & 0b00000001)```
   responses:
   - ...implement

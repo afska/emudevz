@@ -21,12 +21,12 @@ ok:
     **_evaluate()**:
       **->** define un array `sprites`
       **->** para cada id de sprite posible (~0-63~):
-        **->** crea un sprite usando `this._createSprite(...)`
+        **->** crea un sprite usando ```javascript this._createSprite(...)```
         **->** si el sprite debe renderizarse en la scanline actual, y `sprites` tiene menos de 9 elementos:
           **->** si `sprites` tiene menos de 8 elementos:
             **->** agrega al array `sprites`
           **->** de lo contrario:
-            **->** asigna `this.ppu.registers.ppuStatus.spriteOverflow = 1`
+            **->** asigna ```javascript this.ppu.registers.ppuStatus.spriteOverflow = 1```
             **->** detiene el bucle
       **->** devuelve `sprites` en orden inverso
   - 📚 además, necesitas reiniciar `spriteOverflow` a 0 en ~scanline=-1; cycle=1~, como lo hiciste anteriormente con `isInVBlankInterval`
@@ -37,5 +37,5 @@ ok:
 visible:
   messages:
   - hay un método para verificar esto en mi biblioteca Sprite
-  - usa `sprite.shouldRenderInScanline(this.ppu.scanline)`
+  - usa ```javascript sprite.shouldRenderInScanline(this.ppu.scanline)```
   responses: []
