@@ -4,7 +4,7 @@ main:
   - los modos indexados...
   - hora de implementarlos también
   - echa un vistazo al pseudocódigo de ejemplo en la documentación 👀
-  - tienes que tener cuidado y aplicar las llamadas a ```javascript byte.toU8(...)``` y ```javascript byte.toU16(...)``` apropiadas
+  - tienes que tener cuidado y aplicar las llamadas a `byte.toU8(...)` y `byte.toU16(...)` apropiadas
   - p. ej. en el modo "Absolute,X", si la <entrada> es $FFFF y [X] es 3, el <output> tiene que ser $0002 (y no $10002)
   - 📚  siguiendo 📄  ~/docs/cpu/addressing_modes.es.md~,
   - ¡implementa los modos restantes!

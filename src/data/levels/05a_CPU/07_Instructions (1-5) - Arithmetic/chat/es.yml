@@ -53,6 +53,6 @@ flags:
   - y además, asignar ~N=1~ cuando el byte es negativo, y ~N=0~ cuando no lo es
   - |-
     ya tienes métodos para esta tarea, solo usa:
-      ```javascript cpu.flags.updateZeroAndNegative(...)```
+      `cpu.flags.updateZeroAndNegative(...)`
   responses:
   - ...howmany

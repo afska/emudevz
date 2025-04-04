@@ -66,11 +66,11 @@ next:
     📚  para llevar un seguimiento del tiempo, agrega este método:
     **step()**:
       **->** incrementa `cycle`
-      **->** si `cycle >= 341`:
-        **->** asigna `cycle = 0`
+      **->** si ```javascript cycle >= 341```:
+        **->** asigna ```javascript cycle = 0```
         **->** incrementa `scanline`
-        **->** si `scanline >= 261`:
-          **->** asigna `scanline = -1`
+        **->** si ```javascript scanline >= 261```:
+          **->** asigna ```javascript scanline = -1```
           **->** incrementa `frame`
   - 📚  luego, importa tu archivo desde 📄  ~/code/index.js~
   - y agrega la correspondiente clave `PPU` al objeto exportado

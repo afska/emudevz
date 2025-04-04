@@ -13,18 +13,18 @@ main:
         $0000 or $1000 depending on `patternTableId` (~0~ or ~1~)
         (let's call this `tableAddress`)
       **->** calculates the start address of the tile's 💜  low plane:
-        `tableAddress + tileId * 16`
+        ```javascript tableAddress + tileId * 16```
         (let's call this `lowPlaneAddress`)
       **->** calculates the start address of the tile's 💚  high plane:
-        `lowPlaneAddress + 8`
+        ```javascript lowPlaneAddress + 8```
         (let's call this `highPlaneAddress`)
       **->** reads the correct row of each bitplane:
-        `this._lowRow` = read PPU address `lowPlaneAddress + y` from `ppu.memory`
-        `this._highRow` = read PPU address `highPlaneAddress + y` from `ppu.memory`
+        ```javascript this._lowRow``` = read PPU address ```javascript lowPlaneAddress + y``` from ```javascript ppu.memory```
+        ```javascript this._highRow``` = read PPU address ```javascript highPlaneAddress + y``` from ```javascript ppu.memory```
     **getColorIndex(x)**:
       **->** determines the bit position that corresponds to `x` (a number between 0 and 7)
         keep in mind that ~x=0~ is the leftmost pixel, and that would be ~bit 7~
-      **->** grabs that bit from `this._lowRow` and `this._highRow` using `byte.getBit(...)`
+      **->** grabs that bit from ```javascript this._lowRow``` and ```javascript this._highRow``` using `javascript byte.getBit(...)`
       **->** returns the resulting color index, combining the two bits with `byte.buildU2(...)`
   responses:
   - how will we test this? 🧐 [test]

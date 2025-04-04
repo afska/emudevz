@@ -66,11 +66,11 @@ next:
     📚  to keep track of the timing, add this method:
     **step()**:
       **->** increments `cycle`
-      **->** if `cycle >= 341`:
-        **->** sets `cycle = 0`
+      **->** if ```javascript cycle >= 341```:
+        **->** sets ```javascript cycle = 0```
         **->** increments `scanline`
-        **->** if `scanline >= 261`:
-          **->** sets `scanline = -1`
+        **->** if ```javascript scanline >= 261```:
+          **->** sets ```javascript scanline = -1```
           **->** increments `frame`
   - 📚  then, import your file from 📄  ~/code/index.js~
   - and add the corresponding `PPU` key to the exported object

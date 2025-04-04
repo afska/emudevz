@@ -13,18 +13,18 @@ main:
         $0000 o $1000 dependiendo de `patternTableId` (~0~ o ~1~)
         (llamemos a esto `tableAddress`)
       **->** calcula la dirección inicial del 💜  low plane:
-        `tableAddress + tileId * 16`
+        ```javascript tableAddress + tileId * 16```
         (llamemos a esto `lowPlaneAddress`)
       **->** calcula la dirección inicial del 💚  high plane:
-        `lowPlaneAddress + 8`
+        ```javascript lowPlaneAddress + 8```
         (llamemos a esto `highPlaneAddress`)
       **->** lee la fila correcta de cada bitplane:
-        `this._lowRow` = leer dirección PPU `lowPlaneAddress + y`
-        `this._highRow` = leer dirección PPU `highPlaneAddress + y`
+        ```javascript this._lowRow``` = leer dirección PPU ```javascript lowPlaneAddress + y```
+        ```javascript this._highRow``` = leer dirección PPU ```javascript highPlaneAddress + y```
     **getColorIndex(x)**:
       **->** determina la posición del bit que corresponde a `x` (un número entre 0 y 7)
         ten en cuenta que ~x=0~ es el píxel más a la izquierda, y eso sería ~bit 7~
-      **->** toma ese bit de `this._lowRow` y `this._highRow` usando `byte.getBit(...)`
+      **->** toma ese bit de ```javascript this._lowRow``` y ```javascript this._highRow``` usando `byte.getBit(...)`
       **->** devuelve el índice de color resultante, combinando los dos bits con `byte.buildU2(...)`
   responses:
   - ¿cómo lo probaremos? 🧐 [test]

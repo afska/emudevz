@@ -21,8 +21,8 @@ emulate:
   messages:
   - 📚  create a `PPUMemory` class, using 📄  ~/tmpl/ppu/PPUMemory.js~ as template
   - 📚  implement just the first range ($0000-$1FFF), for both `read(...)` and `write(...)` operations
-  - on <reads>, you should return `this.mapper.ppuRead(address)`
-  - on <writes>, you should call `this.mapper.ppuWrite(address, value)` and return
+  - on <reads>, you should return ```javascript this.mapper.ppuRead(address)```
+  - on <writes>, you should call ```javascript this.mapper.ppuWrite(address, value)``` and return
   - |-
     📚  then, add this to your PPU's constructor:
       ```javascript

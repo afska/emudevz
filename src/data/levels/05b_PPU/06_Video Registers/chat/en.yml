@@ -39,14 +39,14 @@ useit:
   messages:
   - have a look at 📄  ~/tmpl/ppu/VideoRegisters.js~ and use it as a template
   - registers 🎛️  `PPUCtrl` and 📊  `PPUStatus` are already implemented
-  - note how they call `addField` for each parameter defined in the ~Bits~ column of the doc file, indicating the starting bit, and its size (when they're larger than 1 bit)
-  - "this creates <magic properties>: after the `onWrite(...)` call, the PPU will be able to access their values (e.g. `ppuCtrl.spriteSize`)"
-  - in the case of 📊  `PPUStatus`, it uses `addWritableField` because the PPU needs to write them (e.g. `ppuStatus.isInVBlankInterval = 1`) so the CPU can read the updated values via `onRead()`
+  - note how they call `addField(...)` for each parameter defined in the ~Bits~ column of the doc file, indicating the starting bit, and its size (when they're larger than 1 bit)
+  - "this creates <magic properties>: after the `onWrite(...)` call, the PPU will be able to access their values (e.g. ```javascript ppuCtrl.spriteSize```)"
+  - in the case of 📊  `PPUStatus`, it uses `addWritableField(...)` because the PPU needs to write them (e.g. ```javascript ppuStatus.isInVBlankInterval = 1```) so the CPU can read the updated values via `onRead()`
   - 📚  create a `VideoRegisters` class, using that template
   - |-
     📚  add a `registers` property to `PPU`, assigned to:
          ```javascript new VideoRegisters(this)```
   - "📚  lastly, map them in `CPUMemory` (regions $2000-$2007 and $4014):"
-  - <reads> should return `this.ppu.registers.read(address)`
-  - <writes> should call `this.ppu.registers.write(address, value)` and return
+  - <reads> should return ```javascript this.ppu.registers.read(address)```
+  - <writes> should call ```javascript this.ppu.registers.write(address, value)``` and return
   responses: []
