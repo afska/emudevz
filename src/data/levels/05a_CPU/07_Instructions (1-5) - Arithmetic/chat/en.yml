@@ -51,6 +51,8 @@ flags:
   - in almost all instructions that produce a value, the ~Z~ and ~N~ flags are updated
   - you should set ~Z=1~ when the produced value is 0, and ~Z=0~ when it's not
   - also, set ~N=1~ when the byte is negative, and ~N=0~ when it's not
-  - you already have methods for this task, just use `cpu.flags.updateZeroAndNegative(...)`!
+  - |-
+    you already have methods for this task, just use:
+      ```javascript cpu.flags.updateZeroAndNegative(...)```
   responses:
   - ...howmany

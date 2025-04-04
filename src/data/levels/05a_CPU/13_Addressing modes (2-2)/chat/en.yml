@@ -4,7 +4,7 @@ main:
   - the indexed modes...
   - time to implement them as well
   - take a look at the example pseudocode in the documentation 👀
-  - you have to be careful and apply the appropriate `byte.toU8(...)` and `byte.toU16(...)` calls
+  - you have to be careful and apply the appropriate ```javascript byte.toU8(...)``` and ```javascript byte.toU16(...)``` calls
   - e.g. in the "Absolute,X" mode, if the <input> is $FFFF and [X] is 3, the <output> must be $0002 (not $10002)
   - 📚  following 📄  ~/docs/cpu/addressing_modes.en.md~,
   - implement the missing modes!

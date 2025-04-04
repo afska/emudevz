@@ -28,7 +28,7 @@ what:
     set((m) => m.$exercise = true);
   messages:
   - 📚  crea una clase `FlagsRegister` con 6 propiedades booleanas (llamadas `c`, `z`, `i`, `d`, `v` y `n`)
-  - inicialízalas en `false`
+  - inicialízalas en ```javascript false```
   - |-
     📚  luego implementa, siguiendo la tabla anterior:
     **getValue()**:
@@ -36,7 +36,7 @@ what:
     **setValue(value)**:
       **->** tiene que asignar todas las banderas a partir del número de 8 bits que recibe
   - p. ej. con `i` y `v` encendidas, ```javascript getValue()``` debería retornar ```javascript 0b01100100```
-  - y ```javascript setValue(0b00000010)``` debería poner todos los booleanos en `false`, menos `z`
+  - y ```javascript setValue(0b00000010)``` debería poner todos los booleanos en ```javascript false```, menos `z`
   responses:
   - (*) necesito un poco de ayuda 📐 [bits]
   - ✅  ya tengo la clase [nowwhat]

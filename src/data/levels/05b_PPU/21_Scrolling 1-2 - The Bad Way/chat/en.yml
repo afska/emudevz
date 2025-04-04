@@ -76,9 +76,9 @@ proceed:
         **->** sets `this.x = 0`
         **->** sets `this.y = 0`
       **onWrite(value)**:
-        **->** if PPUAddr's `latch` is `false`:
+        **->** if PPUAddr's `latch` is ```javascript false```:
           **->** writes the `value` to `this.x`
-        **->** if it's `true`:
+        **->** if it's ```javascript true```:
           **->** writes the `value` to `this.y`
         (you can access the `latch` with `this.ppu.registers.ppuAddr.latch`)
         **->** switches the `latch` to the opposite value

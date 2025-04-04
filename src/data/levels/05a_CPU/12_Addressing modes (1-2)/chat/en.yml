@@ -47,6 +47,6 @@ relative:
 indirect:
   messages:
   - you have a full implementation in the doc file 😊
-  - just perform a `read16` with the address!
+  - just perform a `read16(...)` with the address!
   responses:
   - ...letscode

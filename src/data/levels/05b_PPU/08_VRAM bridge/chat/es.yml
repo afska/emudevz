@@ -32,10 +32,10 @@ define:
         `this.address = 0`
         (usaremos estas para modelar el comportamiento alternante entre byte alto / byte bajo en cada operación de escritura)
     **onWrite(value)**:
-      **->** si `latch` es `false`:
+      **->** si `latch` es ```javascript false```:
         **->** escribe solo el high byte de `address`, usando `value`
           (deja la parte baja como estaba antes)
-      **->** si es `true`:
+      **->** si es ```javascript true```:
         **->** escribe solo el low byte de `address`, usando `value`
           (deja la parte alta como estaba antes)
       (puedes usar `buildU16(...)`, `highByteOf(...)`, y `lowByteOf(...)`)

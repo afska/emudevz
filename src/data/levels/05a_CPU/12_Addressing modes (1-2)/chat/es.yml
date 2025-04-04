@@ -47,6 +47,6 @@ relative:
 indirect:
   messages:
   - tienes una implementación completa en el archivo de documentación 😊
-  - ¡solo realiza un `read16` con la dirección!
+  - ¡solo realiza un `read16(...)` con la dirección!
   responses:
   - ...letscode

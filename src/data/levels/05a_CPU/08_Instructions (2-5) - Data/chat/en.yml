@@ -19,8 +19,8 @@ inst:
   messages:
   - right, sorry... 🤣
   - in `PHP`, you should push a number to the stack
-  - that number is the result of calling `cpu.flags.getValue()`
-  - but you should set its bit 4 to 1 (use `byte.setBit(flags, 4, 1)`)
+  - that number is the result of calling ```javascript cpu.flags.getValue()```
+  - but you should set its bit 4 to 1 (use ```javascript byte.setBit(flags, 4, 1)```)
   responses:
   - why? [why]
 

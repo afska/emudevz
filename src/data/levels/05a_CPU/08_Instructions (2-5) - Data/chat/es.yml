@@ -19,8 +19,8 @@ inst:
   messages:
   - claro, disculpa... 🤣
   - en `PHP`, tienes que poner un número en la pila
-  - ese número es el resultado de llamar a `cpu.flags.getValue()`
-  - pero tendrías que poner su bit 4 en 1 (usa `byte.setBit(flags, 4, 1)`)
+  - ese número es el resultado de llamar a ```javascript cpu.flags.getValue()```
+  - pero tendrías que poner su bit 4 en 1 (usa ```javascript byte.setBit(flags, 4, 1)```)
   responses:
   - ¿por qué? [why]
 

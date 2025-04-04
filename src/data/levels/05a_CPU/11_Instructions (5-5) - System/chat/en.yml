@@ -79,15 +79,15 @@ implement:
   - |-
     📚  add this method to your `CPU`:
     **interrupt(interrupt, withBFlag = false)**:
-      **->** if `interrupt.id === "IRQ"` and ~I=1~, returns 0
+      **->** if ```javascript interrupt.id === "IRQ"``` and ~I=1~, returns 0
         (the interrupt is ignored)
       **->** pushes [PC] onto the stack
       **->** pushes the flags byte onto the stack
-        (if `withBFlag` is `true`, the value is pushed with its bit 4 on)
+        (if `withBFlag` is ```javascript true```, the value is pushed with its bit 4 on)
         (otherwise, the value is pushed as is)
-      **->** advances 7 cycles (`this.cycle += 7`)
+      **->** advances 7 cycles (```javascript this.cycle += 7```)
       **->** sets ~I=1~ in the flags register
-      **->** sets [PC] = the result of reading the addresses `interrupt.vector` and `interrupt.vector+1` in <Little Endian>
+      **->** sets [PC] = the result of reading the addresses ```javascript interrupt.vector``` and ```javascript interrupt.vector+1``` in Little Endian
         (remember that you have a `read16(...)` method for that)
       **->** returns 7
   responses:
