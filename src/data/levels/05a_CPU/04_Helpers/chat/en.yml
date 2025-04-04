@@ -5,15 +5,15 @@ main:
   - |-
     📚  in your `Register8Bit` and `Register16Bit` classes, implement:
     **increment()**:
-      **->** calls `setValue(...)` with the result of `getValue()+1`
+      **->** calls `setValue(...)` with the result of ```javascript getValue()+1```
     **decrement()**:
-      **->** calls `setValue(...)` with the result of `getValue()-1`
+      **->** calls `setValue(...)` with the result of ```javascript getValue()-1```
   - |-
     📚  in your `FlagsRegister`, implement:
     **updateZero(value)**:
-      **->** sets `z=true` if `value` is 0, or `z=false` otherwise
+      **->** sets ```javascript z=true``` if `value` is 0, or ```javascript z=false``` otherwise
     **updateNegative(value)**:
-      **->** sets `n=true` if `byte.isNegative(value)`, or `n=false` otherwise
+      **->** sets ```javascript n=true``` if ```javascript byte.isNegative(value)```, or ```javascript n=false``` otherwise
     **updateZeroAndNegative(value)**:
       **->** calls `updateZero(...)` and `updateNegative(...)` with the `value`
   responses: []
