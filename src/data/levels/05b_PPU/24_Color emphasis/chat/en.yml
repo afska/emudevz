@@ -1,7 +1,7 @@
 main:
   messages:
   - the PPU is capable of "transforming" the output colors to some degree
-  - 🎭  ~PPUMask~ has some bits that enable <grayscale mode> or <color emphasis>
+  - 🎭  PPUMask has some bits that enable <grayscale mode> or <color emphasis>
   - that is, emphasizing the red, green, or blue components of each color
   responses:
   - how does it work? [how]

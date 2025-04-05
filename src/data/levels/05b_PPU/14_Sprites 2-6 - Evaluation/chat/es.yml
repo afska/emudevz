@@ -9,7 +9,7 @@ how:
   messages:
   - escanea toda la tabla OAM, comprobando si cada sprite debe dibujarse en la scanline actual (basado en ~x~, ~y~, y ~height~)
   - elige los primeros 8 sprites
-  - después de encontrar 8 (el número máximo de sprites por scanline), si encuentra <más> sprites visibles, la 🏁  ~bandera de sprite overflow~ (bit 5 de 📊  ~PPUStatus~) se enciende para notificar el error al desarrollador del juego
+  - después de encontrar 8 (el número máximo de sprites por scanline), si encuentra <más> sprites visibles, la 🏁  ~bandera de sprite overflow~ (bit 5 de 📊  PPUStatus) se enciende para notificar el error al desarrollador del juego
   - los sprites con identificadores más bajos se renderizan encima de los sprites con identificadores más altos, ¡así que deberías invertir la lista de sprites elegidos!
   responses:
   - ok creo que lo entendí [ok]

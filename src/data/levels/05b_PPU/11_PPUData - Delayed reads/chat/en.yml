@@ -3,8 +3,8 @@ main:
   messages:
   - remember how games write to VRAM?
   - <{PPUAddr_PPUData.png}>
-  - they also can <read> from VRAM, by reading from 📦  ~PPUData~ instead of writing
-  - "this operation also increments the address in 📍  ~PPUAddr~, and has a little quirk:"
+  - they also can <read> from VRAM, by reading from 📦  PPUData instead of writing
+  - "this operation also increments the address in 📍  PPUAddr, and has a little quirk:"
   - all reads are <delayed> by 1, except for the Palette RAM section and its mirrors
   responses:
   - how can we implement the delay? ⌛ [delay]

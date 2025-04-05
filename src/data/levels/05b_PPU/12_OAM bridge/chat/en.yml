@@ -9,8 +9,8 @@ main:
 how:
   messages:
   - "there are two ways:"
-  - "1) using the registers 🏠  ~OAMAddr~ and 📝  ~OAMData~"
-  - "2) using ⚡  ~OAMDMA~"
+  - "1) using the registers 🏠  OAMAddr and 📝  OAMData"
+  - "2) using ⚡  OAMDMA"
   responses:
   - tell me about 🏠  OAMAddr and 📝  OAMData [addrdata]
   - tell me about ⚡  OAMDMA [dma]
@@ -19,7 +19,7 @@ how:
 addrdata:
   messages:
   - there's not much to say about them
-  - it's the same as 📍  ~PPUAddr~ and 📦  ~PPUData~
+  - it's the same as 📍  PPUAddr and 📦  PPUData
   - but they access 🐏  OAM RAM instead of PPU memory
   responses:
   - ...how
@@ -27,7 +27,7 @@ addrdata:
 dma:
   messages:
   - DMA ("Direct Memory Access") is a hardware mechanism to copy bytes from one memory region to another one really fast
-  - in the NEEES, this is provided by the ⚡  ~OAMDMA~ register, which let games fill 🐏  OAM RAM by copying bytes from CPU memory
+  - in the NEEES, this is provided by the ⚡  OAMDMA register, which let games fill 🐏  OAM RAM by copying bytes from CPU memory
   - writing ```raw $```~XX~ to that register will copy 256 bytes from CPU addresses ```raw $```~XX~```raw 00```-```raw $```~XX~```raw FF``` to the internal OAM RAM
   - this operation will take around 513 CPU cycles, during which the CPU is suspended
   responses:

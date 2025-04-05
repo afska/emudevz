@@ -1,6 +1,6 @@
 main:
   messages:
-  - the 🎭  ~PPUMask~ video register ($2001) lets programs enable or disable parts of the rendering
+  - the 🎭  PPUMask video register ($2001) lets programs enable or disable parts of the rendering
   - check out again 📄  ~/docs/ppu/video_registers.en.md~
   - 🏛️  the ~m~ and ~M~ bits controls whether the first 8px column should be visible or not for backgrounds and sprites respectively
   - 🏞️  ~b~ enables background rendering

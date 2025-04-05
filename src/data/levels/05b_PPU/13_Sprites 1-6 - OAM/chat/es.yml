@@ -47,7 +47,7 @@ addone:
 
 spritesize:
   messages:
-  - eso es una configuración global, configurada en 🎛️  ~PPUCtrl~
+  - eso es una configuración global, configurada en 🎛️  PPUCtrl
   - cuando ```javascript ppu.registers.ppuCtrl.spriteSize === 1```, los sprites deben usar el modo ~8x16~
   responses:
   - ...implement
