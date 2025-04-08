@@ -1,7 +1,7 @@
 main:
   messages:
   - ya que ya sabemos qué sprites necesitamos dibujar y cómo renderizar los tiles,
-  - dibujar sprites será bastante fácil
+  - dibujar sprites será bastante <fácil>
   - |-
     nuestro método para renderizar una sola 🌠  scanline se verá así:
       ```javascript
@@ -28,7 +28,7 @@ easy:
         **->** determina la coordenada y:
           ```javascript this.ppu.scanline;```
           (llamemos a esto `y`)
-        **->** para cada sprite en `sprites`:
+        **->** para cada `sprite` en `sprites`:
           **->** calcula la coordenada Y "interna":
             ```javascript sprite.diffY(y)```
             (llamemos a esto `insideY`)

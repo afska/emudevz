@@ -539,6 +539,21 @@ const dictionary = {
 			es:
 				"Un objeto del juego encima (¡o detrás!) del fondo que puede ser movido o volteado, almacenado en OAM. Puede usar un tile (sprite de `8×8`) o dos (sprite de `8×16`).",
 		},
+		"Sprite evaluation": {
+			also: { es: "Evaluación de sprites" },
+			icon: "🕵️",
+			en:
+				"A step performed on each scanline where the PPU checks which sprites should be rendered. It scans all entries in OAM and selects up to `8` sprites whose vertical position matches the current scanline. <br /><br />If more than `8` sprites are found, the sprite overflow flag is set.",
+			es:
+				"Un paso que se realiza en cada scanline donde la PPU determina qué sprites deben renderizarse. Escanea todas las entradas en OAM y selecciona hasta `8` sprites cuya posición vertical coincida con la scanline actual. <br /><br />Si se encuentran más de `8` sprites, se activa la bandera de sprite overflow.",
+		},
+		"Sprite overflow": {
+			icon: "🏁",
+			en:
+				"A condition that occurs when more than `8` sprites appear on the same scanline. Only the first `8` are rendered. <br /><br />Games can retrieve this flag by reading bit `5` of PPUStatus.",
+			es:
+				"Una condición que ocurre cuando más de `8` sprites aparecen en la misma scanline. Solo se renderizan los primeros `8`. <br /><br />Los juegos pueden leer esta bandera desde el bit `5` de PPUStatus.",
+		},
 		Stack: {
 			also: { es: "Pila" },
 			icon: "🧱",

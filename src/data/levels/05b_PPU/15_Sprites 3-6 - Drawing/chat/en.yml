@@ -1,7 +1,7 @@
 main:
   messages:
   - since we already know which sprites we need to draw and how to render tiles,
-  - drawing sprites will be fairly easy
+  - drawing sprites will be fairly <easy>
   - |-
     our method to render a single 🌠  scanline will look like this:
       ```javascript
@@ -28,7 +28,7 @@ easy:
         **->** determine the y coordinate:
           ```javascript this.ppu.scanline;```
           (let's call this `y`)
-        **->** for each sprite in `sprites`:
+        **->** for each `sprite` in `sprites`:
           **->** calculates the "inside" Y coordinate:
             ```javascript sprite.diffY(y)```
             (let's call this `insideY`)

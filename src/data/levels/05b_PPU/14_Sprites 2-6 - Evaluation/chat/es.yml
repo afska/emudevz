@@ -1,6 +1,6 @@
 main:
   messages:
-  - en cada scanline, el renderizador de sprites realiza una ~evaluación de sprites~ 🕵️
+  - en cada scanline, el renderizador de sprites realiza una evaluación de sprites 🕵️
   - prepara los sprites que necesitan ser renderizados
   responses:
   - mhm... ¿cómo lo hace? [how]
@@ -9,7 +9,7 @@ how:
   messages:
   - escanea toda la tabla OAM, comprobando si cada sprite debe dibujarse en la scanline actual (basado en ~x~, ~y~, y ~height~)
   - elige los primeros 8 sprites
-  - después de encontrar 8 (el número máximo de sprites por scanline), si encuentra <más> sprites visibles, la 🏁  ~bandera de sprite overflow~ (bit 5 de 📊  PPUStatus) se enciende para notificar el error al desarrollador del juego
+  - después de encontrar 8 (el número máximo de sprites por scanline), si encuentra <más> sprites visibles, la 🏁  bandera de sprite overflow (bit 5 de 📊  PPUStatus) se enciende para notificar el error al desarrollador del juego
   - los sprites con identificadores más bajos se renderizan encima de los sprites con identificadores más altos, ¡así que deberías invertir la lista de sprites elegidos!
   responses:
   - ok creo que lo entendí [ok]
@@ -21,16 +21,16 @@ ok:
     **_evaluate()**:
       **->** define un array `sprites`
       **->** para cada id de sprite posible (~0-63~):
-        **->** crea un sprite usando ```javascript this._createSprite(...)```
-        **->** si el sprite debe renderizarse en la scanline actual, y `sprites` tiene menos de 9 elementos:
+        **->** crea un `sprite` usando ```javascript this._createSprite(...)```
+        **->** si el `sprite` debe renderizarse en la scanline actual, y `sprites` tiene menos de 9 elementos:
           **->** si `sprites` tiene menos de 8 elementos:
-            **->** agrega al array `sprites`
+            **->** agrega `sprite` al array `sprites`
           **->** de lo contrario:
             **->** asigna ```javascript this.ppu.registers.ppuStatus.spriteOverflow = 1```
             **->** detiene el bucle
       **->** devuelve `sprites` en orden inverso
   - 📚 además, necesitas reiniciar `spriteOverflow` a 0 en ~scanline=-1; cycle=1~, como lo hiciste anteriormente con `isInVBlankInterval`
-  - 📚 hazlo en `PPU::_onPreLine()`
+  - hazlo en `PPU::_onPreLine()`
   responses:
   - ¿cómo sé si un sprite debe ser renderizado? [visible]
 
