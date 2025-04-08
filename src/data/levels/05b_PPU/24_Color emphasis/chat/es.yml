@@ -8,10 +8,10 @@ main:
 
 how:
   messages:
-  - el bit 0 convierte la salida a escala de grises
-  - el bit 5 enfatiza el rojo (oscureciendo el verde y el azul en un 25%)
-  - el bit 6 enfatiza el verde (oscureciendo el rojo y el azul en un 25%)
-  - el bit 7 enfatiza el azul (oscureciendo el rojo y el verde en un 25%)
+  - el bit 0 convierte la salida a <escala de grises>
+  - el bit 5 enfatiza el <rojo> (oscureciendo el verde y el azul en un 25%)
+  - el bit 6 enfatiza el <verde> (oscureciendo el rojo y el azul en un 25%)
+  - el bit 7 enfatiza el <azul> (oscureciendo el rojo y el verde en un 25%)
   - si los tres bits de énfasis están habilitados al mismo tiempo, todos los colores estarán un 25% más oscuros
   - el <énfasis de color> es independiente del <modo de escala de grises>, por lo que los bits de énfasis aún tiñen el color de la imagen en escala de grises
   responses:
