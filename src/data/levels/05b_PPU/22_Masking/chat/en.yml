@@ -55,5 +55,5 @@ renderers:
     you need a similar logic:
     ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
       continue;```
-    in the sprite-0 hit `if`, add `showBackground` and `showSprites` as conditions: if one of them is disabled, it shouldn't be triggered!
+    in the sprite-zero hit `if`, add `showBackground` and `showSprites` as conditions: if one of them is disabled, it shouldn't be triggered!
   responses: []

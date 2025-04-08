@@ -45,7 +45,7 @@ easy:
   - ¿qué pattern table debería usar? [patterntable]
   - ¿qué id de tile debería usar? [tileid]
   - ¿cómo puedo obtener los colores de la paleta? [palette]
-  - ¿qué X y Y debería usar al dibujar píxeles? [coordinates]
+  - ¿qué ~X~ y ~Y~ debería usar al dibujar píxeles? [coordinates]
   - ¿qué color debería usar al dibujar píxeles? [color]
 
 patterntable:

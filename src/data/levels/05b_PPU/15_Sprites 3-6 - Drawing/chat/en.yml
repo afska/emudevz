@@ -45,7 +45,7 @@ easy:
   - what pattern table should I use? [patterntable]
   - what tile id should I use? [tileid]
   - how can I get the palette colors? [palette]
-  - what X and Y should I use when plotting pixels? [coordinates]
+  - what ~X~ and ~Y~ should I use when plotting pixels? [coordinates]
   - what color should I use when plotting pixels? [color]
 
 patterntable:

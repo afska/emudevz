@@ -1,7 +1,7 @@
 main:
   messages:
-  - as we saw in the <sprite evaluation>, sprites with lower OAM indices are drawn in front
-  - additionally, there's the <sprite-to-background> priority bit (byte 2, bit 5), which makes the sprites appear behind the background
+  - as we saw in the sprite evaluation, sprites with lower OAM indexes are drawn in <front>
+  - additionally, there's the <sprite-to-background> priority bit (byte 2, bit 5), which makes the sprites appear <behind> the background
   - when the background covers a sprite, only opaque pixels are taken into account
   responses:
   - show me an example [example]
@@ -21,7 +21,7 @@ example:
 fix:
   messages:
   - first, we need to remember which background pixels are transparent
-  - that is, when the <color index> is 0
+  - that is, when the color index is 0
   - then, we'll save current scanline's colors and sprites into a temporary buffer
   - and we'll only plot the pixels from that buffer if the sprite priority is <front> or the background pixel is transparent
   responses:

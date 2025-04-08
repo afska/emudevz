@@ -1,7 +1,7 @@
 main:
   messages:
-  - como vimos en la <evaluación de sprites>, los sprites con índices OAM más bajos se dibujan al frente
-  - además, está el bit de prioridad <sprite-to-background> (byte 2, bit 5), que hace que los sprites aparezcan detrás del fondo
+  - como vimos en la evaluación de sprites, los sprites con índices OAM más bajos se dibujan al <frente>
+  - además, está el bit de prioridad <sprite-to-background> (byte 2, bit 5), que hace que los sprites aparezcan <detrás> del fondo
   - cuando el fondo cubre un sprite, solo se toman en cuenta los píxeles opacos
   responses:
   - muéstrame un ejemplo [example]
@@ -21,7 +21,7 @@ example:
 fix:
   messages:
   - primero, necesitamos recordar qué píxeles del fondo son transparentes
-  - es decir, cuando el <índice de color> es 0
+  - es decir, cuando el índice de color es 0
   - luego, guardaremos los colores y sprites de la scanline actual en un buffer temporal
   - y solo dibujaremos los píxeles de ese buffer si la prioridad del sprite es <front> o si el píxel del fondo es transparente
   responses:

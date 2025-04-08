@@ -135,6 +135,14 @@ const dictionary = {
 			es:
 				"_(Character ROM)_ Un chip de ROM que contiene los gráficos del juego, dentro del cartucho.",
 		},
+		"Color index|_Color indexes": {
+			also: { es: "Índice de color|_Índices de color" },
+			icon: "🎨",
+			en:
+				"A number inside a tile pixel that selects a color from the palette. It ranges from `0` to `3`. <br /><br />In sprites, index `0` is always transparent.",
+			es:
+				"Un número dentro de un píxel de tile que selecciona un color de la paleta. Va de `0` a `3`. <br /><br />En los sprites, el índice `0` siempre es transparente.",
+		},
 		"Controller|_Controllers": {
 			also: { es: "Mando|_Mandos" },
 			icon: "🎮",
@@ -420,10 +428,10 @@ const dictionary = {
 			en: "A list of color indexes, stored in Palette RAM.",
 			es: "Una lista de índices de colores, almacenada en Palette RAM.",
 		},
-		"Palette id|Palette index": {
+		"Palette id|Palette index|_Palette indexes": {
 			also: {
 				es:
-					"Índice de paleta|_Índice de la paleta|Id de paleta|_Id de la paleta",
+					"Índice de paleta|_Índices de paleta|_Índice de la paleta|_Índices de la paleta|Id de paleta|_Id de la paleta",
 			},
 			icon: "🎨",
 			en:
@@ -558,6 +566,22 @@ const dictionary = {
 			es:
 				"Un objeto del juego encima (¡o detrás!) del fondo que puede ser movido o volteado, almacenado en OAM. Puede usar un tile (sprite de `8×8`) o dos (sprite de `8×16`).",
 		},
+		"Sprite zero|_Sprite-zero": {
+			also: { es: "Sprite cero|_Sprite-cero" },
+			icon: "🛸",
+			en:
+				"The sprite with OAM index `0`. It has special behavior in the PPU, such as triggering the sprite-0 hit when it overlaps the background.",
+			es:
+				"El sprite con índice OAM `0`. Tiene un comportamiento especial en la PPU, como activar el sprite-0 hit cuando se superpone con el fondo.",
+		},
+		"Sprite-zero hit|_Sprite zero hit": {
+			also: { es: "Sprite zero hit|_Sprite-zero hit" },
+			icon: "👊",
+			en:
+				"A condition that occurs when a visible pixel of the sprite zero overlaps a visible background pixel. When this happens, the PPU sets the sprite-0 hit flag in PPUStatus. <br /><br />Games often use it to time mid-frame effects like status bars or split screens.",
+			es:
+				"Una condición que ocurre cuando un píxel visible del sprite cero se superpone con un píxel visible del fondo. Cuando eso pasa, la PPU activa la bandera de sprite-0 hit en PPUStatus. <br /><br />Los juegos suelen usarla para sincronizar efectos a mitad de frame como barras de estado o pantallas divididas.",
+		},
 		"Sprite evaluation": {
 			also: { es: "Evaluación de sprites" },
 			icon: "🕵️",
@@ -566,8 +590,11 @@ const dictionary = {
 			es:
 				"Un paso que se realiza en cada scanline donde la PPU determina qué sprites deben renderizarse. Escanea todas las entradas en OAM y selecciona hasta `8` sprites cuya posición vertical coincida con la scanline actual. <br /><br />Si se encuentran más de `8` sprites, se activa la bandera de sprite overflow.",
 		},
-		"Sprite id|OAM id|OAM index": {
-			also: { es: "OAM id|Índice OAM|Id de OAM|Id de sprite|_Id del sprite" },
+		"Sprite id|OAM id|OAM index|_OAM indexes": {
+			also: {
+				es:
+					"OAM id|Índice OAM|_Índices OAM|Id de OAM|Id de sprite|_Id del sprite",
+			},
 			icon: "🛸",
 			en: "The index of a sprite inside OAM. It ranges from `0` to `63`.",
 			es: "El índice de un sprite dentro de OAM. Va de `0` a `63`.",

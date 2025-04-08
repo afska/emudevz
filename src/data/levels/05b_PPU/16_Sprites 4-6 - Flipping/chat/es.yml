@@ -4,8 +4,8 @@ main:
   - esto está representado en nuestra clase `Sprite` con los atributos `flipX` y `flipY`
   - 📚  cambia tu `SpriteRenderer` para que dibuje los píxeles correctos, dependiendo de estos atributos
   responses:
+  - espera, ¿qué quisiste decir con ~voltearse~? [whats]
   - necesito ayuda con el volteo horizontal [horizontal]
-  - ¿qué es voltear? [whats]
 
 whats:
   messages:
