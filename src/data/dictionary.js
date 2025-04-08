@@ -420,6 +420,17 @@ const dictionary = {
 			en: "A list of color indexes, stored in Palette RAM.",
 			es: "Una lista de índices de colores, almacenada en Palette RAM.",
 		},
+		"Palette id|Palette index": {
+			also: {
+				es:
+					"Índice de paleta|_Índice de la paleta|Id de paleta|_Id de la paleta",
+			},
+			icon: "🎨",
+			en:
+				"The index of a palette inside Palette RAM. Backgrounds and sprites use different sets. Ranges from `0` to `7`.",
+			es:
+				"El índice de una paleta dentro de Palette RAM. Los fondos y sprites usan conjuntos distintos. Va de `0` a `7`.",
+		},
 		"Palette RAM": {
 			icon: "🐏",
 			en:
@@ -431,6 +442,14 @@ const dictionary = {
 			icon: "🕊️📖",
 			en: "A list of tiles stored in CHR-ROM or CHR-RAM.",
 			es: "Una lista de tiles almacenada en CHR-ROM o CHR-RAM.",
+		},
+		"Pattern table id": {
+			also: { es: "Id de pattern table|_Id de la pattern table" },
+			icon: "👾",
+			en:
+				"The index of a pattern table. There are `2`: `PPU $0000` (`0`) and `PPU $1000` (`1`).",
+			es:
+				"El índice de una pattern table. Hay `2`: `PPU $0000` (`0`) y `PPU $1000` (`1`).",
 		},
 		PPU: {
 			icon: "🖥️",
@@ -547,6 +566,12 @@ const dictionary = {
 			es:
 				"Un paso que se realiza en cada scanline donde la PPU determina qué sprites deben renderizarse. Escanea todas las entradas en OAM y selecciona hasta `8` sprites cuya posición vertical coincida con la scanline actual. <br /><br />Si se encuentran más de `8` sprites, se activa la bandera de sprite overflow.",
 		},
+		"Sprite id|OAM id|OAM index": {
+			also: { es: "OAM id|Índice OAM|Id de OAM|Id de sprite|_Id del sprite" },
+			icon: "🛸",
+			en: "The index of a sprite inside OAM. It ranges from `0` to `63`.",
+			es: "El índice de un sprite dentro de OAM. Va de `0` a `63`.",
+		},
 		"Sprite overflow": {
 			icon: "🏁",
 			en:
@@ -568,6 +593,14 @@ const dictionary = {
 				"An 8×8 grayscale pixel grid that represents a pattern. Tiles are stored in pattern tables.",
 			es:
 				"Una cuadrícula de 8×8 píxeles en escala de grises que representa un patrón. Los tiles se almacenan en pattern tables.",
+		},
+		"Tile id": {
+			also: { es: "Id de tile|_Id del tile" },
+			icon: "🕊️",
+			en:
+				"The index of a tile inside a pattern table. It ranges from `0` to `255`.",
+			es:
+				"El índice de un tile dentro de una pattern table. Va de `0` a `255`.",
 		},
 		VBlank: {
 			icon: "🏝️",
