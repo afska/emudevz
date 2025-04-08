@@ -1,6 +1,6 @@
 main:
   messages:
-  - now that our emulator is able to access 🛸 📖  ~OAM~
+  - now that our emulator is able to access 🛸 📖  OAM
   - we are ready to read 🛸  sprites!
   responses:
   - what's in OAM? [oam]

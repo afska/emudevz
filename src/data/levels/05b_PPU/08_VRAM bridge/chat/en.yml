@@ -11,7 +11,7 @@ how:
   - through the video registers called 📍  PPUAddr and 📦  PPUData
   - they are like a bridge that connects the 🧠  CPU and 🖥️  PPU
   - first, games put the VRAM address they want to write in 📍  PPUAddr
-  - "(two consecutive writes: one for the <high byte>, and one for the <low byte>)"
+  - "(two consecutive writes: one for the high byte, and one for the low byte)"
   - then, they write to 📦  PPUData the byte they want to put in that address
   - <{PPUAddr_PPUData.png}>
   responses:
@@ -43,7 +43,7 @@ define:
   - |-
     📚  implement these methods in `PPUData`:
     **onWrite(value)**:
-      **->** writes `value` to the PPU memory address ```javascript ppuAddr.address```
+      **->** writes `value` to the PPU address ```javascript ppuAddr.address```
         (you can access the `PPUMemory` instance with ```javascript this.ppu.memory```)
         (you can access the `PPUAddr` instance with ```javascript this.ppu.registers.ppuAddr```)
       **->** calls ```javascript this._incrementAddress()```
@@ -65,4 +65,5 @@ increment:
   - yeah, I forgot to tell you
   - the PPU increments the address automatically after writing to 📦  PPUData
   - depending on what's in 🎛️  PPUCtrl, this can be a ~+1~ or a ~+32~
+  - this autoincrement is useful for games to fill VRAM faster
   responses: []

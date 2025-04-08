@@ -11,7 +11,7 @@ how:
   - a través de los registros de video llamados 📍  PPUAddr y 📦  PPUData
   - son como un puente que conecta la 🧠  CPU y 🖥️  PPU
   - primero, los juegos ponen la dirección de VRAM que quieren escribir en 📍  PPUAddr
-  - "(dos escrituras consecutivas: una para el <high byte>, y una para el <low byte>)"
+  - "(dos escrituras consecutivas: una para el high byte, y una para el low byte)"
   - luego, escriben en 📦  PPUData el byte que quieren poner en esa dirección
   - <{PPUAddr_PPUData.png}>
   responses:
@@ -43,7 +43,7 @@ define:
   - |-
     📚  implementa estos métodos en `PPUData`:
     **onWrite(value)**:
-      **->** escribe `value` en la dirección de memoria PPU ```javascript ppuAddr.address```
+      **->** escribe `value` en la dirección PPU ```javascript ppuAddr.address```
         (puedes acceder a la instancia `PPUMemory` con ```javascript this.ppu.memory```)
         (puedes acceder a la instancia `PPUAddr` con ```javascript this.ppu.registers.ppuAddr```)
       **->** llama a ```javascript this._incrementAddress()```
@@ -65,4 +65,5 @@ increment:
   - sí, olvidé mencionarte
   - la PPU incrementa la dirección automáticamente después de escribir en 📦  PPUData
   - dependiendo de lo que esté en 🎛️  PPUCtrl, esto puede ser un ~+1~ o un ~+32~
+  - este autoincremento es útil para que los juegos llenen la VRAM más rápido
   responses: []

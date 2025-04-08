@@ -19,11 +19,11 @@ interrupts:
   - de hecho, vamos a programarlo
   - |-
     📚  modifica este método de `PPUStatus`:
-      **onRead()**:
-        **->** guarda el actual ```javascript this.value``` en una constante `value`
-        **->** reinicia ```javascript this.isInVBlankInterval``` a 0
-          (sí, leer este registro <REINICIA> parte de su valor 🤷 )
-        **->** devuelve el `value` guardado
+    **onRead()**:
+      **->** guarda el actual ```javascript this.value``` en una constante `value`
+      **->** reinicia ```javascript this.isInVBlankInterval``` a 0
+        (sí, leer este registro <REINICIA> parte de su valor 🤷 )
+      **->** devuelve el `value` guardado
   - |-
     📚  y cambia este en `PPU`:
     **step(onFrame, onInterrupt)**:

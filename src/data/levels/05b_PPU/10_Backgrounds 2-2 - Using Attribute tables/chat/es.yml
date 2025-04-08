@@ -2,7 +2,7 @@
 main:
   messages:
   - para permitir colores, primero necesitamos permitir que los juegos escriban información de color
-  - en otras palabras, necesitamos mapear 🐏  Palette RAM en nuestra memoria PPU
+  - entonces, como nuestro primer paso, mapearemos 🐏  Palette RAM en nuestra memoria PPU
   - luego, agregaremos métodos para leer paletas de colores
   - y finalmente, haremos que `BackgroundRenderer` use paletas para renderizar
   - 📚  como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `paletteRam` en `PPUMemory`

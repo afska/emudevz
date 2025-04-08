@@ -19,11 +19,11 @@ interrupts:
   - actually, let's code this
   - |-
     📚  modify this method of `PPUStatus`:
-      **onRead()**:
-        **->** saves the current ```javascript this.value``` in a `value` constant
-        **->** resets ```javascript this.isInVBlankInterval``` to 0
-          (yeah, reading this register <RESETS> part of its value 🤷 )
-        **->** returns the saved `value`
+    **onRead()**:
+      **->** saves the current ```javascript this.value``` in a `value` constant
+      **->** resets ```javascript this.isInVBlankInterval``` to 0
+        (yeah, reading this register <RESETS> part of its value 🤷 )
+      **->** returns the saved `value`
   - |-
     📚  and change this one on `PPU`:
     **step(onFrame, onInterrupt)**:

@@ -11,7 +11,7 @@ finally:
   - esta vez, tendrás que seguir la documentación
   - lee 📄  ~/docs/ppu/background_rendering.es.md~
   - y trata de entender cómo renderizar fondos en <escala de grises>
-  - y cuando hayas terminado...
+  - cuando hayas terminado...
   - 📚  crea una clase `BackgroundRenderer`
   - 📚  su constructor debe recibir y asignar una propiedad `ppu` con la instancia de PPU
   - |-
@@ -21,7 +21,7 @@ finally:
         ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
         (¡recuerda importarlo si lo definiste en otro archivo!)
     **step(...)**:
-      **->** elimina el código de prueba (`<test>...</test>`)
+      **->** elimina el código de prueba (```javascript // <test>...</test>```)
     **_onVisibleLine()**:
       **->** si el ciclo es ~0~, llama a `backgroundRenderer.renderScanline()`
   - |-
@@ -30,7 +30,7 @@ finally:
       **->** agrega el código necesario para renderizar una línea completa del fondo
   - ¡adiós!
   responses:
-  - NO ME DEJES 😭 [questions]
+  - esperá, NO ME DEJES 😭 [questions]
 
 questions:
   messages:

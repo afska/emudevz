@@ -11,7 +11,7 @@ finally:
   - this time, you'll need to follow the documentation
   - read 📄  ~/docs/ppu/background_rendering.en.md~
   - and try to understand how to render backgrounds in <grayscale>
-  - and when you are ready...
+  - when you are ready...
   - 📚  create a `BackgroundRenderer` class
   - 📚  its constructor should receive and assign a `ppu` property with the PPU instance
   - |-
@@ -21,7 +21,7 @@ finally:
         ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
         (remember to import it if you defined it in another file!)
     **step(...)**:
-      **->** remove the test code (`<test>...</test>`)
+      **->** remove the test code (```javascript // <test>...</test>```)
     **_onVisibleLine()**:
       **->** if the cycle is ~0~, call `backgroundRenderer.renderScanline()`
   - |-
@@ -30,7 +30,7 @@ finally:
       **->** add the necessary code to render a full scanline of the background
   - bye!
   responses:
-  - DON'T LEAVE ME 😭 [questions]
+  - wait, DON'T LEAVE ME 😭 [questions]
 
 questions:
   messages:

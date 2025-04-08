@@ -53,7 +53,7 @@ implement:
   - |-
     📚  implement this method in `OAMDMA`:
     **onWrite(value)**:
-      **->** ```javascript for (i = 0; i < 256; i++```:
+      **->** ```javascript for (i = 0; i < 256; i++)```:
         **->** builds the address (high byte: `value`, low byte: `i`)
         **->** reads the address from CPU memory (```javascript this.ppu.cpu``` returns the `CPU`)
         **->** assigns the obtained byte to ```javascript oamRam[i]```

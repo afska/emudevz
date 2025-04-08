@@ -1,6 +1,6 @@
 main:
   messages:
-  - ahora que nuestro emulador es capaz de acceder a la 🛸 📖  ~OAM~
+  - ahora que nuestro emulador es capaz de acceder a la 🛸 📖  OAM
   - ¡estamos listos para leer 🛸  sprites!
   responses:
   - ¿qué hay en la OAM? [oam]
