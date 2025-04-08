@@ -2,7 +2,7 @@ main:
   messages:
   - el scrolling es una característica de la PPU que permite a los desarrolladores mover el fondo
   - implementarlo en un emulador NEEES es difícil 🥵
-  - no porque sea difícil mover el fondo, sino porque los registros de desplazamiento se comportan de maneras extrañas
+  - no porque sea difícil mover el fondo, sino porque los registros de desplazamiento se comportan de maneras no obvias
   - mucha gente lo ha intentado, pero solo los elegidos pudieron lograrlo
   responses:
   - ¿tienes un plan? [plan]
@@ -30,7 +30,7 @@ viewport:
   messages:
   - así
   - <{3rdparty_nametable_scrolling.png}>
-  - los juegos escriben en 📜  `PPUScroll` la posición de la ventana
+  - los juegos escriben en 📜  PPUScroll la posición de la ventana
   - escriben dos veces, primero para la <coordenada X>, luego para la <coordenada Y>
   - y la PPU mueve la ventana, dibujando solo parte de las name tables afectadas
   responses:

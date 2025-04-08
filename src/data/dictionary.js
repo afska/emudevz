@@ -44,9 +44,9 @@ const dictionary = {
 			also: { es: "Espacio de direcciones" },
 			icon: "🐏",
 			en:
-				"The full range of memory addresses a component is able to access directly. <br /><br />In the NEEES, the CPU and the PPU each have their own address space. <br /><br />We differentiate these two spaces by saying `CPU address $xxxx` or `PPU address $xxxx`.",
+				"The full range of memory addresses a component is able to access directly. <br /><br />In the NEEES, the CPU and the PPU each have their own address space. <br /><br />We differentiate these two spaces by saying `CPU address $xxxx` or `PPU address $xxxx`, or simply $CPU `$xxxx` and $PPU `$xxxx`.",
 			es:
-				"El rango completo de direcciones de memoria que un componente puede acceder directamente. <br /><br />En la NEEES, tanto la CPU como la PPU tienen su propio espacio de direcciones. <br /><br />Distinguimos estos espacios diciendo `dirección CPU $xxxx` o `dirección PPU $xxxx`.",
+				"El rango completo de direcciones de memoria que un componente puede acceder directamente. <br /><br />En la NEEES, tanto la CPU como la PPU tienen su propio espacio de direcciones. <br /><br />Distinguimos estos espacios diciendo `dirección CPU $xxxx` o `dirección PPU $xxxx`, o simplemente $CPU `$xxxx` y $PPU `$xxxx`.",
 		},
 		"Addressing mode|_Addressing modes": {
 			also: { es: "Modo de direccionamiento|_Modos de direccionamiento" },
@@ -158,8 +158,8 @@ const dictionary = {
 			es:
 				"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
 		},
-		"CPU address|_CPU addresses|CPU $": {
-			also: { es: "Dirección CPU|_Direcciones CPU|CPU $" },
+		"CPU address|_CPU addresses|$CPU": {
+			also: { es: "Dirección CPU|_Direcciones CPU|$CPU" },
 			icon: "🐏",
 			en:
 				"A memory address seen from the CPU's address space. <br /><br />In the NEEES, the CPU can access addresses from `$0000` to `$FFFF` (`64` KiB).",
@@ -455,9 +455,9 @@ const dictionary = {
 			also: { es: "Id de pattern table|_Id de la pattern table" },
 			icon: "👾",
 			en:
-				"The index of a pattern table. There are `2`: `PPU $0000` (`0`) and `PPU $1000` (`1`).",
+				"The index of a pattern table. There are `2`: `$PPU $0000` (`0`) and `$PPU $1000` (`1`).",
 			es:
-				"El índice de una pattern table. Hay `2`: `PPU $0000` (`0`) y `PPU $1000` (`1`).",
+				"El índice de una pattern table. Hay `2`: `$PPU $0000` (`0`) y `$PPU $1000` (`1`).",
 		},
 		PPU: {
 			icon: "🖥️",
@@ -508,8 +508,8 @@ const dictionary = {
 			es:
 				"Un registro de video que muestra si la PPU está en VBlank, si ocurrió un sprite 0 hit, o si hay desbordamiento de sprites. Leerlo también reinicia latches internos. <br /><br />Está disponible en la dirección de CPU `$2002`.",
 		},
-		"PPU address|_PPU addresses|PPU $": {
-			also: { es: "Dirección PPU|_Direcciones PPU|PPU $" },
+		"PPU address|_PPU addresses|$PPU": {
+			also: { es: "Dirección PPU|_Direcciones PPU|$PPU" },
 			icon: "🐏",
 			en:
 				"A memory address seen from the PPU's address space. <br /><br />In the NEEES, valid addresses go from `$0000` to `$3FFF`, with many regions being mirrored.",
@@ -635,6 +635,13 @@ const dictionary = {
 				"Longer period after the last scanline of a frame, where the PPU is idle before starting a new frame. It's the best time to update graphics safely.",
 			es:
 				"Período más largo después de la última scanline de un frame, donde la PPU queda inactiva antes de comenzar uno nuevo. Es el mejor momento para actualizar gráficos sin problemas.",
+		},
+		VDraw: {
+			icon: "🖍️",
+			en:
+				"The period when the PPU is actively drawing the frame, scanline by scanline. It starts after the pre-line and ends before VBlank.",
+			es:
+				"El período en el que la PPU está dibujando activamente el frame, scanline por scanline. Comienza después de la pre-line y termina antes del VBlank.",
 		},
 		"Video register|_Video registers": {
 			also: { es: "Registro de video|_Registros de video" },

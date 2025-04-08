@@ -2,7 +2,7 @@ main:
   messages:
   - scrolling is a PPU feature that allows developers to move the background
   - implementing it in a NEEES emulator is hard 🥵
-  - not because it's hard to move the background, but because the scroll registers behave in odd ways
+  - not because it's hard to move the background, but because the scroll registers behave in non-obvious ways
   - a lot of people have tried, but only the chosen ones were able to do it
   responses:
   - do you have a plan? [plan]
@@ -30,7 +30,7 @@ viewport:
   messages:
   - like this
   - <{3rdparty_nametable_scrolling.png}>
-  - games write into 📜  `PPUScroll` the position of the viewport
+  - games write into 📜  PPUScroll the position of the viewport
   - they write twice, first for the <X coordinate>, then for the <Y coordinate>
   - and the PPU moves the viewport, only drawing part of the affected name tables
   responses:

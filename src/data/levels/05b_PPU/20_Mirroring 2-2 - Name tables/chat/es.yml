@@ -1,6 +1,6 @@
 main:
   messages:
-  - el mapa de memoria de la PPU tiene una sección dedicada para 4 name tables, en ~PPU $2000-$2FFF~
+  - el mapa de memoria de la PPU tiene una sección dedicada para 4 name tables, en $PPU $2000-$2FFF
   - cada name table es de 1024 bytes (o $400 en hexadecimal), por lo que estas 4 tablas están en las direcciones $2000, $2400, $2800 y $2C00
   - pero el hardware real de la NEEES solo tiene VRAM para <dos> de ellas
   - lo que termina sucediendo es que el mapper espeja las otras de formas divertidas ✨

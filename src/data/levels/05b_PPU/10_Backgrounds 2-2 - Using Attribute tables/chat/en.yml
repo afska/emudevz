@@ -83,6 +83,6 @@ oof:
 backdrop:
   messages:
   - you can think of it as a global "transparent" color
-  - index 0 of every palette will use it, and it's defined in ~palette 0, index 0~ (aka ~PPU $3F00~)
+  - index 0 of every palette will use it, and it's defined in ~palette 0, index 0~ (aka $PPU $3F00)
   responses:
   - ...help

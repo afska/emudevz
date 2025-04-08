@@ -2,7 +2,7 @@ main:
   messages:
   - the 🎭  PPUMask video register ($2001) lets programs enable or disable parts of the rendering
   - check out again 📄  ~/docs/ppu/video_registers.en.md~
-  - 🏛️  the ~m~ and ~M~ bits controls whether the first 8px column should be visible or not for backgrounds and sprites respectively
+  - 🏛️  the ~m~ and ~M~ bits controls whether the first ~8~px column should be visible or not for backgrounds and sprites respectively
   - 🏞️  ~b~ enables background rendering
   - 🛸  and ~s~ enables sprite rendering
   responses:
@@ -47,7 +47,7 @@ renderers:
   messages:
   - yup, let's see...
   - |-
-    📚  in `BackgroundRenderer`, change `renderScanline()`:
+    📚  in `BackgroundRenderer`, change `renderScanline()`...
     if `showBackgroundInFirst8Pixels` is off and `x < 8`, just plot (with `PPU::plotBG(...)`) the backdrop color, increment `x`, and `continue`! don't process further!
     (remember that the backdrop color is ```javascript this.ppu.getColor(0, 0)```)
   - |-
