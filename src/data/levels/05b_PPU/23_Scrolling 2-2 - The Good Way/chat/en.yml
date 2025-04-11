@@ -19,7 +19,7 @@ loopy:
 changes:
   messages:
   - |-
-    📚  import the library and add a `loopy` property to `PPU`'s constructor, assigned to:
+    📚  import the library and add a `loopy` property to 🖥️  `PPU`'s constructor, assigned to:
          ```javascript new LoopyRegister()```
   - |-
     📚  at the end of the `onPreLine(...)` method, call:
@@ -55,7 +55,7 @@ changes:
         this.ppu.loopy.vAddress.setValue(value);
       }```
   - |-
-    📚  lastly, in `BackgroundRenderer`, replace the `scrolledX`, `scrolledY` and `nameTableId` constants with:
+    📚  lastly, in 🏞️  `BackgroundRenderer`, replace the `scrolledX`, `scrolledY` and `nameTableId` constants with:
       ```javascript const scrolledX = this.ppu.loopy.scrolledX(x);
       const scrolledY = this.ppu.loopy.scrolledY(y);
       const nameTableId = this.ppu.loopy.nameTableId(scrolledX);```

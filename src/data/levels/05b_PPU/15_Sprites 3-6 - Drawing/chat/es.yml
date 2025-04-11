@@ -16,12 +16,12 @@ easy:
   messages:
   - vamos a hacer lo siguiente
   - |-
-      📚  en la clase `PPU`, cambia:
+      📚  en la clase 🖥️  `PPU`, cambia:
       **_onVisibleLine()**:
         **->** justo debajo de la llamada `renderScanline()` a `backgroundRenderer`...
         **->** ...haz lo mismo con `spriteRenderer`
   - |-
-      📚  implementa estos métodos en `SpriteRenderer`:
+      📚  implementa estos métodos en 🛸  `SpriteRenderer`:
       **renderScanline()**:
         **->** ¡usa el código de mi mensaje anterior!
       **_render(sprites)**:
@@ -32,7 +32,7 @@ easy:
           **->** calcula la coordenada Y "interna":
             ```javascript sprite.diffY(y)```
             (llamemos a esto `insideY`)
-          **->** instancia un `Tile` pasando la ppu, el id de la pattern table, el id del tile y el `insideY`
+          **->** instancia un 🕊️  `Tile` pasando la ppu, el id de la pattern table, el id del tile y el `insideY`
             (llamemos a esto `tile`)
           **->** crea un array con los 4 colores de paleta de ```javascript sprite.paletteId```
             (llamemos a esto `paletteColors`)

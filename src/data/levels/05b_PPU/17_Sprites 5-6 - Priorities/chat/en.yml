@@ -30,7 +30,7 @@ fix:
 clear:
   messages:
   - |-
-    📚  alright, in the `PPU` class, add to the constructor:
+    📚  alright, in the 🖥️  `PPU` class, add to the constructor:
       ```javascript
       this.colorIndexes = new Uint8Array(256*240);```
   - |-
@@ -42,9 +42,9 @@ clear:
         ```javascript this.plot(x, y, color);```
     **isBackgroundPixelOpaque(x, y)**:
       **->** returns whether the ~(x, y)~ pixel in `colorIndexes` is greater than 0
-  - 📚  in `BackgroundRenderer`, instead of calling the `plot(...)` method, call `plotBG(...)` passing the `colorIndex` as the last argument
+  - 📚  in 🏞️  `BackgroundRenderer`, instead of calling the `plot(...)` method, call `plotBG(...)` passing the `colorIndex` as the last argument
   - |-
-    📚  in `SpriteRenderer`, modify these methods:
+    📚  in 🛸  `SpriteRenderer`, modify these methods:
       **_render(...)**:
         **->** at the start, declare a `buffer` empty array
         **->** instead of calling ```javascript this.ppu.plot(...)```, save the information in the `buffer`:

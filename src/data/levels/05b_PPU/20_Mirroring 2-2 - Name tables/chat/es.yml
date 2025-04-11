@@ -52,7 +52,7 @@ implement:
   - traduje los tipos de mapeo en una linda tabla aquí 📄  ~/lib/ppu/mirroringTypes.js~
   - las claves (`$2000`, `$2400`, `$2800` y `$2C00`) representan las direcciones lógicas de la PPU
   - y los valores (principalmente `0x000` y `0x400`) son los desplazamientos de las name tables físicas dentro del array `PPUMemory::vram`
-  - 📚  en `PPUMemory`, importa el archivo `mirroringTypes`
+  - 📚  en 🐏  `PPUMemory`, importa el archivo `mirroringTypes`
   - |-
     📚  define este método:
     **changeNameTableMirroringTo(mirroringId)**:

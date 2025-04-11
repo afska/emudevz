@@ -4,12 +4,12 @@ main:
   - para permitir colores, primero necesitamos permitir que los juegos escriban información de color
   - entonces, como nuestro primer paso, mapearemos 🐏  Palette RAM en nuestra memoria PPU
   - luego, agregaremos métodos para leer paletas de colores
-  - y finalmente, haremos que `BackgroundRenderer` use paletas para renderizar
-  - 📚  como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `paletteRam` en `PPUMemory`
+  - y finalmente, haremos que 🏞️  `BackgroundRenderer` use paletas para renderizar
+  - 📚  como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `paletteRam` en 🐏  `PPUMemory`
   - el array debería almacenar 32 bytes
   - 📚  mapea el rango $3F00-$3F1F a Palette RAM (tanto lecturas como escrituras)
   - |-
-    📚  implementa este método en `PPU`:
+    📚  implementa este método en 🖥️  `PPU`:
     **getColor(paletteId, colorIndex)**:
       **->** calcula la dirección inicial de la paleta:
         `0x3F00 + paletteId * 4`
@@ -20,7 +20,7 @@ main:
       **->** devuelve un color de la paleta maestra, usando `masterColorIndex`
         (puedes importar y usar 📄  ~/lib/ppu/masterPalette.js~ para la lista de colores)
   - |-
-    📚  implementa este método en `BackgroundRenderer`:
+    📚  implementa este método en 🏞️  `BackgroundRenderer`:
     **_getPaletteId(nameTableId, x, y)**:
       **->** agrega el código necesario para devolver el id de paleta correcto para el píxel ~(x, y)~
       **->** sigue 📄  ~/docs/ppu/background_rendering.es.md~ para orientación sobre cómo se codifican los ids de paletas

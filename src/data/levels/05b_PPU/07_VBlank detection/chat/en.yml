@@ -25,7 +25,7 @@ interrupts:
         (yeah, reading this register <RESETS> part of its value 🤷 )
       **->** returns the saved `value`
   - |-
-    📚  and change this one on `PPU`:
+    📚  and change this one on 🖥️  `PPU`:
     **step(onFrame, onInterrupt)**:
       **->** if ```javascript this.scanline``` is ~-1~:
         **->** call ```javascript this._onPreLine()```

@@ -52,7 +52,7 @@ cycle:
   messages:
   - that's time it takes to process an interrupt 🕖
   - we didn't talk much about cycles so far
-  - I've only made you add two mysterious properties to the `CPU` class, remember?
+  - I've only made you add two mysterious properties to the 🧠  `CPU` class, remember?
   - those called `cycles` and `extraCycles`
   - I'll explain this further later, I promise 😅
   responses:
@@ -77,7 +77,7 @@ implement:
   - we'll model interrupts as `{ id, vector }` objects
   - check out 📄  ~/lib/interrupts.js~
   - |-
-    📚  add this method to your `CPU`:
+    📚  add this method to your 🧠  `CPU`:
     **interrupt(interrupt, withBFlag = false)**:
       **->** if ```javascript interrupt.id === "IRQ"``` and ~I=1~, returns 0
         (the interrupt is ignored)

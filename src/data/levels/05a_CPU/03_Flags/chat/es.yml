@@ -27,7 +27,7 @@ what:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  crea una clase `FlagsRegister` con 6 propiedades booleanas (llamadas `c`, `z`, `i`, `d`, `v` y `n`)
+  - 📚  crea una clase 🏁  `FlagsRegister` con 6 propiedades booleanas (llamadas `c`, `z`, `i`, `d`, `v` y `n`)
   - inicialízalas en ```javascript false```
   - |-
     📚  luego implementa, siguiendo la tabla anterior:
@@ -51,5 +51,5 @@ bits:
 
 nowwhat:
   messages:
-  - "📚  perfecto, solo agrega una nueva instancia a la clase `CPU`, debajo de los otros registros, así:\n  ```javascript this.flags = new FlagsRegister();```"
+  - "📚  perfecto, solo agrega una nueva instancia a la clase 🧠  `CPU`, debajo de los otros registros, así:\n  ```javascript this.flags = new FlagsRegister();```"
   responses: []

@@ -2,12 +2,12 @@
 main:
   messages:
   - recuerda, cada componente de hardware tiene que estar conectado a la memoria
-  - a medida que avances en tu desarrollo, tendrás que actualizar tu clase `CPUMemory`, agregando los mapeos correctos
+  - a medida que avances en tu desarrollo, tendrás que actualizar tu clase 🐏  `CPUMemory`, agregando los mapeos correctos
   - un dispositivo importante que tenemos que agregar es el 🗜️  Mapper, el cual manejará todas las interacciones con el código de juego (🤖  PRG-ROM)
   - la 🧠  CPU accede al código solo leyendo bytes dentro de $4020-$FFFF
   - hagamos recibir a nuestra memoria un montón de <dispositivos> 📱
   - |-
-    📚  agrega a tu `CPUMemory` el siguiente método:
+    📚  agrega a tu 🐏  `CPUMemory` el siguiente método:
     **onLoad(ppu, apu, mapper, controllers)**:
       **->** guarda los parámetros como propiedades (```javascript this.ppu```, ```javascript this.apu```, ```javascript this.mapper```, y ```javascript this.controllers```)
   - 📚  luego, como hiciste antes con ```javascript this.ram```, modifica `read(...)` y `write(...)` para dejar que ```javascript this.mapper``` maneje el rango $4020-$FFFF (💾  Espacio del cartucho)

@@ -73,7 +73,7 @@ understand:
   - awesome 💪
   - the first 16 bytes of the file represent the 🗣️  header
   - |-
-    📚  let's add a `header` property to the `Cartridge` class, with the following form:
+    📚  let's add a `header` property to the 💾  `Cartridge` class, with the following form:
     ```javascript {
       prgRomPages: 2, // (obtain this from byte 4)
       chrRomPages: 1, // (obtain this from byte 5)

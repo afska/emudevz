@@ -8,13 +8,13 @@ main:
   - "eso quiere decir: el byte menos significativo (\"low byte\") se guarda primero, luego el más significativo (\"high byte\")"
   - <{little_endian.png}>
   - |-
-    📚  implementa este método en `CPUMemory`:
+    📚  implementa este método en 🐏  `CPUMemory`:
     **read16(address)**:
       **->** retorna un número de 16 bits
         - el low byte se obtiene leyendo `address` de la memoria
         - el high byte se obtiene leyendo ```javascript address+1```
   - |-
-    📚  y estos dos métodos en `Stack`:
+    📚  y estos dos métodos en 🧱  `Stack`:
     **push16(bigNumber)**:
       **->** llama a `push(...)` dos veces (primero con el high byte de `bigNumber`, luego con su low byte)
     **pop16()**:

@@ -27,7 +27,7 @@ what:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  create a `FlagsRegister` class with 6 boolean properties (called `c`, `z`, `i`, `d`, `v` and `n`)
+  - 📚  create a 🏁  `FlagsRegister` class with 6 boolean properties (called `c`, `z`, `i`, `d`, `v` and `n`)
   - initialize them with ```javascript false```
   - |-
     📚  then implement, following the previous table:
@@ -51,5 +51,5 @@ bits:
 
 nowwhat:
   messages:
-  - "📚  great, just add a new instance to the `CPU` class, below the other registers, like this:\n  ```javascript this.flags = new FlagsRegister();```"
+  - "📚  great, just add a new instance to the 🧠  `CPU` class, below the other registers, like this:\n  ```javascript this.flags = new FlagsRegister();```"
   responses: []

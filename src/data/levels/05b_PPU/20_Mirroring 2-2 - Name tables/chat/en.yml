@@ -52,7 +52,7 @@ implement:
   - I translated the mapping types into a nice table, here 📄  ~/lib/ppu/mirroringTypes.js~
   - the keys (`$2000`, `$2400`, `$2800` and `$2C00`) represent the logical PPU addresses
   - and the values (mostly `0x000` and `0x400`) are the offsets of the physical name tables inside the `PPUMemory::vram` array
-  - 📚  in `PPUMemory`, import the `mirroringTypes` file
+  - 📚  in 🐏  `PPUMemory`, import the `mirroringTypes` file
   - |-
     📚  define this method:
     **changeNameTableMirroringTo(mirroringId)**:

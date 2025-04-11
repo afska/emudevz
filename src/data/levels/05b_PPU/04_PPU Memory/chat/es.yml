@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - podrías preguntarte por qué nombramos la clase `CPUMemory` de esa manera
+  - podrías preguntarte por qué nombramos la clase 🐏  `CPUMemory` de esa manera
   - y no simplemente `Memory` 🤷
   - es porque hay 2 buses de memoria diferentes 🚌
   responses:
@@ -19,7 +19,7 @@ howso:
 
 emulate:
   messages:
-  - 📚  crea una clase `PPUMemory`, utilizando 📄  ~/tmpl/ppu/PPUMemory.js~ como plantilla
+  - 📚  crea una clase 🐏  `PPUMemory`, utilizando 📄  ~/tmpl/ppu/PPUMemory.js~ como plantilla
   - 📚  implementa solo el primer rango ($0000-$1FFF), tanto para las operaciones `read(...)` como `write(...)`
   - en <lecturas>, deberías retornar ```javascript this.mapper.ppuRead(address)```
   - en <escrituras>, deberías llamar a ```javascript this.mapper.ppuWrite(address, value)``` y retornar

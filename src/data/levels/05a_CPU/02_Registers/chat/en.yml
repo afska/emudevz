@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - "📚  you'll start by creating two classes: `Register8Bit` and `Register16Bit` 🔢"
+  - "📚  you'll start by creating two classes: 🔢  `Register8Bit` and 🔢  `Register16Bit`"
   - |-
     📚  they should have two methods:
     **getValue()**:
@@ -42,7 +42,7 @@ implement:
 nowwhat:
   messages:
   - |-
-    📚  then, add the following to your `CPU` class' constructor:
+    📚  then, add the following to your 🧠  `CPU` class' constructor:
       ```javascript
       this.a = new Register8Bit();
       this.x = new Register8Bit();

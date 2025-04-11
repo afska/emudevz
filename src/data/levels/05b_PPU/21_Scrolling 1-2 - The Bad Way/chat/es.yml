@@ -90,7 +90,7 @@ then:
   - tendrás en ```javascript ppuScroll.x``` y ```javascript ppuScroll.y``` las coordenadas de desplazamiento
   - ¡ahora puedes aplicar el scrolling a los fondos!
   - |-
-    📚  ve a `BackgroundRenderer` y cambia `renderScanline()`:
+    📚  ve a 🏞️  `BackgroundRenderer` y cambia `renderScanline()`:
       **->** si antes tenías algo como...
         ```javascript
           for (let x = 0; x < 256; x += 8)```

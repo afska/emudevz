@@ -7,7 +7,7 @@ main:
   - we'll create a class to help us retrieve tile colors
   - as the PPU renders by 🌠  scanlines, it will receive a parameter (`y`) that represents the row index it should draw
   - |-
-    📚  create a `Tile` class with the following:
+    📚  create a 🕊️  `Tile` class with the following:
     **constructor(ppu, patternTableId, tileId, y)**:
       **->** calculates the start address of the pattern table:
         $0000 or $1000 depending on `patternTableId` (~0~ or ~1~)
@@ -33,7 +33,7 @@ test:
   messages:
   - good question! 😁
   - |+
-    📚  in your `PPU`, import the `Tile` class and replace the test code (before the `onFrame` call) with:
+    📚  in your 🖥️  `PPU`, import the 🕊️  `Tile` class and replace the test code (before the `onFrame` call) with:
 
       ```javascript
       // <test>

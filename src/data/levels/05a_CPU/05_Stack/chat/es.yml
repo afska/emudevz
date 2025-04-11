@@ -4,7 +4,7 @@ main:
   - ¿recuerdas la pila? 🧱
   - <{stack.png}>
   - 📚  crea una nueva clase para ella
-  - tendría que recibir `memory` (`CPUMemory`) y `sp` (`Register8Bit`) de la CPU, ya que va a tener que interactuar con ellos
+  - tendría que recibir `memory` (🐏  `CPUMemory`) y `sp` (🔢  `Register8Bit`) de la CPU, ya que va a tener que interactuar con ellos
   - |-
     📚  implementa estos métodos:
     **push(value)**:

@@ -90,7 +90,7 @@ then:
   - then you will have in ```javascript ppuScroll.x``` and ```javascript ppuScroll.y``` the scroll coordinates!
   - you can apply the scrolling to the backgrounds now!
   - |-
-    📚  go to `BackgroundRenderer` and change `renderScanline()`:
+    📚  go to 🏞️  `BackgroundRenderer` and change `renderScanline()`:
       **->** if you previously had something like...
         ```javascript
           for (let x = 0; x < 256; x += 8)```

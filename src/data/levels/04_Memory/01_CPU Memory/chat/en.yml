@@ -32,7 +32,7 @@ io:
 implement:
   messages:
   - for now, we'll just implement the first range (🐏  WRAM)
-  - 📚  create a `CPUMemory` class, using 📄  ~/tmpl/CPUMemory.js~ as template
+  - 📚  create a 🐏  `CPUMemory` class, using 📄  ~/tmpl/CPUMemory.js~ as template
   - 📚  its constructor should initialize a `ram` property (a `Uint8Array` of 2048 bytes)
   - |-
     📚  implement the first `// TODO` of each method:
@@ -42,7 +42,7 @@ implement:
     **write(address, value)**:
       **->** if `address` is in the $0000-$07FF range, writes the `value` to the corresponding byte from `ram` and returns
         (leave the rest of the code as it is)
-  - 📚  then, as you did with `Cartridge`, add the class to 📄  ~/code/index.js~
+  - 📚  then, as you did with 💾  `Cartridge`, add the class to 📄  ~/code/index.js~
   responses:
   - what about the mirrored bytes? 📐 [help]
 

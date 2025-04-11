@@ -25,7 +25,7 @@ interrupts:
         (sí, leer este registro <REINICIA> parte de su valor 🤷 )
       **->** devuelve el `value` guardado
   - |-
-    📚  y cambia este en `PPU`:
+    📚  y cambia este en 🖥️  `PPU`:
     **step(onFrame, onInterrupt)**:
       **->** si ```javascript this.scanline``` es ~-1~:
         **->** llama a ```javascript this._onPreLine()```

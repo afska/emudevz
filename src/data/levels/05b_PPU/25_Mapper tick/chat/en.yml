@@ -11,7 +11,7 @@ simple:
   messages:
   - yeah!
   - |-
-    📚  in `PPU`, add this method:
+    📚  in 🖥️  `PPU`, add this method:
       **onLoad(mapper)**:
         **->** saves the parameter as a property (```javascript this.mapper```)
   - |-

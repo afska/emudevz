@@ -35,11 +35,11 @@ dma:
 
 implement:
   messages:
-  - 📚  como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `oamRam` en `PPUMemory`
+  - 📚  como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `oamRam` en 🐏  `PPUMemory`
   - el array debe almacenar 256 bytes
   - esta vez, no tienes que mapearla, la OAM es muy <interna>
   - |-
-    📚  implementa estos métodos en `OAMData`:
+    📚  implementa estos métodos en 📝  `OAMData`:
     **onRead()**:
       **->** guarda la dirección OAM actual:
         ```javascript const oamAddress = this.ppu.registers.oamAddr.value;```
@@ -55,7 +55,7 @@ implement:
     **onWrite(value)**:
       **->** ```javascript for (i = 0; i < 256; i++)```:
         **->** construye la dirección (high byte: `value`, low byte: `i`)
-        **->** lee la dirección de la memoria de la CPU (```javascript this.ppu.cpu``` devuelve la `CPU`)
+        **->** lee la dirección de la memoria de la CPU (```javascript this.ppu.cpu``` devuelve la 🧠  `CPU`)
         **->** asigna el byte obtenido a ```javascript oamRam[i]```
       **->** suma 513 a ```javascript this.ppu.cpu.extraCycles```
   responses: []

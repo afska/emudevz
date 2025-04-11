@@ -33,7 +33,7 @@ lets:
       **isRenderingEnabled()**:
         **->** retorna ```javascript this.showBackground || this.showSprites```
   - |-
-    📚  en `PPU`, quieres <no hacer nada> si la renderización está deshabilitada:
+    📚  en 🖥️  `PPU`, quieres <no hacer nada> si la renderización está deshabilitada:
       ```javascript if (!this.registers.ppuMask.isRenderingEnabled())
         return;```
     agrega eso al comienzo de `onPreLine(...)` y `onVisibleLine(...)`!
@@ -47,11 +47,11 @@ renderers:
   messages:
   - yep, veamos...
   - |-
-    📚  en `BackgroundRenderer`, cambia `renderScanline()`:
+    📚  en 🏞️  `BackgroundRenderer`, cambia `renderScanline()`:
     si `showBackgroundInFirst8Pixels` está apagado y `x < 8`, solo dibuja (con `PPU::plotBG(...)`) el color de fondo, incrementa `x` y después haz `continue`! ¡no proceses más!
     (recuerda que el color de fondo es ```javascript this.ppu.getColor(0, 0)```)
   - |-
-    📚  en `SpriteRenderer`, cambia `_render(...)`...
+    📚  en 🛸  `SpriteRenderer`, cambia `_render(...)`...
     necesitas una lógica similar:
     ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
       continue;```

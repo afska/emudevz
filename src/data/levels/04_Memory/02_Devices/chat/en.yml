@@ -7,7 +7,7 @@ main:
   - the 🧠  CPU accesses the code just by reading bytes inside $4020-$FFFF
   - let's make our memory receive a bunch of <devices> 📱
   - |-
-    📚  add the following method to your `CPUMemory`:
+    📚  add the following method to your 🐏  `CPUMemory`:
     **onLoad(ppu, apu, mapper, controllers)**:
       **->** saves the parameters as properties (```javascript this.ppu```, ```javascript this.apu```, ```javascript this.mapper```, and ```javascript this.controllers```)
   - 📚  then, as you did before with ```javascript this.ram```, modify `read(...)` and `write(...)` to let ```javascript this.mapper``` handle the range $4020-$FFFF (💾  Cartridge space)

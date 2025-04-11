@@ -3,13 +3,13 @@ main:
   messages:
   - vamos a definir algunas utilidades para simplificar futuras tareas
   - |-
-    📚  en tus clases `Register8Bit` y `Register16Bit`, implementa:
+    📚  en tus clases 🔢  `Register8Bit` y 🔢  `Register16Bit`, implementa:
     **increment()**:
       **->** llama a `setValue(...)` con el resultado de ```javascript getValue()+1```
     **decrement()**:
       **->** llama a `setValue(...)` con el resultado de ```javascript getValue()-1```
   - |-
-    📚  en tu `FlagsRegister`, implementa:
+    📚  en tu 🏁  `FlagsRegister`, implementa:
     **updateZero(value)**:
       **->** asigna ```javascript z=true``` si `value` es 0, o ```javascript z=false``` en caso contrario
     **updateNegative(value)**:

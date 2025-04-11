@@ -13,11 +13,20 @@ how:
   - sprites with lower ids are rendered on top of sprites with higher ids, so you should reverse the chosen sprite list!
   responses:
   - ok I think I got it [ok]
+  - (*) only 8 sprites per scanline? [only8]
+
+only8:
+  messages:
+  - yeah
+  - but games do some tricks to workaround this limit
+  - for example, they make them flicker to give the illusion of more sprites being on the same line
+  responses:
+  - ...how
 
 ok:
   messages:
   - |-
-    📚  cool, implement the following method in `SpriteRenderer`:
+    📚  cool, implement the following method in 🛸  `SpriteRenderer`:
     **_evaluate()**:
       **->** defines a `sprites` array
       **->** for each possible sprite id (~0-63~):

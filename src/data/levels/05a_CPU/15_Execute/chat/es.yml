@@ -34,7 +34,7 @@ rightway:
     set((m) => m.$exercise = true);
   messages:
   - |-
-    📚  primero, vamos a agregar estos métodos a tu `CPU`:
+    📚  primero, vamos a agregar estos métodos a tu 🧠  `CPU`:
     **_fetchOperation()**:
       **->** lee un byte de la dirección de memoria apuntada por [PC]
         (llamemos a esto `opcode`)

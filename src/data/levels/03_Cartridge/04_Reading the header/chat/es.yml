@@ -73,7 +73,7 @@ understand:
   - excelente 💪
   - los primeros 16 bytes del archivo representan la 🗣️  cabecera
   - |-
-    📚  agreguemos una propiedad `header` a la clase `Cartridge`, con la siguiente forma:
+    📚  agreguemos una propiedad `header` a la clase 💾  `Cartridge`, con la siguiente forma:
     ```javascript {
       prgRomPages: 2, // (obtener esto del byte 4)
       chrRomPages: 1, // (obtener esto del byte 5)

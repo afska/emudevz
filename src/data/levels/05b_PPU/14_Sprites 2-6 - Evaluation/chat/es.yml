@@ -13,11 +13,20 @@ how:
   - los sprites con identificadores más bajos se renderizan encima de los sprites con identificadores más altos, ¡así que deberías invertir la lista de sprites elegidos!
   responses:
   - ok creo que lo entendí [ok]
+  - (*) ¿solo 8 sprites por scanline? [only8]
+
+only8:
+  messages:
+  - sí
+  - pero los juegos hacen algunos trucos para evitar este límite
+  - por ejemplo, los hacen parpadear para dar la ilusión de que hay más sprites en la misma línea
+  responses:
+  - ...how
 
 ok:
   messages:
   - |-
-    📚  genial, implementa el siguiente método en `SpriteRenderer`:
+    📚  genial, implementa el siguiente método en 🛸  `SpriteRenderer`:
     **_evaluate()**:
       **->** define un array `sprites`
       **->** para cada id de sprite posible (~0-63~):

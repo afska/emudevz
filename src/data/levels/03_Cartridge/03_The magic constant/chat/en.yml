@@ -22,7 +22,7 @@ exercise:
   run: |
     set((m) => m.$end = true);
   messages:
-  - 📚  add a constructor to the `Cartridge` class receiving the ROM bytes
+  - 📚  add a constructor to the 💾  `Cartridge` class receiving the ROM bytes
   - 📚  save them in a property called `bytes`
   - 📚  if the magic constant doesn't match $4E $45 $53 $1A, throw an error with the "Invalid ROM." message
   responses:

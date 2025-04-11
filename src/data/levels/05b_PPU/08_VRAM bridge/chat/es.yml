@@ -20,7 +20,7 @@ how:
 define:
   messages:
   - sí, mejor empieza por eso
-  - 📚  como hiciste con `CPUMemory::ram`, agrega una propiedad llamada `vram` en `PPUMemory`
+  - 📚  como hiciste con `CPUMemory::ram`, agrega una propiedad llamada `vram` en 🐏  `PPUMemory`
   - el array debería almacenar 4096 bytes
   - (sé que dije varias veces que solo hay 2 KiB de VRAM, pero algunos juegos extienden esa memoria usando chips extra en su cartucho, y es más fácil emular esos simplemente asignando un gran bloque de 4 KiB 🤷 )
   - 📚  mapea el rango $2000-$2FFF a VRAM (tanto lecturas como escrituras)
@@ -44,7 +44,7 @@ define:
     📚  implementa estos métodos en 📦  `PPUData`:
     **onWrite(value)**:
       **->** escribe `value` en la dirección PPU ```javascript ppuAddr.address```
-        (puedes acceder a la instancia `PPUMemory` con ```javascript this.ppu.memory```)
+        (puedes acceder a la instancia 🐏  `PPUMemory` con ```javascript this.ppu.memory```)
         (puedes acceder a la instancia 📍  `PPUAddr` con ```javascript this.ppu.registers.ppuAddr```)
       **->** llama a ```javascript this._incrementAddress()```
     **_incrementAddress()**:

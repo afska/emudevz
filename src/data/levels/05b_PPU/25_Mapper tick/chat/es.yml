@@ -11,7 +11,7 @@ simple:
   messages:
   - ¡sí!
   - |-
-    📚  en `PPU`, añade este método:
+    📚  en 🖥️  `PPU`, añade este método:
       **onLoad(mapper)**:
         **->** guarda el parámetro como una propiedad (```javascript this.mapper```)
   - |-

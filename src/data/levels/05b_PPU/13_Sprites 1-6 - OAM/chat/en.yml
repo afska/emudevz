@@ -18,16 +18,16 @@ oam:
 implement:
   messages:
   - correct ✅
-  - 📚  create a `SpriteRenderer` class
+  - 📚  create a 🛸  `SpriteRenderer` class
   - 📚  its constructor should receive and assign a `ppu` property with the PPU instance
   - |-
-    📚  make this change to the `PPU` class:
+    📚  make this change to the 🖥️  `PPU` class:
     **constructor**:
       **->** instantiates the sprite renderer:
         ```javascript this.spriteRenderer = new SpriteRenderer(this)```
         (remember to import it if you defined it in another file!)
   - |-
-    📚  now, in the `SpriteRenderer` class, define:
+    📚  now, in the 🛸  `SpriteRenderer` class, define:
     **_createSprite(id)**:
       **->** returns a new `Sprite` instance, by reading the OAM index `id`
       (remember to add 1 to the Y coordinate!)

@@ -2,7 +2,7 @@ main:
   messages:
   - as you saw in the OAM level, sprites can be 🤸  <flipped>, both horizontally and vertically
   - this is represented in our `Sprite` class with the `flipX` and `flipY` attributes
-  - 📚  change your `SpriteRenderer` so it plots the right pixels, depending on these attributes
+  - 📚  change your 🛸  `SpriteRenderer` so it plots the right pixels, depending on these attributes
   responses:
   - wait, what did you mean by ~flipped~? [whats]
   - I need help with the horizontal flip [horizontal]
@@ -43,6 +43,6 @@ vertical:
   - to take into account ~8x16~ sprites, we should use the Y coordinate <inside the current tile>
   - first define a ```javascript tileInsideY = insideY % 8;```
   - |-
-    then, as the last argument of `Tile`'s constructor, use:
+    then, as the last argument of 🕊️  `Tile`'s constructor, use:
       ```javascript sprite.flipY ? 7 - tileInsideY : tileInsideY```
   responses: []

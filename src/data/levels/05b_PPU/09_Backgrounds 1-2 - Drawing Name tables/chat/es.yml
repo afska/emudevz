@@ -12,10 +12,10 @@ finally:
   - lee 📄  ~/docs/ppu/background_rendering.es.md~
   - y trata de entender cómo renderizar fondos en <escala de grises>
   - cuando hayas terminado...
-  - 📚  crea una clase `BackgroundRenderer`
+  - 📚  crea una clase 🏞️  `BackgroundRenderer`
   - 📚  su constructor debe recibir y asignar una propiedad `ppu` con la instancia de PPU
   - |-
-    📚  haz estos cambios en la clase `PPU`:
+    📚  haz estos cambios en la clase 🖥️  `PPU`:
     **constructor**:
       **->** instancia el renderizador de fondos:
         ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
@@ -25,7 +25,7 @@ finally:
     **_onVisibleLine()**:
       **->** si el ciclo es ~0~, llama a `backgroundRenderer.renderScanline()`
   - |-
-    📚  ahora, en la clase `BackgroundRenderer`, define:
+    📚  ahora, en la clase 🏞️  `BackgroundRenderer`, define:
     **renderScanline()**:
       **->** agrega el código necesario para renderizar una línea completa del fondo
   - ¡adiós!
@@ -62,7 +62,7 @@ help:
   - sabes que `y = this.ppu.scanline`
   - y que necesitas dibujar desde ~x = 0~ hasta ~x = 255~
   - también sabes que la pantalla es una cuadrícula de ~32x32~ tiles (de ~8x8~ píxeles cada uno)
-  - y por último, ¡ya sabes cómo dibujar un tile usando tu clase `Tile`!
+  - y por último, ¡ya sabes cómo dibujar un tile usando tu clase 🕊️  `Tile`!
   - |-
     una forma de implementar esto es hacer algo como:
       ```javascript
