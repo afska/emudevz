@@ -15,7 +15,7 @@
     "___": "___",
     "test": "react-scripts test",
     "electron": "electron",
-    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/emudevz react-scripts build",
+    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/emudevz-temp react-scripts build",
     "build:electron": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=./ react-scripts build"
   },
   "//": [

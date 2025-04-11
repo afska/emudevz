@@ -25,7 +25,7 @@ define:
   - (I know I said multiple times that there's only 2 KiB of VRAM, but some games extend that memory using extra chips in their cartridge, and it's easier to emulate those by just allocating a big 4 KiB chunk 🤷 )
   - 📚  map the range $2000-$2FFF to VRAM (both reads and writes)
   - |-
-    📚  implement these methods in `PPUAddr`:
+    📚  implement these methods in 📍  `PPUAddr`:
     **onLoad()**:
       **->** initializes two properties:
         ```javascript this.latch = false```
@@ -41,11 +41,11 @@ define:
       (you can use `buildU16(...)`, `highByteOf(...)`, and `lowByteOf(...)`)
       **->** switches `latch` to the opposite value
   - |-
-    📚  implement these methods in `PPUData`:
+    📚  implement these methods in 📦  `PPUData`:
     **onWrite(value)**:
       **->** writes `value` to the PPU address ```javascript ppuAddr.address```
         (you can access the `PPUMemory` instance with ```javascript this.ppu.memory```)
-        (you can access the `PPUAddr` instance with ```javascript this.ppu.registers.ppuAddr```)
+        (you can access the 📍  `PPUAddr` instance with ```javascript this.ppu.registers.ppuAddr```)
       **->** calls ```javascript this._incrementAddress()```
     **_incrementAddress()**:
       **->** if ```javascript ppuCtrl.vramAddressIncrement32``` is ~1~:
@@ -54,9 +54,9 @@ define:
         **->** increments ```javascript ppuAddr.address``` 1 time
      **[!]** make sure the address never exceeds 65535 by using `byte.toU16(...)`
   - |-
-    📚  lastly, modify in `PPUStatus`:
+    📚  lastly, modify in 📊  `PPUStatus`:
     **onRead()**:
-      **->** after resetting `isInVBlankInterval`, it also resets the `latch` from `PPUAddr`
+      **->** after resetting `isInVBlankInterval`, it also resets the `latch` from 📍  `PPUAddr`
   responses:
   - what's this address increment? 🤔 [increment]
 

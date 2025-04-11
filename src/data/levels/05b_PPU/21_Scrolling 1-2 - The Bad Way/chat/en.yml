@@ -71,12 +71,12 @@ proceed:
   messages:
   - (again, ~THIS IS NOT EXACTLY CORRECT~, but it'll work for now!)
   - |-
-    📚  modify these methods of `PPUScroll`:
+    📚  modify these methods of 📜  `PPUScroll`:
       **onLoad()**:
         **->** sets ```javascript this.x = 0```
         **->** sets ```javascript this.y = 0```
       **onWrite(value)**:
-        **->** if PPUAddr's `latch` is ```javascript false```:
+        **->** if 📍 PPUAddr's `latch` is ```javascript false```:
           **->** writes the `value` to ```javascript this.x```
         **->** if it's ```javascript true```:
           **->** writes the `value` to ```javascript this.y```

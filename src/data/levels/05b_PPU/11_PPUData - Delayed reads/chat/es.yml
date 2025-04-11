@@ -13,7 +13,7 @@ delay:
   messages:
   - simple, cuando se solicita una <lectura>, lees en un buffer, pero luego devuelves el <valor anterior> de ese buffer
   - |-
-    📚  implementa estos métodos en `PPUData`:
+    📚  implementa estos métodos en 📦  `PPUData`:
     **onLoad**:
       **->** inicializa ```javascript this.buffer = 0```
     **onRead()**:

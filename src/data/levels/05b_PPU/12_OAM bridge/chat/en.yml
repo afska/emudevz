@@ -51,7 +51,7 @@ implement:
       **->** increments the OAM address:
         ```javascript this.ppu.registers.oamAddr.setValue(oamAddress + 1);```
   - |-
-    📚  implement this method in `OAMDMA`:
+    📚  implement this method in ⚡  `OAMDMA`:
     **onWrite(value)**:
       **->** ```javascript for (i = 0; i < 256; i++)```:
         **->** builds the address (high byte: `value`, low byte: `i`)

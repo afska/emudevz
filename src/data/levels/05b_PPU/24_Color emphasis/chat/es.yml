@@ -20,7 +20,7 @@ how:
 so:
   messages:
   - abre 📄  ~/docs/ppu/video_registers.en.md~
-  - 📚  en `PPUMask`, edita el método `onLoad()` y usa `addField(...)` para mapear los bits `grayscale`, `emphasizeRed`, `emphasizeGreen` y `emphasizeBlue`
+  - 📚  en 🎭  `PPUMask`, edita el método `onLoad()` y usa `addField(...)` para mapear los bits `grayscale`, `emphasizeRed`, `emphasizeGreen` y `emphasizeBlue`
   - |-
     📚  agrega este método:
     **transform(color)**:
@@ -44,5 +44,5 @@ so:
 
       **->** devuelve el color actualizado:
         ```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```
-  - 📚  y lo más importante, ahora `PPU::plot(...)` necesita llamar al método transform de `PPUMask` en lugar de usar directamente el `color`
+  - 📚  y lo más importante, ahora `PPU::plot(...)` necesita llamar al método transform de 🎭  `PPUMask` en lugar de usar directamente el `color`
   responses: []

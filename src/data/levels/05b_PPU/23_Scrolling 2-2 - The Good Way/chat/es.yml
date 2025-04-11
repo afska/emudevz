@@ -31,18 +31,18 @@ changes:
     📚  al final del método `plotBG(...)`, llama a:
       ```javascript this.loopy.onPlot(x);```
   - |-
-    📚 🎛️  en `PPUCtrl`, elimina el campo `nameTableId`; reemplaza su asignación en el método `onWrite(...)` con:
+    📚  en 🎛️  `PPUCtrl`, elimina el campo `nameTableId`; reemplaza su asignación en el método `onWrite(...)` con:
       ```javascript this.ppu.loopy.onPPUCtrlWrite(value);```
   - |-
-    📚 📊  en `PPUStatus`, reemplaza el código que desactiva el `latch` de `PPUAddr` con:
+    📚  en 📊  `PPUStatus`, reemplaza el código que desactiva el `latch` de 📍  `PPUAddr` con:
       ```javascript this.ppu.loopy.onPPUStatusRead();```
   - |-
-    📚 📜  en `PPUScroll`, elimina el método `onLoad()` y reemplaza `onWrite(...)` con:
+    📚  en 📜  `PPUScroll`, elimina el método `onLoad()` y reemplaza `onWrite(...)` con:
       ```javascript onWrite(value) {
         this.ppu.loopy.onPPUScrollWrite(value);
       }```
   - |-
-    📚 📍  en `PPUAddr`, elimina el método `onLoad()` y reemplaza `onWrite(...)` con:
+    📚 en 📍  `PPUAddr`, elimina el método `onLoad()` y reemplaza `onWrite(...)` con:
       ```javascript onWrite(value) {
         this.ppu.loopy.onPPUAddrWrite(value);
       }```

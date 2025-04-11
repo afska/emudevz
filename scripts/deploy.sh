@@ -2,7 +2,7 @@
 
 . ./scripts/try.sh
 
-APP_NAME="emudevz"
+APP_NAME="emudevz-temp"
 
 USERNAME="$1"
 TOKEN="$2"

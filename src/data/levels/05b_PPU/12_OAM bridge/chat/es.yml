@@ -51,7 +51,7 @@ implement:
       **->** incrementa la dirección OAM:
         ```javascript this.ppu.registers.oamAddr.setValue(oamAddress + 1);```
   - |-
-    📚  implementa este método en `OAMDMA`:
+    📚  implementa este método en ⚡  `OAMDMA`:
     **onWrite(value)**:
       **->** ```javascript for (i = 0; i < 256; i++)```:
         **->** construye la dirección (high byte: `value`, low byte: `i`)

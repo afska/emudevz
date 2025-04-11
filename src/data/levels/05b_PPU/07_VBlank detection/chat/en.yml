@@ -18,7 +18,7 @@ interrupts:
   - and the 🧠  CPU will handle that by jumping to the right piece of code
   - actually, let's code this
   - |-
-    📚  modify this method of `PPUStatus`:
+    📚  modify this method of 📊  `PPUStatus`:
     **onRead()**:
       **->** saves the current ```javascript this.value``` in a `value` constant
       **->** resets ```javascript this.isInVBlankInterval``` to 0

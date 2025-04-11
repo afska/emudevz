@@ -31,18 +31,18 @@ changes:
     📚  at the end of the `plotBG(...)` method, call:
       ```javascript this.loopy.onPlot(x);```
   - |-
-    📚 🎛️  in `PPUCtrl`, remove the `nameTableId` field; replace its assignment in the `onWrite(...)` method with:
+    📚  in 🎛️  `PPUCtrl`, remove the `nameTableId` field; replace its assignment in the `onWrite(...)` method with:
       ```javascript this.ppu.loopy.onPPUCtrlWrite(value);```
   - |-
-    📚 📊  in `PPUStatus`, replace the code that disables `PPUAdrr`'s `latch` with:
+    📚  in 📊  `PPUStatus`, replace the code that disables `PPUAdrr`'s `latch` with:
       ```javascript this.ppu.loopy.onPPUStatusRead();```
   - |-
-    📚 📜  in `PPUScroll`, remove the `onLoad()` method and replace `onWrite(...)` with:
+    📚  in 📜  `PPUScroll`, remove the `onLoad()` method and replace `onWrite(...)` with:
       ```javascript onWrite(value) {
         this.ppu.loopy.onPPUScrollWrite(value);
       }```
   - |-
-    📚 📍  in `PPUAddr`, remove the `onLoad()` method and replace `onWrite(...)` with:
+    📚  in 📍  `PPUAddr`, remove the `onLoad()` method and replace `onWrite(...)` with:
       ```javascript onWrite(value) {
         this.ppu.loopy.onPPUAddrWrite(value);
       }```

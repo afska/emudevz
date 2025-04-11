@@ -18,7 +18,7 @@ interrupts:
   - y la 🧠  CPU lo manejará saltando al fragmento de código correcto
   - de hecho, vamos a programarlo
   - |-
-    📚  modifica este método de `PPUStatus`:
+    📚  modifica este método de 📊  `PPUStatus`:
     **onRead()**:
       **->** guarda el actual ```javascript this.value``` en una constante `value`
       **->** reinicia ```javascript this.isInVBlankInterval``` a 0

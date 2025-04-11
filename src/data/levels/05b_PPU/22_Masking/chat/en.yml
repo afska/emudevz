@@ -19,7 +19,7 @@ why:
 
 lets:
   messages:
-  - 📚  in `PPUMask`, implement the `onLoad()` method, using `addField(...)` to map the mentioned bits
+  - 📚  in 🎭  `PPUMask`, implement the `onLoad()` method, using `addField(...)` to map the mentioned bits
   - |-
     use these names:
       `showBackgroundInFirst8Pixels`
