@@ -38,8 +38,7 @@ lets:
         return;```
     add that at the beginning of both `onPreLine(...)` and `onVisibleLine(...)`!
   - |-
-    📚  only call `BackgroundRenderer::renderScanline` if `showBackground` is enabled,
-    and only call `SpriteRenderer::renderScanline` if `showSprites` is enabled
+    📚  only call `BackgroundRenderer::renderScanline` if `showBackground` is enabled, and only call `SpriteRenderer::renderScanline` if `showSprites` is enabled
   responses:
   - shouldn't I also change the renderers? [renderers]
 
@@ -48,12 +47,15 @@ renderers:
   - yup, let's see...
   - |-
     📚  in 🏞️  `BackgroundRenderer`, change `renderScanline()`...
-    if `showBackgroundInFirst8Pixels` is off and `x < 8`, just plot (with `PPU::plotBG(...)`) the backdrop color, increment `x`, and `continue`! don't process further!
-    (remember that the backdrop color is ```javascript this.ppu.getColor(0, 0)```)
+      **->** if `showBackgroundInFirst8Pixels` is off and `x < 8`
+        **->** just plot (with `PPU::plotBG(...)`) the backdrop color
+        **->** increment `x`
+        **->** `continue`! don't process further!
+      (remember that the backdrop color is ```javascript this.ppu.getColor(0, 0)```)
   - |-
     📚  in 🛸  `SpriteRenderer`, change `_render(...)`...
-    you need a similar logic:
-    ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
-      continue;```
-    in the sprite-zero hit `if`, add `showBackground` and `showSprites` as conditions: if one of them is disabled, it shouldn't be triggered!
+      **->** you need a similar logic:
+        ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
+          continue;```
+      **->** in the sprite-zero hit `if`, add `showBackground` and `showSprites` as conditions: if one of them is disabled, it shouldn't be triggered!
   responses: []

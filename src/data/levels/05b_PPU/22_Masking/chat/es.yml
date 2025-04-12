@@ -48,12 +48,15 @@ renderers:
   - yep, veamos...
   - |-
     📚  en 🏞️  `BackgroundRenderer`, cambia `renderScanline()`:
-    si `showBackgroundInFirst8Pixels` está apagado y `x < 8`, solo dibuja (con `PPU::plotBG(...)`) el color de fondo, incrementa `x` y después haz `continue`! ¡no proceses más!
-    (recuerda que el color de fondo es ```javascript this.ppu.getColor(0, 0)```)
+      **->** si `showBackgroundInFirst8Pixels` está apagado y `x < 8`:
+        **->** solo dibuja (con `PPU::plotBG(...)`) el color de fondo
+        **->** incrementa `x`
+        **->** `continue`! ¡no proceses más!
+      (recuerda que el color de fondo es ```javascript this.ppu.getColor(0, 0)```)
   - |-
     📚  en 🛸  `SpriteRenderer`, cambia `_render(...)`...
-    necesitas una lógica similar:
-    ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
-      continue;```
-    en el `if` del sprite-zero hit, agrega `showBackground` y `showSprites` como condiciones: si uno de ellos está deshabilitado, ¡no debería activarse!
+      **->** necesitas una lógica similar:
+        ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
+          continue;```
+      **->** en el `if` del sprite-zero hit, agrega `showBackground` y `showSprites` como condiciones: si uno de ellos está deshabilitado, ¡no debería activarse!
   responses: []
