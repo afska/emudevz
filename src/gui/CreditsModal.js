@@ -64,6 +64,66 @@ export default class CreditsModal extends PureComponent {
 							Synthenia
 						</a>
 					</Section>
+					<Section title="🎨 Art">
+						<li>
+							<a
+								href="https://x.com/AngryMuffinDSFW"
+								target="_blank"
+								rel="noreferrer"
+							>
+								Angry Muffin
+							</a>
+						</li>
+						<li>
+							<a
+								href="https://www.instagram.com/damiandeamicis"
+								target="_blank"
+								rel="noreferrer"
+							>
+								Damian De Amicis
+							</a>
+						</li>
+					</Section>
+					<Section title="📚 Source code">
+						🛠️{" "}
+						<a
+							href="https://github.com/afska/emudevz"
+							target="_blank"
+							rel="noreferrer"
+						>
+							Fork me on GitHub!
+						</a>
+					</Section>
+					<Section title="🔑 Licenses">
+						<Game
+							emojis="💿💻"
+							prefix={
+								<span>
+									<strong>Code</strong> is licensed under{" "}
+								</span>
+							}
+							link="https://opensource.org/license/mit"
+						>
+							The MIT License
+						</Game>
+						<Game
+							emojis="📖✏️"
+							prefix={
+								<span>
+									<strong>Levels</strong> are licensed under{" "}
+								</span>
+							}
+							link="https://creativecommons.org/licenses/by-nc/4.0"
+						>
+							CC BY-NC 4.0
+						</Game>
+						<br />
+						This game uses open-source software, check{" "}
+						<a href="licenses.txt" target="_blank" rel="noreferrer">
+							Licenses
+						</a>
+						.
+					</Section>
 					<Section title="👾 Homebrew games">
 						<div>
 							<div>
@@ -195,10 +255,34 @@ export default class CreditsModal extends PureComponent {
 								</Game>
 							</div>
 							<div style={{ fontSize: "small", marginTop: 8 }}>
-								✅ All these games were included with the permission of their
-								authors.
+								✅ All these games and test roms were included with the
+								permission of their authors. If I made a mistake or you'd like
+								your game here, drop me an e-mail!
 							</div>
 						</div>
+					</Section>
+					<Section title="🕵️ Test ROMs">
+						<Game
+							emojis="🧠🔎"
+							link="https://www.qmtpro.com/~nes/misc/nestest.txt"
+							author="kevtris"
+						>
+							nestest
+						</Game>
+						<Game
+							emojis="👋🌎"
+							link="https://pineight.com/nes/"
+							author="PinoBatch"
+						>
+							Hello world
+						</Game>
+						<Game
+							emojis="📺🔎"
+							link="https://pineight.com/nes/"
+							author="PinoBatch"
+						>
+							240p Test Suite
+						</Game>
 					</Section>
 					<Section title="🙏 Thanks to...">
 						<Game emojis="🕹️🛠️" link="https://www.nesdev.org">
@@ -211,46 +295,6 @@ export default class CreditsModal extends PureComponent {
 						>
 							Easy 6502
 						</Game>
-					</Section>
-					<Section title="📚 Source code">
-						🛠️{" "}
-						<a
-							href="https://github.com/afska/emudevz"
-							target="_blank"
-							rel="noreferrer"
-						>
-							Fork me on GitHub!
-						</a>
-					</Section>
-					<Section title="🔑 Licenses">
-						<Game
-							emojis="💿💻"
-							prefix={
-								<span>
-									<strong>Code</strong> is licensed under{" "}
-								</span>
-							}
-							link="https://opensource.org/license/mit"
-						>
-							The MIT License
-						</Game>
-						<Game
-							emojis="📖✏️"
-							prefix={
-								<span>
-									<strong>Levels</strong> are licensed under{" "}
-								</span>
-							}
-							link="https://creativecommons.org/licenses/by-nc/4.0"
-						>
-							CC BY-NC 4.0
-						</Game>
-						<br />
-						This game uses open-source software, check{" "}
-						<a href="licenses.txt" target="_blank" rel="noreferrer">
-							Licenses
-						</a>
-						.
 					</Section>
 				</Modal.Body>
 			</Modal>
