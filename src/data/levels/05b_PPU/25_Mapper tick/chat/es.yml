@@ -1,6 +1,6 @@
 main:
   messages:
-  - un toque final 🪄
+  - un toque final ✨
   - algunos mappers incluyen un <contador de scanlines>
   - "lo implementaremos tan simplemente como podamos:"
   - simplemente llama a una función `tick()` en el ciclo 260 de cada pre-line y scanline visible
