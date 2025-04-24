@@ -381,11 +381,18 @@ const dictionary = {
 			es:
 				"Una interrupción de CPU disparada al principio del VBlank, cuando la PPU termina de dibujar un frame.",
 		},
-		OAM: {
+		"OAM|OAM table": {
+			also: { es: "OAM|Tabla OAM" },
 			icon: "🛸📖",
 			en: "_(Object Attribute Memory)_ A list of sprites, stored in OAM RAM.",
 			es:
 				"_(Object Attribute Memory)_ Una lista de sprites, almacenada en OAM RAM.",
+		},
+		"OAM entry|_OAM entries": {
+			also: { es: "Entrada OAM|_Entradas OAM" },
+			icon: "🛸📖",
+			en: "An entry inside the OAM table.",
+			es: "Una entrada dentro de la tabla OAM.",
 		},
 		OAMAddr: {
 			icon: "🏠",

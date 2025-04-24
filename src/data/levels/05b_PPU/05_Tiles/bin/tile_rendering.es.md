@@ -1,9 +1,9 @@
 # PPU: Renderizado de Tiles
 
-- Una 🕊️📖 _pattern table_ es una lista de `256` 🕊️ _tiles_ consecutivos.
-- Cada 🕊️ _tile_ ocupa `16` bytes...
-- ...por lo tanto, cada _pattern table_ es de `4096` bytes.
-- El 👾 CHR-ROM dentro del 💾 cartucho contiene `2` 🕊️📖 _pattern tables_.
+- Una 🕊️📖 pattern table es una lista de `256` 🕊️ tiles consecutivos.
+- Cada 🕊️ tile ocupa `16` bytes...
+- ...por lo tanto, cada pattern table es de `4096` bytes.
+- El 👾 CHR-ROM dentro del 💾 cartucho contiene `2` 🕊️📖 pattern tables.
   - (eso está disponible en las direcciones PPU `$0000-$1FFF`)
 
 #### Ejemplo de pattern table
@@ -12,7 +12,7 @@
 
 #### Renderizado
 
-- Un 🕊️ _tile_ es una cuadrícula de 8x8 píxeles en _escala de grises_.
+- Un 🕊️ tile es una cuadrícula de 8x8 píxeles en _escala de grises_.
 - Esos píxeles pueden ser `0`, `1`, `2` o `3` dependiendo de su color.
   - (en binario: `00`, `01`, `10` o `11`)
 

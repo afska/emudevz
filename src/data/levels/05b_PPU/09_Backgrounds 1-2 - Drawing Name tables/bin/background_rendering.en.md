@@ -1,10 +1,10 @@
 # PPU: Background rendering
 
-- A 🏞️📖 _name table_ is a matrix of `32x30` 🕊️ _tile indexes_.
-- Since the screen resolution is `256x240`, and each 🕊️ _tile_ is `8x8` pixels, these `32x30` tiles cover the whole screen area ✨.
+- A 🏞️📖 name table is a matrix of `32x30` 🕊️ _tile indexes_.
+- Since the screen resolution is `256x240`, and each 🕊️ tile is `8x8` pixels, these `32x30` tiles cover the whole screen area ✨.
 - Each 🕊️ _tile index_ occupies `1` byte, and there are `64` bytes of 🖍️ _color metadata_ at the end of the name table.
-- So, each _name table_ totals `1024` bytes (`32*30*1 + 64`).
-- The 🐏 VRAM contains `2` 🏞️📖 _name tables_.
+- So, each name table totals `1024` bytes (`32*30*1 + 64`).
+- The 🐏 VRAM contains `2` 🏞️📖 name tables.
   - (that's available in PPU addresses `$2000-$27FF`)
 
 <div class="embed-image"><img alt="Name table memory" src="assets/graphics/name_tables.png" style="width: 100%" /></div>
@@ -17,22 +17,22 @@
 
 ##### ⬛️⬜️ Grayscale
 
-- Find the location of the 🏞️📖 _name table_:
+- Find the location of the 🏞️📖 name table:
   - The first `2` bits of 🎛️ PPUCtrl contain the `nameTableId`.
   - The table will be in the PPU address `0x2000 + nameTableId * 1024`.
-- Find out which 🏞️📖 _pattern table_ we should use (`0` or `1`):
+- Find out which 🏞️📖 pattern table we should use (`0` or `1`):
   - This is in bit `4` of 🎛️ PPUCtrl.
 - Each of the next `960` bytes will be a 🕊️ _tile index_ (`0-255`).
   - Ignore 🖍️ _color metadata_ for now.
 - On cycle `0` of every visible scanline (`0-239`), draw a row of pixels (composed by `32` tiles each).
-  - Use a fixed 🎨 _palette_:
+  - Use a fixed 🎨 palette:
     - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
 
 ##### 🎨🌈 Adding color
 
 ###### **Obtaining palette ids**
 
-- Each section of `"color metadata"` is an 🖍️📖 _attribute table_ that defines which 🎨 _palette_ each tile should use.
+- Each section of `"color metadata"` is an 🖍️📖 attribute table that defines which 🎨 palette each tile should use.
 - 🎨 Palettes have `4` colors, and they are assigned to `blocks` of `2x2` tiles.
 
 <div class="embed-image"><img alt="Palette blocks" src="assets/graphics/palette-blocks.gif" style="width: 75%" /></div>
@@ -51,8 +51,8 @@
 
 ###### **Reading palette data**
 
-- A 🎨 _palette_ is an array of `4` 🖍️ _color indexes_ (`0-63`), pointing to the hardcoded 👑🎨 `master palette`.
-- Each 🖍️ _color index_ occupies `1` byte, so each 🎨 _palette_ totals `4` bytes.
+- A 🎨 palette is an array of `4` 🖍️ _color indexes_ (`0-63`), pointing to the hardcoded 👑🎨 master palette.
+- Each 🖍️ _color index_ occupies `1` byte, so each 🎨 palette totals `4` bytes.
 - The 🐏 Palette RAM contains `4` palettes for backgrounds, and `4` palettes for sprites.
   - (background palettes are available in PPU addresses `$3F00-$3F0F`)
 
