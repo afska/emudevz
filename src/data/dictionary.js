@@ -288,6 +288,13 @@ const dictionary = {
 			es:
 				"El byte con el valor posicional más bajo en un número multibyte. <br /><br />Por ejemplo, el LSB de `$AB15` es `$15`.",
 		},
+		"Little Endian": {
+			icon: "🔢",
+			en:
+				"A convention where the least significant byte is stored first in memory.",
+			es:
+				"Una convención donde el byte menos significativo se almacena primero en memoria.",
+		},
 		"Machine code": {
 			also: { es: "Código máquina" },
 			icon: "🔢",
@@ -311,7 +318,8 @@ const dictionary = {
 		},
 		"Memory address|_Memory addresses|Address|_Addresses": {
 			also: {
-				es: "Dirección de memoria|Direcciones de memoria|Dirección|Direcciones",
+				es:
+					"Dirección de memoria|_Direcciones de memoria|Dirección|_Direcciones",
 			},
 			icon: "🐏",
 			en:
