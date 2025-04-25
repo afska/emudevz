@@ -10,7 +10,8 @@ class ProgressList extends PureComponent {
 		const { book, chapter, selectedLevelId, goTo } = this.props;
 
 		const levelDefinitions = chapter.levels;
-		const nextPendingLevel = book.nextPendingLevelOfChapter(chapter.id);
+		const nextPendingLevel =
+			!chapter.isSpecial && book.nextPendingLevelOfChapter(chapter.id);
 
 		return (
 			<div className={styles.progressList}>

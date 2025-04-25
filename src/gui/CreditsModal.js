@@ -216,7 +216,7 @@ export default class CreditsModal extends PureComponent {
 									link="https://sgadrat.itch.io/super-tilt-bro"
 									author="sgadrat"
 								>
-									Super Tilt Bro.
+									Super Tilt Bro
 								</Game>
 								<Game
 									emojis="📻💡"
