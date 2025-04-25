@@ -135,6 +135,13 @@ export default class CreditsModal extends PureComponent {
 									Böbl
 								</Game>
 								<Game
+									emojis="🍒🃏"
+									link="https://github.com/pinobatch/croom-nes"
+									author="PinoBatch"
+								>
+									Concentration Room
+								</Game>
+								<Game
 									emojis="🦅🧷"
 									link="https://miau6502.itch.io/crowborg"
 									author="miau6502"
@@ -142,11 +149,47 @@ export default class CreditsModal extends PureComponent {
 									Crowborg
 								</Game>
 								<Game
+									emojis="💫🐑"
+									link="https://igwgames.com/classic-gaming/do-sheep-dream-of-velcro"
+									author="IGW Games"
+								>
+									Dizzy Sheep Disaster
+								</Game>
+								<Game
+									emojis="💤🐶"
+									link="https://igwgames.com/classic-gaming/dream-dog-dilemma"
+									author="IGW Games"
+								>
+									Dream Dog Dilemma
+								</Game>
+
+								<Game
+									emojis="🙌☁️"
+									link="https://github.com/xram64/falling-nes"
+									author="xram64"
+								>
+									Falling
+								</Game>
+								<Game
+									emojis="🌊🐈"
+									link="https://igwgames.com/classic-gaming/feline-flood-fiasco"
+									author="IGW Games"
+								>
+									Feline Flood Fiasco
+								</Game>
+								<Game
 									emojis="🦟🍳"
 									link="https://dustmop.itch.io/filthy-kitchen"
 									author="dustmop"
 								>
 									Filthy Kitchen
+								</Game>
+								<Game
+									emojis="🧱🐙"
+									link="https://mhughson.itch.io/from-below"
+									author="Matt Hughson"
+								>
+									From Below
 								</Game>
 								<Game
 									emojis="⛽💥"
@@ -170,9 +213,16 @@ export default class CreditsModal extends PureComponent {
 									Jupiter Scope 2
 								</Game>
 								<Game
+									emojis="💎⛏️"
+									link="https://mhughson.itch.io/minekart-madness"
+									author="Matt Hughson"
+								>
+									Minekart Madness
+								</Game>
+								<Game
 									emojis="🐸🌍"
-									link="https://cpprograms.net/classic-gaming/missing-lands"
-									author="chriscpp"
+									link="https://igwgames.com/classic-gaming/missing-lands"
+									author="IGW Games"
 								>
 									Missing Lands
 								</Game>
