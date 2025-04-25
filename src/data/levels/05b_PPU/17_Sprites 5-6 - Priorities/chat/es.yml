@@ -8,7 +8,7 @@ main:
 
 example:
   run: |-
-    {{Top}}.load("SuperTiltBro.neees", "rom", "bin");
+    {{Top}}.loadROM("/roms/.all/SuperTiltBro.neees", "rom");
   messages:
   - presta atención a la <nube> en el medio
   - la nube es un sprite y el título del juego es parte del fondo

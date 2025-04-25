@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import filesystem from "../../filesystem";
 import TVNoise from "./TVNoise";
 import EmulatorRunner from "./emulator/EmulatorRunner";
 import GameStreamer from "./emulator/GameStreamer";
@@ -28,6 +29,11 @@ export default class TV extends PureComponent {
 	load(fileName, type = "media", bucket = "media") {
 		const content = (fileName && this._level?.[bucket]?.[fileName]) || null;
 		this.setContent(content, type);
+	}
+
+	loadROM(filePath, type = "rom") {
+		const file = filesystem.read(filePath, { binary: true });
+		this.setContent(file, type);
 	}
 
 	setContent(content, type) {
