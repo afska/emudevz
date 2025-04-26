@@ -8,7 +8,8 @@ main:
   - |-
     it's called 🦅 ⛩️  ~Raven's Gate~
     <{screenshot.png;30x30}>
-  - if you complete it, I'll send you all my ⚔️  <adventure> games
+  - a classic <action adventure> from the NEEES era
+  - if you complete it, I'll send you the <ROM file>
   - in the ~*.neees~ format
   responses:
   - I got this! 🤺 [play]
@@ -29,12 +30,15 @@ finish:
     const directory = `${Drive.ROMS_DIR}/adventure`;
     filesystem.mkdirp(directory);
 
-    ["Crowborg.neees", "MissingLands.neees", "RavensGate.neees"].forEach((file) => {
+    ["RavensGate.neees", "Crowborg.neees"].forEach((file) => {
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - YOU ARE ~GREAT~.
+  - "<! ROM received: 📄  /roms/RavensGate.neees"
   - as I promised, I put the ROM in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/Crowborg.neees"
+  - I've also sent another game called ~Crowborg~
   - congratulations 🙃
   responses:
   - ▶️  continue [end]

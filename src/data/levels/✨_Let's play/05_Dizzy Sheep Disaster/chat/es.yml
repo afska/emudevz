@@ -8,8 +8,8 @@ main:
   - |-
     se llama 🦅 ⛩️  ~Raven's Gate~
     <{screenshot.png;30x30}>
-  - si lo completas, te enviaré todos mis ⚔️  juegos de <aventura>
-  - en formato ~*.neees~
+  - si lo completas, te enviaré el <archivo ROM>
+  - en el formato ~*.neees~
   responses:
   - ¡yo me encargo! 🤺 [play]
 
@@ -17,7 +17,7 @@ play:
   run: |
     {{Right}}.stream.zoom();
     {{Right}}.stream.setIntegration("RavensGate");
-    {{Right}}.load("RavensGate.neees", "stream", "bin");
+    {{Right}}.loadROM("/roms/.all/RavensGate.neees", "stream");
   messages:
   - aquí vamos
   - observaré tu aventura 👀
@@ -29,12 +29,15 @@ finish:
     const directory = `${Drive.ROMS_DIR}/adventure`;
     filesystem.mkdirp(directory);
 
-    ["Crowborg.neees", "MissingLands.neees", "RavensGate.neees"].forEach((file) => {
+    ["RavensGate.neees", "Crowborg.neees"].forEach((file) => {
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - ERES ~GENIAL~.
+  - "<! ROM recibida: 📄  /roms/RavensGate.neees"
   - como prometí, puse la ROM en tu directorio 📁  ~/roms~
+  - "<! ROM recibida: 📄  /roms/Crowborg.neees"
+  - también envié otro juego llamado ~Crowborg~
   - felicitaciones 🙃
   responses:
   - ▶️  continuar [end]
