@@ -24,7 +24,7 @@ play:
   run: |
     {{Right}}.stream.zoom();
     {{Right}}.stream.setIntegration("JupiterScope2");
-    {{Right}}.load("JupiterScope2.neees", "stream", "bin");
+    {{Right}}.loadROM("/roms/.all/JupiterScope2.neees", "stream");
   messages:
   - veremos 😁
   events:

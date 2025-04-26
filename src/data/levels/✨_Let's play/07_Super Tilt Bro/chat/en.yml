@@ -25,7 +25,7 @@ play:
   run: |
     {{Right}}.stream.zoom();
     {{Right}}.stream.setIntegration("SuperTiltBro");
-    {{Right}}.load("SuperTiltBro.neees", "stream", "bin");
+    {{Right}}.loadROM("/roms/.all/SuperTiltBro.neees", "stream");
   messages:
   - ok
   - FIGHT! 👊

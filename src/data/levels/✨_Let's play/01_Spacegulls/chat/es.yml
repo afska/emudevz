@@ -8,7 +8,8 @@ main:
   - |-
     se llama 🕊️ 🛰️  ~Spacegulls~
     <{screenshot.png;30x30}>
-  - si lo completas, te enviaré todos mis 🌀  juegos de <no-plataformas>
+  - un buen plataformero que presenta pájaros en el espacio
+  - si lo completas, te enviaré el <archivo ROM>
   - en el formato ~*.neees~
   responses:
   - ¿cómo vamos a jugar? nuestro emulador aún no está listo 😕 [notready]
@@ -36,7 +37,7 @@ zoom:
   run: |
     {{Right}}.stream.zoom();
   messages:
-  - ✨  he hackeado el puerto del mando para que tus entradas funcionen en mi NEEES real
+  - ah, he hackeado el puerto del mando para que tus entradas funcionen en mi NEEES real ✨
   responses:
   - entonces, ¿podemos jugar ahora? 👾 [play]
 
@@ -48,23 +49,27 @@ play:
   - sí
   - aquí está el juego
   - puedes jugar usando tu ⌨️  teclado o un 🎮  mando
-  - 💾  tu progreso se guardará cuando salgas de este nivel
+  - coloca el cursor del mouse sobre el ícono ⌨️  en la esquina <superior derecha> para aprender los controles del teclado
+  - 💾  tu progreso se <guardará> cuando salgas de este nivel
   - estaré aquí, observando 👀
   events:
   - spacegulls-end [finish]
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/non-platform`;
+    const directory = `${Drive.ROMS_DIR}`;
     filesystem.mkdirp(directory);
 
-    ["Bobl.neees", "Spacegulls.neees", "Wolfling.neees"].forEach((file) => {
-      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    ["Spacegulls.neees", "Bobl.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
     });
   messages:
   - ¡IMPRESIONANTE!
   - ahora eres un ~héroe~
-  - como prometí, puse mis ROMs en tu directorio 📁  ~/roms~
+  - "<! ROM recibida: 📄 /roms/Spacegulls.js"
+  - como prometí, puse un dump del juego en tu directorio 📁  ~/roms~
+  - "<! ROM recibida: 📄 /roms/Bobl.js"
+  - también envié otro juego del mismo autor llamado ~Böbl~, ¡échale un vistazo!
   - (si no sabes cómo usar archivos, ¡lo aprenderás pronto!)
   responses:
   - ▶️  continuar [end]

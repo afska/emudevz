@@ -1,3 +1,4 @@
+import Level from "../../level/Level";
 import Command from "./Command";
 
 export default class SudoCommand extends Command {
@@ -11,5 +12,28 @@ export default class SudoCommand extends Command {
 
 	async execute() {
 		window.SUDO = true;
+
+		if (this.isUnlock) {
+			const level = Level.current;
+			level.unlockLetsPlayLevelIfNeeded("lets-play-spacegulls");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-nalleland");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-jupiter-scope-2");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-ravens-gate");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-dizzy-sheep-disaster");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-trouble-at-2a03");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-super-tilt-bro");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-wolf-spirit");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-minekart-madness");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-tesla-vs-edison");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-heist");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-feline-flood-fiasco");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-falling");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-from-below");
+			level.unlockLetsPlayLevelIfNeeded("lets-play-robo-ninja-climb");
+		}
+	}
+
+	get isUnlock() {
+		return this._includes("-unlock");
 	}
 }

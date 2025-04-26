@@ -8,7 +8,8 @@ main:
   - |-
     it's called 🕊️ 🛰️  ~Spacegulls~
     <{screenshot.png;30x30}>
-  - if you complete it, I'll send you all my 🌀  <non-platform> games
+  - a cool platformer that features <birds> in space
+  - if you complete it, I'll send you the <ROM file>
   - in the ~*.neees~ format
   responses:
   - how are we gonna play? our emulator is not ready yet 😕 [notready]
@@ -36,7 +37,7 @@ zoom:
   run: |
     {{Right}}.stream.zoom();
   messages:
-  - ✨  I hacked the controller port so your inputs work on my real NEEES
+  - ah, I hacked the controller port so your inputs work on my real NEEES ✨
   responses:
   - so, can we play now? 👾 [play]
 
@@ -48,23 +49,27 @@ play:
   - yeah
   - here's the game
   - you can play using either your ⌨️  keyboard or a 🎮  gamepad
-  - 💾  your progress will be saved when you leave this level
+  - place your mouse cursor over the ⌨️  icon on the <top-right> corner so learn the keyboard controls
+  - 💾  your progress will be <saved> when you leave this level
   - I'll be here, watching 👀
   events:
   - spacegulls-end [finish]
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/non-platform`;
+    const directory = `${Drive.ROMS_DIR}`;
     filesystem.mkdirp(directory);
 
-    ["Bobl.neees", "Spacegulls.neees", "Wolfling.neees"].forEach((file) => {
-      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    ["Spacegulls.neees", "Bobl.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
     });
   messages:
   - AWESOME!
   - now you are a ~hero~
-  - as I promised, I put my ROMs in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/Spacegulls.js"
+  - as I promised, I put a dump of the game in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/Bobl.js"
+  - I've also sent another game from the same author called ~Böbl~, check it out!
   - (if you don't know how to use files, you'll learn soon!)
   responses:
   - ▶️  continue [end]

@@ -8,7 +8,8 @@ main:
   - |-
     it's called 🧸 📍  ~Nalleland~
     <{screenshot.png;30x30}>
-  - if you win my challenge, I'll send you all my 🍄  <platform> games
+  - this time, you'll play as the adventurous bear ~Nalle~, who faces dangerous things with his special tool, the <enchanted pin>
+  - if you win my challenge, I'll send you the <ROM file>
   - in the ~*.neees~ format
   responses:
   - what challenge? 👀 [challenge]
@@ -25,7 +26,7 @@ play:
   run: |
     {{Right}}.stream.zoom();
     {{Right}}.stream.setIntegration("Nalleland");
-    {{Right}}.load("Nalleland.neees", "stream", "bin");
+    {{Right}}.loadROM("/roms/.all/Nalleland.neees", "stream");
   messages:
   - let's see what you can do 👀
   events:
@@ -36,13 +37,16 @@ finish:
     const directory = `${Drive.ROMS_DIR}/platform`;
     filesystem.mkdirp(directory);
 
-    ["FilthyKitchen.neees", "Isostasy.neees", "Nalleland.neees", "WolfSpirit.neees"].forEach((file) => {
+    ["Nalleland.neees", "Isostasy.neees"].forEach((file) => {
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - wow!
   - you've become an expert in this game 🤯
-  - as I promised, I put my ROMs in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/Nalleland.js"
+  - as I promised, I put the ROM in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/Isostasy.js"
+  - I've also sent another game called ~Isostasy~
   - enjoy 😎
   responses:
   - ▶️  continue [end]

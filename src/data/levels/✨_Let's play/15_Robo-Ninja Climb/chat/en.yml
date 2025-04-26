@@ -17,7 +17,7 @@ play:
   run: |
     {{Right}}.stream.zoom();
     {{Right}}.stream.setIntegration("RoboNinjaClimb");
-    {{Right}}.load("RoboNinjaClimb.neees", "stream", "bin");
+    {{Right}}.load("/roms/.all/RoboNinjaClimb.neees", "stream");
   messages:
   - well, it's not 🙃
   - actually, you'll die a lot

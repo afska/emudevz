@@ -17,7 +17,7 @@ play:
   run: |
     {{Right}}.stream.zoom();
     {{Right}}.stream.setIntegration("RavensGate");
-    {{Right}}.load("RavensGate.neees", "stream", "bin");
+    {{Right}}.loadROM("/roms/.all/RavensGate.neees", "stream");
   messages:
   - here we go
   - I'll watch your adventure 👀
