@@ -8,7 +8,8 @@ main:
   - |-
     se llama 🚀 💥  ~Jupiter Scope 2~
     <{screenshot.png;30x30}>
-  - si superas mi puntuación más alta, te enviaré todos mis 🔫  juegos de <disparos>
+  - un <space shooter> vertical
+  - si superas mi puntuación más alta, te enviaré el <archivo ROM>
   - en el formato ~*.neees~
   responses:
   - ¿y cuál es tu puntuación más alta? 🤔 [highest]
@@ -35,12 +36,15 @@ finish:
     const directory = `${Drive.ROMS_DIR}/shooting`;
     filesystem.mkdirp(directory);
 
-    ["JupiterScope2.neees", "StarPowerDemo.neees", "TroubleAt2A03.neees"].forEach((file) => {
+    ["JupiterScope2.neees", "StarPowerDemo.neees"].forEach((file) => {
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - mmm... supongo que mi puntuación no era tan alta 😅
-  - como prometí, puse mis ROMs en tu directorio 📁  ~/roms~
+  - "<! ROM recibida: 📄  /roms/JupiterScope2.neees"
+  - como prometí, puse la ROM en tu directorio 📁  ~/roms~
+  - "<! ROM recibida: 📄  /roms/StarPowerDemo.neees"
+  - también envié otro juego llamado ~Isostasy~
   - disfruta disparando 💣
   responses:
   - ▶️  continuar [end]

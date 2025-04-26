@@ -34,7 +34,7 @@ finish:
     });
   messages:
   - ERES ~GENIAL~.
-  - como prometí, puse mis ROMs en tu directorio 📁  ~/roms~
+  - como prometí, puse la ROM en tu directorio 📁  ~/roms~
   - felicitaciones 🙃
   responses:
   - ▶️  continuar [end]

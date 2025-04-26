@@ -8,7 +8,8 @@ main:
   - |-
     it's called 🚀 💥  ~Jupiter Scope 2~
     <{screenshot.png;30x30}>
-  - if you beat my highest score, I'll send you all my 🔫  <shooting> games
+  - a vertical <space shooter>
+  - if you beat my highest score, I'll send you the <ROM file>
   - in the ~*.neees~ format
   responses:
   - and what's your highest score? 🤔 [highest]
@@ -35,12 +36,15 @@ finish:
     const directory = `${Drive.ROMS_DIR}/shooting`;
     filesystem.mkdirp(directory);
 
-    ["JupiterScope2.neees", "StarPowerDemo.neees", "TroubleAt2A03.neees"].forEach((file) => {
+    ["JupiterScope2.neees", "StarPowerDemo.neees"].forEach((file) => {
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - hmm... I guess my score was not that high 😅
-  - as I promised, I put my ROMs in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/JupiterScope2.neees"
+  - as I promised, I put the ROM in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/StarPowerDemo.neees"
+  - I've also sent another game called ~Star Power Demo~
   - happy shooting 💣
   responses:
   - ▶️  continue [end]

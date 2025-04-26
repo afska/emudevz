@@ -66,9 +66,9 @@ finish:
   messages:
   - AWESOME!
   - now you are a ~hero~
-  - "<! ROM received: 📄  /roms/Spacegulls.js"
+  - "<! ROM received: 📄  /roms/Spacegulls.neees"
   - as I promised, I put a dump of the game in your 📁  ~/roms~ directory
-  - "<! ROM received: 📄  /roms/Bobl.js"
+  - "<! ROM received: 📄  /roms/Bobl.neees"
   - I've also sent another game from the same author called ~Böbl~, check it out!
   - (if you don't know how to use files, you'll learn soon!)
   responses:
