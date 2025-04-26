@@ -8,8 +8,9 @@ main:
   - |-
     se llama 🤖 🧗  ~Robo-Ninja Climb~
     <{screenshot.png;30x30}>
-  - si lo completas, te enviaré todos mis 🕹️  juegos de <arcade>
-  - en formato ~*.neees~
+  - tendrás que trepar <como un ninja> aquí
+  - si lo completas, te enviaré el <archivo ROM>
+  - en el formato ~*.neees~
   responses:
   - suena fácil 🙌 [play]
 
@@ -27,15 +28,16 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/arcade`;
+    const directory = `${Drive.ROMS_DIR}`;
     filesystem.mkdirp(directory);
 
-    ["Heist.neees", "RoboNinjaClimb.neees", "Thwaite.neees"].forEach((file) => {
+    ["RoboNinjaClimb.neees"].forEach((file) => {
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - ¡WOW!
   - ¡qué juego difícil!
+  - "<! ROM recibida: 📄  /roms/RoboNinjaClimb.neees"
   - como prometí, puse la ROM en tu directorio 📁  ~/roms~
   - bien hecho 👏👏
   responses:

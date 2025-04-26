@@ -27,7 +27,7 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/adventure`;
+    const directory = `${Drive.ROMS_DIR}`;
     filesystem.mkdirp(directory);
 
     ["RavensGate.neees", "Crowborg.neees"].forEach((file) => {

@@ -34,7 +34,7 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/platform`;
+    const directory = `${Drive.ROMS_DIR}`;
     filesystem.mkdirp(directory);
 
     ["Nalleland.neees", "Isostasy.neees"].forEach((file) => {

@@ -33,7 +33,7 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/shooting`;
+    const directory = `${Drive.ROMS_DIR}`;
     filesystem.mkdirp(directory);
 
     ["JupiterScope2.neees", "StarPowerDemo.neees"].forEach((file) => {

@@ -35,7 +35,7 @@ play:
 
 finish:
   run: |
-    const directory = `${Drive.ROMS_DIR}/battle`;
+    const directory = `${Drive.ROMS_DIR}`;
     filesystem.mkdirp(directory);
 
     ["SuperTiltBro.neees", "Wolfling.neees"].forEach((file) => {
