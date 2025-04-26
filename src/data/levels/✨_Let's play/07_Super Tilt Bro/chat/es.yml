@@ -8,8 +8,9 @@ main:
   - |-
     se llama 🦸 🤸  ~Super Tilt Bro~
     <{screenshot.png;30x30}>
-  - si ganas mi desafío, te enviaré todos mis 💥  juegos de <batalla>
-  - en formato ~*.neees~
+  - una <experiencia de pelea> donde tienes que derribar al otro jugador del escenario
+  - si ganas mi desafío, te enviaré el <archivo ROM>
+  - en el formato ~*.neees~
   responses:
   - ¿qué desafío? 👀 [challenge]
 
@@ -37,13 +38,16 @@ finish:
     const directory = `${Drive.ROMS_DIR}/battle`;
     filesystem.mkdirp(directory);
 
-    ["SuperTiltBro.neees", "TestlaVsEdison.neees"].forEach((file) => {
+    ["SuperTiltBro.neees", "Wolfling.neees"].forEach((file) => {
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
   - TÚ
   - ¡GANAS!
+  - "<! ROM recibida: 📄  /roms/SuperTiltBro.neees"
   - como prometí, puse la ROM en tu directorio 📁  ~/roms~
+  - "<! ROM recibida: 📄  /roms/Wolfling.neees"
+  - también envié otro juego llamado ~Wolfling~
   - sigue luchando 💪
   responses:
   - ▶️  continuar [end]
