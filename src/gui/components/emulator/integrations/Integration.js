@@ -30,6 +30,10 @@ export default class Integration extends PureComponent {
 		).style.transform = `translateY(${dy}px)`;
 	}
 
+	_humanHexToNumber(number) {
+		return parseInt(number.toString(16));
+	}
+
 	_disconnectControllers(neees) {
 		neees.context.controllers[0].update = () => {};
 		neees.context.controllers[1].update = () => {};

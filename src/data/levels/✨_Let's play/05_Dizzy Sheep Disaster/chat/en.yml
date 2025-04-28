@@ -6,39 +6,38 @@ main:
   - hey,
   - let's play a game
   - |-
-    it's called 🦅 ⛩️  ~Raven's Gate~
+    it's called 💫 🐑  ~Dizzy Sheep Disaster~
     <{screenshot.png;30x30}>
-  - a classic <action adventure> from the NEEES era
+  - a unique puzzle about a velcro sheep and <magnets>
   - if you complete it, I'll send you the <ROM file>
   - in the ~*.neees~ format
   responses:
-  - I got this! 🤺 [play]
+  - ~magnets~? [play]
 
 play:
   run: |
     {{Right}}.stream.zoom();
-    {{Right}}.stream.setIntegration("RavensGate");
-    {{Right}}.loadROM("/roms/.all/RavensGate.neees", "stream");
+    {{Right}}.stream.setIntegration("DizzySheepDisaster");
+    {{Right}}.loadROM("/roms/.all/DizzySheepDisaster.neees", "stream");
   messages:
-  - here we go
-  - I'll watch your adventure 👀
+  - you'll see!
   events:
-  - ravensgate-end [finish]
+  - dizzysheepdisaster-end [finish]
 
 finish:
   run: |
     const directory = `${Drive.ROMS_DIR}`;
     filesystem.mkdirp(directory);
 
-    ["RavensGate.neees", "Crowborg.neees"].forEach((file) => {
+    ["DizzySheepDisaster.neees", "DreamDogDilemma.neees"].forEach((file) => {
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
-  - YOU ARE ~GREAT~.
-  - "<! ROM received: 📄  /roms/RavensGate.neees"
+  - that last level was quite challenging!
+  - "<! ROM received: 📄  /roms/DizzySheepDisaster.neees"
   - as I promised, I put the ROM in your 📁  ~/roms~ directory
-  - "<! ROM received: 📄  /roms/Crowborg.neees"
-  - I've also sent another game called ~Crowborg~
-  - congratulations 🙃
+  - "<! ROM received: 📄  /roms/DreamDogDilemma.neees"
+  - I've also sent another game from the same author called ~Dream Dog Dilemma~
+  - have fun!
   responses:
   - ▶️  continue [end]

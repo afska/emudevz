@@ -13,6 +13,8 @@
 [
 	"Bobl.neees",
 	"Crowborg.neees",
+	"DizzySheepDisaster.neees",
+	"DreamDogDilemma.neees",
 	"FilthyKitchen.neees",
 	"Heist.neees",
 	"Isostasy.neees",

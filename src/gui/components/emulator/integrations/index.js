@@ -1,3 +1,4 @@
+import DizzySheepDisaster from "./DizzySheepDisaster";
 import JupiterScope2 from "./JupiterScope2";
 import Nalleland from "./Nalleland";
 import RavensGate from "./RavensGate";
@@ -6,12 +7,13 @@ import Spacegulls from "./Spacegulls";
 import SuperTiltBro from "./SuperTiltBro";
 
 export default {
-	Spacegulls,
-	Nalleland,
+	DizzySheepDisaster,
 	JupiterScope2,
+	Nalleland,
 	RavensGate,
-	SuperTiltBro,
 	RoboNinjaClimb,
+	Spacegulls,
+	SuperTiltBro,
 
 	get(id) {
 		return this[id] || (() => false);
