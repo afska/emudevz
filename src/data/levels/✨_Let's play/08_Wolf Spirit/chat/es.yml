@@ -1,0 +1,46 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - juguemos un juego
+  - |-
+    se llama 🐺 🌲  ~Wolf Spirit~
+    <{screenshot.png;30x30}>
+  - un plataformero platformer acerca de un <espíritu maligno> que lanzó una maldición sobre el mundo
+  - si lo completas, te enviaré el <archivo ROM>
+  - en el formato ~*.neees~
+  responses:
+  - ¿Y puedo jugar como un lobo? [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("WolfSpirit");
+    {{Right}}.loadROM("/roms/.all/WolfSpirit.neees", "stream");
+  messages:
+  messages:
+  - yes!
+  - go and stop the spirit
+  events:
+  - wolfspirit-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["WolfSpirit.neees", "FilthyKitchen.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - guau
+  - el equilibrio ha sido restablecido
+  - "<! ROM recibida: 📄  /roms/WolfSpirit.neees"
+  - como prometí, puse la ROM en tu directorio 📁  ~/roms~
+  - "<! ROM recibida: 📄  /roms/FilthyKitchen.neees"
+  - también envié otro juego llamado ~Filthy Kitchen~
+  - ¡diviértete!
+  responses:
+  - ▶️  continuar [end]
