@@ -19,6 +19,7 @@
 	"Heist.neees",
 	"Isostasy.neees",
 	"JupiterScope2.neees",
+	"MinekartMadness.neees",
 	"MissingLands.neees",
 	"Nalleland.neees",
 	"RavensGate.neees",

@@ -13,9 +13,9 @@ export default class WolfSpirit extends Integration {
 
 		return (
 			<Tooltip
-				title={`${locales.get(
-					"integration_wolfspirit_level"
-				)} ${level} / ${10}`}
+				title={`${locales.get("integration_wolfspirit_level")} ${level} / ${
+					WIN_LEVEL - 1
+				}`}
 			>
 				<div
 					style={{ width: "50%", textAlign: "center", whiteSpace: "nowrap" }}
@@ -46,7 +46,7 @@ export default class WolfSpirit extends Integration {
 
 		const level = neees.cpu.memory.read(0x0090) + 1;
 		const lives = neees.cpu.memory.read(0x00a6);
-		const percentage = (level / WIN_LEVEL) * 100;
+		const percentage = ((level - 1) / (WIN_LEVEL - 1)) * 100;
 
 		if (percentage === 100) {
 			this._disconnectControllers(neees);

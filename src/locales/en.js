@@ -80,6 +80,7 @@ export default {
 	hot_reload: "Hot reload",
 	integration_dizzysheepdisaster_level: "Level",
 	integration_jupiterscope2_wrong_difficulty: "Wrong difficulty level!",
+	integration_minekartmadness_level: "Level",
 	integration_nalleland_limited_lives: "Limited lives",
 	integration_nalleland_lives: "lives",
 	integration_nalleland_wrong_mode_start1: "Wrong mode: ",

@@ -80,6 +80,7 @@ export default {
 	integration_dizzysheepdisaster_level: "Nivel",
 	integration_jupiterscope2_wrong_difficulty:
 		"¡Nivel de dificultad incorrecto!",
+	integration_minekartmadness_level: "Nivel",
 	integration_nalleland_limited_lives: "Limited lives",
 	integration_nalleland_lives: "vidas",
 	integration_nalleland_wrong_mode_start1: "Modo incorrecto: ",

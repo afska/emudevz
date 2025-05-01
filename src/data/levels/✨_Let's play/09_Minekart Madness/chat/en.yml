@@ -1,0 +1,42 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - let's play a game
+  - |-
+    it's called 💎 ⛏️  ~Minekart Madness~
+    <{screenshot.png;30x30}>
+  - you'll now be a dwarf piloting an out of control <minecart>
+  - if you complete it, I'll send you the <ROM file>
+  - in the ~*.neees~ format
+  responses:
+  - nice! [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("MinekartMadness");
+    {{Right}}.loadROM("/roms/.all/MinekartMadness.neees", "stream");
+  messages:
+  - it's a homage to classic coin-op games
+  - let's see if you can beat all the levels!
+  events:
+  - minekartmadness-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["MinekartMadness.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - you're good at this!
+  - "<! ROM received: 📄  /roms/MinekartMadness.neees"
+  - as I promised, I put the ROM in your 📁  ~/roms~ directory
+  - see ya!
+  responses:
+  - ▶️  continue [end]

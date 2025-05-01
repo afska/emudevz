@@ -1,5 +1,6 @@
 import DizzySheepDisaster from "./DizzySheepDisaster";
 import JupiterScope2 from "./JupiterScope2";
+import MinekartMadness from "./MinekartMadness";
 import Nalleland from "./Nalleland";
 import RavensGate from "./RavensGate";
 import RoboNinjaClimb from "./RoboNinjaClimb";
@@ -10,6 +11,7 @@ import WolfSpirit from "./WolfSpirit";
 export default {
 	DizzySheepDisaster,
 	JupiterScope2,
+	MinekartMadness,
 	Nalleland,
 	RavensGate,
 	RoboNinjaClimb,

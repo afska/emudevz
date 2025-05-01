@@ -15,7 +15,7 @@ export default class DizzySheepDisaster extends Integration {
 			<Tooltip
 				title={`${locales.get(
 					"integration_dizzysheepdisaster_level"
-				)} ${level} / ${20}`}
+				)} ${level} / ${WIN_LEVEL - 1}`}
 			>
 				<div
 					style={{ width: "50%", textAlign: "center", whiteSpace: "nowrap" }}
@@ -43,7 +43,7 @@ export default class DizzySheepDisaster extends Integration {
 
 		const level = this._humanHexToNumber(neees.cpu.memory.read(0x0059));
 		const deaths = this._humanHexToNumber(neees.cpu.memory.read(0x005a));
-		const percentage = (level / WIN_LEVEL) * 100;
+		const percentage = ((level - 1) / (WIN_LEVEL - 1)) * 100;
 
 		if (percentage === 100) {
 			this._disconnectControllers(neees);
