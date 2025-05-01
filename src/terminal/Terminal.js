@@ -492,7 +492,7 @@ export default class Terminal {
 							</span>
 						</span>
 					);
-				} else if (result == ERR_CANNOT_LAUNCH_EMULATOR) {
+				} else if (result === ERR_CANNOT_LAUNCH_EMULATOR) {
 					toast.error(locales.get("cant_open_emulator"));
 				}
 			}

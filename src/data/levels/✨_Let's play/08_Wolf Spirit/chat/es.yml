@@ -36,7 +36,7 @@ finish:
   messages:
   - guau
   - el equilibrio ha sido restablecido
-  - al menos, el balance de la demo
+  - al menos, el balance de la <demo>
   - "<! ROM recibida: 📄  /roms/WolfSpirit.neees"
   - como prometí, puse la ROM en tu directorio 📁  ~/roms~
   - "<! ROM recibida: 📄  /roms/FilthyKitchen.neees"
