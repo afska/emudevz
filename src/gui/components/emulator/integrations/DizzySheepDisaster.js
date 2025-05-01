@@ -54,4 +54,4 @@ export default class DizzySheepDisaster extends Integration {
 	};
 }
 
-const WIN_LEVEL = 20;
+const WIN_LEVEL = 21;

@@ -13,9 +13,9 @@ export default class MinekartMadness extends Integration {
 
 		return (
 			<Tooltip
-				title={`${locales.get(
-					"integration_minekartmadness_level"
-				)} ${level} / ${WIN_LEVEL - 1}`}
+				title={`${locales.get("integration_minekartmadness_level")} ${
+					1 + level
+				} / ${WIN_LEVEL}`}
 			>
 				<div
 					style={{ width: "50%", textAlign: "center", whiteSpace: "nowrap" }}
@@ -40,8 +40,8 @@ export default class MinekartMadness extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		const level = neees.cpu.memory.read(0x0486) + 1;
-		const percentage = ((level - 1) / (WIN_LEVEL - 1)) * 100;
+		const level = neees.cpu.memory.read(0x0486);
+		const percentage = (level / WIN_LEVEL) * 100;
 
 		if (percentage === 100) {
 			this._disconnectControllers(neees);

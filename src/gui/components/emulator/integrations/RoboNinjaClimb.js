@@ -23,9 +23,9 @@ export default class RoboNinjaClimb extends Integration {
 
 		return (
 			<Tooltip
-				title={`${locales.get("integration_roboninjaclimb_level")} ${level} / ${
-					WIN_LEVEL - 1
-				}`}
+				title={`${locales.get("integration_roboninjaclimb_level")} ${
+					1 + level
+				} / ${WIN_LEVEL}`}
 			>
 				<div style={{ paddingTop: 8, paddingBottom: 8, width: "50%" }}>
 					<ProgressBar
@@ -44,8 +44,8 @@ export default class RoboNinjaClimb extends Integration {
 
 		this._moveTV(5);
 
-		const level = neees.cpu.memory.read(0x0300) + 1;
-		const percentage = ((level - 1) / (WIN_LEVEL - 1)) * 100;
+		const level = neees.cpu.memory.read(0x0300);
+		const percentage = (level / WIN_LEVEL) * 100;
 
 		if (percentage === 100) {
 			this._disconnectControllers(neees);
