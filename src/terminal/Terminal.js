@@ -8,7 +8,10 @@ import { WebLinkProvider } from "../utils/cli/WebLinkProvider";
 import PendingInput, { PendingKey } from "./PendingInput";
 import Shell from "./Shell";
 import FilesystemCommand from "./commands/fs/FilesystemCommand";
-import OpenCommand from "./commands/fs/OpenCommand";
+import OpenCommand, {
+	ERR_CANNOT_LAUNCH_EMULATOR,
+	ERR_FILE_NOT_FOUND,
+} from "./commands/fs/OpenCommand";
 import { CANCELED, DISPOSED, INTERRUPTED } from "./errors";
 import highlighter from "./highlighter";
 import { theme } from "./style";
@@ -476,7 +479,7 @@ export default class Terminal {
 				const matches = link.match(LINK_FILE_REGEXP);
 				const filePath = matches[1];
 				const result = OpenCommand.open(filePath);
-				if (result === -1) {
+				if (result === ERR_FILE_NOT_FOUND) {
 					toast.error(
 						<span
 							onClick={() => {
@@ -489,6 +492,8 @@ export default class Terminal {
 							</span>
 						</span>
 					);
+				} else if (result == ERR_CANNOT_LAUNCH_EMULATOR) {
+					toast.error(locales.get("cant_open_emulator"));
 				}
 			}
 		);

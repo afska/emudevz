@@ -5,6 +5,7 @@ import RavensGate from "./RavensGate";
 import RoboNinjaClimb from "./RoboNinjaClimb";
 import Spacegulls from "./Spacegulls";
 import SuperTiltBro from "./SuperTiltBro";
+import WolfSpirit from "./WolfSpirit";
 
 export default {
 	DizzySheepDisaster,
@@ -14,6 +15,7 @@ export default {
 	RoboNinjaClimb,
 	Spacegulls,
 	SuperTiltBro,
+	WolfSpirit,
 
 	get(id) {
 		return this[id] || (() => false);

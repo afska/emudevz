@@ -20,10 +20,10 @@ play:
     {{Right}}.stream.setIntegration("WolfSpirit");
     {{Right}}.loadROM("/roms/.all/WolfSpirit.neees", "stream");
   messages:
-  - ¡sí!
-  - vé y detiene al espíritu
+  - yes!
+  - go and stop the spirit
   events:
-  - dizzysheepdisaster-end [finish]
+  - wolfspirit-end [finish]
 
 finish:
   run: |
@@ -36,6 +36,7 @@ finish:
   messages:
   - whoa
   - balance has been restablished
+  - at least, the demo balance
   - "<! ROM received: 📄  /roms/WolfSpirit.neees"
   - as I promised, I put the ROM in your 📁  ~/roms~ directory
   - "<! ROM received: 📄  /roms/FilthyKitchen.neees"

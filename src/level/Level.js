@@ -126,6 +126,10 @@ export default class Level {
 	}
 
 	canLaunchEmulator() {
+		const book = Book.current;
+		const chapter = book.getChapterOf(this.id);
+		if (chapter.isSpecial) return false;
+
 		return (
 			bus.isListeningTo("pin") ||
 			this.$layout.findInstance("TV", (it) => it.state.type === "rom") != null

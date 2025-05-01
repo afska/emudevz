@@ -77,6 +77,7 @@ export default {
 		"🚀  General:\n  ♐  Cambiar panel activo:\n     `Alt+{DirectionalKey}` (o click del mouse)\n💻  Terminal:\n  🛑  Cerrar app:\n     `Ctrl+C`\n  🕑  Acelerar chat:\n     `Enter`\n  📜  Scrollear terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (o rueda del mouse)\n  📋  Copiar/pegar:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocompletar:\n     `Tab`\n📝  Editor de código:\n  ▶️  Ejecutar código:\n     `Alt+Enter`\n  🔍  Buscar archivo:\n     `Ctrl+P`\n  ❌  Cerrar archivo:\n     `Ctrl+E`",
 	hexadecimal: "Hexadecimal",
 	hot_reload: "Recarga en caliente",
+	integration_dizzysheepdisaster_level: "Nivel",
 	integration_jupiterscope2_wrong_difficulty:
 		"¡Nivel de dificultad incorrecto!",
 	integration_nalleland_limited_lives: "Limited lives",
@@ -90,6 +91,8 @@ export default {
 	integration_supertiltbro_shouldbesettofive: 'debería estar en "Five"',
 	integration_supertiltbro_shouldbesettohard: 'debería estar en "Hard"',
 	integration_supertiltbro_playing: "Jugando desafío",
+	integration_wolfspirit_level: "Nivel",
+	integration_wolfspirit_lives: "vidas",
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",

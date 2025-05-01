@@ -7,19 +7,26 @@ import store from "../../../store";
 import { theme } from "../../style";
 import FilesystemCommand from "./FilesystemCommand";
 
+export const ERR_FILE_NOT_FOUND = -1;
+export const ERR_IS_DIRECTORY = -2;
+export const ERR_CANNOT_LAUNCH_EMULATOR = -3;
+
 export default class OpenCommand extends FilesystemCommand {
 	static get name() {
 		return "open";
 	}
 
 	static open(filePath) {
-		if (!filesystem.exists(filePath)) return -1;
-		if (filesystem.stat(filePath).isDirectory) return -2;
+		if (!filesystem.exists(filePath)) return ERR_FILE_NOT_FOUND;
+		if (filesystem.stat(filePath).isDirectory) return ERR_IS_DIRECTORY;
 		const [Component, customArgs] = extensions.getOptions(filePath);
 
 		if (Component === TV && customArgs.type === "rom") {
-			const rom = filesystem.read(filePath, { binary: true });
-			Level.current.launchEmulator(rom);
+			const level = Level.current;
+			if (level.canLaunchEmulator()) {
+				const rom = filesystem.read(filePath, { binary: true });
+				Level.current.launchEmulator(rom);
+			} else return ERR_CANNOT_LAUNCH_EMULATOR;
 		} else {
 			store.dispatch.savedata.openFile(filePath);
 		}
