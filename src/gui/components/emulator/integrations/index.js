@@ -6,6 +6,7 @@ import RavensGate from "./RavensGate";
 import RoboNinjaClimb from "./RoboNinjaClimb";
 import Spacegulls from "./Spacegulls";
 import SuperTiltBro from "./SuperTiltBro";
+import TeslaVsEdison from "./TeslaVsEdison";
 import WolfSpirit from "./WolfSpirit";
 
 export default {
@@ -17,6 +18,7 @@ export default {
 	RoboNinjaClimb,
 	Spacegulls,
 	SuperTiltBro,
+	TeslaVsEdison,
 	WolfSpirit,
 
 	get(id) {

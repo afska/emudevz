@@ -42,8 +42,6 @@ export default class RoboNinjaClimb extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		this._moveTV(5);
-
 		const level = neees.cpu.memory.read(0x0300);
 		const percentage = (level / WIN_LEVEL) * 100;
 

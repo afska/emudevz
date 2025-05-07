@@ -40,8 +40,6 @@ export default class JupiterScope2 extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		this._moveTV(-15);
-
 		const difficulty = neees.cpu.memory.read(0x07f8);
 		const digit1 = neees.cpu.memory.read(0x0303);
 		const digit2 = neees.cpu.memory.read(0x0304);

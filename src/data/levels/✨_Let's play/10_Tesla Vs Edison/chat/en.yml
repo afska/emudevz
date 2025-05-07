@@ -1,0 +1,45 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - let's play a game
+  - |-
+    it's called 📻 💡  ~Tesla Vs Edison~
+    <{screenshot.png;30x30}>
+  - an improved version of a two-player classic game, augmented with <power ups>
+  - if you complete it, I'll send you the <ROM file>
+  - in the ~*.neees~ format
+  responses:
+  - two players? [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("TeslaVsEdison");
+    {{Right}}.loadROM("/roms/.all/TeslaVsEdison.neees", "stream");
+  messages:
+  - yes, but it also has an AI to play with
+  - give it a try!
+  - choose <START> and try to win a match
+  events:
+  - teslavsedison-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["TeslaVsEdison.neees", "MissingLands.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - amazing
+  - "<! ROM received: 📄  /roms/TeslaVsEdison.neees"
+  - as I promised, I put the ROM in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/MissingLands.neees"
+  - I've also sent another game called ~Missing Lands~
+  - later!
+  responses:
+  - ▶️  continue [end]

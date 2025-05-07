@@ -42,8 +42,6 @@ export default class Nalleland extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		this._moveTV(-15);
-
 		const mode = neees.cpu.memory.read(0x0047);
 		const lives = neees.cpu.memory.read(0x03ca);
 		const victory =

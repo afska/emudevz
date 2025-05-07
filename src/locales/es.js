@@ -92,6 +92,7 @@ export default {
 	integration_supertiltbro_shouldbesettofive: 'debería estar en "Five"',
 	integration_supertiltbro_shouldbesettohard: 'debería estar en "Hard"',
 	integration_supertiltbro_playing: "Jugando desafío",
+	integration_teslavsedison_wrongmode: "Modo incorrecto!",
 	integration_wolfspirit_level: "Nivel",
 	integration_wolfspirit_lives: "vidas",
 	language: "Idioma",
