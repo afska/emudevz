@@ -14,10 +14,10 @@ const INITIAL_ZOOM_DELAY = 3000;
 const ZOOM_DELAY = 1000;
 
 export default class GameStreamer extends PureComponent {
-	state = { rom: null, integrationId: null, isSelectDisabled: false };
+	state = { rom: null, integrationId: null };
 
-	setIntegration(integrationId, isSelectDisabled = false) {
-		this.setState({ integrationId, isSelectDisabled });
+	setIntegration(integrationId) {
+		this.setState({ integrationId });
 	}
 
 	zoom = () => {
@@ -39,7 +39,7 @@ export default class GameStreamer extends PureComponent {
 	}
 
 	render() {
-		const { id, rom: propsRom, isSelectDisabled } = this.props;
+		const { id, rom: propsRom } = this.props;
 		const { rom: stateRom, integrationId } = this.state;
 		const rom = propsRom || stateRom;
 
@@ -137,7 +137,6 @@ export default class GameStreamer extends PureComponent {
 						>
 							<Emulator
 								crt
-								blockSelect={isSelectDisabled}
 								autoSaveAndRestore={id}
 								rom={rom}
 								error={null}

@@ -163,17 +163,12 @@ export default class Emulator extends Component {
 
 		this.props.onInputType(gamepadInput ? "gamepad" : "keyboard");
 
-		const input =
-			gamepadInput?.[0] != null
-				? [
-						gamepadInput?.[0],
-						gamepad.createInput() /*gamepadInput?.[1] || this.keyboardInput*/,
-				  ]
-				: [this.keyboardInput, gamepad.createInput()];
-
-		if (this.props.blockSelect) input[0].BUTTON_SELECT = false;
-
-		return input;
+		return gamepadInput?.[0] != null
+			? [
+					gamepadInput?.[0],
+					gamepad.createInput() /*gamepadInput?.[1] || this.keyboardInput*/,
+			  ]
+			: [this.keyboardInput, gamepad.createInput()];
 	};
 
 	_setFps = (fps) => {
