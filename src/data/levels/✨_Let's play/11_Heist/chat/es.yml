@@ -1,0 +1,46 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - juguemos un juego
+  - |-
+    se llama ⛽ 💥  ~Heist~
+    <{screenshot.png;30x30}>
+  - donde tienes que defender el recurso más valioso de la guerra, el <combustible>
+  - si lo completas, te enviaré el <archivo ROM>
+  - en el formato ~*.neees~
+  responses:
+  - ¿defender de quién? [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("Heist");
+    {{Right}}.loadROM("/roms/.all/Heist.neees", "stream");
+  messages:
+  - de los enemigos!
+  - intentarán robarlo para sus propios fines nefastos
+  - intenta sobrevivir hasta... digamos, al menos la <oleada 20>
+  - consideraré eso una victoria
+  events:
+  - heist-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["Heist.neees", "ConcentrationRoom.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - ¡buen trabajo!
+  - "<! ROM recibida: 📄  /roms/Heist.neees"
+  - como prometí, puse la ROM en tu directorio 📁  ~/roms~
+  - "<! ROM recibida: 📄  /roms/ConcentrationRoom.neees"
+  - también envié otro juego llamado ~Concentration Room~
+  - ¡chau!
+  responses:
+  - ▶️  continuar [end]

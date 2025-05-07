@@ -1,4 +1,5 @@
 import DizzySheepDisaster from "./DizzySheepDisaster";
+import Heist from "./Heist";
 import JupiterScope2 from "./JupiterScope2";
 import MinekartMadness from "./MinekartMadness";
 import Nalleland from "./Nalleland";
@@ -12,6 +13,7 @@ import WolfSpirit from "./WolfSpirit";
 export default {
 	DizzySheepDisaster,
 	JupiterScope2,
+	Heist,
 	MinekartMadness,
 	Nalleland,
 	RavensGate,

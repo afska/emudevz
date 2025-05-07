@@ -12,6 +12,7 @@
 
 [
 	"Bobl.neees",
+	"ConcentrationRoom.neees",
 	"Crowborg.neees",
 	"DizzySheepDisaster.neees",
 	"DreamDogDilemma.neees",

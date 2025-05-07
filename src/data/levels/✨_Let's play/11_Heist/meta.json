@@ -1,0 +1,31 @@
+{
+	"name": {
+		"en": "⛽💥 Heist",
+		"es": "⛽💥 Heist"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat -f",
+					"availableCommands": ["chat"]
+				}
+			],
+			"Right": [
+				"tv",
+				{
+					"content": null,
+					"type": "stream"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"memory": {
+		"content": {
+			"protected": true
+		}
+	}
+}
