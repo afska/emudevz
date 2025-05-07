@@ -35,17 +35,17 @@ export default {
 	command_repl_description: "Opens a JavaScript REPL.",
 	command_test_description: "Tests your solution.",
 	command_cd_description:
-		"Changes directory (usage: ~cd a_directory~, or ~cd ..~)",
-	command_cp_description: "Copies something (usage: ~cp orig_path dest_path~)",
-	command_ls_description: "Shows a file list (usage: ~ls~, or ~ls -r~)",
-	command_mkdir_description: "Creates directories (usage: ~mkdir dir1 dir2~)",
+		"Changes directory (usage: `cd a_directory`, or `cd ..`)",
+	command_cp_description: "Copies something (usage: `cp orig_path dest_path`)",
+	command_ls_description: "Shows a file list (usage: `ls`, or `ls -r`)",
+	command_mkdir_description: "Creates directories (usage: `mkdir dir1 dir2`)",
 	command_mv_description:
-		"Moves or renames something (usage: ~mv old_path new_path~)",
+		"Moves or renames something (usage: `mv old_path new_path`)",
 	command_open_description:
-		"Opens files (usage: ~open file1.txt file2.js~, or ~open *~)",
-	command_rm_description: "Removes something (usage: ~rm something~)",
+		"Opens files (usage: `open file1.txt file2.js`, or `open *`)",
+	command_rm_description: "Removes something (usage: `rm something`)",
 	command_touch_description:
-		"Creates files (usage: ~touch file1.txt file2.js~)",
+		"Creates files (usage: `touch file1.txt file2.js`)",
 	complete: "complete",
 	console: "Console",
 	controller: "Controller",
@@ -129,8 +129,8 @@ export default {
 	register_flags_C: "Carry Flag",
 	register_flags_U: "Unused Flag",
 	repl_code_error:
-		"⚠️  Your code has errors. The ~$~ object won't be available.",
-	repl_code_success: "💬  Inspect your main code using the ~$~ object.",
+		"⚠️  Your code has errors. The `$` object won't be available.",
+	repl_code_success: "💬  Inspect your main code using the `$` object.",
 	reset_level: "Reset level progress",
 	resize_warning: "Resizing is not supported while typing.",
 	restore: "Restore",
