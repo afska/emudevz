@@ -1,0 +1,43 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - let's play a game
+  - |-
+    it's called 🌊 🐈  ~Feline Flood Fiasco~
+    <{screenshot.png;30x30}>
+  - a puzzle where you have to <save cats> from a flood
+  - if you complete it, I'll send you the <ROM file>
+  - in the ~*.neees~ format
+  responses:
+  - saving cats sounds nice [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("FelineFloodFiasco");
+    {{Right}}.loadROM("/roms/.all/FelineFloodFiasco.neees", "stream");
+  messages:
+  - yeah, it's turn-based so watch out your movements!
+  events:
+  - felinefloodfiasco-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["FelineFloodFiasco.neees", "FluffySpaceEscape.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - you save them all?!
+  - "<! ROM received: 📄  /roms/FelineFloodFiasco.neees"
+  - as I promised, I put the ROM in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/FluffySpaceEscape.neees"
+  - I've also sent another game from the same author called ~FluffySpaceEscape~
+  - happy puzzling!
+  responses:
+  - ▶️  continue [end]

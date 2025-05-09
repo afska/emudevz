@@ -79,6 +79,7 @@ export default {
 	hexadecimal: "Hexadecimal",
 	hot_reload: "Hot reload",
 	integration_dizzysheepdisaster_level: "Level",
+	integration_felinefloodfiasco_level: "Level",
 	integration_heist_wave: "Wave",
 	integration_jupiterscope2_wrong_difficulty: "Wrong difficulty level!",
 	integration_minekartmadness_level: "Level",

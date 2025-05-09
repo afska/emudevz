@@ -78,6 +78,7 @@ export default {
 	hexadecimal: "Hexadecimal",
 	hot_reload: "Recarga en caliente",
 	integration_dizzysheepdisaster_level: "Nivel",
+	integration_felinefloodfiasco_level: "Nivel",
 	integration_heist_wave: "Oleada",
 	integration_jupiterscope2_wrong_difficulty:
 		"¡Nivel de dificultad incorrecto!",

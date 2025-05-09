@@ -1,4 +1,5 @@
 import DizzySheepDisaster from "./DizzySheepDisaster";
+import FelineFloodFiasco from "./FelineFloodFiasco";
 import Heist from "./Heist";
 import JupiterScope2 from "./JupiterScope2";
 import MinekartMadness from "./MinekartMadness";
@@ -12,6 +13,7 @@ import WolfSpirit from "./WolfSpirit";
 
 export default {
 	DizzySheepDisaster,
+	FelineFloodFiasco,
 	JupiterScope2,
 	Heist,
 	MinekartMadness,

@@ -5,31 +5,29 @@ import ProgressBar from "../../widgets/ProgressBar";
 import Tooltip from "../../widgets/Tooltip";
 import Integration from "./Integration";
 
-export default class MinekartMadness extends Integration {
-	state = { percentage: 0, wave: 0 };
+export default class FelineFloodFiasco extends Integration {
+	state = { percentage: 0, level: 0 };
 
 	render() {
-		const { percentage, wave } = this.state;
+		const { percentage, level } = this.state;
 
 		return (
 			<Tooltip
-				title={`${locales.get("integration_heist_wave")} ${
-					1 + wave
-				} / ${WIN_WAVE}`}
+				title={`${locales.get("integration_felinefloodfiasco_level")} ${
+					1 + level
+				} / ${WIN_LEVEL}`}
 			>
 				<div
 					style={{ width: "50%", textAlign: "center", whiteSpace: "nowrap" }}
 				>
 					{percentage === 100 ? (
-						<span>⛽⛽⛽</span>
+						<span>🐈🐈🐈</span>
 					) : (
-						<div>
-							<ProgressBar
-								percentage={percentage}
-								barFillColor="#3398dc"
-								style={{ marginTop: 0 }}
-							/>
-						</div>
+						<ProgressBar
+							percentage={percentage}
+							barFillColor="#3398dc"
+							style={{ marginTop: 0 }}
+						/>
 					)}
 				</div>
 			</Tooltip>
@@ -40,16 +38,16 @@ export default class MinekartMadness extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		let wave = neees.cpu.memory.read(0x0025) + 1;
-		const percentage = (wave / WIN_WAVE) * 100;
+		const level = neees.cpu.memory.read(0x0061);
+		const percentage = (level / WIN_LEVEL) * 100;
 
 		if (percentage === 100) {
 			this._disconnectControllers(neees);
-			bus.emit("heist-end");
+			bus.emit("felinefloodfiasco-end");
 		}
 
-		this.setState({ percentage, wave });
+		this.setState({ percentage, level });
 	};
 }
 
-const WIN_WAVE = 19;
+const WIN_LEVEL = 20;
