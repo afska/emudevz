@@ -1,0 +1,46 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - let's play a game
+  - |-
+    it's called 🙌 ☁️  ~Falling~
+    <{screenshot.png;30x30}>
+  - an simple <endless faller> game where you dodge obstacles and pick up collectibles
+  - if you complete it, I'll send you the <ROM file>
+  - in the ~*.neees~ format
+  responses:
+  - hm... and how do I win? [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("Falling");
+    {{Right}}.loadROM("/roms/.all/Falling.neees", "stream");
+  messages:
+  - you don't...
+  - well, let's say you win when you reach 50 points
+  - 👀
+  events:
+  - falling-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["Falling.neees", "Thwaite.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - how did... you...
+  - ok
+  - "<! ROM received: 📄  /roms/Falling.neees"
+  - as I promised, I put the ROM in your 📁  ~/roms~ directory
+  - "<! ROM received: 📄  /roms/Thwaite.neees"
+  - I've also sent another game called ~Thwaite~
+  - bye for now!
+  responses:
+  - ▶️  continue [end]
