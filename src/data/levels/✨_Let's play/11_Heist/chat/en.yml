@@ -22,7 +22,7 @@ play:
   messages:
   - from the enemies!
   - they'll try to steal it for their own nefarious purposes
-  - try to survive to... let's say, at least <wave 20>
+  - try to survive until... let's say, at least <wave 20>
   - I'll consider that a win
   events:
   - heist-end [finish]

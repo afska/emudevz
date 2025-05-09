@@ -13,9 +13,9 @@ export default class MinekartMadness extends Integration {
 
 		return (
 			<Tooltip
-				title={`${locales.get("integration_heist_wave")} ${
-					wave > 0 ? wave : "?"
-				} / ${WIN_WAVE}`}
+				title={`${locales.get("integration_heist_wave")} ${1 + wave} / ${
+					1 + WIN_WAVE
+				}`}
 			>
 				<div
 					style={{ width: "50%", textAlign: "center", whiteSpace: "nowrap" }}
@@ -40,8 +40,7 @@ export default class MinekartMadness extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		let wave = neees.cpu.memory.read(0x0008); // TODO: This behaves a bit funky
-		if (wave === 0xa) wave = 0;
+		let wave = neees.cpu.memory.read(0x0025) + 1;
 		const percentage = (wave / WIN_WAVE) * 100;
 
 		if (percentage === 100) {
@@ -53,4 +52,4 @@ export default class MinekartMadness extends Integration {
 	};
 }
 
-const WIN_WAVE = 20;
+const WIN_WAVE = 19;
