@@ -1,0 +1,42 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - let's play a game
+  - |-
+    it's called 🧱 🐙  ~From Below~
+    <{screenshot.png;30x30}>
+  - a classic block falling experience with a little twist, <the Kraken>
+  - if you beat my highest score, I'll send you the <ROM file>
+  - in the ~*.neees~ format
+  responses:
+  - and your score is...? [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("FromBelow");
+    {{Right}}.loadROM("/roms/.all/FromBelow.neees", "stream");
+  messages:
+  - my highest so far is ~1234~ points
+  - try to reach it in any mode!
+  events:
+  - frombelow-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["FromBelow.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - you beat me 😅
+  - "<! ROM received: 📄  /roms/FromBelow.neees"
+  - as I promised, I put the ROM in your 📁  ~/roms~ directory
+  - have fun!
+  responses:
+  - ▶️  continue [end]

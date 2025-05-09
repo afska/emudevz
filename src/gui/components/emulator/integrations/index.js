@@ -1,6 +1,7 @@
 import DizzySheepDisaster from "./DizzySheepDisaster";
 import Falling from "./Falling";
 import FelineFloodFiasco from "./FelineFloodFiasco";
+import FromBelow from "./FromBelow";
 import Heist from "./Heist";
 import JupiterScope2 from "./JupiterScope2";
 import MinekartMadness from "./MinekartMadness";
@@ -16,6 +17,7 @@ export default {
 	DizzySheepDisaster,
 	Falling,
 	FelineFloodFiasco,
+	FromBelow,
 	JupiterScope2,
 	Heist,
 	MinekartMadness,
