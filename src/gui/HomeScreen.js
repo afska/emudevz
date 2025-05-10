@@ -66,7 +66,6 @@ class HomeScreen extends PureComponent {
 				<CreditsModal open={isCreditsOpen} setCreditsOpen={setCreditsOpen} />
 
 				<div id="ui" className={styles.ui}>
-					<h6 style={{ marginBottom: 22 }}>Demo</h6>
 					{isChromeOrChromium ? (
 						<div
 							className={styles.box}

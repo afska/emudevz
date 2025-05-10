@@ -44,7 +44,7 @@ class SettingsModal extends PureComponent {
 				contentClassName={"crt " + styles.modalContent}
 			>
 				<Modal.Header>
-					<Modal.Title>⚙ {locales.get("settings")}</Modal.Title>
+					<Modal.Title>⚙️ {locales.get("settings")}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
