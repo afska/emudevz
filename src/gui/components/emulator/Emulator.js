@@ -47,7 +47,11 @@ export default class Emulator extends Component {
 							}}
 						/>
 					) : (
-						<div ref={() => this._initialize(screen)} />
+						<div
+							ref={(div) => {
+								if (div) this._initialize(screen);
+							}}
+						/>
 					)
 				) : (
 					!screen && <TVNoise className={innerClassName} />
