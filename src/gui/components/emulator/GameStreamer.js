@@ -177,6 +177,7 @@ export default class GameStreamer extends PureComponent {
 	}
 
 	componentWillUnmount() {
+		this._emulator?.stop();
 		window.removeEventListener("resize", this._onResize);
 		if (this._app) this._app.destroy(true, true);
 	}
@@ -208,7 +209,6 @@ export default class GameStreamer extends PureComponent {
 			const background = new PIXI.Sprite(resources.background.texture);
 			this._pixiBackground = background;
 
-			// Create a container for the buffer that will be transformed
 			const bufferContainer = new PIXI.Container();
 			this._bufferContainer = bufferContainer;
 
@@ -226,8 +226,8 @@ export default class GameStreamer extends PureComponent {
 				time: 10,
 			});
 
-			background.filters = [crtFilter];
-			background.filterArea = app.screen;
+			app.stage.filters = [crtFilter];
+			app.stage.filterArea = app.screen;
 
 			app.stage.addChild(background);
 			app.stage.addChild(bufferContainer);
@@ -391,8 +391,10 @@ export default class GameStreamer extends PureComponent {
 		this._zoomButton.style.pointerEvents = "none";
 		setTimeout(() => {
 			this._nextZoom = next;
-			this._zoomButton.style.opacity = 1;
-			this._zoomButton.style.pointerEvents = "auto";
+			if (this._zoomButton != null) {
+				this._zoomButton.style.opacity = 1;
+				this._zoomButton.style.pointerEvents = "auto";
+			}
 		}, delay);
 	}
 
