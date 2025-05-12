@@ -17,6 +17,14 @@ const ZOOM_DELAY = 1000;
 const ASSET_BACKGROUND = "assets/stream.jpg";
 const CRT_SPEED = 0.25;
 
+// points in original stream.jpg coordinates (before center-crop scaling)
+const BUFFER_POINTS = {
+	topLeft: { x: 1000, y: 1000 },
+	topRight: { x: 1300, y: 1000 },
+	bottomLeft: { x: 1000, y: 1300 },
+	bottomRight: { x: 1300, y: 1300 },
+};
+
 export default class GameStreamer extends PureComponent {
 	state = { rom: null, integrationId: null };
 
@@ -200,6 +208,10 @@ export default class GameStreamer extends PureComponent {
 			const background = new PIXI.Sprite(resources.background.texture);
 			this._pixiBackground = background;
 
+			// Create a container for the buffer that will be transformed
+			const bufferContainer = new PIXI.Container();
+			this._bufferContainer = bufferContainer;
+
 			// TODO: EXTRACT DUPLICATED CODE FROM HomeScreen.js
 			const crtFilter = new CRTFilter({
 				curvature: 5,
@@ -214,25 +226,105 @@ export default class GameStreamer extends PureComponent {
 				time: 10,
 			});
 
-			app.stage.filters = [crtFilter];
-			app.stage.filterArea = app.screen;
+			background.filters = [crtFilter];
+			background.filterArea = app.screen;
+
 			app.stage.addChild(background);
+			app.stage.addChild(bufferContainer);
 
 			app.ticker.add((delta) => {
 				crtFilter.time += delta * CRT_SPEED;
 			});
 
 			div.appendChild(app.view);
-
 			this._onResize();
 		});
 	};
 
 	_setBuffer = (buffer) => {
-		if (!this._app) return;
+		if (!this._app || !this._bufferContainer) return;
 
-		console.log(buffer);
-		// TODO: WRITE BUFFER
+		if (!this._bufferTexture) {
+			const canvas = document.createElement("canvas");
+			canvas.width = 256;
+			canvas.height = 240;
+			this._bufferCanvas = canvas;
+			this._bufferContext = canvas.getContext("2d");
+			this._bufferTexture = PIXI.Texture.from(canvas);
+
+			this._imageData = this._bufferContext.getImageData(0, 0, 256, 240);
+			this._buf = new ArrayBuffer(this._imageData.data.length);
+			this._buf8 = new Uint8ClampedArray(this._buf);
+			this._buf32 = new Uint32Array(this._buf);
+		}
+
+		this._buf32.set(buffer);
+		this._imageData.data.set(this._buf8);
+		this._bufferContext.putImageData(this._imageData, 0, 0);
+		this._bufferTexture.update();
+
+		if (!this._bufferSprite) {
+			this._bufferSprite = new PIXI.Sprite(this._bufferTexture);
+			this._bufferContainer.addChild(this._bufferSprite);
+		}
+
+		this._updateBufferTransform();
+	};
+
+	_updateBufferTransform = () => {
+		if (!this._bufferSprite || !this._pixiBackground) return;
+
+		const bg = this._pixiBackground;
+		const tex = bg.texture;
+		const canvasW = this._app.screen.width;
+		const canvasH = this._app.screen.height;
+		const imgW = tex.width;
+		const imgH = tex.height;
+		const scale = Math.max(canvasW / imgW, canvasH / imgH);
+
+		// calculate the actual points after center-crop scaling
+		const points = {
+			topLeft: {
+				x: BUFFER_POINTS.topLeft.x * scale + bg.x,
+				y: BUFFER_POINTS.topLeft.y * scale + bg.y,
+			},
+			topRight: {
+				x: BUFFER_POINTS.topRight.x * scale + bg.x,
+				y: BUFFER_POINTS.topRight.y * scale + bg.y,
+			},
+			bottomLeft: {
+				x: BUFFER_POINTS.bottomLeft.x * scale + bg.x,
+				y: BUFFER_POINTS.bottomLeft.y * scale + bg.y,
+			},
+			bottomRight: {
+				x: BUFFER_POINTS.bottomRight.x * scale + bg.x,
+				y: BUFFER_POINTS.bottomRight.y * scale + bg.y,
+			},
+		};
+
+		// calculate the transform matrix to map the 256x240 sprite to the quadrilateral
+		const matrix = new PIXI.Matrix();
+
+		// first, scale the sprite to match the width of the quadrilateral
+		const width = Math.hypot(
+			points.topRight.x - points.topLeft.x,
+			points.topRight.y - points.topLeft.y
+		);
+		const height = Math.hypot(
+			points.bottomLeft.x - points.topLeft.x,
+			points.bottomLeft.y - points.topLeft.y
+		);
+		matrix.scale(width / 256, height / 240);
+
+		// then, rotate and position to match the quadrilateral
+		const angle = Math.atan2(
+			points.topRight.y - points.topLeft.y,
+			points.topRight.x - points.topLeft.x
+		);
+		matrix.rotate(angle);
+		matrix.translate(points.topLeft.x, points.topLeft.y);
+
+		this._bufferSprite.transform.setFromMatrix(matrix);
 	};
 
 	_setInputType = (inputType) => {
@@ -285,6 +377,8 @@ export default class GameStreamer extends PureComponent {
 				bg.height = imgH * scale;
 				bg.x = (canvasW - bg.width) / 2;
 				bg.y = (canvasH - bg.height) / 2;
+
+				this._updateBufferTransform();
 			}
 		}
 	};
