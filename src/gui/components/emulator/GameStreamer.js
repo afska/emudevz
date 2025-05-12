@@ -137,6 +137,11 @@ export default class GameStreamer extends PureComponent {
 						>
 							<Emulator
 								crt
+								screen={{
+									setBuffer: (buffer) => {
+										this._setBuffer(buffer);
+									},
+								}}
 								autoSaveAndRestore={id}
 								rom={rom}
 								error={null}
@@ -221,6 +226,13 @@ export default class GameStreamer extends PureComponent {
 
 			this._onResize();
 		});
+	};
+
+	_setBuffer = (buffer) => {
+		if (!this._app) return;
+
+		console.log(buffer);
+		// TODO: WRITE BUFFER
 	};
 
 	_setInputType = (inputType) => {
