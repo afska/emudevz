@@ -1,4 +1,6 @@
 import React, { PureComponent } from "react";
+import { CRTFilter } from "pixi-filters";
+import * as PIXI from "pixi.js";
 import { FaGlasses, FaVideo } from "react-icons/fa";
 import classNames from "classnames";
 import locales from "../../../locales";
@@ -12,6 +14,8 @@ import styles from "./GameStreamer.module.css";
 
 const INITIAL_ZOOM_DELAY = 3000;
 const ZOOM_DELAY = 1000;
+const ASSET_BACKGROUND = "assets/stream.jpg";
+const CRT_SPEED = 0.25;
 
 export default class GameStreamer extends PureComponent {
 	state = { rom: null, integrationId: null };
@@ -115,11 +119,7 @@ export default class GameStreamer extends PureComponent {
 							this._onResize();
 						}}
 					>
-						<img
-							src="assets/stream.jpg"
-							alt="Background"
-							className={styles.backgroundImage}
-						/>
+						<div ref={this.onReady} className={styles.backgroundImage} />
 
 						<div className={styles.pointLight} />
 
@@ -165,7 +165,63 @@ export default class GameStreamer extends PureComponent {
 
 	componentWillUnmount() {
 		window.removeEventListener("resize", this._onResize);
+		if (this._app) this._app.destroy(true, true);
 	}
+
+	onReady = (div) => {
+		if (!div) return;
+
+		const loader = PIXI.Loader.shared;
+		loader.reset();
+		loader.add("background", ASSET_BACKGROUND);
+
+		let error = false;
+		loader.onError.add(() => {
+			error = true;
+		});
+
+		loader.load((loader, resources) => {
+			if (error) {
+				alert("Error loading assets.");
+				return;
+			}
+
+			const app = new PIXI.Application({
+				resizeTo: div,
+				backgroundColor: 0x000000,
+			});
+			this._app = app;
+
+			const background = new PIXI.Sprite(resources.background.texture);
+			background.width = app.screen.width;
+			background.height = app.screen.height;
+			this._pixiBackground = background;
+
+			// TODO: EXTRACT DUPLICATED CODE FROM HomeScreen.js
+			const crtFilter = new CRTFilter({
+				curvature: 5,
+				lineWidth: 5,
+				lineContrast: 0.25,
+				noise: 0.2,
+				noiseSize: 1,
+				vignetting: 0.3,
+				vignettingAlpha: 1,
+				vignettingBlur: 0.3,
+				seed: 0,
+				time: 10,
+			});
+
+			app.stage.filters = [crtFilter];
+			app.stage.filterArea = app.screen;
+			app.stage.addChild(background);
+
+			app.ticker.add((delta) => {
+				crtFilter.time += delta * CRT_SPEED;
+			});
+
+			div.appendChild(app.view);
+		});
+	};
 
 	_setInputType = (inputType) => {
 		if (!this._container) return;
@@ -201,6 +257,14 @@ export default class GameStreamer extends PureComponent {
 		inner.style.left = `${x}px`;
 		inner.style.top = `${y}px`;
 		inner.style.transform = `scaleX(${scaleX}) scaleY(${scaleY})`;
+
+		if (this._app) {
+			this._app.resize();
+			if (this._pixiBackground) {
+				this._pixiBackground.width = this._app.screen.width;
+				this._pixiBackground.height = this._app.screen.height;
+			}
+		}
 	};
 
 	_changeZoomTo(style, next, delay = ZOOM_DELAY) {
