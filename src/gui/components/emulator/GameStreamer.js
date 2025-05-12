@@ -129,6 +129,8 @@ export default class GameStreamer extends PureComponent {
 					>
 						<div ref={this.onReady} className={styles.backgroundImage} />
 
+						<div className={styles.pointLight} />
+
 						<div
 							id="tvScreen"
 							style={{
