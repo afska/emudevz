@@ -19,10 +19,10 @@ const CRT_SPEED = 0.25;
 
 // points in original stream.jpg coordinates (before center-crop scaling)
 const BUFFER_POINTS = {
-	topLeft: { x: 696, y: 637 },
-	topRight: { x: 1532, y: 637 },
-	bottomLeft: { x: 696, y: 1241 },
-	bottomRight: { x: 1532, y: 1241 },
+	topLeft: { x: 677, y: 434 },
+	topRight: { x: 1349, y: 434 },
+	bottomLeft: { x: 677, y: 933 },
+	bottomRight: { x: 1349, y: 933 },
 };
 
 export default class GameStreamer extends PureComponent {
@@ -226,14 +226,13 @@ export default class GameStreamer extends PureComponent {
 				time: 10,
 			});
 
-			app.stage.filters = [crtFilter];
-			app.stage.filterArea = app.screen;
+			this._crtFilter = crtFilter;
 
 			app.stage.addChild(background);
 			app.stage.addChild(bufferContainer);
 
 			app.ticker.add((delta) => {
-				crtFilter.time += delta * CRT_SPEED;
+				if (this._crtFilter) this._crtFilter.time += delta * CRT_SPEED;
 			});
 
 			div.appendChild(app.view);
@@ -265,6 +264,10 @@ export default class GameStreamer extends PureComponent {
 
 		if (!this._bufferSprite) {
 			this._bufferSprite = new PIXI.Sprite(this._bufferTexture);
+			if (this._crtFilter) {
+				this._bufferSprite.filters = [this._crtFilter];
+				this._bufferSprite.filterArea = this._app.screen;
+			}
 			this._bufferContainer.addChild(this._bufferSprite);
 		}
 
