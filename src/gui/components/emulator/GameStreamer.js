@@ -19,10 +19,10 @@ const CRT_SPEED = 0.25;
 
 // points in original stream.jpg coordinates (before center-crop scaling)
 const BUFFER_POINTS = {
-	topLeft: { x: 1000, y: 1000 },
-	topRight: { x: 1300, y: 1000 },
-	bottomLeft: { x: 1000, y: 1300 },
-	bottomRight: { x: 1300, y: 1300 },
+	topLeft: { x: 696, y: 637 },
+	topRight: { x: 1532, y: 637 },
+	bottomLeft: { x: 696, y: 1241 },
+	bottomRight: { x: 1532, y: 1241 },
 };
 
 export default class GameStreamer extends PureComponent {
