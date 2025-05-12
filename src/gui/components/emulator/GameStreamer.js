@@ -193,8 +193,6 @@ export default class GameStreamer extends PureComponent {
 			this._app = app;
 
 			const background = new PIXI.Sprite(resources.background.texture);
-			background.width = app.screen.width;
-			background.height = app.screen.height;
 			this._pixiBackground = background;
 
 			// TODO: EXTRACT DUPLICATED CODE FROM HomeScreen.js
@@ -220,6 +218,8 @@ export default class GameStreamer extends PureComponent {
 			});
 
 			div.appendChild(app.view);
+
+			this._onResize();
 		});
 	};
 
@@ -261,8 +261,18 @@ export default class GameStreamer extends PureComponent {
 		if (this._app) {
 			this._app.resize();
 			if (this._pixiBackground) {
-				this._pixiBackground.width = this._app.screen.width;
-				this._pixiBackground.height = this._app.screen.height;
+				// (center-crop bg)
+				const bg = this._pixiBackground;
+				const tex = bg.texture;
+				const canvasW = this._app.screen.width;
+				const canvasH = this._app.screen.height;
+				const imgW = tex.width;
+				const imgH = tex.height;
+				const scale = Math.max(canvasW / imgW, canvasH / imgH);
+				bg.width = imgW * scale;
+				bg.height = imgH * scale;
+				bg.x = (canvasW - bg.width) / 2;
+				bg.y = (canvasH - bg.height) / 2;
 			}
 		}
 	};
