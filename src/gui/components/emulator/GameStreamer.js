@@ -159,18 +159,7 @@ export default class GameStreamer extends PureComponent {
 
 						<div className={styles.pointLight} />
 
-						<div
-							id="tvScreen"
-							style={{
-								position: "absolute",
-								width: SCREEN_WIDTH,
-								height: SCREEN_HEIGHT,
-								zIndex: 1,
-								clipPath:
-									'path("M 16.597 33.729 C 4.921 21.211 167.519 13.919 237.56 32.364 C 245.389 32.364 251.454 53.775 249.205 48.235 C 255.638 53.16 261.012 200.57 250.436 195.09 C 258.092 186.709 245.874 210.207 236.67 211.313 C 175.573 223.497 93.096 225.671 21.648 211.313 C 13.819 211.313 -0.962 199.349 6.445 200.802 C 0.781 221.1 -4.372 78.351 6.268 47.794 C 8.159 35.901 21.809 24.348 23.139 31.395")',
-								transformOrigin: "top left",
-							}}
-						>
+						<div id="tvScreen">
 							<Emulator
 								crt
 								screen={{
