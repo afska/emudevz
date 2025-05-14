@@ -261,6 +261,8 @@ export default class GameStreamer extends PureComponent {
 			this._bufferCanvas = canvas;
 			this._bufferContext = canvas.getContext("2d");
 			this._bufferTexture = PIXI.Texture.from(canvas);
+			// TODO: Make the image so the buffer integer-scales properly
+			this._bufferTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
 
 			this._imageData = this._bufferContext.getImageData(
 				0,
