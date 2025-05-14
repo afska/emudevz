@@ -26,7 +26,7 @@ const BUFFER_POINTS = {
 };
 
 export default class GameStreamer extends PureComponent {
-	state = { rom: null, integrationId: null };
+	state = { rom: null, integrationId: null, isLoading: true };
 
 	setIntegration(integrationId) {
 		this.setState({ integrationId });
@@ -52,7 +52,7 @@ export default class GameStreamer extends PureComponent {
 
 	render() {
 		const { id, rom: propsRom } = this.props;
-		const { rom: stateRom, integrationId } = this.state;
+		const { rom: stateRom, integrationId, isLoading } = this.state;
 		const rom = propsRom || stateRom;
 
 		const Integration = integrations.get(integrationId);
@@ -127,7 +127,13 @@ export default class GameStreamer extends PureComponent {
 							this._onResize();
 						}}
 					>
-						<div ref={this.onReady} className={styles.backgroundImage} />
+						<div ref={this.onReady} className={styles.backgroundImage}>
+							{isLoading && (
+								<div className={styles.spinnerContainer}>
+									<div className={styles.spinner}></div>
+								</div>
+							)}
+						</div>
 
 						<div className={styles.pointLight} />
 
@@ -192,9 +198,12 @@ export default class GameStreamer extends PureComponent {
 		let error = false;
 		loader.onError.add(() => {
 			error = true;
+			this.setState({ isLoading: false });
 		});
 
 		loader.load((loader, resources) => {
+			this.setState({ isLoading: false });
+
 			if (error) {
 				alert("Error loading assets.");
 				return;
