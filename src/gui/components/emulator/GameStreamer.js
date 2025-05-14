@@ -14,7 +14,7 @@ import styles from "./GameStreamer.module.css";
 
 const INITIAL_ZOOM_DELAY = 3000;
 const ZOOM_DELAY = 1000;
-const ASSET_BACKGROUND = "assets/stream.jpg";
+const ASSET_BACKGROUND = "assets/stream/main.jpg";
 const CRT_SPEED = 0.25;
 const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
