@@ -16,6 +16,8 @@ const INITIAL_ZOOM_DELAY = 3000;
 const ZOOM_DELAY = 1000;
 const ASSET_BACKGROUND = "assets/stream.jpg";
 const CRT_SPEED = 0.25;
+const SCREEN_WIDTH = 256;
+const SCREEN_HEIGHT = 240;
 
 // points in original stream.jpg coordinates (before center-crop scaling)
 const BUFFER_POINTS = {
@@ -140,8 +142,8 @@ export default class GameStreamer extends PureComponent {
 							id="tvScreen"
 							style={{
 								position: "absolute",
-								width: 256,
-								height: 240,
+								width: SCREEN_WIDTH,
+								height: SCREEN_HEIGHT,
 								zIndex: 1,
 								clipPath:
 									'path("M 16.597 33.729 C 4.921 21.211 167.519 13.919 237.56 32.364 C 245.389 32.364 251.454 53.775 249.205 48.235 C 255.638 53.16 261.012 200.57 250.436 195.09 C 258.092 186.709 245.874 210.207 236.67 211.313 C 175.573 223.497 93.096 225.671 21.648 211.313 C 13.819 211.313 -0.962 199.349 6.445 200.802 C 0.781 221.1 -4.372 78.351 6.268 47.794 C 8.159 35.901 21.809 24.348 23.139 31.395")',
@@ -241,6 +243,7 @@ export default class GameStreamer extends PureComponent {
 
 			app.ticker.add((delta) => {
 				if (this._crtFilter) this._crtFilter.time += delta * CRT_SPEED;
+				if (!this.props.rom) this._updateNoise();
 			});
 
 			div.appendChild(app.view);
@@ -253,13 +256,18 @@ export default class GameStreamer extends PureComponent {
 
 		if (!this._bufferTexture) {
 			const canvas = document.createElement("canvas");
-			canvas.width = 256;
-			canvas.height = 240;
+			canvas.width = SCREEN_WIDTH;
+			canvas.height = SCREEN_HEIGHT;
 			this._bufferCanvas = canvas;
 			this._bufferContext = canvas.getContext("2d");
 			this._bufferTexture = PIXI.Texture.from(canvas);
 
-			this._imageData = this._bufferContext.getImageData(0, 0, 256, 240);
+			this._imageData = this._bufferContext.getImageData(
+				0,
+				0,
+				SCREEN_WIDTH,
+				SCREEN_HEIGHT
+			);
 			this._buf = new ArrayBuffer(this._imageData.data.length);
 			this._buf8 = new Uint8ClampedArray(this._buf);
 			this._buf32 = new Uint32Array(this._buf);
@@ -325,7 +333,7 @@ export default class GameStreamer extends PureComponent {
 			points.bottomLeft.x - points.topLeft.x,
 			points.bottomLeft.y - points.topLeft.y
 		);
-		matrix.scale(width / 256, height / 240);
+		matrix.scale(width / SCREEN_WIDTH, height / SCREEN_HEIGHT);
 
 		// then, rotate and position to match the quadrilateral
 		const angle = Math.atan2(
@@ -421,4 +429,15 @@ export default class GameStreamer extends PureComponent {
 		if (this._emulator?.speaker) this._emulator?.speaker.setVolume(value);
 		store.dispatch.savedata.setEmulatorVolume(value);
 	}
+
+	_updateNoise = () => {
+		if (!this._app || !this._bufferContainer) return;
+
+		const len = SCREEN_WIDTH * SCREEN_HEIGHT;
+		const noiseBuffer = new Uint32Array(len);
+		for (let i = 0; i < len; i++)
+			noiseBuffer[i] = ((255 * Math.random()) | 0) << 24;
+
+		this._setBuffer(noiseBuffer);
+	};
 }
