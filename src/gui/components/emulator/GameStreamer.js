@@ -239,18 +239,17 @@ export default class GameStreamer extends PureComponent {
 			const bufferContainer = new PIXI.Container();
 			this._bufferContainer = bufferContainer;
 
-			// TODO: EXTRACT DUPLICATED CODE FROM HomeScreen.js
 			const crtFilter = new CRTFilter({
 				curvature: 5,
-				lineWidth: 5,
-				lineContrast: 0.25,
+				lineWidth: 3,
+				lineContrast: 0.3,
 				noise: 0.2,
 				noiseSize: 1,
 				vignetting: 0.3,
 				vignettingAlpha: 1,
 				vignettingBlur: 0.3,
 				seed: 0,
-				time: 10,
+				time: 0.5,
 			});
 
 			this._crtFilter = crtFilter;
