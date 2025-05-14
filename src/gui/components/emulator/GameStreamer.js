@@ -12,19 +12,35 @@ import Emulator from "./Emulator";
 import integrations from "./integrations";
 import styles from "./GameStreamer.module.css";
 
-const INITIAL_ZOOM_DELAY = 3000;
 const ZOOM_DELAY = 1000;
 const ASSET_BACKGROUND = "assets/stream/main.jpg";
+const ASSET_TV = "assets/stream/tv.png";
+const ASSET_LIGHTS = {
+	tv: "assets/stream/light-tv.png",
+	monitor: "assets/stream/light-monitor.png",
+	buttons: "assets/stream/light-buttons-and-lamp.png",
+};
+const LIGHT_STROBE_SPEEDS = {
+	// low => slower strobe
+	tv: 0.2,
+	monitor: 0.005,
+	buttons: 0.3,
+};
+const LIGHT_OPACITY = {
+	min: 0.5,
+	max: 1,
+	range: 0.1,
+};
 const CRT_SPEED = 0.25;
 const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
 
 // points in original stream.jpg coordinates (before center-crop scaling)
 const BUFFER_POINTS = {
-	topLeft: { x: 677, y: 434 },
-	topRight: { x: 1349, y: 434 },
-	bottomLeft: { x: 677, y: 933 },
-	bottomRight: { x: 1349, y: 933 },
+	topLeft: { x: 686, y: 194 },
+	topRight: { x: 1454, y: 194 },
+	bottomLeft: { x: 686, y: 914 },
+	bottomRight: { x: 1454, y: 914 },
 };
 
 export default class GameStreamer extends PureComponent {
@@ -35,7 +51,7 @@ export default class GameStreamer extends PureComponent {
 	}
 
 	zoom = () => {
-		this._changeZoomTo(styles.zoom, "megaZoom", INITIAL_ZOOM_DELAY);
+		this._changeZoomTo(styles.zoom, "megaZoom", 0);
 	};
 
 	megaZoom = () => {
@@ -81,7 +97,12 @@ export default class GameStreamer extends PureComponent {
 							ref={(ref) => {
 								this._zoomButton = ref;
 							}}
-							style={{ opacity: 0, marginLeft: 8, marginBottom: 0 }}
+							style={{
+								opacity: 0,
+								pointerEvents: "none",
+								marginLeft: 8,
+								marginBottom: 0,
+							}}
 						>
 							<IconButton
 								Icon={FaGlasses}
@@ -195,6 +216,10 @@ export default class GameStreamer extends PureComponent {
 		const loader = PIXI.Loader.shared;
 		loader.reset();
 		loader.add("background", ASSET_BACKGROUND);
+		loader.add("tv", ASSET_TV);
+		Object.entries(ASSET_LIGHTS).forEach(([key, path]) => {
+			loader.add(`light_${key}`, path);
+		});
 
 		let error = false;
 		loader.onError.add(() => {
@@ -219,6 +244,9 @@ export default class GameStreamer extends PureComponent {
 			const background = new PIXI.Sprite(resources.background.texture);
 			this._pixiBackground = background;
 
+			const tvOverlay = new PIXI.Sprite(resources.tv.texture);
+			this._tvOverlay = tvOverlay;
+
 			const bufferContainer = new PIXI.Container();
 			this._bufferContainer = bufferContainer;
 
@@ -239,11 +267,29 @@ export default class GameStreamer extends PureComponent {
 			this._crtFilter = crtFilter;
 
 			app.stage.addChild(background);
+
 			app.stage.addChild(bufferContainer);
+			app.stage.addChild(tvOverlay);
+
+			this._lightSprites = {};
+			const lightOrder = ["tv", "buttons", "monitor"];
+			lightOrder.forEach((key) => {
+				const sprite = new PIXI.Sprite(resources[`light_${key}`].texture);
+				sprite.alpha = LIGHT_OPACITY.min;
+				this._lightSprites[key] = sprite;
+				app.stage.addChild(sprite);
+			});
 
 			app.ticker.add((delta) => {
 				if (this._crtFilter) this._crtFilter.time += delta * CRT_SPEED;
 				if (!this.props.rom) this._updateNoise();
+
+				Object.entries(this._lightSprites).forEach(([key, sprite]) => {
+					const speed = LIGHT_STROBE_SPEEDS[key];
+					sprite.alpha =
+						LIGHT_OPACITY.min +
+						Math.sin(app.ticker.lastTime * speed) * LIGHT_OPACITY.range;
+				});
 			});
 
 			div.appendChild(app.view);
@@ -398,6 +444,20 @@ export default class GameStreamer extends PureComponent {
 				bg.height = imgH * scale;
 				bg.x = (canvasW - bg.width) / 2;
 				bg.y = (canvasH - bg.height) / 2;
+
+				if (this._tvOverlay) {
+					this._tvOverlay.width = bg.width;
+					this._tvOverlay.height = bg.height;
+					this._tvOverlay.x = bg.x;
+					this._tvOverlay.y = bg.y;
+				}
+
+				Object.values(this._lightSprites).forEach((sprite) => {
+					sprite.width = bg.width;
+					sprite.height = bg.height;
+					sprite.x = bg.x;
+					sprite.y = bg.y;
+				});
 
 				this._updateBufferTransform();
 			}
