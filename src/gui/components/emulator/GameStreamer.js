@@ -26,7 +26,7 @@ const BUFFER_POINTS = {
 };
 
 export default class GameStreamer extends PureComponent {
-	state = { rom: null, integrationId: null, isLoading: true };
+	state = { integrationId: null, isLoading: true };
 
 	setIntegration(integrationId) {
 		this.setState({ integrationId });
@@ -51,9 +51,8 @@ export default class GameStreamer extends PureComponent {
 	}
 
 	render() {
-		const { id, rom: propsRom } = this.props;
-		const { rom: stateRom, integrationId, isLoading } = this.state;
-		const rom = propsRom || stateRom;
+		const { id, rom } = this.props;
+		const { integrationId, isLoading } = this.state;
 
 		const Integration = integrations.get(integrationId);
 
