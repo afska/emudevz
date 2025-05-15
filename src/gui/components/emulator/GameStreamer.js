@@ -35,12 +35,13 @@ const CRT_SPEED = 0.25;
 const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
 
-// points in original stream.jpg coordinates (before center-crop scaling)
+// points in original stream/main.jpg coordinates (before center-crop scaling)
 const BUFFER_POINTS = {
 	topLeft: { x: 686, y: 194 },
 	topRight: { x: 1454, y: 194 },
 	bottomLeft: { x: 686, y: 914 },
 	bottomRight: { x: 1454, y: 914 },
+	// ^^^ (topLeft + (256, 240) * 3)
 };
 
 export default class GameStreamer extends PureComponent {
@@ -194,7 +195,6 @@ export default class GameStreamer extends PureComponent {
 	}
 
 	componentWillUnmount() {
-		this._emulator?.stop();
 		window.removeEventListener("resize", this._onResize);
 		if (this._app) this._app.destroy(true, true);
 	}

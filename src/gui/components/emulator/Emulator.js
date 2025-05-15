@@ -90,11 +90,6 @@ export default class Emulator extends Component {
 		this._stop();
 	}
 
-	shouldComponentUpdate() {
-		this._stop();
-		return true;
-	}
-
 	componentDidMount() {
 		window.addEventListener("beforeunload", this._saveProgress);
 	}
