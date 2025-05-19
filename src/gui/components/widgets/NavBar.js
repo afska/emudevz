@@ -137,7 +137,7 @@ class NavBar extends PureComponent {
 								this.forceUpdate();
 							}}
 						/>
-						<IconButton
+						{/* <IconButton // TODO: REMOVE
 							style={{ marginLeft: 8 }}
 							Icon={FaComment}
 							tooltip={"Send feedback"}
@@ -147,7 +147,7 @@ class NavBar extends PureComponent {
 									"What do you think of the game? 👀"
 								)
 							}
-						/>
+						/> */}
 						{book.canReset(level) && (
 							<IconButton
 								style={{ marginLeft: 8 }}
