@@ -141,7 +141,7 @@ export default {
 		const newCode = _code_
 			.split("\n")
 			.map((line, i) => {
-				return i === lineNumber ? `${line} /*💥  ❗ 💥 */` : line;
+				return i === lineNumber ? `\`!!\`${line}\`!!\`` : line;
 			})
 			.join("\n");
 
