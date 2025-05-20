@@ -71,7 +71,7 @@
 
 .megazoom {
 	animation: megazoomin 1s;
-	transform: scale(1.8) translateX(-24px) translateY(70px);
+	transform: scale(1.8) translateX(-24px) translateY(120px);
 }
 
 .megazoomout {
@@ -140,13 +140,13 @@
 		transform: scale(1) translateX(0) translateY(0);
 	}
 	100% {
-		transform: scale(1.8) translateX(-24px) translateY(70px);
+		transform: scale(1.8) translateX(-24px) translateY(120px);
 	}
 }
 
 @keyframes megazoomout {
 	0% {
-		transform: scale(1.8) translateX(-24px) translateY(70px);
+		transform: scale(1.8) translateX(-24px) translateY(120px);
 	}
 	100% {
 		transform: scale(1) translateX(0) translateY(0);
