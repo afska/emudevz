@@ -9,7 +9,7 @@ const dictionary = {
 		"[A]": {
 			icon: "🔢",
 			en:
-				"_(Accummulator Register)_ A CPU register used to store the result of arithmetic and logic operations.",
+				"_(Accumulator Register)_ A CPU register used to store the result of arithmetic and logic operations.",
 			es:
 				"_(Registro Acumulador)_ Un registro de CPU usado para almacenar el resultado de operaciones aritméticas y lógicas.",
 		},
@@ -117,7 +117,7 @@ const dictionary = {
 			also: { es: "Cartucho|_Cartuchos" },
 			icon: "💾",
 			en:
-				"A removable piece of hardware that contains the all the game chips, such as PRG-ROM, CHR-ROM, PRG-RAM, and the Mapper.",
+				"A removable piece of hardware that contains all the game chips, such as PRG-ROM, CHR-ROM, PRG-RAM, and the Mapper.",
 			es:
 				"Una pieza de hardware removible que contiene todos los chips del juego, como PRG-ROM, CHR-ROM, PRG-RAM, y el Mapper.",
 		},
