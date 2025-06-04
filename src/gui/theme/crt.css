@@ -101,12 +101,6 @@
 	pointer-events: none;
 }
 
-.screen {
-	width: 100%;
-	height: 100%;
-	border: none;
-}
-
 /* .crt::after {
 	animation: flicker 0.15s infinite;
 } */
