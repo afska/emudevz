@@ -117,7 +117,7 @@ lda:
     set((m) => m.$canRun = false);
   messages:
   - great!
-  - if you were watching carefully, you'll have noticed that [A] changed from $00 to $01
+  - if you were watching carefully, you probably noticed that [A] changed from $00 to $01
   - and [PC] changed from $4020 to $4022 🤯
   - those are CPU registers, quickly accessible locations
   - each register can hold a single byte (~8~ bits) of data

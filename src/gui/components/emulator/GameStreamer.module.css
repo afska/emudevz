@@ -4,6 +4,7 @@
 	display: flex;
 	flex-direction: column;
 	animation: fadein 5s;
+	image-rendering: pixelated;
 }
 
 @keyframes fadein {
@@ -42,15 +43,14 @@
 }
 
 .video {
+	width: 100%;
 	height: 100%;
-	margin-top: 8px;
-	margin-bottom: 8px;
-	margin-left: auto;
-	margin-right: auto;
-	aspect-ratio: 1;
+	margin: 0;
+	border: none;
+	border-radius: 0;
 	overflow: hidden;
-	border: 4px dashed #577295;
-	border-radius: 8px;
+	background: black;
+	image-rendering: pixelated;
 }
 
 .stream {
@@ -58,26 +58,27 @@
 	width: 100%;
 	height: 100%;
 
-	animation: noise 5s infinite;
+	animation: noise 5s infinite, zoomloop 5s infinite;
+	image-rendering: pixelated;
 }
 
 .zoom {
 	animation: zoomin, zoomloop infinite;
-	animation-duration: 3s, 5s;
-	animation-delay: 0s, 3s;
-	transform: scale(1.3);
+	animation-duration: 0s, 5s;
+	animation-delay: 0s, 0s;
+	transform: scale(1);
 }
 
 .megazoom {
 	animation: megazoomin 1s;
-	transform: scale(1.8) translateX(-24px) translateY(24px);
+	transform: scale(1.8) translateX(-24px) translateY(120px);
 }
 
 .megazoomout {
 	animation: megazoomout, zoomloop infinite;
 	animation-duration: 1s, 5s;
 	animation-delay: 0s, 1s;
-	transform: scale(1.3);
+	transform: scale(1);
 }
 
 @keyframes noise {
@@ -85,28 +86,28 @@
 		filter: brightness(100%) contrast(100%) saturate(100%);
 	}
 	10% {
-		filter: brightness(98%) contrast(102%) saturate(98%);
+		filter: brightness(99%) contrast(101%) saturate(99%);
 	}
 	20% {
-		filter: brightness(102%) contrast(98%) saturate(102%);
+		filter: brightness(101%) contrast(99%) saturate(101%);
 	}
 	30% {
 		filter: brightness(100%) contrast(100%) saturate(100%);
 	}
 	40% {
-		filter: brightness(98%) contrast(102%) saturate(98%);
+		filter: brightness(99%) contrast(101%) saturate(99%);
 	}
 	50% {
-		filter: brightness(102%) contrast(98%) saturate(102%);
+		filter: brightness(101%) contrast(99%) saturate(101%);
 	}
 	60% {
 		filter: brightness(100%) contrast(100%) saturate(100%);
 	}
 	70% {
-		filter: brightness(98%) contrast(102%) saturate(98%);
+		filter: brightness(99%) contrast(101%) saturate(99%);
 	}
 	80% {
-		filter: brightness(102%) contrast(98%) saturate(102%);
+		filter: brightness(101%) contrast(99%) saturate(101%);
 	}
 	90% {
 		filter: brightness(100%) contrast(100%) saturate(100%);
@@ -117,47 +118,38 @@
 }
 
 @keyframes zoomin {
-	0% {
-		transform: scale(1);
-	}
-	25% {
-		transform: rotateZ(-10deg) scale(1.2);
-	}
-	75% {
-		transform: rotateZ(10deg) scale(1.25);
-	}
 	100% {
-		transform: rotateZ(0) scale(1.3);
+		transform: scale(1);
 	}
 }
 
 @keyframes zoomloop {
 	0% {
-		transform: scale(1.3);
+		transform: scale(1);
 	}
 	50% {
-		transform: scale(1.31);
+		transform: scale(1.01);
 	}
 	100% {
-		transform: scale(1.3);
+		transform: scale(1);
 	}
 }
 
 @keyframes megazoomin {
 	0% {
-		transform: scale(1.3) translateX(0) translateY(0);
+		transform: scale(1) translateX(0) translateY(0);
 	}
 	100% {
-		transform: scale(1.8) translateX(-24px) translateY(24px);
+		transform: scale(1.8) translateX(-24px) translateY(120px);
 	}
 }
 
 @keyframes megazoomout {
 	0% {
-		transform: scale(1.8) translateX(-24px) translateY(24px);
+		transform: scale(1.8) translateX(-24px) translateY(120px);
 	}
 	100% {
-		transform: scale(1.3) translateX(0) translateY(0);
+		transform: scale(1) translateX(0) translateY(0);
 	}
 }
 
@@ -185,9 +177,40 @@
 		opacity: 0;
 	}
 	50% {
-		opacity: 0.45;
+		opacity: 0.25;
 	}
 	100% {
 		opacity: 0;
+	}
+}
+
+.spinnerContainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 10;
+}
+
+.spinner {
+	width: 50px;
+	height: 50px;
+	border: 5px solid #f3f3f3;
+	border-top: 5px solid #6f8fb9;
+	border-radius: 50%;
+	animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
 	}
 }

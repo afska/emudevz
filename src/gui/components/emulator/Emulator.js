@@ -3,7 +3,6 @@ import EmulatorBuilder from "../../../EmulatorBuilder";
 import Level from "../../../level/Level";
 import { bus } from "../../../utils";
 import TVNoise from "../TVNoise";
-import CRTScreen from "./CRTScreen";
 import Screen from "./Screen";
 import Emulation from "./runner/Emulation";
 import gamepad from "./runner/gamepad";
@@ -25,9 +24,8 @@ const KEY_MAP = {
 
 export default class Emulator extends Component {
 	render() {
-		const { rom, error, crt = false, style } = this.props;
+		const { rom, error, crt = false, screen = null, style } = this.props;
 
-		const ScreenComponent = crt ? CRTScreen : Screen;
 		const innerClassName = crt ? styles.crtNoise : styles.box;
 
 		return (
@@ -41,14 +39,22 @@ export default class Emulator extends Component {
 						/>
 					</div>
 				) : !!rom ? (
-					<ScreenComponent
-						className={innerClassName}
-						ref={(screen) => {
-							if (screen) this._initialize(screen);
-						}}
-					/>
+					!screen ? (
+						<Screen
+							className={innerClassName}
+							ref={(screen) => {
+								if (screen) this._initialize(screen);
+							}}
+						/>
+					) : (
+						<div
+							ref={(div) => {
+								if (div) this._initialize(screen);
+							}}
+						/>
+					)
 				) : (
-					<TVNoise className={innerClassName} />
+					!screen && <TVNoise className={innerClassName} />
 				)}
 			</div>
 		);
@@ -82,11 +88,6 @@ export default class Emulator extends Component {
 
 	stop() {
 		this._stop();
-	}
-
-	shouldComponentUpdate() {
-		this._stop();
-		return true;
 	}
 
 	componentDidMount() {

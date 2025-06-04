@@ -12,7 +12,7 @@ main:
   - si lo completas, te enviaré el <archivo ROM>
   - en el formato ~*.neees~
   responses:
-  - ¿Y puedo jugar como un lobo? [play]
+  - ¿y puedo jugar como un lobo? [play]
 
 play:
   run: |

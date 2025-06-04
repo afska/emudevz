@@ -25,6 +25,7 @@ notready:
 videochat:
   run: |
     {{Right}}.load(null, "stream");
+    {{Right}}.stream.zoom();
   messages:
   - sí, ¿ves mi habitación allí?
   - está un poco desordenada, lo sé
@@ -34,8 +35,6 @@ videochat:
   responses: []
 
 zoom:
-  run: |
-    {{Right}}.stream.zoom();
   messages:
   - ah, he hackeado el puerto del mando para que tus entradas funcionen en mi NEEES real ✨
   responses:
