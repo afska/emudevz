@@ -14,7 +14,7 @@ const MESSAGE_SYMBOL = ">> ";
 const SELECTION_SYMBOL = "=> ";
 const SYSTEM_PREFIX = "<! ";
 const EXERCISE_PREFIX = "📚";
-const MESSAGE_SPEED = 30;
+const MESSAGE_TYPING_INTERVAL = 30;
 
 // eslint-disable-next-line
 const LINK_DETECT_REGEXP = _.template("(^${responses}$)");
@@ -142,7 +142,7 @@ export default class ChatCommand extends Command {
 				await this._terminal.writeln(
 					MESSAGE_SYMBOL + message,
 					theme.MESSAGE,
-					MESSAGE_SPEED,
+					MESSAGE_TYPING_INTERVAL,
 					true
 				);
 			}
