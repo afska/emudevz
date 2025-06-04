@@ -16,9 +16,9 @@ main:
 
 play:
   run: |
-      {{Right}}.stream.zoom();
-      {{Right}}.stream.setIntegration("FromBelow");
-      {{Right}}.loadROM("/roms/.all/FromBelow.neees", "stream");
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("FromBelow");
+    {{Right}}.loadROM("/roms/.all/FromBelow.neees", "stream");
   messages:
   - mi máxima hasta ahora es de ~1234~ puntos
   - ¡intenta alcanzarla en cualquier modo!

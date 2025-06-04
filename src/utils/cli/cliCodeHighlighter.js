@@ -1,8 +1,14 @@
+import { theme } from "../../terminal/style";
+
 const cliHighlight = require("cli-highlight");
 
 export default {
 	highlight(code, language = "javascript") {
-		return cliHighlight.highlight(code, {
+		const highlighted = code.replace(/`!!`(.*?)`!!`/g, (_, match) =>
+			theme.BG_HIGHLIGHT(match)
+		);
+
+		return cliHighlight.highlight(highlighted, {
 			language,
 		});
 	},

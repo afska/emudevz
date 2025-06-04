@@ -22,4 +22,4 @@
   - Bit `5`: Prioridad (`0`: arriba del fondo, `1`: detrás del fondo).
   - Bit `6`: Voltear horizontalmente.
   - Bit `7`: Voltear verticalmente.
-- Byte `3`: **X** coordinate of the sprite.
+- Byte `3`: Coordenada **X** del sprite.

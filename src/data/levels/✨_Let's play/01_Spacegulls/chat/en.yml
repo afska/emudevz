@@ -25,6 +25,7 @@ notready:
 videochat:
   run: |
     {{Right}}.load(null, "stream");
+    {{Right}}.stream.zoom();
   messages:
   - yeah, you see my room there?
   - it's a bit messy, I know
@@ -34,8 +35,6 @@ videochat:
   responses: []
 
 zoom:
-  run: |
-    {{Right}}.stream.zoom();
   messages:
   - ah, I hacked the controller port so your inputs work on my real NEEES ✨
   responses:

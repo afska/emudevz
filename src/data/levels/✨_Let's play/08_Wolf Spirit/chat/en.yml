@@ -12,7 +12,7 @@ main:
   - if you complete it, I'll send you the <ROM file>
   - in the ~*.neees~ format
   responses:
-  - an do I get to play as a wolf? [play]
+  - and do I get to play as a wolf? [play]
 
 play:
   run: |
