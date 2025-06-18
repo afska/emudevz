@@ -6,7 +6,6 @@ import {
 	FaChevronLeft,
 	FaChevronRight,
 	FaClock,
-	FaComment,
 	FaExclamationCircle,
 	FaHome,
 	FaMusic,
@@ -20,7 +19,7 @@ import classNames from "classnames";
 import _ from "lodash";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
-import { analytics, bus } from "../../../utils";
+import { bus } from "../../../utils";
 import music from "../../sound/music";
 import CalculatorModal from "./CalculatorModal";
 import IconButton from "./IconButton";
@@ -137,17 +136,6 @@ class NavBar extends PureComponent {
 								this.forceUpdate();
 							}}
 						/>
-						{/* <IconButton // TODO: REMOVE
-							style={{ marginLeft: 8 }}
-							Icon={FaComment}
-							tooltip={"Send feedback"}
-							onClick={() =>
-								analytics.requestFeedback(
-									"navbar",
-									"What do you think of the game? 👀"
-								)
-							}
-						/> */}
 						{book.canReset(level) && (
 							<IconButton
 								style={{ marginLeft: 8 }}
