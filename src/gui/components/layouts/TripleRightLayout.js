@@ -196,37 +196,37 @@ export default class TripleLayout extends Layout {
 	}
 
 	_onPin = (pin) => {
-		this.setState({ Pin: pin.Component }, () => {
-			this.instances.Pin.initialize(pin.args, pin.level, this);
-			setTimeout(() => {
-				this.focus(this.constructor.pinLocation);
-			});
-		});
+		this._onPinOpened(pin, "Pin", this.constructor.pinLocation);
 	};
 
 	_closePin = () => {
-		this.instances.Pin = null;
-		this.setState({ Pin: null }, () => {
-			setTimeout(() => {
-				this.focus(this.constructor.pinLocation);
-			});
-		});
+		this._onPinClosed("Pin", this.constructor.pinLocation);
 	};
 
 	_onSecondaryPin = (pin) => {
-		this.setState({ SecondaryPin: pin.Component }, () => {
-			this.instances.SecondaryPin.initialize(pin.args, pin.level, this);
+		const location = this.constructor.secondaryPinLocation;
+
+		this._onPinOpened(pin, "SecondaryPin", location);
+	};
+
+	_closeSecondaryPin = () => {
+		this._onPinClosed("SecondaryPin", this.constructor.secondaryPinLocation);
+	};
+
+	_onPinOpened = (pin, name, pinLocation) => {
+		this.setState({ [name]: pin.Component }, () => {
+			this.instances[name].initialize(pin.args, pin.level, this);
 			setTimeout(() => {
-				this.focus(this.constructor.secondaryPinLocation);
+				this.focus(this.constructor[pinLocation]);
 			});
 		});
 	};
 
-	_closeSecondaryPin = () => {
-		this.instances.SecondaryPin = null;
-		this.setState({ SecondaryPin: null }, () => {
+	_onPinClosed = (name, pinLocation) => {
+		this.instances[name] = null;
+		this.setState({ [name]: null }, () => {
 			setTimeout(() => {
-				this.focus(this.constructor.secondaryPinLocation);
+				this.focus(this.constructor[pinLocation]);
 			});
 		});
 	};
