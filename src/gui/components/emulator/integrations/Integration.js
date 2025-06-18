@@ -24,13 +24,6 @@ export default class Integration extends PureComponent {
 		})();
 	}
 
-	// TODO: REDO WITH PIXI.js
-	// _moveTV(dy) {
-	// 	document.querySelector(
-	// 		"#tvScreen canvas"
-	// 	).style.transform = `translateY(${dy}px)`;
-	// }
-
 	_humanHexToNumber(number) {
 		return parseInt(number.toString(16));
 	}

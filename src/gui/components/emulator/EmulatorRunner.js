@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { FaBug, FaExpand, FaStop, FaSync } from "react-icons/fa";
+import { FaExpand, FaSearch, FaStop, FaSync } from "react-icons/fa";
 import classNames from "classnames";
 import _ from "lodash";
 import Level from "../../../level/Level";
@@ -178,9 +178,9 @@ export default class EmulatorRunner extends PureComponent {
 					{!!rom && !!error && !!error.debugInfo && (
 						<IconButton
 							style={{ marginRight: 8 }}
-							Icon={FaBug}
-							tooltip={locales.get("emulation_debug")}
-							onClick={this._debug}
+							Icon={FaSearch}
+							tooltip={locales.get("emulation_go_to_error")}
+							onClick={this._goToError}
 						/>
 					)}
 					{!!rom && !error && (
@@ -270,7 +270,7 @@ export default class EmulatorRunner extends PureComponent {
 		this._info.innerText = "";
 	};
 
-	_debug = () => {
+	_goToError = () => {
 		const { filePath, lineNumber } = this.props.error.debugInfo;
 		store.dispatch.savedata.openFile(filePath);
 		setTimeout(() => {
