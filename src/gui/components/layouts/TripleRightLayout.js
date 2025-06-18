@@ -16,12 +16,16 @@ export default class TripleLayout extends Layout {
 		return "Top";
 	}
 
+	static get secondaryPinLocation() {
+		return "Right";
+	}
+
 	state = { selected: "Right", lastVerticalSelection: "Bottom", Pin: null };
 
 	render() {
 		this.requireComponents();
 		const { Right, Top, Bottom } = this.props;
-		const { selected, Pin } = this.state;
+		const { selected, Pin, SecondaryPin } = this.state;
 
 		return (
 			<div className={styles.container} onKeyDownCapture={this.onKeyDown}>
@@ -89,12 +93,38 @@ export default class TripleLayout extends Layout {
 					</div>
 				)}
 
+				{SecondaryPin && (
+					<div
+						className={classNames(
+							styles.rightColumn,
+							styles.column,
+							selected === "Right" ? styles.selected : styles.unselected
+						)}
+						onMouseDown={(e) => {
+							this.setState({ selected: "Right" });
+						}}
+					>
+						<IconButton
+							Icon={FaTimes}
+							tooltip={locales.get("close")}
+							onClick={this._closeSecondaryPin}
+							className={styles.closePinButton}
+						/>
+						<SecondaryPin
+							ref={(ref) => {
+								this.instances.SecondaryPin = ref;
+							}}
+						/>
+					</div>
+				)}
+
 				<div
 					className={classNames(
 						styles.rightColumn,
 						styles.column,
 						selected === "Right" ? styles.selected : styles.unselected
 					)}
+					style={{ display: SecondaryPin ? "none" : "block" }}
 					onMouseDown={(e) => {
 						this.setState({ selected: "Right" });
 					}}
@@ -155,6 +185,8 @@ export default class TripleLayout extends Layout {
 		this._subscriber = bus.subscribe({
 			pin: this._onPin,
 			unpin: this._closePin,
+			secondaryPin: this._onSecondaryPin,
+			unpinSecondary: this._closeSecondaryPin,
 			"do-not-pin-emulator": () => {},
 		});
 	}
@@ -176,7 +208,25 @@ export default class TripleLayout extends Layout {
 		this.instances.Pin = null;
 		this.setState({ Pin: null }, () => {
 			setTimeout(() => {
-				this.focus("Top");
+				this.focus(this.constructor.pinLocation);
+			});
+		});
+	};
+
+	_onSecondaryPin = (pin) => {
+		this.setState({ SecondaryPin: pin.Component }, () => {
+			this.instances.SecondaryPin.initialize(pin.args, pin.level, this);
+			setTimeout(() => {
+				this.focus(this.constructor.secondaryPinLocation);
+			});
+		});
+	};
+
+	_closeSecondaryPin = () => {
+		this.instances.SecondaryPin = null;
+		this.setState({ SecondaryPin: null }, () => {
+			setTimeout(() => {
+				this.focus(this.constructor.secondaryPinLocation);
 			});
 		});
 	};

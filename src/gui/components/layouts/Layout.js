@@ -8,10 +8,23 @@ export default class Layout extends PureComponent {
 		return this.constructor.pinLocation != null;
 	}
 
+	get supportsSecondaryPin() {
+		return this.constructor.secondaryPinLocation != null;
+	}
+
 	focus(instanceName) {
 		const pinLocation = this.constructor.pinLocation;
 		if (this.instances.Pin != null && instanceName === pinLocation) {
 			this.instances.Pin.focus();
+			return;
+		}
+
+		const secondaryPinLocation = this.constructor.secondaryPinLocation;
+		if (
+			this.instances.SecondaryPin != null &&
+			instanceName === secondaryPinLocation
+		) {
+			this.instances.SecondaryPin.focus();
 			return;
 		}
 

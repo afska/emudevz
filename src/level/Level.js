@@ -161,6 +161,14 @@ export default class Level {
 		}
 	}
 
+	launchDebugger() {
+		bus.emit("secondaryPin", {
+			Component: TV,
+			args: { type: "rom" },
+			level: this,
+		});
+	}
+
 	highlightMultiFileEditor() {
 		const instance = this.$layout.findInstance("MultiFile");
 		if (instance == null) return;

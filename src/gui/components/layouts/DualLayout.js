@@ -134,7 +134,7 @@ export default class DualLayout extends Layout {
 		this.instances.Pin = null;
 		this.setState({ Pin: null }, () => {
 			setTimeout(() => {
-				this.focus("Left");
+				this.focus(this.constructor.pinLocation);
 			});
 		});
 	};
