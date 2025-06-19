@@ -2,7 +2,7 @@
 
 . ./scripts/try.sh
 
-APP_NAME="emudevz-temp"
+APP_NAME="emudevz-supersecret-link-pls-do-not-share"
 
 USERNAME="$1"
 TOKEN="$2"
