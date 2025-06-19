@@ -37,7 +37,13 @@ export default class Debugger extends PureComponent {
 			ImGui.Cond.FirstUseEver
 		);
 
-		ImGui.Begin("Debug window");
+		ImGui.Begin(
+			"Debug window",
+			null,
+			ImGui.WindowFlags.NoMove |
+				ImGui.WindowFlags.NoResize |
+				ImGui.WindowFlags.NoCollapse
+		);
 		if (ImGui.Button("Save")) {
 			alert("Test");
 		}
