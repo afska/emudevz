@@ -217,7 +217,7 @@ export default class TripleLayout extends Layout {
 		this.setState({ [name]: pin.Component }, () => {
 			this.instances[name].initialize(pin.args, pin.level, this);
 			setTimeout(() => {
-				this.focus(this.constructor[pinLocation]);
+				this.focus(pinLocation);
 			});
 		});
 	};
@@ -226,7 +226,7 @@ export default class TripleLayout extends Layout {
 		this.instances[name] = null;
 		this.setState({ [name]: null }, () => {
 			setTimeout(() => {
-				this.focus(this.constructor[pinLocation]);
+				this.focus(pinLocation);
 			});
 		});
 	};
