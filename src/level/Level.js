@@ -1,6 +1,7 @@
 import _ from "lodash";
 import filesystem, { Drive } from "../filesystem";
 import components from "../gui/components";
+import Debugger from "../gui/components/Debugger";
 import TV from "../gui/components/TV";
 import layouts from "../gui/components/layouts";
 import locales from "../locales";
@@ -163,8 +164,8 @@ export default class Level {
 
 	launchDebugger() {
 		bus.emit("secondaryPin", {
-			Component: TV,
-			args: { type: "rom" },
+			Component: Debugger,
+			args: {},
 			level: this,
 		});
 	}
