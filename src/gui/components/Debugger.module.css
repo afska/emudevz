@@ -5,6 +5,7 @@
 	justify-content: center;
 	align-items: center;
 	height: 100%;
+	-webkit-user-drag: none;
 }
 
 .imgui {

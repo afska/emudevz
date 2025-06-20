@@ -20,7 +20,7 @@ export default class Debugger extends PureComponent {
 		this._memRegion = 0;
 		this._memData = new ArrayBuffer(MEM_TOTAL);
 		this._memoryEditor = new window.ImGui_Memory_Editor.MemoryEditor();
-		// this._memoryEditor.ReadOnly = true;
+		this._memoryEditor.ReadOnly = true; // (this prevents a crash!)
 		// this._memoryEditor.OptShowOptions = false;
 		this._memoryEditor.OptAddrDigitsCount = 4;
 		this._memoryEditor.ReadFn = (__, addr) => {

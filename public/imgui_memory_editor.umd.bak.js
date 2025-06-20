@@ -1,8 +1,5 @@
 // This is based on commit #a66f2a1b66e8e1da82453e1a080177884a92b892
 // https://github.com/flyover/imgui-js
-// [!] The code was modified to fix a crash with ImGui's ListClipper API
-// To review the changes, compare this file with `imgui_memory_editor.umd.bak.js`
-
 (function (global, factory) {
 	typeof exports === "object" && typeof module !== "undefined"
 		? factory(exports, require("imgui-js"))
@@ -212,372 +209,363 @@
 			// ImGuiListClipper clipper;
 			const clipper = new ImGui__namespace.ListClipper();
 			clipper.Begin(line_total_count, s.LineHeight);
+			clipper.Step();
+			const visible_start_addr = clipper.DisplayStart * this.Cols;
+			const visible_end_addr = clipper.DisplayEnd * this.Cols;
 			let data_next = false;
+			if (this.ReadOnly || this.DataEditingAddr >= mem_size)
+				this.DataEditingAddr = -1;
+			if (this.DataPreviewAddr >= mem_size) this.DataPreviewAddr = -1;
+			const preview_data_type_size = this.OptShowDataPreview
+				? this.DataTypeGetSize(this.PreviewDataType)
+				: 0;
 			let data_editing_addr_backup = this.DataEditingAddr;
 			let data_editing_addr_next = -1;
-			while (clipper.Step()) {
-				const visible_start_addr = clipper.DisplayStart * this.Cols;
-				const visible_end_addr = clipper.DisplayEnd * this.Cols;
-				if (this.ReadOnly || this.DataEditingAddr >= mem_size)
-					this.DataEditingAddr = -1;
-				if (this.DataPreviewAddr >= mem_size) this.DataPreviewAddr = -1;
-				const preview_data_type_size = this.OptShowDataPreview
-					? this.DataTypeGetSize(this.PreviewDataType)
-					: 0;
-				if (this.DataEditingAddr !== -1) {
-					// Move cursor but only apply on next frame so scrolling with be synchronized (because currently we can't change the scrolling while the window is being rendered)
-					if (
-						ImGui__namespace.IsKeyPressed(
-							ImGui__namespace.GetKeyIndex(ImGui__namespace.Key.UpArrow)
-						) &&
-						this.DataEditingAddr >= this.Cols
-					) {
-						data_editing_addr_next = this.DataEditingAddr - this.Cols;
-						this.DataEditingTakeFocus = true;
-					} else if (
-						ImGui__namespace.IsKeyPressed(
-							ImGui__namespace.GetKeyIndex(ImGui__namespace.Key.DownArrow)
-						) &&
-						this.DataEditingAddr < mem_size - this.Cols
-					) {
-						data_editing_addr_next = this.DataEditingAddr + this.Cols;
-						this.DataEditingTakeFocus = true;
-					} else if (
-						ImGui__namespace.IsKeyPressed(
-							ImGui__namespace.GetKeyIndex(ImGui__namespace.Key.LeftArrow)
-						) &&
-						this.DataEditingAddr > 0
-					) {
-						data_editing_addr_next = this.DataEditingAddr - 1;
-						this.DataEditingTakeFocus = true;
-					} else if (
-						ImGui__namespace.IsKeyPressed(
-							ImGui__namespace.GetKeyIndex(ImGui__namespace.Key.RightArrow)
-						) &&
-						this.DataEditingAddr < mem_size - 1
-					) {
-						data_editing_addr_next = this.DataEditingAddr + 1;
-						this.DataEditingTakeFocus = true;
-					}
-				}
+			if (this.DataEditingAddr !== -1) {
+				// Move cursor but only apply on next frame so scrolling with be synchronized (because currently we can't change the scrolling while the window is being rendered)
 				if (
-					data_editing_addr_next !== -1 &&
-					data_editing_addr_next / this.Cols !==
-						data_editing_addr_backup / this.Cols
+					ImGui__namespace.IsKeyPressed(
+						ImGui__namespace.GetKeyIndex(ImGui__namespace.Key.UpArrow)
+					) &&
+					this.DataEditingAddr >= this.Cols
 				) {
-					// Track cursor movements
-					const scroll_offset =
-						/*(int)*/ data_editing_addr_next / this.Cols -
-						/*(int)*/ data_editing_addr_backup / this.Cols;
-					const scroll_desired =
-						(scroll_offset < 0 &&
-							data_editing_addr_next < visible_start_addr + this.Cols * 2) ||
-						(scroll_offset > 0 &&
-							data_editing_addr_next > visible_end_addr - this.Cols * 2);
-					if (scroll_desired)
-						ImGui__namespace.SetScrollY(
-							ImGui__namespace.GetScrollY() + scroll_offset * s.LineHeight
-						);
+					data_editing_addr_next = this.DataEditingAddr - this.Cols;
+					this.DataEditingTakeFocus = true;
+				} else if (
+					ImGui__namespace.IsKeyPressed(
+						ImGui__namespace.GetKeyIndex(ImGui__namespace.Key.DownArrow)
+					) &&
+					this.DataEditingAddr < mem_size - this.Cols
+				) {
+					data_editing_addr_next = this.DataEditingAddr + this.Cols;
+					this.DataEditingTakeFocus = true;
+				} else if (
+					ImGui__namespace.IsKeyPressed(
+						ImGui__namespace.GetKeyIndex(ImGui__namespace.Key.LeftArrow)
+					) &&
+					this.DataEditingAddr > 0
+				) {
+					data_editing_addr_next = this.DataEditingAddr - 1;
+					this.DataEditingTakeFocus = true;
+				} else if (
+					ImGui__namespace.IsKeyPressed(
+						ImGui__namespace.GetKeyIndex(ImGui__namespace.Key.RightArrow)
+					) &&
+					this.DataEditingAddr < mem_size - 1
+				) {
+					data_editing_addr_next = this.DataEditingAddr + 1;
+					this.DataEditingTakeFocus = true;
 				}
-				// Draw vertical separator
-				const window_pos = ImGui__namespace.GetWindowPos();
-				if (this.OptShowAscii)
-					draw_list.AddLine(
-						new ImGui__namespace.Vec2(
-							window_pos.x + s.PosAsciiStart - s.GlyphWidth,
-							window_pos.y
-						),
-						new ImGui__namespace.Vec2(
-							window_pos.x + s.PosAsciiStart - s.GlyphWidth,
-							window_pos.y + 9999
-						),
-						ImGui__namespace.GetColorU32(ImGui__namespace.Col.Border)
+			}
+			if (
+				data_editing_addr_next !== -1 &&
+				data_editing_addr_next / this.Cols !==
+					data_editing_addr_backup / this.Cols
+			) {
+				// Track cursor movements
+				const scroll_offset =
+					/*(int)*/ data_editing_addr_next / this.Cols -
+					/*(int)*/ data_editing_addr_backup / this.Cols;
+				const scroll_desired =
+					(scroll_offset < 0 &&
+						data_editing_addr_next < visible_start_addr + this.Cols * 2) ||
+					(scroll_offset > 0 &&
+						data_editing_addr_next > visible_end_addr - this.Cols * 2);
+				if (scroll_desired)
+					ImGui__namespace.SetScrollY(
+						ImGui__namespace.GetScrollY() + scroll_offset * s.LineHeight
 					);
-				const color_text = ImGui__namespace.GetColorU32(
-					ImGui__namespace.Col.Text
+			}
+			// Draw vertical separator
+			const window_pos = ImGui__namespace.GetWindowPos();
+			if (this.OptShowAscii)
+				draw_list.AddLine(
+					new ImGui__namespace.Vec2(
+						window_pos.x + s.PosAsciiStart - s.GlyphWidth,
+						window_pos.y
+					),
+					new ImGui__namespace.Vec2(
+						window_pos.x + s.PosAsciiStart - s.GlyphWidth,
+						window_pos.y + 9999
+					),
+					ImGui__namespace.GetColorU32(ImGui__namespace.Col.Border)
 				);
-				const color_disabled = this.OptGreyOutZeroes
-					? ImGui__namespace.GetColorU32(ImGui__namespace.Col.TextDisabled)
-					: color_text;
-				// const char* format_address = this.OptUpperCaseHex ? "%0*" _PRISizeT "X: " : "%0*" _PRISizeT "x: ";
-				const format_address = (n, a) => {
-					let s = a.toString(16).padStart(n, "0");
-					if (this.OptUpperCaseHex) {
-						s = s.toUpperCase();
+			const color_text = ImGui__namespace.GetColorU32(
+				ImGui__namespace.Col.Text
+			);
+			const color_disabled = this.OptGreyOutZeroes
+				? ImGui__namespace.GetColorU32(ImGui__namespace.Col.TextDisabled)
+				: color_text;
+			// const char* format_address = this.OptUpperCaseHex ? "%0*" _PRISizeT "X: " : "%0*" _PRISizeT "x: ";
+			const format_address = (n, a) => {
+				let s = a.toString(16).padStart(n, "0");
+				if (this.OptUpperCaseHex) {
+					s = s.toUpperCase();
+				}
+				return s;
+			};
+			// const char* format_data = this.OptUpperCaseHex ? "%0*" _PRISizeT "X" : "%0*" _PRISizeT "x";
+			const format_data = (n, a) => {
+				let s = a.toString(16).padStart(n, "0");
+				if (this.OptUpperCaseHex) {
+					s = s.toUpperCase();
+				}
+				return s;
+			};
+			// const char* format_byte = this.OptUpperCaseHex ? "%02X" : "%02x";
+			const format_byte = (b) => {
+				let s = b.toString(16).padStart(2, "0");
+				if (this.OptUpperCaseHex) {
+					s = s.toUpperCase();
+				}
+				return s;
+			};
+			// const char* format_byte_space = this.OptUpperCaseHex ? "%02X " : "%02x ";
+			const format_byte_space = (b) => {
+				return `${format_byte(b)} `;
+			};
+			for (
+				let /*int*/ line_i = clipper.DisplayStart;
+				line_i < clipper.DisplayEnd;
+				line_i++ // display only visible lines
+			) {
+				let addr = line_i * this.Cols;
+				// ImGui.Text(format_address, s.AddrDigitsCount, base_display_addr + addr);
+				ImGui__namespace.Text(
+					format_address(s.AddrDigitsCount, base_display_addr + addr)
+				);
+				// Draw Hexadecimal
+				for (let /*int*/ n = 0; n < this.Cols && addr < mem_size; n++, addr++) {
+					let byte_pos_x = s.PosHexStart + s.HexCellWidth * n;
+					if (this.OptMidColsCount > 0)
+						byte_pos_x +=
+							/*(float)*/ (n / this.OptMidColsCount) * s.SpacingBetweenMidCols;
+					ImGui__namespace.SameLine(byte_pos_x);
+					// Draw highlight
+					const is_highlight_from_user_range =
+						addr >= this.HighlightMin && addr < this.HighlightMax;
+					const is_highlight_from_user_func =
+						this.HighlightFn !== null && this.HighlightFn(mem_data, addr);
+					const is_highlight_from_preview =
+						addr >= this.DataPreviewAddr &&
+						addr < this.DataPreviewAddr + preview_data_type_size;
+					if (
+						is_highlight_from_user_range ||
+						is_highlight_from_user_func ||
+						is_highlight_from_preview
+					) {
+						const pos = ImGui__namespace.GetCursorScreenPos();
+						let highlight_width = s.GlyphWidth * 2;
+						const is_next_byte_highlighted =
+							addr + 1 < mem_size &&
+							((this.HighlightMax !== -1 && addr + 1 < this.HighlightMax) ||
+								(this.HighlightFn !== null &&
+									this.HighlightFn(mem_data, addr + 1)));
+						if (is_next_byte_highlighted || n + 1 === this.Cols) {
+							highlight_width = s.HexCellWidth;
+							if (
+								this.OptMidColsCount > 0 &&
+								n > 0 &&
+								n + 1 < this.Cols &&
+								(n + 1) % this.OptMidColsCount === 0
+							)
+								highlight_width += s.SpacingBetweenMidCols;
+						}
+						draw_list.AddRectFilled(
+							pos,
+							new ImGui__namespace.Vec2(
+								pos.x + highlight_width,
+								pos.y + s.LineHeight
+							),
+							this.HighlightColor
+						);
 					}
-					return s;
-				};
-				// const char* format_data = this.OptUpperCaseHex ? "%0*" _PRISizeT "X" : "%0*" _PRISizeT "x";
-				const format_data = (n, a) => {
-					let s = a.toString(16).padStart(n, "0");
-					if (this.OptUpperCaseHex) {
-						s = s.toUpperCase();
+					if (this.DataEditingAddr === addr) {
+						// Display text input on current byte
+						let data_write = false;
+						ImGui__namespace.PushID(/*(void*)*/ addr);
+						if (this.DataEditingTakeFocus) {
+							ImGui__namespace.SetKeyboardFocusHere();
+							ImGui__namespace.CaptureKeyboardFromApp(true);
+							// sprintf(AddrInputBuf, format_data, s.AddrDigitsCount, base_display_addr + addr);
+							this.AddrInputBuf.buffer = format_data(
+								s.AddrDigitsCount,
+								base_display_addr + addr
+							);
+							// sprintf(DataInputBuf, format_byte, ReadFn ? ReadFn(mem_data, addr) : mem_data[addr]);
+							this.DataInputBuf.buffer = format_byte(
+								this.ReadFn
+									? this.ReadFn(mem_data, addr)
+									: new Uint8Array(mem_data)[addr]
+							);
+						}
+						ImGui__namespace.PushItemWidth(s.GlyphWidth * 2);
+						class UserData {
+							constructor() {
+								this.CurrentBufOverwrite = new ImGui__namespace.StringBuffer(3); // Input
+								this.CursorPos = 0; // Output
+							}
+							// FIXME: We should have a way to retrieve the text edit cursor position more easily in the API, this is rather tedious. This is such a ugly mess we may be better off not using InputText() at all here.
+							static Callback(data) {
+								const user_data = data.UserData;
+								ImGui__namespace.ASSERT(user_data !== null);
+								if (!data.HasSelection()) user_data.CursorPos = data.CursorPos;
+								if (
+									data.SelectionStart === 0 &&
+									data.SelectionEnd === data.BufTextLen
+								) {
+									// When not editing a byte, always rewrite its content (this is a bit tricky, since InputText technically "owns" the master copy of the buffer we edit it in there)
+									data.DeleteChars(0, data.BufTextLen);
+									data.InsertChars(0, user_data.CurrentBufOverwrite.buffer);
+									data.SelectionStart = 0;
+									data.SelectionEnd = 2;
+									data.CursorPos = 0;
+								}
+								return 0;
+							}
+						}
+						const user_data = new UserData();
+						user_data.CursorPos = -1;
+						// sprintf(user_data.CurrentBufOverwrite, format_byte, ReadFn ? ReadFn(mem_data, addr) : mem_data[addr]);
+						user_data.CurrentBufOverwrite.buffer = format_byte(
+							this.ReadFn
+								? this.ReadFn(mem_data, addr)
+								: new Uint8Array(mem_data)[addr]
+						);
+						const flags =
+							ImGui__namespace.InputTextFlags.CharsHexadecimal |
+							ImGui__namespace.InputTextFlags.EnterReturnsTrue |
+							ImGui__namespace.InputTextFlags.AutoSelectAll |
+							ImGui__namespace.InputTextFlags.NoHorizontalScroll |
+							ImGui__namespace.InputTextFlags.AlwaysOverwrite |
+							ImGui__namespace.InputTextFlags.CallbackAlways;
+						if (
+							ImGui__namespace.InputText(
+								"##data",
+								this.DataInputBuf,
+								32,
+								flags,
+								UserData.Callback,
+								user_data
+							)
+						)
+							data_write = data_next = true;
+						else if (
+							!this.DataEditingTakeFocus &&
+							!ImGui__namespace.IsItemActive()
+						)
+							this.DataEditingAddr = data_editing_addr_next = -1;
+						this.DataEditingTakeFocus = false;
+						ImGui__namespace.PopItemWidth();
+						if (user_data.CursorPos >= 2) data_write = data_next = true;
+						if (data_editing_addr_next !== -1) data_write = data_next = false;
+						// unsigned int data_input_value = 0;
+						let data_input_value = 0;
+						// if (data_write && sscanf(DataInputBuf, "%X", &data_input_value) === 1)
+						if (
+							data_write &&
+							Number.isInteger(
+								(data_input_value = parseInt(this.DataInputBuf.buffer, 16))
+							)
+						) {
+							if (this.WriteFn)
+								this.WriteFn(mem_data, addr, /*(ImU8)*/ data_input_value);
+							// mem_data[addr] = (ImU8)data_input_value;
+							else new Uint8Array(mem_data)[addr] = data_input_value;
+						}
+						ImGui__namespace.PopID();
+					} else {
+						// NB: The trailing space is not visible but ensure there's no gap that the mouse cannot click on.
+						// ImU8 b = ReadFn ? ReadFn(mem_data, addr) : mem_data[addr];
+						const b = this.ReadFn
+							? this.ReadFn(mem_data, addr)
+							: new Uint8Array(mem_data)[addr];
+						if (this.OptShowHexII) {
+							if (b >= 32 && b < 128)
+								// ImGui.Text(".%c ", b);
+								ImGui__namespace.Text(`.${String.fromCharCode(b)} `);
+							else if (b === 0xff && this.OptGreyOutZeroes)
+								ImGui__namespace.TextDisabled("## ");
+							else if (b === 0x00) ImGui__namespace.Text("   ");
+							else ImGui__namespace.Text(format_byte_space(b));
+						} else {
+							if (b === 0 && this.OptGreyOutZeroes)
+								ImGui__namespace.TextDisabled("00 ");
+							else ImGui__namespace.Text(format_byte_space(b));
+						}
+						if (
+							!this.ReadOnly &&
+							ImGui__namespace.IsItemHovered() &&
+							ImGui__namespace.IsMouseClicked(0)
+						) {
+							this.DataEditingTakeFocus = true;
+							data_editing_addr_next = addr;
+						}
 					}
-					return s;
-				};
-				// const char* format_byte = this.OptUpperCaseHex ? "%02X" : "%02x";
-				const format_byte = (b) => {
-					let s = b.toString(16).padStart(2, "0");
-					if (this.OptUpperCaseHex) {
-						s = s.toUpperCase();
+				}
+				if (this.OptShowAscii) {
+					// Draw ASCII values
+					ImGui__namespace.SameLine(s.PosAsciiStart);
+					const pos = ImGui__namespace.GetCursorScreenPos();
+					addr = line_i * this.Cols;
+					ImGui__namespace.PushID(line_i);
+					if (
+						ImGui__namespace.InvisibleButton(
+							"ascii",
+							new ImGui__namespace.Vec2(
+								s.PosAsciiEnd - s.PosAsciiStart,
+								s.LineHeight
+							)
+						)
+					) {
+						this.DataEditingAddr = this.DataPreviewAddr =
+							addr +
+							(ImGui__namespace.GetIO().MousePos.x - pos.x) / s.GlyphWidth;
+						this.DataEditingTakeFocus = true;
 					}
-					return s;
-				};
-				// const char* format_byte_space = this.OptUpperCaseHex ? "%02X " : "%02x ";
-				const format_byte_space = (b) => {
-					return `${format_byte(b)} `;
-				};
-				for (
-					let /*int*/ line_i = clipper.DisplayStart;
-					line_i < clipper.DisplayEnd;
-					line_i++ // display only visible lines
-				) {
-					let addr = line_i * this.Cols;
-					// ImGui.Text(format_address, s.AddrDigitsCount, base_display_addr + addr);
-					ImGui__namespace.Text(
-						format_address(s.AddrDigitsCount, base_display_addr + addr)
-					);
-					// Draw Hexadecimal
+					ImGui__namespace.PopID();
 					for (
 						let /*int*/ n = 0;
 						n < this.Cols && addr < mem_size;
 						n++, addr++
 					) {
-						let byte_pos_x = s.PosHexStart + s.HexCellWidth * n;
-						if (this.OptMidColsCount > 0)
-							byte_pos_x +=
-								/*(float)*/ (n / this.OptMidColsCount) *
-								s.SpacingBetweenMidCols;
-						ImGui__namespace.SameLine(byte_pos_x);
-						// Draw highlight
-						const is_highlight_from_user_range =
-							addr >= this.HighlightMin && addr < this.HighlightMax;
-						const is_highlight_from_user_func =
-							this.HighlightFn !== null && this.HighlightFn(mem_data, addr);
-						const is_highlight_from_preview =
-							addr >= this.DataPreviewAddr &&
-							addr < this.DataPreviewAddr + preview_data_type_size;
-						if (
-							is_highlight_from_user_range ||
-							is_highlight_from_user_func ||
-							is_highlight_from_preview
-						) {
-							const pos = ImGui__namespace.GetCursorScreenPos();
-							let highlight_width = s.GlyphWidth * 2;
-							const is_next_byte_highlighted =
-								addr + 1 < mem_size &&
-								((this.HighlightMax !== -1 && addr + 1 < this.HighlightMax) ||
-									(this.HighlightFn !== null &&
-										this.HighlightFn(mem_data, addr + 1)));
-							if (is_next_byte_highlighted || n + 1 === this.Cols) {
-								highlight_width = s.HexCellWidth;
-								if (
-									this.OptMidColsCount > 0 &&
-									n > 0 &&
-									n + 1 < this.Cols &&
-									(n + 1) % this.OptMidColsCount === 0
-								)
-									highlight_width += s.SpacingBetweenMidCols;
-							}
+						if (addr === this.DataEditingAddr) {
 							draw_list.AddRectFilled(
 								pos,
 								new ImGui__namespace.Vec2(
-									pos.x + highlight_width,
+									pos.x + s.GlyphWidth,
 									pos.y + s.LineHeight
 								),
-								this.HighlightColor
+								ImGui__namespace.GetColorU32(ImGui__namespace.Col.FrameBg)
 							);
-						}
-						if (this.DataEditingAddr === addr) {
-							// Display text input on current byte
-							let data_write = false;
-							ImGui__namespace.PushID(/*(void*)*/ addr);
-							if (this.DataEditingTakeFocus) {
-								ImGui__namespace.SetKeyboardFocusHere();
-								ImGui__namespace.CaptureKeyboardFromApp(true);
-								// sprintf(AddrInputBuf, format_data, s.AddrDigitsCount, base_display_addr + addr);
-								this.AddrInputBuf.buffer = format_data(
-									s.AddrDigitsCount,
-									base_display_addr + addr
-								);
-								// sprintf(DataInputBuf, format_byte, ReadFn ? ReadFn(mem_data, addr) : mem_data[addr]);
-								this.DataInputBuf.buffer = format_byte(
-									this.ReadFn
-										? this.ReadFn(mem_data, addr)
-										: new Uint8Array(mem_data)[addr]
-								);
-							}
-							ImGui__namespace.PushItemWidth(s.GlyphWidth * 2);
-							class UserData {
-								constructor() {
-									this.CurrentBufOverwrite = new ImGui__namespace.StringBuffer(
-										3
-									); // Input
-									this.CursorPos = 0; // Output
-								}
-								// FIXME: We should have a way to retrieve the text edit cursor position more easily in the API, this is rather tedious. This is such a ugly mess we may be better off not using InputText() at all here.
-								static Callback(data) {
-									const user_data = data.UserData;
-									ImGui__namespace.ASSERT(user_data !== null);
-									if (!data.HasSelection())
-										user_data.CursorPos = data.CursorPos;
-									if (
-										data.SelectionStart === 0 &&
-										data.SelectionEnd === data.BufTextLen
-									) {
-										// When not editing a byte, always rewrite its content (this is a bit tricky, since InputText technically "owns" the master copy of the buffer we edit it in there)
-										data.DeleteChars(0, data.BufTextLen);
-										data.InsertChars(0, user_data.CurrentBufOverwrite.buffer);
-										data.SelectionStart = 0;
-										data.SelectionEnd = 2;
-										data.CursorPos = 0;
-									}
-									return 0;
-								}
-							}
-							const user_data = new UserData();
-							user_data.CursorPos = -1;
-							// sprintf(user_data.CurrentBufOverwrite, format_byte, ReadFn ? ReadFn(mem_data, addr) : mem_data[addr]);
-							user_data.CurrentBufOverwrite.buffer = format_byte(
-								this.ReadFn
-									? this.ReadFn(mem_data, addr)
-									: new Uint8Array(mem_data)[addr]
-							);
-							const flags =
-								ImGui__namespace.InputTextFlags.CharsHexadecimal |
-								ImGui__namespace.InputTextFlags.EnterReturnsTrue |
-								ImGui__namespace.InputTextFlags.AutoSelectAll |
-								ImGui__namespace.InputTextFlags.NoHorizontalScroll |
-								ImGui__namespace.InputTextFlags.AlwaysOverwrite |
-								ImGui__namespace.InputTextFlags.CallbackAlways;
-							if (
-								ImGui__namespace.InputText(
-									"##data",
-									this.DataInputBuf,
-									32,
-									flags,
-									UserData.Callback,
-									user_data
-								)
-							)
-								data_write = data_next = true;
-							else if (
-								!this.DataEditingTakeFocus &&
-								!ImGui__namespace.IsItemActive()
-							)
-								this.DataEditingAddr = data_editing_addr_next = -1;
-							this.DataEditingTakeFocus = false;
-							ImGui__namespace.PopItemWidth();
-							if (user_data.CursorPos >= 2) data_write = data_next = true;
-							if (data_editing_addr_next !== -1) data_write = data_next = false;
-							// unsigned int data_input_value = 0;
-							let data_input_value = 0;
-							// if (data_write && sscanf(DataInputBuf, "%X", &data_input_value) === 1)
-							if (
-								data_write &&
-								Number.isInteger(
-									(data_input_value = parseInt(this.DataInputBuf.buffer, 16))
-								)
-							) {
-								if (this.WriteFn)
-									this.WriteFn(mem_data, addr, /*(ImU8)*/ data_input_value);
-								// mem_data[addr] = (ImU8)data_input_value;
-								else new Uint8Array(mem_data)[addr] = data_input_value;
-							}
-							ImGui__namespace.PopID();
-						} else {
-							// NB: The trailing space is not visible but ensure there's no gap that the mouse cannot click on.
-							// ImU8 b = ReadFn ? ReadFn(mem_data, addr) : mem_data[addr];
-							const b = this.ReadFn
-								? this.ReadFn(mem_data, addr)
-								: new Uint8Array(mem_data)[addr];
-							if (this.OptShowHexII) {
-								if (b >= 32 && b < 128)
-									// ImGui.Text(".%c ", b);
-									ImGui__namespace.Text(`.${String.fromCharCode(b)} `);
-								else if (b === 0xff && this.OptGreyOutZeroes)
-									ImGui__namespace.TextDisabled("## ");
-								else if (b === 0x00) ImGui__namespace.Text("   ");
-								else ImGui__namespace.Text(format_byte_space(b));
-							} else {
-								if (b === 0 && this.OptGreyOutZeroes)
-									ImGui__namespace.TextDisabled("00 ");
-								else ImGui__namespace.Text(format_byte_space(b));
-							}
-							if (
-								!this.ReadOnly &&
-								ImGui__namespace.IsItemHovered() &&
-								ImGui__namespace.IsMouseClicked(0)
-							) {
-								this.DataEditingTakeFocus = true;
-								data_editing_addr_next = addr;
-							}
-						}
-					}
-					if (this.OptShowAscii) {
-						// Draw ASCII values
-						ImGui__namespace.SameLine(s.PosAsciiStart);
-						const pos = ImGui__namespace.GetCursorScreenPos();
-						addr = line_i * this.Cols;
-						ImGui__namespace.PushID(line_i);
-						if (
-							ImGui__namespace.InvisibleButton(
-								"ascii",
-								new ImGui__namespace.Vec2(
-									s.PosAsciiEnd - s.PosAsciiStart,
-									s.LineHeight
-								)
-							)
-						) {
-							this.DataEditingAddr = this.DataPreviewAddr =
-								addr +
-								(ImGui__namespace.GetIO().MousePos.x - pos.x) / s.GlyphWidth;
-							this.DataEditingTakeFocus = true;
-						}
-						ImGui__namespace.PopID();
-						for (
-							let /*int*/ n = 0;
-							n < this.Cols && addr < mem_size;
-							n++, addr++
-						) {
-							if (addr === this.DataEditingAddr) {
-								draw_list.AddRectFilled(
-									pos,
-									new ImGui__namespace.Vec2(
-										pos.x + s.GlyphWidth,
-										pos.y + s.LineHeight
-									),
-									ImGui__namespace.GetColorU32(ImGui__namespace.Col.FrameBg)
-								);
-								draw_list.AddRectFilled(
-									pos,
-									new ImGui__namespace.Vec2(
-										pos.x + s.GlyphWidth,
-										pos.y + s.LineHeight
-									),
-									ImGui__namespace.GetColorU32(
-										ImGui__namespace.Col.TextSelectedBg
-									)
-								);
-							}
-							// unsigned char c = ReadFn ? ReadFn(mem_data, addr) : mem_data[addr];
-							const c = this.ReadFn
-								? this.ReadFn(mem_data, addr)
-								: new Uint8Array(mem_data)[addr];
-							// char display_c = (c < 32 || c >= 128) ? '.' : c;
-							const display_c =
-								c < 32 || c >= 128 ? "." : String.fromCharCode(c);
-							// draw_list.AddText(pos, (display_c === c) ? color_text : color_disabled, &display_c, &display_c + 1);
-							draw_list.AddText(
+							draw_list.AddRectFilled(
 								pos,
-								display_c === "." ? color_disabled : color_text,
-								display_c
+								new ImGui__namespace.Vec2(
+									pos.x + s.GlyphWidth,
+									pos.y + s.LineHeight
+								),
+								ImGui__namespace.GetColorU32(
+									ImGui__namespace.Col.TextSelectedBg
+								)
 							);
-							pos.x += s.GlyphWidth;
 						}
+						// unsigned char c = ReadFn ? ReadFn(mem_data, addr) : mem_data[addr];
+						const c = this.ReadFn
+							? this.ReadFn(mem_data, addr)
+							: new Uint8Array(mem_data)[addr];
+						// char display_c = (c < 32 || c >= 128) ? '.' : c;
+						const display_c = c < 32 || c >= 128 ? "." : String.fromCharCode(c);
+						// draw_list.AddText(pos, (display_c === c) ? color_text : color_disabled, &display_c, &display_c + 1);
+						draw_list.AddText(
+							pos,
+							display_c === "." ? color_disabled : color_text,
+							display_c
+						);
+						pos.x += s.GlyphWidth;
 					}
 				}
 			}
+			ImGui__namespace.ASSERT(clipper.Step() === false);
 			clipper.End();
 			ImGui__namespace.PopStyleVar(2);
 			ImGui__namespace.EndChild();
