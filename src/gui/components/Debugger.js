@@ -4,6 +4,9 @@ import styles from "./Debugger.module.css";
 const ImGui = window.ImGui;
 const ImGui_Impl = window.ImGui_Impl;
 
+const MEM_START = 0x0000;
+const MEM_TOTAL = 0xffff + 1;
+
 export default class Debugger extends PureComponent {
 	static get id() {
 		return "Debugger";
@@ -14,6 +17,14 @@ export default class Debugger extends PureComponent {
 
 		this._input = "";
 		this._float = 0.4;
+		this._memData = new ArrayBuffer(MEM_TOTAL);
+		this._memoryEditor = new window.ImGui_Memory_Editor.MemoryEditor();
+		this._memoryEditor.ReadOnly = true;
+		this._memoryEditor.OptShowOptions = false;
+		this._memoryEditor.OptAddrDigitsCount = 4;
+		this._memoryEditor.ReadFn = (__, addr) => {
+			return addr % 256;
+		};
 	}
 
 	render() {
@@ -31,19 +42,59 @@ export default class Debugger extends PureComponent {
 	focus = () => {};
 
 	_draw = () => {
-		ImGui.SetNextWindowPos(new ImGui.ImVec2(20, 20), ImGui.Cond.FirstUseEver);
-		ImGui.SetNextWindowSize(
-			new ImGui.ImVec2(294, 140),
+		const margin = 10;
+		ImGui.SetNextWindowPos(
+			new ImGui.ImVec2(margin, margin),
 			ImGui.Cond.FirstUseEver
+		);
+		const io = ImGui.GetIO();
+		ImGui.SetNextWindowSize(
+			new ImGui.ImVec2(
+				io.DisplaySize.x - margin * 2,
+				io.DisplaySize.y - margin * 2
+			)
 		);
 
 		ImGui.Begin(
-			"Debug window",
+			"Debugger",
 			null,
 			ImGui.WindowFlags.NoMove |
 				ImGui.WindowFlags.NoResize |
 				ImGui.WindowFlags.NoCollapse
 		);
+
+		if (ImGui.BeginTabBar("Tabs")) {
+			if (ImGui.BeginTabItem("CPU")) {
+				this._memoryEditor.DrawContents(
+					this._memData,
+					MEM_TOTAL - MEM_START,
+					MEM_START
+				);
+
+				ImGui.EndTabItem();
+			}
+			if (ImGui.BeginTabItem("PPU")) {
+				ImGui.Text("hello PPU");
+				ImGui.EndTabItem();
+			}
+			if (ImGui.BeginTabItem("APU")) {
+				ImGui.Text("hello APU");
+				ImGui.EndTabItem();
+			}
+			if (ImGui.BeginTabItem("Cartridge")) {
+				ImGui.Text("hello Cartridge");
+				ImGui.EndTabItem();
+			}
+			if (ImGui.BeginTabItem("Controller")) {
+				ImGui.Text("hello Controller");
+				ImGui.EndTabItem();
+			}
+			if (ImGui.BeginTabItem("Mapper")) {
+				ImGui.Text("hello Mapper");
+				ImGui.EndTabItem();
+			}
+		}
+
 		if (ImGui.Button("Save")) {
 			alert("Test");
 		}
