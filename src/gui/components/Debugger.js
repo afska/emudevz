@@ -22,7 +22,7 @@ export default class Debugger extends PureComponent {
 				<canvas
 					className={styles.imgui}
 					ref={this._onCanvas}
-					tabindex="1"
+					tabIndex="1"
 				></canvas>
 			</div>
 		);
