@@ -17,10 +17,11 @@ export default class Debugger extends PureComponent {
 
 		this._input = "";
 		this._float = 0.4;
+		this._memRegion = 0;
 		this._memData = new ArrayBuffer(MEM_TOTAL);
 		this._memoryEditor = new window.ImGui_Memory_Editor.MemoryEditor();
-		this._memoryEditor.ReadOnly = true;
-		this._memoryEditor.OptShowOptions = false;
+		// this._memoryEditor.ReadOnly = true;
+		// this._memoryEditor.OptShowOptions = false;
 		this._memoryEditor.OptAddrDigitsCount = 4;
 		this._memoryEditor.ReadFn = (__, addr) => {
 			return addr % 256;
@@ -33,7 +34,7 @@ export default class Debugger extends PureComponent {
 				<canvas
 					className={styles.imgui}
 					ref={this._onCanvas}
-					tabIndex="1"
+					tabIndex="-1"
 				></canvas>
 			</div>
 		);
@@ -64,13 +65,27 @@ export default class Debugger extends PureComponent {
 		);
 
 		if (ImGui.BeginTabBar("Tabs")) {
-			if (ImGui.BeginTabItem("CPU")) {
+			if (ImGui.BeginTabItem("Memory")) {
+				ImGui.Combo(
+					"Region",
+					(value = this._memRegion) => (this._memRegion = value),
+					[
+						"All",
+						"CPU $0000-$2000 // WRAM",
+						"CPU $0800-$1FFF // WRAM Mirror",
+						"CPU $2000-$2007 // PPU Registers",
+					]
+				);
+
 				this._memoryEditor.DrawContents(
 					this._memData,
 					MEM_TOTAL - MEM_START,
 					MEM_START
 				);
-
+				ImGui.EndTabItem();
+			}
+			if (ImGui.BeginTabItem("CPU")) {
+				ImGui.Text("hello CPU");
 				ImGui.EndTabItem();
 			}
 			if (ImGui.BeginTabItem("PPU")) {
@@ -93,19 +108,23 @@ export default class Debugger extends PureComponent {
 				ImGui.Text("hello Mapper");
 				ImGui.EndTabItem();
 			}
+			if (ImGui.BeginTabItem("Logs")) {
+				ImGui.Text("hello Mapper");
+				ImGui.EndTabItem();
+			}
 		}
 
-		if (ImGui.Button("Save")) {
-			alert("Test");
-		}
+		// if (ImGui.Button("Save")) {
+		// 	alert("Test");
+		// }
 
-		ImGui.InputText("field 1", (v = this._input) => (this._input = v), 256);
-		ImGui.SliderFloat(
-			"field 2",
-			(v = this._float) => (this._float = v),
-			0.0,
-			1.0
-		);
+		// ImGui.InputText("field 1", (v = this._input) => (this._input = v), 256);
+		// ImGui.SliderFloat(
+		// 	"field 2",
+		// 	(v = this._float) => (this._float = v),
+		// 	0.0,
+		// 	1.0
+		// );
 
 		ImGui.End();
 	};
