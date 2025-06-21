@@ -85,70 +85,80 @@ export default class Debugger extends PureComponent {
 				ImGui.EndTabItem();
 			}
 			if (ImGui.BeginTabItem("CPU")) {
-				(() => {
+				// compute widths of table1 and table2 so we can center them with a gap
+				const style = ImGui.GetStyle();
+				const headers1 = ["[A]", "[X]", "[Y]", "[SP]", "[PC]"];
+				const headers2 = ["N", "V", "-", "-", "D", "I", "Z", "C"];
+				let table1W = 0,
+					table2W = 0;
+
+				for (let h of headers1)
+					table1W += ImGui.CalcTextSize(h).x + style.CellPadding.x * 2;
+				table1W +=
+					style.ItemInnerSpacing.x * (headers1.length - 1) +
+					style.FrameBorderSize * 2;
+				for (let h of headers2)
+					table2W += ImGui.CalcTextSize(h).x + style.CellPadding.x * 2;
+				table2W +=
+					style.ItemInnerSpacing.x * (headers2.length - 1) +
+					style.FrameBorderSize * 2;
+
+				const availW = ImGui.GetContentRegionAvail().x;
+				const gap = style.ItemSpacing.x;
+				const offset = (availW - table1W - table2W - gap) * 0.5;
+				ImGui.SetCursorPosX(ImGui.GetCursorPosX() + offset);
+
+				{
 					const flags =
 						ImGui.TableFlags.SizingFixedFit |
 						ImGui.TableFlags.RowBg |
 						ImGui.TableFlags.Borders |
 						ImGui.TableFlags.NoHostExtendX;
-
-					if (ImGui.BeginTable("table1", 5, flags)) {
-						ImGui.TableSetupColumn("[A]", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("[X]", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("[Y]", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("[SP]", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("[PC]", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableHeadersRow();
-
-						ImGui.TableNextRow();
-						for (let column = 0; column < 5; column++) {
-							ImGui.TableSetColumnIndex(column);
-							ImGui.Text(column === 4 ? "$8000" : "$00");
+					if (ImGui.BeginTable("table1", headers1.length, flags)) {
+						for (let h of headers1) {
+							ImGui.TableSetupColumn(h, ImGui.TableColumnFlags.WidthFixed);
 						}
-
+						ImGui.TableHeadersRow();
+						ImGui.TableNextRow();
+						for (let i = 0; i < headers1.length; i++) {
+							ImGui.TableSetColumnIndex(i);
+							ImGui.Text(i === 4 ? "$8000" : "$00");
+						}
 						ImGui.EndTable();
 					}
-				})();
+				}
 
-				ImGui.SameLine();
+				ImGui.SameLine(undefined, gap);
 
-				(() => {
+				{
 					const flags =
 						ImGui.TableFlags.SizingFixedFit |
 						ImGui.TableFlags.RowBg |
 						ImGui.TableFlags.Borders |
 						ImGui.TableFlags.NoHostExtendX;
-
-					if (ImGui.BeginTable("table2", 8, flags)) {
-						ImGui.TableSetupColumn("N", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("V", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("-", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("-", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("D", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("I", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("Z", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableSetupColumn("C", ImGui.TableColumnFlags.WidthFixed);
-						ImGui.TableHeadersRow();
-
-						ImGui.TableNextRow();
-						for (let column = 0; column < 8; column++) {
-							ImGui.TableSetColumnIndex(column);
-							ImGui.Text(column === 3 ? "1" : "0");
+					if (ImGui.BeginTable("table2", headers2.length, flags)) {
+						for (let h of headers2) {
+							ImGui.TableSetupColumn(h, ImGui.TableColumnFlags.WidthFixed);
 						}
-
+						ImGui.TableHeadersRow();
+						ImGui.TableNextRow();
+						for (let i = 0; i < headers2.length; i++) {
+							ImGui.TableSetColumnIndex(i);
+							ImGui.Text(i === 3 ? "1" : "0");
+						}
 						ImGui.EndTable();
 					}
-				})();
+				}
 
-				(() => {
+				{
 					const flags =
 						ImGui.TableFlags.SizingFixedFit |
 						ImGui.TableFlags.RowBg |
 						ImGui.TableFlags.Borders |
 						ImGui.TableFlags.ScrollY |
 						ImGui.TableFlags.NoHostExtendX;
-
 					if (ImGui.BeginTable("table3", 4, flags)) {
+						ImGui.TableSetupScrollFreeze(0, 1);
 						ImGui.TableSetupColumn("[PC]", ImGui.TableColumnFlags.WidthFixed);
 						ImGui.TableSetupColumn(
 							"Binary",
@@ -166,25 +176,24 @@ export default class Debugger extends PureComponent {
 						);
 						ImGui.TableHeadersRow();
 
-						for (let i = 0; i < 32; i++) {
+						for (let row = 0; row < 32; row++) {
 							ImGui.TableNextRow();
-							for (let column = 0; column < 4; column++) {
-								ImGui.TableSetColumnIndex(column);
+							for (let col = 0; col < 4; col++) {
+								ImGui.TableSetColumnIndex(col);
 								ImGui.Text(
-									column === 0
+									col === 0
 										? "C000"
-										: column === 1
+										: col === 1
 										? "4C F5 C5"
-										: column === 2
+										: col === 2
 										? "JMP $C5F5"
 										: "A:00 X:00 Y:00 P:24 SP:FD CYC:7"
 								);
 							}
 						}
-
 						ImGui.EndTable();
 					}
-				})();
+				}
 
 				ImGui.EndTabItem();
 			}
