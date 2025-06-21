@@ -200,6 +200,39 @@ export default class Debugger extends PureComponent {
 
 			if (ImGui.BeginTabItem("PPU")) {
 				ImGui.Text("hello PPU");
+
+				const gl = ImGui_Impl.gl;
+				const pixels = new Uint8Array(256 * 240 * 4);
+				for (let y = 0; y < 240; y++) {
+					for (let x = 0; x < 256; x++) {
+						let i = (y * 256 + x) * 4;
+						pixels[i + 0] = x; // R = x position
+						pixels[i + 1] = y; // G = y position
+						pixels[i + 2] = 128; // B = constant
+						pixels[i + 2] = Math.floor(Math.random() * 128); // B = constant
+						pixels[i + 3] = 255; // A = opaque
+					}
+				}
+				gl.bindTexture(gl.TEXTURE_2D, this._fbTex0);
+				gl.texSubImage2D(
+					gl.TEXTURE_2D,
+					0,
+					0,
+					0,
+					256,
+					240,
+					gl.RGBA,
+					gl.UNSIGNED_BYTE,
+					pixels
+				);
+				const drawList = ImGui.GetWindowDrawList();
+				const p = ImGui.GetCursorScreenPos();
+				drawList.AddImage(
+					this._fbTex0,
+					p,
+					new ImGui.Vec2(p.x + 256, p.y + 240)
+				);
+
 				ImGui.EndTabItem();
 			}
 			if (ImGui.BeginTabItem("APU")) {
@@ -222,6 +255,10 @@ export default class Debugger extends PureComponent {
 						new ImGui.Vec2(0, 80)
 					);
 				}
+
+				ImGui.ProgressBar(0.8, new ImGui.Vec2(0, 0));
+				ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
+				ImGui.Text("Progress Bar");
 
 				ImGui.EndTabItem();
 			}
@@ -276,6 +313,25 @@ export default class Debugger extends PureComponent {
 
 			ImGui.CreateContext();
 			ImGui_Impl.Init(canvas);
+
+			// Buffer
+			const gl = ImGui_Impl.gl;
+			self._fbTex0 = gl.createTexture();
+			gl.bindTexture(gl.TEXTURE_2D, self._fbTex0);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+			// allocate empty RGBA buffer
+			gl.texImage2D(
+				gl.TEXTURE_2D,
+				0,
+				gl.RGBA,
+				256,
+				240,
+				0,
+				gl.RGBA,
+				gl.UNSIGNED_BYTE,
+				null
+			);
 
 			// ImGui.StyleColorsDark(); // DISABLED
 			ImGui.StyleColorsClassic();
