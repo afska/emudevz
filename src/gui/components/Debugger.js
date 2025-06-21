@@ -204,6 +204,25 @@ export default class Debugger extends PureComponent {
 			}
 			if (ImGui.BeginTabItem("APU")) {
 				ImGui.Text("hello APU");
+
+				{
+					const N = 100;
+					// build a normal Array of samples
+					const data = Array.from({ length: N }, (_, i) => Math.sin(i * 0.1));
+
+					// draw it
+					ImGui.PlotLines(
+						"Wave",
+						data, // JS Array
+						data.length, // count
+						0, // offset
+						"", // overlay
+						-1, // scale_min
+						+1, // scale_max
+						new ImGui.Vec2(0, 80)
+					);
+				}
+
 				ImGui.EndTabItem();
 			}
 			if (ImGui.BeginTabItem("Cartridge")) {
