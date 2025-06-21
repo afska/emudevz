@@ -66,16 +66,21 @@ export default class Debugger extends PureComponent {
 
 		if (ImGui.BeginTabBar("Tabs")) {
 			if (ImGui.BeginTabItem("Memory")) {
-				ImGui.Combo(
-					"Region",
-					(value = this._memRegion) => (this._memRegion = value),
-					[
-						"All",
-						"CPU $0000-$2000 // WRAM",
-						"CPU $0800-$1FFF // WRAM Mirror",
-						"CPU $2000-$2007 // PPU Registers",
-					]
-				);
+				const label = "Region";
+				const style = ImGui.GetStyle();
+				// compute how much width the combo itself can use, leaving room for the label + spacing
+				const avail = ImGui.GetContentRegionAvail().x;
+				const labelW = ImGui.CalcTextSize(label).x;
+				const comboW = avail - labelW - style.ItemInnerSpacing.x;
+
+				ImGui.PushItemWidth(comboW);
+				ImGui.Combo(label, (v = this._memRegion) => (this._memRegion = v), [
+					"All",
+					"CPU $0000-$2000 // WRAM",
+					"CPU $0800-$1FFF // WRAM Mirror",
+					"CPU $2000-$2007 // PPU Registers",
+				]);
+				ImGui.PopItemWidth();
 
 				this._memoryEditor.DrawContents(
 					this._memData,
@@ -202,15 +207,14 @@ export default class Debugger extends PureComponent {
 				ImGui.Text("hello PPU");
 
 				const gl = ImGui_Impl.gl;
-				const pixels = new Uint8Array(256 * 240 * 4);
+				const pixels = new Uint32Array(256 * 240);
 				for (let y = 0; y < 240; y++) {
 					for (let x = 0; x < 256; x++) {
-						let i = (y * 256 + x) * 4;
-						pixels[i + 0] = x; // R = x position
-						pixels[i + 1] = y; // G = y position
-						pixels[i + 2] = 128; // B = constant
-						pixels[i + 2] = Math.floor(Math.random() * 128); // B = constant
-						pixels[i + 3] = 255; // A = opaque
+						const r = x & 0xff;
+						const g = y & 0xff;
+						const b = Math.floor(Math.random() * 128) & 0xff;
+						const a = 0xff;
+						pixels[y * 256 + x] = (a << 24) | (b << 16) | (g << 8) | r;
 					}
 				}
 				gl.bindTexture(gl.TEXTURE_2D, this._fbTex0);
@@ -223,8 +227,9 @@ export default class Debugger extends PureComponent {
 					240,
 					gl.RGBA,
 					gl.UNSIGNED_BYTE,
-					pixels
+					new Uint8Array(pixels.buffer)
 				);
+
 				const drawList = ImGui.GetWindowDrawList();
 				const p = ImGui.GetCursorScreenPos();
 				drawList.AddImage(
@@ -355,6 +360,7 @@ export default class Debugger extends PureComponent {
 	componentDidMount() {}
 
 	componentWillUnmount() {
+		// TODO: REMOVE RESIZE LISTENER, window.addEventListener("resize"
 		ImGui_Impl.Shutdown();
 		ImGui.DestroyContext();
 		if (this._animationFrame) window.cancelAnimationFrame(this._animationFrame);
