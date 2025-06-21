@@ -241,46 +241,80 @@ export default class Debugger extends PureComponent {
 				ImGui.EndTabItem();
 			}
 			if (ImGui.BeginTabItem("APU")) {
-				ImGui.Text("hello APU");
+				const N = 100;
+				// example wave data
+				const square1 = Array.from({ length: N }, (_, i) =>
+					i % 20 < 10 ? 1 : -1
+				);
+				const square2 = Array.from({ length: N }, (_, i) =>
+					i % 40 < 10 ? 1 : -1
+				);
+				const triangle = Array.from({ length: N }, (_, i) => {
+					const period = 50,
+						t = i % period;
+					return t < period / 2
+						? (t / (period / 2)) * 2 - 1
+						: ((period - t) / (period / 2)) * 2 - 1;
+				});
+				const noise = Array.from({ length: N }, () => Math.random() * 2 - 1);
+				const dmc = Array.from({ length: N }, () => Math.random() * 2 - 1);
+				const mix = square1.map(
+					(v, i) => (v + square2[i] + triangle[i] + noise[i] + dmc[i]) / 5
+				);
 
-				{
-					const N = 100;
-					// build a normal Array of samples
-					const data = Array.from({ length: N }, (_, i) => Math.sin(i * 0.1));
+				const size = new ImGui.Vec2(0, 80);
+				ImGui.PlotLines("Pulse Channel 1", square1, N, 0, "", -1, 1, size);
+				ImGui.PlotLines("Pulse Channel 2", square2, N, 0, "", -1, 1, size);
+				ImGui.PlotLines("Triangle Channel", triangle, N, 0, "", -1, 1, size);
+				ImGui.PlotLines("Noise Channel", noise, N, 0, "", -1, 1, size);
+				ImGui.PlotLines("DMC Channel", dmc, N, 0, "", -1, 1, size);
+				ImGui.PlotLines("Mix", mix, N, 0, "", -1, 1, size);
 
-					// draw it
-					ImGui.PlotLines(
-						"Wave",
-						data, // JS Array
-						data.length, // count
-						0, // offset
-						"", // overlay
-						-1, // scale_min
-						+1, // scale_max
-						new ImGui.Vec2(0, 80)
-					);
+				ImGui.EndTabItem();
+			}
+			if (ImGui.BeginTabItem("External")) {
+				const buttons = [
+					"Up",
+					"Down",
+					"Left",
+					"Right",
+					"A",
+					"B",
+					"Select",
+					"Start",
+				];
+				for (let c = 1; c <= 2; c++) {
+					{
+						const flags =
+							ImGui.TableFlags.SizingFixedFit |
+							ImGui.TableFlags.RowBg |
+							ImGui.TableFlags.Borders |
+							ImGui.TableFlags.NoHostExtendX;
+						if (ImGui.BeginTable("controller" + c, 1, flags)) {
+							ImGui.TableSetupColumn(
+								`Controller ${c}`,
+								ImGui.TableColumnFlags.WidthFixed
+							);
+							ImGui.TableHeadersRow();
+							ImGui.TableNextRow();
+							ImGui.TableSetColumnIndex(0);
+							for (let i = 0; i < buttons.length; i++) {
+								const pressed = c === 1 ? i % 2 === 0 : i % 3 === 0; // mock
+								const col = pressed
+									? new ImGui.Vec4(0xc3 / 255, 0x9f / 255, 0x79 / 255, 1) // #c39f79
+									: new ImGui.Vec4(0.5, 0.5, 0.5, 1); // gray
+								ImGui.TextColored(col, buttons[i]);
+								ImGui.SameLine();
+							}
+							ImGui.EndTable();
+						}
+					}
+					ImGui.SameLine();
 				}
-
-				ImGui.ProgressBar(0.8, new ImGui.Vec2(0, 0));
-				ImGui.SameLine(0, ImGui.GetStyle().ItemInnerSpacing.x);
-				ImGui.Text("Progress Bar");
-
-				ImGui.EndTabItem();
-			}
-			if (ImGui.BeginTabItem("Cartridge")) {
-				ImGui.Text("hello Cartridge");
-				ImGui.EndTabItem();
-			}
-			if (ImGui.BeginTabItem("Controller")) {
-				ImGui.Text("hello Controller");
-				ImGui.EndTabItem();
-			}
-			if (ImGui.BeginTabItem("Mapper")) {
-				ImGui.Text("hello Mapper");
 				ImGui.EndTabItem();
 			}
 			if (ImGui.BeginTabItem("Logs")) {
-				ImGui.Text("hello Mapper");
+				ImGui.Text("hello Logs");
 				ImGui.EndTabItem();
 			}
 		}
