@@ -85,9 +85,110 @@ export default class Debugger extends PureComponent {
 				ImGui.EndTabItem();
 			}
 			if (ImGui.BeginTabItem("CPU")) {
-				ImGui.Text("hello CPU");
+				(() => {
+					const flags =
+						ImGui.TableFlags.SizingFixedFit |
+						ImGui.TableFlags.RowBg |
+						ImGui.TableFlags.Borders |
+						ImGui.TableFlags.NoHostExtendX;
+
+					if (ImGui.BeginTable("table1", 5, flags)) {
+						ImGui.TableSetupColumn("[A]", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("[X]", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("[Y]", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("[SP]", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("[PC]", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableHeadersRow();
+
+						ImGui.TableNextRow();
+						for (let column = 0; column < 5; column++) {
+							ImGui.TableSetColumnIndex(column);
+							ImGui.Text(column === 4 ? "$8000" : "$00");
+						}
+
+						ImGui.EndTable();
+					}
+				})();
+
+				ImGui.SameLine();
+
+				(() => {
+					const flags =
+						ImGui.TableFlags.SizingFixedFit |
+						ImGui.TableFlags.RowBg |
+						ImGui.TableFlags.Borders |
+						ImGui.TableFlags.NoHostExtendX;
+
+					if (ImGui.BeginTable("table2", 8, flags)) {
+						ImGui.TableSetupColumn("N", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("V", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("-", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("-", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("D", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("I", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("Z", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn("C", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableHeadersRow();
+
+						ImGui.TableNextRow();
+						for (let column = 0; column < 8; column++) {
+							ImGui.TableSetColumnIndex(column);
+							ImGui.Text(column === 3 ? "1" : "0");
+						}
+
+						ImGui.EndTable();
+					}
+				})();
+
+				(() => {
+					const flags =
+						ImGui.TableFlags.SizingFixedFit |
+						ImGui.TableFlags.RowBg |
+						ImGui.TableFlags.Borders |
+						ImGui.TableFlags.ScrollY |
+						ImGui.TableFlags.NoHostExtendX;
+
+					if (ImGui.BeginTable("table3", 4, flags)) {
+						ImGui.TableSetupColumn("[PC]", ImGui.TableColumnFlags.WidthFixed);
+						ImGui.TableSetupColumn(
+							"Binary",
+							ImGui.TableColumnFlags.WidthFixed,
+							10 * 8
+						);
+						ImGui.TableSetupColumn(
+							"Instruction",
+							ImGui.TableColumnFlags.WidthFixed,
+							16 * 8
+						);
+						ImGui.TableSetupColumn(
+							"Context",
+							ImGui.TableColumnFlags.WidthFixed
+						);
+						ImGui.TableHeadersRow();
+
+						for (let i = 0; i < 32; i++) {
+							ImGui.TableNextRow();
+							for (let column = 0; column < 4; column++) {
+								ImGui.TableSetColumnIndex(column);
+								ImGui.Text(
+									column === 0
+										? "C000"
+										: column === 1
+										? "4C F5 C5"
+										: column === 2
+										? "JMP $C5F5"
+										: "A:00 X:00 Y:00 P:24 SP:FD CYC:7"
+								);
+							}
+						}
+
+						ImGui.EndTable();
+					}
+				})();
+
 				ImGui.EndTabItem();
 			}
+
 			if (ImGui.BeginTabItem("PPU")) {
 				ImGui.Text("hello PPU");
 				ImGui.EndTabItem();
