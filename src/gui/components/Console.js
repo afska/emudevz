@@ -90,7 +90,7 @@ export default class Console extends PureComponent {
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener("resize", this.resize);
+		window.removeEventListener("resize", this._onResize);
 		this.terminal.dispose();
 	}
 
