@@ -207,14 +207,14 @@ export default class Debugger extends PureComponent {
 				ImGui.Text("hello PPU");
 
 				const gl = ImGui_Impl.gl;
-				const pixels = new Uint32Array(256 * 240);
-				for (let y = 0; y < 240; y++) {
-					for (let x = 0; x < 256; x++) {
+				const pixels = new Uint32Array(256 * 240 * 4);
+				for (let y = 0; y < 240 * 2; y++) {
+					for (let x = 0; x < 256 * 2; x++) {
 						const r = x & 0xff;
 						const g = y & 0xff;
 						const b = Math.floor(Math.random() * 128) & 0xff;
 						const a = 0xff;
-						pixels[y * 256 + x] = (a << 24) | (b << 16) | (g << 8) | r;
+						pixels[y * 256 * 2 + x] = (a << 24) | (b << 16) | (g << 8) | r;
 					}
 				}
 				gl.bindTexture(gl.TEXTURE_2D, this._fbTex0);
@@ -223,20 +223,15 @@ export default class Debugger extends PureComponent {
 					0,
 					0,
 					0,
-					256,
-					240,
+					256 * 2,
+					240 * 2,
 					gl.RGBA,
 					gl.UNSIGNED_BYTE,
 					new Uint8Array(pixels.buffer)
 				);
 
-				const drawList = ImGui.GetWindowDrawList();
-				const p = ImGui.GetCursorScreenPos();
-				drawList.AddImage(
-					this._fbTex0,
-					p,
-					new ImGui.Vec2(p.x + 256, p.y + 240)
-				);
+				ImGui.Image(this._fbTex0, new ImGui.Vec2(256 * 2, 240 * 2));
+				ImGui.Text("bye PPU");
 
 				ImGui.EndTabItem();
 			}
@@ -364,8 +359,8 @@ export default class Debugger extends PureComponent {
 				gl.TEXTURE_2D,
 				0,
 				gl.RGBA,
-				256,
-				240,
+				256 * 2,
+				240 * 2,
 				0,
 				gl.RGBA,
 				gl.UNSIGNED_BYTE,
