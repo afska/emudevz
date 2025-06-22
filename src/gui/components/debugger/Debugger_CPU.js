@@ -1,15 +1,41 @@
 import { hex } from "../../../utils";
+import { NEEESSimpleCPULogger } from "../../../utils/nes";
 import utils from "./utils";
 
 const ImGui = window.ImGui;
 
+const LOG_LIMIT = 60;
+
 export default class Debugger_CPU {
+	constructor() {
+		this._logs = [];
+		this._logger = new NEEESSimpleCPULogger();
+		this._frame = 0;
+
+		const neees = window.EMULATION?.neees;
+		neees.cpu.logger = (a, b, c, d, e) => {
+			const frame = neees?.ppu.frame ?? 0;
+			if (frame !== this._frame) {
+				this._frame = frame;
+				this._logger.log(a, b, c, d, e); // TODO: DISCONNECT LOGGER WHEN DEBUGGING STOPS
+				this._logs.unshift(this._logger.lastLog);
+				if (this._logs.length > LOG_LIMIT) this._logs.pop();
+			}
+		};
+	}
+
 	draw() {
 		const neees = window.EMULATION?.neees;
 
 		const registerFields = ["a", "x", "y", "sp", "pc"];
 		const registers = registerFields.map((it) => `[${it.toUpperCase()}]`);
 		const flags = ["N", "V", "-", "-", "D", "I", "Z", "C"];
+		const disassemblyFields = [
+			"$counter",
+			"$commandHex",
+			"$assembly",
+			"$status",
+		];
 
 		const flagsSmall =
 			ImGui.TableFlags.SizingStretchProp |
@@ -72,19 +98,13 @@ export default class Debugger_CPU {
 			);
 			ImGui.TableSetupColumn("Context", ImGui.TableColumnFlags.WidthFixed);
 			ImGui.TableHeadersRow();
-			for (let row = 0; row < 32; row++) {
+			for (let row = 0; row < this._logs.length; row++) {
 				ImGui.TableNextRow();
 				for (let col = 0; col < 4; col++) {
 					ImGui.TableSetColumnIndex(col);
-					ImGui.Text(
-						col === 0
-							? "C000"
-							: col === 1
-							? "4C F5 C5"
-							: col === 2
-							? "JMP $C5F5"
-							: "A:00 X:00 Y:00 P:24 SP:FD CYC:7"
-					);
+					const field = disassemblyFields[col];
+					const value = this._logs[row][field];
+					ImGui.Text(value);
 				}
 			}
 			ImGui.EndTable();
