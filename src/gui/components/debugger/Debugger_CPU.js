@@ -13,11 +13,12 @@ export default class Debugger_CPU {
 		this._frame = 0;
 
 		const neees = window.EMULATION?.neees;
+		if (!neees) return;
 		neees.cpu.logger = (a, b, c, d, e) => {
 			const frame = neees?.ppu.frame ?? 0;
 			if (frame !== this._frame) {
 				this._frame = frame;
-				this._logger.log(a, b, c, d, e); // TODO: DISCONNECT LOGGER WHEN DEBUGGING STOPS
+				this._logger.log(a, b, c, d, e);
 				this._logs.unshift(this._logger.lastLog);
 				if (this._logs.length > LOG_LIMIT) this._logs.pop();
 			}
@@ -109,5 +110,12 @@ export default class Debugger_CPU {
 			}
 			ImGui.EndTable();
 		}
+	}
+
+	destroy() {
+		const neees = window.EMULATION?.neees;
+		if (!neees) return;
+
+		neees.cpu.logger = null;
 	}
 }

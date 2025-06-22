@@ -72,6 +72,7 @@ export default class Debugger extends PureComponent {
 	};
 
 	componentWillUnmount() {
+		if (this._debuggerGUI != null) this._debuggerGUI.destroy();
 		window.removeEventListener("resize", this._onResize);
 		ImGui_Impl.Shutdown();
 		ImGui.DestroyContext();

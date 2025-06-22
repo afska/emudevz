@@ -88,4 +88,8 @@ export default class DebuggerGUI {
 
 		ImGui.End();
 	}
+
+	destroy() {
+		this._cpu.destroy();
+	}
 }

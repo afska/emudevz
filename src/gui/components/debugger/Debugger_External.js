@@ -2,8 +2,21 @@ import utils from "./utils";
 
 const ImGui = window.ImGui;
 
+const ORDERED_BUTTONS = [
+	"A",
+	"B",
+	"Select",
+	"Start",
+	"Up",
+	"Down",
+	"Left",
+	"Right",
+];
+
 export default class Debugger_External {
 	draw() {
+		const neees = window.EMULATION?.neees;
+
 		const buttons = [
 			"Up",
 			"Down",
@@ -21,16 +34,23 @@ export default class Debugger_External {
 
 		ImGui.Columns(2, "external_controller_columns", false);
 
-		for (let c = 1; c <= 2; c++) {
-			if (ImGui.BeginTable("controller" + c, 1, flags)) {
-				ImGui.TableSetupColumn(`Controller ${c}`, ImGui.TableColumnFlags.None);
+		for (let c = 0; c < 2; c++) {
+			if (ImGui.BeginTable("controller" + (c + 1), 1, flags)) {
+				ImGui.TableSetupColumn(
+					`Controller ${c + 1}`,
+					ImGui.TableColumnFlags.None
+				);
 				ImGui.TableHeadersRow();
 				ImGui.TableNextRow();
 				ImGui.TableSetColumnIndex(0);
 				for (let i = 0; i < buttons.length; i++) {
-					const pressed = c === 1 ? i % 2 === 0 : i % 3 === 0;
+					let pressed = false;
+					const label = buttons[i];
+					const nesButtons = neees?.context.controllers[c]._buttons; // TODO: FIX
+					if (nesButtons != null)
+						pressed = nesButtons[ORDERED_BUTTONS.indexOf(label)];
 					const hex = pressed ? "#c39f79" : "#808080";
-					utils.withTextColor(hex, () => ImGui.Text(buttons[i]));
+					utils.withTextColor(hex, () => ImGui.Text(label));
 					ImGui.SameLine();
 				}
 				ImGui.EndTable();
