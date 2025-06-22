@@ -39,12 +39,12 @@ export default class DebuggerGUI {
 				ImGui.WindowFlags.NoCollapse
 		);
 
-		const runFrame = "run frame";
+		const runFrame = "Run frame";
 		if (ImGui.BeginTabBar("Tabs")) {
 			const btns = [
-				{ label: emulation.isDebugging ? "resume" : "pause" },
+				{ label: emulation.isDebugging ? "Resume" : "Pause" },
 				{ label: runFrame, color: "#b87632" },
-				{ label: "run scanline", color: "#2a62b0" },
+				{ label: "Run scanline", color: "#2a62b0" },
 			];
 			const style = ImGui.GetStyle();
 			const totalW =

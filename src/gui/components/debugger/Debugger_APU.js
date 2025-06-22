@@ -1,4 +1,5 @@
 const ImGui = window.ImGui;
+
 const MIN = 0;
 const MAX = 15;
 
@@ -36,6 +37,7 @@ export default class Debugger_APU {
 		ImGui.PlotLines("DMC Channel", dmc, N, 0, "", MIN, MAX, size);
 		ImGui.PlotLines("Mix", mix, N, 0, "", 0, 0.5, size);
 
-		if (emulation != null) emulation.resetChannelSamples();
+		if (emulation != null && !emulation.isDebugging)
+			emulation.resetChannelSamples();
 	}
 }

@@ -128,12 +128,14 @@ export default class Emulation {
 
 	_onAudio = (sample, pulse1, pulse2, triangle, noise, dmc) => {
 		this.samples.push(sample);
-		this.channelSamples.mix.push(sample);
-		this.channelSamples.pulse1.push(pulse1);
-		this.channelSamples.pulse2.push(pulse2);
-		this.channelSamples.triangle.push(triangle);
-		this.channelSamples.noise.push(noise);
-		this.channelSamples.dmc.push(dmc);
+		if (this.channelSamples.mix.length < APU_SAMPLE_RATE * 10) {
+			this.channelSamples.mix.push(sample);
+			this.channelSamples.pulse1.push(pulse1);
+			this.channelSamples.pulse2.push(pulse2);
+			this.channelSamples.triangle.push(triangle);
+			this.channelSamples.noise.push(noise);
+			this.channelSamples.dmc.push(dmc);
+		}
 	};
 
 	_updateSound() {
