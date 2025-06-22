@@ -1,8 +1,14 @@
+import { hex } from "../../../utils";
+import utils from "./utils";
+
 const ImGui = window.ImGui;
 
 export default class Debugger_CPU {
 	draw() {
-		const registers = ["[A]", "[X]", "[Y]", "[SP]", "[PC]"];
+		const neees = window.EMULATION?.neees;
+
+		const registerFields = ["a", "x", "y", "sp", "pc"];
+		const registers = registerFields.map((it) => `[${it.toUpperCase()}]`);
 		const flags = ["N", "V", "-", "-", "D", "I", "Z", "C"];
 
 		const flagsSmall =
@@ -13,14 +19,14 @@ export default class Debugger_CPU {
 		ImGui.Columns(2, "cpu_flag_columns", false);
 
 		if (ImGui.BeginTable("registers", registers.length, flagsSmall)) {
-			for (let h of registers) {
-				ImGui.TableSetupColumn(h, ImGui.TableColumnFlags.None);
-			}
+			for (let h of registers) ImGui.TableSetupColumn(h);
 			ImGui.TableHeadersRow();
 			ImGui.TableNextRow();
 			for (let i = 0; i < registers.length; i++) {
 				ImGui.TableSetColumnIndex(i);
-				ImGui.Text(i === 4 ? "$8000" : "$00");
+				const registerField = registerFields[i];
+				const value = utils.numberOr0(neees?.cpu[registerField]?.getValue());
+				ImGui.Text("$" + hex.format(value, registerField === "pc" ? 4 : 2));
 			}
 			ImGui.EndTable();
 		}
@@ -28,14 +34,16 @@ export default class Debugger_CPU {
 		ImGui.NextColumn();
 
 		if (ImGui.BeginTable("flags", flags.length, flagsSmall)) {
-			for (let h of flags) {
-				ImGui.TableSetupColumn(h, ImGui.TableColumnFlags.None);
-			}
+			for (let h of flags) ImGui.TableSetupColumn(h);
 			ImGui.TableHeadersRow();
 			ImGui.TableNextRow();
 			for (let i = 0; i < flags.length; i++) {
 				ImGui.TableSetColumnIndex(i);
-				ImGui.Text(i === 3 ? "1" : "0");
+				const flagField = flags[i].toLowerCase();
+				const value = utils.numberOr0(
+					+(neees?.cpu.flags?.[flagField] ?? false)
+				);
+				ImGui.Text(i === 2 ? "1" : i === 3 ? "0" : `${value}`);
 			}
 			ImGui.EndTable();
 		}

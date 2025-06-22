@@ -72,11 +72,11 @@ export default class Debugger_Memory {
 
 			switch (address) {
 				case 0x2002:
-					return neees.ppu.registers?.ppuStatus.value;
+					return utils.numberOr0(neees.ppu.registers?.ppuStatus.value);
 				case 0x2007:
-					return neees.ppu.registers?.ppuData.buffer ?? 0;
+					return utils.numberOr0(neees.ppu.registers?.ppuData.buffer);
 				default:
-					return neees.cpu.memory.read(address);
+					return utils.numberOr0(neees.cpu.memory.read(address));
 			}
 		};
 	}
