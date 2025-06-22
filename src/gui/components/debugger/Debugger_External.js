@@ -27,6 +27,32 @@ export default class Debugger_External {
 			"Select",
 			"Start",
 		];
+		const bits = [Array(8).fill(false), Array(8).fill(false)];
+
+		if (neees != null) {
+			const [ctrl1, ctrl2] = neees.context.controllers;
+
+			// backup strobe and cursors
+			const prevStrobe = ctrl1.strobe;
+			const prevCursor1 = ctrl1.cursor;
+			const prevCursor2 = ctrl2.cursor;
+
+			// pulse strobe on ctrl1
+			ctrl1.onWrite(1);
+			ctrl1.onWrite(0);
+
+			// read 8 bits from each
+			for (let i = 0; i < 8; i++) {
+				bits[0][i] = !!ctrl1.onRead();
+				bits[1][i] = !!ctrl2.onRead();
+			}
+
+			// restore strobe and cursors
+			ctrl1.strobe = prevStrobe;
+			ctrl1.cursor = prevCursor1;
+			ctrl2.cursor = prevCursor2;
+		}
+
 		const flags =
 			ImGui.TableFlags.SizingStretchProp |
 			ImGui.TableFlags.RowBg |
@@ -44,13 +70,11 @@ export default class Debugger_External {
 				ImGui.TableNextRow();
 				ImGui.TableSetColumnIndex(0);
 				for (let i = 0; i < buttons.length; i++) {
-					let pressed = false;
 					const label = buttons[i];
-					const nesButtons = neees?.context.controllers[c]._buttons; // TODO: FIX
-					if (nesButtons != null)
-						pressed = nesButtons[ORDERED_BUTTONS.indexOf(label)];
-					const hex = pressed ? "#c39f79" : "#808080";
-					utils.withTextColor(hex, () => ImGui.Text(label));
+					const position = ORDERED_BUTTONS.indexOf(label);
+					const pressed = bits[c][position];
+					const color = pressed ? "#c39f79" : "#808080";
+					utils.withTextColor(color, () => ImGui.Text(label));
 					ImGui.SameLine();
 				}
 				ImGui.EndTable();
