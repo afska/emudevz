@@ -10,8 +10,23 @@ export default class Debugger_Memory {
 		this._memoryEditor = new window.ImGui_Memory_Editor.MemoryEditor();
 		this._memoryEditor.ReadOnly = true; // (this prevents a crash!)
 		this._memoryEditor.OptAddrDigitsCount = 4;
-		this._memoryEditor.ReadFn = (__, addr) => {
-			return window.EMULATION?.neees.cpu.memory.read(addr) ?? 0;
+		this._memoryEditor.ReadFn = (__, address) => {
+			const neees = window.EMULATION?.neees;
+			if (!neees) return 0;
+
+			// reimplementing some memory-mapped reads to avoid triggering side effects
+
+			if (address >= 0x2008 && address <= 0x3fff)
+				address = 0x2000 + ((address - 0x2008) % 0x0008);
+
+			switch (address) {
+				case 0x2002:
+					return neees.ppu.registers?.ppuStatus.value;
+				case 0x2007:
+					return neees.ppu.registers?.ppuData.buffer ?? 0;
+				default:
+					return neees.cpu.memory.read(address);
+			}
 		};
 	}
 
