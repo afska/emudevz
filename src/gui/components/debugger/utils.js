@@ -10,9 +10,20 @@ export default {
 		draw(label);
 		ImGui.PopItemWidth();
 	},
-	numberOr0(value) {
-		const number = Number(value);
-		return isNaN(number) ? 0 : number;
+	simpleTable(id, label, draw) {
+		const flags =
+			ImGui.TableFlags.SizingStretchProp |
+			ImGui.TableFlags.RowBg |
+			ImGui.TableFlags.Borders;
+
+		if (ImGui.BeginTable(id, 1, flags)) {
+			ImGui.TableSetupColumn(label, ImGui.TableColumnFlags.None);
+			ImGui.TableHeadersRow();
+			ImGui.TableNextRow();
+			ImGui.TableSetColumnIndex(0);
+			draw();
+			ImGui.EndTable();
+		}
 	},
 	withTextColor(hex, draw) {
 		const r = parseInt(hex.slice(1, 3), 16) / 255;
@@ -37,5 +48,9 @@ export default {
 		);
 		draw();
 		ImGui.PopStyleColor(3);
+	},
+	numberOr0(value) {
+		const number = Number(value);
+		return isNaN(number) ? 0 : number;
 	},
 };

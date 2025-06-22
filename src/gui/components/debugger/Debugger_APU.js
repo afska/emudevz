@@ -1,3 +1,5 @@
+import utils from "./utils";
+
 const ImGui = window.ImGui;
 
 const MIN = 0;
@@ -5,7 +7,7 @@ const MAX = 15;
 
 export default class Debugger_APU {
 	constructor() {
-		this._zoom = 0.0; // 0 = no zoom (show 100%), 1 = full zoom (show none)
+		this._zoom = 0.0;
 	}
 
 	draw() {
@@ -18,24 +20,44 @@ export default class Debugger_APU {
 		const noise = emulation?.channelSamples.noise ?? [];
 		const dmc = emulation?.channelSamples.dmc ?? [];
 
-		ImGui.SliderFloat(
-			"Zoom",
-			(v = this._zoom) => (this._zoom = v),
-			0.0,
-			0.9,
-			"%.2f"
-		);
+		utils.fullWidthFieldWithLabel("Zoom", (label) => {
+			ImGui.SliderFloat(
+				label,
+				(v = this._zoom) => (this._zoom = v),
+				0.0,
+				0.9,
+				"%.2f"
+			);
+		});
 
 		const maxN = mix.length;
 		const N = Math.floor(maxN * (1 - this._zoom));
+		const height = 40;
 
-		const size = new ImGui.Vec2(0, 80);
-		ImGui.PlotLines("Pulse Channel 1", pulse1, N, 0, "", MIN, MAX, size);
-		ImGui.PlotLines("Pulse Channel 2", pulse2, N, 0, "", MIN, MAX, size);
-		ImGui.PlotLines("Triangle Channel", triangle, N, 0, "", MIN, MAX, size);
-		ImGui.PlotLines("Noise Channel", noise, N, 0, "", MIN, MAX, size);
-		ImGui.PlotLines("DMC Channel", dmc, N, 0, "", MIN, MAX, size);
-		ImGui.PlotLines("Mix", mix, N, 0, "", 0, 0.5, size);
+		utils.simpleTable("pulse1", "Pulse Channel 1", () => {
+			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
+			ImGui.PlotLines("", pulse1, N, 0, "", MIN, MAX, waveSize);
+		});
+		utils.simpleTable("pulse2", "Pulse Channel 2", () => {
+			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
+			ImGui.PlotLines("", pulse2, N, 0, "", MIN, MAX, waveSize);
+		});
+		utils.simpleTable("triangle", "Triangle Channel", () => {
+			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
+			ImGui.PlotLines("", triangle, N, 0, "", MIN, MAX, waveSize);
+		});
+		utils.simpleTable("noise", "Noise Channel", () => {
+			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
+			ImGui.PlotLines("", noise, N, 0, "", MIN, MAX, waveSize);
+		});
+		utils.simpleTable("dmc", "DMC Channel", () => {
+			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
+			ImGui.PlotLines("", dmc, N, 0, "", MIN, MAX, waveSize);
+		});
+		utils.simpleTable("mix", "Mix", () => {
+			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
+			ImGui.PlotLines("Mix", mix, N, 0, "", 0, 0.5, waveSize);
+		});
 
 		if (emulation != null && !emulation.isDebugging)
 			emulation.resetChannelSamples();

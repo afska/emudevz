@@ -1,6 +1,8 @@
 const ImGui = window.ImGui;
 const ImGui_Impl = window.ImGui_Impl;
 
+// TODO: FIX TEXTURE when opening debugger while already open
+
 export default class Debugger_PPU {
 	init() {
 		const gl = ImGui_Impl.gl;

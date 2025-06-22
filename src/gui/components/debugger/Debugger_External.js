@@ -53,22 +53,10 @@ export default class Debugger_External {
 			ctrl2.cursor = prevCursor2;
 		}
 
-		const flags =
-			ImGui.TableFlags.SizingStretchProp |
-			ImGui.TableFlags.RowBg |
-			ImGui.TableFlags.Borders;
-
 		ImGui.Columns(2, "external_controller_columns", false);
 
 		for (let c = 0; c < 2; c++) {
-			if (ImGui.BeginTable("controller" + (c + 1), 1, flags)) {
-				ImGui.TableSetupColumn(
-					`Controller ${c + 1}`,
-					ImGui.TableColumnFlags.None
-				);
-				ImGui.TableHeadersRow();
-				ImGui.TableNextRow();
-				ImGui.TableSetColumnIndex(0);
+			utils.simpleTable("controller" + (c + 1), `Controller ${c + 1}`, () => {
 				for (let i = 0; i < buttons.length; i++) {
 					const label = buttons[i];
 					const position = ORDERED_BUTTONS.indexOf(label);
@@ -77,8 +65,7 @@ export default class Debugger_External {
 					utils.withTextColor(color, () => ImGui.Text(label));
 					ImGui.SameLine();
 				}
-				ImGui.EndTable();
-			}
+			});
 			ImGui.NextColumn();
 		}
 
