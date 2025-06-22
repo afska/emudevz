@@ -185,8 +185,8 @@ export default class TripleLayout extends Layout {
 		this._subscriber = bus.subscribe({
 			pin: this._onPin,
 			unpin: this._closePin,
-			secondaryPin: this._onSecondaryPin,
-			unpinSecondary: this._closeSecondaryPin,
+			"secondary-pin": this._onSecondaryPin,
+			"unpin-secondary": this._closeSecondaryPin,
 			"do-not-pin-emulator": () => {},
 		});
 	}
@@ -209,8 +209,12 @@ export default class TripleLayout extends Layout {
 		this._onPinOpened(pin, "SecondaryPin", location);
 	};
 
-	_closeSecondaryPin = () => {
-		this._onPinClosed("SecondaryPin", this.constructor.secondaryPinLocation);
+	_closeSecondaryPin = (options) => {
+		this._onPinClosed(
+			"SecondaryPin",
+			this.constructor.secondaryPinLocation,
+			options
+		);
 	};
 
 	_onPinOpened = (pin, name, pinLocation) => {
@@ -222,12 +226,14 @@ export default class TripleLayout extends Layout {
 		});
 	};
 
-	_onPinClosed = (name, pinLocation) => {
+	_onPinClosed = (name, pinLocation, options = { changeFocus: true }) => {
 		this.instances[name] = null;
 		this.setState({ [name]: null }, () => {
-			setTimeout(() => {
-				this.focus(pinLocation);
-			});
+			if (options?.changeFocus) {
+				setTimeout(() => {
+					this.focus(pinLocation);
+				});
+			}
 		});
 	};
 }

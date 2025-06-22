@@ -224,6 +224,9 @@ export default class EmulatorRunner extends PureComponent {
 		this._subscriber = bus.subscribe({
 			"code-changed": _.debounce(this._onCodeChanged, REFRESH_DEBOUNCE_MS),
 			"unit-unlocked": this._onUnitUnlocked,
+			"emulator-stopped": () => {
+				bus.emit("unpin-secondary", { changeFocus: false });
+			},
 		});
 	}
 
@@ -307,6 +310,7 @@ export default class EmulatorRunner extends PureComponent {
 	};
 
 	_stop = () => {
+		this._emulator?.stop();
 		this.props.onStop();
 	};
 

@@ -6,7 +6,6 @@ import Debugger_Memory from "./Debugger_Memory";
 import Debugger_PPU from "./Debugger_PPU";
 
 const ImGui = window.ImGui;
-const ImGui_Impl = window.ImGui_Impl;
 
 export default class DebuggerGUI {
 	constructor() {

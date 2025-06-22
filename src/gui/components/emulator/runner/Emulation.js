@@ -40,6 +40,8 @@ export default class Emulation {
 		this.isDebugStepScanlineRequested = false;
 
 		this.neees = new NEEES(this._onFrame, this._onAudio);
+		window.EMULATION = this;
+
 		this.frameTimer = new FrameTimer(() => {
 			this._updateInput(getInput());
 
@@ -103,6 +105,7 @@ export default class Emulation {
 	terminate = () => {
 		this.frameTimer.stop();
 		this.speaker.stop();
+		window.EMULATION = null;
 	};
 
 	_onFrame = (frameBuffer) => {

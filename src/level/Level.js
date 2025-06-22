@@ -163,7 +163,7 @@ export default class Level {
 	}
 
 	launchDebugger() {
-		bus.emit("secondaryPin", {
+		bus.emit("secondary-pin", {
 			Component: Debugger,
 			args: {},
 			level: this,
