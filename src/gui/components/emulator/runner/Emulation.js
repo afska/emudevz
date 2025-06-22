@@ -26,6 +26,7 @@ export default class Emulation {
 
 		this.screen = screen;
 		this.samples = [];
+		this.resetChannelSamples();
 
 		this.speaker = new Speaker(volume);
 		this.speaker.start();
@@ -108,14 +109,31 @@ export default class Emulation {
 		window.EMULATION = null;
 	};
 
+	resetChannelSamples = () => {
+		this.channelSamples = {
+			mix: [],
+			pulse1: [],
+			pulse2: [],
+			triangle: [],
+			noise: [],
+			dmc: [],
+		};
+	};
+
 	_onFrame = (frameBuffer) => {
 		this.frameTimer.countNewFrame();
 		this.screen.setBuffer(frameBuffer);
 		this._onFrameCallback(frameBuffer, this.neees);
 	};
 
-	_onAudio = (sample) => {
+	_onAudio = (sample, pulse1, pulse2, triangle, noise, dmc) => {
 		this.samples.push(sample);
+		this.channelSamples.mix.push(sample);
+		this.channelSamples.pulse1.push(pulse1);
+		this.channelSamples.pulse2.push(pulse2);
+		this.channelSamples.triangle.push(triangle);
+		this.channelSamples.noise.push(noise);
+		this.channelSamples.dmc.push(dmc);
 	};
 
 	_updateSound() {
