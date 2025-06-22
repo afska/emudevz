@@ -20,44 +20,73 @@ export default class Debugger_APU {
 		const noise = emulation?.channelSamples.noise ?? [];
 		const dmc = emulation?.channelSamples.dmc ?? [];
 
-		utils.fullWidthFieldWithLabel("Zoom", (label) => {
-			ImGui.SliderFloat(
-				label,
-				(v = this._zoom) => (this._zoom = v),
-				0.0,
-				0.9,
-				"%.2f"
-			);
-		});
+		if (ImGui.BeginTabBar("APUTabs")) {
+			utils.simpleTab("Waves", () => {
+				utils.fullWidthFieldWithLabel("Zoom", (label) => {
+					ImGui.SliderFloat(
+						label,
+						(v = this._zoom) => (this._zoom = v),
+						0.0,
+						0.9,
+						"%.2f"
+					);
+				});
 
-		const maxN = mix.length;
-		const N = Math.floor(maxN * (1 - this._zoom));
-		const height = 40;
+				const maxN = mix.length;
+				const N = Math.floor(maxN * (1 - this._zoom));
+				const height = 40;
 
-		utils.simpleTable("pulse1", "Pulse Channel 1", () => {
-			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
-			ImGui.PlotLines("", pulse1, N, 0, "", MIN, MAX, waveSize);
-		});
-		utils.simpleTable("pulse2", "Pulse Channel 2", () => {
-			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
-			ImGui.PlotLines("", pulse2, N, 0, "", MIN, MAX, waveSize);
-		});
-		utils.simpleTable("triangle", "Triangle Channel", () => {
-			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
-			ImGui.PlotLines("", triangle, N, 0, "", MIN, MAX, waveSize);
-		});
-		utils.simpleTable("noise", "Noise Channel", () => {
-			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
-			ImGui.PlotLines("", noise, N, 0, "", MIN, MAX, waveSize);
-		});
-		utils.simpleTable("dmc", "DMC Channel", () => {
-			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
-			ImGui.PlotLines("", dmc, N, 0, "", MIN, MAX, waveSize);
-		});
-		utils.simpleTable("mix", "Mix", () => {
-			const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
-			ImGui.PlotLines("Mix", mix, N, 0, "", 0, 0.5, waveSize);
-		});
+				utils.simpleTable("pulse1", "Pulse Channel 1", () => {
+					const waveSize = new ImGui.Vec2(
+						ImGui.GetContentRegionAvail().x,
+						height
+					);
+					ImGui.PlotLines("", pulse1, N, 0, "", MIN, MAX, waveSize);
+				});
+				utils.simpleTable("pulse2", "Pulse Channel 2", () => {
+					const waveSize = new ImGui.Vec2(
+						ImGui.GetContentRegionAvail().x,
+						height
+					);
+					ImGui.PlotLines("", pulse2, N, 0, "", MIN, MAX, waveSize);
+				});
+				utils.simpleTable("triangle", "Triangle Channel", () => {
+					const waveSize = new ImGui.Vec2(
+						ImGui.GetContentRegionAvail().x,
+						height
+					);
+					ImGui.PlotLines("", triangle, N, 0, "", MIN, MAX, waveSize);
+				});
+				utils.simpleTable("noise", "Noise Channel", () => {
+					const waveSize = new ImGui.Vec2(
+						ImGui.GetContentRegionAvail().x,
+						height
+					);
+					ImGui.PlotLines("", noise, N, 0, "", MIN, MAX, waveSize);
+				});
+				utils.simpleTable("dmc", "DMC Channel", () => {
+					const waveSize = new ImGui.Vec2(
+						ImGui.GetContentRegionAvail().x,
+						height
+					);
+					ImGui.PlotLines("", dmc, N, 0, "", MIN, MAX, waveSize);
+				});
+				utils.simpleTable("mix", "Mix", () => {
+					const waveSize = new ImGui.Vec2(
+						ImGui.GetContentRegionAvail().x,
+						height
+					);
+					ImGui.PlotLines("Mix", mix, N, 0, "", 0, 0.5, waveSize);
+				});
+			});
+
+			utils.simpleTab("Detail", () => {
+				const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, 40);
+				ImGui.PlotLines("Mix", mix, mix.length, 0, "", 0, 0.5, waveSize);
+			});
+
+			ImGui.EndTabBar();
+		}
 
 		if (emulation != null && !emulation.isDebugging)
 			emulation.resetChannelSamples();

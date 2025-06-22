@@ -25,6 +25,19 @@ export default {
 			ImGui.EndTable();
 		}
 	},
+	simpleTab(name, draw) {
+		if (ImGui.BeginTabItem(name)) {
+			ImGui.BeginChild(
+				"Child" + name,
+				new ImGui.ImVec2(0, 0),
+				false,
+				ImGui.WindowFlags.None
+			);
+			draw();
+			ImGui.EndChild();
+			ImGui.EndTabItem();
+		}
+	},
 	withTextColor(hex, draw) {
 		const r = parseInt(hex.slice(1, 3), 16) / 255;
 		const g = parseInt(hex.slice(3, 5), 16) / 255;

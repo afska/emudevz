@@ -87,17 +87,7 @@ export default class DebuggerGUI {
 				{ name: "Logs", pane: this._logs },
 			];
 			for (let { name, pane } of tabs) {
-				if (ImGui.BeginTabItem(name)) {
-					ImGui.BeginChild(
-						"Child" + name,
-						new ImGui.ImVec2(0, 0),
-						false,
-						ImGui.WindowFlags.None
-					);
-					pane.draw();
-					ImGui.EndChild();
-					ImGui.EndTabItem();
-				}
+				utils.simpleTab(name, () => pane.draw());
 			}
 
 			ImGui.EndTabBar();
