@@ -23,6 +23,8 @@ export default class DebuggerGUI {
 	}
 
 	draw() {
+		const emulation = window.EMULATION;
+
 		const m = 10;
 		ImGui.SetNextWindowPos(new ImGui.ImVec2(m, m), ImGui.Cond.FirstUseEver);
 		const io = ImGui.GetIO();
@@ -37,10 +39,11 @@ export default class DebuggerGUI {
 				ImGui.WindowFlags.NoCollapse
 		);
 
+		const runFrame = "run frame";
 		if (ImGui.BeginTabBar("Tabs")) {
 			const btns = [
-				{ label: "pause" },
-				{ label: "run frame", color: "#b87632" },
+				{ label: emulation.isDebugging ? "resume" : "pause" },
+				{ label: runFrame, color: "#b87632" },
 				{ label: "run scanline", color: "#2a62b0" },
 			];
 			const style = ImGui.GetStyle();
@@ -54,9 +57,23 @@ export default class DebuggerGUI {
 			ImGui.SameLine(ImGui.GetContentRegionAvail().x - totalW);
 			btns.forEach(({ label, color }, i) => {
 				if (color) {
-					utils.withBgColor(color, () => ImGui.Button(label));
+					utils.withBgColor(color, () => {
+						ImGui.Button(label);
+						if (ImGui.IsItemActive()) {
+							if (emulation) {
+								emulation.isDebugging = true;
+								if (label === runFrame) {
+									emulation.isDebugStepFrameRequested = true;
+								} else {
+									emulation.isDebugStepScanlineRequested = true;
+								}
+							}
+						}
+					});
 				} else {
-					ImGui.Button(label);
+					if (ImGui.Button(label)) {
+						if (emulation) emulation.isDebugging = !emulation.isDebugging;
+					}
 				}
 				if (i < btns.length - 1) ImGui.SameLine();
 			});

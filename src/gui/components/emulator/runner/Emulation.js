@@ -48,13 +48,13 @@ export default class Emulation {
 			if (
 				this.isDebugging &&
 				!this.isDebugStepFrameRequested &&
-				!this.isDebugScanlineRequested
+				!this.isDebugStepScanlineRequested
 			)
 				return;
 
-			const isDebugScanlineRequested = this.isDebugScanlineRequested;
+			const isDebugStepScanlineRequested = this.isDebugStepScanlineRequested;
 			this.isDebugStepFrameRequested = false;
-			this.isDebugScanlineRequested = false;
+			this.isDebugStepScanlineRequested = false;
 
 			if (this.isSaveStateRequested && !this.wasSaveStateRequested) {
 				this.saveState = this.neees.getSaveState();
@@ -72,8 +72,8 @@ export default class Emulation {
 			}
 
 			try {
-				if (isDebugScanlineRequested) {
-					this.neees.scanline();
+				if (isDebugStepScanlineRequested) {
+					this.neees.scanline(true);
 				} else if (SYNC_TO_AUDIO) {
 					const requestedSamples = APU_SAMPLE_RATE / FPS;
 					const newBufferSize = this.speaker.bufferSize + requestedSamples;
@@ -133,7 +133,8 @@ export default class Emulation {
 				if (input[i].$startDebugging) this.isDebugging = true;
 				if (input[i].$stopDebugging) this.isDebugging = false;
 				if (input[i].$debugStepFrame) this.isDebugStepFrameRequested = true;
-				if (input[i].$debugStepScanline) this.isDebugScanlineRequested = true;
+				if (input[i].$debugStepScanline)
+					this.isDebugStepScanlineRequested = true;
 			}
 
 			for (let button in input[i])
