@@ -1,3 +1,5 @@
+import utils from "./utils";
+
 const ImGui = window.ImGui;
 
 const MEM_TOTAL = 0x10000;
@@ -80,20 +82,13 @@ export default class Debugger_Memory {
 	}
 
 	draw() {
-		const label = "Region";
-		const style = ImGui.GetStyle();
-		// compute how much width the combo itself can use, leaving room for the label + spacing
-		const avail = ImGui.GetContentRegionAvail().x;
-		const labelW = ImGui.CalcTextSize(label).x;
-		const comboW = avail - labelW - style.ItemInnerSpacing.x;
-
-		ImGui.PushItemWidth(comboW);
-		ImGui.Combo(
-			label,
-			(v = this._memRegion) => (this._memRegion = v),
-			REGIONS.map((r) => r.label)
-		);
-		ImGui.PopItemWidth();
+		utils.fullWidthFieldWithLabel("Region", (label) => {
+			ImGui.Combo(
+				label,
+				(v = this._memRegion) => (this._memRegion = v),
+				REGIONS.map((r) => r.label)
+			);
+		});
 
 		const region = REGIONS[this._memRegion];
 		this._memoryEditor.DrawContents(this._memData, region.size, region.start);
