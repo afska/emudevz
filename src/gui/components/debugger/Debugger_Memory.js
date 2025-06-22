@@ -11,7 +11,7 @@ export default class Debugger_Memory {
 		this._memoryEditor.ReadOnly = true; // (this prevents a crash!)
 		this._memoryEditor.OptAddrDigitsCount = 4;
 		this._memoryEditor.ReadFn = (__, addr) => {
-			return addr % 256;
+			return window.EMULATION?.neees.cpu.memory.read(addr) ?? 0;
 		};
 	}
 
