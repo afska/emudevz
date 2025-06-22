@@ -1,3 +1,5 @@
+import utils from "./utils";
+
 const ImGui = window.ImGui;
 
 export default class Debugger_External {
@@ -27,10 +29,8 @@ export default class Debugger_External {
 				ImGui.TableSetColumnIndex(0);
 				for (let i = 0; i < buttons.length; i++) {
 					const pressed = c === 1 ? i % 2 === 0 : i % 3 === 0;
-					const col = pressed
-						? new ImGui.Vec4(0xc3 / 255, 0x9f / 255, 0x79 / 255, 1)
-						: new ImGui.Vec4(0.5, 0.5, 0.5, 1);
-					ImGui.TextColored(col, buttons[i]);
+					const hex = pressed ? "#c39f79" : "#808080";
+					utils.withTextColor(hex, () => ImGui.Text(buttons[i]));
 					ImGui.SameLine();
 				}
 				ImGui.EndTable();
