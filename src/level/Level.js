@@ -132,7 +132,7 @@ export default class Level {
 		if (chapter.isSpecial) return false;
 
 		return (
-			bus.isListeningTo("pin") ||
+			(bus.isListeningTo("pin") && !bus.isListeningTo("do-not-pin-emulator")) ||
 			this.$layout.findInstance("TV", (it) => it.state.type === "rom") != null
 		);
 	}
