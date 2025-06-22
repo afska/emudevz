@@ -94,7 +94,7 @@ export default class Debugger_CPU {
 			ImGui.TableSetupColumn(
 				"Instruction",
 				ImGui.TableColumnFlags.WidthFixed,
-				16 * 8
+				20 * 8
 			);
 			ImGui.TableSetupColumn("Context", ImGui.TableColumnFlags.WidthFixed);
 			ImGui.TableHeadersRow();
