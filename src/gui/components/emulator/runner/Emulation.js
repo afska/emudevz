@@ -4,6 +4,7 @@ import Speaker from "./Speaker";
 const SYNC_TO_AUDIO = true;
 const APU_SAMPLE_RATE = 44100;
 const AUDIO_BUFFER_LIMIT = 4096;
+const MAX_SAMPLE_MEMORY_SECONDS = 10;
 const FPS = 60.098;
 
 /**
@@ -128,7 +129,11 @@ export default class Emulation {
 
 	_onAudio = (sample, pulse1, pulse2, triangle, noise, dmc) => {
 		this.samples.push(sample);
-		if (this.channelSamples.mix.length < APU_SAMPLE_RATE * 10) {
+
+		if (
+			this.channelSamples.mix.length <
+			APU_SAMPLE_RATE * MAX_SAMPLE_MEMORY_SECONDS
+		) {
 			this.channelSamples.mix.push(sample);
 			this.channelSamples.pulse1.push(pulse1);
 			this.channelSamples.pulse2.push(pulse2);
