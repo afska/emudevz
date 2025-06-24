@@ -82,12 +82,7 @@ export default class Debugger_APU {
 				});
 
 				utils.simpleTable("sequencer", "Sequencer", () => {
-					ImGui.BeginDisabled(true);
-					ImGui.Checkbox(
-						"Use 5-step sequence",
-						() => true //apu.sequence5Step ?? false
-					);
-					ImGui.EndDisabled(); // TODO: EXTRACT HELPER FOR CHECKBOXES
+					utils.boolean("Use 5-step sequence", true);
 				});
 			});
 
@@ -95,55 +90,39 @@ export default class Debugger_APU {
 				ImGui.Columns(2, "PulseCols", false);
 				["pulse1", "pulse2"].forEach((id, i) => {
 					utils.simpleTable(id, "Pulse Channel " + (i + 1), () => {
-						ImGui.Checkbox(`enabled##${id}`, () => apu.p1?.enabled ?? false);
-						ImGui.Checkbox(
-							`constant volume##${id}_constantvolume`,
-							() => apu.p1?.constantVol ?? false
-						);
-
-						ImGui.TextDisabled(`timer = ${apu.p1?.timer ?? 0}`); // TODO: EXTRACT HELPER FOR VALUE LOGGING
-						ImGui.TextDisabled(`freq = ${apu.p1?.timerFreq ?? 0} hz`);
-						ImGui.TextDisabled(`duty = ${apu.p1?.duty ?? 0}`);
-						ImGui.TextDisabled(`sample = ${apu.p1?.sample ?? 0}`);
+						utils.boolean("Enabled", true);
+						utils.boolean("Constant volume", true);
+						utils.value("timer", 123);
+						utils.value("freq", 123);
+						utils.value("duty", 2); // TODO: PlotLines
+						utils.value("sample", 15);
 
 						utils.simpleTable(`${id}_lengthcounter`, "Length Counter", () => {
-							ImGui.Checkbox(
-								`halt##${id}_lengthcounter_halt`,
-								() => apu.p1?.length?.halt ?? false
-							);
 							const count = apu.p1?.length?.count ?? 0;
-							ImGui.TextDisabled(`count = ${count}`);
+
+							utils.boolean("halt", true);
+							utils.value("count", count);
 							ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 0));
 						});
 
 						utils.simpleTable(`${id}_volumeenvelope`, "Volume Envelope", () => {
-							ImGui.Checkbox(
-								`start##${id}_volumeenvelope`,
-								() => apu.p1?.envStart ?? false
-							);
-							ImGui.SameLine();
-							ImGui.Checkbox(
-								`loop##${id}_volumeenvelope_loop`,
-								() => apu.p1?.envLoop ?? false
-							);
-							ImGui.TextDisabled(`divider period = ${apu.p1?.envPeriod ?? 0}`);
-							ImGui.TextDisabled(`divider count = ${apu.p1?.envCount ?? 0}`);
 							const vol = apu.p1?.envVolume ?? 0;
-							ImGui.TextDisabled(`volume = ${vol}`);
+
+							utils.boolean("start", true);
+							ImGui.SameLine();
+							utils.boolean("loop", true);
+
+							utils.value("divider period", 1);
+							utils.value("divider count", 3);
+							utils.value("volume", vol);
 							ImGui.ProgressBar(vol / 15, new ImGui.Vec2(-1, 0));
 						});
 
 						utils.simpleTable(`${id}_sweep`, "Frequency Sweep", () => {
-							ImGui.Checkbox(
-								`enabled##${id}_sweep`,
-								() => apu.p1?.sweepEn ?? false
-							);
-							ImGui.Checkbox(
-								`negate##${id}_sweep`,
-								() => apu.p1?.sweepNeg ?? false
-							);
-							ImGui.TextDisabled(`period = ${apu.p1?.sweepPeriod ?? 0}`);
-							ImGui.TextDisabled(`delta = ${apu.p1?.sweepShift ?? 0}`);
+							utils.boolean("enabled", true);
+							utils.boolean("negate", true);
+							utils.value("period", 2);
+							utils.value("delta", 14);
 							ImGui.ProgressBar(
 								(apu.freq ?? 0) / MAX_FREQ,
 								new ImGui.Vec2(-1, 0)

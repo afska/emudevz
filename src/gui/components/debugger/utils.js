@@ -38,6 +38,16 @@ export default {
 			ImGui.EndTabItem();
 		}
 	},
+	boolean(label, value) {
+		ImGui.BeginDisabled(true);
+		ImGui.Checkbox(label, () => value);
+		ImGui.EndDisabled();
+	},
+	value(fieldName, value) {
+		ImGui.Text(`${fieldName} =`);
+		ImGui.SameLine();
+		this.withTextColor("#c39f79", () => ImGui.Text(`${value}`));
+	},
 	withTextColor(hex, draw) {
 		const r = parseInt(hex.slice(1, 3), 16) / 255;
 		const g = parseInt(hex.slice(3, 5), 16) / 255;
