@@ -5,6 +5,12 @@ const ImGui = window.ImGui;
 const MIN = 0;
 const MAX = 15;
 const MAX_FREQ = 800;
+const DUTY_SEQUENCE = [
+	[1, 0, 0, 0, 0, 0, 0, 0],
+	[1, 1, 0, 0, 0, 0, 0, 0],
+	[1, 1, 1, 1, 0, 0, 0, 0],
+	[0, 0, 1, 1, 1, 1, 1, 1],
+];
 
 export default class Debugger_APU {
 	constructor() {
@@ -20,7 +26,6 @@ export default class Debugger_APU {
 		const triangle = emulation?.channelSamples.triangle ?? [];
 		const noise = emulation?.channelSamples.noise ?? [];
 		const dmc = emulation?.channelSamples.dmc ?? [];
-		const apu = {};
 
 		if (ImGui.BeginTabBar("APUTabs")) {
 			utils.simpleTab("Overview", () => {
@@ -91,42 +96,55 @@ export default class Debugger_APU {
 				["pulse1", "pulse2"].forEach((id, i) => {
 					utils.simpleTable(id, "Pulse Channel " + (i + 1), () => {
 						utils.boolean("Enabled", true);
-						utils.boolean("Constant volume", true);
-						utils.value("timer", 123);
-						utils.value("freq", 123);
-						utils.value("duty", 2); // TODO: PlotLines
-						utils.value("sample", 15);
+						ImGui.SameLine();
+						utils.boolean("Constant", true);
+						utils.value("Timer", 123);
+						utils.value("  => Freq", "123 hz");
+						utils.value("Duty", "3 (75%)");
+						ImGui.SameLine();
+						const dutyWave = DUTY_SEQUENCE[3];
+						ImGui.PlotHistogram(
+							"",
+							dutyWave,
+							dutyWave.length,
+							0,
+							"",
+							0,
+							1,
+							new ImGui.Vec2(80, 16)
+						);
+						utils.value("Sample", 15);
+						ImGui.NewLine();
 
 						utils.simpleTable(`${id}_lengthcounter`, "Length Counter", () => {
-							const count = apu.p1?.length?.count ?? 0;
+							const count = 40; //apu.p1?.length?.count ?? 0;
 
-							utils.boolean("halt", true);
-							utils.value("count", count);
-							ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 0));
+							utils.boolean("Halt", true);
+							utils.value("Count", count);
+							ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
 						});
 
 						utils.simpleTable(`${id}_volumeenvelope`, "Volume Envelope", () => {
-							const vol = apu.p1?.envVolume ?? 0;
+							const vol = 4; //apu.p1?.envVolume ?? 0;
 
-							utils.boolean("start", true);
+							utils.boolean("Start", true);
 							ImGui.SameLine();
-							utils.boolean("loop", true);
+							utils.boolean("Loop", true);
 
-							utils.value("divider period", 1);
-							utils.value("divider count", 3);
-							utils.value("volume", vol);
-							ImGui.ProgressBar(vol / 15, new ImGui.Vec2(-1, 0));
+							utils.value("Divider period", 1);
+							utils.value("Divider count", 3);
+							utils.value("Volume", vol);
+							ImGui.ProgressBar(vol / 255, new ImGui.Vec2(-1, 16));
 						});
 
 						utils.simpleTable(`${id}_sweep`, "Frequency Sweep", () => {
-							utils.boolean("enabled", true);
-							utils.boolean("negate", true);
-							utils.value("period", 2);
-							utils.value("delta", 14);
-							ImGui.ProgressBar(
-								(apu.freq ?? 0) / MAX_FREQ,
-								new ImGui.Vec2(-1, 0)
-							);
+							utils.boolean("Enabled", true);
+							ImGui.SameLine();
+							utils.boolean("Negate", true);
+							utils.value("Divider period", 1);
+							utils.value("Divider count", 3);
+							utils.value("Delta", 14);
+							ImGui.ProgressBar(200 / MAX_FREQ, new ImGui.Vec2(-1, 16));
 						});
 					});
 
