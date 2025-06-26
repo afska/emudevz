@@ -153,6 +153,69 @@ export default class Debugger_APU {
 				ImGui.Columns(1);
 			});
 
+			utils.simpleTab("Triangle", () => {
+				utils.boolean("Enabled", true);
+				utils.value("Timer", 123);
+				utils.value("  => Freq", "123 hz");
+				utils.value("Sample", 15);
+				ImGui.NewLine();
+
+				utils.simpleTable(`triangle_lengthcounter`, "Length Counter", () => {
+					const count = 40; //apu.p1?.length?.count ?? 0;
+
+					utils.boolean("Halt", true);
+					utils.value("Count", count);
+					ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
+				});
+
+				utils.simpleTable(
+					`triangle_linearlengthcounter`,
+					"Linear Length Counter",
+					() => {
+						const count = 40; //apu.p1?.length?.count ?? 0;
+
+						utils.boolean("Halt", true);
+						utils.value("Count", count);
+						utils.boolean("Reload", true);
+						utils.value("Reload value", count);
+						ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
+					}
+				);
+			});
+
+			utils.simpleTab("Noise", () => {
+				utils.boolean("Enabled", true);
+				ImGui.SameLine();
+				utils.boolean("Constant", true);
+				utils.boolean("Mode", true);
+				utils.value("Divider period", 2);
+				utils.value("Divider count", 2);
+				utils.value("Shift", "0b01000100");
+				utils.value("Sample", 15);
+				ImGui.NewLine();
+
+				utils.simpleTable(`noise_volumeenvelope`, "Volume Envelope", () => {
+					const vol = 4; //apu.p1?.envVolume ?? 0;
+
+					utils.boolean("Start", true);
+					ImGui.SameLine();
+					utils.boolean("Loop", true);
+
+					utils.value("Divider period", 1);
+					utils.value("Divider count", 3);
+					utils.value("Volume", vol);
+					ImGui.ProgressBar(vol / 255, new ImGui.Vec2(-1, 16));
+				});
+
+				utils.simpleTable(`noise_lengthcounter`, "Length Counter", () => {
+					const count = 40; //apu.p1?.length?.count ?? 0;
+
+					utils.boolean("Halt", true);
+					utils.value("Count", count);
+					ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
+				});
+			});
+
 			ImGui.EndTabBar();
 		}
 
