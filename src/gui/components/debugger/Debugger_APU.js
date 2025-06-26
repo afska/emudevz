@@ -4,13 +4,14 @@ const ImGui = window.ImGui;
 
 const MIN = 0;
 const MAX = 15;
-const MAX_FREQ = 800;
+const MAX_FREQ = 1000;
 const DUTY_SEQUENCE = [
 	[1, 0, 0, 0, 0, 0, 0, 0],
 	[1, 1, 0, 0, 0, 0, 0, 0],
 	[1, 1, 1, 1, 0, 0, 0, 0],
 	[0, 0, 1, 1, 1, 1, 1, 1],
 ];
+const DUTY_PERCENTAGES = ["12.5%", "25%", "50%", "75"];
 
 export default class Debugger_APU {
 	constructor() {
@@ -19,13 +20,30 @@ export default class Debugger_APU {
 
 	draw() {
 		const emulation = window.EMULATION;
+		const neees = emulation?.neees;
 
-		const mix = emulation?.channelSamples.mix ?? [];
-		const pulse1 = emulation?.channelSamples.pulse1 ?? [];
-		const pulse2 = emulation?.channelSamples.pulse2 ?? [];
-		const triangle = emulation?.channelSamples.triangle ?? [];
-		const noise = emulation?.channelSamples.noise ?? [];
-		const dmc = emulation?.channelSamples.dmc ?? [];
+		let mix = emulation?.channelSamples.mix ?? [];
+		let pulse1 = emulation?.channelSamples.pulse1 ?? [];
+		let pulse2 = emulation?.channelSamples.pulse2 ?? [];
+		let triangle = emulation?.channelSamples.triangle ?? [];
+		let noise = emulation?.channelSamples.noise ?? [];
+		let dmc = emulation?.channelSamples.dmc ?? [];
+
+		if (mix.length > 0) {
+			this._lastMix = mix;
+			this._lastPulse1 = pulse1;
+			this._lastPulse2 = pulse2;
+			this._lastTriangle = triangle;
+			this._lastNoise = noise;
+			this._lastDMC = dmc;
+		} else if (this._lastMix != null && this._lastMix.length > 0) {
+			mix = this._lastMix;
+			pulse1 = this._lastPulse1;
+			pulse2 = this._lastPulse2;
+			triangle = this._lastTriangle;
+			noise = this._lastNoise;
+			dmc = this._lastDMC;
+		}
 
 		const maxN = mix.length;
 		const N = Math.floor(maxN * (1 - this._zoom));
@@ -94,30 +112,34 @@ export default class Debugger_APU {
 			utils.simpleTab("Pulse", () => {
 				ImGui.Columns(2, "PulseCols", false);
 				["pulse1", "pulse2"].forEach((id, i) => {
+					const samples = i === 0 ? pulse1 : pulse2;
+					const channel = neees?.apu.channels?.pulses?.[i];
+					let frequency = 0,
+						duty = 0;
+					if (channel != null) {
+						const timer = channel.timer ?? 0;
+						frequency = Math.abs(1789773 / (16 * (timer + 1)));
+						duty = channel.registers?.control.dutyCycleId;
+					}
+
 					utils.simpleTable(id, "Pulse Channel " + (i + 1), () => {
 						const waveSize = new ImGui.Vec2(
 							ImGui.GetContentRegionAvail().x,
 							height
 						);
-						ImGui.PlotLines(
-							"",
-							i === 0 ? pulse1 : pulse2,
-							maxN,
-							0,
-							"",
-							MIN,
-							MAX,
-							waveSize
-						);
+						ImGui.PlotLines("", samples, maxN, 0, "", MIN, MAX, waveSize);
 
-						utils.boolean("Enabled", true);
+						utils.boolean("Enabled", channel?.isEnabled?.() ?? false);
 						ImGui.SameLine();
-						utils.boolean("Constant", true);
-						utils.value("Timer", 123);
-						utils.value("  => Freq", "123 hz");
-						utils.value("Duty", "3 (75%)");
+						utils.boolean(
+							"Constant",
+							channel?.registers?.control.constantVolume ?? false
+						);
+						utils.value("Timer", channel?.timer ?? 0);
+						utils.value("  => Freq", `${frequency.toFixed(2)} hz`);
+						utils.value("Duty", `${duty} (${DUTY_PERCENTAGES[duty]})`);
 						ImGui.SameLine();
-						const dutyWave = DUTY_SEQUENCE[3];
+						const dutyWave = DUTY_SEQUENCE[duty];
 						ImGui.PlotHistogram(
 							"",
 							dutyWave,
@@ -128,37 +150,65 @@ export default class Debugger_APU {
 							1,
 							new ImGui.Vec2(80, 16)
 						);
-						utils.value("Sample", 15);
+						utils.value("Sample", samples[samples.length - 1]);
 
 						utils.simpleTable(`${id}_lengthcounter`, "Length Counter", () => {
-							const count = 40; //apu.p1?.length?.count ?? 0;
+							const count = channel?.lengthCounter?.count ?? 0;
 
-							utils.boolean("Halt", true);
+							utils.boolean(
+								"Halt",
+								channel?.registers?.control.envelopeLoopOrLengthCounterHalt
+							);
 							utils.value("Count", count);
 							ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
 						});
 
 						utils.simpleTable(`${id}_volumeenvelope`, "Volume Envelope", () => {
-							const vol = 4; //apu.p1?.envVolume ?? 0;
+							const volume = channel?.volumeEnvelope?.volume ?? 0;
 
-							utils.boolean("Start", true);
+							utils.boolean(
+								"Start",
+								channel?.volumeEnvelope?.startFlag ?? false
+							);
 							ImGui.SameLine();
-							utils.boolean("Loop", true);
+							utils.boolean(
+								"Loop",
+								channel?.registers?.control.envelopeLoopOrLengthCounterHalt ??
+									false
+							);
 
-							utils.value("Divider period", 1);
-							utils.value("Divider count", 3);
-							utils.value("Volume", vol);
-							ImGui.ProgressBar(vol / 255, new ImGui.Vec2(-1, 16));
+							utils.value(
+								"Divider period",
+								channel?.registers?.control.volumeOrEnvelopePeriod ?? 0
+							);
+							utils.value(
+								"Divider count",
+								channel?.volumeEnvelope?.dividerCount ?? 0
+							);
+							utils.value("Volume", volume);
+							ImGui.ProgressBar(volume / 15, new ImGui.Vec2(-1, 16));
 						});
 
 						utils.simpleTable(`${id}_sweep`, "Frequency Sweep", () => {
-							utils.boolean("Enabled", true);
+							utils.boolean(
+								"Enabled",
+								channel?.registers?.sweep?.enabledFlag ?? false
+							);
 							ImGui.SameLine();
-							utils.boolean("Negate", true);
-							utils.value("Divider period", 1);
-							utils.value("Divider count", 3);
-							utils.value("Delta", 14);
-							ImGui.ProgressBar(200 / MAX_FREQ, new ImGui.Vec2(-1, 16));
+							utils.boolean(
+								"Negate",
+								channel?.registers?.sweep?.negateFlag ?? false
+							);
+							utils.value(
+								"Divider period",
+								(channel?.registers?.sweep?.dividerPeriodMinusOne ?? 0) + 1
+							);
+							utils.value(
+								"Divider count",
+								channel?.frequencySweep?.dividerCount ?? 0
+							);
+							utils.value("Delta", channel?.frequencySweep?.sweepDelta ?? 0);
+							ImGui.ProgressBar(frequency / MAX_FREQ, new ImGui.Vec2(-1, 16));
 						});
 					});
 
