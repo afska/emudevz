@@ -27,6 +27,10 @@ export default class Debugger_APU {
 		const noise = emulation?.channelSamples.noise ?? [];
 		const dmc = emulation?.channelSamples.dmc ?? [];
 
+		const maxN = mix.length;
+		const N = Math.floor(maxN * (1 - this._zoom));
+		const height = 40;
+
 		if (ImGui.BeginTabBar("APUTabs")) {
 			utils.simpleTab("Overview", () => {
 				utils.fullWidthFieldWithLabel("Zoom", (label) => {
@@ -38,10 +42,6 @@ export default class Debugger_APU {
 						"%.2f"
 					);
 				});
-
-				const maxN = mix.length;
-				const N = Math.floor(maxN * (1 - this._zoom));
-				const height = 40;
 
 				utils.simpleTable("pulse1", "Pulse Channel 1", () => {
 					const waveSize = new ImGui.Vec2(
@@ -95,6 +95,21 @@ export default class Debugger_APU {
 				ImGui.Columns(2, "PulseCols", false);
 				["pulse1", "pulse2"].forEach((id, i) => {
 					utils.simpleTable(id, "Pulse Channel " + (i + 1), () => {
+						const waveSize = new ImGui.Vec2(
+							ImGui.GetContentRegionAvail().x,
+							height
+						);
+						ImGui.PlotLines(
+							"",
+							i === 0 ? pulse1 : pulse2,
+							maxN,
+							0,
+							"",
+							MIN,
+							MAX,
+							waveSize
+						);
+
 						utils.boolean("Enabled", true);
 						ImGui.SameLine();
 						utils.boolean("Constant", true);
@@ -114,7 +129,6 @@ export default class Debugger_APU {
 							new ImGui.Vec2(80, 16)
 						);
 						utils.value("Sample", 15);
-						ImGui.NewLine();
 
 						utils.simpleTable(`${id}_lengthcounter`, "Length Counter", () => {
 							const count = 40; //apu.p1?.length?.count ?? 0;
@@ -154,11 +168,16 @@ export default class Debugger_APU {
 			});
 
 			utils.simpleTab("Triangle", () => {
+				const waveSize = new ImGui.Vec2(
+					ImGui.GetContentRegionAvail().x,
+					height
+				);
+				ImGui.PlotLines("", triangle, maxN, 0, "", MIN, MAX, waveSize);
+
 				utils.boolean("Enabled", true);
 				utils.value("Timer", 123);
 				utils.value("  => Freq", "123 hz");
 				utils.value("Sample", 15);
-				ImGui.NewLine();
 
 				utils.simpleTable(`triangle_lengthcounter`, "Length Counter", () => {
 					const count = 40; //apu.p1?.length?.count ?? 0;
@@ -184,6 +203,12 @@ export default class Debugger_APU {
 			});
 
 			utils.simpleTab("Noise", () => {
+				const waveSize = new ImGui.Vec2(
+					ImGui.GetContentRegionAvail().x,
+					height
+				);
+				ImGui.PlotLines("", noise, maxN, 0, "", MIN, MAX, waveSize);
+
 				utils.boolean("Enabled", true);
 				ImGui.SameLine();
 				utils.boolean("Constant", true);
@@ -192,7 +217,6 @@ export default class Debugger_APU {
 				utils.value("Divider count", 2);
 				utils.value("Shift", "0b01000100");
 				utils.value("Sample", 15);
-				ImGui.NewLine();
 
 				utils.simpleTable(`noise_volumeenvelope`, "Volume Envelope", () => {
 					const vol = 4; //apu.p1?.envVolume ?? 0;
