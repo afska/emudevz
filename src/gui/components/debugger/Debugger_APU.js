@@ -150,7 +150,7 @@ export default class Debugger_APU {
 							1,
 							new ImGui.Vec2(80, 16)
 						);
-						utils.value("Sample", samples[samples.length - 1]);
+						utils.value("Sample", samples[samples.length - 1] ?? 0);
 
 						utils.simpleTable(`${id}_lengthcounter`, "Length Counter", () => {
 							const count = channel?.lengthCounter?.count ?? 0;
@@ -235,7 +235,7 @@ export default class Debugger_APU {
 				utils.boolean("Enabled", channel?.isEnabled?.() ?? false);
 				utils.value("Timer", channel?.timer ?? 0);
 				utils.value("  => Freq", `${frequency.toFixed(2)} hz`);
-				utils.value("Sample", triangle[triangle.length - 1]);
+				utils.value("Sample", triangle[triangle.length - 1] ?? 0);
 
 				utils.simpleTable(`triangle_lengthcounter`, "Length Counter", () => {
 					const count = channel?.lengthCounter?.count ?? 0;
@@ -296,7 +296,7 @@ export default class Debugger_APU {
 					"Shift",
 					"0b" + (channel?.shift ?? 0).toString(2).padStart(15, "0")
 				);
-				utils.value("Sample", noise[noise.length - 1]);
+				utils.value("Sample", noise[noise.length - 1] ?? 0);
 
 				utils.simpleTable(`noise_volumeenvelope`, "Volume Envelope", () => {
 					const volume = channel?.volumeEnvelope?.volume ?? 0;
@@ -333,28 +333,40 @@ export default class Debugger_APU {
 			});
 
 			utils.simpleTab("DMC", () => {
+				const channel = neees?.apu.channels?.dmc;
+
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
 					height
 				);
 				ImGui.PlotLines("", dmc, maxN, 0, "", MIN, MAX, waveSize);
 
-				utils.boolean("Enabled", true);
-				utils.value("Sample", 15);
+				utils.boolean("Enabled", channel?.isEnabled?.());
+				utils.value("Sample", dmc[dmc.length - 1] ?? 0);
 
 				utils.simpleTable("dmc_dpcm", "DPCM", () => {
-					utils.boolean("Start", true);
-					ImGui.SameLine();
-					utils.boolean("Active", true);
-					utils.value("Buffer", 1);
-					utils.value("Cursor (byte)", 1);
-					utils.value("Cursor (bit)", 3);
-					utils.value("Divider period", 2);
-					utils.value("Divider count", 1);
-					utils.value("Sample address", "0xc000");
-					utils.value("Sample length", 32);
+					const cursorByte = channel?.cursorByte ?? 0;
+					const cursorBit = channel?.cursorBit ?? 0;
+					const sampleLength = channel?.sampleLength ?? 0;
 
-					ImGui.ProgressBar(200 / 1000, new ImGui.Vec2(-1, 16));
+					utils.boolean("Start", channel?.startFlag ?? false);
+					ImGui.SameLine();
+					utils.boolean("Active", channel?.isUsingDPCM ?? false);
+					utils.value("Buffer", channel?.buffer ?? 0);
+					utils.value("Cursor (byte)", cursorByte);
+					utils.value("Cursor (bit)", cursorBit);
+					utils.value("Divider period", channel?.dividerPeriod ?? 0);
+					utils.value("Divider count", channel?.dividerCount ?? 0);
+					utils.value(
+						"Sample address",
+						"0x" + (channel?.sampleAddress ?? 0).toString(16).padStart(4, "0")
+					);
+					utils.value("Sample length", sampleLength);
+
+					ImGui.ProgressBar(
+						(cursorByte * 8 + cursorBit) / Math.max(sampleLength * 8, 1),
+						new ImGui.Vec2(-1, 16)
+					);
 				});
 			});
 
