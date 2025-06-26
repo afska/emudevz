@@ -194,8 +194,9 @@ export default class Debugger_APU {
 						const count = 40; //apu.p1?.length?.count ?? 0;
 
 						utils.boolean("Halt", true);
-						utils.value("Count", count);
+						ImGui.SameLine();
 						utils.boolean("Reload", true);
+						utils.value("Count", count);
 						utils.value("Reload value", count);
 						ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
 					}
@@ -212,6 +213,7 @@ export default class Debugger_APU {
 				utils.boolean("Enabled", true);
 				ImGui.SameLine();
 				utils.boolean("Constant", true);
+				ImGui.SameLine();
 				utils.boolean("Mode", true);
 				utils.value("Divider period", 2);
 				utils.value("Divider count", 2);
@@ -237,6 +239,32 @@ export default class Debugger_APU {
 					utils.boolean("Halt", true);
 					utils.value("Count", count);
 					ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
+				});
+			});
+
+			utils.simpleTab("DMC", () => {
+				const waveSize = new ImGui.Vec2(
+					ImGui.GetContentRegionAvail().x,
+					height
+				);
+				ImGui.PlotLines("", dmc, maxN, 0, "", MIN, MAX, waveSize);
+
+				utils.boolean("Enabled", true);
+				utils.value("Sample", 15);
+
+				utils.simpleTable("dmc_dpcm", "DPCM", () => {
+					utils.boolean("Start", true);
+					ImGui.SameLine();
+					utils.boolean("Active", true);
+					utils.value("Buffer", 1);
+					utils.value("Cursor (byte)", 1);
+					utils.value("Cursor (bit)", 3);
+					utils.value("Divider period", 2);
+					utils.value("Divider count", 1);
+					utils.value("Sample address", "0xc000");
+					utils.value("Sample length", 32);
+
+					ImGui.ProgressBar(200 / 1000, new ImGui.Vec2(-1, 16));
 				});
 			});
 
