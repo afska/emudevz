@@ -118,7 +118,7 @@ export default class Debugger_APU {
 						duty = 0;
 					if (channel != null) {
 						const timer = channel.timer ?? 0;
-						frequency = Math.abs(1789773 / (16 * (timer + 1)));
+						frequency = 1789773 / (16 * (timer + 1));
 						duty = channel.registers?.control.dutyCycleId;
 					}
 
@@ -157,7 +157,8 @@ export default class Debugger_APU {
 
 							utils.boolean(
 								"Halt",
-								channel?.registers?.control.envelopeLoopOrLengthCounterHalt
+								channel?.registers?.control.envelopeLoopOrLengthCounterHalt ??
+									false
 							);
 							utils.value("Count", count);
 							ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
@@ -218,21 +219,28 @@ export default class Debugger_APU {
 			});
 
 			utils.simpleTab("Triangle", () => {
+				const channel = neees?.apu.channels?.triangle;
+				let frequency = 0;
+				if (channel != null) {
+					const timer = channel.timer ?? 0;
+					frequency = 1789773 / (16 * (timer + 1)) / 2;
+				}
+
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
 					height
 				);
 				ImGui.PlotLines("", triangle, maxN, 0, "", MIN, MAX, waveSize);
 
-				utils.boolean("Enabled", true);
-				utils.value("Timer", 123);
-				utils.value("  => Freq", "123 hz");
-				utils.value("Sample", 15);
+				utils.boolean("Enabled", channel?.isEnabled?.() ?? false);
+				utils.value("Timer", channel?.timer ?? 0);
+				utils.value("  => Freq", `${frequency.toFixed(2)} hz`);
+				utils.value("Sample", triangle[triangle.length - 1]);
 
 				utils.simpleTable(`triangle_lengthcounter`, "Length Counter", () => {
-					const count = 40; //apu.p1?.length?.count ?? 0;
+					const count = channel?.lengthCounter?.count ?? 0;
 
-					utils.boolean("Halt", true);
+					utils.boolean("Halt", channel?.registers?.linearLCL.halt ?? false);
 					utils.value("Count", count);
 					ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
 				});
@@ -241,52 +249,84 @@ export default class Debugger_APU {
 					`triangle_linearlengthcounter`,
 					"Linear Length Counter",
 					() => {
-						const count = 40; //apu.p1?.length?.count ?? 0;
+						const count = channel?.linearLengthCounter?.count ?? 0;
 
-						utils.boolean("Halt", true);
+						utils.boolean("Halt", channel?.registers?.linearLCL.halt ?? false);
 						ImGui.SameLine();
-						utils.boolean("Reload", true);
+						utils.boolean(
+							"Reload",
+							channel?.linearLengthCounter?.reloadFlag ?? false
+						);
 						utils.value("Count", count);
-						utils.value("Reload value", count);
+						utils.value(
+							"Reload value",
+							channel?.linearLengthCounter?.reload ?? 0
+						);
 						ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
 					}
 				);
 			});
 
 			utils.simpleTab("Noise", () => {
+				const channel = neees?.apu.channels?.noise;
+
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
 					height
 				);
 				ImGui.PlotLines("", noise, maxN, 0, "", MIN, MAX, waveSize);
 
-				utils.boolean("Enabled", true);
+				utils.boolean("Enabled", channel?.isEnabled?.());
 				ImGui.SameLine();
-				utils.boolean("Constant", true);
+				utils.boolean(
+					"Constant",
+					channel?.registers?.control.constantVolume ?? false
+				);
 				ImGui.SameLine();
-				utils.boolean("Mode", true);
-				utils.value("Divider period", 2);
-				utils.value("Divider count", 2);
-				utils.value("Shift", "0b01000100");
-				utils.value("Sample", 15);
+				utils.boolean("Mode", channel?.registers?.form.mode ?? false);
+				utils.value(
+					"Divider period",
+					channel?.registers?.control.volumeOrEnvelopePeriod ?? 0
+				);
+				utils.value(
+					"Divider count",
+					channel?.volumeEnvelope?.dividerCount ?? 0
+				);
+				utils.value(
+					"Shift",
+					"0b" + (channel?.shift ?? 0).toString(2).padStart(15, "0")
+				);
+				utils.value("Sample", noise[noise.length - 1]);
 
 				utils.simpleTable(`noise_volumeenvelope`, "Volume Envelope", () => {
-					const vol = 4; //apu.p1?.envVolume ?? 0;
+					const volume = channel?.volumeEnvelope?.volume ?? 0;
 
-					utils.boolean("Start", true);
+					utils.boolean("Start", channel?.volumeEnvelope?.startFlag ?? false);
 					ImGui.SameLine();
-					utils.boolean("Loop", true);
+					utils.boolean(
+						"Loop",
+						channel?.registers?.control.envelopeLoopOrLengthCounterHalt ?? false
+					);
 
-					utils.value("Divider period", 1);
-					utils.value("Divider count", 3);
-					utils.value("Volume", vol);
-					ImGui.ProgressBar(vol / 255, new ImGui.Vec2(-1, 16));
+					utils.value(
+						"Divider period",
+						channel?.registers?.control.volumeOrEnvelopePeriod ?? 0
+					);
+					utils.value(
+						"Divider count",
+						channel?.volumeEnvelope?.dividerCount ?? 0
+					);
+					utils.value("Volume", volume);
+					ImGui.ProgressBar(volume / 15, new ImGui.Vec2(-1, 16));
 				});
 
 				utils.simpleTable(`noise_lengthcounter`, "Length Counter", () => {
-					const count = 40; //apu.p1?.length?.count ?? 0;
+					const count = channel?.lengthCounter?.count ?? 0;
 
-					utils.boolean("Halt", true);
+					utils.boolean(
+						"Halt",
+						channel?.registers?.control.envelopeLoopOrLengthCounterHalt ?? false
+					);
 					utils.value("Count", count);
 					ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
 				});
