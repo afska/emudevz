@@ -4,10 +4,12 @@ import utils from "./utils";
 
 const ImGui = window.ImGui;
 
-const LOG_LIMIT = 240;
+const LOG_LIMIT = 1000;
 
 export default class Debugger_CPU {
 	constructor() {
+		this.isRunningStepByStep = false;
+
 		this._logs = [];
 		this._logger = new NEEESSimpleCPULogger();
 		this._scanline = 0;
@@ -16,7 +18,7 @@ export default class Debugger_CPU {
 		if (!neees) return;
 		neees.cpu.logger = (a, b, c, d, e) => {
 			const scanline = neees?.ppu.scanline ?? 0;
-			if (scanline !== this._scanline) {
+			if (this.isRunningStepByStep || scanline !== this._scanline) {
 				this._scanline = scanline;
 				this._logger.log(a, b, c, d, e);
 				this._logs.unshift(this._logger.lastLog);

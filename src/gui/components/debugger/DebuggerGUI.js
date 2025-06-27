@@ -40,11 +40,12 @@ export default class DebuggerGUI {
 		);
 
 		const runFrame = "Run frame";
+		const runScanline = "Run scanline";
 		if (ImGui.BeginTabBar("Tabs")) {
 			const btns = [
 				{ label: emulation.isDebugging ? "Resume" : "Pause" },
 				{ label: runFrame, color: "#b87632" },
-				{ label: "Run scanline", color: "#2a62b0" },
+				{ label: runScanline, color: "#2a62b0" },
 			];
 			const style = ImGui.GetStyle();
 			const totalW =
@@ -59,12 +60,16 @@ export default class DebuggerGUI {
 				if (color) {
 					utils.withBgColor(color, () => {
 						ImGui.Button(label);
-						if (ImGui.IsItemActive()) {
+						const isActive = ImGui.IsItemActive();
+
+						if (label === runScanline) this._cpu.isRunningStepByStep = isActive;
+
+						if (isActive) {
 							if (emulation) {
 								emulation.isDebugging = true;
 								if (label === runFrame) {
 									emulation.isDebugStepFrameRequested = true;
-								} else {
+								} else if (label === runScanline) {
 									emulation.isDebugStepScanlineRequested = true;
 								}
 							}
