@@ -98,5 +98,6 @@ export default class DebuggerGUI {
 
 	destroy() {
 		this._cpu.destroy();
+		this._apu.destroy();
 	}
 }

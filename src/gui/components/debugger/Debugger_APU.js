@@ -51,6 +51,38 @@ export default class Debugger_APU {
 
 		if (ImGui.BeginTabBar("APUTabs")) {
 			utils.simpleTab("Overview", () => {
+				if (emulation != null) {
+					ImGui.Checkbox(
+						"Pulse 1",
+						(val = emulation.enabledChannels.pulse1) =>
+							(emulation.enabledChannels.pulse1 = val)
+					);
+					ImGui.SameLine();
+					ImGui.Checkbox(
+						"Pulse 2",
+						(val = emulation.enabledChannels.pulse2) =>
+							(emulation.enabledChannels.pulse2 = val)
+					);
+					ImGui.SameLine();
+					ImGui.Checkbox(
+						"Triangle",
+						(val = emulation.enabledChannels.triangle) =>
+							(emulation.enabledChannels.triangle = val)
+					);
+					ImGui.SameLine();
+					ImGui.Checkbox(
+						"Noise",
+						(val = emulation.enabledChannels.noise) =>
+							(emulation.enabledChannels.noise = val)
+					);
+					ImGui.SameLine();
+					ImGui.Checkbox(
+						"DMC",
+						(val = emulation.enabledChannels.dmc) =>
+							(emulation.enabledChannels.dmc = val)
+					);
+				}
+
 				utils.fullWidthFieldWithLabel("Zoom", (label) => {
 					ImGui.SliderFloat(
 						label,
@@ -375,5 +407,16 @@ export default class Debugger_APU {
 
 		if (emulation != null && !emulation.isDebugging)
 			emulation.resetChannelSamples();
+	}
+
+	destroy() {
+		const emulation = window.EMULATION;
+		if (!emulation) return;
+
+		emulation.enabledChannels.pulse1 = true;
+		emulation.enabledChannels.pulse2 = true;
+		emulation.enabledChannels.triangle = true;
+		emulation.enabledChannels.noise = true;
+		emulation.enabledChannels.dmc = true;
 	}
 }

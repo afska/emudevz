@@ -28,6 +28,13 @@ export default class Emulation {
 		this.screen = screen;
 		this.samples = [];
 		this.resetChannelSamples();
+		this.enabledChannels = {
+			pulse1: true,
+			pulse2: true,
+			triangle: true,
+			noise: true,
+			dmc: true,
+		};
 
 		this.speaker = new Speaker(volume);
 		this.speaker.start();
@@ -128,6 +135,25 @@ export default class Emulation {
 	};
 
 	_onAudio = (sample, pulse1, pulse2, triangle, noise, dmc) => {
+		if (
+			!this.enabledChannels.pulse1 ||
+			!this.enabledChannels.pulse2 ||
+			!this.enabledChannels.triangle ||
+			!this.enabledChannels.noise ||
+			!this.enabledChannels.dmc
+		) {
+			// some channels are muted, so we mix manually
+			if (!this.enabledChannels.pulse1) pulse1 = 0;
+			if (!this.enabledChannels.pulse2) pulse2 = 0;
+			if (!this.enabledChannels.triangle) triangle = 0;
+			if (!this.enabledChannels.noise) noise = 0;
+			if (!this.enabledChannels.dmc) dmc = 0;
+
+			const pulseOut = 0.00752 * (pulse1 + pulse2);
+			const tndOut = 0.00851 * triangle + 0.00494 * noise + 0.00335 * dmc;
+			sample = pulseOut + tndOut;
+		}
+
 		this.samples.push(sample);
 
 		if (

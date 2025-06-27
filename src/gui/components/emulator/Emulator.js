@@ -126,7 +126,7 @@ export default class Emulator extends Component {
 						.usePartialAPU(currentLevel.id.startsWith("apu-"))
 						.setCustomPPU(settings.customPPU)
 						.setCustomAPU(settings.customAPU)
-						.setUnbroken(settings.unbroken)
+						.setUnbroken(true) //settings.unbroken)
 						.build(settings.withLatestCode);
 		} catch (e) {
 			this._onError(e);
