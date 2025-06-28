@@ -158,6 +158,7 @@ class MultiFile extends PureComponent {
 	};
 
 	_focusAndSearch = () => {
+		bus.emit("unpin-secondary", { changeFocus: false });
 		const name = this._layout.getInstanceName(this);
 		this._layout.focus(name);
 		this._search();

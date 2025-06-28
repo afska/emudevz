@@ -4,6 +4,7 @@ import Speaker from "./Speaker";
 const SYNC_TO_AUDIO = true;
 const APU_SAMPLE_RATE = 44100;
 const AUDIO_BUFFER_LIMIT = 4096;
+const MAX_SAMPLE_MEMORY_SECONDS = 10;
 const FPS = 60.098;
 
 /**
@@ -26,6 +27,14 @@ export default class Emulation {
 
 		this.screen = screen;
 		this.samples = [];
+		this.resetChannelSamples();
+		this.enabledChannels = {
+			pulse1: true,
+			pulse2: true,
+			triangle: true,
+			noise: true,
+			dmc: true,
+		};
 
 		this.speaker = new Speaker(volume);
 		this.speaker.start();
@@ -40,19 +49,21 @@ export default class Emulation {
 		this.isDebugStepScanlineRequested = false;
 
 		this.neees = new NEEES(this._onFrame, this._onAudio);
+		window.EMULATION = this;
+
 		this.frameTimer = new FrameTimer(() => {
 			this._updateInput(getInput());
 
 			if (
 				this.isDebugging &&
 				!this.isDebugStepFrameRequested &&
-				!this.isDebugScanlineRequested
+				!this.isDebugStepScanlineRequested
 			)
 				return;
 
-			const isDebugScanlineRequested = this.isDebugScanlineRequested;
+			const isDebugStepScanlineRequested = this.isDebugStepScanlineRequested;
 			this.isDebugStepFrameRequested = false;
-			this.isDebugScanlineRequested = false;
+			this.isDebugStepScanlineRequested = false;
 
 			if (this.isSaveStateRequested && !this.wasSaveStateRequested) {
 				this.saveState = this.neees.getSaveState();
@@ -70,8 +81,8 @@ export default class Emulation {
 			}
 
 			try {
-				if (isDebugScanlineRequested) {
-					this.neees.scanline();
+				if (isDebugStepScanlineRequested) {
+					this.neees.scanline(true);
 				} else if (SYNC_TO_AUDIO) {
 					const requestedSamples = APU_SAMPLE_RATE / FPS;
 					const newBufferSize = this.speaker.bufferSize + requestedSamples;
@@ -103,6 +114,18 @@ export default class Emulation {
 	terminate = () => {
 		this.frameTimer.stop();
 		this.speaker.stop();
+		window.EMULATION = null;
+	};
+
+	resetChannelSamples = () => {
+		this.channelSamples = {
+			mix: [],
+			pulse1: [],
+			pulse2: [],
+			triangle: [],
+			noise: [],
+			dmc: [],
+		};
 	};
 
 	_onFrame = (frameBuffer) => {
@@ -111,8 +134,39 @@ export default class Emulation {
 		this._onFrameCallback(frameBuffer, this.neees);
 	};
 
-	_onAudio = (sample) => {
+	_onAudio = (sample, pulse1, pulse2, triangle, noise, dmc) => {
+		if (
+			!this.enabledChannels.pulse1 ||
+			!this.enabledChannels.pulse2 ||
+			!this.enabledChannels.triangle ||
+			!this.enabledChannels.noise ||
+			!this.enabledChannels.dmc
+		) {
+			// some channels are muted, so we mix manually
+			if (!this.enabledChannels.pulse1) pulse1 = 0;
+			if (!this.enabledChannels.pulse2) pulse2 = 0;
+			if (!this.enabledChannels.triangle) triangle = 0;
+			if (!this.enabledChannels.noise) noise = 0;
+			if (!this.enabledChannels.dmc) dmc = 0;
+
+			const pulseOut = 0.00752 * (pulse1 + pulse2);
+			const tndOut = 0.00851 * triangle + 0.00494 * noise + 0.00335 * dmc;
+			sample = pulseOut + tndOut;
+		}
+
 		this.samples.push(sample);
+
+		if (
+			this.channelSamples.mix.length <
+			APU_SAMPLE_RATE * MAX_SAMPLE_MEMORY_SECONDS
+		) {
+			this.channelSamples.mix.push(sample);
+			this.channelSamples.pulse1.push(pulse1);
+			this.channelSamples.pulse2.push(pulse2);
+			this.channelSamples.triangle.push(triangle);
+			this.channelSamples.noise.push(noise);
+			this.channelSamples.dmc.push(dmc);
+		}
 	};
 
 	_updateSound() {
@@ -130,7 +184,8 @@ export default class Emulation {
 				if (input[i].$startDebugging) this.isDebugging = true;
 				if (input[i].$stopDebugging) this.isDebugging = false;
 				if (input[i].$debugStepFrame) this.isDebugStepFrameRequested = true;
-				if (input[i].$debugStepScanline) this.isDebugScanlineRequested = true;
+				if (input[i].$debugStepScanline)
+					this.isDebugStepScanlineRequested = true;
 			}
 
 			for (let button in input[i])

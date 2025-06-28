@@ -157,6 +157,7 @@ export default class Emulator extends Component {
 			volume,
 			onFrame
 		);
+		bus.emit("emulator-started");
 	}
 
 	_getInput = () => {
@@ -193,6 +194,7 @@ export default class Emulator extends Component {
 		window.removeEventListener("keyup", this._onKeyUp);
 		window.removeEventListener("fullscreenchange", this._onFullscreenChange);
 		this.props.onStop?.();
+		bus.emit("emulator-stopped");
 		bus.emit("resume-music");
 	}
 

@@ -59,6 +59,7 @@ export default {
 	drag_and_drop_here: "Drag a ROM here!",
 	emulation_fullscreen: "Go fullscreen",
 	emulation_go_to_error: "Go to error line",
+	emulation_open_debugger: "Open debugger",
 	emulation_reload: "Reload ROM",
 	emulation_stop: "Stop emulation",
 	enter_a_file_name: "Enter a file name...",

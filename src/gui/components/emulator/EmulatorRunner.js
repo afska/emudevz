@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { FaExpand, FaSearch, FaStop, FaSync } from "react-icons/fa";
+import { FaBug, FaExpand, FaSearch, FaStop, FaSync } from "react-icons/fa";
 import classNames from "classnames";
 import _ from "lodash";
 import Level from "../../../level/Level";
@@ -194,6 +194,14 @@ export default class EmulatorRunner extends PureComponent {
 					{!!rom && (
 						<IconButton
 							style={{ marginRight: 8 }}
+							Icon={FaBug}
+							tooltip={locales.get("emulation_open_debugger")}
+							onClick={this._openDebugger}
+						/>
+					)}
+					{!!rom && (
+						<IconButton
+							style={{ marginRight: 8 }}
 							Icon={FaSync}
 							tooltip={locales.get("emulation_reload")}
 							onClick={() => this._reload(false)}
@@ -216,6 +224,9 @@ export default class EmulatorRunner extends PureComponent {
 		this._subscriber = bus.subscribe({
 			"code-changed": _.debounce(this._onCodeChanged, REFRESH_DEBOUNCE_MS),
 			"unit-unlocked": this._onUnitUnlocked,
+			"emulator-stopped": () => {
+				bus.emit("unpin-secondary", { changeFocus: false });
+			},
 		});
 	}
 
@@ -284,6 +295,10 @@ export default class EmulatorRunner extends PureComponent {
 		this._emulator.toggleFullscreen();
 	};
 
+	_openDebugger = () => {
+		Level.current.launchDebugger();
+	};
+
 	_reload = (useSaveStateIfPossible = false) => {
 		const saveState =
 			(useSaveStateIfPossible &&
@@ -295,6 +310,7 @@ export default class EmulatorRunner extends PureComponent {
 	};
 
 	_stop = () => {
+		this._emulator?.stop();
 		this.props.onStop();
 	};
 

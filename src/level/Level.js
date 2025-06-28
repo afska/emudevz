@@ -1,6 +1,7 @@
 import _ from "lodash";
 import filesystem, { Drive } from "../filesystem";
 import components from "../gui/components";
+import Debugger from "../gui/components/Debugger";
 import TV from "../gui/components/TV";
 import layouts from "../gui/components/layouts";
 import locales from "../locales";
@@ -131,7 +132,7 @@ export default class Level {
 		if (chapter.isSpecial) return false;
 
 		return (
-			bus.isListeningTo("pin") ||
+			(bus.isListeningTo("pin") && !bus.isListeningTo("do-not-pin-emulator")) ||
 			this.$layout.findInstance("TV", (it) => it.state.type === "rom") != null
 		);
 	}
@@ -159,6 +160,14 @@ export default class Level {
 				level: this,
 			});
 		}
+	}
+
+	launchDebugger() {
+		bus.emit("secondary-pin", {
+			Component: Debugger,
+			args: {},
+			level: this,
+		});
 	}
 
 	highlightMultiFileEditor() {

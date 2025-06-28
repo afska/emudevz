@@ -16,12 +16,16 @@ export default class TripleLayout extends Layout {
 		return "Top";
 	}
 
+	static get secondaryPinLocation() {
+		return "Right";
+	}
+
 	state = { selected: "Right", lastVerticalSelection: "Bottom", Pin: null };
 
 	render() {
 		this.requireComponents();
 		const { Right, Top, Bottom } = this.props;
-		const { selected, Pin } = this.state;
+		const { selected, Pin, SecondaryPin } = this.state;
 
 		return (
 			<div className={styles.container} onKeyDownCapture={this.onKeyDown}>
@@ -89,12 +93,38 @@ export default class TripleLayout extends Layout {
 					</div>
 				)}
 
+				{SecondaryPin && (
+					<div
+						className={classNames(
+							styles.rightColumn,
+							styles.column,
+							selected === "Right" ? styles.selected : styles.unselected
+						)}
+						onMouseDown={(e) => {
+							this.setState({ selected: "Right" });
+						}}
+					>
+						<IconButton
+							Icon={FaTimes}
+							tooltip={locales.get("close")}
+							onClick={this._closeSecondaryPin}
+							className={styles.closePinButton}
+						/>
+						<SecondaryPin
+							ref={(ref) => {
+								this.instances.SecondaryPin = ref;
+							}}
+						/>
+					</div>
+				)}
+
 				<div
 					className={classNames(
 						styles.rightColumn,
 						styles.column,
 						selected === "Right" ? styles.selected : styles.unselected
 					)}
+					style={{ display: SecondaryPin ? "none" : "block" }}
 					onMouseDown={(e) => {
 						this.setState({ selected: "Right" });
 					}}
@@ -155,6 +185,8 @@ export default class TripleLayout extends Layout {
 		this._subscriber = bus.subscribe({
 			pin: this._onPin,
 			unpin: this._closePin,
+			"secondary-pin": this._onSecondaryPin,
+			"unpin-secondary": this._closeSecondaryPin,
 			"do-not-pin-emulator": () => {},
 		});
 	}
@@ -164,20 +196,44 @@ export default class TripleLayout extends Layout {
 	}
 
 	_onPin = (pin) => {
-		this.setState({ Pin: pin.Component }, () => {
-			this.instances.Pin.initialize(pin.args, pin.level, this);
+		this._onPinOpened(pin, "Pin", this.constructor.pinLocation);
+	};
+
+	_closePin = () => {
+		this._onPinClosed("Pin", this.constructor.pinLocation);
+	};
+
+	_onSecondaryPin = (pin) => {
+		const location = this.constructor.secondaryPinLocation;
+
+		this._onPinOpened(pin, "SecondaryPin", location);
+	};
+
+	_closeSecondaryPin = (options) => {
+		this._onPinClosed(
+			"SecondaryPin",
+			this.constructor.secondaryPinLocation,
+			options
+		);
+	};
+
+	_onPinOpened = (pin, name, pinLocation) => {
+		this.setState({ [name]: pin.Component }, () => {
+			this.instances[name].initialize(pin.args, pin.level, this);
 			setTimeout(() => {
-				this.focus(this.constructor.pinLocation);
+				this.focus(pinLocation);
 			});
 		});
 	};
 
-	_closePin = () => {
-		this.instances.Pin = null;
-		this.setState({ Pin: null }, () => {
-			setTimeout(() => {
-				this.focus("Top");
-			});
+	_onPinClosed = (name, pinLocation, options = { changeFocus: true }) => {
+		this.instances[name] = null;
+		this.setState({ [name]: null }, () => {
+			if (options?.changeFocus) {
+				setTimeout(() => {
+					this.focus(pinLocation);
+				});
+			}
 		});
 	};
 }

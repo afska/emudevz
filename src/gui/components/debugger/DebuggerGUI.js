@@ -1,0 +1,108 @@
+import Debugger_APU from "./Debugger_APU";
+import Debugger_CPU from "./Debugger_CPU";
+import Debugger_External from "./Debugger_External";
+import Debugger_Logs from "./Debugger_Logs";
+import Debugger_Memory from "./Debugger_Memory";
+import Debugger_PPU from "./Debugger_PPU";
+import utils from "./utils";
+
+const ImGui = window.ImGui;
+
+export default class DebuggerGUI {
+	constructor() {
+		this._memory = new Debugger_Memory();
+		this._cpu = new Debugger_CPU();
+		this._ppu = new Debugger_PPU();
+		this._apu = new Debugger_APU();
+		this._external = new Debugger_External();
+		this._logs = new Debugger_Logs();
+	}
+
+	init() {
+		this._ppu.init();
+	}
+
+	draw() {
+		const emulation = window.EMULATION;
+
+		const m = 10;
+		ImGui.SetNextWindowPos(new ImGui.ImVec2(m, m), ImGui.Cond.FirstUseEver);
+		const io = ImGui.GetIO();
+		ImGui.SetNextWindowSize(
+			new ImGui.ImVec2(io.DisplaySize.x - m * 2, io.DisplaySize.y - m * 2)
+		);
+		ImGui.Begin(
+			"Debugger",
+			null,
+			ImGui.WindowFlags.NoMove |
+				ImGui.WindowFlags.NoResize |
+				ImGui.WindowFlags.NoCollapse
+		);
+
+		const runFrame = "Run frame";
+		const runScanline = "Run scanline";
+		if (ImGui.BeginTabBar("Tabs")) {
+			const btns = [
+				{ label: emulation.isDebugging ? "Resume" : "Pause" },
+				{ label: runFrame, color: "#b87632" },
+				{ label: runScanline, color: "#2a62b0" },
+			];
+			const style = ImGui.GetStyle();
+			const totalW =
+				btns.reduce(
+					(acc, b) =>
+						acc + ImGui.CalcTextSize(b.label).x + style.FramePadding.x * 2,
+					0
+				) +
+				style.ItemSpacing.x * (btns.length - 1);
+			ImGui.SameLine(ImGui.GetContentRegionAvail().x - totalW);
+			btns.forEach(({ label, color }, i) => {
+				if (color) {
+					utils.withBgColor(color, () => {
+						ImGui.Button(label);
+						const isActive = ImGui.IsItemActive();
+
+						if (label === runScanline) this._cpu.isRunningStepByStep = isActive;
+
+						if (isActive) {
+							if (emulation) {
+								emulation.isDebugging = true;
+								if (label === runFrame) {
+									emulation.isDebugStepFrameRequested = true;
+								} else if (label === runScanline) {
+									emulation.isDebugStepScanlineRequested = true;
+								}
+							}
+						}
+					});
+				} else {
+					if (ImGui.Button(label)) {
+						if (emulation) emulation.isDebugging = !emulation.isDebugging;
+					}
+				}
+				if (i < btns.length - 1) ImGui.SameLine();
+			});
+
+			const tabs = [
+				{ name: "Memory", pane: this._memory },
+				{ name: "CPU", pane: this._cpu },
+				{ name: "PPU", pane: this._ppu },
+				{ name: "APU", pane: this._apu },
+				{ name: "External", pane: this._external },
+				{ name: "Logs", pane: this._logs },
+			];
+			for (let { name, pane } of tabs) {
+				utils.simpleTab(name, () => pane.draw());
+			}
+
+			ImGui.EndTabBar();
+		}
+
+		ImGui.End();
+	}
+
+	destroy() {
+		this._cpu.destroy();
+		this._apu.destroy();
+	}
+}
