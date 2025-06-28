@@ -1,0 +1,36 @@
+{
+	"name": {
+		"en": "🔊 New APU",
+		"es": "🔊 Nueva APU"
+	},
+	"ui": {
+		"run": "copy.js",
+		"layout": "dual",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "apu.js"],
+		"mainTestFile": "apu.js"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

@@ -1,6 +1,6 @@
 ---
 main:
   messages:
-  - ¡próximamente!
+  - coming soon!
   responses:
-  - ok [end]
+  - asd [end]
