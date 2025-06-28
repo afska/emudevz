@@ -1,6 +1,41 @@
 ---
 main:
   messages:
-  - coming soon!
+  - we'll finally add <audio> to our emulator! 🔊
+  - it's not as intuitive as <video>, so I'll have to explain a few things first
   responses:
-  - asd [end]
+  - how does it work? [how]
+
+how:
+  messages:
+  - 📈  <audio> works by defining waves that directly match what the speakers do
+  - 🎵  when a speaker vibrates at a particular frequency, it creates a note
+  - 🌊  since time is a <continuous unit>, computers store waves as a stream of samples, which are numbers that define the height of the wave at a certain point in time
+  - 🔢  in the NEEES, samples are numbers in the ~0-15~ range, and when emulating the APU, we feed 44100 samples per second to the sound card
+  - that's called the sample rate
+  responses:
+  - how does a wave look? [wave]
+  - how does the APU generate samples? [samples]
+
+wave:
+  messages:
+  - it looks... periodical!
+  - like this, this is a sinoidal wave
+  - "// TODO: Explain frequency, period, amplitude"
+  responses:
+  - ...how
+
+samples:
+  messages:
+  - like the CPU and PPU, the APU works with cycles 🚲
+  - a cycle is the smallest time unit, corresponding to one clock tick during which it updates its internal state by one step
+  - the 🔊  APU runs 2x slower than the 🧠  CPU
+  - so APU cycles are slower (each APU cycle is, in time, ~twice as long~ as a CPU cycle)
+  - <{unit_speeds.png}>
+  responses:
+  - how do we start? [start]
+
+start:
+  messages:
+  - asd
+  responses: []
