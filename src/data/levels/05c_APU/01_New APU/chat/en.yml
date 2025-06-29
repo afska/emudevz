@@ -14,14 +14,28 @@ how:
   - 🔢  in the NEEES, samples are numbers in the ~0-15~ range, and when emulating the APU, we feed 44100 samples per second to the sound card
   - that's called the sample rate
   responses:
-  - how does a wave look? [wave]
+  - (*) how does a wave look? [wave]
   - how does the APU generate samples? [samples]
 
 wave:
   messages:
-  - it looks... periodical!
-  - like this, this is a sinoidal wave
-  - "// TODO: Explain frequency, period, amplitude"
+  - it looks... <periodical>!
+  - <{wave_square.png}>
+  - this is a <max-volume> square wave, a common waveform used by the APU
+  - the period indicates the time it takes to complete a full repetition
+  - "`period = 1 / frequency`, so lower periods make higher pitch notes"
+  - more amplitude means more volume
+  - and like I said, these are stored like a stream of samples
+  - here's a more complex wave
+  - <{wave.png}>
+  - you can observe here how we can store the waveform as a <sequence of points>
+  - the samples!
+  responses:
+  - alright, but how do these waves sound? [sound]
+
+sound:
+  messages:
+  - dunno
   responses:
   - ...how
 
@@ -29,7 +43,7 @@ samples:
   messages:
   - like the CPU and PPU, the APU works with cycles 🚲
   - a cycle is the smallest time unit, corresponding to one clock tick during which it updates its internal state by one step
-  - the 🔊  APU runs 2x slower than the 🧠  CPU
+  - the 🔊  APU runs <2x> slower than the 🧠  CPU
   - so APU cycles are slower (each APU cycle is, in time, ~twice as long~ as a CPU cycle)
   - <{unit_speeds.png}>
   responses:

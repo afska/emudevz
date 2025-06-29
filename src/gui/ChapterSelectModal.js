@@ -60,6 +60,7 @@ export default class ChapterSelectModal extends PureComponent {
 									nested
 									right
 									optional
+									comingSoon
 								/>
 								<Chapter
 									book={book}
@@ -81,7 +82,6 @@ export default class ChapterSelectModal extends PureComponent {
 									nested
 									left
 									right
-									comingSoon
 								/>
 								<Chapter
 									book={book}

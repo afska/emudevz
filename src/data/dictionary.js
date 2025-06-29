@@ -264,9 +264,9 @@ const dictionary = {
 			also: { es: "Frecuencia" },
 			icon: "🎚️",
 			en:
-				"The number of times a wave repeats in one second. It determines the pitch of a sound. Measured in hertz (`Hz`).",
+				"The number of times a wave repeats in one second. It determines the pitch of a sound. Measured in hertz (`Hz`). <br /><br />It is the inverse of the period.",
 			es:
-				"El número de veces que una onda se repite en un segundo. Determina el tono de un sonido. Se mide en hertz (`Hz`).",
+				"El número de veces que una onda se repite en un segundo. Determina el tono de un sonido. Se mide en hertz (`Hz`). <br /><br />Es la inversa del período.",
 		},
 		HBlank: {
 			icon: "🏝️",
@@ -505,6 +505,14 @@ const dictionary = {
 				"The index of a pattern table. There are `2`: `$PPU $0000` (`0`) and `$PPU $1000` (`1`).",
 			es:
 				"El índice de una pattern table. Hay `2`: `$PPU $0000` (`0`) y `$PPU $1000` (`1`).",
+		},
+		Period: {
+			also: { es: "Período" },
+			icon: "⏱️",
+			en:
+				"The time it takes for a wave to complete one full repetition, measured in seconds. <br /><br />It is the inverse of the frequency.",
+			es:
+				"El tiempo que tarda una onda en completar una repetición completa, medido en segundos. <br /><br />Es el inverso de la frecuencia.",
 		},
 		PPU: {
 			icon: "🖥️",
