@@ -55,6 +55,30 @@ const dictionary = {
 			es:
 				"Una forma que tiene una instrucción de especificar dónde está el dato que necesita.",
 		},
+		Amplitude: {
+			also: { es: "Amplitud" },
+			icon: "📶",
+			en:
+				"The height of the wave peaks. It defines the volume or loudness of the sound.",
+			es:
+				"La altura de los picos de la onda. Define el volumen o la intensidad del sonido.",
+		},
+		"Audio sample|_Audio samples|Sample|_Samples": {
+			also: { es: "Sample de audio|_Samples de audio|Sample|_Samples" },
+			icon: "📈",
+			en:
+				"A number that represents the height of a wave at a specific point in time. Waves are stored as a stream of these values. <br /><br/>In the NEEES, these are numbers in the `0-15` range. When emulating the APU, we use a 44100 Hz sample rate.",
+			es:
+				"Un número que representa la altura de una onda en un punto específico en el tiempo. Las ondas se almacenan como una secuencia de estos valores. <br /><br/>En la NEEES, estos números están en el rango `0-15`. Al emular la APU, usamos una frecuencia de muestreo de 44100 Hz.",
+		},
+		"Audio wave|_Audio waves|Wave|_Waves": {
+			also: { es: "Onda de audio|_Ondas de audio|Onda|_Ondas" },
+			icon: "🌊",
+			en:
+				"A representation of how sound varies over time, stored as a stream of samples that describe the wave's height at each moment. <br /><br />A wave has a form, frequency and amplitude.",
+			es:
+				"Una representación de cómo varía el sonido a lo largo del tiempo, almacenada como una secuencia de samples que describen la altura de la onda en cada instante. <br /><br />Una onda tiene forma, frecuencia y amplitud.",
+		},
 		APU: {
 			icon: "🔊",
 			en:
@@ -235,6 +259,14 @@ const dictionary = {
 				"A block of memory that stores the color of each pixel on the screen. It's where the frame image is built before being displayed.",
 			es:
 				"Un bloque de memoria que almacena el color de cada píxel en pantalla. Es donde se construye la imagen del frame antes de mostrarse.",
+		},
+		Frequency: {
+			also: { es: "Frecuencia" },
+			icon: "🎚️",
+			en:
+				"The number of times a wave repeats in one second. It determines the pitch of a sound. Measured in hertz (`Hz`).",
+			es:
+				"El número de veces que una onda se repite en un segundo. Determina el tono de un sonido. Se mide en hertz (`Hz`).",
 		},
 		HBlank: {
 			icon: "🏝️",
@@ -560,6 +592,16 @@ const dictionary = {
 			es:
 				"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
 		},
+		"Sample rate|_Sample rates": {
+			also: {
+				es: "Frecuencia de muestreo|_Frecuencias de muestreo",
+			},
+			icon: "🎛️",
+			en:
+				"The number of samples taken per second to represent a sound. Measured in hertz (`Hz`).",
+			es:
+				"La cantidad de samples tomados por segundo para representar un sonido. Se mide en hertz (`Hz`).",
+		},
 		"Scanline|_Scanlines": {
 			icon: "🌠",
 			en:
@@ -672,6 +714,14 @@ const dictionary = {
 				"_(Video RAM)_ A RAM chip of `2` KiB that lives in the PPU. It holds name tables.",
 			es:
 				"_(Video RAM)_ Un chip de RAM de `2` KiB que vive en la PPU. Almacena name tables.",
+		},
+		"Waveform|Form": {
+			also: { es: "Forma de onda|Forma" },
+			icon: "♒",
+			en:
+				"The general shape of a wave over time. Common waveforms include sine, square, triangle, and sawtooth.",
+			es:
+				"La forma general de una onda a lo largo del tiempo. Las formas comunes incluyen seno, cuadrada, triangular y diente de sierra.",
 		},
 		WRAM: {
 			icon: "🐏",

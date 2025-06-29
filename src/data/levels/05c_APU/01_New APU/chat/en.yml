@@ -8,9 +8,9 @@ main:
 
 how:
   messages:
-  - 📈  <audio> works by defining waves that directly match what the speakers do
+  - 🌊  <audio> works by defining waves that directly match what the speakers do
   - 🎵  when a speaker vibrates at a particular frequency, it creates a note
-  - 🌊  since time is a <continuous unit>, computers store waves as a stream of samples, which are numbers that define the height of the wave at a certain point in time
+  - 📈  since time is a <continuous unit>, computers store waves as a stream of samples, which are numbers that define the height of the wave at a certain point in time
   - 🔢  in the NEEES, samples are numbers in the ~0-15~ range, and when emulating the APU, we feed 44100 samples per second to the sound card
   - that's called the sample rate
   responses:
