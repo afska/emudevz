@@ -88,6 +88,7 @@ export default class Debugger extends PureComponent {
 		canvas.height = canvas.scrollHeight * devicePixelRatio;
 	};
 
+	// TODO: USE OR REMOVE
 	// _logError(err) {
 	// 	ImGui.TextColored(new ImGui.ImVec4(1.0, 0.0, 0.0, 1.0), "Error: ");
 	// 	ImGui.SameLine();

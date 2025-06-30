@@ -7,7 +7,31 @@ import testContext from "../../../terminal/commands/test/context";
 import IconButton from "../widgets/IconButton";
 import ProgressBar from "../widgets/ProgressBar";
 import Emulator from "./Emulator";
-import styles from "./AudioTester.module.css";
+import emulatorStyles from "./Emulator.module.css";
+import styles from "./Tester.module.css";
+
+const SCREEN_WIDTH = 256;
+const SCREEN_HEIGHT = 240;
+
+class AudioViewer extends PureComponent {
+	render() {
+		return (
+			<div
+				className={emulatorStyles.content}
+				style={{ width: "auto", height: "auto" }}
+			>
+				<canvas
+					className={emulatorStyles.box}
+					width={SCREEN_WIDTH}
+					height={SCREEN_HEIGHT}
+					ref={(canvas) => {
+						// if (canvas) this._initCanvas(canvas);
+					}}
+				/>
+			</div>
+		);
+	}
+}
 
 export default class AudioTester extends PureComponent {
 	_samplesA = {
@@ -52,7 +76,11 @@ export default class AudioTester extends PureComponent {
 					<h6 className={styles.title}>
 						{locales.get("tests_audio_apu_output")}
 					</h6>
+					<AudioViewer />
 					<Emulator
+						screen={{
+							setBuffer: (buffer) => {},
+						}}
 						rom={rom}
 						saveState={saveState}
 						settings={{
@@ -108,7 +136,11 @@ export default class AudioTester extends PureComponent {
 					<h6 className={styles.title}>
 						{locales.get("tests_audio_expected_output")}
 					</h6>
+					<AudioViewer />
 					<Emulator
+						screen={{
+							setBuffer: (buffer) => {},
+						}}
 						rom={rom}
 						saveState={saveState}
 						settings={{

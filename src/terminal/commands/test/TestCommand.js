@@ -86,7 +86,8 @@ export default class TestCommand extends Command {
 			if (mainTestFile != null && testFiles.includes(mainTestFile))
 				testFiles = [..._.without(testFiles, mainTestFile), mainTestFile];
 			else mainTestFile = null;
-			if (this._targetId === "video") testFiles = [];
+			if (this._targetId === "audio" || this._targetId === "video")
+				testFiles = [];
 
 			const testDefinitions = await this._getTestDefinitions(
 				level,
