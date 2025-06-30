@@ -7,7 +7,7 @@ export default class APU {
     this.sample = 0;
   }
 
-  step() {
+  step(onSample) {
     /* TODO: IMPLEMENT */
   }
 }

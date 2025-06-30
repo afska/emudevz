@@ -5,6 +5,7 @@ main:
   - it's not as intuitive as <video>, so I'll have to explain a few things first
   responses:
   - how does it work? [how]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [start]
 
 how:
   messages:
@@ -21,21 +22,15 @@ wave:
   messages:
   - it looks... <periodical>!
   - <{wave_square.png}>
-  - this is a <max-volume> square wave, a common waveform used by the APU
+  - this is a max-volume square wave, a common waveform used by the APU
   - the period indicates the time it takes to complete a full repetition
-  - "`period = 1 / frequency`, so lower periods make higher pitch notes"
+  - "`period = 1 / frequency`, so lower periods make higher-pitched notes"
   - more amplitude means more volume
   - and like I said, these are stored like a stream of samples
   - here's a more complex wave
   - <{wave.png}>
-  - you can observe here how we can store the waveform as a <sequence of points>
+  - you can see how we can store the waveform as a <sequence of points>
   - the samples!
-  responses:
-  - alright, but how do these waves sound? [sound]
-
-sound:
-  messages:
-  - dunno
   responses:
   - ...how
 
@@ -50,6 +45,27 @@ samples:
   - how do we start? [start]
 
 start:
+  run: |
+    set((m) => m.$exercise = true);
   messages:
-  - asd
+  - 📚  create a file for the APU code, using 📄  ~/tmpl/apu/APU.js~ as template
+  - |-
+    📚  to keep track of the timing, add this method:
+    **step(onSample)**:
+      **->** increments the sample counter
+      **->** if it's time to produce a new sample:
+        **->** resets the sample counter
+        **->** adds `1 / 44100` to the elapsed time (```javascript this.time```)
+        **->** calls `onSample(...)` with the current sample (```javascript this.sample```)
+  - 📚  then, import your file from 📄  ~/code/index.js~
+  - and add the corresponding `APU` key to the exported object
+  responses:
+  - how do I know when it's time for a new sample? [time]
+
+time:
+  messages:
+  - each `step(...)` call would be an APU cycle, and the APU runs at 894887 Hz
+  - to produce 44100 samples per second, divide both things!
+  - 894887 / 44100 gives us 20 APU cycles per sample
+  - so you should provide a new sample whenever ```javascript this.sampleCounter``` reaches 20
   responses: []

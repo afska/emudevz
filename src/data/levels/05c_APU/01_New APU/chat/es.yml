@@ -1,6 +1,71 @@
 ---
 main:
   messages:
-  - coming soon!
+  - ¡por fin vamos a agregar <audio> a nuestro emulador! 🔊
+  - no es tan intuitivo como el <video>, así que primero tendré que explicar algunas cosas
   responses:
-  - asd [end]
+  - ¿cómo funciona? [how]
+  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [start]
+
+how:
+  messages:
+  - 🌊  el <audio> funciona definiendo ondas que coinciden directamente con lo que hacen los parlantes
+  - 🎵  cuando un parlante vibra a una frecuencia particular, crea una nota
+  - 📈  como el tiempo es una <unidad contínua>, las computadoras almacenan las ondas como una secuencia de samples, que son números que definen la altura de la onda en un punto específico del tiempo
+  - 🔢  en la NEEES, los samples son números en el rango ~0-15~, y al emular la APU, enviamos 44100 samples por segundo a la placa de sonido
+  - a eso se lo llama frecuencia de muestreo
+  responses:
+  - (*) ¿cómo se ve una onda? [wave]
+  - ¿cómo genera samples la APU? [samples]
+
+wave:
+  messages:
+  - se ve... <periódica>!
+  - <{wave_square.png}>
+  - esta es una onda cuadrada de máximo volúmen, una forma de onda común usada por la APU
+  - el período indica el tiempo que tarda en completar una repetición entera
+  - "`período = 1 / frecuencia`, así que períodos más bajos generan notas más agudas"
+  - más amplitud significa más volumen
+  - y como dije, estas se almacenan como una secuencia de samples
+  - aquí hay una onda más compleja
+  - <{wave.png}>
+  - puedes ver cómo se puede almacenar la forma de onda como una <secuencia de puntos>
+  - ¡los samples!
+  responses:
+  - ...how
+
+samples:
+  messages:
+  - como la CPU y la PPU, la APU funciona con ciclos 🚲
+  - un ciclo es la unidad de tiempo más pequeña, correspondiente a un tick de reloj durante el cual actualiza su estado interno en un paso
+  - la 🔊  APU corre <2x> más lento que la 🧠  CPU
+  - así que los ciclos de APU son más lentos (cada ciclo de APU dura, en tiempo, ~el doble~ que uno de CPU)
+  - <{unit_speeds.png}>
+  responses:
+  - ¿cómo empezamos? [start]
+
+start:
+  run: |
+    set((m) => m.$exercise = true);
+  messages:
+  - 📚  crea un archivo para el código de la APU, usando 📄  ~/tmpl/apu/APU.js~ como plantilla
+  - |-
+    📚  para llevar el seguimiento del tiempo, agrega este método:
+    **step(onSample)**:
+      **->** incrementa el contador de samples
+      **->** si es momento de producir un nuevo sample:
+        **->** resetea el contador de samples
+        **->** suma `1 / 44100` al tiempo transcurrido (```javascript this.time```)
+        **->** llama a `onSample(...)` con el sample actual (```javascript this.sample```)
+  - 📚  luego, importa tu archivo desde 📄  ~/code/index.js~
+  - y agrega la correspondiente clave `APU` al objeto exportado
+  responses:
+  - ¿cómo sé cuándo es hora de un nuevo sample? [time]
+
+time:
+  messages:
+  - cada llamada a `step(...)` sería un ciclo de APU, y la APU corre a 894887 Hz
+  - para producir 44100 samples por segundo, ¡divide ambas cosas!
+  - 894887 / 44100 nos da 20 ciclos de APU por sample
+  - así que deberías generar un nuevo sample cada vez que ```javascript this.sampleCounter``` llegue a 20
+  responses: []

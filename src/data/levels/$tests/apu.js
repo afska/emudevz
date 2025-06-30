@@ -23,72 +23,88 @@ const noop = () => {};
 
 // 5c.1 New APU
 
-// it("`/code/index.js` exports an object containing the `PPU` class", () => {
-// 	expect(mainModule.default).to.be.an("object");
-// 	mainModule.default.should.include.key("PPU");
-// 	expect(mainModule.default.PPU).to.be.a.class;
-// })({
-// 	locales: {
-// 		es: "`/code/index.js` exporta un objeto que contiene la clase `PPU`",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.1"),
-// });
+it("`/code/index.js` exports an object containing the `APU` class", () => {
+	expect(mainModule.default).to.be.an("object");
+	mainModule.default.should.include.key("APU");
+	expect(mainModule.default.APU).to.be.a.class;
+})({
+	locales: {
+		es: "`/code/index.js` exporta un objeto que contiene la clase `APU`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.1"),
+});
 
-// it("receives and saves the `cpu` property", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const cpu = {};
-// 	const ppu = new PPU(cpu);
-// 	ppu.should.include.key("cpu");
-// 	ppu.cpu.should.equal(cpu);
-// })({
-// 	locales: {
-// 		es: "recibe y guarda una propiedad `cpu`",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.1"),
-// });
+it("receives and saves the `cpu` property", () => {
+	const APU = mainModule.default.APU;
+	const cpu = {};
+	const apu = new APU(cpu);
+	apu.should.include.key("cpu");
+	apu.cpu.should.equal(cpu);
+})({
+	locales: {
+		es: "recibe y guarda una propiedad `cpu`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.1"),
+});
 
-// it("initializates the counters", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+it("initializates the counters", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// 	ppu.should.include.key("cycle");
-// 	ppu.should.include.key("scanline");
-// 	ppu.should.include.key("frame");
+	apu.should.include.key("time");
+	apu.should.include.key("sampleCounter");
+	apu.should.include.key("sample");
 
-// 	ppu.cycle.should.equalN(0, "cycle");
-// 	ppu.scanline.should.equalN(-1, "scanline");
-// 	ppu.frame.should.equalN(0, "frame");
-// })({
-// 	locales: {
-// 		es: "inicializa los contadores",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.1"),
-// });
+	apu.time.should.equalN(0, "time");
+	apu.sampleCounter.should.equalN(0, "sampleCounter");
+	apu.sample.should.equalN(0, "sample");
+})({
+	locales: {
+		es: "inicializa los contadores",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.1"),
+});
 
-// it("has a `step` method that increments the counters", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
-// 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
-// 	ppu.onLoad?.(dummyMapper);
-// 	ppu.should.respondTo("step");
+it("increments the sample counter on every `step(...)` call", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	apu.should.respondTo("step");
 
-// 	for (let frame = 0; frame < 1; frame++) {
-// 		for (let scanline = -1; scanline < 261; scanline++) {
-// 			for (let cycle = 0; cycle < 341; cycle++) {
-// 				ppu.frame.should.equalN(frame, "frame");
-// 				ppu.scanline.should.equalN(scanline, "scanline");
-// 				ppu.cycle.should.equalN(cycle, "cycle");
-// 				ppu.step(noop, noop);
-// 			}
-// 		}
-// 	}
+	for (let i = 0; i < 5; i++) {
+		apu.step(() => {});
+		apu.sampleCounter.should.equalN(i + 1, "sampleCounter");
+	}
+})({
+	locales: {
+		es: "incrementa el contador de samples en cada llamada a `step(...)`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.1"),
+});
 
-// 	ppu.frame.should.equalN(1, "frame");
-// 	ppu.scanline.should.equalN(-1, "scanline");
-// 	ppu.cycle.should.equalN(0, "cycle");
-// })({
-// 	locales: {
-// 		es: "tiene un método `step` que incrementa los contadores",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.1"),
-// });
+it("generates a new sample for every 20 `step(...)` calls", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	apu.should.respondTo("step");
+	const onSample = sinon.spy();
+
+	apu.sample = 15;
+	apu.time = 66;
+
+	for (let i = 0; i < 19; i++) {
+		apu.step(onSample);
+
+		apu.time.should.equalN(66, "time");
+		apu.sampleCounter.should.equalN(i + 1, "sampleCounter");
+		onSample.should.not.have.been.called;
+	}
+
+	apu.step(onSample);
+	apu.time.should.equalN(66 + 1 / 44100, "time");
+	apu.sampleCounter.should.equalN(0, "sampleCounter");
+	onSample.should.have.been.calledWith(apu.sample);
+})({
+	locales: {
+		es: "generate un nuevo sample por cada 20 llamadas a `step(...)`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.1"),
+});
