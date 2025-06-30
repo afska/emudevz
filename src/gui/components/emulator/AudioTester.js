@@ -13,6 +13,7 @@ import styles from "./Tester.module.css";
 const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
 
+// TODO: Make this whole screen Debugger-based
 class AudioViewer extends PureComponent {
 	render() {
 		return (

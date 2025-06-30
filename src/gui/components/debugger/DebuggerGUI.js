@@ -43,7 +43,7 @@ export default class DebuggerGUI {
 		const runScanline = "Run scanline";
 		if (ImGui.BeginTabBar("Tabs")) {
 			const btns = [
-				{ label: emulation.isDebugging ? "Resume" : "Pause" },
+				{ label: emulation?.isDebugging ? "Resume" : "Pause" },
 				{ label: runFrame, color: "#b87632" },
 				{ label: runScanline, color: "#2a62b0" },
 			];
