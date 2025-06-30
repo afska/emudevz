@@ -37,7 +37,7 @@
 	"audioTests": [
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
-			"seconds": 120,
+			"frames": 120,
 			"apu": "TestAPU.v1.js"
 		}
 	],

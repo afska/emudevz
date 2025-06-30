@@ -9,8 +9,26 @@ import Emulator from "./Emulator";
 import styles from "./AudioTester.module.css";
 
 export default class AudioTester extends PureComponent {
-	_samplesA = [];
-	_samplesB = [];
+	_samplesA = {
+		comparedMix: [],
+		mix: [],
+		pulse1: [],
+		pulse2: [],
+		triangle: [],
+		noise: [],
+		dmc: [],
+	};
+	_samplesB = {
+		comparedMix: [],
+		mix: [],
+		pulse1: [],
+		pulse2: [],
+		triangle: [],
+		noise: [],
+		dmc: [],
+	};
+	_framesA = 0;
+	_framesB = 0;
 	_count = 0;
 
 	render() {
@@ -114,62 +132,104 @@ export default class AudioTester extends PureComponent {
 		);
 	}
 
-	_onActualFrame = (frameBuffer) => {
-		// if (this._framesA.length < this._testFrames)
-		// 	this._framesA.push(frameBuffer.slice());
+	_onActualFrame = (frameBuffer, neees, emulation) => {
+		if (this._framesA < this._testFrames) {
+			for (let i = 0; i < emulation.channelSamples.mix.length; i++) {
+				this._samplesA.comparedMix.push(emulation.channelSamples.mix[i]);
+				this._samplesA.mix.push(emulation.channelSamples.mix[i]);
+				this._samplesA.pulse1.push(emulation.channelSamples.pulse1[i]);
+				this._samplesA.pulse2.push(emulation.channelSamples.pulse2[i]);
+				this._samplesA.triangle.push(emulation.channelSamples.triangle[i]);
+				this._samplesA.noise.push(emulation.channelSamples.noise[i]);
+				this._samplesA.dmc.push(emulation.channelSamples.dmc[i]);
+			}
+
+			emulation.channelSamples.mix.length = 0;
+			emulation.channelSamples.pulse1.length = 0;
+			emulation.channelSamples.pulse2.length = 0;
+			emulation.channelSamples.triangle.length = 0;
+			emulation.channelSamples.noise.length = 0;
+			emulation.channelSamples.dmc.length = 0;
+
+			this._framesA++;
+		}
 	};
 
-	_onExpectedFrame = (frameBuffer) => {
+	_onExpectedFrame = (frameBuffer, neees, emulation) => {
 		this.props.onFrame();
 
-		// if (this._framesB.length < this._testFrames)
-		// 	this._framesB.push(frameBuffer.slice());
+		if (this._framesB < this._testFrames) {
+			for (let i = 0; i < emulation.channelSamples.mix.length; i++) {
+				this._samplesB.comparedMix.push(emulation.channelSamples.mix[i]);
+				this._samplesB.mix.push(emulation.channelSamples.mix[i]);
+				this._samplesB.pulse1.push(emulation.channelSamples.pulse1[i]);
+				this._samplesB.pulse2.push(emulation.channelSamples.pulse2[i]);
+				this._samplesB.triangle.push(emulation.channelSamples.triangle[i]);
+				this._samplesB.noise.push(emulation.channelSamples.noise[i]);
+				this._samplesB.dmc.push(emulation.channelSamples.dmc[i]);
+			}
 
-		// if (this._framesA.length > 0 && this._framesB.length > 0) {
-		// 	const frameA = this._framesA.shift();
-		// 	const frameB = this._framesB.shift();
+			emulation.channelSamples.mix.length = 0;
+			emulation.channelSamples.pulse1.length = 0;
+			emulation.channelSamples.pulse2.length = 0;
+			emulation.channelSamples.triangle.length = 0;
+			emulation.channelSamples.noise.length = 0;
+			emulation.channelSamples.dmc.length = 0;
 
-		// 	let success = true;
-		// 	for (let i = 0; i < 256 * 240; i++)
-		// 		if (frameA[i] !== frameB[i]) success = false;
+			this._framesB++;
+		}
 
-		// 	if (!success) {
-		// 		this._emulatorA.setBuffer(frameA);
-		// 		this._emulatorB.setBuffer(frameB);
-		// 		this._screenshotA = this._emulatorA.getScreenshot();
-		// 		this._screenshotB = this._emulatorB.getScreenshot();
-		// 		this._emulatorA.stop();
-		// 		this._emulatorB.stop();
-		// 		this._symbol.innerHTML = "❌";
-		// 		this.props.onEnd({
-		// 			success,
-		// 			frame: this._count,
-		// 			total: this._testFrames,
-		// 		});
-		// 		this._progressBar.setBarFillColor("#d9534f");
-		// 		this._closeButton.style.display = "block";
+		if (this._framesA > 0 && this._framesB > 0) {
+			let success = true;
+			while (
+				success &&
+				this._samplesA.comparedMix.length > 0 &&
+				this._samplesB.comparedMix.length > 0
+			) {
+				const sampleA = this._samplesA.comparedMix.shift();
+				const sampleB = this._samplesB.comparedMix.shift();
 
-		// 		this._checkDiffsButton.style.display = "block";
-		// 		return;
-		// 	}
+				if (sampleA !== sampleB) success = false;
+			}
 
-		// 	this._count++;
+			if (!success) {
+				// this._emulatorA.setBuffer(frameA);
+				// this._emulatorB.setBuffer(frameB);
+				this._screenshotA = this._emulatorA.getScreenshot();
+				this._screenshotB = this._emulatorB.getScreenshot();
+				this._emulatorA.stop();
+				this._emulatorB.stop();
+				this._symbol.innerHTML = "❌";
+				this.props.onEnd({
+					success,
+					frame: this._count,
+					total: this._testFrames,
+				});
+				this._progressBar.setBarFillColor("#d9534f");
+				this._closeButton.style.display = "block";
 
-		// 	if (this._count < this._testFrames) {
-		// 		const percentage = (this._count / this._testFrames) * 100;
-		// 		this._progressBar.setPercentage(percentage);
-		// 		this._detail.innerHTML = this._count + " / " + this._testFrames;
-		// 	} else {
-		// 		this._progressBar.setPercentage(100);
-		// 		this.props.onEnd({ success: true });
-		// 		this._detail.innerHTML = this._count + " / " + this._testFrames;
-		// 	}
-		// }
+				this._checkDiffsButton.style.display = "block";
+				return;
+			}
+
+			this._count++;
+
+			if (this._count < this._testFrames) {
+				const percentage = (this._count / this._testFrames) * 100;
+				this._progressBar.setPercentage(percentage);
+				this._detail.innerHTML = this._count + " / " + this._testFrames;
+			} else {
+				this._progressBar.setPercentage(100);
+				this.props.onEnd({ success: true });
+				this._detail.innerHTML = this._count + " / " + this._testFrames;
+			}
+		}
 	};
 
-	// _checkDiffs = () => {
-	// 	bus.emit("image-diff", this._screenshotB, this._screenshotA);
-	// };
+	_checkDiffs = () => {
+		// TODO: IMPLEMENT
+		// bus.emit("image-diff", this._screenshotB, this._screenshotA);
+	};
 
 	_setError = (e) => {
 		console.error(e);
@@ -200,5 +260,3 @@ export default class AudioTester extends PureComponent {
 		return this.props.test.frames;
 	}
 }
-
-// TODO: IMPLEMENT

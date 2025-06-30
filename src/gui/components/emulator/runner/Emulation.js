@@ -131,7 +131,7 @@ export default class Emulation {
 	_onFrame = (frameBuffer) => {
 		this.frameTimer.countNewFrame();
 		this.screen.setBuffer(frameBuffer);
-		this._onFrameCallback(frameBuffer, this.neees);
+		this._onFrameCallback(frameBuffer, this.neees, this);
 	};
 
 	_onAudio = (sample, pulse1, pulse2, triangle, noise, dmc) => {
