@@ -194,46 +194,4 @@ export default class TripleLayout extends Layout {
 	componentWillUnmount() {
 		this._subscriber.release();
 	}
-
-	_onPin = (pin) => {
-		this._onPinOpened(pin, "Pin", this.constructor.pinLocation);
-	};
-
-	_closePin = () => {
-		this._onPinClosed("Pin", this.constructor.pinLocation);
-	};
-
-	_onSecondaryPin = (pin) => {
-		const location = this.constructor.secondaryPinLocation;
-
-		this._onPinOpened(pin, "SecondaryPin", location);
-	};
-
-	_closeSecondaryPin = (options) => {
-		this._onPinClosed(
-			"SecondaryPin",
-			this.constructor.secondaryPinLocation,
-			options
-		);
-	};
-
-	_onPinOpened = (pin, name, pinLocation) => {
-		this.setState({ [name]: pin.Component }, () => {
-			this.instances[name].initialize(pin.args, pin.level, this);
-			setTimeout(() => {
-				this.focus(pinLocation);
-			});
-		});
-	};
-
-	_onPinClosed = (name, pinLocation, options = { changeFocus: true }) => {
-		this.instances[name] = null;
-		this.setState({ [name]: null }, () => {
-			if (options?.changeFocus) {
-				setTimeout(() => {
-					this.focus(pinLocation);
-				});
-			}
-		});
-	};
 }
