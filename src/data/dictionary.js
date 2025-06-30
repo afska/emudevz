@@ -69,17 +69,17 @@ const dictionary = {
 			},
 			icon: "🎛️",
 			en:
-				"A component of the APU responsible for generating a specific type of sound. Each channel has its own parameters and behavior. <br /><br />The NEEES has 2 Pulse Channels, 1 Triangle Channel, 1 Noise Channel, and 1 DMC Channel.",
+				"A component of the APU responsible for generating a specific type of sound. Each channel has its own parameters and behavior. <br /><br />The NEEES has `2` Pulse Channels, `1` Triangle Channel, `1` Noise Channel, and `1` DMC Channel.",
 			es:
-				"Un componente del APU encargado de generar un tipo específico de sonido. Cada canal tiene sus propios parámetros y comportamiento. <br /><br />La NEEES tiene 2 Canales Pulso, 1 Canal Triangular, 1 Canal Ruido, y 1 Canal DMC.",
+				"Un componente del APU encargado de generar un tipo específico de sonido. Cada canal tiene sus propios parámetros y comportamiento. <br /><br />La NEEES tiene `2` Canales Pulso, `1` Canal Triangular, `1` Canal Ruido, y `1` Canal DMC.",
 		},
 		"Audio sample|_Audio samples|Sample|_Samples": {
 			also: { es: "Sample de audio|_Samples de audio|Sample|_Samples" },
 			icon: "📈",
 			en:
-				"A number that represents the height of a wave at a specific point in time. Waves are stored as a stream of these values. <br /><br/>In the NEEES, these are numbers in the `0-15` range. When emulating the APU, we use a 44100 Hz sample rate.",
+				"A number that represents the height of a wave at a specific point in time. Waves are stored as a stream of these values. <br /><br/>In the NEEES, these are numbers in the `0-15` range. When emulating the APU, we use a `44100` Hz sample rate.",
 			es:
-				"Un número que representa la altura de una onda en un punto específico en el tiempo. Las ondas se almacenan como una secuencia de estos valores. <br /><br/>En la NEEES, estos números están en el rango `0-15`. Al emular la APU, usamos una frecuencia de muestreo de 44100 Hz.",
+				"Un número que representa la altura de una onda en un punto específico en el tiempo. Las ondas se almacenan como una secuencia de estos valores. <br /><br/>En la NEEES, estos números están en el rango `0-15`. Al emular la APU, usamos una frecuencia de muestreo de `44100` Hz.",
 		},
 		"Audio wave|_Audio waves|Wave|_Waves": {
 			also: { es: "Onda de audio|_Ondas de audio|Onda|_Ondas" },

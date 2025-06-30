@@ -29,7 +29,7 @@ export default class Emulator extends Component {
 		const innerClassName = crt ? styles.crtNoise : styles.box;
 
 		return (
-			<div className={styles.content} style={style}>
+			<div className={!screen ? styles.content : ""} style={style}>
 				{error ? (
 					<div className={styles.message}>
 						<span
