@@ -1,0 +1,63 @@
+---
+main:
+  messages:
+  - ⚠️  <VOLUME WARNING!!!> ⚠️
+  - <make sure your device volume is really quiet so this doesn't hurt your ears>
+  - let's make some noise!
+  - first, I'll integrate your 🔊  APU into the emulator
+  responses:
+  - go ahead [integrate]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [wave]
+
+integrate:
+  messages:
+  - it should be quick...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 500);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useAPU");
+  messages:
+  - ✅  done!
+  - <! 🔊  APU integrated.
+  - now, the 🔊  icon in the emulator will glow ✨
+  - as there's almost no APU code, we won't have sound for now
+  - but we'll get there!
+  - let's code an <example wave>
+  responses:
+  - like a square wave? [wave]
+
+wave:
+  run: |
+    set((m) => m.$exercise = true);
+  messages:
+  - correct! currently, you should have something like ```javascript onSample(this.sample)```
+  - |-
+    📚  <before> that `onSample(...)` call, add:
+      ```javascript
+      const frequency = 440;
+      const period = 1 / frequency;
+      const dutyCycle = 0.5;
+      this.sample = (this.time % period) < period * dutyCycle ? 1 : 0;```
+  - try it! when loading a ROM, you should hear a square wave, playing an <A4> note (~440~ Hz) 🎵
+  responses:
+  - what's the duty cycle? [duty]
+
+duty:
+  messages:
+  - in a square wave, the duty cycle defines the percentage of time the signal is <high> (vs <low>)
+  - for example, with a <50%> duty cycle, it spends the same time on both
+  - <{wave_square.png;32x32}>
+  - with a <25%> duty cycle, it would look like this
+  - <{wave_square_25duty.png;32x32}>
+  - and with <75%>
+  - <{wave_square_75duty.png;32x32}>
+  - these all sound <very different>! try changing the `dutyCycle` constant to see how it reacts
+  responses: []
