@@ -63,6 +63,16 @@ const dictionary = {
 			es:
 				"La altura de los picos de la onda. Define el volumen o la intensidad del sonido.",
 		},
+		"Audio channel|Channel|_Audio channels|_Channels": {
+			also: {
+				es: "Canal de audio|Canal|_Canales de audio|_Canales",
+			},
+			icon: "🎛️",
+			en:
+				"A component of the APU responsible for generating a specific type of sound. Each channel has its own parameters and behavior. <br /><br />The NEEES has 2 Pulse Channels, 1 Triangle Channel, 1 Noise Channel, and 1 DMC Channel.",
+			es:
+				"Un componente del APU encargado de generar un tipo específico de sonido. Cada canal tiene sus propios parámetros y comportamiento. <br /><br />La NEEES tiene 2 Canales Pulso, 1 Canal Triangular, 1 Canal Ruido, y 1 Canal DMC.",
+		},
 		"Audio sample|_Audio samples|Sample|_Samples": {
 			also: { es: "Sample de audio|_Samples de audio|Sample|_Samples" },
 			icon: "📈",
@@ -231,6 +241,22 @@ const dictionary = {
 				"_(Direct Memory Access)_ A mechanism that copies data from one memory area to another without using the CPU to move each byte manually. <br /><br />In the NEEES, DMA is only available to transfer OAM data through the OAMDMA register.",
 			es:
 				"_(Direct Memory Access)_ Un mecanismo que copia datos de una zona de memoria a otra sin que la CPU tenga que mover cada byte manualmente. <br /><br />En la NEEES, el DMA solo está disponible para transferir datos de OAM usando el registro OAMDMA.",
+		},
+		"DMC Channel": {
+			also: { es: "Canal DMC" },
+			icon: "📦",
+			en:
+				"One of the APU's audio channels. It plays back digital samples from memory using the *Delta Modulation* technique.",
+			es:
+				"Uno de los canales de audio de la APU. Reproduce muestras digitales desde la memoria usando la técnica de *Modulación Delta*.",
+		},
+		"Duty cycle|_Duty cycles": {
+			also: { es: "Ciclo de trabajo|_Ciclos de trabajo" },
+			icon: "📊",
+			en:
+				"The percentage of time a square wave stays high during one period. Affects the tone and timbre of the sound. <br /><br />In the NEEES, Pulse Channels supports 4 duty cycles: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) and `3` (`75%`).",
+			es:
+				"El porcentaje de tiempo que una onda cuadrada se mantiene alta durante un período. Afecta el tono y el timbre del sonido. <br /><br />En la NEEES, los Canales Pulso soportan 4 ciclos de trabajo: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) y `3` (`75%`).",
 		},
 		"Flag|_Flags": {
 			also: { es: "Bandera|_Banderas" },
@@ -421,6 +447,14 @@ const dictionary = {
 			es:
 				"Una interrupción de CPU disparada al principio del VBlank, cuando la PPU termina de dibujar un frame.",
 		},
+		"Noise Channel": {
+			also: { es: "Canal Ruido" },
+			icon: "💥",
+			en:
+				"One of the APU's audio channels. It generates a random-sounding signal, useful for percussion or sound effects like explosions.",
+			es:
+				"Uno de los canales de audio de la APU. Genera una señal con sonido aleatorio, útil para percusión o efectos como explosiones.",
+		},
 		"OAM|OAM table": {
 			also: { es: "OAM|Tabla OAM" },
 			icon: "🛸📖",
@@ -600,6 +634,14 @@ const dictionary = {
 			es:
 				"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
 		},
+		"Pulse Channel|_Pulse Channels": {
+			also: { es: "Canal Pulso|_Canales Pulso" },
+			icon: "🟦",
+			en:
+				"One of the APU's audio channels. It plays square waves with adjustable duty cycles and pitch. <br /><br />The NEEES has two of these.",
+			es:
+				"Uno de los canales de audio de la APU. Reproduce ondas cuadradas con ciclos de trabajo y tono ajustables. <br /><br />La NEEES tiene dos de estos.",
+		},
 		"Sample rate|_Sample rates": {
 			also: {
 				es: "Frecuencia de muestreo|_Frecuencias de muestreo",
@@ -671,6 +713,14 @@ const dictionary = {
 			es:
 				"Una condición que ocurre cuando más de `8` sprites aparecen en la misma scanline. Solo se renderizan los primeros `8`. <br /><br />Los juegos pueden leer esta bandera desde el bit `5` de PPUStatus.",
 		},
+		"Square wave|_Square waves": {
+			also: { es: "Onda cuadrada|_Ondas cuadradas" },
+			icon: "🟦",
+			en:
+				"A waveform that alternates between two levels, creating a sharp, blocky sound. Used by the APU's Pulse Channels.",
+			es:
+				"Una forma de onda que alterna entre dos niveles, generando un sonido fuerte y entrecortado. Usada por los Canales Pulso de la APU.",
+		},
 		Stack: {
 			also: { es: "Pila" },
 			icon: "🧱",
@@ -693,6 +743,22 @@ const dictionary = {
 				"The index of a tile inside a pattern table. It ranges from `0` to `255`.",
 			es:
 				"El índice de un tile dentro de una pattern table. Va de `0` a `255`.",
+		},
+		"Triangle Channel": {
+			also: { es: "Canal Triangular" },
+			icon: "🔺",
+			en:
+				"One of the APU's audio channels. It plays a triangle wave with fixed volume and shape, often used for bass or melodic lines.",
+			es:
+				"Uno de los canales de audio de la APU. Reproduce una onda triangular con volumen y forma fijos, comúnmente usado para graves o melodías.",
+		},
+		"Triangle wave|_Triangle waves": {
+			also: { es: "Onda triangular|_Ondas triangulares" },
+			icon: "🔺",
+			en:
+				"A waveform shaped like a triangle, with a softer, more mellow sound. Used by the APU's Triangle Channel.",
+			es:
+				"Una forma de onda con forma de triángulo, que produce un sonido más suave y apagado. Usada por el Canal Triangular de la APU.",
 		},
 		VBlank: {
 			icon: "🏝️",
