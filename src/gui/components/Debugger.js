@@ -14,7 +14,7 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 		async initialize(args, level) {
 			this._level = level;
 
-			this._debuggerGUI = new DebuggerGUIClass();
+			this.debuggerGUI = new DebuggerGUIClass();
 		}
 
 		render() {
@@ -35,7 +35,7 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 		focus = () => {};
 
 		_draw = () => {
-			this._debuggerGUI.draw();
+			this.debuggerGUI.draw();
 		};
 
 		_onCanvas = (canvas) => {
@@ -54,7 +54,7 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 				ImGui.CreateContext();
 				ImGui_Impl.Init(canvas);
 
-				self._debuggerGUI.init();
+				self.debuggerGUI.init();
 
 				// ImGui.StyleColorsDark(); // DISABLED
 				ImGui.StyleColorsClassic();
@@ -76,7 +76,7 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 		};
 
 		componentWillUnmount() {
-			if (this._debuggerGUI != null) this._debuggerGUI.destroy();
+			if (this.debuggerGUI != null) this.debuggerGUI.destroy();
 			window.removeEventListener("resize", this._onResize);
 			ImGui_Impl.Shutdown();
 			ImGui.DestroyContext();

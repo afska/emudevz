@@ -29,9 +29,9 @@ export default GenericDebugger(
 
 			ImGui.ProgressBar(100 / 255, new ImGui.Vec2(-1, 16));
 			ImGui.Columns(2, "ComparerCols", false);
-			this._drawWaves();
+			this._drawWaves(this.emulationA);
 			ImGui.NextColumn();
-			this._drawWaves();
+			this._drawWaves(this.emulationB);
 
 			ImGui.End();
 			ImGui.PopStyleVar();
@@ -39,8 +39,8 @@ export default GenericDebugger(
 
 		destroy() {}
 
-		_drawWaves() {
-			const emulation = window.EMULATION;
+		_drawWaves(emulation) {
+			if (!emulation) return;
 
 			let mix = emulation?.channelSamples.mix ?? [];
 			let pulse1 = emulation?.channelSamples.pulse1 ?? [];
@@ -65,8 +65,7 @@ export default GenericDebugger(
 				dmc = this._lastDMC;
 			}
 
-			const maxN = mix.length;
-			const N = Math.floor(maxN * (1 - this._zoom));
+			const N = mix.length;
 			const height = 20;
 
 			utils.simpleSection("pulse1", "Pulse Channel 1", () => {

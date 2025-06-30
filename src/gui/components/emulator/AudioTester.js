@@ -39,6 +39,7 @@ export default class AudioTester extends PureComponent {
 		return (
 			<AudioComparer
 				ref={(ref) => {
+					this._comparer = ref;
 					if (ref) ref.initialize({}, Level.current);
 				}}
 				accessory={
@@ -69,6 +70,7 @@ export default class AudioTester extends PureComponent {
 							onError={this._setError}
 							onInputType={this._setInputType}
 							onFps={this._setFps}
+							onStart={this._onActualEmulatorStart}
 							onFrame={this._onActualFrame}
 							style={{ width: "auto", height: "auto" }}
 							ref={(ref) => {
@@ -93,6 +95,7 @@ export default class AudioTester extends PureComponent {
 							}}
 							onInputType={this._setInputType}
 							onFps={this._setFps}
+							onStart={this._onExpectedEmulatorStart}
 							onFrame={this._onExpectedFrame}
 							style={{ width: "auto", height: "auto" }}
 							ref={(ref) => {
@@ -104,6 +107,14 @@ export default class AudioTester extends PureComponent {
 			/>
 		);
 	}
+
+	_onActualEmulatorStart = (emulation) => {
+		this._comparer.debuggerGUI.emulationA = emulation;
+	};
+
+	_onExpectedEmulatorStart = (emulation) => {
+		this._comparer.debuggerGUI.emulationB = emulation;
+	};
 
 	_onActualFrame = (frameBuffer, neees, emulation) => {
 		if (this._framesA < this._testFrames) {
