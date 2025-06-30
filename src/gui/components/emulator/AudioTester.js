@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import locales from "../../../locales";
+import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
-import { bus } from "../../../utils";
+// import { bus } from "../../../utils"; // TODO: USE?
 import IconButton from "../widgets/IconButton";
 import ProgressBar from "../widgets/ProgressBar";
 import Emulator from "./Emulator";
@@ -59,7 +60,7 @@ export default class AudioTester extends PureComponent {
 							useAPU: true,
 							withLatestCode: false,
 						}}
-						volume={0}
+						volume={this._volume}
 						onError={this._setError}
 						onInputType={this._setInputType}
 						onFps={this._setFps}
@@ -193,10 +194,6 @@ export default class AudioTester extends PureComponent {
 			}
 
 			if (!success) {
-				// this._emulatorA.setBuffer(frameA);
-				// this._emulatorB.setBuffer(frameB);
-				this._screenshotA = this._emulatorA.getScreenshot();
-				this._screenshotB = this._emulatorB.getScreenshot();
 				this._emulatorA.stop();
 				this._emulatorB.stop();
 				this._symbol.innerHTML = "❌";
@@ -258,5 +255,9 @@ export default class AudioTester extends PureComponent {
 
 	get _testFrames() {
 		return this.props.test.frames;
+	}
+
+	get _volume() {
+		return Math.max(store.getState().savedata.emulatorVolume, 0.1);
 	}
 }

@@ -133,7 +133,7 @@ export default class Emulator extends Component {
 			return;
 		}
 
-		this._stop();
+		this._stop(false);
 		if (volume > 0) bus.emit("pause-music");
 		this.keyboardInput = gamepad.createInput();
 		window.addEventListener("keydown", this._onKeyDown);
@@ -182,7 +182,7 @@ export default class Emulator extends Component {
 		this._stop();
 	};
 
-	_stop() {
+	_stop(resumeMusic = true) {
 		if (this._emulation) {
 			this._emulation.terminate();
 			this._emulation = null;
@@ -195,7 +195,7 @@ export default class Emulator extends Component {
 		window.removeEventListener("fullscreenchange", this._onFullscreenChange);
 		this.props.onStop?.();
 		bus.emit("emulator-stopped");
-		bus.emit("resume-music");
+		if (resumeMusic) bus.emit("resume-music");
 	}
 
 	_onKeyDown = (e) => {
