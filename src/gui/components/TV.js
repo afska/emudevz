@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import filesystem from "../../filesystem";
 import TVNoise from "./TVNoise";
+import AudioTester from "./emulator/AudioTester";
 import EmulatorRunner from "./emulator/EmulatorRunner";
 import GameStreamer from "./emulator/GameStreamer";
 import VideoTester from "./emulator/VideoTester";
@@ -136,6 +137,22 @@ export default class TV extends PureComponent {
 						ref={(ref) => {
 							this.stream = ref;
 						}}
+					/>
+				);
+			}
+			case "audioTest": {
+				return (
+					<AudioTester
+						APU={content.APU}
+						rom={content.rom}
+						saveState={content.saveState}
+						test={content.test}
+						onEnd={content.onEnd}
+						onFrame={content.onFrame}
+						onError={(e) => {
+							content.onError(e);
+						}}
+						onClose={() => this.setContent(null, "rom")}
 					/>
 				);
 			}

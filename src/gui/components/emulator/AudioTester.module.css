@@ -1,0 +1,33 @@
+.row {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+}
+
+.column {
+	flex: 1;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	user-select: none;
+}
+
+.title {
+	text-align: center;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.closeButton {
+	z-index: 10;
+	position: absolute;
+	right: 8px;
+	top: 8px;
+}
+
+.frameDetails {
+	margin-top: 8px;
+}

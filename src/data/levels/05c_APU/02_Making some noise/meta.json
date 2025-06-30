@@ -34,6 +34,13 @@
 		"inherit": ["cartridge.js", "memory.js", "apu.js"],
 		"mainTestFile": "apu.js"
 	},
+	"audioTests": [
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"seconds": 120,
+			"apu": "TestAPU.v1.js"
+		}
+	],
 	"memory": {
 		"content": {
 			"multifile": true

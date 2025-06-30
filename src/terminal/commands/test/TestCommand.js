@@ -25,6 +25,20 @@ export default class TestCommand extends Command {
 	async execute() {
 		const level = Level.current;
 
+		let isAudioTestSuccessful = true;
+		if (
+			!_.isEmpty(level.audioTests) &&
+			(!this._targetId || this._targetId === "audio")
+		) {
+			try {
+				isAudioTestSuccessful = await this._runAudioTests(level);
+			} catch (e) {
+				console.error(e);
+				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
+			}
+			await this._terminal.newline();
+		}
+
 		let isVideoTestSuccessful = true;
 		if (
 			!_.isEmpty(level.videoTests) &&
@@ -136,7 +150,11 @@ export default class TestCommand extends Command {
 				});
 			}
 
-			if (overallResult.allGreen && isVideoTestSuccessful) {
+			if (
+				overallResult.allGreen &&
+				isAudioTestSuccessful &&
+				isVideoTestSuccessful
+			) {
 				if (winOnTestPass && !this._targetId) {
 					await this._terminal.writeln(locales.get("tests_success_continue"));
 					await this._terminal.waitForKey();
@@ -169,6 +187,95 @@ export default class TestCommand extends Command {
 		this._onClose();
 
 		return true;
+	}
+
+	async _runAudioTests(level) {
+		for (let audioTest of level.audioTests) {
+			const success = await this._runAudioTest(level, audioTest);
+			if (!success) return false;
+		}
+
+		return true;
+	}
+
+	async _runAudioTest(level, audioTest) {
+		const isAPUUnlocked = store.getState().savedata.unlockedUnits.useAPU;
+		if (!isAPUUnlocked) {
+			await this._terminal.writeln(locales.get("tests_audio_apu_not_unlocked"));
+			return false;
+		}
+
+		await this._terminal.writeln(locales.get("tests_audio_running"));
+		const tv = level.$layout.findInstance("TV");
+		if (!tv) {
+			await this._terminal.writeln(locales.get("tests_video_no_tv"));
+			return false;
+		}
+
+		const rom =
+			audioTest.internalRom != null
+				? level.bin[audioTest.internalRom]
+				: filesystem.read(audioTest.rom, {
+						binary: true,
+				  });
+
+		const saveState =
+			audioTest.saveState != null
+				? JSON.parse(level.code[audioTest.saveState])
+				: null;
+
+		const apuCode = level.code[audioTest.apu];
+		const APU = (await moduleEval(apuCode)).default;
+
+		tv.setContent(null, "rom");
+		try {
+			const result = await new Promise((resolve, reject) => {
+				tv.setContent(
+					{
+						APU,
+						rom,
+						saveState,
+						test: audioTest,
+						onEnd: (result) => {
+							resolve(result);
+						},
+						onError: (error) => {
+							reject(error);
+						},
+						onFrame: () => {
+							if (this._terminal.tryInterrupt() != null) {
+								reject(INTERRUPTED);
+							}
+						},
+					},
+					"audioTest"
+				);
+			});
+
+			if (result.success) {
+				await this._terminal.writeln("✅ ");
+				tv.setContent(null, "rom");
+			} else {
+				await this._terminal.writeln("AUDIO TEST FAILED", theme.ERROR);
+				// TODO: LOCALIZE AND IMPLEMENTERROR MESSAGE
+			}
+
+			return result.success;
+		} catch (e) {
+			if (e === INTERRUPTED) {
+				tv.setContent(null, "rom");
+				throw INTERRUPTED;
+			}
+
+			await this._terminal.writeln(
+				locales.get("tests_emulator_crashed"),
+				theme.ERROR
+			);
+			await this._printError(e);
+			tv.setContent(null, "rom");
+		}
+
+		return false;
 	}
 
 	async _runVideoTests(level) {
@@ -375,7 +482,8 @@ export default class TestCommand extends Command {
 
 	get _targetId() {
 		const argument = this._args.filter((it) => it.toLowerCase() !== "-v")[0];
-		if (argument === "video" || argument === "unit") return argument;
+		if (argument === "audio" || argument === "video" || argument === "unit")
+			return argument;
 		let int = parseInt(argument);
 		return _.isFinite(int) ? int : null;
 	}
