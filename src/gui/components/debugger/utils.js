@@ -25,6 +25,10 @@ export default {
 			ImGui.EndTable();
 		}
 	},
+	simpleSection(id, label, draw) {
+		ImGui.Text(label);
+		draw();
+	},
 	simpleTab(name, draw) {
 		if (ImGui.BeginTabItem(name)) {
 			ImGui.BeginChild(

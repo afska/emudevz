@@ -133,7 +133,7 @@ export default class Debugger_APU {
 						ImGui.GetContentRegionAvail().x,
 						height
 					);
-					ImGui.PlotLines("Mix", mix, N, 0, "", 0, 0.5, waveSize);
+					ImGui.PlotLines("", mix, N, 0, "", 0, 0.5, waveSize);
 				});
 
 				utils.simpleTable("sequencer", "Sequencer", () => {

@@ -11,28 +11,30 @@ export default GenericDebugger(
 		init() {}
 
 		draw() {
-			const m = 10;
+			const m = 0;
 			ImGui.SetNextWindowPos(new ImGui.ImVec2(m, m), ImGui.Cond.FirstUseEver);
 			const io = ImGui.GetIO();
 			ImGui.SetNextWindowSize(
 				new ImGui.ImVec2(io.DisplaySize.x - m * 2, io.DisplaySize.y - m * 2)
 			);
+			ImGui.PushStyleVar(ImGui.StyleVar.WindowBorderSize, 0);
 			ImGui.Begin(
 				"Audio test",
 				null,
-				ImGui.WindowFlags.NoMove |
+				ImGui.WindowFlags.NoTitleBar |
+					ImGui.WindowFlags.NoMove |
 					ImGui.WindowFlags.NoResize |
 					ImGui.WindowFlags.NoCollapse
 			);
 
-			ImGui.Columns(3, "ComparerCols", false);
-			this._drawWaves();
-			ImGui.NextColumn();
 			ImGui.ProgressBar(100 / 255, new ImGui.Vec2(-1, 16));
+			ImGui.Columns(2, "ComparerCols", false);
+			this._drawWaves();
 			ImGui.NextColumn();
 			this._drawWaves();
 
 			ImGui.End();
+			ImGui.PopStyleVar();
 		}
 
 		destroy() {}
@@ -67,47 +69,47 @@ export default GenericDebugger(
 			const N = Math.floor(maxN * (1 - this._zoom));
 			const height = 20;
 
-			utils.simpleTable("pulse1", "Pulse Channel 1", () => {
+			utils.simpleSection("pulse1", "Pulse Channel 1", () => {
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
 					height
 				);
 				ImGui.PlotLines("", pulse1, N, 0, "", MIN, MAX, waveSize);
 			});
-			utils.simpleTable("pulse2", "Pulse Channel 2", () => {
+			utils.simpleSection("pulse2", "Pulse Channel 2", () => {
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
 					height
 				);
 				ImGui.PlotLines("", pulse2, N, 0, "", MIN, MAX, waveSize);
 			});
-			utils.simpleTable("triangle", "Triangle Channel", () => {
+			utils.simpleSection("triangle", "Triangle Channel", () => {
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
 					height
 				);
 				ImGui.PlotLines("", triangle, N, 0, "", MIN, MAX, waveSize);
 			});
-			utils.simpleTable("noise", "Noise Channel", () => {
+			utils.simpleSection("noise", "Noise Channel", () => {
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
 					height
 				);
 				ImGui.PlotLines("", noise, N, 0, "", MIN, MAX, waveSize);
 			});
-			utils.simpleTable("dmc", "DMC Channel", () => {
+			utils.simpleSection("dmc", "DMC Channel", () => {
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
 					height
 				);
 				ImGui.PlotLines("", dmc, N, 0, "", MIN, MAX, waveSize);
 			});
-			utils.simpleTable("mix", "Mix", () => {
+			utils.simpleSection("mix", "Mix", () => {
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
 					height
 				);
-				ImGui.PlotLines("Mix", mix, N, 0, "", 0, 0.5, waveSize);
+				ImGui.PlotLines("", mix, N, 0, "", 0, 0.5, waveSize);
 			});
 		}
 	}
