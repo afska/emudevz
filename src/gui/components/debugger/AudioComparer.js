@@ -8,7 +8,10 @@ const MAX = 15;
 
 export default GenericDebugger(
 	class AudioComparer {
-		init() {}
+		init() {
+			this.progressValue = 0;
+			this.progressText = "";
+		}
 
 		draw() {
 			const m = 0;
@@ -27,7 +30,12 @@ export default GenericDebugger(
 					ImGui.WindowFlags.NoCollapse
 			);
 
-			ImGui.ProgressBar(100 / 255, new ImGui.Vec2(-1, 16));
+			ImGui.ProgressBar(
+				this.progressValue / 100,
+				new ImGui.Vec2(-1, 16),
+				this.progressText
+			);
+
 			ImGui.Columns(2, "ComparerCols", false);
 			this._drawWaves(this.emulationA);
 			ImGui.NextColumn();

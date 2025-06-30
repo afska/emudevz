@@ -194,14 +194,15 @@ export default class AudioTester extends PureComponent {
 
 			this._count++;
 
+			this._comparer.debuggerGUI.progressText =
+				this._count + " / " + this._testFrames;
+
 			if (this._count < this._testFrames) {
 				const percentage = (this._count / this._testFrames) * 100;
-				// this._progressBar.setPercentage(percentage);
-				// this._detail.innerHTML = this._count + " / " + this._testFrames;
+				this._comparer.debuggerGUI.progressValue = percentage;
 			} else {
-				// this._progressBar.setPercentage(100);
+				this._comparer.debuggerGUI.progressValue = 100;
 				this.props.onEnd({ success: true });
-				// this._detail.innerHTML = this._count + " / " + this._testFrames;
 			}
 		}
 	};
