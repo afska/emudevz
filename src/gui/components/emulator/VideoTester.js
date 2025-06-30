@@ -6,7 +6,7 @@ import { bus } from "../../../utils";
 import IconButton from "../widgets/IconButton";
 import ProgressBar from "../widgets/ProgressBar";
 import Emulator from "./Emulator";
-import styles from "./Tester.module.css";
+import styles from "./VideoTester.module.css";
 
 export default class VideoTester extends PureComponent {
 	_framesA = [];

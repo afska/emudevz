@@ -1,38 +1,14 @@
 import React, { PureComponent } from "react";
-import { FaSearch, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
+import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
-// import { bus } from "../../../utils"; // TODO: USE?
+import AudioComparer from "../debugger/AudioComparer";
+// import { bus } from "../../../utils"; // TODO: USE? FINISH IMPLEMENTATION
 import IconButton from "../widgets/IconButton";
-import ProgressBar from "../widgets/ProgressBar";
 import Emulator from "./Emulator";
-import emulatorStyles from "./Emulator.module.css";
-import styles from "./Tester.module.css";
-
-const SCREEN_WIDTH = 256;
-const SCREEN_HEIGHT = 240;
-
-// TODO: Make this whole screen Debugger-based
-class AudioViewer extends PureComponent {
-	render() {
-		return (
-			<div
-				className={emulatorStyles.content}
-				style={{ width: "auto", height: "auto" }}
-			>
-				<canvas
-					className={emulatorStyles.box}
-					width={SCREEN_WIDTH}
-					height={SCREEN_HEIGHT}
-					ref={(canvas) => {
-						// if (canvas) this._initCanvas(canvas);
-					}}
-				/>
-			</div>
-		);
-	}
-}
+import styles from "./AudioTester.module.css";
 
 export default class AudioTester extends PureComponent {
 	_samplesA = {
@@ -61,108 +37,71 @@ export default class AudioTester extends PureComponent {
 		const { APU, rom, saveState, onClose } = this.props;
 
 		return (
-			<div className={styles.row}>
-				<IconButton
-					Icon={FaTimes}
-					tooltip={locales.get("close")}
-					onClick={onClose}
-					className={styles.closeButton}
-					style={{ display: "none" }}
-					$ref={(ref) => {
-						this._closeButton = ref;
-					}}
-				/>
+			<AudioComparer
+				ref={(ref) => {
+					if (ref) ref.initialize({}, Level.current);
+				}}
+				accessory={
+					<>
+						<IconButton
+							Icon={FaTimes}
+							tooltip={locales.get("close")}
+							onClick={onClose}
+							className={styles.closeButton}
+							style={{ display: "none" }}
+							$ref={(ref) => {
+								this._closeButton = ref;
+							}}
+						/>
 
-				<div className={styles.column} style={{ flex: 3 }}>
-					<h6 className={styles.title}>
-						{locales.get("tests_audio_apu_output")}
-					</h6>
-					<AudioViewer />
-					<Emulator
-						screen={{
-							setBuffer: (buffer) => {},
-						}}
-						rom={rom}
-						saveState={saveState}
-						settings={{
-							...this._settings,
-							useAPU: true,
-							withLatestCode: false,
-						}}
-						volume={this._volume}
-						onError={this._setError}
-						onInputType={this._setInputType}
-						onFps={this._setFps}
-						onFrame={this._onActualFrame}
-						style={{ width: "auto", height: "auto" }}
-						ref={(ref) => {
-							this._emulatorA = ref;
-						}}
-					/>
-				</div>
-				<div className={styles.column}>
-					<div
-						ref={(ref) => {
-							this._symbol = ref;
-						}}
-					>
-						🧐
-					</div>
-					<ProgressBar
-						percentage={0}
-						animated={false}
-						ref={(ref) => {
-							this._progressBar = ref;
-						}}
-					/>
-					<code
-						ref={(ref) => {
-							this._detail = ref;
-						}}
-						className={styles.frameDetails}
-					></code>
-					<IconButton
-						Icon={FaSearch}
-						tooltip={locales.get("check_diffs")}
-						onClick={this._checkDiffs}
-						kind="inline-no-margin"
-						className={styles.checkDiffs}
-						style={{ display: "none" }}
-						$ref={(ref) => {
-							this._checkDiffsButton = ref;
-						}}
-					/>
-				</div>
-				<div className={styles.column} style={{ flex: 3 }}>
-					<h6 className={styles.title}>
-						{locales.get("tests_audio_expected_output")}
-					</h6>
-					<AudioViewer />
-					<Emulator
-						screen={{
-							setBuffer: (buffer) => {},
-						}}
-						rom={rom}
-						saveState={saveState}
-						settings={{
-							...this._settings,
-							customAPU: APU,
-							withLatestCode: false,
-						}}
-						volume={0}
-						onError={(e) => {
-							console.error(e);
-						}}
-						onInputType={this._setInputType}
-						onFps={this._setFps}
-						onFrame={this._onExpectedFrame}
-						style={{ width: "auto", height: "auto" }}
-						ref={(ref) => {
-							this._emulatorB = ref;
-						}}
-					/>
-				</div>
-			</div>
+						<Emulator
+							screen={{
+								setBuffer: (buffer) => {},
+							}}
+							rom={rom}
+							saveState={saveState}
+							settings={{
+								...this._settings,
+								useAPU: true,
+								withLatestCode: false,
+							}}
+							volume={this._volume}
+							onError={this._setError}
+							onInputType={this._setInputType}
+							onFps={this._setFps}
+							onFrame={this._onActualFrame}
+							style={{ width: "auto", height: "auto" }}
+							ref={(ref) => {
+								this._emulatorA = ref;
+							}}
+						/>
+
+						<Emulator
+							screen={{
+								setBuffer: (buffer) => {},
+							}}
+							rom={rom}
+							saveState={saveState}
+							settings={{
+								...this._settings,
+								customAPU: APU,
+								withLatestCode: false,
+							}}
+							volume={0}
+							onError={(e) => {
+								console.error(e);
+							}}
+							onInputType={this._setInputType}
+							onFps={this._setFps}
+							onFrame={this._onExpectedFrame}
+							style={{ width: "auto", height: "auto" }}
+							ref={(ref) => {
+								this._emulatorB = ref;
+							}}
+						/>
+					</>
+				}
+			/>
 		);
 	}
 
@@ -229,16 +168,16 @@ export default class AudioTester extends PureComponent {
 			if (!success) {
 				this._emulatorA.stop();
 				this._emulatorB.stop();
-				this._symbol.innerHTML = "❌";
+				// this._symbol.innerHTML = "❌";
 				this.props.onEnd({
 					success,
 					frame: this._count,
 					total: this._testFrames,
 				});
-				this._progressBar.setBarFillColor("#d9534f");
+				// this._progressBar.setBarFillColor("#d9534f");
 				this._closeButton.style.display = "block";
 
-				this._checkDiffsButton.style.display = "block";
+				// this._checkDiffsButton.style.display = "block";
 				return;
 			}
 
@@ -246,18 +185,17 @@ export default class AudioTester extends PureComponent {
 
 			if (this._count < this._testFrames) {
 				const percentage = (this._count / this._testFrames) * 100;
-				this._progressBar.setPercentage(percentage);
-				this._detail.innerHTML = this._count + " / " + this._testFrames;
+				// this._progressBar.setPercentage(percentage);
+				// this._detail.innerHTML = this._count + " / " + this._testFrames;
 			} else {
-				this._progressBar.setPercentage(100);
+				// this._progressBar.setPercentage(100);
 				this.props.onEnd({ success: true });
-				this._detail.innerHTML = this._count + " / " + this._testFrames;
+				// this._detail.innerHTML = this._count + " / " + this._testFrames;
 			}
 		}
 	};
 
 	_checkDiffs = () => {
-		// TODO: IMPLEMENT
 		// bus.emit("image-diff", this._screenshotB, this._screenshotA);
 	};
 

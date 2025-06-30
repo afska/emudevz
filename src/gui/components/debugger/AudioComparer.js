@@ -1,0 +1,114 @@
+import { GenericDebugger } from "../Debugger";
+import utils from "./utils";
+
+const ImGui = window.ImGui;
+
+const MIN = 0;
+const MAX = 15;
+
+export default GenericDebugger(
+	class AudioComparer {
+		init() {}
+
+		draw() {
+			const m = 10;
+			ImGui.SetNextWindowPos(new ImGui.ImVec2(m, m), ImGui.Cond.FirstUseEver);
+			const io = ImGui.GetIO();
+			ImGui.SetNextWindowSize(
+				new ImGui.ImVec2(io.DisplaySize.x - m * 2, io.DisplaySize.y - m * 2)
+			);
+			ImGui.Begin(
+				"Audio test",
+				null,
+				ImGui.WindowFlags.NoMove |
+					ImGui.WindowFlags.NoResize |
+					ImGui.WindowFlags.NoCollapse
+			);
+
+			ImGui.Columns(3, "ComparerCols", false);
+			this._drawWaves();
+			ImGui.NextColumn();
+			ImGui.ProgressBar(100 / 255, new ImGui.Vec2(-1, 16));
+			ImGui.NextColumn();
+			this._drawWaves();
+
+			ImGui.End();
+		}
+
+		destroy() {}
+
+		_drawWaves() {
+			const emulation = window.EMULATION;
+
+			let mix = emulation?.channelSamples.mix ?? [];
+			let pulse1 = emulation?.channelSamples.pulse1 ?? [];
+			let pulse2 = emulation?.channelSamples.pulse2 ?? [];
+			let triangle = emulation?.channelSamples.triangle ?? [];
+			let noise = emulation?.channelSamples.noise ?? [];
+			let dmc = emulation?.channelSamples.dmc ?? [];
+
+			if (mix.length > 0) {
+				this._lastMix = mix;
+				this._lastPulse1 = pulse1;
+				this._lastPulse2 = pulse2;
+				this._lastTriangle = triangle;
+				this._lastNoise = noise;
+				this._lastDMC = dmc;
+			} else if (this._lastMix != null && this._lastMix.length > 0) {
+				mix = this._lastMix;
+				pulse1 = this._lastPulse1;
+				pulse2 = this._lastPulse2;
+				triangle = this._lastTriangle;
+				noise = this._lastNoise;
+				dmc = this._lastDMC;
+			}
+
+			const maxN = mix.length;
+			const N = Math.floor(maxN * (1 - this._zoom));
+			const height = 20;
+
+			utils.simpleTable("pulse1", "Pulse Channel 1", () => {
+				const waveSize = new ImGui.Vec2(
+					ImGui.GetContentRegionAvail().x,
+					height
+				);
+				ImGui.PlotLines("", pulse1, N, 0, "", MIN, MAX, waveSize);
+			});
+			utils.simpleTable("pulse2", "Pulse Channel 2", () => {
+				const waveSize = new ImGui.Vec2(
+					ImGui.GetContentRegionAvail().x,
+					height
+				);
+				ImGui.PlotLines("", pulse2, N, 0, "", MIN, MAX, waveSize);
+			});
+			utils.simpleTable("triangle", "Triangle Channel", () => {
+				const waveSize = new ImGui.Vec2(
+					ImGui.GetContentRegionAvail().x,
+					height
+				);
+				ImGui.PlotLines("", triangle, N, 0, "", MIN, MAX, waveSize);
+			});
+			utils.simpleTable("noise", "Noise Channel", () => {
+				const waveSize = new ImGui.Vec2(
+					ImGui.GetContentRegionAvail().x,
+					height
+				);
+				ImGui.PlotLines("", noise, N, 0, "", MIN, MAX, waveSize);
+			});
+			utils.simpleTable("dmc", "DMC Channel", () => {
+				const waveSize = new ImGui.Vec2(
+					ImGui.GetContentRegionAvail().x,
+					height
+				);
+				ImGui.PlotLines("", dmc, N, 0, "", MIN, MAX, waveSize);
+			});
+			utils.simpleTable("mix", "Mix", () => {
+				const waveSize = new ImGui.Vec2(
+					ImGui.GetContentRegionAvail().x,
+					height
+				);
+				ImGui.PlotLines("Mix", mix, N, 0, "", 0, 0.5, waveSize);
+			});
+		}
+	}
+);
