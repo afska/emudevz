@@ -42,10 +42,12 @@ wave:
   - |-
     📚  <before> that `onSample(...)` call, add:
       ```javascript
+      // <test>
       const frequency = 440;
       const period = 1 / frequency;
       const dutyCycle = 0.5;
-      this.sample = (this.time % period) < period * dutyCycle ? 1 : 0;```
+      this.sample = (this.time % period) < period * dutyCycle ? 1 : 0;
+      // </test>```
   - try it! when loading a ROM, you should hear a square wave, playing an <A4> note (~440~ Hz) 🎵
   responses:
   - what's the duty cycle? [duty]
