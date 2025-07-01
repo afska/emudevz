@@ -25,8 +25,11 @@ export default {
 			ImGui.EndTable();
 		}
 	},
-	simpleSection(id, label, draw) {
-		ImGui.Text(label);
+	simpleSection(id, label, draw, textColor = null) {
+		if (textColor != null)
+			this.withTextColor(textColor, () => ImGui.Text(label));
+		else ImGui.Text(label);
+
 		draw();
 	},
 	simpleTab(name, draw) {

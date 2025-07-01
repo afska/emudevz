@@ -21,7 +21,8 @@ export default class Emulation {
 		onSaveState = () => {},
 		saveState = null,
 		volume = 1,
-		onFrame = () => {}
+		onFrame = () => {},
+		useSpeaker = true
 	) {
 		this._onFrameCallback = onFrame;
 
@@ -36,8 +37,8 @@ export default class Emulation {
 			dmc: true,
 		};
 
-		this.speaker = new Speaker(volume);
-		this.speaker.start();
+		this.speaker = useSpeaker ? new Speaker(volume) : null;
+		this.speaker?.start();
 
 		this.saveState = saveState;
 		this.isSaveStateRequested = false;
@@ -83,7 +84,7 @@ export default class Emulation {
 			try {
 				if (isDebugStepScanlineRequested) {
 					this.neees.scanline(true);
-				} else if (SYNC_TO_AUDIO) {
+				} else if (SYNC_TO_AUDIO && this.speaker != null) {
 					const requestedSamples = APU_SAMPLE_RATE / FPS;
 					const newBufferSize = this.speaker.bufferSize + requestedSamples;
 					if (newBufferSize <= AUDIO_BUFFER_LIMIT)
@@ -113,7 +114,7 @@ export default class Emulation {
 
 	terminate = () => {
 		this.frameTimer.stop();
-		this.speaker.stop();
+		this.speaker?.stop();
 		window.EMULATION = null;
 	};
 
@@ -170,7 +171,7 @@ export default class Emulation {
 	};
 
 	_updateSound() {
-		this.speaker.writeSamples(this.samples);
+		this.speaker?.writeSamples(this.samples);
 		this.samples = [];
 	}
 

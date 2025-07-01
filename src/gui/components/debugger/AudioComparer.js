@@ -12,6 +12,9 @@ export default GenericDebugger(
 			this.progressValue = 0;
 			this.progressText = "";
 			this.didFail = false;
+
+			this.samplesA = null;
+			this.samplesB = null;
 		}
 
 		draw() {
@@ -44,9 +47,9 @@ export default GenericDebugger(
 			if (this.didFail) ImGui.PopStyleColor(2);
 
 			ImGui.Columns(2, "ComparerCols", false);
-			this._drawWaves(this.emulationA, "#e5c07b");
+			this._drawWaves(this.emulationA, "#e5c07b", this.samplesA);
 			ImGui.NextColumn();
-			this._drawWaves(this.emulationB, "#577295");
+			this._drawWaves(this.emulationB, "#577295", this.samplesB);
 
 			ImGui.End();
 			ImGui.PopStyleVar();
@@ -54,15 +57,18 @@ export default GenericDebugger(
 
 		destroy() {}
 
-		_drawWaves(emulation, color) {
+		_drawWaves(emulation, color, finalSamples) {
 			if (!emulation) return;
 
-			let mix = emulation?.channelSamples.mix ?? [];
-			let pulse1 = emulation?.channelSamples.pulse1 ?? [];
-			let pulse2 = emulation?.channelSamples.pulse2 ?? [];
-			let triangle = emulation?.channelSamples.triangle ?? [];
-			let noise = emulation?.channelSamples.noise ?? [];
-			let dmc = emulation?.channelSamples.dmc ?? [];
+			let mix = finalSamples?.mix ?? emulation?.channelSamples.mix ?? [];
+			let pulse1 =
+				finalSamples?.pulse1 ?? emulation?.channelSamples.pulse1 ?? [];
+			let pulse2 =
+				finalSamples?.pulse2 ?? emulation?.channelSamples.pulse2 ?? [];
+			let triangle =
+				finalSamples?.triangle ?? emulation?.channelSamples.triangle ?? [];
+			let noise = finalSamples?.noise ?? emulation?.channelSamples.noise ?? [];
+			let dmc = finalSamples?.dmc ?? emulation?.channelSamples.dmc ?? [];
 
 			if (mix.length > 0) {
 				this._lastMix = mix;
@@ -87,6 +93,18 @@ export default GenericDebugger(
 			ImGui.PushStyleColor(ImGui.Col.PlotLines, vec4Color);
 			ImGui.PushStyleColor(ImGui.Col.PlotLinesHovered, vec4Color);
 
+			utils.simpleSection(
+				"mix",
+				"Mix",
+				() => {
+					const waveSize = new ImGui.Vec2(
+						ImGui.GetContentRegionAvail().x,
+						height
+					);
+					ImGui.PlotLines("", mix, N, 0, "", 0, 0.5, waveSize);
+				},
+				color
+			);
 			utils.simpleSection("pulse1", "Pulse Channel 1", () => {
 				const waveSize = new ImGui.Vec2(
 					ImGui.GetContentRegionAvail().x,
@@ -121,13 +139,6 @@ export default GenericDebugger(
 					height
 				);
 				ImGui.PlotLines("", dmc, N, 0, "", MIN, MAX, waveSize);
-			});
-			utils.simpleSection("mix", "Mix", () => {
-				const waveSize = new ImGui.Vec2(
-					ImGui.GetContentRegionAvail().x,
-					height
-				);
-				ImGui.PlotLines("", mix, N, 0, "", 0, 0.5, waveSize);
 			});
 
 			ImGui.PopStyleColor(2);

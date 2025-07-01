@@ -5,10 +5,11 @@ import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
 import AudioComparer from "../debugger/AudioComparer";
-// import { bus } from "../../../utils"; // TODO: USE? FINISH IMPLEMENTATION
 import IconButton from "../widgets/IconButton";
 import Emulator from "./Emulator";
 import styles from "./AudioTester.module.css";
+
+const COMPARABLE_WINDOW = 1000;
 
 export default class AudioTester extends PureComponent {
 	_samplesA = {
@@ -97,6 +98,7 @@ export default class AudioTester extends PureComponent {
 							onFps={this._setFps}
 							onStart={this._onExpectedEmulatorStart}
 							onFrame={this._onExpectedFrame}
+							withAudio={false}
 							style={{ width: "auto", height: "auto" }}
 							ref={(ref) => {
 								this._emulatorB = ref;
@@ -179,7 +181,25 @@ export default class AudioTester extends PureComponent {
 			if (!success) {
 				this._emulatorA.stop();
 				this._emulatorB.stop();
+
 				this._comparer.debuggerGUI.didFail = true;
+				this._comparer.debuggerGUI.samplesA = {
+					pulse1: this._samplesA.pulse1.slice(-COMPARABLE_WINDOW),
+					pulse2: this._samplesA.pulse2.slice(-COMPARABLE_WINDOW),
+					triangle: this._samplesA.triangle.slice(-COMPARABLE_WINDOW),
+					noise: this._samplesA.noise.slice(-COMPARABLE_WINDOW),
+					dmc: this._samplesA.dmc.slice(-COMPARABLE_WINDOW),
+					mix: this._samplesA.mix.slice(-COMPARABLE_WINDOW),
+				};
+				this._comparer.debuggerGUI.samplesB = {
+					pulse1: this._samplesB.pulse1.slice(-COMPARABLE_WINDOW),
+					pulse2: this._samplesB.pulse2.slice(-COMPARABLE_WINDOW),
+					triangle: this._samplesB.triangle.slice(-COMPARABLE_WINDOW),
+					noise: this._samplesB.noise.slice(-COMPARABLE_WINDOW),
+					dmc: this._samplesB.dmc.slice(-COMPARABLE_WINDOW),
+					mix: this._samplesB.mix.slice(-COMPARABLE_WINDOW),
+				};
+
 				this.props.onEnd({
 					success,
 					frame: this._count,

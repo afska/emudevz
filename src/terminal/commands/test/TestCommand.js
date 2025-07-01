@@ -257,8 +257,14 @@ export default class TestCommand extends Command {
 				await this._terminal.writeln("✅ ");
 				tv.setContent(null, "rom");
 			} else {
-				await this._terminal.writeln("AUDIO TEST FAILED", theme.ERROR);
-				// TODO: LOCALIZE AND IMPLEMENTERROR MESSAGE
+				await this._terminal.writeln(
+					locales.get("tests_audio_failed1") +
+						(result.frame + 1) +
+						locales.get("tests_audio_failed2") +
+						result.total +
+						locales.get("tests_audio_failed3"),
+					theme.ERROR
+				);
 			}
 
 			return result.success;

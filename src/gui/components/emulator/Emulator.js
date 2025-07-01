@@ -102,7 +102,14 @@ export default class Emulator extends Component {
 	}
 
 	async _initialize(screen) {
-		const { rom, settings, volume, onStart, onFrame } = this.props;
+		const {
+			rom,
+			settings,
+			volume,
+			onStart,
+			onFrame,
+			withAudio = true,
+		} = this.props;
 		this.screen = screen;
 		if (!rom) return;
 
@@ -155,7 +162,8 @@ export default class Emulator extends Component {
 			this._setSaveState,
 			saveState,
 			volume,
-			onFrame
+			onFrame,
+			withAudio
 		);
 		onStart?.(this._emulation);
 		bus.emit("emulator-started");
