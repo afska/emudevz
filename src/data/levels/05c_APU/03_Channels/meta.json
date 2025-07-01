@@ -1,0 +1,32 @@
+{
+	"name": {
+		"en": "🎛️ Channels",
+		"es": "🎛️ Canales"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Right": ["debugger", {}],
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Background": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"memory": {
+		"content": {
+			"multifile": true,
+			"protected": true
+		}
+	}
+}
