@@ -179,16 +179,14 @@ export default class AudioTester extends PureComponent {
 			if (!success) {
 				this._emulatorA.stop();
 				this._emulatorB.stop();
-				// this._symbol.innerHTML = "❌";
+				this._comparer.debuggerGUI.didFail = true;
 				this.props.onEnd({
 					success,
 					frame: this._count,
 					total: this._testFrames,
 				});
-				// this._progressBar.setBarFillColor("#d9534f");
 				this._closeButton.style.display = "block";
 
-				// this._checkDiffsButton.style.display = "block";
 				return;
 			}
 
@@ -205,10 +203,6 @@ export default class AudioTester extends PureComponent {
 				this.props.onEnd({ success: true });
 			}
 		}
-	};
-
-	_checkDiffs = () => {
-		// bus.emit("image-diff", this._screenshotB, this._screenshotA);
 	};
 
 	_setError = (e) => {

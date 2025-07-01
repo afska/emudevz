@@ -52,11 +52,14 @@ export default {
 		ImGui.SameLine();
 		this.withTextColor("#c39f79", () => ImGui.Text(`${value}`));
 	},
-	withTextColor(hex, draw) {
+	hexToVec4(hex) {
 		const r = parseInt(hex.slice(1, 3), 16) / 255;
 		const g = parseInt(hex.slice(3, 5), 16) / 255;
 		const b = parseInt(hex.slice(5, 7), 16) / 255;
-		ImGui.PushStyleColor(ImGui.Col.Text, new ImGui.Vec4(r, g, b, 1));
+		return new ImGui.Vec4(r, g, b, 1);
+	},
+	withTextColor(hex, draw) {
+		ImGui.PushStyleColor(ImGui.Col.Text, this.hexToVec4(hex));
 		draw();
 		ImGui.PopStyleColor();
 	},

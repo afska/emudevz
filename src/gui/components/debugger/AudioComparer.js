@@ -11,6 +11,7 @@ export default GenericDebugger(
 		init() {
 			this.progressValue = 0;
 			this.progressText = "";
+			this.didFail = false;
 		}
 
 		draw() {
@@ -30,16 +31,22 @@ export default GenericDebugger(
 					ImGui.WindowFlags.NoCollapse
 			);
 
+			if (this.didFail) {
+				const vec4Color = utils.hexToVec4("#d9534f");
+				ImGui.PushStyleColor(ImGui.Col.PlotHistogram, vec4Color);
+				ImGui.PushStyleColor(ImGui.Col.PlotHistogramHovered, vec4Color);
+			}
 			ImGui.ProgressBar(
 				this.progressValue / 100,
 				new ImGui.Vec2(-1, 16),
 				this.progressText
 			);
+			if (this.didFail) ImGui.PopStyleColor(2);
 
 			ImGui.Columns(2, "ComparerCols", false);
-			this._drawWaves(this.emulationA);
+			this._drawWaves(this.emulationA, "#e5c07b");
 			ImGui.NextColumn();
-			this._drawWaves(this.emulationB);
+			this._drawWaves(this.emulationB, "#577295");
 
 			ImGui.End();
 			ImGui.PopStyleVar();
@@ -47,7 +54,7 @@ export default GenericDebugger(
 
 		destroy() {}
 
-		_drawWaves(emulation) {
+		_drawWaves(emulation, color) {
 			if (!emulation) return;
 
 			let mix = emulation?.channelSamples.mix ?? [];
@@ -75,6 +82,10 @@ export default GenericDebugger(
 
 			const N = mix.length;
 			const height = 20;
+
+			const vec4Color = utils.hexToVec4(color);
+			ImGui.PushStyleColor(ImGui.Col.PlotLines, vec4Color);
+			ImGui.PushStyleColor(ImGui.Col.PlotLinesHovered, vec4Color);
 
 			utils.simpleSection("pulse1", "Pulse Channel 1", () => {
 				const waveSize = new ImGui.Vec2(
@@ -118,6 +129,8 @@ export default GenericDebugger(
 				);
 				ImGui.PlotLines("", mix, N, 0, "", 0, 0.5, waveSize);
 			});
+
+			ImGui.PopStyleColor(2);
 		}
 	}
 );
