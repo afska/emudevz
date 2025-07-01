@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import { FaTimes } from "react-icons/fa";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
-import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
 import AudioComparer from "../debugger/AudioComparer";
 import IconButton from "../widgets/IconButton";
@@ -255,6 +254,6 @@ export default class AudioTester extends PureComponent {
 	}
 
 	get _volume() {
-		return Math.max(store.getState().savedata.emulatorVolume, 0.1);
+		return 0.1; // Math.max(store.getState().savedata.emulatorVolume, 0.1);
 	}
 }
