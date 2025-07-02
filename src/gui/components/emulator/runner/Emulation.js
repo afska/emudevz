@@ -1,11 +1,8 @@
 import FrameTimer from "./FrameTimer";
 import Speaker from "./Speaker";
 
-const SYNC_TO_AUDIO = true;
 const APU_SAMPLE_RATE = 44100;
-const AUDIO_BUFFER_LIMIT = 4096;
 const MAX_SAMPLE_MEMORY_SECONDS = 10;
-const FPS = 60.098;
 
 /**
  * An emulator runner instance.
@@ -21,10 +18,11 @@ export default class Emulation {
 		onSaveState = () => {},
 		saveState = null,
 		volume = 1,
-		onFrame = () => {},
-		useSpeaker = true
+		syncToVideo = false,
+		onFrame = () => {}
 	) {
 		this._onFrameCallback = onFrame;
+		this._syncToVideo = syncToVideo;
 
 		this.screen = screen;
 		this.samples = [];
@@ -37,8 +35,13 @@ export default class Emulation {
 			dmc: true,
 		};
 
-		this.speaker = useSpeaker ? new Speaker(volume) : null;
-		this.speaker?.start();
+		this.speaker = new Speaker((requestedSamples) => {
+			if (this._canSyncToAudio()) {
+				this.neees.samples(requestedSamples);
+				this._updateSound();
+			}
+		}, volume);
+		this.speaker.start();
 
 		this.saveState = saveState;
 		this.isSaveStateRequested = false;
@@ -82,18 +85,14 @@ export default class Emulation {
 			}
 
 			try {
-				if (isDebugStepScanlineRequested) {
-					this.neees.scanline(true);
-				} else if (SYNC_TO_AUDIO && this.speaker != null) {
-					const requestedSamples = APU_SAMPLE_RATE / FPS;
-					const newBufferSize = this.speaker.bufferSize + requestedSamples;
-					if (newBufferSize <= AUDIO_BUFFER_LIMIT)
-						this.neees.samples(requestedSamples);
-				} else {
-					this.neees.frame();
+				if (!this._canSyncToAudio()) {
+					if (isDebugStepScanlineRequested) {
+						this.neees.scanline(true);
+					} else {
+						this.neees.frame();
+					}
+					this._updateSound();
 				}
-
-				this._updateSound();
 			} catch (error) {
 				onError(error);
 			}
@@ -114,7 +113,7 @@ export default class Emulation {
 
 	terminate = () => {
 		this.frameTimer.stop();
-		this.speaker?.stop();
+		this.speaker.stop();
 		window.EMULATION = null;
 	};
 
@@ -171,7 +170,7 @@ export default class Emulation {
 	};
 
 	_updateSound() {
-		this.speaker?.writeSamples(this.samples);
+		this.speaker.writeSamples(this.samples);
 		this.samples = [];
 	}
 
@@ -193,5 +192,9 @@ export default class Emulation {
 				if (button[0] !== "$")
 					this.neees.setButton(i + 1, button, input[i][button]);
 		}
+	}
+
+	_canSyncToAudio() {
+		return !this._syncToVideo && !this.isDebugging;
 	}
 }

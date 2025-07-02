@@ -6,15 +6,14 @@ const SAMPLE_RATE = 44100;
 const CHANNELS = 1;
 
 export default class Speaker {
-	constructor(initialVolume = 1) {
+	constructor(onAudioRequested = () => {}, initialVolume = 1) {
+		this.onAudioRequested = onAudioRequested;
 		this.initialVolume = initialVolume;
 	}
 
 	async start() {
 		if (this._audioCtx) return;
 		if (!window.AudioContext) return;
-
-		this.bufferSize = 0;
 
 		this._audioCtx = new window.AudioContext({
 			sampleRate: SAMPLE_RATE,
@@ -38,7 +37,7 @@ export default class Speaker {
 		});
 		this.playerWorklet.connect(this.gainNode);
 		this.playerWorklet.port.onmessage = (event) => {
-			this.bufferSize = event.data;
+			this.onAudioRequested(event.data);
 		};
 	}
 

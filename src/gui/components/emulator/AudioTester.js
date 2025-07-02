@@ -97,7 +97,6 @@ export default class AudioTester extends PureComponent {
 							onFps={this._setFps}
 							onStart={this._onExpectedEmulatorStart}
 							onFrame={this._onExpectedFrame}
-							withAudio={false}
 							style={{ width: "auto", height: "auto" }}
 							ref={(ref) => {
 								this._emulatorB = ref;

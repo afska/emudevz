@@ -46,6 +46,7 @@ export default class VideoTester extends PureComponent {
 						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onActualFrame}
+						syncToVideo
 						style={{ width: "auto", height: "auto" }}
 						ref={(ref) => {
 							this._emulatorA = ref;
@@ -104,6 +105,7 @@ export default class VideoTester extends PureComponent {
 						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onExpectedFrame}
+						syncToVideo
 						style={{ width: "auto", height: "auto" }}
 						ref={(ref) => {
 							this._emulatorB = ref;
