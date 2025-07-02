@@ -254,7 +254,8 @@ export default class EmulatorRunner extends PureComponent {
 
 	_setFps = (fps) => {
 		if (!this._container) return;
-		const formattedFps = `${fps}`.padStart(2, "0");
+		const cappedFps = Math.min(fps, 60);
+		const formattedFps = `${cappedFps}`.padStart(2, "0");
 		this._container.querySelector("#fps").textContent = formattedFps;
 	};
 
