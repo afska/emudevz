@@ -3,6 +3,7 @@ import Speaker from "./Speaker";
 
 const APU_SAMPLE_RATE = 44100;
 const MAX_SAMPLE_MEMORY_SECONDS = 10;
+const AUDIO_DRIFT_THRESHOLD = 64;
 
 /**
  * An emulator runner instance.
@@ -35,9 +36,13 @@ export default class Emulation {
 			dmc: true,
 		};
 
-		this.speaker = new Speaker((requestedSamples) => {
+		this.speaker = new Speaker(({ need, have, target }) => {
 			if (this._canSyncToAudio()) {
-				this.neees.samples(requestedSamples);
+				let n = need;
+				if (have > target + AUDIO_DRIFT_THRESHOLD) n--;
+				else if (have < target - AUDIO_DRIFT_THRESHOLD) n++;
+				this.neees.samples(n);
+
 				this._updateSound();
 			}
 		}, volume);
