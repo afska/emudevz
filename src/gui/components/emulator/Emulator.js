@@ -110,6 +110,7 @@ export default class Emulator extends Component {
 			onStart,
 			onFrame,
 			syncToVideo = false,
+			forceMusicPause = false,
 		} = this.props;
 		this.screen = screen;
 		if (!rom) return;
@@ -142,7 +143,7 @@ export default class Emulator extends Component {
 		}
 
 		this._stop(false);
-		if (volume > 0) music.pause();
+		if (volume > 0 || forceMusicPause) music.pause();
 		this.keyboardInput = gamepad.createInput();
 		window.addEventListener("keydown", this._onKeyDown);
 		window.addEventListener("keyup", this._onKeyUp);
@@ -171,6 +172,9 @@ export default class Emulator extends Component {
 	}
 
 	_getInput = () => {
+		if (this.props.noInput)
+			return [gamepad.createInput(), gamepad.createInput()];
+
 		const gamepadInput = gamepad.getInput();
 
 		this.props.onInputType(gamepadInput ? "gamepad" : "keyboard");

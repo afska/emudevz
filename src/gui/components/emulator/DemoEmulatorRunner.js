@@ -16,6 +16,8 @@ export default class DemoEmulatorRunner extends PureComponent {
 				onError={() => {}}
 				onInputType={() => {}}
 				onFps={() => {}}
+				noInput
+				forceMusicPause
 				ref={(ref) => {
 					this._emulator = ref;
 				}}
