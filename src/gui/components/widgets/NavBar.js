@@ -229,11 +229,9 @@ class NavBar extends PureComponent {
 			"new-listeners": () => this.forceUpdate(),
 			"image-diff": this._showImageDiff,
 			"pause-music": () => {
-				music.pause();
 				this.forceUpdate();
 			},
 			"resume-music": () => {
-				music.resume();
 				this.forceUpdate();
 			},
 		});

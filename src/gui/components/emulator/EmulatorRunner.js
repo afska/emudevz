@@ -7,6 +7,7 @@ import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
 import { bus, filepicker } from "../../../utils";
+import music from "../../sound/music";
 import IconButton from "../widgets/IconButton";
 import Tooltip from "../widgets/Tooltip";
 import VolumeSlider from "../widgets/VolumeSlider";
@@ -142,7 +143,7 @@ export default class EmulatorRunner extends PureComponent {
 							volume={null}
 							setVolume={(v) => {
 								this._volume = v;
-								bus.emit("pause-music");
+								music.pause();
 							}}
 							defaultVolume={this._volume}
 							style={{ marginLeft: 8, width: 64 }}

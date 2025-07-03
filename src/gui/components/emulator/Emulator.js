@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import Level from "../../../level/Level";
 import { bus } from "../../../utils";
+import music from "../../sound/music";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
 import Emulation from "./runner/Emulation";
@@ -141,7 +142,7 @@ export default class Emulator extends Component {
 		}
 
 		this._stop(false);
-		if (volume > 0) bus.emit("pause-music");
+		if (volume > 0) music.pause();
 		this.keyboardInput = gamepad.createInput();
 		window.addEventListener("keydown", this._onKeyDown);
 		window.addEventListener("keyup", this._onKeyUp);
@@ -204,7 +205,7 @@ export default class Emulator extends Component {
 		window.removeEventListener("fullscreenchange", this._onFullscreenChange);
 		this.props.onStop?.();
 		bus.emit("emulator-stopped");
-		if (resumeMusic) bus.emit("resume-music");
+		if (resumeMusic) music.resume();
 	}
 
 	_onKeyDown = (e) => {
