@@ -7,7 +7,7 @@ main:
   - muéstrame un ejemplo [example]
 
 example:
-  run: |-
+  run: |
     {{Top}}.loadROM("/roms/.all/SuperTiltBro.neees");
   messages:
   - presta atención a la <nube> en el medio

@@ -1,12 +1,16 @@
 ---
 main:
+  # run: |
+  #   {{Right}}.do((debuggerGUI) => {
+  #     debuggerGUI.selectedTab = "APU";
+  #   });
   messages:
   - "coming soon!"
   responses:
   - try rom [start]
 
 start:
-  run: |-
+  run: |
     {{Background}}.loadROM("/roms/.all/SuperTiltBro.neees", "demoRom");
   messages:
   - does this work?

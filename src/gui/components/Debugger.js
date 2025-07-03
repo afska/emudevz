@@ -14,7 +14,7 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 		async initialize(args, level) {
 			this._level = level;
 
-			this.debuggerGUI = new DebuggerGUIClass();
+			this.debuggerGUI = new DebuggerGUIClass(args);
 		}
 
 		render() {
@@ -33,6 +33,10 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 		}
 
 		focus = () => {};
+
+		do = (action) => {
+			action(this.debuggerGUI);
+		};
 
 		_draw = () => {
 			this.debuggerGUI.draw();

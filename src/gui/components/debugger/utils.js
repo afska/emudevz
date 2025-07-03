@@ -32,8 +32,16 @@ export default {
 
 		draw();
 	},
-	simpleTab(name, draw) {
-		if (ImGui.BeginTabItem(name)) {
+	simpleTab(name, draw, isSelected = null) {
+		if (isSelected != null) ImGui.BeginDisabled(true);
+		const opened = ImGui.BeginTabItem(
+			name,
+			null,
+			isSelected ? ImGui.TabItemFlags.SetSelected : ImGui.TabItemFlags.None
+		);
+		if (isSelected != null) ImGui.EndDisabled(true);
+
+		if (opened) {
 			ImGui.BeginChild(
 				"Child" + name,
 				new ImGui.ImVec2(0, 0),

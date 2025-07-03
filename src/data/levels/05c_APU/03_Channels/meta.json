@@ -6,7 +6,7 @@
 	"ui": {
 		"layout": "dual",
 		"components": {
-			"Right": ["debugger", {}],
+			"Right": ["debugger", { "readOnly": true, "initialTab": "APU" }],
 			"Left": [
 				"console",
 				{

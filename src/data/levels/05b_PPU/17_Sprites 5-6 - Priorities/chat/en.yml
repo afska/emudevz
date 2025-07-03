@@ -7,7 +7,7 @@ main:
   - show me an example [example]
 
 example:
-  run: |-
+  run: |
     {{Top}}.loadROM("/roms/.all/SuperTiltBro.neees");
   messages:
   - take a look at the <cloud> in the middle
