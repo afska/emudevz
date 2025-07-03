@@ -24,7 +24,7 @@ export default class DualLayout extends Layout {
 
 	render() {
 		this.requireComponents();
-		const { Left, Right } = this.props;
+		const { Left, Right, Background = null } = this.props;
 		const { selected, Pin, SecondaryPin } = this.state;
 
 		return (
@@ -46,6 +46,24 @@ export default class DualLayout extends Layout {
 						}}
 					/>
 				</div>
+
+				{!!Background && (
+					<div
+						style={{ display: "none" }}
+						className={classNames(
+							styles.leftColumn,
+							styles.column,
+							styles.unselected
+						)}
+						onMouseDown={(e) => {}}
+					>
+						<Background
+							ref={(ref) => {
+								this.instances.Background = ref;
+							}}
+						/>
+					</div>
+				)}
 
 				{Pin && (
 					<div

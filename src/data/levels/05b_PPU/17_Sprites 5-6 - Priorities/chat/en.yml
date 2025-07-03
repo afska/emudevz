@@ -8,7 +8,7 @@ main:
 
 example:
   run: |-
-    {{Top}}.loadROM("/roms/.all/SuperTiltBro.neees", "rom");
+    {{Top}}.loadROM("/roms/.all/SuperTiltBro.neees");
   messages:
   - take a look at the <cloud> in the middle
   - the cloud is a sprite and the game title is part of the background

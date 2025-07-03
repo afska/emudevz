@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import filesystem from "../../filesystem";
 import TVNoise from "./TVNoise";
 import AudioTester from "./emulator/AudioTester";
+import DemoEmulatorRunner from "./emulator/DemoEmulatorRunner";
 import EmulatorRunner from "./emulator/EmulatorRunner";
 import GameStreamer from "./emulator/GameStreamer";
 import VideoTester from "./emulator/VideoTester";
@@ -125,6 +126,18 @@ export default class TV extends PureComponent {
 						}}
 						onStop={() => {
 							this._resetContent(null);
+						}}
+					/>
+				);
+			}
+			case "demoRom": {
+				return (
+					<DemoEmulatorRunner
+						id={this._level.id}
+						rom={content}
+						saveState={_saveState}
+						ref={(ref) => {
+							this.stream = ref;
 						}}
 					/>
 				);

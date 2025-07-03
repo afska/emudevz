@@ -1,4 +1,5 @@
 import store from "../../store";
+import { bus } from "../../utils";
 
 const MUSIC_DIR = "music/";
 const TRACKS = [
@@ -27,6 +28,8 @@ class Music {
 	}
 
 	setVolume(value) {
+		bus.emit("music-volume-changed", value);
+
 		this._volume = value;
 		this._saveVolume();
 
