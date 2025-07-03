@@ -27,7 +27,8 @@
 				}
 			]
 		},
-		"focus": "Bottom"
+		"focus": "Bottom",
+		"canPinEmulator": false
 	},
 	"test": {
 		"context": "javascript",

@@ -118,7 +118,7 @@ async function pkg() {
 				globalId: globalLevelId,
 				name: levelMetadata.name,
 				helpLines: _.sortBy([...helpLines]),
-				unlocksGame: levelMetadata.letsPlayUnlock,
+				unlocksGame: levelMetadata.unlocksGame,
 			});
 
 			// create compressed file

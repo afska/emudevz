@@ -116,7 +116,7 @@ export default class Level {
 
 	advance() {
 		this._saveSnapshotIfNeeded();
-		this.unlockLetsPlayLevelIfNeeded(this.letsPlayUnlock);
+		this.unlockLetsPlayLevelIfNeeded(this.unlocksGame);
 		analytics.track("level_completed", {
 			id: this.id,
 			name: this.name.en,
@@ -132,7 +132,7 @@ export default class Level {
 		if (chapter.isSpecial) return false;
 
 		return (
-			(bus.isListeningTo("pin") && !bus.isListeningTo("do-not-pin-emulator")) ||
+			(bus.isListeningTo("pin") && this.ui.canPinEmulator !== false) ||
 			this.$layout.findInstance("TV", (it) => it.state.type === "rom") != null
 		);
 	}
@@ -140,7 +140,7 @@ export default class Level {
 	canLaunchEmulatorFromNavbar(chapter) {
 		return (
 			bus.isListeningTo("pin") &&
-			!bus.isListeningTo("do-not-pin-emulator") &&
+			this.ui.canPinEmulator !== false &&
 			!chapter.isSpecial
 		);
 	}

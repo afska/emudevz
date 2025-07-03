@@ -187,7 +187,6 @@ export default class TripleLayout extends Layout {
 			unpin: this._closePin,
 			"secondary-pin": this._onSecondaryPin,
 			"unpin-secondary": this._closeSecondaryPin,
-			"do-not-pin-emulator": () => {},
 		});
 	}
 

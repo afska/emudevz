@@ -2,7 +2,6 @@
 main:
   messages:
   - "coming soon!"
-  - prevent emulator from being launched, make it a level flag instead of a hack listener in triple layout
   responses:
   - try rom [start]
 

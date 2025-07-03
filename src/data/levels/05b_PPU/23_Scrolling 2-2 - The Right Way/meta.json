@@ -28,7 +28,8 @@
 				}
 			]
 		},
-		"focus": "Bottom"
+		"focus": "Bottom",
+		"canPinEmulator": false
 	},
 	"test": {
 		"context": "javascript",
@@ -70,5 +71,5 @@
 			"multifile": true
 		}
 	},
-	"letsPlayUnlock": "lets-play-minekart-madness"
+	"unlocksGame": "lets-play-minekart-madness"
 }

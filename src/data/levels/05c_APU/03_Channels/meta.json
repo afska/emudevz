@@ -21,7 +21,8 @@
 				}
 			]
 		},
-		"focus": "Left"
+		"focus": "Left",
+		"canPinEmulator": false
 	},
 	"memory": {
 		"content": {
