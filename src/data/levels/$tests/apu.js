@@ -51,11 +51,9 @@ it("initializates the counters", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.should.include.key("time");
 	apu.should.include.key("sampleCounter");
 	apu.should.include.key("sample");
 
-	apu.time.should.equalN(0, "time");
 	apu.sampleCounter.should.equalN(0, "sampleCounter");
 	apu.sample.should.equalN(0, "sample");
 })({
@@ -88,18 +86,15 @@ it("generates a new sample for every 20 `step(...)` calls", () => {
 	const onSample = sinon.spy();
 
 	apu.sample = 15;
-	apu.time = 66;
 
 	for (let i = 0; i < 19; i++) {
 		apu.step(onSample);
 
-		apu.time.should.equalN(66, "time");
 		apu.sampleCounter.should.equalN(i + 1, "sampleCounter");
 		onSample.should.not.have.been.called;
 	}
 
 	apu.step(onSample);
-	apu.time.should.equalN(66 + 1 / 44100, "time");
 	apu.sampleCounter.should.equalN(0, "sampleCounter");
 	onSample.should.have.been.calledWith(apu.sample);
 })({

@@ -55,7 +55,6 @@ start:
       **->** increments the sample counter
       **->** if it's time to produce a new sample:
         **->** resets the sample counter
-        **->** adds `1 / 44100` to the elapsed time (```javascript this.time```)
         **->** calls `onSample(...)` with the current sample (```javascript this.sample```)
   - 📚  then, import your file from 📄  ~/code/index.js~
   - and add the corresponding `APU` key to the exported object
