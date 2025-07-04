@@ -37,13 +37,17 @@ export default class Emulation {
 		};
 
 		this.speaker = new Speaker(({ need, have, target }) => {
-			if (this._canSyncToAudio()) {
-				let n = need;
-				if (have > target + AUDIO_DRIFT_THRESHOLD) n--;
-				else if (have < target - AUDIO_DRIFT_THRESHOLD) n++;
-				this.neees.samples(n);
+			try {
+				if (this._canSyncToAudio()) {
+					let n = need;
+					if (have > target + AUDIO_DRIFT_THRESHOLD) n--;
+					else if (have < target - AUDIO_DRIFT_THRESHOLD) n++;
+					this.neees.samples(n);
 
-				this._updateSound();
+					this._updateSound();
+				}
+			} catch (error) {
+				onError(error);
 			}
 		}, volume);
 		this.speaker.start();
