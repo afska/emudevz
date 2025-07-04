@@ -1,17 +1,28 @@
 ---
 main:
-  # run: |
-  #   {{Right}}.do((debuggerGUI) => {
-  #     debuggerGUI.selectedTab = "APU";
-  #   });
   messages:
-  - "coming soon!"
+  - we'll do a quick overview of the APU's audio channels
+  - make sure the <music volume> is not muted, and continue
   responses:
-  - try rom [start]
+  - ▶️  play demo music [start]
 
 start:
   run: |
     {{Background}}.loadROM("/roms/.all/SuperTiltBro.neees", "demoRom");
   messages:
-  - does this work?
+  - this is the incredible music of <Super Tilt Bro>
+  - here, we can see almost all audio channels in action
+  - let's start with the Pulse Channel
+  responses:
+  - what's the Pulse Channel? [pulse]
+
+# {{Right}}.do((debuggerGUI) => {
+#   debuggerGUI.selectedTab = "Pulse";
+# });
+
+pulse:
+  run: |
+    // Only enable pulse1
+  messages:
+  - coming soon!
   responses: []

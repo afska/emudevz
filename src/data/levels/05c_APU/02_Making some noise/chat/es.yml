@@ -52,8 +52,8 @@ wave:
 
 duty:
   messages:
-  - en una onda cuadrada, el ciclo de trabajo define el porcentaje de tiempo que la señal está en <alto> (vs <bajo>)
-  - por ejemplo, con un ciclo de trabajo del <50%>, pasa el mismo tiempo en ambos
+  - en una onda de pulso, el ciclo de trabajo define el porcentaje de tiempo que la señal está en <alto> (vs <bajo>)
+  - por ejemplo, con un ciclo de trabajo del <50%>, pasa el mismo tiempo en ambos, y la llamamos onda cuadrada
   - <{wave_square.png;32x32}>
   - con un ciclo de trabajo del <25%>, se vería así
   - <{wave_square_25duty.png;32x32}>

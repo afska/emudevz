@@ -54,8 +54,8 @@ wave:
 
 duty:
   messages:
-  - in a square wave, the duty cycle defines the percentage of time the signal is <high> (vs <low>)
-  - for example, with a <50%> duty cycle, it spends the same time on both
+  - in a pulse wave, the duty cycle defines the percentage of time the signal is <high> (vs <low>)
+  - for example, with a <50%> duty cycle, it spends the same time on both, and we call it a square wave
   - <{wave_square.png;32x32}>
   - with a <25%> duty cycle, it would look like this
   - <{wave_square_25duty.png;32x32}>

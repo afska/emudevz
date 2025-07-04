@@ -10,7 +10,8 @@ const ImGui = window.ImGui;
 
 export default class DebuggerGUI {
 	constructor(args) {
-		this.selectedTab = args.initialTab || null; // only works when `args.readOnly`
+		this.args = args;
+		this.selectedTab = args.initialTab || null; // only works when `this.args.readOnly`
 
 		this.memory = new Debugger_Memory(args);
 		this.cpu = new Debugger_CPU(args);
@@ -18,8 +19,6 @@ export default class DebuggerGUI {
 		this.apu = new Debugger_APU(args);
 		this.external = new Debugger_External(args);
 		this.logs = new Debugger_Logs(args);
-
-		this._args = args;
 	}
 
 	init() {
@@ -61,7 +60,7 @@ export default class DebuggerGUI {
 				style.ItemSpacing.x * (btns.length - 1);
 			ImGui.SameLine(ImGui.GetContentRegionAvail().x - totalW);
 
-			if (!this._args.readOnly) {
+			if (!this.args.readOnly) {
 				btns.forEach(({ label, color }, i) => {
 					if (color) {
 						utils.withBgColor(color, () => {
@@ -103,7 +102,7 @@ export default class DebuggerGUI {
 				utils.simpleTab(
 					name,
 					() => pane.draw(),
-					this._args.readOnly ? name === this.selectedTab : null
+					this.args.readOnly ? name === this.selectedTab : null
 				);
 			}
 

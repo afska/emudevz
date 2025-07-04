@@ -254,9 +254,9 @@ const dictionary = {
 			also: { es: "Ciclo de trabajo|_Ciclos de trabajo" },
 			icon: "📊",
 			en:
-				"The percentage of time a square wave stays high during one period. Affects the tone and timbre of the sound. <br /><br />In the NEEES, Pulse Channels supports 4 duty cycles: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) and `3` (`75%`).",
+				"The percentage of time a pulse wave stays high during one period. Affects the tone and timbre of the sound. <br /><br />In the NEEES, Pulse Channels supports 4 duty cycles: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) and `3` (`75%`).",
 			es:
-				"El porcentaje de tiempo que una onda cuadrada se mantiene alta durante un período. Afecta el tono y el timbre del sonido. <br /><br />En la NEEES, los Canales Pulso soportan 4 ciclos de trabajo: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) y `3` (`75%`).",
+				"El porcentaje de tiempo que una onda de pulso se mantiene alta durante un período. Afecta el tono y el timbre del sonido. <br /><br />En la NEEES, los Canales Pulso soportan 4 ciclos de trabajo: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) y `3` (`75%`).",
 		},
 		"Flag|_Flags": {
 			also: { es: "Bandera|_Banderas" },
@@ -638,9 +638,17 @@ const dictionary = {
 			also: { es: "Canal Pulso|_Canales Pulso" },
 			icon: "🟦",
 			en:
-				"One of the APU's audio channels. It plays square waves with adjustable duty cycles and pitch. <br /><br />The NEEES has two of these.",
+				"One of the APU's audio channels. It plays pulse waves with adjustable duty cycles and pitch. <br /><br />The NEEES has two of these.",
 			es:
-				"Uno de los canales de audio de la APU. Reproduce ondas cuadradas con ciclos de trabajo y tono ajustables. <br /><br />La NEEES tiene dos de estos.",
+				"Uno de los canales de audio de la APU. Reproduce ondas de pulso con ciclos de trabajo y tono ajustables. <br /><br />La NEEES tiene dos de estos.",
+		},
+		"Pulse wave|_Pulse waves": {
+			also: { es: "Onda de pulso|_Ondas de pulso" },
+			icon: "🟦",
+			en:
+				"A waveform that alternates between two levels, creating a sharp, blocky sound. Used by the APU's Pulse Channels.",
+			es:
+				"Una forma de onda que alterna entre dos niveles, generando un sonido fuerte y entrecortado. Usada por los Canales Pulso de la APU.",
 		},
 		"Sample rate|_Sample rates": {
 			also: {
@@ -715,11 +723,9 @@ const dictionary = {
 		},
 		"Square wave|_Square waves": {
 			also: { es: "Onda cuadrada|_Ondas cuadradas" },
-			icon: "🟦",
-			en:
-				"A waveform that alternates between two levels, creating a sharp, blocky sound. Used by the APU's Pulse Channels.",
-			es:
-				"Una forma de onda que alterna entre dos niveles, generando un sonido fuerte y entrecortado. Usada por los Canales Pulso de la APU.",
+			icon: "⏹️",
+			en: "A pulse wave with a duty cycle of `50%`.",
+			es: "Una onda de pulso con un ciclo de trabajo de `50%`.",
 		},
 		Stack: {
 			also: { es: "Pila" },

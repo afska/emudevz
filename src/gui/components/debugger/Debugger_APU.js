@@ -15,9 +15,8 @@ const DUTY_PERCENTAGES = ["12.5%", "25%", "50%", "75"];
 
 export default class Debugger_APU {
 	constructor(args) {
-		this.selectedTab = null; // only works when `args.readOnly`
-
-		this._args = args;
+		this.args = args;
+		this.selectedTab = null; // only works when `this.args.readOnly`
 
 		this._zoom = 0.0;
 	}
@@ -58,7 +57,7 @@ export default class Debugger_APU {
 				"Overview",
 				() => {
 					if (emulation != null) {
-						if (this._args.readOnly) ImGui.BeginDisabled(true);
+						if (this.args.readOnly) ImGui.BeginDisabled(true);
 						ImGui.Checkbox(
 							"Pulse 1",
 							(val = emulation.enabledChannels.pulse1) =>
@@ -88,10 +87,10 @@ export default class Debugger_APU {
 							(val = emulation.enabledChannels.dmc) =>
 								(emulation.enabledChannels.dmc = val)
 						);
-						if (this._args.readOnly) ImGui.EndDisabled(true);
+						if (this.args.readOnly) ImGui.EndDisabled(true);
 					}
 
-					if (!this._args.readOnly) {
+					if (!this.args.readOnly) {
 						utils.fullWidthFieldWithLabel("Zoom", (label) => {
 							ImGui.SliderFloat(
 								label,
@@ -150,7 +149,7 @@ export default class Debugger_APU {
 						utils.boolean("Use 5-step sequence", true);
 					});
 				},
-				this._args.readOnly ? this.selectedTab === "Overview" : null
+				this.args.readOnly ? this.selectedTab === "Overview" : null
 			);
 
 			utils.simpleTab(
@@ -267,7 +266,7 @@ export default class Debugger_APU {
 					});
 					ImGui.Columns(1);
 				},
-				this._args.readOnly ? this.selectedTab === "Pulse" : null
+				this.args.readOnly ? this.selectedTab === "Pulse" : null
 			);
 
 			utils.simpleTab(
@@ -323,7 +322,7 @@ export default class Debugger_APU {
 						}
 					);
 				},
-				this._args.readOnly ? this.selectedTab === "Triangle" : null
+				this.args.readOnly ? this.selectedTab === "Triangle" : null
 			);
 
 			utils.simpleTab(
@@ -394,7 +393,7 @@ export default class Debugger_APU {
 						ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
 					});
 				},
-				this._args.readOnly ? this.selectedTab === "Noise" : null
+				this.args.readOnly ? this.selectedTab === "Noise" : null
 			);
 
 			utils.simpleTab(
@@ -436,7 +435,7 @@ export default class Debugger_APU {
 						);
 					});
 				},
-				this._args.readOnly ? this.selectedTab === "DMC" : null
+				this.args.readOnly ? this.selectedTab === "DMC" : null
 			);
 
 			ImGui.EndTabBar();
