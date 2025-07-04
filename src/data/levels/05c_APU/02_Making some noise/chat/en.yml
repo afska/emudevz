@@ -32,7 +32,7 @@ done:
   - but we'll get there!
   - let's code an <example wave>
   responses:
-  - like a square wave? [wave]
+  - like a square wave? ⏹️ [wave]
 
 wave:
   run: |

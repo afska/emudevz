@@ -31,6 +31,8 @@ export default {
 		const filesystem = _filesystem_;
 		// eslint-disable-next-line
 		const Drive = _Drive_;
+		// eslint-disable-next-line
+		const emulation = window.EMULATION;
 
 		let _evalCode_ = _code_;
 		_.forEach(layout.instances, (__, name) => {

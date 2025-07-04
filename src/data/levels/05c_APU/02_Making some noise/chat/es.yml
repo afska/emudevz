@@ -32,7 +32,7 @@ done:
   - ¡pero ya llegaremos!
   - vamos a programar una <onda de ejemplo>
   responses:
-  - ¿como una onda cuadrada? [wave]
+  - ¿como una onda cuadrada? ⏹️ [wave]
 
 wave:
   run: |

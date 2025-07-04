@@ -646,9 +646,9 @@ const dictionary = {
 			also: { es: "Onda de pulso|_Ondas de pulso" },
 			icon: "🟦",
 			en:
-				"A waveform that alternates between two levels, creating a sharp, blocky sound. Used by the APU's Pulse Channels.",
+				"A waveform that alternates between two levels, creating a sharp, blocky sound. Used by the APU's Pulse Channels. <br /><br />It looks like this:<br />`_——__—_——_`",
 			es:
-				"Una forma de onda que alterna entre dos niveles, generando un sonido fuerte y entrecortado. Usada por los Canales Pulso de la APU.",
+				"Una forma de onda que alterna entre dos niveles, generando un sonido fuerte y entrecortado. Usada por los Canales Pulso de la APU. <br /><br />Se ve así:<br />`_——__—_——_`",
 		},
 		"Sample rate|_Sample rates": {
 			also: {
@@ -762,9 +762,9 @@ const dictionary = {
 			also: { es: "Onda triangular|_Ondas triangulares" },
 			icon: "🔺",
 			en:
-				"A waveform shaped like a triangle, with a softer, more mellow sound. Used by the APU's Triangle Channel.",
+				"A waveform shaped like a triangle, with a softer, more mellow sound. Used by the APU's Triangle Channel. <br /><br />It looks like this:<br />`/\\/\\/\\/\\`",
 			es:
-				"Una forma de onda con forma de triángulo, que produce un sonido más suave y apagado. Usada por el Canal Triangular de la APU.",
+				"Una forma de onda con forma de triángulo, que produce un sonido más suave y apagado. Usada por el Canal Triangular de la APU. <br /><br />Se ve así:<br />`/\\/\\/\\/\\",
 		},
 		VBlank: {
 			icon: "🏝️",
