@@ -28,7 +28,7 @@ pulse:
       emulation.enabledChannels.dmc = false;
     }
   messages:
-  - they are channels dedicated to produce pulse waves
+  - they are channels dedicated to producing pulse waves
   - there are <two> of them
   - this is just <Pulse 1>
   responses:
@@ -46,7 +46,7 @@ pulse2:
   messages:
   - this is <Pulse 2>
   - it creates the same kind of waves as <Pulse 1>
-  - and the magic starts when they sound together
+  - and the magic starts when they play together
   responses:
   - let's hear both together [together]
 
@@ -90,7 +90,7 @@ triangle:
     }
   messages:
   - this is the 🔺  Triangle Channel
-  - it can create constant-volume triangle waves
+  - it can produce constant-volume triangle waves
   - and it's commonly used for <bass lines> 🎸
   responses:
   - mix it with the main melody 🎶 [pulseagain]
@@ -122,7 +122,7 @@ noise:
     }
   messages:
   - yup!
-  - the 💥  Noise Channel generates pseudo-random <noise>
+  - the 💥  Noise Channel generates <pseudo-random noise>
   - it's typically used for 🥁  <drums> and 💥  <special effects>
   responses:
   - let's also hear the Triangle Channel 🔺 [addtriangle]
@@ -154,10 +154,10 @@ combined:
       emulation.enabledChannels.dmc = false;
     }
   messages:
-  - as you can see, with some <creativity>, you can create pretty nice melodies combining all these channels! ✨
+  - as you can see, with some <creativity>, you can create some pretty nice melodies combining all these channels! ✨
   - there's one extra channel we didn't cover here, the 📦  DMC Channel
-  - it allows games provide their custom waves directly to the APU
-  - that one will receive special treatment later, so don't worry about it! 
+  - it allows games to provide their custom waves directly to the APU
+  - that one's getting special treatment later, so don't worry about it! 
   - I <enabled the controls> in the debugger view so you can play around for a while
   - once you are ready, let me know and we can go back to programming 👀
   responses:
