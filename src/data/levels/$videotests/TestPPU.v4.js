@@ -276,16 +276,6 @@ class InMemoryRegister {
 			}
 		};
 	}
-
-	static get Controller() {
-		return class ControllerInMemoryRegister extends InMemoryRegister {
-			constructor(controller) {
-				super();
-
-				this.controller = controller;
-			}
-		};
-	}
 }
 
 class PPUMemory {
