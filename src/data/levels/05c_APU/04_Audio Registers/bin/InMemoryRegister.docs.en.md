@@ -6,7 +6,7 @@ This class facilitates the implementation of memory-mapped registers used by NEE
 
 ## Usage
 
-1. Create a class for each memory-mapped register by extending from `InMemoryRegister.{UnitName}`. For example, to create a PPU register, extend from `InMemoryRegister.PPU`. For an APU register, extend from `InMemoryRegister.APU`.
+1. Create a class for each memory-mapped register. To create a PPU register, extend from `InMemoryRegister.PPU`. For an APU register, extend from `InMemoryRegister.APU`.
 2. In the `onLoad()` method, use `addField(...)`/`addWritableField(...)` to add _fields_ that live inside the register bits (see example below).
 3. If the register can be read by the 🧠 CPU, implement `onRead()`. Otherwise, reads will return `0`.
 4. If the register can be written by the 🧠 CPU, implement `onWrite(value)`. Otherwise, writes will have no effect.
@@ -17,7 +17,7 @@ The examples are based on 🖥️ PPU registers, but **🔊 APU registers work i
 
 #### ✏️ Write-only
 
-Write-only registers are filled by the games through memory writes executed by the 🧠 CPU. By writing to their memory address, games set a value that the 🖥️ PPU can query later to perform different actions, like changing the sprite size. Some writes can trigger immediate effects as well.
+Write-only registers are filled by the games through memory writes executed by the 🧠 CPU. By writing to their memory address, games set a value that the 🖥️ PPU can query later to perform different actions, like changing the sprite size. Some writes can trigger other immediate effects as well.
 
 ```javascript
 class PPUCtrl extends InMemoryRegister.PPU {
@@ -53,7 +53,7 @@ ppuCtrl.generateNMIOnVBlank; //      => 1
 
 #### 🔍 Read-only
 
-Read-only registers are populated by the 🖥️ PPU. Games can read their state through memory reads executed by the 🧠 CPU.
+Read-only registers are populated by the 🖥️ PPU. Games can read their state through memory reads executed by the 🧠 CPU. Some reads can trigger other immediate effects as well.
 
 ```javascript
 class PPUStatus extends InMemoryRegister.PPU {

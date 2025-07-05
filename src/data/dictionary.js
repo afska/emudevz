@@ -218,8 +218,8 @@ const dictionary = {
 			es:
 				"Una señal que pausa el programa actual para manejar un evento específico. <br /><br />Cuando tal evento ocurre, la CPU guarda su estado ([PC] y registro de banderas) en la pila y salta al vector asociado con ese evento. <br /><br />Luego de manejar el evento, la ejecución suele continuar desde donde se interrumpió.",
 		},
-		"CPU register|_CPU registers|Register|_Registers": {
-			also: { es: "Registro de CPU|_Registros de CPU|Registro|_Registros" },
+		"CPU register|_CPU registers": {
+			also: { es: "Registro de CPU|_Registros de CPU" },
 			icon: "🔢",
 			en:
 				"A small, fast storage location inside the CPU used to hold data temporarily (like numbers, memory addresses, or results of operations) while it's working. <br /><br />In the NEEES, each register can hold a single byte (`8` bits) of data, with the exception of [PC] which is `2` bytes wide.",
@@ -649,6 +649,14 @@ const dictionary = {
 				"A waveform that alternates between two levels, creating a sharp, blocky sound. Used by the APU's Pulse Channels. <br /><br />It looks like this:<br />`_——__—_——_`",
 			es:
 				"Una forma de onda que alterna entre dos niveles, generando un sonido fuerte y entrecortado. Usada por los Canales Pulso de la APU. <br /><br />Se ve así:<br />`_——__—_——_`",
+		},
+		"Register|_Registers": {
+			also: { es: "Registro|_Registros" },
+			icon: "🔣",
+			en:
+				"A storage location used during program execution. <br /><br />See also: CPU register, Memory-mapped register.",
+			es:
+				"Una ubicación de almacenamiento usada durante la ejecución de un programa. <br /><br />Ver también: Registro de CPU, Registro mapeado en memoria.",
 		},
 		"Sample rate|_Sample rates": {
 			also: {
