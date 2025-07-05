@@ -284,6 +284,16 @@ code {
 
 /* Markdown */
 
+.markdown-view h2 {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-view h3 {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
 .markdown-view h4 {
 	margin-top: 16px;
 	margin-bottom: 16px;
@@ -311,10 +321,6 @@ code {
 .markdown-view td {
 	border: 1px solid #577295;
 	padding: 4px;
-}
-
-.markdown-view code {
-	color: var(--bs-code-color);
 }
 
 /* Tooltips */

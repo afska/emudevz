@@ -21,22 +21,22 @@ Write-only registers are filled by the games through memory writes executed by t
 
 ```javascript
 class PPUCtrl extends InMemoryRegister.PPU {
-	onLoad() {
-		this.addField("nameTableId", 0, 2) //           bits 0-1
-			.addField("vramAddressIncrement32", 2) //   bit 2
-			.addField("sprite8x8PatternTableId", 3) //  bit 3
-			.addField("backgroundPatternTableId", 4) // bit 4
-			.addField("spriteSize", 5) //               bit 5
-			.addField("generateNMIOnVBlank", 7); //     bit 7
-	}
+  onLoad() {
+    this.addField("nameTableId", 0, 2) //         bits 0-1
+      .addField("vramAddressIncrement32", 2) //   bit 2
+      .addField("sprite8x8PatternTableId", 3) //  bit 3
+      .addField("backgroundPatternTableId", 4) // bit 4
+      .addField("spriteSize", 5) //               bit 5
+      .addField("generateNMIOnVBlank", 7); //     bit 7
+  }
 
-	// when onRead() is not defined, reads return 0
+  // when onRead() is not defined, reads return 0
 
-	onWrite(value) {
-		this.setValue(value); // this updates this.value and all the fields
+  onWrite(value) {
+    this.setValue(value); // this updates this.value and all the fields
 
-		// you can trigger other operations here with `this.ppu`
-	}
+    // you can trigger other operations here with `this.ppu`
+  }
 }
 
 const ppuCtrl = new PPUCtrl(ppu);
@@ -57,19 +57,19 @@ Read-only registers are filled by the 🖥️ PPU. Games can read their state th
 
 ```javascript
 class PPUStatus extends InMemoryRegister.PPU {
-	onLoad() {
-		this.addWritableField("spriteOverflow", 5) //      bit 5
-			.addWritableField("sprite0Hit", 6) //          bit 6
-			.addWritableField("isInVBlankInterval", 7); // bit 7
+  onLoad() {
+    this.addWritableField("spriteOverflow", 5) //    bit 5
+      .addWritableField("sprite0Hit", 6) //          bit 6
+      .addWritableField("isInVBlankInterval", 7); // bit 7
 
-		this.setValue(0b10000000); // you can set an initial state here!
-	}
+    this.setValue(0b10000000); // you can set an initial state here!
+  }
 
-	onRead(value) {
-		return this.value; // this will change based on the writable fields
-	}
+  onRead(value) {
+    return this.value; // this will change based on the writable fields
+  }
 
-	// when onWrite(...) is not defined, writes will have no effect
+  // when onWrite(...) is not defined, writes will have no effect
 }
 
 const ppuStatus = new PPUStatus(ppu);

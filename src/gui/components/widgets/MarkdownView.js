@@ -1,8 +1,21 @@
 import React, { PureComponent } from "react";
-import { marked } from "marked";
+import hljs from "highlight.js";
+import { Marked } from "marked";
+import { markedHighlight } from "marked-highlight";
 import classNames from "classnames";
 import dictionary from "../../../data/dictionary";
 import styles from "./MarkdownView.module.css";
+
+const marked = new Marked(
+	markedHighlight({
+		emptyLangClass: "hljs",
+		langPrefix: "hljs language-",
+		highlight(code, lang, info) {
+			const language = hljs.getLanguage(lang) ? lang : "plaintext";
+			return hljs.highlight(code, { language }).value;
+		},
+	})
+);
 
 export default class MarkdownView extends PureComponent {
 	render() {
