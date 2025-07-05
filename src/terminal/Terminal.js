@@ -35,6 +35,26 @@ const CTRL_C = "^C";
 const BACKSPACE = "\b \b";
 const LINK_FILE_REGEXP = /📄 {2}([a-z0-9/._-]+)/iu;
 
+window._openPath_ = (filePath) => {
+	const result = OpenCommand.open(filePath);
+	if (result === ERR_FILE_NOT_FOUND) {
+		toast.error(
+			<span
+				onClick={() => {
+					this.constructor.tryCreateFile(filePath);
+				}}
+			>
+				<span className="toast-link">
+					{locales.get("file_doesnt_exist1")} <code>{filePath}</code>{" "}
+					{locales.get("file_doesnt_exist2")}
+				</span>
+			</span>
+		);
+	} else if (result === ERR_CANNOT_LAUNCH_EMULATOR) {
+		toast.error(locales.get("cant_open_emulator"));
+	}
+};
+
 export default class Terminal {
 	constructor(xterm, dictionary) {
 		this._xterm = xterm;
@@ -478,23 +498,7 @@ export default class Terminal {
 			(__, link) => {
 				const matches = link.match(LINK_FILE_REGEXP);
 				const filePath = matches[1];
-				const result = OpenCommand.open(filePath);
-				if (result === ERR_FILE_NOT_FOUND) {
-					toast.error(
-						<span
-							onClick={() => {
-								this.constructor.tryCreateFile(filePath);
-							}}
-						>
-							<span className="toast-link">
-								{locales.get("file_doesnt_exist1")} <code>{filePath}</code>{" "}
-								{locales.get("file_doesnt_exist2")}
-							</span>
-						</span>
-					);
-				} else if (result === ERR_CANNOT_LAUNCH_EMULATOR) {
-					toast.error(locales.get("cant_open_emulator"));
-				}
+				window._openPath_(filePath);
 			}
 		);
 	}

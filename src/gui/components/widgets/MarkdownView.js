@@ -6,6 +6,8 @@ import classNames from "classnames";
 import dictionary from "../../../data/dictionary";
 import styles from "./MarkdownView.module.css";
 
+const LINK_FILE_REGEXP = /📄 {1}([a-z0-9/._-]+)/iu;
+
 const marked = new Marked(
 	markedHighlight({
 		emptyLangClass: "hljs",
@@ -32,6 +34,10 @@ export default class MarkdownView extends PureComponent {
 
 	_htmlContent(content) {
 		const parsedContent = marked.parse(content);
-		return dictionary.parseLinks(parsedContent);
+		return dictionary
+			.parseLinks(parsedContent)
+			.replace(LINK_FILE_REGEXP, (label, path) => {
+				return `<a class="highlight-link" href="javascript:_openPath_('${path}')">${label}</a>`;
+			});
 	}
 }

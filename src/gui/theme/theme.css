@@ -181,18 +181,18 @@ body {
 }
 
 code {
-	.dictionary-link {
+	.highlight-link {
 		color: inherit;
 	}
 }
 
-.dictionary-link {
+.highlight-link {
 	color: #9db5dc;
 	text-decoration: none;
 	-webkit-user-drag: none;
 }
 
-.dictionary-link:hover {
+.highlight-link:hover {
 	color: #ccd1f9;
 }
 

@@ -857,7 +857,7 @@ const dictionary = {
 		return html.replace(
 			globalRegexp,
 			(word) =>
-				`<a class="dictionary-link" href="javascript:_showDefinition_('${word}')">${word}</a>`
+				`<a class="highlight-link" href="javascript:_showDefinition_('${word}')">${word}</a>`
 		);
 	},
 
