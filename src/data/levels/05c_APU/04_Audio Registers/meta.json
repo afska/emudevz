@@ -4,6 +4,7 @@
 		"es": "🔢 Registros de Audio"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [

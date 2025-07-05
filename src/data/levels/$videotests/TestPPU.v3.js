@@ -201,10 +201,11 @@ class InMemoryRegister {
 
 	static get APU() {
 		return class APUInMemoryRegister extends InMemoryRegister {
-			constructor(apu) {
+			constructor(apu, id) {
 				super();
 
 				this.apu = apu;
+				this.id = id;
 			}
 		};
 	}

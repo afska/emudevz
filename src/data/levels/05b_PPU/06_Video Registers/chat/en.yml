@@ -27,7 +27,7 @@ example:
 numbers:
   messages: 
   - yes, but some produce <special effects> when the 🧠  CPU reads or writes them
-  - these side effects can reset an internal buffer, increment counters, or even copying data!
+  - these side effects can reset an internal buffer, increment counters, or even copy data!
   - "I've coded a class that will help you implement this, you should use it 📖"
   - 📄  ~/lib/InMemoryRegister.js~
   responses:
