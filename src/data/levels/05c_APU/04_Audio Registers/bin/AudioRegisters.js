@@ -29,7 +29,7 @@ class PulseTimerLow extends InMemoryRegister.APU {
   }
 }
 
-class PulseLCLTimerHigh extends InMemoryRegister.APU {
+class PulseTimerHighLCL extends InMemoryRegister.APU {
   onLoad() {
     /* TODO: IMPLEMENT */
   }
@@ -55,7 +55,7 @@ class TriangleTimerLow extends InMemoryRegister.APU {
   }
 }
 
-class TriangleLCLTimerHigh extends InMemoryRegister.APU {
+class TriangleTimerHighLCL extends InMemoryRegister.APU {
   onLoad() {
     /* TODO: IMPLEMENT */
   }
@@ -159,13 +159,13 @@ export default class AudioRegisters {
       control: new PulseControl(apu), //                  $4000/$4004
       sweep: new PulseSweep(apu, id), //                  $4001/$4005
       timerLow: new PulseTimerLow(apu, id), //            $4002/$4006
-      lclTimerHigh: new PulseLCLTimerHigh(apu, id) //     $4003/$4007
+      timerHighLCL: new PulseTimerHighLCL(apu, id) //     $4003/$4007
     }));
 
     this.triangle = {
       linearLCL: new TriangleLinearLCL(apu), //           $4008
       timerLow: new TriangleTimerLow(apu), //             $400A
-      lclTimerHigh: new TriangleLCLTimerHigh(apu) //      $400B
+      timerHighLCL: new TriangleTimerHighLCL(apu) //      $400B
     };
 
     this.noise = {
@@ -207,7 +207,7 @@ export default class AudioRegisters {
       case 0x4002:
         return this.pulses[0].timerLow;
       case 0x4003:
-        return this.pulses[0].lclTimerHigh;
+        return this.pulses[0].timerHighLCL;
       case 0x4004:
         return this.pulses[1].control;
       case 0x4005:
@@ -215,13 +215,13 @@ export default class AudioRegisters {
       case 0x4006:
         return this.pulses[1].timerLow;
       case 0x4007:
-        return this.pulses[1].lclTimerHigh;
+        return this.pulses[1].timerHighLCL;
       case 0x4008:
         return this.triangle.linearLCL;
       case 0x400a:
         return this.triangle.timerLow;
       case 0x400b:
-        return this.triangle.lclTimerHigh;
+        return this.triangle.timerHighLCL;
       case 0x400c:
         return this.noise.control;
       case 0x400e:
