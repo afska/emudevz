@@ -96,8 +96,11 @@ const dictionary = {
 			es:
 				"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
 		},
-		"APU register|_APU registers": {
-			also: { es: "Registro de APU|_Registros de APU" },
+		"APU register|_APU registers|Audio register|_Audio registers": {
+			also: {
+				es:
+					"Registro de APU|_Registros de APU|Registro de Audio|_Registros de Audio",
+			},
 			icon: "🔢",
 			en:
 				"A memory-mapped register used to control sound channels or volume. <br /><br />In the NEEES, they are mapped to addresses `$4000` - `$4013`, and `$4015` (APUControl / APUStatus).",
@@ -605,8 +608,11 @@ const dictionary = {
 			es:
 				"Una dirección de memoria vista desde el espacio de direcciones de la PPU. <br /><br />En la NEEES, las direcciones válidas van de `$0000` a `$3FFF`, con muchas regiones espejadas.",
 		},
-		"PPU register|_PPU registers": {
-			also: { es: "Registro de PPU|_Registros de PPU" },
+		"PPU register|_PPU registers|Video register|_Video registers": {
+			also: {
+				es:
+					"Registro de PPU|_Registros de PPU|Registro de Video|_Registros de Video",
+			},
 			icon: "🔢",
 			en:
 				"A memory-mapped register used to control the PPU or read its state. <br /><br />In the NEEES, they are mapped to addresses `$2000` - `$2007`, and `$4014` (OAMDMA).",
@@ -662,7 +668,7 @@ const dictionary = {
 			also: {
 				es: "Frecuencia de muestreo|_Frecuencias de muestreo",
 			},
-			icon: "🎛️",
+			icon: "💨",
 			en:
 				"The number of samples taken per second to represent a sound. Measured in hertz (`Hz`).",
 			es:
