@@ -125,9 +125,9 @@ const dictionary = {
 			},
 			icon: "🔢",
 			en:
-				"A memory-mapped register used to control sound channels or volume. <br /><br />In the NEEES, they are mapped to addresses `$4000` - `$4013`, and `$4015` (APUControl / APUStatus).",
+				"A memory-mapped register used to control sound channels or volume. <br /><br />In the NEEES, they are mapped to addresses `$4000` - `$4013`, `$4015` (APUControl / APUStatus), and `$4017` (APUFrameCounter).",
 			es:
-				"Un registro mapeado en memoria usado para controlar los canales de sonido o el volumen. <br /><br />En la NEEES, están mapeados en las direcciones `$4000` - `$4013`, y `$4015` (APUControl / APUStatus).",
+				"Un registro mapeado en memoria usado para controlar los canales de sonido o el volumen. <br /><br />En la NEEES, están mapeados en las direcciones `$4000` - `$4013`, `$4015` (APUControl / APUStatus), y `$4017` (APUFrameCounter).",
 		},
 		Assembly: {
 			also: { es: "Ensamblador" },
@@ -416,7 +416,7 @@ const dictionary = {
 		},
 		"Least significant byte|LSB|Low byte": {
 			also: {
-				es: "Byte menos significativo|LSB|Low byte",
+				es: "Byte menos significativo|LSB|Low byte|Byte bajo",
 			},
 			icon: "🔢",
 			en:
@@ -516,7 +516,7 @@ const dictionary = {
 		},
 		"Most significant byte|MSB|High byte": {
 			also: {
-				es: "Byte más significativo|MSB|High byte",
+				es: "Byte más significativo|MSB|High byte|Byte alto",
 			},
 			icon: "🔢",
 			en:

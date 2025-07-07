@@ -1,5 +1,46 @@
 ---
 main:
   messages:
-  - coming soon!
+  - the 🧠  CPU and 🔊  APU talk with each other via a set of 21 memory-mapped registers
+  - they live at CPU addresses $4000-$4013, $4015 and $4017
+  - check out 📄  ~/docs/apu/audio_registers.en.md~
+  responses:
+  - give me an example 🙏 [example]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [useit]
+
+example:
+  messages:
+  - the Pulse Channel 1 has to know what note it should produce, right?
+  - well, the game's code sets a 11-bit timer value to registers 🕡  Pulse1TimerLow and 🕛  Pulse1TimerHighLCL
+  - and then the 🔊  APU uses that value to calculate the note's frequency
+  - so, for example, if a game wants a timer value of 507, it would write a 251 (low byte of 507) to $4002 and a 1 (high byte of 507) to $4003
+  - <{Pulse1Timer.png}>
+  responses:
+  - so, these registers only hold numbers? 🔢 [numbers]
+
+numbers:
+  messages: 
+  - yes, but some produce <special effects> when the 🧠  CPU writes to them
+  - these side effects can reset note durations, start frequency sweeps, or even mute entire channels!
+  - "I've coded a class that will help you implement this, you should use it 📖"
+  responses:
+  - how can I use it? [useit]
+
+useit:
+  run: |
+    set((m) => m.$exercise = true);
+  messages:
+  - read the docs at 📄  ~/docs/lib/InMemoryRegister.en.md~
+  - and use 📄  ~/tmpl/apu/AudioRegisters.js~ as a template for the audio registers file
+  - registers for 🟦  `PulseControl` are already implemented
+  - note how they call `addField(...)` for each bit defined in the ~Bits~ column
+  - "this creates <automatic properties>: after a write, the APU can access their values (e.g. ```javascript pulse1Control.dutyCycleId```)"
+  - 📚  create an `AudioRegisters` class, using that template
+  - |-
+    📚  add a `registers` property to 🔊  `APU`, assigned to:
+         ```javascript new AudioRegisters(this)```
+  - "📚  lastly, map them in 🐏  `CPUMemory` (regions $4000-$4013, $4015 and $4017):"
+  - <reads> should return ```javascript this.apu.registers.read(address)```
+  - <writes> should call ```javascript this.apu.registers.write(address, value)``` and return
+  - be careful with 🧮  APUFrameCounter, as it shares its address with the second 🎮  controller port; do not map <reads>! only writes!
   responses: []
