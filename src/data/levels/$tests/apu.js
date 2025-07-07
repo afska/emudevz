@@ -164,70 +164,109 @@ it("includes a `registers` property with 21 audio registers", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-// it("connects the video registers to CPU memory (reads)", () => {
-// 	const CPUMemory = mainModule.default.CPUMemory;
-// 	const cpuMemory = new CPUMemory();
-// 	const cpu = { memory: cpuMemory };
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU(cpu);
-// 	cpuMemory.onLoad(ppu, dummyApu, dummyMapper, dummyControllers);
-// 	ppu.memory.onLoad(dummyCartridge, dummyMapper);
+it("connects the audio registers to CPU memory (reads)", () => {
+	const CPUMemory = mainModule.default.CPUMemory;
+	const cpuMemory = new CPUMemory();
+	const cpu = { memory: cpuMemory };
+	const APU = mainModule.default.APU;
+	const apu = new APU(cpu);
+	cpuMemory.onLoad(dummyPpu, apu, dummyMapper, dummyControllers);
 
-// 	[
-// 		"ppuCtrl",
-// 		"ppuMask",
-// 		"ppuStatus",
-// 		"oamAddr",
-// 		"oamData",
-// 		"ppuScroll",
-// 		"ppuAddr",
-// 		"ppuData",
-// 		"oamDma",
-// 	].forEach((name, i) => {
-// 		const register = ppu.registers[name];
-// 		register.onRead = sinon.spy();
-// 		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
-// 		cpuMemory.read(address);
-// 		register.onRead.should.have.been.calledOnce;
-// 	});
-// })({
-// 	locales: {
-// 		es: "conecta los registros de video con la memoria de CPU (lecturas)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+	const checkRegister = (key, address, shouldBeAccessed = true) => {
+		const register = _.get(apu.registers, key);
+		register.onRead = sinon.spy();
 
-// it("connects the video registers to CPU memory (writes)", () => {
-// 	const CPUMemory = mainModule.default.CPUMemory;
-// 	const cpuMemory = new CPUMemory();
-// 	const cpu = { memory: cpuMemory };
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU(cpu);
-// 	cpuMemory.onLoad(ppu, dummyApu, dummyMapper, dummyControllers);
+		cpuMemory.read(address);
 
-// 	[
-// 		"ppuCtrl",
-// 		"ppuMask",
-// 		"ppuStatus",
-// 		"oamAddr",
-// 		"oamData",
-// 		"ppuScroll",
-// 		"ppuAddr",
-// 		"ppuData",
-// 		"oamDma",
-// 	].forEach((name, i) => {
-// 		const register = ppu.registers[name];
-// 		register.onWrite = sinon.spy();
-// 		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
-// 		cpuMemory.write(address, 123);
-// 		register.onWrite.should.have.been.calledWith(123);
-// 	});
-// })({
-// 	locales: {
-// 		es: "conecta los registros de video con la memoria de CPU (escrituras)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+		if (shouldBeAccessed) {
+			expect(register.onRead, `apu.registers.${key}.onRead`).to.have.been
+				.calledOnce;
+		} else {
+			expect(register.onRead, `apu.registers.${key}.onRead`).to.not.have.been
+				.called;
+		}
+	};
+
+	checkRegister("pulses[0].control", 0x4000);
+	checkRegister("pulses[0].sweep", 0x4001);
+	checkRegister("pulses[0].timerLow", 0x4002);
+	checkRegister("pulses[0].timerHighLCL", 0x4003);
+	checkRegister("pulses[1].control", 0x4004);
+	checkRegister("pulses[1].sweep", 0x4005);
+	checkRegister("pulses[1].timerLow", 0x4006);
+	checkRegister("pulses[1].timerHighLCL", 0x4007);
+	checkRegister("triangle.linearLCL", 0x4008);
+	checkRegister("triangle.timerLow", 0x400a);
+	checkRegister("triangle.timerHighLCL", 0x400b);
+	checkRegister("noise.control", 0x400c);
+	checkRegister("noise.form", 0x400e);
+	checkRegister("noise.lcl", 0x400f);
+	checkRegister("dmc.control", 0x4010);
+	checkRegister("dmc.load", 0x4011);
+	checkRegister("dmc.sampleAddress", 0x4012);
+	checkRegister("dmc.sampleLength", 0x4013);
+	checkRegister("apuStatus", 0x4015);
+	checkRegister("apuControl", 0x4015, false);
+	checkRegister("apuFrameCounter", 0x4017, false);
+})({
+	locales: {
+		es: "conecta los registros de audio con la memoria de CPU (lecturas)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
+
+it("connects the audio registers to CPU memory (writes)", () => {
+	const CPUMemory = mainModule.default.CPUMemory;
+	const cpuMemory = new CPUMemory();
+	const cpu = { memory: cpuMemory };
+	const APU = mainModule.default.APU;
+	const apu = new APU(cpu);
+	cpuMemory.onLoad(dummyPpu, apu, dummyMapper, dummyControllers);
+
+	const checkRegister = (key, address, shouldBeAccessed = true) => {
+		const register = _.get(apu.registers, key);
+		register.onWrite = sinon.spy();
+
+		cpuMemory.write(address, 123);
+
+		if (shouldBeAccessed) {
+			expect(
+				register.onWrite,
+				`apu.registers.${key}.onWrite`
+			).to.have.been.calledWith(123);
+		} else {
+			expect(register.onWrite, `apu.registers.${key}.onWrite`).to.not.have.been
+				.called;
+		}
+	};
+
+	checkRegister("pulses[0].control", 0x4000);
+	checkRegister("pulses[0].sweep", 0x4001);
+	checkRegister("pulses[0].timerLow", 0x4002);
+	checkRegister("pulses[0].timerHighLCL", 0x4003);
+	checkRegister("pulses[1].control", 0x4004);
+	checkRegister("pulses[1].sweep", 0x4005);
+	checkRegister("pulses[1].timerLow", 0x4006);
+	checkRegister("pulses[1].timerHighLCL", 0x4007);
+	checkRegister("triangle.linearLCL", 0x4008);
+	checkRegister("triangle.timerLow", 0x400a);
+	checkRegister("triangle.timerHighLCL", 0x400b);
+	checkRegister("noise.control", 0x400c);
+	checkRegister("noise.form", 0x400e);
+	checkRegister("noise.lcl", 0x400f);
+	checkRegister("dmc.control", 0x4010);
+	checkRegister("dmc.load", 0x4011);
+	checkRegister("dmc.sampleAddress", 0x4012);
+	checkRegister("dmc.sampleLength", 0x4013);
+	checkRegister("apuStatus", 0x4015, false);
+	checkRegister("apuControl", 0x4015);
+	checkRegister("apuFrameCounter", 0x4017);
+})({
+	locales: {
+		es: "conecta los registros de audio con la memoria de CPU (escrituras)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
 
 // it("PPUCtrl: write only", () => {
 // 	const PPU = mainModule.default.PPU;

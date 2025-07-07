@@ -118,6 +118,7 @@ export default {
 		const expect = _chai_.expect;
 		// eslint-disable-next-line
 		const should = _chai_.should();
+		// eslint-disable-next-line
 		_chai_.use(_sinonChai_);
 		// eslint-disable-next-line
 		const sinon = _sinon_;
