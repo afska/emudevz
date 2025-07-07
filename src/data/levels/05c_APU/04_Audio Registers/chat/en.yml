@@ -10,7 +10,7 @@ main:
 
 example:
   messages:
-  - let's same a game needs to configure the Pulse Channel 1 to a ~50%~ duty cycle and a constant volume of 6
+  - let's say a game needs to configure the Pulse Channel 1 to a ~50%~ duty cycle and a constant volume of 6
   - this is handled by the bits of $4000 (🟦  Pulse1Control)
   - in the ~Bits~ column, ~DD~ is the duty cycle, ~C~ the constant-volume flag, and ~NNNN~ the volume
   - so, in this case, the game writes a 150 (binary ~10010110~) to $4000
