@@ -96,6 +96,27 @@ const dictionary = {
 			es:
 				"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
 		},
+		APUControl: {
+			icon: "🎛️",
+			en:
+				"An audio register that enables or disables each APU channel (pulse, triangle, noise, DMC). <br /><br />It is available for writing at CPU address `$4015`.",
+			es:
+				"Un registro de control de audio que habilita o deshabilita cada canal de la APU (pulso, triangular, ruido, DMC). <br /><br />Está disponible para escritura en la dirección de CPU `$4015`.",
+		},
+		APUFrameCounter: {
+			icon: "🧮",
+			en:
+				"An audio register that controls the APU's sequence (4- or 5-step). <br /><br />It is available at CPU address `$4017`.",
+			es:
+				"Un registro de audio que controla la secuencia del APU (4 o 5 pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
+		},
+		APUStatus: {
+			icon: "📊",
+			en:
+				"An audio status register that reports which channels are active and if DPCM is active. <br /><br />It is available for reading at CPU address `$4015`.",
+			es:
+				"Un registro de estado de audio que indica qué canales están activos y si el DPCM está activo. <br /><br />Está disponible para lectura en la dirección de CPU `$4015`.",
+		},
 		"APU register|_APU registers|Audio register|_Audio registers": {
 			also: {
 				es:
@@ -245,13 +266,41 @@ const dictionary = {
 			es:
 				"_(Direct Memory Access)_ Un mecanismo que copia datos de una zona de memoria a otra sin que la CPU tenga que mover cada byte manualmente. <br /><br />En la NEEES, el DMA solo está disponible para transferir datos de OAM usando el registro OAMDMA.",
 		},
+		DMCControl: {
+			icon: "📦",
+			en:
+				"An audio register that controls DMC Channel's sample playback, and sets its playback rate index. <br /><br />It is available at CPU address `$4010`.",
+			es:
+				"Un registro de audio que controla la reproducción de sample del Canal DMC, y ajusta su índice de tasa de reproducción. <br /><br />Está disponible en la dirección de CPU `$4010`.",
+		},
+		DMCLoad: {
+			icon: "📥",
+			en:
+				"An audio register that holds the direct 7-bit sample level for the DMC Channel. <br /><br />It is available at CPU address `$4011`.",
+			es:
+				"Un registro de audio que contiene el nivel de sample directo de 7 bits para el Canal DMC. <br /><br />Está disponible en la dirección de CPU `$4011`.",
+		},
+		DMCSampleAddress: {
+			icon: "🐏",
+			en:
+				"An audio register that sets the high byte of the DMC sample's start address in memory. <br /><br />It is available at CPU address `$4012`.",
+			es:
+				"Un registro de audio que establece el byte alto de la dirección de inicio del sample DMC en memoria. <br /><br />Está disponible en la dirección de CPU `$4012`.",
+		},
+		DMCSampleLength: {
+			icon: "📐",
+			en:
+				"An audio register that sets the length (in bytes) of the DMC sample to play. <br /><br />It is available at CPU address `$4013`.",
+			es:
+				"Un registro de audio que establece la longitud (en bytes) del sample DMC a reproducir. <br /><br />Está disponible en la dirección de CPU `$4013`.",
+		},
 		"DMC Channel": {
 			also: { es: "Canal DMC" },
 			icon: "📦",
 			en:
 				"One of the APU's audio channels. It plays back digital samples from memory using the *Delta Modulation* technique.",
 			es:
-				"Uno de los canales de audio de la APU. Reproduce muestras digitales desde la memoria usando la técnica de *Modulación Delta*.",
+				"Uno de los canales de audio de la APU. Reproduce samples digitales desde la memoria usando la técnica de *Modulación Delta*.",
 		},
 		"Duty cycle|_Duty cycles": {
 			also: { es: "Ciclo de trabajo|_Ciclos de trabajo" },
@@ -450,6 +499,27 @@ const dictionary = {
 			es:
 				"Una interrupción de CPU disparada al principio del VBlank, cuando la PPU termina de dibujar un frame.",
 		},
+		NoiseControl: {
+			icon: "💥",
+			en:
+				"An audio register that configures the Noise Channel's envelope and length counter behavior. <br /><br />It is available at CPU address `$400C`.",
+			es:
+				"Un registro de audio que configura la envolvente y el comportamiento del contador de longitud del Canal Ruido. <br /><br />Está disponible en la dirección de CPU `$400C`.",
+		},
+		NoiseForm: {
+			icon: "🌪️",
+			en:
+				"An audio register that selects the Noise Channel's mode (periodic or white noise) and its period. <br /><br />It is available at CPU address `$400E`.",
+			es:
+				"Un registro de audio que selecciona el modo del Canal Ruido (ruido periódico o blanco) y su periodo. <br /><br />Está disponible en la dirección de CPU `$400E`.",
+		},
+		NoiseLCL: {
+			icon: "📏",
+			en:
+				"An audio register that loads the Noise Channel's length counter and restarts its envelope. <br /><br />It is available at CPU address `$400F`.",
+			es:
+				"Un registro de audio que carga el contador de longitud del Canal Ruido y reinicia su envolvente. <br /><br />Está disponible en la dirección de CPU `$400F`.",
+		},
 		"Noise Channel": {
 			also: { es: "Canal Ruido" },
 			icon: "💥",
@@ -474,21 +544,21 @@ const dictionary = {
 		OAMAddr: {
 			icon: "🏠",
 			en:
-				"A video register that sets the address inside OAM where the next sprite data will be read or written. <br /><br />It is available in CPU address `$2003`.",
+				"A video register that sets the address inside OAM where the next sprite data will be read or written. <br /><br />It is available at CPU address `$2003`.",
 			es:
 				"Un registro de video que establece la dirección dentro de OAM donde se leerán o escribirán los datos del próximo sprite. <br /><br />Está disponible en la dirección de CPU `$2003`.",
 		},
 		OAMData: {
 			icon: "📝",
 			en:
-				"A video register that reads or writes OAM data at the address pointed by OAMAddr. After each read/write, OAMAddr is auto-incremented. <br /><br />It is available in CPU address `$2004`.",
+				"A video register that reads or writes OAM data at the address pointed by OAMAddr. After each read/write, OAMAddr is auto-incremented. <br /><br />It is available at CPU address `$2004`.",
 			es:
 				"Un registro de video que lee o escribe datos OAM en la dirección apuntada por OAMAddr. Luego de cada lectura/escritura, OAMAddr es autoincrementada. <br /><br />Está disponible en la dirección de CPU `$2004`.",
 		},
 		OAMDMA: {
 			icon: "⚡",
 			en:
-				"A video register that triggers a DMA transfer, copying 256 bytes from CPU memory into OAM to update all sprite data quickly. <br /><br />It is available in CPU address `$4014`.",
+				"A video register that triggers a DMA transfer, copying 256 bytes from CPU memory into OAM to update all sprite data quickly. <br /><br />It is available at CPU address `$4014`.",
 			es:
 				"Un registro de video que dispara una transferencia DMA, copiando 256 bytes desde la memoria de CPU hacia OAM para actualizar todos los datos de sprites rápidamente. <br /><br />Está disponible en la dirección de CPU `$4014`.",
 		},
@@ -561,42 +631,42 @@ const dictionary = {
 		PPUAddr: {
 			icon: "📍",
 			en:
-				"A video register that sets the PPU address for future reads or writes. <br /><br />Must be written twice: high byte first, then low byte. <br /><br />It is available in CPU address `$2006`.",
+				"A video register that sets the PPU address for future reads or writes. <br /><br />Must be written twice: high byte first, then low byte. <br /><br />It is available at CPU address `$2006`.",
 			es:
 				"Un registro de video que establece la dirección PPU para futuras lecturas o escrituras. <br /><br />Debe escribirse dos veces: primero el byte alto, luego el byte bajo. <br /><br />Está disponible en la dirección de CPU `$2006`.",
 		},
 		PPUCtrl: {
 			icon: "🎛️",
 			en:
-				"A video register that sets basic PPU settings like NMI enable, sprite size, pattern table selection, and nametable base. <br /><br />It is available in CPU address `$2000`.",
+				"A video register that sets basic PPU settings like NMI enable, sprite size, pattern table selection, and nametable base. <br /><br />It is available at CPU address `$2000`.",
 			es:
 				"Un registro de video que configura ajustes básicos de la PPU como la habilitación de NMI, el tamaño de los sprites, la selección de pattern tables y la base del name table. <br /><br />Está disponible en la dirección de CPU `$2000`.",
 		},
 		PPUData: {
 			icon: "📦",
 			en:
-				"A video register that reads or writes a byte of data from/to the PPU address pointed by PPUAddr. After each read/write, PPUAddr is auto-incremented. <br /><br />It is available in CPU address `$2007`.",
+				"A video register that reads or writes a byte of data from/to the PPU address pointed by PPUAddr. After each read/write, PPUAddr is auto-incremented. <br /><br />It is available at CPU address `$2007`.",
 			es:
 				"Un registro de video que lee o escribe un byte de datos desde/hacia la dirección PPU apuntada por PPUAddr. Luego de cada lectura/escritura, PPUAddr es autoincrementada. <br /><br />Está disponible en la dirección de CPU `$2007`.",
 		},
 		PPUMask: {
 			icon: "🎭",
 			en:
-				"A video register used to enable or disable parts of the background and sprites, as well as apply color effects like greyscale or emphasis. <br /><br />It is available in CPU address `$2001`.",
+				"A video register used to enable or disable parts of the background and sprites, as well as apply color effects like greyscale or emphasis. <br /><br />It is available at CPU address `$2001`.",
 			es:
 				"Un registro de video usado para habilitar o deshabilitar partes del fondo y los sprites, además de aplicar efectos de color como escala de grises o énfasis. <br /><br />Está disponible en la dirección de CPU `$2001`.",
 		},
 		PPUScroll: {
 			icon: "📜",
 			en:
-				"A video register that sets the background scroll position. <br /><br />Written twice per frame: once for X scroll, once for Y. <br /><br />It is available in CPU address `$2005`.",
+				"A video register that sets the background scroll position. <br /><br />Written twice per frame: once for X scroll, once for Y. <br /><br />It is available at CPU address `$2005`.",
 			es:
 				"Un registro de video que establece la posición de scroll del fondo. <br /><br />Se escribe dos veces por frame: una para el scroll horizontal, otra para el vertical. <br /><br />Está disponible en la dirección de CPU `$2005`.",
 		},
 		PPUStatus: {
 			icon: "📊",
 			en:
-				"A video register that shows whether the PPU is in VBlank, if sprite 0 hit occurred, or if there's sprite overflow. Reading it also resets internal latches. <br /><br />It is available in CPU address `$2002`.",
+				"A video register that shows whether the PPU is in VBlank, if sprite 0 hit occurred, or if there's sprite overflow. Reading it also resets internal latches. <br /><br />It is available at CPU address `$2002`.",
 			es:
 				"Un registro de video que muestra si la PPU está en VBlank, si ocurrió un sprite 0 hit, o si hay desbordamiento de sprites. Leerlo también reinicia latches internos. <br /><br />Está disponible en la dirección de CPU `$2002`.",
 		},
@@ -639,6 +709,62 @@ const dictionary = {
 				"_(Program RAM)_ A battery-backed RAM chip that contains the save file, inside the cartridge.",
 			es:
 				"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
+		},
+		Pulse1Control: {
+			icon: "🟦",
+			en:
+				"An audio register that configures the first Pulse Channel's duty cycle, envelope, and volume. <br /><br />It is available at CPU address `$4000`.",
+			es:
+				"Un registro de audio que configura el ciclo de trabajo, la envolvente y el volumen del primer Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4000`.",
+		},
+		Pulse2Control: {
+			icon: "🟦",
+			en:
+				"An audio register that configures the second Pulse Channel's duty cycle, envelope, and volume. <br /><br />It is available at CPU address `$4004`.",
+			es:
+				"Un registro de audio que configura el ciclo de trabajo, la envolvente y el volumen del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4004`.",
+		},
+		Pulse1Sweep: {
+			icon: "🧹",
+			en:
+				"An audio register that sets up the first pulse channel's frequency sweep (rate, direction, and shift count). <br /><br />It is available at CPU address `$4001`.",
+			es:
+				"Un registro de audio que ajusta el barrido de frecuencia (velocidad, dirección y desplazamiento) del primer Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4001`.",
+		},
+		Pulse2Sweep: {
+			icon: "🧹",
+			en:
+				"An audio register that sets up the second Pulse Channel's frequency sweep (rate, direction, and shift count). <br /><br />It is available at CPU address `$4005`.",
+			es:
+				"Un registro de audio que ajusta el barrido de frecuencia (velocidad, dirección y desplazamiento) del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4005`.",
+		},
+		Pulse1TimerHighLCL: {
+			icon: "🕛",
+			en:
+				"An audio register holding the high byte of the first Pulse Channel's timer and loading its length counter (which also starts the envelope). <br /><br />It is available at CPU address `$4003`.",
+			es:
+				"Un registro de audio que contiene el byte alto del timer del primer Canal Pulso y carga su contador de longitud (que además inicia la envolvente). <br /><br />Está disponible en la dirección de CPU `$4003`.",
+		},
+		Pulse2TimerHighLCL: {
+			icon: "🕛",
+			en:
+				"An audio register holding the high byte of the second Pulse Channel's timer and loading its length counter (which also starts the envelope). <br /><br />It is available at CPU address `$4007`.",
+			es:
+				"Un registro de audio que contiene el byte alto del timer del segundo Canal Pulso y carga su contador de longitud (que además inicia la envolvente). <br /><br />Está disponible en la dirección de CPU `$4007`.",
+		},
+		Pulse1TimerLow: {
+			icon: "🕡",
+			en:
+				"An audio register holding the low byte of the first Pulse Channel's timer, which determines its pitch. <br /><br />It is available at CPU address `$4002`.",
+			es:
+				"Un registro de audio que contiene el byte bajo del timer del primer Canal Pulso, que determina su tono. <br /><br />Está disponible en la dirección de CPU `$4002`.",
+		},
+		Pulse2TimerLow: {
+			icon: "🕡",
+			en:
+				"An audio register holding the low byte of the second Pulse Channel's timer, which determines its pitch. <br /><br />It is available at CPU address `$4006`.",
+			es:
+				"Un registro de audio que contiene el byte bajo del timer del segundo Canal Pulso, que determina su tono. <br /><br />Está disponible en la dirección de CPU `$4006`.",
 		},
 		"Pulse Channel|_Pulse Channels": {
 			also: { es: "Canal Pulso|_Canales Pulso" },
@@ -763,6 +889,27 @@ const dictionary = {
 				"The index of a tile inside a pattern table. It ranges from `0` to `255`.",
 			es:
 				"El índice de un tile dentro de una pattern table. Va de `0` a `255`.",
+		},
+		TriangleLinearLCL: {
+			icon: "📏",
+			en:
+				"An audio register that sets the Triangle Channel's linear length counter reload value and controls its length counter halt. <br /><br />It is available at CPU address `$4008`.",
+			es:
+				"Un registro de audio que establece el valor de recarga del contador de longitud lineal del Canal Triangular y controla la detención del contador de longitud. <br /><br />Está disponible en la dirección de CPU `$4008`.",
+		},
+		TriangleTimerHighLCL: {
+			icon: "🕛",
+			en:
+				"An audio register holding the high byte of the Triangle Channel's timer and loading its length counter. <br /><br />It is available at CPU address `$400B`.",
+			es:
+				"Un registro de audio que contiene el byte alto del timer del Canal Triangular y carga su contador de longitud. <br /><br />Está disponible en la dirección de CPU `$400B`.",
+		},
+		TriangleTimerLow: {
+			icon: "🕡",
+			en:
+				"An audio register holding the low byte of the Triangle Channel's timer, which sets its frequency. <br /><br />It is available at CPU address `$400A`.",
+			es:
+				"Un registro de audio que contiene el byte bajo del timer del Canal Triangular, que define su frecuencia. <br /><br />Está disponible en la dirección de CPU `$400A`.",
 		},
 		"Triangle Channel": {
 			also: { es: "Canal Triangular" },
