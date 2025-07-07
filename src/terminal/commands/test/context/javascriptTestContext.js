@@ -41,6 +41,7 @@ export default {
 			testHelpers,
 			filesystem,
 			byte,
+			lodash: _,
 		};
 
 		$.evaluate = (path = null) => {
