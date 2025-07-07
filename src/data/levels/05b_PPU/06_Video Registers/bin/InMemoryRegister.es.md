@@ -20,6 +20,8 @@ Los ejemplos se basan en los registros PPU 🖥️, pero **los registros APU �
 Los registros de solo escritura son llenados por los juegos mediante escrituras en memoria ejecutadas por la CPU 🧠. Al escribir en su dirección de memoria, los juegos establecen un valor que la PPU 🖥️ puede consultar luego para realizar diferentes acciones, como cambiar el tamaño de los sprites. Algunas escrituras también pueden desencadenar otros efectos inmediatos.
 
 ```javascript
+import InMemoryRegister from "/lib/InMemoryRegister";
+
 class PPUCtrl extends InMemoryRegister.PPU {
   onLoad() {
     this.addField("nameTableId", 0, 2) //         bits 0-1
@@ -56,6 +58,8 @@ ppuCtrl.generateNMIOnVBlank; //      => 1
 Los registros de solo lectura son poblados por la PPU 🖥️. Los juegos pueden leer su estado mediante lecturas de memoria ejecutadas por la CPU 🧠. Algunas lecturas también pueden desencadenar otros efectos inmediatos.
 
 ```javascript
+import InMemoryRegister from "/lib/InMemoryRegister";
+
 class PPUStatus extends InMemoryRegister.PPU {
   onLoad() {
     this.addWritableField("spriteOverflow", 5) //    bit 5

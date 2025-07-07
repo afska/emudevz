@@ -4,11 +4,9 @@ filesystem.mkdirp(`${Drive.DOCS_DIR}/lib`);
 	filesystem.write(`${Drive.LIB_DIR}/${file}`, level.bin[file]);
 });
 
-["InMemoryRegister.docs.en.md", "InMemoryRegister.docs.es.md"].forEach(
-	(file) => {
-		filesystem.write(`${Drive.DOCS_DIR}/lib/${file}`, level.bin[file]);
-	}
-);
+["InMemoryRegister.en.md", "InMemoryRegister.es.md"].forEach((file) => {
+	filesystem.write(`${Drive.DOCS_DIR}/lib/${file}`, level.bin[file]);
+});
 
 ["audio_registers.en.md", "audio_registers.es.md"].forEach((file) => {
 	filesystem.write(`${Drive.DOCS_DIR}/apu/${file}`, level.bin[file]);

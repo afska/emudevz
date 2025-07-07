@@ -20,6 +20,8 @@ The examples are based on 🖥️ PPU registers, but **🔊 APU registers work i
 Write-only registers are filled by the games through memory writes executed by the 🧠 CPU. By writing to their memory address, games set a value that the 🖥️ PPU can query later to perform different actions, like changing the sprite size. Some writes can trigger other immediate effects as well.
 
 ```javascript
+import InMemoryRegister from "/lib/InMemoryRegister";
+
 class PPUCtrl extends InMemoryRegister.PPU {
   onLoad() {
     this.addField("nameTableId", 0, 2) //         bits 0-1
@@ -56,6 +58,8 @@ ppuCtrl.generateNMIOnVBlank; //      => 1
 Read-only registers are populated by the 🖥️ PPU. Games can read their state through memory reads executed by the 🧠 CPU. Some reads can trigger other immediate effects as well.
 
 ```javascript
+import InMemoryRegister from "/lib/InMemoryRegister";
+
 class PPUStatus extends InMemoryRegister.PPU {
   onLoad() {
     this.addWritableField("spriteOverflow", 5) //    bit 5

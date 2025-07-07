@@ -312,7 +312,6 @@ const dictionary = {
 				"Uno de los canales de audio de la APU. Reproduce samples digitales desde la memoria usando la técnica de *Modulación Delta*.",
 		},
 		DPCM: {
-			also: { es: "DPCM" },
 			icon: "🤏",
 			en:
 				"_Delta Pulse-Code Modulation_, the audio compression format used by the DMC Channel when not using the _direct load_ mode. <br /><br />Samples are stored as the difference (delta) from the previous sample.",
@@ -373,7 +372,7 @@ const dictionary = {
 			es:
 				"Una característica de los Canales Pulso que desplaza periódicamente su periodo de timer hacia arriba o abajo para crear efectos de deslizamiento de tono.",
 		},
-		HBlank: {
+		"HBlank|Horizontal Blank": {
 			icon: "🏝️",
 			en:
 				"Short period after each scanline is drawn, where the PPU is idle before starting the next one.",
@@ -944,7 +943,6 @@ const dictionary = {
 				"El índice de un tile dentro de una pattern table. Va de `0` a `255`.",
 		},
 		"Timer|_Timers": {
-			also: { es: "Timer|_Timers" },
 			icon: "📡",
 			en:
 				"A value that sets an APU channel's oscillation rate by determining how many master-clock ticks occur between waveform steps. <br /><br />It determines the frequency, thus the pitch of the note.",
@@ -988,7 +986,7 @@ const dictionary = {
 			es:
 				"Una forma de onda con forma de triángulo, que produce un sonido más suave y apagado. Usada por el Canal Triangular de la APU. <br /><br />Se ve así:<br />`/\\/\\/\\/\\",
 		},
-		VBlank: {
+		"VBlank|Vertical Blank": {
 			icon: "🏝️",
 			en:
 				"Longer period after the last scanline of a frame, where the PPU is idle before starting a new frame. It's the best time to update graphics safely.",
