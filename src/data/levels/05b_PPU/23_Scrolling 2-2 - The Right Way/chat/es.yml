@@ -42,7 +42,7 @@ changes:
         this.ppu.loopy.onPPUScrollWrite(value);
       }```
   - |-
-    📚 en 📍  `PPUAddr`, elimina el método `onLoad()` y reemplaza `onWrite(...)` con:
+    📚  en 📍  `PPUAddr`, elimina el método `onLoad()` y reemplaza `onWrite(...)` con:
       ```javascript onWrite(value) {
         this.ppu.loopy.onPPUAddrWrite(value);
       }```

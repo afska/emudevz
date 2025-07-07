@@ -10,11 +10,13 @@ main:
 
 example:
   messages:
-  - the Pulse Channel 1 has to know what note it should produce, right?
-  - well, the game's code sets a 11-bit timer value to registers 🕡  Pulse1TimerLow and 🕛  Pulse1TimerHighLCL
-  - and then the 🔊  APU uses that value to calculate the note's frequency
-  - so, for example, if a game wants a timer value of 507, it would write a 251 (low byte of 507) to $4002 and a 1 (high byte of 507) to $4003
-  - <{Pulse1Timer.png}>
+  - let's same a game needs to configure the Pulse Channel 1 to a ~50%~ duty cycle and a constant volume of 6
+  - this is handled by the bits of $4000 (🟦  Pulse1Control)
+  - in the ~Bits~ column, ~DD~ is the duty cycle, ~C~ the constant-volume flag, and ~NNNN~ the volume
+  - so, in this case, the game writes a 150 (binary ~10010110~) to $4000
+  - and then the 🔊  APU uses that value to alter the pulse wave
+  - the write to $4000 affects 4 parameters at the same time (~DD~, ~L~, ~C~, y ~NNNN~)
+  - <{Pulse1Control.png}>
   responses:
   - so, these registers only hold numbers? 🔢 [numbers]
 

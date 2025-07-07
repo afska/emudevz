@@ -12,7 +12,7 @@ how:
   - bit 5 emphasizes <red> (darkening green and blue by 25%)
   - bit 6 emphasizes <green> (darkening red and blue by 25%)
   - bit 7 emphasizes <blue> (darkening red and green by 25%)
-  - if the three emphasis bits are enabled at the same time, all colors will be 25% darker
+  - if the three emphasis bits are enabled at the same time, all colors will be ~25%~ darker
   - <color emphasis> is independent from <grayscale mode>, so the emphasis bits still tint the color of the gray image
   responses:
   - so... [so]

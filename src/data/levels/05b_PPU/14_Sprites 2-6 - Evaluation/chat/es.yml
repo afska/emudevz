@@ -38,7 +38,7 @@ ok:
             **->** asigna ```javascript this.ppu.registers.ppuStatus.spriteOverflow = 1```
             **->** detiene el bucle
       **->** devuelve `sprites` en orden inverso
-  - 📚 además, necesitas reiniciar `spriteOverflow` a 0 en ~scanline=-1; cycle=1~, como lo hiciste anteriormente con `isInVBlankInterval`
+  - 📚  además, necesitas reiniciar `spriteOverflow` a 0 en ~scanline=-1; cycle=1~, como lo hiciste anteriormente con `isInVBlankInterval`
   - hazlo en `PPU::_onPreLine()`
   responses:
   - ¿cómo sé si un sprite debe ser renderizado? [visible]
