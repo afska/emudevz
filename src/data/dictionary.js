@@ -63,9 +63,10 @@ const dictionary = {
 			es:
 				"La altura de los picos de la onda. Define el volumen o la intensidad del sonido.",
 		},
-		"Audio channel|Channel|_Audio channels|_Channels": {
+		"Audio channel|APU channel|Channel|_Audio channels|_APU channels|_Channels": {
 			also: {
-				es: "Canal de audio|Canal|_Canales de audio|_Canales",
+				es:
+					"Canal de audio|Canal APU|Canal|_Canales de audio|_Canales APU|_Canales",
 			},
 			icon: "🎛️",
 			en:
@@ -258,6 +259,14 @@ const dictionary = {
 			es:
 				"Una unidad usada para medir el tiempo en el sistema. La CPU, la PPU y la APU hacen su trabajo ciclo a ciclo. <br /><br />La duración de un ciclo depende de la velocidad de cada unidad.",
 		},
+		"Divider|_Dividers": {
+			also: { es: "Divisor|_Divisores" },
+			icon: "⏰",
+			en:
+				"A counter that reduces the system's master clock to a slower periodic signal by counting down from a set value and reloading when it reaches zero. <br /><br />It is used to clock other units at a slower rate.",
+			es:
+				"Un contador que reduce el reloj maestro del sistema a una señal periódica más lenta al descontar desde un valor fijo y recargarse al llegar a cero. <br /><br />Se usa para sincronizar otras unidades a una velocidad más baja.",
+		},
 		"DMA|DMA transfer": {
 			also: { es: "DMA|Transferencia DMA" },
 			icon: "⚡",
@@ -294,13 +303,21 @@ const dictionary = {
 			es:
 				"Un registro de audio que establece la longitud (en bytes) del sample DMC a reproducir. <br /><br />Está disponible en la dirección de CPU `$4013`.",
 		},
-		"DMC Channel": {
-			also: { es: "Canal DMC" },
+		"DMC Channel|DMC": {
+			also: { es: "Canal DMC|DMC" },
 			icon: "📦",
 			en:
 				"One of the APU's audio channels. It plays back digital samples from memory using the *Delta Modulation* technique.",
 			es:
 				"Uno de los canales de audio de la APU. Reproduce samples digitales desde la memoria usando la técnica de *Modulación Delta*.",
+		},
+		DPCM: {
+			also: { es: "DPCM" },
+			icon: "🤏",
+			en:
+				"_Delta Pulse-Code Modulation_, the audio compression format used by the DMC Channel when not using the _direct load_ mode. <br /><br />Samples are stored as the difference (delta) from the previous sample.",
+			es:
+				"_Delta Pulse-Code Modulation_, el formato de compresión de audio usado por el Canal DMC cuando no se usa el modo de _carga directa_. <br /><br />Los samples se almacenan como la diferencia (delta) respecto al sample anterior.",
 		},
 		"Duty cycle|_Duty cycles": {
 			also: { es: "Ciclo de trabajo|_Ciclos de trabajo" },
@@ -345,6 +362,16 @@ const dictionary = {
 				"The number of times a wave repeats in one second. It determines the pitch of a sound. Measured in hertz (`Hz`). <br /><br />It is the inverse of the period.",
 			es:
 				"El número de veces que una onda se repite en un segundo. Determina el tono de un sonido. Se mide en hertz (`Hz`). <br /><br />Es la inversa del período.",
+		},
+		"Frequency sweep|_Frequency sweeps|Sweep|_Sweeps": {
+			also: {
+				es: "Barrido de frecuencia|_Barridos de frecuencia|Barrido|_Barridos",
+			},
+			icon: "🧹",
+			en:
+				"A feature of Pulse Channels that periodically shifts their timer period up or down to create pitch-slide effects.",
+			es:
+				"Una característica de los Canales Pulso que desplaza periódicamente su periodo de timer hacia arriba o abajo para crear efectos de deslizamiento de tono.",
 		},
 		HBlank: {
 			icon: "🏝️",
@@ -397,6 +424,24 @@ const dictionary = {
 				"The byte with the lowest positional value in a multi-byte number. <br /><br />For example, the LSB of `$AB15` is `$15`.",
 			es:
 				"El byte con el valor posicional más bajo en un número multibyte. <br /><br />Por ejemplo, el LSB de `$AB15` es `$15`.",
+		},
+		"Length counter|_Length counters": {
+			also: { es: "Contador de longitud|_Contadores de longitud" },
+			icon: "📏",
+			en:
+				"A counter that determines the length of the notes. When it reaches zero, the channel silences.",
+			es:
+				"Un contador que determina la longitud de las notas. Al llegar a cero, silencia el canal.",
+		},
+		"Linear length counter|_Linear length counters": {
+			also: {
+				es: "Contador de longitud lineal|_Contadores de longitud lineal",
+			},
+			icon: "📏",
+			en:
+				"A special length counter present in the Triangle Channel whose register value maps directly (linearly) to the number of ticks before silencing. Regular length counters use an index into a predefined table of durations instead.",
+			es:
+				"Un contador especial del Canal Triangular cuyo valor de registro se asigna de forma directa (lineal) al número de ciclos antes de silenciar. Los contadores de longitud normales usan un índice en una tabla predefinida de duraciones.",
 		},
 		"Little Endian": {
 			icon: "🔢",
@@ -814,6 +859,14 @@ const dictionary = {
 			es:
 				"Una función de la PPU que permite a los desarrolladores mover el fondo ajustando la porción visible de la name table.",
 		},
+		"Sequencer|Sequence|Frame sequencer": {
+			also: { es: "Secuenciador|Secuencia|Secuenciador de Frame" },
+			icon: "🔀",
+			en:
+				"An internal APU unit that cycles through four- or five-step patterns to generate timing signals for envelopes, sweeps, and length counters.",
+			es:
+				"Una unidad interna de la APU que cicla por patrones de cuatro o cinco pasos para generar señales de tiempo para envolventes, barridos y contadores de longitud.",
+		},
 		"Sprite|_Sprites": {
 			icon: "🛸",
 			en:
@@ -890,6 +943,14 @@ const dictionary = {
 			es:
 				"El índice de un tile dentro de una pattern table. Va de `0` a `255`.",
 		},
+		"Timer|_Timers": {
+			also: { es: "Timer|_Timers" },
+			icon: "📡",
+			en:
+				"A value that sets an APU channel's oscillation rate by determining how many master-clock ticks occur between waveform steps. <br /><br />It determines the frequency, thus the pitch of the note.",
+			es:
+				"Un valor que establece la tasa de oscilación de un canal APU determinando cuántos ciclos de reloj maestro pasan entre pasos de la forma de onda. <br /><br />Determina la frecuencia, y en consecuencia el tono de una nota.",
+		},
 		TriangleLinearLCL: {
 			icon: "📏",
 			en:
@@ -948,6 +1009,17 @@ const dictionary = {
 				"A memory-mapped register that the PPU uses to control rendering and expose its internal state.",
 			es:
 				"Un registro mapeado en memoria que la PPU usa para controlar el renderizado y exponer su estado interno.",
+		},
+		"Volume envelope|_Volume envelopes|Envelope|_Envelopes": {
+			also: {
+				es:
+					"Envolvente de volumen|_Envolventes de volumen|Envolvente|_Envolventes",
+			},
+			icon: "📉",
+			en:
+				"A mechanism that automatically adjusts a channel's output volume over time according to its rate and loop settings. <br /><br />It's used to produce _fade in/out_ effects.",
+			es:
+				"Un mecanismo que ajusta automáticamente el volumen de salida de un canal a lo largo del tiempo según sus opciones de tasa y bucle. <br /><br />Se usa para producir efectos _fade in/out_.",
 		},
 		VRAM: {
 			icon: "🐏",
