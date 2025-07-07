@@ -268,179 +268,163 @@ it("connects the audio registers to CPU memory (writes)", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-// it("PPUCtrl: write only", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+it("except APUStatus, all registers are write only", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// 	const ppuCtrl = ppu.registers.ppuCtrl;
-// 	ppuCtrl.onWrite(byte.random());
-// 	ppuCtrl.onRead().should.equalN(0, "onRead()");
-// })({
-// 	locales: {
-// 		es: "PPUCtrl: solo escritura",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+	[
+		...Object.values(apu.registers.pulses[0]),
+		...Object.values(apu.registers.pulses[1]),
+		...Object.values(apu.registers.triangle),
+		...Object.values(apu.registers.noise),
+		...Object.values(apu.registers.dmc),
+		apu.registers.apuControl,
+		apu.registers.apuFrameCounter,
+	].forEach((register) => {
+		register.onWrite(byte.random());
+		register.onRead().should.equalN(0, "onRead()");
+	});
+})({
+	locales: {
+		es: "excepto APUStatus, todos los registros son solo escritura",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
 
-// it("PPUCtrl: writes `nameTableId` (bits 0-1)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+it("PulseControl: writes `volumeOrEnvelopePeriod` (bits 0-3)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// 	const ppuCtrl = ppu.registers.ppuCtrl;
-// 	ppuCtrl.onWrite(0b10100000);
-// 	ppuCtrl.nameTableId.should.equalN(0, "nameTableId");
-// 	ppuCtrl.onWrite(0b10100001);
-// 	ppuCtrl.nameTableId.should.equalN(1, "nameTableId");
-// 	ppuCtrl.onWrite(0b10100010);
-// 	ppuCtrl.nameTableId.should.equalN(2, "nameTableId");
-// 	ppuCtrl.onWrite(0b10100011);
-// 	ppuCtrl.nameTableId.should.equalN(3, "nameTableId");
-// })({
-// 	locales: {
-// 		es: "PPUCtrl: escribe `nameTableId` (bits 0-1)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4") && id < book.getId("5b.23"),
-// });
+	[
+		["pulse1Control", apu.registers.pulses[0].control],
+		["pulse2Control", apu.registers.pulses[1].control],
+	].forEach(([name, register]) => {
+		const key = `${name}.volumeOrEnvelopePeriod`;
 
-// it("PPUCtrl: writes `vramAddressIncrement32` (bit 2)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+		register.onWrite(0b10100000);
+		register.volumeOrEnvelopePeriod.should.equalN(0, key);
+		register.onWrite(0b10100001);
+		register.volumeOrEnvelopePeriod.should.equalN(1, key);
+		register.onWrite(0b10100110);
+		register.volumeOrEnvelopePeriod.should.equalN(6, key);
+		register.onWrite(0b10101111);
+		register.volumeOrEnvelopePeriod.should.equalN(15, key);
+	});
+})({
+	locales: {
+		es: "PulseControl: escribe `volumeOrEnvelopePeriod` (bits 0-3)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
 
-// 	const ppuCtrl = ppu.registers.ppuCtrl;
-// 	ppuCtrl.onWrite(0b10100011);
-// 	ppuCtrl.vramAddressIncrement32.should.equalN(0, "vramAddressIncrement32");
-// 	ppuCtrl.onWrite(0b10100111);
-// 	ppuCtrl.vramAddressIncrement32.should.equalN(1, "vramAddressIncrement32");
-// })({
-// 	locales: {
-// 		es: "PPUCtrl: escribe `vramAddressIncrement32` (bit 2)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4") && id < book.getId("5b.23"),
-// });
+it("PulseControl: writes `constantVolume` (bit 4)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// it("PPUCtrl: writes `sprite8x8PatternTableId` (bit 3)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+	[
+		["pulse1Control", apu.registers.pulses[0].control],
+		["pulse2Control", apu.registers.pulses[1].control],
+	].forEach(([name, register]) => {
+		const key = `${name}.constantVolume`;
 
-// 	const ppuCtrl = ppu.registers.ppuCtrl;
-// 	ppuCtrl.onWrite(0b10100011);
-// 	ppuCtrl.sprite8x8PatternTableId.should.equalN(0, "sprite8x8PatternTableId");
-// 	ppuCtrl.onWrite(0b10101111);
-// 	ppuCtrl.sprite8x8PatternTableId.should.equalN(1, "sprite8x8PatternTableId");
-// })({
-// 	locales: {
-// 		es: "PPUCtrl: escribe `vramAddressIncrement32` (bit 3)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+		register.onWrite(0b10100011);
+		register.constantVolume.should.equalN(0, key);
+		register.onWrite(0b10110011);
+		register.constantVolume.should.equalN(1, key);
+	});
+})({
+	locales: {
+		es: "PulseControl: escribe `constantVolume` (bit 4)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
 
-// it("PPUCtrl: writes `backgroundPatternTableId` (bit 4)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+it("PulseControl: writes `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// 	const ppuCtrl = ppu.registers.ppuCtrl;
-// 	ppuCtrl.onWrite(0b10100011);
-// 	ppuCtrl.backgroundPatternTableId.should.equalN(0, "backgroundPatternTableId");
-// 	ppuCtrl.onWrite(0b10111111);
-// 	ppuCtrl.backgroundPatternTableId.should.equalN(1, "backgroundPatternTableId");
-// })({
-// 	locales: {
-// 		es: "PPUCtrl: escribe `backgroundPatternTableId` (bit 4)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+	[
+		["pulse1Control", apu.registers.pulses[0].control],
+		["pulse2Control", apu.registers.pulses[1].control],
+	].forEach(([name, register]) => {
+		const key = `${name}.envelopeLoopOrLengthCounterHalt`;
 
-// it("PPUCtrl: writes `spriteSize` (bit 5)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+		register.onWrite(0b10000011);
+		register.envelopeLoopOrLengthCounterHalt.should.equalN(0, key);
+		register.onWrite(0b10100011);
+		register.envelopeLoopOrLengthCounterHalt.should.equalN(1, key);
+	});
+})({
+	locales: {
+		es: "PulseControl: escribe `envelopeLoopOrLengthCounterHalt` (bit 5)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
 
-// 	const ppuCtrl = ppu.registers.ppuCtrl;
-// 	ppuCtrl.onWrite(0b10000011);
-// 	ppuCtrl.spriteSize.should.equalN(0, "spriteSize");
-// 	ppuCtrl.onWrite(0b10111111);
-// 	ppuCtrl.spriteSize.should.equalN(1, "spriteSize");
-// })({
-// 	locales: {
-// 		es: "PPUCtrl: escribe `spriteSize` (bit 5)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+it("PulseControl: writes `dutyCycleId` (bits 6-7)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// it("PPUCtrl: writes `generateNMIOnVBlank` (bit 7)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+	[
+		["pulse1Control", apu.registers.pulses[0].control],
+		["pulse2Control", apu.registers.pulses[1].control],
+	].forEach(([name, register]) => {
+		const key = `${name}.dutyCycleId`;
 
-// 	const ppuCtrl = ppu.registers.ppuCtrl;
-// 	ppuCtrl.onWrite(0b00000011);
-// 	ppuCtrl.generateNMIOnVBlank.should.equalN(0, "generateNMIOnVBlank");
-// 	ppuCtrl.onWrite(0b10111111);
-// 	ppuCtrl.generateNMIOnVBlank.should.equalN(1, "generateNMIOnVBlank");
-// })({
-// 	locales: {
-// 		es: "PPUCtrl: escribe `generateNMIOnVBlank` (bit 7)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+		register.onWrite(0b00000011);
+		register.dutyCycleId.should.equalN(0, key);
+		register.onWrite(0b01000011);
+		register.dutyCycleId.should.equalN(1, key);
+		register.onWrite(0b10000011);
+		register.dutyCycleId.should.equalN(2, key);
+		register.onWrite(0b11000011);
+		register.dutyCycleId.should.equalN(3, key);
+	});
+})({
+	locales: {
+		es: "PulseControl: escribe `dutyCycleId` (bits 6-7)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
 
-// it("PPUStatus: read only", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+it("TriangleTimerLow: writes the value", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// 	const ppuStatus = ppu.registers.ppuStatus;
-// 	ppuStatus.setValue(123);
-// 	ppuStatus.onRead().should.equalN(123, "onRead()");
-// 	ppuStatus.onWrite(456);
-// 	ppuStatus.onRead().should.equalN(123, "onRead()");
-// })({
-// 	locales: {
-// 		es: "PPUStatus: solo lectura",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+	const triangleTimerLow = apu.registers.triangle.timerLow;
+	triangleTimerLow.onWrite(129);
+	triangleTimerLow.value.should.equalN(129, "triangleTimerLow.value");
+})({
+	locales: {
+		es: "TriangleTimerLow: escribe el valor",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
 
-// it("PPUStatus: reads `spriteOverflow` (bit 5)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+it("DMCSampleAddress: writes the value", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// 	const ppuStatus = ppu.registers.ppuStatus;
-// 	byte.getBit(ppuStatus.onRead(), 5).should.equalN(0, "bit 5");
-// 	ppuStatus.spriteOverflow = 1;
-// 	byte.getBit(ppuStatus.onRead(), 5).should.equalN(1, "bit 5");
-// })({
-// 	locales: {
-// 		es: "PPUStatus: lee `spriteOverflow` (bit 5)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+	const dmcSampleAddress = apu.registers.dmc.sampleAddress;
+	dmcSampleAddress.onWrite(135);
+	dmcSampleAddress.value.should.equalN(135, "dmcSampleAddress.value");
+})({
+	locales: {
+		es: "DMCSampleAddress: escribe el valor",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
 
-// it("PPUStatus: reads `sprite0Hit` (bit 6)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
+it("DMCSampleLength: writes the value", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// 	const ppuStatus = ppu.registers.ppuStatus;
-// 	byte.getBit(ppuStatus.onRead(), 6).should.equalN(0, "bit 6");
-// 	ppuStatus.sprite0Hit = 1;
-// 	byte.getBit(ppuStatus.onRead(), 6).should.equalN(1, "bit 6");
-// })({
-// 	locales: {
-// 		es: "PPUStatus: lee `sprite0Hit` (bit 6)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
-
-// it("PPUStatus: reads `isInVBlankInterval` (bit 7) (ON by default)", () => {
-// 	const PPU = mainModule.default.PPU;
-// 	const ppu = new PPU({});
-
-// 	const ppuStatus = ppu.registers.ppuStatus;
-// 	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
-// 	ppuStatus.isInVBlankInterval = 0;
-// 	byte.getBit(ppuStatus.onRead(), 7).should.equalN(0, "bit 7");
-// 	ppuStatus.isInVBlankInterval = 1;
-// 	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
-// })({
-// 	locales: {
-// 		es: "PPUStatus: lee `isInVBlankInterval` (bit 7) (encendido por defecto)",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.4"),
-// });
+	const dmcSampleLength = apu.registers.dmc.sampleLength;
+	dmcSampleLength.onWrite(172);
+	dmcSampleLength.value.should.equalN(172, "dmcSampleLength.value");
+})({
+	locales: {
+		es: "DMCSampleLength: escribe el valor",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});

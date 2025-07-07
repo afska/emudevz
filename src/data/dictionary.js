@@ -754,7 +754,7 @@ const dictionary = {
 			es:
 				"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
 		},
-		Pulse1Control: {
+		"Pulse1Control|PulseControl": {
 			icon: "🟦",
 			en:
 				"An audio register that configures the first Pulse Channel's duty cycle, envelope, and volume. <br /><br />It is available at CPU address `$4000`.",
@@ -768,7 +768,7 @@ const dictionary = {
 			es:
 				"Un registro de audio que configura el ciclo de trabajo, la envolvente y el volumen del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4004`.",
 		},
-		Pulse1Sweep: {
+		"Pulse1Sweep|PulseSweep": {
 			icon: "🧹",
 			en:
 				"An audio register that sets up the first pulse channel's frequency sweep (rate, direction, and shift count). <br /><br />It is available at CPU address `$4001`.",
@@ -782,7 +782,7 @@ const dictionary = {
 			es:
 				"Un registro de audio que ajusta el barrido de frecuencia (velocidad, dirección y desplazamiento) del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4005`.",
 		},
-		Pulse1TimerHighLCL: {
+		"Pulse1TimerHighLCL|PulseTimerHighLCL": {
 			icon: "🕛",
 			en:
 				"An audio register holding the high byte of the first Pulse Channel's timer and loading its length counter (which also starts the envelope). <br /><br />It is available at CPU address `$4003`.",
@@ -796,7 +796,7 @@ const dictionary = {
 			es:
 				"Un registro de audio que contiene el byte alto del timer del segundo Canal Pulso y carga su contador de longitud (que además inicia la envolvente). <br /><br />Está disponible en la dirección de CPU `$4007`.",
 		},
-		Pulse1TimerLow: {
+		"Pulse1TimerLow|PulseTimerLow": {
 			icon: "🕡",
 			en:
 				"An audio register holding the low byte of the first Pulse Channel's timer, which determines its pitch. <br /><br />It is available at CPU address `$4002`.",
