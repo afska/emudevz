@@ -48,7 +48,7 @@ start:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  create a file for the APU code, using 📄  ~/tmpl/apu/APU.js~ as template
+  - 📚  create a file for the APU code, using 📄  ~/tmpl/apu/APU.js~ as a template
   - |-
     📚  to keep track of the timing, add this method:
     **step(onSample)**:

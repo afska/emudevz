@@ -4,6 +4,7 @@
 		"es": "⚙️ Canales Pulso (1/5): Configuración del canal"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
