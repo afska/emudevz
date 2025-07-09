@@ -36,7 +36,7 @@ connect:
       ```javascript this.sample = (
         this.channels.pulses[0].sample() +
         this.channels.pulses[1].sample()
-      ) / 2```
+      ) / 10```
   - |-
     📚  implement in 🕡  `PulseTimerLow`:
     **onWrite(value)**:

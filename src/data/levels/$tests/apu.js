@@ -579,3 +579,106 @@ it("`PulseChannel`: `step()` calls updateTimer()", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
+
+it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].step = sinon.spy();
+	apu.channels.pulses[1].step = sinon.spy();
+
+	apu.step(() => {});
+	apu.channels.pulses[0].step.should.have.been.called;
+	apu.channels.pulses[1].step.should.have.been.called;
+})({
+	locales: {
+		es:
+			"llama al método `step()` de los Canales Pulso en cada llamado a `step(...)` de la APU",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].step = sinon.spy();
+	apu.channels.pulses[1].step = sinon.spy();
+
+	apu.step(() => {});
+	apu.channels.pulses[0].step.should.have.been.called;
+	apu.channels.pulses[1].step.should.have.been.called;
+})({
+	locales: {
+		es:
+			"llama al método `step()` de los Canales Pulso en cada llamado a `step(...)` de la APU",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("for now, new samples are mixed like `(pulse1 + pulse2) / 100`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	apu.should.respondTo("step");
+	const onSample = sinon.spy();
+
+	apu.channels.pulses[0].sample = () => 2;
+	apu.channels.pulses[1].sample = () => 5;
+
+	for (let i = 0; i < 19; i++) {
+		apu.step(onSample);
+		onSample.should.not.have.been.called;
+	}
+
+	apu.step(onSample);
+	onSample.should.have.been.calledWith(0.07); // (2 + 5) / 100
+})({
+	locales: {
+		es:
+			"por ahora, los nuevos samples se mezclan como `(pulse1 + pulse2) / 100`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseTimerLow`: writes the value and calls `updateTimer()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].updateTimer = sinon.spy();
+	apu.channels.pulses[1].updateTimer = sinon.spy();
+
+	apu.registers.write(0x4002, 251); // Pulse1TimerLow
+	apu.registers.pulses[0].timerLow.value.should.equalN(251, "value");
+	expect(apu.channels.pulses[0].updateTimer, "updateTimer").to.have.been.called;
+
+	apu.registers.write(0x4006, 196); // Pulse2TimerLow
+	apu.registers.pulses[1].timerLow.value.should.equalN(196, "value");
+	expect(apu.channels.pulses[1].updateTimer, "updateTimer").to.have.been.called;
+})({
+	locales: {
+		es: "`PulseTimerLow`: escribe el valor y llama a `updateTimer()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseTimerHighLCL`: writes `timerHigh` (bits 0-2) and calls `updateTimer()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].updateTimer = sinon.spy();
+	apu.channels.pulses[1].updateTimer = sinon.spy();
+
+	apu.registers.write(0x4003, 5); // Pulse1TimerHighLCL
+	apu.registers.pulses[0].timerHighLCL.timerHigh.should.equalN(5, "timerHigh");
+	expect(apu.channels.pulses[0].updateTimer, "updateTimer").to.have.been.called;
+
+	apu.registers.write(0x4007, 7); // Pulse2TimerHighLCL
+	apu.registers.pulses[1].timerHighLCL.timerHigh.should.equalN(7, "timerHigh");
+	expect(apu.channels.pulses[1].updateTimer, "updateTimer").to.have.been.called;
+})({
+	locales: {
+		es:
+			"`PulseTimerHighLCL`: escribe `timerHigh` (bits 0-2) y llama a `updateTimer()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
