@@ -1615,7 +1615,7 @@ it("SpriteRenderer: `_evaluate()` returns a sprite array", () => {
 	ppu.memory.oamRam[4 * 8 + 3] = 17; // x
 
 	const sprites = ppu.spriteRenderer._evaluate();
-	expect(sprites).to.be.an("array");
+	expect(sprites, "sprites").to.be.an("array");
 	sprites.length.should.equalN(2, "length");
 	sprites[0].id.should.equalN(5, "sprites[0].id");
 	sprites[0].x.should.equalN(77, "sprites[0].x");
@@ -1646,7 +1646,7 @@ it("SpriteRenderer: `_evaluate()` sets the sprite overflow flag when there are m
 	}
 
 	const sprites = ppu.spriteRenderer._evaluate();
-	expect(sprites).to.be.an("array");
+	expect(sprites, "sprites").to.be.an("array");
 	sprites.length.should.equalN(8, "length");
 	sprites[0].id.should.equal(7, "sprites[0].id");
 	sprites[7].id.should.equal(0, "sprites[7].id");

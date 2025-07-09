@@ -32,7 +32,7 @@ connect:
       }```
   - 📚  llama al método `step()` de los dos canales pulso al inicio de 🔊 `APU::step()`
   - |-
-    📚  reemplaza el <código de pruebas> actual en 🔊  `APU::sample(...)` con algo como:
+    📚  reemplaza el <código de prueba> actual en 🔊  `APU::sample(...)` con algo como:
       ```javascript this.sample = (
         this.channels.pulses[0].sample() +
         this.channels.pulses[1].sample()

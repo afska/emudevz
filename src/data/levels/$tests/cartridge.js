@@ -92,7 +92,7 @@ it("has a `header` property with metadata (PRG-ROM pages)", () => {
 	for (let i = 0; i < 256; i++) {
 		bytes[4] = i;
 		const header = new Cartridge(bytes).header;
-		expect(header).to.be.an("object");
+		expect(header, "header").to.be.an("object");
 		header.should.include.key("prgRomPages");
 		header.prgRomPages.should.equalN(i, "prgRomPages");
 	}
@@ -111,7 +111,7 @@ it("has a `header` property with metadata (CHR-ROM pages)", () => {
 	for (let i = 0; i < 256; i++) {
 		bytes[5] = i;
 		const header = new Cartridge(bytes).header;
-		expect(header).to.be.an("object");
+		expect(header, "header").to.be.an("object");
 		header.should.include.key("chrRomPages");
 		header.chrRomPages.should.equalN(i, "chrRomPages");
 		header.should.include.key("usesChrRam");
@@ -135,7 +135,7 @@ it("has a `header` property with metadata (512-byte padding)", () => {
 	].forEach(([has512BytePadding, flags6]) => {
 		bytes[6] = flags6;
 		const header = new Cartridge(bytes).header;
-		expect(header).to.be.an("object");
+		expect(header, "header").to.be.an("object");
 		header.should.include.key("has512BytePadding");
 		header.has512BytePadding.should.equalN(
 			has512BytePadding,
@@ -160,7 +160,7 @@ it("has a `header` property with metadata (PRG-RAM presence)", () => {
 	].forEach(([hasPrgRam, flags6]) => {
 		bytes[6] = flags6;
 		const header = new Cartridge(bytes).header;
-		expect(header).to.be.an("object");
+		expect(header, "header").to.be.an("object");
 		header.should.include.key("hasPrgRam");
 		header.hasPrgRam.should.equalN(hasPrgRam, "hasPrgRam");
 	});
@@ -184,7 +184,7 @@ it("has a `header` property with metadata (mirroringId)", () => {
 	].forEach(([mirroringId, flags6]) => {
 		bytes[6] = flags6;
 		const header = new Cartridge(bytes).header;
-		expect(header).to.be.an("object");
+		expect(header, "header").to.be.an("object");
 		header.should.include.key("mirroringId");
 		header.mirroringId.should.equalN(mirroringId, "mirroringId");
 	});

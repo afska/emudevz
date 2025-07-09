@@ -104,8 +104,6 @@ it("generates a new sample for every 20 `step(...)` calls", () => {
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
 
-// TODO: IMPLEMENT---v
-
 // 5b.4 Audio Registers
 
 it("includes a `registers` property with 21 audio registers", () => {
@@ -113,7 +111,7 @@ it("includes a `registers` property with 21 audio registers", () => {
 	const apu = new APU({});
 
 	apu.should.include.key("registers");
-	expect(apu.registers).to.be.an("object");
+	expect(apu.registers, "registers").to.be.an("object");
 	apu.registers.should.respondTo("read");
 	apu.registers.should.respondTo("write");
 
@@ -268,7 +266,7 @@ it("connects the audio registers to CPU memory (writes)", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("except APUStatus, all registers are write only", () => {
+it("except `APUStatus`, all registers are write only", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -286,12 +284,12 @@ it("except APUStatus, all registers are write only", () => {
 	});
 })({
 	locales: {
-		es: "excepto APUStatus, todos los registros son solo escritura",
+		es: "excepto `APUStatus`, todos los registros son solo escritura",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("PulseControl: writes `volumeOrEnvelopePeriod` (bits 0-3)", () => {
+it("`PulseControl`: writes `volumeOrEnvelopePeriod` (bits 0-3)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -312,12 +310,12 @@ it("PulseControl: writes `volumeOrEnvelopePeriod` (bits 0-3)", () => {
 	});
 })({
 	locales: {
-		es: "PulseControl: escribe `volumeOrEnvelopePeriod` (bits 0-3)",
+		es: "`PulseControl`: escribe `volumeOrEnvelopePeriod` (bits 0-3)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("PulseControl: writes `constantVolume` (bit 4)", () => {
+it("`PulseControl`: writes `constantVolume` (bit 4)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -334,12 +332,12 @@ it("PulseControl: writes `constantVolume` (bit 4)", () => {
 	});
 })({
 	locales: {
-		es: "PulseControl: escribe `constantVolume` (bit 4)",
+		es: "`PulseControl`: escribe `constantVolume` (bit 4)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("PulseControl: writes `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
+it("`PulseControl`: writes `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -356,12 +354,12 @@ it("PulseControl: writes `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
 	});
 })({
 	locales: {
-		es: "PulseControl: escribe `envelopeLoopOrLengthCounterHalt` (bit 5)",
+		es: "`PulseControl`: escribe `envelopeLoopOrLengthCounterHalt` (bit 5)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("PulseControl: writes `dutyCycleId` (bits 6-7)", () => {
+it("`PulseControl`: writes `dutyCycleId` (bits 6-7)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -382,12 +380,12 @@ it("PulseControl: writes `dutyCycleId` (bits 6-7)", () => {
 	});
 })({
 	locales: {
-		es: "PulseControl: escribe `dutyCycleId` (bits 6-7)",
+		es: "`PulseControl`: escribe `dutyCycleId` (bits 6-7)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("TriangleTimerLow: writes the value", () => {
+it("`TriangleTimerLow`: writes the value", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -396,12 +394,12 @@ it("TriangleTimerLow: writes the value", () => {
 	triangleTimerLow.value.should.equalN(129, "triangleTimerLow.value");
 })({
 	locales: {
-		es: "TriangleTimerLow: escribe el valor",
+		es: "`TriangleTimerLow`: escribe el valor",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("DMCSampleAddress: writes the value", () => {
+it("`DMCSampleAddress`: writes the value", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -410,12 +408,12 @@ it("DMCSampleAddress: writes the value", () => {
 	dmcSampleAddress.value.should.equalN(135, "dmcSampleAddress.value");
 })({
 	locales: {
-		es: "DMCSampleAddress: escribe el valor",
+		es: "`DMCSampleAddress`: escribe el valor",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("DMCSampleLength: writes the value", () => {
+it("`DMCSampleLength`: writes the value", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -424,7 +422,160 @@ it("DMCSampleLength: writes the value", () => {
 	dmcSampleLength.value.should.equalN(172, "dmcSampleLength.value");
 })({
 	locales: {
-		es: "DMCSampleLength: escribe el valor",
+		es: "`DMCSampleLength`: escribe el valor",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
+
+it("has `PulseChannel` instances", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	expect(apu.channels, "channels").to.be.an("object");
+	expect(apu.channels.pulses, "pulses").to.be.an("array");
+	apu.channels.pulses.length.should.equalN(2, "pulses.length");
+	expect(apu.channels.pulses[0], "pulses[0]").to.be.an("object");
+	expect(apu.channels.pulses[1], "pulses[1]").to.be.an("object");
+	expect(apu.channels.pulses[0].constructor, "pulses[0].constructor").to.be.a
+		.class;
+	expect(apu.channels.pulses[1].constructor, "pulses[1].constructor").to.be.a
+		.class;
+
+	const pulse1Class = apu.channels.pulses[0].constructor;
+	const pulse2Class = apu.channels.pulses[1].constructor;
+	pulse1Class.should.equalN(pulse2Class, "class");
+	apu.channels.pulses[0].should.not.equalN(apu.channels.pulses[1], "instance");
+})({
+	locales: {
+		es: "tiene instancias de `PulseChannel`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: has an `apu` reference", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].apu.should.equalN(apu);
+	apu.channels.pulses[1].apu.should.equalN(apu);
+})({
+	locales: {
+		es: "`PulseChannel`: tiene una referencia `apu`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: has an `id`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].id.should.equalN(0, "id");
+	apu.channels.pulses[1].id.should.equalN(1, "id");
+})({
+	locales: {
+		es: "`PulseChannel`: tiene un `id`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: has an `enableFlagName`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const pulse1FlagName = apu.channels.pulses[0].enableFlagName;
+	const pulse2FlagName = apu.channels.pulses[1].enableFlagName;
+	pulse1FlagName.should.equalN("enablePulse1", "enableFlagName");
+	pulse2FlagName.should.equalN("enablePulse2", "enableFlagName");
+})({
+	locales: {
+		es: "`PulseChannel`: tiene un `enableFlagName`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: has a `timer` initialized at 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].timer.should.equalN(0, "timer");
+	apu.channels.pulses[1].timer.should.equalN(0, "timer");
+})({
+	locales: {
+		es: "`PulseChannel`: tiene un `timer` inicializado en 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: has a `registers` property, pointing to the audio registers", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].registers.should.equalN(apu.registers.pulses[0]);
+	apu.channels.pulses[1].registers.should.equalN(apu.registers.pulses[1]);
+})({
+	locales: {
+		es:
+			"`PulseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: has a `sample` method that returns a number", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].should.respondTo("sample");
+	apu.channels.pulses[0].sample().should.be.a("number");
+	apu.channels.pulses[1].should.respondTo("sample");
+	apu.channels.pulses[1].sample().should.be.a("number");
+})({
+	locales: {
+		es: "`PulseChannel`: tiene un método `sample` que retorna un número",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: `updateTimer()` updates `timer` based on PulseTimerLow and PulseTimerHighLCL", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.pulses[0].timerLow.onWrite(251);
+	apu.registers.pulses[0].timerHighLCL.onWrite(1);
+
+	apu.registers.pulses[1].timerLow.onWrite(196);
+	apu.registers.pulses[1].timerHighLCL.onWrite(2);
+
+	apu.channels.pulses[0].should.respondTo("updateTimer");
+	apu.channels.pulses[0].updateTimer();
+	apu.channels.pulses[0].timer.should.equalN(507, "timer");
+	apu.channels.pulses[1].should.respondTo("updateTimer");
+	apu.channels.pulses[1].updateTimer();
+	apu.channels.pulses[1].timer.should.equalN(708, "timer");
+})({
+	locales: {
+		es:
+			"`PulseChannel`: `updateTimer()` actualiza `timer` basado en PulseTimerLow and PulseTimerHighLCL",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: `step()` calls updateTimer()", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].updateTimer = sinon.spy();
+	apu.channels.pulses[1].updateTimer = sinon.spy();
+
+	apu.channels.pulses[0].should.respondTo("step");
+	apu.channels.pulses[0].step();
+	apu.channels.pulses[0].updateTimer.should.have.been.called;
+
+	apu.channels.pulses[1].should.respondTo("step");
+	apu.channels.pulses[1].step();
+	apu.channels.pulses[1].updateTimer.should.have.been.called;
+})({
+	locales: {
+		es: "`PulseChannel`: `step()` llama a `updateTimer()",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
