@@ -14,10 +14,10 @@ good:
   - |-
     📚  implement this method:
     **sample()**:
-      **->** sets ```javascript this.oscillator.frequency``` with the right frequency, based on ```javascript this.timer```
+      **->** sets ```javascript this.oscillator.frequency``` to the right frequency, based on ```javascript this.timer```
         remember the formula: ```javascript f = 1789773 / (16 * (t + 1))```
-      **->** sets ```javascript this.oscillator.dutyCycle``` with the `dutyCycleId` from 🟦  `PulseControl`
-      **->** sets ```javascript this.oscillator.volume``` with the `volumeOrEnvelopePeriod` from 🟦  `PulseControl`
+      **->** sets ```javascript this.oscillator.dutyCycle``` to `dutyCycleId` from 🟦  `PulseControl`
+      **->** sets ```javascript this.oscillator.volume``` to `volumeOrEnvelopePeriod` from 🟦  `PulseControl`
       **->** returns ```javascript this.oscillator.sample()```
   - try out some games!
   - it won't sound <great> since the channels are never silenced and there's lots of missing stuff 😅
