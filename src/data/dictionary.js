@@ -858,8 +858,10 @@ const dictionary = {
 			es:
 				"Una función de la PPU que permite a los desarrolladores mover el fondo ajustando la porción visible de la name table.",
 		},
-		"Sequencer|Sequence|Frame sequencer": {
-			also: { es: "Secuenciador|Secuencia|Secuenciador de Frame" },
+		"Sequencer|Sequence|Frame sequencer|Frame counter": {
+			also: {
+				es: "Secuenciador|Secuencia|Secuenciador de Frame|Contador de Frame",
+			},
 			icon: "🔀",
 			en:
 				"An internal APU unit that cycles through four- or five-step patterns to generate timing signals for envelopes, sweeps, and length counters.",
