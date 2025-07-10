@@ -575,7 +575,7 @@ it("`PulseChannel`: `step()` calls updateTimer()", () => {
 	apu.channels.pulses[1].updateTimer.should.have.been.called;
 })({
 	locales: {
-		es: "`PulseChannel`: `step()` llama a `updateTimer()",
+		es: "`PulseChannel`: `step()` llama a `updateTimer()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -663,4 +663,121 @@ it("`PulseTimerHighLCL`: writes `timerHigh` (bits 0-2) and calls `updateTimer()`
 			"`PulseTimerHighLCL`: escribe `timerHigh` (bits 0-2) y llama a `updateTimer()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: has an `oscillator` that can produce samples", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	expect(apu.channels.pulses[0], "oscillator").to.be.an("object");
+	expect(apu.channels.pulses[1], "oscillator").to.be.an("object");
+
+	apu.channels.pulses[0].oscillator.frequency.should.equalN(0, "frequency");
+	apu.channels.pulses[0].oscillator.dutyCycle.should.equalN(0, "dutyCycle");
+	apu.channels.pulses[0].oscillator.volume.should.equalN(15, "dutyCycle");
+	apu.channels.pulses[0].oscillator.should.respondTo("sample");
+
+	apu.channels.pulses[1].oscillator.frequency.should.equalN(0, "frequency");
+	apu.channels.pulses[1].oscillator.dutyCycle.should.equalN(0, "dutyCycle");
+	apu.channels.pulses[1].oscillator.volume.should.equalN(15, "dutyCycle");
+	apu.channels.pulses[1].oscillator.should.respondTo("sample");
+})({
+	locales: {
+		es: "`PulseChannel`: tiene un `oscillator` que puede producir samples",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.6"),
+});
+
+it("`PulseChannel`: `sample()` updates the oscillator frequency", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].timer = 507;
+	apu.channels.pulses[0].sample();
+	const pulse1Frequency = Math.floor(
+		apu.channels.pulses[0].oscillator.frequency
+	);
+	pulse1Frequency.should.equalN(220, "frequency");
+
+	apu.channels.pulses[1].timer = 708;
+	apu.channels.pulses[1].sample();
+	const pulse2Frequency = Math.floor(
+		apu.channels.pulses[1].oscillator.frequency
+	);
+	pulse2Frequency.should.equalN(157, "frequency");
+})({
+	locales: {
+		es: "`PulseChannel`: `sample()` actualiza la frecuencia del oscilador",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.6"),
+});
+
+it("`PulseChannel`: `sample()` updates the oscillator duty cycle", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		apu.channels.pulses[i].registers.control.onWrite(0b00000000);
+		apu.channels.pulses[i].sample();
+		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(0, "dutyCycle");
+
+		apu.channels.pulses[i].registers.control.onWrite(0b01000000);
+		apu.channels.pulses[i].sample();
+		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(1, "dutyCycle");
+
+		apu.channels.pulses[i].registers.control.onWrite(0b10000000);
+		apu.channels.pulses[i].sample();
+		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(2, "dutyCycle");
+
+		apu.channels.pulses[i].registers.control.onWrite(0b11000000);
+		apu.channels.pulses[i].sample();
+		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(3, "dutyCycle");
+	}
+})({
+	locales: {
+		es:
+			"`PulseChannel`: `sample()` actualiza el ciclo de trabajo del oscilador",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.6"),
+});
+
+it("`PulseChannel`: `sample()` updates the oscillator volume", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].registers.control.onWrite(0b00001100);
+	apu.channels.pulses[1].registers.control.onWrite(0b00001011);
+
+	apu.channels.pulses[0].sample();
+	apu.channels.pulses[0].oscillator.volume.should.equalN(0b1100, "volume");
+
+	apu.channels.pulses[1].sample();
+	apu.channels.pulses[1].oscillator.volume.should.equalN(0b1011, "volume");
+})({
+	locales: {
+		es: "`PulseChannel`: `sample()` actualiza el volumen del oscilador",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.6"),
+});
+
+it("`PulseChannel`: `sample()` calls `oscillator.sample()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const random1 = byte.random();
+	const random2 = byte.random();
+	apu.channels.pulses[0].oscillator.sample = function () {
+		return random1;
+	};
+	apu.channels.pulses[1].oscillator.sample = function () {
+		return random2;
+	};
+
+	apu.channels.pulses[0].sample().should.equalN(random1);
+	apu.channels.pulses[1].sample().should.equalN(random2);
+})({
+	locales: {
+		es: "`PulseChannel`: `sample()` llama a `oscillator.sample()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.6"),
 });

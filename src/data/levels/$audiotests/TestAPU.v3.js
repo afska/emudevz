@@ -216,17 +216,23 @@ class PulseSweep extends InMemoryRegister.APU {
 
 class PulseTimerLow extends InMemoryRegister.APU {
 	onWrite(value) {
-		/* TODO: IMPLEMENT */
+		this.setValue(value);
+
+		const channel = this.apu.channels.pulses[this.id];
+		channel.updateTimer();
 	}
 }
 
 class PulseTimerHighLCL extends InMemoryRegister.APU {
 	onLoad() {
-		/* TODO: IMPLEMENT */
+		this.addField("timerHigh", 0, 3);
 	}
 
 	onWrite(value) {
-		/* TODO: IMPLEMENT */
+		this.setValue(value);
+
+		const channel = this.apu.channels.pulses[this.id];
+		channel.updateTimer();
 	}
 }
 
@@ -434,6 +440,59 @@ class AudioRegisters {
 	}
 }
 
+const APU_SAMPLE_RATE = 44100;
+const DUTY_TABLE = [0.125, 0.25, 0.5, 0.75];
+
+/** A pulse wave generator. */
+class PulseOscillator {
+	constructor() {
+		this.frequency = 0;
+		this.dutyCycle = 0; // (0~3)
+		this.volume = 15; // (0~5)
+
+		this._phase = 0; // (0~1)
+	}
+
+	/** Generates a new sample (0~15). */
+	sample() {
+		this._phase = (this._phase + this.frequency / APU_SAMPLE_RATE) % 1;
+
+		return this._phase < DUTY_TABLE[this.dutyCycle] ? this.volume : 0;
+	}
+}
+
+class PulseChannel {
+	constructor(apu, id, enableFlagName) {
+		this.apu = apu;
+
+		this.id = id;
+		this.enableFlagName = enableFlagName;
+
+		this.timer = 0;
+		this.registers = this.apu.registers.pulses[this.id];
+		this.oscillator = new PulseOscillator();
+	}
+
+	sample() {
+		this.oscillator.frequency = 1789773 / (16 * (this.timer + 1));
+		this.oscillator.dutyCycle = this.registers.control.dutyCycleId;
+		this.oscillator.volume = this.registers.control.volumeOrEnvelopePeriod;
+
+		return this.oscillator.sample();
+	}
+
+	updateTimer() {
+		this.timer = byte.buildU16(
+			this.registers.timerHighLCL.timerHigh,
+			this.registers.timerLow.value
+		);
+	}
+
+	step() {
+		this.updateTimer();
+	}
+}
+
 export default class APU {
 	constructor(cpu) {
 		this.cpu = cpu;
@@ -442,6 +501,12 @@ export default class APU {
 		this.sample = 0;
 
 		this.registers = new AudioRegisters(this);
+		this.channels = {
+			pulses: [
+				new PulseChannel(this, 0, "enablePulse1"),
+				new PulseChannel(this, 1, "enablePulse2"),
+			],
+		};
 	}
 
 	step(onSample) {
@@ -450,15 +515,11 @@ export default class APU {
 		if (this.sampleCounter === 20) {
 			this.sampleCounter = 0;
 
-			// <test>
-			this.time = (this.time || 0) + 1 / 44100;
-			const frequency = 440;
-			const period = 1 / frequency;
-			const dutyCycle = 0.5;
-			this.sample = this.time % period < period * dutyCycle ? 1 : 0;
-			// </test>
+			const pulse1 = this.channels.pulses[0].sample();
+			const pulse2 = this.channels.pulses[1].sample();
+			this.sample = (pulse1 + pulse2) * 0.01;
 
-			onSample(this.sample);
+			onSample(this.sample, pulse1, pulse2);
 		}
 	}
 }
