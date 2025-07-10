@@ -158,8 +158,11 @@ export default class Emulation {
 			if (!this.enabledChannels.noise) noise = 0;
 			if (!this.enabledChannels.dmc) dmc = 0;
 
-			const pulseOut = 0.00752 * (pulse1 + pulse2);
-			const tndOut = 0.00851 * triangle + 0.00494 * noise + 0.00335 * dmc;
+			const pulseOut = 0.00752 * ((pulse1 || 0) + (pulse2 || 0));
+			const tndOut =
+				0.00851 * (triangle || 0) +
+				0.00494 * (noise || 0) +
+				0.00335 * (dmc || 0);
 			sample = pulseOut + tndOut;
 		}
 
