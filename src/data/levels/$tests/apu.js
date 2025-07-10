@@ -598,24 +598,6 @@ it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => 
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => {
-	const APU = mainModule.default.APU;
-	const apu = new APU({});
-
-	apu.channels.pulses[0].step = sinon.spy();
-	apu.channels.pulses[1].step = sinon.spy();
-
-	apu.step(() => {});
-	apu.channels.pulses[0].step.should.have.been.called;
-	apu.channels.pulses[1].step.should.have.been.called;
-})({
-	locales: {
-		es:
-			"llama al método `step()` de los Canales Pulso en cada llamado a `step(...)` de la APU",
-	},
-	use: ({ id }, book) => id >= book.getId("5c.5"),
-});
-
 it("for now, new samples are mixed like `(pulse1 + pulse2) * 0.01`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
