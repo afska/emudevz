@@ -33,10 +33,12 @@ connect:
   - 📚  call the `step()` method of the two pulse channels at the start of 🔊  `APU::step()`
   - |-
     📚  replace the current <test code> in  🔊  `APU::sample(...)` with something like:
-      ```javascript this.sample = (
-        this.channels.pulses[0].sample() +
-        this.channels.pulses[1].sample()
-      ) / 10```
+      ```javascript const pulse1 = this.channels.pulses[0].sample();
+      const pulse2 = this.channels.pulses[1].sample();
+      this.sample = (pulse1 + pulse2) * 0.01;```
+  - |-
+    📚  replace the `onSample(...)` call with:
+      ```javascript onSample(this.sample, pulse1, pulse2);```
   - |-
     📚  implement in 🕡  `PulseTimerLow`:
     **onWrite(value)**:

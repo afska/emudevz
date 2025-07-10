@@ -616,7 +616,7 @@ it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => 
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("for now, new samples are mixed like `(pulse1 + pulse2) / 100`", () => {
+it("for now, new samples are mixed like `(pulse1 + pulse2) * 0.01`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	apu.should.respondTo("step");
@@ -631,7 +631,7 @@ it("for now, new samples are mixed like `(pulse1 + pulse2) / 100`", () => {
 	}
 
 	apu.step(onSample);
-	onSample.should.have.been.calledWith(0.07); // (2 + 5) / 100
+	onSample.should.have.been.calledWith(0.07, 2, 5); // (2 + 5) * 0.01
 })({
 	locales: {
 		es:
