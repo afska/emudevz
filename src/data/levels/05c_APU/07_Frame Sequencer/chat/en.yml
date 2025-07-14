@@ -1,5 +1,52 @@
 ---
 main:
   messages:
-  - coming soon!
+  - the APU has an <internal unit> called the 🔀  Frame Sequencer
+  - which <counts cycles> 🚲  following a 4-step or 5-step predetermined sequence
+  - and triggers <events> where the channels can <react>
+  - (ignore the word frame here, this has nothing to do with the video signal!)
+  responses:
+  - what's the sequence? [sequence]
+
+sequence:
+  messages:
+  - actually, we only care about the <quarter> and <half> events of the sequence!
+  - in the 4-step sequence, quarter frames occur in cycles 3729, 7457, 11186, 14916
+  - in the 5-step sequence, quarter frames occur in cycles 3729, 7457, 11186, 18641
+  - half frames occur in the <second> and <fourth> quarter of each sequence
+  - and when the counter reaches the fourth quarter, it resets back to 0
+  - games need to react to these events for several things, for example, to silence the channels when the notes end!
+  responses:
+  - let's count cycles 🚲 [exercise]
+
+exercise:
+  messages:
+  - |-
+    📚  implement in 🧮  `APUFrameCounter`:
+    **onLoad()**:
+      **->** uses ```javascript this.addField(...)``` to set a `use5StepSequencer` field mapped to bit 7
+    **onWrite(value)**:
+      **->** sets the value with ```javascript this.setValue(...)```
+      **->** calls ```javascript this.apu.frameSequencer.reset()```
+      **->** calls ```javascript this.apu.onQuarterFrameClock()```
+      **->** calls ```javascript this.apu.onHalfFrameClock()```
+  - |-
+    📚  create a 🔀  `FrameSequencer` class with the following:
+    **constructor(apu)**:
+      **->** saves the parameter as a property (```javascript this.apu```)
+      **->** calls ```javascript this.reset()```
+    **reset()**:
+      **->** sets ```javascript this.counter``` to zero
+        (that's the cycle counter!)
+    **step()**:
+      **->** increments ```javascript this.counter```
+      **->** figures out if we're in a 5-step sequence or not by looking at the field we added
+      **->** if we are in a quarter frame, calls ```javascript this.apu.onQuarterFrameClock()```
+      **->** if we are in a half frame, calls ```javascript this.apu.onHalfFrameClock()```
+      **->** if we are in the last cycle of the sequence, calls ```javascript this.reset()```
+  - |-
+    📚  in 🔊  `APU`:
+      **-** add a `frameSequencer` property with a new instance
+      **-** add the `onQuarterFrameClock()` and `onHalfFrameClock()` methods, for now, empty
+      **-** call ```javascript this.frameSequencer.step()``` after incrementing the sample counter
   responses: []
