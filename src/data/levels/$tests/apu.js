@@ -104,7 +104,7 @@ it("generates a new sample for every 20 `step(...)` calls", () => {
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
 
-// 5b.4 Audio Registers
+// 5c.4 Audio Registers
 
 it("includes a `registers` property with 21 audio registers", () => {
 	const APU = mainModule.default.APU;
@@ -427,6 +427,8 @@ it("`DMCSampleLength`: writes the value", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
+// 5c.5 Pulse Channels (1/5): Channel setup
+
 it("has `PulseChannel` instances", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
@@ -665,6 +667,8 @@ it("`PulseTimerHighLCL`: writes `timerHigh` (bits 0-2) and calls `updateTimer()`
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
+// 5c.6 Pulse Channels (2/5): Producing pulse waves
+
 it("`PulseChannel`: has an `oscillator` that can produce samples", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
@@ -781,3 +785,7 @@ it("`PulseChannel`: `sample()` calls `oscillator.sample()`", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("5c.6"),
 });
+
+// 5c.7 Frame Sequencer
+
+// TODO
