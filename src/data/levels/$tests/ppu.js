@@ -821,7 +821,7 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 })({
 	locales: {
 		es:
-			"asigna `PPUStatus::isInVBlankInterval` y dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está encendido",
+			"enciende `PPUStatus::isInVBlankInterval` y dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está encendido",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
@@ -860,7 +860,7 @@ it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on scanline=
 })({
 	locales: {
 		es:
-			"asigna `PPUStatus::isInVBlankInterval` y no dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está apagado",
+			"enciende `PPUStatus::isInVBlankInterval` y no dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está apagado",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });

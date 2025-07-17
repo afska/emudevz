@@ -788,4 +788,306 @@ it("`PulseChannel`: `sample()` calls `oscillator.sample()`", () => {
 
 // 5c.7 Frame Sequencer
 
-// TODO
+it("`APUFrameCounter`: writes `use5StepSequencer` (bit 7)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const register = apu.registers.apuFrameCounter;
+
+	register.onWrite(0b10000011);
+	register.use5StepSequencer.should.equalN(1, "use5StepSequencer");
+	register.onWrite(0b00100011);
+	register.use5StepSequencer.should.equalN(0, "use5StepSequencer");
+})({
+	locales: {
+		es: "`APUFrameCounter`: escribe `use5StepSequencer` (bit 7)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`APUFrameCounter`: writing resets the frame sequencer", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const register = apu.registers.apuFrameCounter;
+
+	apu.frameSequencer.counter = 8;
+	register.onWrite(0b10000011);
+	apu.frameSequencer.counter.should.equalN(0, "counter");
+})({
+	locales: {
+		es: "`APUFrameCounter`: escribir reinicia el secuenciador de frames",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`APUFrameCounter`: writing triggers both a quarter frame and a half frame", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const register = apu.registers.apuFrameCounter;
+
+	apu.onQuarterFrameClock = sinon.spy();
+	apu.onHalfFrameClock = sinon.spy();
+
+	register.onWrite(0b10000011);
+
+	expect(apu.onQuarterFrameClock, "onQuarterFrameClock").to.have.been
+		.calledOnce;
+	expect(apu.onHalfFrameClock, "onHalfFrameClock").to.have.been.calledOnce;
+})({
+	locales: {
+		es:
+			"`APUFrameCounter`: escribir dispara tanto un quarter frame como un half frame",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("has a `frameSequencer` property", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	expect(apu.frameSequencer, "frameSequencer").to.be.an("object");
+})({
+	locales: {
+		es: "tiene una propiedad `frameSequencer`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`FrameSequencer`: has a `counter` property and `reset`/`step` methods", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.frameSequencer.counter.should.equalN(0, "counter");
+	apu.frameSequencer.should.respondTo("reset");
+	apu.frameSequencer.should.respondTo("step");
+})({
+	locales: {
+		es:
+			"`FrameSequencer`: tiene una propiedad `counter` y métodos `reset`/`step`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`FrameSequencer`: `reset()` assigns 0 to `counter`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.frameSequencer.counter = 78;
+	apu.frameSequencer.reset();
+	apu.frameSequencer.counter.should.equalN(0, "counter");
+})({
+	locales: {
+		es: "`FrameSequencer`: `reset()` asigna 0 a `counter`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`FrameSequencer`: `step()` increments `counter`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.frameSequencer.counter = 78;
+	apu.frameSequencer.step();
+	apu.frameSequencer.counter.should.equalN(79, "counter");
+})({
+	locales: {
+		es: "`FrameSequencer`: `step()` incrementa `counter`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`FrameSequencer`: on four-step sequences, `step()` triggers quarter frames on cycles 3729, 7457, 11186, 14916", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.onQuarterFrameClock = sinon.spy();
+	apu.registers.apuFrameCounter.setValue(0); // 4-step
+
+	for (let i = 0; i < 14917; i++) {
+		apu.onQuarterFrameClock.resetHistory();
+		apu.frameSequencer.step();
+		const newCount = i + 1;
+		const isQuarter =
+			newCount === 3729 ||
+			newCount === 7457 ||
+			newCount === 11186 ||
+			newCount === 14916;
+
+		const name = `onQuarterFrameClock (counter: ${apu.frameSequencer.counter})`;
+		if (isQuarter) {
+			expect(apu.onQuarterFrameClock, name).to.have.been.calledOnce;
+		} else {
+			expect(apu.onQuarterFrameClock, name).to.not.have.been.called;
+		}
+	}
+})({
+	locales: {
+		es:
+			"`FrameSequencer`: en secuencias de cuatro pasos, `step()` dispara quarter frames en los ciclos 3729, 7457, 11186, 14916",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`FrameSequencer`: on four-step sequences, `step()` triggers half frames on cycles 7457, 14916", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.onHalfFrameClock = sinon.spy();
+	apu.registers.apuFrameCounter.setValue(0); // 4-step
+
+	for (let i = 0; i < 14917; i++) {
+		apu.onHalfFrameClock.resetHistory();
+		apu.frameSequencer.step();
+		const newCount = i + 1;
+		const isHalf = newCount === 7457 || newCount === 14916;
+
+		const name = `onHalfFrameClock (counter: ${apu.frameSequencer.counter})`;
+		if (isHalf) {
+			expect(apu.onHalfFrameClock, name).to.have.been.calledOnce;
+		} else {
+			expect(apu.onHalfFrameClock, name).to.not.have.been.called;
+		}
+	}
+})({
+	locales: {
+		es:
+			"`FrameSequencer`: en secuencias de cuatro pasos, `step()` dispara half frames en los ciclos 7457, 14916",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`FrameSequencer`: on four-step sequences, `step()` resets the counter on cycle 14916", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.apuFrameCounter.setValue(0); // 4-step
+
+	for (let i = 0; i < 14915; i++) {
+		apu.frameSequencer.step();
+		const newCount = i + 1;
+		apu.frameSequencer.counter.should.equalN(newCount, "counter");
+	}
+
+	apu.frameSequencer.step();
+	apu.frameSequencer.counter.should.equalN(0, "counter");
+})({
+	locales: {
+		es:
+			"`FrameSequencer`: en secuencias de cuatro pasos, `step()` reinicia el contador en el ciclo 14916",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`FrameSequencer`: on five-step sequences, `step()` triggers quarter frames on cycles 3729, 7457, 11186, 18641", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.onQuarterFrameClock = sinon.spy();
+	apu.registers.apuFrameCounter.setValue(0b10000000); // 5-step
+
+	for (let i = 0; i < 18642; i++) {
+		apu.onQuarterFrameClock.resetHistory();
+		apu.frameSequencer.step();
+		const newCount = i + 1;
+		const isQuarter =
+			newCount === 3729 ||
+			newCount === 7457 ||
+			newCount === 11186 ||
+			newCount === 18641;
+
+		const name = `onQuarterFrameClock (counter: ${apu.frameSequencer.counter})`;
+		if (isQuarter) {
+			expect(apu.onQuarterFrameClock, name).to.have.been.calledOnce;
+		} else {
+			expect(apu.onQuarterFrameClock, name).to.not.have.been.called;
+		}
+	}
+})({
+	locales: {
+		es:
+			"`FrameSequencer`: en secuencias de cinco pasos, `step()` dispara quarter frames en los ciclos 3729, 7457, 11186, 14916",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`FrameSequencer`: on five-step sequences, `step()` triggers half frames on cycles 7457, 18641", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.onHalfFrameClock = sinon.spy();
+	apu.registers.apuFrameCounter.setValue(0b10000000); // 5-step
+
+	for (let i = 0; i < 18642; i++) {
+		apu.onHalfFrameClock.resetHistory();
+		apu.frameSequencer.step();
+		const newCount = i + 1;
+		const isHalf = newCount === 7457 || newCount === 18641;
+
+		const name = `onHalfFrameClock (counter: ${apu.frameSequencer.counter})`;
+		if (isHalf) {
+			expect(apu.onHalfFrameClock, name).to.have.been.calledOnce;
+		} else {
+			expect(apu.onHalfFrameClock, name).to.not.have.been.called;
+		}
+	}
+})({
+	locales: {
+		es:
+			"`FrameSequencer`: en secuencias de cinco pasos, `step()` dispara half frames en los ciclos 7457, 18641",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("`FrameSequencer`: on five-step sequences, `step()` resets the counter on cycle 18641", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.apuFrameCounter.setValue(0b10000000); // 5-step
+
+	for (let i = 0; i < 18640; i++) {
+		apu.frameSequencer.step();
+		const newCount = i + 1;
+		apu.frameSequencer.counter.should.equalN(newCount, "counter");
+	}
+
+	apu.frameSequencer.step();
+	apu.frameSequencer.counter.should.equalN(0, "counter");
+})({
+	locales: {
+		es:
+			"`FrameSequencer`: en secuencias de cinco pasos, `step()` reinicia el contador en el ciclo 14916",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("has two methods: `onQuarterFrameClock()` and `onHalfFrameClock()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.should.respondTo("onQuarterFrameClock");
+	apu.should.respondTo("onHalfFrameClock");
+})({
+	locales: {
+		es: "tiene dos métodos: `onQuarterFrameClock()` y `onHalfFrameClock()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
+
+it("updates the frame sequencer on every `step(...)` call", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 5; i++) {
+		apu.frameSequencer.step = sinon.spy();
+		apu.step(() => {});
+		expect(apu.frameSequencer.step, "frameSequencer.step").to.have.been
+			.calledOnce;
+	}
+})({
+	locales: {
+		es: "actualiza el secuenciador de frames en cada llamada a `step(...)`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.7"),
+});
