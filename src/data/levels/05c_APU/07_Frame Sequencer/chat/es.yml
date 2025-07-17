@@ -1,5 +1,54 @@
 ---
 main:
   messages:
-  - coming soon!
+  - la APU tiene una <unidad interna> llamada 🔀  Secuenciador de Frames
+  - que <cuenta ciclos> 🚲  siguiendo una secuencia predeterminada de cuatro o cinco pasos
+  - y dispara <eventos de clock> donde los canales pueden <reaccionar>
+  - (la palabra frame puede ser un poco confusa aquí, ¡esto no tiene nada que ver con la señal de video!)
+  responses:
+  - ¿cuál es la secuencia? [sequence]
+
+sequence:
+  messages:
+  - en realidad, ¡solo nos importan los eventos de quarter y <half> de la secuencia!
+  - la secuencia empieza en 0
+  - en la secuencia de cuatro pasos, los quarter frame ocurren en los ciclos 3729, 7457, 11186, 14916
+  - en la secuencia de cinco pasos, los quarter frame ocurren en los ciclos 3729, 7457, 11186, 18641
+  - los half frame ocurren en el <segundo> y <cuarto> quarter-frame de cada secuencia
+  - y cuando el contador llega al cuarto quarter-frame, se reinicia a 0
+  - <{sequencer.png}>
+  - los juegos deben reaccionar a estos eventos para varias cosas, por ejemplo, ¡silenciar los canales cuando terminan las notas!
+  responses:
+  - vamos a contar ciclos 🚲 [exercise]
+
+exercise:
+  messages:
+  - |-
+    📚  implementa en 🧮  `APUFrameCounter`:
+    **onLoad()**:
+      **->** usa ```javascript this.addField(...)``` para definir un campo `use5StepSequencer` mapeado al bit 7
+    **onWrite(value)**:
+      **->** asigna el valor con ```javascript this.setValue(...)```
+      **->** llama a ```javascript this.apu.frameSequencer.reset()```
+      **->** llama a ```javascript this.apu.onQuarterFrameClock()```
+      **->** llama a ```javascript this.apu.onHalfFrameClock()```
+  - |-
+    📚  crea una clase 🔀  `FrameSequencer` con lo siguiente:
+    **constructor(apu)**:
+      **->** guarda el parámetro como una propiedad (```javascript this.apu```)
+      **->** llama a ```javascript this.reset()```
+    **reset()**:
+      **->** asigna ```javascript this.counter``` a cero
+        (¡ese es el contador de ciclos!)
+    **step()**:
+      **->** incrementa ```javascript this.counter```
+      **->** determina si estamos en una secuencia de 5 pasos o no mirando el campo que agregamos
+      **->** si es un quarter frame, llama a ```javascript this.apu.onQuarterFrameClock()```
+      **->** si es un half frame, llama a ```javascript this.apu.onHalfFrameClock()```
+      **->** si es el último ciclo de la secuencia, llama a ```javascript this.reset()```
+  - |-
+    📚  en 🔊  `APU`:
+      **->** agrega una propiedad `frameSequencer` con una nueva instancia
+      **->** agrega los métodos `onQuarterFrameClock()` y `onHalfFrameClock()`, por ahora vacíos
+      **->** llama a ```javascript this.frameSequencer.step()``` después de incrementar el contador de samples
   responses: []

@@ -40,6 +40,20 @@ const dictionary = {
 			es:
 				"_(Contador de Programa)_ Un registro de CPU usado para almacenar la dirección de la próxima instrucción a ejecutar.",
 		},
+		"Four-step sequence|Four-step": {
+			also: { es: "Secuencia de cuatro pasos|Cuatro pasos" },
+			icon: "🔀",
+			en: "A mode of the frame sequencer that runs a four-step pattern.",
+			es:
+				"Un modo del secuenciador de frames que ejecuta un patrón de cuatro pasos.",
+		},
+		"Five-step sequence|Five-step": {
+			also: { es: "Secuencia de cinco pasos|Cinco pasos" },
+			icon: "🔀",
+			en: "A mode of the frame sequencer that runs a five-step pattern.",
+			es:
+				"Un modo del secuenciador de frames de la APU de NES que ejecuta un patrón de cinco pasos.",
+		},
 		"Address space": {
 			also: { es: "Espacio de direcciones" },
 			icon: "🐏",
@@ -343,9 +357,9 @@ const dictionary = {
 		"Frame|_Frames": {
 			icon: "🖼️",
 			en:
-				"A full image drawn on the screen, made of multiple scanlines. <br /><br />In the NEEES, it's 256×240 pixels, and the PPU renders 60 of them per second.",
+				"A full image drawn on the screen, made of multiple scanlines. <br /><br />In the NEEES, it's `256×240` pixels, and the PPU renders `60` of them per second.",
 			es:
-				"Una imagen completa dibujada en la pantalla, compuesta por múltiples scanlines. <br /><br />En la NEEES, mide 256×240 píxeles, y la PPU renderiza 60 por segundo.",
+				"Una imagen completa dibujada en la pantalla, compuesta por múltiples scanlines. <br /><br />En la NEEES, mide `256×240` píxeles, y la PPU renderiza `60` por segundo.",
 		},
 		"Frame buffer": {
 			icon: "🔢",
@@ -371,6 +385,13 @@ const dictionary = {
 				"A feature of Pulse Channels that periodically shifts their timer period up or down to create pitch-slide effects.",
 			es:
 				"Una característica de los Canales Pulso que desplaza periódicamente su periodo de timer hacia arriba o abajo para crear efectos de deslizamiento de tono.",
+		},
+		"Half frame|Half-frame|_Half frames|_Half-frames": {
+			icon: "🕧",
+			en:
+				"An event in the frame sequencer that occurs at every half sequence (second and fourth quarters), triggering length counter and sweep updates.",
+			es:
+				"Un evento de temporización en el secuenciador de frames que ocurre en el segundo y cuarto quarter-frame de su secuencia, activando las actualizaciones de contadores de longitud y barrido.",
 		},
 		"HBlank|Horizontal Blank": {
 			icon: "🏝️",
@@ -826,6 +847,13 @@ const dictionary = {
 			es:
 				"Una forma de onda que alterna entre dos niveles, generando un sonido fuerte y entrecortado. Usada por los Canales Pulso de la APU. <br /><br />Se ve así:<br />`_——__—_——_`",
 		},
+		"Quarter frame|Quarter-frame|Quarter|_Quarter frames|_Quarter-frames|_Quarters": {
+			icon: "🕒",
+			en:
+				"An event in the frame sequencer that occurs at each quarter of its sequence, triggering envelope and linear length counter updates.",
+			es:
+				"Un evento de temporización en el secuenciador de frames que ocurre en cada cuarto de su secuencia, activando las actualizaciones de envolvente y contador de longitud lineal.",
+		},
 		"Register|_Registers": {
 			also: { es: "Registro|_Registros" },
 			icon: "🔣",
@@ -860,7 +888,7 @@ const dictionary = {
 		},
 		"Sequencer|Sequence|Frame sequencer|Frame counter": {
 			also: {
-				es: "Secuenciador|Secuencia|Secuenciador de Frame|Contador de Frame",
+				es: "Secuenciador|Secuencia|Secuenciador de Frames|Contador de Frames",
 			},
 			icon: "🔀",
 			en:
