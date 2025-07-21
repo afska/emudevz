@@ -135,11 +135,15 @@ class APUStatus extends InMemoryRegister.APU {
 
 class APUControl extends InMemoryRegister.APU {
   onLoad() {
-    /* TODO: IMPLEMENT */
+    this.addField("enablePulse1", 0)
+      .addField("enablePulse2", 1)
+      .addField("enableTriangle", 2)
+      .addField("enableNoise", 3)
+      .addField("enableDMC", 4);
   }
 
   onWrite(value) {
-    /* TODO: IMPLEMENT */
+    this.setValue(value);
   }
 }
 

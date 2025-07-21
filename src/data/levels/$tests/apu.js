@@ -427,6 +427,47 @@ it("`DMCSampleLength`: writes the value", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
+it("`APUControl`: writes the channel enable fields (bits 0-4)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const register = apu.registers.apuControl;
+
+	register.onWrite(0b10100);
+	register.enablePulse1.should.equalN(0, "enablePulse1");
+	register.enablePulse2.should.equalN(0, "enablePulse2");
+	register.enableTriangle.should.equalN(1, "enableTriangle");
+	register.enableNoise.should.equalN(0, "enableNoise");
+	register.enableDMC.should.equalN(1, "enableDMC");
+
+	register.onWrite(0b01001);
+	register.enablePulse1.should.equalN(1, "enablePulse1");
+	register.enablePulse2.should.equalN(0, "enablePulse2");
+	register.enableTriangle.should.equalN(0, "enableTriangle");
+	register.enableNoise.should.equalN(1, "enableNoise");
+	register.enableDMC.should.equalN(0, "enableDMC");
+
+	register.onWrite(0b11010);
+	register.enablePulse1.should.equalN(0, "enablePulse1");
+	register.enablePulse2.should.equalN(1, "enablePulse2");
+	register.enableTriangle.should.equalN(0, "enableTriangle");
+	register.enableNoise.should.equalN(1, "enableNoise");
+	register.enableDMC.should.equalN(1, "enableDMC");
+
+	register.onWrite(0b11111);
+	register.enablePulse1.should.equalN(1, "enablePulse1");
+	register.enablePulse2.should.equalN(1, "enablePulse2");
+	register.enableTriangle.should.equalN(1, "enableTriangle");
+	register.enableNoise.should.equalN(1, "enableNoise");
+	register.enableDMC.should.equalN(1, "enableDMC");
+})({
+	locales: {
+		es:
+			"`APUControl`: escribe los campos de habilitación de canales (bits 0-4)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
+
 // 5c.5 Pulse Channels (1/5): Channel setup
 
 it("has `PulseChannel` instances", () => {
@@ -518,6 +559,36 @@ it("`PulseChannel`: has a `registers` property, pointing to the audio registers"
 	locales: {
 		es:
 			"`PulseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.5"),
+});
+
+it("`PulseChannel`: has an `isEnabled` method that returns whether the channel is enabled or not in APUControl", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].should.respondTo("isEnabled");
+	apu.channels.pulses[1].should.respondTo("isEnabled");
+
+	apu.registers.apuControl.onWrite(0b00);
+	apu.channels.pulses[0].isEnabled().should.equalN(false, "isEnabled()");
+	apu.channels.pulses[1].isEnabled().should.equalN(false, "isEnabled()");
+
+	apu.registers.apuControl.onWrite(0b01);
+	apu.channels.pulses[0].isEnabled().should.equalN(true, "isEnabled()");
+	apu.channels.pulses[1].isEnabled().should.equalN(false, "isEnabled()");
+
+	apu.registers.apuControl.onWrite(0b10);
+	apu.channels.pulses[0].isEnabled().should.equalN(false, "isEnabled()");
+	apu.channels.pulses[1].isEnabled().should.equalN(true, "isEnabled()");
+
+	apu.registers.apuControl.onWrite(0b11);
+	apu.channels.pulses[0].isEnabled().should.equalN(true, "isEnabled()");
+	apu.channels.pulses[1].isEnabled().should.equalN(true, "isEnabled()");
+})({
+	locales: {
+		es:
+			"`PulseChannel`: tiene un método `isEnabled` que retorna si el canal está activo o no en APUControl",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });

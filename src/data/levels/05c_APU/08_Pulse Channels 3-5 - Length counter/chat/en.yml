@@ -42,5 +42,45 @@ decrement:
 
 exercise:
   messages:
-  - coming soon!
+  - |-
+    📚  create a 📏  `LengthCounter` class with the following:
+    **constructor()**:
+      **->** sets ```javascript this.counter = 0```
+    **reset()**:
+      **->** sets ```javascript this.counter = 0```
+        (yeah, same as the constructor)
+    **isActive()**:
+      **->** returns whether ```javascript this.counter``` is greater than 0 or not
+    **clock(isEnabled, isHalted)**:
+      **->** if `!isEnabled`:
+        **->** calls ```javascript this.reset()```
+      **->** else:
+        **->** if ```javascript this.isActive()``` and `!isHalted`:
+          **->** decrements the counter
+  - |-
+    📚  in 🟦  `PulseChannel`:
+    **->** import that class and add a `lengthCounter` property with a new instance
+    **->** modify **sample()**, so if ```javascript !this.isEnabled()``` or the length counter is not active, it returns the last generated sample, without changing anything
+    **->** add the methods described below
+    **quarterFrame()**:
+      **[!]** leave empty for now
+    **halfFrame()**:
+      **->** call the `clock(...)` method of the length counter
+        (use ```javascript this.isEnabled()``` as the first argument)
+        (for the halt flag, look for `envelopeLoopOrLengthCounterHalt` in the 🟦  PulseControl register)
+  - |-
+    📚  in 🔊  `APU`:
+    **onQuarterFrameClock()**:
+      **->** call `quarterFrame()` on the two pulse channel instances
+    **onHalfFrameClock()**:
+      **->** call `halfFrame()` on the two pulse channel instances
+  - |-
+    📚  implement in 🕛  `PulseTimerHighLCL`:
+    **onLoad()**:
+      **->** uses ```javascript this.addField(...)``` to set a 5-bit `lengthCounterLoad` field from bit 3
+    **onWrite(value)**:
+      **->** __keep old behavior__
+      **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
+        use 📄  ~/lib/apu/noteLengths.js~ to get the array
+      **->** assigns the `counter` property of the channel's length counter to the new length
   responses: []

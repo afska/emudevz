@@ -34,7 +34,7 @@ useit:
   messages:
   - read the docs at 📄  ~/docs/lib/InMemoryRegister.en.md~
   - and use 📄  ~/tmpl/apu/AudioRegisters.js~ as a template for the audio registers file
-  - registers for 🟦  `PulseControl` are already implemented
+  - registers 🟦  `PulseControl` and 🎛️  `APUControl` are already implemented
   - note how they call `addField(...)` for each bit defined in the ~Bits~ column
   - "this creates <automatic properties>: after a write, the APU can access their values (e.g. ```javascript pulse1Control.dutyCycleId```)"
   - 📚  create an `AudioRegisters` class, using that template

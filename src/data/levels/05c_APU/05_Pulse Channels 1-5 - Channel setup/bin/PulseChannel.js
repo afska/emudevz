@@ -26,4 +26,8 @@ export default class PulseChannel {
   step() {
     this.updateTimer();
   }
+
+  isEnabled() {
+    return !!this.apu.registers.apuControl[this.enableFlagName];
+  }
 }

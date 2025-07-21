@@ -48,7 +48,7 @@ exercise:
       **->** si es el último ciclo de la secuencia, llama a ```javascript this.reset()```
   - |-
     📚  en 🔊  `APU`:
-      **->** agrega una propiedad `frameSequencer` con una nueva instancia
-      **->** agrega los métodos `onQuarterFrameClock()` y `onHalfFrameClock()`, por ahora vacíos
-      **->** llama a ```javascript this.frameSequencer.step()``` después de incrementar el contador de samples
+    **->** agrega una propiedad `frameSequencer` con una nueva instancia
+    **->** agrega los métodos `onQuarterFrameClock()` y `onHalfFrameClock()`, por ahora vacíos
+    **->** llama a ```javascript this.frameSequencer.step()``` después de incrementar el contador de samples
   responses: []
