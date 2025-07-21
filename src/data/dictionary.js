@@ -1056,8 +1056,8 @@ const dictionary = {
 			es:
 				"_(Video RAM)_ Un chip de RAM de `2` KiB que vive en la PPU. Almacena name tables.",
 		},
-		"Waveform|Form": {
-			also: { es: "Forma de onda|Forma" },
+		Waveform: {
+			also: { es: "Forma de onda" },
 			icon: "♒",
 			en:
 				"The general shape of a wave over time. Common waveforms include sine, square, triangle, and sawtooth.",

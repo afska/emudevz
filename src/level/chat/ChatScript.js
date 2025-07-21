@@ -75,7 +75,8 @@ export default class ChatScript {
 				if (inheritance) return this.getOptionsOf(field, inheritance, history);
 
 				const [content, link] = rawContent.split(REGEXP.link);
-				const isConsumable = REGEXP.consumable.test(rawContent);
+				const isConsumable =
+					REGEXP.consumable.test(rawContent) || REGEXP.key.test(rawContent);
 				const isKey = REGEXP.key.test(rawContent);
 				const isLock = REGEXP.lock.test(rawContent);
 

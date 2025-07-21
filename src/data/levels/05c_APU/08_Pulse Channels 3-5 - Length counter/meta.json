@@ -4,6 +4,7 @@
 		"es": "📏 Canales Pulso (3/5): Contador de longitud"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
