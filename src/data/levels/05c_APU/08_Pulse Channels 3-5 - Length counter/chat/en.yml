@@ -1,5 +1,16 @@
 ---
 main:
   messages:
-  - coming soon!
+  - Pulse Channels can be silenced in two situations
+  - 🔇  when games mute the channel with a 🎛️  APUControl write
+  - 📏  when the length counter is 0
+  responses:
+  - and what's a length counter? [length]
+
+length:
+  messages:
+  - it's what the APU uses to track the <length> of the notes!
+  - games <load> its initial value to indicate the note length
+  - then that value is decreased every half frame
+  - and when it reaches 0, the channel is muted! 🤐
   responses: []

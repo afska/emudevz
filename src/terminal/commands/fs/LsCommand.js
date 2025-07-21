@@ -60,7 +60,7 @@ export default class LsCommand extends FilesystemCommand {
 		const content = filesystem.ls(path);
 		const maxNameLength =
 			_.maxBy(content, (it) => it.name.length)?.name.length ?? 0;
-		const maxSizeLenght =
+		const maxSizeLength =
 			_.maxBy(content, (it) => it.size.toString().length)?.size.toString()
 				.length ?? 0;
 
@@ -73,7 +73,7 @@ export default class LsCommand extends FilesystemCommand {
 						? style(name) + "/"
 						: style(name.padEnd(maxNameLength + SPACING)) +
 								theme.ACCENT(
-									size.toString().padStart(maxSizeLenght) +
+									size.toString().padStart(maxSizeLength) +
 										" " +
 										locales.get("bytes")
 								);
