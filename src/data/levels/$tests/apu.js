@@ -767,6 +767,13 @@ it("`PulseChannel`: `sample()` updates the oscillator frequency", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
+	// enable all channels, max volume, length counter halt & load
+	apu.registers.apuControl.setValue(0b11111111);
+	apu.registers.pulses[0].control.onWrite(0b0111111);
+	apu.registers.pulses[1].control.onWrite(0b0111111);
+	apu.registers.pulses[0].timerHighLCL.onWrite(0b11111111);
+	apu.registers.pulses[1].timerHighLCL.onWrite(0b11111111);
+
 	apu.channels.pulses[0].timer = 507;
 	apu.channels.pulses[0].sample();
 	const pulse1Frequency = Math.floor(
@@ -790,6 +797,13 @@ it("`PulseChannel`: `sample()` updates the oscillator frequency", () => {
 it("`PulseChannel`: `sample()` updates the oscillator duty cycle", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
+
+	// enable all channels, max volume, length counter halt & load
+	apu.registers.apuControl.setValue(0b11111111);
+	apu.registers.pulses[0].control.onWrite(0b0111111);
+	apu.registers.pulses[1].control.onWrite(0b0111111);
+	apu.registers.pulses[0].timerHighLCL.onWrite(0b11111111);
+	apu.registers.pulses[1].timerHighLCL.onWrite(0b11111111);
 
 	for (let i = 0; i < 2; i++) {
 		apu.channels.pulses[i].registers.control.onWrite(0b00000000);
@@ -820,6 +834,13 @@ it("`PulseChannel`: `sample()` updates the oscillator volume", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
+	// enable all channels, max volume, length counter halt & load
+	apu.registers.apuControl.setValue(0b11111111);
+	apu.registers.pulses[0].control.onWrite(0b0111111);
+	apu.registers.pulses[1].control.onWrite(0b0111111);
+	apu.registers.pulses[0].timerHighLCL.onWrite(0b11111111);
+	apu.registers.pulses[1].timerHighLCL.onWrite(0b11111111);
+
 	apu.channels.pulses[0].registers.control.onWrite(0b00001100);
 	apu.channels.pulses[1].registers.control.onWrite(0b00001011);
 
@@ -838,6 +859,13 @@ it("`PulseChannel`: `sample()` updates the oscillator volume", () => {
 it("`PulseChannel`: `sample()` calls `oscillator.sample()`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
+
+	// enable all channels, max volume, length counter halt & load
+	apu.registers.apuControl.setValue(0b11111111);
+	apu.registers.pulses[0].control.onWrite(0b0111111);
+	apu.registers.pulses[1].control.onWrite(0b0111111);
+	apu.registers.pulses[0].timerHighLCL.onWrite(0b11111111);
+	apu.registers.pulses[1].timerHighLCL.onWrite(0b11111111);
 
 	const random1 = byte.random();
 	const random2 = byte.random();
@@ -1162,3 +1190,22 @@ it("updates the frame sequencer on every `step(...)` call", () => {
 	},
 	use: ({ id }, book) => id >= book.getId("5c.7"),
 });
+
+// 5c.8 Pulse Channels (3/5): Length counter
+
+// it("ASD", () => {
+// 	const APU = mainModule.default.APU;
+// 	const apu = new APU({});
+
+// 	for (let i = 0; i < 5; i++) {
+// 		apu.frameSequencer.step = sinon.spy();
+// 		apu.step(() => {});
+// 		expect(apu.frameSequencer.step, "frameSequencer.step").to.have.been
+// 			.calledOnce;
+// 	}
+// })({
+// 	locales: {
+// 		es: "ASD",
+// 	},
+// 	use: ({ id }, book) => id >= book.getId("5c.8"),
+// });
