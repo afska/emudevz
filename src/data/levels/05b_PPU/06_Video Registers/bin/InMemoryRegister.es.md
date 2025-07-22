@@ -32,7 +32,7 @@ class PPUCtrl extends InMemoryRegister.PPU {
       .addField("generateNMIOnVBlank", 7); //     bit 7
   }
 
-  // cuando onRead() no está definido, las lecturas devuelven 0
+  // cuando onRead() no está definido, las lecturas retornan 0
 
   onWrite(value) {
     this.setValue(value); // esto actualiza this.value y todos los campos

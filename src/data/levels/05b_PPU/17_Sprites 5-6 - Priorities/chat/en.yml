@@ -41,7 +41,7 @@ clear:
       **->** draws the pixel:
         ```javascript this.plot(x, y, color);```
     **isBackgroundPixelOpaque(x, y)**:
-      **->** returns whether the ~(x, y)~ pixel in `colorIndexes` is greater than 0
+      **->** returns whether the ~(x, y)~ pixel in `colorIndexes` is greater than 0 or not
   - 📚  in 🏞️  `BackgroundRenderer`, instead of calling the `plot(...)` method, call `plotBG(...)` passing the `colorIndex` as the last argument
   - |-
     📚  in 🛸  `SpriteRenderer`, modify these methods:

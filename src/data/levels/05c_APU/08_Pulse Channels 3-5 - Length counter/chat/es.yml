@@ -1,5 +1,91 @@
 ---
 main:
   messages:
-  - coming soon!
+  - "los Canales de Pulso pueden silenciarse de múltiples formas:"
+  - 🔇  cuando los juegos silencian el canal con una escritura a 🎛️  APUControl
+  - 📏  cuando el contador de longitud es 0
+  - 🧹  cuando la unidad de barrido está silenciada
+  - 🔈  cuando el volumen del canal es 0
+  - hasta ahora, solo cubrimos la última situación
+  - (más o menos, todavía tenemos que ocuparnos de la envolvente, ¡pero eso vendrá después!)
+  - "nuestro próximo objetivo es manejar las dos primeras: silencios de canal y el contador de longitud"
+  responses:
+  - ¿y qué es un contador de longitud? [length]
+
+length:
+  messages:
+  - ¡es lo que usa la APU para manejar la <longitud> de las notas!
+  - los juegos <cargan> su valor inicial para indicar la longitud de la nota
+  - luego ese valor se reduce cada half frame
+  - ¡y cuando llega a 0, el canal se silencia! 🤐
+  responses:
+  - (k) ¿cómo cargaría su valor un juego? [load]
+  - (k) ¿siempre reduce su valor en los half frames? [decrement]
+  - (l) vamos a programarlo [exercise]
+
+load:
+  messages:
+  - escribe en un registro que tiene <Length Counter Load> (o su forma abreviada, <LCL>) en su nombre
+  - en el caso de los Canales de Pulso, es 🕛  PulseTimerHighLCL, donde los 5 bits altos son el <índice de longitud>
+  - ese índice apunta a una tabla fija con todas las longitudes disponibles, revisa 📄  ~/lib/apu/noteLengths.js~
+  responses:
+  - ¿y si un juego necesita una longitud que no está en la lista? [otherlengths]
+
+otherlengths:
+  messages:
+  - ¡no es posible!
+  - al menos con este tipo de contador de longitud
+  - es por eso que los juegos no suelen usar este método y terminan cambiando el volumen a mano, o usando la envolvente
+  responses:
+  - ...length
+
+decrement:
+  messages:
+  - solo si su <bandera de detención> (<halt>) no está activada
+  - esa sería el bit <L> en 🟦  PulseControl
+  responses:
+  - ...length
+
+exercise:
+  messages:
+  - |-
+    📚  crea una clase 📏  `LengthCounter` con lo siguiente:
+    **constructor()**:
+      **->** llama a ```javascript this.reset()```
+    **reset()**:
+      **->** asigna ```javascript this.counter = 0```
+    **isActive()**:
+      **->** retorna si ```javascript this.counter``` es mayor a 0 o no
+    **clock(isEnabled, isHalted)**:
+      **->** si `!isEnabled`:
+        **->** llama a ```javascript this.reset()```
+      **->** si no:
+        **->** si ```javascript this.isActive()``` y `!isHalted`:
+          **->** disminuye el contador
+  - |-
+    📚  en 🟦  `PulseChannel`:
+    **->** importa esa clase y agrega una propiedad `lengthCounter` con una nueva instancia
+    **->** modifica **sample()**, para que si ```javascript !this.isEnabled()``` o el contador de longitud no está activo, retorne el último sample generado, sin cambiar nada
+    **->** agrega los métodos que se describen abajo
+    **quarterFrame()**:
+      **[!]** déjalo vacío por ahora
+    **halfFrame()**:
+      **->** llama al método `clock(...)` del contador de longitud
+        (usa ```javascript this.isEnabled()``` como primer argumento)
+        (para la bandera de detención, busca `envelopeLoopOrLengthCounterHalt` en el registro 🟦  PulseControl)
+  - |-
+    📚  en 🔊  `APU`:
+    **onQuarterFrameClock()**:
+      **->** llama a `quarterFrame()` en las dos instancias de canal de pulso
+    **onHalfFrameClock()**:
+      **->** llama a `halfFrame()` en las dos instancias de canal de pulso
+  - |-
+    📚  implementa en 🕛  `PulseTimerHighLCL`:
+    **onLoad()**:
+      **->** usa ```javascript this.addField(...)``` para definir un campo `lengthCounterLoad` de 5 bits desde el bit 3
+    **onWrite(value)**:
+      **->** __mantén el comportamiento existente__
+      **->** determina la nueva longitud accediendo al array `noteLengths` con el índice ```javascript this.lengthCounterLoad```
+        usa 📄  ~/lib/apu/noteLengths.js~ para obtener el array
+      **->** asigna la propiedad `counter` del contador de longitud del canal al nuevo valor
   responses: []

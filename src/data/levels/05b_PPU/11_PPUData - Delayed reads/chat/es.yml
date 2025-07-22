@@ -11,7 +11,7 @@ main:
 
 delay:
   messages:
-  - simple, cuando se solicita una <lectura>, lees en un buffer, pero luego devuelves el <valor anterior> de ese buffer
+  - simple, cuando se solicita una <lectura>, lees en un buffer, pero luego retornas el <valor anterior> de ese buffer
   - |-
     📚  implementa estos métodos en 📦  `PPUData`:
     **onLoad**:
@@ -21,5 +21,5 @@ delay:
       **->** lee desde la dirección PPU ```javascript ppuAddr.address``` y guarda el resultado en ```javascript this.buffer```
       **->** si la dirección está entre $3F00 y $3FFF, asigna ```javascript data = this.buffer``` (omite el buffer)
       **->** llama a ```javascript this._incrementAddress()```
-      **->** devuelve `data`
+      **->** retorna `data`
   responses: []

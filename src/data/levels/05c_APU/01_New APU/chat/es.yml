@@ -22,7 +22,7 @@ wave:
   messages:
   - se ve... <periódica>!
   - <{wave_square.png}>
-  - esta es una onda cuadrada de máximo volúmen, una forma de onda común usada por la APU
+  - esta es una onda cuadrada de máximo volumen, una forma de onda común usada por la APU
   - el período indica el tiempo que tarda en completar una repetición entera
   - "`período = 1 / frecuencia`, así que períodos más bajos generan notas más agudas"
   - más amplitud significa más volumen

@@ -23,7 +23,7 @@ interrupts:
       **->** guarda el actual ```javascript this.value``` en una constante `value`
       **->** reinicia ```javascript this.isInVBlankInterval``` a 0
         (sí, leer este registro <REINICIA> parte de su valor 🤷 )
-      **->** devuelve el `value` guardado
+      **->** retorna el `value` guardado
   - |-
     📚  y cambia este en 🖥️  `PPU`:
     **step(onFrame, onInterrupt)**:

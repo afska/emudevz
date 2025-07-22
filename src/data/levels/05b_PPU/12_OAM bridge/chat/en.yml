@@ -55,7 +55,7 @@ implement:
     **onWrite(value)**:
       **->** ```javascript for (i = 0; i < 256; i++)```:
         **->** builds the address (high byte: `value`, low byte: `i`)
-        **->** reads the address from CPU memory (```javascript this.ppu.cpu``` returns the 🧠  `CPU`)
+        **->** reads the address from CPU memory (```javascript this.ppu.cpu``` retrieves the 🧠  `CPU`)
         **->** assigns the obtained byte to ```javascript oamRam[i]```
       **->** adds 513 to ```javascript this.ppu.cpu.extraCycles```
   responses: []

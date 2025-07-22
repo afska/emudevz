@@ -33,8 +33,9 @@ load:
 
 otherlengths:
   messages:
-  - that's not possible!
+  - it's not possible!
   - at least with this type of length counter
+  - that's why games don't usually use this method and end up changing the volume manually, or using the envelope
   responses:
   - ...length
 
@@ -50,10 +51,9 @@ exercise:
   - |-
     📚  create a 📏  `LengthCounter` class with the following:
     **constructor()**:
-      **->** sets ```javascript this.counter = 0```
+      **->** calls ```javascript this.reset()```
     **reset()**:
       **->** sets ```javascript this.counter = 0```
-        (yeah, same as the constructor)
     **isActive()**:
       **->** returns whether ```javascript this.counter``` is greater than 0 or not
     **clock(isEnabled, isHalted)**:

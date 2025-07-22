@@ -42,7 +42,7 @@ so:
               por ejemplo, el rojo sería:
               ```javascript r = Math.floor(r * 0.75)```
 
-      **->** devuelve el color actualizado:
+      **->** retorna el color actualizado:
         ```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```
   - 📚  y lo más importante, ahora `PPU::plot(...)` necesita llamar al método transform de 🎭  `PPUMask` en lugar de usar directamente el `color`
   responses: []

@@ -29,7 +29,7 @@ implement:
   - |-
     📚  ahora, en la clase 🛸  `SpriteRenderer`, define:
     **_createSprite(id)**:
-      **->** devuelve una nueva instancia de `Sprite`, leyendo el índice OAM `id`
+      **->** retorna una nueva instancia de `Sprite`, leyendo el índice OAM `id`
       (¡recuerda agregar 1 a la coordenada Y!)
   responses:
   - ¿por qué debería agregar 1 a la coordenada Y? ➕ [addone]

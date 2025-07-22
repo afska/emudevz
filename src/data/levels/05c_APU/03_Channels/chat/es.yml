@@ -4,7 +4,7 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - ¡hagamos un repaso rápido de los canales de audio de la APU!
-  - asegúrate de que el <volúmen de la música> no esté en silencio, y continúa
+  - asegúrate de que el <volumen de la música> no esté en silencio, y continúa
   responses:
   - ▶️  empezar [start]
 
