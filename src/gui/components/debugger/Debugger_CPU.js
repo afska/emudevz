@@ -5,6 +5,7 @@ import utils from "./utils";
 const ImGui = window.ImGui;
 
 const LOG_LIMIT = 1000;
+const LOGGER_TYPE = "cpu";
 
 export default class Debugger_CPU {
 	constructor() {
@@ -18,7 +19,10 @@ export default class Debugger_CPU {
 	draw() {
 		const neees = window.EMULATION?.neees;
 
-		if (neees != null && neees.cpu.logger == null) {
+		if (
+			neees != null &&
+			(neees.cpu.logger == null || neees.cpu.logger.type !== LOGGER_TYPE)
+		) {
 			neees.cpu.logger = (a, b, c, d, e) => {
 				if (this._destroyed) {
 					neees.logger = null;
@@ -33,6 +37,7 @@ export default class Debugger_CPU {
 					if (this._logs.length > LOG_LIMIT) this._logs.pop();
 				}
 			};
+			neees.cpu.logger.type = LOGGER_TYPE;
 		}
 
 		const registerFields = ["a", "x", "y", "sp", "pc"];
@@ -123,7 +128,7 @@ export default class Debugger_CPU {
 		const neees = window.EMULATION?.neees;
 		if (!neees) return;
 
-		neees.cpu.logger = null;
+		if (neees.cpu.logger?.type === LOGGER_TYPE) neees.cpu.logger = null;
 		this._destroyed = true;
 	}
 }

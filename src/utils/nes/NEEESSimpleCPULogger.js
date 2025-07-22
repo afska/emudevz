@@ -15,6 +15,8 @@ export default class NEEESSimpleCPULogger {
 	}
 
 	log(cpu, originalPC, operation, input, argument) {
+		if (!originalPC || !operation || !input || !argument) return;
+
 		const section = (string, length) =>
 			_.padEnd(string.substr(0, length), length);
 		const hexArgument = (value) => {

@@ -4,6 +4,9 @@ main:
   - "Pulse Channels can be silenced in two situations:"
   - 🔇  when games mute the channel with a 🎛️  APUControl write
   - 📏  when the length counter is 0
+  - "constant volume y volumeOrEnvelopePeriod == 0 `// TODO: FINISH`"
+  - con volume envelope y envelope.volume == 0
+  - con frequency sweep.mute
   responses:
   - and what's a length counter? [length]
 
