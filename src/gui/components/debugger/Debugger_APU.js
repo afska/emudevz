@@ -198,7 +198,7 @@ export default class Debugger_APU {
 							utils.value("Sample", samples[samples.length - 1] ?? 0);
 
 							utils.simpleTable(`${id}_lengthcounter`, "Length Counter", () => {
-								const count = channel?.lengthCounter?.count ?? 0;
+								const count = channel?.lengthCounter?.counter ?? 0;
 
 								utils.boolean(
 									"Halt",
@@ -291,7 +291,7 @@ export default class Debugger_APU {
 					utils.value("Sample", triangle[triangle.length - 1] ?? 0);
 
 					utils.simpleTable(`triangle_lengthcounter`, "Length Counter", () => {
-						const count = channel?.lengthCounter?.count ?? 0;
+						const count = channel?.lengthCounter?.counter ?? 0;
 
 						utils.boolean("Halt", channel?.registers?.linearLCL.halt ?? false);
 						utils.value("Count", count);
@@ -302,7 +302,7 @@ export default class Debugger_APU {
 						`triangle_linearlengthcounter`,
 						"Linear Length Counter",
 						() => {
-							const count = channel?.linearLengthCounter?.count ?? 0;
+							const count = channel?.linearLengthCounter?.counter ?? 0;
 
 							utils.boolean(
 								"Halt",
@@ -382,7 +382,7 @@ export default class Debugger_APU {
 					});
 
 					utils.simpleTable(`noise_lengthcounter`, "Length Counter", () => {
-						const count = channel?.lengthCounter?.count ?? 0;
+						const count = channel?.lengthCounter?.counter ?? 0;
 
 						utils.boolean(
 							"Halt",
