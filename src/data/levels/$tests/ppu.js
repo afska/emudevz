@@ -604,7 +604,7 @@ it("PPUStatus: resets `isInVBlankInterval` after reading", () => {
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("has methods: `_onPreLine`, `_onVisibleLine`, `onVBlankLine`", () => {
+it("has methods: `_onPreLine`, `_onVisibleLine`, `_onVBlankLine`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.should.respondTo("_onPreLine");
@@ -612,7 +612,7 @@ it("has methods: `_onPreLine`, `_onVisibleLine`, `onVBlankLine`", () => {
 	ppu.should.respondTo("_onVBlankLine");
 })({
 	locales: {
-		es: "tiene métodos `_onPreLine`, `onVisibleLine`, `onVBlankLine`",
+		es: "tiene métodos `_onPreLine`, `_onVisibleLine`, `_onVBlankLine`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
