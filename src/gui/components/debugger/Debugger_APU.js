@@ -174,12 +174,14 @@ export default class Debugger_APU {
 							);
 							ImGui.PlotLines("", samples, maxN, 0, "", MIN, MAX, waveSize);
 
+							const constantVolume =
+								channel?.registers?.control.constantVolume ?? false;
+							const volumeOrEnvelopePeriod =
+								channel?.registers?.control.volumeOrEnvelopePeriod ?? 0;
+
 							utils.boolean("Enabled", channel?.isEnabled?.() ?? false);
 							ImGui.SameLine();
-							utils.boolean(
-								"Constant",
-								channel?.registers?.control.constantVolume ?? false
-							);
+							utils.boolean("Constant", constantVolume);
 							utils.value("Timer", channel?.timer ?? 0);
 							utils.value("  => Freq", `${frequency.toFixed(2)} hz`);
 							utils.value("Duty", `${duty} (${DUTY_PERCENTAGES[duty]})`);
@@ -227,15 +229,20 @@ export default class Debugger_APU {
 									);
 
 									utils.value(
-										"Divider period",
-										channel?.registers?.control.volumeOrEnvelopePeriod ?? 0
+										constantVolume ? "Constant volume" : "Divider period",
+										volumeOrEnvelopePeriod
 									);
-									utils.value(
-										"Divider count",
-										channel?.volumeEnvelope?.dividerCount ?? 0
+									if (!constantVolume) {
+										utils.value(
+											"Divider count",
+											channel?.volumeEnvelope?.dividerCount ?? 0
+										);
+										utils.value("Volume", volume);
+									}
+									ImGui.ProgressBar(
+										(constantVolume ? volumeOrEnvelopePeriod : volume) / 15,
+										new ImGui.Vec2(-1, 16)
 									);
-									utils.value("Volume", volume);
-									ImGui.ProgressBar(volume / 15, new ImGui.Vec2(-1, 16));
 								}
 							);
 
@@ -336,22 +343,18 @@ export default class Debugger_APU {
 					);
 					ImGui.PlotLines("", noise, maxN, 0, "", MIN, MAX, waveSize);
 
+					const constantVolume =
+						channel?.registers?.control.constantVolume ?? false;
+					const volumeOrEnvelopePeriod =
+						channel?.registers?.control.volumeOrEnvelopePeriod ?? 0;
+
 					utils.boolean("Enabled", channel?.isEnabled?.());
 					ImGui.SameLine();
-					utils.boolean(
-						"Constant",
-						channel?.registers?.control.constantVolume ?? false
-					);
+					utils.boolean("Constant", constantVolume);
 					ImGui.SameLine();
 					utils.boolean("Mode", channel?.registers?.form.mode ?? false);
-					utils.value(
-						"Divider period",
-						channel?.registers?.control.volumeOrEnvelopePeriod ?? 0
-					);
-					utils.value(
-						"Divider count",
-						channel?.volumeEnvelope?.dividerCount ?? 0
-					);
+					utils.value("Divider period", channel?.registers?.form.period ?? 0);
+					utils.value("Divider count", channel?.count ?? 0);
 					utils.value(
 						"Shift",
 						"0b" + (channel?.shift ?? 0).toString(2).padStart(15, "0")
@@ -370,15 +373,20 @@ export default class Debugger_APU {
 						);
 
 						utils.value(
-							"Divider period",
-							channel?.registers?.control.volumeOrEnvelopePeriod ?? 0
+							constantVolume ? "Constant volume" : "Divider period",
+							volumeOrEnvelopePeriod
 						);
-						utils.value(
-							"Divider count",
-							channel?.volumeEnvelope?.dividerCount ?? 0
+						if (!constantVolume) {
+							utils.value(
+								"Divider count",
+								channel?.volumeEnvelope?.dividerCount ?? 0
+							);
+							utils.value("Volume", volume);
+						}
+						ImGui.ProgressBar(
+							(constantVolume ? volumeOrEnvelopePeriod : volume) / 15,
+							new ImGui.Vec2(-1, 16)
 						);
-						utils.value("Volume", volume);
-						ImGui.ProgressBar(volume / 15, new ImGui.Vec2(-1, 16));
 					});
 
 					utils.simpleTable(`noise_lengthcounter`, "Length Counter", () => {
