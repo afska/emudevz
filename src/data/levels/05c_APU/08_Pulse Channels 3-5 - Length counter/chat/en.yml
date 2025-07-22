@@ -1,12 +1,14 @@
 ---
 main:
   messages:
-  - "Pulse Channels can be silenced in two situations:"
-  - 🔇  when games mute the channel with a 🎛️  APUControl write
+  - "Pulse Channels can be silenced in multiple ways:"
+  - 🔇  when games mute the channel with an 🎛️  APUControl write
   - 📏  when the length counter is 0
-  - "constant volume y volumeOrEnvelopePeriod == 0 `// TODO: FINISH`"
-  - con volume envelope y envelope.volume == 0
-  - con frequency sweep.mute
+  - 🧹  when the sweep unit is muted
+  - 🔈  when the channel's volume is 0
+  - so far, we only covered the last situation
+  - (kind of, we still need to take care of the envelope, but that'll come later!)
+  - our next goal is to handle the first two, channel mutes and the length counter!
   responses:
   - and what's a length counter? [length]
 
@@ -23,7 +25,7 @@ length:
 
 load:
   messages:
-  - it writes to a register that has <Length Counter Load> (or it's abbreviated form, <LCL>) in its name
+  - it writes to a register that has <Length Counter Load> (or its abbreviated form, <LCL>) in its name
   - in the case of the Pulse Channels, it's 🕛  PulseTimerHighLCL, where the high 5 bits are the <length index>
   - that index points to a fixed table with all the available lengths, check out 📄  ~/lib/apu/noteLengths.js~
   responses:
@@ -32,7 +34,7 @@ load:
 otherlengths:
   messages:
   - that's not possible!
-  - at least with this type of length counters
+  - at least with this type of length counter
   responses:
   - ...length
 
@@ -82,7 +84,7 @@ exercise:
     **onLoad()**:
       **->** uses ```javascript this.addField(...)``` to set a 5-bit `lengthCounterLoad` field from bit 3
     **onWrite(value)**:
-      **->** __keep old behavior__
+      **->** __keep existing behavior__
       **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
         use 📄  ~/lib/apu/noteLengths.js~ to get the array
       **->** assigns the `counter` property of the channel's length counter to the new length

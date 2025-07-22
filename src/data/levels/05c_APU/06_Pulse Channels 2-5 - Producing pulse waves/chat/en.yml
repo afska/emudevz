@@ -20,6 +20,6 @@ good:
       **->** sets ```javascript this.oscillator.volume``` to `volumeOrEnvelopePeriod` from 🟦  `PulseControl`
       **->** returns ```javascript this.oscillator.sample()```
   - try out some games!
-  - it won't sound <great> since the channels are never silenced and there's lots of missing stuff 😅
+  - it won't sound <great> since the channels aren't always silenced and there's lots of missing stuff 😅
   - but you'll start hearing part of the games' melodies
   responses: []
