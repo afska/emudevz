@@ -1055,7 +1055,7 @@ const dictionary = {
 			en:
 				"A mechanism that automatically adjusts a channel's output volume over time according to its rate and loop settings. <br /><br />It's used to produce _fade out_ effects.",
 			es:
-				"Un mecanismo que ajusta automáticamente el volumen de salida de un canal a lo largo del tiempo según sus opciones de tasa y bucle. <br /><br />Se usa para producir efectos _fade out_.",
+				"Un mecanismo que ajusta automáticamente el volumen de salida de un canal a lo largo del tiempo según sus opciones de tasa y bucle. <br /><br />Se usa para producir efectos de _desvanecimiento_.",
 		},
 		VRAM: {
 			icon: "🐏",
