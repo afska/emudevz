@@ -477,12 +477,12 @@ it("has `PulseChannel` instances", () => {
 	expect(apu.channels, "channels").to.be.an("object");
 	expect(apu.channels.pulses, "pulses").to.be.an("array");
 	apu.channels.pulses.length.should.equalN(2, "pulses.length");
-	expect(apu.channels.pulses[0], "pulses[0]").to.be.an("object");
-	expect(apu.channels.pulses[1], "pulses[1]").to.be.an("object");
-	expect(apu.channels.pulses[0].constructor, "pulses[0].constructor").to.be.a
-		.class;
-	expect(apu.channels.pulses[1].constructor, "pulses[1].constructor").to.be.a
-		.class;
+
+	for (let i = 0; i < 2; i++) {
+		expect(apu.channels.pulses[i], `pulses[${i}]`).to.be.an("object");
+		expect(apu.channels.pulses[i].constructor, `pulses[${i}].constructor`).to.be
+			.a.class;
+	}
 
 	const pulse1Class = apu.channels.pulses[0].constructor;
 	const pulse2Class = apu.channels.pulses[1].constructor;
@@ -499,8 +499,8 @@ it("`PulseChannel`: has an `apu` reference", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.pulses[0].apu.should.equalN(apu);
-	apu.channels.pulses[1].apu.should.equalN(apu);
+	for (let i = 0; i < 2; i++)
+		apu.channels.pulses[i].apu.should.equalN(apu, `[${i}].apu`);
 })({
 	locales: {
 		es: "`PulseChannel`: tiene una referencia `apu`",
@@ -512,8 +512,8 @@ it("`PulseChannel`: has an `id`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.pulses[0].id.should.equalN(0, "id");
-	apu.channels.pulses[1].id.should.equalN(1, "id");
+	for (let i = 0; i < 2; i++)
+		apu.channels.pulses[i].id.should.equalN(i, `[${i}].id`);
 })({
 	locales: {
 		es: "`PulseChannel`: tiene un `id`",
@@ -540,8 +540,8 @@ it("`PulseChannel`: has a `timer` initialized at 0", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.pulses[0].timer.should.equalN(0, "timer");
-	apu.channels.pulses[1].timer.should.equalN(0, "timer");
+	for (let i = 0; i < 2; i++)
+		apu.channels.pulses[i].timer.should.equalN(0, "`[${i}].timer`");
 })({
 	locales: {
 		es: "`PulseChannel`: tiene un `timer` inicializado en 0",
@@ -553,8 +553,11 @@ it("`PulseChannel`: has a `registers` property, pointing to the audio registers"
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.pulses[0].registers.should.equalN(apu.registers.pulses[0]);
-	apu.channels.pulses[1].registers.should.equalN(apu.registers.pulses[1]);
+	for (let i = 0; i < 2; i++)
+		apu.channels.pulses[i].registers.should.equalN(
+			apu.registers.pulses[i],
+			`[${i}].registers`
+		);
 })({
 	locales: {
 		es:
@@ -597,10 +600,10 @@ it("`PulseChannel`: has a `sample` method that returns a number", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.pulses[0].should.respondTo("sample");
-	apu.channels.pulses[0].sample().should.be.a("number");
-	apu.channels.pulses[1].should.respondTo("sample");
-	apu.channels.pulses[1].sample().should.be.a("number");
+	for (let i = 0; i < 2; i++) {
+		apu.channels.pulses[i].should.respondTo("sample");
+		apu.channels.pulses[i].sample().should.be.a("number");
+	}
 })({
 	locales: {
 		es: "`PulseChannel`: tiene un método `sample` que retorna un número",
@@ -636,16 +639,12 @@ it("`PulseChannel`: `step()` calls updateTimer()", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.pulses[0].updateTimer = sinon.spy();
-	apu.channels.pulses[1].updateTimer = sinon.spy();
-
-	apu.channels.pulses[0].should.respondTo("step");
-	apu.channels.pulses[0].step();
-	apu.channels.pulses[0].updateTimer.should.have.been.called;
-
-	apu.channels.pulses[1].should.respondTo("step");
-	apu.channels.pulses[1].step();
-	apu.channels.pulses[1].updateTimer.should.have.been.called;
+	for (let i = 0; i < 2; i++) {
+		apu.channels.pulses[i].updateTimer = sinon.spy();
+		apu.channels.pulses[i].should.respondTo("step");
+		apu.channels.pulses[i].step();
+		apu.channels.pulses[i].updateTimer.should.have.been.called;
+	}
 })({
 	locales: {
 		es: "`PulseChannel`: `step()` llama a `updateTimer()`",
@@ -657,12 +656,15 @@ it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => 
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.pulses[0].step = sinon.spy();
-	apu.channels.pulses[1].step = sinon.spy();
+	for (let i = 0; i < 2; i++) {
+		apu.channels.pulses[i].step = sinon.spy();
+	}
 
 	apu.step(() => {});
-	apu.channels.pulses[0].step.should.have.been.called;
-	apu.channels.pulses[1].step.should.have.been.called;
+
+	for (let i = 0; i < 2; i++) {
+		apu.channels.pulses[i].step.should.have.been.called;
+	}
 })({
 	locales: {
 		es:
@@ -744,18 +746,19 @@ it("`PulseChannel`: has an `oscillator` that can produce samples", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	expect(apu.channels.pulses[0], "oscillator").to.be.an("object");
-	expect(apu.channels.pulses[1], "oscillator").to.be.an("object");
-
-	apu.channels.pulses[0].oscillator.frequency.should.equalN(0, "frequency");
-	apu.channels.pulses[0].oscillator.dutyCycle.should.equalN(0, "dutyCycle");
-	apu.channels.pulses[0].oscillator.volume.should.equalN(15, "dutyCycle");
-	apu.channels.pulses[0].oscillator.should.respondTo("sample");
-
-	apu.channels.pulses[1].oscillator.frequency.should.equalN(0, "frequency");
-	apu.channels.pulses[1].oscillator.dutyCycle.should.equalN(0, "dutyCycle");
-	apu.channels.pulses[1].oscillator.volume.should.equalN(15, "dutyCycle");
-	apu.channels.pulses[1].oscillator.should.respondTo("sample");
+	for (let i = 0; i < 2; i++) {
+		expect(apu.channels.pulses[i], `[${i}].oscillator`).to.be.an("object");
+		apu.channels.pulses[i].oscillator.frequency.should.equalN(
+			0,
+			`[${i}].frequency`
+		);
+		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(
+			0,
+			`[${i}].dutyCycle`
+		);
+		apu.channels.pulses[i].oscillator.volume.should.equalN(15, `[${i}].volume`);
+		apu.channels.pulses[i].oscillator.should.respondTo("sample");
+	}
 })({
 	locales: {
 		es: "`PulseChannel`: tiene un `oscillator` que puede producir samples",
@@ -769,10 +772,10 @@ it("`PulseChannel`: `sample()` updates the oscillator frequency", () => {
 
 	// enable all channels, max volume, length counter halt & load
 	apu.registers.apuControl.setValue(0b11111111);
-	apu.registers.pulses[0].control.onWrite(0b0111111);
-	apu.registers.pulses[1].control.onWrite(0b0111111);
-	apu.registers.pulses[0].timerHighLCL.onWrite(0b11111111);
-	apu.registers.pulses[1].timerHighLCL.onWrite(0b11111111);
+	for (let i = 0; i < 2; i++) {
+		apu.registers.pulses[i].control.onWrite(0b00111111);
+		apu.registers.pulses[i].timerHighLCL.onWrite(0b11111111);
+	}
 
 	apu.channels.pulses[0].timer = 507;
 	apu.channels.pulses[0].sample();
@@ -800,27 +803,29 @@ it("`PulseChannel`: `sample()` updates the oscillator duty cycle", () => {
 
 	// enable all channels, max volume, length counter halt & load
 	apu.registers.apuControl.setValue(0b11111111);
-	apu.registers.pulses[0].control.onWrite(0b0111111);
-	apu.registers.pulses[1].control.onWrite(0b0111111);
-	apu.registers.pulses[0].timerHighLCL.onWrite(0b11111111);
-	apu.registers.pulses[1].timerHighLCL.onWrite(0b11111111);
+	for (let i = 0; i < 2; i++) {
+		apu.registers.pulses[i].control.onWrite(0b00111111);
+		apu.registers.pulses[i].timerHighLCL.onWrite(0b11111111);
+	}
 
 	for (let i = 0; i < 2; i++) {
+		const key = `[${i}].dutyCycle`;
+
 		apu.channels.pulses[i].registers.control.onWrite(0b00000000);
 		apu.channels.pulses[i].sample();
-		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(0, "dutyCycle");
+		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(0, key);
 
 		apu.channels.pulses[i].registers.control.onWrite(0b01000000);
 		apu.channels.pulses[i].sample();
-		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(1, "dutyCycle");
+		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(1, key);
 
 		apu.channels.pulses[i].registers.control.onWrite(0b10000000);
 		apu.channels.pulses[i].sample();
-		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(2, "dutyCycle");
+		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(2, key);
 
 		apu.channels.pulses[i].registers.control.onWrite(0b11000000);
 		apu.channels.pulses[i].sample();
-		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(3, "dutyCycle");
+		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(3, key);
 	}
 })({
 	locales: {
@@ -836,13 +841,13 @@ it("`PulseChannel`: `sample()` updates the oscillator volume", () => {
 
 	// enable all channels, max volume, length counter halt & load
 	apu.registers.apuControl.setValue(0b11111111);
-	apu.registers.pulses[0].control.onWrite(0b0111111);
-	apu.registers.pulses[1].control.onWrite(0b0111111);
-	apu.registers.pulses[0].timerHighLCL.onWrite(0b11111111);
-	apu.registers.pulses[1].timerHighLCL.onWrite(0b11111111);
+	for (let i = 0; i < 2; i++) {
+		apu.registers.pulses[i].control.onWrite(0b00111111);
+		apu.registers.pulses[i].timerHighLCL.onWrite(0b11111111);
+	}
 
-	apu.channels.pulses[0].registers.control.onWrite(0b00001100);
-	apu.channels.pulses[1].registers.control.onWrite(0b00001011);
+	apu.channels.pulses[0].registers.control.onWrite(0b00111100);
+	apu.channels.pulses[1].registers.control.onWrite(0b00111011);
 
 	apu.channels.pulses[0].sample();
 	apu.channels.pulses[0].oscillator.volume.should.equalN(0b1100, "volume");
@@ -862,10 +867,10 @@ it("`PulseChannel`: `sample()` calls `oscillator.sample()`", () => {
 
 	// enable all channels, max volume, length counter halt & load
 	apu.registers.apuControl.setValue(0b11111111);
-	apu.registers.pulses[0].control.onWrite(0b0111111);
-	apu.registers.pulses[1].control.onWrite(0b0111111);
-	apu.registers.pulses[0].timerHighLCL.onWrite(0b11111111);
-	apu.registers.pulses[1].timerHighLCL.onWrite(0b11111111);
+	for (let i = 0; i < 2; i++) {
+		apu.registers.pulses[i].control.onWrite(0b00111111);
+		apu.registers.pulses[i].timerHighLCL.onWrite(0b11111111);
+	}
 
 	const random1 = byte.random();
 	const random2 = byte.random();
@@ -1197,14 +1202,12 @@ it("`PulseChannel`: has a `lengthCounter` property", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	expect(
-		apu.channels.pulses[0].lengthCounter,
-		"channels.pulses[0].lengthCounter"
-	).to.be.an("object");
-	expect(
-		apu.channels.pulses[1].lengthCounter,
-		"channels.pulses[1].lengthCounter"
-	).to.be.an("object");
+	for (let i = 0; i < 2; i++) {
+		expect(
+			apu.channels.pulses[i].lengthCounter,
+			`channels.pulses[${i}].lengthCounter`
+		).to.be.an("object");
+	}
 })({
 	locales: {
 		es: "`PulseChannel`: tiene una propiedad `lengthCounter`",
@@ -1216,11 +1219,10 @@ it("`LengthCounter`: has a `counter` property that starts at 0", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	const pulse1 = apu.channels.pulses[0];
-	const pulse2 = apu.channels.pulses[1];
-
-	pulse1.lengthCounter.counter.should.equalN(0, "counter");
-	pulse2.lengthCounter.counter.should.equalN(0, "counter");
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		channel.lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+	}
 })({
 	locales: {
 		es: "`LengthCounter`: tiene una propiedad `counter` que empieza en 0",
@@ -1232,16 +1234,18 @@ it("`LengthCounter`: has a `reset()` method that sets `counter` = 0", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	const pulse1 = apu.channels.pulses[0];
-	const pulse2 = apu.channels.pulses[1];
-
-	pulse1.lengthCounter.should.respondTo("reset");
-	pulse2.lengthCounter.should.respondTo("reset");
-
-	// TODO: STOP REPEATING PULSES
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		channel.lengthCounter.should.respondTo("reset");
+		channel.lengthCounter.counter = 2;
+		channel.lengthCounter.reset();
+		channel.lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+	}
 })({
 	locales: {
 		es: "`LengthCounter`: tiene un método `reset()` que asigna `counter` = 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
+
+// TODO: CONTINUE TESTING
