@@ -566,7 +566,7 @@ it("`PulseChannel`: has a `registers` property, pointing to the audio registers"
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseChannel`: has an `isEnabled` method that returns whether the channel is enabled or not in APUControl", () => {
+it("`PulseChannel`: has an `isEnabled()` method that returns whether the channel is enabled or not in APUControl", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -591,12 +591,12 @@ it("`PulseChannel`: has an `isEnabled` method that returns whether the channel i
 })({
 	locales: {
 		es:
-			"`PulseChannel`: tiene un método `isEnabled` que retorna si el canal está activo o no en APUControl",
+			"`PulseChannel`: tiene un método `isEnabled()` que retorna si el canal está activo o no en APUControl",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseChannel`: has a `sample` method that returns a number", () => {
+it("`PulseChannel`: has a `sample()` method that returns a number", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -606,7 +606,7 @@ it("`PulseChannel`: has a `sample` method that returns a number", () => {
 	}
 })({
 	locales: {
-		es: "`PulseChannel`: tiene un método `sample` que retorna un número",
+		es: "`PulseChannel`: tiene un método `sample()` que retorna un número",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -959,7 +959,7 @@ it("has a `frameSequencer` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.7"),
 });
 
-it("`FrameSequencer`: has a `counter` property and `reset`/`step` methods", () => {
+it("`FrameSequencer`: has a `counter` property and `reset()`/`step()` methods", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -969,7 +969,7 @@ it("`FrameSequencer`: has a `counter` property and `reset`/`step` methods", () =
 })({
 	locales: {
 		es:
-			"`FrameSequencer`: tiene una propiedad `counter` y métodos `reset`/`step`",
+			"`FrameSequencer`: tiene una propiedad `counter` y métodos `reset()`/`step()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1220,8 +1220,8 @@ it("`LengthCounter`: has a `counter` property that starts at 0", () => {
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
-		const channel = apu.channels.pulses[i];
-		channel.lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+		const lengthCounter = apu.channels.pulses[i].lengthCounter;
+		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
 	}
 })({
 	locales: {
@@ -1235,11 +1235,11 @@ it("`LengthCounter`: has a `reset()` method that sets `counter` = 0", () => {
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
-		const channel = apu.channels.pulses[i];
-		channel.lengthCounter.should.respondTo("reset");
-		channel.lengthCounter.counter = 2;
-		channel.lengthCounter.reset();
-		channel.lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+		const lengthCounter = apu.channels.pulses[i].lengthCounter;
+		lengthCounter.should.respondTo("reset");
+		lengthCounter.counter = 2;
+		lengthCounter.reset();
+		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
 	}
 })({
 	locales: {
@@ -1248,4 +1248,366 @@ it("`LengthCounter`: has a `reset()` method that sets `counter` = 0", () => {
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-// TODO: CONTINUE TESTING
+it("`LengthCounter`: has an `isActive()` method that returns whether `counter` is greater than 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const lengthCounter = apu.channels.pulses[i].lengthCounter;
+		lengthCounter.should.respondTo("isActive");
+
+		lengthCounter.counter = 2;
+		lengthCounter.isActive().should.equalN(true, `[${i}]::isActive()`);
+
+		lengthCounter.counter = 0;
+		lengthCounter.isActive().should.equalN(false, `[${i}]::isActive()`);
+
+		lengthCounter.counter = 1;
+		lengthCounter.isActive().should.equalN(true, `[${i}]::isActive()`);
+	}
+})({
+	locales: {
+		es:
+			"`LengthCounter`: tiene un método `isActive()` que retorna si `counter` es mayor a 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`LengthCounter`: has a `clock(...)` method", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const lengthCounter = apu.channels.pulses[i].lengthCounter;
+		lengthCounter.should.respondTo("clock");
+	}
+})({
+	locales: {
+		es: "`LengthCounter`: tiene un método `clock(...)`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`LengthCounter`: calling `clock(...)` with `false` as the first argument just resets the counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const lengthCounter = apu.channels.pulses[i].lengthCounter;
+
+		lengthCounter.counter = 3;
+		lengthCounter.clock(false, true);
+		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+
+		lengthCounter.counter = 17;
+		lengthCounter.clock(false, false);
+		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+	}
+})({
+	locales: {
+		es:
+			"`LengthCounter`: llamar a `clock()` con `false` como primer argumento solo reinicia el contador",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`LengthCounter`: calling `clock(true, true)` doesn't do anything", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const lengthCounter = apu.channels.pulses[i].lengthCounter;
+
+		lengthCounter.counter = 219;
+		lengthCounter.clock(true, true);
+		lengthCounter.counter.should.equalN(219, `[${i}]::counter`);
+	}
+})({
+	locales: {
+		es: "`LengthCounter`: llamar a `clock(true, true)` no hace nada",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`LengthCounter`: calling `clock(true, false)` decrements the counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const lengthCounter = apu.channels.pulses[i].lengthCounter;
+
+		lengthCounter.counter = 219;
+
+		lengthCounter.clock(true, false);
+		lengthCounter.counter.should.equalN(218, `[${i}]::counter`);
+
+		lengthCounter.clock(true, false);
+		lengthCounter.counter.should.equalN(217, `[${i}]::counter`);
+	}
+})({
+	locales: {
+		es: "`LengthCounter`: llamar a `clock(true, false)` decrementa el contador",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`LengthCounter`: calling `clock(true, false)` doesn't decrement if the counter is 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const lengthCounter = apu.channels.pulses[i].lengthCounter;
+
+		lengthCounter.counter = 0;
+		lengthCounter.clock(true, false);
+		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+	}
+})({
+	locales: {
+		es:
+			"`LengthCounter`: llamar a `clock(true, false)` no decrementa si el contador es 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`PulseChannel`: `sample()` just returns the last sample if the channel is disabled", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	// enable all channels, volume 1 and 2, length counter halt & load
+	apu.registers.apuControl.setValue(0b11111111);
+	for (let i = 0; i < 2; i++) {
+		apu.registers.pulses[i].control.onWrite(0b00110000 | (i + 1));
+		apu.registers.pulses[i].timerHighLCL.onWrite(0b11111111);
+	}
+
+	// Pulse1: get the first non-zero sample
+	apu.channels.pulses[0].timer = 507;
+	let lastSample1 = 0;
+	for (let i = 0; i < 10; i++) {
+		lastSample1 = apu.channels.pulses[0].sample();
+		if (lastSample1 !== 0) break;
+	}
+	if (lastSample1 === 0)
+		throw new Error("The first 10 samples of pulse 1 were 0.");
+
+	// Pulse2: get the first non-zero sample
+	apu.channels.pulses[1].timer = 708;
+	let lastSample2 = 0;
+	for (let i = 0; i < 10; i++) {
+		lastSample2 = apu.channels.pulses[1].sample();
+		if (lastSample2 !== 0) break;
+	}
+	if (lastSample2 === 0)
+		throw new Error("The first 10 samples of pulse 2 were 0.");
+
+	// disable all channels
+	apu.registers.apuControl.setValue(0);
+
+	// set another timer value
+	apu.channels.pulses[0].timer = 123;
+	apu.channels.pulses[0].timer = 456;
+
+	// when the channel is disabled, it should return the last sample
+	apu.channels.pulses[0].sample().should.equalN(lastSample1, "[0].sample()");
+	apu.channels.pulses[1].sample().should.equalN(lastSample2, "[1].sample()");
+
+	// they shouldn't update the oscillator frequency
+	const pulse1Frequency = Math.floor(
+		apu.channels.pulses[0].oscillator.frequency
+	);
+	pulse1Frequency.should.equalN(220, "frequency");
+	const pulse2Frequency = Math.floor(
+		apu.channels.pulses[1].oscillator.frequency
+	);
+	pulse2Frequency.should.equalN(157, "frequency");
+})({
+	locales: {
+		es:
+			"`PulseChannel`: `sample()` solo retorna el último sample si el canal está desactivado",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`PulseChannel`: `sample()` just returns the last sample if the length counter is not active", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	// enable all channels, volume 1 and 2, length counter halt & load
+	apu.registers.apuControl.setValue(0b11111111);
+	for (let i = 0; i < 2; i++) {
+		apu.registers.pulses[i].control.onWrite(0b00110000 | (i + 1));
+		apu.registers.pulses[i].timerHighLCL.onWrite(0b11111111);
+	}
+
+	// Pulse1: get the first non-zero sample
+	apu.channels.pulses[0].timer = 507;
+	let lastSample1 = 0;
+	for (let i = 0; i < 10; i++) {
+		lastSample1 = apu.channels.pulses[0].sample();
+		if (lastSample1 !== 0) break;
+	}
+	if (lastSample1 === 0)
+		throw new Error("The first 10 samples of pulse 1 were 0.");
+
+	// Pulse2: get the first non-zero sample
+	apu.channels.pulses[1].timer = 708;
+	let lastSample2 = 0;
+	for (let i = 0; i < 10; i++) {
+		lastSample2 = apu.channels.pulses[1].sample();
+		if (lastSample2 !== 0) break;
+	}
+	if (lastSample2 === 0)
+		throw new Error("The first 10 samples of pulse 2 were 0.");
+
+	// disable length counters
+	apu.channels.pulses[0].lengthCounter.reset();
+	apu.channels.pulses[1].lengthCounter.reset();
+
+	// set another timer value
+	apu.channels.pulses[0].timer = 123;
+	apu.channels.pulses[0].timer = 456;
+
+	// when the channel is disabled, it should return the last sample
+	apu.channels.pulses[0].sample().should.equalN(lastSample1, "[0].sample()");
+	apu.channels.pulses[1].sample().should.equalN(lastSample2, "[1].sample()");
+
+	// they shouldn't update the oscillator frequency
+	const pulse1Frequency = Math.floor(
+		apu.channels.pulses[0].oscillator.frequency
+	);
+	pulse1Frequency.should.equalN(220, "frequency");
+	const pulse2Frequency = Math.floor(
+		apu.channels.pulses[1].oscillator.frequency
+	);
+	pulse2Frequency.should.equalN(157, "frequency");
+})({
+	locales: {
+		es:
+			"`PulseChannel`: `sample()` solo retorna el último sample si el contador de longitud no está activo",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`PulseChannel`: has a `quarterFrame()` method", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		apu.channels.pulses[i].should.respondTo("quarterFrame");
+	}
+})({
+	locales: {
+		es: "`PulseChannel`: tiene un método `quarterFrame()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`PulseChannel`: has a `halfFrame()` method that updates the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		channel.should.respondTo("halfFrame");
+
+		channel.lengthCounter.clock = sinon.spy();
+		channel.isEnabled = () => true;
+		channel.registers.control.onWrite(0b100000); // halt = 1
+		channel.halfFrame();
+		channel.lengthCounter.clock.should.have.been.calledWith(true, 1);
+
+		channel.lengthCounter.clock = sinon.spy();
+		channel.isEnabled = () => true;
+		channel.registers.control.onWrite(0b000000); // halt = 0
+		channel.halfFrame();
+		channel.lengthCounter.clock.should.have.been.calledWith(true, 0);
+
+		channel.lengthCounter.clock = sinon.spy();
+		channel.isEnabled = () => false;
+		channel.registers.control.onWrite(0b000000); // halt = 0
+		channel.halfFrame();
+		channel.lengthCounter.clock.should.have.been.calledWith(false, 0);
+
+		channel.lengthCounter.clock = sinon.spy();
+		channel.isEnabled = () => false;
+		channel.registers.control.onWrite(0b100000); // halt = 1
+		channel.halfFrame();
+		channel.lengthCounter.clock.should.have.been.calledWith(false, 1);
+	}
+})({
+	locales: {
+		es:
+			"`PulseChannel`: tiene un método `halfFrame()` que actualiza el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`onQuarterFrameClock()` calls `quarterFrame()` on the two pulse channel instances", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].quarterFrame = sinon.spy();
+	apu.channels.pulses[1].quarterFrame = sinon.spy();
+
+	apu.onQuarterFrameClock();
+
+	apu.channels.pulses[0].quarterFrame.should.have.been.calledOnce;
+	apu.channels.pulses[1].quarterFrame.should.have.been.calledOnce;
+})({
+	locales: {
+		es:
+			"`onQuarterFrameClock()` llama a `quarterFrame()` en las dos instancias del canal pulso",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`onHalfFrameClock()` calls `halfFrame()` on the two pulse channel instances", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].halfFrame = sinon.spy();
+	apu.channels.pulses[1].halfFrame = sinon.spy();
+
+	apu.onHalfFrameClock();
+
+	apu.channels.pulses[0].halfFrame.should.have.been.calledOnce;
+	apu.channels.pulses[1].halfFrame.should.have.been.calledOnce;
+})({
+	locales: {
+		es:
+			"`onHalfFrameClock()` llama a `halfFrame()` en las dos instancias del canal pulso",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.write(0x4003, 0b10110000); // Pulse1TimerHighLCL
+	apu.registers.pulses[0].timerHighLCL.lengthCounterLoad.should.equalN(
+		0b10110, // index 22 => 96 in length table
+		"lengthCounterLoad"
+	);
+	apu.channels.pulses[0].lengthCounter.counter.should.equalN(
+		96,
+		"[0]::counter"
+	);
+
+	apu.registers.write(0x4007, 0b01100000); // Pulse2TimerHighLCL
+	apu.registers.pulses[1].timerHighLCL.lengthCounterLoad.should.equalN(
+		0b01100, // index 22 => 14 in length table
+		"lengthCounterLoad"
+	);
+	apu.channels.pulses[1].lengthCounter.counter.should.equalN(
+		14,
+		"[1]::counter"
+	);
+})({
+	locales: {
+		es:
+			"`PulseTimerHighLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
