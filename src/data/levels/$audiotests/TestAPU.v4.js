@@ -225,13 +225,14 @@ class PulseTimerLow extends InMemoryRegister.APU {
 
 class PulseTimerHighLCL extends InMemoryRegister.APU {
 	onLoad() {
-		this.addField("timerHigh", 0, 3);
+		this.addField("timerHigh", 0, 3).addField("lengthCounterLoad", 3, 5);
 	}
 
 	onWrite(value) {
 		this.setValue(value);
 
 		const channel = this.apu.channels.pulses[this.id];
+		channel.lengthCounter.counter = noteLengths[this.lengthCounterLoad];
 		channel.updateTimer();
 	}
 }
@@ -341,16 +342,23 @@ class APUControl extends InMemoryRegister.APU {
 
 	onWrite(value) {
 		this.setValue(value);
+
+		if (!this.enablePulse1) this.apu.channels.pulses[0].lengthCounter.reset();
+		if (!this.enablePulse2) this.apu.channels.pulses[1].lengthCounter.reset();
 	}
 }
 
 class APUFrameCounter extends InMemoryRegister.APU {
 	onLoad() {
-		/* TODO: IMPLEMENT */
+		this.addField("use5StepSequencer", 7);
 	}
 
 	onWrite(value) {
-		/* TODO: IMPLEMENT */
+		this.setValue(value);
+
+		this.apu.frameSequencer.reset();
+		this.apu.onQuarterFrameClock();
+		this.apu.onHalfFrameClock();
 	}
 }
 
@@ -444,6 +452,98 @@ class AudioRegisters {
 	}
 }
 
+const QUARTERS_4_STEP = [3729, 7457, 11186, 14916];
+const QUARTERS_5_STEP = [3729, 7457, 11186, 18641];
+
+class FrameSequencer {
+	constructor(apu) {
+		this.apu = apu;
+		this.reset();
+	}
+
+	reset() {
+		this.counter = 0;
+	}
+
+	step() {
+		this.counter++;
+
+		const use5StepSequencer = this.apu.registers.apuFrameCounter
+			.use5StepSequencer;
+
+		const quarters = use5StepSequencer ? QUARTERS_5_STEP : QUARTERS_4_STEP;
+		const isQuarter =
+			this.counter === quarters[0] ||
+			this.counter === quarters[1] ||
+			this.counter === quarters[2] ||
+			this.counter === quarters[3];
+		const isHalf = this.counter === quarters[1] || this.counter === quarters[3];
+		const isEnd = this.counter === quarters[3];
+
+		if (isQuarter) this.apu.onQuarterFrameClock();
+		if (isHalf) this.apu.onHalfFrameClock();
+
+		if (isEnd) this.reset();
+	}
+}
+
+const noteLengths = [
+	10,
+	254,
+	20,
+	2,
+	40,
+	4,
+	80,
+	6,
+	160,
+	8,
+	60,
+	10,
+	14,
+	12,
+	26,
+	14,
+	12,
+	16,
+	24,
+	18,
+	48,
+	20,
+	96,
+	22,
+	192,
+	24,
+	72,
+	26,
+	16,
+	28,
+	32,
+	30,
+];
+
+class LengthCounter {
+	constructor() {
+		this.counter = 0;
+	}
+
+	reset() {
+		this.counter = 0;
+	}
+
+	isActive() {
+		return this.counter > 0;
+	}
+
+	clock(isEnabled, isHalted) {
+		if (!isEnabled) {
+			this.reset();
+		} else if (this.isActive() && !isHalted) {
+			this.counter--;
+		}
+	}
+}
+
 const APU_SAMPLE_RATE = 44100;
 const DUTY_TABLE = [0.125, 0.25, 0.5, 0.75];
 
@@ -475,14 +575,20 @@ class PulseChannel {
 		this.timer = 0;
 		this.registers = this.apu.registers.pulses[this.id];
 		this.oscillator = new PulseOscillator();
+		this.lengthCounter = new LengthCounter();
 	}
 
 	sample() {
+		if (!this.isEnabled() || !this.lengthCounter.isActive())
+			return this.outputSample || 0;
+
 		this.oscillator.frequency = 1789773 / (16 * (this.timer + 1));
 		this.oscillator.dutyCycle = this.registers.control.dutyCycleId;
 		this.oscillator.volume = this.registers.control.volumeOrEnvelopePeriod;
 
-		return this.oscillator.sample();
+		this.outputSample = this.oscillator.sample();
+
+		return this.outputSample;
 	}
 
 	updateTimer() {
@@ -499,6 +605,15 @@ class PulseChannel {
 	isEnabled() {
 		return !!this.apu.registers.apuControl[this.enableFlagName];
 	}
+
+	quarterFrame() {}
+
+	halfFrame() {
+		this.lengthCounter.clock(
+			this.isEnabled(),
+			this.registers.control.envelopeLoopOrLengthCounterHalt
+		);
+	}
 }
 
 export default class APU {
@@ -509,6 +624,7 @@ export default class APU {
 		this.sample = 0;
 
 		this.registers = new AudioRegisters(this);
+		this.frameSequencer = new FrameSequencer(this);
 		this.channels = {
 			pulses: [
 				new PulseChannel(this, 0, "enablePulse1"),
@@ -521,6 +637,7 @@ export default class APU {
 		this.channels.pulses[0].step();
 		this.channels.pulses[1].step();
 		this.sampleCounter++;
+		this.frameSequencer.step();
 
 		if (this.sampleCounter === 20) {
 			this.sampleCounter = 0;
@@ -531,5 +648,15 @@ export default class APU {
 
 			onSample(this.sample, pulse1, pulse2);
 		}
+	}
+
+	onQuarterFrameClock() {
+		this.channels.pulses[0].quarterFrame();
+		this.channels.pulses[1].quarterFrame();
+	}
+
+	onHalfFrameClock() {
+		this.channels.pulses[0].halfFrame();
+		this.channels.pulses[1].halfFrame();
 	}
 }

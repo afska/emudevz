@@ -40,7 +40,7 @@
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 300,
-			"apu": "TestAPU.v3.js"
+			"apu": "TestAPU.v4.js"
 		}
 	],
 	"memory": {
