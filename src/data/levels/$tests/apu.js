@@ -1193,19 +1193,55 @@ it("updates the frame sequencer on every `step(...)` call", () => {
 
 // 5c.8 Pulse Channels (3/5): Length counter
 
-// it("ASD", () => {
-// 	const APU = mainModule.default.APU;
-// 	const apu = new APU({});
+it("`PulseChannel`: has a `lengthCounter` property", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// 	for (let i = 0; i < 5; i++) {
-// 		apu.frameSequencer.step = sinon.spy();
-// 		apu.step(() => {});
-// 		expect(apu.frameSequencer.step, "frameSequencer.step").to.have.been
-// 			.calledOnce;
-// 	}
-// })({
-// 	locales: {
-// 		es: "ASD",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.8"),
-// });
+	expect(
+		apu.channels.pulses[0].lengthCounter,
+		"channels.pulses[0].lengthCounter"
+	).to.be.an("object");
+	expect(
+		apu.channels.pulses[1].lengthCounter,
+		"channels.pulses[1].lengthCounter"
+	).to.be.an("object");
+})({
+	locales: {
+		es: "`PulseChannel`: tiene una propiedad `lengthCounter`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`LengthCounter`: has a `counter` property that starts at 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const pulse1 = apu.channels.pulses[0];
+	const pulse2 = apu.channels.pulses[1];
+
+	pulse1.lengthCounter.counter.should.equalN(0, "counter");
+	pulse2.lengthCounter.counter.should.equalN(0, "counter");
+})({
+	locales: {
+		es: "`LengthCounter`: tiene una propiedad `counter` que empieza en 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`LengthCounter`: has a `reset()` method that sets `counter` = 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const pulse1 = apu.channels.pulses[0];
+	const pulse2 = apu.channels.pulses[1];
+
+	pulse1.lengthCounter.should.respondTo("reset");
+	pulse2.lengthCounter.should.respondTo("reset");
+
+	// TODO: STOP REPEATING PULSES
+})({
+	locales: {
+		es: "`LengthCounter`: tiene un método `reset()` que asigna `counter` = 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
