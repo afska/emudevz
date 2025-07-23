@@ -1,5 +1,50 @@
 ---
 main:
   messages:
-  - coming soon!
+  - cuando está habilitada, la envolvente puede disminuir gradualmente el volumen del canal, produciendo un <decay> (desvanecimiento) 📉
+  - siempre comienza en volumen máximo (~15~) y los juegos controlan qué tan lento disminuye el volumen configurando un período de divisor
+  - cuando el volumen llega a 0, puede reiniciarse a 15 si su bandera de bucle está encendida
+  responses:
+  - ¡suena fácil! [exercise]
+
+exercise:
+  messages:
+  - |-
+    📚  crea una clase 📏  `VolumeEnvelope` con lo siguiente:
+    **constructor()**:
+      **->** asigna ```javascript this.startFlag = false```
+      **->** asigna ```javascript this.dividerCount = 0```
+      **->** asigna ```javascript this.volume = 0```
+    **clock(period, loop)**:
+      **->** si la bandera de inicio (<start flag>) está encendida:
+        **->** apaga la bandera de inicio
+        **->** asigna el volumen a 15
+        **->** asigna el contador del divisor a `period`
+        **->** retorna
+      **->** si el contador del divisor es mayor que 0:
+        **->** decrementa el contador del divisor
+        **->** retorna
+      **->** __(en este punto, el divisor es 0, así que hay que actuar)__
+      **->** reinicia el contador del divisor a `period`
+      **->** si el volumen es 0:
+        **->** si `loop`:
+          **->** reinicia el volumen a 15
+      **->** si no:
+        **->** decrementa el volumen
+  - |-
+    📚  en 🟦  `PulseChannel`:
+    **->** importa esa clase y agrega una propiedad `volumeEnvelope` con una nueva instancia
+    **->** modifica **sample()** para que el volumen del oscilador dependa de la bandera `constantVolume` de 🟦  PulseControl:
+      **->** si se usa volumen constante, mantiene la lógica actual
+      **->** si no, usa ```javascript this.volumeEnvelope.volume```
+    **->** implementa este método:
+    **quarterFrame()**:
+      **->** llama al método `clock(...)` de la envolvente
+        (para `period`, usa `volumeOrEnvelopePeriod` de 🟦  PulseControl)
+        (para `loop`, usa `envelopeLoopOrLengthCounterHalt` de 🟦  PulseControl)
+  - |-
+    📚  implementa en 🕛  `PulseTimerHighLCL`:
+    **onWrite(value)**:
+      **->** __mantiene el comportamiento existente__
+      **->** activa la bandera `startFlag` de la envolvente del canal
   responses: []

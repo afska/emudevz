@@ -15,7 +15,7 @@ sequence:
   - in the four-step sequence, quarter frames occur in cycles 3729, 7457, 11186, 14916
   - in the five-step sequence, quarter frames occur in cycles 3729, 7457, 11186, 18641
   - half frames occur in the <second> and <fourth> quarter of each sequence
-  - and when the counter reaches the fourth quarter, it resets back to 0
+  - and when the counter reaches the fourth quarter, it resets to 0
   - <{sequencer.png}>
   - games need to react to these events for several things, for example, silencing the channels when the notes end!
   responses:

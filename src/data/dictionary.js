@@ -277,9 +277,17 @@ const dictionary = {
 			also: { es: "Divisor|_Divisores" },
 			icon: "⏰",
 			en:
-				"A counter that reduces the system's master clock to a slower periodic signal by counting down from a set value and reloading when it reaches zero. <br /><br />It is used to clock other units at a slower rate.",
+				"A counter that reduces the system's master clock to a slower periodic signal by counting down from a set value and reloading when it reaches zero. <br /><br />It is used to clock other units at a slower rate. <br /><br />See also: Divider period.",
 			es:
-				"Un contador que reduce el reloj maestro del sistema a una señal periódica más lenta al descontar desde un valor fijo y recargarse al llegar a cero. <br /><br />Se usa para sincronizar otras unidades a una velocidad más baja.",
+				"Un contador que reduce el reloj maestro del sistema a una señal periódica más lenta al descontar desde un valor fijo y recargarse al llegar a cero. <br /><br />Se usa para sincronizar otras unidades a una velocidad más baja. <br /><br />Ver también: Período de dividor",
+		},
+		"Divider period": {
+			also: { es: "Período de divisor" },
+			icon: "⏰",
+			en:
+				"The initial value of a divider. It determines how frequently a divider clocks its signal. <br /><br />For example, with a divider period of `15`, the divider will count down from `15` to `0`, reload back to `15`, and generate one timing pulse each time it reaches `0`.",
+			es:
+				"El valor inicial de un divisor. Determina con qué frecuencia genera su señal. <br /><br />Por ejemplo, con un período de divisor de `15`, este contará de `15` a `0`, se recargará a `15` y generará un pulso de temporización cada vez que llegue a `0`.",
 		},
 		"DMA|DMA transfer": {
 			also: { es: "DMA|Transferencia DMA" },
@@ -1045,9 +1053,9 @@ const dictionary = {
 			},
 			icon: "📉",
 			en:
-				"A mechanism that automatically adjusts a channel's output volume over time according to its rate and loop settings. <br /><br />It's used to produce _fade in/out_ effects.",
+				"A mechanism that automatically adjusts a channel's output volume over time according to its rate and loop settings. <br /><br />It's used to produce _fade out_ effects.",
 			es:
-				"Un mecanismo que ajusta automáticamente el volumen de salida de un canal a lo largo del tiempo según sus opciones de tasa y bucle. <br /><br />Se usa para producir efectos _fade in/out_.",
+				"Un mecanismo que ajusta automáticamente el volumen de salida de un canal a lo largo del tiempo según sus opciones de tasa y bucle. <br /><br />Se usa para producir efectos _fade out_.",
 		},
 		VRAM: {
 			icon: "🐏",

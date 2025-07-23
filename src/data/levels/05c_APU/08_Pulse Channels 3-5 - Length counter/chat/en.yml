@@ -70,15 +70,15 @@ exercise:
     **quarterFrame()**:
       **[!]** leave empty for now
     **halfFrame()**:
-      **->** call the `clock(...)` method of the length counter
+      **->** calls the `clock(...)` method of the length counter
         (use ```javascript this.isEnabled()``` as the first argument)
         (for the halt flag, look for `envelopeLoopOrLengthCounterHalt` in the 🟦  PulseControl register)
   - |-
     📚  in 🔊  `APU`:
     **onQuarterFrameClock()**:
-      **->** call `quarterFrame()` on the two pulse channel instances
+      **->** calls `quarterFrame()` on the two pulse channel instances
     **onHalfFrameClock()**:
-      **->** call `halfFrame()` on the two pulse channel instances
+      **->** calls `halfFrame()` on the two pulse channel instances
   - |-
     📚  implement in 🕛  `PulseTimerHighLCL`:
     **onLoad()**:
