@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "📉 Pulse Channels (4/5): Volume envelope",
-		"es": "📉 Canales Pulso (4/5): Envolvente de volumen"
+		"en": "🧹 Pulse Channels (5/5): Frequency sweep",
+		"es": "🧹 Canales Pulso (5/5): Barrido de frecuencia"
 	},
 	"ui": {
 		"layout": "tripleRight",
