@@ -1,5 +1,16 @@
 ---
 main:
   messages:
-  - coming soon!
+  - if you ran the emulator, you probably noticed that <jump sounds> and other <sfx> sound a bit...
+  - uninspiring
+  - the sweep unit can gradually shift the frequency up or down, creating the most common jump effect produced by plumbers! 👨‍🔧
+  responses:
+  - how does it work? [how]
+
+how:
+  messages:
+  - kinda like the envelope, but instead of shifting volume, it shifts pitch!
+  - it's a bit more complex tho
+  - games write to 🧹  PulseSweep a divider period and a shift count (which determine how slowly the frequency will shift), a <negate flag> (whether the shift is downwards or upwards) and an <enable flag> which turns on the sweep unit
+  - "// TODO: CONTINUE"
   responses: []
