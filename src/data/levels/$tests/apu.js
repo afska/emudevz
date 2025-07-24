@@ -1611,3 +1611,190 @@ it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the l
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
+
+// 5c.9 Pulse Channels (4/5): Volume envelope
+
+it("`PulseChannel`: has a `volumeEnvelope` property", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		expect(
+			apu.channels.pulses[i].volumeEnvelope,
+			`[${i}].volumeEnvelope`
+		).to.be.an("object");
+	}
+})({
+	locales: { es: "`PulseChannel`: tiene una propiedad `volumeEnvelope`" },
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+it("`VolumeEnvelope`: has `startFlag`, `dividerCount`, `volume` initialized to false, 0, 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const envelope = apu.channels.pulses[i].volumeEnvelope;
+		envelope.startFlag.should.equal(false, `[${i}]::startFlag`);
+		envelope.dividerCount.should.equalN(0, `[${i}]::dividerCount`);
+		envelope.volume.should.equalN(0, `[${i}]::volume`);
+	}
+})({
+	locales: {
+		es:
+			"`VolumeEnvelope`: tiene `startFlag`, `dividerCount` y `volume` inicializados en false, 0, 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+it("`VolumeEnvelope`: has a `clock(...)` method", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		apu.channels.pulses[i].volumeEnvelope.should.respondTo("clock");
+	}
+})({
+	locales: { es: "`VolumeEnvelope`: tiene un método `clock(...)`" },
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+it("`VolumeEnvelope`: `clock(...)` with `startFlag = true` clears it, sets `volume` to 15 and `dividerCount` to period", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const envelope = apu.channels.pulses[0].volumeEnvelope;
+	envelope.startFlag = true;
+
+	envelope.clock(8, false);
+
+	envelope.startFlag.should.equalN(false, "startFlag");
+	envelope.volume.should.equalN(15, "volume");
+	envelope.dividerCount.should.equalN(8, "dividerCount");
+})({
+	locales: {
+		es:
+			"`VolumeEnvelope`: `clock(...)` con `startFlag = true` la limpia, fija `volume` en 15 y `dividerCount` en el periodo",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+it("`VolumeEnvelope`: `clock(...)` when `dividerCount > 0` decrements it and leaves the rest unchanged", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const envelope = apu.channels.pulses[0].volumeEnvelope;
+	envelope.dividerCount = 3;
+	envelope.volume = 7;
+
+	envelope.clock(5, false);
+
+	envelope.dividerCount.should.equalN(2, "dividerCount");
+	envelope.volume.should.equalN(7, "volume");
+	envelope.startFlag.should.equalN(false, "startFlag");
+})({
+	locales: {
+		es:
+			"`VolumeEnvelope`: `clock(...)` cuando `dividerCount > 0` lo decrementa y deja el resto intacto",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume > 0`, resets `dividerCount` and decrements `volume`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const envelope = apu.channels.pulses[0].volumeEnvelope;
+	envelope.dividerCount = 0;
+	envelope.volume = 5;
+
+	envelope.clock(9, false);
+
+	envelope.dividerCount.should.equalN(9);
+	envelope.volume.should.equalN(4);
+})({
+	locales: {
+		es:
+			"`VolumeEnvelope`: `clock(...)` cuando `dividerCount = 0` y `volume > 0`, reinicia `dividerCount` y decrementa `volume`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with `loop = false`, resets `dividerCount` only", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const envelope = apu.channels.pulses[0].volumeEnvelope;
+	envelope.dividerCount = 0;
+	envelope.volume = 0;
+
+	envelope.clock(6, false);
+
+	envelope.dividerCount.should.equalN(6);
+	envelope.volume.should.equalN(0);
+})({
+	locales: {
+		es:
+			"`VolumeEnvelope`: `clock(...)` cuando `dividerCount = 0` y `volume = 0` con `loop = false`, reinicia solo `dividerCount`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with `loop = true`, resets both `dividerCount` and `volume`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const envelope = apu.channels.pulses[0].volumeEnvelope;
+	envelope.dividerCount = 0;
+	envelope.volume = 0;
+
+	envelope.clock(2, true);
+
+	envelope.dividerCount.should.equalN(2);
+	envelope.volume.should.equalN(15);
+})({
+	locales: {
+		es:
+			"`VolumeEnvelope`: `clock(...)` cuando `dividerCount = 0` y `volume = 0` con `loop = true`, reinicia `dividerCount` y `volume`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+it("`PulseChannel`: `quarterFrame()` updates the volume envelope", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		channel.volumeEnvelope.clock = sinon.spy();
+
+		const period = 3;
+		const loop = 1;
+		channel.registers.control.onWrite(period | (loop << 5));
+		channel.quarterFrame();
+
+		channel.volumeEnvelope.clock.should.have.been.calledWith(period, loop);
+	}
+})({
+	locales: {
+		es: "`PulseChannel`: `quarterFrame()` actualiza la envolvente de volumen",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+it("`PulseTimerHighLCL`: writes set the `startFlag` on the channel's volume envelope", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.write(0x4003, 0b01000000);
+	apu.channels.pulses[0].volumeEnvelope.startFlag.should.equal(true);
+
+	apu.registers.write(0x4007, 0b11000000);
+	apu.channels.pulses[1].volumeEnvelope.startFlag.should.equal(true);
+})({
+	locales: {
+		es:
+			"`PulseTimerHighLCL`: las escrituras encienden `startFlag` en la envolvente de volumen del canal",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
