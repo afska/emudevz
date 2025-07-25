@@ -90,7 +90,7 @@ Todas las instrucciones de bifurcación **condicionales** deben incrementar `cpu
 
 #### 🧙‍♂️ Sistema
 
-| Código | Nombre              | Arg | Descripción                                                                                                                                                                                                  |
-| ------ | ------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `BRK`  | Forzar Interrupción | 🚫  | Fuerza la generación de una solicitud de interrupción.<br><br>El `[PC]` y las banderas (con el bit `4` encendido) se ponen en la pila, luego el vector de interrupciones IRQ en `$FFFE/F` se carga a `[PC]`. |
-| `NOP`  | No Operar           | 🚫  | No causa ningún tipo de cambio.                                                                                                                                                                              |
+| Código | Nombre              | Arg | Descripción                                                                                                                                                                                                |
+| ------ | ------------------- | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BRK`  | Forzar Interrupción | 🚫  | Fuerza la generación de una solicitud de interrupción.<br><br>El `[PC]` y las banderas (con el bit `4` encendido) se ponen en la pila, luego el vector de interrupción IRQ en `$FFFE/F` se carga a `[PC]`. |
+| `NOP`  | No Operar           | 🚫  | No causa ningún tipo de cambio.                                                                                                                                                                            |
