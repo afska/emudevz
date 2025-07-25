@@ -25,21 +25,24 @@ exercise:
       **->** asigna ```javascript this.dividerCount = 0```
       **->** asigna ```javascript this.volume = 0```
     **clock(period, loop)**:
-      **->** si la bandera de inicio (<start flag>) está encendida:
-        **->** apaga la bandera de inicio
-        **->** asigna el volumen a 15
-        **->** asigna el contador del divisor a `period`
+      **->** si la <bandera de inicio> (start flag) está encendida:
+        **->** apaga la <bandera de inicio>
+        **->** asigna 15 al <volumen>
+        **->** asigna `period` al <contador del divisor> (divider count)
         **->** retorna
-      **->** si el contador del divisor es mayor que 0:
-        **->** decrementa el contador del divisor
+
+      **->** si el <contador del divisor> es mayor que 0:
+        **->** decrementa el <contador del divisor>
         **->** retorna
+
       **->** __(en este punto, el divisor es 0, así que hay que actuar)__
-      **->** reinicia el contador del divisor a `period`
-      **->** si el volumen es 0:
+
+      **->** reinicia el <contador del divisor> a `period`
+      **->** si el <volumen> es 0:
         **->** si `loop`:
-          **->** reinicia el volumen a 15
+          **->** reinicia el <volumen> a 15
       **->** si no:
-        **->** decrementa el volumen
+        **->** decrementa el <volumen>
   - |-
     📚  en 🟦  `PulseChannel`:
     **->** importa esa clase y agrega una propiedad `volumeEnvelope` con una nueva instancia

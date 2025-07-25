@@ -19,12 +19,12 @@ how:
   - <{frequency_sweep.png;30x30}>
   - |-
     each half frame the divider counts until its period, and if enabled, it calculates the change amount like this:
-      ```javascript const sweepDelta = channel.timer >> shiftCount```
+      ```javascript const sweepDelta = channel.timer >> shiftCount;```
   - |-
     then, depending on the <negate flag>, it increments or decrements the timer:
-      ```javascript channel.timer += sweepDelta * (negateFlag ? -1 : 1)```
+      ```javascript channel.timer += sweepDelta * (negateFlag ? -1 : 1);```
   responses:
-  - (*) what does the >> do? [shifting]
+  - (*) what does the <right shift> do? [shifting]
   - awesome, I guess we can now code it [exercise]
 
 shifting:
@@ -38,5 +38,50 @@ shifting:
 
 exercise:
   messages:
-  - // TODO
+  - |-
+    📚  implement in 🧹  `PulseSweep`:
+    **onLoad()**:
+      **->** uses ```javascript this.addField(...)``` to add 4 fields: `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`
+      (use 📄  ~/docs/apu/audio_registers.en.md~ for reference)
+    **onWrite(value)**:
+      **->** sets the value with ```javascript this.setValue(...)```
+  - |-
+    📚  create a 🧹  `FrequencySweep` class with the following:
+    **constructor(channel)**:
+      **->** saves the parameter as a property (```javascript this.channel```)
+      **->** assigns ```javascript this.startFlag = false```
+      **->** sets ```javascript this.dividerCount = 0```
+      **->** sets ```javascript this.mute = false```
+    **clock()**:
+      **->** if (
+          the <enabled flag> is set <AND>
+          the <shift count> is greater than 0 <AND>
+          the <divider count> is 0 <AND>
+          ```javascript !this.mute```
+        ):
+          ```javascript const sweepDelta = this.channel.timer >> register.shiftCount;
+          this.channel.timer += sweepDelta * (register.negateFlag ? -1 : 1);```
+      
+      **->** if the <divider count> is 0 <OR> the <start flag> is set
+        **->** sets the <divider count> to 🧹  PulseSweep's `dividerPeriodMinusOne` + 1
+        **->** clears the <start flag>
+      **->** else:
+        **->** decrements the <divider count>
+      
+      **->** assigns ```javascript this.mute = this.channel.timer < 8 || this.channel.timer > 0x7ff```
+  - |-
+    📚  in 🟦  `PulseChannel`:
+    **->** import that class and add a `frequencySweep` property with a new instance (pass ```javascript this``` to the constructor!)
+    **->** modify **sample()** so the early return also checks for ```javascript this.frequencySweep.mute```
+    **->** modify **step()** so the `updateTimer()` method is only called if 🧹  PulseSweep's `enabledFlag` is clear
+    **->** implement this method:
+    **halfFrame()**:
+      **->** __keep clocking the envelope like before__
+      **->** calls ```javascript this.frequencySweep.clock()```
+  - |-
+    📚  ah, right, in 🧹  `PulseSweep`, one more thing:
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** we should set the `startFlag` of the channel's `frequencySweep` here!
+      (this forces the divider to reload in the next tick)
   responses: []

@@ -25,21 +25,24 @@ exercise:
       **->** sets ```javascript this.dividerCount = 0```
       **->** sets ```javascript this.volume = 0```
     **clock(period, loop)**:
-      **->** if the start flag is set:
-        **->** clears the start flag
-        **->** sets the volume to 15
-        **->** sets the divider count to `period`
+      **->** if the <start flag> is set:
+        **->** clears the <start flag>
+        **->** sets the <volume> to 15
+        **->** sets the <divider count> to `period`
         **->** returns
-      **->** if the divider count is greater than 0:
-        **->** decrements the divider count
+
+      **->** if the <divider count> is greater than 0:
+        **->** decrements the <divider count>
         **->** returns
+
       **->** __(at this point, the divider is 0, so we must act)__
-      **->** resets the divider count to `period`
-      **->** if the volume is 0:
+      
+      **->** resets the <divider count> to `period`
+      **->** if the <volume> is 0:
         **->** if `loop`:
-          **->** resets the volume to 15
+          **->** resets the <volume> to 15
       **->** else:
-        **->** decrements the volume
+        **->** decrements the <volume>
   - |-
     📚  in 🟦  `PulseChannel`:
     **->** import that class and add a `volumeEnvelope` property with a new instance
