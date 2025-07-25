@@ -3,7 +3,7 @@ main:
   messages:
   - if you ran the emulator, you probably noticed that <jump sounds> and other <sfx> sound a bit...
   - uninspiring
-  - the sweep unit can gradually shift the frequency up or down, creating the most common jump effect produced by plumbers! 👨‍🔧
+  - the sweep unit can gradually shift the frequency up or down, creating the most common jump effect produced by <plumbers>! 👨‍ 🔧
   responses:
   - how does it work? [how]
 
