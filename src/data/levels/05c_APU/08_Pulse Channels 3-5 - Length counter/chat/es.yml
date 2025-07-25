@@ -89,5 +89,5 @@ exercise:
       **->** __mantén el comportamiento existente__
       **->** determina la nueva longitud accediendo al array `noteLengths` con el índice ```javascript this.lengthCounterLoad```
         usa 📄  ~/lib/apu/noteLengths.js~ para obtener el array
-      **->** asigna la propiedad `counter` del contador de longitud del canal al nuevo valor
+      **->** asigna el nuevo valor a la propiedad `counter` del contador de longitud
   responses: []

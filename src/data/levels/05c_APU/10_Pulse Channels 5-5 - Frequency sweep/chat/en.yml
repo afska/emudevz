@@ -11,17 +11,17 @@ how:
   messages:
   - kinda like the envelope, but instead of changing <volume>, it changes the channel's timer, affecting the <pitch>!
   - it's a bit more complex tho, because the change is not <constant>
-  - "games write to 🧹  PulseSweep 4 parameters:"
+  - "games write 4 parameters to 🧹  PulseSweep:"
   - ⏰  a divider period, which determines how slowly the frequency will change
   - ➗  a <shift count>, which determines how gradual the transition will be
-  - ⛔  a <negate flag>, which defines if the change is downwards or upwards
+  - ⛔  a <negate flag>, which determines whether the change is downwards or upwards
   - 🔛  an <enable flag>, which turns on the sweep unit
   - <{frequency_sweep.png;30x30}>
   - |-
-    each half frame the divider counts until its period, and if enabled, it calculates the change amount like this:
+    each half frame, the divider counts down from its period to 0, and if enabled, it calculates the amount of change like this:
       ```javascript const sweepDelta = channel.timer >> shiftCount;```
   - |-
-    then, depending on the <negate flag>, it increments or decrements the timer:
+    then, depending on the <negate flag>, it increases or decreases the timer:
       ```javascript channel.timer += sweepDelta * (negateFlag ? -1 : 1);```
   responses:
   - (*) what does the <right shift> do? [shifting]
@@ -49,7 +49,7 @@ exercise:
     📚  create a 🧹  `FrequencySweep` class with the following:
     **constructor(channel)**:
       **->** saves the parameter as a property (```javascript this.channel```)
-      **->** assigns ```javascript this.startFlag = false```
+      **->** sets ```javascript this.startFlag = false```
       **->** sets ```javascript this.dividerCount = 0```
       **->** sets ```javascript this.mute = false```
     **clock()**:
@@ -68,7 +68,7 @@ exercise:
       **->** else:
         **->** decrements the <divider count>
       
-      **->** assigns ```javascript this.mute = this.channel.timer < 8 || this.channel.timer > 0x7ff```
+      **->** sets ```javascript this.mute = this.channel.timer < 8 || this.channel.timer > 0x7ff```
   - |-
     📚  in 🟦  `PulseChannel`:
     **->** import that class and add a `frequencySweep` property with a new instance (pass ```javascript this``` to the constructor!)

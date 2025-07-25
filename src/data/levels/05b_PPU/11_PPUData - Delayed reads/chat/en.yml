@@ -19,7 +19,7 @@ delay:
     **onRead()**:
       **->** saves ```javascript this.buffer``` in a variable named `data`
       **->** reads from the PPU address ```javascript ppuAddr.address``` and saves the result into ```javascript this.buffer```
-      **->** if the address is between $3F00 and $3FFF, assigns ```javascript data = this.buffer``` (skips the buffer)
+      **->** if the address is between $3F00 and $3FFF, sets ```javascript data = this.buffer``` (skips the buffer)
       **->** calls ```javascript this._incrementAddress()```
       **->** returns `data`
   responses: []

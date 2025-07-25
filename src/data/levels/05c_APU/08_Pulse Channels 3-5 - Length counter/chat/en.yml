@@ -89,5 +89,5 @@ exercise:
       **->** __keep existing behavior__
       **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
         use 📄  ~/lib/apu/noteLengths.js~ to get the array
-      **->** assigns the `counter` property of the channel's length counter to the new length
+      **->** assigns the new length to the `counter` property of the channel's length counter
   responses: []
