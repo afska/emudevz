@@ -5,6 +5,15 @@ main:
   - it always starts at max volume (~15~) and games control how slowly the volume decreases by setting a divider period
   - when the volume reaches 0, it can loop back to 15 if its loop flag is set
   responses:
+  - and when it's disabled? [disabled]
+
+disabled:
+  messages:
+  - when disabled, the channel just outputs the volume set in 🟦  PulseControl's first 4 bits
+  - <{volume_envelope_disabled.png}>
+  - note how they repurpose those 4 bits as the divider period when it's enabled
+  - <{volume_envelope_enabled.png}>
+  responses:
   - sounds easy! [exercise]
 
 exercise:

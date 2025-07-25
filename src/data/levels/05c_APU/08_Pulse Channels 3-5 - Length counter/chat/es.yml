@@ -28,6 +28,7 @@ load:
   - escribe en un registro que tiene <Length Counter Load> (o su forma abreviada, <LCL>) en su nombre
   - en el caso de los Canales de Pulso, es 🕛  PulseTimerHighLCL, donde los 5 bits altos son el <índice de longitud>
   - ese índice apunta a una tabla fija con todas las longitudes disponibles, revisa 📄  ~/lib/apu/noteLengths.js~
+  - <{length_counter_load.png}>
   responses:
   - ¿y si un juego necesita una longitud que no está en la lista? [otherlengths]
 
@@ -43,6 +44,7 @@ decrement:
   messages:
   - solo si su <bandera de detención> (<halt>) no está activada
   - esa sería el bit <L> en 🟦  PulseControl
+  - <{length_counter_halt.png;30x30}>
   responses:
   - ...length
 

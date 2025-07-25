@@ -5,7 +5,16 @@ main:
   - siempre comienza en volumen máximo (~15~) y los juegos controlan qué tan lento disminuye el volumen configurando un período de divisor
   - cuando el volumen llega a 0, puede reiniciarse a 15 si su bandera de bucle está encendida
   responses:
-  - ¡suena fácil! [exercise]
+  - ¿y cuando está deshabilitada? [disabled]
+
+disabled:
+  messages:
+  - cuando está deshabilitada, el canal simplemente emite el volumen establecido en los primeros 4 bits de 🟦  PulseControl
+  - <{volume_envelope_disabled.png}>
+  - observa cómo reutilizan esos 4 bits como período de divisor cuando está habilitada
+  - <{volume_envelope_enabled.png}>
+  responses:
+  - suena fácil! [exercise]
 
 exercise:
   messages:
