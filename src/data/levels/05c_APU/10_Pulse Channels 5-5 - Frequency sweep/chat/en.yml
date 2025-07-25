@@ -3,14 +3,40 @@ main:
   messages:
   - if you ran the emulator, you probably noticed that <jump sounds> and other <sfx> sound a bit...
   - uninspiring
-  - the sweep unit can gradually shift the frequency up or down, creating the most common jump effect produced by <plumbers>! 👨‍ 🔧
+  - the sweep unit can gradually change the frequency up or down, creating the most common jump effect produced by <plumbers>! 👨‍ 🔧
   responses:
   - how does it work? [how]
 
 how:
   messages:
-  - kinda like the envelope, but instead of shifting volume, it shifts pitch!
-  - it's a bit more complex tho
-  - games write to 🧹  PulseSweep a divider period and a shift count (which determine how slowly the frequency will shift), a <negate flag> (whether the shift is downwards or upwards) and an <enable flag> which turns on the sweep unit
-  - "// TODO: CONTINUE"
+  - kinda like the envelope, but instead of changing <volume>, it changes the channel's timer, affecting the <pitch>!
+  - it's a bit more complex tho, because the change is not <constant>
+  - "games write to 🧹  PulseSweep 4 parameters:"
+  - ⏰  a divider period, which determines how slowly the frequency will change
+  - ➗  a <shift count>, which determines how gradual the transition will be
+  - ⛔  a <negate flag>, which defines if the change is downwards or upwards
+  - 🔛  an <enable flag>, which turns on the sweep unit
+  - <{frequency_sweep.png;30x30}>
+  - |-
+    each half frame the divider counts until its period, and if enabled, it calculates the change amount like this:
+      ```javascript const sweepDelta = channel.timer >> shiftCount```
+  - |-
+    then, depending on the <negate flag>, it increments or decrements the timer:
+      ```javascript channel.timer += sweepDelta * (negateFlag ? -1 : 1)```
+  responses:
+  - (*) what does the >> do? [shifting]
+  - awesome, I guess we can now code it [exercise]
+
+shifting:
+  messages:
+  - "`number >> 1` shifts the bits of `number` to the right, once"
+  - this divides the number by 2
+  - "`number >> 2` does it twice, and thus, divides the number by 4"
+  - so, in practice, higher <shift counts> lead to more gradual changes
+  responses: 
+  - ...how
+
+exercise:
+  messages:
+  - // TODO
   responses: []
