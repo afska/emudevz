@@ -3,7 +3,7 @@ main:
   messages:
   - if you ran the emulator, you probably noticed that <jump sounds> and other <sfx> sound a bit...
   - uninspiring
-  - the sweep unit can gradually change the frequency up or down, creating the most common jump effect produced by <plumbers>! 👨‍ 🔧
+  - the sweep unit can gradually change the frequency up or down, creating the best jump effect produced by <plumbers>! 👨‍ 🔧
   responses:
   - how does it work? [how]
 
@@ -18,7 +18,7 @@ how:
   - 🔛  an <enable flag>, which turns on the sweep unit
   - <{frequency_sweep.png;30x30}>
   - |-
-    each half frame, the divider counts down from its period to 0, and if enabled, it calculates the amount of change like this:
+    each half frame the divider counts down, and if the count reaches 0, it calculates the amount of change like this:
       ```javascript const sweepDelta = channel.timer >> shiftCount;```
   - |-
     then, depending on the <negate flag>, it increases or decreases the timer:
@@ -63,7 +63,7 @@ exercise:
           this.channel.timer += sweepDelta * (register.negateFlag ? -1 : 1);```
       
       **->** if the <divider count> is 0 <OR> the <start flag> is set
-        **->** sets the <divider count> to 🧹  PulseSweep's `dividerPeriodMinusOne` + 1
+        **->** sets ```javascript this.dividerCount``` to 🧹  PulseSweep's `dividerPeriodMinusOne` + 1
         **->** clears the <start flag>
       **->** else:
         **->** decrements the <divider count>
@@ -72,7 +72,7 @@ exercise:
   - |-
     📚  in 🟦  `PulseChannel`:
     **->** import that class and add a `frequencySweep` property with a new instance (pass ```javascript this``` to the constructor!)
-    **->** modify **sample()** so the early return also checks for ```javascript this.frequencySweep.mute```
+    **->** modify **sample()** so the <early return> also checks for ```javascript this.frequencySweep.mute```
     **->** modify **step()** so the `updateTimer()` method is only called if 🧹  PulseSweep's `enabledFlag` is clear
     **->** implement this method:
     **halfFrame()**:

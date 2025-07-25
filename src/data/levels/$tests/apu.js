@@ -1674,7 +1674,7 @@ it("`VolumeEnvelope`: `clock(...)` with `startFlag = true` clears it, sets `volu
 })({
 	locales: {
 		es:
-			"`VolumeEnvelope`: `clock(...)` con `startFlag = true` la limpia, fija `volume` en 15 y `dividerCount` en el periodo",
+			"`VolumeEnvelope`: `clock(...)` con `startFlag = true` lo apaga, fija `volume` en 15 y `dividerCount` en el periodo",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.9"),
 });

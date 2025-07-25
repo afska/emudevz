@@ -1,5 +1,87 @@
 ---
 main:
   messages:
-  - coming soon!
+  - si ejecutaste el emulador, probablemente notaste que los <sonidos de salto> y otros <sfx> suenan un poco...
+  - aburridos
+  - la unidad de barrido puede cambiar gradualmente la frecuencia hacia arriba o hacia abajo, ¡creando el mejor efecto de salto producido por <plomeros>! 👨‍ 🔧
+  responses:
+  - ¿cómo funciona? [how]
+
+how:
+  messages:
+  - es algo parecido a la envolvente, pero en vez de cambiar el <volumen>, cambia el timer del canal, ¡afectando el <pitch>!
+  - es un poco más complejo igual, porque el cambio no es <constante>
+  - "los juegos escriben 4 parámetros en 🧹  PulseSweep:"
+  - ⏰  un periodo de divisor, que determina qué tan lento cambiará la frecuencia
+  - ➗  un <shift count>, que determina qué tan gradual será la transición
+  - ⛔  un <negate flag>, que define si el cambio será hacia abajo o hacia arriba
+  - 🔛  un <enable flag>, que activa la unidad de barrido
+  - <{frequency_sweep.png;30x30}>
+  - |-
+    cada half frame el divisor cuenta hacia abajo, y si la cuenta llega a 0, calcula la cantidad de cambio así:
+      ```javascript const sweepDelta = channel.timer >> shiftCount;```
+  - |-
+    luego, dependiendo del <negate flag>, incrementa o disminuye el timer:
+      ```javascript channel.timer += sweepDelta * (negateFlag ? -1 : 1);```
+  responses:
+  - (*) ¿qué hace el <right shift>? [shifting]
+  - genial, supongo que ahora podemos programarlo [exercise]
+
+shifting:
+  messages:
+  - "`number >> 1` desplaza los bits de `number` a la derecha, una vez"
+  - esto divide el número por 2
+  - "`number >> 2` lo hace dos veces, y por lo tanto, divide el número por 4"
+  - así que, en la práctica, mayores <shift counts> llevan a cambios más graduales
+  responses: 
+  - ...how
+
+exercise:
+  messages:
+  - |-
+    📚  implementa en 🧹  `PulseSweep`:
+    **onLoad()**:
+      **->** usa ```javascript this.addField(...)``` para agregar 4 campos: `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`
+      (usa 📄  ~/docs/apu/audio_registers.es.md~ como referencia)
+    **onWrite(value)**:
+      **->** asigna el valor con ```javascript this.setValue(...)```
+  - |-
+    📚  crea una clase 🧹  `FrequencySweep` con lo siguiente:
+    **constructor(channel)**:
+      **->** guarda el parámetro como una propiedad (```javascript this.channel```)
+      **->** asigna ```javascript this.startFlag = false```
+      **->** asigna ```javascript this.dividerCount = 0```
+      **->** asigna ```javascript this.mute = false```
+    **clock()**:
+      **->** si (
+          el <enable flag> está encendido <Y>
+          el <shift count> es mayor que 0 <Y>
+          el <divider count> es 0 <Y>
+          ```javascript !this.mute```
+        ):
+          ```javascript const sweepDelta = this.channel.timer >> register.shiftCount;
+          this.channel.timer += sweepDelta * (register.negateFlag ? -1 : 1);```
+      
+      **->** si el <divider count> es 0 <O> el <start flag> está encendido
+        **->** asigna el valor de `dividerPeriodMinusOne` de 🧹  PulseSweep + 1 a ```javascript this.dividerCount```
+        **->** apaga el <start flag>
+      **->** si no:
+        **->** decrementa el <divider count>
+      
+      **->** asigna ```javascript this.mute = this.channel.timer < 8 || this.channel.timer > 0x7ff```
+  - |-
+    📚  en 🟦  `PulseChannel`:
+    **->** importa esa clase y agrega una propiedad `frequencySweep` con una nueva instancia (¡pasa ```javascript this``` al constructor!)
+    **->** modifica **sample()** para que el <return temprano> también revise ```javascript this.frequencySweep.mute```
+    **->** modifica **step()** para que el método `updateTimer()` solo se llame si el `enabledFlag` de 🧹  PulseSweep está apagado
+    **->** implementa este método:
+    **halfFrame()**:
+      **->** __continúa clockeando la envolvente como antes__
+      **->** llama a ```javascript this.frequencySweep.clock()```
+  - |-
+    📚  ah, cierto, en 🧹  `PulseSweep`, una cosa más:
+    **onWrite(value)**:
+      **->** __mantén el comportamiento actual__
+      **->** aquí deberíamos activar el `startFlag` del `frequencySweep` del canal
+      (esto fuerza al divisor a recargarse en el siguiente tick)
   responses: []
