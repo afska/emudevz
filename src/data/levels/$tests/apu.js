@@ -1404,6 +1404,10 @@ it("`PulseChannel`: `sample()` just returns the last sample if the channel is di
 	// disable all channels
 	apu.registers.apuControl.setValue(0);
 
+	// change volume
+	for (let i = 0; i < 2; i++)
+		apu.registers.pulses[i].control.onWrite(0b00110000 | ((i + 1) * 2));
+
 	// set another timer value
 	apu.channels.pulses[0].timer = 123;
 	apu.channels.pulses[0].timer = 456;
@@ -1468,7 +1472,11 @@ it("`PulseChannel`: `sample()` just returns the last sample if the length counte
 	apu.channels.pulses[0].timer = 123;
 	apu.channels.pulses[0].timer = 456;
 
-	// when the channel is disabled, it should return the last sample
+	// change volume
+	for (let i = 0; i < 2; i++)
+		apu.registers.pulses[i].control.onWrite(0b00110000 | ((i + 1) * 2));
+
+	// when the length counter is 0, it should return the last sample
 	apu.channels.pulses[0].sample().should.equalN(lastSample1, "[0].sample()");
 	apu.channels.pulses[1].sample().should.equalN(lastSample2, "[1].sample()");
 
@@ -1797,4 +1805,372 @@ it("`PulseTimerHighLCL`: writes set the `startFlag` on the channel's volume enve
 			"`PulseTimerHighLCL`: las escrituras encienden `startFlag` en la envolvente de volumen del canal",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.9"),
+});
+
+// 5c.10 Pulse Channels (5/5): Frequency sweep
+
+it("`PulseSweep`: writes `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.write(0x4001, 0b01110010);
+	apu.registers.write(0x4005, 0b10111011);
+
+	// Pulse 1
+	const sweep1 = apu.registers.pulses[0].sweep;
+	sweep1.shiftCount.should.equalN(2, "shiftCount");
+	sweep1.negateFlag.should.equalN(0, "negateFlag");
+	sweep1.dividerPeriodMinusOne.should.equalN(7, "dividerPeriodMinusOne");
+	sweep1.enabledFlag.should.equalN(0, "enabledFlag");
+
+	// Pulse 2
+	const sweep2 = apu.registers.pulses[1].sweep;
+	sweep2.shiftCount.should.equalN(3, "shiftCount");
+	sweep2.negateFlag.should.equalN(1, "negateFlag");
+	sweep2.dividerPeriodMinusOne.should.equalN(3, "dividerPeriodMinusOne");
+	sweep2.enabledFlag.should.equalN(1, "enabledFlag");
+})({
+	locales: {
+		es:
+			"`PulseSweep`: escribe `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`PulseChannel`: has a `frequencySweep` property", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		expect(
+			apu.channels.pulses[i].frequencySweep,
+			`[${i}].frequencySweep`
+		).to.be.an("object");
+	}
+})({
+	locales: { es: "`PulseChannel`: tiene una propiedad `frequencySweep`" },
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`FrequencySweep`: has `startFlag`, `dividerCount`, `mute` initialized to `false`, `0`, `false`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const sweep = apu.channels.pulses[i].frequencySweep;
+		sweep.startFlag.should.equal(false, `[${i}]::startFlag`);
+		sweep.dividerCount.should.equalN(0, `[${i}]::dividerCount`);
+		sweep.mute.should.equalN(false, `[${i}]::mute`);
+	}
+})({
+	locales: {
+		es:
+			"`FrequencySweep`: tiene `startFlag`, `dividerCount` y `mute` inicializados en `false`, `0`, `false`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`FrequencySweep`: has `clock()` and `muteIfNeeded()` methods", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const sweep = apu.channels.pulses[i].frequencySweep;
+		sweep.should.respondTo("clock");
+		sweep.should.respondTo("muteIfNeeded");
+	}
+})({
+	locales: {
+		es: "`FrequencySweep`: tiene métodos `clock()` y `muteIfNeeded()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`FrequencySweep`: `clock()` increases `timer` by shift delta when enabled, `shiftCount > 0`, `dividerCount = 0`, and not muted", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		const sweep = channel.frequencySweep;
+		const address = i === 0 ? 0x4001 : 0x4005;
+
+		// enable, period=7 (reload=8), shiftCount=2, negateFlag=0
+		apu.registers.write(address, 0b11110010);
+		sweep.startFlag = false;
+		sweep.dividerCount = 0;
+		sweep.mute = false;
+
+		channel.timer = 100; // => delta = 100 >> 2 = 25
+		sweep.clock();
+
+		channel.timer.should.equalN(125, `[${i}].timer`);
+		sweep.dividerCount.should.equalN(8, `[${i}]::dividerCount`);
+	}
+})({
+	locales: {
+		es:
+			"`FrequencySweep`: `clock()` incrementa `timer` por el delta apropiado cuando está habilitado, `shiftCount > 0`, `dividerCount = 0` y no está silenciado",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`FrequencySweep`: `clock()` decreases `timer` by shift delta when `negateFlag` is set (same conditions)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		const sweep = channel.frequencySweep;
+		const address = i === 0 ? 0x4001 : 0x4005;
+
+		// configure sweep: enable, period=3 (reload=4), shiftCount=2, negateFlag=1
+		apu.registers.write(address, 0b10111010);
+		sweep.startFlag = false;
+		sweep.dividerCount = 0;
+		sweep.mute = false;
+
+		channel.timer = 100; // => delta = 100 >> 2 = 25
+		sweep.clock();
+
+		channel.timer.should.equalN(75, `[${i}].timer`);
+		sweep.dividerCount.should.equalN(4, `[${i}]::dividerCount`);
+	}
+})({
+	locales: {
+		es:
+			"`FrequencySweep`: `clock()`: decrementa `timer` por el delta apropiado cuando `negateFlag` está encendida (mismas condiciones)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`FrequencySweep`: `clock()` reloads `dividerCount` and clears `startFlag` when `startFlag` is set", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		const sweep = channel.frequencySweep;
+		const address = i === 0 ? 0x4001 : 0x4005;
+
+		// configure sweep: enable, period=7 (reload=8)
+		apu.registers.write(address, 0b11110010);
+		sweep.startFlag = true;
+		sweep.dividerCount = 0;
+
+		sweep.clock();
+
+		sweep.startFlag.should.equalN(false, `[${i}]::startFlag`);
+		sweep.dividerCount.should.equalN(8, `[${i}]::dividerCount`);
+	}
+})({
+	locales: {
+		es:
+			"`FrequencySweep`: `clock()` recarga `dividerCount` y limpia `startFlag` cuando `startFlag` está encendida",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`FrequencySweep`: `clock()` when `dividerCount > 0` decrements it and leaves `timer` unchanged", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		const sweep = channel.frequencySweep;
+
+		channel.timer = 200;
+		sweep.dividerCount = 5;
+		sweep.startFlag = false;
+
+		sweep.clock();
+
+		sweep.dividerCount.should.equalN(4, `[${i}]::dividerCount`);
+		channel.timer.should.equalN(200, `[${i}].timer`);
+	}
+})({
+	locales: {
+		es:
+			"`FrequencySweep`: `clock()` cuando `dividerCount > 0` lo decrementa y deja `timer` intacto",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is < 8 or > 0x7ff`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		const sweep = channel.frequencySweep;
+
+		channel.timer = 7;
+		sweep.muteIfNeeded();
+		sweep.mute.should.equalN(true, `[${i}]::mute`);
+
+		channel.timer = 8;
+		sweep.muteIfNeeded();
+		sweep.mute.should.equalN(false, `[${i}]::mute`);
+
+		channel.timer = 0x800;
+		sweep.muteIfNeeded();
+		sweep.mute.should.equalN(true, `[${i}]::mute`);
+
+		channel.timer = 0x7ff;
+		sweep.muteIfNeeded();
+		sweep.mute.should.equalN(false, `[${i}]::mute`);
+	}
+})({
+	locales: {
+		es:
+			"`FrequencySweep`: `muteIfNeeded()` pone `mute` en true cuando `timer` is < 8 o > 0x7ff`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`PulseChannel`: `sample()` just returns the last sample if the sweep unit is muted", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	// enable all channels, volume 1 and 2, length counter halt & load
+	apu.registers.apuControl.setValue(0b11111111);
+	for (let i = 0; i < 2; i++) {
+		apu.registers.pulses[i].control.onWrite(0b00110000 | (i + 1));
+		apu.registers.pulses[i].timerHighLCL.onWrite(0b11111111);
+	}
+
+	// Pulse1: get the first non-zero sample
+	apu.channels.pulses[0].timer = 507;
+	let lastSample1 = 0;
+	for (let i = 0; i < 10; i++) {
+		lastSample1 = apu.channels.pulses[0].sample();
+		if (lastSample1 !== 0) break;
+	}
+	if (lastSample1 === 0)
+		throw new Error("The first 10 samples of pulse 1 were 0.");
+
+	// Pulse2: get the first non-zero sample
+	apu.channels.pulses[1].timer = 708;
+	let lastSample2 = 0;
+	for (let i = 0; i < 10; i++) {
+		lastSample2 = apu.channels.pulses[1].sample();
+		if (lastSample2 !== 0) break;
+	}
+	if (lastSample2 === 0)
+		throw new Error("The first 10 samples of pulse 2 were 0.");
+
+	// mute sweep units
+	for (let i = 0; i < 2; i++) {
+		apu.channels.pulses[i].frequencySweep.mute = true;
+	}
+
+	// change volume
+	for (let i = 0; i < 2; i++)
+		apu.registers.pulses[i].control.onWrite(0b00110000 | ((i + 1) * 2));
+
+	// set another timer value
+	apu.channels.pulses[0].timer = 123;
+	apu.channels.pulses[0].timer = 456;
+
+	// when the sweep unit is muted, it should return the last sample
+	apu.channels.pulses[0].sample().should.equalN(lastSample1, "[0].sample()");
+	apu.channels.pulses[1].sample().should.equalN(lastSample2, "[1].sample()");
+
+	// they shouldn't update the oscillator frequency
+	const pulse1Frequency = Math.floor(
+		apu.channels.pulses[0].oscillator.frequency
+	);
+	pulse1Frequency.should.equalN(220, "frequency");
+	const pulse2Frequency = Math.floor(
+		apu.channels.pulses[1].oscillator.frequency
+	);
+	pulse2Frequency.should.equalN(157, "frequency");
+})({
+	locales: {
+		es:
+			"`PulseChannel`: `sample()` solo retorna el último sample si la unidad de barrido está silenciada",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`PulseChannel`: `step()` calls `frequencySweep.muteIfNeeded()` and `updateTimer()` when `sweep.enabledFlag` is clear", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+
+		channel.frequencySweep.muteIfNeeded = sinon.spy();
+		channel.updateTimer = sinon.spy();
+		channel.registers.sweep.enabledFlag = 0;
+
+		channel.step();
+
+		channel.frequencySweep.muteIfNeeded.should.have.been.calledOnce;
+		channel.updateTimer.should.have.been.calledOnce;
+	}
+})({
+	locales: {
+		es:
+			"`PulseChannel`: `step()` llama a `frequencySweep.muteIfNeeded()` y a `updateTimer()` cuando `sweep.enabledFlag` está en 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`PulseChannel`: `step()` calls `frequencySweep.muteIfNeeded()` but not `updateTimer()` when `sweep.enabledFlag` is set", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+
+		channel.frequencySweep.muteIfNeeded = sinon.spy();
+		channel.updateTimer = sinon.spy();
+		channel.registers.sweep.enabledFlag = 1;
+
+		channel.step();
+
+		channel.frequencySweep.muteIfNeeded.should.have.been.calledOnce;
+		channel.updateTimer.should.not.have.been.called;
+	}
+})({
+	locales: {
+		es:
+			"`PulseChannel`: `step()` llama a `frequencySweep.muteIfNeeded()` pero no a `updateTimer()` cuando `sweep.enabledFlag` está encendida",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`PulseChannel`: `halfFrame()` calls `frequencySweep.clock()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	for (let i = 0; i < 2; i++) {
+		const channel = apu.channels.pulses[i];
+		channel.frequencySweep.clock = sinon.spy();
+		channel.halfFrame();
+		channel.frequencySweep.clock.should.have.been.calledOnce;
+	}
+})({
+	locales: {
+		es: "`PulseChannel`: `halfFrame()` llama a `frequencySweep.clock()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+it("`PulseSweep`: writes set the `startFlag` on the channel's frequency sweep", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.write(0x4001, 1);
+	apu.channels.pulses[0].frequencySweep.startFlag.should.equal(true);
+
+	apu.registers.write(0x4005, 2);
+	apu.channels.pulses[1].frequencySweep.startFlag.should.equal(true);
+})({
+	locales: {
+		es:
+			"`PulseSweep`: las escrituras encienden `startFlag` en el barrido de frecuencia del canal",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.10"),
 });

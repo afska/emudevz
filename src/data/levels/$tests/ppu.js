@@ -2367,7 +2367,7 @@ it("PPUMask: writes `showSprites` (bit 4)", () => {
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("PPUMask: has an `isRenderingEnabled` method that returns true if the background or sprites are enabled", () => {
+it("PPUMask: has an `isRenderingEnabled` method that returns `true` if the background or sprites are enabled", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2389,7 +2389,7 @@ it("PPUMask: has an `isRenderingEnabled` method that returns true if the backgro
 })({
 	locales: {
 		es:
-			"PPUMask: tiene un método `isRenderingEnabled` que retorna true si el fondo o los sprites están habilitados",
+			"PPUMask: tiene un método `isRenderingEnabled` que retorna `true` si el fondo o los sprites están habilitados",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
