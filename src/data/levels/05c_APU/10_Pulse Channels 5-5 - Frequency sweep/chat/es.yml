@@ -67,13 +67,15 @@ exercise:
         **->** apaga el <start flag>
       **->** si no:
         **->** decrementa el <divider count>
-      
+    **muteIfNeeded()**:
       **->** asigna ```javascript this.mute = this.channel.timer < 8 || this.channel.timer > 0x7ff```
   - |-
     📚  en 🟦  `PulseChannel`:
     **->** importa esa clase y agrega una propiedad `frequencySweep` con una nueva instancia (¡pasa ```javascript this``` al constructor!)
     **->** modifica **sample()** para que el <return temprano> también revise ```javascript this.frequencySweep.mute```
-    **->** modifica **step()** para que el método `updateTimer()` solo se llame si el `enabledFlag` de 🧹  PulseSweep está apagado
+    **->** modifica **step()** para que:
+      - llame al método `muteIfNeeded()` de `frequencySweep`
+      - el método `updateTimer()` solo se llame si el `enabledFlag` de 🧹  PulseSweep está apagado
     **->** implementa este método:
     **halfFrame()**:
       **->** __continúa clockeando la envolvente como antes__

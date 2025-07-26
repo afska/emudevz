@@ -67,13 +67,15 @@ exercise:
         **->** clears the <start flag>
       **->** else:
         **->** decrements the <divider count>
-      
+    **muteIfNeeded()**:
       **->** sets ```javascript this.mute = this.channel.timer < 8 || this.channel.timer > 0x7ff```
   - |-
     📚  in 🟦  `PulseChannel`:
     **->** import that class and add a `frequencySweep` property with a new instance (pass ```javascript this``` to the constructor!)
     **->** modify **sample()** so the <early return> also checks for ```javascript this.frequencySweep.mute```
-    **->** modify **step()** so the `updateTimer()` method is only called if 🧹  PulseSweep's `enabledFlag` is clear
+    **->** modify **step()** so:
+      - it calls the `muteIfNeeded()` method of `frequencySweep`
+      - the `updateTimer()` method is only called if 🧹  PulseSweep's `enabledFlag` is clear
     **->** implement this method:
     **halfFrame()**:
       **->** __keep clocking the envelope like before__

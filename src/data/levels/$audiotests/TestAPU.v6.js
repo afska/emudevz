@@ -615,11 +615,9 @@ class FrequencySweep {
 			this.dividerCount = register.dividerPeriodMinusOne + 1;
 			this.startFlag = false;
 		} else this.dividerCount--;
-
-		this._setMute();
 	}
 
-	_setMute() {
+	muteIfNeeded() {
 		this.mute = this.channel.timer < 8 || this.channel.timer > 0x7ff;
 	}
 }
@@ -687,6 +685,7 @@ class PulseChannel {
 	}
 
 	step() {
+		this.frequencySweep.muteIfNeeded();
 		if (!this.registers.sweep.enabledFlag) this.updateTimer();
 	}
 
