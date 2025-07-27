@@ -2277,9 +2277,11 @@ it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `os
 	const apu = new APU({});
 	const channel = apu.channels.triangle;
 
+	apu.registers.apuControl.setValue(0b11111111);
+
 	// set timer => buildU16(2, 4) = 516
-	channel.registers.timerLow.value = 4;
-	channel.registers.timerHighLCL.timerHigh = 2;
+	apu.registers.write(0x400a, 4); // low: 4
+	apu.registers.write(0x400b, 0b11111010); // high: 2
 
 	const expectedFreq = 1789773 / (16 * (516 + 1)) / 2;
 	channel.oscillator.sample = () => 9;
