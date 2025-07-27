@@ -23,33 +23,32 @@ two:
 exercise:
   messages:
   - |-
-    📚  implement in 📏  `TriangleLinearLCL`:
+    📚  implement in 📏  `TriangleLengthControl`:
     **onLoad()**:
       **->** uses ```javascript this.addField(...)``` to set a `halt` field mapped to bit 7
     **onWrite(value)**:
-      **->** __keep existing behavior__
-      **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
-        use 📄  ~/lib/apu/noteLengths.js~ to get the array
-      **->** assigns the new length to the `counter` property of the channel's length counter
-    - |-
+      **->** sets the value with ```javascript this.setValue(...)```
+  - |-
     📚  in 🔺  `TriangleChannel`:
     **->** import the 📏  `LengthCounter` class and add a `lengthCounter` property with a new instance
     **->** modify **sample()**, so if ```javascript !this.isEnabled()``` or the length counter is not active, it returns the last generated sample, without changing anything
-    **->** add the methods described below
+    **->** add the following methods:
     **quarterFrame()**:
       **[!]** leave empty for now
     **halfFrame()**:
       **->** calls the `clock(...)` method of the length counter
         (use ```javascript this.isEnabled()``` as the first argument)
-        (for the halt flag, look for `envelopeLoopOrLengthCounterHalt` in the 🟦  PulseControl register)
+        (for the halt flag, use the `halt` flag you added in the 📏  TriangleLengthControl register)
+    **isEnabled()**:
+      **->** returns ```javascript this.apu.registers.apuControl.enableTriangle```
   - |-
     📚  in 🔊  `APU`:
     **onQuarterFrameClock()**:
-      **->** calls `quarterFrame()` on the two pulse channel instances
+      **->** calls `quarterFrame()` on the triangle channel instance
     **onHalfFrameClock()**:
-      **->** calls `halfFrame()` on the two pulse channel instances
+      **->** calls `halfFrame()` on the triangle channel instance
   - |-
-    📚  implement in 🕛  `PulseTimerHighLCL`:
+    📚  implement in 🕛  `TriangleTimerHighLCL`:
     **onLoad()**:
       **->** uses ```javascript this.addField(...)``` to set a 5-bit `lengthCounterLoad` field from bit 3
     **onWrite(value)**:
@@ -57,3 +56,10 @@ exercise:
       **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
         use 📄  ~/lib/apu/noteLengths.js~ to get the array
       **->** assigns the new length to the `counter` property of the channel's length counter
+  - |-
+    // TODO: Oof, I forgot in the Length Counter level:
+    ```javascript if (!this.enablePulse1)
+      this.apu.channels.pulses[0].lengthCounter.reset();
+    if (!this.enablePulse2)
+      this.apu.channels.pulses[1].lengthCounter.reset();```
+  responses: []

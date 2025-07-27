@@ -68,7 +68,7 @@ exercise:
     📚  in 🟦  `PulseChannel`:
     **->** import that class and add a `lengthCounter` property with a new instance
     **->** modify **sample()**, so if ```javascript !this.isEnabled()``` or the length counter is not active, it returns the last generated sample, without changing anything
-    **->** add the methods described below
+    **->** add the following methods:
     **quarterFrame()**:
       **[!]** leave empty for now
     **halfFrame()**:
