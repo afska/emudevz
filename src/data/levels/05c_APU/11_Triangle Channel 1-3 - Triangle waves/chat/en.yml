@@ -26,18 +26,26 @@ bass:
     📚  create a 🔺  `TriangleChannel` class with the following:
     **constructor(apu)**:
       **->** saves the parameter as a property (```javascript this.apu```)
-      **->** saves the triangle registers object in ```javascript this.registers```
-      **->** saves a ```this.oscillator``` property with a new instance of the `TriangleOscillator` I sent
+      **->** saves the triangle registers object in a property:
+        ```javascript this.registers = this.apu.registers.triangle;```
+      **->** saves a ```javascript this.oscillator``` property with a new instance of the `TriangleOscillator` I sent
     **sample()**:
       **->** calculates the timer value based on 🕡  TriangleTimerLow and 🕛  TriangleTimerHighLCL's `timerHigh` field
+        (use `byte.buildU16(...)` to combine both)
         (let's call this `timer`)
-      **->** if `timer` is below 2 or above 0x7ff:
+      **->** if `timer` is below 2 or above ~0x7ff~:
         **->** returns 0, the channel is silenced here
       **->** sets the oscillator frequency using the formula:
         ```javascript this.oscillator.frequency = 1789773 / (16 * (timer + 1)) / 2;```
+      **->** calls the oscillator's `sample()` method and returns its value
   - |-
     📚  in 🔊  `APU`:
     **->** import the channel and add a `triangle` key to ```javascript this.channels``` with a new instance
-    **->** in `step()`, mix its sample with the pulse channels' samples, something like this:
-      ```javascript this.sample = (pulse1Sample + pulse2Sample + this.channels.triangle.sample()) / 100;```
+    **->** in `step()`, add the triangle channel to the mix:
+      ```javascript const pulse1 = this.channels.pulses[0].sample();
+      const pulse2 = this.channels.pulses[1].sample();
+      const triangle = this.channels.triangle.sample();
+      this.sample = (pulse1 + pulse2 + triangle) / 100;
+      
+      onSample(this.sample, pulse1, pulse2, triangle);```
   responses: []
