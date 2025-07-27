@@ -1,0 +1,50 @@
+{
+	"name": {
+		"en": "📏 Triangle Channel (3/3): Linear length counter",
+		"es": "📏 Canal Triangular (3/3): Contador lineal de longitud"
+	},
+	"ui": {
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom",
+		"canPinEmulator": false
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "apu.js"],
+		"mainTestFile": "apu.js"
+	},
+	"audioTests": [
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"frames": 300,
+			"apu": "TestAPU.v8.js"
+		}
+	],
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
