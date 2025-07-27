@@ -415,6 +415,13 @@ const dictionary = {
 			es:
 				"Un formato que describe un cartucho de NEEES. Contiene su código (PRG-ROM), gráficos (CHR-ROM), y un header con metadatos.",
 		},
+		"Interrupt Disable Flag": {
+			also: { es: "Bandera Interrupt Disable" },
+			icon: "🏁",
+			en: "A CPU flag that, when set, disables maskable CPU interrupts.",
+			es:
+				"Una bandera de CPU que, cuando está activa, desactiva las interrupciones enmascarables de la CPU.",
+		},
 		"Interrupt vector|_Interrupt vectors|Vector|_Vectors": {
 			also: {
 				es: "Vector de interrupción|_Vectores de interrupción|Vector|_Vectores",
@@ -565,6 +572,14 @@ const dictionary = {
 			es:
 				"La pieza de hardware que estamos tratando de emular. La gente piensa que significa _'No Entiendo' El Entretenimiento Saludable_.",
 		},
+		"Negative Flag": {
+			also: { es: "Bandera Negative" },
+			icon: "🏁",
+			en:
+				"A CPU flag that indicates when the result of an operation is a negative number.",
+			es:
+				"Una bandera de CPU que indica cuando el resultado de una operación es un número negativo.",
+		},
 		NMI: {
 			icon: "📹",
 			en:
@@ -648,6 +663,14 @@ const dictionary = {
 				"_(Operation code)_ A number that, inside the machine code, represents an instruction code. <br /><br />In the NEEES, it defines both the instruction and the addressing mode.",
 			es:
 				"_(Código de operación)_ Un número que, dentro del código máquina, define un código de instrucción. <br /><br />En la NEEES, define tanto la instrucción como el modo de direccionamiento.",
+		},
+		"Overflow Flag": {
+			also: { es: "Bandera Overflow" },
+			icon: "🏁",
+			en:
+				"A CPU flag that indicates when an arithmetic operation results in a value too large to be represented in the available number of bits.",
+			es:
+				"Una bandera de CPU que indica cuando una operación aritmética produce un valor demasiado grande para representarse con el número de bits disponibles.",
 		},
 		"Palette|_Palettes": {
 			also: { es: "Paleta|_Paletas" },
