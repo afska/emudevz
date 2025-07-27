@@ -391,7 +391,7 @@ it("`TriangleTimerLow`: writes the value", () => {
 
 	const triangleTimerLow = apu.registers.triangle.timerLow;
 	triangleTimerLow.onWrite(129);
-	triangleTimerLow.value.should.equalN(129, "triangleTimerLow.value");
+	triangleTimerLow.value.should.equalN(129, "triangle.timerLow.value");
 })({
 	locales: {
 		es: "`TriangleTimerLow`: escribe el valor",
@@ -405,7 +405,7 @@ it("`DMCSampleAddress`: writes the value", () => {
 
 	const dmcSampleAddress = apu.registers.dmc.sampleAddress;
 	dmcSampleAddress.onWrite(135);
-	dmcSampleAddress.value.should.equalN(135, "dmcSampleAddress.value");
+	dmcSampleAddress.value.should.equalN(135, "dmc.sampleAddress.value");
 })({
 	locales: {
 		es: "`DMCSampleAddress`: escribe el valor",
@@ -419,7 +419,7 @@ it("`DMCSampleLength`: writes the value", () => {
 
 	const dmcSampleLength = apu.registers.dmc.sampleLength;
 	dmcSampleLength.onWrite(172);
-	dmcSampleLength.value.should.equalN(172, "dmcSampleLength.value");
+	dmcSampleLength.value.should.equalN(172, "dmc.sampleLength.value");
 })({
 	locales: {
 		es: "`DMCSampleLength`: escribe el valor",
@@ -2173,4 +2173,109 @@ it("`PulseSweep`: writes set the `startFlag` on the channel's frequency sweep", 
 			"`PulseSweep`: las escrituras encienden `startFlag` en el barrido de frecuencia del canal",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
+});
+
+// 5c.11 Triangle Channel (1/3): Triangle waves
+
+it("`TriangleTimerHighLCL`: writes `timerHigh` (bits 0-2)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.write(0x400b, 5);
+	apu.registers.triangle.timerHighLCL.timerHigh.should.equalN(5, "timerHigh");
+})({
+	locales: { es: "`TriangleTimerHighLCL`: escribe `timerHigh` (bits 0-2)" },
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`APU`: has a `TriangleChannel` instance", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	expect(apu.channels.triangle, "triangle").to.be.an("object");
+	apu.channels.triangle.should.respondTo("sample");
+})({
+	locales: {
+		es: "`APU`: tiene una instancia de `TriangleChannel`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`TriangleChannel`: has an `oscillator` property", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.triangle;
+	expect(channel.oscillator, "oscillator").to.be.an("object");
+	channel.oscillator.should.respondTo("sample");
+})({
+	locales: { es: "`TriangleChannel`: tiene una propiedad `oscillator`" },
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`TriangleChannel`: `sample()` returns 0 when `timer` < 2", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const channel = apu.channels.triangle;
+
+	channel.registers.timerLow.value = 1;
+	channel.registers.timerHighLCL.timerHigh = 0;
+	channel.sample().should.equalN(0, "sample()");
+
+	channel.registers.timerLow.value = 0;
+	channel.registers.timerHighLCL.timerHigh = 0;
+	channel.sample().should.equalN(0, "sample()");
+})({
+	locales: {
+		es: "`TriangleChannel`: `sample()` retorna 0 cuando `timer` < 2",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `oscillator.sample()` when `timer` is in a valid range", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const channel = apu.channels.triangle;
+
+	// set timer => buildU16(2, 4) = 516
+	channel.registers.timerLow.value = 4;
+	channel.registers.timerHighLCL.timerHigh = 2;
+
+	const expectedFreq = 1789773 / (16 * (516 + 1)) / 2;
+	channel.oscillator.sample = () => 9;
+
+	channel.sample().should.equalN(9, "sample()");
+	Math.floor(channel.oscillator.frequency).should.equalN(
+		Math.floor(expectedFreq),
+		"frequency"
+	);
+})({
+	locales: {
+		es:
+			"`TriangleChannel`: `sample()` actualiza `oscillator.frequency` y retorna `oscillator.sample()` cuando `timer` está en un rango válido",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`APU`: mixes pulse1, pulse2 and triangle in `step()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const onSample = sinon.spy();
+
+	apu.channels.pulses[0].sample = () => 1;
+	apu.channels.pulses[1].sample = () => 2;
+	apu.channels.triangle.sample = () => 3;
+
+	for (let i = 0; i < 19; i++) {
+		apu.step(onSample);
+		onSample.should.not.have.been.called;
+	}
+
+	apu.step(onSample);
+	onSample.should.have.been.calledWith(0.06, 1, 2, 3);
+})({
+	locales: {
+		es: "`APU`: mezcla triangle con pulse1 y pulse2 en `step()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
