@@ -172,6 +172,7 @@ it("connects the audio registers to CPU memory (reads)", () => {
 
 	const checkRegister = (key, address, shouldBeAccessed = true) => {
 		const register = _.get(apu.registers, key);
+		expect(register, `apu.registers.${key}`).to.be.an("object");
 		register.onRead = sinon.spy();
 
 		cpuMemory.read(address);
@@ -223,6 +224,7 @@ it("connects the audio registers to CPU memory (writes)", () => {
 
 	const checkRegister = (key, address, shouldBeAccessed = true) => {
 		const register = _.get(apu.registers, key);
+		expect(register, `apu.registers.${key}`).to.be.an("object");
 		register.onWrite = sinon.spy();
 
 		cpuMemory.write(address, 123);
@@ -1616,6 +1618,44 @@ it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the l
 	locales: {
 		es:
 			"`PulseTimerHighLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`APUControl`: on writes, if `enablePulse1` is clear, resets the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].lengthCounter.counter = 72;
+	apu.channels.pulses[1].lengthCounter.counter = 83;
+
+	apu.registers.write(0x4015, 0b00000010);
+
+	apu.channels.pulses[0].lengthCounter.counter.should.equalN(0, "counter");
+	apu.channels.pulses[1].lengthCounter.counter.should.equalN(83, "counter");
+})({
+	locales: {
+		es:
+			"`APUControl`: en escrituras, si `enablePulse1` está apagada, reinicia el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.8"),
+});
+
+it("`APUControl`: on writes, if `enablePulse2` is clear, resets the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.pulses[0].lengthCounter.counter = 72;
+	apu.channels.pulses[1].lengthCounter.counter = 83;
+
+	apu.registers.write(0x4015, 0b00000001);
+
+	apu.channels.pulses[0].lengthCounter.counter.should.equalN(72, "counter");
+	apu.channels.pulses[1].lengthCounter.counter.should.equalN(0, "counter");
+})({
+	locales: {
+		es:
+			"`APUControl`: en escrituras, si `enablePulse2` está apagada, reinicia el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });

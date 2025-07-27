@@ -90,4 +90,12 @@ exercise:
       **->** determina la nueva longitud accediendo al array `noteLengths` con el índice ```javascript this.lengthCounterLoad```
         usa 📄  ~/lib/apu/noteLengths.js~ para obtener el array
       **->** asigna el nuevo valor a la propiedad `counter` del contador de longitud
+  - |-
+    📚  implementa en 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __mantén el comportamiento existente__
+      **->** if `!this.enablePulse1`:
+        **->** reinicia el contador de longitud de <Pulse 1>
+      **->** if `!this.enablePulse2`:
+        **->** reinicia el contador de longitud de <Pulse 2>
   responses: []

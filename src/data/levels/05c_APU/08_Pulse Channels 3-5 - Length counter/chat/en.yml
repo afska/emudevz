@@ -90,4 +90,12 @@ exercise:
       **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
         use 📄  ~/lib/apu/noteLengths.js~ to get the array
       **->** assigns the new length to the `counter` property of the channel's length counter
+  - |-
+    📚  implement in 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** if `!this.enablePulse1`:
+        **->** reset <Pulse 1>'s length counter
+      **->** if `!this.enablePulse2`:
+        **->** reset <Pulse 2>'s length counter
   responses: []
