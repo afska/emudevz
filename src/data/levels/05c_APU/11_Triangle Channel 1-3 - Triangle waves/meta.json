@@ -4,6 +4,7 @@
 		"es": "🔺 Canal Triangular (1/3): Ondas triangulares"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [

@@ -1,5 +1,43 @@
 ---
 main:
   messages:
-  - coming soon!
+  - let's implement the 🔺  Triangle Channel!
+  - remember, first we need to get the timer value
+  - its low 8 bits are in the 🕡  TriangleTimerLow register, and its high 3 bits are in 🕛  TriangleTimerHighLCL
+  - <{triangle_timer.png}>
+  - from the timer we can derive the frequency with the same formula that Pulse Channels use
+  - though the triangle channel's pitch is <one octave below>, so we have to divide the resulting frequency by two ⚗️
+  - "`frequency = 1789773 / (16 * (timer + 1)) / 2`"
+  responses:
+  - ah, that's why it's used for bass lines 🎸 [bass]
+
+bass:
+  messages:
+  - exactly!
+  - "I'll help with the actual triangle wave generation, here's my oscillator code:"
+  - 📄  ~/lib/apu/TriangleOscillator.js~
+  - |-
+    📚  implement in 🕛  `TriangleTimerHighLCL`:
+    **onLoad()**:
+      **->** uses ```javascript this.addField(...)``` to set a 3-bit `timerHigh` field from bit 0
+    **onWrite(value)**:
+      **->** sets the value with ```javascript this.setValue(...)```
+  - |-
+    📚  create a 🔺  `TriangleChannel` class with the following:
+    **constructor(apu)**:
+      **->** saves the parameter as a property (```javascript this.apu```)
+      **->** saves the triangle registers object in ```javascript this.registers```
+      **->** saves a ```this.oscillator``` property with a new instance of the `TriangleOscillator` I sent
+    **sample()**:
+      **->** calculates the timer value based on 🕡  TriangleTimerLow and 🕛  TriangleTimerHighLCL's `timerHigh` field
+        (let's call this `timer`)
+      **->** if `timer` is below 2 or above 0x7ff:
+        **->** returns 0, the channel is silenced here
+      **->** sets the oscillator frequency using the formula:
+        ```javascript this.oscillator.frequency = 1789773 / (16 * (timer + 1)) / 2;```
+  - |-
+    📚  in 🔊  `APU`:
+    **->** import the channel and add a `triangle` key to ```javascript this.channels``` with a new instance
+    **->** in `step()`, mix its sample with the pulse channels' samples, something like this:
+      ```javascript this.sample = (pulse1Sample + pulse2Sample + this.channels.triangle.sample()) / 100;```
   responses: []
