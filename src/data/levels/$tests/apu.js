@@ -692,7 +692,7 @@ it("for now, new samples are mixed like `(pulse1 + pulse2) * 0.01`", () => {
 })({
 	locales: {
 		es:
-			"por ahora, los nuevos samples se mezclan como `(pulse1 + pulse2) / 100`",
+			"por ahora, los nuevos samples se mezclan como `(pulse1 + pulse2) * 0.01`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });

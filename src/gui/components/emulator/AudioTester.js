@@ -170,8 +170,8 @@ export default class AudioTester extends PureComponent {
 				this._samplesA.comparedMix.length > 0 &&
 				this._samplesB.comparedMix.length > 0
 			) {
-				const sampleA = this._samplesA.comparedMix.shift();
-				const sampleB = this._samplesB.comparedMix.shift();
+				const sampleA = Math.floor(this._samplesA.comparedMix.shift());
+				const sampleB = Math.floor(this._samplesB.comparedMix.shift());
 
 				if (sampleA !== sampleB) success = false;
 			}

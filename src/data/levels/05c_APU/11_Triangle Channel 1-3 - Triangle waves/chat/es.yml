@@ -7,7 +7,7 @@ main:
   - <{triangle_timer.png}>
   - a partir del timer podemos derivar la frecuencia con la misma fórmula que usan los Canales Pulso
   - aunque el tono del canal triangular está <una octava más abajo>, así que tenemos que dividir la frecuencia resultante por dos ⚗️
-  - "`frequency = 1789773 / (16 * (timer + 1)) / 2`"
+  - "```javascript frequency = 1789773 / (16 * (timer + 1)) / 2```"
   responses:
   - ah, por eso se usa para líneas de bajo 🎸 [bass]
 
@@ -45,7 +45,7 @@ bass:
       ```javascript const pulse1 = this.channels.pulses[0].sample();
       const pulse2 = this.channels.pulses[1].sample();
       const triangle = this.channels.triangle.sample();
-      this.sample = (pulse1 + pulse2 + triangle) / 100;
-      
+      this.sample = (pulse1 + pulse2 + triangle) * 0.01;
+
       onSample(this.sample, pulse1, pulse2, triangle);```
   responses: []

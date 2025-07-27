@@ -4,7 +4,7 @@ main:
   - el Canal Pulso 1 tiene que saber qué nota debe producir, ¿verdad?
   - bueno, el código del juego escribe un valor de timer de 11 bits en los registros 🕡  Pulse1TimerLow y 🕛  Pulse1TimerHighLCL
   - podemos convertir valores de timer a frecuencia usando esta fórmula ⚗️
-  - "`f = fCPU / (16 * (t + 1))`"
+  - "```javascript f = fCPU / (16 * (t + 1))```"
   - "`fCPU` es la frecuencia de la CPU (~1789773~), y `t` es el valor del timer"
   responses:
   - dame un ejemplo [example]

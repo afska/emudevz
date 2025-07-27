@@ -4,7 +4,7 @@ main:
   - the Pulse Channel 1 has to know what note it should produce, right?
   - well, the game's code writes an 11-bit timer value to registers 🕡  Pulse1TimerLow and 🕛  Pulse1TimerHighLCL
   - we can convert timer values to frequency using this formula ⚗️
-  - "`f = fCPU / (16 * (t + 1))`"
+  - "```javascript f = fCPU / (16 * (t + 1))```"
   - "`fCPU` is the CPU frequency (~1789773~), and `t` is the timer value"
   responses:
   - give me an example [example]
