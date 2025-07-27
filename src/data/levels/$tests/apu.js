@@ -142,7 +142,7 @@ it("includes a `registers` property with 21 audio registers", () => {
 	checkRegister("pulses[1].sweep", 0x4005);
 	checkRegister("pulses[1].timerLow", 0x4006);
 	checkRegister("pulses[1].timerHighLCL", 0x4007);
-	checkRegister("triangle.linearLCL", 0x4008);
+	checkRegister("triangle.lengthControl", 0x4008);
 	checkRegister("triangle.timerLow", 0x400a);
 	checkRegister("triangle.timerHighLCL", 0x400b);
 	checkRegister("noise.control", 0x400c);
@@ -193,7 +193,7 @@ it("connects the audio registers to CPU memory (reads)", () => {
 	checkRegister("pulses[1].sweep", 0x4005);
 	checkRegister("pulses[1].timerLow", 0x4006);
 	checkRegister("pulses[1].timerHighLCL", 0x4007);
-	checkRegister("triangle.linearLCL", 0x4008);
+	checkRegister("triangle.lengthControl", 0x4008);
 	checkRegister("triangle.timerLow", 0x400a);
 	checkRegister("triangle.timerHighLCL", 0x400b);
 	checkRegister("noise.control", 0x400c);
@@ -246,7 +246,7 @@ it("connects the audio registers to CPU memory (writes)", () => {
 	checkRegister("pulses[1].sweep", 0x4005);
 	checkRegister("pulses[1].timerLow", 0x4006);
 	checkRegister("pulses[1].timerHighLCL", 0x4007);
-	checkRegister("triangle.linearLCL", 0x4008);
+	checkRegister("triangle.lengthControl", 0x4008);
 	checkRegister("triangle.timerLow", 0x400a);
 	checkRegister("triangle.timerHighLCL", 0x400b);
 	checkRegister("noise.control", 0x400c);

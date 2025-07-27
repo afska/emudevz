@@ -236,7 +236,7 @@ class PulseTimerHighLCL extends InMemoryRegister.APU {
 	}
 }
 
-class TriangleLinearLCL extends InMemoryRegister.APU {
+class TriangleLengthControl extends InMemoryRegister.APU {
 	onLoad() {
 		/* TODO: IMPLEMENT */
 	}
@@ -364,7 +364,7 @@ class AudioRegisters {
 		}));
 
 		this.triangle = {
-			linearLCL: new TriangleLinearLCL(apu), //           $4008
+			lengthControl: new TriangleLengthControl(apu), //           $4008
 			timerLow: new TriangleTimerLow(apu), //             $400A
 			timerHighLCL: new TriangleTimerHighLCL(apu), //      $400B
 		};
@@ -418,7 +418,7 @@ class AudioRegisters {
 			case 0x4007:
 				return this.pulses[1].timerHighLCL;
 			case 0x4008:
-				return this.triangle.linearLCL;
+				return this.triangle.lengthControl;
 			case 0x400a:
 				return this.triangle.timerLow;
 			case 0x400b:

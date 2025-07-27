@@ -987,7 +987,7 @@ const dictionary = {
 			es:
 				"Un valor que establece la tasa de oscilación de un canal APU determinando cuántos ciclos de reloj maestro pasan entre pasos de la forma de onda. <br /><br />Determina la frecuencia, y en consecuencia el tono de una nota.",
 		},
-		TriangleLinearLCL: {
+		TriangleLengthControl: {
 			icon: "📏",
 			en:
 				"An audio register that sets the Triangle Channel's linear length counter reload value and controls its length counter halt. <br /><br />It is available at CPU address `$4008`.",

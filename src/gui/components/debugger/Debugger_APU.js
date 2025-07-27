@@ -300,7 +300,10 @@ export default class Debugger_APU {
 					utils.simpleTable(`triangle_lengthcounter`, "Length Counter", () => {
 						const count = channel?.lengthCounter?.counter ?? 0;
 
-						utils.boolean("Halt", channel?.registers?.linearLCL.halt ?? false);
+						utils.boolean(
+							"Halt",
+							channel?.registers?.lengthControl.halt ?? false
+						);
 						utils.value("Count", count);
 						ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
 					});
@@ -313,7 +316,7 @@ export default class Debugger_APU {
 
 							utils.boolean(
 								"Halt",
-								channel?.registers?.linearLCL.halt ?? false
+								channel?.registers?.lengthControl.halt ?? false
 							);
 							ImGui.SameLine();
 							utils.boolean(
