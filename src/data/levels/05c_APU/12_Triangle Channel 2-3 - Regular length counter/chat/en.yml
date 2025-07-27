@@ -15,7 +15,7 @@ main:
 two:
   messages:
   - yes!
-  - the other one behaves a bit different
+  - the other one behaves a bit differently
   - more on that later!
   responses: 
   - ...main
@@ -57,9 +57,9 @@ exercise:
         use 📄  ~/lib/apu/noteLengths.js~ to get the array
       **->** assigns the new length to the `counter` property of the channel's length counter
   - |-
-    // TODO: Oof, I forgot in the Length Counter level:
-    ```javascript if (!this.enablePulse1)
-      this.apu.channels.pulses[0].lengthCounter.reset();
-    if (!this.enablePulse2)
-      this.apu.channels.pulses[1].lengthCounter.reset();```
+    📚  implement in 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** if `!this.enableTriangle`:
+        **->** reset <Triangle>'s length counter
   responses: []
