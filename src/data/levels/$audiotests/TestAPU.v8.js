@@ -775,7 +775,7 @@ class TriangleChannel {
 
 	sample() {
 		if (!this.isEnabled() || !this.lengthCounter.isActive())
-			return this.lastSample || 0;
+			return this.outputSample || 0;
 
 		const timer = byte.buildU16(
 			this.registers.timerHighLCL.timerHigh,
@@ -786,7 +786,9 @@ class TriangleChannel {
 
 		this.oscillator.frequency = 1789773 / (16 * (timer + 1)) / 2;
 
-		return this.oscillator.sample();
+		this.outputSample = this.oscillator.sample();
+
+		return this.outputSample;
 	}
 
 	quarterFrame() {}

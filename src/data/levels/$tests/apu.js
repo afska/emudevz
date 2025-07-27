@@ -779,14 +779,14 @@ it("`PulseChannel`: `sample()` updates the oscillator frequency", () => {
 		apu.registers.pulses[i].timerHighLCL.onWrite(0b11111111);
 	}
 
-	apu.channels.pulses[0].timer = 507;
+	apu.channels.pulses[0].timer = 507; // => freq = 220
 	apu.channels.pulses[0].sample();
 	const pulse1Frequency = Math.floor(
 		apu.channels.pulses[0].oscillator.frequency
 	);
 	pulse1Frequency.should.equalN(220, "frequency");
 
-	apu.channels.pulses[1].timer = 708;
+	apu.channels.pulses[1].timer = 708; // => freq = 157
 	apu.channels.pulses[1].sample();
 	const pulse2Frequency = Math.floor(
 		apu.channels.pulses[1].oscillator.frequency
@@ -1384,7 +1384,7 @@ it("`PulseChannel`: `sample()` just returns the last sample if the channel is di
 	}
 
 	// Pulse1: get the first non-zero sample
-	apu.channels.pulses[0].timer = 507;
+	apu.channels.pulses[0].timer = 507; // => freq = 220
 	let lastSample1 = 0;
 	for (let i = 0; i < 10; i++) {
 		lastSample1 = apu.channels.pulses[0].sample();
@@ -1394,7 +1394,7 @@ it("`PulseChannel`: `sample()` just returns the last sample if the channel is di
 		throw new Error("The first 10 samples of pulse 1 were 0.");
 
 	// Pulse2: get the first non-zero sample
-	apu.channels.pulses[1].timer = 708;
+	apu.channels.pulses[1].timer = 708; // => freq = 157
 	let lastSample2 = 0;
 	for (let i = 0; i < 10; i++) {
 		lastSample2 = apu.channels.pulses[1].sample();
@@ -1447,7 +1447,7 @@ it("`PulseChannel`: `sample()` just returns the last sample if the length counte
 	}
 
 	// Pulse1: get the first non-zero sample
-	apu.channels.pulses[0].timer = 507;
+	apu.channels.pulses[0].timer = 507; // => freq = 220
 	let lastSample1 = 0;
 	for (let i = 0; i < 10; i++) {
 		lastSample1 = apu.channels.pulses[0].sample();
@@ -1457,7 +1457,7 @@ it("`PulseChannel`: `sample()` just returns the last sample if the length counte
 		throw new Error("The first 10 samples of pulse 1 were 0.");
 
 	// Pulse2: get the first non-zero sample
-	apu.channels.pulses[1].timer = 708;
+	apu.channels.pulses[1].timer = 708; // => freq = 157
 	let lastSample2 = 0;
 	for (let i = 0; i < 10; i++) {
 		lastSample2 = apu.channels.pulses[1].sample();
@@ -1466,13 +1466,13 @@ it("`PulseChannel`: `sample()` just returns the last sample if the length counte
 	if (lastSample2 === 0)
 		throw new Error("The first 10 samples of pulse 2 were 0.");
 
-	// disable length counters
-	apu.channels.pulses[0].lengthCounter.reset();
-	apu.channels.pulses[1].lengthCounter.reset();
-
 	// set another timer value
 	apu.channels.pulses[0].timer = 123;
 	apu.channels.pulses[0].timer = 456;
+
+	// reset length counters
+	apu.channels.pulses[0].lengthCounter.reset();
+	apu.channels.pulses[1].lengthCounter.reset();
 
 	// change volume
 	for (let i = 0; i < 2; i++)
@@ -2080,7 +2080,7 @@ it("`PulseChannel`: `sample()` just returns the last sample if the sweep unit is
 	}
 
 	// Pulse1: get the first non-zero sample
-	apu.channels.pulses[0].timer = 507;
+	apu.channels.pulses[0].timer = 507; // => freq = 220
 	let lastSample1 = 0;
 	for (let i = 0; i < 10; i++) {
 		lastSample1 = apu.channels.pulses[0].sample();
@@ -2090,7 +2090,7 @@ it("`PulseChannel`: `sample()` just returns the last sample if the sweep unit is
 		throw new Error("The first 10 samples of pulse 1 were 0.");
 
 	// Pulse2: get the first non-zero sample
-	apu.channels.pulses[1].timer = 708;
+	apu.channels.pulses[1].timer = 708; // => freq = 157
 	let lastSample2 = 0;
 	for (let i = 0; i < 10; i++) {
 		lastSample2 = apu.channels.pulses[1].sample();
@@ -2256,6 +2256,7 @@ it("`TriangleChannel`: has an `oscillator` property", () => {
 it("`TriangleChannel`: `sample()` returns 0 when `timer` < 2", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
+
 	const channel = apu.channels.triangle;
 
 	channel.registers.timerLow.value = 1;
@@ -2275,6 +2276,7 @@ it("`TriangleChannel`: `sample()` returns 0 when `timer` < 2", () => {
 it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `oscillator.sample()` when `timer` is in a valid range", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
+
 	const channel = apu.channels.triangle;
 
 	apu.registers.apuControl.setValue(0b11111111);
@@ -2320,4 +2322,272 @@ it("`APU`: mixes pulse1, pulse2 and triangle in `step()`", () => {
 		es: "`APU`: mezcla triangle con pulse1 y pulse2 en `step()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+// 5c.12 Triangle Channel (2/3): Regular length counter
+
+it("`TriangleLengthControl`: writes `halt` (bit 7)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const register = apu.registers.triangle.lengthControl;
+
+	apu.registers.write(0x4008, 0b11011010);
+	register.halt.should.equalN(1, "halt");
+	apu.registers.write(0x4008, 0b01011010);
+	register.halt.should.equalN(0, "halt");
+})({
+	locales: {
+		es: "`PulseControl`: escribe `halt` (bit 7)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`TriangleChannel`: has a `lengthCounter` property", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.triangle;
+
+	expect(channel.lengthCounter, "lengthCounter").to.be.an("object");
+	channel.lengthCounter.should.respondTo("reset");
+	channel.lengthCounter.should.respondTo("isActive");
+	channel.lengthCounter.should.respondTo("clock");
+})({
+	locales: { es: "`TriangleChannel`: tiene una propiedad `lengthCounter`" },
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`TriangleChannel`: `sample()` just returns the last sample if the channel is disabled", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	// enable all channels, length counter halt & load
+	apu.registers.apuControl.setValue(0b11111111);
+	apu.registers.triangle.lengthControl.onWrite(0b10000000);
+	// timer = 507 => freq = 110
+	apu.registers.triangle.timerLow.onWrite(0b11111011); // low = 0b11111011
+	apu.registers.triangle.timerHighLCL.onWrite(0b11111001); // high = 0b001
+
+	// get the first non-zero sample
+	let lastSample = 0;
+	for (let i = 0; i < 10; i++) {
+		lastSample = apu.channels.triangle.sample();
+		if (lastSample !== 0) break;
+	}
+	if (lastSample === 0)
+		throw new Error("The first 10 samples of triangle were 0.");
+
+	// disable all channels
+	apu.registers.apuControl.setValue(0);
+
+	// set another timer value
+	apu.registers.triangle.timerLow.onWrite(0b10001011);
+	apu.registers.triangle.timerHighLCL.onWrite(0b11111001);
+
+	// when the channel is disabled, it should return the last sample
+	apu.channels.triangle.sample().should.equalN(lastSample, "sample()");
+
+	// it shouldn't update the oscillator frequency
+	const frequency = Math.floor(apu.channels.triangle.oscillator.frequency);
+	frequency.should.equalN(110, "frequency");
+})({
+	locales: {
+		es:
+			"`TriangleChannel`: `sample()` solo retorna el último sample si el canal está desactivado",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`TriangleChannel`: `sample()` just returns the last sample if the length counter is not active", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	// enable all channels, length counter halt & load
+	apu.registers.apuControl.setValue(0b11111111);
+	apu.registers.triangle.lengthControl.onWrite(0b10000000);
+	// timer = 507 => freq = 110
+	apu.registers.triangle.timerLow.onWrite(0b11111011); // low = 0b11111011
+	apu.registers.triangle.timerHighLCL.onWrite(0b11111001); // high = 0b001
+
+	// get the first non-zero sample
+	let lastSample = 0;
+	for (let i = 0; i < 10; i++) {
+		lastSample = apu.channels.triangle.sample();
+		if (lastSample !== 0) break;
+	}
+	if (lastSample === 0)
+		throw new Error("The first 10 samples of triangle were 0.");
+
+	// set another timer value
+	apu.registers.triangle.timerLow.onWrite(0b10001011);
+	apu.registers.triangle.timerHighLCL.onWrite(0b11111001);
+
+	// reset length counter
+	apu.channels.triangle.lengthCounter.reset();
+
+	// when the length counter is 0, it should return the last sample
+	apu.channels.triangle.sample().should.equalN(lastSample, "sample()");
+
+	// it shouldn't update the oscillator frequency
+	const frequency = Math.floor(apu.channels.triangle.oscillator.frequency);
+	frequency.should.equalN(110, "frequency");
+})({
+	locales: {
+		es:
+			"`TriangleChannel`: `sample()` solo retorna el último sample si el contador de longitud no está activo",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`TriangleChannel`: has a `quarterFrame()` method", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.triangle;
+
+	channel.should.respondTo("quarterFrame");
+})({
+	locales: { es: "`TriangleChannel`: tiene un método `quarterFrame()`" },
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`TriangleChannel`: has a `halfFrame()` method that updates the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.triangle;
+
+	channel.should.respondTo("halfFrame");
+
+	channel.lengthCounter.clock = sinon.spy();
+	channel.isEnabled = () => true;
+	channel.registers.lengthControl.onWrite(0b10000000); // halt = 1
+	channel.halfFrame();
+	channel.lengthCounter.clock.should.have.been.calledWith(true, 1);
+
+	channel.lengthCounter.clock = sinon.spy();
+	channel.isEnabled = () => true;
+	channel.registers.lengthControl.onWrite(0b00000000); // halt = 0
+	channel.halfFrame();
+	channel.lengthCounter.clock.should.have.been.calledWith(true, 0);
+
+	channel.lengthCounter.clock = sinon.spy();
+	channel.isEnabled = () => false;
+	channel.registers.lengthControl.onWrite(0b00000000); // halt = 0
+	channel.halfFrame();
+	channel.lengthCounter.clock.should.have.been.calledWith(false, 0);
+
+	channel.lengthCounter.clock = sinon.spy();
+	channel.isEnabled = () => false;
+	channel.registers.lengthControl.onWrite(0b10000000); // halt = 1
+	channel.halfFrame();
+	channel.lengthCounter.clock.should.have.been.calledWith(false, 1);
+})({
+	locales: {
+		es:
+			"`TriangleChannel`: tiene un método `halfFrame()` que actualiza el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`TriangleChannel`: has an `isEnabled()` method that returns whether the channel is enabled or not in APUControl", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.triangle.should.respondTo("isEnabled");
+
+	apu.registers.apuControl.onWrite(0b100);
+	apu.channels.triangle.isEnabled().should.equalN(true, "isEnabled()");
+
+	apu.registers.apuControl.onWrite(0b000);
+	apu.channels.triangle.isEnabled().should.equalN(false, "isEnabled()");
+})({
+	locales: {
+		es:
+			"`TriangleChannel`: tiene un método `isEnabled()` que retorna si el canal está activo o no en APUControl",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`APU`: `onQuarterFrameClock()` calls `quarterFrame()` on triangle channel", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.triangle.quarterFrame = sinon.spy();
+	apu.onQuarterFrameClock();
+	apu.channels.triangle.quarterFrame.should.have.been.calledOnce;
+})({
+	locales: {
+		es:
+			"`APU`: `onQuarterFrameClock()` llama a `quarterFrame()` en el canal triangular",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`APU`: `onHalfFrameClock()` calls `halfFrame()` on triangle channel", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.triangle.halfFrame = sinon.spy();
+	apu.onHalfFrameClock();
+	apu.channels.triangle.halfFrame.should.have.been.calledOnce;
+})({
+	locales: {
+		es:
+			"`APU`: `onHalfFrameClock()` llama a `halfFrame()` en el canal triangular",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`TriangleTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.write(0x400b, 0b10110000); // TriangleTimerHighLCL
+	apu.registers.triangle.timerHighLCL.lengthCounterLoad.should.equalN(
+		0b10110, // index 22 => 96 in length table
+		"lengthCounterLoad"
+	);
+	apu.channels.triangle.lengthCounter.counter.should.equalN(96, "counter");
+})({
+	locales: {
+		es:
+			"`TriangleTimerHighLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`APUControl`: on writes, if `enableTriangle` is clear, resets the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.triangle.lengthCounter.counter = 72;
+
+	apu.registers.write(0x4015, 0b00000010);
+
+	apu.channels.triangle.lengthCounter.counter.should.equalN(0, "counter");
+})({
+	locales: {
+		es:
+			"`APUControl`: en escrituras, si `enableTriangle` está apagada, reinicia el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
+});
+
+it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.triangle.lengthCounter.counter = 72;
+
+	apu.registers.write(0x4015, 0b00000110);
+
+	apu.channels.triangle.lengthCounter.counter.should.equalN(72, "counter");
+})({
+	locales: {
+		es:
+			"`APUControl`: en escrituras, si `enableTriangle` está encendida, no reinicia el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
