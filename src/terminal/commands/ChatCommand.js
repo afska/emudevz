@@ -122,8 +122,6 @@ export default class ChatCommand extends Command {
 	}
 
 	async _showMessages(messages) {
-		let wasExerciseFound = false;
-
 		for (let i = 0; i < messages.length; i++) {
 			const message = messages[i];
 			const isSystemMessage = message.startsWith(SYSTEM_PREFIX);
@@ -134,9 +132,12 @@ export default class ChatCommand extends Command {
 				await this._terminal.writeln(rawMessage, theme.COMMENT);
 				await this._terminal.newline();
 			} else {
-				if (!wasExerciseFound && message.startsWith(EXERCISE_PREFIX)) {
-					wasExerciseFound = true;
-					if (i > 0) await this._terminal.newline();
+				if (
+					i > 0 &&
+					!_.last(messages[i - 1].split("\n")).startsWith(EXERCISE_PREFIX) &&
+					message.startsWith(EXERCISE_PREFIX)
+				) {
+					await this._terminal.newline();
 				}
 
 				await this._terminal.writeln(
