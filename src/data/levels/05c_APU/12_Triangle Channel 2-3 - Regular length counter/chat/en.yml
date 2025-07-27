@@ -1,5 +1,59 @@
 ---
 main:
   messages:
-  - coming soon!
-  responses: []
+  - did you listen to the emulator? 😂
+  - we need to silence these triangle waves urgently!
+  - "the Triangle Channel should be silenced:"
+  - 📡  when its timer is below 8 (already covered ✅)
+  - 🔇  when games mute the channel with an 🎛️  APUControl write
+  - 📏  when its length counter is 0
+  - 📏  when its linear length counter is 0
+  responses:
+  - (*) two length counters? [two]
+  - what shall we do? [exercise]
+
+two:
+  messages:
+  - yes!
+  - the other one behaves a bit different
+  - more on that later!
+  responses: 
+  - ...main
+
+exercise:
+  messages:
+  - |-
+    📚  implement in 📏  `TriangleLinearLCL`:
+    **onLoad()**:
+      **->** uses ```javascript this.addField(...)``` to set a `halt` field mapped to bit 7
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
+        use 📄  ~/lib/apu/noteLengths.js~ to get the array
+      **->** assigns the new length to the `counter` property of the channel's length counter
+    - |-
+    📚  in 🔺  `TriangleChannel`:
+    **->** import the 📏  `LengthCounter` class and add a `lengthCounter` property with a new instance
+    **->** modify **sample()**, so if ```javascript !this.isEnabled()``` or the length counter is not active, it returns the last generated sample, without changing anything
+    **->** add the methods described below
+    **quarterFrame()**:
+      **[!]** leave empty for now
+    **halfFrame()**:
+      **->** calls the `clock(...)` method of the length counter
+        (use ```javascript this.isEnabled()``` as the first argument)
+        (for the halt flag, look for `envelopeLoopOrLengthCounterHalt` in the 🟦  PulseControl register)
+  - |-
+    📚  in 🔊  `APU`:
+    **onQuarterFrameClock()**:
+      **->** calls `quarterFrame()` on the two pulse channel instances
+    **onHalfFrameClock()**:
+      **->** calls `halfFrame()` on the two pulse channel instances
+  - |-
+    📚  implement in 🕛  `PulseTimerHighLCL`:
+    **onLoad()**:
+      **->** uses ```javascript this.addField(...)``` to set a 5-bit `lengthCounterLoad` field from bit 3
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
+        use 📄  ~/lib/apu/noteLengths.js~ to get the array
+      **->** assigns the new length to the `counter` property of the channel's length counter
