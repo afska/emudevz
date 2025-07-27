@@ -50,7 +50,7 @@ connect:
       **->** usa ```javascript this.addField(...)``` para definir un campo `timerHigh` de 3 bits desde el bit 0
     **onWrite(value)**:
       **->** asigna el valor con ```javascript this.setValue(...)```
-      **->** invoca a ```javascript updateTimer()``` en la instancia del canal de pulso
+      **->** invoca a ```javascript updateTimer()``` en la instancia del canal pulso
   - |-
     puedes acceder a la instancia de canal actual desde los registros de audio usando:
       ```javascript this.apu.channels.pulses[this.id]```

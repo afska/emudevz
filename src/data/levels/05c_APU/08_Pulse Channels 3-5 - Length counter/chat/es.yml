@@ -67,7 +67,7 @@ exercise:
   - |-
     📚  en 🟦  `PulseChannel`:
     **->** importa esa clase y agrega una propiedad `lengthCounter` con una nueva instancia
-    **->** modifica **sample()**, para que si ```javascript !this.isEnabled()``` o el contador de longitud no está activo, retorne el último sample generado, sin cambiar nada
+    **->** modifica **sample()** para que si ```javascript !this.isEnabled()``` o el contador de longitud no está activo, retorne el último sample generado, sin cambiar nada
     **->** agrega los siguientes métodos:
     **quarterFrame()**:
       **[!]** déjalo vacío por ahora
@@ -78,9 +78,9 @@ exercise:
   - |-
     📚  en 🔊  `APU`:
     **onQuarterFrameClock()**:
-      **->** llama a `quarterFrame()` en las dos instancias de canal de pulso
+      **->** llama a `quarterFrame()` en las dos instancias de canal pulso
     **onHalfFrameClock()**:
-      **->** llama a `halfFrame()` en las dos instancias de canal de pulso
+      **->** llama a `halfFrame()` en las dos instancias de canal pulso
   - |-
     📚  implementa en 🕛  `PulseTimerHighLCL`:
     **onLoad()**:
@@ -88,7 +88,7 @@ exercise:
     **onWrite(value)**:
       **->** __mantén el comportamiento existente__
       **->** determina la nueva longitud accediendo al array `noteLengths` con el índice ```javascript this.lengthCounterLoad```
-        usa 📄  ~/lib/apu/noteLengths.js~ para obtener el array
+        (usa 📄  ~/lib/apu/noteLengths.js~ para obtener el array)
       **->** asigna el nuevo valor a la propiedad `counter` del contador de longitud
   - |-
     📚  implementa en 🎛️  `APUControl`:

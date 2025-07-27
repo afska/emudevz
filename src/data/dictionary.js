@@ -463,7 +463,7 @@ const dictionary = {
 		},
 		"Linear length counter|_Linear length counters": {
 			also: {
-				es: "Contador de longitud lineal|_Contadores de longitud lineal",
+				es: "Contador lineal de longitud|_Contadores lineales de longitud",
 			},
 			icon: "📏",
 			en:
@@ -992,7 +992,7 @@ const dictionary = {
 			en:
 				"An audio register that sets the Triangle Channel's linear length counter reload value and controls its length counter halt. <br /><br />It is available at CPU address `$4008`.",
 			es:
-				"Un registro de audio que establece el valor de recarga del contador de longitud lineal del Canal Triangular y controla la detención del contador de longitud. <br /><br />Está disponible en la dirección de CPU `$4008`.",
+				"Un registro de audio que establece el valor de recarga del contador lineal de longitud del Canal Triangular y controla la detención del contador de longitud. <br /><br />Está disponible en la dirección de CPU `$4008`.",
 		},
 		TriangleTimerHighLCL: {
 			icon: "🕛",
@@ -1022,7 +1022,7 @@ const dictionary = {
 			en:
 				"A waveform shaped like a triangle, with a softer, more mellow sound. Used by the APU's Triangle Channel. <br /><br />It looks like this:<br />`/\\/\\/\\/\\`",
 			es:
-				"Una forma de onda con forma de triángulo, que produce un sonido más suave y apagado. Usada por el Canal Triangular de la APU. <br /><br />Se ve así:<br />`/\\/\\/\\/\\",
+				"Una forma de onda con forma de triángulo, que produce un sonido más suave y apagado. Usada por el Canal Triangular de la APU. <br /><br />Se ve así:<br />`/\\/\\/\\/\\`",
 		},
 		"VBlank|Vertical Blank": {
 			icon: "🏝️",

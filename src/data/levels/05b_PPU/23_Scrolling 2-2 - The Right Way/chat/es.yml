@@ -19,7 +19,7 @@ loopy:
 changes:
   messages:
   - |-
-    📚  importa la biblioteca y añade una propiedad `loopy` en el constructor de 🖥️  `PPU`, asignada a:
+    📚  importa la biblioteca y agrega una propiedad `loopy` en el constructor de 🖥️  `PPU`, asignada a:
          ```javascript new LoopyRegister()```
   - |-
     📚  al final del método `onPreLine(...)`, llama a:
@@ -46,7 +46,7 @@ changes:
       ```javascript onWrite(value) {
         this.ppu.loopy.onPPUAddrWrite(value);
       }```
-    además, añade esta propiedad dinámica:
+    además, agrega esta propiedad dinámica:
       ```javascript get address() {
         return this.ppu.loopy.vAddress.getValue()
       }

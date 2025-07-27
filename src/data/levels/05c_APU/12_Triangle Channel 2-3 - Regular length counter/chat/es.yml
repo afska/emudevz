@@ -1,5 +1,65 @@
 ---
 main:
   messages:
-  - coming soon!
+  - ¿escuchaste el emulador? 😂
+  - ¡necesitamos silenciar estas ondas triangulares con urgencia!
+  - "el Canal Triangular debe silenciarse:"
+  - 📡  cuando su timer está por debajo de 8 (ya cubierto ✅ )
+  - 🔇  cuando los juegos silencian el canal con una escritura a 🎛️  APUControl
+  - 📏  cuando su contador de longitud es 0
+  - 📏  cuando su contador lineal de longitud es 0
+  responses:
+  - (*) ¿dos contadores de longitud? [two]
+  - ¿qué hacemos? [exercise]
+
+two:
+  messages:
+  - ¡sí!
+  - el otro se comporta un poco diferente
+  - ¡más sobre eso después!
+  responses: 
+  - ...main
+
+exercise:
+  messages:
+  - |-
+    📚  implementa en 📏  `TriangleLengthControl`:
+    **onLoad()**:
+      **->** usa ```javascript this.addField(...)``` para definir un campo `halt` mapeado al bit 7
+    **onWrite(value)**:
+      **->** asigna el valor con ```javascript this.setValue(...)```
+  - |-
+    📚  en 🔺  `TriangleChannel`:
+    **->** importa la clase 📏  `LengthCounter` y agrega una propiedad `lengthCounter` con una nueva instancia
+    **->** modifica **sample()** para que si ```javascript !this.isEnabled()``` o el contador de longitud no está activo, retorna la última muestra generada sin cambiar nada
+    **->** agrega los siguientes métodos:
+    **quarterFrame()**:
+      **[!]** déjalo vacío por ahora
+    **halfFrame()**:
+      **->** llama al método `clock(...)` del contador de longitud
+        (usa ```javascript this.isEnabled()``` como primer argumento)
+        (para la bandera de detención, usa la bandera `halt` que agregaste en el registro 📏  TriangleLengthControl)
+    **isEnabled()**:
+      **->** retorna ```javascript !!this.apu.registers.apuControl.enableTriangle```
+  - |-
+    📚  en 🔊  `APU`:
+    **onQuarterFrameClock()**:
+      **->** llama a `quarterFrame()` en la instancia del canal triangular
+    **onHalfFrameClock()**:
+      **->** llama a `halfFrame()` en la instancia del canal triangular
+  - |-
+    📚  implementa en 🕛  `TriangleTimerHighLCL`:
+    **onLoad()**:
+      **->** usa ```javascript this.addField(...)``` para definir un campo `lengthCounterLoad` de 5 bits desde el bit 3
+    **onWrite(value)**:
+      **->** __mantén el comportamiento existente__
+      **->** determina la nueva longitud accediendo al array `noteLengths` con el índice ```javascript this.lengthCounterLoad```
+        (usa 📄  ~/lib/apu/noteLengths.js~ para obtener el array)
+      **->** asigna el nuevo valor a la propiedad `counter` del contador de longitud
+  - |-
+    📚  implementa en 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __mantén el comportamiento existente__
+      **->** si `!this.enableTriangle`:
+        **->** reinicia el contador de longitud del canal
   responses: []

@@ -4,7 +4,7 @@ main:
   - did you listen to the emulator? 😂
   - we need to silence these triangle waves urgently!
   - "the Triangle Channel should be silenced:"
-  - 📡  when its timer is below 8 (already covered ✅)
+  - 📡  when its timer is below 8 (already covered ✅ )
   - 🔇  when games mute the channel with an 🎛️  APUControl write
   - 📏  when its length counter is 0
   - 📏  when its linear length counter is 0
@@ -31,7 +31,7 @@ exercise:
   - |-
     📚  in 🔺  `TriangleChannel`:
     **->** import the 📏  `LengthCounter` class and add a `lengthCounter` property with a new instance
-    **->** modify **sample()**, so if ```javascript !this.isEnabled()``` or the length counter is not active, it returns the last generated sample, without changing anything
+    **->** modify **sample()** so if ```javascript !this.isEnabled()``` or the length counter is not active, it returns the last generated sample, without changing anything
     **->** add the following methods:
     **quarterFrame()**:
       **[!]** leave empty for now
@@ -40,7 +40,7 @@ exercise:
         (use ```javascript this.isEnabled()``` as the first argument)
         (for the halt flag, use the `halt` flag you added in the 📏  TriangleLengthControl register)
     **isEnabled()**:
-      **->** returns ```javascript this.apu.registers.apuControl.enableTriangle```
+      **->** returns ```javascript !!this.apu.registers.apuControl.enableTriangle```
   - |-
     📚  in 🔊  `APU`:
     **onQuarterFrameClock()**:
@@ -54,12 +54,12 @@ exercise:
     **onWrite(value)**:
       **->** __keep existing behavior__
       **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
-        use 📄  ~/lib/apu/noteLengths.js~ to get the array
+        (use 📄  ~/lib/apu/noteLengths.js~ to get the array)
       **->** assigns the new length to the `counter` property of the channel's length counter
   - |-
     📚  implement in 🎛️  `APUControl`:
     **onWrite(value)**:
       **->** __keep existing behavior__
       **->** if `!this.enableTriangle`:
-        **->** reset <Triangle>'s length counter
+        **->** resets the channels' length counter
   responses: []

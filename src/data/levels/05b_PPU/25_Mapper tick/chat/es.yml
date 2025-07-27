@@ -11,10 +11,10 @@ simple:
   messages:
   - ¡sí!
   - |-
-    📚  en 🖥️  `PPU`, añade este método:
+    📚  en 🖥️  `PPU`, agrega este método:
       **onLoad(mapper)**:
         **->** guarda el parámetro como una propiedad (```javascript this.mapper```)
   - |-
-    📚  añade al final de `_onPreLine()` y `_onVisibleLine()`:
+    📚  agrega al final de `_onPreLine()` y `_onVisibleLine()`:
       ```javascript if (this.cycle === 260) this.mapper.tick();```
   responses: []
