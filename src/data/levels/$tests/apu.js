@@ -2228,15 +2228,42 @@ it("`TriangleTimerHighLCL`: writes `timerHigh` (bits 0-2)", () => {
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
-it("`APU`: has a `TriangleChannel` instance", () => {
+it("has a `TriangleChannel` instance", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	expect(apu.channels.triangle, "triangle").to.be.an("object");
-	apu.channels.triangle.should.respondTo("sample");
 })({
 	locales: {
-		es: "`APU`: tiene una instancia de `TriangleChannel`",
+		es: "tiene una instancia de `TriangleChannel`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`TriangleChannel`: has an `apu` reference", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.triangle.apu.should.equalN(apu, "apu");
+})({
+	locales: {
+		es: "`TriangleChannel`: tiene una referencia `apu`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`TriangleChannel`: has a `registers` property, pointing to the audio registers", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.triangle.registers.should.equalN(
+		apu.registers.triangle,
+		"registers"
+	);
+})({
+	locales: {
+		es:
+			"`TriangleChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2250,6 +2277,19 @@ it("`TriangleChannel`: has an `oscillator` property", () => {
 	channel.oscillator.should.respondTo("sample");
 })({
 	locales: { es: "`TriangleChannel`: tiene una propiedad `oscillator`" },
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`TriangleChannel`: has a `sample()` method that returns a number", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.triangle.should.respondTo("sample");
+	apu.channels.triangle.sample().should.be.a("number");
+})({
+	locales: {
+		es: "`TriangleChannel`: tiene un método `sample()` que retorna un número",
+	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
@@ -2305,7 +2345,7 @@ it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `os
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
-it("`APU`: mixes pulse1, pulse2 and triangle in `step()`", () => {
+it("mixes pulse1, pulse2 and triangle in `step()`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const onSample = sinon.spy();
@@ -2323,7 +2363,7 @@ it("`APU`: mixes pulse1, pulse2 and triangle in `step()`", () => {
 	onSample.should.have.been.calledWith(0.06, 1, 2, 3);
 })({
 	locales: {
-		es: "`APU`: mezcla triangle con pulse1 y pulse2 en `step()`",
+		es: "mezcla pulse1, pulse2 y triangle en `step()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2520,32 +2560,35 @@ it("`TriangleChannel`: has an `isEnabled()` method that returns whether the chan
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`APU`: `onQuarterFrameClock()` calls `quarterFrame()` on triangle channel", () => {
+it("`onQuarterFrameClock()` calls `quarterFrame()` on triangle channel", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	apu.channels.triangle.quarterFrame = sinon.spy();
+
 	apu.onQuarterFrameClock();
+
 	apu.channels.triangle.quarterFrame.should.have.been.calledOnce;
 })({
 	locales: {
 		es:
-			"`APU`: `onQuarterFrameClock()` llama a `quarterFrame()` en el canal triangular",
+			"`onQuarterFrameClock()` llama a `quarterFrame()` en el canal triangular",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`APU`: `onHalfFrameClock()` calls `halfFrame()` on triangle channel", () => {
+it("`onHalfFrameClock()` calls `halfFrame()` on triangle channel", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	apu.channels.triangle.halfFrame = sinon.spy();
+
 	apu.onHalfFrameClock();
+
 	apu.channels.triangle.halfFrame.should.have.been.calledOnce;
 })({
 	locales: {
-		es:
-			"`APU`: `onHalfFrameClock()` llama a `halfFrame()` en el canal triangular",
+		es: "`onHalfFrameClock()` llama a `halfFrame()` en el canal triangular",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2931,4 +2974,260 @@ it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the le
 			"`APUControl`: en escrituras, si `enableTriangle` está encendida, no reinicia el contador lineal de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+// 5c.14 Noise Channel (1/3): Length counter
+
+it("has a `NoiseChannel` instance", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	expect(apu.channels.noise, "noise").to.be.an("object");
+})({
+	locales: { es: "tiene una instancia de `NoiseChannel`" },
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`NoiseChannel`: has an `apu` reference", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.noise.apu.should.equalN(apu, "apu");
+})({
+	locales: {
+		es: "`NoiseChannel`: tiene una referencia `apu`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`NoiseChannel`: has a `registers` property, pointing to the audio registers", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.noise.registers.should.equalN(apu.registers.noise, "registers");
+})({
+	locales: {
+		es:
+			"`NoiseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`NoiseChannel`: has a `lengthCounter` property", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.noise;
+
+	expect(channel.lengthCounter, "lengthCounter").to.be.an("object");
+	channel.lengthCounter.should.respondTo("reset");
+	channel.lengthCounter.should.respondTo("isActive");
+	channel.lengthCounter.should.respondTo("clock");
+})({
+	locales: { es: "`NoiseChannel`: tiene una propiedad `lengthCounter`" },
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`NoiseChannel`: has a `sample()` method that returns a number", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.noise.should.respondTo("sample");
+	apu.channels.noise.sample().should.be.a("number");
+})({
+	locales: {
+		es: "`NoiseChannel`: tiene un método `sample()` que retorna un número",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`NoiseChannel`: `sample()` returns 0 when disabled or length counter inactive", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const channel = apu.channels.noise;
+
+	// length counter not active
+	channel.lengthCounter.isActive = () => false;
+	apu.registers.apuControl.setValue(0b00001000);
+	channel.sample().should.equalN(0, "sample()");
+
+	// channel disabled
+	channel.lengthCounter.isActive = () => true;
+	apu.registers.apuControl.setValue(0b00000000);
+	channel.sample().should.equalN(0, "sample()");
+})({
+	locales: {
+		es:
+			"`NoiseChannel`: `sample()` retorna 0 cuando está deshabilitado o el contador de longitud no está activo",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("calls noise channel's `step()` method on every APU `step(...)` call", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.noise;
+	channel.step = sinon.spy();
+
+	apu.step(noop);
+
+	channel.step.should.have.been.called;
+})({
+	locales: {
+		es:
+			"llama al método `step()` del canal ruido en cada llamada a `step(...)` de la APU",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("mixes pulse1, pulse2, triangle and noise in `step()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const onSample = sinon.spy();
+
+	apu.channels.pulses[0].sample = () => 1;
+	apu.channels.pulses[1].sample = () => 2;
+	apu.channels.triangle.sample = () => 3;
+	apu.channels.noise.sample = () => 4;
+
+	for (let i = 0; i < 19; i++) {
+		apu.step(onSample);
+		onSample.should.not.have.been.called;
+	}
+
+	apu.step(onSample);
+	onSample.should.have.been.calledWith(0.1, 1, 2, 3, 4);
+})({
+	locales: {
+		es: "mezcla pulse1, pulse2, triangle y noise en `step()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`onQuarterFrameClock()` calls `quarterFrame()` on noise channel", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.noise.quarterFrame = sinon.spy();
+
+	apu.onQuarterFrameClock();
+
+	apu.channels.noise.quarterFrame.should.have.been.calledOnce;
+})({
+	locales: {
+		es: "`onQuarterFrameClock()` llama a `quarterFrame()` en NoiseChannel",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`onHalfFrameClock()` calls `halfFrame()` on noise channel", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.noise.halfFrame = sinon.spy();
+
+	apu.onHalfFrameClock();
+
+	apu.channels.noise.halfFrame.should.have.been.calledOnce;
+})({
+	locales: {
+		es: "`onHalfFrameClock()` llama a `halfFrame()` en NoiseChannel",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`NoiseControl`: writes `volumeOrEnvelopePeriod` (bits 0-3), `constantVolume` (bit 4), `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const register = apu.registers.noise.control;
+
+	register.onWrite(0b00101101);
+	register.volumeOrEnvelopePeriod.should.equalN(
+		0b1101,
+		"volumeOrEnvelopePeriod"
+	);
+	register.constantVolume.should.equalN(0, "constantVolume");
+	register.envelopeLoopOrLengthCounterHalt.should.equalN(
+		1,
+		"envelopeLoopOrLengthCounterHalt"
+	);
+
+	register.onWrite(0b00010010);
+	register.volumeOrEnvelopePeriod.should.equalN(
+		0b0010,
+		"volumeOrEnvelopePeriod"
+	);
+	register.constantVolume.should.equalN(1, "constantVolume");
+	register.envelopeLoopOrLengthCounterHalt.should.equalN(
+		0,
+		"envelopeLoopOrLengthCounterHalt"
+	);
+})({
+	locales: {
+		es:
+			"`NoiseControl`: escribe `volumeOrEnvelopePeriod` (bits 0-3), `constantVolume` (bit 4), `envelopeLoopOrLengthCounterHalt` (bit 5)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`NoiseLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	// index 22 -> length 96
+	apu.registers.write(0x400f, 0b10110000);
+	apu.registers.noise.lcl.lengthCounterLoad.should.equalN(
+		0b10110,
+		"lengthCounterLoad"
+	);
+	apu.channels.noise.lengthCounter.counter.should.equalN(96, "counter");
+
+	// index 12 -> length 14
+	apu.registers.write(0x400f, 0b01100000);
+	apu.registers.noise.lcl.lengthCounterLoad.should.equalN(
+		0b01100,
+		"lengthCounterLoad"
+	);
+	apu.channels.noise.lengthCounter.counter.should.equalN(14, "counter");
+})({
+	locales: {
+		es:
+			"`NoiseLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`APUControl`: on writes, if `enableNoise` is clear, resets the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.noise.lengthCounter.counter = 45;
+
+	apu.registers.write(0x4015, 0b00000111);
+
+	apu.channels.noise.lengthCounter.counter.should.equalN(0, "counter");
+})({
+	locales: {
+		es:
+			"`APUControl`: en escrituras, si `enableNoise` está apagada, reinicia el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`APUControl`: on writes, if `enableNoise` is set, it doesn't reset the noise channel length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.noise.lengthCounter.counter = 45;
+
+	apu.registers.write(0x4015, 0b00001000);
+
+	apu.channels.noise.lengthCounter.counter.should.equalN(45, "counter");
+})({
+	locales: {
+		es:
+			"`APUControl`: en escrituras, si `enableNoise` está encendida, no reinicia el contador de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
 });

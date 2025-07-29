@@ -368,7 +368,7 @@ class APUControl extends InMemoryRegister.APU {
 			this.apu.channels.triangle.lengthCounter.reset();
 			this.apu.channels.triangle.linearLengthCounter.fullReset();
 		}
-		if (!this.enableNoisse) this.apu.channels.noise.lengthCounter.reset();
+		if (!this.enableNoise) this.apu.channels.noise.lengthCounter.reset();
 	}
 }
 
