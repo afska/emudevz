@@ -64,7 +64,10 @@ export default class TestCommand extends Command {
 			let warnings = [];
 			try {
 				warnings = testContext[context]?.getWarnings(level);
-			} catch (e) {}
+			} catch (e) {
+				this._terminal.writeln(e?.message || "?", theme.ERROR);
+				return;
+			}
 
 			const overallResult = { allGreen: true, passCount: 0, failCount: 0 };
 			const hasMultipleTestFiles =

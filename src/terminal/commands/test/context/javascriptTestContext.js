@@ -63,24 +63,37 @@ export default {
 	},
 
 	getWarnings(level) {
-		const code = level.content;
-		if (!_.isObject(code)) return [];
+		try {
+			const code = level.content;
+			if (!_.isObject(code)) return [];
 
-		const { modules } = this._compile(code.main);
-		const fileNames = _(modules).keys().sort().value();
+			const { modules } = this._compile(code.main);
+			const fileNames = _(modules).keys().sort().value();
 
-		return fileNames
-			.map((fileName) => {
-				const linter = new Linter();
+			return fileNames
+				.map((fileName) => {
+					const linter = new Linter();
 
-				return {
-					fileName,
-					lint: linter.verify(filesystem.read(fileName), esLintConfig, {
-						filename: fileName,
-					}),
-				};
-			})
-			.filter((it) => !_.isEmpty(it.lint));
+					return {
+						fileName,
+						lint: linter.verify(filesystem.read(fileName), esLintConfig, {
+							filename: fileName,
+						}),
+					};
+				})
+				.filter((it) => !_.isEmpty(it.lint));
+		} catch (e) {
+			console.error(e);
+			const message = e?.message?.toLowerCase() || "?";
+
+			if (message.includes("call stack")) {
+				throw new Error(
+					"There's some recursive stuff goin' on. Check your imports?"
+				);
+			} else {
+				throw new Error("Something has gone very wrong!");
+			}
+		}
 	},
 
 	buildHTMLError(e) {
@@ -115,16 +128,7 @@ export default {
 				(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
 			);
 		} catch (e) {
-			console.error(e);
-
-			const message = e?.message?.toLowerCase() || "?";
-			if (message.includes("import loop detected")) {
-				return e.message.replace("!", "<br />");
-			} else if (message.includes("call stack")) {
-				return "There's some recursive stuff goin' on.<br />Check your imports?";
-			} else {
-				return "Something has gone very wrong!";
-			}
+			return e?.message || "?";
 		}
 	},
 
@@ -252,9 +256,6 @@ export default {
 					context.matches,
 					context.withLastCode
 				);
-
-				if (context.filePath === absolutePath)
-					throw new Error(`Import loop detected! 📌  ${absolutePath} 📌`);
 
 				const module =
 					modules[absolutePath] ||
