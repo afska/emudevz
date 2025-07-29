@@ -84,35 +84,48 @@ export default {
 	},
 
 	buildHTMLError(e) {
-		let fullStack = this.buildStack(e);
+		try {
+			let fullStack = this.buildStack(e);
 
-		if (!fullStack) {
-			const warnings = this.getWarnings(Level.current).filter((it) =>
-				it.lint.some((lint) => lint.severity === ERROR)
+			if (!fullStack) {
+				const warnings = this.getWarnings(Level.current).filter((it) =>
+					it.lint.some((lint) => lint.severity === ERROR)
+				);
+				if (!_.isEmpty(warnings)) {
+					fullStack = {
+						trace: warnings
+							.map((it) => {
+								const errors = it.lint
+									.filter((lint) => lint.severity === ERROR)
+									.map(
+										(lint) =>
+											`&nbsp;&nbsp;(:${lint.line}:${lint.column}) ${lint.message}`
+									)
+									.join("\n");
+
+								return `\n📄 ${it.fileName}:\n` + errors;
+							})
+							.join("\n"),
+					};
+				}
+			}
+
+			return (
+				(e?.message || "?") +
+				(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
 			);
-			if (!_.isEmpty(warnings)) {
-				fullStack = {
-					trace: warnings
-						.map((it) => {
-							const errors = it.lint
-								.filter((lint) => lint.severity === ERROR)
-								.map(
-									(lint) =>
-										`&nbsp;&nbsp;(:${lint.line}:${lint.column}) ${lint.message}`
-								)
-								.join("\n");
+		} catch (e) {
+			console.error(e);
 
-							return `\n📄 ${it.fileName}:\n` + errors;
-						})
-						.join("\n"),
-				};
+			const message = e?.message?.toLowerCase() || "?";
+			if (message.includes("import loop detected")) {
+				return e.message.replace("!", "<br />");
+			} else if (message.includes("call stack")) {
+				return "There's some recursive stuff goin' on.<br />Check your imports?";
+			} else {
+				return "Something has gone very wrong!";
 			}
 		}
-
-		return (
-			(e?.message || "?") +
-			(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
-		);
 	},
 
 	buildStack(error) {
@@ -239,6 +252,9 @@ export default {
 					context.matches,
 					context.withLastCode
 				);
+
+				if (context.filePath === absolutePath)
+					throw new Error(`Import loop detected! 📌  ${absolutePath} 📌`);
 
 				const module =
 					modules[absolutePath] ||

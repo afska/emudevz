@@ -82,10 +82,20 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 		componentWillUnmount() {
 			if (this.debuggerGUI != null) this.debuggerGUI.destroy();
 			window.removeEventListener("resize", this._onResize);
-			ImGui_Impl.Shutdown();
-			ImGui.DestroyContext();
 			if (this._animationFrame)
 				window.cancelAnimationFrame(this._animationFrame);
+
+			try {
+				ImGui_Impl.Shutdown();
+			} catch (e) {
+				console.warn(e);
+			}
+
+			try {
+				ImGui.DestroyContext();
+			} catch (e) {
+				console.warn(e);
+			}
 		}
 
 		_onResize = () => {
