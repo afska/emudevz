@@ -1,0 +1,16 @@
+---
+main:
+  messages:
+  - the 💥  Noise Channel is a little bit... <noisy>
+  - silencing it correctly is crucial, so we'll start with that
+  - and only then we'll do the actual noise emulation!
+  responses:
+  - how do we silence it? [exercise]
+
+exercise:
+  messages:
+  - as usual, monitoring 🎛️  APUControl and with a 📏  length counter
+  - it also has an 📉  envelope! which we'll cover later
+  - at this point, this is all normal stuff, so I'll provide a base template for it and you'll wire everything up
+  - "// TODO: EXERCISE"
+  responses: []
