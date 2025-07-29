@@ -18,9 +18,9 @@ main:
 exercise:
   messages:
   - |- 
-    📚  create a 📏  `LinearLengthCounter` class <that extends from `LengthCounter`> with the following:
+    📚  create a 📏  `LinearLengthCounter` class that <extends> from `LengthCounter` with the following:
     **constructor()**:
-      **->** calls ```super()```
+      **->** calls ```javascript super()```
       **->** sets ```javascript this.reload = 0```
       **->** sets ```javascript this.reloadFlag = false```
     **fullReset()**:
