@@ -2279,7 +2279,11 @@ it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `os
 
 	const channel = apu.channels.triangle;
 
-	apu.registers.apuControl.setValue(0b11111111);
+	// enable triangle output
+	apu.registers.apuControl.onWrite(0b11111111); // enables all channels
+	apu.registers.triangle.lengthControl.onWrite(0b11111111); // sets reload value
+	apu.registers.triangle.timerHighLCL.onWrite(0); // sets reload flag
+	apu.registers.apuFrameCounter.onWrite(0); // triggers quarter&half frames
 
 	// set timer => buildU16(2, 4) = 516
 	apu.registers.write(0x400a, 4); // low: 4
@@ -2362,9 +2366,12 @@ it("`TriangleChannel`: `sample()` just returns the last sample if the channel is
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	// enable all channels, length counter halt & load
-	apu.registers.apuControl.setValue(0b11111111);
-	apu.registers.triangle.lengthControl.onWrite(0b10000000);
+	// enable triangle output
+	apu.registers.apuControl.onWrite(0b11111111); // enables all channels
+	apu.registers.triangle.lengthControl.onWrite(0b11111111); // sets reload value
+	apu.registers.triangle.timerHighLCL.onWrite(0); // sets reload flag
+	apu.registers.apuFrameCounter.onWrite(0); // triggers quarter&half frames
+
 	// timer = 507 => freq = 110
 	apu.registers.triangle.timerLow.onWrite(0b11111011); // low = 0b11111011
 	apu.registers.triangle.timerHighLCL.onWrite(0b11111001); // high = 0b001
@@ -2403,9 +2410,12 @@ it("`TriangleChannel`: `sample()` just returns the last sample if the length cou
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	// enable all channels, length counter halt & load
-	apu.registers.apuControl.setValue(0b11111111);
-	apu.registers.triangle.lengthControl.onWrite(0b10000000);
+	// enable triangle output
+	apu.registers.apuControl.onWrite(0b11111111); // enables all channels
+	apu.registers.triangle.lengthControl.onWrite(0b11111111); // sets reload value
+	apu.registers.triangle.timerHighLCL.onWrite(0); // sets reload flag
+	apu.registers.apuFrameCounter.onWrite(0); // triggers quarter&half frames
+
 	// timer = 507 => freq = 110
 	apu.registers.triangle.timerLow.onWrite(0b11111011); // low = 0b11111011
 	apu.registers.triangle.timerHighLCL.onWrite(0b11111001); // high = 0b001
@@ -2760,26 +2770,49 @@ it("`LinearLengthCounter`: `clock(true, *)` when `reloadFlag` false and `counter
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
 
-// TODO: FIX OLD TESTS
-// TODO: FINISH AND FIX --vvv
-// it("`TriangleChannel`: `sample()` returns `lastSample` or `0` when `linearLengthCounter` is not active", () => {
-// 	const APU = mainModule.default.APU;
-// 	const apu = new APU({});
+it("`TriangleChannel`: `sample()` just returns the last sample if the linear length counter is not active", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
 
-// 	const channel = apu.channels.triangle;
+	// enable triangle output
+	apu.registers.apuControl.onWrite(0b11111111); // enables all channels
+	apu.registers.triangle.lengthControl.onWrite(0b11111111); // sets reload value
+	apu.registers.triangle.timerHighLCL.onWrite(0); // sets reload flag
+	apu.registers.apuFrameCounter.onWrite(0); // triggers quarter&half frames
 
-// 	channel.linearLengthCounter.isActive = () => false;
-// 	channel.lastSample = undefined;
-// 	channel.sample().should.equalN(0, "sample()");
-// 	channel.lastSample = 6;
-// 	channel.sample().should.equalN(6, "sample()");
-// })({
-// 	locales: {
-// 		es:
-// 			"`TriangleChannel`: `sample()` retorna `lastSample` o `0` cuando `linearLengthCounter` no está activo",
-// 	},
-// 	use: ({ id }, book) => id >= book.getId("5c.13"),
-// });
+	// timer = 507 => freq = 110
+	apu.registers.triangle.timerLow.onWrite(0b11111011); // low = 0b11111011
+	apu.registers.triangle.timerHighLCL.onWrite(0b11111001); // high = 0b001
+
+	// get the first non-zero sample
+	let lastSample = 0;
+	for (let i = 0; i < 10; i++) {
+		lastSample = apu.channels.triangle.sample();
+		if (lastSample !== 0) break;
+	}
+	if (lastSample === 0)
+		throw new Error("The first 10 samples of triangle were 0.");
+
+	// set another timer value
+	apu.registers.triangle.timerLow.onWrite(0b10001011);
+	apu.registers.triangle.timerHighLCL.onWrite(0b11111001);
+
+	// reset linear length counter
+	apu.channels.triangle.linearLengthCounter.fullReset();
+
+	// when the length counter is 0, it should return the last sample
+	apu.channels.triangle.sample().should.equalN(lastSample, "sample()");
+
+	// it shouldn't update the oscillator frequency
+	const frequency = Math.floor(apu.channels.triangle.oscillator.frequency);
+	frequency.should.equalN(110, "frequency");
+})({
+	locales: {
+		es:
+			"`TriangleChannel`: `sample()` solo retorna el último sample si el contador lineal de longitud no está activo",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
 
 it("`TriangleChannel`: `quarterFrame()` updates the linear length counter", () => {
 	const APU = mainModule.default.APU;
