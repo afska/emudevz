@@ -3,8 +3,8 @@
 		"en": "📏 Noise Channel (1/3): Length counter",
 		"es": "📏 Canal Ruido (1/3): Contador de longitud"
 	},
-	"run": "copy.js",
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [

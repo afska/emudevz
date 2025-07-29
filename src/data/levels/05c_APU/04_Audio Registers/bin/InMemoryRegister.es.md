@@ -7,7 +7,7 @@ Esta clase facilita la implementación de registros mapeados en memoria usados p
 ## Uso
 
 1. Crea una clase para cada registro mapeado en memoria. Para crear un registro PPU, extiende de `InMemoryRegister.PPU`. Para un registro APU, extiende de `InMemoryRegister.APU`.
-2. En el método `onLoad()`, usa `addField(...)`/`addWritableField(...)` para agregar _campos_ que residen en los bits del registro (ver ejemplo abajo).
+2. En el método `onLoad()`, usa `addField(...)`/`addWritableField(...)` para definir _campos_ que residen en los bits del registro (ver ejemplo abajo).
 3. Si el registro puede ser leído por la CPU 🧠, implementa `onRead()`. De lo contrario, las lecturas devolverán `0`.
 4. Si el registro puede ser escrito por la CPU 🧠, implementa `onWrite(value)`. De lo contrario, las escrituras no tendrán efecto.
 

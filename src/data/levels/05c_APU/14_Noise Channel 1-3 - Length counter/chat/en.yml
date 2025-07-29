@@ -52,6 +52,6 @@ exercise:
 random:
   messages:
   - well, obviously that's not what the NEEES does
-  - but I added it just to hear something!
+  - but I added it just so you can hear something!
   - we'll properly emulate the noise in the next level
   responses: []

@@ -7,7 +7,7 @@ This class facilitates the implementation of memory-mapped registers used by NEE
 ## Usage
 
 1. Create a class for each memory-mapped register. To create a PPU register, extend from `InMemoryRegister.PPU`. For an APU register, extend from `InMemoryRegister.APU`.
-2. In the `onLoad()` method, use `addField(...)`/`addWritableField(...)` to add _fields_ that live inside the register bits (see example below).
+2. In the `onLoad()` method, use `addField(...)`/`addWritableField(...)` to define _fields_ that live inside the register bits (see example below).
 3. If the register can be read by the 🧠 CPU, implement `onRead()`. Otherwise, reads will return `0`.
 4. If the register can be written by the 🧠 CPU, implement `onWrite(value)`. Otherwise, writes will have no effect.
 
