@@ -26,7 +26,7 @@ exercise:
   - |-
     📚  implement in 🧮  `APUFrameCounter`:
     **onLoad()**:
-      **->** uses ```javascript this.addField(...)``` to set a `use5StepSequencer` field mapped to bit 7
+      **->** uses ```javascript this.addField(...)``` to define a `use5StepSequencer` field mapped to bit 7
     **onWrite(value)**:
       **->** sets the value with ```javascript this.setValue(...)```
       **->** calls ```javascript this.apu.frameSequencer.reset()```

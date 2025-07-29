@@ -84,7 +84,7 @@ exercise:
   - |-
     📚  implement in 🕛  `PulseTimerHighLCL`:
     **onLoad()**:
-      **->** uses ```javascript this.addField(...)``` to set a 5-bit `lengthCounterLoad` field from bit 3
+      **->** uses ```javascript this.addField(...)``` to define a 5-bit `lengthCounterLoad` field from bit 3
     **onWrite(value)**:
       **->** __keep existing behavior__
       **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index

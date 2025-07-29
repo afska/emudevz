@@ -19,7 +19,7 @@ bass:
   - |-
     📚  implement in 🕛  `TriangleTimerHighLCL`:
     **onLoad()**:
-      **->** uses ```javascript this.addField(...)``` to set a 3-bit `timerHigh` field from bit 0
+      **->** uses ```javascript this.addField(...)``` to define a 3-bit `timerHigh` field from bit 0
     **onWrite(value)**:
       **->** sets the value with ```javascript this.setValue(...)```
   - |-

@@ -25,7 +25,7 @@ exercise:
   - |-
     📚  implement in 📏  `TriangleLengthControl`:
     **onLoad()**:
-      **->** uses ```javascript this.addField(...)``` to set a `halt` field mapped to bit 7
+      **->** uses ```javascript this.addField(...)``` to define a `halt` field mapped to bit 7
     **onWrite(value)**:
       **->** sets the value with ```javascript this.setValue(...)```
   - |-
@@ -50,7 +50,7 @@ exercise:
   - |-
     📚  implement in 🕛  `TriangleTimerHighLCL`:
     **onLoad()**:
-      **->** uses ```javascript this.addField(...)``` to set a 5-bit `lengthCounterLoad` field from bit 3
+      **->** uses ```javascript this.addField(...)``` to define a 5-bit `lengthCounterLoad` field from bit 3
     **onWrite(value)**:
       **->** __keep existing behavior__
       **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index

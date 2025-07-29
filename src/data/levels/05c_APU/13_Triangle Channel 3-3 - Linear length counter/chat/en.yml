@@ -51,7 +51,7 @@ exercise:
   - |-
     📚  implement in 📏  `TriangleLengthControl`:
     **onLoad()**:
-      **->** uses ```javascript this.addField(...)``` to set a 7-bit `linearCounterReload` field from bit 1
+      **->** uses ```javascript this.addField(...)``` to define a 7-bit `linearCounterReload` field from bit 1
     **onWrite(value)**:
       **->** __keep existing behavior__
       **->** assigns the new length to the `reload` property of the channel's linear length counter
@@ -60,6 +60,6 @@ exercise:
     📚  implement in 🕛  `TriangleTimerHighLCL`:
     **onWrite(value)**:
       **->** __keep existing behavior__
-      **->** sets the reload flag of the channel's length counter
+      **->** sets the reload flag of the channel's linear length counter
   - 📚  in 🎛️  `APUControl`, after calling `reset()` on the length counter, also call `fullReset()` on the linear length counter if `enableTriangle` is 0
   responses: []
