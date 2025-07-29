@@ -246,14 +246,14 @@ class PulseTimerHighLCL extends InMemoryRegister.APU {
 
 class TriangleLengthControl extends InMemoryRegister.APU {
 	onLoad() {
-		this.addField("lengthCounterLoad", 0, 7).addField("halt", 7);
+		this.addField("linearCounterReload", 0, 7).addField("halt", 7);
 	}
 
 	onWrite(value) {
 		this.setValue(value);
 
 		const channel = this.apu.channels.triangle;
-		channel.linearLengthCounter.reload = this.lengthCounterLoad;
+		channel.linearLengthCounter.reload = this.linearCounterReload;
 	}
 }
 

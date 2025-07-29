@@ -2591,3 +2591,311 @@ it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the le
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
+
+// 5c.13 Triangle Channel (3/3): Linear length counter
+
+it("`TriangleChannel`: has a `linearLengthCounter` property", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.triangle;
+
+	expect(channel.linearLengthCounter, "linearLengthCounter").to.be.an("object");
+})({
+	locales: {
+		es: "`TriangleChannel`: tiene una propiedad `linearLengthCounter`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`LinearLengthCounter`: has `reload` and `reloadFlag` initialized to `0` and `false`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
+
+	linearLengthCounter.reload.should.equalN(0, "reload");
+	linearLengthCounter.reloadFlag.should.equalN(false, "reloadFlag");
+})({
+	locales: {
+		es:
+			"`LinearLengthCounter`: tiene `reload` y `reloadFlag` inicializados en `0` y `false`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`LinearLengthCounter`: `isActive()` returns whether `counter` is greater than 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
+
+	linearLengthCounter.should.respondTo("isActive");
+
+	linearLengthCounter.counter = 2;
+	linearLengthCounter.isActive().should.equalN(true, "isActive()");
+
+	linearLengthCounter.counter = 0;
+	linearLengthCounter.isActive().should.equalN(false, "isActive()");
+
+	linearLengthCounter.counter = 1;
+	linearLengthCounter.isActive().should.equalN(true, "isActive()");
+})({
+	locales: {
+		es: "`LinearLengthCounter`: `isActive()` retorna si `counter` es mayor a 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`LinearLengthCounter`: `fullReset()` resets `counter`, `reload`, and `reloadFlag`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
+
+	linearLengthCounter.should.respondTo("fullReset");
+
+	linearLengthCounter.counter = 5;
+	linearLengthCounter.reload = 7;
+	linearLengthCounter.reloadFlag = true;
+
+	linearLengthCounter.fullReset();
+
+	linearLengthCounter.counter.should.equalN(0, "counter");
+	linearLengthCounter.reload.should.equalN(0, "reload");
+	linearLengthCounter.reloadFlag.should.equalN(false, "reloadFlag");
+})({
+	locales: {
+		es:
+			"`LinearLengthCounter`: `fullReset()` reinicia `counter`, `reload` y `reloadFlag`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`LinearLengthCounter`: `clock(false, *)` resets `counter` but keeps `reload` and `reloadFlag`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
+
+	linearLengthCounter.should.respondTo("clock");
+
+	linearLengthCounter.counter = 4;
+	linearLengthCounter.reload = 9;
+	linearLengthCounter.reloadFlag = true;
+
+	linearLengthCounter.clock(false, true);
+
+	linearLengthCounter.counter.should.equalN(0, "counter");
+	linearLengthCounter.reload.should.equalN(9, "reload");
+	linearLengthCounter.reloadFlag.should.equalN(true, "reloadFlag");
+})({
+	locales: {
+		es:
+			"`LinearLengthCounter`: `clock(false, *)` reinicia `counter` pero mantiene `reload` y `reloadFlag`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`LinearLengthCounter`: `clock(true, false)` with `reloadFlag` loads `reload` into `counter` and clears `reloadFlag`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
+
+	linearLengthCounter.should.respondTo("clock");
+
+	linearLengthCounter.reload = 9;
+	linearLengthCounter.reloadFlag = true;
+	linearLengthCounter.counter = 0;
+
+	linearLengthCounter.clock(true, false);
+
+	linearLengthCounter.counter.should.equalN(9, "counter");
+	linearLengthCounter.reloadFlag.should.equalN(false, "reloadFlag");
+})({
+	locales: {
+		es:
+			"`LinearLengthCounter`: `clock(true, false)` con `reloadFlag` carga `reload` en `counter` y apaga `reloadFlag`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`LinearLengthCounter`: `clock(true, true)` with `reloadFlag` and `isHalted` true loads `reload` but keeps `reloadFlag`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
+
+	linearLengthCounter.should.respondTo("clock");
+
+	linearLengthCounter.reload = 11;
+	linearLengthCounter.reloadFlag = true;
+	linearLengthCounter.counter = 0;
+
+	linearLengthCounter.clock(true, true);
+
+	linearLengthCounter.counter.should.equalN(11, "counter");
+	linearLengthCounter.reloadFlag.should.equalN(true, "reloadFlag");
+})({
+	locales: {
+		es:
+			"`LinearLengthCounter`: `clock(true, true)` con `reloadFlag` y `isHalted` verdadero carga `reload` y mantiene `reloadFlag`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`LinearLengthCounter`: `clock(true, *)` when `reloadFlag` false and `counter > 0` decrements `counter`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
+
+	linearLengthCounter.should.respondTo("clock");
+
+	linearLengthCounter.reloadFlag = false;
+	linearLengthCounter.counter = 4;
+
+	linearLengthCounter.clock(true, false);
+
+	linearLengthCounter.counter.should.equalN(3, "counter");
+})({
+	locales: {
+		es:
+			"`LinearLengthCounter`: `clock(true, *)` cuando `reloadFlag` es false y `counter > 0` decrementa `counter`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+// TODO: FIX OLD TESTS
+// TODO: FINISH AND FIX --vvv
+// it("`TriangleChannel`: `sample()` returns `lastSample` or `0` when `linearLengthCounter` is not active", () => {
+// 	const APU = mainModule.default.APU;
+// 	const apu = new APU({});
+
+// 	const channel = apu.channels.triangle;
+
+// 	channel.linearLengthCounter.isActive = () => false;
+// 	channel.lastSample = undefined;
+// 	channel.sample().should.equalN(0, "sample()");
+// 	channel.lastSample = 6;
+// 	channel.sample().should.equalN(6, "sample()");
+// })({
+// 	locales: {
+// 		es:
+// 			"`TriangleChannel`: `sample()` retorna `lastSample` o `0` cuando `linearLengthCounter` no está activo",
+// 	},
+// 	use: ({ id }, book) => id >= book.getId("5c.13"),
+// });
+
+it("`TriangleChannel`: `quarterFrame()` updates the linear length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.triangle;
+
+	channel.should.respondTo("quarterFrame");
+
+	channel.linearLengthCounter.clock = sinon.spy();
+	channel.isEnabled = () => true;
+	channel.registers.lengthControl.onWrite(0b10000000); // halt = 1
+	channel.quarterFrame();
+	channel.linearLengthCounter.clock.should.have.been.calledWith(true, 1);
+
+	channel.linearLengthCounter.clock = sinon.spy();
+	channel.isEnabled = () => true;
+	channel.registers.lengthControl.onWrite(0b00000000); // halt = 0
+	channel.quarterFrame();
+	channel.linearLengthCounter.clock.should.have.been.calledWith(true, 0);
+
+	channel.linearLengthCounter.clock = sinon.spy();
+	channel.isEnabled = () => false;
+	channel.registers.lengthControl.onWrite(0b00000000); // halt = 0
+	channel.quarterFrame();
+	channel.linearLengthCounter.clock.should.have.been.calledWith(false, 0);
+
+	channel.linearLengthCounter.clock = sinon.spy();
+	channel.isEnabled = () => false;
+	channel.registers.lengthControl.onWrite(0b10000000); // halt = 1
+	channel.quarterFrame();
+	channel.linearLengthCounter.clock.should.have.been.calledWith(false, 1);
+})({
+	locales: {
+		es:
+			"`TriangleChannel`: `quarterFrame()` actualiza el contador lineal de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`TriangleLengthControl`: writes `linearCounterReload` and updates linear length counter's `reload`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.triangle;
+	const register = apu.registers.triangle.lengthControl;
+
+	apu.registers.write(0x4008, 0b01001011);
+	register.linearCounterReload.should.equalN(0b1001011, "linearCounterReload");
+	channel.linearLengthCounter.reload.should.equalN(0b1001011, "reload");
+})({
+	locales: {
+		es:
+			"`TriangleLengthControl`: escribe `linearCounterReload` y actualiza el `reload` del contador lineal de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`TriangleTimerHighLCL`: writes set `reloadFlag` on channel's linearLengthCounter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.triangle;
+	channel.linearLengthCounter.reloadFlag = false;
+	apu.registers.write(0x400b, 0);
+	channel.linearLengthCounter.reloadFlag.should.equalN(true, "reloadFlag");
+})({
+	locales: {
+		es:
+			"`TriangleTimerHighLCL`: las escrituras encienden `reloadFlag` en el contador linearl de longitud del canal",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`APUControl`: on writes, if `enableTriangle` is clear, resets the linear length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
+
+	linearLengthCounter.counter = 5;
+	linearLengthCounter.reload = 8;
+	linearLengthCounter.reloadFlag = true;
+
+	apu.registers.apuControl.onWrite(0b00000000);
+
+	linearLengthCounter.counter.should.equalN(0, "counter");
+	linearLengthCounter.reload.should.equalN(0, "reload");
+	linearLengthCounter.reloadFlag.should.equalN(false, "reloadFlag");
+})({
+	locales: {
+		es:
+			"`APUControl`: en escrituras, si `enablePulse1` está apagada, reinicia el contador lineal de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
+
+it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the length counter", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
+
+	linearLengthCounter.counter = 5;
+	linearLengthCounter.reload = 8;
+	linearLengthCounter.reloadFlag = true;
+
+	apu.registers.apuControl.onWrite(0b00000100);
+
+	linearLengthCounter.counter.should.equalN(5, "counter");
+	linearLengthCounter.reload.should.equalN(8, "reload");
+	linearLengthCounter.reloadFlag.should.equalN(true, "reloadFlag");
+})({
+	locales: {
+		es:
+			"`APUControl`: en escrituras, si `enableTriangle` está encendida, no reinicia el contador lineal de longitud",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.13"),
+});
