@@ -433,7 +433,7 @@
 		}
 		// Gamepad navigation mapping [BETA]
 		for (let i = 0; i < io.NavInputs.length; ++i) {
-			// TODO: This is currently causing an issue and I have no gamepad to test with.
+			// TO DO: This is currently causing an issue and I have no gamepad to test with.
 			//       The error is: ''set' on proxy: trap returned falsish for property '21'
 			//       I think that the NavInputs are zeroed out by ImGui at the start of each frame anyway
 			//       so I am not sure if the following is even necessary.
@@ -470,7 +470,7 @@
 					if (v > 1.0) v = 1.0;
 					if (io.NavInputs[NAV_NO] < v) io.NavInputs[NAV_NO] = v;
 				}
-				// TODO: map input based on vendor and product id
+				// TO DO: map input based on vendor and product id
 				// https://developer.mozilla.org/en-US/docs/Web/API/Gamepad/id
 				const match = gamepad.id.match(/^([0-9a-f]{4})-([0-9a-f]{4})-.*$/);
 				const match_chrome = gamepad.id.match(

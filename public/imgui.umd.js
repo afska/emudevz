@@ -306,7 +306,7 @@
 
 	function basename(path, ext) {
 		var f = splitPath(path)[2];
-		// TODO: make this comparison case-insensitive on windows?
+		// TO DO: make this comparison case-insensitive on windows?
 		if (ext && f.substr(-1 * ext.length) === ext) {
 			f = f.substr(0, f.length - ext.length);
 		}
@@ -5856,7 +5856,7 @@
 		get Glyphs() {
 			const glyphs = new ImVector();
 			this.native.IterateGlyphs((glyph) => {
-				glyphs.push(new ImFontGlyph(glyph)); // TODO: wrap native
+				glyphs.push(new ImFontGlyph(glyph)); // TO DO: wrap native
 			});
 			return glyphs;
 		}

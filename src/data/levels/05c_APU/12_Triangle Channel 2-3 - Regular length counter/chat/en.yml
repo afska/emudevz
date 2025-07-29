@@ -61,5 +61,5 @@ exercise:
     **onWrite(value)**:
       **->** __keep existing behavior__
       **->** if `!this.enableTriangle`:
-        **->** resets the channels' length counter
+        **->** resets the channel's length counter
   responses: []
