@@ -41,7 +41,7 @@ exercise:
   - |-
     📚  implement in 🧹  `PulseSweep`:
     **onLoad()**:
-      **->** uses ```javascript this.addField(...)``` to add 4 fields: `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`
+      **->** uses ```javascript this.addField(...)``` to define 4 fields: `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`
       (use 📄  ~/docs/apu/audio_registers.en.md~ for reference)
     **onWrite(value)**:
       **->** sets the value with ```javascript this.setValue(...)```

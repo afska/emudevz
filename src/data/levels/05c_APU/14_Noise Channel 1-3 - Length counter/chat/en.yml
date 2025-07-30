@@ -27,7 +27,7 @@ exercise:
   - |-
       📚  implement in 💥  `NoiseControl`:
       **onLoad()**:
-        **->** uses ```javascript this.addField(...)``` to add 3 fields: `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`
+        **->** uses ```javascript this.addField(...)``` to define 3 fields: `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`
         (use 📄  ~/docs/apu/audio_registers.en.md~ for reference)
       **onWrite(value)**:
         **->** sets the value with ```javascript this.setValue(...)```

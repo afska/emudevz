@@ -23,7 +23,7 @@ exercise:
   - |-
       📚  implement in 🌪️  `NoiseForm`:
       **onLoad()**:
-        **->** uses ```javascript this.addField(...)``` to add 2 fields: `periodId`, `loop`
+        **->** uses ```javascript this.addField(...)``` to define 2 fields: `periodId`, `loop`
         (use 📄  ~/docs/apu/audio_registers.en.md~ for reference)
       **onWrite(value)**:
         **->** sets the value with ```javascript this.setValue(...)```
