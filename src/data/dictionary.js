@@ -277,17 +277,17 @@ const dictionary = {
 			also: { es: "Divisor|_Divisores" },
 			icon: "⏰",
 			en:
-				"A counter that reduces the system's master clock to a slower periodic signal by counting down from a set value and reloading when it reaches zero. <br /><br />It is used to clock other units at a slower rate. <br /><br />See also: Divider period.",
+				"A counter that reduces the system's master clock to a slower periodic signal by counting cycles and triggering an event at a fixed interval. <br /><br />It is used to clock other units at a slower rate. <br /><br />See also: Divider period.",
 			es:
-				"Un contador que reduce el reloj maestro del sistema a una señal periódica más lenta al descontar desde un valor fijo y recargarse al llegar a cero. <br /><br />Se usa para sincronizar otras unidades a una velocidad más baja. <br /><br />Ver también: Período de dividor",
+				"Un contador que reduce el reloj maestro del sistema a una señal periódica más lenta contando ciclos y activando un evento a intervalos fijos. <br /><br />Se usa para sincronizar otras unidades a una velocidad más baja. <br /><br />Ver también: Período de divisor.",
 		},
 		"Divider period": {
 			also: { es: "Período de divisor" },
 			icon: "⏰",
 			en:
-				"The initial value of a divider. It determines how frequently a divider clocks its signal. <br /><br />For example, with a divider period of `15`, the divider will count down from `15` to `0`, reload back to `15`, and generate one timing pulse each time it reaches `0`.",
+				"The number of cycles a divider waits before triggering its next output. <br /><br />For example, with a divider period of `15`, the divider will generate a timing pulse every `15` cycles.",
 			es:
-				"El valor inicial de un divisor. Determina con qué frecuencia genera su señal. <br /><br />Por ejemplo, con un período de divisor de `15`, este contará de `15` a `0`, se recargará a `15` y generará un pulso de temporización cada vez que llegue a `0`.",
+				"La cantidad de ciclos que un divisor espera antes de generar su siguiente salida. <br /><br />Por ejemplo, con un período de divisor de `15`, este generará un pulso de temporización cada `15` ciclos.",
 		},
 		"DMA|DMA transfer": {
 			also: { es: "DMA|Transferencia DMA" },
