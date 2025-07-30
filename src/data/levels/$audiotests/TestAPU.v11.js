@@ -291,7 +291,7 @@ class NoiseControl extends InMemoryRegister.APU {
 
 class NoiseForm extends InMemoryRegister.APU {
 	onLoad() {
-		this.addField("periodId", 0, 4).addField("loop", 7);
+		this.addField("periodId", 0, 4).addField("mode", 7);
 	}
 
 	onWrite(value) {
@@ -896,7 +896,7 @@ class NoiseChannel {
 
 		const volume = this.registers.control.volumeOrEnvelopePeriod;
 
-		return Math.floor(Math.random() * volume);
+		return volume;
 	}
 
 	step() {
@@ -905,7 +905,7 @@ class NoiseChannel {
 			this.dividerCount = 0;
 		else return;
 
-		const bitPosition = this.registers.form.loop ? 6 : 1;
+		const bitPosition = this.registers.form.mode ? 6 : 1;
 
 		const bit = byte.getBit(this.shift, bitPosition);
 		const feedback = byte.getBit(this.shift, 0) ^ bit;

@@ -35,7 +35,7 @@ exercise:
       **sample(value)**:
         **->** make the <early return> also check for ```javascript !(this.shift & 1)```
           (the output sample is 0 if the <shift register>'s first bit is 0)
-        **->** __keep existing behavior__
+        **->** change the <main return value> from ```javascript Math.floor(...)``` to just `volume`
       **step()**:
         **->** increments the <divider count>
         **->** if the <divider count> reaches ```javascript noisePeriods[this.registers.form.periodId]```:

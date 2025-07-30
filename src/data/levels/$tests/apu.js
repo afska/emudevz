@@ -3137,7 +3137,7 @@ it("`onHalfFrameClock()` calls `halfFrame()` on noise channel", () => {
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
-it("`NoiseControl`: writes `volumeOrEnvelopePeriod` (bits 0-3), `constantVolume` (bit 4), `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
+it("`NoiseControl`: writes `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const register = apu.registers.noise.control;
@@ -3166,7 +3166,7 @@ it("`NoiseControl`: writes `volumeOrEnvelopePeriod` (bits 0-3), `constantVolume`
 })({
 	locales: {
 		es:
-			"`NoiseControl`: escribe `volumeOrEnvelopePeriod` (bits 0-3), `constantVolume` (bit 4), `envelopeLoopOrLengthCounterHalt` (bit 5)",
+			"`NoiseControl`: escribe `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3230,4 +3230,168 @@ it("`APUControl`: on writes, if `enableNoise` is set, it doesn't reset the noise
 			"`APUControl`: en escrituras, si `enableNoise` está encendida, no reinicia el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+// 5c.15 Noise Channel (2/3): Linear-feedback shift register
+
+it("`NoiseForm`: writes `periodId` (bits 0-3) and `mode` (bit 7)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const register = apu.registers.noise.form;
+
+	register.onWrite(0b10000101);
+	register.periodId.should.equalN(0b0101, "periodId");
+	register.mode.should.equalN(1, "mode");
+
+	register.onWrite(0b00001010);
+	register.periodId.should.equalN(0b1010, "periodId");
+	register.mode.should.equalN(0, "mode");
+})({
+	locales: {
+		es: "`NoiseForm`: escribe `periodId` (bits 0-3) y `mode` (bit 7)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.15"),
+});
+
+it("`NoiseChannel`: has `shift` and `dividerCount` initialized to 1 and 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.noise;
+
+	channel.shift.should.equalN(1, "shift");
+	channel.dividerCount.should.equalN(0, "dividerCount");
+})({
+	locales: {
+		es: "`NoiseChannel`: tiene `shift` y `dividerCount` inicializados en 1 y 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.15"),
+});
+
+it("`NoiseChannel`: `sample()` returns 0 when `shift & 1` is 1", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.noise;
+
+	// enable noise and make lengthCounter active
+	channel.lengthCounter.isActive = () => true;
+	apu.registers.apuControl.onWrite(0b01000);
+	channel.registers.control.onWrite(0b00010101); // volume = 5
+
+	channel.shift = 1; // bit 0 == 1
+	channel.sample().should.equalN(0, "sample()");
+})({
+	locales: {
+		es: "`NoiseChannel`: `sample()` retorna 0 cuando `shift & 1` es 1",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.15"),
+});
+
+it("`NoiseChannel`: `sample()` returns the volume when `shift & 1` is 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.noise;
+
+	// enable noise and make lengthCounter active
+	channel.lengthCounter.isActive = () => true;
+	apu.registers.apuControl.onWrite(0b01000);
+	channel.registers.control.onWrite(0b00010101); // volume = 5
+
+	channel.shift = 2; // bit 0 == 0
+	channel.sample().should.equalN(5, "sample()");
+})({
+	locales: {
+		es: "`NoiseChannel`: `sample()` retorna el volumen cuando `shift & 1` es 1",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.15"),
+});
+
+it("`NoiseChannel`: `step()` increments `dividerCount` and updates `shift` every noise period", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.noise;
+
+	// periodId = 0 => period = noisePeriods[0] = 2
+	apu.registers.noise.form.onWrite(0b00000000);
+
+	// first call: dividerCount = 1, no shift update
+	channel.step();
+	channel.dividerCount.should.equalN(1, "dividerCount");
+	channel.shift.should.equalN(1, "shift");
+
+	// second call: dividerCount reaches 2 => reset and update shift
+	channel.step();
+	channel.dividerCount.should.equalN(0, "dividerCount");
+	// feedback = bit0 ^ bit1 = 1 ^ 0 = 1, new shift = (1>>1)=0 | (1<<14)=16384
+	channel.shift.should.equalN(16384, "shift");
+})({
+	locales: {
+		es:
+			"`NoiseChannel`: `step()` incrementa `dividerCount` y actualiza `shift` cada período de ruido",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.15"),
+});
+
+it("`NoiseChannel`: `step()` uses `mode` flag to compute feedback bit", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const channel = apu.channels.noise;
+
+	// periodId = 1 => period = 4, and mode = 1
+	apu.registers.noise.form.onWrite(0b10000001);
+	// set shift so bit0=0, bit6=1
+	channel.shift = 0b001010101001100;
+	channel.dividerCount = 2;
+
+	// first call: dividerCount = 3, no shift update
+	channel.step();
+	channel.dividerCount.should.equalN(3, "dividerCount");
+	channel.shift.should.equalN(0b001010101001100, "shift");
+
+	// next step triggers update
+	channel.step();
+	channel.dividerCount.should.equalN(0, "dividerCount");
+	// feedback = bit0 ^ bit6 = 0 ^ 1 = 1,
+	// new shift = (0b001010101001100 >> 1) | (1 << 14)
+	channel.shift.should.equalN(0b100101010100110, "shift");
+})({
+	locales: {
+		es:
+			"`NoiseChannel`: `step()` usa la bandera `mode` para calcular el bit de feedback",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.15"),
+});
+
+it("`NoiseChannel`: `step()` uses an exclusive OR (`^`) for the feedback bit", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const channel = apu.channels.noise;
+
+	// periodId = 1 => period = 4, and mode = 1
+	apu.registers.noise.form.onWrite(0b10000001);
+	// set shift so bit0=1, bit6=1
+	channel.shift = 0b100110111001101;
+	channel.dividerCount = 2;
+
+	// first call: dividerCount = 3, no shift update
+	channel.step();
+	channel.dividerCount.should.equalN(3, "dividerCount");
+	channel.shift.should.equalN(0b100110111001101, "shift");
+
+	// next step triggers update
+	channel.step();
+	channel.dividerCount.should.equalN(0, "dividerCount");
+	// feedback = bit0 ^ bit6 = 1 ^ 1 = 0
+	// new shift = (0b100110111001101 >> 1) | (0 << 14)
+	channel.shift.should.equalN(0b10011011100110, "shift");
+})({
+	locales: {
+		es:
+			"`NoiseChannel`: `step()` usa un OR exclusivo (`^`) para el bit de feedback",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.15"),
 });
