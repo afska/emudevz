@@ -16,13 +16,13 @@
     - si la bandera de modo está encendida => `bit 0 ^ bit 6`
     - si la bandera de modo está apagada => `bit 0 ^ bit 1`
   - el registro de desplazamiento se **desplaza a la derecha** un bit (`>> 1`)
-  - el bit `14`, el más a la izquierda, se reemplaza con el `feedback` calculado antes
+  - el bit `14`, el más a la izquierda, se reemplaza con el bit de `feedback` calculado antes
 
 <div style="text-align: center">
   <img alt="noise" src="assets/bitshifts/noise.gif" width="134" height="115" />
   <pre>Ejemplo con bandera de modo encendida</pre>
 </div>
 
-- El sample de salida del canal es el **volumen de la envolvente**, excepto cuando:
+- El sample de salida del canal es el **volumen de la envolvente**, o `0` si se cumple alguna de estas condiciones:
   - el bit `0` del registro de desplazamiento está activo
   - el contador de longitud es `0`

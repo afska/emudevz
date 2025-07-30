@@ -22,7 +22,7 @@ implement:
   - 📚  su constructor debe recibir y asignar una propiedad `ppu` con la instancia PPU
   - |-
     📚  haz este cambio en la clase 🖥️  `PPU`:
-    **constructor**:
+    **constructor(cpu)**:
       **->** instancia el renderizador de sprites:
         ```javascript this.spriteRenderer = new SpriteRenderer(this)```
         (¡recuerda importarlo si lo definiste en otro archivo!)

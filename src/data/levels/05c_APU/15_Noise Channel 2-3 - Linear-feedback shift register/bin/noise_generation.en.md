@@ -16,13 +16,13 @@
     - if the mode flag is set => `bit 0 ^ bit 6`
     - if the mode flag is clear => `bit 0 ^ bit 1`
   - the shift register is **shifted right** by one bit (`>> 1`)
-  - bit `14`, the leftmost bit, is replaced with the `feedback` calculated earlier
+  - bit `14`, the leftmost bit, is replaced with the `feedback` bit calculated earlier
 
 <div style="text-align: center">
   <img alt="noise" src="assets/bitshifts/noise.gif" width="134" height="115" />
   <pre>Example with mode flag ON</pre>
 </div>
 
-- The channel's output sample is the **envelope volume** except when:
+- The channel's output sample is the **envelope volume**, or `0` if either:
   - bit `0` of the shift register is set
   - the length counter is `0`
