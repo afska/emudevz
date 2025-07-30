@@ -57,6 +57,6 @@ exercise:
   - |-
     📚  implementa en 🕛  `PulseTimerHighLCL`:
     **onWrite(value)**:
-      **->** __mantiene el comportamiento existente__
-      **->** activa la bandera `startFlag` de la envolvente del canal
+      **->** __mantén el comportamiento existente__
+      **->** enciende la bandera `startFlag` de la envolvente del canal
   responses: []
