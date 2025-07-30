@@ -2394,9 +2394,10 @@ it("`TriangleChannel`: has a `lengthCounter` property", () => {
 	const channel = apu.channels.triangle;
 
 	expect(channel.lengthCounter, "lengthCounter").to.be.an("object");
-	channel.lengthCounter.should.respondTo("reset");
-	channel.lengthCounter.should.respondTo("isActive");
-	channel.lengthCounter.should.respondTo("clock");
+	channel.lengthCounter.constructor.should.equalN(
+		apu.channels.pulses[0].lengthCounter.constructor,
+		"class"
+	);
 })({
 	locales: { es: "`TriangleChannel`: tiene una propiedad `lengthCounter`" },
 	use: ({ id }, book) => id >= book.getId("5c.12"),
@@ -3020,9 +3021,10 @@ it("`NoiseChannel`: has a `lengthCounter` property", () => {
 	const channel = apu.channels.noise;
 
 	expect(channel.lengthCounter, "lengthCounter").to.be.an("object");
-	channel.lengthCounter.should.respondTo("reset");
-	channel.lengthCounter.should.respondTo("isActive");
-	channel.lengthCounter.should.respondTo("clock");
+	channel.lengthCounter.constructor.should.equalN(
+		apu.channels.pulses[0].lengthCounter.constructor,
+		"class"
+	);
 })({
 	locales: { es: "`NoiseChannel`: tiene una propiedad `lengthCounter`" },
 	use: ({ id }, book) => id >= book.getId("5c.14"),
@@ -3038,7 +3040,7 @@ it("`NoiseChannel`: has a `sample()` method that returns a number", () => {
 	locales: {
 		es: "`NoiseChannel`: tiene un método `sample()` que retorna un número",
 	},
-	use: ({ id }, book) => id >= book.getId("5c.11"),
+	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
 it("`NoiseChannel`: `sample()` returns 0 when disabled or length counter inactive", () => {
@@ -3102,7 +3104,7 @@ it("mixes pulse1, pulse2, triangle and noise in `step()`", () => {
 	locales: {
 		es: "mezcla pulse1, pulse2, triangle y noise en `step()`",
 	},
-	use: ({ id }, book) => id >= book.getId("5c.11"),
+	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
 it("`onQuarterFrameClock()` calls `quarterFrame()` on noise channel", () => {
@@ -3394,4 +3396,83 @@ it("`NoiseChannel`: `step()` uses an exclusive OR (`^`) for the feedback bit", (
 			"`NoiseChannel`: `step()` usa un OR exclusivo (`^`) para el bit de feedback",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.15"),
+});
+
+// 5c.16 Noise Channel (3/3): Volume envelope
+
+it("`NoiseChannel`: has a `volumeEnvelope` property", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.noise;
+
+	expect(channel.volumeEnvelope, "volumeEnvelope").to.be.an("object");
+	channel.volumeEnvelope.constructor.should.equalN(
+		apu.channels.pulses[0].volumeEnvelope.constructor,
+		"class"
+	);
+})({
+	locales: { es: "`NoiseChannel`: tiene una propiedad `volumeEnvelope`" },
+	use: ({ id }, book) => id >= book.getId("5c.16"),
+});
+
+it("`NoiseChannel`: `sample()` uses the envelope volume when `constantVolume` is clear", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.noise;
+
+	// enable noise and active length
+	channel.lengthCounter.isActive = () => true;
+	apu.registers.apuControl.onWrite(0b01000);
+	channel.shift = 0;
+	channel.registers.control.onWrite(0b00000101); // volume=5, constantVolume=0
+	channel.volumeEnvelope.volume = 3;
+
+	channel.sample().should.equalN(3, "sample()");
+})({
+	locales: {
+		es:
+			"`NoiseChannel`: `sample()` usa el volumen de la envolvente cuando `constantVolume` está desactivado",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.16"),
+});
+
+it("`NoiseChannel`: `quarterFrame()` updates the volume envelope", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.noise;
+	channel.volumeEnvelope.clock = sinon.spy();
+
+	channel.registers.control.onWrite(0b00100110); // period=6, loop=1
+	channel.quarterFrame();
+
+	channel.volumeEnvelope.clock.should.have.been.calledWith(6, 1);
+})({
+	locales: {
+		es: "`NoiseChannel`: `quarterFrame()` actualiza la envolvente de volumen",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.16"),
+});
+
+it("`NoiseLCL`: writes set the `startFlag` on the channel's volume envelope", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const envelope = apu.channels.noise.volumeEnvelope;
+
+	envelope.startFlag = false;
+	apu.registers.write(0x400f, 0);
+	envelope.startFlag.should.equal(true, "startFlag");
+
+	envelope.startFlag = false;
+	apu.registers.write(0x400f, 123);
+	envelope.startFlag.should.equal(true, "startFlag");
+})({
+	locales: {
+		es:
+			"`NoiseLCL`: las escrituras encienden `startFlag` en la envolvente de volumen del canal",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.16"),
 });
