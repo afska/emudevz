@@ -6,3 +6,5 @@ src/data/levels/05b_PPU/06_Video Registers/bin/InMemoryRegister.en.md
 src/data/levels/05b_PPU/06_Video Registers/bin/InMemoryRegister.es.md
 src/data/levels/05c_APU/04_Audio Registers/bin/InMemoryRegister.en.md
 src/data/levels/05c_APU/04_Audio Registers/bin/InMemoryRegister.es.md
+src/data/levels/05c_APU/15_Noise Channel 2-3 - Linear-feedback shift register/bin/noise_generation.en.md
+src/data/levels/05c_APU/15_Noise Channel 2-3 - Linear-feedback shift register/bin/noise_generation.es.md

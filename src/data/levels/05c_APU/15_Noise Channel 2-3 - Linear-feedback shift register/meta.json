@@ -4,6 +4,7 @@
 		"es": "📏 Canal Ruido (2/3): Shift register de feedback lineal"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
