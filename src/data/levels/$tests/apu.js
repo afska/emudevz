@@ -3614,3 +3614,95 @@ it("`DMCLoad`: writes `directLoad` (bits 0-6) and updates channel's `outputSampl
 	},
 	use: ({ id }, book) => id >= book.getId("5c.17"),
 });
+
+// 5c.18 DMC Channel (2/2): DPCM
+
+it("`DMCChannel`: has a `dpcm` property with the correct DPCM class", async () => {
+	mainModule = await evaluate();
+	const DPCMClass = (await evaluateModule($.modules["/lib/apu/DPCM.js"]))
+		.default;
+	const APU = mainModule.default.APU;
+
+	const apu = new APU({});
+
+	expect(apu.channels.dmc.dpcm).to.be.an("object");
+	expect(apu.channels.dmc.dpcm.constructor).to.equal(DPCMClass);
+})({
+	locales: {
+		es: "`DMCChannel`: tiene una propiedad `dpcm` con la clase DPCM correcta",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.18"),
+});
+
+it("`DMCChannel`: `step()` calls `dpcm.update()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.dmc;
+	channel.dpcm.update = sinon.spy();
+
+	channel.step();
+
+	channel.dpcm.update.should.have.been.calledOnce;
+})({
+	locales: {
+		es: "`DMCChannel`: `step()` llama a `dpcm.update()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.18"),
+});
+
+it("`APUControl`: writing with `enableDMC` clear calls `dpcm.stop()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const dpcm = apu.channels.dmc.dpcm;
+	dpcm.stop = sinon.spy();
+
+	apu.registers.write(0x4015, 0b00000);
+
+	dpcm.stop.should.have.been.calledOnce;
+})({
+	locales: {
+		es:
+			"`APUControl`: al escribir con `enableDMC` apagado llama a `dpcm.stop()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.18"),
+});
+
+it("`APUControl`: writing with `enableDMC` set and no remaining bytes calls `dpcm.start()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const dpcm = apu.channels.dmc.dpcm;
+	dpcm.start = sinon.spy();
+	dpcm.remainingBytes = () => 0;
+
+	apu.registers.write(0x4015, 0b10000);
+
+	dpcm.start.should.have.been.calledOnce;
+})({
+	locales: {
+		es:
+			"`APUControl`: al escribir con `enableDMC` encendido y sin bytes restantes llama a `dpcm.start()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.18"),
+});
+
+it("`APUControl`: writing with `enableDMC` set and remaining bytes does not call `dpcm.start()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const dpcm = apu.channels.dmc.dpcm;
+	dpcm.start = sinon.spy();
+	dpcm.remainingBytes = () => 5;
+
+	apu.registers.write(0x4015, 0b00000);
+
+	dpcm.start.should.not.have.been.called;
+})({
+	locales: {
+		es:
+			"`APUControl`: al escribir con `enableDMC` encendido y con bytes restantes no llama a `dpcm.start()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.18"),
+});

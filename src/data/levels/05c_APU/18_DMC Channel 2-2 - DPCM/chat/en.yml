@@ -48,7 +48,7 @@ exercise:
     📚  implement in 🎛️  `APUControl`:
     **onWrite(value)**:
       **->** __keep existing behavior__
-      **->** if `this.enableDMC`:
+      **->** if `!this.enableDMC`:
         **->** calls ```javascript this.apu.channels.dmc.dpcm.stop()```
       **->** else if ```javascript this.apu.channels.dmc.dpcm.remainingBytes() === 0```
         **->** calls ```javascript this.apu.channels.dmc.dpcm.start()```
