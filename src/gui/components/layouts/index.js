@@ -1,5 +1,4 @@
 import DualLayout from "./DualLayout";
-import DualLayoutFixedPin from "./DualLayoutFixedPin";
 import MonoLayout from "./MonoLayout";
 import QuadLayout from "./QuadLayout";
 import TripleBottomLayout from "./TripleBottomLayout";
@@ -8,7 +7,6 @@ import TripleRightLayout from "./TripleRightLayout";
 
 export default {
 	dual: DualLayout,
-	dualFixedPin: DualLayoutFixedPin,
 	mono: MonoLayout,
 	quad: QuadLayout,
 	triple: TripleLayout,

@@ -1,7 +1,6 @@
 ---
 main:
   run: |
-    level.launchEmulator();
     set((m) => m.chat.winOnEnd = true);
   messages:
   - a que no sabes lo que encontré

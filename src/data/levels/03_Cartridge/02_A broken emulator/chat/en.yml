@@ -1,7 +1,6 @@
 ---
 main:
   run: |
-    level.launchEmulator();
     set((m) => m.chat.winOnEnd = true);
   messages:
   - bet you don't know what I found

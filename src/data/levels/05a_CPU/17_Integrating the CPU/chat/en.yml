@@ -1,7 +1,6 @@
 ---
 main:
   run: |
-    level.launchEmulator();
     set((m) => m.chat.winOnEnd = true);
   messages:
   - now I'm gonna integrate your 🧠  CPU into the emulator

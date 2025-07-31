@@ -4,16 +4,18 @@
 		"es": "⚙️ Integrando nuestro trabajo"
 	},
 	"ui": {
-		"layout": "dualFixedPin",
+		"layout": "dual",
 		"components": {
 			"Left": [
 				"console",
 				{
 					"startup": "chat"
 				}
-			]
+			],
+			"Right": ["tv", { "type": "rom" }]
 		},
-		"focus": "Left"
+		"focus": "Left",
+		"canPinEmulator": false
 	},
 	"test": {
 		"context": "javascript",
