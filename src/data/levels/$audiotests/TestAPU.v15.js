@@ -357,7 +357,7 @@ class APUStatus extends InMemoryRegister.APU {
 			+(channels.pulses[1].lengthCounter.counter > 0),
 			+(channels.triangle.lengthCounter.counter > 0),
 			+(channels.noise.lengthCounter.counter > 0),
-			channels.dmc.remainingBytes() > 0,
+			channels.dmc.dpcm.remainingBytes() > 0,
 			0,
 			0,
 			0

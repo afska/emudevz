@@ -734,7 +734,7 @@ it("for now, new samples are mixed like `(pulse1 + pulse2) * 0.01`", () => {
 		es:
 			"por ahora, los nuevos samples se mezclan como `(pulse1 + pulse2) * 0.01`",
 	},
-	use: ({ id }, book) => id >= book.getId("5c.5"),
+	use: ({ id }, book) => id >= book.getId("5c.5") && id < book.getId("5c.19"),
 });
 
 it("`PulseTimerLow`: writes the value and calls `updateTimer()`", () => {
@@ -2403,7 +2403,7 @@ it("mixes pulse1, pulse2 and triangle in `step()`", () => {
 	locales: {
 		es: "mezcla pulse1, pulse2 y triangle en `step()`",
 	},
-	use: ({ id }, book) => id >= book.getId("5c.11"),
+	use: ({ id }, book) => id >= book.getId("5c.11") && id < book.getId("5c.19"),
 });
 
 // 5c.12 Triangle Channel (2/3): Regular length counter
@@ -3142,7 +3142,7 @@ it("mixes pulse1, pulse2, triangle and noise in `step()`", () => {
 	locales: {
 		es: "mezcla pulse1, pulse2, triangle y noise en `step()`",
 	},
-	use: ({ id }, book) => id >= book.getId("5c.14"),
+	use: ({ id }, book) => id >= book.getId("5c.14") && id < book.getId("5c.19"),
 });
 
 it("`onQuarterFrameClock()` calls `quarterFrame()` on noise channel", () => {
@@ -3615,6 +3615,31 @@ it("`DMCLoad`: writes `directLoad` (bits 0-6) and updates channel's `outputSampl
 	use: ({ id }, book) => id >= book.getId("5c.17"),
 });
 
+it("mixes pulse1, pulse2, triangle, noise and dmc in `step()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const onSample = sinon.spy();
+
+	apu.channels.pulses[0].sample = () => 1;
+	apu.channels.pulses[1].sample = () => 2;
+	apu.channels.triangle.sample = () => 3;
+	apu.channels.noise.sample = () => 4;
+	apu.channels.dmc.sample = () => 5;
+
+	for (let i = 0; i < 19; i++) {
+		apu.step(onSample);
+		onSample.should.not.have.been.called;
+	}
+
+	apu.step(onSample);
+	onSample.should.have.been.calledWith(0.15, 1, 2, 3, 4, 5);
+})({
+	locales: {
+		es: "mezcla pulse1, pulse2, triangle, noise y dmc en `step()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.17") && id < book.getId("5c.19"),
+});
+
 // 5c.18 DMC Channel (2/2): DPCM
 
 it("`DMCChannel`: has a `dpcm` property with the correct DPCM class", async () => {
@@ -3705,4 +3730,73 @@ it("`APUControl`: writing with `enableDMC` set and remaining bytes does not call
 			"`APUControl`: al escribir con `enableDMC` encendido y con bytes restantes no llama a `dpcm.start()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.18"),
+});
+
+// 5c.19 Mixer and APUStatus
+
+it("mixes pulse1, pulse2, triangle, noise and dmc in `step()`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+	const onSample = sinon.spy();
+
+	apu.channels.pulses[0].sample = () => 1;
+	apu.channels.pulses[1].sample = () => 2;
+	apu.channels.triangle.sample = () => 3;
+	apu.channels.noise.sample = () => 4;
+	apu.channels.dmc.sample = () => 5;
+
+	for (let i = 0; i < 19; i++) {
+		apu.step(onSample);
+		onSample.should.not.have.been.called;
+	}
+
+	apu.step(onSample);
+	// 0.00752*(1+2) + 0.00851*3 + 0.00494*4 + 0.00335*5 = 0.0846
+	onSample.should.have.been.calledWith(0.0846, 1, 2, 3, 4, 5);
+})({
+	locales: {
+		es: "mezcla pulse1, pulse2, triangle, noise y dmc en `step()`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.19"),
+});
+
+it("`APUStatus`: reads return 0 when all channels inactive and no DMC bytes", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	// ensure all length counters are zero and DMC has no bytes
+	apu.channels.pulses[0].lengthCounter.counter = 0;
+	apu.channels.pulses[1].lengthCounter.counter = 0;
+	apu.channels.triangle.lengthCounter.counter = 0;
+	apu.channels.noise.lengthCounter.counter = 0;
+	apu.channels.dmc.dpcm.remainingBytes = () => 0;
+
+	apu.registers.apuStatus.onRead().should.equalN(0, "onRead()");
+})({
+	locales: {
+		es:
+			"`APUStatus`: las lecturas retornan 0 cuando todos los canales están inactivos y DMC sin bytes",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.19"),
+});
+
+it("`APUStatus`: reads return a bitfield for active channels and DMC", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	// set some length counters and DMC bytes
+	apu.channels.pulses[0].lengthCounter.counter = 1; // bit 0
+	apu.channels.pulses[1].lengthCounter.counter = 0; // bit 1
+	apu.channels.triangle.lengthCounter.counter = 2; // bit 2
+	apu.channels.noise.lengthCounter.counter = 0; // bit 3
+	apu.channels.dmc.dpcm.remainingBytes = () => 5; // bit 4
+
+	// expected bits: b4=1,b3=0,b2=1,b1=0,b0=1 => 0b10101 = 21
+	apu.registers.apuStatus.onRead().should.equalN(0b10101, "onRead()");
+})({
+	locales: {
+		es:
+			"`APUStatus`: las lecturas retornan un bitfield para canales activos y DMC",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.19"),
 });
