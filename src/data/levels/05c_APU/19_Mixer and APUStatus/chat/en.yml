@@ -7,7 +7,8 @@ main:
     we can emulate the APU mixer using this formula:
     ```javascript (
       0.00752 * (pulse1 + pulse2) +
-      0.00851 * triangle + 0.00494 * noise +
+      0.00851 * triangle +
+      0.00494 * noise +
       0.00335 * dmc
     )```
   - ah, and we'll emulate the last register, 📊  APUStatus
