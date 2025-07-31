@@ -1,0 +1,50 @@
+{
+	"name": {
+		"en": "🧹 Pulse Channels (5/5): Frequency sweep",
+		"es": "🧹 Canales Pulso (5/5): Barrido de frecuencia"
+	},
+	"ui": {
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom",
+		"canPinEmulator": false
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "apu.js"],
+		"mainTestFile": "apu.js"
+	},
+	"audioTests": [
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"frames": 300,
+			"apu": "TestAPU.v6.js"
+		}
+	],
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

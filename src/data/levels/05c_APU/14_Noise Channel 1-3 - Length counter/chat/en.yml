@@ -1,0 +1,57 @@
+---
+main:
+  messages:
+  - the 💥  Noise Channel is a little bit... <noisy>
+  - silencing it correctly is crucial, so we'll start with that
+  - and only then we'll start the actual noise emulation!
+  responses:
+  - how do we silence it? [exercise]
+
+exercise:
+  messages:
+  - as usual, monitoring 🎛️  APUControl and the 📏  length counter
+  - it also has an 📉  envelope! which we'll cover later
+  - at this point, this is all normal stuff, so I'll provide a base template for it and you'll wire everything up
+  - 📚  create a `NoiseChannel` class, using 📄  ~/tmpl/apu/NoiseChannel.js~ as a template
+  - |-
+    📚  in 🔊  `APU`:
+    **->** import the channel and add a `noise` key to ```javascript this.channels``` with a new instance
+    **->** in `step()`, before incrementing the sample counter, call ```javascript this.channels.noise.step()```
+    **->** also in `step()`, add the noise channel to the mix:
+      ```javascript const noise = this.channels.noise.sample();
+      this.sample = (pulse1 + pulse2 + triangle + noise) * 0.01;
+
+      onSample(this.sample, pulse1, pulse2, triangle, noise);```
+    **->** in `onQuarterFrameClock()`, call `quarterFrame()` in the noise channel instance
+    **->** in `onHalfFrameClock()`, call `halfFrame()` in the noise channel instance
+  - |-
+      📚  implement in 💥  `NoiseControl`:
+      **onLoad()**:
+        **->** uses ```javascript this.addField(...)``` to define 3 fields: `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`
+        (use 📄  ~/docs/apu/audio_registers.en.md~ for reference)
+      **onWrite(value)**:
+        **->** sets the value with ```javascript this.setValue(...)```
+  - |-
+      📚  implement in 📏  `NoiseLCL`:
+      **onLoad()**:
+        **->** uses ```javascript this.addField(...)``` to define a 5-bit `lengthCounterLoad` field from bit 3
+      **onWrite(value)**:
+        **->** sets the value with ```javascript this.setValue(...)```
+        **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
+          (use 📄  ~/lib/apu/noteLengths.js~ to get the array)
+        **->** assigns the new length to the `counter` property of the channel's length counter
+  - |-
+    📚  implement in 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** if `!this.enableNoise`:
+        **->** resets the channel's length counter
+  responses:
+  - "why does the template you provided use `Math.random()`? [random]"
+
+random:
+  messages:
+  - well, obviously that's not what the NEEES does
+  - but I added it just so you can hear something!
+  - we'll properly emulate the noise in the next level
+  responses: []

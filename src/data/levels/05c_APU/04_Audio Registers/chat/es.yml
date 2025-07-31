@@ -1,0 +1,48 @@
+---
+main:
+  messages:
+  - la 🧠  CPU y 🔊  APU se comunican entre ellas a través de un conjunto de 21 registros mapeados en memoria
+  - estos viven en las direcciones CPU $4000-$4013, $4015 y $4017
+  - echa un vistazo a 📄  ~/docs/apu/audio_registers.es.md~
+  responses:
+  - dame un ejemplo 🙏 [example]
+  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [useit]
+
+example:
+  messages:
+  - digamos que un juego necesita configurar el Canal Pulso 1 con un ciclo de trabajo del ~50%~ y un volumen constante de 6
+  - esto se gestiona mediante los bits de $4000 (🟦  Pulse1Control)
+  - en la columna ~Bits~, ~DD~ es el ciclo de trabajo, ~C~ la bandera de volumen constante y ~NNNN~ el volumen
+  - así que, en este caso, el juego escribe un 150 (binario ~10010110~) en $4000
+  - y luego la 🔊  APU usa ese valor para modificar la onda de pulso
+  - la escritura en $4000 afecta 4 parámetros al mismo tiempo (~DD~, ~L~, ~C~ y ~NNNN~)
+  - <{Pulse1Control.png}>
+  responses:
+  - entonces, ¿estos registros solo almacenan números? 🔢 [numbers]
+
+numbers:
+  messages:
+  - sí, pero algunos producen <efectos especiales> cuando la 🧠  CPU escribe en ellos
+  - estos efectos secundarios pueden restablecer la duración de las notas, iniciar barridos de frecuencia, ¡o incluso silenciar canales completos!
+  - programé una clase que te ayudará a implementar esto, deberías usarla 📖
+  responses:
+  - ¿cómo puedo usarla? [useit]
+
+useit:
+  run: |
+    set((m) => m.$exercise = true);
+  messages:
+  - lee la documentación en 📄  ~/docs/lib/InMemoryRegister.es.md~
+  - y usa 📄  ~/tmpl/apu/AudioRegisters.js~ como plantilla para el archivo de registros de audio
+  - los registros 🟦  `PulseControl` y 🎛️  `APUControl` ya están implementados
+  - nota cómo llaman a `addField(...)` para cada bit definido en la columna ~Bits~
+  - "esto crea <propiedades automáticas>: después de una escritura, la APU puede acceder a sus valores (p. ej. ```javascript pulse1Control.dutyCycleId```)"
+  - 📚  crea una clase `AudioRegisters`, utilizando esa plantilla
+  - |-
+    📚  agrega una propiedad `registers` a 🔊  `APU`, asignada a:
+         ```javascript new AudioRegisters(this)```
+  - "📚  por último, mapéalos en 🐏  `CPUMemory` (regiones $4000-$4013, $4015 y $4017):"
+  - <las lecturas> deberían retornar ```javascript this.apu.registers.read(address)```
+  - <las escrituras> deberían llamar a ```javascript this.apu.registers.write(address, value)``` y retornar
+  - ten cuidado con 🧮  APUFrameCounter, ya que comparte su dirección con el segundo puerto de 🎮  mando; ¡no mapees <las lecturas>! ¡solo <las escrituras>!
+  responses: []

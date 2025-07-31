@@ -1,0 +1,66 @@
+---
+main:
+  messages:
+  - ⚠️  <¡¡¡ADVERTENCIA DE VOLUMEN!!!> ⚠️
+  - <asegúrate de que el volumen de tu dispositivo esté muy bajo para que no te lastime los oídos>
+  - ¡hagamos algo de ruido!
+  - primero, integraré tu 🔊  APU en el emulador
+  responses:
+  - adelante [integrate]
+  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [wave]
+
+integrate:
+  messages:
+  - debería ser rápido...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 500);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useAPU");
+  messages:
+  - ✅  ¡listo!
+  - <! 🔊  APU integrada.
+  - ahora, el ícono 🔊  en el emulador brillará ✨
+  - como casi no hay código APU, por ahora no tendremos sonido
+  - ¡pero ya llegaremos!
+  - vamos a programar una <onda de ejemplo>
+  responses:
+  - ¿como una onda cuadrada? ⏹️ [wave]
+
+wave:
+  run: |
+    set((m) => m.$exercise = true);
+  messages:
+  - ¡correcto! actualmente, deberías tener algo como ```javascript onSample(this.sample)```
+  - |-
+    📚  <antes> de esa llamada a `onSample(...)`, agrega:
+      ```javascript
+      // <test>
+      this.time = (this.time || 0) + 1 / 44100;
+      const frequency = 440;
+      const period = 1 / frequency;
+      const dutyCycle = 0.5;
+      this.sample = (this.time % period) < period * dutyCycle ? 1 : 0;
+      // </test>```
+  - ¡pruébalo! al cargar una ROM, deberías escuchar una onda cuadrada tocando una nota <A4> (~440~ Hz) 🎵
+  responses:
+  - ¿qué es el ciclo de trabajo? [duty]
+
+duty:
+  messages:
+  - en una onda de pulso, el ciclo de trabajo define el porcentaje de tiempo que la señal está en <alto> (vs <bajo>)
+  - por ejemplo, con un ciclo de trabajo del <50%>, pasa el mismo tiempo en ambos, y la llamamos onda cuadrada
+  - <{wave_square.png;32x32}>
+  - con un ciclo de trabajo del <25%>, se vería así
+  - <{wave_square_25duty.png;32x32}>
+  - y con <75%>
+  - <{wave_square_75duty.png;32x32}>
+  - ¡todos suenan <muy diferentes>! prueba cambiar la constante `dutyCycle` para ver cómo reacciona
+  responses: []

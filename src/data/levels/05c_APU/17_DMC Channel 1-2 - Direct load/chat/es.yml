@@ -1,0 +1,41 @@
+main:
+  messages:
+  - el 📦  Canal DMC les da a los juegos la capacidad de reproducir sus propios samples
+  - ¡esto permite crear cualquier forma de onda; ¡no solo ondas cuadradas, ondas triangulares o ruido!
+  - "tiene dos modos de operación:"
+  - "📥  <Carga Directa>: los juegos cargan un sample de 7 bits directamente a la APU (alta calidad, pero consume mucha CPU)"
+  - "🤏  <Modulación Delta>: la APU decodifica automáticamente un stream DPCM usando la técnica de Modulación Delta, donde cada sample se almacena como la diferencia (<delta>) con respecto a la anterior (baja calidad, pero más liviano)"
+  responses:
+  - (*) el nombre se ve gracioso [name]
+  - carga directa suena más fácil [exercise]
+
+name:
+  messages:
+  - ¿sí? ¿por qué?
+  - es el <Delta Modulation Channel Channel>
+  - no veo nada malo en ello
+  responses:
+  - ...main
+
+exercise:
+  messages:
+  - sí, para nosotros es más simple de implementar
+  - 📚  crea una clase `DMCChannel`, usando 📄  ~/tmpl/apu/DMCChannel.js~ como plantilla
+  - |-
+    📚  en 🔊  `APU`:
+    **->** importa el canal y agrega una clave `dmc` a ```javascript this.channels``` con una nueva instancia
+      (¡nota que el constructor recibe tanto la `apu` como la `cpu`! ¡vamos a necesitar eso luego!)
+    **->** en `step()`, antes de incrementar el contador de samples, llama a ```javascript this.channels.dmc.step()```
+    **->** también en `step()`, agrega el canal DMC a la mezcla:
+      ```javascript const dmc = this.channels.dmc.sample();
+      this.sample = (pulse1 + pulse2 + triangle + noise + dmc) * 0.01;
+
+      onSample(this.sample, pulse1, pulse2, triangle, noise, dmc);```
+  - |-
+      📚  implementa en 📥  `DMCLoad`:
+      **onLoad()**:
+        **->** usa ```javascript this.addField(...)``` para definir un campo `directLoad` de 7 bits desde el bit 0
+      **onWrite(value)**:
+        **->** asigna el valor con ```javascript this.setValue(...)```
+        **->** asigna el <output sample> del canal a ```javascript this.directLoad```
+  responses: []

@@ -1,0 +1,65 @@
+---
+main:
+  messages:
+  - previously, I said the Triangle Channel has two length counters 📏
+  - "the other one is the Linear length counter, which has 3 main differences:"
+  - |-
+    🎯  it lets games write exactly the length they want instead of using a prefixed length table
+      (still pretty limited, because the field is only 7-bit wide, so the maximum length is 127)
+  - |-
+    ⛓️  its value is not loaded immediately:
+      - writes to 📏  LinearLengthCounter set a <reload value>
+      - writes to 🕛  TriangleTimerHighLCL set a <reload flag>, which makes it load that pending value in the next clock
+  - 🕒  it's updated in quarter frames instead of half frames
+  - the channel should be silenced when either counter is 0
+  responses:
+  - gotcha [exercise]
+
+exercise:
+  messages:
+  - |- 
+    📚  create a 📏  `LinearLengthCounter` class that <extends> from `LengthCounter` with the following:
+    **constructor()**:
+      **->** calls ```javascript super()```
+      **->** sets ```javascript this.reload = 0```
+      **->** sets ```javascript this.reloadFlag = false```
+    **fullReset()**:
+      **->** calls ```javascript this.reset()```
+      **->** sets ```javascript this.reload = 0```
+      **->** sets ```javascript this.reloadFlag = false```
+    **clock(isEnabled, isHalted)**:
+      **->** if `!isEnabled`:
+        **->** calls ```javascript this.reset()```
+        **->** returns
+
+      **->** if the reload flag is set:
+        **->** assigns the reload value to ```javascript this.counter```
+      **->** else:
+        **->** calls ```javascript super.clock(isEnabled, false);```
+      
+      **->** if `!isHalted`:
+          **->** clears the reload flag
+  - |-
+    📚  in 🔺  `TriangleChannel`:
+    **->** import the 📏  `LinearLengthCounter` class and add a `linearLengthCounter` property with a new instance
+    **->** modify **sample()** so the <early return> also checks for ```javascript !this.linearLengthCounter.isActive()```
+    **->** implement:
+    **quarterFrame()**:
+      **->** calls the `clock(...)` method of the linear length counter
+        (use ```javascript this.isEnabled()``` as the first argument)
+        (for the halt flag, use the same one as the regular length counter, they share it!)
+  - |-
+    📚  implement in 📏  `TriangleLengthControl`:
+    **onLoad()**:
+      **->** uses ```javascript this.addField(...)``` to define a 7-bit `linearCounterReload` field from bit 1
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** assigns the new length to the `reload` property of the channel's linear length counter
+        (the <reload value> is directly ```javascript this.linearCounterReload```)
+  - |-
+    📚  implement in 🕛  `TriangleTimerHighLCL`:
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** sets the reload flag of the channel's linear length counter
+  - 📚  in 🎛️  `APUControl`, after calling `reset()` on the length counter, also call `fullReset()` on the linear length counter if `enableTriangle` is 0
+  responses: []

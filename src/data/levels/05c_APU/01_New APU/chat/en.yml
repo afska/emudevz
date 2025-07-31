@@ -1,0 +1,70 @@
+---
+main:
+  messages:
+  - we'll finally add <audio> to our emulator! 🔊
+  - it's not as intuitive as <video>, so I'll have to explain a few things first
+  responses:
+  - how does it work? [how]
+  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [start]
+
+how:
+  messages:
+  - 🌊  <audio> works by defining waves that directly match what the speakers do
+  - 🎵  when a speaker vibrates at a particular frequency, it creates a note
+  - 📈  since time is a <continuous unit>, computers store waves as a stream of samples, which are numbers that define the height of the wave at a certain point in time
+  - 🔢  in the NEEES, samples are numbers in the ~0-15~ range, and when emulating the APU, we feed 44100 samples per second to the sound card
+  - that's called the sample rate
+  responses:
+  - (*) how does a wave look? [wave]
+  - how does the APU generate samples? [samples]
+
+wave:
+  messages:
+  - it looks... <periodical>!
+  - <{wave_square.png}>
+  - this is a max-volume square wave, a common waveform used by the APU
+  - the period indicates the time it takes to complete a full repetition
+  - "`period = 1 / frequency`, so lower periods make higher-pitched notes"
+  - more amplitude means more volume
+  - and like I said, these are stored like a stream of samples
+  - here's a more complex wave
+  - <{wave.png}>
+  - you can see how we can store the waveform as a <sequence of points>
+  - the samples!
+  responses:
+  - ...how
+
+samples:
+  messages:
+  - like the CPU and PPU, the APU works with cycles 🚲
+  - a cycle is the smallest time unit, corresponding to one clock tick during which it updates its internal state by one step
+  - the 🔊  APU runs <2x> slower than the 🧠  CPU
+  - so APU cycles are slower (each APU cycle is, in time, ~twice as long~ as a CPU cycle)
+  - <{unit_speeds.png}>
+  responses:
+  - how do we start? [start]
+
+start:
+  run: |
+    set((m) => m.$exercise = true);
+  messages:
+  - 📚  create a file for the APU code, using 📄  ~/tmpl/apu/APU.js~ as a template
+  - |-
+    📚  to keep track of the timing, add this method:
+    **step(onSample)**:
+      **->** increments the sample counter
+      **->** if it's time to produce a new sample:
+        **->** resets the sample counter
+        **->** calls `onSample(...)` with the current sample (```javascript this.sample```)
+  - 📚  then, import your file from 📄  ~/code/index.js~
+  - and add the corresponding `APU` key to the exported object
+  responses:
+  - how do I know when it's time for a new sample? [time]
+
+time:
+  messages:
+  - each `step(...)` call would be an APU cycle, and the APU runs at 894887 Hz
+  - to produce 44100 samples per second, divide both things!
+  - 894887 / 44100 gives us 20 APU cycles per sample
+  - so you should provide a new sample whenever ```javascript this.sampleCounter``` reaches 20
+  responses: []

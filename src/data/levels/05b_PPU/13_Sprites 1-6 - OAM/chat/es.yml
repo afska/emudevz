@@ -22,14 +22,14 @@ implement:
   - 📚  su constructor debe recibir y asignar una propiedad `ppu` con la instancia PPU
   - |-
     📚  haz este cambio en la clase 🖥️  `PPU`:
-    **constructor**:
+    **constructor(cpu)**:
       **->** instancia el renderizador de sprites:
         ```javascript this.spriteRenderer = new SpriteRenderer(this)```
         (¡recuerda importarlo si lo definiste en otro archivo!)
   - |-
     📚  ahora, en la clase 🛸  `SpriteRenderer`, define:
     **_createSprite(id)**:
-      **->** devuelve una nueva instancia de `Sprite`, leyendo el índice OAM `id`
+      **->** retorna una nueva instancia de `Sprite`, leyendo el índice OAM `id`
       (¡recuerda agregar 1 a la coordenada Y!)
   responses:
   - ¿por qué debería agregar 1 a la coordenada Y? ➕ [addone]

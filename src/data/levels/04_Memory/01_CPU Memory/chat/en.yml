@@ -32,7 +32,7 @@ io:
 implement:
   messages:
   - for now, we'll just implement the first range (🐏  WRAM)
-  - 📚  create a 🐏  `CPUMemory` class, using 📄  ~/tmpl/CPUMemory.js~ as template
+  - 📚  create a 🐏  `CPUMemory` class, using 📄  ~/tmpl/CPUMemory.js~ as a template
   - 📚  its constructor should initialize a `ram` property (a `Uint8Array` of 2048 bytes)
   - |-
     📚  implement the first `// TODO` of each method:

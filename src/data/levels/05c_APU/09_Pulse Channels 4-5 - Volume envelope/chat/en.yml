@@ -1,0 +1,62 @@
+---
+main:
+  messages:
+  - when enabled, the envelope can gradually decrease the channel's volume, producing a <decay> (fade out) 📉
+  - it always starts at max volume (~15~) and games control how slowly the volume decreases by setting a divider period
+  - when the volume reaches 0, it can loop back to 15 if its loop flag is set
+  responses:
+  - and when it's disabled? [disabled]
+
+disabled:
+  messages:
+  - when disabled, the channel just outputs the volume set in 🟦  PulseControl's first 4 bits
+  - <{volume_envelope_disabled.png}>
+  - note how they repurpose those 4 bits as the divider period when it's enabled
+  - <{volume_envelope_enabled.png}>
+  responses:
+  - sounds easy! [exercise]
+
+exercise:
+  messages:
+  - |-
+    📚  create a 📏  `VolumeEnvelope` class with the following:
+    **constructor()**:
+      **->** sets ```javascript this.startFlag = false```
+      **->** sets ```javascript this.dividerCount = 0```
+      **->** sets ```javascript this.volume = 0```
+    **clock(period, loop)**:
+      **->** if the <start flag> is set:
+        **->** clears the <start flag>
+        **->** sets the <volume> to 15
+        **->** sets the <divider count> to `period`
+        **->** returns
+
+      **->** if the <divider count> is greater than 0:
+        **->** decrements the <divider count>
+        **->** returns
+
+      **->** __(at this point, the divider is 0, so we must act)__
+      
+      **->** resets the <divider count> to `period`
+      **->** if the <volume> is 0:
+        **->** if `loop`:
+          **->** resets the <volume> to 15
+      **->** else:
+        **->** decrements the <volume>
+  - |-
+    📚  in 🟦  `PulseChannel`:
+    **->** import that class and add a `volumeEnvelope` property with a new instance
+    **->** modify **sample()** so the oscillator's volume depends on 🟦  PulseControl's `constantVolume` flag:
+      **->** when using constant volume, keep the current logic
+      **->** when not, use ```javascript this.volumeEnvelope.volume```
+    **->** implement this method:
+    **quarterFrame()**:
+      **->** calls the `clock(...)` method of the volume envelope
+        (for `period`, use `volumeOrEnvelopePeriod` from 🟦  PulseControl)
+        (for `loop`, use `envelopeLoopOrLengthCounterHalt` from 🟦  PulseControl)
+  - |-
+    📚  implement in 🕛  `PulseTimerHighLCL`:
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** sets the `startFlag` of the channel's volume envelope
+  responses: []

@@ -1,0 +1,164 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - we'll do a quick overview of the APU's audio channels!
+  - make sure the <music volume> is not muted, and continue
+  responses:
+  - ▶️  start [start]
+
+start:
+  run: |
+    {{Background}}.loadROM("/roms/.all/SuperTiltBro.neees", "demoRom");
+  messages:
+  - this is the incredible music of 🦸 🤸  <Super Tilt Bro>
+  - here, we can see almost all audio channels in action
+  - let's start with the 🟦  Pulse Channels
+  responses:
+  - what are the Pulse Channels? 🟦 [pulse]
+
+pulse:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = true;
+      emulation.enabledChannels.pulse2 = false;
+      emulation.enabledChannels.triangle = false;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - they are channels dedicated to producing pulse waves
+  - there are <two> of them
+  - this is just <Pulse 1>
+  responses:
+  - let's hear <Pulse 2> 👀 [pulse2]
+  
+pulse2:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = false;
+      emulation.enabledChannels.pulse2 = true;
+      emulation.enabledChannels.triangle = false;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - this is <Pulse 2>
+  - it creates the same kind of waves as <Pulse 1>
+  - and the magic starts when they play together
+  responses:
+  - let's hear both together [together]
+
+together:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = true;
+      emulation.enabledChannels.pulse2 = true;
+      emulation.enabledChannels.triangle = false;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - see?
+  - these two Pulse channels, combined, can create <powerful melodies> 🎶
+  responses:
+  - there's a lot going on here [alot]
+
+alot:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.apu.selectedTab = "Pulse";
+    });
+  messages:
+  - well... they support a lot of <features>
+  - like configurable duty cycles, <volume fades> and <note sweeps>!
+  responses:
+  - cool! what about the other channels? [triangle]
+
+triangle:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.apu.selectedTab = "Overview";
+    });
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = false;
+      emulation.enabledChannels.pulse2 = false;
+      emulation.enabledChannels.triangle = true;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - this is the 🔺  Triangle Channel
+  - it can produce constant-volume triangle waves
+  - and it's commonly used for <bass lines> 🎸
+  responses:
+  - mix it with the main melody 🎶 [pulseagain]
+
+pulseagain:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = true;
+      emulation.enabledChannels.pulse2 = true;
+      emulation.enabledChannels.triangle = true;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - yeah
+  - with this setup, we have main melodies and bass
+  - now, the missing part...
+  responses:
+  - the Noise Channel, I guess? 💥 [noise]
+
+noise:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = false;
+      emulation.enabledChannels.pulse2 = false;
+      emulation.enabledChannels.triangle = false;
+      emulation.enabledChannels.noise = true;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - yup!
+  - the 💥  Noise Channel generates <pseudo-random noise>
+  - it's typically used for 🥁  <drums> and 💥  <special effects>
+  responses:
+  - let's also hear the Triangle Channel 🔺 [addtriangle]
+
+addtriangle:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = false;
+      emulation.enabledChannels.pulse2 = false;
+      emulation.enabledChannels.triangle = true;
+      emulation.enabledChannels.noise = true;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - I can already see your head groovin', let's combine all the channels again!
+  responses:
+  - yeah! 🤘 [combined]
+
+combined:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.args.readOnly = false;
+    });
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = true;
+      emulation.enabledChannels.pulse2 = true;
+      emulation.enabledChannels.triangle = true;
+      emulation.enabledChannels.noise = true;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - as you can see, with some <creativity>, you can create some pretty nice melodies combining all these channels! ✨
+  - there's one extra channel we didn't cover here, the 📦  DMC Channel
+  - it allows games to provide their custom waves directly to the APU
+  - that one's getting special treatment later, so don't worry about it! 
+  - I <enabled the controls> in the debugger view so you can play around for a while
+  - once you are ready, let me know and we can go back to programming 👀
+  responses:
+  - ▶️  I'm ready, let's continue [end]

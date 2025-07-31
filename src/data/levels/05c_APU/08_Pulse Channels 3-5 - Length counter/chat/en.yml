@@ -1,0 +1,101 @@
+---
+main:
+  messages:
+  - "Pulse Channels can be silenced in multiple ways:"
+  - 🔇  when games mute the channel with an 🎛️  APUControl write
+  - 📏  when the length counter is 0
+  - 🧹  when the sweep unit is muted
+  - 🔈  when the channel's volume is 0
+  - so far, we only covered the last situation
+  - (kind of, we still need to take care of the envelope, but that'll come later!)
+  - our next goal is to handle the first two, channel mutes and the length counter!
+  responses:
+  - and what's a length counter? [length]
+
+length:
+  messages:
+  - it's what the APU uses to track the <length> of the notes!
+  - games <load> its initial value to indicate the note length
+  - then that value is decreased every half frame
+  - and when it reaches 0, the channel is muted! 🤐
+  responses:
+  - (k) how would a game load its value? [load]
+  - (k) does it always decrement its value on half frames? [decrement]
+  - (l) let's code it [exercise]
+
+load:
+  messages:
+  - it writes to a register that has <Length Counter Load> (or its abbreviated form, <LCL>) in its name
+  - in the case of the Pulse Channels, it's 🕛  PulseTimerHighLCL, where the high 5 bits are the <length index>
+  - that index points to a fixed table with all the available lengths, check out 📄  ~/lib/apu/noteLengths.js~
+  - <{length_counter_load.png}>
+  responses:
+  - what if a game needs a length that isn't in the list? [otherlengths]
+
+otherlengths:
+  messages:
+  - it's not possible!
+  - at least with this type of length counter
+  - that's why games don't usually use this method and end up changing the volume manually, or using the envelope
+  responses:
+  - ...length
+
+decrement:
+  messages:
+  - only if its <halt flag> is not set
+  - that would be the <L> bit in 🟦  PulseControl
+  - <{length_counter_halt.png;30x30}>
+  responses:
+  - ...length
+
+exercise:
+  messages:
+  - |-
+    📚  create a 📏  `LengthCounter` class with the following:
+    **constructor()**:
+      **->** calls ```javascript this.reset()```
+    **reset()**:
+      **->** sets ```javascript this.counter = 0```
+    **isActive()**:
+      **->** returns whether ```javascript this.counter``` is greater than 0 or not
+    **clock(isEnabled, isHalted)**:
+      **->** if `!isEnabled`:
+        **->** calls ```javascript this.reset()```
+      **->** else:
+        **->** if ```javascript this.isActive()``` and `!isHalted`:
+          **->** decrements the counter
+  - |-
+    📚  in 🟦  `PulseChannel`:
+    **->** import that class and add a `lengthCounter` property with a new instance
+    **->** modify **sample()** so if ```javascript !this.isEnabled()``` or the length counter is not active, it returns the last generated sample, without changing anything
+    **->** add the following methods:
+    **quarterFrame()**:
+      **[!]** leave empty for now
+    **halfFrame()**:
+      **->** calls the `clock(...)` method of the length counter
+        (use ```javascript this.isEnabled()``` as the first argument)
+        (for the halt flag, look for `envelopeLoopOrLengthCounterHalt` in the 🟦  PulseControl register)
+  - |-
+    📚  in 🔊  `APU`:
+    **onQuarterFrameClock()**:
+      **->** calls `quarterFrame()` on the two pulse channel instances
+    **onHalfFrameClock()**:
+      **->** calls `halfFrame()` on the two pulse channel instances
+  - |-
+    📚  implement in 🕛  `PulseTimerHighLCL`:
+    **onLoad()**:
+      **->** uses ```javascript this.addField(...)``` to define a 5-bit `lengthCounterLoad` field from bit 3
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** determines the new length by accessing the `noteLengths` array with the ```javascript this.lengthCounterLoad``` index
+        (use 📄  ~/lib/apu/noteLengths.js~ to get the array)
+      **->** assigns the new length to the `counter` property of the channel's length counter
+  - |-
+    📚  implement in 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** if `!this.enablePulse1`:
+        **->** reset <Pulse 1>'s length counter
+      **->** if `!this.enablePulse2`:
+        **->** reset <Pulse 2>'s length counter
+  responses: []

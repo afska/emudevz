@@ -63,7 +63,7 @@ apu:
   messages:
   - it's the <Audio Processing Unit>
   - handles sound, producing audio waves
-  - like square waves, triangle waves, noise, and even custom samples!
+  - like pulse waves, triangle waves, noise, and even custom samples!
   - it outputs a stream of 44100 samples per second
   responses:
   - ...main

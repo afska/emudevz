@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
 import filesystem from "../../filesystem";
 import TVNoise from "./TVNoise";
+import AudioTester from "./emulator/AudioTester";
+import DemoEmulatorRunner from "./emulator/DemoEmulatorRunner";
 import EmulatorRunner from "./emulator/EmulatorRunner";
 import GameStreamer from "./emulator/GameStreamer";
 import VideoTester from "./emulator/VideoTester";
@@ -128,6 +130,18 @@ export default class TV extends PureComponent {
 					/>
 				);
 			}
+			case "demoRom": {
+				return (
+					<DemoEmulatorRunner
+						id={this._level.id}
+						rom={content}
+						saveState={_saveState}
+						ref={(ref) => {
+							this.stream = ref;
+						}}
+					/>
+				);
+			}
 			case "stream": {
 				return (
 					<GameStreamer
@@ -136,6 +150,22 @@ export default class TV extends PureComponent {
 						ref={(ref) => {
 							this.stream = ref;
 						}}
+					/>
+				);
+			}
+			case "audioTest": {
+				return (
+					<AudioTester
+						APU={content.APU}
+						rom={content.rom}
+						saveState={content.saveState}
+						test={content.test}
+						onEnd={content.onEnd}
+						onFrame={content.onFrame}
+						onError={(e) => {
+							content.onError(e);
+						}}
+						onClose={() => this.setContent(null, "rom")}
 					/>
 				);
 			}

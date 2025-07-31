@@ -1,0 +1,65 @@
+---
+main:
+  messages:
+  - anteriormente, dije que el Canal Triangular tiene dos contadores de longitud 📏
+  - "el otro es el contador lineal de longitud, que tiene 3 diferencias principales:"
+  - |-
+    🎯  permite a los juegos escribir exactamente la longitud que quieren en lugar de usar una tabla de longitudes prefijada
+      (aún bastante limitado, porque el campo tiene solo 7 bits, así que la longitud máxima es 127)
+  - |-
+    ⛓️  su valor no se carga de inmediato:
+      - las escrituras a 📏  LinearLengthCounter encienden un <valor de recarga>
+      - las escrituras a 🕛  TriangleTimerHighLCL encienden una <bandera de recarga>, lo cual hace que se cargue ese valor pendiente en el siguiente clock
+  - 🕒  se actualiza en quarter frames en lugar de half frames
+  - el canal debe silenciarse cuando cualquiera de los dos contadores sea 0
+  responses:
+  - entendido [exercise]
+
+exercise:
+  messages:
+  - |- 
+    📚  crea una clase 📏  `LinearLengthCounter` que <extiende> de `LengthCounter` con lo siguiente:
+    **constructor()**:
+      **->** llama a ```javascript super()```
+      **->** asigna ```javascript this.reload = 0```
+      **->** asigna ```javascript this.reloadFlag = false```
+    **fullReset()**:
+      **->** llama a ```javascript this.reset()```
+      **->** asigna ```javascript this.reload = 0```
+      **->** asigna ```javascript this.reloadFlag = false```
+    **clock(isEnabled, isHalted)**:
+      **->** si `!isEnabled`:
+        **->** llama a ```javascript this.reset()```
+        **->** retorna
+
+      **->** si la bandera de recarga está encendida:
+        **->** asigna el valor de recarga a ```javascript this.counter```
+      **->** si no:
+        **->** llama a ```javascript super.clock(isEnabled, false);```
+      
+      **->** si `!isHalted`:
+          **->** apaga la bandera de recarga
+  - |-
+    📚  en 🔺  `TriangleChannel`:
+    **->** importa la clase 📏  `LinearLengthCounter` y agrega una propiedad `linearLengthCounter` con una nueva instancia
+    **->** modifica **sample()** para que el <return temprano> también revise ```javascript !this.linearLengthCounter.isActive()```
+    **->** implementa:
+    **quarterFrame()**:
+      **->** llama al método `clock(...)` del contador lineal de longitud
+        (usa ```javascript this.isEnabled()``` como primer argumento)
+        (para la bandera de detención, usa la misma que la del contador de longitud regular, ¡la comparten!)
+  - |-
+    📚  implementa en 📏  `TriangleLengthControl`:
+    **onLoad()**:
+      **->** usa ```javascript this.addField(...)``` para definir un campo de 7 bits `linearCounterReload` desde el bit 1
+    **onWrite(value)**:
+      **->** __mantén el comportamiento existente__
+      **->** asigna la nueva longitud a la propiedad `reload` del contador lineal de longitud del canal
+        (el <reload value> es directamente ```javascript this.linearCounterReload```)
+  - |-
+    📚  implementa en 🕛  `TriangleTimerHighLCL`:
+    **onWrite(value)**:
+      **->** __mantén el comportamiento existente__
+      **->** enciende la bandera de recarga del contador lineal de longitud del canal
+  - 📚  en 🎛️  `APUControl`, después de llamar a `reset()` en el contador de longitud, también llama a `fullReset()` en el contador lineal de longitud si `enableTriangle` es 0
+  responses: []

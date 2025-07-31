@@ -1,0 +1,55 @@
+---
+main:
+  messages:
+  - esto podría causar algo de confusión, así que me adelanto
+  - "en jerga de audio, \"sample\" puede tener dos significados diferentes:"
+  - 📈  un solo valor de amplitud en un momento dado (o sea <un número>)
+  - 🔊  un clip de sonido grabado (¡o sea <varios números>!)
+  - ten en cuenta que los registros 🐏  DMCSampleAddress y 📐  DMCSampleLength se refieren al <segundo significado>!
+  - (intentaré decir "clip de sonido" para evitar confusión)
+  responses:
+  - entendido, ¿cómo funciona DPCM? [dpcm]
+
+dpcm:
+  messages:
+  - los juegos escriben la dirección de memoria donde se almacena el clip de sonido en 🐏  DMCSampleAddress y la longitud en bytes en 📐  DMCSampleLength
+  - |-
+    no exactamente, pero la dirección y la longitud reales se pueden obtener así:
+      ```javascript clipAddress = 0xc000 + dmcSampleAddress + (A * 64);
+      clipLength = dmcSampleLength * 16 + 1;```
+  - luego, escriben un <período DPCM> (que determina la frecuencia de reproducción) y una <bandera de bucle> en 📦  DMCControl
+  - por último, escriben en 🎛️  APUControl un valor con el bit 4 activado, lo que inicia la reproducción si el canal DMC no está reproduciendo un clip
+  responses:
+  - ¿y qué pasa después? [then]
+
+then:
+  messages:
+  - después todo lo maneja automáticamente la APU
+  - el canal comienza con un sample de salida en 0 y configura un divisor basado en el <período DPCM>
+  - en cada pulso del divisor, la unidad procesa <un bit> del stream y <cambia> el sample de salida
+  - |-
+    ese bit determina la <variación>:
+      **->** un 1 significa ~+1~
+      **->** un 0 significa ~-1~
+  - cuando termina de procesar todos los bits (el clip de sonido se ha terminado), la reproducción se reinicia si la <bandera de bucle> está encendida
+  responses:
+  - esto suena complicado [exercise]
+
+exercise:
+  messages:
+  - hay muchos matices en esto y puede ser difícil hacerlo bien 😅
+  - así que te daré una clase que maneja la decodificación DPCM
+  - y tú solo tienes que integrarla en tu canal
+  - |-
+    📚  en 📦  `DMCChannel`:
+    **->** importa 📄  ~/lib/apu/DPCM.js~ y agrega una propiedad `dpcm` con una nueva instancia
+    **->** en `step()`, llama a ```javascript this.dpcm.update()```
+  - |-
+    📚  implementa en 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __mantén el comportamiento existente__
+      **->** si `!this.enableDMC`:
+        **->** llama a ```javascript this.apu.channels.dmc.dpcm.stop()```
+      **->** si no, y ```javascript this.apu.channels.dmc.dpcm.remainingBytes() === 0```
+        **->** llama a ```javascript this.apu.channels.dmc.dpcm.start()```
+  responses: []

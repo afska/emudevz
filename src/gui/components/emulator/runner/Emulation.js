@@ -1,11 +1,9 @@
 import FrameTimer from "./FrameTimer";
 import Speaker from "./Speaker";
 
-const SYNC_TO_AUDIO = true;
 const APU_SAMPLE_RATE = 44100;
-const AUDIO_BUFFER_LIMIT = 4096;
 const MAX_SAMPLE_MEMORY_SECONDS = 10;
-const FPS = 60.098;
+const AUDIO_DRIFT_THRESHOLD = 64;
 
 /**
  * An emulator runner instance.
@@ -21,9 +19,11 @@ export default class Emulation {
 		onSaveState = () => {},
 		saveState = null,
 		volume = 1,
+		syncToVideo = false,
 		onFrame = () => {}
 	) {
 		this._onFrameCallback = onFrame;
+		this._syncToVideo = syncToVideo;
 
 		this.screen = screen;
 		this.samples = [];
@@ -36,7 +36,20 @@ export default class Emulation {
 			dmc: true,
 		};
 
-		this.speaker = new Speaker(volume);
+		this.speaker = new Speaker(({ need, have, target }) => {
+			try {
+				if (this._canSyncToAudio()) {
+					let n = need;
+					if (have > target + AUDIO_DRIFT_THRESHOLD) n--;
+					else if (have < target - AUDIO_DRIFT_THRESHOLD) n++;
+					this.neees.samples(n);
+
+					this._updateSound();
+				}
+			} catch (error) {
+				onError(error);
+			}
+		}, volume);
 		this.speaker.start();
 
 		this.saveState = saveState;
@@ -81,18 +94,14 @@ export default class Emulation {
 			}
 
 			try {
-				if (isDebugStepScanlineRequested) {
-					this.neees.scanline(true);
-				} else if (SYNC_TO_AUDIO) {
-					const requestedSamples = APU_SAMPLE_RATE / FPS;
-					const newBufferSize = this.speaker.bufferSize + requestedSamples;
-					if (newBufferSize <= AUDIO_BUFFER_LIMIT)
-						this.neees.samples(requestedSamples);
-				} else {
-					this.neees.frame();
+				if (!this._canSyncToAudio()) {
+					if (isDebugStepScanlineRequested) {
+						this.neees.scanline(true);
+					} else {
+						this.neees.frame();
+					}
+					this._updateSound();
 				}
-
-				this._updateSound();
 			} catch (error) {
 				onError(error);
 			}
@@ -131,7 +140,7 @@ export default class Emulation {
 	_onFrame = (frameBuffer) => {
 		this.frameTimer.countNewFrame();
 		this.screen.setBuffer(frameBuffer);
-		this._onFrameCallback(frameBuffer, this.neees);
+		this._onFrameCallback(frameBuffer, this.neees, this);
 	};
 
 	_onAudio = (sample, pulse1, pulse2, triangle, noise, dmc) => {
@@ -149,8 +158,11 @@ export default class Emulation {
 			if (!this.enabledChannels.noise) noise = 0;
 			if (!this.enabledChannels.dmc) dmc = 0;
 
-			const pulseOut = 0.00752 * (pulse1 + pulse2);
-			const tndOut = 0.00851 * triangle + 0.00494 * noise + 0.00335 * dmc;
+			const pulseOut = 0.00752 * ((pulse1 || 0) + (pulse2 || 0));
+			const tndOut =
+				0.00851 * (triangle || 0) +
+				0.00494 * (noise || 0) +
+				0.00335 * (dmc || 0);
 			sample = pulseOut + tndOut;
 		}
 
@@ -192,5 +204,9 @@ export default class Emulation {
 				if (button[0] !== "$")
 					this.neees.setButton(i + 1, button, input[i][button]);
 		}
+	}
+
+	_canSyncToAudio() {
+		return !this._syncToVideo && !this.isDebugging;
 	}
 }

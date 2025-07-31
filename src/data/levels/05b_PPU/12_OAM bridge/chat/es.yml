@@ -44,7 +44,7 @@ implement:
       **->** guarda la dirección OAM actual:
         ```javascript const oamAddress = this.ppu.registers.oamAddr.value;```
         (el campo `value` está definido en `InMemoryRegister` y representa el valor actual)
-      **->** devuelve el byte correspondiente de OAM RAM, usando `oamAddress`
+      **->** retorna el byte correspondiente de OAM RAM, usando `oamAddress`
     **onWrite(value)**:
       **->** guarda la dirección OAM actual (`oamAddress`)
       **->** escribe `value` en el byte correspondiente de OAM RAM, usando `oamAddress`
@@ -55,7 +55,7 @@ implement:
     **onWrite(value)**:
       **->** ```javascript for (i = 0; i < 256; i++)```:
         **->** construye la dirección (high byte: `value`, low byte: `i`)
-        **->** lee la dirección de la memoria de la CPU (```javascript this.ppu.cpu``` devuelve la 🧠  `CPU`)
+        **->** lee la dirección de la memoria de la CPU (```javascript this.ppu.cpu``` obtiene la 🧠  `CPU`)
         **->** asigna el byte obtenido a ```javascript oamRam[i]```
       **->** suma 513 a ```javascript this.ppu.cpu.extraCycles```
   responses: []

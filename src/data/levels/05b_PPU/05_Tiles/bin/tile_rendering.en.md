@@ -4,7 +4,7 @@
 - Each 🕊️ tile occupies `16` bytes...
 - ...so each pattern table is `4096` bytes.
 - The 👾 CHR-ROM inside the 💾 cartridge contains `2` 🕊️📖 pattern tables.
-  - (that's available in PPU addresses `$0000-$1FFF`)
+  - (that's available at PPU addresses `$0000-$1FFF`)
 
 <div class="embed-image"><img alt="Pattern table memory" src="assets/graphics/tile_bitplanes.png" style="width: 100%" /></div>
 

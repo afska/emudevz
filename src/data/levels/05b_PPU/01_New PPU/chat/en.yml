@@ -31,7 +31,7 @@ cycles:
 
 same:
   messages:
-  - conceptually, yes, but the 🖥️  PPU runs 3x faster than the 🧠  CPU
+  - conceptually, yes, but the 🖥️  PPU runs <3x> faster than the 🧠  CPU
   - so PPU cycles are faster (each PPU cycle is, in time, ~1/3~ of a CPU cycle)
   - <{unit_speeds.png}>
   responses:
@@ -53,7 +53,7 @@ vblank_hblank:
   messages:
   - during each scanline (after it has drawn all the pixels), it gets a small break known as the Horizontal Blank, or HBlank
   - and at the end of all visible scanlines, it gets a longer break, the Vertical Blank, or VBlank 🏝️
-  - during these periods, the PPU isn't drawing any pixels, and that gives the program a chance to update the screen
+  - during VBlank/HBlank time, the PPU isn't drawing any pixels, and that gives the program a chance to update the screen
   responses:
   - got it, what's next? [next]
 
@@ -61,7 +61,7 @@ next:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - 📚  create a file for the PPU code, using 📄  ~/tmpl/ppu/PPU.js~ as template
+  - 📚  create a file for the PPU code, using 📄  ~/tmpl/ppu/PPU.js~ as a template
   - |-
     📚  to keep track of the timing, add this method:
     **step()**:

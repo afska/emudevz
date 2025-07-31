@@ -1,0 +1,25 @@
+---
+main:
+  messages:
+  - hasta ahora, creamos algunas ondas de pulso de prueba
+  - y ahora también sabemos qué nota deberíamos tocar
+  - ¡es hora de conectar ambas cosas e implementar los Canales Pulso!
+  responses:
+  - suena bien 👍 [good]
+
+good:
+  messages:
+  - abstraje la lógica de generación de ondas de pulso en 📄  ~/lib/apu/PulseOscillator.js~
+  - 📚  en 🟦  `PulseChannel`, importa esa clase y agrega una propiedad `oscillator` con una nueva instancia
+  - |-
+    📚  implementa este método:
+    **sample()**:
+      **->** asigna ```javascript this.oscillator.frequency``` a la frecuencia correcta, basada en ```javascript this.timer```
+        recuerda la fórmula: ```javascript f = 1789773 / (16 * (t + 1))```
+      **->** asigna ```javascript this.oscillator.dutyCycle``` a `dutyCycleId` desde 🟦  `PulseControl`
+      **->** asigna ```javascript this.oscillator.volume``` a `volumeOrEnvelopePeriod` desde 🟦  `PulseControl`
+      **->** retorna ```javascript this.oscillator.sample()```
+  - ¡prueba algunos juegos!
+  - no va a sonar <genial> ya que los canales no siempre se silencian y hay muchas cosas que faltan 😅
+  - pero empezarás a escuchar parte de las melodías de los juegos
+  responses: []

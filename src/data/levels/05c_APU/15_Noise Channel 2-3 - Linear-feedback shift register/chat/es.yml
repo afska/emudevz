@@ -1,0 +1,49 @@
+---
+main:
+  messages:
+  - la generación de ruido es un poco más compleja que el ```javascript Math.random()``` de JavaScript
+  - "aquí hay un documento que lo describe:"
+  - 📄  ~/docs/apu/noise_generation.es.md~
+  - léelo y dime si tienes alguna pregunta
+  responses:
+  - ¿la salida es el volumen? ¿qué? [volume]
+
+volume:
+  messages:
+  - sí, el 💥  Canal Ruido no genera "ondas" reales
+  - sus samples son o el <nivel de volumen> o 0
+  - y eso depende del bit 0 del <registro de desplazamiento>
+  - todavía no tenemos una envolvente, así que seguiremos asumiendo un volumen constante
+  responses:
+  - suena bien, puedo programar esto [exercise]
+
+exercise:
+  messages:
+  - ¡genial!
+  - |-
+      📚  implementa en 🌪️  `NoiseForm`:
+      **onLoad()**:
+        **->** usa ```javascript this.addField(...)``` para definir 2 campos: `periodId`, `mode`
+        (usa 📄  ~/docs/apu/audio_registers.es.md~ como referencia)
+      **onWrite(value)**:
+        **->** asigna el valor con ```javascript this.setValue(...)```
+  - |-
+      📚  implementa en 💥  `NoiseChannel`:
+      **constructor(apu)**:
+        **->** asigna ```javascript this.shift = 1```
+        **->** asigna ```javascript this.dividerCount = 0```
+      **sample(value)**:
+        **->** haz que el <return temprano> también revise ```javascript !(this.shift & 1)```
+          (el sample de salida es 0 si el primer bit del <registro de desplazamiento> es 0)
+        **->** cambia el <valor de retorno principal> de ```javascript Math.floor(...)``` a solo `volume`
+      **step()**:
+        **->** incrementa el <contador del divisor>
+        **->** si el <contador del divisor> alcanza ```javascript noisePeriods[this.registers.form.periodId]```:
+          (puedes obtener `noisePeriods` de 📄  ~/lib/apu/noisePeriods.js~)
+          **->** reinicia el <contador del divisor>
+        **->** si no:
+          **->** retorna
+        
+        **->** actualiza ```javascript this.shift``` usando la lógica descrita aquí:
+          📄  ~/docs/apu/noise_generation.es.md~
+  responses: []

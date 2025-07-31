@@ -41,6 +41,7 @@ export default {
 			testHelpers,
 			filesystem,
 			byte,
+			lodash: _,
 		};
 
 		$.evaluate = (path = null) => {
@@ -62,56 +63,73 @@ export default {
 	},
 
 	getWarnings(level) {
-		const code = level.content;
-		if (!_.isObject(code)) return [];
+		try {
+			const code = level.content;
+			if (!_.isObject(code)) return [];
 
-		const { modules } = this._compile(code.main);
-		const fileNames = _(modules).keys().sort().value();
+			const { modules } = this._compile(code.main);
+			const fileNames = _(modules).keys().sort().value();
 
-		return fileNames
-			.map((fileName) => {
-				const linter = new Linter();
+			return fileNames
+				.map((fileName) => {
+					const linter = new Linter();
 
-				return {
-					fileName,
-					lint: linter.verify(filesystem.read(fileName), esLintConfig, {
-						filename: fileName,
-					}),
-				};
-			})
-			.filter((it) => !_.isEmpty(it.lint));
+					return {
+						fileName,
+						lint: linter.verify(filesystem.read(fileName), esLintConfig, {
+							filename: fileName,
+						}),
+					};
+				})
+				.filter((it) => !_.isEmpty(it.lint));
+		} catch (e) {
+			console.error(e);
+			const message = e?.message?.toLowerCase() || "?";
+
+			if (message.includes("call stack")) {
+				throw new Error(
+					"There's some recursive stuff goin' on. Check your imports?"
+				);
+			} else {
+				throw new Error("Something has gone very wrong!");
+			}
+		}
 	},
 
 	buildHTMLError(e) {
-		let fullStack = this.buildStack(e);
+		try {
+			let fullStack = this.buildStack(e);
 
-		if (!fullStack) {
-			const warnings = this.getWarnings(Level.current).filter((it) =>
-				it.lint.some((lint) => lint.severity === ERROR)
-			);
-			if (!_.isEmpty(warnings)) {
-				fullStack = {
-					trace: warnings
-						.map((it) => {
-							const errors = it.lint
-								.filter((lint) => lint.severity === ERROR)
-								.map(
-									(lint) =>
-										`&nbsp;&nbsp;(:${lint.line}:${lint.column}) ${lint.message}`
-								)
-								.join("\n");
+			if (!fullStack) {
+				const warnings = this.getWarnings(Level.current).filter((it) =>
+					it.lint.some((lint) => lint.severity === ERROR)
+				);
+				if (!_.isEmpty(warnings)) {
+					fullStack = {
+						trace: warnings
+							.map((it) => {
+								const errors = it.lint
+									.filter((lint) => lint.severity === ERROR)
+									.map(
+										(lint) =>
+											`&nbsp;&nbsp;(:${lint.line}:${lint.column}) ${lint.message}`
+									)
+									.join("\n");
 
-							return `\n📄 ${it.fileName}:\n` + errors;
-						})
-						.join("\n"),
-				};
+								return `\n📄 ${it.fileName}:\n` + errors;
+							})
+							.join("\n"),
+					};
+				}
 			}
-		}
 
-		return (
-			(e?.message || "?") +
-			(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
-		);
+			return (
+				(e?.message || "?") +
+				(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
+			);
+		} catch (e) {
+			return e?.message || "?";
+		}
 	},
 
 	buildStack(error) {

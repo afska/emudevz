@@ -604,7 +604,7 @@ it("PPUStatus: resets `isInVBlankInterval` after reading", () => {
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("has methods: `_onPreLine`, `_onVisibleLine`, `onVBlankLine`", () => {
+it("has methods: `_onPreLine`, `_onVisibleLine`, `_onVBlankLine`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.should.respondTo("_onPreLine");
@@ -612,7 +612,7 @@ it("has methods: `_onPreLine`, `_onVisibleLine`, `onVBlankLine`", () => {
 	ppu.should.respondTo("_onVBlankLine");
 })({
 	locales: {
-		es: "tiene métodos `_onPreLine`, `onVisibleLine`, `onVBlankLine`",
+		es: "tiene métodos `_onPreLine`, `_onVisibleLine`, `_onVBlankLine`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
@@ -821,7 +821,7 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 })({
 	locales: {
 		es:
-			"asigna `PPUStatus::isInVBlankInterval` y dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está encendido",
+			"enciende `PPUStatus::isInVBlankInterval` y dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está encendido",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
@@ -860,7 +860,7 @@ it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on scanline=
 })({
 	locales: {
 		es:
-			"asigna `PPUStatus::isInVBlankInterval` y no dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está apagado",
+			"enciende `PPUStatus::isInVBlankInterval` y no dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está apagado",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
@@ -1615,7 +1615,7 @@ it("SpriteRenderer: `_evaluate()` returns a sprite array", () => {
 	ppu.memory.oamRam[4 * 8 + 3] = 17; // x
 
 	const sprites = ppu.spriteRenderer._evaluate();
-	expect(sprites).to.be.an("array");
+	expect(sprites, "sprites").to.be.an("array");
 	sprites.length.should.equalN(2, "length");
 	sprites[0].id.should.equalN(5, "sprites[0].id");
 	sprites[0].x.should.equalN(77, "sprites[0].x");
@@ -1646,7 +1646,7 @@ it("SpriteRenderer: `_evaluate()` sets the sprite overflow flag when there are m
 	}
 
 	const sprites = ppu.spriteRenderer._evaluate();
-	expect(sprites).to.be.an("array");
+	expect(sprites, "sprites").to.be.an("array");
 	sprites.length.should.equalN(8, "length");
 	sprites[0].id.should.equal(7, "sprites[0].id");
 	sprites[7].id.should.equal(0, "sprites[7].id");
@@ -2367,7 +2367,7 @@ it("PPUMask: writes `showSprites` (bit 4)", () => {
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("PPUMask: has an `isRenderingEnabled` method that returns true if the background or sprites are enabled", () => {
+it("PPUMask: has an `isRenderingEnabled` method that returns `true` if the background or sprites are enabled", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2389,7 +2389,7 @@ it("PPUMask: has an `isRenderingEnabled` method that returns true if the backgro
 })({
 	locales: {
 		es:
-			"PPUMask: tiene un método `isRenderingEnabled` que retorna true si el fondo o los sprites están habilitados",
+			"PPUMask: tiene un método `isRenderingEnabled` que retorna `true` si el fondo o los sprites están habilitados",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });

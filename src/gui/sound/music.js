@@ -1,4 +1,5 @@
 import store from "../../store";
+import { bus } from "../../utils";
 
 const MUSIC_DIR = "music/";
 const TRACKS = [
@@ -27,6 +28,8 @@ class Music {
 	}
 
 	setVolume(value) {
+		bus.emit("music-volume-changed", value);
+
 		this._volume = value;
 		this._saveVolume();
 
@@ -36,6 +39,7 @@ class Music {
 	}
 
 	start() {
+		if (this.isPaused) return;
 		if (this._hasStarted) return;
 
 		this._volume = this._loadVolume();
@@ -52,15 +56,17 @@ class Music {
 	}
 
 	pause() {
-		if (this._audio && !this.isPaused) {
-			this._audio.pause();
-			this.isPaused = true;
-		}
+		if (this._audio && !this.isPaused) this._audio.pause();
+		this.isPaused = true;
+
+		bus.emit("pause-music");
 	}
 
 	resume() {
 		if (this._audio && this._audio.paused) this._audio.play();
 		this.isPaused = false;
+
+		bus.emit("resume-music");
 	}
 
 	_playCurrentTrack() {

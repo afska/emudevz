@@ -2,7 +2,7 @@
 main:
   messages:
   - the 🧠  CPU and 🖥️  PPU talk with each other via a set of 9 memory-mapped registers
-  - they live in CPU addresses $2000-$2007 and $4014
+  - they live at CPU addresses $2000-$2007 and $4014
   - check out 📄  ~/docs/ppu/video_registers.en.md~
   - some of them are 🔍  <read-only> (read by 🧠  CPU, written by 🖥️  PPU) 
   - some are ✏️  <write-only> (read by 🖥️  PPU, written by 🧠  CPU)
@@ -14,7 +14,7 @@ main:
 example:
   messages:
   - there are two 🕊️ 📖  pattern tables, remember?
-  - well, a game's code need to tell the PPU which one it should use
+  - well, the game's code needs to tell the 🖥️  PPU which one it should use
   - for backgrounds, this is handled by bit 4 of $2000 (🎛️  PPUCtrl)
   - we call it ~B~ in our ~Bits~ column
   - so, for example, if a game wants to use the second table, it would write a 16 (binary ```raw 000```~1~```raw 0000```) to $2000
@@ -26,10 +26,9 @@ example:
 
 numbers:
   messages: 
-  - yes, but some produce <special effects> when the 🧠  CPU reads or writes them
-  - these side effects can reset an internal buffer, increment counters, or even copying data!
+  - yes, but some produce <special effects> when the 🧠  CPU reads or writes to them
+  - these side effects can reset an internal buffer, increment counters, or even copy data!
   - "I've coded a class that will help you implement this, you should use it 📖"
-  - 📄  ~/lib/InMemoryRegister.js~
   responses:
   - how can I use it? [useit]
 
@@ -37,11 +36,11 @@ useit:
   run: |
     set((m) => m.$exercise = true);
   messages:
-  - have a look at 📄  ~/tmpl/ppu/VideoRegisters.js~ and use it as a template
+  - read the docs at 📄  ~/docs/lib/InMemoryRegister.en.md~
+  - and use 📄  ~/tmpl/ppu/VideoRegisters.js~ as a template for the video registers file
   - registers 🎛️  `PPUCtrl` and 📊  `PPUStatus` are already implemented
-  - note how they call `addField(...)` for each parameter defined in the ~Bits~ column of the doc file, indicating the starting bit, and its size (when they're larger than 1 bit)
-  - "this creates <magic properties>: after the `onWrite(...)` call, the PPU will be able to access their values (e.g. ```javascript ppuCtrl.spriteSize```)"
-  - in the case of 📊  `PPUStatus`, it uses `addWritableField(...)` because the PPU needs to write them (e.g. ```javascript ppuStatus.isInVBlankInterval = 1```) so the CPU can read the updated values via `onRead()`
+  - note how they call `addField(...)` for each bit defined in the ~Bits~ column
+  - "this creates <automatic properties>: after a write, the PPU can access their values (e.g. ```javascript ppuCtrl.spriteSize```)"
   - 📚  create a `VideoRegisters` class, using that template
   - |-
     📚  add a `registers` property to 🖥️  `PPU`, assigned to:

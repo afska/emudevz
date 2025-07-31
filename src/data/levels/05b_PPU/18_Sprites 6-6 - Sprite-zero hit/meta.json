@@ -27,7 +27,8 @@
 				}
 			]
 		},
-		"focus": "Bottom"
+		"focus": "Bottom",
+		"canPinEmulator": false
 	},
 	"test": {
 		"context": "javascript",
@@ -57,5 +58,5 @@
 			"multifile": true
 		}
 	},
-	"letsPlayUnlock": "lets-play-wolf-spirit"
+	"unlocksGame": "lets-play-wolf-spirit"
 }

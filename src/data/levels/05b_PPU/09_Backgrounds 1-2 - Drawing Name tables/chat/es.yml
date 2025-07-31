@@ -16,7 +16,7 @@ finally:
   - 📚  su constructor debe recibir y asignar una propiedad `ppu` con la instancia de PPU
   - |-
     📚  haz estos cambios en la clase 🖥️  `PPU`:
-    **constructor**:
+    **constructor(cpu)**:
       **->** instancia el renderizador de fondos:
         ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
         (¡recuerda importarlo si lo definiste en otro archivo!)

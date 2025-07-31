@@ -25,7 +25,7 @@ main:
       **->** determina la posición del bit que corresponde a `x` (un número entre 0 y 7)
         ten en cuenta que ~x=0~ es el píxel más a la izquierda, y eso sería ~bit 7~
       **->** toma ese bit de ```javascript this._lowRow``` y ```javascript this._highRow``` usando `byte.getBit(...)`
-      **->** devuelve el índice de color resultante, combinando los dos bits con `byte.buildU2(...)`
+      **->** retorna el índice de color resultante, combinando los dos bits con `byte.buildU2(...)`
   responses:
   - ¿cómo lo probaremos? 🧐 [test]
 

@@ -1,0 +1,51 @@
+---
+main:
+  messages:
+  - ¡implementemos el 🔺  Canal Triangular!
+  - recuerda, primero necesitamos obtener el valor del timer
+  - sus 8 bits bajos están en el registro 🕡  TriangleTimerLow, y sus 3 bits altos están en 🕛  TriangleTimerHighLCL
+  - <{triangle_timer.png}>
+  - a partir del timer podemos derivar la frecuencia con la misma fórmula que usan los Canales Pulso
+  - aunque el tono del canal triangular está <una octava más abajo>, así que tenemos que dividir la frecuencia resultante por dos ⚗️
+  - "```javascript frequency = 1789773 / (16 * (timer + 1)) / 2```"
+  responses:
+  - ah, por eso se usa para líneas de bajo 🎸 [bass]
+
+bass:
+  messages:
+  - ¡exacto!
+  - "yo ayudaré con la generación real de la onda triangular, aquí está mi código de oscilador:"
+  - 📄  ~/lib/apu/TriangleOscillator.js~
+  - |-
+    📚  implementa en 🕛  `TriangleTimerHighLCL`:
+    **onLoad()**:
+      **->** usa ```javascript this.addField(...)``` para definir un campo `timerHigh` de 3 bits desde el bit 0
+    **onWrite(value)**:
+      **->** asigna el valor con ```javascript this.setValue(...)```
+  - |-
+    📚  crear una clase 🔺  `TriangleChannel` con lo siguiente:
+    **constructor(apu)**:
+      **->** guarda el parámetro como una propiedad (```javascript this.apu```)
+      **->** guarda el objeto de registros de triángulo en una propiedad:
+        ```javascript this.registers = this.apu.registers.triangle;```
+      **->** guarda una propiedad ```javascript this.oscillator``` con una nueva instancia del `TriangleOscillator` que envié
+    **sample()**:
+      **->** calcula el valor del timer basado en 🕡  TriangleTimerLow y el campo `timerHigh` de 🕛  TriangleTimerHighLCL
+        (usa `byte.buildU16(...)` para combinar ambos)
+        (llamemos a esto `timer`)
+      **->** si `timer` es menor a 2 o mayor a ~0x7ff~:
+        **->** retorna 0, el canal se silencia aquí
+      **->** asigna la frecuencia del oscilador usando la fórmula:
+        ```javascript this.oscillator.frequency = 1789773 / (16 * (timer + 1)) / 2;```
+      **->** llama al método `sample()` del oscilador y retorna su valor
+  - |-
+    📚  en 🔊  `APU`:
+    **->** importa el canal y agrega una clave `triangle` a ```javascript this.channels``` con una nueva instancia
+    **->** en `step()`, agrega el canal triangular a la mezcla:
+      ```javascript const pulse1 = this.channels.pulses[0].sample();
+      const pulse2 = this.channels.pulses[1].sample();
+      const triangle = this.channels.triangle.sample();
+      this.sample = (pulse1 + pulse2 + triangle) * 0.01;
+
+      onSample(this.sample, pulse1, pulse2, triangle);```
+  responses: []

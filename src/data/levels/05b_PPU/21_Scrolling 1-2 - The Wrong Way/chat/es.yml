@@ -6,7 +6,7 @@ main:
   - mucha gente lo ha intentado, pero solo los elegidos pudieron lograrlo
   responses:
   - ¿tienes un plan? [plan]
-  - <<level.isCompleted || m.$exercise>> 📚 llévame a la acción [proceed]
+  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [proceed]
 
 plan:
   messages:

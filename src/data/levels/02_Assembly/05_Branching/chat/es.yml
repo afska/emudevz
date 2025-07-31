@@ -103,7 +103,7 @@ testing:
   messages:
   - configuré un <generador de números aleatorios> 🔢
   - cada vez que cambies/corras tu código, escribirá un 7 o un byte aleatorio en $4080
-  - con 50% de probabilidades cada cosa
+  - con ~50%~ de probabilidades cada cosa
   - así que cuando sea 7, tu código debería escribir $EE
   - y cuando no, $AA tendría que ser escrito
   responses:

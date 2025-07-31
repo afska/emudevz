@@ -8,6 +8,7 @@ const _ = require("lodash");
 const LEVELS_PATH = "src/data/levels";
 const OUTPUT_PATH = "public/levels";
 const GLOBAL_TEST_FOLDER = "$tests";
+const GLOBAL_AUDIOTEST_FOLDER = "$audiotests";
 const GLOBAL_VIDEOTEST_FOLDER = "$videotests";
 const LOCAL_TEST_FOLDER = "tests";
 const LOCAL_CODE_FOLDER = "code";
@@ -21,6 +22,7 @@ const FORMAT = "zip";
 const COMPRESSION_LEVEL = 9;
 
 const GLOBAL_TEST_PATH = $path.join(LEVELS_PATH, GLOBAL_TEST_FOLDER);
+const GLOBAL_AUDIOTEST_PATH = $path.join(LEVELS_PATH, GLOBAL_AUDIOTEST_FOLDER);
 const GLOBAL_VIDEOTEST_PATH = $path.join(LEVELS_PATH, GLOBAL_VIDEOTEST_FOLDER);
 
 function readDirs(path) {
@@ -39,9 +41,6 @@ async function pkg() {
 
 	// global tests
 	const globalTestFiles = fs.readdirSync(GLOBAL_TEST_PATH);
-
-	// global videotests
-	const globalVideoTestFiles = fs.readdirSync(GLOBAL_VIDEOTEST_PATH);
 
 	// create output directory
 	mkdirp.sync(OUTPUT_PATH);
@@ -119,7 +118,7 @@ async function pkg() {
 				globalId: globalLevelId,
 				name: levelMetadata.name,
 				helpLines: _.sortBy([...helpLines]),
-				unlocksGame: levelMetadata.letsPlayUnlock,
+				unlocksGame: levelMetadata.unlocksGame,
 			});
 
 			// create compressed file
@@ -168,6 +167,18 @@ async function pkg() {
 					levelMetadata.test?.inherit.forEach((file) => {
 						archive.file($path.join(GLOBAL_TEST_PATH, file), {
 							name: $path.join(LOCAL_TEST_FOLDER, file),
+						});
+					});
+				}
+
+				// process audiotest inheritance
+				if (levelMetadata.audioTests?.length > 0) {
+					const files = _(levelMetadata.audioTests).map("apu").uniq().value();
+
+					// copy audiotest files
+					files.forEach((file) => {
+						archive.file($path.join(GLOBAL_AUDIOTEST_PATH, file), {
+							name: $path.join(LOCAL_CODE_FOLDER, file),
 						});
 					});
 				}

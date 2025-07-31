@@ -1,0 +1,51 @@
+{
+	"name": {
+		"en": "📏 Noise Channel (1/3): Length counter",
+		"es": "📏 Canal Ruido (1/3): Contador de longitud"
+	},
+	"ui": {
+		"run": "copy.js",
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom",
+		"canPinEmulator": false
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "apu.js"],
+		"mainTestFile": "apu.js"
+	},
+	"audioTests": [
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"frames": 300,
+			"apu": "TestAPU.v10.js"
+		}
+	],
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

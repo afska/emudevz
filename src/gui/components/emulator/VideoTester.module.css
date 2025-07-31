@@ -13,6 +13,7 @@
 	justify-content: center;
 	text-align: center;
 	user-select: none;
+	align-items: center;
 }
 
 .title {

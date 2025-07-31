@@ -1,0 +1,22 @@
+---
+main:
+  messages:
+  - agregar la envolvente será muy fácil ✨
+  - ya que se comporta exactamente como la de los 🟦  Canales Pulso
+  - |-
+    📚  en 💥  `NoiseChannel`:
+    **->** importa tu clase 📉  `VolumeEnvelope` y agrega una propiedad `volumeEnvelope` con una nueva instancia
+    **->** modifica **sample()** para que el `volume` dependa de la bandera `constantVolume` de 💥  NoiseControl:
+      **->** si se usa volumen constante, mantiene la lógica actual
+      **->** si no, usa ```javascript this.volumeEnvelope.volume```
+    **->** implementa este método:
+    **quarterFrame()**:
+      **->** llama al método `clock(...)` de la envolvente
+        (para `period`, usa `volumeOrEnvelopePeriod` de 💥  NoiseControl)
+        (para `loop`, usa `envelopeLoopOrLengthCounterHalt` de 💥  NoiseControl)
+  - |-
+    📚  implementa en 📏  `NoiseLCL`:
+    **onWrite(value)**:
+      **->** __mantén el comportamiento actual__
+      **->** enciende la bandera `startFlag` de la envolvente del canal
+  responses: []

@@ -131,7 +131,10 @@ class NavBar extends PureComponent {
 							}
 							onClick={() => {
 								if (music.isPaused) music.resume();
-								else music.next();
+								else {
+									if (window.EMULATION != null) music.pause();
+									else music.next();
+								}
 
 								this.forceUpdate();
 							}}
@@ -226,11 +229,9 @@ class NavBar extends PureComponent {
 			"new-listeners": () => this.forceUpdate(),
 			"image-diff": this._showImageDiff,
 			"pause-music": () => {
-				music.pause();
 				this.forceUpdate();
 			},
 			"resume-music": () => {
-				music.resume();
 				this.forceUpdate();
 			},
 		});

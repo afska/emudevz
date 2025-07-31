@@ -5,6 +5,7 @@ import utils from "./utils";
 const ImGui = window.ImGui;
 
 const LOG_LIMIT = 1000;
+const LOGGER_TYPE = "cpu";
 
 export default class Debugger_CPU {
 	constructor() {
@@ -13,22 +14,31 @@ export default class Debugger_CPU {
 		this._logs = [];
 		this._logger = new NEEESSimpleCPULogger();
 		this._scanline = 0;
-
-		const neees = window.EMULATION?.neees;
-		if (!neees) return;
-		neees.cpu.logger = (a, b, c, d, e) => {
-			const scanline = neees?.ppu.scanline ?? 0;
-			if (this.isRunningStepByStep || scanline !== this._scanline) {
-				this._scanline = scanline;
-				this._logger.log(a, b, c, d, e);
-				this._logs.unshift(this._logger.lastLog);
-				if (this._logs.length > LOG_LIMIT) this._logs.pop();
-			}
-		};
 	}
 
 	draw() {
 		const neees = window.EMULATION?.neees;
+
+		if (
+			neees != null &&
+			(neees.cpu.logger == null || neees.cpu.logger.type !== LOGGER_TYPE)
+		) {
+			neees.cpu.logger = (a, b, c, d, e) => {
+				if (this._destroyed) {
+					neees.logger = null;
+					return;
+				}
+
+				const scanline = neees?.ppu.scanline ?? 0;
+				if (this.isRunningStepByStep || scanline !== this._scanline) {
+					this._scanline = scanline;
+					this._logger.log(a, b, c, d, e);
+					this._logs.unshift(this._logger.lastLog);
+					if (this._logs.length > LOG_LIMIT) this._logs.pop();
+				}
+			};
+			neees.cpu.logger.type = LOGGER_TYPE;
+		}
 
 		const registerFields = ["a", "x", "y", "sp", "pc"];
 		const registers = registerFields.map((it) => `[${it.toUpperCase()}]`);
@@ -118,6 +128,7 @@ export default class Debugger_CPU {
 		const neees = window.EMULATION?.neees;
 		if (!neees) return;
 
-		neees.cpu.logger = null;
+		if (neees.cpu.logger?.type === LOGGER_TYPE) neees.cpu.logger = null;
+		this._destroyed = true;
 	}
 }

@@ -7,6 +7,7 @@ import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
 import { bus, filepicker } from "../../../utils";
+import music from "../../sound/music";
 import IconButton from "../widgets/IconButton";
 import Tooltip from "../widgets/Tooltip";
 import VolumeSlider from "../widgets/VolumeSlider";
@@ -142,7 +143,7 @@ export default class EmulatorRunner extends PureComponent {
 							volume={null}
 							setVolume={(v) => {
 								this._volume = v;
-								bus.emit("pause-music");
+								music.pause();
 							}}
 							defaultVolume={this._volume}
 							style={{ marginLeft: 8, width: 64 }}
@@ -254,7 +255,8 @@ export default class EmulatorRunner extends PureComponent {
 
 	_setFps = (fps) => {
 		if (!this._container) return;
-		const formattedFps = `${fps}`.padStart(2, "0");
+		const cappedFps = Math.min(fps, 60);
+		const formattedFps = `${cappedFps}`.padStart(2, "0");
 		this._container.querySelector("#fps").textContent = formattedFps;
 	};
 

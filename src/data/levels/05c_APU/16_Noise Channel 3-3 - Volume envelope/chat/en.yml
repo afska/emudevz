@@ -1,0 +1,22 @@
+---
+main:
+  messages:
+  - adding the envelope will be very easy ✨
+  - since it behaves exactly like the one in the 🟦  Pulse Channels
+  - |-
+    📚  in 💥  `NoiseChannel`:
+    **->** import your 📉  `VolumeEnvelope` class and add a `volumeEnvelope` property with a new instance
+    **->** modify **sample()** so the `volume` depends on 💥  NoiseControl's `constantVolume` flag:
+      **->** when using constant volume, keep the current logic
+      **->** when not, use ```javascript this.volumeEnvelope.volume```
+    **->** implement this method:
+    **quarterFrame()**:
+      **->** calls the `clock(...)` method of the volume envelope
+        (for `period`, use `volumeOrEnvelopePeriod` from 💥  NoiseControl)
+        (for `loop`, use `envelopeLoopOrLengthCounterHalt` from 💥  NoiseControl)
+  - |-
+    📚  implement in 📏  `NoiseLCL`:
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** sets the `startFlag` of the channel's volume envelope
+  responses: []

@@ -1,0 +1,49 @@
+---
+main:
+  messages:
+  - noise generation is a bit more involved than JavaScript's ```javascript Math.random()```
+  - "here's a document that describes it:"
+  - 📄  ~/docs/apu/noise_generation.en.md~
+  - read it and let me know if you have any questions
+  responses:
+  - the output is the volume? what? [volume]
+
+volume:
+  messages:
+  - yeah, the 💥  Noise Channel doesn't generate real "waves"
+  - its samples are either the <volume level> or 0
+  - and that depends on <shift register>'s bit 0
+  - we don't have an envelope yet, so we'll keep assuming a constant volume
+  responses:
+  - sounds cool, I can code this [exercise]
+
+exercise:
+  messages:
+  - great!
+  - |-
+      📚  implement in 🌪️  `NoiseForm`:
+      **onLoad()**:
+        **->** uses ```javascript this.addField(...)``` to define 2 fields: `periodId`, `mode`
+        (use 📄  ~/docs/apu/audio_registers.en.md~ for reference)
+      **onWrite(value)**:
+        **->** sets the value with ```javascript this.setValue(...)```
+  - |-
+      📚  implement in 💥  `NoiseChannel`:
+      **constructor(apu)**:
+        **->** sets ```javascript this.shift = 1```
+        **->** sets ```javascript this.dividerCount = 0```
+      **sample(value)**:
+        **->** make the <early return> also check for ```javascript !(this.shift & 1)```
+          (the output sample is 0 if the <shift register>'s first bit is 0)
+        **->** change the <main return value> from ```javascript Math.floor(...)``` to just `volume`
+      **step()**:
+        **->** increments the <divider count>
+        **->** if the <divider count> reaches ```javascript noisePeriods[this.registers.form.periodId]```:
+          (you can get `noisePeriods` from 📄  ~/lib/apu/noisePeriods.js~)
+          **->** resets the <divider count>
+        **->** else:
+          **->** returns
+        
+        **->** updates ```javascript this.shift``` using the logic described here:
+          📄  ~/docs/apu/noise_generation.en.md~
+  responses: []

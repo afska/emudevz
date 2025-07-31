@@ -1,0 +1,56 @@
+{
+	"name": {
+		"en": "📦 DMC Channel (1/2): Direct load",
+		"es": "📦 Canal DMC (1/2): Carga directa"
+	},
+	"ui": {
+		"run": "copy.js",
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom",
+		"canPinEmulator": false
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "apu.js"],
+		"mainTestFile": "apu.js"
+	},
+	"audioTests": [
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"frames": 300,
+			"apu": "TestAPU.v13.js"
+		},
+		{
+			"rom": "/roms/_test/apu_dmc_directload_crowd.neees",
+			"frames": 300,
+			"apu": "TestAPU.v13.js"
+		}
+	],
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

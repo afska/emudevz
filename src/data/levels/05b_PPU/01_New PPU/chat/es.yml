@@ -31,7 +31,7 @@ cycles:
 
 same:
   messages:
-  - conceptualmente, sí, pero la 🖥️  PPU funciona 3 veces más rápido que la 🧠  CPU
+  - conceptualmente, sí, pero la 🖥️  PPU funciona <3 veces> más rápido que la 🧠  CPU
   - así que los ciclos de PPU son más rápidos (cada ciclo de PPU es, en tiempo, ~1/3~ de un ciclo de CPU)
   - <{unit_speeds.png}>
   responses:
@@ -53,7 +53,7 @@ vblank_hblank:
   messages:
   - durante cada scanline (después de haber dibujado todos los píxeles), hay un pequeño descanso conocido como Horizontal Blank, o HBlank
   - y al final de todas las scanlines visibles, hay un descanso más largo, el Vertical Blank, o VBlank 🏝️
-  - durante estos períodos, la PPU no está dibujando ningún píxel, y eso da la oportunidad al programa de actualizar la pantalla
+  - durante el tiempo de VBlank/HBlank, la PPU no está dibujando ningún píxel, y eso da la oportunidad al programa de actualizar la pantalla
   responses:
   - entendido, ¿qué sigue? [next]
 

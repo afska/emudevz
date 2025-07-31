@@ -1,0 +1,57 @@
+---
+main:
+  messages:
+  - el 💥  Canal Ruido es un poco... <ruidoso>
+  - silenciarlo correctamente es crucial, así que empezaremos con eso
+  - ¡y solo entonces empezaremos con la emulación real del ruido!
+  responses:
+  - ¿cómo lo silenciamos? [exercise]
+
+exercise:
+  messages:
+  - como siempre, monitoreando 🎛️  APUControl y el 📏  contador de longitud
+  - ¡también tiene una 📉  envolvente! que veremos más adelante
+  - a este punto, todo esto es material normal, así que te daré una plantilla base y tú conectarás todo
+  - 📚  crea una clase `NoiseChannel`, usando 📄  ~/tmpl/apu/NoiseChannel.js~ como plantilla
+  - |-
+    📚  en 🔊  `APU`:
+    **->** importa el canal y agrega una clave `noise` a ```javascript this.channels``` con una nueva instancia
+    **->** en `step()`, antes de incrementar el contador de samples, llama a ```javascript this.channels.noise.step()```
+    **->** también en `step()`, agrega el canal ruido a la mezcla:
+      ```javascript const noise = this.channels.noise.sample();
+      this.sample = (pulse1 + pulse2 + triangle + noise) * 0.01;
+
+      onSample(this.sample, pulse1, pulse2, triangle, noise);```
+    **->** en `onQuarterFrameClock()`, llama a `quarterFrame()` en la instancia del canal ruido
+    **->** en `onHalfFrameClock()`, llama a `halfFrame()` en la instancia del canal ruido
+  - |-
+      📚  implementa en 💥  `NoiseControl`:
+      **onLoad()**:
+        **->** usa ```javascript this.addField(...)``` para definir 3 campos: `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`
+        (usa 📄  ~/docs/apu/audio_registers.es.md~ como referencia)
+      **onWrite(value)**:
+        **->** asigna el valor con ```javascript this.setValue(...)```
+  - |-
+      📚  implementa en 📏  `NoiseLCL`:
+      **onLoad()**:
+        **->** usa ```javascript this.addField(...)``` para definir un campo de 5 bits `lengthCounterLoad` desde el bit 3
+      **onWrite(value)**:
+        **->** __mantén el comportamiento existente__
+        **->** determina la nueva longitud accediendo al array `noteLengths` con el índice ```javascript this.lengthCounterLoad```
+          (usa 📄  ~/lib/apu/noteLengths.js~ para obtener el array)
+        **->** asigna el nuevo valor a la propiedad `counter` del contador de longitud
+  - |-
+    📚  implementa en 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __mantén el comportamiento existente__
+      **->** si `!this.enableNoise`:
+        **->** reinicia el contador de longitud del canal
+  responses:
+  - "¿por qué la plantilla que diste usa `Math.random()`? [random]"
+
+random:
+  messages:
+  - bueno, obviamente eso no es lo que hace la NEEES
+  - ¡pero lo agregué solo para que puedas escuchar algo!
+  - vamos a emular correctamente el ruido en el siguiente nivel
+  responses: []

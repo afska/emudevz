@@ -67,7 +67,7 @@ export default function FileSearch(props) {
 		_onSelect(file.originalFilePath);
 	};
 
-	window._openPath_ = (filePath) => {
+	window._openPathFromFileSearch_ = (filePath) => {
 		_onSelect(filePath);
 	};
 
@@ -80,7 +80,7 @@ export default function FileSearch(props) {
 
 			return (
 				icon +
-				`<span onclick="javascript:_openPath_('${filePath}')" class="${styles.treeLink}">${name}</span>`
+				`<span onclick="javascript:_openPathFromFileSearch_('${filePath}')" class="${styles.treeLink}">${name}</span>`
 			);
 		}
 	);

@@ -1,0 +1,37 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="28.0.6">
+  <diagram name="Página-1" id="YGOn6PNyKOojVt_gOlFw">
+    <mxGraphModel dx="854" dy="443" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#121010" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="r7sO3AQOclcK5GVMsysy-8" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D3F6B;fillColor=#5E7BA1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="150" width="210" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="r7sO3AQOclcK5GVMsysy-9" value="&lt;b style=&quot;font-family: &amp;quot;Courier New&amp;quot;; font-size: 16px;&quot;&gt;&lt;font style=&quot;color: rgb(0, 102, 204);&quot;&gt;E&lt;/font&gt;&lt;font style=&quot;color: rgb(255, 153, 51);&quot;&gt;PPP&lt;/font&gt;&lt;font style=&quot;color: rgb(160, 133, 86);&quot;&gt; &lt;/font&gt;&lt;font style=&quot;color: rgb(103, 171, 159);&quot;&gt;N&lt;/font&gt;&lt;font style=&quot;color: rgb(153, 0, 77);&quot;&gt;SSS&lt;/font&gt;&lt;/b&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="175" width="210" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="r7sO3AQOclcK5GVMsysy-10" value="&lt;font color=&quot;#ffffff&quot; size=&quot;1&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;CPU $4001&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="150" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="r7sO3AQOclcK5GVMsysy-11" value="&lt;font color=&quot;#ffffff&quot; size=&quot;1&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;🐏&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="335" y="140" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="r7sO3AQOclcK5GVMsysy-12" value="&lt;font style=&quot;color: rgb(229, 192, 123); font-family: &amp;quot;Courier New&amp;quot;;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;🧹&lt;/b&gt;&lt;/span&gt;&lt;b style=&quot;color: light-dark(rgb(229, 192, 123), rgb(99, 67, 8)); font-size: 14px;&quot;&gt;&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;b style=&quot;color: light-dark(rgb(229, 192, 123), rgb(99, 67, 8)); font-family: &amp;quot;Courier New&amp;quot;; font-size: 14px;&quot;&gt;Pulse1Sweep&lt;/b&gt;&lt;font face=&quot;Courier New&quot;&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="120" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="r7sO3AQOclcK5GVMsysy-13" value="&lt;font face=&quot;Courier New&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 10px; color: rgb(153, 0, 77);&quot;&gt;shift count&lt;/font&gt;&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="353" y="191" width="80" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="r7sO3AQOclcK5GVMsysy-24" value="&lt;font color=&quot;#67ab9f&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 10px;&quot;&gt;negate flag&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="343" y="202" width="80" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="r7sO3AQOclcK5GVMsysy-25" value="&lt;font style=&quot;color: rgb(255, 153, 51);&quot; face=&quot;Courier New&quot;&gt;&lt;b style=&quot;font-size: 10px;&quot;&gt;divider period - 1&lt;/b&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="311" y="214" width="111" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="r7sO3AQOclcK5GVMsysy-26" value="&lt;font face=&quot;Courier New&quot; color=&quot;#0066cc&quot;&gt;&lt;span style=&quot;font-size: 10px;&quot;&gt;&lt;b&gt;sweep enabled&lt;/b&gt;&lt;/span&gt;&lt;/font&gt;" style="text;align=center;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="298" y="226" width="87" height="10" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

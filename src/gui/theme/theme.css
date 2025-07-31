@@ -69,7 +69,62 @@ body {
 }
 
 .running {
-	animation: pulse 1.5s ease-in-out infinite;
+	pointer-events: none;
+}
+
+.running::before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: black;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 1000;
+	animation: fadeInOverlay 0.5s forwards;
+}
+
+.running::after {
+	content: "";
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 40px;
+	height: 40px;
+	border: 4px solid rgba(255, 255, 255, 0.2);
+	border-top-color: white;
+	border-radius: 50%;
+	opacity: 0;
+	pointer-events: none;
+	z-index: 1001;
+	animation: fadeInSpinner 0.5s forwards, spin 1s linear infinite;
+}
+
+@keyframes fadeInOverlay {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0.6;
+	}
+}
+
+@keyframes fadeInSpinner {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes spin {
+	to {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
 }
 
 @keyframes shake {
@@ -114,16 +169,6 @@ body {
 	}
 }
 
-@keyframes pulse {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.5;
-	}
-}
-
 /* Dictionary entries */
 
 .dictionary-entry-name {
@@ -136,18 +181,18 @@ body {
 }
 
 code {
-	.dictionary-link {
+	.highlight-link {
 		color: inherit;
 	}
 }
 
-.dictionary-link {
+.highlight-link {
 	color: #9db5dc;
 	text-decoration: none;
 	-webkit-user-drag: none;
 }
 
-.dictionary-link:hover {
+.highlight-link:hover {
 	color: #ccd1f9;
 }
 
@@ -239,6 +284,16 @@ code {
 
 /* Markdown */
 
+.markdown-view h2 {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+.markdown-view h3 {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
 .markdown-view h4 {
 	margin-top: 16px;
 	margin-bottom: 16px;
@@ -266,10 +321,6 @@ code {
 .markdown-view td {
 	border: 1px solid #577295;
 	padding: 4px;
-}
-
-.markdown-view code {
-	color: var(--bs-code-color);
 }
 
 /* Tooltips */

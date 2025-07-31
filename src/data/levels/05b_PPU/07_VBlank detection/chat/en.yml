@@ -1,10 +1,10 @@
 ---
 main:
   messages:
-  - 🏝️  VBlank is a period where the 🖥️  PPU rests at the end of each frame
+  - 🏝️  VBlank is a phase where the 🖥️  PPU rests at the end of each frame
   - <{rendering.png}>
   - games need to know when it starts, so they can update the screen without any visible glitches
-  - a program can know if it's inside the VBlank period by checking ~bit 7~ of 📊  `PPUStatus` (CPU $2002)
+  - a program can know if it's inside the VBlank phase by checking ~bit 7~ of 📊  `PPUStatus` (CPU $2002)
   - (we've mapped that as 📊  `PPUStatus::isInVBlankInterval`)
   - also, the 🖥️  PPU can notify a game that it's entering VBlank by using <CPU interrupts>
   responses:

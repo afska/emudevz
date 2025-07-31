@@ -1,0 +1,51 @@
+{
+	"name": {
+		"en": "📣 Pulse Channels (2/5): Producing pulse waves",
+		"es": "📣 Canales Pulso (2/5): Produciendo ondas de pulso"
+	},
+	"ui": {
+		"run": "copy.js",
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom",
+		"canPinEmulator": false
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "memory.js", "apu.js"],
+		"mainTestFile": "apu.js"
+	},
+	"audioTests": [
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"frames": 300,
+			"apu": "TestAPU.v3.js"
+		}
+	],
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

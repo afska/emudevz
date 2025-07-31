@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import Level from "../../../level/Level";
 import { bus } from "../../../utils";
+import music from "../../sound/music";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
 import Emulation from "./runner/Emulation";
@@ -29,7 +30,7 @@ export default class Emulator extends Component {
 		const innerClassName = crt ? styles.crtNoise : styles.box;
 
 		return (
-			<div className={styles.content} style={style}>
+			<div className={!screen ? styles.content : ""} style={style}>
 				{error ? (
 					<div className={styles.message}>
 						<span
@@ -102,7 +103,15 @@ export default class Emulator extends Component {
 	}
 
 	async _initialize(screen) {
-		const { rom, settings, volume, onFrame } = this.props;
+		const {
+			rom,
+			settings,
+			volume,
+			onStart,
+			onFrame,
+			syncToVideo = false,
+			forceMusicPause = false,
+		} = this.props;
 		this.screen = screen;
 		if (!rom) return;
 
@@ -133,8 +142,8 @@ export default class Emulator extends Component {
 			return;
 		}
 
-		this._stop();
-		if (volume > 0) bus.emit("pause-music");
+		this._stop(false);
+		if (volume > 0 || forceMusicPause) music.pause();
 		this.keyboardInput = gamepad.createInput();
 		window.addEventListener("keydown", this._onKeyDown);
 		window.addEventListener("keyup", this._onKeyUp);
@@ -155,12 +164,17 @@ export default class Emulator extends Component {
 			this._setSaveState,
 			saveState,
 			volume,
+			syncToVideo,
 			onFrame
 		);
+		onStart?.(this._emulation);
 		bus.emit("emulator-started");
 	}
 
 	_getInput = () => {
+		if (this.props.noInput)
+			return [gamepad.createInput(), gamepad.createInput()];
+
 		const gamepadInput = gamepad.getInput();
 
 		this.props.onInputType(gamepadInput ? "gamepad" : "keyboard");
@@ -182,7 +196,7 @@ export default class Emulator extends Component {
 		this._stop();
 	};
 
-	_stop() {
+	_stop(resumeMusic = true) {
 		if (this._emulation) {
 			this._emulation.terminate();
 			this._emulation = null;
@@ -195,7 +209,7 @@ export default class Emulator extends Component {
 		window.removeEventListener("fullscreenchange", this._onFullscreenChange);
 		this.props.onStop?.();
 		bus.emit("emulator-stopped");
-		bus.emit("resume-music");
+		if (resumeMusic) music.resume();
 	}
 
 	_onKeyDown = (e) => {

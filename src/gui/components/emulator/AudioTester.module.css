@@ -1,0 +1,6 @@
+.closeButton {
+	z-index: 10;
+	position: absolute;
+	right: 8px;
+	top: 8px;
+}
