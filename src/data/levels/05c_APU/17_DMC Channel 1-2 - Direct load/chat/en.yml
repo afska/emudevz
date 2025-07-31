@@ -1,5 +1,32 @@
 ---
 main:
   messages:
-  - coming soon!
+  - the 📦  DMC Channel gives games the ability to output their own samples!
+  - this allows creating any waveforms, not just pulse waves, triangle waves, or noise!
+  - "it has two modes of operation:"
+  - "🎚️  <Direct Load>: games load a 7-bit sample directly to the APU (high quality, but CPU intensive)"
+  - "🤏  <Delta Modulation>: the APU automatically decodes a DPCM stream using the Delta Modulation technique, where each sample is stored as the difference (<delta>) from the previous one (low quality, but lighter)"
+  responses:
+  - direct load sounds easier [exercise]
+
+exercise:
+  messages:
+  - yeah, for us, it's more simpler to implement
+  - 📚  create a `DMCChannel` class, using 📄  ~/tmpl/apu/DMCChannel.js~ as a template
+  - |-
+    📚  in 🔊  `APU`:
+    **->** import the channel and add a `dmc` key to ```javascript this.channels``` with a new instance
+    **->** in `step()`, before incrementing the sample counter, call ```javascript this.channels.dmc.step()```
+    **->** also in `step()`, add the DMC channel to the mix:
+      ```javascript const dmc = this.channels.dmc.sample();
+      this.sample = (pulse1 + pulse2 + triangle + noise + dmc) * 0.01;
+
+      onSample(this.sample, pulse1, pulse2, triangle, noise, dmc);```
+  - |-
+      📚  implement in 📥  `DMCLoad`:
+      **onLoad()**:
+        **->** uses ```javascript this.addField(...)``` to define a 7-bit `directLoad` field from bit 0
+      **onWrite(value)**:
+        **->** sets the value with ```javascript this.setValue(...)```
+        **->** sets the channel's output sample to ```javascript this.directLoad```
   responses: []

@@ -329,11 +329,12 @@ const dictionary = {
 			also: { es: "Canal DMC|DMC" },
 			icon: "📦",
 			en:
-				"One of the APU's audio channels. It plays back digital samples from memory using the *Delta Modulation* technique.",
+				"One of the APU's audio channels. It plays back digital samples from memory using the Delta Modulation technique, but it also can load samples directly.",
 			es:
-				"Uno de los canales de audio de la APU. Reproduce samples digitales desde la memoria usando la técnica de *Modulación Delta*.",
+				"Uno de los canales de audio de la APU. Reproduce samples digitales desde la memoria usando la técnica de Modulación Delta, pero también puede cargar samples directamente.",
 		},
-		DPCM: {
+		"DPCM|Delta Modulation": {
+			also: { es: "DPCM|Modulación Delta" },
 			icon: "🤏",
 			en:
 				"_Delta Pulse-Code Modulation_, the audio compression format used by the DMC Channel when not using the _direct load_ mode. <br /><br />Samples are stored as the difference (delta) from the previous sample.",

@@ -1,5 +1,9 @@
 ---
 main:
   messages:
-  - coming soon!
+  - the 📦  DMC Channel gives games the ability to output their own samples!
+  - this allows creating any waveforms, not just pulse waves, triangle waves, or noise!
+  - "it has two modes of operation:"
+  - "🎚️  <Direct Load>: games load a 7-bit sample directly to the APU (high quality, but CPU intensive)"
+  - "🔼  <Delta Modulation>: the APU automatically decodes a DPCM stream using the _Delta Modulation_ technique, where each sample is stored as the difference (<delta>) from the previous one (low quality, but lighter)"
   responses: []

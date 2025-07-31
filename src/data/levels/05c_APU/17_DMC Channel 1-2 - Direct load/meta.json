@@ -4,6 +4,7 @@
 		"es": "📦 Canal DMC (1/2): Carga directa"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
@@ -39,7 +40,7 @@
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 300,
-			"apu": "TestAPU.v12.js"
+			"apu": "TestAPU.v13.js"
 		}
 	],
 	"memory": {
