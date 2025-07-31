@@ -16,6 +16,7 @@ exercise:
   - |-
     📚  in 🔊  `APU`:
     **->** import the channel and add a `dmc` key to ```javascript this.channels``` with a new instance
+      (note that the constructor receives both the `apu` and the `cpu`! we'll need that later!)
     **->** in `step()`, before incrementing the sample counter, call ```javascript this.channels.dmc.step()```
     **->** also in `step()`, add the DMC channel to the mix:
       ```javascript const dmc = this.channels.dmc.sample();

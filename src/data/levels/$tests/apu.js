@@ -3476,3 +3476,103 @@ it("`NoiseLCL`: writes set the `startFlag` on the channel's volume envelope", ()
 	},
 	use: ({ id }, book) => id >= book.getId("5c.16"),
 });
+
+// 5c.17 DMC Channel (1/2): Direct load
+
+it("has a `DMCChannel` instance", () => {
+	const APU = mainModule.default.APU;
+	const cpu = {};
+
+	const apu = new APU(cpu);
+
+	expect(apu.channels.dmc, "dmc").to.be.an("object");
+})({
+	locales: { es: "tiene una instancia de `DMCChannel`" },
+	use: ({ id }, book) => id >= book.getId("5c.17"),
+});
+
+it("`DMCChannel`: has an `apu` reference", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.dmc.apu.should.equalN(apu, "apu");
+})({
+	locales: {
+		es: "`DMCChannel`: tiene una referencia `apu`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.17"),
+});
+
+it("`DMCChannel`: has a `cpu` reference", () => {
+	const APU = mainModule.default.APU;
+	const cpu = {};
+	const apu = new APU(cpu);
+
+	apu.channels.dmc.cpu.should.equalN(cpu, "cpu");
+})({
+	locales: {
+		es: "`DMCChannel`: tiene una referencia `cpu`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.17"),
+});
+
+it("`DMCChannel`: has a `registers` property, pointing to the audio registers", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.channels.dmc.registers.should.equalN(apu.registers.dmc, "registers");
+})({
+	locales: {
+		es:
+			"`NoiseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.17"),
+});
+
+it("`DMCChannel`: has an `outputSample` property initialized to 0", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.dmc;
+
+	channel.outputSample.should.equalN(0, "outputSample");
+})({
+	locales: {
+		es: "`DMCChannel`: tiene una propiedad `outputSample` inicializada en 0",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.17"),
+});
+
+it("`DMCChannel`: `sample()` returns `outputSample`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const channel = apu.channels.dmc;
+
+	channel.outputSample = 42;
+	channel.sample().should.equalN(42, "sample()");
+})({
+	locales: {
+		es: "`DMCChannel`: `sample()` retorna `outputSample`",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.17"),
+});
+
+it("`DMCLoad`: writes `directLoad` (bits 0-6) and updates channel's `outputSample`", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	apu.registers.write(0x4011, 0b11001000);
+	apu.registers.dmc.load.directLoad.should.equalN(0b1001000, "directLoad");
+	apu.channels.dmc.outputSample.should.equalN(0b1001000, "outputSample");
+
+	apu.registers.write(0x4011, 42);
+	apu.registers.dmc.load.directLoad.should.equalN(42, "directLoad");
+	apu.channels.dmc.outputSample.should.equalN(42, "outputSample");
+})({
+	locales: {
+		es:
+			"`DMCLoad`: escribe `directLoad` (bits 0-6) y actualiza `outputSample` del canal",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.17"),
+});

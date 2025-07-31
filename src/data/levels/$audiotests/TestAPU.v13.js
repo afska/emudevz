@@ -971,7 +971,7 @@ export default class APU {
 			],
 			triangle: new TriangleChannel(this),
 			noise: new NoiseChannel(this),
-			dmc: new DMCChannel(this),
+			dmc: new DMCChannel(this, this.cpu),
 		};
 	}
 

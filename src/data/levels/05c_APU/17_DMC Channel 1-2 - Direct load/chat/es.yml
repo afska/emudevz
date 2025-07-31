@@ -15,6 +15,7 @@ exercise:
   - |-
     📚  en 🔊  `APU`:
     **->** importa el canal y agrega una clave `dmc` a ```javascript this.channels``` con una nueva instancia
+      (¡nota que el constructor recibe tanto la `apu` como la `cpu`! ¡vamos a necesitar eso luego!)
     **->** en `step()`, antes de incrementar el contador de samples, llama a ```javascript this.channels.dmc.step()```
     **->** también en `step()`, agrega el canal DMC a la mezcla:
       ```javascript const dmc = this.channels.dmc.sample();
