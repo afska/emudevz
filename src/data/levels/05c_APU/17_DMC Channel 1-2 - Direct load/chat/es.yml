@@ -6,7 +6,16 @@ main:
   - "📥  <Carga Directa>: los juegos cargan un sample de 7 bits directamente a la APU (alta calidad, pero consume mucha CPU)"
   - "🤏  <Modulación Delta>: la APU decodifica automáticamente un stream DPCM usando la técnica de Modulación Delta, donde cada sample se almacena como la diferencia (<delta>) con respecto a la anterior (baja calidad, pero más liviano)"
   responses:
+  - (*) el nombre se ve gracioso [name]
   - carga directa suena más fácil [exercise]
+
+name:
+  messages:
+  - ¿sí? ¿por qué?
+  - es el <Delta Modulation Channel Channel>
+  - no veo nada malo en ello
+  responses:
+  - ...main
 
 exercise:
   messages:

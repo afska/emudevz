@@ -7,7 +7,16 @@ main:
   - "📥  <Direct Load>: games load a 7-bit sample directly to the APU (high quality, but CPU intensive)"
   - "🤏  <Delta Modulation>: the APU automatically decodes a DPCM stream using the Delta Modulation technique, where each sample is stored as the difference (<delta>) from the previous one (low quality, but lighter)"
   responses:
+  - (*) the name looks funny [name]
   - direct load sounds easier [exercise]
+
+name:
+  messages:
+  - yeah? why?
+  - it's the <Delta Modulation Channel Channel>
+  - I see nothing wrong with it
+  responses:
+  - ...main
 
 exercise:
   messages:
