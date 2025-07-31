@@ -40,12 +40,12 @@
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 300,
-			"apu": "TestAPU.v13.js"
+			"apu": "TestAPU.v14.js"
 		},
 		{
 			"rom": "/roms/_test/apu_dmc_directload_crowd.neees",
 			"frames": 300,
-			"apu": "TestAPU.v13.js"
+			"apu": "TestAPU.v14.js"
 		}
 	],
 	"memory": {

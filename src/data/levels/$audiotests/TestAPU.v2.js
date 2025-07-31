@@ -288,11 +288,11 @@ class NoiseLCL extends InMemoryRegister.APU {
 
 class DMCControl extends InMemoryRegister.APU {
 	onLoad() {
-		/* TODO: IMPLEMENT */
+		this.addField("dpcmPeriodId", 0, 4).addField("loop", 6);
 	}
 
 	onWrite(value) {
-		/* TODO: IMPLEMENT */
+		this.setValue(value);
 	}
 }
 
