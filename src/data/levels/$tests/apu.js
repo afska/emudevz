@@ -401,6 +401,44 @@ it("`TriangleTimerLow`: writes the value", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
+it("`DMCControl`: writes `dpcmPeriodId` (bits 0-3)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const dmcControl = apu.registers.dmc.control;
+
+	dmcControl.onWrite(0b10100000);
+	dmcControl.dpcmPeriodId.should.equalN(0, "dmc.control.dpcmPeriodId");
+	dmcControl.onWrite(0b10100001);
+	dmcControl.dpcmPeriodId.should.equalN(1, "dmc.control.dpcmPeriodId");
+	dmcControl.onWrite(0b10100110);
+	dmcControl.dpcmPeriodId.should.equalN(6, "dmc.control.dpcmPeriodId");
+	dmcControl.onWrite(0b10101111);
+	dmcControl.dpcmPeriodId.should.equalN(15, "dmc.control.dpcmPeriodId");
+})({
+	locales: {
+		es: "`DMCControl`: escribe `dpcmPeriodId` (bits 0-3)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
+
+it("`DMCControl`: writes `loop` (bit 6)", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	const dmcControl = apu.registers.dmc.control;
+
+	dmcControl.onWrite(0b10000011);
+	dmcControl.loop.should.equalN(0, "dmc.control.loop");
+	dmcControl.onWrite(0b11000011);
+	dmcControl.loop.should.equalN(1, "dmc.control.loop");
+})({
+	locales: {
+		es: "`DMCControl`: escribe `loop` (bit 6)",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.4"),
+});
+
 it("`DMCSampleAddress`: writes the value", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
