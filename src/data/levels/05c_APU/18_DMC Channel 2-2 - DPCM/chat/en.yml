@@ -1,5 +1,55 @@
 ---
 main:
   messages:
-  - coming soon!
+  - the following might cause some confusion, so I'll get ahead of it
+  - "in audio jargon, \"sample\" can have two different meanings:"
+  - 📈  one single amplitude value at a point in time (aka <a number>)
+  - 🔊  a recorded sound clip (aka <multiple numbers>!)
+  - keep in mind that the registers 🐏  DMCSampleAddress and 📐  DMCSampleLength refer to the <second meaning>!
+  - (I'll try to say "sound clip" to avoid confusion)
+  responses:
+  - understood, how does DPCM work? [dpcm]
+
+dpcm:
+  messages:
+  - games write the memory address where the sound clip is stored to 🐏  DMCSampleAddress and the length in bytes to 📐  DMCSampleLength
+  - |-
+    not quite, but the actual address and length can be derived like this:
+      ```javascript clipAddress = 0xc000 + dmcSampleAddress + (A * 64);
+      clipLength = dmcSampleLength * 16 + 1;```
+  - then, they write a <DPCM period> (which determines the playback frequency) and a <loop flag> to 📦  DMCControl
+  - lastly, they write to 🎛️  APUControl a value with its bit 4 set, which starts the playback if the DMC Channel is not currently playing a clip
+  responses:
+  - what happens then? [then]
+
+then:
+  messages:
+  - then everything is automatically handled by the APU
+  - the channel starts with an output sample of 0 and sets up a divider based on the <DPCM period>
+  - on each divider clock, the unit processes <one bit> from the stream and <changes> the output sample
+  - |-
+    that bit determines the <variation>:
+      **->** a 1 means ~+1~
+      **->** a 0 means ~-1~
+  - when it finishes processing all bits (the sound clip has ended), playback is restarted if the <loop flag> is set
+  responses:
+  - this sounds complicated [exercise]
+
+exercise:
+  messages:
+  - there are a lot of nuances to this and it can be hard to get right 😅
+  - so I'll give you a class that handles DPCM decoding
+  - and you can just integrate it into your channel
+  - |-
+    📚  in 📦  `DMCChannel`:
+    **->** import 📄  ~/lib/apu/DPCM.js~ and add a `dpcm` property with a new instance
+    **->** in `step()`, call ```javascript this.dpcm.update()```
+  - |-
+    📚  implement in 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __keep existing behavior__
+      **->** if `this.enableDMC`:
+        **->** calls ```javascript this.apu.channels.dmc.dpcm.stop()```
+      **->** else if ```javascript this.apu.channels.dmc.dpcm.remainingBytes() === 0```
+        **->** calls ```javascript this.apu.channels.dmc.dpcm.start()```
   responses: []
