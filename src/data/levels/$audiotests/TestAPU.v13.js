@@ -989,6 +989,7 @@ export default class APU {
 			const pulse1 = this.channels.pulses[0].sample();
 			const pulse2 = this.channels.pulses[1].sample();
 			const triangle = this.channels.triangle.sample();
+			const noise = this.channels.noise.sample();
 			const dmc = this.channels.dmc.sample();
 			this.sample = (pulse1 + pulse2 + triangle + noise + dmc) * 0.01;
 

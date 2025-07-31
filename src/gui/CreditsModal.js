@@ -333,6 +333,13 @@ export default class CreditsModal extends PureComponent {
 						>
 							240p Test Suite
 						</Game>
+						<Game
+							emojis="📦📥"
+							link="https://forums.nesdev.org/viewtopic.php?p=191062&sid=96d498ec05434794b59866a583ea4ed6#p191062"
+							author="Kragen (ported by rainwarrior)"
+						>
+							Crowd
+						</Game>
 					</Section>
 					<Section title="🙏 Thanks to...">
 						<Game emojis="🕹️🛠️" link="https://www.nesdev.org">

@@ -3,7 +3,7 @@ main:
   - el 📦  Canal DMC les da a los juegos la capacidad de reproducir sus propios samples
   - ¡esto permite crear cualquier forma de onda; ¡no solo ondas cuadradas, ondas triangulares o ruido!
   - "tiene dos modos de operación:"
-  - "🎚️  <Carga Directa>: los juegos cargan un sample de 7 bits directamente a la APU (alta calidad, pero consume mucha CPU)"
+  - "📥  <Carga Directa>: los juegos cargan un sample de 7 bits directamente a la APU (alta calidad, pero consume mucha CPU)"
   - "🤏  <Modulación Delta>: la APU decodifica automáticamente un stream DPCM usando la técnica de Modulación Delta, donde cada sample se almacena como la diferencia (<delta>) con respecto a la anterior (baja calidad, pero más liviano)"
   responses:
   - carga directa suena más fácil [exercise]
