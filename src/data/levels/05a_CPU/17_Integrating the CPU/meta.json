@@ -15,7 +15,8 @@
 			"Right": ["tv", { "type": "rom", "withFileSearch": true }]
 		},
 		"focus": "Left",
-		"canPinEmulator": false
+		"canPinEmulator": false,
+		"debuggerPinType": ""
 	},
 	"test": {
 		"context": "javascript",

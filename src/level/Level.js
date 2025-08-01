@@ -163,11 +163,15 @@ export default class Level {
 	}
 
 	launchDebugger() {
-		bus.emit("secondary-pin", {
+		bus.emit("pin" + this.debuggerPinSuffix, {
 			Component: Debugger,
 			args: {},
 			level: this,
 		});
+	}
+
+	closeDebugger() {
+		bus.emit("unpin" + this.debuggerPinSuffix, { changeFocus: false });
 	}
 
 	highlightMultiFileEditor() {
@@ -264,6 +268,10 @@ export default class Level {
 				}
 			);
 		}
+	}
+
+	get debuggerPinSuffix() {
+		return this.ui.debuggerPinType ?? "-secondary";
 	}
 
 	_saveSnapshotIfNeeded() {

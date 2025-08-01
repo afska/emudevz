@@ -185,7 +185,7 @@ export default class TripleLayout extends Layout {
 		this._subscriber = bus.subscribe({
 			pin: this._onPin,
 			unpin: this._closePin,
-			"secondary-pin": this._onSecondaryPin,
+			"pin-secondary": this._onSecondaryPin,
 			"unpin-secondary": this._closeSecondaryPin,
 		});
 	}

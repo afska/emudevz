@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
 import filesystem, { Drive } from "../../filesystem";
+import Level from "../../level/Level";
 import locales from "../../locales";
 import Terminal from "../../terminal/Terminal";
 import OpenCommand from "../../terminal/commands/fs/OpenCommand";
@@ -158,7 +159,7 @@ class MultiFile extends PureComponent {
 	};
 
 	_focusAndSearch = () => {
-		bus.emit("unpin-secondary", { changeFocus: false });
+		Level.current.closeDebugger();
 		const name = this._layout.getInstanceName(this);
 		this._layout.focus(name);
 		this._search();

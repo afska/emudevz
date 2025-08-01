@@ -209,7 +209,7 @@ export default class Emulator extends Component {
 		window.removeEventListener("fullscreenchange", this._onFullscreenChange);
 		this.props.onStop?.();
 		bus.emit("emulator-stopped");
-		bus.emit("unpin-secondary", { changeFocus: false });
+		Level.current?.closeDebugger();
 		if (resumeMusic) music.resume();
 	}
 
