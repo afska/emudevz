@@ -58,6 +58,6 @@ enough:
   - 👾  all tiles are in CHR-ROM or CHR-RAM, with no color
   - 🎨  color is given through palettes
   - 👑 🎨  palettes reference entries of a fixed 64-color master palette
-  - "I'll write about this, with more details, here: 📄  /docs/ppu/definitions.en.md"
+  - "I'll write about this, with more details, here: 📄  ~/docs/ppu/definitions.en.md~"
   responses:
   - awesome [end]
