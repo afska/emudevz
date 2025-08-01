@@ -13,7 +13,7 @@ export default {
 	bytes: "bytes",
 	calculator: "Calculator",
 	cancel: "Cancel",
-	cant_open_emulator: "The emulator can't be opened with this layout!",
+	cant_open_emulator: "The emulator can't be opened now!",
 	cartridge: "Cartridge",
 	chapter_next: "Go to next chapter",
 	chapter_previous: "Go to previous chapter",

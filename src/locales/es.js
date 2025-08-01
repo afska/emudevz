@@ -13,7 +13,7 @@ export default {
 	bytes: "bytes",
 	calculator: "Calculadora",
 	cancel: "Cancelar",
-	cant_open_emulator: "¡El emulador no puede abrirse con este esquema!",
+	cant_open_emulator: "¡El emulador no puede abrirse ahora!",
 	cartridge: "Cartucho",
 	chapter_next: "Ir al siguiente capítulo",
 	chapter_previous: "Ir al capítulo anterior",

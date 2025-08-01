@@ -130,6 +130,7 @@ export default class Level {
 		const book = Book.current;
 		const chapter = book.getChapterOf(this.id);
 		if (chapter.isSpecial) return false;
+		if (!book.canUseEmulator) return false;
 
 		return (
 			(bus.isListeningTo("pin") && this.ui.canPinEmulator !== false) ||

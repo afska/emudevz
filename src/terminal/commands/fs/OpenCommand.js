@@ -44,7 +44,9 @@ export default class OpenCommand extends FilesystemCommand {
 				`${locales.get("opening")} ${theme.ACCENT(arg)}...`
 			);
 
-			OpenCommand.open(path);
+			const result = OpenCommand.open(path);
+			if (result === ERR_CANNOT_LAUNCH_EMULATOR)
+				throw new Error(locales.get("cant_open_emulator"));
 		}
 	}
 }
