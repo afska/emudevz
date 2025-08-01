@@ -329,6 +329,10 @@ export default class EmulatorRunner extends PureComponent {
 			this.forceUpdate();
 			this._reload(true);
 		}
+
+		setTimeout(() => {
+			document.getElementById("emulator")?.focus();
+		});
 	};
 
 	_onCodeChanged = () => {
