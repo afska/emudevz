@@ -54,7 +54,7 @@ class PlayScreen extends PureComponent {
 
 		return (
 			<div className={styles.container}>
-				{!chapter.isSpecial && <Toaster containerClassName="toaster-wrapper" />}
+				<Toaster containerClassName="toaster-wrapper" />
 				<LevelScreen chapter={chapter} level={level} />
 			</div>
 		);
