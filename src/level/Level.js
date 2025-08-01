@@ -126,6 +126,10 @@ export default class Level {
 			store.dispatch.level.goHome();
 	}
 
+	canLaunch(Component) {
+		return this.$layout.findInstance(Component.name);
+	}
+
 	canLaunchEmulator() {
 		const book = Book.current;
 		const chapter = book.getChapterOf(this.id);

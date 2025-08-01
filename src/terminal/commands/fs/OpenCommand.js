@@ -10,6 +10,7 @@ import FilesystemCommand from "./FilesystemCommand";
 export const ERR_FILE_NOT_FOUND = -1;
 export const ERR_IS_DIRECTORY = -2;
 export const ERR_CANNOT_LAUNCH_EMULATOR = -3;
+export const ERR_CANNOT_OPEN_FILE = -4;
 
 export default class OpenCommand extends FilesystemCommand {
 	static get name() {
@@ -21,14 +22,16 @@ export default class OpenCommand extends FilesystemCommand {
 		if (filesystem.stat(filePath).isDirectory) return ERR_IS_DIRECTORY;
 		const [Component, customArgs] = extensions.getOptions(filePath);
 
+		const level = Level.current;
 		if (Component === TV && customArgs.type === "rom") {
-			const level = Level.current;
 			if (level.canLaunchEmulator()) {
 				const rom = filesystem.read(filePath, { binary: true });
 				Level.current.launchEmulator(rom);
 			} else return ERR_CANNOT_LAUNCH_EMULATOR;
 		} else {
-			store.dispatch.savedata.openFile(filePath);
+			if (level.canLaunch(Component, customArgs))
+				store.dispatch.savedata.openFile(filePath);
+			else return ERR_CANNOT_OPEN_FILE;
 		}
 		return true;
 	}
@@ -47,6 +50,8 @@ export default class OpenCommand extends FilesystemCommand {
 			const result = OpenCommand.open(path);
 			if (result === ERR_CANNOT_LAUNCH_EMULATOR)
 				throw new Error(locales.get("cant_open_emulator"));
+			if (result === ERR_CANNOT_OPEN_FILE)
+				throw new Error(locales.get("cant_open_file"));
 		}
 	}
 }

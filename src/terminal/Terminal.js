@@ -10,6 +10,7 @@ import Shell from "./Shell";
 import FilesystemCommand from "./commands/fs/FilesystemCommand";
 import OpenCommand, {
 	ERR_CANNOT_LAUNCH_EMULATOR,
+	ERR_CANNOT_OPEN_FILE,
 	ERR_FILE_NOT_FOUND,
 } from "./commands/fs/OpenCommand";
 import { CANCELED, DISPOSED, INTERRUPTED } from "./errors";
@@ -52,6 +53,8 @@ window._openPath_ = (filePath) => {
 		);
 	} else if (result === ERR_CANNOT_LAUNCH_EMULATOR) {
 		toast.error(locales.get("cant_open_emulator"));
+	} else if (result === ERR_CANNOT_OPEN_FILE) {
+		toast.error(locales.get("cant_open_file"));
 	}
 };
 

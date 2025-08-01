@@ -14,6 +14,7 @@ export default {
 	calculator: "Calculadora",
 	cancel: "Cancelar",
 	cant_open_emulator: "¡El emulador no puede abrirse ahora!",
+	cant_open_file: "¡Este archivo no puede abrirse ahora!",
 	cartridge: "Cartucho",
 	chapter_next: "Ir al siguiente capítulo",
 	chapter_previous: "Ir al capítulo anterior",
