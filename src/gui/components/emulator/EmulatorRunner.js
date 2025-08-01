@@ -193,7 +193,7 @@ export default class EmulatorRunner extends PureComponent {
 							onClick={this._goFullscreen}
 						/>
 					)}
-					{!!rom && (
+					{!!rom && !error && (
 						<IconButton
 							style={{ marginRight: 8 }}
 							Icon={FaBug}
