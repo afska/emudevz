@@ -127,7 +127,12 @@ export default class Level {
 	}
 
 	canLaunch(Component) {
-		return this.$layout.findInstance(Component.name);
+		return (
+			this.$layout.findInstance(Component.name) ||
+			(Component.name === "CodeEditor"
+				? this.$layout.findInstance("MultiFile")
+				: undefined)
+		);
 	}
 
 	canLaunchEmulator() {
