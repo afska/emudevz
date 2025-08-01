@@ -158,6 +158,7 @@ export default class EmulatorRunner extends PureComponent {
 					saveState={saveState}
 					settings={this._emulatorSettings}
 					volume={this._volume}
+					onStart={this._focusEmulator}
 					onError={this._setError}
 					onInputType={this._setInputType}
 					onFps={this._setFps}
@@ -330,10 +331,14 @@ export default class EmulatorRunner extends PureComponent {
 			this._reload(true);
 		}
 
+		this._focusEmulator();
+	};
+
+	_focusEmulator() {
 		setTimeout(() => {
 			document.getElementById("emulator")?.focus();
 		});
-	};
+	}
 
 	_onCodeChanged = () => {
 		if (!this.props.rom) return;
