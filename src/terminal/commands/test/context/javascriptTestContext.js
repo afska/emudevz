@@ -123,10 +123,15 @@ export default {
 				}
 			}
 
-			return (
-				(e?.message || "?") +
-				(fullStack != null ? "\n" + fullStack.trace : "").replace(/\n/g, "<br>")
+			const combined =
+				(e?.message || "?") + (fullStack != null ? "\n" + fullStack.trace : "");
+			const linkified = combined.replace(
+				/(\/[^\s:()]+?\.[A-Za-z0-9_]+)(:\d+:\d+)?/g,
+				(_, path, linecol) =>
+					`<a class="highlight-link" href="javascript:_openPath_('${path}')">${path}</a>` +
+					(linecol || "")
 			);
+			return linkified.replace(/\n/g, "<br>");
 		} catch (e) {
 			return e?.message || "?";
 		}
