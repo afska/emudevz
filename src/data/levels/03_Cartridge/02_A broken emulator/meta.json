@@ -12,7 +12,7 @@
 					"startup": "chat"
 				}
 			],
-			"Right": ["tv", { "type": "rom" }]
+			"Right": ["tv", { "type": "rom", "withFileSearch": true }]
 		},
 		"focus": "Left",
 		"canPinEmulator": false

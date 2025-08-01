@@ -13,12 +13,12 @@ export default class LsCommand extends FilesystemCommand {
 		return "ls";
 	}
 
-	static getTree(path, format = true, indent = "") {
+	static getTree(path, format = true, indent = "", filter = null, data) {
 		try {
-			const content = filesystem.ls(path);
+			const content = data != null ? data : filesystem.lsrTree(path, filter);
 
 			return content
-				.flatMap(({ name, isDirectory }, i) => {
+				.flatMap(({ name, isDirectory, children }, i) => {
 					const folderName = (format ? "" : "📁 ") + name + "/";
 					const fileName = format ? name : `[[[${$path.join(path, name)}]]]`;
 					const formattedName = isDirectory ? folderName : fileName;
@@ -30,7 +30,13 @@ export default class LsCommand extends FilesystemCommand {
 					const indentSymbol = isLastItem ? " " : "│";
 					const newIndent = indent + indentSymbol + _.repeat(" ", INDENT + 1);
 					const innerContent = isDirectory
-						? LsCommand.getTree(`${path}/${name}`, format, newIndent)
+						? LsCommand.getTree(
+								`${path}/${name}`,
+								format,
+								newIndent,
+								filter,
+								children
+						  )
 						: "";
 
 					// (main)
@@ -43,6 +49,7 @@ export default class LsCommand extends FilesystemCommand {
 
 					return entry;
 				})
+				.filter((it) => it != null)
 				.join("\n");
 		} catch (e) {
 			return "";

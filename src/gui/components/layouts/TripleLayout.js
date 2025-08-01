@@ -24,7 +24,7 @@ export default class TripleLayout extends Layout {
 						selected === "Left" ? styles.selected : styles.unselected
 					)}
 					onMouseDown={(e) => {
-						this.setState({ selected: "Left" });
+						this.focus("Left");
 					}}
 				>
 					<Left
@@ -42,7 +42,7 @@ export default class TripleLayout extends Layout {
 							selected === "Top" ? styles.selected : styles.unselected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selected: "Top" });
+							this.focus("Top");
 						}}
 					>
 						<Top
@@ -59,7 +59,7 @@ export default class TripleLayout extends Layout {
 							selected === "Bottom" ? styles.selected : styles.unselected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selected: "Bottom" });
+							this.focus("Bottom");
 						}}
 					>
 						<Bottom

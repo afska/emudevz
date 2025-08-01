@@ -86,6 +86,20 @@ class Filesystem {
 		});
 	}
 
+	lsrTree(path, filter = (name) => true) {
+		return this.ls(this.process(path), path)
+			.map((it) => {
+				if (!it.isDirectory && !filter(it.name)) return null;
+
+				it.children = it.isDirectory
+					? this.lsrTree(`${path}/${it.name}`, filter)
+					: [];
+				return it;
+			})
+			.filter((it) => it != null)
+			.filter((it) => !it.isDirectory || it.children.length > 0);
+	}
+
 	read(path, options = {}) {
 		path = this.process(path);
 		// ---

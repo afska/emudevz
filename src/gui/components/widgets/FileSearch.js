@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+	forwardRef,
+	useEffect,
+	useImperativeHandle,
+	useRef,
+	useState,
+} from "react";
 import $path from "path-browserify-esm";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
@@ -13,15 +19,29 @@ import styles from "./FileSearch.module.css";
 const DIRECTORY = "";
 const PREFIX = `${DIRECTORY}/`;
 const MAX_RESULTS = 10;
+const DEFAULT_FILTER = (name) => true;
 
-export default function FileSearch(props) {
-	const { isSearching, onSelect, onBlur, className, ...rest } = props;
+export default forwardRef(function FileSearch(props, ref) {
+	const {
+		isSearching,
+		onSelect,
+		onBlur,
+		className,
+		filter = DEFAULT_FILTER,
+		...rest
+	} = props;
 
 	const [files, setFiles] = useState([]);
 	const [input, setInput] = useState("");
 	const [selected, setSelected] = useState(0);
 	const [matches, setMatches] = useState([]);
 	const inputRef = useRef(null);
+
+	useImperativeHandle(ref, () => ({
+		focus: () => inputRef.current?.focus(),
+		blur: () => inputRef.current?.blur(),
+	}));
+
 	useEffect(() => {
 		if (isSearching) {
 			let files = [];
@@ -31,20 +51,24 @@ export default function FileSearch(props) {
 				console.error(`❌ Cannot list directory: ${DIRECTORY}`);
 				console.error(e);
 			}
-			const newFiles = files.map((file) => {
-				return {
-					...file,
-					originalFilePath: file.filePath,
-					filePath: file.filePath.replace(PREFIX, ""),
-				};
-			});
+			const newFiles = files
+				.map((file) => {
+					if (!filter(file.filePath)) return null;
+
+					return {
+						...file,
+						originalFilePath: file.filePath,
+						filePath: file.filePath.replace(PREFIX, ""),
+					};
+				})
+				.filter((it) => it != null);
 
 			setFiles(newFiles);
 			setInput("");
 			setSelected(0);
 			inputRef.current.focus();
 		}
-	}, [isSearching]);
+	}, [isSearching, filter]);
 
 	useEffect(() => {
 		const matches = fuzzy.search(files, input).slice(0, MAX_RESULTS);
@@ -71,7 +95,7 @@ export default function FileSearch(props) {
 		_onSelect(filePath);
 	};
 
-	const tree = LsCommand.getTree(DIRECTORY, false).replace(
+	const tree = LsCommand.getTree(DIRECTORY, false, undefined, filter).replace(
 		/\[\[\[(.+)\]\]\]/g,
 		(__, filePath) => {
 			const icon = extensions.getTabIcon(filePath);
@@ -191,4 +215,4 @@ export default function FileSearch(props) {
 
 	if (!isSearching) return false;
 	return render();
-}
+});

@@ -37,7 +37,7 @@ export default class DualLayout extends Layout {
 						selected === "Left" ? styles.selected : styles.unselected
 					)}
 					onMouseDown={(e) => {
-						this.setState({ selected: "Left" });
+						this.focus("Left");
 					}}
 				>
 					<Left
@@ -73,7 +73,7 @@ export default class DualLayout extends Layout {
 							selected === "Left" ? styles.selected : styles.unselected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selected: "Left" });
+							this.focus("Left");
 						}}
 					>
 						<IconButton
@@ -98,7 +98,7 @@ export default class DualLayout extends Layout {
 							selected === "Right" ? styles.selected : styles.unselected
 						)}
 						onMouseDown={(e) => {
-							this.setState({ selected: "Right" });
+							this.focus("Right");
 						}}
 					>
 						<IconButton
@@ -123,7 +123,7 @@ export default class DualLayout extends Layout {
 					)}
 					style={{ display: SecondaryPin ? "none" : "block" }}
 					onMouseDown={(e) => {
-						this.setState({ selected: "Right" });
+						this.focus("Right");
 					}}
 				>
 					<Right

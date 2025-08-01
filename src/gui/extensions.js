@@ -4,14 +4,6 @@ import CodeEditor from "./components/CodeEditor";
 import TV from "./components/TV";
 
 export default {
-	".js": [CodeEditor, { language: "javascript" }],
-	".asm": [CodeEditor, { language: "asm" }],
-	".webp": [TV, { type: "media" }],
-	".png": [TV, { type: "media" }],
-	".md": [TV, { type: "markdown" }],
-	".neees": [TV, { type: "rom", binary: true }],
-	".nes": [TV, { type: "rom", binary: true }],
-
 	getTabIcon(filePath) {
 		if (filePath.startsWith(Drive.TMPL_DIR)) return "📑 ";
 
@@ -19,7 +11,17 @@ export default {
 	},
 
 	getOptions(filePath) {
+		const map = {
+			".js": [CodeEditor, { language: "javascript" }],
+			".asm": [CodeEditor, { language: "asm" }],
+			".webp": [TV, { type: "media" }],
+			".png": [TV, { type: "media" }],
+			".md": [TV, { type: "markdown" }],
+			".neees": [TV, { type: "rom", binary: true }],
+			".nes": [TV, { type: "rom", binary: true }],
+		};
+
 		const extension = $path.parse(filePath).ext.toLowerCase();
-		return this[extension] ?? [CodeEditor, { language: "plaintext" }];
+		return map[extension] ?? [CodeEditor, { language: "plaintext" }];
 	},
 };

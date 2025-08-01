@@ -1,11 +1,14 @@
 import React, { PureComponent } from "react";
 import filesystem from "../../filesystem";
+import OpenCommand from "../../terminal/commands/fs/OpenCommand";
+import extensions from "../extensions";
 import TVNoise from "./TVNoise";
 import AudioTester from "./emulator/AudioTester";
 import DemoEmulatorRunner from "./emulator/DemoEmulatorRunner";
 import EmulatorRunner from "./emulator/EmulatorRunner";
 import GameStreamer from "./emulator/GameStreamer";
 import VideoTester from "./emulator/VideoTester";
+import FileSearch from "./widgets/FileSearch";
 import MarkdownView from "./widgets/MarkdownView";
 import PanZoom from "./widgets/PanZoom";
 import styles from "./TV.module.css";
@@ -19,13 +22,24 @@ export default class TV extends PureComponent {
 		return "📺 ";
 	}
 
-	state = { content: null, type: "media", _error: null, _saveState: null };
+	state = {
+		content: null,
+		type: "media",
+		_error: null,
+		_saveState: null,
+		withFileSearch: false,
+	};
 
 	async initialize(args, level) {
 		this._level = level;
 
 		if (args.type != null)
-			this.setState({ content: args.content, type: args.type, _error: null });
+			this.setState({
+				content: args.content,
+				type: args.type,
+				_error: null,
+				withFileSearch: !!args.withFileSearch,
+			});
 	}
 
 	load(fileName, type = "media", bucket = "media") {
@@ -61,6 +75,23 @@ export default class TV extends PureComponent {
 				style={style}
 				onKeyDown={onKeyDown}
 			>
+				{this.state.withFileSearch && (
+					<FileSearch
+						ref={(ref) => {
+							this._searchRef = ref;
+						}}
+						isSearching={this.state.content == null && !this.state._error}
+						onSelect={(filePath) => {
+							const [Component, customArgs] = extensions.getOptions(filePath);
+
+							if (Component === TV && customArgs.type === "rom")
+								OpenCommand.open(filePath);
+						}}
+						onBlur={() => {}}
+						filter={(name) => name.endsWith(".neees")}
+					/>
+				)}
+
 				{this._renderContent()}
 			</div>
 		);
@@ -214,5 +245,6 @@ export default class TV extends PureComponent {
 
 	focus = () => {
 		this.ref.focus();
+		this._searchRef?.focus();
 	};
 }
