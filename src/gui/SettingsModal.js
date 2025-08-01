@@ -119,10 +119,11 @@ class SettingsModal extends PureComponent {
 									<Button
 										onClick={this._deleteSavefile}
 										disabled={isLoadingSaveDelete}
+										style={{ background: "#ff07005e" }}
 									>
 										{isLoadingSaveDelete
 											? "⌛"
-											: (areYouSureDelete ? "❗❗❗ " : "🗑️ ") +
+											: (areYouSureDelete ? "❗❗❗ " : "💥 ") +
 											  locales.get("delete")}
 									</Button>
 								</div>
@@ -208,6 +209,7 @@ class SettingsModal extends PureComponent {
 	};
 
 	_onClose = () => {
+		this.setState({ areYouSureRestore: false, areYouSureDelete: false });
 		this.props.setSettingsOpen(false);
 	};
 }
