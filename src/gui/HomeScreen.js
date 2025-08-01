@@ -127,10 +127,27 @@ class HomeScreen extends PureComponent {
 		});
 	}
 
+	componentWillUnmount() {
+		if (this._app) {
+			try {
+				const gl = this._app.renderer.gl;
+				gl.getExtension("WEBGL_lose_context")?.loseContext();
+			} catch (e) {
+				console.warn(e);
+			}
+
+			try {
+				this._app.destroy(true, true);
+			} catch (e) {
+				console.warn(e);
+			}
+		}
+	}
+
 	onReady = (div) => {
 		if (!div) return;
 
-		const loader = PIXI.Loader.shared;
+		const loader = new PIXI.Loader();
 		loader.reset();
 		loader.add("logo", ASSET_LOGO);
 		loader.add("background", ASSET_BACKGROUND);
@@ -161,6 +178,7 @@ class HomeScreen extends PureComponent {
 				resizeTo: div,
 				backgroundColor: BACKGROUND_COLOR,
 			});
+			this._app = app;
 
 			app.stage = new Stage();
 			const crtFilter = this._createCRTFilter();

@@ -196,13 +196,26 @@ export default class GameStreamer extends PureComponent {
 
 	componentWillUnmount() {
 		window.removeEventListener("resize", this._onResize);
-		if (this._app) this._app.destroy(true, true);
+		if (this._app) {
+			try {
+				const gl = this._app.renderer.gl;
+				gl.getExtension("WEBGL_lose_context")?.loseContext();
+			} catch (e) {
+				console.warn(e);
+			}
+
+			try {
+				this._app.destroy(true, true);
+			} catch (e) {
+				console.warn(e);
+			}
+		}
 	}
 
 	onReady = (div) => {
 		if (!div) return;
 
-		const loader = PIXI.Loader.shared;
+		const loader = new PIXI.Loader();
 		loader.reset();
 		loader.add("background", ASSET_BACKGROUND);
 		loader.add("tv", ASSET_TV);
