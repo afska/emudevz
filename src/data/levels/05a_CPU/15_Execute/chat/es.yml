@@ -47,7 +47,7 @@ rightway:
     **_fetchInput(operation)**:
       **->** lee 0, 1 (usando `read(...)`) o 2 bytes (usando `read16(...)`) de la dirección de memoria apuntada por [PC], dependiendo de ```javascript operation.addressingMode.inputSize```
         (llamemos a esto `input`)
-      **->** incrementa [PC] (0, 1, o 2 veces) para saltear esos bytes
+      **->** incrementa [PC] (~0~, 1, o 2 veces) para saltear esos bytes
       **->** retorna `input` (o ```javascript null```)
     **_fetchArgument(operation, input)**:
       **->** retorna el resultado de procesar `input` con el modo de direccionamiento

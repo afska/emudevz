@@ -47,7 +47,7 @@ rightway:
     **_fetchInput(operation)**:
       **->** reads 0, 1 (using `read(...)`) or 2 bytes (using `read16(...)`) from the memory address that [PC] points at, depending on ```javascript operation.addressingMode.inputSize```
         (let's call this `input`)
-      **->** increments [PC] (0, 1, or 2 times) to skip those bytes
+      **->** increments [PC] (~0~, 1, or 2 times) to skip those bytes
       **->** returns `input` (or ```javascript null```)
     **_fetchArgument(operation, input)**:
       **->** returns the result of processing `input` with the addressing mode
