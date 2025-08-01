@@ -1,4 +1,5 @@
 import filesystem, { Drive } from "../filesystem";
+import { bus } from "../utils";
 
 const DEFAULT_FILE = Drive.MAIN_FILE;
 
@@ -172,6 +173,7 @@ export default {
 				if (!openFiles.includes(filePath))
 					this.setOpenFiles([...openFiles, filePath]);
 				this.setSelectedFile(filePath);
+				bus.emit("file-opened");
 			},
 			closeFile(filePath, _state_) {
 				const state = _state_[KEY];
@@ -180,6 +182,7 @@ export default {
 				const newOpenFiles = openFiles.filter((it) => it !== filePath);
 				if (selectedFile === filePath) this.setSelectedFile(newOpenFiles[0]);
 				this.setOpenFiles(newOpenFiles);
+				bus.emit("file-closed");
 			},
 			closeNonExistingFiles(__, _state_) {
 				const state = _state_[KEY];

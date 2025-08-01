@@ -146,6 +146,8 @@ class MultiFile extends PureComponent {
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
 			"file-search": this._focusAndSearch,
+			"file-opened": this._onFileOpened,
+			"file-closed": this._onFileClosed,
 		});
 	}
 
@@ -163,6 +165,17 @@ class MultiFile extends PureComponent {
 		const name = this._layout.getInstanceName(this);
 		this._layout.focus(name);
 		this._search();
+	};
+
+	_onFileOpened = () => {
+		this._tabsScroll.scrollTo({
+			left: this._tabsScroll.scrollWidth,
+			behavior: "smooth",
+		});
+	};
+
+	_onFileClosed = () => {
+		this._tabsScroll.scrollTo({ left: 0, behavior: "smooth" });
 	};
 
 	_search = () => {
