@@ -11,6 +11,7 @@ export default class Screen extends Component {
 
 		return (
 			<canvas
+				id="screen"
 				className={classNames(styles.screen, className)}
 				width={SCREEN_WIDTH}
 				height={SCREEN_HEIGHT}
