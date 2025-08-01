@@ -69,13 +69,25 @@
 	transform: scale(1);
 }
 
+:root {
+	--zoom: 1.8;
+	--pivot-x: 54%;
+	--pivot-y: 29%;
+}
+
 .megazoom {
 	animation: megazoomin 1s;
-	transform: scale(1.8) translateX(-24px) translateY(120px);
+	transform-origin: var(--pivot-x) var(--pivot-y);
+	transform: translate(
+			calc((50% - var(--pivot-x)) * (1 - 1 / var(--zoom))),
+			calc((50% - var(--pivot-y)) * (1 - 1 / var(--zoom)))
+		)
+		scale(var(--zoom));
 }
 
 .megazoomout {
 	animation: megazoomout, zoomloop infinite;
+	transform-origin: var(--pivot-x) var(--pivot-y);
 	animation-duration: 1s, 5s;
 	animation-delay: 0s, 1s;
 	transform: scale(1);
@@ -140,13 +152,21 @@
 		transform: scale(1) translateX(0) translateY(0);
 	}
 	100% {
-		transform: scale(1.8) translateX(-24px) translateY(120px);
+		transform: translate(
+				calc((50% - var(--pivot-x)) * (1 - 1 / var(--zoom))),
+				calc((50% - var(--pivot-y)) * (1 - 1 / var(--zoom)))
+			)
+			scale(var(--zoom));
 	}
 }
 
 @keyframes megazoomout {
 	0% {
-		transform: scale(1.8) translateX(-24px) translateY(120px);
+		transform: translate(
+				calc((50% - var(--pivot-x)) * (1 - 1 / var(--zoom))),
+				calc((50% - var(--pivot-y)) * (1 - 1 / var(--zoom)))
+			)
+			scale(var(--zoom));
 	}
 	100% {
 		transform: scale(1) translateX(0) translateY(0);
