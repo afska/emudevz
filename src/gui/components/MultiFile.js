@@ -179,6 +179,7 @@ class MultiFile extends PureComponent {
 	};
 
 	_search = () => {
+		if (window.EmuDevz.isCompiling) return;
 		this.setState({ isSearching: true });
 	};
 
@@ -364,7 +365,7 @@ class MultiFile extends PureComponent {
 
 		if (isCtrlP) {
 			e.preventDefault();
-			this.setState({ isSearching: true });
+			this._search();
 			return;
 		}
 

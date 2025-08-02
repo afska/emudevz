@@ -25,6 +25,7 @@ window.EmuDevz = {
 
 		neees.cpu.logger?.(value);
 	},
+	isCompiling: false,
 };
 
 // Set up store and navigation
