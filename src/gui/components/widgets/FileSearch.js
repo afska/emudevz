@@ -20,7 +20,7 @@ const DIRECTORY = "";
 const PREFIX = `${DIRECTORY}/`;
 const MAX_RESULTS = 10;
 const DEFAULT_FILTER = (name) => true;
-const CODE_DIR = "/code";
+const CODE_DIRS = ["/code", "/lib"];
 const CODE_EXTENSION = ".js";
 const CLASS_REGEXP = /\s*class\s+([A-Za-z0-9_]+)/;
 
@@ -76,33 +76,40 @@ export default forwardRef(function FileSearch(props, ref) {
 
 			if (classIndexRef.current == null) {
 				try {
-					const codeFiles = filesystem.lsr(CODE_DIR);
 					const index = [];
-					codeFiles.forEach((file) => {
-						if (!file.filePath.endsWith(CODE_EXTENSION)) return;
-
-						let content = "";
+					for (const dir of CODE_DIRS) {
+						let codeFiles = [];
 						try {
-							content = filesystem.read(file.filePath);
+							codeFiles = filesystem.lsr(dir);
 						} catch (e) {
-							return;
+							continue;
 						}
-						const lines = content.split("\n");
-						lines.forEach((line, idx) => {
-							const m = line.match(CLASS_REGEXP);
-							if (m) {
-								index.push({
-									className: m[1],
-									filePath: file.filePath,
-									lineNumber: idx + 1,
-								});
+						codeFiles.forEach((file) => {
+							if (!file.filePath.endsWith(CODE_EXTENSION)) return;
+
+							let content = "";
+							try {
+								content = filesystem.read(file.filePath);
+							} catch (e) {
+								return;
 							}
+							const lines = content.split("\n");
+							lines.forEach((line, idx) => {
+								const m = line.match(CLASS_REGEXP);
+								if (m) {
+									index.push({
+										className: m[1],
+										filePath: file.filePath,
+										lineNumber: idx + 1,
+									});
+								}
+							});
 						});
-					});
+					}
 
 					classIndexRef.current = index;
 				} catch (e) {
-					console.error("❌ Failed to build class index from /code", e);
+					console.error("❌ Failed to build class index from code dirs", e);
 				}
 			}
 		} else {
