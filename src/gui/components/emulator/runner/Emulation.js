@@ -62,6 +62,7 @@ export default class Emulation {
 		this.isDebugStepScanlineRequested = false;
 
 		this.neees = new NEEES(this._onFrame, this._onAudio);
+		this.bytes = bytes;
 		window.EmuDevz.emulation = this;
 
 		this.frameTimer = new FrameTimer(() => {
@@ -115,6 +116,20 @@ export default class Emulation {
 			onError(error);
 		}
 	}
+
+	replace = (NEEES, saveState) => {
+		const oldFrameBuffer = new Uint32Array(this.neees.ppu.frameBuffer.length);
+		for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
+			oldFrameBuffer[i] = this.neees.ppu.frameBuffer[i];
+
+		this.neees = new NEEES(this._onFrame, this._onAudio);
+		this.neees.load(this.bytes);
+		this.saveState = saveState;
+		if (this.saveState != null) this.neees.setSaveState(this.saveState);
+
+		for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
+			this.neees.ppu.frameBuffer[i] = oldFrameBuffer[i] ?? 0;
+	};
 
 	toggleFullscreen = () => {
 		this.screen.toggleFullscreen();

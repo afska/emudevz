@@ -102,10 +102,20 @@ export default class Emulator extends Component {
 		this._stop();
 	}
 
+	async reloadCode(keepState = false) {
+		if (!this._emulation) return;
+
+		const saveState = keepState ? this._emulation.neees.getSaveState() : null;
+
+		const Console = await this._buildConsole();
+		if (Console == null) return;
+
+		this._emulation.replace(Console, saveState);
+	}
+
 	async _initialize(screen) {
 		const {
 			rom,
-			settings,
 			volume,
 			onStart,
 			onFrame,
@@ -115,32 +125,8 @@ export default class Emulator extends Component {
 		this.screen = screen;
 		if (!rom) return;
 
-		const currentLevel = Level.current;
-
-		let Console;
-		try {
-			Console = settings.useHardware
-				? await new EmulatorBuilder()
-						.setHardware(true)
-						.setUnbroken(true)
-						.build()
-				: await new EmulatorBuilder()
-						.addUserCartridge(settings.useCartridge)
-						.addUserCPU(settings.useCPU)
-						.addUserPPU(settings.usePPU)
-						.addUserAPU(settings.useAPU)
-						.addUserController(settings.useController)
-						.addUserMappers(settings.useMappers)
-						.usePartialPPU(currentLevel.id.startsWith("ppu-"))
-						.usePartialAPU(currentLevel.id.startsWith("apu-"))
-						.setCustomPPU(settings.customPPU)
-						.setCustomAPU(settings.customAPU)
-						.setUnbroken(settings.unbroken)
-						.build(settings.withLatestCode);
-		} catch (e) {
-			this._onError(e);
-			return;
-		}
+		const Console = await this._buildConsole();
+		if (Console == null) return;
 
 		this._stop(false);
 		if (volume > 0 || forceMusicPause) music.pause();
@@ -169,6 +155,35 @@ export default class Emulator extends Component {
 		);
 		onStart?.(this._emulation);
 		bus.emit("emulator-started");
+	}
+
+	async _buildConsole() {
+		try {
+			const { settings } = this.props;
+			const currentLevel = Level.current;
+
+			return settings.useHardware
+				? await new EmulatorBuilder()
+						.setHardware(true)
+						.setUnbroken(true)
+						.build()
+				: await new EmulatorBuilder()
+						.addUserCartridge(settings.useCartridge)
+						.addUserCPU(settings.useCPU)
+						.addUserPPU(settings.usePPU)
+						.addUserAPU(settings.useAPU)
+						.addUserController(settings.useController)
+						.addUserMappers(settings.useMappers)
+						.usePartialPPU(currentLevel.id.startsWith("ppu-"))
+						.usePartialAPU(currentLevel.id.startsWith("apu-"))
+						.setCustomPPU(settings.customPPU)
+						.setCustomAPU(settings.customAPU)
+						.setUnbroken(settings.unbroken)
+						.build(settings.withLatestCode);
+		} catch (e) {
+			this._onError(e);
+			return null;
+		}
 	}
 
 	_getInput = () => {

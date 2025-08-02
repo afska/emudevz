@@ -206,7 +206,7 @@ export default class EmulatorRunner extends PureComponent {
 							style={{ marginRight: 8 }}
 							Icon={FaSync}
 							tooltip={locales.get("emulation_reload")}
-							onClick={() => this._reload(false)}
+							onClick={() => this._reload(true, true)}
 						/>
 					)}
 					{!!rom && (
@@ -299,14 +299,16 @@ export default class EmulatorRunner extends PureComponent {
 		Level.current.launchDebugger();
 	};
 
-	_reload = (useSaveStateIfPossible = false) => {
-		const saveState =
-			(useSaveStateIfPossible &&
-				this._emulatorSettings.withHotReload &&
-				this._emulator?.neees?.getSaveState()) ||
-			null;
+	_reload = (isFullReload = false, forceReset = false) => {
+		const keepState = this._emulatorSettings.withHotReload && !forceReset;
 
-		this.props.onRestart(saveState);
+		if (isFullReload) {
+			const saveState =
+				(keepState && this._emulator?.neees?.getSaveState()) || null;
+			this.props.onRestart(saveState);
+		} else {
+			this._emulator?.reloadCode(keepState);
+		}
 	};
 
 	_stop = () => {
@@ -348,7 +350,7 @@ export default class EmulatorRunner extends PureComponent {
 		if (!this.props.rom) return;
 
 		window.EmuDevz.state.lastCodeChangeTime = Date.now();
-		this._reload(true);
+		this._reload(false);
 	};
 
 	_onUnitUnlocked = () => {
