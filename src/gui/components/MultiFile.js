@@ -62,7 +62,7 @@ class MultiFile extends PureComponent {
 			>
 				<FileSearch
 					isSearching={isSearching}
-					onSelect={(filePath) => {
+					onSelect={(filePath, lineNumber) => {
 						const [Component, customArgs] = extensions.getOptions(filePath);
 
 						if (Component === TV && customArgs.type === "rom") {
@@ -70,7 +70,7 @@ class MultiFile extends PureComponent {
 							this._refresh();
 						} else {
 							this.props.openFile(filePath);
-							this._refresh();
+							this._refresh(lineNumber);
 						}
 					}}
 					onBlur={() => {
@@ -381,9 +381,13 @@ class MultiFile extends PureComponent {
 		}
 	};
 
-	_refresh() {
+	_refresh(lineNumber = null) {
 		setTimeout(() => {
 			this.focus();
+
+			if (lineNumber != null) {
+				bus.emit("highlight", { line: lineNumber - 1 });
+			}
 		});
 	}
 

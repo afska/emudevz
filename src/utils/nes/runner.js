@@ -62,11 +62,11 @@ export default {
 			while (true) {
 				cpu.step();
 
-				const lineNumber = instructions.find(
+				const lineIndex = instructions.find(
 					(it) => this.CODE_ADDRESS + it.address === cpu.pc.value
-				)?.lineNumber;
+				)?.lineIndex;
 
-				if (!lineNumber) break;
+				if (!lineIndex) break;
 				if (Date.now() - startTime > TIMEOUT)
 					throw new Error("Execution timed out (infinite loop?)");
 			}

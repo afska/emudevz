@@ -20,6 +20,9 @@ const DIRECTORY = "";
 const PREFIX = `${DIRECTORY}/`;
 const MAX_RESULTS = 10;
 const DEFAULT_FILTER = (name) => true;
+const CODE_DIR = "/code";
+const CODE_EXTENSION = ".js";
+const CLASS_REGEXP = /\s*class\s+([A-Za-z0-9_]+)/;
 
 export default forwardRef(function FileSearch(props, ref) {
 	const {
@@ -36,6 +39,9 @@ export default forwardRef(function FileSearch(props, ref) {
 	const [selected, setSelected] = useState(0);
 	const [matches, setMatches] = useState([]);
 	const inputRef = useRef(null);
+
+	// class index: array of { className, filePath, lineNumber }
+	const classIndexRef = useRef(null);
 
 	useImperativeHandle(ref, () => ({
 		focus: () => inputRef.current?.focus(),
@@ -67,28 +73,85 @@ export default forwardRef(function FileSearch(props, ref) {
 			setInput("");
 			setSelected(0);
 			inputRef.current.focus();
+
+			if (classIndexRef.current == null) {
+				try {
+					const codeFiles = filesystem.lsr(CODE_DIR);
+					const index = [];
+					codeFiles.forEach((file) => {
+						if (!file.filePath.endsWith(CODE_EXTENSION)) return;
+
+						let content = "";
+						try {
+							content = filesystem.read(file.filePath);
+						} catch (e) {
+							return;
+						}
+						const lines = content.split("\n");
+						lines.forEach((line, idx) => {
+							const m = line.match(CLASS_REGEXP);
+							if (m) {
+								index.push({
+									className: m[1],
+									filePath: file.filePath,
+									lineNumber: idx + 1,
+								});
+							}
+						});
+					});
+
+					classIndexRef.current = index;
+				} catch (e) {
+					console.error("❌ Failed to build class index from /code", e);
+				}
+			}
+		} else {
+			classIndexRef.current = null;
 		}
 	}, [isSearching, filter]);
 
 	useEffect(() => {
-		const matches = fuzzy.search(files, input).slice(0, MAX_RESULTS);
-		setMatches(matches);
-		if (selected >= matches.length) setSelected(0);
+		const fuzzyMatches = fuzzy.search(files, input).slice(0, MAX_RESULTS);
+		let classMatches = [];
+
+		if (input !== "") {
+			classMatches =
+				classIndexRef.current
+					?.filter((c) =>
+						c.className.toLowerCase().startsWith(input.toLowerCase())
+					)
+					?.slice(0, MAX_RESULTS)
+					?.map((c) => {
+						return {
+							isClass: true,
+							className: c.className,
+							file: {
+								originalFilePath: c.filePath,
+								filePath: c.filePath.replace(PREFIX, ""),
+							},
+							lineNumber: c.lineNumber,
+						};
+					}) ?? [];
+		}
+
+		const combined = [...classMatches, ...fuzzyMatches];
+		setMatches(combined);
+		if (selected >= combined.length) setSelected(0);
 	}, [input, files, selected]);
 
-	const _onSelect = (filePath) => {
-		onBlur();
+	const _onSelect = (filePath, lineNumber) => {
+		if (onBlur) onBlur();
 
 		if (!Level.current.canLaunchEmulator() && filePath.endsWith(".neees")) {
 			toast.error(locales.get("cant_open_emulator"));
 			return;
 		}
 
-		onSelect(filePath);
+		if (onSelect) onSelect(filePath, lineNumber);
 	};
 
-	const _onSelectFile = (file) => {
-		_onSelect(file.originalFilePath);
+	const _onSelectFile = (file, lineNumber) => {
+		_onSelect(file.originalFilePath, lineNumber);
 	};
 
 	window._openPathFromFileSearch_ = (filePath) => {
@@ -104,7 +167,7 @@ export default forwardRef(function FileSearch(props, ref) {
 
 			return (
 				icon +
-				`<span onclick="javascript:_openPathFromFileSearch_('${filePath}')" class="${styles.treeLink}">${name}</span>`
+				`<span onmousedown="javascript:_openPathFromFileSearch_('${filePath}')" class="${styles.treeLink}">${name}</span>`
 			);
 		}
 	);
@@ -133,30 +196,74 @@ export default forwardRef(function FileSearch(props, ref) {
 				)}
 				{matches.length > 0 && (
 					<div className={styles.results}>
-						{matches.map(({ file, groups }, i) => {
-							const icon = extensions.getTabIcon(file.originalFilePath) + " ";
-
-							return (
-								<div
-									key={i}
-									className={classNames(
-										styles.result,
-										selected === i && styles.selected
-									)}
-									onMouseMove={() => setSelected(i)}
-									onMouseDown={(e) => {
-										e.preventDefault();
-										_onSelectFile(file);
-									}}
-								>
-									<span>{icon}</span>
-									{_renderGroups(groups.file)}
-									{_renderGroups(groups.dir, true)}
-								</div>
-							);
-						})}
+						{matches.map((match, i) =>
+							match.isClass
+								? _renderClassMatch(match, i)
+								: _renderFileMatch(match, i)
+						)}
 					</div>
 				)}
+			</div>
+		);
+	};
+
+	const _renderClassMatch = (match, i) => {
+		const file = match.file;
+		const displayName = match.className;
+		const inputLower = input.toLowerCase();
+
+		let prefix = "";
+		let restName = displayName;
+		if (input && displayName.toLowerCase().startsWith(inputLower)) {
+			prefix = displayName.slice(0, input.length);
+			restName = displayName.slice(input.length);
+		}
+
+		return (
+			<div
+				key={`class-${file.originalFilePath}-${match.lineNumber}`}
+				className={classNames(styles.result, selected === i && styles.selected)}
+				onMouseMove={() => setSelected(i)}
+				onMouseDown={(e) => {
+					e.preventDefault();
+					_onSelectFile(file, match.lineNumber);
+				}}
+			>
+				<span>📚 </span>
+				<span>
+					{prefix ? (
+						<>
+							<span className={styles.highlight}>{prefix}</span>
+							{restName}
+						</>
+					) : (
+						displayName
+					)}
+				</span>
+				<span style={{ marginLeft: 6 }} className={styles.path}>
+					({file.filePath})
+				</span>
+			</div>
+		);
+	};
+
+	const _renderFileMatch = (match, i) => {
+		const { file, groups } = match;
+		const icon = extensions.getTabIcon(file.originalFilePath) + " ";
+
+		return (
+			<div
+				key={i}
+				className={classNames(styles.result, selected === i && styles.selected)}
+				onMouseMove={() => setSelected(i)}
+				onMouseDown={(e) => {
+					e.preventDefault();
+					_onSelectFile(file);
+				}}
+			>
+				<span>{icon}</span>
+				{_renderGroups(groups.file)}
+				{_renderGroups(groups.dir, true)}
 			</div>
 		);
 	};
@@ -207,7 +314,10 @@ export default forwardRef(function FileSearch(props, ref) {
 
 		if (isEnter) {
 			const match = matches[selected];
-			if (match != null) _onSelectFile(match.file);
+			if (match != null) {
+				if (match.isClass) _onSelectFile(match.file, match.lineNumber);
+				else _onSelectFile(match.file);
+			}
 			e.preventDefault();
 			return;
 		}

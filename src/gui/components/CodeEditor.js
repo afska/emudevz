@@ -256,8 +256,8 @@ export default class CodeEditor extends PureComponent {
 			this.setState({ isReady: false });
 
 			if (e.err?.name === "SyntaxError") {
-				const lineNumber = e.lineNumber - 1;
-				const { index: lineStart } = errorMarker.findLine(code, lineNumber);
+				const lineIndex = e.lineNumber - 1;
+				const { index: lineStart } = errorMarker.findLine(code, lineIndex);
 
 				this.setState({
 					errorStart: lineStart + e.err.location.start.offset,

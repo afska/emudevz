@@ -471,16 +471,16 @@ export default class CPUDebugger extends PureComponent {
 			stack,
 		});
 
-		const lineNumber = this.state._mappings.find(
+		const lineIndex = this.state._mappings.find(
 			(it) => asm.CODE_ADDRESS + it.address === this._cpu.pc.value
-		)?.lineNumber;
+		)?.lineIndex;
 
 		bus.emit("highlight", {
-			line: lineNumber,
-			nextAction: lineNumber == null ? "reset" : "step",
+			line: lineIndex,
+			nextAction: lineIndex == null ? "reset" : "step",
 			reason,
 		});
-		if (lineNumber == null) bus.emit("end");
+		if (lineIndex == null) bus.emit("end");
 	}
 }
 

@@ -88,13 +88,13 @@ export default (
 			view.dispatch({ effects });
 		},
 
-		findLine(code, lineNumber) {
+		findLine(code, lineIndex) {
 			const lines = code.split("\n");
-			const line = lines[lineNumber];
+			const line = lines[lineIndex];
 			if (line == null) return { index: -1, line: "" };
 
 			let index = 0;
-			for (let l of lines.slice(0, lineNumber)) index += l.length + 1;
+			for (let l of lines.slice(0, lineIndex)) index += l.length + 1;
 
 			return { line, index };
 		},
