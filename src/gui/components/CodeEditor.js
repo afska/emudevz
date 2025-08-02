@@ -21,6 +21,7 @@ import {
 	errorMarker,
 	esLintConfig,
 	lineHighlighter,
+	pasteIndent,
 } from "../../utils/codemirror";
 import IconButton from "./widgets/IconButton";
 import styles from "./CodeEditor.module.css";
@@ -37,6 +38,7 @@ const LANGUAGES = {
 		linter(esLint(new Linter(), esLintConfig), {
 			delay: COMPILE_DEBOUNCE_MS,
 		}),
+		pasteIndent,
 	],
 	asm: () => [asm6502()],
 	plaintext: () => [],
