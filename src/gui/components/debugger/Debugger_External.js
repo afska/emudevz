@@ -61,9 +61,22 @@ export default class Debugger_External {
 					const label = buttons[i];
 					const position = ORDERED_BUTTONS.indexOf(label);
 					const pressed = bits[c][position];
-					const color = pressed ? "#c39f79" : "#808080";
-					utils.withTextColor(color, () => ImGui.Text(label));
-					ImGui.SameLine();
+
+					if (pressed) {
+						const bg = "#c39f79";
+						ImGui.PushStyleColor(ImGui.Col.Button, utils.hexToVec4(bg));
+						ImGui.PushStyleColor(ImGui.Col.ButtonHovered, utils.hexToVec4(bg));
+						ImGui.PushStyleColor(ImGui.Col.ButtonActive, utils.hexToVec4(bg));
+						ImGui.BeginDisabled(true);
+						ImGui.Button(label);
+						ImGui.EndDisabled();
+						ImGui.PopStyleColor(3);
+					} else {
+						ImGui.BeginDisabled(true);
+						ImGui.Button(label);
+						ImGui.EndDisabled();
+					}
+					ImGui.SameLine(0, 5);
 				}
 			});
 			ImGui.NextColumn();
