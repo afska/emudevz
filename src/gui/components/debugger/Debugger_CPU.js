@@ -17,7 +17,7 @@ export default class Debugger_CPU {
 	}
 
 	draw() {
-		const neees = window.EMULATION?.neees;
+		const neees = window.EmuDevz.emulation?.neees;
 
 		if (
 			neees != null &&
@@ -125,7 +125,7 @@ export default class Debugger_CPU {
 	}
 
 	destroy() {
-		const neees = window.EMULATION?.neees;
+		const neees = window.EmuDevz.emulation?.neees;
 		if (!neees) return;
 
 		if (neees.cpu.logger?.type === LOGGER_TYPE) neees.cpu.logger = null;

@@ -5,6 +5,16 @@ const APU_SAMPLE_RATE = 44100;
 const MAX_SAMPLE_MEMORY_SECONDS = 10;
 const AUDIO_DRIFT_THRESHOLD = 64;
 
+window.EmuDevz = {
+	emulation: null,
+	log(value) {
+		const neees = this.emulation?.neees;
+		if (neees == null) return;
+
+		neees.cpu.logger?.(value);
+	},
+};
+
 /**
  * An emulator runner instance.
  */
@@ -62,7 +72,7 @@ export default class Emulation {
 		this.isDebugStepScanlineRequested = false;
 
 		this.neees = new NEEES(this._onFrame, this._onAudio);
-		window.EMULATION = this;
+		window.EmuDevz.emulation = this;
 
 		this.frameTimer = new FrameTimer(() => {
 			this._updateInput(getInput());
@@ -123,7 +133,7 @@ export default class Emulation {
 	terminate = () => {
 		this.frameTimer.stop();
 		this.speaker.stop();
-		window.EMULATION = null;
+		window.EmuDevz.emulation = null;
 	};
 
 	resetChannelSamples = () => {

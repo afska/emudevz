@@ -26,7 +26,7 @@ export default class DebuggerGUI {
 	}
 
 	draw() {
-		const emulation = window.EMULATION;
+		const emulation = window.EmuDevz.emulation;
 
 		const m = 10;
 		ImGui.SetNextWindowPos(new ImGui.ImVec2(m, m), ImGui.Cond.FirstUseEver);
@@ -122,5 +122,6 @@ export default class DebuggerGUI {
 	destroy() {
 		this.cpu.destroy();
 		this.apu.destroy();
+		this.logs.destroy();
 	}
 }

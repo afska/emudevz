@@ -11,7 +11,7 @@ export default class Debugger_Logs {
 	}
 
 	draw() {
-		const neees = window.EMULATION?.neees;
+		const neees = window.EmuDevz.emulation?.neees;
 
 		if (
 			neees != null &&
@@ -29,6 +29,20 @@ export default class Debugger_Logs {
 				if (this._logs.length > LOG_LIMIT) this._logs.pop();
 			};
 			neees.cpu.logger.type = LOGGER_TYPE;
+		}
+
+		ImGui.AlignTextToFramePadding();
+		ImGui.Text("Use `EmuDevz.log(value)` to log things here!");
+		ImGui.SameLine();
+		{
+			const region_max_x = ImGui.GetWindowContentRegionMax().x;
+			const button_w =
+				ImGui.CalcTextSize("Clear").x + ImGui.GetStyle().FramePadding.x * 2;
+			ImGui.SetCursorPosX(region_max_x - button_w);
+			ImGui.AlignTextToFramePadding();
+			if (ImGui.Button("Clear")) {
+				this._logs.length = 0;
+			}
 		}
 
 		const flagsBig =
@@ -52,7 +66,7 @@ export default class Debugger_Logs {
 	}
 
 	destroy() {
-		const neees = window.EMULATION?.neees;
+		const neees = window.EmuDevz.emulation?.neees;
 		if (!neees) return;
 
 		if (neees.cpu.logger?.type === LOGGER_TYPE) neees.cpu.logger = null;

@@ -32,7 +32,7 @@ export default {
 		// eslint-disable-next-line
 		const Drive = _Drive_;
 		// eslint-disable-next-line
-		const emulation = window.EMULATION;
+		const emulation = window.EmuDevz.emulation;
 
 		let _evalCode_ = _code_;
 		_.forEach(layout.instances, (__, name) => {

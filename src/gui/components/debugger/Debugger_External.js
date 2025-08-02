@@ -15,7 +15,7 @@ const ORDERED_BUTTONS = [
 
 export default class Debugger_External {
 	draw() {
-		const neees = window.EMULATION?.neees;
+		const neees = window.EmuDevz.emulation?.neees;
 
 		const buttons = [
 			"Up",

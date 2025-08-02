@@ -62,7 +62,7 @@ export default class Debugger_Memory {
 		this._memoryEditor.ReadOnly = true; // (this prevents a crash!)
 		this._memoryEditor.OptAddrDigitsCount = 4;
 		this._memoryEditor.ReadFn = (__, address) => {
-			const neees = window.EMULATION?.neees;
+			const neees = window.EmuDevz.emulation?.neees;
 			if (!neees) return 0;
 
 			// reimplementing some memory-mapped reads to avoid triggering side effects

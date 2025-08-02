@@ -22,7 +22,7 @@ export default class Debugger_APU {
 	}
 
 	draw() {
-		const emulation = window.EMULATION;
+		const emulation = window.EmuDevz.emulation;
 		const neees = emulation?.neees;
 
 		let mix = emulation?.channelSamples.mix ?? [];
@@ -457,7 +457,7 @@ export default class Debugger_APU {
 	}
 
 	destroy() {
-		const emulation = window.EMULATION;
+		const emulation = window.EmuDevz.emulation;
 		if (!emulation) return;
 
 		emulation.enabledChannels.pulse1 = true;
