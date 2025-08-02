@@ -194,12 +194,20 @@ export default class TestCommand extends Command {
 	}
 
 	async _runAudioTests(level) {
-		for (let audioTest of level.audioTests) {
-			const success = await this._runAudioTest(level, audioTest);
-			if (!success) return false;
-		}
+		try {
+			window.EmuDevz.state.isRunningEmulatorTest = true;
+			bus.emit("run-enabled", false);
 
-		return true;
+			for (let audioTest of level.audioTests) {
+				const success = await this._runAudioTest(level, audioTest);
+				if (!success) return false;
+			}
+
+			return true;
+		} finally {
+			window.EmuDevz.state.isRunningEmulatorTest = false;
+			bus.emit("run-enabled", true);
+		}
 	}
 
 	async _runAudioTest(level, audioTest) {
@@ -289,12 +297,20 @@ export default class TestCommand extends Command {
 	}
 
 	async _runVideoTests(level) {
-		for (let videoTest of level.videoTests) {
-			const success = await this._runVideoTest(level, videoTest);
-			if (!success) return false;
-		}
+		try {
+			window.EmuDevz.state.isRunningEmulatorTest = true;
+			bus.emit("run-enabled", false);
 
-		return true;
+			for (let videoTest of level.videoTests) {
+				const success = await this._runVideoTest(level, videoTest);
+				if (!success) return false;
+			}
+
+			return true;
+		} finally {
+			window.EmuDevz.state.isRunningEmulatorTest = false;
+			bus.emit("run-enabled", true);
+		}
 	}
 
 	async _runVideoTest(level, videoTest) {

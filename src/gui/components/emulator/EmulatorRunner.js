@@ -16,7 +16,6 @@ import Unit from "./Unit";
 import styles from "./EmulatorRunner.module.css";
 
 const COMPONENT_BORDER_RADIUS = 8;
-const REFRESH_DEBOUNCE_MS = 500;
 
 export default class EmulatorRunner extends PureComponent {
 	render() {
@@ -224,7 +223,7 @@ export default class EmulatorRunner extends PureComponent {
 
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
-			"code-changed": _.debounce(this._onCodeChanged, REFRESH_DEBOUNCE_MS),
+			"sync-emulator": this._onEmulatorSync,
 			"unit-unlocked": this._onUnitUnlocked,
 		});
 	}
@@ -337,19 +336,14 @@ export default class EmulatorRunner extends PureComponent {
 	};
 
 	_focusEmulator() {
-		const now = Date.now();
-		if (now - window.EmuDevz.state.lastCodeChangeTime < REFRESH_DEBOUNCE_MS)
-			return;
-
 		setTimeout(() => {
 			document.getElementById("emulator")?.focus();
 		});
 	}
 
-	_onCodeChanged = () => {
+	_onEmulatorSync = () => {
 		if (!this.props.rom) return;
 
-		window.EmuDevz.state.lastCodeChangeTime = Date.now();
 		this._reload(false);
 	};
 

@@ -10,6 +10,7 @@ import {
 	FaPlay,
 	FaSpinner,
 	FaStepForward,
+	FaSync,
 } from "react-icons/fa";
 import _ from "lodash";
 import Level from "../../level/Level";
@@ -29,6 +30,8 @@ import styles from "./CodeEditor.module.css";
 // GRAB FUTURE LANGUAGES FROM:
 // import { langs } from "@uiw/codemirror-extensions-langs";
 
+const ACTION_RUN = "run";
+const ACTION_SYNC_EMULATOR = "refreshEmulator";
 const NULL_ACTION = "none";
 const COMPILE_DEBOUNCE_MS = 500;
 const LANGUAGES = {
@@ -71,13 +74,20 @@ export default class CodeEditor extends PureComponent {
 	};
 
 	actions = {
-		run: {
+		[ACTION_RUN]: {
 			icon: FaPlay,
 			tooltip: locales.get("run"),
 			run: () => {
 				bus.emit("run", "test");
 				const focus = this._layout.constructor.pinLocation;
 				if (focus != null) this._layout.focus(focus);
+			},
+		},
+		[ACTION_SYNC_EMULATOR]: {
+			icon: FaSync,
+			tooltip: locales.get("sync_emulator"),
+			run: () => {
+				bus.emit("sync-emulator");
 			},
 		},
 		step: {
@@ -116,10 +126,14 @@ export default class CodeEditor extends PureComponent {
 			_isInitialized: true,
 			isPinned: !!args.isPinned,
 			isReadOnly: !!args.readOnly,
-			actionName: args.action || NULL_ACTION,
+			actionName:
+				(window.EmuDevz.isRunningEmulator()
+					? ACTION_SYNC_EMULATOR
+					: args.action) || NULL_ACTION,
 			onlyShowActionWhen: args.onlyShowActionWhen || null,
 			onlyEnableActionWhen: args.onlyEnableActionWhen || null,
 			onlyEnableEditionWhen: args.onlyEnableEditionWhen || null,
+			isDisabled: window.EmuDevz.state.isRunningEmulatorTest,
 		});
 	}
 
@@ -193,6 +207,12 @@ export default class CodeEditor extends PureComponent {
 					this._setCode(this.props.getCode());
 				this.forceUpdate();
 			},
+			"emulator-started": () => {
+				this.setState({ actionName: ACTION_SYNC_EMULATOR });
+			},
+			"emulator-stopped": () => {
+				this.setState({ actionName: ACTION_RUN });
+			},
 		});
 	}
 
@@ -242,15 +262,26 @@ export default class CodeEditor extends PureComponent {
 	_setCode = (code) => {
 		this.props.setCode(code);
 
-		window.EmuDevz.state.isCompiling = true;
-		this.setState({ isCompiling: true, highlightedLine: -1 });
-		this._compile(code);
-		bus.emit("code-changed", code);
+		if (this.props.disableCompileDebounce) {
+			bus.emit("code-changed", code);
+			bus.emit("code", code);
+
+			this.setState({
+				isCompiling: false,
+				isReady: true,
+				highlightedLine: -1,
+				errorStart: -1,
+				errorEnd: -1,
+			});
+		} else {
+			this.setState({ isCompiling: true, highlightedLine: -1 });
+			this._compile(code);
+			bus.emit("code-changed", code);
+		}
 	};
 
 	_compile = _.debounce((code) => {
 		try {
-			window.EmuDevz.state.isCompiling = false;
 			this.setState({ isCompiling: false });
 			bus.emit("code", code);
 			this.setState({ isReady: true, errorStart: -1, errorEnd: -1 });

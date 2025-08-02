@@ -179,7 +179,6 @@ class MultiFile extends PureComponent {
 	};
 
 	_search = () => {
-		if (window.EmuDevz.state.isCompiling) return;
 		this.setState({ isSearching: true });
 	};
 
@@ -312,6 +311,7 @@ class MultiFile extends PureComponent {
 						}
 					},
 					forceReadOnly: isReadOnly,
+					disableCompileDebounce: true,
 				};
 				break;
 			}

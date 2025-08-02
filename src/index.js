@@ -25,9 +25,11 @@ window.EmuDevz = {
 
 		neees.cpu.logger?.(value);
 	},
+	isRunningEmulator() {
+		return this.emulation != null;
+	},
 	state: {
-		isCompiling: false,
-		lastCodeChangeTime: 0,
+		isRunningEmulatorTest: false,
 	},
 };
 
@@ -61,6 +63,10 @@ document.onkeydown = (e) => {
 		if (!isFullscreen) bus.emit("file-search");
 		e.preventDefault();
 	}
+
+	// Disable Addressbar shortcut
+	const isCtrlE = (e.ctrlKey || e.metaKey) && e.code === "KeyE";
+	if (isCtrlE) e.preventDefault();
 
 	// Disable Save shortcut
 	const isCtrlS = (e.ctrlKey || e.metaKey) && e.code === "KeyS";
