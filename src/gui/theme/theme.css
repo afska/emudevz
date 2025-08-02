@@ -188,6 +188,7 @@ code {
 
 .highlight-link {
 	color: #9db5dc;
+	cursor: pointer;
 	text-decoration: none;
 	-webkit-user-drag: none;
 }

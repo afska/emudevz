@@ -7,6 +7,7 @@ import Book from "../level/Book";
 import LevelLoader from "../level/LevelLoader";
 import locales from "../locales";
 import { bus } from "../utils";
+import ChapterSelectModal from "./ChapterSelectModal";
 import LevelScreen from "./LevelScreen";
 import styles from "./PlayScreen.module.css";
 
@@ -44,7 +45,12 @@ class PlayScreen extends PureComponent {
 
 	render() {
 		const { error } = this.state;
-		const { book, level } = this.props;
+		const {
+			book,
+			level,
+			isChapterSelectOpen,
+			setChapterSelectOpen,
+		} = this.props;
 
 		if (error) return <div className={styles.message}>❌ {error}</div>;
 
@@ -54,6 +60,11 @@ class PlayScreen extends PureComponent {
 
 		return (
 			<div className={styles.container}>
+				<ChapterSelectModal
+					open={isChapterSelectOpen}
+					setChapterSelectOpen={setChapterSelectOpen}
+				/>
+
 				<Toaster containerClassName="toaster-wrapper" />
 				<LevelScreen chapter={chapter} level={level} />
 			</div>
@@ -114,6 +125,7 @@ const mapStateToProps = ({ router, book, level }) => {
 		currentLevelId,
 		book: book.instance,
 		level: level.instance,
+		isChapterSelectOpen: level.isChapterSelectOpen,
 	};
 };
 const mapDispatchToProps = ({ book, level, savedata }) => ({
@@ -121,6 +133,7 @@ const mapDispatchToProps = ({ book, level, savedata }) => ({
 	setLevel: level.setLevel,
 	resetLevel: level.reset,
 	validateSavedata: savedata.validate,
+	setChapterSelectOpen: level.setChapterSelectOpen,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen);

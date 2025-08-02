@@ -47,6 +47,7 @@ class NavBar extends PureComponent {
 			goToNext,
 			resetLevel,
 			rollbackLevel,
+			setChapterSelectOpen,
 		} = this.props;
 
 		const levelDefinition = book.getLevelDefinitionOf(level.id);
@@ -85,8 +86,16 @@ class NavBar extends PureComponent {
 						/>
 					)}
 					<span>
-						{levelDefinition.humanId} / {chapter.name[locales.language]} /{" "}
-						{level.name[locales.language]}
+						{levelDefinition.humanId} /{" "}
+						<span
+							class="highlight-link"
+							onClick={() => {
+								setChapterSelectOpen(true);
+							}}
+						>
+							{chapter.name[locales.language]}
+						</span>{" "}
+						/ {level.name[locales.language]}
 					</span>
 					{level.isUsingSnapshot && (
 						<Badge
@@ -252,6 +261,7 @@ const mapDispatchToProps = ({ level }) => ({
 	goToNext: level.goToNext,
 	resetLevel: level.resetProgress,
 	rollbackLevel: level.rollback,
+	setChapterSelectOpen: level.setChapterSelectOpen,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
