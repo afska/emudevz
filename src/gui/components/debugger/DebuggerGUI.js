@@ -65,19 +65,26 @@ export default class DebuggerGUI {
 					if (color) {
 						utils.withBgColor(color, () => {
 							ImGui.Button(label);
-							const isActive = ImGui.IsItemActive();
+							const isRightClicked = ImGui.IsItemClicked(1);
+							const isActive = ImGui.IsItemActive() && !ImGui.IsMouseDown(1);
 
 							if (label === runScanline)
 								this.cpu.isRunningStepByStep = isActive;
 
+							if (label === runFrame && isRightClicked) {
+								if (emulation) emulation.isDebugStepFrameRequested = true;
+							}
+							if (label === runScanline && isRightClicked) {
+								if (emulation) emulation.isDebugStepScanlineRequested = true;
+							}
+
 							if (isActive) {
 								if (emulation) {
 									emulation.isDebugging = true;
-									if (label === runFrame) {
+									if (label === runFrame)
 										emulation.isDebugStepFrameRequested = true;
-									} else if (label === runScanline) {
+									else if (label === runScanline)
 										emulation.isDebugStepScanlineRequested = true;
-									}
 								}
 							}
 						});
