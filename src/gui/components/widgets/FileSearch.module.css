@@ -40,6 +40,9 @@
 	color: #b7bbc7;
 	cursor: pointer;
 	flex: 1;
+
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 .path {

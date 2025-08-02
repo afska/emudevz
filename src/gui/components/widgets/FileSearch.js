@@ -115,11 +115,15 @@ export default forwardRef(function FileSearch(props, ref) {
 		let classMatches = [];
 
 		if (input !== "") {
+			const inputLower = input.toLowerCase();
 			classMatches =
 				classIndexRef.current
-					?.filter((c) =>
-						c.className.toLowerCase().startsWith(input.toLowerCase())
-					)
+					?.filter((c) => c.className.toLowerCase().includes(inputLower))
+					?.sort((a, b) => {
+						const ai = a.className.toLowerCase().indexOf(inputLower);
+						const bi = b.className.toLowerCase().indexOf(inputLower);
+						return ai - bi;
+					})
 					?.slice(0, MAX_RESULTS)
 					?.map((c) => {
 						return {
@@ -211,13 +215,16 @@ export default forwardRef(function FileSearch(props, ref) {
 		const file = match.file;
 		const displayName = match.className;
 		const inputLower = input.toLowerCase();
-
-		let prefix = "";
-		let restName = displayName;
-		if (input && displayName.toLowerCase().startsWith(inputLower)) {
-			prefix = displayName.slice(0, input.length);
-			restName = displayName.slice(input.length);
-		}
+		const nameLower = displayName.toLowerCase();
+		const matchIndex = input ? nameLower.indexOf(inputLower) : -1;
+		const before =
+			matchIndex >= 0 ? displayName.slice(0, matchIndex) : displayName;
+		const matchText =
+			matchIndex >= 0
+				? displayName.slice(matchIndex, matchIndex + input.length)
+				: "";
+		const after =
+			matchIndex >= 0 ? displayName.slice(matchIndex + input.length) : "";
 
 		return (
 			<div
@@ -231,10 +238,11 @@ export default forwardRef(function FileSearch(props, ref) {
 			>
 				<span>📚 </span>
 				<span>
-					{prefix ? (
+					{matchIndex >= 0 ? (
 						<>
-							<span className={styles.highlight}>{prefix}</span>
-							{restName}
+							{before}
+							<span className={styles.highlight}>{matchText}</span>
+							{after}
 						</>
 					) : (
 						displayName
