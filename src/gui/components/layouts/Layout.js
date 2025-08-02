@@ -53,8 +53,8 @@ export default class Layout extends PureComponent {
 		this._onPinOpened(pin, "Pin", this.constructor.pinLocation);
 	};
 
-	_closePin = () => {
-		this._onPinClosed("Pin", this.constructor.pinLocation);
+	_closePin = (options) => {
+		this._onPinClosed("Pin", this.constructor.pinLocation, options);
 	};
 
 	_onSecondaryPin = (pin) => {
