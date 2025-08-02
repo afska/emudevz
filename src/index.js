@@ -16,6 +16,17 @@ import "./gui/theme/theme.css";
 import "highlight.js/styles/base16/onedark.css";
 import "xterm/css/xterm.css";
 
+// Set up EmuDevz global object
+window.EmuDevz = {
+	emulation: null,
+	log(value) {
+		const neees = this.emulation?.neees;
+		if (neees == null) return;
+
+		neees.cpu.logger?.(value);
+	},
+};
+
 // Set up store and navigation
 const persistor = getPersistor();
 const app = (

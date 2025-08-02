@@ -5,16 +5,6 @@ const APU_SAMPLE_RATE = 44100;
 const MAX_SAMPLE_MEMORY_SECONDS = 10;
 const AUDIO_DRIFT_THRESHOLD = 64;
 
-window.EmuDevz = {
-	emulation: null,
-	log(value) {
-		const neees = this.emulation?.neees;
-		if (neees == null) return;
-
-		neees.cpu.logger?.(value);
-	},
-};
-
 /**
  * An emulator runner instance.
  */
