@@ -10,7 +10,11 @@
 			"Left": [
 				"console",
 				{
-					"startup": "chat -f"
+					"startup": "chat -f",
+					"subtitle": {
+						"en": "",
+						"es": ""
+					}
 				}
 			],
 			"Right": [

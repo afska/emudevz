@@ -10,7 +10,11 @@
 				"console",
 				{
 					"startup": "chat -f",
-					"availableCommands": ["chat"]
+					"availableCommands": ["chat"],
+					"subtitle": {
+						"en": "",
+						"es": ""
+					}
 				}
 			],
 			"Right": ["tv", {}]
