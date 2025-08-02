@@ -25,7 +25,10 @@ window.EmuDevz = {
 
 		neees.cpu.logger?.(value);
 	},
-	isCompiling: false,
+	state: {
+		isCompiling: false,
+		lastCodeChangeTime: 0,
+	},
 };
 
 // Set up store and navigation

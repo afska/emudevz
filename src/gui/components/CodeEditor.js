@@ -242,7 +242,7 @@ export default class CodeEditor extends PureComponent {
 	_setCode = (code) => {
 		this.props.setCode(code);
 
-		window.EmuDevz.isCompiling = true;
+		window.EmuDevz.state.isCompiling = true;
 		this.setState({ isCompiling: true, highlightedLine: -1 });
 		this._compile(code);
 		bus.emit("code-changed", code);
@@ -250,7 +250,7 @@ export default class CodeEditor extends PureComponent {
 
 	_compile = _.debounce((code) => {
 		try {
-			window.EmuDevz.isCompiling = false;
+			window.EmuDevz.state.isCompiling = false;
 			this.setState({ isCompiling: false });
 			bus.emit("code", code);
 			this.setState({ isReady: true, errorStart: -1, errorEnd: -1 });

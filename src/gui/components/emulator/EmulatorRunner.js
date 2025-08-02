@@ -335,6 +335,10 @@ export default class EmulatorRunner extends PureComponent {
 	};
 
 	_focusEmulator() {
+		const now = Date.now();
+		if (now - window.EmuDevz.state.lastCodeChangeTime < REFRESH_DEBOUNCE_MS)
+			return;
+
 		setTimeout(() => {
 			document.getElementById("emulator")?.focus();
 		});
@@ -343,6 +347,7 @@ export default class EmulatorRunner extends PureComponent {
 	_onCodeChanged = () => {
 		if (!this.props.rom) return;
 
+		window.EmuDevz.state.lastCodeChangeTime = Date.now();
 		this._reload(true);
 	};
 
