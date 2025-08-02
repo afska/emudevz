@@ -88,7 +88,7 @@ class NavBar extends PureComponent {
 					<span>
 						{levelDefinition.humanId} /{" "}
 						<span
-							class="highlight-link"
+							className="highlight-link"
 							onClick={() => {
 								setChapterSelectOpen(true);
 							}}
