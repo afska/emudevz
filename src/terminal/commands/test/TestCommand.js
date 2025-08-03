@@ -63,7 +63,8 @@ export default class TestCommand extends Command {
 
 			let warnings = [];
 			try {
-				warnings = testContext[context]?.getWarnings(level);
+				if (testContext[context]?.getWarnings != null)
+					warnings = testContext[context]?.getWarnings(level);
 			} catch (e) {
 				this._terminal.writeln(e?.message || "?", theme.ERROR);
 				return;
