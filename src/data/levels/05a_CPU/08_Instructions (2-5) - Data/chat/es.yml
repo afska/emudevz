@@ -6,7 +6,7 @@ main:
   - 📚  siguiendo 📄  ~/docs/cpu/instructions.es.md~,
   - ¡implementa todas las instrucciones de datos en tu objeto `instructions`!
   responses:
-  - necesito ayuda con `PHP` 😅 [php]
+  - (*) necesito ayuda con `PHP` 😅 [php]
 
 php:
   messages:
@@ -30,5 +30,5 @@ why:
   - como desarrolladores de emuladores, no nos importa <por qué> las cosas funcionan de cierta manera
   - solo nos importa <cómo> funcionan 🤷
   - así que enciende ese bit 4, por favor
-  responses: []
-
+  responses:
+  - ...main

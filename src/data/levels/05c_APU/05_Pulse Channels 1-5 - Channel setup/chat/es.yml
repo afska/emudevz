@@ -16,9 +16,9 @@ example:
   - <{Pulse1Timer.png}>
   - luego, el canal pulso de la APU oscilaría automáticamente a 220 Hz
   responses:
-  - ¿conectamos la cosa? [connect]
+  - ¿conectamos la cosa? [exercise]
 
-connect:
+exercise:
   messages:
   - ¡necesitamos una clase para los Canales Pulso!
   - 📚  crea una clase `PulseChannel`, usando 📄  ~/tmpl/apu/PulseChannel.js~ como plantilla

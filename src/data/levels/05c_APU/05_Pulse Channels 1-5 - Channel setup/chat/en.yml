@@ -16,9 +16,9 @@ example:
   - <{Pulse1Timer.png}>
   - then, the APU's pulse channel would automatically oscillate at 220 Hz
   responses:
-  - shall we connect the thing? [connect]
+  - shall we connect the thing? [exercise]
 
-connect:
+exercise:
   messages:
   - we need a class for the Pulse Channels!
   - 📚  create a `PulseChannel` class, using 📄  ~/tmpl/apu/PulseChannel.js~ as a template

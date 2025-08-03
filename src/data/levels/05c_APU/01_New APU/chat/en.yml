@@ -5,7 +5,6 @@ main:
   - it's not as intuitive as <video>, so I'll have to explain a few things first
   responses:
   - how does it work? [how]
-  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [start]
 
 how:
   messages:
@@ -42,11 +41,9 @@ samples:
   - so APU cycles are slower (each APU cycle is, in time, ~twice as long~ as a CPU cycle)
   - <{unit_speeds.png}>
   responses:
-  - how do we start? [start]
+  - how do we start? [exercise]
 
-start:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - 📚  create a file for the APU code, using 📄  ~/tmpl/apu/APU.js~ as a template
   - |-
@@ -59,7 +56,7 @@ start:
   - 📚  then, import your file from 📄  ~/code/index.js~
   - and add the corresponding `APU` key to the exported object
   responses:
-  - how do I know when it's time for a new sample? [time]
+  - (*) how do I know when it's time for a new sample? [time]
 
 time:
   messages:
@@ -67,4 +64,5 @@ time:
   - to produce 44100 samples per second, divide both things!
   - 894887 / 44100 gives us 20 APU cycles per sample
   - so you should provide a new sample whenever ```javascript this.sampleCounter``` reaches 20
-  responses: []
+  responses:
+  - ...exercise

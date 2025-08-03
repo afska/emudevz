@@ -15,9 +15,9 @@ main:
     `STA ($55),Y`: the `STA` instruction + the `INDIRECT_INDEXED` mode
       => opcode $91
   responses:
-  - that means `STA` can have different opcodes depending on the addressing mode? [multiple]
+  - that means `STA` can have different opcodes depending on the addressing mode? [exercise]
 
-multiple:
+exercise:
   messages:
   - exactly that ✅
   - "here's a function that defines all the opcodes for you:"

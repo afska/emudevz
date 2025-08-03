@@ -13,7 +13,6 @@ main:
   - all flags are represented by an uppercase letter
   responses:
   - not <all> of them 😑 [notall]
-  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [what]
 
 notall:
   messages:
@@ -21,11 +20,9 @@ notall:
   - bit 5 is always 1
   - bit 4 ("b")... depends... on... things - we'll ignore it for now 😂
   responses:
-  - fair enough, what should I do? [what]
+  - fair enough, what should I do? [exercise]
 
-what:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - 📚  create a 🏁  `FlagsRegister` class with 6 boolean properties (called `c`, `z`, `i`, `d`, `v` and `n`)
   - initialize them with ```javascript false```
@@ -47,9 +44,11 @@ bits:
   - to build the value on ```javascript getValue()```, use `bitfield(...)`
   - to get the flags on ```javascript setValue(value)```, use `getFlag(...)`
   responses:
-  - ...what
+  - ...exercise
 
 nowwhat:
   messages:
-  - "📚  great, just add a new instance to the 🧠  `CPU` class, below the other registers, like this:\n  ```javascript this.flags = new FlagsRegister();```"
+  - |-
+    📚  great, just add a new instance to the 🧠  `CPU` class, below the other registers, like this:
+      ```javascript this.flags = new FlagsRegister();```
   responses: []

@@ -9,7 +9,6 @@ main:
   - y algunos son <bidireccionales> 🔍  ✏️
   responses:
   - dame un ejemplo 🙏 [example]
-  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [useit]
 
 example:
   messages:
@@ -30,11 +29,9 @@ numbers:
   - estos efectos secundarios pueden reiniciar un buffer interno, incrementar contadores, ¡o incluso copiar datos!
   - "he programado una clase que te ayudará a implementar esto, deberías usarla 📖"
   responses:
-  - ¿cómo puedo usarla? [useit]
+  - ¿cómo puedo usarla? [exercise]
 
-useit:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - lee la documentación en 📄  ~/docs/lib/InMemoryRegister.es.md~
   - y usa 📄  ~/tmpl/ppu/VideoRegisters.js~ como plantilla para el archivo de registros de video

@@ -15,9 +15,9 @@ howso:
   - and it will only use the CPU addresses as a bridge to communicate with the CPU
   - from now on, we'll say something like `PPU address $1F2A` or `CPU address $1F2A` to differentiate the two spaces
   responses:
-  - how can we emulate this? 😮 [emulate]
+  - how can we emulate this? 😮 [exercise]
 
-emulate:
+exercise:
   messages:
   - 📚  create a 🐏  `PPUMemory` class, using 📄  ~/tmpl/ppu/PPUMemory.js~ as a template
   - 📚  implement just the first range ($0000-$1FFF), for both `read(...)` and `write(...)` operations

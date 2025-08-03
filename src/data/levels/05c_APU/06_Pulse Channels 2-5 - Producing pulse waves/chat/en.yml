@@ -5,9 +5,9 @@ main:
   - and now we also know what note we should play
   - it's time to connect both things and implement the Pulse Channels!
   responses:
-  - sounds good 👍 [good]
+  - sounds good 👍 [exercise]
 
-good:
+exercise:
   messages:
   - I've abstracted the pulse wave generation logic in 📄  ~/lib/apu/PulseOscillator.js~
   - 📚  in 🟦  `PulseChannel`, import that class and add an `oscillator` property with a new instance

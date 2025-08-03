@@ -1,14 +1,11 @@
 ---
 main:
   run: |
-    if (level.hasStoredContent) $.goTo("exercise");
-    else {
-      set((m) => {
-        m.chat.stopBlock = locales.get("not_now");
-        m.$canRun = false;
-        m.$canEdit = false;
-      });
-    }
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
   messages:
   - entonces, con el combo `LDA` + `STA` puedes escribir en memoria ✍️
   - "hay instrucciones similares que usan los registros [X] e [Y]:"

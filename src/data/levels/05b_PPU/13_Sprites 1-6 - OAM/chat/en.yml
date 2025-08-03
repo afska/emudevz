@@ -13,9 +13,9 @@ oam:
   - 📄  ~/lib/ppu/Sprite.js~
   - it takes care of some stuff like parsing the attributes
   responses:
-  - thx, but I still need to read the OAM, right? [implement]
+  - thx, but I still need to read the OAM, right? [exercise]
 
-implement:
+exercise:
   messages:
   - correct ✅
   - 📚  create a 🛸  `SpriteRenderer` class
@@ -32,9 +32,9 @@ implement:
       **->** returns a new `Sprite` instance, by reading the OAM index `id`
       (remember to add 1 to the Y coordinate!)
   responses:
-  - why should I add 1 to the Y coordinate? ➕ [addone]
-  - how do I know if the sprite is ~8x8~ or ~8x16~? 📏 [spritesize]
-  - how do I know the tile id / pattern table id? 🕊️ 📖 [patterntable]
+  - (*) why should I add 1 to the Y coordinate? ➕ [addone]
+  - (*) how do I know if the sprite is ~8x8~ or ~8x16~? 📏 [spritesize]
+  - (*) how do I know the tile id / pattern table id? 🕊️ 📖 [patterntable]
 
 addone:
   messages:
@@ -43,18 +43,18 @@ addone:
   - i.e. if byte 0 of an OAM entry is set to 0, it's drawn at line 1
   - and there's no way to draw a sprite starting from line 0
   responses:
-  - ...implement
+  - ...exercise
 
 spritesize:
   messages:
   - that's a global setting, configured in 🎛️  PPUCtrl
   - when ```javascript ppu.registers.ppuCtrl.spriteSize === 1```, sprites should use the ~8x16~ mode
   responses:
-  - ...implement
+  - ...exercise
 
 patterntable:
   messages:
   - in ~8x8~ mode, the tile id is `byte1` of the OAM entry, and the pattern table id is ```javascript ppu.registers.ppuCtrl.sprite8x8PatternTableId```
   - in ~8x16~ mode, the tile id is ```javascript (byte1 & 0b11111110)``` and the pattern table id is ```javascript (byte1 & 0b00000001)```
   responses:
-  - ...implement
+  - ...exercise

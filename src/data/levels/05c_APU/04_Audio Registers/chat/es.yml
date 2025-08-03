@@ -6,7 +6,6 @@ main:
   - echa un vistazo a 📄  ~/docs/apu/audio_registers.es.md~
   responses:
   - dame un ejemplo 🙏 [example]
-  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [useit]
 
 example:
   messages:
@@ -26,11 +25,9 @@ numbers:
   - estos efectos secundarios pueden restablecer la duración de las notas, iniciar barridos de frecuencia, ¡o incluso silenciar canales completos!
   - programé una clase que te ayudará a implementar esto, deberías usarla 📖
   responses:
-  - ¿cómo puedo usarla? [useit]
+  - ¿cómo puedo usarla? [exercise]
 
-useit:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - lee la documentación en 📄  ~/docs/lib/InMemoryRegister.es.md~
   - y usa 📄  ~/tmpl/apu/AudioRegisters.js~ como plantilla para el archivo de registros de audio

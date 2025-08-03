@@ -16,7 +16,7 @@ other62:
   - el mapa de memoria tiene una estructura muy específica, mira 📄  ~/docs/cpu/cpu_memory.es.md~
   responses:
   - (*) ¿qué es "E/S mapeada en memoria"? 🗺️ [io]
-  - 👌  ya veo... ¿qué necesito implementar? [implement]
+  - 👌  ya veo... ¿qué necesito implementar? [exercise]
 
 io:
   messages:
@@ -30,7 +30,7 @@ io:
   - ...other62
 
 
-implement:
+exercise:
   messages:
   - por ahora, solo vamos a implementar el primer rango (🐏  WRAM)
   - 📚  crea una clase 🐏  `CPUMemory`, usando 📄  ~/tmpl/CPUMemory.js~ como plantilla
@@ -45,7 +45,7 @@ implement:
         (deja el resto del código como está)
   - 📚  luego, como hiciste con 💾  `Cartridge`, agrega la clase a 📄  ~/code/index.js~
   responses:
-  - ¿cómo es eso de los bytes espejados? 📐 [help]
+  - (*) ¿cómo es eso de los bytes espejados? 📐 [help]
 
 help:
   messages:
@@ -55,4 +55,5 @@ help:
   - por eso es que el rango $0800-$1FFF es un 🚽  espejo de $0000-$07FF
   - "aquí dejo un ejemplo con el otro rango espejo en $2008:"
   - <{memory_mirror.png}>
-  responses: []
+  responses:
+  - ...exercise

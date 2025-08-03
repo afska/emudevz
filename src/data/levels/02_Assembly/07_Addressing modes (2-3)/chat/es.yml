@@ -1,26 +1,31 @@
 ---
 main:
   run: |
-    if (level.hasStoredContent) $.goTo("exercise");
-    else {
-      set((m) => {
-        m.chat.stopBlock = locales.get("not_now");
-        m.$canRun = false;
-        m.$canEdit = false;
-      });
-      {{Bottom}}.setMemoryStart(0x0);
-    }
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
+    {{Bottom}}.setMemoryStart(0x0);
   messages: []
   events:
-  - compiled [lda]
+  - compiled [main2]
 
-lda:
+main2:
   run: |
     bus.emit("step");
+  messages:
+  - aquí es donde el direccionamiento se pone interesante 🧐
+  - en el modo de direccionamiento "Zero Page,X", se da una dirección de la página cero
+  - y luego se suma el valor de [X]
+  - ejecuta las primeras dos instrucciones ⏩
+  responses:
+  - ¿por qué? [why]
+
+why:
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
-  - aquí es donde el direccionamiento se pone interesante 🧐
   - en el modo de direccionamiento "Zero Page,X", se da una dirección de la página cero
   - y luego se suma el valor de [X]
   - ejecuta las primeras dos instrucciones ⏩
@@ -122,6 +127,7 @@ exercise:
       m.content.useTemp = false;
     });
     {{Bottom}}.setDelay(0);
+    {{Bottom}}.setMemoryStart(0x4020);
   messages:
   - 📚  borra todo el código
   - 📚  construye un programa que grite por la memoria 😱

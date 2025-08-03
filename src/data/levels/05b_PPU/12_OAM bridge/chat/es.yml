@@ -12,9 +12,9 @@ how:
   - "1) usando los registros 🏠  OAMAddr y 📝  OAMData"
   - "2) usando ⚡  OAMDMA"
   responses:
-  - cuéntame sobre 🏠  OAMAddr y 📝  OAMData [addrdata]
-  - cuéntame sobre ⚡  OAMDMA [dma]
-  - implementemos ese puente [implement]
+  - (*) cuéntame sobre 🏠  OAMAddr y 📝  OAMData [addrdata]
+  - (*) cuéntame sobre ⚡  OAMDMA [dma]
+  - implementemos ese puente [exercise]
 
 addrdata:
   messages:
@@ -33,7 +33,7 @@ dma:
   responses:
   - ...how
 
-implement:
+exercise:
   messages:
   - 📚  como hiciste con `PPUMemory::vram`, agrega una propiedad llamada `oamRam` en 🐏  `PPUMemory`
   - el array debe almacenar 256 bytes

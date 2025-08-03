@@ -1,7 +1,5 @@
 ---
 main:
-  run: |
-    if (m.$end) $.goTo("exercise");
   messages:
   - los juegos se suelen preservar en formato digital con <archivos de juego> (también llamados <ROMs>)
   - estos contienen 🤖  <código>, 👾  <gráficos> y una 🗣️  <cabecera> que identifica el hardware
@@ -26,9 +24,9 @@ exercise:
   - 📚  guárdalos en una propiedad llamada `bytes`
   - 📚  si la constante mágica no coincide con $4E $45 $53 $1A, tira un error con el mensaje "Invalid ROM."
   responses:
-  - ¿cómo puedo agregar un constructor? 😳 [constructor]
-  - necesito ayuda verificando los bytes 🥺 [help]
-  - ayúdame a tirar un error 🤔 [errors]
+  - (*) ¿cómo puedo agregar un constructor? 😳 [constructor]
+  - (*) necesito ayuda verificando los bytes 🥺 [help]
+  - (*) ayúdame a tirar un error 🤔 [errors]
 
 constructor:
   messages:
@@ -42,16 +40,21 @@ constructor:
         }
       }
       ```
-  responses: []
+  responses:
+  - ...exercise
 
 help:
   messages:
   - vas a recibir un `Uint8Array`, ¡que funciona similar a los arrays comunes!
   - por lo que ```javascript bytes[0]``` representa el primer byte, ```javascript bytes[1]``` el segundo, y así
   - recuerda que puedes expresar notación hexadecimal con el prefijo ~0x~, p. ej. `0x4e`
-  responses: []
+  responses:
+  - ...exercise
 
 errors:
   messages:
-  - "para tirar errores, usa:\n  ```javascript throw new Error(\"un mensaje\");```"
-  responses: []
+  - |-
+    para tirar errores, usa:
+      ```javascript throw new Error(\"un mensaje\");```
+  responses:
+  - ...exercise

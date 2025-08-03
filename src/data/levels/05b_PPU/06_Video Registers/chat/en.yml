@@ -9,7 +9,6 @@ main:
   - and a few are <bidirectional>  🔍 ✏️
   responses:
   - give me an example 🙏 [example]
-  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [useit]
 
 example:
   messages:
@@ -30,11 +29,9 @@ numbers:
   - these side effects can reset an internal buffer, increment counters, or even copy data!
   - "I've coded a class that will help you implement this, you should use it 📖"
   responses:
-  - how can I use it? [useit]
+  - how can I use it? [exercise]
 
-useit:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - read the docs at 📄  ~/docs/lib/InMemoryRegister.en.md~
   - and use 📄  ~/tmpl/ppu/VideoRegisters.js~ as a template for the video registers file

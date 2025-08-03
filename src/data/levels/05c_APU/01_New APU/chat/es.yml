@@ -5,7 +5,6 @@ main:
   - no es tan intuitivo como el <video>, así que primero tendré que explicar algunas cosas
   responses:
   - ¿cómo funciona? [how]
-  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [start]
 
 how:
   messages:
@@ -42,11 +41,9 @@ samples:
   - así que los ciclos de APU son más lentos (cada ciclo de APU dura, en tiempo, ~el doble~ que uno de CPU)
   - <{unit_speeds.png}>
   responses:
-  - ¿cómo empezamos? [start]
+  - ¿cómo empezamos? [exercise]
 
-start:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - 📚  crea un archivo para el código de la APU, usando 📄  ~/tmpl/apu/APU.js~ como plantilla
   - |-
@@ -59,7 +56,7 @@ start:
   - 📚  luego, importa tu archivo desde 📄  ~/code/index.js~
   - y agrega la correspondiente clave `APU` al objeto exportado
   responses:
-  - ¿cómo sé cuándo es hora de un nuevo sample? [time]
+  - (*) ¿cómo sé cuándo es hora de un nuevo sample? [time]
 
 time:
   messages:
@@ -67,4 +64,5 @@ time:
   - para producir 44100 samples por segundo, ¡divide ambas cosas!
   - 894887 / 44100 nos da 20 ciclos de APU por sample
   - así que deberías generar un nuevo sample cada vez que ```javascript this.sampleCounter``` llegue a 20
-  responses: []
+  responses:
+  - ...exercise

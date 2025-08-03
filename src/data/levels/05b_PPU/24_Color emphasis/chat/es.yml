@@ -15,9 +15,9 @@ how:
   - si los tres bits de énfasis están habilitados al mismo tiempo, todos los colores estarán un ~25%~ más oscuros
   - el <énfasis de color> es independiente del <modo de escala de grises>, por lo que los bits de énfasis aún tiñen el color de la imagen en escala de grises
   responses:
-  - entonces... [so]
+  - entonces... [exercise]
 
-so:
+exercise:
   messages:
   - abre 📄  ~/docs/ppu/video_registers.en.md~
   - 📚  en 🎭  `PPUMask`, edita el método `onLoad()` y usa `addField(...)` para mapear los bits `grayscale`, `emphasizeRed`, `emphasizeGreen` y `emphasizeBlue`

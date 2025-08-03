@@ -7,7 +7,6 @@ main:
   - first, I'll integrate your 🔊  APU into the emulator
   responses:
   - go ahead [integrate]
-  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [wave]
 
 integrate:
   messages:
@@ -32,11 +31,9 @@ done:
   - but we'll get there!
   - let's code an <example wave>
   responses:
-  - like a square wave? ⏹️ [wave]
+  - like a square wave? ⏹️ [exercise]
 
-wave:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - correct! currently, you should have something like ```javascript onSample(this.sample)```
   - |-
@@ -51,7 +48,7 @@ wave:
       // </test>```
   - try it! when loading a ROM, you should hear a square wave, playing an <A4> note (~440~ Hz) 🎵
   responses:
-  - what's the duty cycle? [duty]
+  - (*) what's the duty cycle? [duty]
 
 duty:
   messages:
@@ -63,4 +60,5 @@ duty:
   - and with <75%>
   - <{wave_square_75duty.png;32x32}>
   - these all sound <very different>! try changing the `dutyCycle` constant to see how it reacts
-  responses: []
+  responses:
+  - ...exercise

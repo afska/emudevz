@@ -8,7 +8,6 @@ main:
   - so, last one is `BRK` which generates an <Interrupt Request>
   responses:
   - what's an interrupt? [interrupt]
-  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [implement]
 
 interrupt:
   messages:
@@ -46,7 +45,7 @@ nmi:
   responses:
   - (*) what about the 7-cycle stuff? 🚲 [cycle]
   - (*) what's the purpose of the ~I~ flag? 🏁 [iflag]
-  - great! I think I'm ready to implement it 😎 [implement]
+  - great! I think I'm ready to implement it 😎 [exercise]
 
 cycle:
   messages:
@@ -69,9 +68,7 @@ iflag:
   responses:
   - ...nmi
 
-implement:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - awesome
   - we'll model interrupts as `{ id, vector }` objects
@@ -91,11 +88,12 @@ implement:
         (remember that you have a `read16(...)` method for that)
       **->** returns 7
   responses:
-  - and `BRK`? [brk]
+  - (*) and `BRK`? [brk]
 
 brk:
   messages:
   - |-
     📚  you can implement the `BRK` instruction just by calling
       ```javascript cpu.interrupt(interrupts.IRQ, true)```
-  responses: []
+  responses:
+  - ...exercise

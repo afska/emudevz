@@ -11,7 +11,6 @@ main:
   responses:
   - (*) ¿puedes darme algunos ejemplos de colores? [examples]
   - ¡quiero dibujar algo en la pantalla! 🖌️ [integrate]
-  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [draw]
 
 examples:
   messages:
@@ -51,11 +50,10 @@ done:
   - como casi no hay código PPU, por ahora no se mostrará nada
   - ¡pero llegaremos allí!
   responses:
-  - programemos esto 🤟 [draw]
+  - programemos esto 🤟 [exercise]
 
-draw:
+exercise:
   run: |
-    set((m) => m.$exercise = true);
     {{Top}}.load(null, "rom");
   messages:
   - |-

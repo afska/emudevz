@@ -13,9 +13,9 @@ usage:
   - al colocar el sprite cero en una posición específica en el fondo, la PPU activa un sprite-zero hit cuando esa parte de la pantalla se renderiza
   - esto permite a los juegos detectar el momento en que la PPU alcanza una scanline específica, y luego cambiar las coordenadas de scrolling a mitad del frame
   responses:
-  - aaah [aahh]
+  - aaah [exercise]
 
-aahh:
+exercise:
   messages:
   - |-
     📚  en 🛸  `SpriteRenderer`, modifica el método `_render(...)`; debajo de `buffer[x] = ...`, agrega:

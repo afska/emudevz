@@ -4,9 +4,9 @@ main:
   - ahora que podemos...
   - ¡comenzaremos a dibujar 🏞️  fondos!
   responses:
-  - ¡por fin! [finally]
+  - ¡por fin! [exercise]
 
-finally:
+exercise:
   messages:
   - esta vez, tendrás que seguir la documentación
   - lee 📄  ~/docs/ppu/background_rendering.es.md~
@@ -37,10 +37,10 @@ questions:
   - ok, ok 😅
   - ¿tienes alguna pregunta?
   responses:
-  - entonces, ¿cuántos píxeles debería dibujar? ⏹ [howmany]
-  - ¿cómo sé la línea actual? 🌠 [line]
-  - ayúdame un poco 🆘 [help]
-  - lo hice, pero algunos juegos no parecen funcionar 🤔 [work]
+  - (*) entonces, ¿cuántos píxeles debería dibujar? ⏹ [howmany]
+  - (*) ¿cómo sé la línea actual? 🌠 [line]
+  - (*) ayúdame un poco 🆘 [help]
+  - (*) lo hice, pero algunos juegos no parecen funcionar 🤔 [work]
 
 howmany:
   messages:

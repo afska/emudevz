@@ -12,7 +12,7 @@ how:
   - después de encontrar 8 (el número máximo de sprites por scanline), si encuentra <más> sprites visibles, la 🏁  bandera de sprite overflow (bit 5 de 📊  PPUStatus) se enciende para notificar el error al desarrollador del juego
   - los sprites con identificadores más bajos se renderizan encima de los sprites con identificadores más altos, ¡así que deberías invertir la lista de sprites elegidos!
   responses:
-  - ok creo que lo entendí [ok]
+  - ok creo que lo entendí [exercise]
   - (*) ¿solo 8 sprites por scanline? [only8]
 
 only8:
@@ -23,7 +23,7 @@ only8:
   responses:
   - ...how
 
-ok:
+exercise:
   messages:
   - |-
     📚  genial, implementa el siguiente método en 🛸  `SpriteRenderer`:
@@ -41,10 +41,11 @@ ok:
   - 📚  además, necesitas reiniciar `spriteOverflow` a 0 en ~scanline=-1; cycle=1~, como lo hiciste anteriormente con `isInVBlankInterval`
   - hazlo en `PPU::_onPreLine()`
   responses:
-  - ¿cómo sé si un sprite debe ser renderizado? [visible]
+  - (*) ¿cómo sé si un sprite debe ser renderizado? [visible]
 
 visible:
   messages:
   - hay un método para verificar esto en mi biblioteca Sprite
   - usa ```javascript sprite.shouldRenderInScanline(this.ppu.scanline)```
-  responses: []
+  responses:
+  - ...exercise

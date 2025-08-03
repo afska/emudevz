@@ -13,7 +13,6 @@ main:
   - todas las banderas se representan con una letra en mayúscula
   responses:
   - no <todas> 😑 [notall]
-  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [what]
 
 notall:
   messages:
@@ -21,11 +20,9 @@ notall:
   - el bit 5 es siempre 1
   - el bit 4 ("b")... depende... de... cosas - vamos a ignorarlo por ahora 😂
   responses:
-  - está bien, ¿qué debería hacer? [what]
+  - está bien, ¿qué debería hacer? [exercise]
 
-what:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - 📚  crea una clase 🏁  `FlagsRegister` con 6 propiedades booleanas (llamadas `c`, `z`, `i`, `d`, `v` y `n`)
   - inicialízalas en ```javascript false```
@@ -47,9 +44,11 @@ bits:
   - para construir el valor en ```javascript getValue()```, usa `bitfield(...)`
   - para obtener las banderas en ```javascript setValue(value)```, usa `getFlag(...)`
   responses:
-  - ...what
+  - ...exercise
 
 nowwhat:
   messages:
-  - "📚  perfecto, solo agrega una nueva instancia a la clase 🧠  `CPU`, debajo de los otros registros, así:\n  ```javascript this.flags = new FlagsRegister();```"
+  - |-
+    📚  perfecto, solo agrega una nueva instancia a la clase 🧠  `CPU`, debajo de los otros registros, así:
+      ```javascript this.flags = new FlagsRegister();```
   responses: []

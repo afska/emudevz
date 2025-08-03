@@ -8,7 +8,6 @@ main:
   - revisémoslas
   responses:
   - genial, a ver 👀 [show]
-  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [implement]
 
 show:
   messages:
@@ -43,11 +42,9 @@ fourscreen:
   - <{4screen.png}>
   - esta es la razón por la que definimos nuestra propiedad `vram` como un array de 4096 bytes en `PPUScreen`
   responses:
-  - implementemos esto [implement]
+  - implementemos esto [exercise]
 
-implement:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - traduje los tipos de mapeo en una linda tabla aquí 📄  ~/lib/ppu/mirroringTypes.js~
   - las claves (`$2000`, `$2400`, `$2800` y `$2C00`) representan las direcciones lógicas de la PPU
@@ -64,7 +61,7 @@ implement:
   - 📚  cambia `onLoad(...)` para que llame al nuevo método con el mirroring inicial (recuerda que esto está guardado en ```javascript cartridge.header.mirroringId```)
   - 📚  mapea los rangos $2000-$23FF, $2400-$27FF, $2800-$2BFF y $2C00-$2FFF a VRAM, basado en el `mirroring` actual (tanto lecturas como escrituras)
   responses:
-  - ¿por ejemplo? 🧐 [example]
+  - (*) ¿por ejemplo? 🧐 [example]
 
 example:
   messages:
@@ -85,4 +82,5 @@ example:
           return this.vram[this._mirroring.$2400 + (address - 0x2400)];
         // TODO: ¡Termina los demás!
       }```
-  responses: []
+  responses:
+  - ...exercise

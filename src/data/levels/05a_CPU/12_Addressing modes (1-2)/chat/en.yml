@@ -19,9 +19,9 @@ explain:
   - (the `address` argument in your `JMP` instruction's `run(...)` function)
   - in this case, the <output> would be the result of performing a <16-bit read> from address $4080
   responses:
-  - ✅  ok, let's code this [letscode]
+  - ✅  ok, let's code this [exercise]
 
-letscode:
+exercise:
   messages:
   - actually I already coded some of these modes
   - so you'll only have to implement "Relative" and "Indirect"
@@ -29,9 +29,8 @@ letscode:
   - 📚  implement the missing addressing modes
   - 📚  and export the object under the `addressingModes` key in 📄  ~/code/index.js~
   responses:
-  - help me with the "Relative" mode 😅 [relative]
-  - help me with the "Indirect" mode 😅 [indirect]
-  - ok [end]
+  - (*) help me with the "Relative" mode 😅 [relative]
+  - (*) help me with the "Indirect" mode 😅 [indirect]
 
 relative:
   messages:
@@ -42,11 +41,11 @@ relative:
   - you can convert that 253 to ~-3~ using the `toS8` method
   - 💡  also, to check for page crossing events, you will need `highByteOf(...)`
   responses:
-  - ...letscode
+  - ...exercise
 
 indirect:
   messages:
   - you have a full implementation in the doc file 😊
   - just perform a `read16(...)` with the address!
   responses:
-  - ...letscode
+  - ...exercise

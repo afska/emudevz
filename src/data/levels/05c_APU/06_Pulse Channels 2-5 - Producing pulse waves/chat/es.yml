@@ -5,9 +5,9 @@ main:
   - y ahora también sabemos qué nota deberíamos tocar
   - ¡es hora de conectar ambas cosas e implementar los Canales Pulso!
   responses:
-  - suena bien 👍 [good]
+  - suena bien 👍 [exercise]
 
-good:
+exercise:
   messages:
   - abstraje la lógica de generación de ondas de pulso en 📄  ~/lib/apu/PulseOscillator.js~
   - 📚  en 🟦  `PulseChannel`, importa esa clase y agrega una propiedad `oscillator` con una nueva instancia

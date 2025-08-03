@@ -1,16 +1,12 @@
 ---
 main:
-  run: |
-    if (m.$end) $.goTo("exercise");
   messages:
   - ey
   - ¡mira tu directorio 📁  ~/docs~!
   responses:
-  - ¿qué hay ahí? [exercise]
+  - ¿qué hay ahí? [header]
 
-exercise:
-  run: |
-    set((m) => m.$end = true);
+header:
   messages:
   - te envié algo de documentación 🤓
   - revisa 📄  ~/docs/iNEEES.es.md~
@@ -18,7 +14,7 @@ exercise:
   - puedes inspeccionarlo con el comando `open`, o <clickeando> en la ruta al archivo
   - quiero que lo veas y me digas si entiendes
   responses:
-  - 🤔  creo que entiendo [understand]
+  - 🤔  creo que entiendo [exercise]
   - (*) ¿qué es un mapper? 🗜️ [mapper]
   - (*) ¿qué es mirroring? 🚽 [mirroring]
   - (*) por favor, define PRG-ROM, CHR-ROM, PRG-RAM y CHR-RAM 🐏 [memories]
@@ -32,7 +28,7 @@ mapper:
   - y permiten que los juegos realicen operaciones más complejas como modificar el mirroring sobre la marcha
   - ¡más sobre eso luego! 🔜
   responses:
-  - ...exercise
+  - ...header
 
 mirroring:
   messages:
@@ -40,7 +36,7 @@ mirroring:
   - dependiendo del tipo de mirroring, la PPU usará diferentes secciones de memoria para dibujar fondos 🎨
   - no importa demasiado por ahora
   responses:
-  - ...exercise
+  - ...header
 
 memories:
   messages:
@@ -52,13 +48,13 @@ memories:
   - cada juego usa CHR-ROM o CHR-RAM
   - si usa CHR-RAM, el archivo iNEEES no contendrá su última sección de CHR-ROM
   responses:
-  - ...exercise
+  - ...header
 
 padding:
   messages:
   - solo ceros, una parte del archivo que puedes ignorar
   responses:
-  - ...exercise
+  - ...header
 
 nybble:
   messages:
@@ -66,9 +62,9 @@ nybble:
   - por lo que "nybble inferior" significa los primeros 4 bits (```raw 0000```~1011~)
   - y "nybble superior" significa los últimos 4 bits (~1011~```raw 0000```)
   responses:
-  - ...exercise
+  - ...header
 
-understand:
+exercise:
   messages:
   - excelente 💪
   - los primeros 16 bytes del archivo representan la 🗣️  cabecera
@@ -84,7 +80,7 @@ understand:
       mapperId: 4 // (obtener esto de <Flags 6> y <Flags 7>)
     }```
   responses:
-  - necesito un poco de ayuda 📐 [bits]
+  - (*) necesito un poco de ayuda 📐 [bits]
 
 bits:
   messages:
@@ -110,4 +106,5 @@ import:
     byte.highNybbleOf(0b00110100) // el high nybble es 0b0011 => 3
     byte.lowNybbleOf(0b00110100) // el low nybble es 0b0100 => 4
     byte.buildU8(0b0011, 0b0100) // 0b00110100 => 52```
-  responses: []
+  responses:
+  - ...exercise

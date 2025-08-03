@@ -4,9 +4,9 @@ main:
   - now you are ready
   - we'll start drawing 🏞️  backgrounds!
   responses:
-  - freaking FINALLY! [finally]
+  - freaking FINALLY! [exercise]
 
-finally:
+exercise:
   messages:
   - this time, you'll need to follow the documentation
   - read 📄  ~/docs/ppu/background_rendering.en.md~
@@ -37,10 +37,10 @@ questions:
   - ok, ok 😅
   - do you have some questions?
   responses:
-  - so, how many pixels should I draw? ⏹ [howmany]
-  - how do I know the current line? 🌠 [line]
-  - help me a bit 🆘 [help]
-  - I did it, but some games don't seem to work 🤔 [work]
+  - (*) so, how many pixels should I draw? ⏹ [howmany]
+  - (*) how do I know the current line? 🌠 [line]
+  - (*) help me a bit 🆘 [help]
+  - (*) I did it, but some games don't seem to work 🤔 [work]
 
 howmany:
   messages:

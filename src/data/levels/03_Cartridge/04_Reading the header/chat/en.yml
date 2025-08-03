@@ -1,16 +1,12 @@
 ---
 main:
-  run: |
-    if (m.$end) $.goTo("exercise");
   messages:
   - hey
   - look at your 📁  ~/docs~ directory!
   responses:
-  - what's there? [exercise]
+  - what's there? [header]
 
-exercise:
-  run: |
-    set((m) => m.$end = true);
+header:
   messages:
   - I've sent you some documentation 🤓
   - check out 📄  ~/docs/iNEEES.en.md~
@@ -18,7 +14,7 @@ exercise:
   - you can inspect it with the `open` command, or by <clicking> on the file path
   - I want you to read it and tell me if you understand
   responses:
-  - 🤔  I think I understand [understand]
+  - 🤔  I think I understand [exercise]
   - (*) what's a mapper? 🗜️ [mapper]
   - (*) what's mirroring? 🚽 [mirroring]
   - (*) please define PRG-ROM, CHR-ROM, PRG-RAM and CHR-RAM 🐏 [memories]
@@ -32,7 +28,7 @@ mapper:
   - and they allow games to perform more complex operations like changing mirroring on the fly
   - more on that later! 🔜
   responses:
-  - ...exercise
+  - ...header
 
 mirroring:
   messages:
@@ -40,7 +36,7 @@ mirroring:
   - depending on the mirroring type, the PPU will use different memory sections to draw backgrounds 🎨
   - it doesn't matter too much right now
   responses:
-  - ...exercise
+  - ...header
 
 memories:
   messages:
@@ -52,13 +48,13 @@ memories:
   - each game uses either CHR-ROM or CHR-RAM
   - if it uses CHR-RAM, the iNEEES file will not contain its last CHR-ROM section
   responses:
-  - ...exercise
+  - ...header
 
 padding:
   messages:
   - just zeroes, a part of the file which you can ignore
   responses:
-  - ...exercise
+  - ...header
 
 nybble:
   messages:
@@ -66,9 +62,9 @@ nybble:
   - so "lower nybble" means the first 4 bits (```raw 0000```~1011~)
   - and "upper nybble" means the last 4 bits (~1011~```raw 0000```)
   responses:
-  - ...exercise
+  - ...header
 
-understand:
+exercise:
   messages:
   - awesome 💪
   - the first 16 bytes of the file represent the 🗣️  header
@@ -84,7 +80,7 @@ understand:
       mapperId: 4 // (obtain this from <Flags 6> and <Flags 7>)
     }```
   responses:
-  - I need a bit of help 📐 [bits]
+  - (*) I need a bit of help 📐 [bits]
 
 bits:
   messages:
@@ -110,4 +106,5 @@ import:
     byte.highNybbleOf(0b00110100) // high nybble is 0b0011 => 3
     byte.lowNybbleOf(0b00110100) // low nybble is 0b0100 => 4
     byte.buildU8(0b0011, 0b0100) // 0b00110100 => 52```
-  responses: []
+  responses:
+  - ...exercise

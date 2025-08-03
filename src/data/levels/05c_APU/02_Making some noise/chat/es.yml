@@ -7,7 +7,6 @@ main:
   - primero, integraré tu 🔊  APU en el emulador
   responses:
   - adelante [integrate]
-  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [wave]
 
 integrate:
   messages:
@@ -32,11 +31,9 @@ done:
   - ¡pero ya llegaremos!
   - vamos a programar una <onda de ejemplo>
   responses:
-  - ¿como una onda cuadrada? ⏹️ [wave]
+  - ¿como una onda cuadrada? ⏹️ [exercise]
 
-wave:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - ¡correcto! actualmente, deberías tener algo como ```javascript onSample(this.sample)```
   - |-
@@ -51,7 +48,7 @@ wave:
       // </test>```
   - ¡pruébalo! al cargar una ROM, deberías escuchar una onda cuadrada tocando una nota <A4> (~440~ Hz) 🎵
   responses:
-  - ¿qué es el ciclo de trabajo? [duty]
+  - (*) ¿qué es el ciclo de trabajo? [duty]
 
 duty:
   messages:
@@ -63,4 +60,5 @@ duty:
   - y con <75%>
   - <{wave_square_75duty.png;32x32}>
   - ¡todos suenan <muy diferentes>! prueba cambiar la constante `dutyCycle` para ver cómo reacciona
-  responses: []
+  responses:
+  - ...exercise

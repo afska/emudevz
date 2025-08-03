@@ -19,9 +19,9 @@ explain:
   - (el argumento `address` en la función `run(...)` de tu instrucción `JMP`)
   - en este caso, la <salida> sería el resultado de realizar una <lectura de 16 bits> a la dirección $4080
   responses:
-  - ✅  ok, programemos esto [letscode]
+  - ✅  ok, programemos esto [exercise]
 
-letscode:
+exercise:
   messages:
   - en realidad ya codifiqué algunos de estos modos
   - por lo que solo tendrás que implementar "Relative" e "Indirect"
@@ -31,7 +31,6 @@ letscode:
   responses:
   - ayúdame con el modo "Relative" 😅 [relative]
   - ayúdame con el modo "Indirect" 😅 [indirect]
-  - ok [end]
 
 relative:
   messages:
@@ -42,11 +41,11 @@ relative:
   - puedes convertir ese 253 en ~-3~ usando el método `toS8`
   - 💡  además, para detectar si se cruza de página, vas a necesitar `highByteOf(...)`
   responses:
-  - ...letscode
+  - ...exercise
 
 indirect:
   messages:
   - tienes una implementación completa en el archivo de documentación 😊
   - ¡solo realiza un `read16(...)` con la dirección!
   responses:
-  - ...letscode
+  - ...exercise

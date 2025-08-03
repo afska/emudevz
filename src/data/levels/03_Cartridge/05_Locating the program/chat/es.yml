@@ -6,7 +6,7 @@ main:
   - el código está justo después de la cabecera de 16 bytes, pero recuerda que podrías tener que omitir 512 bytes si la cabecera lo indica
   - <{prg.png}>
   responses:
-  - ¿cómo puedo cortar los bytes? ✂️ [cut]
+  - (*) ¿cómo puedo cortar los bytes? ✂️ [cut]
 
 cut:
   messages:
@@ -23,4 +23,5 @@ morehelp:
   - |-
     si quieres 30 bytes, empezando por el byte 5, necesitas escribir
       ```javascript array.slice(5, 5 + 30)```
-  responses: []
+  responses:
+  - ...main

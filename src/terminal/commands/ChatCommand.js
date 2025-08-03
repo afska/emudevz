@@ -14,6 +14,8 @@ const MESSAGE_SYMBOL = ">> ";
 const SELECTION_SYMBOL = "=> ";
 const SYSTEM_PREFIX = "<! ";
 const EXERCISE_PREFIX = "📚";
+const EXERCISE_SECTION = "exercise";
+const ALT_MAIN_SECTION = "main2";
 const MESSAGE_TYPING_INTERVAL = 30;
 
 // eslint-disable-next-line
@@ -46,10 +48,7 @@ export default class ChatCommand extends Command {
 				memory.sectionName,
 				memory.history
 			);
-			const responses = chatScript.getResponsesOf(
-				memory.sectionName,
-				memory.history
-			);
+			const responses = this._getResponses(chatScript, memory);
 			const events = chatScript.getEventsOf(memory.sectionName, memory.history);
 
 			this._eval(chatScript.getStartUpCodeOf(memory.sectionName));
@@ -74,6 +73,11 @@ export default class ChatCommand extends Command {
 			} else {
 				await this._terminal.newline();
 				this._showDisconnected();
+
+				// when there are no responses, history is cleared (except for `exercise`)
+				// this is to allow user to re-ask consumable questions in the next run
+				memory.history = memory.history.filter((it) => it === EXERCISE_SECTION);
+
 				this._goTo(ChatScript.END_SECTION);
 			}
 		}
@@ -115,6 +119,42 @@ export default class ChatCommand extends Command {
 			chat.isOpen = false;
 		});
 		if (this._linkProvider) this._linkProvider.end();
+	}
+
+	_getResponses(chatScript, memory) {
+		const responses = chatScript.getResponsesOf(
+			memory.sectionName,
+			memory.history
+		);
+
+		let exercise = null;
+		try {
+			exercise = chatScript.getSection(EXERCISE_SECTION);
+		} catch (e) {}
+
+		let altMainSection = null;
+		try {
+			altMainSection = chatScript.getSection(ALT_MAIN_SECTION);
+		} catch (e) {}
+		const initialName =
+			altMainSection != null ? ALT_MAIN_SECTION : ChatScript.INITIAL_SECTION;
+
+		if (
+			memory.sectionName === initialName &&
+			exercise != null &&
+			(Level.current.isCompleted || memory.history.includes(EXERCISE_SECTION))
+		) {
+			responses.push({
+				content: `${EXERCISE_PREFIX}  ${locales.get("take_me_to_the_action")}`,
+				link: EXERCISE_SECTION,
+				isConsumable: false,
+				isKey: false,
+				isLock: false,
+				number: responses.length + 1,
+			});
+		}
+
+		return responses;
 	}
 
 	async _showDisconnected() {

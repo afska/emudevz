@@ -1,26 +1,28 @@
 ---
 main:
   run: |
-    if (level.hasStoredContent) $.goTo("exercise");
-    else {
-      set((m) => {
-        m.chat.stopBlock = locales.get("not_now");
-        m.$canRun = false;
-        m.$canEdit = false;
-      });
-      {{Bottom}}.setMemoryStart(0x0);
-    }
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
+    {{Bottom}}.setMemoryStart(0x0);
   messages: []
   events:
-  - compiled [lda]
+  - compiled [main2]
 
-lda:
+main2:
   run: |
     bus.emit("step");
+  messages:
+  - this is where addressing gets interesting 🧐
+  responses:
+  - why? [why]
+
+why:
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
-  - this is where addressing gets interesting 🧐
   - in "Zero Page,X" addressing mode, a zero page address is given
   - and then the value of [X] is added
   - run the first two instructions ⏩
@@ -122,6 +124,7 @@ exercise:
       m.content.useTemp = false;
     });
     {{Bottom}}.setDelay(0);
+    {{Bottom}}.setMemoryStart(0x4020);
   messages:
   - 📚  remove all the code
   - 📚  build a program that screams through the memory addresses 😱

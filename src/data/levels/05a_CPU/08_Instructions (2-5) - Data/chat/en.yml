@@ -6,7 +6,7 @@ main:
   - 📚  following 📄  ~/docs/cpu/instructions.en.md~,
   - implement all the data instructions in your `instructions` object!
   responses:
-  - I need help with `PHP` 😅 [php]
+  - (*) I need help with `PHP` 😅 [php]
 
 php:
   messages:
@@ -30,4 +30,5 @@ why:
   - as emulator developers, we don't care about <why> things work in a certain way
   - we only care about <how> they work 🤷
   - so you turn that bit 4 on, please
-  responses: []
+  responses:
+  - ...main

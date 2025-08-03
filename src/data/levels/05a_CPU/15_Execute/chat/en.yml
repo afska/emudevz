@@ -7,7 +7,6 @@ main:
   - and increment the cycle counters
   responses:
   - you promised you'd explain cycles 🚲 [cycles]
-  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [rightway]
 
 cycles:
   messages:
@@ -18,7 +17,7 @@ cycles:
   - so every opcode knows how many cycles it should take
   responses:
   - (*) why don't we want to build a "cycle-accurate" emulator? [accuracy]
-  - ✅  alright, how should we proceed? [rightway]
+  - ✅  alright, how should we proceed? [exercise]
 
 accuracy:
   messages:
@@ -29,9 +28,7 @@ accuracy:
   responses:
   - ...cycles
 
-rightway:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - |-
     📚  first, we'll add these methods to your 🧠  `CPU`:

@@ -14,9 +14,9 @@ loopy:
   - es mucho más complicado que eso
   - afortunadamente, con mi código, puedes implementar el desplazamiento Haciéndolo Bien™ ✨
   responses:
-  - ¿qué necesitamos cambiar? [changes]
+  - ¿qué necesitamos cambiar? [exercise]
 
-changes:
+exercise:
   messages:
   - |-
     📚  importa la biblioteca y agrega una propiedad `loopy` en el constructor de 🖥️  `PPU`, asignada a:

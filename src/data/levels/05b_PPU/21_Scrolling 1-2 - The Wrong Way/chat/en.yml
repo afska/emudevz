@@ -6,7 +6,6 @@ main:
   - a lot of people have tried, but only the chosen ones were able to do it
   responses:
   - do you have a plan? [plan]
-  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [proceed]
 
 plan:
   messages:
@@ -63,11 +62,9 @@ long:
   - so, if the base name table is 1, it means that the viewport should start at the name table positioned in $2400
   - <{3rdparty_scrolled_nametables.png}>
   responses:
-  - enough talk, how do we proceed? [proceed]
+  - enough talk, how do we proceed? [exercise]
 
-proceed:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - (again, ~THIS IS NOT EXACTLY CORRECT~, but it'll work for now!)
   - |-

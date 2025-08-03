@@ -7,9 +7,9 @@ main:
   - "esta operación también incrementa la dirección en 📍  PPUAddr, y tiene un pequeño truco:"
   - todas las lecturas están <retrasadas> por 1, excepto para la sección Palette RAM y sus espejos
   responses:
-  - ¿cómo podemos implementar el retraso? ⌛ [delay]
+  - ¿cómo podemos implementar el retraso? ⌛ [exercise]
 
-delay:
+exercise:
   messages:
   - simple, cuando se solicita una <lectura>, lees en un buffer, pero luego retornas el <valor anterior> de ese buffer
   - |-

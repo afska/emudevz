@@ -1,14 +1,11 @@
 ---
 main:
   run: |
-    if (level.hasStoredContent) $.goTo("exercise");
-    else {
-      set((m) => {
-        m.chat.stopBlock = locales.get("not_now");
-        m.$canRun = false;
-        m.$canEdit = false;
-      });
-    }
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
   messages:
   - in case you didn't notice, all instructions can take one or zero <arguments>
   - and one compiled instruction can occupy 1, 2, or 3 bytes

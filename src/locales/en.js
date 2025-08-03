@@ -165,6 +165,7 @@ export default {
 	step_reset: "Reset",
 	streaming_video: "Receiving video stream",
 	sync_emulator: "Sync emulator",
+	take_me_to_the_action: "take me to the action",
 	template_file: "📑 This is a template file.",
 	template_file_click_existing: "Click here to navigate to its working copy:",
 	template_file_click_unexisting: "Click here to create a working copy:",

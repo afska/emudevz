@@ -7,7 +7,7 @@ main:
   - 🛸  y ~s~ habilita la renderización de sprites
   responses:
   - (*) ¿por qué un juego querría deshabilitar la renderización? [why]
-  - hagámoslo [lets]
+  - hagámoslo [exercise]
 
 why:
   messages:
@@ -17,7 +17,7 @@ why:
   responses:
   - ...main
 
-lets:
+exercise:
   messages:
   - 📚  en `PPUMask`, implementa el método `onLoad()`, usando `addField(...)` para mapear los bits mencionados
   - |-

@@ -15,9 +15,9 @@ how:
   - if the three emphasis bits are enabled at the same time, all colors will be ~25%~ darker
   - <color emphasis> is independent from <grayscale mode>, so the emphasis bits still tint the color of the gray image
   responses:
-  - so... [so]
+  - so... [exercise]
 
-so:
+exercise:
   messages:
   - open 📄  ~/docs/ppu/video_registers.en.md~
   - 📚  in 🎭  `PPUMask`, edit the `onLoad()` method and use `addField(...)` to map the `grayscale`, `emphasizeRed`, `emphasizeGreen`, and `emphasizeBlue` bits

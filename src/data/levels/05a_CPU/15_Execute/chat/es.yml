@@ -7,7 +7,6 @@ main:
   - e incrementará los contadores de ciclos
   responses:
   - prometiste que explicarías ciclos 🚲 [cycles]
-  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [rightway]
 
 cycles:
   messages:
@@ -18,7 +17,7 @@ cycles:
   - por lo que cada opcode sabe cuántos ciclos debería tomar
   responses:
   - (*) ¿por qué no queremos construir un emulador "cycle-accurate"? [accuracy]
-  - ✅  bueno, ¿cómo hacemos? [rightway]
+  - ✅  bueno, ¿cómo hacemos? [exercise]
 
 accuracy:
   messages:
@@ -29,9 +28,7 @@ accuracy:
   responses:
   - ...cycles
 
-rightway:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - |-
     📚  primero, vamos a agregar estos métodos a tu 🧠  `CPU`:

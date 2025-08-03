@@ -6,7 +6,7 @@ main:
   - the code is right after the 16-byte header, but remember that you might have to skip 512 bytes if the header says so
   - <{prg.png}>
   responses:
-  - how can I cut the bytes? ✂️ [cut]
+  - (*) how can I cut the bytes? ✂️ [cut]
 
 cut:
   messages:
@@ -23,4 +23,5 @@ morehelp:
   - |-
     if you want 30 bytes, starting from byte 5, you need to write
       ```javascript array.slice(5, 5 + 30)```
-  responses: []
+  responses:
+  - ...main

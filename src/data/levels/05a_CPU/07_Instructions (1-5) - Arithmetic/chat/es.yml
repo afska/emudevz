@@ -8,9 +8,9 @@ main:
   - voy a ejemplificar esto implementando 3 instrucciones comunes en un formato particular
   - ¡mira tu archivo 📄  ~/tmpl/cpu/instructions.js~!
   responses:
-  - bueno... ¿cuántas instrucciones aritméticas hay? [howmany]
+  - bueno... ¿cuántas instrucciones aritméticas hay? [exercise]
 
-howmany:
+exercise:
   messages:
   - son 16 en total, ¡pero ya programé 3 por ti! 😎
   - y algunas de ellas son muy similares
@@ -20,9 +20,8 @@ howmany:
   - necesitas documentación acerca de qué debería hacer cada instrucción
   - así que revisa 📄  ~/docs/cpu/instructions.es.md~
   responses:
-  - necesito ayuda para mover bits 😅 [bits]
-  - necesito ayuda para actualizar las banderas ~Z~ y ~N~ 😅 [flags]
-  - ok [end]
+  - (*) necesito ayuda para mover bits 😅 [bits]
+  - (*) necesito ayuda para actualizar las banderas ~Z~ y ~N~ 😅 [flags]
 
 bits:
   messages:
@@ -44,7 +43,7 @@ rotation:
       ```javascript (number >> 1) | ((number & 1) << 7)```
   - ten en cuenta que así no es como funcionan `ROL` y `ROR`, ya que esas rotan usando la bandera ~C~
   responses:
-  - ...howmany
+  - ...exercise
 
 flags:
   messages:
@@ -55,4 +54,4 @@ flags:
     ya tienes métodos para esta tarea, solo usa:
       `cpu.flags.updateZeroAndNegative(...)`
   responses:
-  - ...howmany
+  - ...exercise

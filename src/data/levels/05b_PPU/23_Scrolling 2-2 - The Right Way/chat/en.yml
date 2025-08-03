@@ -14,9 +14,9 @@ loopy:
   - it's way more complicated than that
   - luckily, with my code, you can easily implement scrolling The Right Way™ ✨
   responses:
-  - what do we need to change? [changes]
+  - what do we need to change? [exercise]
 
-changes:
+exercise:
   messages:
   - |-
     📚  import the library and add a `loopy` property to 🖥️  `PPU`'s constructor, assigned to:

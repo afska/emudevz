@@ -25,9 +25,9 @@ fix:
   - then, we'll save current scanline's colors and sprites into a temporary buffer
   - and we'll only plot the pixels from that buffer if the sprite priority is <front> or the background pixel is transparent
   responses:
-  - sounds clear enough [clear]
+  - sounds clear enough [exercise]
 
-clear:
+exercise:
   messages:
   - |-
     📚  alright, in the 🖥️  `PPU` class, add to the constructor:

@@ -13,9 +13,9 @@ usage:
   - by placing sprite zero at a specific position in the background, the PPU would trigger a sprite-zero hit when that part of the screen was rendered
   - this allows games to detect the moment the PPU has reached a specific scanline, and then change the scroll coordinates mid-frame
   responses:
-  - aahh [aahh]
+  - aahh [exercise]
 
-aahh:
+exercise:
   messages:
   - |-
     📚  in 🛸  `SpriteRenderer`, change the `_render(...)` method; below `buffer[x] = ...`, add:

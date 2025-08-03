@@ -4,8 +4,8 @@ main:
   - this is represented in our `Sprite` class with the `flipX` and `flipY` attributes
   - 📚  change your 🛸  `SpriteRenderer` so it plots the right pixels, depending on these attributes
   responses:
-  - wait, what did you mean by ~flipped~? [whats]
-  - I need help with the horizontal flip [horizontal]
+  - (*) wait, what did you mean by ~flipped~? [whats]
+  - (*) I need help with the horizontal flip [horizontal]
 
 whats:
   messages:
@@ -45,4 +45,5 @@ vertical:
   - |-
     then, as the last argument of 🕊️  `Tile`'s constructor, use:
       ```javascript sprite.flipY ? 7 - tileInsideY : tileInsideY```
-  responses: []
+  responses:
+  - ...main

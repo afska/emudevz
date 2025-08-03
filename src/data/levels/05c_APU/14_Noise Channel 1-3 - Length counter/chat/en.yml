@@ -47,11 +47,12 @@ exercise:
       **->** if `!this.enableNoise`:
         **->** resets the channel's length counter
   responses:
-  - "why does the template you provided use `Math.random()`? [random]"
+  - "(*) why does the template you provided use `Math.random()`? [random]"
 
 random:
   messages:
   - well, obviously that's not what the NEEES does
   - but I added it just so you can hear something!
   - we'll properly emulate the noise in the next level
-  responses: []
+  responses:
+  - ...exercise

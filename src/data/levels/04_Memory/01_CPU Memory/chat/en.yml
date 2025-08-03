@@ -16,7 +16,7 @@ other62:
   - the memory map has a very specific structure, see 📄  ~/docs/cpu/cpu_memory.en.md~
   responses:
   - (*) what's "memory-mapped I/O"? 🗺️ [io]
-  - 👌  I see... what do I need to implement? [implement]
+  - 👌  I see... what do I need to implement? [exercise]
 
 io:
   messages:
@@ -29,7 +29,7 @@ io:
   responses:
   - ...other62
 
-implement:
+exercise:
   messages:
   - for now, we'll just implement the first range (🐏  WRAM)
   - 📚  create a 🐏  `CPUMemory` class, using 📄  ~/tmpl/CPUMemory.js~ as a template
@@ -44,7 +44,7 @@ implement:
         (leave the rest of the code as it is)
   - 📚  then, as you did with 💾  `Cartridge`, add the class to 📄  ~/code/index.js~
   responses:
-  - what about the mirrored bytes? 📐 [help]
+  - (*) what about the mirrored bytes? 📐 [help]
 
 help:
   messages:
@@ -54,4 +54,5 @@ help:
   - that's why the range $0800-$1FFF is called a 🚽  mirror of $0000-$07FF
   - "here's an example with the other mirror range in $2008:"
   - <{memory_mirror.png}>
-  responses: []
+  responses:
+  - ...exercise

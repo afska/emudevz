@@ -9,9 +9,9 @@ main:
   - though the triangle channel's pitch is <one octave below>, so we have to divide the resulting frequency by two ⚗️
   - "```javascript frequency = 1789773 / (16 * (timer + 1)) / 2```"
   responses:
-  - ah, that's why it's used for bass lines 🎸 [bass]
+  - ah, that's why it's used for bass lines 🎸 [exercise]
 
-bass:
+exercise:
   messages:
   - exactly!
   - "I'll help with the actual triangle wave generation, here's my oscillator code:"

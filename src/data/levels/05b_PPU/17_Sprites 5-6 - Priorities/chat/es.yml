@@ -25,9 +25,9 @@ fix:
   - luego, guardaremos los colores y sprites de la scanline actual en un buffer temporal
   - y solo dibujaremos los píxeles de ese buffer si la prioridad del sprite es <front> o si el píxel del fondo es transparente
   responses:
-  - suena bastante claro [clear]
+  - suena bastante claro [exercise]
 
-clear:
+exercise:
   messages:
   - |-
     📚  de acuerdo, en la clase 🖥️  `PPU`, agrega al constructor:

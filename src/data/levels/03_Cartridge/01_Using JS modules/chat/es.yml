@@ -57,7 +57,7 @@ exercise:
       import Cartridge from "./Cartridge";
       export default { Cartridge }```
   responses:
-  - ¿exportar? ¿módulos? 🧐 [modules]
+  - (*) ¿exportar? ¿módulos? 🧐 [modules]
 
 modules:
   messages:
@@ -75,4 +75,5 @@ modules:
     para importar un módulo:
       ```javascript import aFunction from "./relative/path/to/aFunction"```
       ```javascript import SomeClass from "./relative/path/to/SomeClass"```
-  responses: []
+  responses:
+  - ...exercise

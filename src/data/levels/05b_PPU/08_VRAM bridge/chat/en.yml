@@ -15,9 +15,9 @@ how:
   - then, they write to 📦  PPUData the byte they want to put in that address
   - <{PPUAddr_PPUData.png}>
   responses:
-  - nice, I guess I need to define the VRAM somewhere [define]
+  - nice, I guess I need to define the VRAM somewhere [exercise]
 
-define:
+exercise:
   messages:
   - yeah, better start with that
   - 📚  like you did with `CPUMemory::ram`, add a property called `vram` in 🐏  `PPUMemory`
@@ -58,7 +58,7 @@ define:
     **onRead()**:
       **->** after resetting `isInVBlankInterval`, it also resets the `latch` from 📍  `PPUAddr`
   responses:
-  - what's this address increment? 🤔 [increment]
+  - (*) what's this address increment? 🤔 [increment]
 
 increment:
   messages:
@@ -66,4 +66,5 @@ increment:
   - the PPU increments the address automatically after writing to 📦  PPUData
   - depending on what's in 🎛️  PPUCtrl, this can be a ~+1~ or a ~+32~
   - this autoincrement is useful for games to fill VRAM faster
-  responses: []
+  responses:
+  - ...exercise

@@ -15,9 +15,9 @@ main:
     `STA ($55),Y`: la instrucción `STA` + el modo `INDIRECT_INDEXED`
       => opcode $91
   responses:
-  - ¿eso significa que `STA` puede tener diferentes opcodes dependiendo del modo de direccionamiento? [multiple]
+  - ¿eso significa que `STA` puede tener diferentes opcodes dependiendo del modo de direccionamiento? [exercise]
 
-multiple:
+exercise:
   messages:
   - exactamente eso ✅
   - "aquí hay una función que define todos los opcodes por ti:"

@@ -47,11 +47,12 @@ exercise:
       **->** si `!this.enableNoise`:
         **->** reinicia el contador de longitud del canal
   responses:
-  - "¿por qué la plantilla que diste usa `Math.random()`? [random]"
+  - "(*) ¿por qué la plantilla que diste usa `Math.random()`? [random]"
 
 random:
   messages:
   - bueno, obviamente eso no es lo que hace la NEEES
   - ¡pero lo agregué solo para que puedas escuchar algo!
   - vamos a emular correctamente el ruido en el siguiente nivel
-  responses: []
+  responses:
+  - ...exercise

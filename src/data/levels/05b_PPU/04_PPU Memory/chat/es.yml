@@ -15,9 +15,9 @@ howso:
   - y solo usará las direcciones CPU como un puente para comunicarse con la CPU
   - a partir de ahora, diremos algo como `dirección PPU $1F2A` o `dirección CPU $1F2A` para diferenciar los dos espacios
   responses:
-  - ¿cómo podemos emular esto? 😮 [emulate]
+  - ¿cómo podemos emular esto? 😮 [exercise]
 
-emulate:
+exercise:
   messages:
   - 📚  crea una clase 🐏  `PPUMemory`, utilizando 📄  ~/tmpl/ppu/PPUMemory.js~ como plantilla
   - 📚  implementa solo el primer rango ($0000-$1FFF), tanto para las operaciones `read(...)` como `write(...)`

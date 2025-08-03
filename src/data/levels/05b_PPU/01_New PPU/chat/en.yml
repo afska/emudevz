@@ -9,7 +9,6 @@ main:
   - 🚲  cycles, 🌠  scanlines, and 🖼️  frames!
   responses:
   - what do you mean? [wdym]
-  - <<level.isCompleted || m.$exercise>> 📚  take me to the action [next]
 
 wdym:
   messages:
@@ -55,11 +54,9 @@ vblank_hblank:
   - and at the end of all visible scanlines, it gets a longer break, the Vertical Blank, or VBlank 🏝️
   - during VBlank/HBlank time, the PPU isn't drawing any pixels, and that gives the program a chance to update the screen
   responses:
-  - got it, what's next? [next]
+  - got it, what's next? [exercise]
 
-next:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - 📚  create a file for the PPU code, using 📄  ~/tmpl/ppu/PPU.js~ as a template
   - |-
@@ -75,11 +72,12 @@ next:
   - 📚  then, import your file from 📄  ~/code/index.js~
   - and add the corresponding `PPU` key to the exported object
   responses:
-  - why does the scanline counter start at -1? 😕 [minus1]
+  - (*) why does the scanline counter start at -1? 😕 [minus1]
 
 minus1:
   messages:
   - the scanline ~-1~ (also called pre-line) is a non-visible line, in which the PPU gets things ready for the upcoming frame
   - during this time, it resets some important status flags
   - more on that later! 🔜
-  responses: []
+  responses:
+  - ...exercise

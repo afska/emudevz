@@ -5,9 +5,9 @@ main:
   - "we'll implement that as simply as we can:"
   - just call a `tick()` function on cycle 260 of every pre-line and visible scanline
   responses:
-  - is it that simple? [simple]
+  - is it that simple? [exercise]
 
-simple:
+exercise:
   messages:
   - yeah!
   - |-

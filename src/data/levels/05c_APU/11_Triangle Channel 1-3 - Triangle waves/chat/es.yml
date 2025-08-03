@@ -9,9 +9,9 @@ main:
   - aunque el tono del canal triangular está <una octava más abajo>, así que tenemos que dividir la frecuencia resultante por dos ⚗️
   - "```javascript frequency = 1789773 / (16 * (timer + 1)) / 2```"
   responses:
-  - ah, por eso se usa para líneas de bajo 🎸 [bass]
+  - ah, por eso se usa para líneas de bajo 🎸 [exercise]
 
-bass:
+exercise:
   messages:
   - ¡exacto!
   - "yo ayudaré con la generación real de la onda triangular, aquí está mi código de oscilador:"

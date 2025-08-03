@@ -10,9 +10,9 @@ main:
         this._render(sprites); // ¡necesitamos definir esto!
       }```
   responses:
-  - fácil... ¿eh? [easy]
+  - fácil... ¿eh? [exercise]
 
-easy:
+exercise:
   messages:
   - vamos a hacer lo siguiente
   - |-
@@ -42,25 +42,25 @@ easy:
             **->** si ```javascript colorIndex > 0``` (es decir, el píxel no es transparente):
               **->** llama a ```javascript this.ppu.plot(...)``` para dibujar el píxel
   responses:
-  - ¿qué pattern table debería usar? [patterntable]
-  - ¿qué id de tile debería usar? [tileid]
-  - ¿cómo puedo obtener los colores de la paleta? [palette]
-  - ¿qué ~X~ y ~Y~ debería usar al dibujar píxeles? [coordinates]
-  - ¿qué color debería usar al dibujar píxeles? [color]
+  - (*) ¿qué pattern table debería usar? [patterntable]
+  - (*) ¿qué id de tile debería usar? [tileid]
+  - (*) ¿cómo puedo obtener los colores de la paleta? [palette]
+  - (*) ¿qué ~X~ y ~Y~ debería usar al dibujar píxeles? [coordinates]
+  - (*) ¿qué color debería usar al dibujar píxeles? [color]
 
 patterntable:
   messages:
   - ¡pregúntale al sprite!
   - "```javascript sprite.patternTableId```"
   responses:
-  - ...easy
+  - ...exercise
 
 tileid:
   messages:
   - ¡el sprite sabe!
   - "```javascript sprite.tileIdFor(insideY)```"
   responses:
-  - ...easy
+  - ...exercise
 
 palette:
   messages:
@@ -68,17 +68,17 @@ palette:
     puedes obtener, por ejemplo, el <color 2> usando:
     ```javascript this.ppu.getColor(sprite.paletteId, 2)```
   responses:
-  - ...easy
+  - ...exercise
 
 coordinates:
   messages:
   - la posición ~x~ debería ser ```javascript sprite.x + insideX```
   - la posición ~y~ debería ser la scanline actual
   responses:
-  - ...easy
+  - ...exercise
 
 color:
   messages:
   - leer `paletteColors` con el `colorIndex` te dará el ~color~
   responses:
-  - ...easy
+  - ...exercise

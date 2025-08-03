@@ -8,9 +8,9 @@ main:
   - (we've mapped that as 📊  `PPUStatus::isInVBlankInterval`)
   - also, the 🖥️  PPU can notify a game that it's entering VBlank by using <CPU interrupts>
   responses:
-  - interrupts? [interrupts]
+  - interrupts? [exercise]
 
-interrupts:
+exercise:
   messages:
   - yeah! think of them as notifications like...
   - "\"NOW IT'S TIME TO DRAW!\""

@@ -6,7 +6,6 @@ main:
   - mucha gente lo ha intentado, pero solo los elegidos pudieron lograrlo
   responses:
   - ¿tienes un plan? [plan]
-  - <<level.isCompleted || m.$exercise>> 📚  llévame a la acción [proceed]
 
 plan:
   messages:
@@ -63,11 +62,9 @@ long:
   - así que, si la name table base es 1, significa que la ventana debería comenzar en la name table posicionada en $2400
   - <{3rdparty_scrolled_nametables.png}>
   responses:
-  - suficiente charla, ¿cómo procedemos? [proceed]
+  - suficiente charla, ¿cómo procedemos? [exercise]
 
-proceed:
-  run: |
-    set((m) => m.$exercise = true);
+exercise:
   messages:
   - (de nuevo, ESTO NO ES EXACTAMENTE CORRECTO, ¡pero funcionará por ahora!)
   - |-

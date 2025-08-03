@@ -15,9 +15,9 @@ how:
   - luego, escriben en 📦  PPUData el byte que quieren poner en esa dirección
   - <{PPUAddr_PPUData.png}>
   responses:
-  - bien, supongo que necesito definir la VRAM en algún lugar [define]
+  - bien, supongo que necesito definir la VRAM en algún lugar [exercise]
 
-define:
+exercise:
   messages:
   - sí, mejor empieza por eso
   - 📚  como hiciste con `CPUMemory::ram`, agrega una propiedad llamada `vram` en 🐏  `PPUMemory`
@@ -58,7 +58,7 @@ define:
     **onRead()**:
       **->** luego de resetear `isInVBlankInterval`, también resetea el `latch` de 📍  `PPUAddr`
   responses:
-  - ¿qué es este incremento de dirección? 🤔 [increment]
+  - (*) ¿qué es este incremento de dirección? 🤔 [increment]
 
 increment:
   messages:
@@ -66,4 +66,5 @@ increment:
   - la PPU incrementa la dirección automáticamente después de escribir en 📦  PPUData
   - dependiendo de lo que esté en 🎛️  PPUCtrl, esto puede ser un ~+1~ o un ~+32~
   - este autoincremento es útil para que los juegos llenen la VRAM más rápido
-  responses: []
+  responses:
+  - ...exercise
