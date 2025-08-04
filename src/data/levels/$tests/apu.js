@@ -40,7 +40,7 @@ it("receives and saves the `cpu` property", () => {
 	const cpu = {};
 	const apu = new APU(cpu);
 	expect(apu).to.include.key("cpu");
-	expect(apu.cpu).to.equalN(cpu);
+	expect(apu.cpu).to.equalN(cpu, "cpu");
 })({
 	locales: {
 		es: "recibe y guarda una propiedad `cpu`",
@@ -934,8 +934,8 @@ it("`PulseChannel`: `sample()` calls `oscillator.sample()`", () => {
 		return random2;
 	};
 
-	expect(apu.channels.pulses[0].sample()).to.equalN(random1);
-	expect(apu.channels.pulses[1].sample()).to.equalN(random2);
+	expect(apu.channels.pulses[0].sample()).to.equalN(random1, "[0].sample()");
+	expect(apu.channels.pulses[1].sample()).to.equalN(random2, "[1].sample()");
 })({
 	locales: {
 		es: "`PulseChannel`: `sample()` llama a `oscillator.sample()`",
@@ -1821,8 +1821,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume > 0`, res
 
 	envelope.clock(9, false);
 
-	expect(envelope.dividerCount).to.equalN(9);
-	expect(envelope.volume).to.equalN(4);
+	expect(envelope.dividerCount).to.equalN(9, "dividerCount");
+	expect(envelope.volume).to.equalN(4, "volume");
 })({
 	locales: {
 		es:
@@ -1841,8 +1841,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with
 
 	envelope.clock(6, false);
 
-	expect(envelope.dividerCount).to.equalN(6);
-	expect(envelope.volume).to.equalN(0);
+	expect(envelope.dividerCount).to.equalN(6, "dividerCount");
+	expect(envelope.volume).to.equalN(0, "volume");
 })({
 	locales: {
 		es:
@@ -1861,8 +1861,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with
 
 	envelope.clock(2, true);
 
-	expect(envelope.dividerCount).to.equalN(2);
-	expect(envelope.volume).to.equalN(15);
+	expect(envelope.dividerCount).to.equalN(2, "dividerCount");
+	expect(envelope.volume).to.equalN(15, "volume");
 })({
 	locales: {
 		es:

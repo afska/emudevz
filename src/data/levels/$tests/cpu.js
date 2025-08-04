@@ -592,9 +592,9 @@ it("can add cycles based on `operation`", () => {
 	// DEC $40,X (6 cycles)
 	cpu.cycle = 3;
 	cpu.extraCycles = 9;
-	expect(cpu._addCycles(cpu.operations[0xd6])).to.equalN(15);
-	expect(cpu.cycle).to.equalN(18);
-	expect(cpu.extraCycles).to.equalN(0);
+	expect(cpu._addCycles(cpu.operations[0xd6])).to.equalN(15, "_addCycles(...)");
+	expect(cpu.cycle).to.equalN(18, "cycle");
+	expect(cpu.extraCycles).to.equalN(0, "extraCycles");
 })({
 	locales: {
 		es: "puede agregar ciclos basándose en `operation`",
