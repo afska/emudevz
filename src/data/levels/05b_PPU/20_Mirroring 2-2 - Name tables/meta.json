@@ -50,8 +50,7 @@
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 120,
-			"ppu": "TestPPU.v8.js",
-			"saveState": "supertiltbro_win.ss"
+			"ppu": "TestPPU.v8.js"
 		}
 	],
 	"memory": {
