@@ -7,11 +7,6 @@ before(async () => {
 
 const dummyPpu = {};
 const dummyControllers = [];
-const dummyCartridge = {
-	header: {
-		mirroringId: "VERTICAL",
-	},
-};
 const dummyMapper = {
 	cpuRead: () => 0,
 	cpuWrite: () => {},
@@ -48,7 +43,7 @@ it("receives and saves the `cpu` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
 
-it("initializates the counters", () => {
+it("initializates the <counters>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -59,12 +54,12 @@ it("initializates the counters", () => {
 	expect(apu.sample).to.equalN(0, "sample");
 })({
 	locales: {
-		es: "inicializa los contadores",
+		es: "inicializa los <contadores>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
 
-it("increments the sample counter on every `step(...)` call", () => {
+it("increments the <sample counter> on every `step(...)` call", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	expect(apu).to.respondTo("step");
@@ -75,7 +70,7 @@ it("increments the sample counter on every `step(...)` call", () => {
 	}
 })({
 	locales: {
-		es: "incrementa el contador de samples en cada llamada a `step(...)`",
+		es: "incrementa el <contador de samples> en cada llamada a `step(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -163,7 +158,7 @@ it("includes a `registers` property with 21 audio registers", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("connects the audio registers to CPU memory (reads)", () => {
+it("connects the audio registers to CPU memory (<reads>)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const cpuMemory = new CPUMemory();
 	const cpu = { memory: cpuMemory };
@@ -210,12 +205,12 @@ it("connects the audio registers to CPU memory (reads)", () => {
 	checkRegister("apuFrameCounter", 0x4017, false);
 })({
 	locales: {
-		es: "conecta los registros de audio con la memoria de CPU (lecturas)",
+		es: "conecta los registros de audio con la memoria de CPU (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("connects the audio registers to CPU memory (writes)", () => {
+it("connects the audio registers to CPU memory (<writes>)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const cpuMemory = new CPUMemory();
 	const cpu = { memory: cpuMemory };
@@ -264,12 +259,12 @@ it("connects the audio registers to CPU memory (writes)", () => {
 	checkRegister("apuFrameCounter", 0x4017);
 })({
 	locales: {
-		es: "conecta los registros de audio con la memoria de CPU (escrituras)",
+		es: "conecta los registros de audio con la memoria de CPU (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("except `APUStatus`, all registers are write only", () => {
+it("except `APUStatus`, all registers are <write only>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -287,7 +282,7 @@ it("except `APUStatus`, all registers are write only", () => {
 	});
 })({
 	locales: {
-		es: "excepto `APUStatus`, todos los registros son solo escritura",
+		es: "excepto `APUStatus`, todos los registros son <solo escritura>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -468,7 +463,7 @@ it("`DMCSampleLength`: writes the value", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("`APUControl`: writes the channel enable fields (bits ~0-4~)", () => {
+it("`APUControl`: writes the <channel enable> fields (bits ~0-4~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -504,7 +499,7 @@ it("`APUControl`: writes the channel enable fields (bits ~0-4~)", () => {
 })({
 	locales: {
 		es:
-			"`APUControl`: escribe los campos de habilitación de canales (bits ~0-4~)",
+			"`APUControl`: escribe los campos de <habilitación de canales> (bits ~0-4~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -610,7 +605,7 @@ it("`PulseChannel`: has a `registers` property, pointing to the audio registers"
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseChannel`: has an `isEnabled()` method that returns whether the channel is enabled or not in APUControl", () => {
+it("`PulseChannel`: has an `isEnabled()` method that returns whether the channel is <enabled> or not in APUControl", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -635,12 +630,12 @@ it("`PulseChannel`: has an `isEnabled()` method that returns whether the channel
 })({
 	locales: {
 		es:
-			"`PulseChannel`: tiene un método `isEnabled()` que retorna si el canal está activo o no en APUControl",
+			"`PulseChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseChannel`: has a `sample()` method that returns a number", () => {
+it("`PulseChannel`: has a `sample()` method that <returns a number>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -650,7 +645,7 @@ it("`PulseChannel`: has a `sample()` method that returns a number", () => {
 	}
 })({
 	locales: {
-		es: "`PulseChannel`: tiene un método `sample()` que retorna un número",
+		es: "`PulseChannel`: tiene un método `sample()` que <retorna un número>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -679,7 +674,7 @@ it("`PulseChannel`: `updateTimer()` updates `timer` based on PulseTimerLow and P
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseChannel`: `step()` calls updateTimer()", () => {
+it("`PulseChannel`: `step()` calls `updateTimer()`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -792,7 +787,7 @@ it("`PulseTimerHighLCL`: writes `timerHigh` (bits ~0-2~) and calls `updateTimer(
 
 // 5c.6 Pulse Channels (2/5): Producing pulse waves
 
-it("`PulseChannel`: has an `oscillator` that can produce samples", () => {
+it("`PulseChannel`: has an `oscillator` that can <produce> samples", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -814,7 +809,7 @@ it("`PulseChannel`: has an `oscillator` that can produce samples", () => {
 	}
 })({
 	locales: {
-		es: "`PulseChannel`: tiene un `oscillator` que puede producir samples",
+		es: "`PulseChannel`: tiene un `oscillator` que puede <producir> samples",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.6"),
 });
@@ -962,7 +957,7 @@ it("`APUFrameCounter`: writes `use5StepSequencer` (bit 7)", () => {
 	use: ({ id }, book) => id >= book.getId("5c.7"),
 });
 
-it("`APUFrameCounter`: writing resets the frame sequencer", () => {
+it("`APUFrameCounter`: writing <resets> the frame sequencer", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -973,7 +968,7 @@ it("`APUFrameCounter`: writing resets the frame sequencer", () => {
 	expect(apu.frameSequencer.counter).to.equalN(0, "counter");
 })({
 	locales: {
-		es: "`APUFrameCounter`: escribir reinicia el secuenciador de frames",
+		es: "`APUFrameCounter`: escribir <reinicia> el secuenciador de frames",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1283,7 +1278,7 @@ it("`LengthCounter`: has a `counter` property that starts at 0", () => {
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`LengthCounter`: has a `reset()` method that sets `counter` = 0", () => {
+it("`LengthCounter`: `reset()` sets `counter` = 0", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1296,12 +1291,12 @@ it("`LengthCounter`: has a `reset()` method that sets `counter` = 0", () => {
 	}
 })({
 	locales: {
-		es: "`LengthCounter`: tiene un método `reset()` que asigna `counter` = 0",
+		es: "`LengthCounter`: `reset()` asigna `counter` = 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`LengthCounter`: has an `isActive()` method that returns whether `counter` is greater than 0", () => {
+it("`LengthCounter`: `isActive()` returns whether `counter` is greater than 0", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1320,8 +1315,7 @@ it("`LengthCounter`: has an `isActive()` method that returns whether `counter` i
 	}
 })({
 	locales: {
-		es:
-			"`LengthCounter`: tiene un método `isActive()` que retorna si `counter` es mayor a 0",
+		es: "`LengthCounter`: `isActive()` retorna si `counter` es mayor a 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1341,7 +1335,7 @@ it("`LengthCounter`: has a `clock(...)` method", () => {
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`LengthCounter`: calling `clock(...)` with `false` as the first argument just resets the counter", () => {
+it("`LengthCounter`: calling `clock(...)` with ~false~ as the first argument just <resets the counter>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1359,7 +1353,7 @@ it("`LengthCounter`: calling `clock(...)` with `false` as the first argument jus
 })({
 	locales: {
 		es:
-			"`LengthCounter`: llamar a `clock()` con `false` como primer argumento solo reinicia el contador",
+			"`LengthCounter`: llamar a `clock()` con ~false~ como primer argumento solo reinicia el contador",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1423,7 +1417,7 @@ it("`LengthCounter`: calling `clock(true, false)` doesn't decrement if the count
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`PulseChannel`: `sample()` just returns the last sample if the channel is disabled", () => {
+it("`PulseChannel`: `sample()` just returns the <last sample> if the channel is disabled", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1487,12 +1481,12 @@ it("`PulseChannel`: `sample()` just returns the last sample if the channel is di
 })({
 	locales: {
 		es:
-			"`PulseChannel`: `sample()` solo retorna el último sample si el canal está desactivado",
+			"`PulseChannel`: `sample()` solo retorna el <último sample> si el canal está desactivado",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`PulseChannel`: `sample()` just returns the last sample if the length counter is not active", () => {
+it("`PulseChannel`: `sample()` just returns the <last sample> if the length counter is <not active>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1557,7 +1551,7 @@ it("`PulseChannel`: `sample()` just returns the last sample if the length counte
 })({
 	locales: {
 		es:
-			"`PulseChannel`: `sample()` solo retorna el último sample si el contador de longitud no está activo",
+			"`PulseChannel`: `sample()` solo retorna el <último sample> si el contador de longitud <no está activo>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1576,7 +1570,7 @@ it("`PulseChannel`: has a `quarterFrame()` method", () => {
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`PulseChannel`: has a `halfFrame()` method that updates the length counter", () => {
+it("`PulseChannel`: `halfFrame()` updates the length counter", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1610,8 +1604,7 @@ it("`PulseChannel`: has a `halfFrame()` method that updates the length counter",
 	}
 })({
 	locales: {
-		es:
-			"`PulseChannel`: tiene un método `halfFrame()` que actualiza el contador de longitud",
+		es: "`PulseChannel`: `halfFrame()` actualiza el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1740,7 +1733,7 @@ it("`PulseChannel`: has a `volumeEnvelope` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.9"),
 });
 
-it("`VolumeEnvelope`: has `startFlag`, `dividerCount`, `volume` initialized to false, 0, 0", () => {
+it("`VolumeEnvelope`: has `startFlag`, `dividerCount`, `volume` initialized to ~false~, 0, 0", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1753,7 +1746,7 @@ it("`VolumeEnvelope`: has `startFlag`, `dividerCount`, `volume` initialized to f
 })({
 	locales: {
 		es:
-			"`VolumeEnvelope`: tiene `startFlag`, `dividerCount` y `volume` inicializados en false, 0, 0",
+			"`VolumeEnvelope`: tiene `startFlag`, `dividerCount` y `volume` inicializados en ~false~, 0, 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -1961,7 +1954,7 @@ it("`PulseChannel`: has a `frequencySweep` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`FrequencySweep`: has `startFlag`, `dividerCount`, `mute` initialized to `false`, `0`, `false`", () => {
+it("`FrequencySweep`: has `startFlag`, `dividerCount`, `mute` initialized to ~false~, `0`, ~false~", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1974,7 +1967,7 @@ it("`FrequencySweep`: has `startFlag`, `dividerCount`, `mute` initialized to `fa
 })({
 	locales: {
 		es:
-			"`FrequencySweep`: tiene `startFlag`, `dividerCount` y `mute` inicializados en `false`, `0`, `false`",
+			"`FrequencySweep`: tiene `startFlag`, `dividerCount` y `mute` inicializados en ~false~, `0`, ~false~",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -1995,7 +1988,7 @@ it("`FrequencySweep`: has `clock()` and `muteIfNeeded()` methods", () => {
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`FrequencySweep`: `clock()` increases `timer` by shift delta when enabled, `shiftCount > 0`, `dividerCount = 0`, and not muted", () => {
+it("`FrequencySweep`: `clock()` increases `timer` by <shift delta> when enabled, `shiftCount > 0`, `dividerCount = 0`, and not muted", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2019,12 +2012,12 @@ it("`FrequencySweep`: `clock()` increases `timer` by shift delta when enabled, `
 })({
 	locales: {
 		es:
-			"`FrequencySweep`: `clock()` incrementa `timer` por el delta apropiado cuando está habilitado, `shiftCount > 0`, `dividerCount = 0` y no está silenciado",
+			"`FrequencySweep`: `clock()` incrementa `timer` por el <delta apropiado> cuando está habilitado, `shiftCount > 0`, `dividerCount = 0` y no está silenciado",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`FrequencySweep`: `clock()` decreases `timer` by shift delta when `negateFlag` is set (same conditions)", () => {
+it("`FrequencySweep`: `clock()` decreases `timer` by <shift delta> when `negateFlag` is set (same conditions)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2048,7 +2041,7 @@ it("`FrequencySweep`: `clock()` decreases `timer` by shift delta when `negateFla
 })({
 	locales: {
 		es:
-			"`FrequencySweep`: `clock()`: decrementa `timer` por el delta apropiado cuando `negateFlag` está encendida (mismas condiciones)",
+			"`FrequencySweep`: `clock()`: decrementa `timer` por el <delta apropiado> cuando `negateFlag` está encendida (mismas condiciones)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2137,7 +2130,7 @@ it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is ~< 8~ or ~> 0
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`PulseChannel`: `sample()` just returns the last sample if the sweep unit is muted", () => {
+it("`PulseChannel`: `sample()` just returns the <last sample> if the sweep unit is muted", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2203,7 +2196,7 @@ it("`PulseChannel`: `sample()` just returns the last sample if the sweep unit is
 })({
 	locales: {
 		es:
-			"`PulseChannel`: `sample()` solo retorna el último sample si la unidad de barrido está silenciada",
+			"`PulseChannel`: `sample()` solo retorna el <último sample> si la unidad de barrido está silenciada",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2352,7 +2345,7 @@ it("`TriangleChannel`: has a `registers` property, pointing to the audio registe
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
-it("`TriangleChannel`: has an `oscillator` property", () => {
+it("`TriangleChannel`: has an `oscillator` property that can <produce> samples", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2360,11 +2353,14 @@ it("`TriangleChannel`: has an `oscillator` property", () => {
 	expect(channel.oscillator, "oscillator").to.be.an("object");
 	expect(channel.oscillator).to.respondTo("sample");
 })({
-	locales: { es: "`TriangleChannel`: tiene una propiedad `oscillator`" },
+	locales: {
+		es:
+			"`TriangleChannel`: tiene una propiedad `oscillator` que puede <producir> samples",
+	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
-it("`TriangleChannel`: has a `sample()` method that returns a number", () => {
+it("`TriangleChannel`: has a `sample()` method that <returns a number>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2372,12 +2368,12 @@ it("`TriangleChannel`: has a `sample()` method that returns a number", () => {
 	expect(apu.channels.triangle.sample()).to.be.a("number");
 })({
 	locales: {
-		es: "`TriangleChannel`: tiene un método `sample()` que retorna un número",
+		es: "`TriangleChannel`: tiene un método `sample()` que <retorna un número>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
-it("`TriangleChannel`: `sample()` returns 0 when `timer` < 2", () => {
+it("`TriangleChannel`: `sample()` returns 0 when `timer` ~< 2~", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2392,12 +2388,12 @@ it("`TriangleChannel`: `sample()` returns 0 when `timer` < 2", () => {
 	expect(channel.sample()).to.equalN(0, "sample()");
 })({
 	locales: {
-		es: "`TriangleChannel`: `sample()` retorna 0 cuando `timer` < 2",
+		es: "`TriangleChannel`: `sample()` retorna 0 cuando `timer` ~< 2~",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
-it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `oscillator.sample()` when `timer` is in a valid range", () => {
+it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `oscillator.sample()` when `timer` is in a <valid range>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2424,7 +2420,7 @@ it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `os
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: `sample()` actualiza `oscillator.frequency` y retorna `oscillator.sample()` cuando `timer` está en un rango válido",
+			"`TriangleChannel`: `sample()` actualiza `oscillator.frequency` y retorna `oscillator.sample()` cuando `timer` está en un <rango válido>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2487,7 +2483,7 @@ it("`TriangleChannel`: has a `lengthCounter` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`TriangleChannel`: `sample()` just returns the last sample if the channel is disabled", () => {
+it("`TriangleChannel`: `sample()` just returns the <last sample> if the channel is disabled", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2526,12 +2522,12 @@ it("`TriangleChannel`: `sample()` just returns the last sample if the channel is
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: `sample()` solo retorna el último sample si el canal está desactivado",
+			"`TriangleChannel`: `sample()` solo retorna el <último sample> si el canal está desactivado",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`TriangleChannel`: `sample()` just returns the last sample if the length counter is not active", () => {
+it("`TriangleChannel`: `sample()` just returns the <last sample> if the length counter is <not active>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2570,7 +2566,7 @@ it("`TriangleChannel`: `sample()` just returns the last sample if the length cou
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: `sample()` solo retorna el último sample si el contador de longitud no está activo",
+			"`TriangleChannel`: `sample()` solo retorna el <último sample> si el contador de longitud <no está activo>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2626,7 +2622,7 @@ it("`TriangleChannel`: has a `halfFrame()` method that updates the length counte
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`TriangleChannel`: has an `isEnabled()` method that returns whether the channel is enabled or not in APUControl", () => {
+it("`TriangleChannel`: has an `isEnabled()` method that returns whether the channel is <enabled> or not in APUControl", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2640,7 +2636,7 @@ it("`TriangleChannel`: has an `isEnabled()` method that returns whether the chan
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: tiene un método `isEnabled()` que retorna si el canal está activo o no en APUControl",
+			"`TriangleChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2746,7 +2742,7 @@ it("`TriangleChannel`: has a `linearLengthCounter` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
 
-it("`LinearLengthCounter`: has `reload` and `reloadFlag` initialized to `0` and `false`", () => {
+it("`LinearLengthCounter`: has `reload` and `reloadFlag` initialized to `0` and ~false~", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
@@ -2756,7 +2752,7 @@ it("`LinearLengthCounter`: has `reload` and `reloadFlag` initialized to `0` and 
 })({
 	locales: {
 		es:
-			"`LinearLengthCounter`: tiene `reload` y `reloadFlag` inicializados en `0` y `false`",
+			"`LinearLengthCounter`: tiene `reload` y `reloadFlag` inicializados en `0` y ~false~",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2898,7 +2894,7 @@ it("`LinearLengthCounter`: `clock(true, *)` when `reloadFlag` false and `counter
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
 
-it("`TriangleChannel`: `sample()` just returns the last sample if the linear length counter is not active", () => {
+it("`TriangleChannel`: `sample()` just returns the <last sample> if the linear length counter is <not active>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2937,7 +2933,7 @@ it("`TriangleChannel`: `sample()` just returns the last sample if the linear len
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: `sample()` solo retorna el último sample si el contador lineal de longitud no está activo",
+			"`TriangleChannel`: `sample()` solo retorna el <último sample> si el contador lineal de longitud <no está activo>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3104,6 +3100,25 @@ it("`NoiseChannel`: has a `registers` property, pointing to the audio registers"
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
+it("`NoiseChannel`: has an `isEnabled()` method that returns whether the channel is <enabled> or not in APUControl", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	expect(apu.channels.noise).to.respondTo("isEnabled");
+
+	apu.registers.apuControl.onWrite(0b1000);
+	expect(apu.channels.noise.isEnabled()).to.equalN(true, "isEnabled()");
+
+	apu.registers.apuControl.onWrite(0b0000);
+	expect(apu.channels.noise.isEnabled()).to.equalN(false, "isEnabled()");
+})({
+	locales: {
+		es:
+			"`NoiseChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
 it("`NoiseChannel`: has a `lengthCounter` property", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
@@ -3120,7 +3135,7 @@ it("`NoiseChannel`: has a `lengthCounter` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
-it("`NoiseChannel`: has a `sample()` method that returns a number", () => {
+it("`NoiseChannel`: has a `sample()` method that <returns a number>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -3128,7 +3143,7 @@ it("`NoiseChannel`: has a `sample()` method that returns a number", () => {
 	expect(apu.channels.noise.sample()).to.be.a("number");
 })({
 	locales: {
-		es: "`NoiseChannel`: tiene un método `sample()` que retorna un número",
+		es: "`NoiseChannel`: tiene un método `sample()` que <retorna un número>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3150,7 +3165,7 @@ it("`NoiseChannel`: `sample()` returns 0 when disabled or length counter inactiv
 })({
 	locales: {
 		es:
-			"`NoiseChannel`: `sample()` retorna 0 cuando está deshabilitado o el contador de longitud no está activo",
+			"`NoiseChannel`: `sample()` retorna 0 cuando está deshabilitado o el contador de longitud <no está activo>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3458,7 +3473,7 @@ it("`NoiseChannel`: `step()` uses `mode` flag to compute feedback bit", () => {
 	use: ({ id }, book) => id >= book.getId("5c.15"),
 });
 
-it("`NoiseChannel`: `step()` uses an exclusive OR (`^`) for the feedback bit", () => {
+it("`NoiseChannel`: `step()` uses an exclusive OR (~^~) for the feedback bit", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const channel = apu.channels.noise;
@@ -3483,7 +3498,7 @@ it("`NoiseChannel`: `step()` uses an exclusive OR (`^`) for the feedback bit", (
 })({
 	locales: {
 		es:
-			"`NoiseChannel`: `step()` usa un OR exclusivo (`^`) para el bit de feedback",
+			"`NoiseChannel`: `step()` usa un OR exclusivo (~^~) para el bit de feedback",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3832,7 +3847,7 @@ it("`APUStatus`: reads return 0 when all channels inactive and no DMC bytes", ()
 	use: ({ id }, book) => id >= book.getId("5c.19"),
 });
 
-it("`APUStatus`: reads return a bitfield for active channels and DMC", () => {
+it("`APUStatus`: reads return a <bitfield> for active channels and DMC", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -3848,7 +3863,7 @@ it("`APUStatus`: reads return a bitfield for active channels and DMC", () => {
 })({
 	locales: {
 		es:
-			"`APUStatus`: las lecturas retornan un bitfield para canales activos y DMC",
+			"`APUStatus`: las lecturas retornan un <bitfield> para canales activos y DMC",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.19"),
 });

@@ -330,7 +330,7 @@ it("can update the Zero and Negative flags", () => {
 
 // 5a.5 Stack
 
-it("includes a `stack` property with `push`/`pop` methods", () => {
+it("includes a `stack` property with `push(...)`/`pop()` methods", () => {
 	const cpu = newCPU();
 
 	expect(cpu).to.include.key("stack");
@@ -340,7 +340,7 @@ it("includes a `stack` property with `push`/`pop` methods", () => {
 	expect(cpu.stack).to.respondTo("pop");
 })({
 	locales: {
-		es: "incluye una propiedad `stack` con métodos `push`/`pop`",
+		es: "incluye una propiedad `stack` con métodos `push(...)`/`pop()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.5"),
 });

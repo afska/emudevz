@@ -51,7 +51,7 @@ it("the file `/code/index.js` exports <an object> containing the class", async (
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("has a `ram` property and `read`/`write` methods", () => {
+it("has a `ram` property and `read(...)`/`write(...)` methods", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
@@ -62,7 +62,7 @@ it("has a `ram` property and `read`/`write` methods", () => {
 	expect(memory).to.respondTo("write");
 })({
 	locales: {
-		es: "incluye una propiedad `ram` y métodos `read`/`write`",
+		es: "incluye una propiedad `ram` y métodos `read(...)`/`write(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
