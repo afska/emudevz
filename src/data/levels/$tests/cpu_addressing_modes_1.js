@@ -17,7 +17,7 @@ function newCPU(prgBytes = []) {
 
 it("`/code/index.js` exports an object containing the `addressingModes` object", () => {
 	expect(mainModule.default).to.be.an("object");
-	mainModule.default.should.include.key("addressingModes");
+	expect(mainModule.default).to.include.key("addressingModes");
 	expect(mainModule.default.addressingModes).to.be.an("object");
 })({
 	locales: {
@@ -31,8 +31,8 @@ it("every member of the `addressingModes` object has an `id`", () => {
 	const addressingModes = mainModule.default.addressingModes;
 
 	for (let key in addressingModes) {
-		addressingModes[key].should.include.key("id");
-		addressingModes[key].id.should.equal(key);
+		expect(addressingModes[key]).to.include.key("id");
+		expect(addressingModes[key].id).to.equalN(key, "id");
 	}
 })({
 	locales: {
@@ -43,9 +43,9 @@ it("every member of the `addressingModes` object has an `id`", () => {
 
 it("`IMPLICIT`: inputSize == 0", () => {
 	const addressingModes = mainModule.default.addressingModes;
-	addressingModes.should.include.key("IMPLICIT");
+	expect(addressingModes).to.include.key("IMPLICIT");
 	expect(addressingModes.IMPLICIT).to.be.an("object");
-	addressingModes.IMPLICIT.inputSize.should.equalN(0, "inputSize");
+	expect(addressingModes.IMPLICIT.inputSize).to.equalN(0, "inputSize");
 })({
 	locales: {
 		es: "`IMPLICIT`: inputSize == 0",
@@ -57,7 +57,10 @@ it("`IMPLICIT` / `getAddress`: returns null", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
-	expect(addressingModes.IMPLICIT.getAddress(cpu, 0)).to.equal(null);
+	expect(addressingModes.IMPLICIT.getAddress(cpu, 0)).to.equalN(
+		null,
+		"getAddress(...)"
+	);
 })({
 	locales: {
 		es: "`IMPLICIT` / `getAddress`: retorna null",
@@ -69,7 +72,7 @@ it("`IMPLICIT` / `getValue`: unsupported", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
-	(() => addressingModes.IMPLICIT.getValue(cpu, 0)).should.throw(
+	expect(() => addressingModes.IMPLICIT.getValue(cpu, 0)).to.throw(
 		Error,
 		/Unsupported/
 	);
@@ -82,9 +85,9 @@ it("`IMPLICIT` / `getValue`: unsupported", () => {
 
 it("`IMMEDIATE`: inputSize == 1", () => {
 	const addressingModes = mainModule.default.addressingModes;
-	addressingModes.should.include.key("IMMEDIATE");
+	expect(addressingModes).to.include.key("IMMEDIATE");
 	expect(addressingModes.IMMEDIATE).to.be.an("object");
-	addressingModes.IMMEDIATE.inputSize.should.equalN(1, "inputSize");
+	expect(addressingModes.IMMEDIATE.inputSize).to.equalN(1, "inputSize");
 })({
 	locales: {
 		es: "`IMMEDIATE`: inputSize == 1",
@@ -96,7 +99,7 @@ it("`IMMEDIATE` / `getAddress`: unsupported", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
-	(() => addressingModes.IMMEDIATE.getAddress(cpu, 0)).should.throw(
+	expect(() => addressingModes.IMMEDIATE.getAddress(cpu, 0)).to.throw(
 		Error,
 		/Unsupported/
 	);
@@ -111,7 +114,7 @@ it("`IMMEDIATE` / `getValue`: returns the same value", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
-	addressingModes.IMMEDIATE.getValue(cpu, 123).should.equalN(
+	expect(addressingModes.IMMEDIATE.getValue(cpu, 123)).to.equalN(
 		123,
 		"getValue(...)"
 	);
@@ -124,9 +127,9 @@ it("`IMMEDIATE` / `getValue`: returns the same value", () => {
 
 it("`ABSOLUTE`: inputSize == 2", () => {
 	const addressingModes = mainModule.default.addressingModes;
-	addressingModes.should.include.key("ABSOLUTE");
+	expect(addressingModes).to.include.key("ABSOLUTE");
 	expect(addressingModes.ABSOLUTE).to.be.an("object");
-	addressingModes.ABSOLUTE.inputSize.should.equalN(2, "inputSize");
+	expect(addressingModes.ABSOLUTE.inputSize).to.equalN(2, "inputSize");
 })({
 	locales: {
 		es: "`ABSOLUTE`: inputSize == 2",
@@ -138,7 +141,7 @@ it("`ABSOLUTE` / `getAddress`: returns the same address", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
-	addressingModes.ABSOLUTE.getAddress(cpu, 0x1234).should.equalHex(
+	expect(addressingModes.ABSOLUTE.getAddress(cpu, 0x1234)).to.equalHex(
 		0x1234,
 		"getAddress(...)"
 	);
@@ -154,7 +157,7 @@ it("`ABSOLUTE` / `getValue`: reads from memory the address returned by `getAddre
 	const cpu = newCPU();
 
 	cpu.memory.write(0x1234, 123);
-	addressingModes.ABSOLUTE.getValue(cpu, 0x1234).should.equalN(
+	expect(addressingModes.ABSOLUTE.getValue(cpu, 0x1234)).to.equalN(
 		123,
 		"getValue(...)"
 	);
@@ -168,9 +171,9 @@ it("`ABSOLUTE` / `getValue`: reads from memory the address returned by `getAddre
 
 it("`ZERO_PAGE`: inputSize == 1", () => {
 	const addressingModes = mainModule.default.addressingModes;
-	addressingModes.should.include.key("ZERO_PAGE");
+	expect(addressingModes).to.include.key("ZERO_PAGE");
 	expect(addressingModes.ZERO_PAGE).to.be.an("object");
-	addressingModes.ZERO_PAGE.inputSize.should.equalN(1, "inputSize");
+	expect(addressingModes.ZERO_PAGE.inputSize).to.equalN(1, "inputSize");
 })({
 	locales: {
 		es: "`ZERO_PAGE`: inputSize == 1",
@@ -182,7 +185,7 @@ it("`ZERO_PAGE` / `getAddress`: returns the same address", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
-	addressingModes.ZERO_PAGE.getAddress(cpu, 120).should.equalN(
+	expect(addressingModes.ZERO_PAGE.getAddress(cpu, 120)).to.equalN(
 		120,
 		"getAddress(...)"
 	);
@@ -198,7 +201,7 @@ it("`ZERO_PAGE` / `getValue`: reads from memory the address returned by `getAddr
 	const cpu = newCPU();
 
 	cpu.memory.write(120, 221);
-	addressingModes.ABSOLUTE.getValue(cpu, 120).should.equalN(
+	expect(addressingModes.ABSOLUTE.getValue(cpu, 120)).to.equalN(
 		221,
 		"getValue(...)"
 	);
@@ -212,9 +215,9 @@ it("`ZERO_PAGE` / `getValue`: reads from memory the address returned by `getAddr
 
 it("`RELATIVE`: inputSize == 1", () => {
 	const addressingModes = mainModule.default.addressingModes;
-	addressingModes.should.include.key("RELATIVE");
+	expect(addressingModes).to.include.key("RELATIVE");
 	expect(addressingModes.RELATIVE).to.be.an("object");
-	addressingModes.RELATIVE.inputSize.should.equalN(1, "inputSize");
+	expect(addressingModes.RELATIVE.inputSize).to.equalN(1, "inputSize");
 })({
 	locales: {
 		es: "`RELATIVE`: inputSize == 1",
@@ -227,11 +230,11 @@ it("`RELATIVE` / `getAddress`: returns an address based on [PC] + offset", () =>
 	const cpu = newCPU();
 
 	cpu.pc.setValue(0xfe10);
-	addressingModes.RELATIVE.getAddress(cpu, 4).should.equalHex(
+	expect(addressingModes.RELATIVE.getAddress(cpu, 4)).to.equalHex(
 		0xfe14,
 		"getAddress(...)"
 	);
-	addressingModes.RELATIVE.getAddress(cpu, byte.toU8(-10)).should.equalHex(
+	expect(addressingModes.RELATIVE.getAddress(cpu, byte.toU8(-10))).to.equalHex(
 		0xfe06,
 		"getAddress(...)"
 	);
@@ -247,7 +250,7 @@ it("`RELATIVE` / `getValue`: unsupported", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
-	(() => addressingModes.RELATIVE.getValue(cpu, 0)).should.throw(
+	expect(() => addressingModes.RELATIVE.getValue(cpu, 0)).to.throw(
 		Error,
 		/Unsupported/
 	);
@@ -263,7 +266,7 @@ it("`RELATIVE`: cannot cross $FFFF", () => {
 	const cpu = newCPU();
 
 	cpu.pc.setValue(0xffff);
-	addressingModes.RELATIVE.getAddress(cpu, 3).should.equalN(
+	expect(addressingModes.RELATIVE.getAddress(cpu, 3)).to.equalN(
 		2,
 		"getAddress(...)"
 	);
@@ -281,11 +284,11 @@ it("`RELATIVE`: adds 2 cycles if it crosses page", () => {
 
 	cpu.extraCycles = 0;
 	addressingModes.RELATIVE.getAddress(cpu, 20, true);
-	cpu.extraCycles.should.equalN(2, "extraCycles");
+	expect(cpu.extraCycles).to.equalN(2, "extraCycles");
 
 	cpu.extraCycles = 0;
 	addressingModes.RELATIVE.getAddress(cpu, 20, false);
-	cpu.extraCycles.should.equalN(0, "extraCycles");
+	expect(cpu.extraCycles).to.equalN(0, "extraCycles");
 })({
 	locales: {
 		es: "`RELATIVE`: agrega 2 ciclos si cruza de página",
@@ -299,7 +302,7 @@ it("`RELATIVE`: doesn't add any cycles if there's no page-cross", () => {
 
 	cpu.pc.setValue(0xfe10);
 	addressingModes.RELATIVE.getAddress(cpu, 4, true);
-	cpu.extraCycles.should.equalN(0, "extraCycles");
+	expect(cpu.extraCycles).to.equalN(0, "extraCycles");
 })({
 	locales: {
 		es: "`RELATIVE`: no agrega ningún ciclo si no cruza de página",
@@ -309,9 +312,9 @@ it("`RELATIVE`: doesn't add any cycles if there's no page-cross", () => {
 
 it("`INDIRECT`: inputSize == 2", () => {
 	const addressingModes = mainModule.default.addressingModes;
-	addressingModes.should.include.key("INDIRECT");
+	expect(addressingModes).to.include.key("INDIRECT");
 	expect(addressingModes.INDIRECT).to.be.an("object");
-	addressingModes.INDIRECT.inputSize.should.equalN(2, "inputSize");
+	expect(addressingModes.INDIRECT.inputSize).to.equalN(2, "inputSize");
 })({
 	locales: {
 		es: "`INDIRECT`: inputSize == 2",
@@ -325,7 +328,7 @@ it("`INDIRECT` / `getAddress`: grabs the address from memory", () => {
 
 	cpu.memory.write(130, 0x12);
 	cpu.memory.write(131, 0xfe);
-	addressingModes.INDIRECT.getAddress(cpu, 130).should.equalHex(
+	expect(addressingModes.INDIRECT.getAddress(cpu, 130)).to.equalHex(
 		0xfe12,
 		"getAddress(...)"
 	);
@@ -340,7 +343,7 @@ it("`INDIRECT` / `getValue`: unsupported", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
-	(() => addressingModes.INDIRECT.getValue(cpu, 0)).should.throw(
+	expect(() => addressingModes.INDIRECT.getValue(cpu, 0)).to.throw(
 		Error,
 		/Unsupported/
 	);
@@ -359,7 +362,7 @@ it("`INDIRECT`: emulates the 'page boundary bug'", () => {
 
 	cpu.memory.write(0x04ff, 0x12);
 	cpu.memory.write(0x0400, 0xcd);
-	addressingModes.INDIRECT.getAddress(cpu, 0x04ff).should.equalHex(
+	expect(addressingModes.INDIRECT.getAddress(cpu, 0x04ff)).to.equalHex(
 		0xcd12,
 		"getAddress(...)"
 	);

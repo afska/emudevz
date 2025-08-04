@@ -25,9 +25,9 @@ function newCPU(prgBytes = []) {
 
 	it("`" + instruction + "`: argument == 'address'", () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("address", "argument");
+		expect(instructions[instruction].argument).to.equalN("address", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
@@ -42,8 +42,8 @@ function newCPU(prgBytes = []) {
 
 		cpu.flags[flag] = false;
 		instructions[instruction].run(cpu, 0x2000);
-		cpu.pc.getValue().should.equalHex(0x2000, "getValue()");
-		cpu.extraCycles.should.equalN(1, "extraCycles");
+		expect(cpu.pc.getValue()).to.equalHex(0x2000, "getValue()");
+		expect(cpu.extraCycles).to.equalN(1, "extraCycles");
 	})({
 		locales: {
 			es:
@@ -65,8 +65,8 @@ function newCPU(prgBytes = []) {
 			cpu.extraCycles = 3;
 			cpu.flags[flag] = true;
 			instructions[instruction].run(cpu, 0x2000);
-			cpu.pc.getValue().should.equalHex(0x1000, "getValue()");
-			cpu.extraCycles.should.equalN(0, "extraCycles");
+			expect(cpu.pc.getValue()).to.equalHex(0x1000, "getValue()");
+			expect(cpu.extraCycles).to.equalN(0, "extraCycles");
 		}
 	)({
 		locales: {
@@ -90,9 +90,9 @@ function newCPU(prgBytes = []) {
 
 	it("`" + instruction + "`: argument == 'address'", () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("address", "argument");
+		expect(instructions[instruction].argument).to.equalN("address", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
@@ -107,8 +107,8 @@ function newCPU(prgBytes = []) {
 
 		cpu.flags[flag] = true;
 		instructions[instruction].run(cpu, 0x2000);
-		cpu.pc.getValue().should.equalHex(0x2000, "getValue()");
-		cpu.extraCycles.should.equalN(1, "extraCycles");
+		expect(cpu.pc.getValue()).to.equalHex(0x2000, "getValue()");
+		expect(cpu.extraCycles).to.equalN(1, "extraCycles");
 	})({
 		locales: {
 			es:
@@ -130,8 +130,8 @@ function newCPU(prgBytes = []) {
 			cpu.extraCycles = 3;
 			cpu.flags[flag] = false;
 			instructions[instruction].run(cpu, 0x2000);
-			cpu.pc.getValue().should.equalHex(0x1000, "getValue()");
-			cpu.extraCycles.should.equalN(0, "extraCycles");
+			expect(cpu.pc.getValue()).to.equalHex(0x1000, "getValue()");
+			expect(cpu.extraCycles).to.equalN(0, "extraCycles");
 		}
 	)({
 		locales: {
@@ -147,9 +147,9 @@ function newCPU(prgBytes = []) {
 
 it("`JMP`: argument == 'address'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("JMP");
+	expect(instructions).to.include.key("JMP");
 	expect(instructions.JMP).to.be.an("object");
-	instructions.JMP.argument.should.equalN("address", "argument");
+	expect(instructions.JMP.argument).to.equalN("address", "argument");
 })({
 	locales: {
 		es: "`JMP`: argument == 'address'",
@@ -163,7 +163,7 @@ it("`JMP`: jumps to the address", () => {
 	cpu.pc.setValue(0x1000);
 
 	instructions.JMP.run(cpu, 0x1234);
-	cpu.pc.getValue().should.equalHex(0x1234, "getValue()");
+	expect(cpu.pc.getValue()).to.equalHex(0x1234, "getValue()");
 })({
 	locales: {
 		es: "`JMP`: salta a la dirección",
@@ -173,9 +173,9 @@ it("`JMP`: jumps to the address", () => {
 
 it("`JSR`: argument == 'address'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("JSR");
+	expect(instructions).to.include.key("JSR");
 	expect(instructions.JSR).to.be.an("object");
-	instructions.JSR.argument.should.equalN("address", "argument");
+	expect(instructions.JSR.argument).to.equalN("address", "argument");
 })({
 	locales: {
 		es: "`JSR`: argument == 'address'",
@@ -189,8 +189,8 @@ it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
 	cpu.pc.setValue(0xfe31);
 
 	instructions.JSR.run(cpu, 0x1234);
-	cpu.stack.pop16().should.equalHex(0xfe30, "pop16()");
-	cpu.pc.getValue().should.equalHex(0x1234, "getValue()");
+	expect(cpu.stack.pop16()).to.equalHex(0xfe30, "pop16()");
+	expect(cpu.pc.getValue()).to.equalHex(0x1234, "getValue()");
 })({
 	locales: {
 		es: "`JSR`: pone [PC] - 1 en la pila y salta a la dirección",
@@ -200,9 +200,9 @@ it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
 
 it("`RTI`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("RTI");
+	expect(instructions).to.include.key("RTI");
 	expect(instructions.RTI).to.be.an("object");
-	instructions.RTI.argument.should.equalN("no", "argument");
+	expect(instructions.RTI.argument).to.equalN("no", "argument");
 })({
 	locales: {
 		es: "`RTI`: argument == 'no'",
@@ -218,8 +218,8 @@ it("`RTI`: updates the flags and [PC] from the stack", () => {
 	cpu.stack.push16(0xfe35);
 	cpu.stack.push(0b10101000);
 	instructions.RTI.run(cpu);
-	cpu.flags.getValue().should.equalBin(0b10101000, "getValue()");
-	cpu.pc.getValue().should.equalHex(0xfe35, "getValue()");
+	expect(cpu.flags.getValue()).to.equalBin(0b10101000, "getValue()");
+	expect(cpu.pc.getValue()).to.equalHex(0xfe35, "getValue()");
 })({
 	locales: {
 		es: "`RTI`: actualiza las banderas y [PC] desde la pila",
@@ -229,9 +229,9 @@ it("`RTI`: updates the flags and [PC] from the stack", () => {
 
 it("`RTS`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("RTS");
+	expect(instructions).to.include.key("RTS");
 	expect(instructions.RTS).to.be.an("object");
-	instructions.RTS.argument.should.equalN("no", "argument");
+	expect(instructions.RTS.argument).to.equalN("no", "argument");
 })({
 	locales: {
 		es: "`RTS`: argument == 'no'",
@@ -246,7 +246,7 @@ it("`RTS`: updates [PC] from a value in the stack + 1", () => {
 
 	cpu.stack.push16(0xfe35);
 	instructions.RTS.run(cpu);
-	cpu.pc.getValue().should.equalHex(0xfe36, "getValue()");
+	expect(cpu.pc.getValue()).to.equalHex(0xfe36, "getValue()");
 })({
 	locales: {
 		es: "`RTS`: actualiza [PC] desde un valor en la pila + 1",

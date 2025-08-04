@@ -25,9 +25,9 @@ function newCPU(prgBytes = []) {
 
 	it("`" + instruction + "`: argument == 'no'", () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("no", "argument");
+		expect(instructions[instruction].argument).to.equalN("no", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'no'",
@@ -41,7 +41,7 @@ function newCPU(prgBytes = []) {
 
 		cpu.flags[flag] = true;
 		instructions[instruction].run(cpu);
-		cpu.flags[flag].should.equalN(false, flag);
+		expect(cpu.flags[flag]).to.equalN(false, flag);
 	})({
 		locales: {
 			es: "`" + instruction + "`: " + `apaga la bandera ~${name}~`,
@@ -59,9 +59,9 @@ function newCPU(prgBytes = []) {
 
 	it("`" + instruction + "`: argument == 'value'", () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("value", "argument");
+		expect(instructions[instruction].argument).to.equalN("value", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
@@ -74,9 +74,9 @@ function newCPU(prgBytes = []) {
 		const instructions = mainModule.default.instructions;
 
 		instructions[instruction].run(cpu, 5);
-		cpu[register].getValue().should.equalN(5, "getValue()");
-		cpu.flags.z.should.equalN(false, "z");
-		cpu.flags.n.should.equalN(false, "n");
+		expect(cpu[register].getValue()).to.equalN(5, "getValue()");
+		expect(cpu.flags.z).to.equalN(false, "z");
+		expect(cpu.flags.n).to.equalN(false, "n");
 	})({
 		locales: {
 			es: "`" + instruction + "`: " + `carga [${name}] (valor positivo)`,
@@ -90,9 +90,9 @@ function newCPU(prgBytes = []) {
 
 		const value = byte.toU8(-5);
 		instructions[instruction].run(cpu, value);
-		cpu[register].getValue().should.equalN(value, "getValue()");
-		cpu.flags.z.should.equalN(false, "z");
-		cpu.flags.n.should.equalN(true, "n");
+		expect(cpu[register].getValue()).to.equalN(value, "getValue()");
+		expect(cpu.flags.z).to.equalN(false, "z");
+		expect(cpu.flags.n).to.equalN(true, "n");
 	})({
 		locales: {
 			es: "`" + instruction + "`: " + `loads [${name}] (valor negativo)`,
@@ -105,9 +105,9 @@ function newCPU(prgBytes = []) {
 		const instructions = mainModule.default.instructions;
 
 		instructions[instruction].run(cpu, 0);
-		cpu[register].getValue().should.equalN(0, "getValue()");
-		cpu.flags.z.should.equalN(true, "z");
-		cpu.flags.n.should.equalN(false, "n");
+		expect(cpu[register].getValue()).to.equalN(0, "getValue()");
+		expect(cpu.flags.z).to.equalN(true, "z");
+		expect(cpu.flags.n).to.equalN(false, "n");
 	})({
 		locales: {
 			es: "`" + instruction + "`: " + `carga [${name}] (valor cero)`,
@@ -118,9 +118,9 @@ function newCPU(prgBytes = []) {
 
 it("`PHA`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("PHA");
+	expect(instructions).to.include.key("PHA");
 	expect(instructions.PHA).to.be.an("object");
-	instructions.PHA.argument.should.equalN("no", "argument");
+	expect(instructions.PHA.argument).to.equalN("no", "argument");
 })({
 	locales: {
 		es: "`PHA`: argument == 'no'",
@@ -134,7 +134,7 @@ it("`PHA`: pushes [A] onto the stack", () => {
 
 	cpu.a.setValue(88);
 	instructions.PHA.run(cpu);
-	cpu.stack.pop().should.equalN(88, "pop()");
+	expect(cpu.stack.pop()).to.equalN(88, "pop()");
 })({
 	locales: {
 		es: "`PHA`: pone [A] en la pila",
@@ -144,9 +144,9 @@ it("`PHA`: pushes [A] onto the stack", () => {
 
 it("`PHP`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("PHP");
+	expect(instructions).to.include.key("PHP");
 	expect(instructions.PHP).to.be.an("object");
-	instructions.PHP.argument.should.equalN("no", "argument");
+	expect(instructions.PHP.argument).to.equalN("no", "argument");
 })({
 	locales: {
 		es: "`PHP`: argument == 'no'",
@@ -165,7 +165,7 @@ it("`PHP`: pushes the flags onto the stack", () => {
 	cpu.flags.v = true;
 	cpu.flags.n = false;
 	instructions.PHP.run(cpu);
-	cpu.stack.pop().should.equalBin(0b01110001, "pop()");
+	expect(cpu.stack.pop()).to.equalBin(0b01110001, "pop()");
 })({
 	locales: {
 		es: "`PHP`: pone las banderas en la pila",
@@ -175,9 +175,9 @@ it("`PHP`: pushes the flags onto the stack", () => {
 
 it("`PLA`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("PLA");
+	expect(instructions).to.include.key("PLA");
 	expect(instructions.PLA).to.be.an("object");
-	instructions.PLA.argument.should.equalN("no", "argument");
+	expect(instructions.PLA.argument).to.equalN("no", "argument");
 })({
 	locales: {
 		es: "`PLA`: argument == 'no'",
@@ -191,7 +191,7 @@ it("`PLA`: sets [A] with a value from the stack", () => {
 
 	cpu.stack.push(76);
 	instructions.PLA.run(cpu);
-	cpu.a.getValue().should.equalN(76, "getValue()");
+	expect(cpu.a.getValue()).to.equalN(76, "getValue()");
 })({
 	locales: {
 		es: "`PLA`: asigna [A] con un valor de la pila",
@@ -205,13 +205,13 @@ it("`PLA`: updates the Zero and Negative flags", () => {
 
 	cpu.stack.push(240);
 	instructions.PLA.run(cpu);
-	cpu.flags.z.should.equalN(false, "z");
-	cpu.flags.n.should.equalN(true, "n");
+	expect(cpu.flags.z).to.equalN(false, "z");
+	expect(cpu.flags.n).to.equalN(true, "n");
 
 	cpu.stack.push(0);
 	instructions.PLA.run(cpu);
-	cpu.flags.z.should.equalN(true, "z");
-	cpu.flags.n.should.equalN(false, "n");
+	expect(cpu.flags.z).to.equalN(true, "z");
+	expect(cpu.flags.n).to.equalN(false, "n");
 })({
 	locales: {
 		es: "`PLA`: actualiza las banderas Zero y Negative",
@@ -221,9 +221,9 @@ it("`PLA`: updates the Zero and Negative flags", () => {
 
 it("`PLP`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("PLP");
+	expect(instructions).to.include.key("PLP");
 	expect(instructions.PLP).to.be.an("object");
-	instructions.PLP.argument.should.equalN("no", "argument");
+	expect(instructions.PLP.argument).to.equalN("no", "argument");
 })({
 	locales: {
 		es: "`PLP`: argument == 'no'",
@@ -237,7 +237,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 
 	cpu.stack.push(0b01000101);
 	instructions.PLP.run(cpu);
-	cpu.flags.should.include({
+	expect(cpu.flags).to.include({
 		n: false,
 		v: true,
 		d: false,
@@ -261,9 +261,9 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 
 	it("`" + instruction + "`: argument == 'no'", () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("no", "argument");
+		expect(instructions[instruction].argument).to.equalN("no", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'no'",
@@ -277,7 +277,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 
 		cpu.flags[flag] = false;
 		instructions[instruction].run(cpu);
-		cpu.flags[flag].should.equalN(true, flag);
+		expect(cpu.flags[flag]).to.equalN(true, flag);
 	})({
 		locales: {
 			es: "`" + instruction + "`: " + `enciende la bandera ~${name}~`,
@@ -295,9 +295,9 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 
 	it("`" + instruction + "`: argument == 'address'", () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("address", "argument");
+		expect(instructions[instruction].argument).to.equalN("address", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'address'",
@@ -313,7 +313,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 
 			cpu[register].setValue(123);
 			instructions[instruction].run(cpu, 0x1349);
-			cpu.memory.read(0x1349).should.equalN(123, "read(...)");
+			expect(cpu.memory.read(0x1349)).to.equalN(123, "read(...)");
 		}
 	)({
 		locales: {
@@ -364,9 +364,9 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 
 	it("`" + instruction + "`: argument == 'no'", () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("no", "argument");
+		expect(instructions[instruction].argument).to.equalN("no", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'no'",
@@ -385,7 +385,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 
 			cpu[sourceRegister].setValue(123);
 			instructions[instruction].run(cpu);
-			cpu[targetRegister].getValue().should.equalN(123, "getValue()");
+			expect(cpu[targetRegister].getValue()).to.equalN(123, "getValue()");
 		}
 	)({
 		locales: {
@@ -407,13 +407,13 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 
 				cpu[sourceRegister].setValue(240);
 				instructions[instruction].run(cpu);
-				cpu.flags.z.should.equalN(false, "z");
-				cpu.flags.n.should.equalN(true, "n");
+				expect(cpu.flags.z).to.equalN(false, "z");
+				expect(cpu.flags.n).to.equalN(true, "n");
 
 				cpu[sourceRegister].setValue(0);
 				instructions[instruction].run(cpu);
-				cpu.flags.z.should.equalN(true, "z");
-				cpu.flags.n.should.equalN(false, "n");
+				expect(cpu.flags.z).to.equalN(true, "z");
+				expect(cpu.flags.n).to.equalN(false, "n");
 			}
 		)({
 			locales: {
@@ -437,13 +437,13 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 
 				cpu[sourceRegister].setValue(240);
 				instructions[instruction].run(cpu);
-				cpu.flags.z.should.equalN(true, "z");
-				cpu.flags.n.should.equalN(true, "n");
+				expect(cpu.flags.z).to.equalN(true, "z");
+				expect(cpu.flags.n).to.equalN(true, "n");
 
 				cpu[sourceRegister].setValue(0);
 				instructions[instruction].run(cpu);
-				cpu.flags.z.should.equalN(true, "z");
-				cpu.flags.n.should.equalN(true, "n");
+				expect(cpu.flags.z).to.equalN(true, "z");
+				expect(cpu.flags.n).to.equalN(true, "n");
 			}
 		)({
 			locales: {

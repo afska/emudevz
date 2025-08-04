@@ -92,7 +92,7 @@ const noop = () => {};
 
 it("`/code/index.js` exports an object containing the `PPU` class", () => {
 	expect(mainModule.default).to.be.an("object");
-	mainModule.default.should.include.key("PPU");
+	expect(mainModule.default).to.include.key("PPU");
 	expect(mainModule.default.PPU).to.be.a.class;
 })({
 	locales: {
@@ -105,8 +105,8 @@ it("receives and saves the `cpu` property", () => {
 	const PPU = mainModule.default.PPU;
 	const cpu = {};
 	const ppu = new PPU(cpu);
-	ppu.should.include.key("cpu");
-	ppu.cpu.should.equal(cpu);
+	expect(ppu).to.include.key("cpu");
+	expect(ppu.cpu).to.equalN(cpu, "cpu");
 })({
 	locales: {
 		es: "recibe y guarda una propiedad `cpu`",
@@ -118,13 +118,13 @@ it("initializates the counters", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	ppu.should.include.key("cycle");
-	ppu.should.include.key("scanline");
-	ppu.should.include.key("frame");
+	expect(ppu).to.include.key("cycle");
+	expect(ppu).to.include.key("scanline");
+	expect(ppu).to.include.key("frame");
 
-	ppu.cycle.should.equalN(0, "cycle");
-	ppu.scanline.should.equalN(-1, "scanline");
-	ppu.frame.should.equalN(0, "frame");
+	expect(ppu.cycle).to.equalN(0, "cycle");
+	expect(ppu.scanline).to.equalN(-1, "scanline");
+	expect(ppu.frame).to.equalN(0, "frame");
 })({
 	locales: {
 		es: "inicializa los contadores",
@@ -137,22 +137,22 @@ it("has a `step` method that increments the counters", () => {
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 	ppu.onLoad?.(dummyMapper);
-	ppu.should.respondTo("step");
+	expect(ppu).to.respondTo("step");
 
 	for (let frame = 0; frame < 1; frame++) {
 		for (let scanline = -1; scanline < 261; scanline++) {
 			for (let cycle = 0; cycle < 341; cycle++) {
-				ppu.frame.should.equalN(frame, "frame");
-				ppu.scanline.should.equalN(scanline, "scanline");
-				ppu.cycle.should.equalN(cycle, "cycle");
+				expect(ppu.frame).to.equalN(frame, "frame");
+				expect(ppu.scanline).to.equalN(scanline, "scanline");
+				expect(ppu.cycle).to.equalN(cycle, "cycle");
 				ppu.step(noop, noop);
 			}
 		}
 	}
 
-	ppu.frame.should.equalN(1, "frame");
-	ppu.scanline.should.equalN(-1, "scanline");
-	ppu.cycle.should.equalN(0, "cycle");
+	expect(ppu.frame).to.equalN(1, "frame");
+	expect(ppu.scanline).to.equalN(-1, "scanline");
+	expect(ppu.cycle).to.equalN(0, "cycle");
 })({
 	locales: {
 		es: "tiene un método `step` que incrementa los contadores",
@@ -166,9 +166,9 @@ it("has a `frameBuffer` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	ppu.should.include.key("frameBuffer");
-	ppu.frameBuffer.should.be.a("Uint32Array");
-	ppu.frameBuffer.length.should.equalN(256 * 240, "length");
+	expect(ppu).to.include.key("frameBuffer");
+	expect(ppu.frameBuffer).to.be.a("Uint32Array");
+	expect(ppu.frameBuffer.length).to.equalN(256 * 240, "length");
 })({
 	locales: {
 		es: "tiene una propiedad `frameBuffer`",
@@ -179,10 +179,10 @@ it("has a `frameBuffer` property", () => {
 it("has a `plot` method that draws into the frame buffer", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
-	ppu.should.respondTo("plot");
+	expect(ppu).to.respondTo("plot");
 
 	ppu.plot(35, 20, 0xfffafafa);
-	ppu.frameBuffer[20 * 256 + 35].should.equalHex(
+	expect(ppu.frameBuffer[20 * 256 + 35]).to.equalHex(
 		0xfffafafa,
 		"frameBuffer[5155]"
 	);
@@ -198,7 +198,7 @@ it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 	ppu.onLoad?.(dummyMapper);
-	ppu.should.respondTo("step");
+	expect(ppu).to.respondTo("step");
 	const onFrame = sinon.spy();
 
 	for (let frame = 0; frame < 1; frame++) {
@@ -209,7 +209,7 @@ it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 		}
 	}
 
-	onFrame.should.have.been.calledOnce;
+	expect(onFrame).to.have.been.calledOnce;
 })({
 	locales: {
 		es: "llama a `onFrame` cada vez que `step(...)` alcanza un nuevo frame",
@@ -223,10 +223,10 @@ it("includes a `memory` property with a `PPUMemory` instance", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	ppu.should.include.key("memory");
-	ppu.memory.should.respondTo("onLoad");
-	ppu.memory.should.respondTo("read");
-	ppu.memory.should.respondTo("write");
+	expect(ppu).to.include.key("memory");
+	expect(ppu.memory).to.respondTo("onLoad");
+	expect(ppu.memory).to.respondTo("read");
+	expect(ppu.memory).to.respondTo("write");
 })({
 	locales: {
 		es: "incluye una propiedad `memory` con una instancia de `PPUMemory`",
@@ -240,8 +240,8 @@ it("its `memory` saves devices in `onLoad`", () => {
 
 	ppu.memory.onLoad(dummyCartridge, dummyMapper);
 
-	ppu.memory.cartridge.should.equal(dummyCartridge);
-	ppu.memory.mapper.should.equal(dummyMapper);
+	expect(ppu.memory.cartridge).to.equalN(dummyCartridge, "cartridge");
+	expect(ppu.memory.mapper).to.equalN(dummyMapper, "mapper");
 })({
 	locales: {
 		es: "su `memory` guarda dispositivos en `onLoad`",
@@ -261,7 +261,7 @@ it("connects the mapper to PPU memory (reads)", () => {
 	ppu.memory.onLoad(dummyCartridge, mapper);
 
 	for (let i = 0x0000; i <= 0x1fff; i++) {
-		ppu.memory.read(i).should.equalHex(i * random, `read(${i})`);
+		expect(ppu.memory.read(i)).to.equalHex(i * random, `read(${i})`);
 	}
 })({
 	locales: {
@@ -288,8 +288,8 @@ it("connects the mapper to PPU memory (writes)", () => {
 	for (let i = 0x0000; i <= 0x1fff; i++) {
 		const value = byte.random();
 		ppu.memory.write(i, value);
-		arg1.should.equalHex(i, "address");
-		arg2.should.equalHex(value, "value");
+		expect(arg1).to.equalHex(i, "address");
+		expect(arg2).to.equalHex(value, "value");
 	}
 })({
 	locales: {
@@ -304,10 +304,10 @@ it("includes a `registers` property with 9 video registers", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	ppu.should.include.key("registers");
+	expect(ppu).to.include.key("registers");
 	expect(ppu.registers).to.be.an("object");
-	ppu.registers.should.respondTo("read");
-	ppu.registers.should.respondTo("write");
+	expect(ppu.registers).to.respondTo("read");
+	expect(ppu.registers).to.respondTo("write");
 
 	[
 		"ppuCtrl",
@@ -323,16 +323,16 @@ it("includes a `registers` property with 9 video registers", () => {
 		const register = ppu.registers[name];
 
 		expect(register).to.be.an("object");
-		register.should.respondTo("onRead");
-		register.should.respondTo("onWrite");
+		expect(register).to.respondTo("onRead");
+		expect(register).to.respondTo("onWrite");
 		register.onRead = sinon.spy();
 		register.onWrite = sinon.spy();
 
 		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
 		ppu.registers.read(address);
 		ppu.registers.write(address, 123);
-		register.onRead.should.have.been.calledOnce;
-		register.onWrite.should.have.been.calledWith(123);
+		expect(register.onRead).to.have.been.calledOnce;
+		expect(register.onWrite).to.have.been.calledWith(123);
 	});
 })({
 	locales: {
@@ -365,7 +365,7 @@ it("connects the video registers to CPU memory (reads)", () => {
 		register.onRead = sinon.spy();
 		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
 		cpuMemory.read(address);
-		register.onRead.should.have.been.calledOnce;
+		expect(register.onRead).to.have.been.calledOnce;
 	});
 })({
 	locales: {
@@ -397,7 +397,7 @@ it("connects the video registers to CPU memory (writes)", () => {
 		register.onWrite = sinon.spy();
 		const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
 		cpuMemory.write(address, 123);
-		register.onWrite.should.have.been.calledWith(123);
+		expect(register.onWrite).to.have.been.calledWith(123);
 	});
 })({
 	locales: {
@@ -412,7 +412,7 @@ it("PPUCtrl: write only", () => {
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(byte.random());
-	ppuCtrl.onRead().should.equalN(0, "onRead()");
+	expect(ppuCtrl.onRead()).to.equalN(0, "onRead()");
 })({
 	locales: {
 		es: "PPUCtrl: solo escritura",
@@ -426,13 +426,13 @@ it("PPUCtrl: writes `nameTableId` (bits 0-1)", () => {
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10100000);
-	ppuCtrl.nameTableId.should.equalN(0, "nameTableId");
+	expect(ppuCtrl.nameTableId).to.equalN(0, "nameTableId");
 	ppuCtrl.onWrite(0b10100001);
-	ppuCtrl.nameTableId.should.equalN(1, "nameTableId");
+	expect(ppuCtrl.nameTableId).to.equalN(1, "nameTableId");
 	ppuCtrl.onWrite(0b10100010);
-	ppuCtrl.nameTableId.should.equalN(2, "nameTableId");
+	expect(ppuCtrl.nameTableId).to.equalN(2, "nameTableId");
 	ppuCtrl.onWrite(0b10100011);
-	ppuCtrl.nameTableId.should.equalN(3, "nameTableId");
+	expect(ppuCtrl.nameTableId).to.equalN(3, "nameTableId");
 })({
 	locales: {
 		es: "PPUCtrl: escribe `nameTableId` (bits 0-1)",
@@ -446,9 +446,9 @@ it("PPUCtrl: writes `vramAddressIncrement32` (bit 2)", () => {
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10100011);
-	ppuCtrl.vramAddressIncrement32.should.equalN(0, "vramAddressIncrement32");
+	expect(ppuCtrl.vramAddressIncrement32).to.equalN(0, "vramAddressIncrement32");
 	ppuCtrl.onWrite(0b10100111);
-	ppuCtrl.vramAddressIncrement32.should.equalN(1, "vramAddressIncrement32");
+	expect(ppuCtrl.vramAddressIncrement32).to.equalN(1, "vramAddressIncrement32");
 })({
 	locales: {
 		es: "PPUCtrl: escribe `vramAddressIncrement32` (bit 2)",
@@ -462,9 +462,15 @@ it("PPUCtrl: writes `sprite8x8PatternTableId` (bit 3)", () => {
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10100011);
-	ppuCtrl.sprite8x8PatternTableId.should.equalN(0, "sprite8x8PatternTableId");
+	expect(ppuCtrl.sprite8x8PatternTableId).to.equalN(
+		0,
+		"sprite8x8PatternTableId"
+	);
 	ppuCtrl.onWrite(0b10101111);
-	ppuCtrl.sprite8x8PatternTableId.should.equalN(1, "sprite8x8PatternTableId");
+	expect(ppuCtrl.sprite8x8PatternTableId).to.equalN(
+		1,
+		"sprite8x8PatternTableId"
+	);
 })({
 	locales: {
 		es: "PPUCtrl: escribe `vramAddressIncrement32` (bit 3)",
@@ -478,9 +484,15 @@ it("PPUCtrl: writes `backgroundPatternTableId` (bit 4)", () => {
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10100011);
-	ppuCtrl.backgroundPatternTableId.should.equalN(0, "backgroundPatternTableId");
+	expect(ppuCtrl.backgroundPatternTableId).to.equalN(
+		0,
+		"backgroundPatternTableId"
+	);
 	ppuCtrl.onWrite(0b10111111);
-	ppuCtrl.backgroundPatternTableId.should.equalN(1, "backgroundPatternTableId");
+	expect(ppuCtrl.backgroundPatternTableId).to.equalN(
+		1,
+		"backgroundPatternTableId"
+	);
 })({
 	locales: {
 		es: "PPUCtrl: escribe `backgroundPatternTableId` (bit 4)",
@@ -494,9 +506,9 @@ it("PPUCtrl: writes `spriteSize` (bit 5)", () => {
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b10000011);
-	ppuCtrl.spriteSize.should.equalN(0, "spriteSize");
+	expect(ppuCtrl.spriteSize).to.equalN(0, "spriteSize");
 	ppuCtrl.onWrite(0b10111111);
-	ppuCtrl.spriteSize.should.equalN(1, "spriteSize");
+	expect(ppuCtrl.spriteSize).to.equalN(1, "spriteSize");
 })({
 	locales: {
 		es: "PPUCtrl: escribe `spriteSize` (bit 5)",
@@ -510,9 +522,9 @@ it("PPUCtrl: writes `generateNMIOnVBlank` (bit 7)", () => {
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(0b00000011);
-	ppuCtrl.generateNMIOnVBlank.should.equalN(0, "generateNMIOnVBlank");
+	expect(ppuCtrl.generateNMIOnVBlank).to.equalN(0, "generateNMIOnVBlank");
 	ppuCtrl.onWrite(0b10111111);
-	ppuCtrl.generateNMIOnVBlank.should.equalN(1, "generateNMIOnVBlank");
+	expect(ppuCtrl.generateNMIOnVBlank).to.equalN(1, "generateNMIOnVBlank");
 })({
 	locales: {
 		es: "PPUCtrl: escribe `generateNMIOnVBlank` (bit 7)",
@@ -526,9 +538,9 @@ it("PPUStatus: read only", () => {
 
 	const ppuStatus = ppu.registers.ppuStatus;
 	ppuStatus.setValue(123);
-	ppuStatus.onRead().should.equalN(123, "onRead()");
+	expect(ppuStatus.onRead()).to.equalN(123, "onRead()");
 	ppuStatus.onWrite(456);
-	ppuStatus.onRead().should.equalN(123, "onRead()");
+	expect(ppuStatus.onRead()).to.equalN(123, "onRead()");
 })({
 	locales: {
 		es: "PPUStatus: solo lectura",
@@ -541,9 +553,9 @@ it("PPUStatus: reads `spriteOverflow` (bit 5)", () => {
 	const ppu = new PPU({});
 
 	const ppuStatus = ppu.registers.ppuStatus;
-	byte.getBit(ppuStatus.onRead(), 5).should.equalN(0, "bit 5");
+	expect(byte.getBit(ppuStatus.onRead(), 5)).to.equalN(0, "bit 5");
 	ppuStatus.spriteOverflow = 1;
-	byte.getBit(ppuStatus.onRead(), 5).should.equalN(1, "bit 5");
+	expect(byte.getBit(ppuStatus.onRead(), 5)).to.equalN(1, "bit 5");
 })({
 	locales: {
 		es: "PPUStatus: lee `spriteOverflow` (bit 5)",
@@ -556,9 +568,9 @@ it("PPUStatus: reads `sprite0Hit` (bit 6)", () => {
 	const ppu = new PPU({});
 
 	const ppuStatus = ppu.registers.ppuStatus;
-	byte.getBit(ppuStatus.onRead(), 6).should.equalN(0, "bit 6");
+	expect(byte.getBit(ppuStatus.onRead(), 6)).to.equalN(0, "bit 6");
 	ppuStatus.sprite0Hit = 1;
-	byte.getBit(ppuStatus.onRead(), 6).should.equalN(1, "bit 6");
+	expect(byte.getBit(ppuStatus.onRead(), 6)).to.equalN(1, "bit 6");
 })({
 	locales: {
 		es: "PPUStatus: lee `sprite0Hit` (bit 6)",
@@ -571,11 +583,11 @@ it("PPUStatus: reads `isInVBlankInterval` (bit 7) (ON by default)", () => {
 	const ppu = new PPU({});
 
 	const ppuStatus = ppu.registers.ppuStatus;
-	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
+	expect(byte.getBit(ppuStatus.onRead(), 7)).to.equalN(1, "bit 7");
 	ppuStatus.isInVBlankInterval = 0;
-	byte.getBit(ppuStatus.onRead(), 7).should.equalN(0, "bit 7");
+	expect(byte.getBit(ppuStatus.onRead(), 7)).to.equalN(0, "bit 7");
 	ppuStatus.isInVBlankInterval = 1;
-	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
+	expect(byte.getBit(ppuStatus.onRead(), 7)).to.equalN(1, "bit 7");
 })({
 	locales: {
 		es: "PPUStatus: lee `isInVBlankInterval` (bit 7) (encendido por defecto)",
@@ -591,12 +603,12 @@ it("PPUStatus: resets `isInVBlankInterval` after reading", () => {
 	const ppuStatus = ppu.registers.ppuStatus;
 
 	ppuStatus.isInVBlankInterval = 1;
-	byte.getBit(ppuStatus.onRead(), 7).should.equalN(1, "bit 7");
-	ppuStatus.isInVBlankInterval.should.equalN(0, "isInVBlankInterval");
+	expect(byte.getBit(ppuStatus.onRead(), 7)).to.equalN(1, "bit 7");
+	expect(ppuStatus.isInVBlankInterval).to.equalN(0, "isInVBlankInterval");
 
 	ppuStatus.isInVBlankInterval = 0;
-	byte.getBit(ppuStatus.onRead(), 7).should.equalN(0, "bit 7");
-	ppuStatus.isInVBlankInterval.should.equalN(0, "isInVBlankInterval");
+	expect(byte.getBit(ppuStatus.onRead(), 7)).to.equalN(0, "bit 7");
+	expect(ppuStatus.isInVBlankInterval).to.equalN(0, "isInVBlankInterval");
 })({
 	locales: {
 		es: "PPUStatus: reinicia `isInVBlankInterval` luego de leer",
@@ -607,9 +619,9 @@ it("PPUStatus: resets `isInVBlankInterval` after reading", () => {
 it("has methods: `_onPreLine`, `_onVisibleLine`, `_onVBlankLine`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
-	ppu.should.respondTo("_onPreLine");
-	ppu.should.respondTo("_onVisibleLine");
-	ppu.should.respondTo("_onVBlankLine");
+	expect(ppu).to.respondTo("_onPreLine");
+	expect(ppu).to.respondTo("_onVisibleLine");
+	expect(ppu).to.respondTo("_onVBlankLine");
 })({
 	locales: {
 		es: "tiene métodos `_onPreLine`, `_onVisibleLine`, `_onVBlankLine`",
@@ -637,7 +649,7 @@ it("calls `_onPreLine` on scanline -1", () => {
 
 			if (scanline === -1) {
 				try {
-					ppu._onPreLine.should.have.been.called;
+					expect(ppu._onPreLine).to.have.been.called;
 				} catch (e) {
 					throw new Error(
 						`_onPreLine should be called on scanline=${scanline}, cycle=${cycle}`
@@ -645,7 +657,7 @@ it("calls `_onPreLine` on scanline -1", () => {
 				}
 			} else {
 				try {
-					ppu._onPreLine.should.have.not.been.called;
+					expect(ppu._onPreLine).to.not.have.been.called;
 				} catch (e) {
 					throw new Error(
 						`_onPreLine should NOT be called on scanline=${scanline}, cycle=${cycle}`
@@ -681,7 +693,7 @@ it("calls `_onVisibleLine` on scanlines ~[0, 240)~", () => {
 
 			if (scanline >= 0 && scanline < 240) {
 				try {
-					ppu._onVisibleLine.should.have.been.called;
+					expect(ppu._onVisibleLine).to.have.been.called;
 				} catch (e) {
 					throw new Error(
 						`_onVisibleLine should be called on scanline=${scanline}, cycle=${cycle}`
@@ -689,7 +701,7 @@ it("calls `_onVisibleLine` on scanlines ~[0, 240)~", () => {
 				}
 			} else {
 				try {
-					ppu._onVisibleLine.should.have.not.been.called;
+					expect(ppu._onVisibleLine).to.not.have.been.called;
 				} catch (e) {
 					throw new Error(
 						`_onVisibleLine should NOT be called on scanline=${scanline}, cycle=${cycle}`
@@ -725,7 +737,7 @@ it("calls `_onVBlankLine` on scanline 241, with the `onInterrupt` argument", () 
 
 			if (scanline === 241) {
 				try {
-					ppu._onVBlankLine.should.have.been.calledWith(onInterrupt);
+					expect(ppu._onVBlankLine).to.have.been.calledWith(onInterrupt);
 				} catch (e) {
 					throw new Error(
 						`_onVBlankLine should be called on scanline=${scanline}, cycle=${cycle}`
@@ -733,7 +745,7 @@ it("calls `_onVBlankLine` on scanline 241, with the `onInterrupt` argument", () 
 				}
 			} else {
 				try {
-					ppu._onVBlankLine.should.have.not.been.called;
+					expect(ppu._onVBlankLine).to.not.have.been.called;
 				} catch (e) {
 					throw new Error(
 						`_onVBlankLine should NOT be called on scanline=${scanline}, cycle=${cycle}`
@@ -765,12 +777,12 @@ it("resets `PPUStatus::isInVBlankInterval` on scanline=-1, cycle=1", () => {
 		ppu.step(noop, noop);
 
 		if (cycle === 1) {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+			expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
 				0,
 				"isInVBlankInterval"
 			);
 		} else {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+			expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
 				1,
 				"isInVBlankInterval"
 			);
@@ -802,20 +814,20 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 		ppu.step(noop, onInterrupt);
 
 		if (cycle === 1) {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+			expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
 				1,
 				"isInVBlankInterval"
 			);
-			onInterrupt.should.have.been.calledWith({
+			expect(onInterrupt).to.have.been.calledWith({
 				id: "NMI",
 				vector: 0xfffa,
 			});
 		} else {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+			expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
 				0,
 				"isInVBlankInterval"
 			);
-			onInterrupt.should.have.not.been.called;
+			expect(onInterrupt).to.not.have.been.called;
 		}
 	}
 })({
@@ -844,17 +856,17 @@ it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on scanline=
 		ppu.step(noop, onInterrupt);
 
 		if (cycle === 1) {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+			expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
 				1,
 				"isInVBlankInterval"
 			);
-			onInterrupt.should.have.not.been.called;
+			expect(onInterrupt).to.not.have.been.called;
 		} else {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+			expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
 				0,
 				"isInVBlankInterval"
 			);
-			onInterrupt.should.have.not.been.called;
+			expect(onInterrupt).to.not.have.been.called;
 		}
 	}
 })({
@@ -871,9 +883,9 @@ it("its `memory` has a `vram` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	ppu.memory.should.include.key("vram");
-	ppu.memory.vram.should.be.a("Uint8Array");
-	ppu.memory.vram.length.should.equalN(4096, "length");
+	expect(ppu.memory).to.include.key("vram");
+	expect(ppu.memory.vram).to.be.a("Uint8Array");
+	expect(ppu.memory.vram.length).to.equalN(4096, "length");
 })({
 	locales: {
 		es: "su `memory`incluye una propiedad `vram`",
@@ -888,7 +900,7 @@ it("connects VRAM to PPU memory (reads)", () => {
 	for (let i = 0; i < 4096; i++) {
 		const value = byte.random();
 		ppu.memory.vram[i] = value;
-		ppu.memory.read(0x2000 + i).should.equalN(value, `read(0x2000 + ${i})`);
+		expect(ppu.memory.read(0x2000 + i)).to.equalN(value, `read(0x2000 + ${i})`);
 	}
 })({
 	locales: {
@@ -904,7 +916,7 @@ it("connects VRAM to PPU memory (writes)", () => {
 	for (let i = 0; i < 4096; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2000 + i, value);
-		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+		expect(ppu.memory.vram[i]).to.equalN(value, `vram[${i}]`);
 	}
 })({
 	locales: {
@@ -919,7 +931,7 @@ it("PPUAddr: write only", () => {
 	const ppuAddr = ppu.registers.ppuAddr;
 
 	ppuAddr.onWrite(byte.random());
-	ppuAddr.onRead().should.equalN(0, "onRead()");
+	expect(ppuAddr.onRead()).to.equalN(0, "onRead()");
 })({
 	locales: {
 		es: "PPUAddr: solo escritura",
@@ -932,11 +944,11 @@ it("PPUAddr: initializes two properties, `latch` and `address`", () => {
 	const ppu = new PPU({});
 	const ppuAddr = ppu.registers.ppuAddr;
 
-	ppuAddr.should.include.key("latch");
-	ppuAddr.latch.should.equalN(false, "latch");
+	expect(ppuAddr).to.include.key("latch");
+	expect(ppuAddr.latch).to.equalN(false, "latch");
 
-	ppuAddr.should.include.key("address");
-	ppuAddr.address.should.equalN(0, "address");
+	expect(ppuAddr).to.include.key("address");
+	expect(ppuAddr.address).to.equalN(0, "address");
 })({
 	locales: {
 		es: "PPUAddr: inicializa dos propiedades, `latch` y `address`",
@@ -950,16 +962,16 @@ it("PPUAddr: writes the MSB first, then the LSB", () => {
 	const ppuAddr = ppu.registers.ppuAddr;
 
 	ppuAddr.onWrite(0x12);
-	ppuAddr.address.should.equalHex(0x1200, "address");
-	ppuAddr.latch.should.equalN(true, "latch");
+	expect(ppuAddr.address).to.equalHex(0x1200, "address");
+	expect(ppuAddr.latch).to.equalN(true, "latch");
 
 	ppuAddr.onWrite(0x34);
-	ppuAddr.address.should.equalHex(0x1234, "address");
-	ppuAddr.latch.should.equalN(false, "latch");
+	expect(ppuAddr.address).to.equalHex(0x1234, "address");
+	expect(ppuAddr.latch).to.equalN(false, "latch");
 
 	ppuAddr.onWrite(0x56);
-	ppuAddr.address.should.equalHex(0x5634, "address");
-	ppuAddr.latch.should.equalN(true, "latch");
+	expect(ppuAddr.address).to.equalHex(0x5634, "address");
+	expect(ppuAddr.latch).to.equalN(true, "latch");
 })({
 	locales: {
 		es: "PPUAddr: escribe primero el MSB, luego el LSB",
@@ -980,7 +992,7 @@ it("PPUData: writes the value to VRAM using `PPUAddr::address`", () => {
 
 	const value = byte.random();
 	ppuData.onWrite(value);
-	ppu.memory.read(0x2023).should.equalN(value, "read(0x2023)");
+	expect(ppu.memory.read(0x2023)).to.equalN(value, "read(0x2023)");
 })({
 	locales: {
 		es: "PPUData: escribe el valor en VRAM usando `PPUAddr::address`",
@@ -1000,10 +1012,10 @@ it("PPUData: autoincrements the address by 1 (writes)", () => {
 	ppuAddr.address = 0x2023;
 
 	ppuData.onWrite(byte.random());
-	ppuAddr.address.should.equalHex(0x2024, "address");
+	expect(ppuAddr.address).to.equalHex(0x2024, "address");
 
 	ppuData.onWrite(byte.random());
-	ppuAddr.address.should.equalHex(0x2025, "address");
+	expect(ppuAddr.address).to.equalHex(0x2025, "address");
 })({
 	locales: {
 		es: "PPUData: autoincrementa la dirección por 1 (escrituras)",
@@ -1025,10 +1037,10 @@ it("PPUData: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement3
 	ppuAddr.address = 0x2023;
 
 	ppuData.onWrite(byte.random());
-	ppuAddr.address.should.equalHex(0x2043, "address");
+	expect(ppuAddr.address).to.equalHex(0x2043, "address");
 
 	ppuData.onWrite(byte.random());
-	ppuAddr.address.should.equalHex(0x2063, "address");
+	expect(ppuAddr.address).to.equalHex(0x2063, "address");
 })({
 	locales: {
 		es:
@@ -1049,12 +1061,12 @@ it("PPUData: autoincrements the address without exceeding $FFFF (writes)", () =>
 
 	ppuAddr.address = 0xffff;
 	ppuData.onWrite(byte.random());
-	ppuAddr.address.should.equalHex(0x0000, "address");
+	expect(ppuAddr.address).to.equalHex(0x0000, "address");
 
 	ppuAddr.address = 0xffff;
 	ppuCtrl.vramAddressIncrement32 = 1;
 	ppuData.onWrite(byte.random());
-	ppuAddr.address.should.equalN(31, "address");
+	expect(ppuAddr.address).to.equalN(31, "address");
 })({
 	locales: {
 		es:
@@ -1072,11 +1084,11 @@ it("PPUStatus: resets `PPUAddr::latch` after reading", () => {
 
 	ppuAddr.latch = true;
 	ppuStatus.onRead();
-	ppuAddr.latch.should.equalN(false, "latch");
+	expect(ppuAddr.latch).to.equalN(false, "latch");
 
 	ppuAddr.latch = false;
 	ppuStatus.onRead();
-	ppuAddr.latch.should.equalN(false, "latch");
+	expect(ppuAddr.latch).to.equalN(false, "latch");
 })({
 	locales: {
 		es: "PPUStatus: reinicia `PPUAddr::latch` luego de leer",
@@ -1090,9 +1102,9 @@ it("has a `backgroundRenderer` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	ppu.should.include.key("backgroundRenderer");
-	ppu.backgroundRenderer.should.include.key("ppu");
-	ppu.backgroundRenderer.ppu.should.equal(ppu);
+	expect(ppu).to.include.key("backgroundRenderer");
+	expect(ppu.backgroundRenderer).to.include.key("ppu");
+	expect(ppu.backgroundRenderer.ppu).to.equalN(ppu, "ppu");
 })({
 	locales: {
 		es: "tiene una propiedad `backgroundRenderer`",
@@ -1108,9 +1120,9 @@ it("BackgroundRenderer: renderScanline() calls `PPU::plot` 256 times", () => {
 	ppu.registers?.ppuMask?.onWrite?.(0x1e);
 	sinon.spy(ppu, "plot");
 
-	ppu.backgroundRenderer.should.respondTo("renderScanline");
+	expect(ppu.backgroundRenderer).to.respondTo("renderScanline");
 	ppu.backgroundRenderer.renderScanline();
-	ppu.plot.callCount.should.equalN(256, "plot.callCount");
+	expect(ppu.plot.callCount).to.equalN(256, "plot.callCount");
 })({
 	locales: {
 		es: "BackgroundRenderer: renderScanline() llama a `PPU::plot` 256 veces",
@@ -1136,10 +1148,11 @@ it("calls `backgroundRenderer.renderScanline()` on cycle 0 of every visible scan
 
 				if (scanline >= 0 && scanline < 240) {
 					if (cycle !== 0) {
-						ppu.backgroundRenderer.renderScanline.should.not.have.been.called;
-						ppu.plot.should.not.have.been.called;
+						expect(ppu.backgroundRenderer.renderScanline).to.not.have.been
+							.called;
+						expect(ppu.plot).to.not.have.been.called;
 					} else {
-						ppu.backgroundRenderer.renderScanline.callCount.should.equalN(
+						expect(ppu.backgroundRenderer.renderScanline.callCount).to.equalN(
 							1,
 							"renderScanline.callCount"
 						);
@@ -1162,9 +1175,9 @@ it("its `memory` has a `paletteRam` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	ppu.memory.should.include.key("paletteRam");
-	ppu.memory.paletteRam.should.be.a("Uint8Array");
-	ppu.memory.paletteRam.length.should.equalN(32, "length");
+	expect(ppu.memory).to.include.key("paletteRam");
+	expect(ppu.memory.paletteRam).to.be.a("Uint8Array");
+	expect(ppu.memory.paletteRam.length).to.equalN(32, "length");
 })({
 	locales: {
 		es: "su `memory`incluye una propiedad `paletteRam`",
@@ -1188,7 +1201,7 @@ it("connects Palette RAM to PPU memory (reads)", () => {
 			continue;
 
 		ppu.memory.paletteRam[i] = value;
-		ppu.memory.read(address).should.equalN(value, `read(0x3f00 + ${i})`);
+		expect(ppu.memory.read(address)).to.equalN(value, `read(0x3f00 + ${i})`);
 	}
 })({
 	locales: {
@@ -1213,7 +1226,7 @@ it("connects Palette RAM to PPU memory (writes)", () => {
 			continue;
 
 		ppu.memory.write(address, value);
-		ppu.memory.paletteRam[i].should.equalN(value, `paletteRam[${i}]`);
+		expect(ppu.memory.paletteRam[i]).to.equalN(value, `paletteRam[${i}]`);
 	}
 })({
 	locales: {
@@ -1226,7 +1239,7 @@ it("has a `getColor` method that reads color palettes", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
-	ppu.should.respondTo("getColor");
+	expect(ppu).to.respondTo("getColor");
 
 	for (let i = 0; i < 32; i++) {
 		ppu.memory.paletteRam[i] = byte.random(63);
@@ -1238,12 +1251,10 @@ it("has a `getColor` method that reads color palettes", () => {
 
 	for (let paletteId = 0; paletteId < 8; paletteId++) {
 		for (let i = 0; i < 4; i++) {
-			ppu
-				.getColor(paletteId, i)
-				.should.equalHex(
-					masterPalette[ppu.memory.paletteRam[paletteId * 4 + i]],
-					`getColor(${paletteId}, ${i})`
-				);
+			expect(ppu.getColor(paletteId, i)).to.equalHex(
+				masterPalette[ppu.memory.paletteRam[paletteId * 4 + i]],
+				`getColor(${paletteId}, ${i})`
+			);
 		}
 	}
 })({
@@ -1265,14 +1276,14 @@ it("PPUData: reads the value at `PPUAddr::address` with delay", () => {
 
 	ppu.memory.write(0x2023, 0x8d);
 	ppuAddr.address = 0x2023;
-	ppuData.onRead().should.equalN(0, "first read");
+	expect(ppuData.onRead()).to.equalN(0, "first read");
 
 	ppu.memory.write(0x2023, 0x9e);
 	ppuAddr.address = 0x2023;
-	ppuData.onRead().should.equalHex(0x8d, "second read");
+	expect(ppuData.onRead()).to.equalHex(0x8d, "second read");
 
 	ppuAddr.address = 0x2023;
-	ppuData.onRead().should.equalHex(0x9e, "third read");
+	expect(ppuData.onRead()).to.equalHex(0x9e, "third read");
 })({
 	locales: {
 		es: "PPUData: lee el valor en `PPUAddr::address` con retraso",
@@ -1291,7 +1302,7 @@ it("PPUData: reads from Palette RAM without delay", () => {
 	ppu.memory.write(0x3f10, 123);
 	ppuAddr.address = 0x3f10;
 
-	ppuData.onRead().should.equalN(123, "first read");
+	expect(ppuData.onRead()).to.equalN(123, "first read");
 })({
 	locales: {
 		es: "PPUData: lee de Palette RAM sin retraso",
@@ -1310,10 +1321,10 @@ it("PPUData: autoincrements the address by 1 (reads)", () => {
 	ppuAddr.address = 0x2023;
 
 	ppuData.onRead();
-	ppuAddr.address.should.equalHex(0x2024, "address");
+	expect(ppuAddr.address).to.equalHex(0x2024, "address");
 
 	ppuData.onRead();
-	ppuAddr.address.should.equalHex(0x2025, "address");
+	expect(ppuAddr.address).to.equalHex(0x2025, "address");
 })({
 	locales: {
 		es: "PPUData: autoincrementa la dirección por 1 (lecturas)",
@@ -1334,10 +1345,10 @@ it("PPUData: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement3
 	ppuAddr.address = 0x2023;
 
 	ppuData.onRead();
-	ppuAddr.address.should.equalHex(0x2043, "address");
+	expect(ppuAddr.address).to.equalHex(0x2043, "address");
 
 	ppuData.onRead();
-	ppuAddr.address.should.equalHex(0x2063, "address");
+	expect(ppuAddr.address).to.equalHex(0x2063, "address");
 })({
 	locales: {
 		es:
@@ -1357,12 +1368,12 @@ it("PPUData: autoincrements the address without exceeding $FFFF (reads)", () => 
 
 	ppuAddr.address = 0xffff;
 	ppuData.onRead();
-	ppuAddr.address.should.equalHex(0x0000, "address");
+	expect(ppuAddr.address).to.equalHex(0x0000, "address");
 
 	ppuAddr.address = 0xffff;
 	ppuCtrl.vramAddressIncrement32 = 1;
 	ppuData.onRead();
-	ppuAddr.address.should.equalN(31, "address");
+	expect(ppuAddr.address).to.equalN(31, "address");
 })({
 	locales: {
 		es:
@@ -1377,9 +1388,9 @@ it("its `memory` has a `oamRam` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	ppu.memory.should.include.key("oamRam");
-	ppu.memory.oamRam.should.be.a("Uint8Array");
-	ppu.memory.oamRam.length.should.equalN(256, "length");
+	expect(ppu.memory).to.include.key("oamRam");
+	expect(ppu.memory.oamRam).to.be.a("Uint8Array");
+	expect(ppu.memory.oamRam.length).to.equalN(256, "length");
 })({
 	locales: {
 		es: "su `memory`incluye una propiedad `oamRam`",
@@ -1398,7 +1409,7 @@ it("OAMData: writes the value to OAM RAM using `OAMAddr::value`", () => {
 
 	const value = byte.random();
 	oamData.onWrite(value);
-	ppu.memory.oamRam[23].should.equalN(value, "oamRam[23]");
+	expect(ppu.memory.oamRam[23]).to.equalN(value, "oamRam[23]");
 })({
 	locales: {
 		es: "OAMData: escribe el valor en OAM RAM usando `OAMAddr::value`",
@@ -1416,10 +1427,10 @@ it("OAMData: autoincrements the address by 1 (writes)", () => {
 	oamAddr.setValue(23);
 
 	oamData.onWrite(byte.random());
-	oamAddr.value.should.equalN(24, "address");
+	expect(oamAddr.value).to.equalN(24, "address");
 
 	oamData.onWrite(byte.random());
-	oamAddr.value.should.equalN(25, "address");
+	expect(oamAddr.value).to.equalN(25, "address");
 })({
 	locales: {
 		es: "PPUData: autoincrementa la dirección por 1 (escrituras)",
@@ -1437,7 +1448,7 @@ it("OAMData: autoincrements the address without exceeding $FF (writes)", () => {
 	oamAddr.setValue(0xff);
 
 	oamData.onWrite(byte.random());
-	oamAddr.value.should.equalN(0, "address");
+	expect(oamAddr.value).to.equalN(0, "address");
 })({
 	locales: {
 		es:
@@ -1452,7 +1463,7 @@ it("OAMDMA: write only", () => {
 
 	const ppuCtrl = ppu.registers.ppuCtrl;
 	ppuCtrl.onWrite(byte.random());
-	ppuCtrl.onRead().should.equalN(0, "onRead()");
+	expect(ppuCtrl.onRead()).to.equalN(0, "onRead()");
 })({
 	locales: {
 		es: "OAMDMA: solo escritura",
@@ -1474,8 +1485,10 @@ it("OAMDMA: copies the whole page to OAM and adds 513 cycles", () => {
 
 	oamDma.onWrite(0x06);
 
-	for (let i = 0; i < 256; i++) ppu.memory.oamRam[i].should.equal(255 - i);
-	cpu.extraCycles.should.equalN(534, "extraCycles");
+	for (let i = 0; i < 256; i++) {
+		expect(ppu.memory.oamRam[i]).to.equalN(255 - i, `oamRam[${i}]`);
+	}
+	expect(cpu.extraCycles).to.equalN(534, "extraCycles");
 })({
 	locales: {
 		es:
@@ -1490,9 +1503,9 @@ it("has a `spriteRenderer` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
-	ppu.should.include.key("spriteRenderer");
-	ppu.spriteRenderer.should.include.key("ppu");
-	ppu.spriteRenderer.ppu.should.equal(ppu);
+	expect(ppu).to.include.key("spriteRenderer");
+	expect(ppu.spriteRenderer).to.include.key("ppu");
+	expect(ppu.spriteRenderer.ppu).to.equalN(ppu, "ppu");
 })({
 	locales: {
 		es: "tiene una propiedad `spriteRenderer`",
@@ -1510,30 +1523,32 @@ it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM da
 	ppu.memory.oamRam[4 * 31 + 2] = 0b10000010; // attr
 	ppu.memory.oamRam[4 * 31 + 3] = 20; // x
 
-	ppu.spriteRenderer.should.respondTo("_createSprite");
+	expect(ppu.spriteRenderer).to.respondTo("_createSprite");
 	const sprite = ppu.spriteRenderer._createSprite(31);
 	expect(sprite).to.exist;
-	sprite.id.should.equalN(31, "id");
-	sprite.x.should.equalN(20, "x");
-	sprite.y.should.equalN(6, "y");
-	sprite.is8x16.should.equalN(false, "is8x16");
-	sprite.patternTableId.should.equalN(0, "patternTableId");
-	sprite.tileId.should.equalN(91, "tileId");
-	sprite.attributes.should.equalBin(0b10000010, "attributes");
+	expect(sprite.id).to.equalN(31, "id");
+	expect(sprite.x).to.equalN(20, "x");
+	expect(sprite.y).to.equalN(6, "y");
+	expect(sprite.is8x16).to.equalN(false, "is8x16");
+	expect(sprite.patternTableId).to.equalN(0, "patternTableId");
+	expect(sprite.tileId).to.equalN(91, "tileId");
+	expect(sprite.attributes).to.equalBin(0b10000010, "attributes");
 
-	sprite.tileIdFor(0).should.equalN(91, "tileIdFor(...)");
-	sprite
-		.shouldRenderInScanline(2)
-		.should.equalN(false, "shouldRenderInScanline(...)");
-	sprite
-		.shouldRenderInScanline(6)
-		.should.equalN(true, "shouldRenderInScanline(...)");
-	sprite.diffY(8).should.equalN(2, "diffY(...)");
-	sprite.paletteId.should.equalN(6, "paletteId");
-	sprite.isInFrontOfBackground.should.equalN(true, "isInFrontOfBackground");
-	sprite.flipX.should.equalN(false, "flipX");
-	sprite.flipY.should.equalN(true, "flipY");
-	sprite.height.should.equalN(8, "height");
+	expect(sprite.tileIdFor(0)).to.equalN(91, "tileIdFor(...)");
+	expect(sprite.shouldRenderInScanline(2)).to.equalN(
+		false,
+		"shouldRenderInScanline(...)"
+	);
+	expect(sprite.shouldRenderInScanline(6)).to.equalN(
+		true,
+		"shouldRenderInScanline(...)"
+	);
+	expect(sprite.diffY(8)).to.equalN(2, "diffY(...)");
+	expect(sprite.paletteId).to.equalN(6, "paletteId");
+	expect(sprite.isInFrontOfBackground).to.equalN(true, "isInFrontOfBackground");
+	expect(sprite.flipX).to.equalN(false, "flipX");
+	expect(sprite.flipY).to.equalN(true, "flipY");
+	expect(sprite.height).to.equalN(8, "height");
 })({
 	locales: {
 		es:
@@ -1554,34 +1569,40 @@ it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM da
 	ppu.memory.oamRam[4 * 9 + 2] = 0b01100001; // attr
 	ppu.memory.oamRam[4 * 9 + 3] = 29; // x
 
-	ppu.spriteRenderer.should.respondTo("_createSprite");
+	expect(ppu.spriteRenderer).to.respondTo("_createSprite");
 	const sprite = ppu.spriteRenderer._createSprite(9);
 	expect(sprite).to.exist;
-	sprite.id.should.equalN(9, "id");
-	sprite.x.should.equalN(29, "x");
-	sprite.y.should.equalN(130, "y");
-	sprite.is8x16.should.equalN(true, "is8x16");
-	sprite.patternTableId.should.equalN(1, "patternTableId");
-	sprite.tileId.should.equalN(76, "tileId");
-	sprite.attributes.should.equalBin(0b01100001, "attributes");
+	expect(sprite.id).to.equalN(9, "id");
+	expect(sprite.x).to.equalN(29, "x");
+	expect(sprite.y).to.equalN(130, "y");
+	expect(sprite.is8x16).to.equalN(true, "is8x16");
+	expect(sprite.patternTableId).to.equalN(1, "patternTableId");
+	expect(sprite.tileId).to.equalN(76, "tileId");
+	expect(sprite.attributes).to.equalBin(0b01100001, "attributes");
 
-	sprite.tileIdFor(3).should.equalN(76, "tileIdFor(...)");
-	sprite.tileIdFor(12).should.equalN(77, "tileIdFor(...)");
-	sprite
-		.shouldRenderInScanline(6)
-		.should.equalN(false, "shouldRenderInScanline(...)");
-	sprite
-		.shouldRenderInScanline(136)
-		.should.equalN(true, "shouldRenderInScanline(...)");
-	sprite
-		.shouldRenderInScanline(140)
-		.should.equalN(true, "shouldRenderInScanline(...)");
-	sprite.diffY(141).should.equalN(11, "diffY(...)");
-	sprite.paletteId.should.equalN(5, "paletteId");
-	sprite.isInFrontOfBackground.should.equalN(false, "isInFrontOfBackground");
-	sprite.flipX.should.equalN(true, "flipX");
-	sprite.flipY.should.equalN(false, "flipY");
-	sprite.height.should.equalN(16, "height");
+	expect(sprite.tileIdFor(3)).to.equalN(76, "tileIdFor(...)");
+	expect(sprite.tileIdFor(12)).to.equalN(77, "tileIdFor(...)");
+	expect(sprite.shouldRenderInScanline(6)).to.equalN(
+		false,
+		"shouldRenderInScanline(...)"
+	);
+	expect(sprite.shouldRenderInScanline(136)).to.equalN(
+		true,
+		"shouldRenderInScanline(...)"
+	);
+	expect(sprite.shouldRenderInScanline(140)).to.equalN(
+		true,
+		"shouldRenderInScanline(...)"
+	);
+	expect(sprite.diffY(141)).to.equalN(11, "diffY(...)");
+	expect(sprite.paletteId).to.equalN(5, "paletteId");
+	expect(sprite.isInFrontOfBackground).to.equalN(
+		false,
+		"isInFrontOfBackground"
+	);
+	expect(sprite.flipX).to.equalN(true, "flipX");
+	expect(sprite.flipY).to.equalN(false, "flipY");
+	expect(sprite.height).to.equalN(16, "height");
 })({
 	locales: {
 		es:
@@ -1616,14 +1637,14 @@ it("SpriteRenderer: `_evaluate()` returns a sprite array", () => {
 
 	const sprites = ppu.spriteRenderer._evaluate();
 	expect(sprites, "sprites").to.be.an("array");
-	sprites.length.should.equalN(2, "length");
-	sprites[0].id.should.equalN(5, "sprites[0].id");
-	sprites[0].x.should.equalN(77, "sprites[0].x");
-	sprites[0].y.should.equalN(43, "sprites[0].y");
-	sprites[1].id.should.equalN(1, "sprites[1].id");
-	sprites[1].x.should.equalN(91, "sprites[1].x");
-	sprites[1].y.should.equalN(46, "sprites[1].y");
-	ppu.registers.ppuStatus.spriteOverflow.should.equalN(0, "spriteOverflow");
+	expect(sprites.length).to.equalN(2, "length");
+	expect(sprites[0].id).to.equalN(5, "sprites[0].id");
+	expect(sprites[0].x).to.equalN(77, "sprites[0].x");
+	expect(sprites[0].y).to.equalN(43, "sprites[0].y");
+	expect(sprites[1].id).to.equalN(1, "sprites[1].id");
+	expect(sprites[1].x).to.equalN(91, "sprites[1].x");
+	expect(sprites[1].y).to.equalN(46, "sprites[1].y");
+	expect(ppu.registers.ppuStatus.spriteOverflow).to.equalN(0, "spriteOverflow");
 })({
 	locales: {
 		es: "SpriteRenderer: `_evaluate()` retorna una lista de sprites",
@@ -1647,10 +1668,10 @@ it("SpriteRenderer: `_evaluate()` sets the sprite overflow flag when there are m
 
 	const sprites = ppu.spriteRenderer._evaluate();
 	expect(sprites, "sprites").to.be.an("array");
-	sprites.length.should.equalN(8, "length");
-	sprites[0].id.should.equal(7, "sprites[0].id");
-	sprites[7].id.should.equal(0, "sprites[7].id");
-	ppu.registers.ppuStatus.spriteOverflow.should.equalN(1, "spriteOverflow");
+	expect(sprites.length).to.equalN(8, "length");
+	expect(sprites[0].id).to.equalN(7, "sprites[0].id");
+	expect(sprites[7].id).to.equalN(0, "sprites[7].id");
+	expect(ppu.registers.ppuStatus.spriteOverflow).to.equalN(1, "spriteOverflow");
 })({
 	locales: {
 		es:
@@ -1674,9 +1695,15 @@ it("resets `PPUStatus::spriteOverflow` on scanline=-1, cycle=1", () => {
 		ppu.step(noop, noop);
 
 		if (cycle === 1) {
-			ppu.registers.ppuStatus.spriteOverflow.should.equalN(0, "spriteOverflow");
+			expect(ppu.registers.ppuStatus.spriteOverflow).to.equalN(
+				0,
+				"spriteOverflow"
+			);
 		} else {
-			ppu.registers.ppuStatus.spriteOverflow.should.equalN(1, "spriteOverflow");
+			expect(ppu.registers.ppuStatus.spriteOverflow).to.equalN(
+				1,
+				"spriteOverflow"
+			);
 		}
 	}
 })({
@@ -1706,10 +1733,10 @@ it("calls `spriteRenderer.renderScanline()` on cycle 0 of every visible scanline
 
 				if (scanline >= 0 && scanline < 240) {
 					if (cycle !== 0) {
-						ppu.spriteRenderer.renderScanline.should.not.have.been.called;
-						ppu.plot.should.not.have.been.called;
+						expect(ppu.spriteRenderer.renderScanline).to.not.have.been.called;
+						expect(ppu.plot).to.not.have.been.called;
 					} else {
-						ppu.spriteRenderer.renderScanline.callCount.should.equalN(
+						expect(ppu.spriteRenderer.renderScanline.callCount).to.equalN(
 							1,
 							"renderScanline.callCount"
 						);
@@ -1752,7 +1779,7 @@ it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pix
 	ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
 	ppu.memory.oamRam[4 * 0 + 3] = 20; // x
 	ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
-	ppu.registers.ppuStatus.sprite0Hit.should.equalN(0, "sprite0Hit");
+	expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(0, "sprite0Hit");
 
 	// sprite 1 (in y=43) => no hit
 	ppu.registers.ppuStatus.sprite0Hit = 0;
@@ -1761,7 +1788,7 @@ it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pix
 	ppu.memory.oamRam[4 * 1 + 2] = 0b10; // attr
 	ppu.memory.oamRam[4 * 1 + 3] = 20; // x
 	ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
-	ppu.registers.ppuStatus.sprite0Hit.should.equalN(0, "sprite0Hit");
+	expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(0, "sprite0Hit");
 
 	// sprite 0 (in y=43) => hit
 	ppu.registers.ppuStatus.sprite0Hit = 0;
@@ -1770,7 +1797,7 @@ it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pix
 	ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
 	ppu.memory.oamRam[4 * 0 + 3] = 20; // x
 	ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
-	ppu.registers.ppuStatus.sprite0Hit.should.equalN(1, "sprite0Hit");
+	expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(1, "sprite0Hit");
 
 	// sprite 0 (in y=43) (wrong tile) => no hit
 	ppu.registers.ppuStatus.sprite0Hit = 0;
@@ -1779,7 +1806,7 @@ it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pix
 	ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
 	ppu.memory.oamRam[4 * 0 + 3] = 20; // x
 	ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
-	ppu.registers.ppuStatus.sprite0Hit.should.equalN(0, "sprite0Hit");
+	expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(0, "sprite0Hit");
 })({
 	locales: {
 		es:
@@ -1803,9 +1830,9 @@ it("resets `PPUStatus::sprite0Hit` on scanline=-1, cycle=1", () => {
 		ppu.step(noop, noop);
 
 		if (cycle === 1) {
-			ppu.registers.ppuStatus.spriteOverflow.should.equalN(0, "sprite0Hit");
+			expect(ppu.registers.ppuStatus.spriteOverflow).to.equalN(0, "sprite0Hit");
 		} else {
-			ppu.registers.ppuStatus.spriteOverflow.should.equalN(1, "sprite0Hit");
+			expect(ppu.registers.ppuStatus.spriteOverflow).to.equalN(1, "sprite0Hit");
 		}
 	}
 })({
@@ -1826,10 +1853,10 @@ it("mirrors Palette RAM correctly in PPU memory (reads)", () => {
 	ppu.memory.paletteRam[8] = 3;
 	ppu.memory.paletteRam[12] = 4;
 
-	ppu.memory.read(0x3f10).should.equalN(1, "read(0x3f10)");
-	ppu.memory.read(0x3f14).should.equalN(2, "read(0x3f14)");
-	ppu.memory.read(0x3f18).should.equalN(3, "read(0x3f18)");
-	ppu.memory.read(0x3f1c).should.equalN(4, "read(0x3f1c)");
+	expect(ppu.memory.read(0x3f10)).to.equalN(1, "read(0x3f10)");
+	expect(ppu.memory.read(0x3f14)).to.equalN(2, "read(0x3f14)");
+	expect(ppu.memory.read(0x3f18)).to.equalN(3, "read(0x3f18)");
+	expect(ppu.memory.read(0x3f1c)).to.equalN(4, "read(0x3f1c)");
 })({
 	locales: {
 		es: "espeja la Palette RAM correctamente en la memoria de PPU (lecturas)",
@@ -1846,10 +1873,10 @@ it("mirrors Palette RAM correctly in PPU memory (writes)", () => {
 	ppu.memory.write(0x3f18, 3);
 	ppu.memory.write(0x3f1c, 4);
 
-	ppu.memory.paletteRam[0].should.equalN(1, "paletteRam[0]");
-	ppu.memory.paletteRam[4].should.equalN(2, "paletteRam[4]");
-	ppu.memory.paletteRam[8].should.equalN(3, "paletteRam[8]");
-	ppu.memory.paletteRam[12].should.equalN(4, "paletteRam[12]");
+	expect(ppu.memory.paletteRam[0]).to.equalN(1, "paletteRam[0]");
+	expect(ppu.memory.paletteRam[4]).to.equalN(2, "paletteRam[4]");
+	expect(ppu.memory.paletteRam[8]).to.equalN(3, "paletteRam[8]");
+	expect(ppu.memory.paletteRam[12]).to.equalN(4, "paletteRam[12]");
 })({
 	locales: {
 		es: "espeja la Palette RAM correctamente en la memoria de PPU (escrituras)",
@@ -1864,42 +1891,48 @@ it("can change the name table mirroring", () => {
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
 
-	ppu.memory.should.respondTo("changeNameTableMirroringTo");
+	expect(ppu.memory).to.respondTo("changeNameTableMirroringTo");
 
 	ppu.memory.changeNameTableMirroringTo("HORIZONTAL");
-	ppu.memory.mirroringId.should.equalN("HORIZONTAL", "mirroringId");
-	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
-	ppu.memory._mirroring.$2400.should.equalHex(0x000, "_mirroring.$2400");
-	ppu.memory._mirroring.$2800.should.equalHex(0x400, "_mirroring.$2800");
-	ppu.memory._mirroring.$2C00.should.equalHex(0x400, "_mirroring.$2C00");
+	expect(ppu.memory.mirroringId).to.equalN("HORIZONTAL", "mirroringId");
+	expect(ppu.memory._mirroring.$2000).to.equalHex(0x000, "_mirroring.$2000");
+	expect(ppu.memory._mirroring.$2400).to.equalHex(0x000, "_mirroring.$2400");
+	expect(ppu.memory._mirroring.$2800).to.equalHex(0x400, "_mirroring.$2800");
+	expect(ppu.memory._mirroring.$2C00).to.equalHex(0x400, "_mirroring.$2C00");
 
 	ppu.memory.changeNameTableMirroringTo("VERTICAL");
-	ppu.memory.mirroringId.should.equalN("VERTICAL", "mirroringId");
-	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
-	ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
-	ppu.memory._mirroring.$2800.should.equalHex(0x000, "_mirroring.$2800");
-	ppu.memory._mirroring.$2C00.should.equalHex(0x400, "_mirroring.$2C00");
+	expect(ppu.memory.mirroringId).to.equalN("VERTICAL", "mirroringId");
+	expect(ppu.memory._mirroring.$2000).to.equalHex(0x000, "_mirroring.$2000");
+	expect(ppu.memory._mirroring.$2400).to.equalHex(0x400, "_mirroring.$2400");
+	expect(ppu.memory._mirroring.$2800).to.equalHex(0x000, "_mirroring.$2800");
+	expect(ppu.memory._mirroring.$2C00).to.equalHex(0x400, "_mirroring.$2C00");
 
 	ppu.memory.changeNameTableMirroringTo("ONE_SCREEN_LOWER_BANK");
-	ppu.memory.mirroringId.should.equalN("ONE_SCREEN_LOWER_BANK", "mirroringId");
-	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
-	ppu.memory._mirroring.$2400.should.equalHex(0x000, "_mirroring.$2400");
-	ppu.memory._mirroring.$2800.should.equalHex(0x000, "_mirroring.$2800");
-	ppu.memory._mirroring.$2C00.should.equalHex(0x000, "_mirroring.$2C00");
+	expect(ppu.memory.mirroringId).to.equalN(
+		"ONE_SCREEN_LOWER_BANK",
+		"mirroringId"
+	);
+	expect(ppu.memory._mirroring.$2000).to.equalHex(0x000, "_mirroring.$2000");
+	expect(ppu.memory._mirroring.$2400).to.equalHex(0x000, "_mirroring.$2400");
+	expect(ppu.memory._mirroring.$2800).to.equalHex(0x000, "_mirroring.$2800");
+	expect(ppu.memory._mirroring.$2C00).to.equalHex(0x000, "_mirroring.$2C00");
 
 	ppu.memory.changeNameTableMirroringTo("ONE_SCREEN_UPPER_BANK");
-	ppu.memory.mirroringId.should.equalN("ONE_SCREEN_UPPER_BANK", "mirroringId");
-	ppu.memory._mirroring.$2000.should.equalHex(0x400, "_mirroring.$2000");
-	ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
-	ppu.memory._mirroring.$2800.should.equalHex(0x400, "_mirroring.$2800");
-	ppu.memory._mirroring.$2C00.should.equalHex(0x400, "_mirroring.$2C00");
+	expect(ppu.memory.mirroringId).to.equalN(
+		"ONE_SCREEN_UPPER_BANK",
+		"mirroringId"
+	);
+	expect(ppu.memory._mirroring.$2000).to.equalHex(0x400, "_mirroring.$2000");
+	expect(ppu.memory._mirroring.$2400).to.equalHex(0x400, "_mirroring.$2400");
+	expect(ppu.memory._mirroring.$2800).to.equalHex(0x400, "_mirroring.$2800");
+	expect(ppu.memory._mirroring.$2C00).to.equalHex(0x400, "_mirroring.$2C00");
 
 	ppu.memory.changeNameTableMirroringTo("FOUR_SCREEN");
-	ppu.memory.mirroringId.should.equalN("FOUR_SCREEN", "mirroringId");
-	ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
-	ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
-	ppu.memory._mirroring.$2800.should.equalHex(0x800, "_mirroring.$2800");
-	ppu.memory._mirroring.$2C00.should.equalHex(0xc00, "_mirroring.$2C00");
+	expect(ppu.memory.mirroringId).to.equalN("FOUR_SCREEN", "mirroringId");
+	expect(ppu.memory._mirroring.$2000).to.equalHex(0x000, "_mirroring.$2000");
+	expect(ppu.memory._mirroring.$2400).to.equalHex(0x400, "_mirroring.$2400");
+	expect(ppu.memory._mirroring.$2800).to.equalHex(0x800, "_mirroring.$2800");
+	expect(ppu.memory._mirroring.$2C00).to.equalHex(0xc00, "_mirroring.$2C00");
 })({
 	locales: {
 		es: "puede cambiar el mirroring de name tables",
@@ -1919,11 +1952,11 @@ it("ignores name table mirroring changes if the cartridge header sets FOUR_SCREE
 		"SINGLE_SCREEN_UPPER_BANK",
 	].forEach((mirroringId) => {
 		ppu.memory.changeNameTableMirroringTo(mirroringId);
-		ppu.memory.mirroringId.should.equalN("FOUR_SCREEN", "mirroringId");
-		ppu.memory._mirroring.$2000.should.equalHex(0x000, "_mirroring.$2000");
-		ppu.memory._mirroring.$2400.should.equalHex(0x400, "_mirroring.$2400");
-		ppu.memory._mirroring.$2800.should.equalHex(0x800, "_mirroring.$2800");
-		ppu.memory._mirroring.$2C00.should.equalHex(0xc00, "_mirroring.$2C00");
+		expect(ppu.memory.mirroringId).to.equalN("FOUR_SCREEN", "mirroringId");
+		expect(ppu.memory._mirroring.$2000).to.equalHex(0x000, "_mirroring.$2000");
+		expect(ppu.memory._mirroring.$2400).to.equalHex(0x400, "_mirroring.$2400");
+		expect(ppu.memory._mirroring.$2800).to.equalHex(0x800, "_mirroring.$2800");
+		expect(ppu.memory._mirroring.$2C00).to.equalHex(0xc00, "_mirroring.$2C00");
 	});
 })({
 	locales: {
@@ -1938,25 +1971,31 @@ it("autosets the mirroring type based on the cartridge header", () => {
 	const ppu = new PPU({});
 
 	ppu.memory?.onLoad?.({ header: { mirroringId: "VERTICAL" } }, dummyMapper);
-	ppu.memory.mirroringId.should.equalN("VERTICAL", "mirroringId");
+	expect(ppu.memory.mirroringId).to.equalN("VERTICAL", "mirroringId");
 
 	ppu.memory?.onLoad?.({ header: { mirroringId: "HORIZONTAL" } }, dummyMapper);
-	ppu.memory.mirroringId.should.equalN("HORIZONTAL", "mirroringId");
+	expect(ppu.memory.mirroringId).to.equalN("HORIZONTAL", "mirroringId");
 
 	ppu.memory?.onLoad?.(
 		{ header: { mirroringId: "ONE_SCREEN_LOWER_BANK" } },
 		dummyMapper
 	);
-	ppu.memory.mirroringId.should.equalN("ONE_SCREEN_LOWER_BANK", "mirroringId");
+	expect(ppu.memory.mirroringId).to.equalN(
+		"ONE_SCREEN_LOWER_BANK",
+		"mirroringId"
+	);
 
 	ppu.memory?.onLoad?.(
 		{ header: { mirroringId: "ONE_SCREEN_UPPER_BANK" } },
 		dummyMapper
 	);
-	ppu.memory.mirroringId.should.equalN("ONE_SCREEN_UPPER_BANK", "mirroringId");
+	expect(ppu.memory.mirroringId).to.equalN(
+		"ONE_SCREEN_UPPER_BANK",
+		"mirroringId"
+	);
 
 	ppu.memory?.onLoad?.({ header: { mirroringId: "FOUR_SCREEN" } }, dummyMapper);
-	ppu.memory.mirroringId.should.equalN("FOUR_SCREEN", "mirroringId");
+	expect(ppu.memory.mirroringId).to.equalN("FOUR_SCREEN", "mirroringId");
 })({
 	locales: {
 		es: "autoasigna el tipo de mirroring basado en la cabecera del cartucho",
@@ -1975,25 +2014,25 @@ it("[HORIZONTAL mirroring] connects VRAM to PPU memory (reads)", () => {
 	}
 
 	// $2000
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2000 + i)
-			.should.equalN(ppu.memory.vram[i], `read(0x2000 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2000 + i);
+		expect(value).to.equalN(ppu.memory.vram[i], `read(0x2000 + ${i})`);
+	}
 	// $2400
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2400 + i)
-			.should.equalN(ppu.memory.vram[i], `read(0x2400 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2400 + i);
+		expect(value).to.equalN(ppu.memory.vram[i], `read(0x2400 + ${i})`);
+	}
 	// $2800
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2800 + i)
-			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2800 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2800 + i);
+		expect(value).to.equalN(ppu.memory.vram[0x400 + i], `read(0x2800 + ${i})`);
+	}
 	// $2C00
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2c00 + i)
-			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2C00 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2c00 + i);
+		expect(value).to.equalN(ppu.memory.vram[0x400 + i], `read(0x2C00 + ${i})`);
+	}
 })({
 	locales: {
 		es: "[HORIZONTAL mirroring] conecta VRAM con la memoria de PPU (lecturas)",
@@ -2010,25 +2049,25 @@ it("[HORIZONTAL mirroring] connects VRAM to PPU memory (writes)", () => {
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2000 + i, value);
-		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+		expect(ppu.memory.vram[i]).to.equalN(value, `vram[${i}]`);
 	}
 	// $2400
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2400 + i, value);
-		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+		expect(ppu.memory.vram[i]).to.equalN(value, `vram[${i}]`);
 	}
 	// $2800
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2800 + i, value);
-		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+		expect(ppu.memory.vram[0x400 + i]).to.equalN(value, `vram[0x400 + ${i}]`);
 	}
 	// $2C00
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2c00 + i, value);
-		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+		expect(ppu.memory.vram[0x400 + i]).to.equalN(value, `vram[0x400 + ${i}]`);
 	}
 })({
 	locales: {
@@ -2049,25 +2088,25 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (reads)", () => {
 	}
 
 	// $2000
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2000 + i)
-			.should.equalN(ppu.memory.vram[i], `read(0x2000 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2000 + i);
+		expect(value).to.equalN(ppu.memory.vram[i], `read(0x2000 + ${i})`);
+	}
 	// $2400
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2400 + i)
-			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2400 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2400 + i);
+		expect(value).to.equalN(ppu.memory.vram[0x400 + i], `read(0x2400 + ${i})`);
+	}
 	// $2800
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2800 + i)
-			.should.equalN(ppu.memory.vram[i], `read(0x2800 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2800 + i);
+		expect(value).to.equalN(ppu.memory.vram[i], `read(0x2800 + ${i})`);
+	}
 	// $2C00
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2c00 + i)
-			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2C00 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2c00 + i);
+		expect(value).to.equalN(ppu.memory.vram[0x400 + i], `read(0x2C00 + ${i})`);
+	}
 })({
 	locales: {
 		es: "[VERTICAL mirroring] conecta VRAM con la memoria de PPU (lecturas)",
@@ -2084,25 +2123,25 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2000 + i, value);
-		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+		expect(ppu.memory.vram[i]).to.equalN(value, `vram[${i}]`);
 	}
 	// $2400
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2400 + i, value);
-		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+		expect(ppu.memory.vram[0x400 + i]).to.equalN(value, `vram[0x400 + ${i}]`);
 	}
 	// $2800
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2800 + i, value);
-		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+		expect(ppu.memory.vram[i]).to.equalN(value, `vram[${i}]`);
 	}
 	// $2C00
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2c00 + i, value);
-		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+		expect(ppu.memory.vram[0x400 + i]).to.equalN(value, `vram[0x400 + ${i}]`);
 	}
 })({
 	locales: {
@@ -2126,25 +2165,37 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 		}
 
 		// $2000
-		for (let i = 0; i < 0x400; i++)
-			ppu.memory
-				.read(0x2000 + i)
-				.should.equalN(ppu.memory.vram[offset + i], `read(0x2000 + ${i})`);
+		for (let i = 0; i < 0x400; i++) {
+			const value = ppu.memory.read(0x2000 + i);
+			expect(value).to.equalN(
+				ppu.memory.vram[offset + i],
+				`read(0x2000 + ${i})`
+			);
+		}
 		// $2400
-		for (let i = 0; i < 0x400; i++)
-			ppu.memory
-				.read(0x2400 + i)
-				.should.equalN(ppu.memory.vram[offset + i], `read(0x2400 + ${i})`);
+		for (let i = 0; i < 0x400; i++) {
+			const value = ppu.memory.read(0x2400 + i);
+			expect(value).to.equalN(
+				ppu.memory.vram[offset + i],
+				`read(0x2400 + ${i})`
+			);
+		}
 		// $2800
-		for (let i = 0; i < 0x400; i++)
-			ppu.memory
-				.read(0x2800 + i)
-				.should.equalN(ppu.memory.vram[offset + i], `read(0x2800 + ${i})`);
+		for (let i = 0; i < 0x400; i++) {
+			const value = ppu.memory.read(0x2800 + i);
+			expect(value).to.equalN(
+				ppu.memory.vram[offset + i],
+				`read(0x2800 + ${i})`
+			);
+		}
 		// $2C00
-		for (let i = 0; i < 0x400; i++)
-			ppu.memory
-				.read(0x2c00 + i)
-				.should.equalN(ppu.memory.vram[offset + i], `read(0x2C00 + ${i})`);
+		for (let i = 0; i < 0x400; i++) {
+			const value = ppu.memory.read(0x2c00 + i);
+			expect(value).to.equalN(
+				ppu.memory.vram[offset + i],
+				`read(0x2C00 + ${i})`
+			);
+		}
 	})({
 		locales: {
 			es: `[${mirroringId} mirroring] conecta VRAM con la memoria de PPU (lecturas)`,
@@ -2161,7 +2212,7 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 		for (let i = 0; i < 0x400; i++) {
 			const value = byte.random();
 			ppu.memory.write(0x2000 + i, value);
-			ppu.memory.vram[offset + i].should.equalN(
+			expect(ppu.memory.vram[offset + i]).to.equalN(
 				value,
 				`vram[${offset} + ${i}]`
 			);
@@ -2170,7 +2221,7 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 		for (let i = 0; i < 0x400; i++) {
 			const value = byte.random();
 			ppu.memory.write(0x2400 + i, value);
-			ppu.memory.vram[offset + i].should.equalN(
+			expect(ppu.memory.vram[offset + i]).to.equalN(
 				value,
 				`vram[${offset} + ${i}]`
 			);
@@ -2179,7 +2230,7 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 		for (let i = 0; i < 0x400; i++) {
 			const value = byte.random();
 			ppu.memory.write(0x2800 + i, value);
-			ppu.memory.vram[offset + i].should.equalN(
+			expect(ppu.memory.vram[offset + i]).to.equalN(
 				value,
 				`vram[${offset} + ${i}]`
 			);
@@ -2188,7 +2239,7 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 		for (let i = 0; i < 0x400; i++) {
 			const value = byte.random();
 			ppu.memory.write(0x2c00 + i, value);
-			ppu.memory.vram[offset + i].should.equalN(
+			expect(ppu.memory.vram[offset + i]).to.equalN(
 				value,
 				`vram[${offset} + ${i}]`
 			);
@@ -2212,25 +2263,25 @@ it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (reads)", () => {
 	}
 
 	// $2000
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2000 + i)
-			.should.equalN(ppu.memory.vram[i], `read(0x2000 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2000 + i);
+		expect(value).to.equalN(ppu.memory.vram[i], `read(0x2000 + ${i})`);
+	}
 	// $2400
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2400 + i)
-			.should.equalN(ppu.memory.vram[0x400 + i], `read(0x2400 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2400 + i);
+		expect(value).to.equalN(ppu.memory.vram[0x400 + i], `read(0x2400 + ${i})`);
+	}
 	// $2800
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2800 + i)
-			.should.equalN(ppu.memory.vram[0x800 + i], `read(0x2800 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2800 + i);
+		expect(value).to.equalN(ppu.memory.vram[0x800 + i], `read(0x2800 + ${i})`);
+	}
 	// $2C00
-	for (let i = 0; i < 0x400; i++)
-		ppu.memory
-			.read(0x2c00 + i)
-			.should.equalN(ppu.memory.vram[0xc00 + i], `read(0x2C00 + ${i})`);
+	for (let i = 0; i < 0x400; i++) {
+		const value = ppu.memory.read(0x2c00 + i);
+		expect(value).to.equalN(ppu.memory.vram[0xc00 + i], `read(0x2C00 + ${i})`);
+	}
 })({
 	locales: {
 		es: "[FOUR_SCREEN mirroring] conecta VRAM con la memoria de PPU (lecturas)",
@@ -2247,25 +2298,25 @@ it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (writes)", () => {
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2000 + i, value);
-		ppu.memory.vram[i].should.equalN(value, `vram[${i}]`);
+		expect(ppu.memory.vram[i]).to.equalN(value, `vram[${i}]`);
 	}
 	// $2400
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2400 + i, value);
-		ppu.memory.vram[0x400 + i].should.equalN(value, `vram[0x400 + ${i}]`);
+		expect(ppu.memory.vram[0x400 + i]).to.equalN(value, `vram[0x400 + ${i}]`);
 	}
 	// $2800
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2800 + i, value);
-		ppu.memory.vram[0x800 + i].should.equalN(value, `vram[0x800 + ${i}]`);
+		expect(ppu.memory.vram[0x800 + i]).to.equalN(value, `vram[0x800 + ${i}]`);
 	}
 	// $2C00
 	for (let i = 0; i < 0x400; i++) {
 		const value = byte.random();
 		ppu.memory.write(0x2c00 + i, value);
-		ppu.memory.vram[0xc00 + i].should.equalN(value, `vram[0xc00 + ${i}]`);
+		expect(ppu.memory.vram[0xc00 + i]).to.equalN(value, `vram[0xc00 + ${i}]`);
 	}
 })({
 	locales: {
@@ -2283,7 +2334,7 @@ it("PPUMask: write only", () => {
 
 	const ppuMask = ppu.registers.ppuMask;
 	ppuMask.onWrite(byte.random());
-	ppuMask.onRead().should.equalN(0, "onRead()");
+	expect(ppuMask.onRead()).to.equalN(0, "onRead()");
 })({
 	locales: {
 		es: "PPUMask: solo escritura",
@@ -2297,12 +2348,12 @@ it("PPUMask: writes `showBackgroundInFirst8Pixels` (bit 1)", () => {
 
 	const ppuMask = ppu.registers.ppuMask;
 	ppuMask.onWrite(0b10100001);
-	ppuMask.showBackgroundInFirst8Pixels.should.equalN(
+	expect(ppuMask.showBackgroundInFirst8Pixels).to.equalN(
 		0,
 		"showBackgroundInFirst8Pixels"
 	);
 	ppuMask.onWrite(0b10100111);
-	ppuMask.showBackgroundInFirst8Pixels.should.equalN(
+	expect(ppuMask.showBackgroundInFirst8Pixels).to.equalN(
 		1,
 		"showBackgroundInFirst8Pixels"
 	);
@@ -2319,12 +2370,12 @@ it("PPUMask: writes `showSpritesInFirst8Pixels` (bit 2)", () => {
 
 	const ppuMask = ppu.registers.ppuMask;
 	ppuMask.onWrite(0b10100011);
-	ppuMask.showSpritesInFirst8Pixels.should.equalN(
+	expect(ppuMask.showSpritesInFirst8Pixels).to.equalN(
 		0,
 		"showSpritesInFirst8Pixels"
 	);
 	ppuMask.onWrite(0b10100111);
-	ppuMask.showSpritesInFirst8Pixels.should.equalN(
+	expect(ppuMask.showSpritesInFirst8Pixels).to.equalN(
 		1,
 		"showSpritesInFirst8Pixels"
 	);
@@ -2341,9 +2392,9 @@ it("PPUMask: writes `showBackground` (bit 3)", () => {
 
 	const ppuMask = ppu.registers.ppuMask;
 	ppuMask.onWrite(0b10100011);
-	ppuMask.showBackground.should.equalN(0, "showBackground");
+	expect(ppuMask.showBackground).to.equalN(0, "showBackground");
 	ppuMask.onWrite(0b10101111);
-	ppuMask.showBackground.should.equalN(1, "showBackground");
+	expect(ppuMask.showBackground).to.equalN(1, "showBackground");
 })({
 	locales: {
 		es: "PPUMask: escribe `showBackground` (bit 3)",
@@ -2357,9 +2408,9 @@ it("PPUMask: writes `showSprites` (bit 4)", () => {
 
 	const ppuMask = ppu.registers.ppuMask;
 	ppuMask.onWrite(0b10100011);
-	ppuMask.showSprites.should.equalN(0, "showSprites");
+	expect(ppuMask.showSprites).to.equalN(0, "showSprites");
 	ppuMask.onWrite(0b10111111);
-	ppuMask.showSprites.should.equalN(1, "showSprites");
+	expect(ppuMask.showSprites).to.equalN(1, "showSprites");
 })({
 	locales: {
 		es: "PPUMask: escribe `showSprites` (bit 4)",
@@ -2372,20 +2423,20 @@ it("PPUMask: has an `isRenderingEnabled` method that returns `true` if the backg
 	const ppu = new PPU({});
 
 	const ppuMask = ppu.registers.ppuMask;
-	ppuMask.should.respondTo("isRenderingEnabled");
+	expect(ppuMask).to.respondTo("isRenderingEnabled");
 
 	ppuMask.onWrite(0b00000000);
-	ppuMask.isRenderingEnabled().should.equalN(0, "isRenderingEnabled()");
+	expect(ppuMask.isRenderingEnabled()).to.equalN(0, "isRenderingEnabled()");
 	ppuMask.onWrite(0b00001000);
-	ppuMask.isRenderingEnabled().should.equalN(1, "isRenderingEnabled()");
+	expect(ppuMask.isRenderingEnabled()).to.equalN(1, "isRenderingEnabled()");
 	ppuMask.onWrite(0b00000000);
-	ppuMask.isRenderingEnabled().should.equalN(0, "isRenderingEnabled()");
+	expect(ppuMask.isRenderingEnabled()).to.equalN(0, "isRenderingEnabled()");
 	ppuMask.onWrite(0b00011000);
-	ppuMask.isRenderingEnabled().should.equalN(1, "isRenderingEnabled()");
+	expect(ppuMask.isRenderingEnabled()).to.equalN(1, "isRenderingEnabled()");
 	ppuMask.onWrite(0b00000000);
-	ppuMask.isRenderingEnabled().should.equalN(0, "isRenderingEnabled()");
+	expect(ppuMask.isRenderingEnabled()).to.equalN(0, "isRenderingEnabled()");
 	ppuMask.onWrite(0b00010000);
-	ppuMask.isRenderingEnabled().should.equalN(1, "isRenderingEnabled()");
+	expect(ppuMask.isRenderingEnabled()).to.equalN(1, "isRenderingEnabled()");
 })({
 	locales: {
 		es:
@@ -2410,15 +2461,18 @@ it("doesn't reset anything on scanline=-1, cycle=1 if rendering is off", () => {
 		ppu.step(noop, noop);
 
 		if (cycle === 1) {
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+			expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
 				1,
 				"isInVBlankInterval"
 			);
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(
+			expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
 				1,
 				"spriteOverflow"
 			);
-			ppu.registers.ppuStatus.isInVBlankInterval.should.equalN(1, "sprite0Hit");
+			expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
+				1,
+				"sprite0Hit"
+			);
 		}
 	}
 })({
@@ -2447,10 +2501,12 @@ it("doesn't call `backgroundRenderer.renderScanline()` if background rendering i
 
 				if (scanline >= 0 && scanline < 240) {
 					if (cycle !== 0) {
-						ppu.backgroundRenderer.renderScanline.should.not.have.been.called;
-						ppu.plot.should.not.have.been.called;
+						expect(ppu.backgroundRenderer.renderScanline).to.not.have.been
+							.called;
+						expect(ppu.plot).to.not.have.been.called;
 					} else {
-						ppu.backgroundRenderer.renderScanline.should.not.have.been.called;
+						expect(ppu.backgroundRenderer.renderScanline).to.not.have.been
+							.called;
 					}
 				}
 			}
@@ -2482,10 +2538,10 @@ it("doesn't call `spriteRenderer.renderScanline()` if sprite rendering is disabl
 
 				if (scanline >= 0 && scanline < 240) {
 					if (cycle !== 0) {
-						ppu.spriteRenderer.renderScanline.should.not.have.been.called;
-						ppu.plot.should.not.have.been.called;
+						expect(ppu.spriteRenderer.renderScanline).to.not.have.been.called;
+						expect(ppu.plot).to.not.have.been.called;
 					} else {
-						ppu.spriteRenderer.renderScanline.should.not.have.been.called;
+						expect(ppu.spriteRenderer.renderScanline).to.not.have.been.called;
 					}
 				}
 			}
@@ -2507,9 +2563,9 @@ it("PPUMask: writes `grayscale` (bit 0)", () => {
 
 	const ppuMask = ppu.registers.ppuMask;
 	ppuMask.onWrite(0b00000110);
-	ppuMask.grayscale.should.equalN(0, "grayscale");
+	expect(ppuMask.grayscale).to.equalN(0, "grayscale");
 	ppuMask.onWrite(0b00000111);
-	ppuMask.grayscale.should.equalN(1, "grayscale");
+	expect(ppuMask.grayscale).to.equalN(1, "grayscale");
 })({
 	locales: {
 		es: "PPUMask: escribe `grayscale` (bit 1)",
@@ -2523,9 +2579,9 @@ it("PPUMask: writes `emphasizeRed` (bit 5)", () => {
 
 	const ppuMask = ppu.registers.ppuMask;
 	ppuMask.onWrite(0b00000110);
-	ppuMask.emphasizeRed.should.equalN(0, "emphasizeRed");
+	expect(ppuMask.emphasizeRed).to.equalN(0, "emphasizeRed");
 	ppuMask.onWrite(0b00100110);
-	ppuMask.emphasizeRed.should.equalN(1, "emphasizeRed");
+	expect(ppuMask.emphasizeRed).to.equalN(1, "emphasizeRed");
 })({
 	locales: {
 		es: "PPUMask: escribe `emphasizeRed` (bit 5)",
@@ -2539,9 +2595,9 @@ it("PPUMask: writes `emphasizeGreen` (bit 6)", () => {
 
 	const ppuMask = ppu.registers.ppuMask;
 	ppuMask.onWrite(0b00000110);
-	ppuMask.emphasizeGreen.should.equalN(0, "emphasizeGreen");
+	expect(ppuMask.emphasizeGreen).to.equalN(0, "emphasizeGreen");
 	ppuMask.onWrite(0b01000110);
-	ppuMask.emphasizeGreen.should.equalN(1, "emphasizeGreen");
+	expect(ppuMask.emphasizeGreen).to.equalN(1, "emphasizeGreen");
 })({
 	locales: {
 		es: "PPUMask: escribe `emphasizeGreen` (bit 6)",
@@ -2555,9 +2611,9 @@ it("PPUMask: writes `emphasizeBlue` (bit 7)", () => {
 
 	const ppuMask = ppu.registers.ppuMask;
 	ppuMask.onWrite(0b00000110);
-	ppuMask.emphasizeBlue.should.equalN(0, "emphasizeBlue");
+	expect(ppuMask.emphasizeBlue).to.equalN(0, "emphasizeBlue");
 	ppuMask.onWrite(0b10000110);
-	ppuMask.emphasizeBlue.should.equalN(1, "emphasizeBlue");
+	expect(ppuMask.emphasizeBlue).to.equalN(1, "emphasizeBlue");
 })({
 	locales: {
 		es: "PPUMask: escribe `emphasizeBlue` (bit 7)",
@@ -2573,7 +2629,7 @@ it("saves the `mapper` `onLoad`", () => {
 
 	ppu.onLoad(dummyMapper);
 
-	ppu.mapper.should.equal(dummyMapper);
+	expect(ppu.mapper).to.equalN(dummyMapper, "mapper");
 })({
 	locales: {
 		es: "guarda el `mapper` en `onLoad`",
@@ -2604,9 +2660,9 @@ it("calls `mapper.tick()` on cycle 260 if scanline < 240", () => {
 				ppu.step(noop, noop);
 
 				if (scanline < 240 && cycle === 260) {
-					ppu.mapper.tick.callCount.should.equalN(1, "tick.callCount");
+					expect(ppu.mapper.tick.callCount).to.equalN(1, "tick.callCount");
 				} else {
-					ppu.mapper.tick.should.not.have.been.called;
+					expect(ppu.mapper.tick).to.not.have.been.called;
 				}
 			}
 		}
@@ -2640,7 +2696,7 @@ it("doesn't call `mapper.tick()` if rendering is disabled", () => {
 				ppu.mapper.tick.resetHistory();
 				ppu.step(noop, noop);
 
-				ppu.mapper.tick.should.not.have.been.called;
+				expect(ppu.mapper.tick).to.not.have.been.called;
 			}
 		}
 	}

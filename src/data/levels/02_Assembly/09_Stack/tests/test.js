@@ -11,8 +11,8 @@ it("it jumps to the right address", () => {
 	const msb = cpu.memory.readAt(0x01ff);
 	const address = (msb << 8) | lsb;
 
-	cpu.sp.value.should.equalHex(0xff, "sp");
-	cpu.pc.value.should.equalHex(address, "pc");
+	expect(cpu.sp.value).to.equalHex(0xff, "sp");
+	expect(cpu.pc.value).to.equalHex(address, "pc");
 })({
 	locales: { es: "salta a la dirección correcta" },
 });

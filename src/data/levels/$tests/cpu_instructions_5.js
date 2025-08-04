@@ -34,11 +34,11 @@ it("the CPU can handle <RESET> interrupts", () => {
 
 	cpu.interrupt(interrupt);
 
-	cpu.stack.pop().should.equalBin(0b00100000, "pop()");
-	cpu.stack.pop16().should.equalHex(0x1234, "pop16()");
-	cpu.cycle.should.equalN(15, "cycle");
-	cpu.flags.i.should.equalN(true, "i");
-	cpu.pc.getValue().should.equalHex(0x3125, "getValue()");
+	expect(cpu.stack.pop()).to.equalBin(0b00100000, "pop()");
+	expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
+	expect(cpu.cycle).to.equalN(15, "cycle");
+	expect(cpu.flags.i).to.equalN(true, "i");
+	expect(cpu.pc.getValue()).to.equalHex(0x3125, "getValue()");
 })({
 	locales: {
 		es: "la CPU puede manejar interrupciones <RESET>",
@@ -66,11 +66,11 @@ it("the CPU can handle NMI interrupts", () => {
 	cpu.flags.i = true;
 	cpu.interrupt(interrupt);
 
-	cpu.stack.pop().should.equalBin(0b00100100, "pop()");
-	cpu.stack.pop16().should.equalHex(0x1234, "pop16()");
-	cpu.cycle.should.equalN(15, "cycle");
-	cpu.flags.i.should.equalN(true, "i");
-	cpu.pc.getValue().should.equalHex(0x3125, "getValue()");
+	expect(cpu.stack.pop()).to.equalBin(0b00100100, "pop()");
+	expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
+	expect(cpu.cycle).to.equalN(15, "cycle");
+	expect(cpu.flags.i).to.equalN(true, "i");
+	expect(cpu.pc.getValue()).to.equalHex(0x3125, "getValue()");
 })({
 	locales: {
 		es: "la CPU puede manejar interrupciones NMI",
@@ -97,11 +97,11 @@ it("the CPU can handle <IRQ> interrupts", () => {
 
 	cpu.interrupt(interrupt);
 
-	cpu.stack.pop().should.equalBin(0b00100000, "pop()");
-	cpu.stack.pop16().should.equalHex(0x1234, "pop16()");
-	cpu.cycle.should.equalN(15, "cycle");
-	cpu.flags.i.should.equalN(true, "i");
-	cpu.pc.getValue().should.equalHex(0x3125, "getValue()");
+	expect(cpu.stack.pop()).to.equalBin(0b00100000, "pop()");
+	expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
+	expect(cpu.cycle).to.equalN(15, "cycle");
+	expect(cpu.flags.i).to.equalN(true, "i");
+	expect(cpu.pc.getValue()).to.equalHex(0x3125, "getValue()");
 })({
 	locales: {
 		es: "la CPU puede manejar interrupciones <IRQ>",
@@ -130,10 +130,10 @@ it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
 	cpu.flags.i = true;
 	cpu.interrupt(interrupt);
 
-	cpu.sp.getValue().should.equalHex(sp, "getValue()");
-	cpu.flags.i.should.equalN(true, "i");
-	cpu.pc.getValue().should.equalHex(0x1234, "getValue()");
-	cpu.cycle.should.equalN(8, "cycle");
+	expect(cpu.sp.getValue()).to.equalHex(sp, "getValue()");
+	expect(cpu.flags.i).to.equalN(true, "i");
+	expect(cpu.pc.getValue()).to.equalHex(0x1234, "getValue()");
+	expect(cpu.cycle).to.equalN(8, "cycle");
 })({
 	locales: {
 		es: "la CPU ignora interrupciones <IRQ> si la bandera ~I~ está encendida",
@@ -143,9 +143,9 @@ it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
 
 it("`BRK`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("BRK");
+	expect(instructions).to.include.key("BRK");
 	expect(instructions.BRK).to.be.an("object");
-	instructions.BRK.argument.should.equalN("no", "argument");
+	expect(instructions.BRK.argument).to.equalN("no", "argument");
 })({
 	locales: {
 		es: "`BRK`: argument == 'no'",
@@ -169,11 +169,11 @@ it("`BRK`: produces an <IRQ> interrupt (bit 4 from flags should be on)", () => {
 
 	instructions.BRK.run(cpu);
 
-	cpu.stack.pop().should.equalBin(0b00110000, "pop()");
-	cpu.stack.pop16().should.equalHex(0x1234, "pop16()");
-	cpu.cycle.should.equalN(15, "cycle");
-	cpu.flags.i.should.equalN(true, "i");
-	cpu.pc.getValue().should.equalHex(0x3125, "getValue()");
+	expect(cpu.stack.pop()).to.equalBin(0b00110000, "pop()");
+	expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
+	expect(cpu.cycle).to.equalN(15, "cycle");
+	expect(cpu.flags.i).to.equalN(true, "i");
+	expect(cpu.pc.getValue()).to.equalHex(0x3125, "getValue()");
 })({
 	locales: {
 		es:
@@ -184,9 +184,9 @@ it("`BRK`: produces an <IRQ> interrupt (bit 4 from flags should be on)", () => {
 
 it("`NOP`: argument == 'no'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("NOP");
+	expect(instructions).to.include.key("NOP");
 	expect(instructions.NOP).to.be.an("object");
-	instructions.NOP.argument.should.equalN("no", "argument");
+	expect(instructions.NOP.argument).to.equalN("no", "argument");
 })({
 	locales: {
 		es: "`NOP`: argument == 'no'",
@@ -196,8 +196,11 @@ it("`NOP`: argument == 'no'", () => {
 
 it("`NOP`: implements `run(...)` as an empty function", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.NOP.should.respondTo("run");
-	instructions.NOP.run.toString().replace(/\s/g, "").should.equal("run(){}");
+	expect(instructions.NOP).to.respondTo("run");
+	expect(instructions.NOP.run.toString().replace(/\s/g, "")).to.equalN(
+		"run(){}",
+		"run"
+	);
 })({
 	locales: {
 		es: "`NOP`: implementa `run(...)` como una función vacía",

@@ -58,7 +58,7 @@
     "marked": "^16.0.0",
     "marked-highlight": "^2.2.2",
     "mixpanel-browser": "^2.45.0",
-    "nes-emu": "^1.0.15",
+    "nes-emu": "^1.0.45",
     "path-browserify-esm": "^1.0.6",
     "pixi-filters": "^4.2.0",
     "pixi-lights": "^3.0.0",

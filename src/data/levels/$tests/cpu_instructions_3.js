@@ -17,9 +17,9 @@ function newCPU(prgBytes = []) {
 
 it("`BIT`: argument == 'value'", () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("BIT");
+	expect(instructions).to.include.key("BIT");
 	expect(instructions.BIT).to.be.an("object");
-	instructions.BIT.argument.should.equalN("value", "argument");
+	expect(instructions.BIT.argument).to.equalN("value", "argument");
 })({
 	locales: {
 		es: "`BIT`: argument == 'value'",
@@ -43,9 +43,9 @@ it("`BIT`: argument == 'value'", () => {
 
 			cpu.a.setValue(mask);
 			instructions.BIT.run(cpu, value);
-			cpu.flags.z.should.equalN(z, "z");
-			cpu.flags.n.should.equalN(n, "n");
-			cpu.flags.v.should.equalN(v, "v");
+			expect(cpu.flags.z).to.equalN(z, "z");
+			expect(cpu.flags.n).to.equalN(n, "n");
+			expect(cpu.flags.v).to.equalN(v, "v");
 		}
 	)({
 		locales: {
@@ -102,9 +102,9 @@ it("`BIT`: argument == 'value'", () => {
 
 	it("`" + instruction + "`: argument == 'value'", () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("value", "argument");
+		expect(instructions[instruction].argument).to.equalN("value", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
@@ -123,9 +123,9 @@ it("`BIT`: argument == 'value'", () => {
 
 			cpu[register].setValue(source);
 			instructions[instruction].run(cpu, value);
-			cpu.flags.z.should.equalN(z, "z");
-			cpu.flags.n.should.equalN(n, "n");
-			cpu.flags.c.should.equalN(c, "c");
+			expect(cpu.flags.z).to.equalN(z, "z");
+			expect(cpu.flags.n).to.equalN(n, "n");
+			expect(cpu.flags.c).to.equalN(c, "c");
 		}
 	)({
 		locales: {
@@ -142,9 +142,9 @@ it("`BIT`: argument == 'value'", () => {
 ["AND", "EOR", "ORA"].forEach((instruction) => {
 	it("`" + instruction + "`: argument == 'value'", () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("value", "argument");
+		expect(instructions[instruction].argument).to.equalN("value", "argument");
 	})({
 		locales: {
 			es: "`" + instruction + "`: argument == 'value'",
@@ -206,9 +206,9 @@ it("`BIT`: argument == 'value'", () => {
 
 			cpu.a.setValue(value1);
 			instructions[instruction].run(cpu, value2);
-			cpu.a.getValue().should.equalN(result, "getValue()");
-			cpu.flags.z.should.equalN(zero, "z");
-			cpu.flags.n.should.equalN(negative, "n");
+			expect(cpu.a.getValue()).to.equalN(result, "getValue()");
+			expect(cpu.flags.z).to.equalN(zero, "z");
+			expect(cpu.flags.n).to.equalN(negative, "n");
 		}
 	)({
 		locales: {
