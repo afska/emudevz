@@ -15,14 +15,14 @@ function newCPU(prgBytes = []) {
 
 // 5a.12 Addressing modes (1/2): Simple
 
-it("`/code/index.js` exports an object containing the `addressingModes` object", () => {
+it("the file `/code/index.js` exports an object containing the `addressingModes` object", () => {
 	expect(mainModule.default).to.be.an("object");
 	expect(mainModule.default).to.include.key("addressingModes");
 	expect(mainModule.default.addressingModes).to.be.an("object");
 })({
 	locales: {
 		es:
-			"`/code/index.js` exporta un objeto que contiene el objeto `addressingModes`",
+			"el archivo `/code/index.js` exporta un objeto que contiene el objeto `addressingModes`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });

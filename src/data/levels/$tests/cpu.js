@@ -17,19 +17,19 @@ function newCPU(prgBytes = []) {
 
 // 5a.1 New CPU
 
-it("the file `/code/index.js` exports an object containing the `CPU` class", () => {
+it("the file `/code/index.js` exports <an object> containing the `CPU` class", () => {
 	expect(mainModule.default).to.be.an("object");
 	expect(mainModule.default).to.include.key("CPU");
 	expect(mainModule.default.CPU).to.be.a.class;
 })({
 	locales: {
 		es:
-			"el archivo `/code/index.js` exporta un objeto que contiene la clase `CPU`",
+			"el archivo `/code/index.js` exporta <un objeto> que contiene la clase `CPU`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.1"),
 });
 
-it("includes a `memory` property with the received `cpuMemory`", () => {
+it("includes a `memory` property with the <received> `cpuMemory`", () => {
 	const CPU = mainModule.default.CPU;
 	const CPUMemory = mainModule.default.CPUMemory;
 	const cpuMemory = new CPUMemory();
@@ -39,12 +39,12 @@ it("includes a `memory` property with the received `cpuMemory`", () => {
 	expect(cpu.memory).to.equalN(cpuMemory, "memory");
 })({
 	locales: {
-		es: "incluye una propiedad `memory` con la `cpuMemory` recibida",
+		es: "incluye una propiedad `memory` con la `cpuMemory` <recibida>",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.1"),
 });
 
-it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
+it("includes two <mysterious properties>: `cycle` and `extraCycles`", () => {
 	const CPU = mainModule.default.CPU;
 	const cpu = new CPU();
 
@@ -54,7 +54,7 @@ it("includes two mysterious properties: `cycle` and `extraCycles`", () => {
 	});
 })({
 	locales: {
-		es: "incluye dos propiedades misteriosas: `cycle` y `extraCycles`",
+		es: "incluye dos <propiedades misteriosas>: `cycle` y `extraCycles`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.1"),
 });
@@ -66,8 +66,8 @@ it("includes all the registers", () => {
 
 	["a", "x", "y", "sp", "pc"].forEach((register) => {
 		expect(cpu).to.include.key(register);
-		expect(cpu[register]).to.respondTo("getValue", register);
-		expect(cpu[register]).to.respondTo("setValue", register);
+		expect(cpu[register], register).to.respondTo("getValue");
+		expect(cpu[register], register).to.respondTo("setValue");
 	});
 })({
 	locales: {
@@ -90,7 +90,7 @@ it("all registers start from 0", () => {
 	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
-it("8-bit registers can save and read values (valid range)", () => {
+it("`Register8Bit`: can save and read values (<valid> range)", () => {
 	const cpu = newCPU();
 
 	["a", "x", "y", "sp"].forEach((register) => {
@@ -101,12 +101,12 @@ it("8-bit registers can save and read values (valid range)", () => {
 	});
 })({
 	locales: {
-		es: "los registros de 8 bits pueden guardar y leer valores (rango válido)",
+		es: "`Register8Bit`: puede guardar y leer valores (rango <válido>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
-it("8-bit registers wrap with values outside the range", () => {
+it("`Register8Bit`: wraps with values <outside> the range", () => {
 	const cpu = newCPU();
 
 	["a", "x", "y", "sp"].forEach((register) => {
@@ -122,26 +122,26 @@ it("8-bit registers wrap with values outside the range", () => {
 	});
 })({
 	locales: {
-		es: "los registros de 8 bits dan la vuelta con valores fuera del rango",
+		es: "`Register8Bit`: da la vuelta con valores <fuera> del rango",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
-it("16-bit registers can save and read values (valid range)", () => {
+it("`Register16Bit`: can save and read values (<valid> range)", () => {
 	const cpu = newCPU();
 
 	for (let i = 0; i < 65536; i++) {
 		cpu.pc.setValue(i);
-		expect(cpu.pc.getValue()).to.equalHex(i, "getValue()");
+		expect(cpu.pc.getValue()).to.equalHex(i, "pc.getValue()");
 	}
 })({
 	locales: {
-		es: "los registros de 16 bits pueden guardar y leer valores (rango válido)",
+		es: "`Register16Bit`: puede guardar y leer valores (rango <válido>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
 
-it("16-bit registers wrap with values outside the range", () => {
+it("`Register16Bit`: wraps with values <outside> the range", () => {
 	const cpu = newCPU();
 
 	for (let i = -300; i < 65800; i++) {
@@ -152,7 +152,7 @@ it("16-bit registers wrap with values outside the range", () => {
 	}
 })({
 	locales: {
-		es: "los registros de 16 bits dan la vuelta con valores fuera del rango",
+		es: "`Register16Bit`: da la vuelta con valores <fuera> del rango",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.2"),
 });
@@ -169,7 +169,7 @@ it("includes a `flags` property with 6 booleans", () => {
 	["c", "z", "i", "d", "v", "n"].forEach((flag) => {
 		expect(cpu.flags).to.include.key(flag);
 		expect(cpu.flags[flag], `flags[${flag}]`).to.be.an("boolean", flag);
-		expect(cpu.flags[flag]).to.be.false;
+		expect(cpu.flags[flag]).to.equalN(false, flag);
 	});
 })({
 	locales: {
@@ -178,7 +178,7 @@ it("includes a `flags` property with 6 booleans", () => {
 	use: ({ id }, book) => id >= book.getId("5a.3"),
 });
 
-it("flags register can be serialized into a byte", () => {
+it("`FlagsRegister`: can be <serialized> into a byte", () => {
 	const cpu = newCPU();
 	cpu.flags.i = false;
 
@@ -203,57 +203,57 @@ it("flags register can be serialized into a byte", () => {
 	expect(cpu.flags.getValue()).to.equalBin(0b10101100, "[-z] => getValue()");
 })({
 	locales: {
-		es: "el registro de flags puede ser serializado en un byte",
+		es: "`FlagsRegister`: puede ser <serializado> en un byte",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.3"),
 });
 
-it("flags register can be set from a byte", () => {
+it("`FlagsRegister`: can be <set> from a byte", () => {
 	const cpu = newCPU();
 
 	cpu.flags.setValue(0b11111111);
 	expect(cpu.flags.getValue()).to.equalBin(0b11101111, "getValue()");
-	expect(cpu.flags.c).to.be.true;
-	expect(cpu.flags.z).to.be.true;
-	expect(cpu.flags.i).to.be.true;
-	expect(cpu.flags.d).to.be.true;
-	expect(cpu.flags.v).to.be.true;
-	expect(cpu.flags.n).to.be.true;
+	expect(cpu.flags.c).to.equalN(true, "c");
+	expect(cpu.flags.z).to.equalN(true, "z");
+	expect(cpu.flags.i).to.equalN(true, "i");
+	expect(cpu.flags.d).to.equalN(true, "d");
+	expect(cpu.flags.v).to.equalN(true, "v");
+	expect(cpu.flags.n).to.equalN(true, "n");
 
 	cpu.flags.setValue(0b01000001);
 	expect(cpu.flags.getValue()).to.equalBin(0b01100001, "getValue()");
-	expect(cpu.flags.c).to.be.true;
-	expect(cpu.flags.z).to.be.false;
-	expect(cpu.flags.i).to.be.false;
-	expect(cpu.flags.d).to.be.false;
-	expect(cpu.flags.v).to.be.true;
-	expect(cpu.flags.n).to.be.false;
+	expect(cpu.flags.c).to.equalN(true, "c");
+	expect(cpu.flags.z).to.equalN(false, "z");
+	expect(cpu.flags.i).to.equalN(false, "i");
+	expect(cpu.flags.d).to.equalN(false, "d");
+	expect(cpu.flags.v).to.equalN(true, "v");
+	expect(cpu.flags.n).to.equalN(false, "n");
 
 	cpu.flags.setValue(0b10000011);
 	expect(cpu.flags.getValue()).to.equalBin(0b10100011, "getValue()");
-	expect(cpu.flags.c).to.be.true;
-	expect(cpu.flags.z).to.be.true;
-	expect(cpu.flags.i).to.be.false;
-	expect(cpu.flags.d).to.be.false;
-	expect(cpu.flags.v).to.be.false;
-	expect(cpu.flags.n).to.be.true;
+	expect(cpu.flags.c).to.equalN(true, "c");
+	expect(cpu.flags.z).to.equalN(true, "z");
+	expect(cpu.flags.i).to.equalN(false, "i");
+	expect(cpu.flags.d).to.equalN(false, "d");
+	expect(cpu.flags.v).to.equalN(false, "v");
+	expect(cpu.flags.n).to.equalN(true, "n");
 })({
 	locales: {
-		es: "el registro de flags puede ser asignado desde un byte",
+		es: "`FlagsRegister`: puede ser <asignado> desde un byte",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.3"),
 });
 
 // 5a.4 Helpers
 
-it("can increment and decrement registers", () => {
+it("can <increment> and <decrement> registers", () => {
 	const cpu = newCPU();
 	const a = cpu.a.getValue();
 	const pc = cpu.pc.getValue();
 
 	["a", "x", "y", "sp", "pc"].forEach((register) => {
-		expect(cpu[register]).to.respondTo("increment", register);
-		expect(cpu[register]).to.respondTo("decrement", register);
+		expect(cpu[register], register).to.respondTo("increment");
+		expect(cpu[register], register).to.respondTo("decrement");
 	});
 
 	cpu.a.increment();
@@ -272,7 +272,7 @@ it("can increment and decrement registers", () => {
 	expect(cpu.pc.getValue()).to.equalHex(pc + 4 - 2, "getValue()");
 })({
 	locales: {
-		es: "puede incrementar y decrementar registros",
+		es: "puede <incrementar> y <decrementar> registros",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.4"),
 });
@@ -283,10 +283,10 @@ it("can update the Zero Flag", () => {
 	expect(cpu.flags).to.respondTo("updateZero");
 
 	cpu.flags.updateZero(0);
-	expect(cpu.flags.z).to.be.true;
+	expect(cpu.flags.z).to.equalN(true, "z");
 
 	cpu.flags.updateZero(50);
-	expect(cpu.flags.z).to.be.false;
+	expect(cpu.flags.z).to.equalN(false, "z");
 })({
 	locales: {
 		es: "puede actualizar la Bandera Zero",
@@ -300,10 +300,10 @@ it("can update the Negative Flag", () => {
 	expect(cpu.flags).to.respondTo("updateNegative");
 
 	cpu.flags.updateNegative(2);
-	expect(cpu.flags.n).to.be.false;
+	expect(cpu.flags.n).to.equalN(false, "n");
 
 	cpu.flags.updateNegative(129);
-	expect(cpu.flags.n).to.be.true;
+	expect(cpu.flags.n).to.equalN(true, "n");
 })({
 	locales: {
 		es: "puede actualizar la Bandera Negative",
@@ -345,7 +345,7 @@ it("includes a `stack` property with `push`/`pop` methods", () => {
 	use: ({ id }, book) => id >= book.getId("5a.5"),
 });
 
-it("the stack can push and pop values", () => {
+it("`Stack`: can push and pop values", () => {
 	const { stack, sp } = newCPU();
 	sp.setValue(0xff);
 
@@ -357,12 +357,12 @@ it("the stack can push and pop values", () => {
 		expect(stack.pop()).to.equalHex(bytes[i], `[${i}] pop()`);
 })({
 	locales: {
-		es: "la pila puede poner y sacar elementos",
+		es: "`Stack`: puede poner y sacar elementos",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.5"),
 });
 
-it("the stack updates RAM and decrements [SP] on push", () => {
+it("`Stack`: `push(...)` updates RAM and decrements [SP]", () => {
 	const { stack, memory, sp } = newCPU();
 	sp.setValue(0xff);
 
@@ -372,12 +372,12 @@ it("the stack updates RAM and decrements [SP] on push", () => {
 	expect(sp.getValue()).to.equalHex(0xfe, "getValue()");
 })({
 	locales: {
-		es: "la pila actualiza RAM y [SP] al poner",
+		es: "`Stack`: `push(...)` actualiza la RAM y decrementa [SP]",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.5"),
 });
 
-it("the stack reads RAM and increments [SP] on pop", () => {
+it("`Stack`: `pop()` reads RAM and increments [SP]", () => {
 	const { stack, memory, sp } = newCPU();
 	sp.setValue(0xff);
 
@@ -388,14 +388,14 @@ it("the stack reads RAM and increments [SP] on pop", () => {
 	expect(sp.getValue()).to.equalHex(0xff, "getValue()");
 })({
 	locales: {
-		es: "la pila lee RAM e incrementa [SP] al sacar",
+		es: "`Stack`: `pop()` lee la RAM e incrementa [SP]",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.5"),
 });
 
 // 5a.6 Little Endian
 
-it("can read 16-bit values from the memory bus", () => {
+it("`CPUMemory`: `read16(...)` reads <16-bit values> from the memory bus", () => {
 	const cpu = newCPU([0x34, 0x12]);
 
 	cpu.memory.write(0x0050, 0x45);
@@ -406,12 +406,13 @@ it("can read 16-bit values from the memory bus", () => {
 	expect(cpu.memory.read16(0x8000)).to.equalHex(0x1234, "read16(...)");
 })({
 	locales: {
-		es: "puede leer valores de 16 bits del bus de memoria",
+		es:
+			"`CPUMemory`: `read16(...)` puede leer <valores de 16 bits> del bus de memoria",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
 
-it("can push 16-bit values onto the stack", () => {
+it("`Stack`: `push16(...)` pushes <16-bit values> onto the stack", () => {
 	const cpu = newCPU();
 
 	expect(cpu.stack).to.respondTo("push16");
@@ -421,12 +422,12 @@ it("can push 16-bit values onto the stack", () => {
 	expect(cpu.stack.pop()).to.equalHex(0x12, "pop()");
 })({
 	locales: {
-		es: "puede poner valores de 16 bits en la pila",
+		es: "`Stack`: `push16(...)` pone <valores de 16 bits> en la pila",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
 
-it("can pop 16-bit values from the stack", () => {
+it("`Stack`: `pop16()` pops <16-bit values> from the stack", () => {
 	const cpu = newCPU();
 
 	cpu.stack.push(0x12);
@@ -436,7 +437,7 @@ it("can pop 16-bit values from the stack", () => {
 	expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
 })({
 	locales: {
-		es: "puede sacar valores de 16 bits de la pila",
+		es: "`Stack`: `pop16()` saca <valores de 16 bits> de la pila",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.6"),
 });
@@ -522,7 +523,7 @@ it("can fetch the next operation", () => {
 	use: ({ id }, book) => id >= book.getId("5a.15"),
 });
 
-it("throws an error when it finds an invalid opcode", () => {
+it("throws an error when it finds an <invalid> opcode", () => {
 	// ??? (0x02)
 	const cpu = newCPU([0x02]);
 	cpu.pc.setValue(0x8000);
@@ -532,12 +533,12 @@ it("throws an error when it finds an invalid opcode", () => {
 	expect(() => cpu._fetchOperation()).to.throw(Error, /Invalid opcode/);
 })({
 	locales: {
-		es: "tira un error cuando encuentra un opcode inválido",
+		es: "tira un error cuando encuentra un opcode <inválido>",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.15"),
 });
 
-it("can fetch the next input", () => {
+it("can fetch the <next input>", () => {
 	// NOP ; LDA #$05 ; STA $0201 ; LDX $0201
 	const cpu = newCPU([0xea, 0xa9, 0x05, 0x8d, 0x01, 0x02, 0xae, 0x01, 0x02]);
 	cpu.pc.setValue(0x8000);
@@ -565,12 +566,12 @@ it("can fetch the next input", () => {
 	);
 })({
 	locales: {
-		es: "puede ir a buscar el próximo input",
+		es: "puede ir a buscar el <próximo input>",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.15"),
 });
 
-it("can fetch the argument based on `operation` and `input`", () => {
+it("can fetch <the argument> based on `operation` and `input`", () => {
 	const cpu = newCPU();
 	expect(cpu).to.respondTo("_fetchArgument");
 
@@ -579,7 +580,7 @@ it("can fetch the argument based on `operation` and `input`", () => {
 	expect(cpu._fetchArgument(cpu.operations[0xd6], 0x40)).to.equalHex(0x46);
 })({
 	locales: {
-		es: "puede ir a buscar el argumento basándose en `operation` e `input`",
+		es: "puede ir a buscar <el argumento> basándose en `operation` e `input`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.15"),
 });

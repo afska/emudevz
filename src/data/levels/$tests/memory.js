@@ -14,27 +14,29 @@ it("there's a `/code/CPUMemory.js` file", () => {
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("the file `/code/CPUMemory.js` is a JS module that exports a class", async () => {
+it("the file `/code/CPUMemory.js` is a JS module that exports <a class>", async () => {
 	const module = await evaluate("/code/CPUMemory.js");
 	expect(module?.default).to.exist;
 	expect(module?.default).to.be.a.class;
 })({
 	locales: {
-		es: "el archivo `/code/CPUMemory.js` es un módulo JS que exporta una clase",
+		es:
+			"el archivo `/code/CPUMemory.js` es un módulo JS que exporta <una clase>",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("the file `/code/index.js` imports the module from `/code/CPUMemory.js`", () => {
+it("the file `/code/index.js` <imports> the module from `/code/CPUMemory.js`", () => {
 	expect($.modules["/code/CPUMemory.js"]).to.exist;
 })({
 	locales: {
-		es: "el archivo `/code/index.js` importa el módulo de `/code/CPUMemory.js`",
+		es:
+			"el archivo `/code/index.js` <importa> el módulo de `/code/CPUMemory.js`",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("the file `/code/index.js` exports an object containing the class", async () => {
+it("the file `/code/index.js` exports <an object> containing the class", async () => {
 	mainModule = await evaluate();
 	const CPUMemory = (await evaluateModule($.modules["/code/CPUMemory.js"]))
 		.default;
@@ -44,7 +46,7 @@ it("the file `/code/index.js` exports an object containing the class", async () 
 	expect(mainModule.default.CPUMemory).to.equalN(CPUMemory, "CPUMemory");
 })({
 	locales: {
-		es: "el archivo `/code/index.js` exporta un objeto que contiene la clase",
+		es: "el archivo `/code/index.js` exporta <un objeto> que contiene la clase",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
@@ -81,7 +83,7 @@ it("can read from RAM ($0000-$07FF)", () => {
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("reading RAM mirror results in RAM reads", () => {
+it("reading RAM mirror results in <RAM reads>", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
@@ -92,7 +94,7 @@ it("reading RAM mirror results in RAM reads", () => {
 	}
 })({
 	locales: {
-		es: "leer espejo de RAM ocasiona lecturas de RAM",
+		es: "leer espejo de RAM ocasiona <lecturas de RAM>",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
@@ -113,7 +115,7 @@ it("can write to RAM ($0000-$07FF)", () => {
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("writing RAM mirror results in RAM writes", () => {
+it("writing RAM mirror results in <RAM writes>", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
@@ -125,14 +127,14 @@ it("writing RAM mirror results in RAM writes", () => {
 	}
 })({
 	locales: {
-		es: "escribir espejo de RAM ocasiona escrituras en RAM",
+		es: "escribir espejo de RAM ocasiona <escrituras en RAM>",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
 // 4.2 Devices
 
-it("saves the devices received by `onLoad(...)`", () => {
+it("saves the <devices> received by `onLoad(...)`", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
@@ -149,7 +151,7 @@ it("saves the devices received by `onLoad(...)`", () => {
 	expect(memory.controllers).to.equalN(controllers, "controllers");
 })({
 	locales: {
-		es: "guarda los dispositivos recibidos por `onLoad(...)`",
+		es: "guarda los <dispositivos> recibidos por `onLoad(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("4.2"),
 });

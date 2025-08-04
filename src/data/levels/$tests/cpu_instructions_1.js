@@ -15,14 +15,14 @@ function newCPU(prgBytes = []) {
 
 // 5a.7 Instructions (1/5): Arithmetic
 
-it("`/code/index.js` exports an object containing the `instructions` object", () => {
+it("the file `/code/index.js` exports an object containing the `instructions` object", () => {
 	expect(mainModule.default).to.be.an("object");
 	expect(mainModule.default).to.include.key("instructions");
 	expect(mainModule.default.instructions).to.be.an("object");
 })({
 	locales: {
 		es:
-			"`/code/index.js` exporta un objeto que contiene el objeto `instructions`",
+			"el archivo `/code/index.js` exporta un objeto que contiene el objeto `instructions`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
