@@ -940,17 +940,17 @@ const dictionary = {
 			also: { es: "Sprite cero|_Sprite-cero" },
 			icon: "🛸",
 			en:
-				"The sprite with OAM index `0`. It has special behavior in the PPU, such as triggering the sprite-0 hit when it overlaps the background.",
+				"The sprite with OAM index `0`. It has special behavior in the PPU, such as triggering the sprite-zero hit when it overlaps the background.",
 			es:
-				"El sprite con índice OAM `0`. Tiene un comportamiento especial en la PPU, como activar el sprite-0 hit cuando se superpone con el fondo.",
+				"El sprite con índice OAM `0`. Tiene un comportamiento especial en la PPU, como activar el sprite-zero hit cuando se superpone con el fondo.",
 		},
 		"Sprite-zero hit|_Sprite zero hit": {
 			also: { es: "Sprite zero hit|_Sprite-zero hit" },
 			icon: "👊",
 			en:
-				"A condition that occurs when a visible pixel of the sprite zero overlaps a visible background pixel. When this happens, the PPU sets the sprite-0 hit flag in PPUStatus. <br /><br />Games often use it to time mid-frame effects like status bars or split screens.",
+				"A condition that occurs when a visible pixel of the sprite zero overlaps a visible background pixel. When this happens, the PPU sets the sprite-zero hit flag in PPUStatus. <br /><br />Games often use it to time mid-frame effects like status bars or split screens.",
 			es:
-				"Una condición que ocurre cuando un píxel visible del sprite cero se superpone con un píxel visible del fondo. Cuando eso pasa, la PPU enciende la bandera de sprite-0 hit en PPUStatus. <br /><br />Los juegos suelen usarla para sincronizar efectos a mitad de frame como barras de estado o pantallas divididas.",
+				"Una condición que ocurre cuando un píxel visible del sprite cero se superpone con un píxel visible del fondo. Cuando eso pasa, la PPU enciende la bandera de sprite-zero hit en PPUStatus. <br /><br />Los juegos suelen usarla para sincronizar efectos a mitad de frame como barras de estado o pantallas divididas.",
 		},
 		"Sprite evaluation": {
 			also: { es: "Evaluación de sprites" },

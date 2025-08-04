@@ -115,7 +115,7 @@ it("receives and saves the `cpu` property", () => {
 	use: ({ id }, book) => id >= book.getId("5b.1"),
 });
 
-it("initializates the counters", () => {
+it("initializates the <counters>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -128,12 +128,12 @@ it("initializates the counters", () => {
 	expect(ppu.frame).to.equalN(0, "frame");
 })({
 	locales: {
-		es: "inicializa los contadores",
+		es: "inicializa los <contadores>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.1"),
 });
 
-it("has a `step` method that increments the counters", () => {
+it("`step(...)` increments the <counters>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -156,7 +156,7 @@ it("has a `step` method that increments the counters", () => {
 	expect(ppu.cycle).to.equalN(0, "cycle");
 })({
 	locales: {
-		es: "tiene un método `step` que incrementa los contadores",
+		es: "`step(...)` incrementa los <contadores>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.1"),
 });
@@ -177,7 +177,7 @@ it("has a `frameBuffer` property", () => {
 	use: ({ id }, book) => id >= book.getId("5b.2"),
 });
 
-it("has a `plot` method that draws into the frame buffer", () => {
+it("`plot(...)` <draws> into the frame buffer", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	expect(ppu).to.respondTo("plot");
@@ -189,12 +189,12 @@ it("has a `plot` method that draws into the frame buffer", () => {
 	);
 })({
 	locales: {
-		es: "tiene un método `plot` que dibuja en el frame buffer",
+		es: "`plot(...)` <dibuja> en el frame buffer",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.2"),
 });
 
-it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
+it("calls `onFrame(...)` every time `step(...)` reaches a <new frame>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -213,7 +213,8 @@ it("calls `onFrame` every time `step(...)` reaches a new frame", () => {
 	expect(onFrame).to.have.been.calledOnce;
 })({
 	locales: {
-		es: "llama a `onFrame` cada vez que `step(...)` alcanza un nuevo frame",
+		es:
+			"llama a `onFrame(...)` cada vez que `step(...)` alcanza un <nuevo frame>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.2"),
 });
@@ -235,7 +236,7 @@ it("includes a `memory` property with a `PPUMemory` instance", () => {
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("its `memory` saves devices in `onLoad`", () => {
+it("`PPUMemory`: saves <devices> in `onLoad`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -245,12 +246,12 @@ it("its `memory` saves devices in `onLoad`", () => {
 	expect(ppu.memory.mapper).to.equalN(dummyMapper, "mapper");
 })({
 	locales: {
-		es: "su `memory` guarda dispositivos en `onLoad`",
+		es: "`PPUMemory`: guarda <dispositivos> en `onLoad`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("connects the mapper to PPU memory (reads)", () => {
+it("`PPUMemory`: connects the mapper (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -266,12 +267,12 @@ it("connects the mapper to PPU memory (reads)", () => {
 	}
 })({
 	locales: {
-		es: "conecta el mapper con la memoria de PPU (lecturas)",
+		es: "`PPUMemory`: conecta el mapper (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("connects the mapper to PPU memory (writes)", () => {
+it("`PPUmemory`: connects the mapper (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -294,7 +295,7 @@ it("connects the mapper to PPU memory (writes)", () => {
 	}
 })({
 	locales: {
-		es: "conecta el mapper con la memoria de PPU (escrituras)",
+		es: "`PPUMemory`: conecta el mapper (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
@@ -342,7 +343,7 @@ it("includes a `registers` property with 9 video registers", () => {
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("connects the video registers to CPU memory (reads)", () => {
+it("connects the video registers to CPU memory (<reads>)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const cpuMemory = new CPUMemory();
 	const cpu = { memory: cpuMemory };
@@ -370,12 +371,12 @@ it("connects the video registers to CPU memory (reads)", () => {
 	});
 })({
 	locales: {
-		es: "conecta los registros de video con la memoria de CPU (lecturas)",
+		es: "conecta los registros de video con la memoria de CPU (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("connects the video registers to CPU memory (writes)", () => {
+it("connects the video registers to CPU memory (<writes>)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const cpuMemory = new CPUMemory();
 	const cpu = { memory: cpuMemory };
@@ -402,12 +403,12 @@ it("connects the video registers to CPU memory (writes)", () => {
 	});
 })({
 	locales: {
-		es: "conecta los registros de video con la memoria de CPU (escrituras)",
+		es: "conecta los registros de video con la memoria de CPU (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: write only", () => {
+it("`PPUCtrl`: write only", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -416,12 +417,12 @@ it("PPUCtrl: write only", () => {
 	expect(ppuCtrl.onRead()).to.equalN(0, "onRead()");
 })({
 	locales: {
-		es: "PPUCtrl: solo escritura",
+		es: "`PPUCtrl`: solo escritura",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes `nameTableId` (bits 0-1)", () => {
+it("`PPUCtrl`: writes `nameTableId` (bits ~0-1~)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -436,12 +437,12 @@ it("PPUCtrl: writes `nameTableId` (bits 0-1)", () => {
 	expect(ppuCtrl.nameTableId).to.equalN(3, "nameTableId");
 })({
 	locales: {
-		es: "PPUCtrl: escribe `nameTableId` (bits 0-1)",
+		es: "`PPUCtrl`: escribe `nameTableId` (bits ~0-1~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6") && id < book.getId("5b.23"),
 });
 
-it("PPUCtrl: writes `vramAddressIncrement32` (bit 2)", () => {
+it("`PPUCtrl`: writes `vramAddressIncrement32` (bit 2)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -452,12 +453,12 @@ it("PPUCtrl: writes `vramAddressIncrement32` (bit 2)", () => {
 	expect(ppuCtrl.vramAddressIncrement32).to.equalN(1, "vramAddressIncrement32");
 })({
 	locales: {
-		es: "PPUCtrl: escribe `vramAddressIncrement32` (bit 2)",
+		es: "`PPUCtrl`: escribe `vramAddressIncrement32` (bit 2)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6") && id < book.getId("5b.23"),
 });
 
-it("PPUCtrl: writes `sprite8x8PatternTableId` (bit 3)", () => {
+it("`PPUCtrl`: writes `sprite8x8PatternTableId` (bit 3)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -474,12 +475,12 @@ it("PPUCtrl: writes `sprite8x8PatternTableId` (bit 3)", () => {
 	);
 })({
 	locales: {
-		es: "PPUCtrl: escribe `vramAddressIncrement32` (bit 3)",
+		es: "`PPUCtrl`: escribe `vramAddressIncrement32` (bit 3)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes `backgroundPatternTableId` (bit 4)", () => {
+it("`PPUCtrl`: writes `backgroundPatternTableId` (bit 4)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -496,12 +497,12 @@ it("PPUCtrl: writes `backgroundPatternTableId` (bit 4)", () => {
 	);
 })({
 	locales: {
-		es: "PPUCtrl: escribe `backgroundPatternTableId` (bit 4)",
+		es: "`PPUCtrl`: escribe `backgroundPatternTableId` (bit 4)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes `spriteSize` (bit 5)", () => {
+it("`PPUCtrl`: writes `spriteSize` (bit 5)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -512,12 +513,12 @@ it("PPUCtrl: writes `spriteSize` (bit 5)", () => {
 	expect(ppuCtrl.spriteSize).to.equalN(1, "spriteSize");
 })({
 	locales: {
-		es: "PPUCtrl: escribe `spriteSize` (bit 5)",
+		es: "`PPUCtrl`: escribe `spriteSize` (bit 5)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUCtrl: writes `generateNMIOnVBlank` (bit 7)", () => {
+it("`PPUCtrl`: writes `generateNMIOnVBlank` (bit 7)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -528,12 +529,12 @@ it("PPUCtrl: writes `generateNMIOnVBlank` (bit 7)", () => {
 	expect(ppuCtrl.generateNMIOnVBlank).to.equalN(1, "generateNMIOnVBlank");
 })({
 	locales: {
-		es: "PPUCtrl: escribe `generateNMIOnVBlank` (bit 7)",
+		es: "`PPUCtrl`: escribe `generateNMIOnVBlank` (bit 7)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUStatus: read only", () => {
+it("`PPUStatus`: read only", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -544,12 +545,12 @@ it("PPUStatus: read only", () => {
 	expect(ppuStatus.onRead()).to.equalN(123, "onRead()");
 })({
 	locales: {
-		es: "PPUStatus: solo lectura",
+		es: "`PPUStatus`: solo lectura",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUStatus: reads `spriteOverflow` (bit 5)", () => {
+it("`PPUStatus`: reads `spriteOverflow` (bit 5)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -559,12 +560,12 @@ it("PPUStatus: reads `spriteOverflow` (bit 5)", () => {
 	expect(byte.getBit(ppuStatus.onRead(), 5)).to.equalN(1, "bit 5");
 })({
 	locales: {
-		es: "PPUStatus: lee `spriteOverflow` (bit 5)",
+		es: "`PPUStatus`: lee `spriteOverflow` (bit 5)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUStatus: reads `sprite0Hit` (bit 6)", () => {
+it("`PPUStatus`: reads `sprite0Hit` (bit 6)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -574,12 +575,12 @@ it("PPUStatus: reads `sprite0Hit` (bit 6)", () => {
 	expect(byte.getBit(ppuStatus.onRead(), 6)).to.equalN(1, "bit 6");
 })({
 	locales: {
-		es: "PPUStatus: lee `sprite0Hit` (bit 6)",
+		es: "`PPUStatus`: lee `sprite0Hit` (bit 6)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
-it("PPUStatus: reads `isInVBlankInterval` (bit 7) (ON by default)", () => {
+it("`PPUStatus`: reads `isInVBlankInterval` (bit 7) (<ON by default>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -591,14 +592,15 @@ it("PPUStatus: reads `isInVBlankInterval` (bit 7) (ON by default)", () => {
 	expect(byte.getBit(ppuStatus.onRead(), 7)).to.equalN(1, "bit 7");
 })({
 	locales: {
-		es: "PPUStatus: lee `isInVBlankInterval` (bit 7) (encendido por defecto)",
+		es:
+			"`PPUStatus`: lee `isInVBlankInterval` (bit 7) (<encendido por defecto>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
 
 // 5b.7 VBlank detection
 
-it("PPUStatus: resets `isInVBlankInterval` after reading", () => {
+it("`PPUStatus`: resets `isInVBlankInterval` after reading", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	const ppuStatus = ppu.registers.ppuStatus;
@@ -612,25 +614,27 @@ it("PPUStatus: resets `isInVBlankInterval` after reading", () => {
 	expect(ppuStatus.isInVBlankInterval).to.equalN(0, "isInVBlankInterval");
 })({
 	locales: {
-		es: "PPUStatus: reinicia `isInVBlankInterval` luego de leer",
+		es: "`PPUStatus`: reinicia `isInVBlankInterval` luego de leer",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("has methods: `_onPreLine`, `_onVisibleLine`, `_onVBlankLine`", () => {
+it("has methods: `_onPreLine(...)`, `_onVisibleLine(...)`, `_onVBlankLine(...)`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
+
 	expect(ppu).to.respondTo("_onPreLine");
 	expect(ppu).to.respondTo("_onVisibleLine");
 	expect(ppu).to.respondTo("_onVBlankLine");
 })({
 	locales: {
-		es: "tiene métodos `_onPreLine`, `_onVisibleLine`, `_onVBlankLine`",
+		es:
+			"tiene métodos `_onPreLine(...)`, `_onVisibleLine(...)`, `_onVBlankLine(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("calls `_onPreLine` on scanline -1", () => {
+it("calls `_onPreLine(...)` on scanline ~-1~", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -669,12 +673,12 @@ it("calls `_onPreLine` on scanline -1", () => {
 	}
 })({
 	locales: {
-		es: "llama a `_onPreLine` en la scanline -1",
+		es: "llama a `_onPreLine(...)` en la scanline ~-1~",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("calls `_onVisibleLine` on scanlines ~[0, 240)~", () => {
+it("calls `_onVisibleLine(...)` on scanlines ~[0, 240)~", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -713,12 +717,12 @@ it("calls `_onVisibleLine` on scanlines ~[0, 240)~", () => {
 	}
 })({
 	locales: {
-		es: "llama a `_onVisibleLine` en las scanlines ~[0, 240)~",
+		es: "llama a `_onVisibleLine(...)` en las scanlines ~[0, 240)~",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("calls `_onVBlankLine` on scanline 241, with the `onInterrupt` argument", () => {
+it("calls `_onVBlankLine(...)` on scanline 241, with the `onInterrupt` argument", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -758,12 +762,12 @@ it("calls `_onVBlankLine` on scanline 241, with the `onInterrupt` argument", () 
 })({
 	locales: {
 		es:
-			"llama a `_onVBlankLine` en la scanline 241, con el argumento `onInterrupt`",
+			"llama a `_onVBlankLine(...)` en la scanline 241, con el argumento `onInterrupt`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("resets `PPUStatus::isInVBlankInterval` on scanline=-1, cycle=1", () => {
+it("resets `PPUStatus::isInVBlankInterval` on ~scanline=-1~, ~cycle=1~", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -791,12 +795,12 @@ it("resets `PPUStatus::isInVBlankInterval` on scanline=-1, cycle=1", () => {
 	}
 })({
 	locales: {
-		es: "reinicia `PPUStatus::isInVBlankInterval` en scanline=-1, cycle=1",
+		es: "reinicia `PPUStatus::isInVBlankInterval` en ~scanline=-1~, ~cycle=1~",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cycle=1 when `PPUCtrl::generateNMIOnVBlank` is on,", () => {
+it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on ~scanline=241~, ~cycle=1~ when `PPUCtrl::generateNMIOnVBlank` is on,", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -834,12 +838,12 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on scanline=241, cy
 })({
 	locales: {
 		es:
-			"enciende `PPUStatus::isInVBlankInterval` y dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está encendido",
+			"enciende `PPUStatus::isInVBlankInterval` y dispara una NMI en ~scanline=241~, ~cycle=1~ cuando `PPUCtrl::generateNMIOnVBlank` está encendido",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on scanline=241, cycle=1 when `PPUCtrl::generateNMIOnVBlank` is off,", () => {
+it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on ~scanline=241~, ~cycle=1~ when `PPUCtrl::generateNMIOnVBlank` is <off>,", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -873,14 +877,14 @@ it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on scanline=
 })({
 	locales: {
 		es:
-			"enciende `PPUStatus::isInVBlankInterval` y no dispara una NMI en scanline=241, cycle=1 cuando `PPUCtrl::generateNMIOnVBlank` está apagado",
+			"enciende `PPUStatus::isInVBlankInterval` y no dispara una NMI en ~scanline=241~, ~cycle=1~ cuando `PPUCtrl::generateNMIOnVBlank` está <apagado>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
 // 5b.8 VRAM bridge
 
-it("its `memory` has a `vram` property", () => {
+it("`PPUMemory`: has a `vram` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -889,12 +893,12 @@ it("its `memory` has a `vram` property", () => {
 	expect(ppu.memory.vram.length).to.equalN(4096, "length");
 })({
 	locales: {
-		es: "su `memory`incluye una propiedad `vram`",
+		es: "`PPUMemory`: incluye una propiedad `vram`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
 
-it("connects VRAM to PPU memory (reads)", () => {
+it("`PPUMemory`: connects VRAM (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -905,12 +909,12 @@ it("connects VRAM to PPU memory (reads)", () => {
 	}
 })({
 	locales: {
-		es: "conecta VRAM con la memoria de PPU (lecturas)",
+		es: "`PPUMemory`: conecta VRAM (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.20"),
 });
 
-it("connects VRAM to PPU memory (writes)", () => {
+it("`PPUMemory`: connects VRAM to PPU memory (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -921,12 +925,12 @@ it("connects VRAM to PPU memory (writes)", () => {
 	}
 })({
 	locales: {
-		es: "conecta VRAM con la memoria de PPU (escrituras)",
+		es: "`PPUMemory`: conecta VRAM (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.20"),
 });
 
-it("PPUAddr: write only", () => {
+it("`PPUAddr`: write only", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	const ppuAddr = ppu.registers.ppuAddr;
@@ -935,12 +939,12 @@ it("PPUAddr: write only", () => {
 	expect(ppuAddr.onRead()).to.equalN(0, "onRead()");
 })({
 	locales: {
-		es: "PPUAddr: solo escritura",
+		es: "`PPUAddr`: solo escritura",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
 
-it("PPUAddr: initializes two properties, `latch` and `address`", () => {
+it("`PPUAddr`: initializes two properties, `latch` and `address`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	const ppuAddr = ppu.registers.ppuAddr;
@@ -952,12 +956,12 @@ it("PPUAddr: initializes two properties, `latch` and `address`", () => {
 	expect(ppuAddr.address).to.equalN(0, "address");
 })({
 	locales: {
-		es: "PPUAddr: inicializa dos propiedades, `latch` y `address`",
+		es: "`PPUAddr`: inicializa dos propiedades, `latch` y `address`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
 });
 
-it("PPUAddr: writes the MSB first, then the LSB", () => {
+it("`PPUAddr`: writes the MSB first, then the LSB", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	const ppuAddr = ppu.registers.ppuAddr;
@@ -975,12 +979,12 @@ it("PPUAddr: writes the MSB first, then the LSB", () => {
 	expect(ppuAddr.latch).to.equalN(true, "latch");
 })({
 	locales: {
-		es: "PPUAddr: escribe primero el MSB, luego el LSB",
+		es: "`PPUAddr`: escribe primero el MSB, luego el LSB",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
 });
 
-it("PPUData: writes the value to VRAM using `PPUAddr::address`", () => {
+it("`PPUData`: writes the value to VRAM using `PPUAddr::address`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -996,12 +1000,12 @@ it("PPUData: writes the value to VRAM using `PPUAddr::address`", () => {
 	expect(ppu.memory.read(0x2023)).to.equalN(value, "read(0x2023)");
 })({
 	locales: {
-		es: "PPUData: escribe el valor en VRAM usando `PPUAddr::address`",
+		es: "`PPUData`: escribe el valor en VRAM usando `PPUAddr::address`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
 
-it("PPUData: autoincrements the address by 1 (writes)", () => {
+it("`PPUData`: autoincrements the address by 1 (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1019,12 +1023,12 @@ it("PPUData: autoincrements the address by 1 (writes)", () => {
 	expect(ppuAddr.address).to.equalHex(0x2025, "address");
 })({
 	locales: {
-		es: "PPUData: autoincrementa la dirección por 1 (escrituras)",
+		es: "`PPUData`: autoincrementa la dirección por 1 (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
 
-it("PPUData: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement32` (writes)", () => {
+it("`PPUData`: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement32` (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1045,12 +1049,12 @@ it("PPUData: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement3
 })({
 	locales: {
 		es:
-			"PPUData: autoincrementa la dirección por 32 si `PPUCtrl::vramAddressIncrement32` (escrituras)",
+			"`PPUData`: autoincrementa la dirección por 32 si `PPUCtrl::vramAddressIncrement32` (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
 
-it("PPUData: autoincrements the address without exceeding $FFFF (writes)", () => {
+it("`PPUData`: autoincrements the address without exceeding $FFFF (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1071,12 +1075,12 @@ it("PPUData: autoincrements the address without exceeding $FFFF (writes)", () =>
 })({
 	locales: {
 		es:
-			"PPUData: autoincrementa la dirección sin excederse de $FFFF (escrituras)",
+			"`PPUData`: autoincrementa la dirección sin excederse de $FFFF (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8"),
 });
 
-it("PPUStatus: resets `PPUAddr::latch` after reading", () => {
+it("`PPUStatus`: resets `PPUAddr::latch` after reading", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1092,7 +1096,7 @@ it("PPUStatus: resets `PPUAddr::latch` after reading", () => {
 	expect(ppuAddr.latch).to.equalN(false, "latch");
 })({
 	locales: {
-		es: "PPUStatus: reinicia `PPUAddr::latch` luego de leer",
+		es: "`PPUStatus`: reinicia `PPUAddr::latch` luego de leer",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
 });
@@ -1113,7 +1117,7 @@ it("has a `backgroundRenderer` property", () => {
 	use: ({ id }, book) => id >= book.getId("5b.9"),
 });
 
-it("BackgroundRenderer: renderScanline() calls `PPU::plot` 256 times", () => {
+it("`BackgroundRenderer`: `renderScanline()` calls `PPU::plot(...)` 256 times", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1126,12 +1130,13 @@ it("BackgroundRenderer: renderScanline() calls `PPU::plot` 256 times", () => {
 	expect(ppu.plot.callCount).to.equalN(256, "plot.callCount");
 })({
 	locales: {
-		es: "BackgroundRenderer: renderScanline() llama a `PPU::plot` 256 veces",
+		es:
+			"`BackgroundRenderer`: `renderScanline()` llama a `PPU::plot(...)` 256 veces",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.9"),
 });
 
-it("calls `backgroundRenderer.renderScanline()` on cycle 0 of every visible scanline", () => {
+it("calls `backgroundRenderer.renderScanline()` on cycle 0 of every <visible scanline>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1165,14 +1170,14 @@ it("calls `backgroundRenderer.renderScanline()` on cycle 0 of every visible scan
 })({
 	locales: {
 		es:
-			"llama a `backgroundRenderer.renderScanline()` en el ciclo 0 de cada scanline visible",
+			"llama a `backgroundRenderer.renderScanline()` en el ciclo 0 de cada <scanline visible>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.9"),
 });
 
 // 5b.10 Backgrounds (2/2): Using Attribute tables
 
-it("its `memory` has a `paletteRam` property", () => {
+it("`PPUMemory`: has a `paletteRam` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1181,12 +1186,12 @@ it("its `memory` has a `paletteRam` property", () => {
 	expect(ppu.memory.paletteRam.length).to.equalN(32, "length");
 })({
 	locales: {
-		es: "su `memory`incluye una propiedad `paletteRam`",
+		es: "`PPUMemory` incluye una propiedad `paletteRam`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.10"),
 });
 
-it("connects Palette RAM to PPU memory (reads)", () => {
+it("`PPUMemory`: connects Palette RAM (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1206,12 +1211,12 @@ it("connects Palette RAM to PPU memory (reads)", () => {
 	}
 })({
 	locales: {
-		es: "conecta Palette RAM con la memoria de PPU (lecturas)",
+		es: "`PPUMemory`: conecta Palette RAM (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.10"),
 });
 
-it("connects Palette RAM to PPU memory (writes)", () => {
+it("`PPUMemory`: connects Palette RAM (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1231,12 +1236,12 @@ it("connects Palette RAM to PPU memory (writes)", () => {
 	}
 })({
 	locales: {
-		es: "conecta Palette RAM con la memoria de PPU (escrituras)",
+		es: "`PPUMemory`: conecta Palette RAM (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.10"),
 });
 
-it("has a `getColor` method that reads color palettes", () => {
+it("`getColor(...)` reads color palettes", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1260,14 +1265,14 @@ it("has a `getColor` method that reads color palettes", () => {
 	}
 })({
 	locales: {
-		es: "tiene un método `getColor` que lee paletas de colores",
+		es: "`getColor(...)` lee paletas de colores",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.10"),
 });
 
 // 5b.11 PPUData: Delayed reads
 
-it("PPUData: reads the value at `PPUAddr::address` with delay", () => {
+it("`PPUData`: reads the value at `PPUAddr::address` <with delay>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1287,12 +1292,12 @@ it("PPUData: reads the value at `PPUAddr::address` with delay", () => {
 	expect(ppuData.onRead()).to.equalHex(0x9e, "third read");
 })({
 	locales: {
-		es: "PPUData: lee el valor en `PPUAddr::address` con retraso",
+		es: "`PPUData`: lee el valor en `PPUAddr::address` <con retraso>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.11"),
 });
 
-it("PPUData: reads from Palette RAM without delay", () => {
+it("`PPUData`: reads from Palette RAM <without delay>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1306,12 +1311,12 @@ it("PPUData: reads from Palette RAM without delay", () => {
 	expect(ppuData.onRead()).to.equalN(123, "first read");
 })({
 	locales: {
-		es: "PPUData: lee de Palette RAM sin retraso",
+		es: "`PPUData`: lee de Palette RAM <sin retraso>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.11"),
 });
 
-it("PPUData: autoincrements the address by 1 (reads)", () => {
+it("`PPUData`: autoincrements the address by 1 (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1328,12 +1333,12 @@ it("PPUData: autoincrements the address by 1 (reads)", () => {
 	expect(ppuAddr.address).to.equalHex(0x2025, "address");
 })({
 	locales: {
-		es: "PPUData: autoincrementa la dirección por 1 (lecturas)",
+		es: "`PPUData`: autoincrementa la dirección por 1 (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.11"),
 });
 
-it("PPUData: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement32` (reads)", () => {
+it("`PPUData`: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement32` (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1353,12 +1358,12 @@ it("PPUData: autoincrements the address by 32 if `PPUCtrl::vramAddressIncrement3
 })({
 	locales: {
 		es:
-			"PPUData: autoincrementa la dirección por 32 si `PPUCtrl::vramAddressIncrement32` (lecturas)",
+			"`PPUData`: autoincrementa la dirección por 32 si `PPUCtrl::vramAddressIncrement32` (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.11"),
 });
 
-it("PPUData: autoincrements the address without exceeding $FFFF (reads)", () => {
+it("`PPUData`: autoincrements the address without exceeding $FFFF (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1378,14 +1383,14 @@ it("PPUData: autoincrements the address without exceeding $FFFF (reads)", () => 
 })({
 	locales: {
 		es:
-			"PPUData: autoincrementa la dirección sin excederse de $FFFF (lecturas)",
+			"`PPUData`: autoincrementa la dirección sin excederse de $FFFF (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.11"),
 });
 
 // 5b.12 OAM bridge
 
-it("its `memory` has a `oamRam` property", () => {
+it("`PPUMemory`: has an `oamRam` property", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1394,12 +1399,12 @@ it("its `memory` has a `oamRam` property", () => {
 	expect(ppu.memory.oamRam.length).to.equalN(256, "length");
 })({
 	locales: {
-		es: "su `memory`incluye una propiedad `oamRam`",
+		es: "`PPUMemory`: incluye una propiedad `oamRam`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.12"),
 });
 
-it("OAMData: writes the value to OAM RAM using `OAMAddr::value`", () => {
+it("`OAMData`: writes the value to OAM RAM using `OAMAddr::value`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1413,12 +1418,12 @@ it("OAMData: writes the value to OAM RAM using `OAMAddr::value`", () => {
 	expect(ppu.memory.oamRam[23]).to.equalN(value, "oamRam[23]");
 })({
 	locales: {
-		es: "OAMData: escribe el valor en OAM RAM usando `OAMAddr::value`",
+		es: "`OAMData`: escribe el valor en OAM RAM usando `OAMAddr::value`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.12"),
 });
 
-it("OAMData: autoincrements the address by 1 (writes)", () => {
+it("`OAMData`: autoincrements the address by 1 (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1434,12 +1439,12 @@ it("OAMData: autoincrements the address by 1 (writes)", () => {
 	expect(oamAddr.value).to.equalN(25, "address");
 })({
 	locales: {
-		es: "PPUData: autoincrementa la dirección por 1 (escrituras)",
+		es: "`OAMData`: autoincrementa la dirección por 1 (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.12"),
 });
 
-it("OAMData: autoincrements the address without exceeding $FF (writes)", () => {
+it("`OAMData`: autoincrements the address without exceeding $FF (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1453,12 +1458,12 @@ it("OAMData: autoincrements the address without exceeding $FF (writes)", () => {
 })({
 	locales: {
 		es:
-			"OAMData: autoincrementa la dirección sin excederse de $FF (escrituras)",
+			"`OAMData`: autoincrementa la dirección sin excederse de $FF (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.12"),
 });
 
-it("OAMDMA: write only", () => {
+it("`OAMDMA`: write only", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1467,12 +1472,12 @@ it("OAMDMA: write only", () => {
 	expect(ppuCtrl.onRead()).to.equalN(0, "onRead()");
 })({
 	locales: {
-		es: "OAMDMA: solo escritura",
+		es: "`OAMDMA`: solo escritura",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.12"),
 });
 
-it("OAMDMA: copies the whole page to OAM and adds 513 cycles", () => {
+it("`OAMDMA`: copies the whole page to OAM and adds 513 cycles", () => {
 	const PPU = mainModule.default.PPU;
 	const CPUMemory = mainModule.default.CPUMemory;
 	const cpuMemory = new CPUMemory();
@@ -1492,8 +1497,7 @@ it("OAMDMA: copies the whole page to OAM and adds 513 cycles", () => {
 	expect(cpu.extraCycles).to.equalN(534, "extraCycles");
 })({
 	locales: {
-		es:
-			"OAMData: autoincrementa la dirección sin excederse de $FF (escrituras)",
+		es: "`OAMDMA`: copia la página entera a OAM y agrega 513 ciclos",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.12"),
 });
@@ -1514,7 +1518,7 @@ it("has a `spriteRenderer` property", () => {
 	use: ({ id }, book) => id >= book.getId("5b.13"),
 });
 
-it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM data (8x8)", () => {
+it("`SpriteRenderer`: `_createSprite(...)` creates a `Sprite` instance from OAM data (<8x8>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1553,12 +1557,12 @@ it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM da
 })({
 	locales: {
 		es:
-			"SpriteRenderer: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (8x8)",
+			"`SpriteRenderer`: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (<8x8>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.13"),
 });
 
-it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM data (8x16)", () => {
+it("`SpriteRenderer`: `_createSprite(...)` creates a `Sprite` instance from OAM data (<8x16>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1607,14 +1611,14 @@ it("SpriteRenderer: `_createSprite(...)` creates a `Sprite` instance from OAM da
 })({
 	locales: {
 		es:
-			"SpriteRenderer: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (8x16)",
+			"`SpriteRenderer`: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (<8x16>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.13"),
 });
 
 // 5b.14 Sprites (2/6): Evaluation
 
-it("SpriteRenderer: `_evaluate()` returns a sprite array", () => {
+it("`SpriteRenderer`: `_evaluate()` returns a sprite array", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1648,12 +1652,12 @@ it("SpriteRenderer: `_evaluate()` returns a sprite array", () => {
 	expect(ppu.registers.ppuStatus.spriteOverflow).to.equalN(0, "spriteOverflow");
 })({
 	locales: {
-		es: "SpriteRenderer: `_evaluate()` retorna una lista de sprites",
+		es: "`SpriteRenderer`: `_evaluate()` retorna una lista de sprites",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.14"),
 });
 
-it("SpriteRenderer: `_evaluate()` sets the sprite overflow flag when there are more than 8 candidate sprites", () => {
+it("`SpriteRenderer`: `_evaluate()` sets the sprite overflow flag when there are more than 8 <candidate sprites>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1676,12 +1680,12 @@ it("SpriteRenderer: `_evaluate()` sets the sprite overflow flag when there are m
 })({
 	locales: {
 		es:
-			"SpriteRenderer: `_evaluate()` enciende la bandera de sprite overflow cuando hay más de 8 sprites candidatos",
+			"`SpriteRenderer`: `_evaluate()` enciende la bandera de sprite overflow cuando hay más de 8 <sprites candidatos>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.14"),
 });
 
-it("resets `PPUStatus::spriteOverflow` on scanline=-1, cycle=1", () => {
+it("resets `PPUStatus::spriteOverflow` on ~scanline=-1~, ~cycle=1~", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1709,14 +1713,14 @@ it("resets `PPUStatus::spriteOverflow` on scanline=-1, cycle=1", () => {
 	}
 })({
 	locales: {
-		es: "reinicia `PPUStatus::spriteOverflow` en scanline=-1, cycle=1",
+		es: "reinicia `PPUStatus::spriteOverflow` en ~scanline=-1~, ~cycle=1~",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.14"),
 });
 
 // 5b.15 Sprites (3/6): Drawing
 
-it("calls `spriteRenderer.renderScanline()` on cycle 0 of every visible scanline", () => {
+it("calls `spriteRenderer.renderScanline()` on cycle 0 of every <visible scanline>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1749,14 +1753,14 @@ it("calls `spriteRenderer.renderScanline()` on cycle 0 of every visible scanline
 })({
 	locales: {
 		es:
-			"llama a `spriteRenderer.renderScanline()` en el ciclo 0 de cada scanline visible",
+			"llama a `spriteRenderer.renderScanline()` en el ciclo 0 de cada <scanline visible>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.15"),
 });
 
-// 5b.18 Sprites (6/6): Sprite-0 hit
+// 5b.18 Sprites (6/6): Sprite-zero hit
 
-it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pixel from sprite 0 is drawn over an opaque pixel from background", () => {
+it("`SpriteRenderer`: `_render(...)` sets the sprite-zero hit flag when an <opaque pixel> from sprite 0 is drawn over an <opaque pixel> from background", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1811,12 +1815,12 @@ it("SpriteRenderer: `_render(...)` sets the sprite-0 hit flag when an opaque pix
 })({
 	locales: {
 		es:
-			"SpriteRenderer: `_render(...)` enciende la bandera de sprite-0 hit cuando un píxel opaco del sprite 0 es dibujado sobre un píxel opaco del fondo",
+			"`SpriteRenderer`: `_render(...)` enciende la bandera de sprite-zero hit cuando un <píxel opaco> del sprite 0 es dibujado sobre un <píxel opaco> del fondo",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.18"),
 });
 
-it("resets `PPUStatus::sprite0Hit` on scanline=-1, cycle=1", () => {
+it("resets `PPUStatus::sprite0Hit` on ~scanline=-1~, ~cycle=1~", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1838,14 +1842,14 @@ it("resets `PPUStatus::sprite0Hit` on scanline=-1, cycle=1", () => {
 	}
 })({
 	locales: {
-		es: "reinicia `PPUStatus::sprite0Hit` en scanline=-1, cycle=1",
+		es: "reinicia `PPUStatus::sprite0Hit` en ~scanline=-1~, ~cycle=1~",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.18"),
 });
 
 // 5b.19 Mirroring (1/2): Palette RAM
 
-it("mirrors Palette RAM correctly in PPU memory (reads)", () => {
+it("`PPUMemory`: mirrors Palette RAM correctly (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1860,12 +1864,12 @@ it("mirrors Palette RAM correctly in PPU memory (reads)", () => {
 	expect(ppu.memory.read(0x3f1c)).to.equalN(4, "read(0x3f1c)");
 })({
 	locales: {
-		es: "espeja la Palette RAM correctamente en la memoria de PPU (lecturas)",
+		es: "`PPUMemory`: espeja la Palette RAM correctamente (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.19"),
 });
 
-it("mirrors Palette RAM correctly in PPU memory (writes)", () => {
+it("`PPUMemory`: mirrors Palette RAM correctly in PPU memory (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1880,14 +1884,15 @@ it("mirrors Palette RAM correctly in PPU memory (writes)", () => {
 	expect(ppu.memory.paletteRam[12]).to.equalN(4, "paletteRam[12]");
 })({
 	locales: {
-		es: "espeja la Palette RAM correctamente en la memoria de PPU (escrituras)",
+		es:
+			"`PPUMemory`: espeja la Palette RAM correctamente en la memoria de PPU (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.19"),
 });
 
 // 5b.20 Mirroring (2/2): Name tables
 
-it("can change the name table mirroring", () => {
+it("`PPUMemory`: can change the name table mirroring", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1936,12 +1941,12 @@ it("can change the name table mirroring", () => {
 	expect(ppu.memory._mirroring.$2C00).to.equalHex(0xc00, "_mirroring.$2C00");
 })({
 	locales: {
-		es: "puede cambiar el mirroring de name tables",
+		es: "`PPUMemory`: puede cambiar el mirroring de name tables",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
 
-it("ignores name table mirroring changes if the cartridge header sets FOUR_SCREEN mode", () => {
+it('`PPUMemory`: ignores name table mirroring changes if the cartridge header sets "FOUR_SCREEN" mode', () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.({ header: { mirroringId: "FOUR_SCREEN" } }, dummyMapper);
@@ -1962,12 +1967,12 @@ it("ignores name table mirroring changes if the cartridge header sets FOUR_SCREE
 })({
 	locales: {
 		es:
-			"ignora cambios de mirroring de name tables si la cabecera del cartucho establece el modo FOUR_SCREEN",
+			'`PPUMemory`: ignora cambios de mirroring de name tables si la cabecera del cartucho establece el modo "FOUR_SCREEN"',
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
 
-it("autosets the mirroring type based on the cartridge header", () => {
+it("`PPUMemory`: autosets the mirroring type based on the cartridge header", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -1999,12 +2004,13 @@ it("autosets the mirroring type based on the cartridge header", () => {
 	expect(ppu.memory.mirroringId).to.equalN("FOUR_SCREEN", "mirroringId");
 })({
 	locales: {
-		es: "autoasigna el tipo de mirroring basado en la cabecera del cartucho",
+		es:
+			"`PPUMemory`: autoasigna el tipo de mirroring basado en la cabecera del cartucho",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
 
-it("[HORIZONTAL mirroring] connects VRAM to PPU memory (reads)", () => {
+it("[~HORIZONTAL~ mirroring] connects VRAM to PPU memory (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.({ header: { mirroringId: "HORIZONTAL" } }, dummyMapper);
@@ -2036,12 +2042,13 @@ it("[HORIZONTAL mirroring] connects VRAM to PPU memory (reads)", () => {
 	}
 })({
 	locales: {
-		es: "[HORIZONTAL mirroring] conecta VRAM con la memoria de PPU (lecturas)",
+		es:
+			"[~HORIZONTAL~ mirroring] conecta VRAM con la memoria de PPU (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
 
-it("[HORIZONTAL mirroring] connects VRAM to PPU memory (writes)", () => {
+it("[~HORIZONTAL~ mirroring] connects VRAM to PPU memory (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.({ header: { mirroringId: "HORIZONTAL" } }, dummyMapper);
@@ -2073,12 +2080,12 @@ it("[HORIZONTAL mirroring] connects VRAM to PPU memory (writes)", () => {
 })({
 	locales: {
 		es:
-			"[HORIZONTAL mirroring] conecta VRAM con la memoria de PPU (escrituras)",
+			"[~HORIZONTAL~ mirroring] conecta VRAM con la memoria de PPU (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
 
-it("[VERTICAL mirroring] connects VRAM to PPU memory (reads)", () => {
+it("[~VERTICAL~ mirroring] connects VRAM to PPU memory (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.({ header: { mirroringId: "VERTICAL" } }, dummyMapper);
@@ -2110,12 +2117,13 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (reads)", () => {
 	}
 })({
 	locales: {
-		es: "[VERTICAL mirroring] conecta VRAM con la memoria de PPU (lecturas)",
+		es:
+			"[~VERTICAL~ mirroring] conecta VRAM con la memoria de PPU (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
 
-it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
+it("[~VERTICAL~ mirroring] connects VRAM to PPU memory (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.({ header: { mirroringId: "VERTICAL" } }, dummyMapper);
@@ -2146,7 +2154,8 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 	}
 })({
 	locales: {
-		es: "[VERTICAL mirroring] conecta VRAM con la memoria de PPU (escrituras)",
+		es:
+			"[~VERTICAL~ mirroring] conecta VRAM con la memoria de PPU (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
@@ -2155,7 +2164,7 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 	["ONE_SCREEN_LOWER_BANK", 0],
 	["ONE_SCREEN_UPPER_BANK", 0x400],
 ].forEach(([mirroringId, offset]) => {
-	it(`[${mirroringId} mirroring] connects VRAM to PPU memory (reads)`, () => {
+	it(`[~${mirroringId}~ mirroring] connects VRAM to PPU memory (<reads>)`, () => {
 		const PPU = mainModule.default.PPU;
 		const ppu = new PPU({});
 		ppu.memory?.onLoad?.({ header: { mirroringId } }, dummyMapper);
@@ -2199,12 +2208,12 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 		}
 	})({
 		locales: {
-			es: `[${mirroringId} mirroring] conecta VRAM con la memoria de PPU (lecturas)`,
+			es: `[~${mirroringId}~ mirroring] conecta VRAM con la memoria de PPU (<lecturas>)`,
 		},
 		use: ({ id }, book) => id >= book.getId("5b.20"),
 	});
 
-	it(`[${mirroringId} mirroring] connects VRAM to PPU memory (writes)`, () => {
+	it(`[~${mirroringId}~ mirroring] connects VRAM to PPU memory (<writes>)`, () => {
 		const PPU = mainModule.default.PPU;
 		const ppu = new PPU({});
 		ppu.memory?.onLoad?.({ header: { mirroringId: mirroringId } }, dummyMapper);
@@ -2247,13 +2256,13 @@ it("[VERTICAL mirroring] connects VRAM to PPU memory (writes)", () => {
 		}
 	})({
 		locales: {
-			es: `[${mirroringId} mirroring] conecta VRAM con la memoria de PPU (escrituras)`,
+			es: `[~${mirroringId}~ mirroring] conecta VRAM con la memoria de PPU (<escrituras>)`,
 		},
 		use: ({ id }, book) => id >= book.getId("5b.20"),
 	});
 });
 
-it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (reads)", () => {
+it("[~FOUR_SCREEN~ mirroring] connects VRAM to PPU memory (<reads>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.({ header: { mirroringId: "FOUR_SCREEN" } }, dummyMapper);
@@ -2285,12 +2294,13 @@ it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (reads)", () => {
 	}
 })({
 	locales: {
-		es: "[FOUR_SCREEN mirroring] conecta VRAM con la memoria de PPU (lecturas)",
+		es:
+			"[~FOUR_SCREEN~ mirroring] conecta VRAM con la memoria de PPU (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
 
-it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (writes)", () => {
+it("[~FOUR_SCREEN~ mirroring] connects VRAM to PPU memory (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.({ header: { mirroringId: "FOUR_SCREEN" } }, dummyMapper);
@@ -2322,14 +2332,14 @@ it("[FOUR_SCREEN mirroring] connects VRAM to PPU memory (writes)", () => {
 })({
 	locales: {
 		es:
-			"[FOUR_SCREEN mirroring] conecta VRAM con la memoria de PPU (escrituras)",
+			"[~FOUR_SCREEN~ mirroring] conecta VRAM con la memoria de PPU (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.20"),
 });
 
 // 5b.22 Masking
 
-it("PPUMask: write only", () => {
+it("`PPUMask`: write only", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2338,12 +2348,12 @@ it("PPUMask: write only", () => {
 	expect(ppuMask.onRead()).to.equalN(0, "onRead()");
 })({
 	locales: {
-		es: "PPUMask: solo escritura",
+		es: "`PPUMask`: solo escritura",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("PPUMask: writes `showBackgroundInFirst8Pixels` (bit 1)", () => {
+it("`PPUMask`: writes `showBackgroundInFirst8Pixels` (bit 1)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2360,12 +2370,12 @@ it("PPUMask: writes `showBackgroundInFirst8Pixels` (bit 1)", () => {
 	);
 })({
 	locales: {
-		es: "PPUMask: escribe `showBackgroundInFirst8Pixels` (bit 1)",
+		es: "`PPUMask`: escribe `showBackgroundInFirst8Pixels` (bit 1)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("PPUMask: writes `showSpritesInFirst8Pixels` (bit 2)", () => {
+it("`PPUMask`: writes `showSpritesInFirst8Pixels` (bit 2)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2382,12 +2392,12 @@ it("PPUMask: writes `showSpritesInFirst8Pixels` (bit 2)", () => {
 	);
 })({
 	locales: {
-		es: "PPUMask: escribe `showSpritesInFirst8Pixels` (bit 2)",
+		es: "`PPUMask`: escribe `showSpritesInFirst8Pixels` (bit 2)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("PPUMask: writes `showBackground` (bit 3)", () => {
+it("`PPUMask`: writes `showBackground` (bit 3)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2398,12 +2408,12 @@ it("PPUMask: writes `showBackground` (bit 3)", () => {
 	expect(ppuMask.showBackground).to.equalN(1, "showBackground");
 })({
 	locales: {
-		es: "PPUMask: escribe `showBackground` (bit 3)",
+		es: "`PPUMask`: escribe `showBackground` (bit 3)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("PPUMask: writes `showSprites` (bit 4)", () => {
+it("`PPUMask`: writes `showSprites` (bit 4)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2414,12 +2424,12 @@ it("PPUMask: writes `showSprites` (bit 4)", () => {
 	expect(ppuMask.showSprites).to.equalN(1, "showSprites");
 })({
 	locales: {
-		es: "PPUMask: escribe `showSprites` (bit 4)",
+		es: "`PPUMask`: escribe `showSprites` (bit 4)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("PPUMask: has an `isRenderingEnabled` method that returns `true` if the background or sprites are enabled", () => {
+it("`PPUMask`: has an `isRenderingEnabled` method that returns `true` if the background or sprites are <enabled>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2441,12 +2451,12 @@ it("PPUMask: has an `isRenderingEnabled` method that returns `true` if the backg
 })({
 	locales: {
 		es:
-			"PPUMask: tiene un método `isRenderingEnabled` que retorna `true` si el fondo o los sprites están habilitados",
+			"`PPUMask`: tiene un método `isRenderingEnabled` que retorna `true` si el fondo o los sprites están <habilitados>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("doesn't reset anything on scanline=-1, cycle=1 if rendering is off", () => {
+it("doesn't reset anything on ~scanline=-1~, ~cycle=1~ if rendering is <off>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -2479,12 +2489,12 @@ it("doesn't reset anything on scanline=-1, cycle=1 if rendering is off", () => {
 })({
 	locales: {
 		es:
-			"no reinicia nada en scanline=-1, cycle=1 si el renderizado está apagado",
+			"no reinicia nada en ~scanline=-1~, ~cycle=1~ si el renderizado está <apagado>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("doesn't call `backgroundRenderer.renderScanline()` if background rendering is disabled", () => {
+it("doesn't call `backgroundRenderer.renderScanline()` if background rendering is <disabled>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -2516,12 +2526,12 @@ it("doesn't call `backgroundRenderer.renderScanline()` if background rendering i
 })({
 	locales: {
 		es:
-			"no lama a `backgroundRenderer.renderScanline()` si el renderizado de fondos está desactivado",
+			"no lama a `backgroundRenderer.renderScanline()` si el renderizado de fondos está <desactivado>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("doesn't call `spriteRenderer.renderScanline()` if sprite rendering is disabled", () => {
+it("doesn't call `spriteRenderer.renderScanline()` if sprite rendering is <disabled>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -2551,14 +2561,14 @@ it("doesn't call `spriteRenderer.renderScanline()` if sprite rendering is disabl
 })({
 	locales: {
 		es:
-			"no llama a `spriteRenderer.renderScanline()` si el renderizado de sprites está desactivado",
+			"no llama a `spriteRenderer.renderScanline()` si el renderizado de sprites está <desactivado>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
 // 5b.24 Color emphasis
 
-it("PPUMask: writes `grayscale` (bit 0)", () => {
+it("`PPUMask`: writes `grayscale` (bit 0)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2569,12 +2579,12 @@ it("PPUMask: writes `grayscale` (bit 0)", () => {
 	expect(ppuMask.grayscale).to.equalN(1, "grayscale");
 })({
 	locales: {
-		es: "PPUMask: escribe `grayscale` (bit 1)",
+		es: "`PPUMask`: escribe `grayscale` (bit 1)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.24"),
 });
 
-it("PPUMask: writes `emphasizeRed` (bit 5)", () => {
+it("`PPUMask`: writes `emphasizeRed` (bit 5)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2585,12 +2595,12 @@ it("PPUMask: writes `emphasizeRed` (bit 5)", () => {
 	expect(ppuMask.emphasizeRed).to.equalN(1, "emphasizeRed");
 })({
 	locales: {
-		es: "PPUMask: escribe `emphasizeRed` (bit 5)",
+		es: "`PPUMask`: escribe `emphasizeRed` (bit 5)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.24"),
 });
 
-it("PPUMask: writes `emphasizeGreen` (bit 6)", () => {
+it("`PPUMask`: writes `emphasizeGreen` (bit 6)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2601,12 +2611,12 @@ it("PPUMask: writes `emphasizeGreen` (bit 6)", () => {
 	expect(ppuMask.emphasizeGreen).to.equalN(1, "emphasizeGreen");
 })({
 	locales: {
-		es: "PPUMask: escribe `emphasizeGreen` (bit 6)",
+		es: "`PPUMask`: escribe `emphasizeGreen` (bit 6)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.24"),
 });
 
-it("PPUMask: writes `emphasizeBlue` (bit 7)", () => {
+it("`PPUMask`: writes `emphasizeBlue` (bit 7)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2617,14 +2627,14 @@ it("PPUMask: writes `emphasizeBlue` (bit 7)", () => {
 	expect(ppuMask.emphasizeBlue).to.equalN(1, "emphasizeBlue");
 })({
 	locales: {
-		es: "PPUMask: escribe `emphasizeBlue` (bit 7)",
+		es: "`PPUMask`: escribe `emphasizeBlue` (bit 7)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.24"),
 });
 
 // 5b.25 Mapper tick
 
-it("saves the `mapper` `onLoad`", () => {
+it("`onLoad(...)` saves the `mapper`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -2633,12 +2643,12 @@ it("saves the `mapper` `onLoad`", () => {
 	expect(ppu.mapper).to.equalN(dummyMapper, "mapper");
 })({
 	locales: {
-		es: "guarda el `mapper` en `onLoad`",
+		es: "`onLoad(...)` guarda el `mapper`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.25"),
 });
 
-it("calls `mapper.tick()` on cycle 260 if scanline < 240", () => {
+it("calls `mapper.tick()` on cycle 260 if ~scanline < 240~", () => {
 	const dummyMapper = {
 		cpuRead: () => 0,
 		cpuWrite: () => {},
@@ -2670,12 +2680,12 @@ it("calls `mapper.tick()` on cycle 260 if scanline < 240", () => {
 	}
 })({
 	locales: {
-		es: "llama a `mapper.tick()` en el ciclo 260 si scanline < 240",
+		es: "llama a `mapper.tick()` en el ciclo 260 si ~scanline < 240~",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.25"),
 });
 
-it("doesn't call `mapper.tick()` if rendering is disabled", () => {
+it("doesn't call `mapper.tick()` if rendering is <disabled>", () => {
 	const dummyMapper = {
 		cpuRead: () => 0,
 		cpuWrite: () => {},
@@ -2703,7 +2713,7 @@ it("doesn't call `mapper.tick()` if rendering is disabled", () => {
 	}
 })({
 	locales: {
-		es: "no llama a `mapper.tick()` si el renderizado está apagado",
+		es: "no llama a `mapper.tick()` si el renderizado está <apagado>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.25"),
 });

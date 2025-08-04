@@ -292,7 +292,7 @@ it("except `APUStatus`, all registers are write only", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("`PulseControl`: writes `volumeOrEnvelopePeriod` (bits 0-3)", () => {
+it("`PulseControl`: writes `volumeOrEnvelopePeriod` (bits ~0-3~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -313,7 +313,7 @@ it("`PulseControl`: writes `volumeOrEnvelopePeriod` (bits 0-3)", () => {
 	});
 })({
 	locales: {
-		es: "`PulseControl`: escribe `volumeOrEnvelopePeriod` (bits 0-3)",
+		es: "`PulseControl`: escribe `volumeOrEnvelopePeriod` (bits ~0-3~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -362,7 +362,7 @@ it("`PulseControl`: writes `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("`PulseControl`: writes `dutyCycleId` (bits 6-7)", () => {
+it("`PulseControl`: writes `dutyCycleId` (bits ~6-7~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -383,7 +383,7 @@ it("`PulseControl`: writes `dutyCycleId` (bits 6-7)", () => {
 	});
 })({
 	locales: {
-		es: "`PulseControl`: escribe `dutyCycleId` (bits 6-7)",
+		es: "`PulseControl`: escribe `dutyCycleId` (bits ~6-7~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -402,7 +402,7 @@ it("`TriangleTimerLow`: writes the value", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("`DMCControl`: writes `dpcmPeriodId` (bits 0-3)", () => {
+it("`DMCControl`: writes `dpcmPeriodId` (bits ~0-3~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -418,7 +418,7 @@ it("`DMCControl`: writes `dpcmPeriodId` (bits 0-3)", () => {
 	expect(dmcControl.dpcmPeriodId).to.equalN(15, "dmc.control.dpcmPeriodId");
 })({
 	locales: {
-		es: "`DMCControl`: escribe `dpcmPeriodId` (bits 0-3)",
+		es: "`DMCControl`: escribe `dpcmPeriodId` (bits ~0-3~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -468,7 +468,7 @@ it("`DMCSampleLength`: writes the value", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("`APUControl`: writes the channel enable fields (bits 0-4)", () => {
+it("`APUControl`: writes the channel enable fields (bits ~0-4~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -504,7 +504,7 @@ it("`APUControl`: writes the channel enable fields (bits 0-4)", () => {
 })({
 	locales: {
 		es:
-			"`APUControl`: escribe los campos de habilitación de canales (bits 0-4)",
+			"`APUControl`: escribe los campos de habilitación de canales (bits ~0-4~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -762,7 +762,7 @@ it("`PulseTimerLow`: writes the value and calls `updateTimer()`", () => {
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseTimerHighLCL`: writes `timerHigh` (bits 0-2) and calls `updateTimer()`", () => {
+it("`PulseTimerHighLCL`: writes `timerHigh` (bits ~0-2~) and calls `updateTimer()`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -785,7 +785,7 @@ it("`PulseTimerHighLCL`: writes `timerHigh` (bits 0-2) and calls `updateTimer()`
 })({
 	locales: {
 		es:
-			"`PulseTimerHighLCL`: escribe `timerHigh` (bits 0-2) y llama a `updateTimer()`",
+			"`PulseTimerHighLCL`: escribe `timerHigh` (bits ~0-2~) y llama a `updateTimer()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -1654,7 +1654,7 @@ it("`onHalfFrameClock()` calls `halfFrame()` on the two pulse channel instances"
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length counter", () => {
+it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the length counter", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1680,7 +1680,7 @@ it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the l
 })({
 	locales: {
 		es:
-			"`PulseTimerHighLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+			"`PulseTimerHighLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -2105,7 +2105,7 @@ it("`FrequencySweep`: `clock()` when `dividerCount > 0` decrements it and leaves
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is < 8 or > 0x7ff`", () => {
+it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is ~< 8~ or ~> 0x7ff~", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2132,7 +2132,7 @@ it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is < 8 or > 0x7f
 })({
 	locales: {
 		es:
-			"`FrequencySweep`: `muteIfNeeded()` pone `mute` en true cuando `timer` is < 8 o > 0x7ff`",
+			"`FrequencySweep`: `muteIfNeeded()` enciende `mute` cuando `timer` is ~< 8~ o ~> 0x7ff~",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2298,7 +2298,7 @@ it("`PulseSweep`: writes set the `startFlag` on the channel's frequency sweep", 
 
 // 5c.11 Triangle Channel (1/3): Triangle waves
 
-it("`TriangleTimerHighLCL`: writes `timerHigh` (bits 0-2)", () => {
+it("`TriangleTimerHighLCL`: writes `timerHigh` (bits ~0-2~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2308,7 +2308,7 @@ it("`TriangleTimerHighLCL`: writes `timerHigh` (bits 0-2)", () => {
 		"timerHigh"
 	);
 })({
-	locales: { es: "`TriangleTimerHighLCL`: escribe `timerHigh` (bits 0-2)" },
+	locales: { es: "`TriangleTimerHighLCL`: escribe `timerHigh` (bits ~0-2~)" },
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
@@ -2678,7 +2678,7 @@ it("`onHalfFrameClock()` calls `halfFrame()` on triangle channel", () => {
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`TriangleTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length counter", () => {
+it("`TriangleTimerHighLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the length counter", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2691,7 +2691,7 @@ it("`TriangleTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates th
 })({
 	locales: {
 		es:
-			"`TriangleTimerHighLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+			"`TriangleTimerHighLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2854,7 +2854,7 @@ it("`LinearLengthCounter`: `clock(true, false)` with `reloadFlag` loads `reload`
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
 
-it("`LinearLengthCounter`: `clock(true, true)` with `reloadFlag` and `isHalted` true loads `reload` but keeps `reloadFlag`", () => {
+it("`LinearLengthCounter`: `clock(true, true)` with `reloadFlag` and `isHalted` set loads `reload` but keeps `reloadFlag`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
@@ -2872,7 +2872,7 @@ it("`LinearLengthCounter`: `clock(true, true)` with `reloadFlag` and `isHalted` 
 })({
 	locales: {
 		es:
-			"`LinearLengthCounter`: `clock(true, true)` con `reloadFlag` y `isHalted` verdadero carga `reload` y mantiene `reloadFlag`",
+			"`LinearLengthCounter`: `clock(true, true)` con `reloadFlag` y `isHalted` encendida carga `reload` y mantiene `reloadFlag`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3263,7 +3263,7 @@ it("`NoiseControl`: writes `volumeOrEnvelopePeriod`, `constantVolume`, `envelope
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
-it("`NoiseLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length counter", () => {
+it("`NoiseLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the length counter", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -3285,7 +3285,7 @@ it("`NoiseLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length cou
 })({
 	locales: {
 		es:
-			"`NoiseLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+			"`NoiseLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3326,7 +3326,7 @@ it("`APUControl`: on writes, if `enableNoise` is set, it doesn't reset the noise
 
 // 5c.15 Noise Channel (2/3): Linear-feedback shift register
 
-it("`NoiseForm`: writes `periodId` (bits 0-3) and `mode` (bit 7)", () => {
+it("`NoiseForm`: writes `periodId` (bits ~0-3~) and `mode` (bit 7)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -3341,7 +3341,7 @@ it("`NoiseForm`: writes `periodId` (bits 0-3) and `mode` (bit 7)", () => {
 	expect(register.mode).to.equalN(0, "mode");
 })({
 	locales: {
-		es: "`NoiseForm`: escribe `periodId` (bits 0-3) y `mode` (bit 7)",
+		es: "`NoiseForm`: escribe `periodId` (bits ~0-3~) y `mode` (bit 7)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3648,7 +3648,7 @@ it("`DMCChannel`: `sample()` returns `outputSample`", () => {
 	use: ({ id }, book) => id >= book.getId("5c.17"),
 });
 
-it("`DMCLoad`: writes `directLoad` (bits 0-6) and updates channel's `outputSample`", () => {
+it("`DMCLoad`: writes `directLoad` (bits ~0-6~) and updates channel's `outputSample`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -3662,7 +3662,7 @@ it("`DMCLoad`: writes `directLoad` (bits 0-6) and updates channel's `outputSampl
 })({
 	locales: {
 		es:
-			"`DMCLoad`: escribe `directLoad` (bits 0-6) y actualiza `outputSample` del canal",
+			"`DMCLoad`: escribe `directLoad` (bits ~0-6~) y actualiza `outputSample` del canal",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.17"),
 });
