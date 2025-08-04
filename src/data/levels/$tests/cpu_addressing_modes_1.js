@@ -191,7 +191,7 @@ it("`ZERO_PAGE`: `getAddress(...)` returns the same address", () => {
 	);
 })({
 	locales: {
-		es: "`ZERO_PAGE`: `getAddress(...)`: retorna la misma dirección",
+		es: "`ZERO_PAGE`: `getAddress(...)` retorna la misma dirección",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });

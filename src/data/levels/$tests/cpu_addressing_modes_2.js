@@ -92,7 +92,7 @@ function newCPU(prgBytes = []) {
 		).to.equalN(74, "getAddress(...)");
 	})({
 		locales: {
-			es: "`INDEXED_ZERO_PAGE_" + name + "`: no puede cruzar la primer página",
+			es: "`INDEXED_ZERO_PAGE_" + name + "`: no puede cruzar la primera página",
 		},
 		use: ({ id }, book) => id >= book.getId("5a.13"),
 	});
@@ -290,7 +290,7 @@ it("`INDEXED_INDIRECT`: cannot cross the first page", () => {
 	);
 })({
 	locales: {
-		es: "`INDEXED_INDIRECT`: no puede cruzar la primer página",
+		es: "`INDEXED_INDIRECT`: no puede cruzar la primera página",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -309,7 +309,7 @@ it("`INDEXED_INDIRECT`: the 16-bit read <wraps> within the first page", () => {
 })({
 	locales: {
 		es:
-			"`INDEXED_INDIRECT`: la lectura de 16 bits <se envuelve> dentro de la primer página",
+			"`INDEXED_INDIRECT`: la lectura de 16 bits <se envuelve> dentro de la primera página",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -397,7 +397,7 @@ it("`INDIRECT_INDEXED`: the 16-bit read <wraps> within the first page", () => {
 })({
 	locales: {
 		es:
-			"`INDIRECT_INDEXED`: la lectura de 16 bits <se envuelve> dentro de la primer página",
+			"`INDIRECT_INDEXED`: la lectura de 16 bits <se envuelve> dentro de la primera página",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.13"),
 });

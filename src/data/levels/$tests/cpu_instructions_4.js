@@ -139,7 +139,7 @@ function newCPU(prgBytes = []) {
 				"`" +
 				instruction +
 				"`: " +
-				`no salta si la bandera ~${name}~ está encendida`,
+				`no salta si la bandera ~${name}~ está apagada`,
 		},
 		use: ({ id }, book) => id >= book.getId("5a.10"),
 	});

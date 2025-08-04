@@ -95,7 +95,7 @@ it("generates a new sample for every 20 `step(...)` calls", () => {
 	expect(onSample).to.have.been.calledWith(apu.sample);
 })({
 	locales: {
-		es: "generate un nuevo sample por cada 20 llamadas a `step(...)`",
+		es: "genera un nuevo sample por cada 20 llamadas a `step(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -669,7 +669,7 @@ it("`PulseChannel`: `updateTimer()` updates `timer` based on PulseTimerLow and P
 })({
 	locales: {
 		es:
-			"`PulseChannel`: `updateTimer()` actualiza `timer` basado en PulseTimerLow and PulseTimerHighLCL",
+			"`PulseChannel`: `updateTimer()` actualiza `timer` basado en PulseTimerLow y PulseTimerHighLCL",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -2462,7 +2462,7 @@ it("`TriangleLengthControl`: writes `halt` (bit 7)", () => {
 	expect(register.halt).to.equalN(0, "halt");
 })({
 	locales: {
-		es: "`PulseControl`: escribe `halt` (bit 7)",
+		es: "`TriangleLengthControl`: escribe `halt` (bit 7)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -3009,7 +3009,7 @@ it("`TriangleTimerHighLCL`: writes set `reloadFlag` on channel's linearLengthCou
 })({
 	locales: {
 		es:
-			"`TriangleTimerHighLCL`: las escrituras encienden `reloadFlag` en el contador linearl de longitud del canal",
+			"`TriangleTimerHighLCL`: las escrituras encienden `reloadFlag` en el contador lineal de longitud del canal",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3411,7 +3411,7 @@ it("`NoiseChannel`: `sample()` returns the volume when `shift & 1` is 0", () => 
 	expect(channel.sample()).to.equalN(5, "sample()");
 })({
 	locales: {
-		es: "`NoiseChannel`: `sample()` retorna el volumen cuando `shift & 1` es 1",
+		es: "`NoiseChannel`: `sample()` retorna el volumen cuando `shift & 1` es 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3629,7 +3629,7 @@ it("`DMCChannel`: has a `registers` property, pointing to the audio registers", 
 })({
 	locales: {
 		es:
-			"`NoiseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+			"`DMCChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.17"),
 });
@@ -3801,7 +3801,7 @@ it("`APUControl`: writing with `enableDMC` set and remaining bytes does not call
 
 // 5c.19 Mixer and APUStatus
 
-it("mixes pulse1, pulse2, triangle, noise and dmc in `step()`", () => {
+it("mixes pulse1, pulse2, triangle, noise and dmc in `step()` (<correct mix>)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const onSample = sinon.spy();
@@ -3822,7 +3822,8 @@ it("mixes pulse1, pulse2, triangle, noise and dmc in `step()`", () => {
 	expect(onSample).to.have.been.calledWith(0.0846, 1, 2, 3, 4, 5);
 })({
 	locales: {
-		es: "mezcla pulse1, pulse2, triangle, noise y dmc en `step()`",
+		es:
+			"mezcla pulse1, pulse2, triangle, noise y dmc en `step()` (<mezcla correcta>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.19"),
 });

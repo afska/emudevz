@@ -95,7 +95,7 @@ function newCPU(prgBytes = []) {
 		expect(cpu.flags.n).to.equalN(true, "n");
 	})({
 		locales: {
-			es: "`" + instruction + "`: " + `loads [${name}] (valor negativo)`,
+			es: "`" + instruction + "`: " + `carga [${name}] (valor negativo)`,
 		},
 		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});

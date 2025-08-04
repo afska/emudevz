@@ -272,7 +272,7 @@ it("`PPUMemory`: connects the mapper (<reads>)", () => {
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("`PPUmemory`: connects the mapper (<writes>)", () => {
+it("`PPUMemory`: connects the mapper (<writes>)", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -475,7 +475,7 @@ it("`PPUCtrl`: writes `sprite8x8PatternTableId` (bit 3)", () => {
 	);
 })({
 	locales: {
-		es: "`PPUCtrl`: escribe `vramAddressIncrement32` (bit 3)",
+		es: "`PPUCtrl`: escribe `sprite8x8PatternTableId` (bit 3)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
@@ -1954,8 +1954,8 @@ it('`PPUMemory`: ignores name table mirroring changes if the cartridge header se
 	[
 		"HORIZONTAL",
 		"VERTICAL",
-		"SINGLE_SCREEN_LOWER_BANK",
-		"SINGLE_SCREEN_UPPER_BANK",
+		"ONE_SCREEN_LOWER_BANK",
+		"ONE_SCREEN_UPPER_BANK",
 	].forEach((mirroringId) => {
 		ppu.memory.changeNameTableMirroringTo(mirroringId);
 		expect(ppu.memory.mirroringId).to.equalN("FOUR_SCREEN", "mirroringId");
@@ -2526,7 +2526,7 @@ it("doesn't call `backgroundRenderer.renderScanline()` if background rendering i
 })({
 	locales: {
 		es:
-			"no lama a `backgroundRenderer.renderScanline()` si el renderizado de fondos está <desactivado>",
+			"no llama a `backgroundRenderer.renderScanline()` si el renderizado de fondos está <desactivado>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
@@ -2579,7 +2579,7 @@ it("`PPUMask`: writes `grayscale` (bit 0)", () => {
 	expect(ppuMask.grayscale).to.equalN(1, "grayscale");
 })({
 	locales: {
-		es: "`PPUMask`: escribe `grayscale` (bit 1)",
+		es: "`PPUMask`: escribe `grayscale` (bit 0)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.24"),
 });

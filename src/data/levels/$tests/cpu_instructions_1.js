@@ -581,7 +581,7 @@ it('`LSRa`: argument == "no"', () => {
 	expect(instructions.LSRa.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: '`LSR`: argument == "no"',
+		es: '`LSRa`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -878,7 +878,7 @@ it('`RORa`: argument == "no"', () => {
 	expect(instructions.RORa.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: '`RORa`: argument == "address"',
+		es: '`RORa`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
