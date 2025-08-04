@@ -43,7 +43,7 @@ it("receives and saves the `cpu` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
 
-it("initializates the <counters>", () => {
+it("initializes the <counters>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 

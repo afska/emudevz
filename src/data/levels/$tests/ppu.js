@@ -115,7 +115,7 @@ it("receives and saves the `cpu` property", () => {
 	use: ({ id }, book) => id >= book.getId("5b.1"),
 });
 
-it("initializates the <counters>", () => {
+it("initializes the <counters>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
