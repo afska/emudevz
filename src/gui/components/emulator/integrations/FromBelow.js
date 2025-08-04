@@ -48,4 +48,4 @@ export default class FromBelow extends Integration {
 	};
 }
 
-const HIGH_SCORE = 1234; // TODO: DEFINE and REPLACE in `en.yml` and `es.yml`
+const HIGH_SCORE = 1300;
