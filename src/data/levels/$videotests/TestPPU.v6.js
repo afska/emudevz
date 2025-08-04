@@ -558,12 +558,11 @@ class SpriteRenderer {
 
 		for (let sprite of sprites) {
 			const insideY = sprite.diffY(y);
-			const tileInsideY = insideY % 8;
 			const tile = new Tile(
 				this.ppu,
 				sprite.patternTableId,
 				sprite.tileIdFor(insideY),
-				sprite.flipY ? 7 - tileInsideY : tileInsideY
+				insideY
 			);
 			const paletteColors = [
 				this.ppu.getColor(sprite.paletteId, 0),
@@ -573,9 +572,7 @@ class SpriteRenderer {
 			];
 
 			for (let insideX = 0; insideX < 8; insideX++) {
-				const colorIndex = tile.getColorIndex(
-					sprite.flipX ? 7 - insideX : insideX
-				);
+				const colorIndex = tile.getColorIndex(insideX);
 				if (colorIndex > 0)
 					this.ppu.plot(
 						sprite.x + insideX,

@@ -582,9 +582,6 @@ class SpriteRenderer {
 					const x = sprite.x + insideX;
 					const color = paletteColors[colorIndex];
 					buffer[x] = { x, sprite, color };
-
-					if (sprite.id === 0 && this.ppu.isBackgroundPixelOpaque(x, y))
-						this.ppu.registers.ppuStatus.sprite0Hit = 1;
 				}
 			}
 		}
@@ -872,7 +869,6 @@ export default class PPU {
 		if (this.cycle === 1) {
 			this.registers.ppuStatus.isInVBlankInterval = 0;
 			this.registers.ppuStatus.spriteOverflow = 0;
-			this.registers.ppuStatus.sprite0Hit = 0;
 		}
 	}
 

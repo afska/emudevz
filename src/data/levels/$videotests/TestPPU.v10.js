@@ -520,12 +520,6 @@ class BackgroundRenderer {
 		const patternTableId = registers.ppuCtrl.backgroundPatternTableId;
 
 		for (let x = 0; x < 256; ) {
-			if (!this.ppu.registers.ppuMask.showBackgroundInFirst8Pixels && x < 8) {
-				this.ppu.plotBG(x, y, this.ppu.getColor(0, 0), 0);
-				x++;
-				continue;
-			}
-
 			const scrollX = this.ppu.registers.ppuScroll.x;
 			const scrollY = registers.ppuScroll.y;
 			const scrolledX = x + scrollX;
@@ -666,18 +660,10 @@ class SpriteRenderer {
 				);
 				if (colorIndex > 0) {
 					const x = sprite.x + insideX;
-					if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
-						continue;
-
 					const color = paletteColors[colorIndex];
 					buffer[x] = { x, sprite, color };
 
-					if (
-						sprite.id === 0 &&
-						this.ppu.isBackgroundPixelOpaque(x, y) &&
-						this.ppu.registers.ppuMask.showBackground &&
-						this.ppu.registers.ppuMask.showSprites
-					)
+					if (sprite.id === 0 && this.ppu.isBackgroundPixelOpaque(x, y))
 						this.ppu.registers.ppuStatus.sprite0Hit = 1;
 				}
 			}
@@ -747,18 +733,7 @@ class PPUCtrl extends InMemoryRegister.PPU {
 
 class PPUMask extends InMemoryRegister.PPU {
 	onLoad() {
-		this.addField("showBackgroundInFirst8Pixels", 1)
-			.addField("showSpritesInFirst8Pixels", 2)
-			.addField("showBackground", 3)
-			.addField("showSprites", 4);
-	}
-
-	onWrite(value) {
-		this.setValue(value);
-	}
-
-	isRenderingEnabled() {
-		return this.showBackground || this.showSprites;
+		/* TODO: IMPLEMENT */
 	}
 }
 
@@ -978,8 +953,6 @@ export default class PPU {
 	}
 
 	_onPreLine() {
-		if (!this.registers.ppuMask.isRenderingEnabled()) return;
-
 		if (this.cycle === 1) {
 			this.registers.ppuStatus.isInVBlankInterval = 0;
 			this.registers.ppuStatus.spriteOverflow = 0;
@@ -988,13 +961,9 @@ export default class PPU {
 	}
 
 	_onVisibleLine() {
-		if (!this.registers.ppuMask.isRenderingEnabled()) return;
-
 		if (this.cycle === 0) {
-			if (this.registers.ppuMask.showBackground)
-				this.backgroundRenderer.renderScanline();
-			if (this.registers.ppuMask.showSprites)
-				this.spriteRenderer.renderScanline();
+			this.backgroundRenderer.renderScanline();
+			this.spriteRenderer.renderScanline();
 		}
 	}
 
