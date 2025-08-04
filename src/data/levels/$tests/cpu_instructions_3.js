@@ -15,14 +15,14 @@ function newCPU(prgBytes = []) {
 
 // 5a.9 Instructions (3/5): Checks
 
-it("`BIT`: argument == 'value'", () => {
+it('`BIT`: argument == "value"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("BIT");
 	expect(instructions.BIT).to.be.an("object");
 	expect(instructions.BIT.argument).to.equalN("value", "argument");
 })({
 	locales: {
-		es: "`BIT`: argument == 'value'",
+		es: '`BIT`: argument == "value"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.9"),
 });
@@ -100,14 +100,14 @@ it("`BIT`: argument == 'value'", () => {
 ].forEach(({ instruction, register, source, value, z, n, c }) => {
 	const name = register.toUpperCase();
 
-	it("`" + instruction + "`: argument == 'value'", () => {
+	it("`" + instruction + '`: argument == "value"', () => {
 		const instructions = mainModule.default.instructions;
 		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
 		expect(instructions[instruction].argument).to.equalN("value", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'value'",
+			es: "`" + instruction + '`: argument == "value"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.9"),
 	});
@@ -140,14 +140,14 @@ it("`BIT`: argument == 'value'", () => {
 });
 
 ["AND", "EOR", "ORA"].forEach((instruction) => {
-	it("`" + instruction + "`: argument == 'value'", () => {
+	it("`" + instruction + '`: argument == "value"', () => {
 		const instructions = mainModule.default.instructions;
 		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
 		expect(instructions[instruction].argument).to.equalN("value", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'value'",
+			es: "`" + instruction + '`: argument == "value"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.9"),
 	});

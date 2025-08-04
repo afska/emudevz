@@ -15,14 +15,14 @@ function newCPU(prgBytes = []) {
 
 // 5a.7 Instructions (1/5): Arithmetic
 
-it("the file `/code/index.js` exports an object containing the `instructions` object", () => {
+it("the file `/code/index.js` exports <an object> containing the `instructions` object", () => {
 	expect(mainModule.default).to.be.an("object");
 	expect(mainModule.default).to.include.key("instructions");
 	expect(mainModule.default.instructions).to.be.an("object");
 })({
 	locales: {
 		es:
-			"el archivo `/code/index.js` exporta un objeto que contiene el objeto `instructions`",
+			"el archivo `/code/index.js` exporta <un objeto> que contiene el objeto `instructions`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -41,14 +41,14 @@ it("every member of the `instructions` object has an `id`", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`ADC`: argument == 'value'", () => {
+it('`ADC`: argument == "value"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("ADC");
 	expect(instructions.ADC).to.be.an("object");
 	expect(instructions.ADC.argument).to.equalN("value", "argument");
 })({
 	locales: {
-		es: "`ADC`: argument == 'value'",
+		es: '`ADC`: argument == "value"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -128,14 +128,14 @@ it("`ADC`: updates the Carry and Overflow flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`ASL`: argument == 'address'", () => {
+it('`ASL`: argument == "address"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("ASL");
 	expect(instructions.ASL).to.be.an("object");
 	expect(instructions.ASL.argument).to.equalN("address", "argument");
 })({
 	locales: {
-		es: "`ASL`: argument == 'address'",
+		es: '`ASL`: argument == "address"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -190,14 +190,14 @@ it("`ASL`: updates the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`ASLa`: argument == 'no'", () => {
+it('`ASLa`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("ASLa");
 	expect(instructions.ASLa).to.be.an("object");
 	expect(instructions.ASLa.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`ASLa`: argument == 'no'",
+		es: '`ASLa`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -252,14 +252,14 @@ it("`ASLa`: updates the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`DEC`: argument == 'address'", () => {
+it('`DEC`: argument == "address"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("DEC");
 	expect(instructions.DEC).to.be.an("object");
 	expect(instructions.DEC.argument).to.equalN("address", "argument");
 })({
 	locales: {
-		es: "`DEC`: argument == 'address'",
+		es: '`DEC`: argument == "address"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -310,14 +310,14 @@ it("`DEC`: updates the Negative Flag", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`INC`: argument == 'address'", () => {
+it('`INC`: argument == "address"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("INC");
 	expect(instructions.INC).to.be.an("object");
 	expect(instructions.INC.argument).to.equalN("address", "argument");
 })({
 	locales: {
-		es: "`INC`: argument == 'address'",
+		es: '`INC`: argument == "address"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -368,14 +368,14 @@ it("`INC`: sets the Negative Flag", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`DEX`: argument == 'no'", () => {
+it('`DEX`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("DEX");
 	expect(instructions.DEX).to.be.an("object");
 	expect(instructions.DEX.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`DEX`: argument == 'no'",
+		es: '`DEX`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -404,14 +404,14 @@ it("`DEX`: decrements the [X] register and updates the flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`DEY`: argument == 'no'", () => {
+it('`DEY`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("DEY");
 	expect(instructions.DEY).to.be.an("object");
 	expect(instructions.DEY.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`DEY`: argument == 'no'",
+		es: '`DEY`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -440,14 +440,14 @@ it("`DEY`: decrements the [Y] register and updates the flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`INX`: argument == 'no'", () => {
+it('`INX`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("INX");
 	expect(instructions.INX).to.be.an("object");
 	expect(instructions.INX.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`INX`: argument == 'no'",
+		es: '`INX`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -476,14 +476,14 @@ it("`INX`: increments the [X] register and updates the flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`INY`: argument == 'no'", () => {
+it('`INY`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("INY");
 	expect(instructions.INY).to.be.an("object");
 	expect(instructions.INY.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`INY`: argument == 'no'",
+		es: '`INY`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -512,14 +512,14 @@ it("`INY`: increments the [Y] register and updates the flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`LSR`: argument == 'address'", () => {
+it('`LSR`: argument == "address"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("LSR");
 	expect(instructions.LSR).to.be.an("object");
 	expect(instructions.LSR.argument).to.equalN("address", "argument");
 })({
 	locales: {
-		es: "`LSR`: argument == 'address'",
+		es: '`LSR`: argument == "address"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -574,14 +574,14 @@ it("`LSR`: updates the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`LSRa`: argument == 'no'", () => {
+it('`LSRa`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("LSRa");
 	expect(instructions.LSRa).to.be.an("object");
 	expect(instructions.LSRa.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`LSR`: argument == 'no'",
+		es: '`LSR`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -636,14 +636,14 @@ it("`LSRa`: updates the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`ROL`: argument == 'address'", () => {
+it('`ROL`: argument == "address"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("ROL");
 	expect(instructions.ROL).to.be.an("object");
 	expect(instructions.ROL.argument).to.equalN("address", "argument");
 })({
 	locales: {
-		es: "`ROL`: argument == 'address'",
+		es: '`ROL`: argument == "address"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -714,14 +714,14 @@ it("`ROL`: updates the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`ROLa`: argument == 'no'", () => {
+it('`ROLa`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("ROLa");
 	expect(instructions.ROLa).to.be.an("object");
 	expect(instructions.ROLa.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`ROLa`: argument == 'no'",
+		es: '`ROLa`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -792,14 +792,14 @@ it("`ROLa`: updates the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`ROR`: argument == 'address'", () => {
+it('`ROR`: argument == "address"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("ROR");
 	expect(instructions.ROR).to.be.an("object");
 	expect(instructions.ROR.argument).to.equalN("address", "argument");
 })({
 	locales: {
-		es: "`ROR`: argument == 'address'",
+		es: '`ROR`: argument == "address"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -871,14 +871,14 @@ it("`ROR`: updates the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`RORa`: argument == 'no'", () => {
+it('`RORa`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("RORa");
 	expect(instructions.RORa).to.be.an("object");
 	expect(instructions.RORa.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`RORa`: argument == 'address'",
+		es: '`RORa`: argument == "address"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -950,14 +950,14 @@ it("`RORa`: updates the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
 
-it("`SBC`: argument == 'value'", () => {
+it('`SBC`: argument == "value"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("SBC");
 	expect(instructions.SBC).to.be.an("object");
 	expect(instructions.SBC.argument).to.equalN("value", "argument");
 })({
 	locales: {
-		es: "`SBC`: argument == 'value'",
+		es: '`SBC`: argument == "value"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });

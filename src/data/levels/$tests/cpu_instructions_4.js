@@ -23,14 +23,14 @@ function newCPU(prgBytes = []) {
 ].forEach(({ instruction, flag }) => {
 	const name = flag.toUpperCase();
 
-	it("`" + instruction + "`: argument == 'address'", () => {
+	it("`" + instruction + '`: argument == "address"', () => {
 		const instructions = mainModule.default.instructions;
 		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
 		expect(instructions[instruction].argument).to.equalN("address", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'address'",
+			es: "`" + instruction + '`: argument == "address"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.10"),
 	});
@@ -88,14 +88,14 @@ function newCPU(prgBytes = []) {
 ].forEach(({ instruction, flag }) => {
 	const name = flag.toUpperCase();
 
-	it("`" + instruction + "`: argument == 'address'", () => {
+	it("`" + instruction + '`: argument == "address"', () => {
 		const instructions = mainModule.default.instructions;
 		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
 		expect(instructions[instruction].argument).to.equalN("address", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'address'",
+			es: "`" + instruction + '`: argument == "address"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.10"),
 	});
@@ -145,14 +145,14 @@ function newCPU(prgBytes = []) {
 	});
 });
 
-it("`JMP`: argument == 'address'", () => {
+it('`JMP`: argument == "address"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("JMP");
 	expect(instructions.JMP).to.be.an("object");
 	expect(instructions.JMP.argument).to.equalN("address", "argument");
 })({
 	locales: {
-		es: "`JMP`: argument == 'address'",
+		es: '`JMP`: argument == "address"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
@@ -171,14 +171,14 @@ it("`JMP`: jumps to the address", () => {
 	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
-it("`JSR`: argument == 'address'", () => {
+it('`JSR`: argument == "address"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("JSR");
 	expect(instructions.JSR).to.be.an("object");
 	expect(instructions.JSR.argument).to.equalN("address", "argument");
 })({
 	locales: {
-		es: "`JSR`: argument == 'address'",
+		es: '`JSR`: argument == "address"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
@@ -198,14 +198,14 @@ it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
 	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
-it("`RTI`: argument == 'no'", () => {
+it('`RTI`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("RTI");
 	expect(instructions.RTI).to.be.an("object");
 	expect(instructions.RTI.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`RTI`: argument == 'no'",
+		es: '`RTI`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
@@ -227,14 +227,14 @@ it("`RTI`: updates the flags and [PC] from the stack", () => {
 	use: ({ id }, book) => id >= book.getId("5a.10"),
 });
 
-it("`RTS`: argument == 'no'", () => {
+it('`RTS`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("RTS");
 	expect(instructions.RTS).to.be.an("object");
 	expect(instructions.RTS.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`RTS`: argument == 'no'",
+		es: '`RTS`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.10"),
 });

@@ -90,14 +90,14 @@ const noop = () => {};
 
 // 5b.1 New PPU
 
-it("the file `/code/index.js` exports an object containing the `PPU` class", () => {
+it("the file `/code/index.js` exports <an object> containing the `PPU` class", () => {
 	expect(mainModule.default).to.be.an("object");
 	expect(mainModule.default).to.include.key("PPU");
 	expect(mainModule.default.PPU).to.be.a.class;
 })({
 	locales: {
 		es:
-			"el archivo `/code/index.js` exporta un objeto que contiene la clase `PPU`",
+			"el archivo `/code/index.js` exporta <un objeto> que contiene la clase `PPU`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.1"),
 });

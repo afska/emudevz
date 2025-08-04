@@ -15,14 +15,14 @@ function newCPU(prgBytes = []) {
 
 // 5a.12 Addressing modes (1/2): Simple
 
-it("the file `/code/index.js` exports an object containing the `addressingModes` object", () => {
+it("the file `/code/index.js` exports <an object> containing the `addressingModes` object", () => {
 	expect(mainModule.default).to.be.an("object");
 	expect(mainModule.default).to.include.key("addressingModes");
 	expect(mainModule.default.addressingModes).to.be.an("object");
 })({
 	locales: {
 		es:
-			"el archivo `/code/index.js` exporta un objeto que contiene el objeto `addressingModes`",
+			"el archivo `/code/index.js` exporta <un objeto> que contiene el objeto `addressingModes`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -41,19 +41,19 @@ it("every member of the `addressingModes` object has an `id`", () => {
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`IMPLICIT`: inputSize == 0", () => {
+it("`IMPLICIT`: <inputSize> == 0", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	expect(addressingModes).to.include.key("IMPLICIT");
 	expect(addressingModes.IMPLICIT).to.be.an("object");
 	expect(addressingModes.IMPLICIT.inputSize).to.equalN(0, "inputSize");
 })({
 	locales: {
-		es: "`IMPLICIT`: inputSize == 0",
+		es: "`IMPLICIT`: <inputSize> == 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`IMPLICIT` / `getAddress`: returns null", () => {
+it("`IMPLICIT`: `getAddress(...)` returns <null>", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -63,12 +63,12 @@ it("`IMPLICIT` / `getAddress`: returns null", () => {
 	);
 })({
 	locales: {
-		es: "`IMPLICIT` / `getAddress`: retorna null",
+		es: "`IMPLICIT`: `getAddress(...)` retorna <null>",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`IMPLICIT` / `getValue`: unsupported", () => {
+it("`IMPLICIT`: `getValue(...)` is unsupported", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -78,24 +78,24 @@ it("`IMPLICIT` / `getValue`: unsupported", () => {
 	);
 })({
 	locales: {
-		es: "`IMPLICIT` / `getValue`: no soportado",
+		es: "`IMPLICIT`: `getValue(...)` no es soportado",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`IMMEDIATE`: inputSize == 1", () => {
+it("`IMMEDIATE`: <inputSize> == 1", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	expect(addressingModes).to.include.key("IMMEDIATE");
 	expect(addressingModes.IMMEDIATE).to.be.an("object");
 	expect(addressingModes.IMMEDIATE.inputSize).to.equalN(1, "inputSize");
 })({
 	locales: {
-		es: "`IMMEDIATE`: inputSize == 1",
+		es: "`IMMEDIATE`: <inputSize> == 1",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`IMMEDIATE` / `getAddress`: unsupported", () => {
+it("`IMMEDIATE`: `getAddress(...)` is unsupported", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -105,12 +105,12 @@ it("`IMMEDIATE` / `getAddress`: unsupported", () => {
 	);
 })({
 	locales: {
-		es: "`IMMEDIATE` / `getAddress`: no soportado",
+		es: "`IMMEDIATE`: `getAddress(...)` no es soportado",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`IMMEDIATE` / `getValue`: returns the same value", () => {
+it("`IMMEDIATE`: `getValue(...)` returns the same value", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -120,24 +120,24 @@ it("`IMMEDIATE` / `getValue`: returns the same value", () => {
 	);
 })({
 	locales: {
-		es: "`IMMEDIATE` / `getValue`: retorna el mismo valor",
+		es: "`IMMEDIATE`: `getValue(...)` retorna el mismo valor",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`ABSOLUTE`: inputSize == 2", () => {
+it("`ABSOLUTE`: <inputSize> == 2", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	expect(addressingModes).to.include.key("ABSOLUTE");
 	expect(addressingModes.ABSOLUTE).to.be.an("object");
 	expect(addressingModes.ABSOLUTE.inputSize).to.equalN(2, "inputSize");
 })({
 	locales: {
-		es: "`ABSOLUTE`: inputSize == 2",
+		es: "`ABSOLUTE`: <inputSize> == 2",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`ABSOLUTE` / `getAddress`: returns the same address", () => {
+it("`ABSOLUTE`: `getAddress(...)` returns the same address", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -147,12 +147,12 @@ it("`ABSOLUTE` / `getAddress`: returns the same address", () => {
 	);
 })({
 	locales: {
-		es: "`ABSOLUTE` / `getAddress`: retorna la misma dirección",
+		es: "`ABSOLUTE`: `getAddress(...)` retorna la misma dirección",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`ABSOLUTE` / `getValue`: reads from memory the address returned by `getAddress`", () => {
+it("`ABSOLUTE`: `getValue(...)` reads from memory the address returned by `getAddress(...)`", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -164,24 +164,24 @@ it("`ABSOLUTE` / `getValue`: reads from memory the address returned by `getAddre
 })({
 	locales: {
 		es:
-			"`ABSOLUTE` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
+			"`ABSOLUTE`: `getValue(...)` lee de memoria la dirección retornada por `getAddress(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`ZERO_PAGE`: inputSize == 1", () => {
+it("`ZERO_PAGE`: <inputSize> == 1", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	expect(addressingModes).to.include.key("ZERO_PAGE");
 	expect(addressingModes.ZERO_PAGE).to.be.an("object");
 	expect(addressingModes.ZERO_PAGE.inputSize).to.equalN(1, "inputSize");
 })({
 	locales: {
-		es: "`ZERO_PAGE`: inputSize == 1",
+		es: "`ZERO_PAGE`: <inputSize> == 1",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`ZERO_PAGE` / `getAddress`: returns the same address", () => {
+it("`ZERO_PAGE`: `getAddress(...)` returns the same address", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -191,12 +191,12 @@ it("`ZERO_PAGE` / `getAddress`: returns the same address", () => {
 	);
 })({
 	locales: {
-		es: "`ZERO_PAGE` / `getAddress`: retorna la misma dirección",
+		es: "`ZERO_PAGE`: `getAddress(...)`: retorna la misma dirección",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`ZERO_PAGE` / `getValue`: reads from memory the address returned by `getAddress`", () => {
+it("`ZERO_PAGE`: `getValue(...)` reads from memory the address returned by `getAddress(...)`", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -208,24 +208,24 @@ it("`ZERO_PAGE` / `getValue`: reads from memory the address returned by `getAddr
 })({
 	locales: {
 		es:
-			"`ZERO_PAGE` / `getValue`: lee de memoria la dirección retornada por `getAddress`",
+			"`ZERO_PAGE`: `getValue(...)` lee de memoria la dirección retornada por `getAddress(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`RELATIVE`: inputSize == 1", () => {
+it("`RELATIVE`: <inputSize> == 1", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	expect(addressingModes).to.include.key("RELATIVE");
 	expect(addressingModes.RELATIVE).to.be.an("object");
 	expect(addressingModes.RELATIVE.inputSize).to.equalN(1, "inputSize");
 })({
 	locales: {
-		es: "`RELATIVE`: inputSize == 1",
+		es: "`RELATIVE`: <inputSize> == 1",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`RELATIVE` / `getAddress`: returns an address based on [PC] + offset", () => {
+it("`RELATIVE`: `getAddress(...)` returns an address based on [PC] + offset", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -241,12 +241,12 @@ it("`RELATIVE` / `getAddress`: returns an address based on [PC] + offset", () =>
 })({
 	locales: {
 		es:
-			"`RELATIVE` / `getAddress`: retorna una dirección basada en [PC] + desplazamiento",
+			"`RELATIVE`: `getAddress(...)` retorna una dirección basada en [PC] + desplazamiento",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`RELATIVE` / `getValue`: unsupported", () => {
+it("`RELATIVE`: `getValue(...)` is unsupported", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -256,7 +256,7 @@ it("`RELATIVE` / `getValue`: unsupported", () => {
 	);
 })({
 	locales: {
-		es: "`RELATIVE` / `getValue`: no soportado",
+		es: "`RELATIVE`: `getValue(...)` no es soportado",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -277,7 +277,7 @@ it("`RELATIVE`: cannot cross $FFFF", () => {
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`RELATIVE`: adds 2 cycles if it crosses page", () => {
+it("`RELATIVE`: adds 2 cycles if it <crosses page>", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 	cpu.pc.setValue(0xfafe);
@@ -291,12 +291,12 @@ it("`RELATIVE`: adds 2 cycles if it crosses page", () => {
 	expect(cpu.extraCycles).to.equalN(0, "extraCycles");
 })({
 	locales: {
-		es: "`RELATIVE`: agrega 2 ciclos si cruza de página",
+		es: "`RELATIVE`: agrega 2 ciclos si <cruza de página>",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`RELATIVE`: doesn't add any cycles if there's no page-cross", () => {
+it("`RELATIVE`: doesn't add any cycles if there's <no page-cross>", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -305,24 +305,24 @@ it("`RELATIVE`: doesn't add any cycles if there's no page-cross", () => {
 	expect(cpu.extraCycles).to.equalN(0, "extraCycles");
 })({
 	locales: {
-		es: "`RELATIVE`: no agrega ningún ciclo si no cruza de página",
+		es: "`RELATIVE`: no agrega ningún ciclo si <no cruza de página>",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`INDIRECT`: inputSize == 2", () => {
+it("`INDIRECT`: <inputSize> == 2", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	expect(addressingModes).to.include.key("INDIRECT");
 	expect(addressingModes.INDIRECT).to.be.an("object");
 	expect(addressingModes.INDIRECT.inputSize).to.equalN(2, "inputSize");
 })({
 	locales: {
-		es: "`INDIRECT`: inputSize == 2",
+		es: "`INDIRECT`: <inputSize> == 2",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`INDIRECT` / `getAddress`: grabs the address from memory", () => {
+it("`INDIRECT`: `getAddress(...)` grabs the address from memory", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -334,12 +334,12 @@ it("`INDIRECT` / `getAddress`: grabs the address from memory", () => {
 	);
 })({
 	locales: {
-		es: "`INDIRECT` / `getAddress`: toma la dirección desde la memoria",
+		es: "`INDIRECT`: `getAddress(...)` toma la dirección desde la memoria",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`INDIRECT` / `getValue`: unsupported", () => {
+it("`INDIRECT`: `getValue(...)` is unsupported", () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -349,14 +349,14 @@ it("`INDIRECT` / `getValue`: unsupported", () => {
 	);
 })({
 	locales: {
-		es: "`INDIRECT` / `getValue`: no soportado",
+		es: "`INDIRECT`: `getValue(...)` no es soportado",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
 // --- After passing 5a.16 ---
 
-it("`INDIRECT`: emulates the 'page boundary bug'", () => {
+it('`INDIRECT`: emulates the "page boundary bug"', () => {
 	const addressingModes = mainModule.default.addressingModes;
 	const cpu = newCPU();
 
@@ -368,7 +368,7 @@ it("`INDIRECT`: emulates the 'page boundary bug'", () => {
 	);
 })({
 	locales: {
-		es: "`INDIRECT`: emula el 'page boundary bug'",
+		es: '`INDIRECT`: emula el "page boundary bug"',
 	},
 	use: ({ id }, book) => id > book.getId("5a.16"),
 });

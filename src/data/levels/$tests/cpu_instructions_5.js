@@ -141,14 +141,14 @@ it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
 	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
-it("`BRK`: argument == 'no'", () => {
+it('`BRK`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("BRK");
 	expect(instructions.BRK).to.be.an("object");
 	expect(instructions.BRK.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`BRK`: argument == 'no'",
+		es: '`BRK`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -182,14 +182,14 @@ it("`BRK`: produces an <IRQ> interrupt (bit 4 from flags should be on)", () => {
 	use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
-it("`NOP`: argument == 'no'", () => {
+it('`NOP`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("NOP");
 	expect(instructions.NOP).to.be.an("object");
 	expect(instructions.NOP.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`NOP`: argument == 'no'",
+		es: '`NOP`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.11"),
 });

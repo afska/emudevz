@@ -23,14 +23,14 @@ function newCPU(prgBytes = []) {
 ].forEach(({ instruction, flag }) => {
 	const name = flag.toUpperCase();
 
-	it("`" + instruction + "`: argument == 'no'", () => {
+	it("`" + instruction + '`: argument == "no"', () => {
 		const instructions = mainModule.default.instructions;
 		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
 		expect(instructions[instruction].argument).to.equalN("no", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'no'",
+			es: "`" + instruction + '`: argument == "no"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
@@ -57,14 +57,14 @@ function newCPU(prgBytes = []) {
 ].forEach(({ instruction, register }) => {
 	const name = register.toUpperCase();
 
-	it("`" + instruction + "`: argument == 'value'", () => {
+	it("`" + instruction + '`: argument == "value"', () => {
 		const instructions = mainModule.default.instructions;
 		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
 		expect(instructions[instruction].argument).to.equalN("value", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'value'",
+			es: "`" + instruction + '`: argument == "value"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
@@ -116,14 +116,14 @@ function newCPU(prgBytes = []) {
 	});
 });
 
-it("`PHA`: argument == 'no'", () => {
+it('`PHA`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("PHA");
 	expect(instructions.PHA).to.be.an("object");
 	expect(instructions.PHA.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`PHA`: argument == 'no'",
+		es: '`PHA`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -142,14 +142,14 @@ it("`PHA`: pushes [A] onto the stack", () => {
 	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
-it("`PHP`: argument == 'no'", () => {
+it('`PHP`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("PHP");
 	expect(instructions.PHP).to.be.an("object");
 	expect(instructions.PHP.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`PHP`: argument == 'no'",
+		es: '`PHP`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -173,14 +173,14 @@ it("`PHP`: pushes the flags onto the stack", () => {
 	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
-it("`PLA`: argument == 'no'", () => {
+it('`PLA`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("PLA");
 	expect(instructions.PLA).to.be.an("object");
 	expect(instructions.PLA.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`PLA`: argument == 'no'",
+		es: '`PLA`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -219,14 +219,14 @@ it("`PLA`: updates the Zero and Negative flags", () => {
 	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
 
-it("`PLP`: argument == 'no'", () => {
+it('`PLP`: argument == "no"', () => {
 	const instructions = mainModule.default.instructions;
 	expect(instructions).to.include.key("PLP");
 	expect(instructions.PLP).to.be.an("object");
 	expect(instructions.PLP.argument).to.equalN("no", "argument");
 })({
 	locales: {
-		es: "`PLP`: argument == 'no'",
+		es: '`PLP`: argument == "no"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -259,14 +259,14 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 ].forEach(({ instruction, flag }) => {
 	const name = flag.toUpperCase();
 
-	it("`" + instruction + "`: argument == 'no'", () => {
+	it("`" + instruction + '`: argument == "no"', () => {
 		const instructions = mainModule.default.instructions;
 		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
 		expect(instructions[instruction].argument).to.equalN("no", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'no'",
+			es: "`" + instruction + '`: argument == "no"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
@@ -293,14 +293,14 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 ].forEach(({ instruction, register }) => {
 	const name = register.toUpperCase();
 
-	it("`" + instruction + "`: argument == 'address'", () => {
+	it("`" + instruction + '`: argument == "address"', () => {
 		const instructions = mainModule.default.instructions;
 		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
 		expect(instructions[instruction].argument).to.equalN("address", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'address'",
+			es: "`" + instruction + '`: argument == "address"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});
@@ -362,14 +362,14 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 	const sourceName = sourceRegister.toUpperCase();
 	const targetName = targetRegister.toUpperCase();
 
-	it("`" + instruction + "`: argument == 'no'", () => {
+	it("`" + instruction + '`: argument == "no"', () => {
 		const instructions = mainModule.default.instructions;
 		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
 		expect(instructions[instruction].argument).to.equalN("no", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'no'",
+			es: "`" + instruction + '`: argument == "no"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.8"),
 	});

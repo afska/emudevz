@@ -23,14 +23,14 @@ const noop = () => {};
 
 // 5c.1 New APU
 
-it("the file `/code/index.js` exports an object containing the `APU` class", () => {
+it("the file `/code/index.js` exports <an object> containing the `APU` class", () => {
 	expect(mainModule.default).to.be.an("object");
 	expect(mainModule.default).to.include.key("APU");
 	expect(mainModule.default.APU).to.be.a.class;
 })({
 	locales: {
 		es:
-			"el archivo `/code/index.js` exporta un objeto que contiene la clase `APU`",
+			"el archivo `/code/index.js` exporta <un objeto> que contiene la clase `APU`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });

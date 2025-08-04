@@ -6,7 +6,8 @@ import { toast } from "../utils";
 
 const dictionary = {
 	entries: {
-		"[A]": {
+		"[A]|Accumulator": {
+			also: { es: "[A]|Acumulador" },
 			icon: "🔢",
 			en:
 				"_(Accumulator Register)_ A CPU register used to store the result of arithmetic and logic operations.",
