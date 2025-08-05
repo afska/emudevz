@@ -1004,7 +1004,7 @@ class DPCM {
 			let address = this.sampleAddress + this.cursorByte;
 			if (address > 0xffff) {
 				// (if it exceeds $FFFF, it is wrapped around to $8000)
-				address = 0x8000 + (address % 0xffff);
+				address = 0x8000 + (address % 0x10000);
 			}
 			this.buffer = this.cpu.memory.read(address);
 		}
