@@ -5,19 +5,19 @@ main:
   - p. ej. cuando una instrucción de CPU tiene una dirección de 16 bits como argumento
   - o al usar la instrucción `RTS` y la CPU tiene que restaurar [PC] desde la pila
   - en estos casos, se usa la convención Little Endian 🔌
-  - "eso quiere decir: el byte menos significativo (\"low byte\") se guarda primero, luego el más significativo (\"high byte\")"
+  - "eso quiere decir: el byte menos significativo (\"low byte\") se guarda primero, luego el más significativo (\"byte alto\")"
   - <{little_endian.png}>
   - |-
     📚  implementa este método en 🐏  `CPUMemory`:
     **read16(address)**:
       **->** retorna un número de 16 bits
-        - el low byte se obtiene leyendo `address` de la memoria
-        - el high byte se obtiene leyendo ```javascript address+1```
+        - el byte bajo se obtiene leyendo `address` de la memoria
+        - el byte alto se obtiene leyendo ```javascript address+1```
   - |-
     📚  y estos dos métodos en 🧱  `Stack`:
     **push16(bigNumber)**:
-      **->** llama a `push(...)` dos veces (primero con el high byte de `bigNumber`, luego con su low byte)
+      **->** llama a `push(...)` dos veces (primero con el byte alto de `bigNumber`, luego con su byte bajo)
     **pop16()**:
-      **->** retorna un número de 16 bits como resultado de hacer `pop()` dos veces (primero el low byte, luego el high byte)
+      **->** retorna un número de 16 bits como resultado de hacer `pop()` dos veces (primero el byte bajo, luego el byte alto)
   - 💡  ¡recuerda usar 📄  ~/lib/byte.js~!
   responses: []
