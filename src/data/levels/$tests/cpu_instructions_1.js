@@ -971,7 +971,7 @@ it("`SBC`: subtracts the value from the Accumulator - 1 when C is clear", () => 
 	expect(cpu.a.getValue()).to.equalN(14, "getValue()");
 })({
 	locales: {
-		es: "`SBC`: resta el valor del Acumulador - 1 cuando C está apagado",
+		es: "`SBC`: resta el valor del Acumulador - 1 cuando C está apagada",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -986,7 +986,7 @@ it("`SBC`: subtracts the value from the Accumulator - 0 when C is set", () => {
 	expect(cpu.a.getValue()).to.equalN(15, "getValue()");
 })({
 	locales: {
-		es: "`SBC`: resta el valor del Acumulador - 0 cuando C está encendido",
+		es: "`SBC`: resta el valor del Acumulador - 0 cuando C está encendida",
 	},
 	use: ({ id }, book) => id >= book.getId("5a.7"),
 });

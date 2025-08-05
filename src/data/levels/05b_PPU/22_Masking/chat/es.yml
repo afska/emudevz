@@ -48,7 +48,7 @@ renderers:
   - yep, veamos...
   - |-
     📚  en 🏞️  `BackgroundRenderer`, cambia `renderScanline()`:
-      **->** si `showBackgroundInFirst8Pixels` está apagado y `x < 8`:
+      **->** si `showBackgroundInFirst8Pixels` está apagada y `x < 8`:
         **->** solo dibuja (con `PPU::plotBG(...)`) el color de fondo
         **->** incrementa `x`
         **->** `continue`! ¡no proceses más!

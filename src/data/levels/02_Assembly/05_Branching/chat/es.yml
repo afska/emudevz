@@ -13,7 +13,7 @@ main:
   - hasta ahora, solo corrimos programas sin <bifurcaciones>
   - vamos a cambiar eso
   - el lenguaje ensamblador para 6502 tiene multiples instrucciones para bifurcar 🌲
-  - todas ellas saltan cuando ciertas banderas están activadas o no
+  - todas ellas saltan cuando ciertas banderas están encendidas o no
   responses:
   - (*) ¿"para 6502"? 🤔 [asm6502]
   - bueno y cómo salto [how]
@@ -64,7 +64,7 @@ step5:
   - esto es lo que pasó
   - "`CPX #3` \"ComPara\" [X] con 3, y activa la Bandera Zero si son iguales"
   - "[X] tiene un 7, y eso no es igual a 3, así que ~Z~ = 0"
-  - "`BNE @decrement` salta a esa etiqueta si la Bandera Zero no está activada"
+  - "`BNE @decrement` salta a esa etiqueta si la Bandera Zero no está encendida"
   - ¡que no lo está! así que saltó 🦘
   - ([X] y 3 eran "Not Equal", por eso el nombre)
   responses:
@@ -112,7 +112,7 @@ testing:
 help:
   messages:
   - 🔀  siempre querrás usar `BEQ` y `BNE` luego de una instrucción de comparación (como `CPX`)
-  - "`CPX` asigna el flag ~Z~=1 si [X] es igual al valor, y luego `BEQ`/`BNE` saltan dependiendo de si ~Z~ es 1 o 0"
+  - "`CPX` asigna la bandera ~Z~=1 si [X] es igual al valor, y luego `BEQ`/`BNE` saltan dependiendo de si ~Z~ es 1 o 0"
   - <{CPX_BEQ.png}>
   - 🏷️  recuerda que la ejecución siempre es de arriba hacia abajo, ignorando etiquetas
   - por lo que probablemente en algún momento necesites <frenar el programa> (para evitar que "siga de largo")

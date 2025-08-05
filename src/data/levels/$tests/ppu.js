@@ -593,7 +593,7 @@ it("`PPUStatus`: reads `isInVBlankInterval` (bit 7) (<ON by default>)", () => {
 })({
 	locales: {
 		es:
-			"`PPUStatus`: lee `isInVBlankInterval` (bit 7) (<encendido por defecto>)",
+			"`PPUStatus`: lee `isInVBlankInterval` (bit 7) (<encendida por defecto>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.6"),
 });
@@ -838,7 +838,7 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on ~scanline=241~, 
 })({
 	locales: {
 		es:
-			"enciende `PPUStatus::isInVBlankInterval` y dispara una NMI en ~scanline=241~, ~cycle=1~ cuando `PPUCtrl::generateNMIOnVBlank` está encendido",
+			"enciende `PPUStatus::isInVBlankInterval` y dispara una NMI en ~scanline=241~, ~cycle=1~ cuando `PPUCtrl::generateNMIOnVBlank` está encendida",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
@@ -877,7 +877,7 @@ it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on ~scanline
 })({
 	locales: {
 		es:
-			"enciende `PPUStatus::isInVBlankInterval` y no dispara una NMI en ~scanline=241~, ~cycle=1~ cuando `PPUCtrl::generateNMIOnVBlank` está <apagado>",
+			"enciende `PPUStatus::isInVBlankInterval` y no dispara una NMI en ~scanline=241~, ~cycle=1~ cuando `PPUCtrl::generateNMIOnVBlank` está <apagada>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
@@ -2489,7 +2489,7 @@ it("doesn't reset anything on ~scanline=-1~, ~cycle=1~ if rendering is <off>", (
 })({
 	locales: {
 		es:
-			"no reinicia nada en ~scanline=-1~, ~cycle=1~ si el renderizado está <apagado>",
+			"no reinicia nada en ~scanline=-1~, ~cycle=1~ si el renderizado está <desactivado>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
@@ -2713,7 +2713,7 @@ it("doesn't call `mapper.tick()` if rendering is <disabled>", () => {
 	}
 })({
 	locales: {
-		es: "no llama a `mapper.tick()` si el renderizado está <apagado>",
+		es: "no llama a `mapper.tick()` si el renderizado está <desactivado>",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.25"),
 });

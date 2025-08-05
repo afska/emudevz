@@ -3756,7 +3756,7 @@ it("`APUControl`: writing with `enableDMC` clear calls `dpcm.stop()`", () => {
 })({
 	locales: {
 		es:
-			"`APUControl`: al escribir con `enableDMC` apagado llama a `dpcm.stop()`",
+			"`APUControl`: al escribir con `enableDMC` apagada llama a `dpcm.stop()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.18"),
 });
@@ -3775,7 +3775,7 @@ it("`APUControl`: writing with `enableDMC` set and no remaining bytes calls `dpc
 })({
 	locales: {
 		es:
-			"`APUControl`: al escribir con `enableDMC` encendido y sin bytes restantes llama a `dpcm.start()`",
+			"`APUControl`: al escribir con `enableDMC` encendida y sin bytes restantes llama a `dpcm.start()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.18"),
 });
@@ -3794,7 +3794,7 @@ it("`APUControl`: writing with `enableDMC` set and remaining bytes does not call
 })({
 	locales: {
 		es:
-			"`APUControl`: al escribir con `enableDMC` encendido y con bytes restantes no llama a `dpcm.start()`",
+			"`APUControl`: al escribir con `enableDMC` encendida y con bytes restantes no llama a `dpcm.start()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.18"),
 });
