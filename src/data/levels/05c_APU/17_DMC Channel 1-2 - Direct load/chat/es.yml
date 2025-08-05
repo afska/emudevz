@@ -37,5 +37,5 @@ exercise:
         **->** usa ```javascript this.addField(...)``` para definir un campo `directLoad` de 7 bits desde el bit 0
       **onWrite(value)**:
         **->** asigna el valor con ```javascript this.setValue(...)```
-        **->** asigna el <output sample> del canal a ```javascript this.directLoad```
+        **->** asigna ```javascript this.directLoad``` al <output sample> del canal
   responses: []
