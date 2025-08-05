@@ -6,7 +6,7 @@ Si la dirección cae en el borde de una página `($aaFF)`, lee el byte menos sig
 
 Así que, en vez de `read16(address)`, la implementación debería ser algo así:
 
-```
+```javascript
 buildU16(
   read(
     lowByteOf(address) === 0xff

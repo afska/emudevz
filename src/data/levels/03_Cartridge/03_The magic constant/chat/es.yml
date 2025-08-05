@@ -38,8 +38,7 @@ constructor:
           this.bytes = bytes;
           // ¡verifica los bytes aquí!
         }
-      }
-      ```
+      }```
   responses:
   - ...exercise
 

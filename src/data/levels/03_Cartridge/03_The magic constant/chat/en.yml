@@ -36,8 +36,7 @@ constructor:
           this.bytes = bytes;
           // check the bytes here!
         }
-      }
-      ```
+      }```
   responses:
   - ...exercise
 

@@ -12,7 +12,7 @@ main:
 
 wdym:
   messages:
-  - 📈  la NEEES genera una señal de video de 60FPS
+  - 📈  la NEEES genera una señal de video de ~60FPS~
   - 🖼️  cada frame es una imagen de ~256x240~ (piensa en ello como una cuadrícula de píxeles)
   - 🌠  una scanline sería una fila de esa cuadrícula
   - 🚲  ah, y cada scanline toma 341 ciclos de PPU para renderizar
