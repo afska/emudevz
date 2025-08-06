@@ -12,8 +12,7 @@ main:
       if (address === 0x3f18) return this.read(0x3f08);
       if (address === 0x3f1c) return this.read(0x3f0c);
       return this.paletteRam[address - 0x3f00];
-    }
-    ```
+    }```
   - |-
     📚  haz lo mismo con `write(...)`, pero usa esto en su lugar:
     ```javascript
@@ -24,6 +23,5 @@ main:
       if (address === 0x3f1c) return this.write(0x3f0c, value);
       this.paletteRam[address - 0x3f00] = value;
       return;
-    }
-    ```
+    }```
   responses: []

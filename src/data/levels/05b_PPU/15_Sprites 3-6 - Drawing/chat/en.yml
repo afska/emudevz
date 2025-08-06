@@ -16,8 +16,8 @@ exercise:
   messages:
   - we're gonna do the following
   - |-
-      📚  in the 🖥️  `PPU` class, change:
-      **onVisibleLine(...)**:
+      📚  in the 🖥️  `PPU` class, <change>:
+      **_onVisibleLine()**:
         **->** just below the `renderScanline()` call to `backgroundRenderer`...
         **->** ...do the same with `spriteRenderer`
   - |-

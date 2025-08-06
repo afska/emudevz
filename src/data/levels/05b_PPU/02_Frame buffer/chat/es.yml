@@ -65,7 +65,7 @@ exercise:
     **plot(x, y, color)**:
       **->** asigna el `color` al píxel ~(x,y)~ en el array `frameBuffer`
         (el índice para ~(x,y)~ debería ser ```javascript y * 256 + x```)
-  - 📚  luego, modifica tu método `step` para que reciba un callback `onFrame` como parámetro
+  - 📚  luego, <modifica> tu método `step` para que reciba un callback `onFrame` como parámetro
   - |-
     📚  y cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
       ```javascript onFrame(this.frameBuffer);```

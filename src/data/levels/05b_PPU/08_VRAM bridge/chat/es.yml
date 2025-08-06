@@ -54,7 +54,7 @@ exercise:
         **->** incrementa ```javascript ppuAddr.address``` 1 vez
      **[!]** asegúrate de que la dirección nunca exceda 65535 usando `byte.toU16(...)`
   - |-
-    📚  por último, modifica en 📊  `PPUStatus`:
+    📚  por último, <modifica> en 📊  `PPUStatus`:
     **onRead()**:
       **->** luego de resetear `isInVBlankInterval`, también resetea el `latch` de 📍  `PPUAddr`
   responses:

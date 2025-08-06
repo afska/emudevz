@@ -33,7 +33,7 @@ exercise:
         **->** call ```javascript this._onVisibleLine()```
       **->** if ```javascript this.scanline``` is 241:
         **->** call ```javascript this._onVBlankLine(onInterrupt)```
-      **->** ...rest of the `step(...)` code...
+      **->** __...rest of the code...__
       **[!]** note that we added an `onInterrupt` parameter
   - |-
     📚  now, add these methods:

@@ -22,10 +22,10 @@ exercise:
     📚  importa la biblioteca y agrega una propiedad `loopy` en el constructor de 🖥️  `PPU`, asignada a:
          ```javascript new LoopyRegister()```
   - |-
-    📚  al final del método `onPreLine(...)`, llama a:
+    📚  al final del método `_onPreLine()`, llama a:
       ```javascript this.loopy.onPreLine(this.cycle);```
   - |-
-    📚  al final del método `onVisibleLine(...)`, llama a:
+    📚  al final del método `_onVisibleLine()`, llama a:
       ```javascript this.loopy.onVisibleLine(this.cycle);```
   - |-
     📚  al final del método `plotBG(...)`, llama a:

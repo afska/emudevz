@@ -22,10 +22,10 @@ exercise:
   - 📚  en `PPUMask`, implementa el método `onLoad()`, usando `addField(...)` para mapear los bits mencionados
   - |-
     usa estos nombres:
-      `showBackgroundInFirst8Pixels`
-      `showSpritesInFirst8Pixels`
-      `showBackground`
-      `showSprites`
+      - `showBackgroundInFirst8Pixels`
+      - `showSpritesInFirst8Pixels`
+      - `showBackground`
+      - `showSprites`
   - |-
     📚  también, agrega estos métodos:
       **onWrite(value)**:
@@ -36,7 +36,7 @@ exercise:
     📚  en 🖥️  `PPU`, quieres <no hacer nada> si la renderización está deshabilitada:
       ```javascript if (!this.registers.ppuMask.isRenderingEnabled())
         return;```
-    agrega eso al comienzo de `onPreLine(...)` y `onVisibleLine(...)`!
+    <agrega eso> al comienzo de `_onPreLine()` y `_onVisibleLine()`!
   - |-
     📚  solo llama a `BackgroundRenderer::renderScanline` si `showBackground` está habilitado,
     y solo llama a `SpriteRenderer::renderScanline` si `showSprites` está habilitado
@@ -47,14 +47,14 @@ renderers:
   messages:
   - yep, veamos...
   - |-
-    📚  en 🏞️  `BackgroundRenderer`, cambia `renderScanline()`:
+    📚  en 🏞️  `BackgroundRenderer`, <cambia> `renderScanline()`:
       **->** si `showBackgroundInFirst8Pixels` está apagada y `x < 8`:
         **->** solo dibuja (con `PPU::plotBG(...)`) el color de fondo
         **->** incrementa `x`
         **->** `continue`! ¡no proceses más!
       (recuerda que el color de fondo es ```javascript this.ppu.getColor(0, 0)```)
   - |-
-    📚  en 🛸  `SpriteRenderer`, cambia `_render(...)`...
+    📚  en 🛸  `SpriteRenderer`, <cambia> `_render(...)`...
       **->** necesitas una lógica similar:
         ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
           continue;```

@@ -15,11 +15,11 @@ exercise:
   - 📚  crea una clase 🏞️  `BackgroundRenderer`
   - 📚  su constructor debe recibir y asignar una propiedad `ppu` con la instancia de PPU
   - |-
-    📚  haz estos cambios en la clase 🖥️  `PPU`:
+    📚  <haz estos cambios> en la clase 🖥️  `PPU`:
     **constructor(cpu)**:
       **->** instancia el renderizador de fondos:
         ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
-        (¡recuerda importarlo si lo definiste en otro archivo!)
+      (¡recuerda importarlo si lo definiste en otro archivo!)
     **step(...)**:
       **->** elimina el código de prueba (```javascript // <test>...</test>```)
     **_onVisibleLine()**:
@@ -27,7 +27,7 @@ exercise:
   - |-
     📚  ahora, en la clase 🏞️  `BackgroundRenderer`, define:
     **renderScanline()**:
-      **->** agrega el código necesario para renderizar una línea completa del fondo
+      **->** <agrega el código necesario> para renderizar una línea completa del fondo
   - ¡adiós!
   responses:
   - esperá, NO ME DEJES 😭 [questions]

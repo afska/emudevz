@@ -3,10 +3,9 @@ main:
   run: |
     {{Top}}.load("rendering.png");
   messages:
-  - buckle up, we're gonna start drawing <actual pixels> to the screen! 🖥️
+  - we're gonna start drawing <actual pixels> to the screen! 🖥️
   - but first we need to learn some things
-  - you'll see... it's all about timing ⏱️
-  - 🚲  cycles, 🌠  scanlines, and 🖼️  frames!
+  - like 🚲  cycles, 🌠  scanlines, and 🖼️  frames!
   responses:
   - what do you mean? [wdym]
 

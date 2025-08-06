@@ -619,7 +619,7 @@ it("`PPUStatus`: resets `isInVBlankInterval` after reading", () => {
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("has methods: `_onPreLine(...)`, `_onVisibleLine(...)`, `_onVBlankLine(...)`", () => {
+it("has methods: `_onPreLine()`, `_onVisibleLine()`, `_onVBlankLine(...)`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -629,7 +629,7 @@ it("has methods: `_onPreLine(...)`, `_onVisibleLine(...)`, `_onVBlankLine(...)`"
 })({
 	locales: {
 		es:
-			"tiene métodos `_onPreLine(...)`, `_onVisibleLine(...)`, `_onVBlankLine(...)`",
+			"tiene métodos `_onPreLine()`, `_onVisibleLine()`, `_onVBlankLine(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
@@ -678,7 +678,7 @@ it("calls `_onPreLine(...)` on scanline ~-1~", () => {
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("calls `_onVisibleLine(...)` on scanlines ~[0, 240)~", () => {
+it("calls `_onVisibleLine()` on scanlines ~[0, 240)~", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -717,7 +717,7 @@ it("calls `_onVisibleLine(...)` on scanlines ~[0, 240)~", () => {
 	}
 })({
 	locales: {
-		es: "llama a `_onVisibleLine(...)` en las scanlines ~[0, 240)~",
+		es: "llama a `_onVisibleLine()` en las scanlines ~[0, 240)~",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.7"),
 });

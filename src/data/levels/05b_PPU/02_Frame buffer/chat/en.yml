@@ -65,7 +65,7 @@ exercise:
     **plot(x, y, color)**:
       **->** assigns the `color` to the pixel ~(x,y)~ in the `frameBuffer` array
         (the index for ~(x,y)~ should be ```javascript y * 256 + x```)
-  - 📚  then, modify your `step` method so it receives an `onFrame` callback as parameter
+  - 📚  then, <modify> your `step` method so it receives an `onFrame` callback as parameter
   - |-
     📚  and every time you detect a new frame (right after ```javascript this.frame++;```), call it with the frame buffer, like this:
       ```javascript onFrame(this.frameBuffer);```

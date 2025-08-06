@@ -22,7 +22,7 @@ main:
   - |-
     📚  implementa este método en 🏞️  `BackgroundRenderer`:
     **_getPaletteId(nameTableId, x, y)**:
-      **->** agrega el código necesario para devolver el id de paleta correcto para el píxel ~(x, y)~
+      **->** <agrega el código necesario> para devolver el id de paleta correcto para el píxel ~(x, y)~
       **->** sigue 📄  ~/docs/ppu/background_rendering.es.md~ para orientación sobre cómo se codifican los ids de paletas
   - |-
     📚  cambia `BackgroundRenderer::renderScanline()` para que use `_getPaletteId(...)` y dibuje el color correcto, así:

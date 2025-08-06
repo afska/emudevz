@@ -18,7 +18,7 @@ usage:
 exercise:
   messages:
   - |-
-    📚  en 🛸  `SpriteRenderer`, modifica el método `_render(...)`; debajo de `buffer[x] = ...`, agrega:
+    📚  en 🛸  `SpriteRenderer`, <modifica> el método `_render(...)`; debajo de `buffer[x] = ...`, agrega:
     **->** si el `sprite.id` es 0 <Y> el píxel de fondo en ~(x, y)~ es opaco:
       **->** asigna ```javascript this.ppu.registers.ppuStatus.sprite0Hit = 1```
   - 📚  ah, y reinicia `sprite0Hit` en `PPU::_onPreLine()`, ¡igual que hiciste con las otras dos banderas!

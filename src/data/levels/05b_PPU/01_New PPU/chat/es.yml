@@ -3,10 +3,9 @@ main:
   run: |
     {{Top}}.load("rendering.png");
   messages:
-  - abróchate el cinturón, ¡vamos a empezar a dibujar <píxeles de verdad> en la pantalla! 🖥️
+  - ¡vamos a empezar a dibujar <píxeles de verdad> en la pantalla! 🖥️
   - pero primero necesitamos aprender algunas cosas
-  - verás... todo depende del timing ⏱️
-  - 🚲  ciclos, 🌠  scanlines y 🖼️  frames
+  - como 🚲  ciclos, 🌠  scanlines y 🖼️  frames
   responses:
   - ¿a qué te refieres? [wdym]
 
@@ -19,8 +18,8 @@ wdym:
   responses:
   - ¿y... qué es un ciclo? 🚲 [cycles]
 
-ciclos:
-  mensajes:
+cycles:
+  messages:
   - un ciclo sería un pulso de reloj, la unidad mínima de ejecución!
   - son solo diminutas fracciones de segundo, ya que hay más de 5 millones de ciclos de PPU por segundo
   - durante un ciclo, la PPU puede leer o escribir datos, o incluso dibujar un píxel en la pantalla 🎨

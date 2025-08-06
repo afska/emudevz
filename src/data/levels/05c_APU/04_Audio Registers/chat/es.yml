@@ -38,8 +38,9 @@ exercise:
   - |-
     📚  agrega una propiedad `registers` a 🔊  `APU`, asignada a:
          ```javascript new AudioRegisters(this)```
-  - "📚  por último, mapéalos en 🐏  `CPUMemory` (regiones $4000-$4013, $4015 y $4017):"
-  - <las lecturas> deberían retornar ```javascript this.apu.registers.read(address)```
-  - <las escrituras> deberían llamar a ```javascript this.apu.registers.write(address, value)``` y retornar
+  - |-
+    📚  por último, mapéalos en 🐏  `CPUMemory` (regiones $4000-$4013, $4015 y $4017):
+      - las <lecturas> deberían retornar ```javascript this.apu.registers.read(address)```
+      - las <escrituras> deberían llamar a ```javascript this.apu.registers.write(address, value)``` y retornar
   - ten cuidado con 🧮  APUFrameCounter, ya que comparte su dirección con el segundo puerto de 🎮  mando; ¡no mapees <las lecturas>! ¡solo <las escrituras>!
   responses: []
