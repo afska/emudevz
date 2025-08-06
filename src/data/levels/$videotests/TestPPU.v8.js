@@ -652,6 +652,10 @@ class PPUMask extends InMemoryRegister.PPU {
 	onLoad() {
 		/* TODO: IMPLEMENT */
 	}
+
+	onWrite(value) {
+		this.setValue(value);
+	}
 }
 
 class PPUStatus extends InMemoryRegister.PPU {
