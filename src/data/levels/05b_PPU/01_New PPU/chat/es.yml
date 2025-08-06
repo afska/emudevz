@@ -19,11 +19,11 @@ wdym:
   responses:
   - ¿y... qué es un ciclo? 🚲 [cycles]
 
-cycles:
-  messages:
-  - cada operación que hace la PPU toma cierta cantidad de tiempo, que medimos en ciclos
-  - estos duran solo fracciones de segundo, ¡y pasan varias cosas en un ciclo!
-  - la PPU puede leer o escribir datos, o incluso dibujar un píxel en la pantalla 🎨
+ciclos:
+  mensajes:
+  - un ciclo sería un pulso de reloj, la unidad mínima de ejecución!
+  - son solo diminutas fracciones de segundo, ya que hay más de 5 millones de ciclos de PPU por segundo
+  - durante un ciclo, la PPU puede leer o escribir datos, o incluso dibujar un píxel en la pantalla 🎨
   responses:
   - (*) ¿los ciclos de PPU son los mismos que los ciclos de CPU? 🤔 [same]
   - ¿cómo funciona el dibujado? 🖌️ [drawing]

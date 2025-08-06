@@ -21,9 +21,9 @@ wdym:
 
 cycles:
   messages:
-  - each operation that the PPU does takes a certain amount of time, which we measure in cycles
-  - these are just fractions of a second, and a lot happens in a single cycle!
-  - the PPU can read or write data, or even draw a pixel on the screen 🎨
+  - a cycle would be one clock tick, the minimal unit of execution!
+  - these are just tiny fractions of a second, as there are more than 5 million PPU cycles per second
+  - during a cycle, the PPU can read or write data, or even draw a pixel on the screen 🎨
   responses:
   - (*) are PPU cycles the same as CPU cycles? 🤔 [same]
   - how does the drawing work? 🖌️ [drawing]
