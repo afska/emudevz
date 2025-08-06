@@ -129,7 +129,7 @@ export default class Level {
 	canLaunch(Component) {
 		return (
 			this.$layout.findInstance(Component.name) ||
-			(Component.name === "CodeEditor"
+			(Component.name === "CodeEditor" || Component.name === "TV"
 				? this.$layout.findInstance("MultiFile")
 				: undefined)
 		);
