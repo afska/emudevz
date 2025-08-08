@@ -55,7 +55,11 @@ window._openPath_ = (filePath) => {
 		toast.error(locales.get("cant_open_emulator"));
 	} else if (result === ERR_CANNOT_OPEN_FILE) {
 		toast.error(locales.get("cant_open_file"));
+	} else {
+		return true;
 	}
+
+	return false;
 };
 
 export default class Terminal {
