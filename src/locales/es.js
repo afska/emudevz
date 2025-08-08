@@ -183,6 +183,8 @@ export default {
 	tests_errors_found: "🚫  Errores encontrados.",
 	tests_warnings_found: "⚠️  Advertencias encontradas.",
 	tests_more: "💬  Para más información, corre `test -v [númeroDeTest]`",
+	tests_more_units:
+		"💡  Para un tipo específico de pruebas, corre `test audio` | `test video` | `test unit`",
 	tests_audio_apu_output: "Salida de la APU",
 	tests_audio_expected_output: "Salida esperada",
 	tests_audio_apu_not_unlocked: "❌  La APU no está desbloqueada.",

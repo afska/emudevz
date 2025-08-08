@@ -164,6 +164,7 @@ export default class TestCommand extends Command {
 					await this._terminal.writeln(locales.get("tests_success_continue"));
 					await this._terminal.waitForKey();
 					level.advance();
+					return;
 				} else {
 					await this._terminal.writeln(locales.get("tests_success"));
 				}
@@ -182,6 +183,16 @@ export default class TestCommand extends Command {
 						theme.COMMENT
 					);
 				}
+			}
+
+			if (
+				!this._targetId &&
+				(!_.isEmpty(level.audioTests) || !_.isEmpty(level.videoTests))
+			) {
+				await this._terminal.writehlln(
+					locales.get("tests_more_units"),
+					theme.COMMENT
+				);
 			}
 		} finally {
 			this._onClose();
@@ -221,7 +232,7 @@ export default class TestCommand extends Command {
 		await this._terminal.writeln(locales.get("tests_audio_running"));
 		const tv = level.$layout.findInstance("TV");
 		if (!tv) {
-			await this._terminal.writeln(locales.get("tests_video_no_tv"));
+			await this._terminal.writeln(locales.get("tests_audio_no_tv"));
 			return false;
 		}
 
