@@ -41,7 +41,7 @@
     "@uiw/codemirror-extensions-langs": "4.12.3",
     "@uiw/react-codemirror": "4.11.6",
     "bootstrap": "^5.2.0",
-    "broken-neees": "^1.0.56",
+    "broken-neees": "^1.0.57",
     "browserfs": "^1.4.3",
     "classnames": "^2.2.6",
     "cli-highlight": "^2.1.11",

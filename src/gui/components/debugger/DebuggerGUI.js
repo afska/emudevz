@@ -121,6 +121,7 @@ export default class DebuggerGUI {
 
 	destroy() {
 		this.cpu.destroy();
+		this.ppu.destroy();
 		this.apu.destroy();
 		this.logs.destroy();
 	}
