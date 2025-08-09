@@ -7,9 +7,9 @@ const RGBA = (r, g, b, a) => {
 	);
 };
 
-const COLOR_VIEWPORT_OVERLAY_FILL = RGBA(0, 180, 255, 48);
-const COLOR_OVERLAY_STROKE = RGBA(0xff, 0, 0, 160);
-const COLOR_TILE_GRID_LINE = RGBA(0, 120, 255, 120);
+const COLOR_VIEWPORT_OVERLAY_STROKE = RGBA(255, 0, 0, 160);
+const COLOR_VIEWPORT_OVERLAY_FILL = RGBA(0, 180, 255, 120);
+const COLOR_TILE_GRID_LINE = RGBA(255, 0, 255, 160);
 const COLOR_ATTRIBUTE_GRID_LINE = RGBA(0, 255, 0, 160);
 
 const SCREEN_WIDTH = 256;
@@ -54,7 +54,16 @@ export default class Debugger_PPU {
 	}
 
 	draw() {
-		if (ImGui.BeginTabBar("APUTabs")) {
+		utils.fullWidthFieldWithLabel("Scanline", (label) => {
+			ImGui.InputInt(
+				label,
+				(v = this._scanlineTrigger) => (this._scanlineTrigger = v)
+			);
+			if (this._scanlineTrigger < -1) this._scanlineTrigger = -1;
+			if (this._scanlineTrigger > 260) this._scanlineTrigger = 260;
+		});
+
+		if (ImGui.BeginTabBar("PPUTabs")) {
 			this._drawNameTablesTab();
 			this._drawCHRTab();
 			this._drawSpritesTab();
@@ -86,32 +95,15 @@ export default class Debugger_PPU {
 			() => {
 				const gl = ImGui_Impl.gl;
 
-				if (
-					ImGui.Checkbox(
-						"Show tile grid (8x8)",
-						(v = this._showTileGrid) => (this._showTileGrid = v)
-					)
-				) {
-				}
+				ImGui.Checkbox(
+					"Show tile grid (8x8)",
+					(v = this._showTileGrid) => (this._showTileGrid = v)
+				);
 				ImGui.SameLine();
-				if (
-					ImGui.Checkbox(
-						"Show attribute grid (16x16)",
-						(v = this._showAttributeGrid) => (this._showAttributeGrid = v)
-					)
-				) {
-				}
-				ImGui.SetNextItemWidth(280);
-				ImGui.Text("Show PPU data at scanline:");
-				if (
-					ImGui.InputInt(
-						"",
-						(v = this._scanlineTrigger) => (this._scanlineTrigger = v)
-					)
-				) {
-				}
-				if (this._scanlineTrigger < -1) this._scanlineTrigger = -1;
-				if (this._scanlineTrigger > 260) this._scanlineTrigger = 260;
+				ImGui.Checkbox(
+					"Show attribute grid (16x16)",
+					(v = this._showAttributeGrid) => (this._showAttributeGrid = v)
+				);
 
 				const emulation = window.EmuDevz?.emulation;
 				const neees = emulation?.neees;
@@ -257,14 +249,21 @@ export default class Debugger_PPU {
 				}
 			}
 
-			this._drawLineH(pixels, width, x, x + w - 1, y, COLOR_OVERLAY_STROKE);
+			this._drawLineH(
+				pixels,
+				width,
+				x,
+				x + w - 1,
+				y,
+				COLOR_VIEWPORT_OVERLAY_STROKE
+			);
 			this._drawLineH(
 				pixels,
 				width,
 				x,
 				x + w - 1,
 				y + h - 1,
-				COLOR_OVERLAY_STROKE
+				COLOR_VIEWPORT_OVERLAY_STROKE
 			);
 			this._drawLineV(
 				pixels,
@@ -273,7 +272,7 @@ export default class Debugger_PPU {
 				x,
 				y,
 				y + h - 1,
-				COLOR_OVERLAY_STROKE
+				COLOR_VIEWPORT_OVERLAY_STROKE
 			);
 			this._drawLineV(
 				pixels,
@@ -282,7 +281,7 @@ export default class Debugger_PPU {
 				x + w - 1,
 				y,
 				y + h - 1,
-				COLOR_OVERLAY_STROKE
+				COLOR_VIEWPORT_OVERLAY_STROKE
 			);
 		};
 
