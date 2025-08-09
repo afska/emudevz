@@ -68,12 +68,13 @@ export default class Debugger_PPU {
 
 	draw() {
 		utils.fullWidthFieldWithLabel("Scanline", (label) => {
-			ImGui.InputInt(
+			ImGui.SliderInt(
 				label,
-				(v = this._scanlineTrigger) => (this._scanlineTrigger = v)
+				(v = this._scanlineTrigger) => (this._scanlineTrigger = v),
+				-1,
+				260,
+				"%d"
 			);
-			if (this._scanlineTrigger < -1) this._scanlineTrigger = -1;
-			if (this._scanlineTrigger > 260) this._scanlineTrigger = 260;
 		});
 
 		if (ImGui.BeginTabBar("PPUTabs")) {
