@@ -1,4 +1,5 @@
 import { NameTableRenderer } from "./neees/debugPPU";
+import utils from "./utils";
 
 const RGBA = (r, g, b, a) => {
 	return (
@@ -20,6 +21,11 @@ const ImGui = window.ImGui;
 const ImGui_Impl = window.ImGui_Impl;
 
 export default class Debugger_PPU {
+	constructor(args) {
+		this.args = args;
+		this.selectedTab = null; // only works when `this.args.readOnly`
+	}
+
 	init() {
 		const gl = ImGui_Impl.gl;
 		this._fbTex0 = gl.createTexture();
@@ -48,105 +54,15 @@ export default class Debugger_PPU {
 	}
 
 	draw() {
-		ImGui.Text("hello PPU");
+		if (ImGui.BeginTabBar("APUTabs")) {
+			this._drawNameTablesTab();
+			this._drawCHRTab();
+			this._drawSpritesTab();
+			this._drawPalettesTab();
+			this._drawInfoTab();
 
-		const gl = ImGui_Impl.gl;
-
-		if (
-			ImGui.Checkbox(
-				"Show tile grid (8x8)",
-				(v = this._showTileGrid) => (this._showTileGrid = v)
-			)
-		) {
+			ImGui.EndTabBar();
 		}
-		ImGui.SameLine();
-		if (
-			ImGui.Checkbox(
-				"Show attribute grid (16x16)",
-				(v = this._showAttributeGrid) => (this._showAttributeGrid = v)
-			)
-		) {
-		}
-		ImGui.SetNextItemWidth(280);
-		ImGui.Text("Show PPU data at scanline:");
-		if (
-			ImGui.InputInt(
-				"",
-				(v = this._scanlineTrigger) => (this._scanlineTrigger = v)
-			)
-		) {
-		}
-		if (this._scanlineTrigger < -1) this._scanlineTrigger = -1;
-		if (this._scanlineTrigger > 260) this._scanlineTrigger = 260;
-
-		const emulation = window.EmuDevz?.emulation;
-		const neees = emulation?.neees;
-		const ppu = neees?.ppu;
-
-		if (neees != null && neees.onScanline == null) {
-			neees.onScanline = () => {
-				if (this._destroyed) {
-					neees.onScanline = null;
-					return;
-				}
-
-				const scanline = ppu.scanline ?? 0;
-				if (scanline !== this._scanlineTrigger) return;
-
-				this._atlasPixels.fill(0);
-
-				const plot = (x, y, color) => {
-					if (x >= 0 && x < ATLAS_WIDTH && y >= 0 && y < ATLAS_HEIGHT)
-						this._atlasPixels[y * ATLAS_WIDTH + x] = color;
-				};
-
-				const renderer = new NameTableRenderer(ppu, plot);
-				renderer.render(0, 0, 0);
-				renderer.render(1, 256, 0);
-				renderer.render(2, 0, 240);
-				renderer.render(3, 256, 240);
-
-				if (this._showTileGrid)
-					this._drawGrid(
-						this._atlasPixels,
-						ATLAS_WIDTH,
-						ATLAS_HEIGHT,
-						8,
-						COLOR_TILE_GRID_LINE
-					);
-				if (this._showAttributeGrid)
-					this._drawGrid(
-						this._atlasPixels,
-						ATLAS_WIDTH,
-						ATLAS_HEIGHT,
-						16,
-						COLOR_ATTRIBUTE_GRID_LINE
-					);
-
-				this._drawViewportOverlay(
-					this._atlasPixels,
-					ATLAS_WIDTH,
-					ATLAS_HEIGHT,
-					ppu
-				);
-			};
-		}
-
-		gl.bindTexture(gl.TEXTURE_2D, this._fbTex0);
-		gl.texSubImage2D(
-			gl.TEXTURE_2D,
-			0,
-			0,
-			0,
-			ATLAS_WIDTH,
-			ATLAS_HEIGHT,
-			gl.RGBA,
-			gl.UNSIGNED_BYTE,
-			new Uint8Array(this._atlasPixels.buffer)
-		);
-
-		ImGui.Image(this._fbTex0, new ImGui.Vec2(ATLAS_WIDTH, ATLAS_HEIGHT));
-		ImGui.Text("bye PPU");
 	}
 
 	destroy() {
@@ -164,30 +80,141 @@ export default class Debugger_PPU {
 		this._destroyed = true;
 	}
 
-	_drawLineH(pixels, width, x0, x1, y, color) {
-		if (y < 0 || y >= pixels.length / width) return;
-		const xa = Math.max(0, Math.min(x0, x1));
-		const xb = Math.min(width - 1, Math.max(x0, x1));
-		const off = y * width;
-		for (let x = xa; x <= xb; x++)
-			pixels[off + x] = this._blendOver(pixels[off + x], color);
+	_drawNameTablesTab() {
+		utils.simpleTab(
+			"Name tables",
+			() => {
+				const gl = ImGui_Impl.gl;
+
+				if (
+					ImGui.Checkbox(
+						"Show tile grid (8x8)",
+						(v = this._showTileGrid) => (this._showTileGrid = v)
+					)
+				) {
+				}
+				ImGui.SameLine();
+				if (
+					ImGui.Checkbox(
+						"Show attribute grid (16x16)",
+						(v = this._showAttributeGrid) => (this._showAttributeGrid = v)
+					)
+				) {
+				}
+				ImGui.SetNextItemWidth(280);
+				ImGui.Text("Show PPU data at scanline:");
+				if (
+					ImGui.InputInt(
+						"",
+						(v = this._scanlineTrigger) => (this._scanlineTrigger = v)
+					)
+				) {
+				}
+				if (this._scanlineTrigger < -1) this._scanlineTrigger = -1;
+				if (this._scanlineTrigger > 260) this._scanlineTrigger = 260;
+
+				const emulation = window.EmuDevz?.emulation;
+				const neees = emulation?.neees;
+				const ppu = neees?.ppu;
+
+				if (neees != null && neees.onScanline == null) {
+					neees.onScanline = () => {
+						if (this._destroyed) {
+							neees.onScanline = null;
+							return;
+						}
+
+						const scanline = ppu.scanline ?? 0;
+						if (scanline !== this._scanlineTrigger) return;
+
+						this._atlasPixels.fill(0);
+
+						const plot = (x, y, color) => {
+							if (x >= 0 && x < ATLAS_WIDTH && y >= 0 && y < ATLAS_HEIGHT)
+								this._atlasPixels[y * ATLAS_WIDTH + x] = color;
+						};
+
+						const renderer = new NameTableRenderer(ppu, plot);
+						renderer.render(0, 0, 0);
+						renderer.render(1, 256, 0);
+						renderer.render(2, 0, 240);
+						renderer.render(3, 256, 240);
+
+						if (this._showTileGrid)
+							this._drawGrid(
+								this._atlasPixels,
+								ATLAS_WIDTH,
+								ATLAS_HEIGHT,
+								8,
+								COLOR_TILE_GRID_LINE
+							);
+						if (this._showAttributeGrid)
+							this._drawGrid(
+								this._atlasPixels,
+								ATLAS_WIDTH,
+								ATLAS_HEIGHT,
+								16,
+								COLOR_ATTRIBUTE_GRID_LINE
+							);
+
+						this._drawViewportOverlay(
+							this._atlasPixels,
+							ATLAS_WIDTH,
+							ATLAS_HEIGHT,
+							ppu
+						);
+					};
+				}
+
+				gl.bindTexture(gl.TEXTURE_2D, this._fbTex0);
+				gl.texSubImage2D(
+					gl.TEXTURE_2D,
+					0,
+					0,
+					0,
+					ATLAS_WIDTH,
+					ATLAS_HEIGHT,
+					gl.RGBA,
+					gl.UNSIGNED_BYTE,
+					new Uint8Array(this._atlasPixels.buffer)
+				);
+
+				ImGui.Image(this._fbTex0, new ImGui.Vec2(ATLAS_WIDTH, ATLAS_HEIGHT));
+			},
+			this.args.readOnly ? this.selectedTab === "Name tables" : null
+		);
 	}
 
-	_drawLineV(pixels, width, height, x, y0, y1, color) {
-		if (x < 0 || x >= width) return;
-		const ya = Math.max(0, Math.min(y0, y1));
-		const yb = Math.min(height - 1, Math.max(y0, y1));
-		for (let y = ya; y <= yb; y++) {
-			const i = y * width + x;
-			pixels[i] = this._blendOver(pixels[i], color);
-		}
+	_drawCHRTab() {
+		utils.simpleTab(
+			"CHR",
+			() => {},
+			this.args.readOnly ? this.selectedTab === "CHR" : null
+		);
 	}
 
-	_drawGrid(pixels, width, height, step, lineColor) {
-		for (let x = 0; x < width; x += step)
-			this._drawLineV(pixels, width, height, x, 0, height - 1, lineColor);
-		for (let y = 0; y < height; y += step)
-			this._drawLineH(pixels, width, 0, width - 1, y, lineColor);
+	_drawSpritesTab() {
+		utils.simpleTab(
+			"Sprites",
+			() => {},
+			this.args.readOnly ? this.selectedTab === "Sprites" : null
+		);
+	}
+
+	_drawPalettesTab() {
+		utils.simpleTab(
+			"Palettes",
+			() => {},
+			this.args.readOnly ? this.selectedTab === "Palettes" : null
+		);
+	}
+
+	_drawInfoTab() {
+		utils.simpleTab(
+			"Info",
+			() => {},
+			this.args.readOnly ? this.selectedTab === "Info" : null
+		);
 	}
 
 	_drawViewportOverlay(pixels, width, height, ppu) {
@@ -284,6 +311,32 @@ export default class Debugger_PPU {
 			drawFilled(viewportStartX, 0, w0, h1);
 			drawFilled(0, 0, w1, h1);
 		}
+	}
+
+	_drawLineH(pixels, width, x0, x1, y, color) {
+		if (y < 0 || y >= pixels.length / width) return;
+		const xa = Math.max(0, Math.min(x0, x1));
+		const xb = Math.min(width - 1, Math.max(x0, x1));
+		const off = y * width;
+		for (let x = xa; x <= xb; x++)
+			pixels[off + x] = this._blendOver(pixels[off + x], color);
+	}
+
+	_drawLineV(pixels, width, height, x, y0, y1, color) {
+		if (x < 0 || x >= width) return;
+		const ya = Math.max(0, Math.min(y0, y1));
+		const yb = Math.min(height - 1, Math.max(y0, y1));
+		for (let y = ya; y <= yb; y++) {
+			const i = y * width + x;
+			pixels[i] = this._blendOver(pixels[i], color);
+		}
+	}
+
+	_drawGrid(pixels, width, height, step, lineColor) {
+		for (let x = 0; x < width; x += step)
+			this._drawLineV(pixels, width, height, x, 0, height - 1, lineColor);
+		for (let y = 0; y < height; y += step)
+			this._drawLineH(pixels, width, 0, width - 1, y, lineColor);
 	}
 
 	_blendOver(dst, src) {
