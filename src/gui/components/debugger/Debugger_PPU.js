@@ -61,6 +61,7 @@ export default class Debugger_PPU {
 		this._scanlineTrigger = 260; // -1..260
 		this._atlasPixels = new Uint32Array(SCREEN_WIDTH * 2 * (SCREEN_HEIGHT * 2));
 		this._hoverInfo = null;
+		this._pendingHoverReq = null;
 
 		this._destroyed = false;
 	}
@@ -173,6 +174,61 @@ export default class Debugger_PPU {
 								ATLAS_HEIGHT,
 								ppu
 							);
+
+						if (this._pendingHoverReq) {
+							const req = this._pendingHoverReq;
+
+							const tileIndex = ppu.memory?.read?.(req.tileIndexAddr) ?? 0;
+							const patternTableId =
+								ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
+							const tileAddr =
+								(patternTableId ? 0x1000 : 0x0000) + tileIndex * 16;
+
+							const attrByte = ppu.memory?.read?.(req.attrAddr) ?? 0;
+							const shift = (req.tileY & 2 ? 4 : 0) + (req.tileX & 2 ? 2 : 0);
+							const paletteId = (attrByte >> shift) & 0x03;
+							const paletteAddr = 0x3f00 + paletteId * 4;
+
+							const previewColors = new Array(64);
+							for (let ty = 0; ty < 8; ty++) {
+								const low = ppu.memory?.read?.(tileAddr + ty) ?? 0;
+								const high = ppu.memory?.read?.(tileAddr + 8 + ty) ?? 0;
+								for (let tx = 0; tx < 8; tx++) {
+									const bit = 7 - tx;
+									const lowBit = (low >> bit) & 1;
+									const highBit = (high >> bit) & 1;
+									const colorIndex = (highBit << 1) | lowBit;
+									const color =
+										colorIndex > 0
+											? ppu.getColor?.(paletteId, colorIndex) ?? 0
+											: ppu.getColor?.(0, 0) ?? 0;
+									previewColors[ty * 8 + tx] = color >>> 0;
+								}
+							}
+
+							const paletteColors = [
+								ppu.getColor?.(0, 0) ?? 0,
+								ppu.getColor?.(paletteId, 1) ?? 0,
+								ppu.getColor?.(paletteId, 2) ?? 0,
+								ppu.getColor?.(paletteId, 3) ?? 0,
+							].map((c) => c >>> 0);
+
+							this._hoverInfo = {
+								nameTableId: req.nameTableId,
+								tileX: req.tileX,
+								tileY: req.tileY,
+								tileIndex,
+								tileIndexAddr: req.tileIndexAddr,
+								tileAddr,
+								attrAddr: req.attrAddr,
+								paletteId,
+								paletteAddr,
+								previewColors,
+								paletteColors,
+							};
+
+							this._pendingHoverReq = null;
+						}
 					};
 				}
 
@@ -181,7 +237,6 @@ export default class Debugger_PPU {
 				const localX = Math.floor(mouse.x - imgTopLeft.x);
 				const localY = Math.floor(mouse.y - imgTopLeft.y);
 				let hoverRect = null;
-				let hoverInfo = null;
 
 				if (
 					localX >= 0 &&
@@ -205,26 +260,12 @@ export default class Debugger_PPU {
 					const attrAddr =
 						ntBase + 0x3c0 + ((tileX >> 2) & 7) + ((tileY >> 2) << 3);
 
-					const tileIndex = ppu.memory?.read?.(tileIndexAddr) ?? 0;
-					const patternTableId =
-						ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
-					const tileAddr = (patternTableId ? 0x1000 : 0x0000) + tileIndex * 16;
-
-					const attrByte = ppu.memory?.read?.(attrAddr) ?? 0;
-					const shift = (tileY & 2 ? 4 : 0) + (tileX & 2 ? 2 : 0);
-					const paletteId = (attrByte >> shift) & 0x03;
-					const paletteAddr = 0x3f00 + paletteId * 4;
-
-					hoverInfo = {
+					this._pendingHoverReq = {
 						nameTableId,
 						tileX,
 						tileY,
-						tileIndex,
 						tileIndexAddr,
-						tileAddr,
 						attrAddr,
-						paletteId,
-						paletteAddr,
 					};
 
 					const rectX = atlasTileX * 8;
@@ -232,6 +273,9 @@ export default class Debugger_PPU {
 					hoverRect = { x: rectX, y: rectY, w: 8, h: 8 };
 
 					ImGui.SetMouseCursor(ImGui.MouseCursor.None);
+				} else {
+					this._pendingHoverReq = null;
+					this._hoverInfo = null;
 				}
 
 				let uploadPixels = this._atlasPixels;
@@ -246,9 +290,6 @@ export default class Debugger_PPU {
 						hoverRect.w,
 						hoverRect.h
 					);
-					this._hoverInfo = hoverInfo;
-				} else {
-					this._hoverInfo = null;
 				}
 
 				gl.bindTexture(gl.TEXTURE_2D, this._fbTex0);
@@ -500,60 +541,47 @@ export default class Debugger_PPU {
 			cy += lineHeights[i] + lineGap;
 		}
 
-		const ppu = window.EmuDevz?.emulation?.neees?.ppu;
-		if (ppu) {
-			const scale = 4;
-			const rowX = cx + Math.floor((contentW - combinedRowW) / 2);
-			const rowY = cy + blockGap;
-			const px0 = rowX + Math.floor(0 / 2); // (tile starts at rowX)
-			const py0 = rowY + Math.floor((combinedRowH - previewSize) / 2);
+		if (!info.previewColors || !info.paletteColors) return;
 
-			for (let ty = 0; ty < 8; ty++) {
-				const low = ppu.memory?.read?.(info.tileAddr + ty) ?? 0;
-				const high = ppu.memory?.read?.(info.tileAddr + 8 + ty) ?? 0;
-				for (let tx = 0; tx < 8; tx++) {
-					const bit = 7 - tx;
-					const lowBit = (low >> bit) & 1;
-					const highBit = (high >> bit) & 1;
-					const colorIndex = (highBit << 1) | lowBit;
-					const color =
-						colorIndex > 0
-							? ppu.getColor?.(info.paletteId, colorIndex) ?? 0
-							: ppu.getColor?.(0, 0) ?? 0;
-					const x = px0 + tx * scale;
-					const y = py0 + ty * scale;
-					draw.AddRectFilled(
-						new ImGui.Vec2(x, y),
-						new ImGui.Vec2(x + scale, y + scale),
-						color
-					);
-				}
-			}
+		const scale = 4;
+		const rowX = cx + Math.floor((contentW - combinedRowW) / 2);
+		const rowY = cy + blockGap;
+		const px0 = rowX;
+		const py0 = rowY + Math.floor((combinedRowH - previewSize) / 2);
 
-			const palX0 = rowX + previewSize + blockGap;
-			const palY0 = rowY + Math.floor((combinedRowH - swatchSize) / 2);
-			for (let i = 0; i < 4; i++) {
-				const color =
-					i === 0
-						? ppu.getColor?.(0, 0) ?? 0
-						: ppu.getColor?.(info.paletteId, i) ?? 0;
-				const x = palX0 + i * swatchSize;
-				const y = palY0;
+		for (let ty = 0; ty < 8; ty++) {
+			for (let tx = 0; tx < 8; tx++) {
+				const color = info.previewColors[ty * 8 + tx] >>> 0;
+				const x = px0 + tx * scale;
+				const y = py0 + ty * scale;
 				draw.AddRectFilled(
 					new ImGui.Vec2(x, y),
-					new ImGui.Vec2(x + swatchSize, y + swatchSize),
-					color,
-					3
-				);
-				draw.AddRect(
-					new ImGui.Vec2(x, y),
-					new ImGui.Vec2(x + swatchSize, y + swatchSize),
-					RGBA(0, 0, 0, 200),
-					3,
-					0,
-					1
+					new ImGui.Vec2(x + scale, y + scale),
+					color
 				);
 			}
+		}
+
+		const palX0 = rowX + previewSize + blockGap;
+		const palY0 = rowY + Math.floor((combinedRowH - swatchSize) / 2);
+		for (let i = 0; i < 4; i++) {
+			const color = info.paletteColors[i] >>> 0;
+			const x = palX0 + i * swatchSize;
+			const y = palY0;
+			draw.AddRectFilled(
+				new ImGui.Vec2(x, y),
+				new ImGui.Vec2(x + swatchSize, y + swatchSize),
+				color,
+				3
+			);
+			draw.AddRect(
+				new ImGui.Vec2(x, y),
+				new ImGui.Vec2(x + swatchSize, y + swatchSize),
+				RGBA(0, 0, 0, 200),
+				3,
+				0,
+				1
+			);
 		}
 	}
 
