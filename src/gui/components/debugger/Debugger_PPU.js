@@ -3,7 +3,11 @@ import utils from "./utils";
 
 const RGBA = (r, g, b, a) => {
 	return (
-		((a & 0xff) << 24) | ((b & 0xff) << 16) | ((g & 0xff) << 8) | (r & 0xff)
+		(((a & 0xff) << 24) |
+			((b & 0xff) << 16) |
+			((g & 0xff) << 8) |
+			(r & 0xff)) >>>
+		0
 	);
 };
 
@@ -11,6 +15,9 @@ const COLOR_VIEWPORT_OVERLAY_STROKE = RGBA(255, 0, 0, 160);
 const COLOR_VIEWPORT_OVERLAY_FILL = RGBA(0, 180, 255, 120);
 const COLOR_HOVER_OVERLAY_STROKE = RGBA(128, 128, 128, 255);
 const COLOR_HOVER_OVERLAY_FILL = RGBA(0, 180, 255, 90);
+const COLOR_INFO_OVERLAY_STROKE = RGBA(255, 255, 255, 64);
+const COLOR_INFO_OVERLAY_FILL = RGBA(16, 16, 16, 180);
+const COLOR_INFO_OVERLAY_TEXT = RGBA(255, 255, 255, 255);
 const COLOR_TILE_GRID_LINE = RGBA(255, 0, 255, 160);
 const COLOR_ATTRIBUTE_GRID_LINE = RGBA(0, 255, 0, 160);
 
@@ -203,6 +210,11 @@ export default class Debugger_PPU {
 						ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
 					const tileAddr = (patternTableId ? 0x1000 : 0x0000) + tileIndex * 16;
 
+					const attrByte = ppu.memory?.read?.(attrAddr) ?? 0;
+					const shift = (tileY & 2 ? 4 : 0) + (tileX & 2 ? 2 : 0);
+					const paletteId = (attrByte >> shift) & 0x03;
+					const paletteAddr = 0x3f00 + paletteId * 4;
+
 					hoverInfo = {
 						nameTableId,
 						tileX,
@@ -211,6 +223,8 @@ export default class Debugger_PPU {
 						tileIndexAddr,
 						tileAddr,
 						attrAddr,
+						paletteId,
+						paletteAddr,
 					};
 
 					const rectX = atlasTileX * 8;
@@ -425,16 +439,16 @@ export default class Debugger_PPU {
 		const margin = 12;
 		const lineGap = 2;
 
-		const toUint = (c) => c >>> 0; // (ensure unsigned 32-bit for ImGui drawlist)
-
 		const pad8 = (n) => String(n).padEnd(8, " ");
+		const posText = pad8(`(${info.tileX}, ${info.tileY})`);
 		const lines = [
 			`PPU address       : ${this._hex(info.tileIndexAddr, 4)} `,
 			`Name table        : ${info.nameTableId}`,
-			`Position          : ` + pad8(`(${info.tileX}, ${info.tileY})`),
+			`Position          : ${posText} `,
 			`Tile index        : ${this._hex(info.tileIndex, 2)} `,
 			`Tile address      : ${this._hex(info.tileAddr, 4)} `,
 			`Attribute address : ${this._hex(info.attrAddr, 4)} `,
+			`Palette address   : ${this._hex(info.paletteAddr, 4)} `,
 		];
 
 		let maxW = 0;
@@ -448,25 +462,32 @@ export default class Debugger_PPU {
 			totalH += (i === 0 ? 0 : lineGap) + h;
 		}
 
+		// ^^^ data --- preview vvv
+
+		const previewSize = 32; // 8x8 @ 4x
+		const swatchSize = 16; // 4 swatches horizontally
+		const blockGap = 6;
+		const combinedRowW = previewSize + blockGap + swatchSize * 4;
+		const combinedRowH = Math.max(previewSize, swatchSize);
+
+		const contentW = Math.max(maxW, combinedRowW);
+		const contentH = totalH + blockGap + combinedRowH;
+
 		const x1 = vp.WorkPos.x + vp.WorkSize.x - margin;
 		const y1 = vp.WorkPos.y + vp.WorkSize.y - margin;
-		const x0 = x1 - maxW - 14;
-		const y0 = y1 - totalH - 14;
-
-		const bgCol = toUint(RGBA(16, 16, 16, 180));
-		const borderCol = toUint(RGBA(255, 255, 255, 64));
-		const textCol = toUint(RGBA(255, 255, 255, 255));
+		const x0 = x1 - contentW - 14;
+		const y0 = y1 - contentH - 14;
 
 		draw.AddRectFilled(
 			new ImGui.Vec2(x0, y0),
 			new ImGui.Vec2(x1, y1),
-			bgCol,
+			COLOR_INFO_OVERLAY_FILL,
 			6
 		);
 		draw.AddRect(
 			new ImGui.Vec2(x0, y0),
 			new ImGui.Vec2(x1, y1),
-			borderCol,
+			COLOR_INFO_OVERLAY_STROKE,
 			6,
 			0,
 			1
@@ -475,8 +496,64 @@ export default class Debugger_PPU {
 		let cy = y0 + 7;
 		const cx = x0 + 7;
 		for (let i = 0; i < lines.length; i++) {
-			draw.AddText(new ImGui.Vec2(cx, cy), textCol, lines[i]);
+			draw.AddText(new ImGui.Vec2(cx, cy), COLOR_INFO_OVERLAY_TEXT, lines[i]);
 			cy += lineHeights[i] + lineGap;
+		}
+
+		const ppu = window.EmuDevz?.emulation?.neees?.ppu;
+		if (ppu) {
+			const scale = 4;
+			const rowX = cx + Math.floor((contentW - combinedRowW) / 2);
+			const rowY = cy + blockGap;
+			const px0 = rowX + Math.floor(0 / 2); // (tile starts at rowX)
+			const py0 = rowY + Math.floor((combinedRowH - previewSize) / 2);
+
+			for (let ty = 0; ty < 8; ty++) {
+				const low = ppu.memory?.read?.(info.tileAddr + ty) ?? 0;
+				const high = ppu.memory?.read?.(info.tileAddr + 8 + ty) ?? 0;
+				for (let tx = 0; tx < 8; tx++) {
+					const bit = 7 - tx;
+					const lowBit = (low >> bit) & 1;
+					const highBit = (high >> bit) & 1;
+					const colorIndex = (highBit << 1) | lowBit;
+					const color =
+						colorIndex > 0
+							? ppu.getColor?.(info.paletteId, colorIndex) ?? 0
+							: ppu.getColor?.(0, 0) ?? 0;
+					const x = px0 + tx * scale;
+					const y = py0 + ty * scale;
+					draw.AddRectFilled(
+						new ImGui.Vec2(x, y),
+						new ImGui.Vec2(x + scale, y + scale),
+						color
+					);
+				}
+			}
+
+			const palX0 = rowX + previewSize + blockGap;
+			const palY0 = rowY + Math.floor((combinedRowH - swatchSize) / 2);
+			for (let i = 0; i < 4; i++) {
+				const color =
+					i === 0
+						? ppu.getColor?.(0, 0) ?? 0
+						: ppu.getColor?.(info.paletteId, i) ?? 0;
+				const x = palX0 + i * swatchSize;
+				const y = palY0;
+				draw.AddRectFilled(
+					new ImGui.Vec2(x, y),
+					new ImGui.Vec2(x + swatchSize, y + swatchSize),
+					color,
+					3
+				);
+				draw.AddRect(
+					new ImGui.Vec2(x, y),
+					new ImGui.Vec2(x + swatchSize, y + swatchSize),
+					RGBA(0, 0, 0, 200),
+					3,
+					0,
+					1
+				);
+			}
 		}
 	}
 
