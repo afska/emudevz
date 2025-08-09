@@ -3,6 +3,7 @@ import { byte } from "../../../../utils";
 const PATTERN_TABLE_SIZE = 0x1000;
 const TILE_SIZE_PIXELS = 8;
 const TILE_TOTAL_BYTES = 16;
+const GRAYSCALE_PALETTE = [0xffffffff, 0xffcecece, 0xff686868, 0xff000000];
 
 export class Tile {
 	constructor(ppu, patternTableId, tileId, y) {
@@ -10,8 +11,8 @@ export class Tile {
 		const firstPlane = tileId * TILE_TOTAL_BYTES;
 		const secondPlane = firstPlane + TILE_TOTAL_BYTES / 2;
 
-		this._lowRow = ppu.memory.read(startAddress + firstPlane + y);
-		this._highRow = ppu.memory.read(startAddress + secondPlane + y);
+		this._lowRow = ppu.memory?.read?.(startAddress + firstPlane + y) ?? 0;
+		this._highRow = ppu.memory?.read?.(startAddress + secondPlane + y) ?? 0;
 	}
 
 	getColorIndex(x) {
@@ -47,7 +48,7 @@ export class NameTableRenderer {
 
 	render(nameTableId, offsetX, offsetY, plot) {
 		for (let y = 0; y < SCREEN_HEIGHT; y++) {
-			const backgroundColor = this.ppu.getColor(0, 0);
+			const backgroundColor = this.ppu.getColor?.(0, 0) ?? 0;
 
 			for (let x = 0; x < SCREEN_WIDTH; ) {
 				const scrolledX = x;
@@ -67,9 +68,10 @@ export class NameTableRenderer {
 					nameTableY
 				);
 
-				const paletteColors = this.ppu.getPaletteColors(paletteId);
-				const patternTableId = this.ppu.registers.ppuCtrl
-					.backgroundPatternTableId;
+				const paletteColors =
+					this.ppu.getPaletteColors?.(paletteId) ?? GRAYSCALE_PALETTE;
+				const patternTableId =
+					this.ppu.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
 				const tileStartX = nameTableX % TILE_SIZE_PIXELS;
 				const tileInsideY = nameTableY % TILE_SIZE_PIXELS;
 
@@ -109,7 +111,7 @@ export class NameTableRenderer {
 		);
 		const regionIndex = regionY * ATTRIBUTE_TABLE_TOTAL_REGIONS_X + regionX;
 
-		const block = this.ppu.memory.read(startAddress + blockIndex);
+		const block = this.ppu.memory?.read?.(startAddress + blockIndex) ?? 0;
 
 		return byte.getBits(
 			block,
