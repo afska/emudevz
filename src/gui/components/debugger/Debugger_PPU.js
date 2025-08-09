@@ -46,6 +46,7 @@ export default class Debugger_PPU {
 			null
 		);
 
+		this._showScrollOverlay = true;
 		this._showTileGrid = false;
 		this._showAttributeGrid = false;
 		this._scanlineTrigger = 260; // -1..260
@@ -96,12 +97,17 @@ export default class Debugger_PPU {
 				const gl = ImGui_Impl.gl;
 
 				ImGui.Checkbox(
-					"Show tile grid (8x8)",
+					"Scroll overlay",
+					(v = this._showScrollOverlay) => (this._showScrollOverlay = v)
+				);
+				ImGui.SameLine();
+				ImGui.Checkbox(
+					"Tile grid (8x8)",
 					(v = this._showTileGrid) => (this._showTileGrid = v)
 				);
 				ImGui.SameLine();
 				ImGui.Checkbox(
-					"Show attribute grid (16x16)",
+					"Attribute grid (16x16)",
 					(v = this._showAttributeGrid) => (this._showAttributeGrid = v)
 				);
 
@@ -149,12 +155,13 @@ export default class Debugger_PPU {
 								COLOR_ATTRIBUTE_GRID_LINE
 							);
 
-						this._drawViewportOverlay(
-							this._atlasPixels,
-							ATLAS_WIDTH,
-							ATLAS_HEIGHT,
-							ppu
-						);
+						if (this._showScrollOverlay)
+							this._drawViewportOverlay(
+								this._atlasPixels,
+								ATLAS_WIDTH,
+								ATLAS_HEIGHT,
+								ppu
+							);
 					};
 				}
 
