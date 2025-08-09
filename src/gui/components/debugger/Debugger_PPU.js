@@ -9,6 +9,8 @@ const RGBA = (r, g, b, a) => {
 
 const COLOR_VIEWPORT_OVERLAY_STROKE = RGBA(255, 0, 0, 160);
 const COLOR_VIEWPORT_OVERLAY_FILL = RGBA(0, 180, 255, 120);
+const COLOR_HOVER_OVERLAY_STROKE = RGBA(128, 128, 128, 255);
+const COLOR_HOVER_OVERLAY_FILL = RGBA(0, 180, 255, 90);
 const COLOR_TILE_GRID_LINE = RGBA(255, 0, 255, 160);
 const COLOR_ATTRIBUTE_GRID_LINE = RGBA(0, 255, 0, 160);
 
@@ -51,6 +53,8 @@ export default class Debugger_PPU {
 		this._showAttributeGrid = false;
 		this._scanlineTrigger = 260; // -1..260
 		this._atlasPixels = new Uint32Array(SCREEN_WIDTH * 2 * (SCREEN_HEIGHT * 2));
+		this._hoverInfo = null;
+
 		this._destroyed = false;
 	}
 
@@ -165,6 +169,74 @@ export default class Debugger_PPU {
 					};
 				}
 
+				const imgTopLeft = ImGui.GetCursorScreenPos();
+				const mouse = ImGui.GetMousePos();
+				const localX = Math.floor(mouse.x - imgTopLeft.x);
+				const localY = Math.floor(mouse.y - imgTopLeft.y);
+				let hoverRect = null;
+				let hoverInfo = null;
+
+				if (
+					localX >= 0 &&
+					localY >= 0 &&
+					localX < ATLAS_WIDTH &&
+					localY < ATLAS_HEIGHT &&
+					ImGui.IsWindowHovered()
+				) {
+					const atlasTileX = Math.floor(localX / 8);
+					const atlasTileY = Math.floor(localY / 8);
+
+					const ntX = localX >= SCREEN_WIDTH ? 1 : 0;
+					const ntY = localY >= SCREEN_HEIGHT ? 1 : 0;
+					const nameTableId = (ntY << 1) | ntX;
+
+					const tileX = atlasTileX % (SCREEN_WIDTH / 8);
+					const tileY = atlasTileY % (SCREEN_HEIGHT / 8);
+
+					const ntBase = 0x2000 + nameTableId * 0x400;
+					const tileIndexAddr = ntBase + tileY * 32 + tileX;
+					const attrAddr =
+						ntBase + 0x3c0 + ((tileX >> 2) & 7) + ((tileY >> 2) << 3);
+
+					const tileIndex = ppu.memory?.read?.(tileIndexAddr) ?? 0;
+					const patternTableId =
+						ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
+					const tileAddr = (patternTableId ? 0x1000 : 0x0000) + tileIndex * 16;
+
+					hoverInfo = {
+						nameTableId,
+						tileX,
+						tileY,
+						tileIndex,
+						tileIndexAddr,
+						tileAddr,
+						attrAddr,
+					};
+
+					const rectX = atlasTileX * 8;
+					const rectY = atlasTileY * 8;
+					hoverRect = { x: rectX, y: rectY, w: 8, h: 8 };
+
+					ImGui.SetMouseCursor(ImGui.MouseCursor.None);
+				}
+
+				let uploadPixels = this._atlasPixels;
+				if (hoverRect) {
+					uploadPixels = new Uint32Array(this._atlasPixels);
+					this._drawHoverOverlay(
+						uploadPixels,
+						ATLAS_WIDTH,
+						ATLAS_HEIGHT,
+						hoverRect.x,
+						hoverRect.y,
+						hoverRect.w,
+						hoverRect.h
+					);
+					this._hoverInfo = hoverInfo;
+				} else {
+					this._hoverInfo = null;
+				}
+
 				gl.bindTexture(gl.TEXTURE_2D, this._fbTex0);
 				gl.texSubImage2D(
 					gl.TEXTURE_2D,
@@ -175,10 +247,13 @@ export default class Debugger_PPU {
 					ATLAS_HEIGHT,
 					gl.RGBA,
 					gl.UNSIGNED_BYTE,
-					new Uint8Array(this._atlasPixels.buffer)
+					new Uint8Array(uploadPixels.buffer)
 				);
 
 				ImGui.Image(this._fbTex0, new ImGui.Vec2(ATLAS_WIDTH, ATLAS_HEIGHT));
+
+				if (this._hoverInfo)
+					this._drawTileInfoOverlayForeground(this._hoverInfo);
 			},
 			this.args.readOnly ? this.selectedTab === "Name tables" : null
 		);
@@ -319,6 +394,92 @@ export default class Debugger_PPU {
 		}
 	}
 
+	_drawHoverOverlay(pixels, width, height, x, y, w, h) {
+		const stroke = COLOR_HOVER_OVERLAY_STROKE;
+		const fill = COLOR_HOVER_OVERLAY_FILL;
+
+		const x0 = Math.max(0, x),
+			y0 = Math.max(0, y);
+		const x1 = Math.min(width, x + w),
+			y1 = Math.min(height, y + h);
+
+		for (let yy = y0; yy < y1; yy++) {
+			const row = yy * width;
+			for (let xx = x0; xx < x1; xx++) {
+				const i = row + xx;
+				pixels[i] = this._blendOver(pixels[i], fill);
+			}
+		}
+
+		this._drawLineH(pixels, width, x, x + w - 1, y, stroke);
+		this._drawLineH(pixels, width, x, x + w - 1, y + h - 1, stroke);
+		this._drawLineV(pixels, width, height, x, y, y + h - 1, stroke);
+		this._drawLineV(pixels, width, height, x + w - 1, y, y + h - 1, stroke);
+	}
+
+	_drawTileInfoOverlayForeground(info) {
+		const draw = ImGui.GetForegroundDrawList();
+		const vp = ImGui.GetMainViewport
+			? ImGui.GetMainViewport()
+			: { WorkPos: ImGui.GetWindowPos(), WorkSize: ImGui.GetWindowSize() };
+		const margin = 12;
+		const lineGap = 2;
+
+		const toUint = (c) => c >>> 0; // (ensure unsigned 32-bit for ImGui drawlist)
+
+		const pad8 = (n) => String(n).padEnd(8, " ");
+		const lines = [
+			`PPU address       : ${this._hex(info.tileIndexAddr, 4)} `,
+			`Name table        : ${info.nameTableId}`,
+			`Position          : ` + pad8(`(${info.tileX}, ${info.tileY})`),
+			`Tile index        : ${this._hex(info.tileIndex, 2)} `,
+			`Tile address      : ${this._hex(info.tileAddr, 4)} `,
+			`Attribute address : ${this._hex(info.attrAddr, 4)} `,
+		];
+
+		let maxW = 0;
+		let totalH = 0;
+		const lineHeights = [];
+		for (let i = 0; i < lines.length; i++) {
+			const size = ImGui.CalcTextSize(lines[i]);
+			maxW = Math.max(maxW, size.x);
+			const h = size.y;
+			lineHeights.push(h);
+			totalH += (i === 0 ? 0 : lineGap) + h;
+		}
+
+		const x1 = vp.WorkPos.x + vp.WorkSize.x - margin;
+		const y1 = vp.WorkPos.y + vp.WorkSize.y - margin;
+		const x0 = x1 - maxW - 14;
+		const y0 = y1 - totalH - 14;
+
+		const bgCol = toUint(RGBA(16, 16, 16, 180));
+		const borderCol = toUint(RGBA(255, 255, 255, 64));
+		const textCol = toUint(RGBA(255, 255, 255, 255));
+
+		draw.AddRectFilled(
+			new ImGui.Vec2(x0, y0),
+			new ImGui.Vec2(x1, y1),
+			bgCol,
+			6
+		);
+		draw.AddRect(
+			new ImGui.Vec2(x0, y0),
+			new ImGui.Vec2(x1, y1),
+			borderCol,
+			6,
+			0,
+			1
+		);
+
+		let cy = y0 + 7;
+		const cx = x0 + 7;
+		for (let i = 0; i < lines.length; i++) {
+			draw.AddText(new ImGui.Vec2(cx, cy), textCol, lines[i]);
+			cy += lineHeights[i] + lineGap;
+		}
+	}
+
 	_drawLineH(pixels, width, x0, x1, y, color) {
 		if (y < 0 || y >= pixels.length / width) return;
 		const xa = Math.max(0, Math.min(x0, x1));
@@ -361,5 +522,10 @@ export default class Debugger_PPU {
 		const b = ((sb * sa + db * (255 - sa) + 127) / 255) | 0;
 
 		return RGBA(r, g, b, a);
+	}
+
+	_hex(n, width) {
+		const v = n.toString(16).toUpperCase().padStart(width, "0");
+		return `$${v}`;
 	}
 }
