@@ -3,7 +3,12 @@ import { byte } from "../../../../utils";
 const PATTERN_TABLE_SIZE = 0x1000;
 const TILE_SIZE_PIXELS = 8;
 const TILE_TOTAL_BYTES = 16;
-const GRAYSCALE_PALETTE = [0xffffffff, 0xffcecece, 0xff686868, 0xff000000];
+export const GRAYSCALE_PALETTE = [
+	0xff000000,
+	0xff555555,
+	0xffaaaaaa,
+	0xffffffff,
+];
 
 export class Tile {
 	constructor(ppu, patternTableId, tileId, y) {

@@ -1,11 +1,17 @@
 import { hex } from "../../../utils";
 import { NEEESSimpleCPULogger } from "../../../utils/nes";
-import utils from "./utils";
+import widgets from "./widgets";
 
 const ImGui = window.ImGui;
 
+// Knobs
 const LOG_LIMIT = 1000;
+
 const LOGGER_TYPE = "cpu";
+const REGISTER_FIELDS = ["a", "x", "y", "sp", "pc"];
+const REGISTERS = REGISTER_FIELDS.map((it) => `[${it.toUpperCase()}]`);
+const FLAGS = ["N", "V", "-", "-", "D", "I", "Z", "C"];
+const DISASSEMBLY_FIELDS = ["$counter", "$commandHex", "$assembly", "$status"];
 
 export default class Debugger_CPU {
 	constructor() {
@@ -19,6 +25,20 @@ export default class Debugger_CPU {
 	draw() {
 		const neees = window.EmuDevz.emulation?.neees;
 
+		this._setUpLoggerIfNeeded(neees);
+		this._drawRegistersAndFlags(neees);
+		this._drawDisassembly();
+	}
+
+	destroy() {
+		const neees = window.EmuDevz.emulation?.neees;
+		if (!neees) return;
+
+		if (neees.cpu.logger?.type === LOGGER_TYPE) neees.cpu.logger = null;
+		this._destroyed = true;
+	}
+
+	_setUpLoggerIfNeeded(neees) {
 		if (
 			neees != null &&
 			(neees.cpu.logger == null || neees.cpu.logger.type !== LOGGER_TYPE)
@@ -39,17 +59,9 @@ export default class Debugger_CPU {
 			};
 			neees.cpu.logger.type = LOGGER_TYPE;
 		}
+	}
 
-		const registerFields = ["a", "x", "y", "sp", "pc"];
-		const registers = registerFields.map((it) => `[${it.toUpperCase()}]`);
-		const flags = ["N", "V", "-", "-", "D", "I", "Z", "C"];
-		const disassemblyFields = [
-			"$counter",
-			"$commandHex",
-			"$assembly",
-			"$status",
-		];
-
+	_drawRegistersAndFlags(neees) {
 		const flagsSmall =
 			ImGui.TableFlags.SizingStretchProp |
 			ImGui.TableFlags.RowBg |
@@ -57,14 +69,14 @@ export default class Debugger_CPU {
 
 		ImGui.Columns(2, "cpu_flag_columns", false);
 
-		if (ImGui.BeginTable("registers", registers.length, flagsSmall)) {
-			for (let h of registers) ImGui.TableSetupColumn(h);
+		if (ImGui.BeginTable("registers", REGISTERS.length, flagsSmall)) {
+			for (let h of REGISTERS) ImGui.TableSetupColumn(h);
 			ImGui.TableHeadersRow();
 			ImGui.TableNextRow();
-			for (let i = 0; i < registers.length; i++) {
+			for (let i = 0; i < REGISTERS.length; i++) {
 				ImGui.TableSetColumnIndex(i);
-				const registerField = registerFields[i];
-				const value = utils.numberOr0(neees?.cpu[registerField]?.getValue());
+				const registerField = REGISTER_FIELDS[i];
+				const value = widgets.numberOr0(neees?.cpu[registerField]?.getValue());
 				ImGui.Text("$" + hex.format(value, registerField === "pc" ? 4 : 2));
 			}
 			ImGui.EndTable();
@@ -72,14 +84,14 @@ export default class Debugger_CPU {
 
 		ImGui.NextColumn();
 
-		if (ImGui.BeginTable("flags", flags.length, flagsSmall)) {
-			for (let h of flags) ImGui.TableSetupColumn(h);
+		if (ImGui.BeginTable("flags", FLAGS.length, flagsSmall)) {
+			for (let h of FLAGS) ImGui.TableSetupColumn(h);
 			ImGui.TableHeadersRow();
 			ImGui.TableNextRow();
-			for (let i = 0; i < flags.length; i++) {
+			for (let i = 0; i < FLAGS.length; i++) {
 				ImGui.TableSetColumnIndex(i);
-				const flagField = flags[i].toLowerCase();
-				const value = utils.numberOr0(
+				const flagField = FLAGS[i].toLowerCase();
+				const value = widgets.numberOr0(
 					+(neees?.cpu.flags?.[flagField] ?? false)
 				);
 				ImGui.Text(i === 2 ? "1" : i === 3 ? "0" : `${value}`);
@@ -88,7 +100,9 @@ export default class Debugger_CPU {
 		}
 
 		ImGui.Columns(1);
+	}
 
+	_drawDisassembly() {
 		const flagsBig =
 			ImGui.TableFlags.SizingFixedFit |
 			ImGui.TableFlags.RowBg |
@@ -115,20 +129,12 @@ export default class Debugger_CPU {
 				ImGui.TableNextRow();
 				for (let col = 0; col < 4; col++) {
 					ImGui.TableSetColumnIndex(col);
-					const field = disassemblyFields[col];
+					const field = DISASSEMBLY_FIELDS[col];
 					const value = this._logs[row][field];
 					ImGui.Text(value);
 				}
 			}
 			ImGui.EndTable();
 		}
-	}
-
-	destroy() {
-		const neees = window.EmuDevz.emulation?.neees;
-		if (!neees) return;
-
-		if (neees.cpu.logger?.type === LOGGER_TYPE) neees.cpu.logger = null;
-		this._destroyed = true;
 	}
 }

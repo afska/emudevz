@@ -1,5 +1,8 @@
-import { NameTableRenderer } from "./neees/debugPPU";
-import utils from "./utils";
+import { hex } from "../../../utils";
+import { GRAYSCALE_PALETTE, NameTableRenderer, Tile } from "./neees/debugPPU";
+import widgets from "./widgets";
+
+const ImGui = window.ImGui;
 
 const RGBA = (r, g, b, a) => {
 	return (
@@ -11,6 +14,7 @@ const RGBA = (r, g, b, a) => {
 	);
 };
 
+// Knobs
 const COLOR_VIEWPORT_OVERLAY_STROKE = RGBA(255, 0, 0, 160);
 const COLOR_VIEWPORT_OVERLAY_FILL = RGBA(0, 180, 255, 120);
 const COLOR_HOVER_OVERLAY_STROKE = RGBA(128, 128, 128, 255);
@@ -18,6 +22,8 @@ const COLOR_HOVER_OVERLAY_FILL = RGBA(0, 180, 255, 90);
 const COLOR_INFO_OVERLAY_STROKE = RGBA(255, 255, 255, 64);
 const COLOR_INFO_OVERLAY_FILL = RGBA(16, 16, 16, 180);
 const COLOR_INFO_OVERLAY_TEXT = RGBA(255, 255, 255, 255);
+const COLOR_SELECTED_TILE_OVERLAY_STROKE = RGBA(255, 64, 64, 192);
+const COLOR_SELECTED_TILE_OVERLAY_FILL = RGBA(255, 0, 0, 96);
 const COLOR_TILE_GRID_LINE = RGBA(255, 0, 255, 160);
 const COLOR_ATTRIBUTE_GRID_LINE = RGBA(0, 255, 0, 160);
 
@@ -25,49 +31,46 @@ const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
 const ATLAS_WIDTH = SCREEN_WIDTH * 2;
 const ATLAS_HEIGHT = SCREEN_HEIGHT * 2;
-
-const ImGui = window.ImGui;
-const ImGui_Impl = window.ImGui_Impl;
+const CHR_SIZE_PIXELS = 128; // 16x16 tiles * 8
+const TILES_PER_ROW = 16;
+const CHR_SCALE = 2;
 
 export default class Debugger_PPU {
 	constructor(args) {
 		this.args = args;
-		this.selectedTab = null; // only works when `this.args.readOnly`
+
+		this.selectedTab = args.initialTab || null;
 	}
 
 	init() {
-		const gl = ImGui_Impl.gl;
-		this._fbTex0 = gl.createTexture();
-		gl.bindTexture(gl.TEXTURE_2D, this._fbTex0);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+		// Textures
+		this._atlasTexture = widgets.newTexture(ATLAS_WIDTH, ATLAS_HEIGHT);
+		this._chr0Texture = widgets.newTexture(CHR_SIZE_PIXELS, CHR_SIZE_PIXELS);
+		this._chr1Texture = widgets.newTexture(CHR_SIZE_PIXELS, CHR_SIZE_PIXELS);
 
-		// $aabbggrr buffer
-		gl.texImage2D(
-			gl.TEXTURE_2D,
-			0,
-			gl.RGBA,
-			ATLAS_WIDTH,
-			ATLAS_HEIGHT,
-			0,
-			gl.RGBA,
-			gl.UNSIGNED_BYTE,
-			null
-		);
+		// Scanline trigger
+		this._scanlineTrigger = 260; // -1..260
 
+		// Name tables
 		this._showScrollOverlay = true;
 		this._showTileGrid = false;
 		this._showAttributeGrid = false;
-		this._scanlineTrigger = 260; // -1..260
-		this._atlasPixels = new Uint32Array(SCREEN_WIDTH * 2 * (SCREEN_HEIGHT * 2));
 		this._hoverInfo = null;
 		this._pendingHoverReq = null;
+		this._atlasPixels = new Uint32Array(ATLAS_WIDTH * ATLAS_HEIGHT);
+
+		// CHR state
+		this._chrHover = null; // { tableId, tileIndex, rect }
+		this._chrHoverInfo = null; // { tableId, tileIndex, tileAddress }
+		this._selectedCHR = null; // { tableId, tileIndex }
+		this._chr0Pixels = new Uint32Array(CHR_SIZE_PIXELS * CHR_SIZE_PIXELS);
+		this._chr1Pixels = new Uint32Array(CHR_SIZE_PIXELS * CHR_SIZE_PIXELS);
 
 		this._destroyed = false;
 	}
 
 	draw() {
-		utils.fullWidthFieldWithLabel("Scanline", (label) => {
+		widgets.fullWidthFieldWithLabel("Scanline", (label) => {
 			ImGui.SliderInt(
 				label,
 				(v = this._scanlineTrigger) => (this._scanlineTrigger = v),
@@ -77,14 +80,33 @@ export default class Debugger_PPU {
 			);
 		});
 
+		const emulation = window.EmuDevz?.emulation;
+		const neees = emulation?.neees;
+		const ppu = neees?.ppu;
+
+		if (neees != null && neees.onScanline == null) {
+			neees.onScanline = () => {
+				if (this._destroyed) {
+					neees.onScanline = null;
+					return;
+				}
+
+				const scanline = ppu.scanline ?? 0;
+				if (scanline !== this._scanlineTrigger) return;
+
+				this._onScanlineTrigger(ppu);
+			};
+		}
+
 		if (ImGui.BeginTabBar("PPUTabs")) {
-			this._drawNameTablesTab();
+			this._drawNameTablesTab(ppu);
 			this._drawCHRTab();
 			this._drawSpritesTab();
 			this._drawPalettesTab();
 			this._drawInfoTab();
 
 			ImGui.EndTabBar();
+			this.selectedTab = null;
 		}
 	}
 
@@ -94,257 +116,434 @@ export default class Debugger_PPU {
 
 		neees.onScanline = null;
 
-		if (this._fbTex0) {
-			const gl = ImGui_Impl.gl;
-			gl.deleteTexture(this._fbTex0);
-			this._fbTex0 = null;
+		if (this._atlasTexture) {
+			widgets.deleteTexture(this._atlasTexture);
+			this._atlasTexture = null;
+		}
+		if (this._chr0Texture) {
+			widgets.deleteTexture(this._chr0Texture);
+			this._chr0Texture = null;
+		}
+		if (this._chr1Texture) {
+			widgets.deleteTexture(this._chr1Texture);
+			this._chr1Texture = null;
 		}
 
 		this._destroyed = true;
 	}
 
-	_drawNameTablesTab() {
-		utils.simpleTab(
-			"Name tables",
-			() => {
-				const gl = ImGui_Impl.gl;
+	_onScanlineTrigger(ppu) {
+		this._updateNameTableAtlas(ppu);
+		this._updateCHR(ppu);
+	}
 
-				ImGui.Checkbox(
-					"Scroll overlay",
-					(v = this._showScrollOverlay) => (this._showScrollOverlay = v)
-				);
-				ImGui.SameLine();
-				ImGui.Checkbox(
-					"Tile grid (8x8)",
-					(v = this._showTileGrid) => (this._showTileGrid = v)
-				);
-				ImGui.SameLine();
-				ImGui.Checkbox(
-					"Attribute grid (16x16)",
-					(v = this._showAttributeGrid) => (this._showAttributeGrid = v)
-				);
+	_updateNameTableAtlas(ppu) {
+		this._atlasPixels.fill(0);
 
-				const emulation = window.EmuDevz?.emulation;
-				const neees = emulation?.neees;
-				const ppu = neees?.ppu;
+		const plot = (x, y, color) => {
+			if (x >= 0 && x < ATLAS_WIDTH && y >= 0 && y < ATLAS_HEIGHT)
+				this._atlasPixels[y * ATLAS_WIDTH + x] = color;
+		};
 
-				if (neees != null && neees.onScanline == null) {
-					neees.onScanline = () => {
-						if (this._destroyed) {
-							neees.onScanline = null;
-							return;
-						}
+		const renderer = new NameTableRenderer(ppu, plot);
+		renderer.render(0, 0, 0);
+		renderer.render(1, 256, 0);
+		renderer.render(2, 0, 240);
+		renderer.render(3, 256, 240);
 
-						const scanline = ppu.scanline ?? 0;
-						if (scanline !== this._scanlineTrigger) return;
+		if (this._showTileGrid)
+			this._drawGrid(
+				this._atlasPixels,
+				ATLAS_WIDTH,
+				ATLAS_HEIGHT,
+				8,
+				COLOR_TILE_GRID_LINE
+			);
+		if (this._showAttributeGrid)
+			this._drawGrid(
+				this._atlasPixels,
+				ATLAS_WIDTH,
+				ATLAS_HEIGHT,
+				16,
+				COLOR_ATTRIBUTE_GRID_LINE
+			);
 
-						this._atlasPixels.fill(0);
+		if (this._showScrollOverlay)
+			this._drawViewportOverlay(
+				this._atlasPixels,
+				ATLAS_WIDTH,
+				ATLAS_HEIGHT,
+				ppu
+			);
 
-						const plot = (x, y, color) => {
-							if (x >= 0 && x < ATLAS_WIDTH && y >= 0 && y < ATLAS_HEIGHT)
-								this._atlasPixels[y * ATLAS_WIDTH + x] = color;
-						};
+		this._highlightSelectedCHROnNameTableAtlas(ppu);
+		this._processPendingHoverReq(ppu);
+	}
 
-						const renderer = new NameTableRenderer(ppu, plot);
-						renderer.render(0, 0, 0);
-						renderer.render(1, 256, 0);
-						renderer.render(2, 0, 240);
-						renderer.render(3, 256, 240);
+	_highlightSelectedCHROnNameTableAtlas(ppu) {
+		if (!this._selectedCHR) return;
 
-						if (this._showTileGrid)
-							this._drawGrid(
-								this._atlasPixels,
-								ATLAS_WIDTH,
-								ATLAS_HEIGHT,
-								8,
-								COLOR_TILE_GRID_LINE
-							);
-						if (this._showAttributeGrid)
-							this._drawGrid(
-								this._atlasPixels,
-								ATLAS_WIDTH,
-								ATLAS_HEIGHT,
-								16,
-								COLOR_ATTRIBUTE_GRID_LINE
-							);
+		const patternTableId =
+			ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
+		if (patternTableId !== this._selectedCHR.tableId) return;
 
-						if (this._showScrollOverlay)
-							this._drawViewportOverlay(
-								this._atlasPixels,
-								ATLAS_WIDTH,
-								ATLAS_HEIGHT,
-								ppu
-							);
+		for (let nameTableId = 0; nameTableId < 4; nameTableId++) {
+			const base = 0x2000 + nameTableId * 0x400;
+			const offsetX = (nameTableId & 1) * SCREEN_WIDTH;
+			const offsetY = ((nameTableId >> 1) & 1) * SCREEN_HEIGHT;
 
-						if (this._pendingHoverReq) {
-							const req = this._pendingHoverReq;
+			for (let tileY = 0; tileY < 30; tileY++) {
+				for (let tileX = 0; tileX < 32; tileX++) {
+					const address = base + tileY * 32 + tileX;
+					const tileIndex = ppu.memory?.read?.(address) ?? 0;
 
-							const tileIndex = ppu.memory?.read?.(req.tileIndexAddr) ?? 0;
-							const patternTableId =
-								ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
-							const tileAddr =
-								(patternTableId ? 0x1000 : 0x0000) + tileIndex * 16;
+					if (tileIndex === this._selectedCHR.tileIndex) {
+						const rectX = offsetX + tileX * 8;
+						const rectY = offsetY + tileY * 8;
 
-							const attrByte = ppu.memory?.read?.(req.attrAddr) ?? 0;
-							const shift = (req.tileY & 2 ? 4 : 0) + (req.tileX & 2 ? 2 : 0);
-							const paletteId = (attrByte >> shift) & 0x03;
-							const paletteAddr = 0x3f00 + paletteId * 4;
-
-							const previewColors = new Array(64);
-							for (let ty = 0; ty < 8; ty++) {
-								const low = ppu.memory?.read?.(tileAddr + ty) ?? 0;
-								const high = ppu.memory?.read?.(tileAddr + 8 + ty) ?? 0;
-								for (let tx = 0; tx < 8; tx++) {
-									const bit = 7 - tx;
-									const lowBit = (low >> bit) & 1;
-									const highBit = (high >> bit) & 1;
-									const colorIndex = (highBit << 1) | lowBit;
-									const color =
-										colorIndex > 0
-											? ppu.getColor?.(paletteId, colorIndex) ?? 0
-											: ppu.getColor?.(0, 0) ?? 0;
-									previewColors[ty * 8 + tx] = color >>> 0;
-								}
-							}
-
-							const paletteColors = [
-								ppu.getColor?.(0, 0) ?? 0,
-								ppu.getColor?.(paletteId, 1) ?? 0,
-								ppu.getColor?.(paletteId, 2) ?? 0,
-								ppu.getColor?.(paletteId, 3) ?? 0,
-							].map((c) => c >>> 0);
-
-							this._hoverInfo = {
-								nameTableId: req.nameTableId,
-								tileX: req.tileX,
-								tileY: req.tileY,
-								tileIndex,
-								tileIndexAddr: req.tileIndexAddr,
-								tileAddr,
-								attrAddr: req.attrAddr,
-								paletteId,
-								paletteAddr,
-								previewColors,
-								paletteColors,
-							};
-
-							this._pendingHoverReq = null;
-						}
-					};
+						this._drawRectOverlay(
+							this._atlasPixels,
+							ATLAS_WIDTH,
+							ATLAS_HEIGHT,
+							rectX,
+							rectY,
+							8,
+							8,
+							COLOR_SELECTED_TILE_OVERLAY_STROKE,
+							COLOR_SELECTED_TILE_OVERLAY_FILL
+						);
+					}
 				}
+			}
+		}
+	}
 
-				const imgTopLeft = ImGui.GetCursorScreenPos();
-				const mouse = ImGui.GetMousePos();
-				const localX = Math.floor(mouse.x - imgTopLeft.x);
-				const localY = Math.floor(mouse.y - imgTopLeft.y);
-				let hoverRect = null;
+	_processPendingHoverReq(ppu) {
+		const req = this._pendingHoverReq;
+		if (!req) return;
 
-				if (
-					localX >= 0 &&
-					localY >= 0 &&
-					localX < ATLAS_WIDTH &&
-					localY < ATLAS_HEIGHT &&
-					ImGui.IsWindowHovered()
-				) {
-					const atlasTileX = Math.floor(localX / 8);
-					const atlasTileY = Math.floor(localY / 8);
+		const tileIndex = ppu.memory?.read?.(req.ppuAddress) ?? 0;
+		const patternTableId =
+			ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
+		const tileAddress = (patternTableId ? 0x1000 : 0x0000) + tileIndex * 16;
 
-					const ntX = localX >= SCREEN_WIDTH ? 1 : 0;
-					const ntY = localY >= SCREEN_HEIGHT ? 1 : 0;
-					const nameTableId = (ntY << 1) | ntX;
+		const attribute = ppu.memory?.read?.(req.attributeAddress) ?? 0;
+		const shift = (req.tileY & 2 ? 4 : 0) + (req.tileX & 2 ? 2 : 0);
+		const paletteId = (attribute >> shift) & 0x03;
+		const paletteAddress = 0x3f00 + paletteId * 4;
 
-					const tileX = atlasTileX % (SCREEN_WIDTH / 8);
-					const tileY = atlasTileY % (SCREEN_HEIGHT / 8);
+		const previewColors = new Array(64);
+		for (let y = 0; y < 8; y++) {
+			const row = new Tile(ppu, patternTableId, tileIndex, y);
+			for (let x = 0; x < 8; x++) {
+				const colorIndex = row.getColorIndex(x);
+				const color =
+					colorIndex > 0
+						? ppu.getColor?.(paletteId, colorIndex) ?? 0
+						: ppu.getColor?.(0, 0) ?? 0;
+				previewColors[y * 8 + x] = color >>> 0;
+			}
+		}
 
-					const ntBase = 0x2000 + nameTableId * 0x400;
-					const tileIndexAddr = ntBase + tileY * 32 + tileX;
-					const attrAddr =
-						ntBase + 0x3c0 + ((tileX >> 2) & 7) + ((tileY >> 2) << 3);
+		const paletteColors = [
+			ppu.getColor?.(0, 0) ?? 0,
+			ppu.getColor?.(paletteId, 1) ?? 0,
+			ppu.getColor?.(paletteId, 2) ?? 0,
+			ppu.getColor?.(paletteId, 3) ?? 0,
+		].map((c) => c >>> 0);
 
-					this._pendingHoverReq = {
-						nameTableId,
-						tileX,
-						tileY,
-						tileIndexAddr,
-						attrAddr,
-					};
+		this._hoverInfo = {
+			nameTableId: req.nameTableId,
+			tileX: req.tileX,
+			tileY: req.tileY,
+			tileIndex,
+			ppuAddress: req.ppuAddress,
+			tileAddress,
+			attributeAddress: req.attributeAddress,
+			paletteId,
+			paletteAddress,
+			previewColors,
+			paletteColors,
+		};
 
-					const rectX = atlasTileX * 8;
-					const rectY = atlasTileY * 8;
-					hoverRect = { x: rectX, y: rectY, w: 8, h: 8 };
+		this._pendingHoverReq = null;
+	}
 
-					ImGui.SetMouseCursor(ImGui.MouseCursor.None);
-				} else {
-					this._pendingHoverReq = null;
-					this._hoverInfo = null;
+	_updateCHR(ppu) {
+		const render = (patternTableId, out) => {
+			for (let tileId = 0; tileId < 256; tileId++) {
+				const tileX = tileId % TILES_PER_ROW;
+				const tileY = Math.floor(tileId / TILES_PER_ROW);
+				const base = tileY * 8 * CHR_SIZE_PIXELS + tileX * 8;
+
+				for (let y = 0; y < 8; y++) {
+					const row = new Tile(ppu, patternTableId, tileId, y);
+					const dst = base + y * CHR_SIZE_PIXELS;
+					for (let x = 0; x < 8; x++)
+						out[dst + x] = GRAYSCALE_PALETTE[row.getColorIndex(x)] >>> 0;
 				}
+			}
+		};
 
-				let uploadPixels = this._atlasPixels;
-				if (hoverRect) {
-					uploadPixels = new Uint32Array(this._atlasPixels);
-					this._drawHoverOverlay(
-						uploadPixels,
-						ATLAS_WIDTH,
-						ATLAS_HEIGHT,
-						hoverRect.x,
-						hoverRect.y,
-						hoverRect.w,
-						hoverRect.h
-					);
-				}
+		render(0, this._chr0Pixels);
+		render(1, this._chr1Pixels);
+	}
 
-				gl.bindTexture(gl.TEXTURE_2D, this._fbTex0);
-				gl.texSubImage2D(
-					gl.TEXTURE_2D,
-					0,
-					0,
-					0,
-					ATLAS_WIDTH,
-					ATLAS_HEIGHT,
-					gl.RGBA,
-					gl.UNSIGNED_BYTE,
-					new Uint8Array(uploadPixels.buffer)
-				);
+	_drawNameTablesTab(ppu) {
+		widgets.simpleTab(this, "Name tables", () => {
+			ImGui.Checkbox(
+				"Scroll overlay",
+				(v = this._showScrollOverlay) => (this._showScrollOverlay = v)
+			);
+			ImGui.SameLine();
+			ImGui.Checkbox(
+				"Tile grid (8x8)",
+				(v = this._showTileGrid) => (this._showTileGrid = v)
+			);
+			ImGui.SameLine();
+			ImGui.Checkbox(
+				"Attribute grid (16x16)",
+				(v = this._showAttributeGrid) => (this._showAttributeGrid = v)
+			);
 
-				ImGui.Image(this._fbTex0, new ImGui.Vec2(ATLAS_WIDTH, ATLAS_HEIGHT));
+			this._processAtlasMouseEvents(ppu);
 
-				if (this._hoverInfo)
-					this._drawTileInfoOverlayForeground(this._hoverInfo);
-			},
-			this.args.readOnly ? this.selectedTab === "Name tables" : null
+			ImGui.Image(
+				this._atlasTexture,
+				new ImGui.Vec2(ATLAS_WIDTH, ATLAS_HEIGHT)
+			);
+
+			if (this._hoverInfo) this._drawTileInfoOverlayForeground(this._hoverInfo);
+		});
+	}
+
+	_processAtlasMouseEvents(ppu) {
+		const imgTopLeft = ImGui.GetCursorScreenPos();
+		const mouse = ImGui.GetMousePos();
+		const localX = Math.floor(mouse.x - imgTopLeft.x);
+		const localY = Math.floor(mouse.y - imgTopLeft.y);
+		let hoverRect = null;
+
+		// hover => show info
+		if (
+			localX >= 0 &&
+			localY >= 0 &&
+			localX < ATLAS_WIDTH &&
+			localY < ATLAS_HEIGHT &&
+			ImGui.IsWindowHovered()
+		) {
+			const atlasTileX = Math.floor(localX / 8);
+			const atlasTileY = Math.floor(localY / 8);
+
+			const nameTableX = localX >= SCREEN_WIDTH ? 1 : 0;
+			const nameTableY = localY >= SCREEN_HEIGHT ? 1 : 0;
+			const nameTableId = (nameTableY << 1) | nameTableX;
+
+			const tileX = atlasTileX % (SCREEN_WIDTH / 8);
+			const tileY = atlasTileY % (SCREEN_HEIGHT / 8);
+
+			const nameTableBase = 0x2000 + nameTableId * 0x400;
+			const ppuAddress = nameTableBase + tileY * 32 + tileX;
+			const attributeAddress =
+				nameTableBase + 0x3c0 + ((tileX >> 2) & 7) + ((tileY >> 2) << 3);
+
+			this._pendingHoverReq = {
+				nameTableId,
+				tileX,
+				tileY,
+				ppuAddress,
+				attributeAddress,
+			};
+
+			const rectX = atlasTileX * 8;
+			const rectY = atlasTileY * 8;
+			hoverRect = { x: rectX, y: rectY, w: 8, h: 8 };
+
+			ImGui.SetMouseCursor(ImGui.MouseCursor.None);
+
+			// click => select and jump to CHR
+			if (ImGui.IsMouseClicked(0) && this._hoverInfo) {
+				const patternTableId =
+					ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
+
+				this._selectedCHR = {
+					tableId: patternTableId,
+					tileIndex: this._hoverInfo.tileIndex,
+				};
+				this.selectedTab = "CHR";
+			}
+		} else {
+			this._pendingHoverReq = null;
+			this._hoverInfo = null;
+		}
+
+		let uploadPixels = this._atlasPixels;
+		if (hoverRect) {
+			uploadPixels = new Uint32Array(this._atlasPixels);
+			this._drawHoverOverlay(
+				uploadPixels,
+				ATLAS_WIDTH,
+				ATLAS_HEIGHT,
+				hoverRect.x,
+				hoverRect.y,
+				hoverRect.w,
+				hoverRect.h
+			);
+		}
+
+		widgets.updateTexture(
+			this._atlasTexture,
+			ATLAS_WIDTH,
+			ATLAS_HEIGHT,
+			uploadPixels
 		);
 	}
 
 	_drawCHRTab() {
-		utils.simpleTab(
-			"CHR",
-			() => {},
-			this.args.readOnly ? this.selectedTab === "CHR" : null
-		);
+		widgets.simpleTab(this, "CHR", () => {
+			const itemWidth = CHR_SIZE_PIXELS * CHR_SCALE;
+
+			const renderChrTable = (
+				id,
+				label,
+				tableId,
+				texture,
+				pixels,
+				baseAddr
+			) => {
+				widgets.simpleTable(id, label, () => {
+					widgets.centerNextItemX(itemWidth);
+
+					// hover detection (scaled coords)
+					let hover = null;
+					const imgTopLeft = ImGui.GetCursorScreenPos();
+					const mouse = ImGui.GetMousePos();
+					const lx = Math.floor((mouse.x - imgTopLeft.x) / CHR_SCALE);
+					const ly = Math.floor((mouse.y - imgTopLeft.y) / CHR_SCALE);
+					if (
+						lx >= 0 &&
+						ly >= 0 &&
+						lx < CHR_SIZE_PIXELS &&
+						ly < CHR_SIZE_PIXELS &&
+						ImGui.IsWindowHovered()
+					) {
+						const tileX = Math.floor(lx / 8);
+						const tileY = Math.floor(ly / 8);
+						const tileIndex = tileY * TILES_PER_ROW + tileX;
+						hover = {
+							tileIndex,
+							rect: { x: tileX * 8, y: tileY * 8, w: 8, h: 8 },
+						};
+						ImGui.SetMouseCursor(ImGui.MouseCursor.None);
+					}
+
+					// overlays (selected + hover)
+					let uploadPixels = pixels;
+					const isSelected =
+						this._selectedCHR && this._selectedCHR.tableId === tableId;
+					if (hover || isSelected) {
+						uploadPixels = new Uint32Array(pixels);
+						if (isSelected) {
+							const sel = this._selectedCHR.tileIndex;
+							const sx = (sel % TILES_PER_ROW) * 8;
+							const sy = Math.floor(sel / TILES_PER_ROW) * 8;
+							this._drawRectOverlay(
+								uploadPixels,
+								CHR_SIZE_PIXELS,
+								CHR_SIZE_PIXELS,
+								sx,
+								sy,
+								8,
+								8,
+								COLOR_SELECTED_TILE_OVERLAY_STROKE,
+								COLOR_SELECTED_TILE_OVERLAY_FILL
+							);
+						}
+						if (hover) {
+							this._drawHoverOverlay(
+								uploadPixels,
+								CHR_SIZE_PIXELS,
+								CHR_SIZE_PIXELS,
+								hover.rect.x,
+								hover.rect.y,
+								hover.rect.w,
+								hover.rect.h
+							);
+						}
+					}
+
+					// upload + draw (with border)
+					widgets.updateTexture(
+						texture,
+						CHR_SIZE_PIXELS,
+						CHR_SIZE_PIXELS,
+						uploadPixels
+					);
+					const drawList = ImGui.GetWindowDrawList();
+					const p0 = ImGui.GetCursorScreenPos();
+					ImGui.Image(texture, new ImGui.Vec2(itemWidth, itemWidth));
+					const p1 = new ImGui.Vec2(p0.x + itemWidth, p0.y + itemWidth);
+					drawList.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
+
+					// click toggle selection
+					if (hover && ImGui.IsMouseClicked(0)) {
+						if (isSelected && this._selectedCHR.tileIndex === hover.tileIndex) {
+							this._selectedCHR = null;
+						} else {
+							this._selectedCHR = { tableId, tileIndex: hover.tileIndex };
+						}
+					}
+
+					// hover info
+					if (hover) {
+						this._chrHoverInfo = {
+							tableId,
+							tileIndex: hover.tileIndex,
+							tileAddress: baseAddr + hover.tileIndex * 16,
+						};
+					}
+				});
+			};
+
+			ImGui.Columns(2, "PatternTableCols", false);
+			renderChrTable(
+				"patternTable0",
+				"Pattern table 0",
+				0,
+				this._chr0Texture,
+				this._chr0Pixels,
+				0x0000
+			);
+			ImGui.NextColumn();
+			renderChrTable(
+				"patternTable1",
+				"Pattern table 1",
+				1,
+				this._chr1Texture,
+				this._chr1Pixels,
+				0x1000
+			);
+			ImGui.Columns(1);
+
+			// CHR overlay (hover info)
+			if (this._chrHoverInfo) {
+				this._drawCHRInfoOverlayForeground(this._chrHoverInfo);
+			} else {
+				this._chrHoverInfo = null;
+			}
+		});
 	}
 
 	_drawSpritesTab() {
-		utils.simpleTab(
-			"Sprites",
-			() => {},
-			this.args.readOnly ? this.selectedTab === "Sprites" : null
-		);
+		widgets.simpleTab(this, "Sprites", () => {});
 	}
 
 	_drawPalettesTab() {
-		utils.simpleTab(
-			"Palettes",
-			() => {},
-			this.args.readOnly ? this.selectedTab === "Palettes" : null
-		);
+		widgets.simpleTab(this, "Palettes", () => {});
 	}
 
 	_drawInfoTab() {
-		utils.simpleTab(
-			"Info",
-			() => {},
-			this.args.readOnly ? this.selectedTab === "Info" : null
-		);
+		widgets.simpleTab(this, "Info", () => {});
 	}
 
 	_drawViewportOverlay(pixels, width, height, ppu) {
@@ -355,22 +554,22 @@ export default class Debugger_PPU {
 		const withinNameTableX = tAddress.coarseX * 8 + (fineX ?? 0) ?? 0;
 		const withinNameTableY = tAddress.coarseY * 8 + (tAddress.fineY ?? 0) ?? 0;
 
-		let atlasNTX = baseNameTableId & 1;
-		let atlasNTY = (baseNameTableId >> 1) & 1;
+		let atlasNameTableX = baseNameTableId & 1;
+		let atlasNameTableY = (baseNameTableId >> 1) & 1;
 
 		let viewportStartX =
-			atlasNTX * SCREEN_WIDTH + (withinNameTableX % SCREEN_WIDTH);
+			atlasNameTableX * SCREEN_WIDTH + (withinNameTableX % SCREEN_WIDTH);
 		let viewportStartY =
-			atlasNTY * SCREEN_HEIGHT + (withinNameTableY % SCREEN_HEIGHT);
+			atlasNameTableY * SCREEN_HEIGHT + (withinNameTableY % SCREEN_HEIGHT);
 
 		if (withinNameTableX >= SCREEN_WIDTH) {
 			const horizontalOffset =
 				baseNameTableId === 0 || baseNameTableId === 2 ? 1 : -1;
 			const adjustedNameTableId = (baseNameTableId + horizontalOffset) & 3;
-			atlasNTX = adjustedNameTableId & 1;
-			atlasNTY = (adjustedNameTableId >> 1) & 1;
+			atlasNameTableX = adjustedNameTableId & 1;
+			atlasNameTableY = (adjustedNameTableId >> 1) & 1;
 			viewportStartX =
-				atlasNTX * SCREEN_WIDTH + (withinNameTableX - SCREEN_WIDTH);
+				atlasNameTableX * SCREEN_WIDTH + (withinNameTableX - SCREEN_WIDTH);
 		}
 
 		const drawFilled = (x, y, w, h) => {
@@ -473,9 +672,29 @@ export default class Debugger_PPU {
 		this._drawLineV(pixels, width, height, x + w - 1, y, y + h - 1, stroke);
 	}
 
+	_drawRectOverlay(pixels, width, height, x, y, w, h, stroke, fill) {
+		const x0 = Math.max(0, x),
+			y0 = Math.max(0, y);
+		const x1 = Math.min(width, x + w),
+			y1 = Math.min(height, y + h);
+
+		for (let yy = y0; yy < y1; yy++) {
+			const row = yy * width;
+			for (let xx = x0; xx < x1; xx++) {
+				const i = row + xx;
+				pixels[i] = this._blendOver(pixels[i], fill);
+			}
+		}
+
+		this._drawLineH(pixels, width, x, x + w - 1, y, stroke);
+		this._drawLineH(pixels, width, x, x + w - 1, y + h - 1, stroke);
+		this._drawLineV(pixels, width, height, x, y, y + h - 1, stroke);
+		this._drawLineV(pixels, width, height, x + w - 1, y, y + h - 1, stroke);
+	}
+
 	_drawTileInfoOverlayForeground(info) {
 		const draw = ImGui.GetForegroundDrawList();
-		const vp = ImGui.GetMainViewport
+		const viewport = ImGui.GetMainViewport
 			? ImGui.GetMainViewport()
 			: { WorkPos: ImGui.GetWindowPos(), WorkSize: ImGui.GetWindowSize() };
 		const margin = 12;
@@ -484,13 +703,13 @@ export default class Debugger_PPU {
 		const pad8 = (n) => String(n).padEnd(8, " ");
 		const posText = pad8(`(${info.tileX}, ${info.tileY})`);
 		const lines = [
-			`PPU address       : ${this._hex(info.tileIndexAddr, 4)} `,
+			`PPU address       : ${hex.format(info.ppuAddress, 4)} `,
 			`Name table        : ${info.nameTableId}`,
 			`Position          : ${posText} `,
-			`Tile index        : ${this._hex(info.tileIndex, 2)} `,
-			`Tile address      : ${this._hex(info.tileAddr, 4)} `,
-			`Attribute address : ${this._hex(info.attrAddr, 4)} `,
-			`Palette address   : ${this._hex(info.paletteAddr, 4)} `,
+			`Tile index        : ${hex.format(info.tileIndex, 2)} `,
+			`Tile address      : ${hex.format(info.tileAddress, 4)} `,
+			`Attribute address : ${hex.format(info.attributeAddress, 4)} `,
+			`Palette address   : ${hex.format(info.paletteAddress, 4)} `,
 		];
 
 		let maxW = 0;
@@ -515,8 +734,8 @@ export default class Debugger_PPU {
 		const contentW = Math.max(maxW, combinedRowW);
 		const contentH = totalH + blockGap + combinedRowH;
 
-		const x1 = vp.WorkPos.x + vp.WorkSize.x - margin;
-		const y1 = vp.WorkPos.y + vp.WorkSize.y - margin;
+		const x1 = viewport.WorkPos.x + viewport.WorkSize.x - margin;
+		const y1 = viewport.WorkPos.y + viewport.WorkSize.y - margin;
 		const x0 = x1 - contentW - 14;
 		const y0 = y1 - contentH - 14;
 
@@ -550,11 +769,11 @@ export default class Debugger_PPU {
 		const px0 = rowX;
 		const py0 = rowY + Math.floor((combinedRowH - previewSize) / 2);
 
-		for (let ty = 0; ty < 8; ty++) {
-			for (let tx = 0; tx < 8; tx++) {
-				const color = info.previewColors[ty * 8 + tx] >>> 0;
-				const x = px0 + tx * scale;
-				const y = py0 + ty * scale;
+		for (let tileY = 0; tileY < 8; tileY++) {
+			for (let tileX = 0; tileX < 8; tileX++) {
+				const color = info.previewColors[tileY * 8 + tileX] >>> 0;
+				const x = px0 + tileX * scale;
+				const y = py0 + tileY * scale;
 				draw.AddRectFilled(
 					new ImGui.Vec2(x, y),
 					new ImGui.Vec2(x + scale, y + scale),
@@ -583,6 +802,89 @@ export default class Debugger_PPU {
 				0,
 				1
 			);
+		}
+	}
+
+	_drawCHRInfoOverlayForeground(info) {
+		const draw = ImGui.GetForegroundDrawList();
+		const viewport = ImGui.GetMainViewport
+			? ImGui.GetMainViewport()
+			: { WorkPos: ImGui.GetWindowPos(), WorkSize: ImGui.GetWindowSize() };
+		const margin = 12;
+		const lineGap = 2;
+
+		const lines = [
+			`Pattern table: ${info.tableId}`,
+			`Tile index   : ${hex.format(info.tileIndex, 2)} `,
+			`Tile address : ${hex.format(info.tileAddress, 4)} `,
+		];
+
+		// text block size
+		let maxW = 0;
+		let totalH = 0;
+		for (let i = 0; i < lines.length; i++) {
+			const size = ImGui.CalcTextSize(lines[i]);
+			maxW = Math.max(maxW, size.x);
+			totalH += size.y + (i ? lineGap : 0);
+		}
+
+		// preview (grayscale, from CHR pixels, no PPU reads)
+		const previewSize = 32; // 8x8 @ 4x
+		const scale = 4;
+		const blockGap = 6;
+
+		const contentW = Math.max(maxW, previewSize);
+		const contentH = totalH + blockGap + previewSize;
+
+		const x1 = viewport.WorkPos.x + viewport.WorkSize.x - margin;
+		const y1 = viewport.WorkPos.y + viewport.WorkSize.y - margin;
+		const x0 = x1 - contentW - 14;
+		const y0 = y1 - contentH - 14;
+
+		draw.AddRectFilled(
+			new ImGui.Vec2(x0, y0),
+			new ImGui.Vec2(x1, y1),
+			COLOR_INFO_OVERLAY_FILL,
+			6
+		);
+		draw.AddRect(
+			new ImGui.Vec2(x0, y0),
+			new ImGui.Vec2(x1, y1),
+			COLOR_INFO_OVERLAY_STROKE,
+			6,
+			0,
+			1
+		);
+
+		let cy = y0 + 7;
+		const cx = x0 + 7;
+		for (let i = 0; i < lines.length; i++) {
+			draw.AddText(new ImGui.Vec2(cx, cy), COLOR_INFO_OVERLAY_TEXT, lines[i]);
+			cy += ImGui.CalcTextSize(lines[i]).y + lineGap;
+		}
+
+		// centered preview
+		const rowX = cx + Math.floor((contentW - previewSize) / 2);
+		const rowY = cy + blockGap;
+		const px0 = rowX;
+		const py0 = rowY;
+
+		const src = info.tableId === 0 ? this._chr0Pixels : this._chr1Pixels;
+		const baseX = (info.tileIndex % TILES_PER_ROW) * 8;
+		const baseY = Math.floor(info.tileIndex / TILES_PER_ROW) * 8;
+
+		for (let tileY = 0; tileY < 8; tileY++) {
+			for (let tileX = 0; tileX < 8; tileX++) {
+				const color =
+					src[(baseY + tileY) * CHR_SIZE_PIXELS + (baseX + tileX)] >>> 0;
+				const x = px0 + tileX * scale;
+				const y = py0 + tileY * scale;
+				draw.AddRectFilled(
+					new ImGui.Vec2(x, y),
+					new ImGui.Vec2(x + scale, y + scale),
+					color
+				);
+			}
 		}
 	}
 
@@ -628,10 +930,5 @@ export default class Debugger_PPU {
 		const b = ((sb * sa + db * (255 - sa) + 127) / 255) | 0;
 
 		return RGBA(r, g, b, a);
-	}
-
-	_hex(n, width) {
-		const v = n.toString(16).toUpperCase().padStart(width, "0");
-		return `$${v}`;
 	}
 }
