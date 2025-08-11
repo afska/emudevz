@@ -31,9 +31,11 @@ const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
 const ATLAS_WIDTH = SCREEN_WIDTH * 2;
 const ATLAS_HEIGHT = SCREEN_HEIGHT * 2;
-const CHR_SIZE_PIXELS = 128; // 16x16 tiles * 8
+const TILE_SIZE_PIXELS = 8;
 const TILES_PER_ROW = 16;
+const CHR_SIZE_PIXELS = TILES_PER_ROW * TILE_SIZE_PIXELS;
 const CHR_SCALE = 2;
+const ATTRIBUTE_SIZE_PIXELS = 16;
 
 export default class Debugger_PPU {
 	constructor(args) {
@@ -60,7 +62,6 @@ export default class Debugger_PPU {
 		this._atlasPixels = new Uint32Array(ATLAS_WIDTH * ATLAS_HEIGHT);
 
 		// CHR state
-		this._chrHover = null; // { tableId, tileIndex, rect }
 		this._chrHoverInfo = null; // { tableId, tileIndex, tileAddress }
 		this._selectedCHR = null; // { tableId, tileIndex }
 		this._chr0Pixels = new Uint32Array(CHR_SIZE_PIXELS * CHR_SIZE_PIXELS);
@@ -156,7 +157,7 @@ export default class Debugger_PPU {
 				this._atlasPixels,
 				ATLAS_WIDTH,
 				ATLAS_HEIGHT,
-				8,
+				TILE_SIZE_PIXELS,
 				COLOR_TILE_GRID_LINE
 			);
 		if (this._showAttributeGrid)
@@ -164,7 +165,7 @@ export default class Debugger_PPU {
 				this._atlasPixels,
 				ATLAS_WIDTH,
 				ATLAS_HEIGHT,
-				16,
+				ATTRIBUTE_SIZE_PIXELS,
 				COLOR_ATTRIBUTE_GRID_LINE
 			);
 
@@ -198,8 +199,8 @@ export default class Debugger_PPU {
 					const tileIndex = ppu.memory?.read?.(address) ?? 0;
 
 					if (tileIndex === this._selectedCHR.tileIndex) {
-						const rectX = offsetX + tileX * 8;
-						const rectY = offsetY + tileY * 8;
+						const rectX = offsetX + tileX * TILE_SIZE_PIXELS;
+						const rectY = offsetY + tileY * TILE_SIZE_PIXELS;
 
 						this._drawRectOverlay(
 							this._atlasPixels,
@@ -207,8 +208,8 @@ export default class Debugger_PPU {
 							ATLAS_HEIGHT,
 							rectX,
 							rectY,
-							8,
-							8,
+							TILE_SIZE_PIXELS,
+							TILE_SIZE_PIXELS,
 							COLOR_SELECTED_TILE_OVERLAY_STROKE,
 							COLOR_SELECTED_TILE_OVERLAY_FILL
 						);
@@ -233,15 +234,15 @@ export default class Debugger_PPU {
 		const paletteAddress = 0x3f00 + paletteId * 4;
 
 		const previewColors = new Array(64);
-		for (let y = 0; y < 8; y++) {
+		for (let y = 0; y < TILE_SIZE_PIXELS; y++) {
 			const row = new Tile(ppu, patternTableId, tileIndex, y);
-			for (let x = 0; x < 8; x++) {
+			for (let x = 0; x < TILE_SIZE_PIXELS; x++) {
 				const colorIndex = row.getColorIndex(x);
 				const color =
 					colorIndex > 0
 						? ppu.getColor?.(paletteId, colorIndex) ?? 0
 						: ppu.getColor?.(0, 0) ?? 0;
-				previewColors[y * 8 + x] = color >>> 0;
+				previewColors[y * TILE_SIZE_PIXELS + x] = color >>> 0;
 			}
 		}
 
@@ -274,12 +275,13 @@ export default class Debugger_PPU {
 			for (let tileId = 0; tileId < 256; tileId++) {
 				const tileX = tileId % TILES_PER_ROW;
 				const tileY = Math.floor(tileId / TILES_PER_ROW);
-				const base = tileY * 8 * CHR_SIZE_PIXELS + tileX * 8;
+				const base =
+					tileY * TILE_SIZE_PIXELS * CHR_SIZE_PIXELS + tileX * TILE_SIZE_PIXELS;
 
-				for (let y = 0; y < 8; y++) {
+				for (let y = 0; y < TILE_SIZE_PIXELS; y++) {
 					const row = new Tile(ppu, patternTableId, tileId, y);
 					const dst = base + y * CHR_SIZE_PIXELS;
-					for (let x = 0; x < 8; x++)
+					for (let x = 0; x < TILE_SIZE_PIXELS; x++)
 						out[dst + x] = GRAYSCALE_PALETTE[row.getColorIndex(x)] >>> 0;
 				}
 			}
@@ -332,15 +334,15 @@ export default class Debugger_PPU {
 			localY < ATLAS_HEIGHT &&
 			ImGui.IsWindowHovered()
 		) {
-			const atlasTileX = Math.floor(localX / 8);
-			const atlasTileY = Math.floor(localY / 8);
+			const atlasTileX = Math.floor(localX / TILE_SIZE_PIXELS);
+			const atlasTileY = Math.floor(localY / TILE_SIZE_PIXELS);
 
 			const nameTableX = localX >= SCREEN_WIDTH ? 1 : 0;
 			const nameTableY = localY >= SCREEN_HEIGHT ? 1 : 0;
 			const nameTableId = (nameTableY << 1) | nameTableX;
 
-			const tileX = atlasTileX % (SCREEN_WIDTH / 8);
-			const tileY = atlasTileY % (SCREEN_HEIGHT / 8);
+			const tileX = atlasTileX % (SCREEN_WIDTH / TILE_SIZE_PIXELS);
+			const tileY = atlasTileY % (SCREEN_HEIGHT / TILE_SIZE_PIXELS);
 
 			const nameTableBase = 0x2000 + nameTableId * 0x400;
 			const ppuAddress = nameTableBase + tileY * 32 + tileX;
@@ -355,9 +357,14 @@ export default class Debugger_PPU {
 				attributeAddress,
 			};
 
-			const rectX = atlasTileX * 8;
-			const rectY = atlasTileY * 8;
-			hoverRect = { x: rectX, y: rectY, w: 8, h: 8 };
+			const rectX = atlasTileX * TILE_SIZE_PIXELS;
+			const rectY = atlasTileY * TILE_SIZE_PIXELS;
+			hoverRect = {
+				x: rectX,
+				y: rectY,
+				w: TILE_SIZE_PIXELS,
+				h: TILE_SIZE_PIXELS,
+			};
 
 			ImGui.SetMouseCursor(ImGui.MouseCursor.None);
 
@@ -427,12 +434,17 @@ export default class Debugger_PPU {
 						ly < CHR_SIZE_PIXELS &&
 						ImGui.IsWindowHovered()
 					) {
-						const tileX = Math.floor(lx / 8);
-						const tileY = Math.floor(ly / 8);
+						const tileX = Math.floor(lx / TILE_SIZE_PIXELS);
+						const tileY = Math.floor(ly / TILE_SIZE_PIXELS);
 						const tileIndex = tileY * TILES_PER_ROW + tileX;
 						hover = {
 							tileIndex,
-							rect: { x: tileX * 8, y: tileY * 8, w: 8, h: 8 },
+							rect: {
+								x: tileX * TILE_SIZE_PIXELS,
+								y: tileY * TILE_SIZE_PIXELS,
+								w: TILE_SIZE_PIXELS,
+								h: TILE_SIZE_PIXELS,
+							},
 						};
 						ImGui.SetMouseCursor(ImGui.MouseCursor.None);
 					}
@@ -445,16 +457,16 @@ export default class Debugger_PPU {
 						uploadPixels = new Uint32Array(pixels);
 						if (isSelected) {
 							const sel = this._selectedCHR.tileIndex;
-							const sx = (sel % TILES_PER_ROW) * 8;
-							const sy = Math.floor(sel / TILES_PER_ROW) * 8;
+							const sx = (sel % TILES_PER_ROW) * TILE_SIZE_PIXELS;
+							const sy = Math.floor(sel / TILES_PER_ROW) * TILE_SIZE_PIXELS;
 							this._drawRectOverlay(
 								uploadPixels,
 								CHR_SIZE_PIXELS,
 								CHR_SIZE_PIXELS,
 								sx,
 								sy,
-								8,
-								8,
+								TILE_SIZE_PIXELS,
+								TILE_SIZE_PIXELS,
 								COLOR_SELECTED_TILE_OVERLAY_STROKE,
 								COLOR_SELECTED_TILE_OVERLAY_FILL
 							);
@@ -551,8 +563,10 @@ export default class Debugger_PPU {
 
 		const { tAddress, fineX } = ppu.loopy;
 		const baseNameTableId = tAddress.nameTableId ?? 0;
-		const withinNameTableX = tAddress.coarseX * 8 + (fineX ?? 0) ?? 0;
-		const withinNameTableY = tAddress.coarseY * 8 + (tAddress.fineY ?? 0) ?? 0;
+		const withinNameTableX =
+			tAddress.coarseX * TILE_SIZE_PIXELS + (fineX ?? 0) ?? 0;
+		const withinNameTableY =
+			tAddress.coarseY * TILE_SIZE_PIXELS + (tAddress.fineY ?? 0) ?? 0;
 
 		let atlasNameTableX = baseNameTableId & 1;
 		let atlasNameTableY = (baseNameTableId >> 1) & 1;
@@ -706,10 +720,10 @@ export default class Debugger_PPU {
 		];
 
 		// layout measurements for the extra row
-		const previewSize = 32,
-			swatchSize = 16,
-			blockGap = 6,
-			scale = 4;
+		const scale = 4;
+		const previewSize = TILE_SIZE_PIXELS * scale;
+		const swatchSize = 16;
+		const blockGap = 6;
 		const extraW =
 			info.previewColors && info.paletteColors
 				? previewSize + blockGap + swatchSize * 4
@@ -757,8 +771,8 @@ export default class Debugger_PPU {
 			`Tile address : ${hex.format(info.tileAddress, 4)} `,
 		];
 
-		const previewSize = 32,
-			scale = 4;
+		const scale = 4;
+		const previewSize = TILE_SIZE_PIXELS * scale;
 		const { draw, cx, rowY, contentW } = this._overlayBox(
 			lines,
 			previewSize,
@@ -849,7 +863,7 @@ export default class Debugger_PPU {
 		this._draw8x8Preview(
 			draw,
 			{ cx, rowY, contentW, scale, blockH, leftX },
-			(tx, ty) => colors64[ty * 8 + tx]
+			(tx, ty) => colors64[ty * TILE_SIZE_PIXELS + tx]
 		);
 	}
 
@@ -864,9 +878,9 @@ export default class Debugger_PPU {
 		leftX = null
 	) {
 		const src = tableId === 0 ? this._chr0Pixels : this._chr1Pixels;
-		const baseX = (tileIndex % TILES_PER_ROW) * 8;
-		const baseY = Math.floor(tileIndex / TILES_PER_ROW) * 8;
-		const blockH = 8 * scale;
+		const baseX = (tileIndex % TILES_PER_ROW) * TILE_SIZE_PIXELS;
+		const baseY = Math.floor(tileIndex / TILES_PER_ROW) * TILE_SIZE_PIXELS;
+		const blockH = TILE_SIZE_PIXELS * scale;
 
 		this._draw8x8Preview(
 			draw,
@@ -882,14 +896,14 @@ export default class Debugger_PPU {
 		{ cx, rowY, contentW, scale, blockH, leftX },
 		getColor
 	) {
-		const previewW = 8 * scale,
-			previewH = 8 * scale;
+		const previewW = TILE_SIZE_PIXELS * scale,
+			previewH = TILE_SIZE_PIXELS * scale;
 		const px0 =
 			leftX != null ? leftX : cx + Math.floor((contentW - previewW) / 2);
 		const py0 = rowY + Math.floor((blockH - previewH) / 2);
 
-		for (let ty = 0; ty < 8; ty++) {
-			for (let tx = 0; tx < 8; tx++) {
+		for (let ty = 0; ty < TILE_SIZE_PIXELS; ty++) {
+			for (let tx = 0; tx < TILE_SIZE_PIXELS; tx++) {
 				const color = getColor(tx, ty) >>> 0;
 				const x = px0 + tx * scale,
 					y = py0 + ty * scale;
