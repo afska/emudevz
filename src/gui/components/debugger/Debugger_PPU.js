@@ -51,7 +51,7 @@ export default class Debugger_PPU {
 		this._chr1Texture = widgets.newTexture(CHR_SIZE_PIXELS, CHR_SIZE_PIXELS);
 
 		// Scanline trigger
-		this._scanlineTrigger = 260; // -1..260
+		this._scanlineTrigger = 241; // -1..260
 
 		// Name tables
 		this._showScrollOverlay = true;
