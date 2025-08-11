@@ -911,39 +911,55 @@ export default class Debugger_PPU {
 	}
 
 	_blitSpriteTo(ppu, sprite, dst, dstW, dx, dy) {
-		const bg = (ppu.getColor?.(0, 0) ?? 0) >>> 0;
-		const palette = ppu.getPaletteColors?.(sprite.paletteId) ?? [
-			bg,
-			bg,
-			bg,
-			bg,
-		];
+		const dstH = Math.floor(dst.length / dstW);
 
-		const minX = dx;
-		const minY = dy;
-		const maxX = dx + TILE_SIZE_PIXELS;
-		const maxY = dy + sprite.height;
+		this._forEachSpritePixel(
+			ppu,
+			sprite,
+			(insideX, insideY, colorIndex, color) => {
+				if (colorIndex === 0) return;
 
-		for (let insideY = 0; insideY < sprite.height; insideY++) {
-			const y = dy + insideY;
-			if (y < minY || y >= maxY) continue;
+				const x = dx + insideX;
+				const y = dy + insideY;
+				if (x < 0 || x >= dstW || y < 0 || y >= dstH) return;
 
+				dst[y * dstW + x] = color >>> 0;
+			}
+		);
+	}
+
+	_forEachSpritePixel(ppu, sprite, onPixel) {
+		const { backgroundColor, palette } = this._getSpritePalette(ppu, sprite);
+		const width = TILE_SIZE_PIXELS;
+		const height = sprite.height;
+
+		for (let insideY = 0; insideY < height; insideY++) {
 			const tileInsideY = insideY & 7;
 			const rowY = sprite.flipY ? 7 - tileInsideY : tileInsideY;
 			const tileId = sprite.tileIdFor(insideY);
 			const row = new Tile(ppu, sprite.patternTableId, tileId, rowY);
 
-			for (let insideX = 0; insideX < TILE_SIZE_PIXELS; insideX++) {
-				const x = dx + insideX;
-				if (x < minX || x >= maxX) continue;
-
-				const colX = sprite.flipX ? TILE_SIZE_PIXELS - 1 - insideX : insideX;
-				const colorIndex = row.getColorIndex(colX);
-				if (colorIndex === 0) continue; // transparent
-
-				dst[y * dstW + x] = (palette[colorIndex] ?? bg) >>> 0;
+			for (let insideX = 0; insideX < width; insideX++) {
+				const sourceX = sprite.flipX ? width - 1 - insideX : insideX;
+				const colorIndex = row.getColorIndex(sourceX);
+				const color =
+					colorIndex > 0
+						? (palette[colorIndex] ?? backgroundColor) >>> 0
+						: backgroundColor;
+				onPixel(insideX, insideY, colorIndex, color, backgroundColor, palette);
 			}
 		}
+	}
+
+	_getSpritePalette(ppu, sprite) {
+		const backgroundColor = (ppu.getColor?.(0, 0) ?? 0) >>> 0;
+		const palette = ppu.getPaletteColors?.(sprite.paletteId) ?? [
+			backgroundColor,
+			backgroundColor,
+			backgroundColor,
+			backgroundColor,
+		];
+		return { backgroundColor, palette };
 	}
 
 	_drawSpritesTab(ppu) {
@@ -1118,37 +1134,15 @@ export default class Debugger_PPU {
 	}
 
 	_buildSpriteHoverInfo(ppu, sprite, index) {
-		const bg = (ppu.getColor?.(0, 0) ?? 0) >>> 0;
-		const palette = ppu.getPaletteColors?.(sprite.paletteId) ?? [
-			bg,
-			bg,
-			bg,
-			bg,
-		];
+		const { palette: paletteColors } = this._getSpritePalette(ppu, sprite);
 
 		const width = TILE_SIZE_PIXELS;
 		const height = sprite.height;
 		const previewColors = new Array(width * height);
-		for (let insideY = 0; insideY < height; insideY++) {
-			const tileInsideY = insideY & 7;
-			const rowY = sprite.flipY ? 7 - tileInsideY : tileInsideY;
-			const tileId = sprite.tileIdFor(insideY);
-			const row = new Tile(ppu, sprite.patternTableId, tileId, rowY);
 
-			for (let insideX = 0; insideX < width; insideX++) {
-				const colX = sprite.flipX ? width - 1 - insideX : insideX;
-				const colorIndex = row.getColorIndex(colX);
-				previewColors[insideY * width + insideX] =
-					(colorIndex > 0 ? palette[colorIndex] ?? bg : bg) >>> 0;
-			}
-		}
-
-		const paletteColors = [
-			bg,
-			palette[1] ?? bg,
-			palette[2] ?? bg,
-			palette[3] ?? bg,
-		].map((c) => c >>> 0);
+		this._forEachSpritePixel(ppu, sprite, (insideX, insideY, _ci, color) => {
+			previewColors[insideY * width + insideX] = color >>> 0;
+		});
 
 		const tileText =
 			height === 16
