@@ -114,7 +114,6 @@ export default {
 			ImGui.Button(label);
 			ImGui.PopStyleColor(3);
 		} else {
-			ImGui.BeginDisabled(true);
 			ImGui.Button(label);
 		}
 
