@@ -611,7 +611,7 @@ export default class Debugger_PPU {
 
 	_drawCHRTab() {
 		widgets.simpleTab(this, "CHR", () => {
-			const itemWidth = CHR_SIZE_PIXELS * CHR_SCALE;
+			const itemSize = CHR_SIZE_PIXELS * CHR_SCALE;
 
 			this._chrHoverInfo = null;
 
@@ -624,7 +624,7 @@ export default class Debugger_PPU {
 				baseAddr
 			) => {
 				widgets.simpleTable(id, label, () => {
-					widgets.centerNextItemX(itemWidth);
+					widgets.centerNextItemX(itemSize);
 
 					// hover detection (scaled coords)
 					let hover = null;
@@ -696,11 +696,11 @@ export default class Debugger_PPU {
 						CHR_SIZE_PIXELS,
 						uploadPixels
 					);
-					const drawList = ImGui.GetWindowDrawList();
+					const draw = ImGui.GetWindowDrawList();
 					const p0 = ImGui.GetCursorScreenPos();
-					ImGui.Image(texture, new ImGui.Vec2(itemWidth, itemWidth));
-					const p1 = new ImGui.Vec2(p0.x + itemWidth, p0.y + itemWidth);
-					drawList.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
+					const p1 = new ImGui.Vec2(p0.x + itemSize, p0.y + itemSize);
+					ImGui.Image(texture, new ImGui.Vec2(itemSize, itemSize));
+					draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
 
 					// click toggle selection
 					if (hover && ImGui.IsMouseClicked(0)) {
@@ -966,8 +966,12 @@ export default class Debugger_PPU {
 				widgets.centerNextItemX(itemWidth);
 
 				const p0 = ImGui.GetCursorScreenPos();
-				if (this._oamTexture)
+				if (this._oamTexture) {
+					const draw = ImGui.GetWindowDrawList();
+					const p1 = new ImGui.Vec2(p0.x + itemWidth, p0.y + itemHeight);
 					ImGui.Image(this._oamTexture, new ImGui.Vec2(itemWidth, itemHeight));
+					draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
+				}
 				this._oamImageRect = { x: p0.x, y: p0.y, w: itemWidth, h: itemHeight };
 
 				// hover picking in OAM grid
@@ -1002,12 +1006,16 @@ export default class Debugger_PPU {
 
 			// 256x240 preview
 			widgets.simpleTable("spritePrev", "Preview", () => {
+				widgets.centerNextItemX(SCREEN_WIDTH);
+
+				const draw = ImGui.GetWindowDrawList();
 				const p0 = ImGui.GetCursorScreenPos();
-				if (this._sprPreviewTexture)
-					ImGui.Image(
-						this._sprPreviewTexture,
-						new ImGui.Vec2(SCREEN_WIDTH, SCREEN_HEIGHT)
-					);
+				const p1 = new ImGui.Vec2(p0.x + SCREEN_WIDTH, p0.y + SCREEN_HEIGHT);
+				ImGui.Image(
+					this._sprPreviewTexture,
+					new ImGui.Vec2(SCREEN_WIDTH, SCREEN_HEIGHT)
+				);
+				draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
 				this._sprPrevImageRect = {
 					x: p0.x,
 					y: p0.y,
@@ -1070,24 +1078,22 @@ export default class Debugger_PPU {
 					);
 				}
 
-				if (this._sprPreviewTexture && this._sprPreviewPixels) {
-					const uploadPixels = new Uint32Array(this._sprPreviewPixels);
-					this._drawHoverOverlay(
-						uploadPixels,
-						SCREEN_WIDTH,
-						SCREEN_HEIGHT,
-						sprite.x,
-						sprite.y,
-						SPRITE_WIDTH,
-						sprite.height
-					);
-					widgets.updateTexture(
-						this._sprPreviewTexture,
-						SCREEN_WIDTH,
-						SCREEN_HEIGHT,
-						uploadPixels
-					);
-				}
+				const uploadPixels = new Uint32Array(this._sprPreviewPixels);
+				this._drawHoverOverlay(
+					uploadPixels,
+					SCREEN_WIDTH,
+					SCREEN_HEIGHT,
+					sprite.x,
+					sprite.y,
+					SPRITE_WIDTH,
+					sprite.height
+				);
+				widgets.updateTexture(
+					this._sprPreviewTexture,
+					SCREEN_WIDTH,
+					SCREEN_HEIGHT,
+					uploadPixels
+				);
 			} else {
 				if (this._oamTexture && this._oamPixels) {
 					widgets.updateTexture(
@@ -1097,14 +1103,12 @@ export default class Debugger_PPU {
 						this._oamPixels
 					);
 				}
-				if (this._sprPreviewTexture && this._sprPreviewPixels) {
-					widgets.updateTexture(
-						this._sprPreviewTexture,
-						SCREEN_WIDTH,
-						SCREEN_HEIGHT,
-						this._sprPreviewPixels
-					);
-				}
+				widgets.updateTexture(
+					this._sprPreviewTexture,
+					SCREEN_WIDTH,
+					SCREEN_HEIGHT,
+					this._sprPreviewPixels
+				);
 			}
 
 			// sprite overlay
