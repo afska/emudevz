@@ -1052,15 +1052,17 @@ export default class Debugger_PPU {
 				) {
 					for (let i = 0; i < TOTAL_SPRITES; i++) {
 						const sprite = sprites[i];
-						const x0 = sprite.x,
-							y0 = sprite.y,
-							x1 = x0 + SPRITE_WIDTH,
-							y1 = y0 + sprite.height;
-						if (lx >= x0 && lx < x1 && ly >= y0 && ly < y1) {
-							this._oamHoverIndex = i;
-							this._oamHoverInfo = this._buildSpriteHoverInfo(ppu, sprite, i);
-							ImGui.SetMouseCursor(ImGui.MouseCursor.None);
-							break;
+						if (sprite) {
+							const x0 = sprite.x,
+								y0 = sprite.y,
+								x1 = x0 + SPRITE_WIDTH,
+								y1 = y0 + sprite.height;
+							if (lx >= x0 && lx < x1 && ly >= y0 && ly < y1) {
+								this._oamHoverIndex = i;
+								this._oamHoverInfo = this._buildSpriteHoverInfo(ppu, sprite, i);
+								ImGui.SetMouseCursor(ImGui.MouseCursor.None);
+								break;
+							}
 						}
 					}
 				}
