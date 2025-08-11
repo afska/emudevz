@@ -693,13 +693,6 @@ export default class Debugger_PPU {
 	}
 
 	_drawTileInfoOverlayForeground(info) {
-		const draw = ImGui.GetForegroundDrawList();
-		const viewport = ImGui.GetMainViewport
-			? ImGui.GetMainViewport()
-			: { WorkPos: ImGui.GetWindowPos(), WorkSize: ImGui.GetWindowSize() };
-		const margin = 12;
-		const lineGap = 2;
-
 		const pad8 = (n) => String(n).padEnd(8, " ");
 		const posText = pad8(`(${info.tileX}, ${info.tileY})`);
 		const lines = [
@@ -712,135 +705,109 @@ export default class Debugger_PPU {
 			`Palette address   : ${hex.format(info.paletteAddress, 4)} `,
 		];
 
-		let maxW = 0;
-		let totalH = 0;
-		const lineHeights = [];
-		for (let i = 0; i < lines.length; i++) {
-			const size = ImGui.CalcTextSize(lines[i]);
-			maxW = Math.max(maxW, size.x);
-			const h = size.y;
-			lineHeights.push(h);
-			totalH += (i === 0 ? 0 : lineGap) + h;
-		}
+		// layout measurements for the extra row
+		const previewSize = 32,
+			swatchSize = 16,
+			blockGap = 6,
+			scale = 4;
+		const extraW =
+			info.previewColors && info.paletteColors
+				? previewSize + blockGap + swatchSize * 4
+				: 0;
+		const extraH =
+			info.previewColors && info.paletteColors
+				? Math.max(previewSize, swatchSize)
+				: 0;
 
-		// ^^^ data --- preview vvv
-
-		const previewSize = 32; // 8x8 @ 4x
-		const swatchSize = 16; // 4 swatches horizontally
-		const blockGap = 6;
-		const combinedRowW = previewSize + blockGap + swatchSize * 4;
-		const combinedRowH = Math.max(previewSize, swatchSize);
-
-		const contentW = Math.max(maxW, combinedRowW);
-		const contentH = totalH + blockGap + combinedRowH;
-
-		const x1 = viewport.WorkPos.x + viewport.WorkSize.x - margin;
-		const y1 = viewport.WorkPos.y + viewport.WorkSize.y - margin;
-		const x0 = x1 - contentW - 14;
-		const y0 = y1 - contentH - 14;
-
-		draw.AddRectFilled(
-			new ImGui.Vec2(x0, y0),
-			new ImGui.Vec2(x1, y1),
-			COLOR_INFO_OVERLAY_FILL,
-			6
-		);
-		draw.AddRect(
-			new ImGui.Vec2(x0, y0),
-			new ImGui.Vec2(x1, y1),
-			COLOR_INFO_OVERLAY_STROKE,
-			6,
-			0,
-			1
+		// draw box + text
+		const { draw, cx, rowY, contentW } = this._overlayBox(
+			lines,
+			extraW,
+			extraH
 		);
 
-		let cy = y0 + 7;
-		const cx = x0 + 7;
-		for (let i = 0; i < lines.length; i++) {
-			draw.AddText(new ImGui.Vec2(cx, cy), COLOR_INFO_OVERLAY_TEXT, lines[i]);
-			cy += lineHeights[i] + lineGap;
-		}
-
+		// nothing else to draw
 		if (!info.previewColors || !info.paletteColors) return;
 
-		const scale = 4;
-		const rowX = cx + Math.floor((contentW - combinedRowW) / 2);
-		const rowY = cy + blockGap;
-		const px0 = rowX;
-		const py0 = rowY + Math.floor((combinedRowH - previewSize) / 2);
+		// center the whole "preview + swatches" row; use its left edge (rowX) for BOTH
+		const rowX = cx + Math.floor((contentW - extraW) / 2);
 
-		for (let tileY = 0; tileY < 8; tileY++) {
-			for (let tileX = 0; tileX < 8; tileX++) {
-				const color = info.previewColors[tileY * 8 + tileX] >>> 0;
-				const x = px0 + tileX * scale;
-				const y = py0 + tileY * scale;
-				draw.AddRectFilled(
-					new ImGui.Vec2(x, y),
-					new ImGui.Vec2(x + scale, y + scale),
-					color
-				);
-			}
-		}
+		// preview
+		this._draw8x8PreviewFromArray(
+			draw,
+			cx,
+			rowY,
+			contentW,
+			scale,
+			info.previewColors,
+			extraH,
+			rowX
+		);
 
+		// palette row
 		const palX0 = rowX + previewSize + blockGap;
-		const palY0 = rowY + Math.floor((combinedRowH - swatchSize) / 2);
-		for (let i = 0; i < 4; i++) {
-			const color = info.paletteColors[i] >>> 0;
-			const x = palX0 + i * swatchSize;
-			const y = palY0;
-			draw.AddRectFilled(
-				new ImGui.Vec2(x, y),
-				new ImGui.Vec2(x + swatchSize, y + swatchSize),
-				color,
-				3
-			);
-			draw.AddRect(
-				new ImGui.Vec2(x, y),
-				new ImGui.Vec2(x + swatchSize, y + swatchSize),
-				RGBA(0, 0, 0, 200),
-				3,
-				0,
-				1
-			);
-		}
+		const palY0 = rowY + Math.floor((extraH - swatchSize) / 2);
+		this._drawPaletteRow(draw, palX0, palY0, swatchSize, info.paletteColors);
 	}
 
 	_drawCHRInfoOverlayForeground(info) {
-		const draw = ImGui.GetForegroundDrawList();
-		const viewport = ImGui.GetMainViewport
-			? ImGui.GetMainViewport()
-			: { WorkPos: ImGui.GetWindowPos(), WorkSize: ImGui.GetWindowSize() };
-		const margin = 12;
-		const lineGap = 2;
-
 		const lines = [
 			`Pattern table: ${info.tableId}`,
 			`Tile index   : ${hex.format(info.tileIndex, 2)} `,
 			`Tile address : ${hex.format(info.tileAddress, 4)} `,
 		];
 
-		// text block size
-		let maxW = 0;
-		let totalH = 0;
+		const previewSize = 32,
+			scale = 4;
+		const { draw, cx, rowY, contentW } = this._overlayBox(
+			lines,
+			previewSize,
+			previewSize
+		);
+
+		// centered grayscale preview from CHR atlas
+		this._draw8x8PreviewFromCHR(
+			draw,
+			cx,
+			rowY,
+			contentW,
+			scale,
+			info.tableId,
+			info.tileIndex
+		);
+	}
+
+	_overlayBox(lines, extraW = 0, extraH = 0) {
+		const draw = ImGui.GetForegroundDrawList();
+		const vp = ImGui.GetMainViewport
+			? ImGui.GetMainViewport()
+			: { WorkPos: ImGui.GetWindowPos(), WorkSize: ImGui.GetWindowSize() };
+
+		const margin = 12,
+			lineGap = 2,
+			pad = 7,
+			blockGap = 6;
+
+		// measure text
+		let maxW = 0,
+			totalH = 0;
+		const heights = [];
 		for (let i = 0; i < lines.length; i++) {
-			const size = ImGui.CalcTextSize(lines[i]);
-			maxW = Math.max(maxW, size.x);
-			totalH += size.y + (i ? lineGap : 0);
+			const s = ImGui.CalcTextSize(lines[i]);
+			maxW = Math.max(maxW, s.x);
+			heights.push(s.y);
+			totalH += s.y + (i ? lineGap : 0);
 		}
 
-		// preview (grayscale, from CHR pixels, no PPU reads)
-		const previewSize = 32; // 8x8 @ 4x
-		const scale = 4;
-		const blockGap = 6;
+		const contentW = Math.max(maxW, extraW);
+		const contentH = totalH + (extraH ? blockGap + extraH : 0);
 
-		const contentW = Math.max(maxW, previewSize);
-		const contentH = totalH + blockGap + previewSize;
-
-		const x1 = viewport.WorkPos.x + viewport.WorkSize.x - margin;
-		const y1 = viewport.WorkPos.y + viewport.WorkSize.y - margin;
+		const x1 = vp.WorkPos.x + vp.WorkSize.x - margin;
+		const y1 = vp.WorkPos.y + vp.WorkSize.y - margin;
 		const x0 = x1 - contentW - 14;
 		const y0 = y1 - contentH - 14;
 
+		// bg + border
 		draw.AddRectFilled(
 			new ImGui.Vec2(x0, y0),
 			new ImGui.Vec2(x1, y1),
@@ -856,35 +823,104 @@ export default class Debugger_PPU {
 			1
 		);
 
-		let cy = y0 + 7;
-		const cx = x0 + 7;
+		// text
+		let cy = y0 + pad;
+		const cx = x0 + pad;
 		for (let i = 0; i < lines.length; i++) {
 			draw.AddText(new ImGui.Vec2(cx, cy), COLOR_INFO_OVERLAY_TEXT, lines[i]);
-			cy += ImGui.CalcTextSize(lines[i]).y + lineGap;
+			cy += heights[i] + lineGap;
 		}
 
-		// centered preview
-		const rowX = cx + Math.floor((contentW - previewSize) / 2);
-		const rowY = cy + blockGap;
-		const px0 = rowX;
-		const py0 = rowY;
+		// where to place extra blocks
+		const rowY = cy + (extraH ? blockGap : 0);
+		return { draw, cx, rowY, contentW, extraH };
+	}
 
-		const src = info.tableId === 0 ? this._chr0Pixels : this._chr1Pixels;
-		const baseX = (info.tileIndex % TILES_PER_ROW) * 8;
-		const baseY = Math.floor(info.tileIndex / TILES_PER_ROW) * 8;
+	_draw8x8PreviewFromArray(
+		draw,
+		cx,
+		rowY,
+		contentW,
+		scale,
+		colors64,
+		blockH,
+		leftX = null
+	) {
+		this._draw8x8Preview(
+			draw,
+			{ cx, rowY, contentW, scale, blockH, leftX },
+			(tx, ty) => colors64[ty * 8 + tx]
+		);
+	}
 
-		for (let tileY = 0; tileY < 8; tileY++) {
-			for (let tileX = 0; tileX < 8; tileX++) {
-				const color =
-					src[(baseY + tileY) * CHR_SIZE_PIXELS + (baseX + tileX)] >>> 0;
-				const x = px0 + tileX * scale;
-				const y = py0 + tileY * scale;
+	_draw8x8PreviewFromCHR(
+		draw,
+		cx,
+		rowY,
+		contentW,
+		scale,
+		tableId,
+		tileIndex,
+		leftX = null
+	) {
+		const src = tableId === 0 ? this._chr0Pixels : this._chr1Pixels;
+		const baseX = (tileIndex % TILES_PER_ROW) * 8;
+		const baseY = Math.floor(tileIndex / TILES_PER_ROW) * 8;
+		const blockH = 8 * scale;
+
+		this._draw8x8Preview(
+			draw,
+			{ cx, rowY, contentW, scale, blockH, leftX },
+			(tx, ty) => src[(baseY + ty) * CHR_SIZE_PIXELS + (baseX + tx)]
+		);
+
+		return blockH;
+	}
+
+	_draw8x8Preview(
+		draw,
+		{ cx, rowY, contentW, scale, blockH, leftX },
+		getColor
+	) {
+		const previewW = 8 * scale,
+			previewH = 8 * scale;
+		const px0 =
+			leftX != null ? leftX : cx + Math.floor((contentW - previewW) / 2);
+		const py0 = rowY + Math.floor((blockH - previewH) / 2);
+
+		for (let ty = 0; ty < 8; ty++) {
+			for (let tx = 0; tx < 8; tx++) {
+				const color = getColor(tx, ty) >>> 0;
+				const x = px0 + tx * scale,
+					y = py0 + ty * scale;
 				draw.AddRectFilled(
 					new ImGui.Vec2(x, y),
 					new ImGui.Vec2(x + scale, y + scale),
 					color
 				);
 			}
+		}
+	}
+
+	_drawPaletteRow(draw, x, y, swatchSize, colors4) {
+		for (let i = 0; i < 4; i++) {
+			const c = colors4[i] >>> 0;
+			const x0 = x + i * swatchSize,
+				y0 = y;
+			draw.AddRectFilled(
+				new ImGui.Vec2(x0, y0),
+				new ImGui.Vec2(x0 + swatchSize, y0 + swatchSize),
+				c,
+				3
+			);
+			draw.AddRect(
+				new ImGui.Vec2(x0, y0),
+				new ImGui.Vec2(x0 + swatchSize, y0 + swatchSize),
+				RGBA(0, 0, 0, 200),
+				3,
+				0,
+				1
+			);
 		}
 	}
 
