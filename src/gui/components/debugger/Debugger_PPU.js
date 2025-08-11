@@ -57,7 +57,7 @@ export default class Debugger_PPU {
 		this._showScrollOverlay = true;
 		this._showTileGrid = false;
 		this._showAttributeGrid = false;
-		this._hoverInfo = null;
+		this._bgHoverInfo = null;
 		this._pendingHoverReq = null;
 		this._atlasPixels = new Uint32Array(ATLAS_WIDTH * ATLAS_HEIGHT);
 
@@ -253,7 +253,7 @@ export default class Debugger_PPU {
 			ppu.getColor?.(paletteId, 3) ?? 0,
 		].map((c) => c >>> 0);
 
-		this._hoverInfo = {
+		this._bgHoverInfo = {
 			nameTableId: req.nameTableId,
 			tileX: req.tileX,
 			tileY: req.tileY,
@@ -315,7 +315,8 @@ export default class Debugger_PPU {
 				new ImGui.Vec2(ATLAS_WIDTH, ATLAS_HEIGHT)
 			);
 
-			if (this._hoverInfo) this._drawTileInfoOverlayForeground(this._hoverInfo);
+			if (this._bgHoverInfo)
+				this._drawTileInfoOverlayForeground(this._bgHoverInfo);
 		});
 	}
 
@@ -369,19 +370,19 @@ export default class Debugger_PPU {
 			ImGui.SetMouseCursor(ImGui.MouseCursor.None);
 
 			// click => select and jump to CHR
-			if (ImGui.IsMouseClicked(0) && this._hoverInfo) {
+			if (ImGui.IsMouseClicked(0) && this._bgHoverInfo) {
 				const patternTableId =
 					ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
 
 				this._selectedCHR = {
 					tableId: patternTableId,
-					tileIndex: this._hoverInfo.tileIndex,
+					tileIndex: this._bgHoverInfo.tileIndex,
 				};
 				this.selectedTab = "CHR";
 			}
 		} else {
 			this._pendingHoverReq = null;
-			this._hoverInfo = null;
+			this._bgHoverInfo = null;
 		}
 
 		let uploadPixels = this._atlasPixels;
@@ -409,6 +410,8 @@ export default class Debugger_PPU {
 	_drawCHRTab() {
 		widgets.simpleTab(this, "CHR", () => {
 			const itemWidth = CHR_SIZE_PIXELS * CHR_SCALE;
+
+			this._chrHoverInfo = null;
 
 			const renderChrTable = (
 				id,
@@ -506,7 +509,7 @@ export default class Debugger_PPU {
 						}
 					}
 
-					// hover info
+					// set overlay
 					if (hover) {
 						this._chrHoverInfo = {
 							tableId,
@@ -537,12 +540,9 @@ export default class Debugger_PPU {
 			);
 			ImGui.Columns(1);
 
-			// CHR overlay (hover info)
-			if (this._chrHoverInfo) {
+			// CHR overlay
+			if (this._chrHoverInfo)
 				this._drawCHRInfoOverlayForeground(this._chrHoverInfo);
-			} else {
-				this._chrHoverInfo = null;
-			}
 		});
 	}
 
