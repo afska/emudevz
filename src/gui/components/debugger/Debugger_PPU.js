@@ -139,7 +139,6 @@ export default class Debugger_PPU {
 			this._drawCHRTab();
 			this._drawSpritesTab(ppu);
 			this._drawPalettesTab(ppu);
-			this._drawInfoTab();
 
 			ImGui.EndTabBar();
 			this.selectedTab = null;
@@ -1473,12 +1472,6 @@ export default class Debugger_PPU {
 			1,
 			() => info.color >>> 0
 		);
-	}
-	//#endregion
-
-	//#region Info
-	_drawInfoTab() {
-		widgets.simpleTab(this, "Info", () => {});
 	}
 	//#endregion
 
