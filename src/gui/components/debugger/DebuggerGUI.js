@@ -38,7 +38,7 @@ export default class DebuggerGUI {
 					{ name: "CPU", pane: this.cpu },
 					{ name: "PPU", pane: this.ppu },
 					{ name: "APU", pane: this.apu },
-					{ name: "External", pane: this.external },
+					{ name: "Controllers", pane: this.external },
 					{ name: "Logs", pane: this.logs },
 				];
 				for (let { name, pane } of tabs) {
