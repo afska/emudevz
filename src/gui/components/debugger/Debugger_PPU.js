@@ -69,6 +69,11 @@ export default class Debugger_PPU {
 		this._sprPreviewTexture = widgets.newTexture(SCREEN_WIDTH, SCREEN_HEIGHT);
 		this._oamTextureWidth = 0;
 		this._oamTextureHeight = 0;
+		this._bgPaletteTexture = widgets.newTexture(32 * 4, 32 * 4);
+		this._sprPaletteTexture = widgets.newTexture(32 * 4, 32 * 4);
+		this._bgPalettePixels = new Uint32Array(32 * 4 * (32 * 4));
+		this._sprPalettePixels = new Uint32Array(32 * 4 * (32 * 4));
+		this._paletteHoverInfo = null;
 
 		// Scanline trigger
 		this._scanlineTrigger = 241; // -1..260
@@ -133,7 +138,7 @@ export default class Debugger_PPU {
 			this._drawNameTablesTab(ppu);
 			this._drawCHRTab();
 			this._drawSpritesTab(ppu);
-			this._drawPalettesTab();
+			this._drawPalettesTab(ppu);
 			this._drawInfoTab();
 
 			ImGui.EndTabBar();
@@ -167,6 +172,14 @@ export default class Debugger_PPU {
 			widgets.deleteTexture(this._sprPreviewTexture);
 			this._sprPreviewTexture = null;
 		}
+		if (this._bgPaletteTexture) {
+			widgets.deleteTexture(this._bgPaletteTexture);
+			this._bgPaletteTexture = null;
+		}
+		if (this._sprPaletteTexture) {
+			widgets.deleteTexture(this._sprPaletteTexture);
+			this._sprPaletteTexture = null;
+		}
 
 		this._destroyed = true;
 	}
@@ -175,6 +188,7 @@ export default class Debugger_PPU {
 		this._updateNameTableAtlas(ppu);
 		this._updateCHR(ppu);
 		this._updateSprites(ppu);
+		this._updatePalettes(ppu);
 	}
 
 	//#region Name tables
@@ -225,7 +239,7 @@ export default class Debugger_PPU {
 		if (!this._selectedCHR) return;
 
 		const patternTableId =
-			ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
+			ppu.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
 		if (patternTableId !== this._selectedCHR.tableId) return;
 
 		for (let nameTableId = 0; nameTableId < 4; nameTableId++) {
@@ -265,7 +279,7 @@ export default class Debugger_PPU {
 
 		const tileIndex = ppu.memory?.read?.(req.ppuAddress) ?? 0;
 		const patternTableId =
-			ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
+			ppu.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
 		const tileAddress = (patternTableId ? 0x1000 : 0x0000) + tileIndex * 16;
 
 		const attribute = ppu.memory?.read?.(req.attributeAddress) ?? 0;
@@ -848,7 +862,7 @@ export default class Debugger_PPU {
 	}
 
 	_readAllOAM(ppu) {
-		const oamRam = ppu?.memory?.oamRam;
+		const oamRam = ppu.memory?.oamRam;
 		const out = new Array(TOTAL_SPRITES);
 
 		for (let i = 0; i < TOTAL_SPRITES; i++) {
@@ -929,6 +943,8 @@ export default class Debugger_PPU {
 	}
 
 	_forEachSpritePixel(ppu, sprite, onPixel) {
+		if (ppu == null) return;
+
 		const { backgroundColor, palette } = this._getSpritePalette(ppu, sprite);
 		const width = TILE_SIZE_PIXELS;
 		const height = sprite.height;
@@ -952,8 +968,8 @@ export default class Debugger_PPU {
 	}
 
 	_getSpritePalette(ppu, sprite) {
-		const backgroundColor = (ppu.getColor?.(0, 0) ?? 0) >>> 0;
-		const palette = ppu.getPaletteColors?.(sprite.paletteId) ?? [
+		const backgroundColor = (ppu?.getColor?.(0, 0) ?? 0) >>> 0;
+		const palette = ppu?.getPaletteColors?.(sprite.paletteId) ?? [
 			backgroundColor,
 			backgroundColor,
 			backgroundColor,
@@ -1220,8 +1236,243 @@ export default class Debugger_PPU {
 	//#endregion
 
 	//#region Palettes
-	_drawPalettesTab() {
-		widgets.simpleTab(this, "Palettes", () => {});
+	_drawPalettesTab(ppu) {
+		widgets.simpleTab(this, "Palettes", () => {
+			this._paletteHoverInfo = null;
+
+			const tileSize = 32;
+			const imageSize = tileSize * 4;
+
+			ImGui.Columns(2, "PaletteCols", false);
+
+			// background palette
+			widgets.simpleTable("bgPalette", "Background palette", () => {
+				widgets.centerNextItemX(imageSize);
+
+				// hover
+				let hoverRect = null;
+				const imgTopLeft = ImGui.GetCursorScreenPos();
+				const mouse = ImGui.GetMousePos();
+				const lx = Math.floor(mouse.x - imgTopLeft.x);
+				const ly = Math.floor(mouse.y - imgTopLeft.y);
+				if (
+					lx >= 0 &&
+					ly >= 0 &&
+					lx < imageSize &&
+					ly < imageSize &&
+					ImGui.IsWindowHovered()
+				) {
+					const col = Math.floor(lx / tileSize);
+					const row = Math.floor(ly / tileSize);
+					const address = 0x3f00 + row * 4 + col;
+					const masterIndex = (ppu?.memory?.read?.(address) ?? 0) & 0x3f;
+					const color = ppu?.getColor?.(row, col) ?? 0;
+
+					hoverRect = {
+						x: col * tileSize,
+						y: row * tileSize,
+						w: tileSize,
+						h: tileSize,
+					};
+					this._paletteHoverInfo = {
+						address,
+						masterIndex,
+						color,
+					};
+					ImGui.SetMouseCursor(ImGui.MouseCursor.None);
+				}
+
+				let uploadPixels = this._bgPalettePixels;
+				if (hoverRect) {
+					uploadPixels = new Uint32Array(this._bgPalettePixels);
+					this._drawHoverOverlay(
+						uploadPixels,
+						imageSize,
+						imageSize,
+						hoverRect.x,
+						hoverRect.y,
+						hoverRect.w,
+						hoverRect.h
+					);
+				}
+				widgets.updateTexture(
+					this._bgPaletteTexture,
+					imageSize,
+					imageSize,
+					uploadPixels
+				);
+
+				const draw = ImGui.GetWindowDrawList();
+				const p0 = ImGui.GetCursorScreenPos();
+				const p1 = new ImGui.Vec2(p0.x + imageSize, p0.y + imageSize);
+				ImGui.Image(
+					this._bgPaletteTexture,
+					new ImGui.Vec2(imageSize, imageSize)
+				);
+				draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
+			});
+
+			ImGui.NextColumn();
+
+			// sprites palette
+			widgets.simpleTable("sprPalette", "Sprites palette", () => {
+				widgets.centerNextItemX(imageSize);
+
+				// hover
+				let hoverRect = null;
+				const imgTopLeft = ImGui.GetCursorScreenPos();
+				const mouse = ImGui.GetMousePos();
+				const lx = Math.floor(mouse.x - imgTopLeft.x);
+				const ly = Math.floor(mouse.y - imgTopLeft.y);
+				if (
+					lx >= 0 &&
+					ly >= 0 &&
+					lx < imageSize &&
+					ly < imageSize &&
+					ImGui.IsWindowHovered()
+				) {
+					const col = Math.floor(lx / tileSize);
+					const row = Math.floor(ly / tileSize);
+					const address = 0x3f10 + row * 4 + col;
+					const masterIndex = (ppu?.memory?.read?.(address) ?? 0) & 0x3f;
+					const color = ppu?.getColor?.(4 + row, col) ?? 0;
+
+					hoverRect = {
+						x: col * tileSize,
+						y: row * tileSize,
+						w: tileSize,
+						h: tileSize,
+					};
+					this._paletteHoverInfo = {
+						address,
+						masterIndex,
+						color,
+					};
+					ImGui.SetMouseCursor(ImGui.MouseCursor.None);
+				}
+
+				// upload + optional hover overlay + draw
+				let uploadPixels = this._sprPalettePixels;
+				if (hoverRect) {
+					uploadPixels = new Uint32Array(this._sprPalettePixels);
+					this._drawHoverOverlay(
+						uploadPixels,
+						imageSize,
+						imageSize,
+						hoverRect.x,
+						hoverRect.y,
+						hoverRect.w,
+						hoverRect.h
+					);
+				}
+				widgets.updateTexture(
+					this._sprPaletteTexture,
+					imageSize,
+					imageSize,
+					uploadPixels
+				);
+
+				const draw = ImGui.GetWindowDrawList();
+				const p0 = ImGui.GetCursorScreenPos();
+				const p1 = new ImGui.Vec2(p0.x + imageSize, p0.y + imageSize);
+				ImGui.Image(
+					this._sprPaletteTexture,
+					new ImGui.Vec2(imageSize, imageSize)
+				);
+				draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
+			});
+
+			ImGui.Columns(1);
+
+			// color overlay
+			if (this._paletteHoverInfo)
+				this._drawPaletteInfoOverlayForeground(this._paletteHoverInfo);
+		});
+	}
+
+	_updatePalettes(ppu) {
+		const tileSize = 32;
+		const imageSize = tileSize * 4;
+
+		this._renderPaletteTexture(
+			ppu,
+			0,
+			this._bgPalettePixels,
+			imageSize,
+			tileSize
+		);
+		this._renderPaletteTexture(
+			ppu,
+			4,
+			this._sprPalettePixels,
+			imageSize,
+			tileSize
+		);
+
+		widgets.updateTexture(
+			this._bgPaletteTexture,
+			imageSize,
+			imageSize,
+			this._bgPalettePixels
+		);
+		widgets.updateTexture(
+			this._sprPaletteTexture,
+			imageSize,
+			imageSize,
+			this._sprPalettePixels
+		);
+	}
+
+	_renderPaletteTexture(ppu, startPaletteId, pixels, imageSize, tileSize) {
+		for (let row = 0; row < 4; row++) {
+			for (let col = 0; col < 4; col++) {
+				const color = (ppu.getColor?.(startPaletteId + row, col) ?? 0) >>> 0;
+
+				const x0 = col * tileSize;
+				const y0 = row * tileSize;
+				for (let y = 0; y < tileSize; y++) {
+					const rowOffset = (y0 + y) * imageSize;
+					for (let x = 0; x < tileSize; x++) {
+						pixels[rowOffset + x0 + x] = color;
+					}
+				}
+			}
+		}
+	}
+
+	_drawPaletteInfoOverlayForeground(info) {
+		const r = info.color & 0xff;
+		const g = (info.color >>> 8) & 0xff;
+		const b = (info.color >>> 16) & 0xff;
+		const hexColor = `#${hex.format(r, 2)}${hex.format(g, 2)}${hex.format(
+			b,
+			2
+		)}`;
+
+		const lines = [
+			`Color           : $${hex.format(info.masterIndex, 2)} `,
+			`Palette address : $${hex.format(info.address, 4)} `,
+			`Color hex       : ${hexColor}`,
+		];
+
+		const previewSize = 32;
+		const { draw, cursorX, cursorY, contentWidth } = this._overlayBox(
+			lines,
+			previewSize,
+			previewSize
+		);
+
+		const previewX0 = cursorX + Math.floor((contentWidth - previewSize) / 2);
+		const previewY0 = cursorY;
+		this._drawPreview(
+			draw,
+			previewX0,
+			previewY0,
+			previewSize,
+			1,
+			1,
+			() => info.color >>> 0
+		);
 	}
 	//#endregion
 
