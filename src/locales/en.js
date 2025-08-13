@@ -176,6 +176,8 @@ export default {
 	tests_errors_found: "🚫  Errors found.",
 	tests_warnings_found: "⚠️  Warnings found.",
 	tests_more: "💬  For more info, run `test -v [testNumber]`",
+	tests_more_units:
+		"💡  For a specific test type, run `test audio` | `test video` | `test unit`",
 	tests_audio_apu_output: "APU output",
 	tests_audio_expected_output: "Expected output",
 	tests_audio_apu_not_unlocked: "❌  APU is not unlocked.",

@@ -20,7 +20,7 @@ play:
     {{Right}}.stream.setIntegration("FromBelow");
     {{Right}}.loadROM("/roms/.all/FromBelow.neees", "stream");
   messages:
-  - my highest so far is ~1234~ points
+  - my highest so far is ~1300~ points
   - try to reach it in any mode!
   events:
   - frombelow-end [finish]

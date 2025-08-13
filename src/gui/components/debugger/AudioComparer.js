@@ -1,7 +1,13 @@
 import { GenericDebugger } from "../Debugger";
-import utils from "./utils";
+import widgets from "./widgets";
 
 const ImGui = window.ImGui;
+
+// Knobs
+const WAVE_HEIGHT = 20;
+const COLOR_FAIL = "#d9534f";
+const COLOR_ACTUAL_WAVE = "#e5c07b";
+const COLOR_EXPECTED_WAVE = "#577295";
 
 const MIN = 0;
 const MAX = 15;
@@ -18,40 +24,23 @@ export default GenericDebugger(
 		}
 
 		draw() {
-			const m = 0;
-			ImGui.SetNextWindowPos(new ImGui.ImVec2(m, m), ImGui.Cond.FirstUseEver);
-			const io = ImGui.GetIO();
-			ImGui.SetNextWindowSize(
-				new ImGui.ImVec2(io.DisplaySize.x - m * 2, io.DisplaySize.y - m * 2)
-			);
 			ImGui.PushStyleVar(ImGui.StyleVar.WindowBorderSize, 0);
-			ImGui.Begin(
+
+			widgets.window(
 				"Audio test",
-				null,
-				ImGui.WindowFlags.NoTitleBar |
-					ImGui.WindowFlags.NoMove |
-					ImGui.WindowFlags.NoResize |
-					ImGui.WindowFlags.NoCollapse
+				{ margin: 10, flags: ImGui.WindowFlags.NoTitleBar },
+				() => {
+					widgets.withWaveColor(this.didFail ? COLOR_FAIL : null, () => {
+						widgets.progressBar(this.progressValue / 100, this.progressText);
+					});
+
+					ImGui.Columns(2, "ComparerCols", false);
+					this._drawWaves(this.emulationA, COLOR_ACTUAL_WAVE, this.samplesA);
+					ImGui.NextColumn();
+					this._drawWaves(this.emulationB, COLOR_EXPECTED_WAVE, this.samplesB);
+				}
 			);
 
-			if (this.didFail) {
-				const vec4Color = utils.hexToVec4("#d9534f");
-				ImGui.PushStyleColor(ImGui.Col.PlotHistogram, vec4Color);
-				ImGui.PushStyleColor(ImGui.Col.PlotHistogramHovered, vec4Color);
-			}
-			ImGui.ProgressBar(
-				this.progressValue / 100,
-				new ImGui.Vec2(-1, 16),
-				this.progressText
-			);
-			if (this.didFail) ImGui.PopStyleColor(2);
-
-			ImGui.Columns(2, "ComparerCols", false);
-			this._drawWaves(this.emulationA, "#e5c07b", this.samplesA);
-			ImGui.NextColumn();
-			this._drawWaves(this.emulationB, "#577295", this.samplesB);
-
-			ImGui.End();
 			ImGui.PopStyleVar();
 		}
 
@@ -86,62 +75,28 @@ export default GenericDebugger(
 				dmc = this._lastDMC;
 			}
 
-			const N = mix.length;
-			const height = 20;
+			const n = mix.length;
 
-			const vec4Color = utils.hexToVec4(color);
-			ImGui.PushStyleColor(ImGui.Col.PlotLines, vec4Color);
-			ImGui.PushStyleColor(ImGui.Col.PlotLinesHovered, vec4Color);
-
-			utils.simpleSection(
-				"mix",
-				"Mix",
-				() => {
-					const waveSize = new ImGui.Vec2(
-						ImGui.GetContentRegionAvail().x,
-						height
-					);
-					ImGui.PlotLines("", mix, N, 0, "", 0, 0.5, waveSize);
-				},
-				color
-			);
-			utils.simpleSection("pulse1", "Pulse Channel 1", () => {
-				const waveSize = new ImGui.Vec2(
-					ImGui.GetContentRegionAvail().x,
-					height
-				);
-				ImGui.PlotLines("", pulse1, N, 0, "", MIN, MAX, waveSize);
+			widgets.withWaveColor(color, () => {
+				widgets.simpleSection("Mix", () => {
+					widgets.wave(mix, n, 0, 0.5, WAVE_HEIGHT);
+				});
+				widgets.simpleSection("Pulse Channel 1", () => {
+					widgets.wave(pulse1, n, MIN, MAX, WAVE_HEIGHT);
+				});
+				widgets.simpleSection("Pulse Channel 2", () => {
+					widgets.wave(pulse2, n, MIN, MAX, WAVE_HEIGHT);
+				});
+				widgets.simpleSection("Triangle Channel", () => {
+					widgets.wave(triangle, n, MIN, MAX, WAVE_HEIGHT);
+				});
+				widgets.simpleSection("Noise Channel", () => {
+					widgets.wave(noise, n, MIN, MAX, WAVE_HEIGHT);
+				});
+				widgets.simpleSection("DMC Channel", () => {
+					widgets.wave(dmc, n, MIN, MAX, WAVE_HEIGHT);
+				});
 			});
-			utils.simpleSection("pulse2", "Pulse Channel 2", () => {
-				const waveSize = new ImGui.Vec2(
-					ImGui.GetContentRegionAvail().x,
-					height
-				);
-				ImGui.PlotLines("", pulse2, N, 0, "", MIN, MAX, waveSize);
-			});
-			utils.simpleSection("triangle", "Triangle Channel", () => {
-				const waveSize = new ImGui.Vec2(
-					ImGui.GetContentRegionAvail().x,
-					height
-				);
-				ImGui.PlotLines("", triangle, N, 0, "", MIN, MAX, waveSize);
-			});
-			utils.simpleSection("noise", "Noise Channel", () => {
-				const waveSize = new ImGui.Vec2(
-					ImGui.GetContentRegionAvail().x,
-					height
-				);
-				ImGui.PlotLines("", noise, N, 0, "", MIN, MAX, waveSize);
-			});
-			utils.simpleSection("dmc", "DMC Channel", () => {
-				const waveSize = new ImGui.Vec2(
-					ImGui.GetContentRegionAvail().x,
-					height
-				);
-				ImGui.PlotLines("", dmc, N, 0, "", MIN, MAX, waveSize);
-			});
-
-			ImGui.PopStyleColor(2);
 		}
 	}
 );

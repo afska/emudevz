@@ -11,7 +11,7 @@ how:
   - a través de los registros de video llamados 📍  PPUAddr y 📦  PPUData
   - son como un puente que conecta la 🧠  CPU y 🖥️  PPU
   - primero, los juegos ponen la dirección de VRAM que quieren escribir en 📍  PPUAddr
-  - "(dos escrituras consecutivas: una para el high byte, y una para el low byte)"
+  - "(dos escrituras consecutivas: una para el byte alto, y una para el byte bajo)"
   - luego, escriben en 📦  PPUData el byte que quieren poner en esa dirección
   - <{PPUAddr_PPUData.png}>
   responses:
@@ -33,10 +33,10 @@ exercise:
         (usaremos estas para modelar el comportamiento alternante entre byte alto / byte bajo en cada operación de escritura)
     **onWrite(value)**:
       **->** si `latch` es ```javascript false```:
-        **->** escribe solo el high byte de `address`, usando `value`
+        **->** escribe solo el byte alto de `address`, usando `value`
           (deja la parte baja como estaba antes)
       **->** si es ```javascript true```:
-        **->** escribe solo el low byte de `address`, usando `value`
+        **->** escribe solo el byte bajo de `address`, usando `value`
           (deja la parte alta como estaba antes)
       (puedes usar `buildU16(...)`, `highByteOf(...)`, y `lowByteOf(...)`)
       **->** cambia `latch` al valor opuesto
@@ -54,7 +54,7 @@ exercise:
         **->** incrementa ```javascript ppuAddr.address``` 1 vez
      **[!]** asegúrate de que la dirección nunca exceda 65535 usando `byte.toU16(...)`
   - |-
-    📚  por último, modifica en 📊  `PPUStatus`:
+    📚  por último, <modifica> en 📊  `PPUStatus`:
     **onRead()**:
       **->** luego de resetear `isInVBlankInterval`, también resetea el `latch` de 📍  `PPUAddr`
   responses:

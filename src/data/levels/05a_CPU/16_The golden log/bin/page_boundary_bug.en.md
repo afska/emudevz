@@ -7,7 +7,7 @@ If the address falls on a page boundary `($aaFF)`, it fetches the least signific
 
 So, instead of `read16(address)`, the implementation should be like this:
 
-```
+```javascript
 buildU16(
   read(
     lowByteOf(address) === 0xff

@@ -282,12 +282,16 @@ export default class EmulatorRunner extends PureComponent {
 
 	_goToError = () => {
 		const { filePath, lineNumber } = this.props.error.debugInfo;
-		store.dispatch.savedata.openFile(filePath);
-		setTimeout(() => {
-			if (_.isFinite(lineNumber))
-				bus.emit("highlight", { line: lineNumber - 1, reason: "debug-button" });
-		});
-		Level.current.highlightMultiFileEditor();
+		if (window._openPath_(filePath)) {
+			setTimeout(() => {
+				if (_.isFinite(lineNumber))
+					bus.emit("highlight", {
+						line: lineNumber - 1,
+						reason: "debug-button",
+					});
+			});
+			Level.current.highlightMultiFileEditor();
+		}
 	};
 
 	_goFullscreen = () => {

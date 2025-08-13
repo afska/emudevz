@@ -181,7 +181,7 @@ const masterPalette = [
 	/* 0x2a */ 0xff35e35b,
 	/* 0x2b */ 0xff88de45,
 	/* 0x2c */ 0xffe3ca49,
-	/* 0x2d */ 0xffe4e404e,
+	/* 0x2d */ 0xff4e4e4e,
 	/* 0x2e */ 0xff000000,
 	/* 0x2f */ 0xff000000,
 	/* 0x30 */ 0xffffffff,
@@ -965,7 +965,7 @@ class LoopyRegister {
 		return vAddress.coarseX * TILE_SIZE_PIXELS + fineX + (x % TILE_SIZE_PIXELS);
 	}
 
-	/** Returns the scrolled X in Name table coordinates ([0..255]). */
+	/** Returns the scrolled Y in Name table coordinates ([0..255]). */
 	scrolledY() {
 		const { vAddress } = this;
 		return vAddress.coarseY * TILE_SIZE_PIXELS + vAddress.fineY;
@@ -1239,10 +1239,6 @@ export default class PPU {
 		this.spriteRenderer = new SpriteRenderer(this);
 	}
 
-	onLoad(mapper) {
-		this.mapper = mapper;
-	}
-
 	plotBG(x, y, color, colorIndex) {
 		this.colorIndexes[y * 256 + x] = colorIndex;
 		this.plot(x, y, color);
@@ -1293,7 +1289,6 @@ export default class PPU {
 		}
 
 		this.loopy.onPreLine(this.cycle);
-		if (this.cycle === 260) this.mapper.tick();
 	}
 
 	_onVisibleLine() {
@@ -1307,7 +1302,6 @@ export default class PPU {
 		}
 
 		this.loopy.onVisibleLine(this.cycle);
-		if (this.cycle === 260) this.mapper.tick();
 	}
 
 	_onVBlankLine(onInterrupt) {

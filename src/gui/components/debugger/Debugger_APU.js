@@ -1,4 +1,4 @@
-import utils from "./utils";
+import widgets from "./widgets";
 
 const ImGui = window.ImGui;
 
@@ -16,7 +16,7 @@ const DUTY_PERCENTAGES = ["12.5%", "25%", "50%", "75"];
 export default class Debugger_APU {
 	constructor(args) {
 		this.args = args;
-		this.selectedTab = null; // only works when `this.args.readOnly`
+		this.selectedTab = null;
 
 		this._zoom = 0.0;
 	}
@@ -49,407 +49,26 @@ export default class Debugger_APU {
 		}
 
 		const maxN = mix.length;
-		const N = Math.floor(maxN * (1 - this._zoom));
-		const height = 40;
+		const n = Math.floor(maxN * (1 - this._zoom));
 
 		if (ImGui.BeginTabBar("APUTabs")) {
-			utils.simpleTab(
-				"Overview",
-				() => {
-					if (emulation != null) {
-						if (this.args.readOnly) ImGui.BeginDisabled(true);
-						ImGui.Checkbox(
-							"Pulse 1",
-							(val = emulation.enabledChannels.pulse1) =>
-								(emulation.enabledChannels.pulse1 = val)
-						);
-						ImGui.SameLine();
-						ImGui.Checkbox(
-							"Pulse 2",
-							(val = emulation.enabledChannels.pulse2) =>
-								(emulation.enabledChannels.pulse2 = val)
-						);
-						ImGui.SameLine();
-						ImGui.Checkbox(
-							"Triangle",
-							(val = emulation.enabledChannels.triangle) =>
-								(emulation.enabledChannels.triangle = val)
-						);
-						ImGui.SameLine();
-						ImGui.Checkbox(
-							"Noise",
-							(val = emulation.enabledChannels.noise) =>
-								(emulation.enabledChannels.noise = val)
-						);
-						ImGui.SameLine();
-						ImGui.Checkbox(
-							"DMC",
-							(val = emulation.enabledChannels.dmc) =>
-								(emulation.enabledChannels.dmc = val)
-						);
-						if (this.args.readOnly) ImGui.EndDisabled(true);
-					}
-
-					if (!this.args.readOnly) {
-						utils.fullWidthFieldWithLabel("Zoom", (label) => {
-							ImGui.SliderFloat(
-								label,
-								(v = this._zoom) => (this._zoom = v),
-								0.0,
-								0.9,
-								"%.2f"
-							);
-						});
-					}
-
-					utils.simpleTable("pulse1", "Pulse Channel 1", () => {
-						const waveSize = new ImGui.Vec2(
-							ImGui.GetContentRegionAvail().x,
-							height
-						);
-						ImGui.PlotLines("", pulse1, N, 0, "", MIN, MAX, waveSize);
-					});
-					utils.simpleTable("pulse2", "Pulse Channel 2", () => {
-						const waveSize = new ImGui.Vec2(
-							ImGui.GetContentRegionAvail().x,
-							height
-						);
-						ImGui.PlotLines("", pulse2, N, 0, "", MIN, MAX, waveSize);
-					});
-					utils.simpleTable("triangle", "Triangle Channel", () => {
-						const waveSize = new ImGui.Vec2(
-							ImGui.GetContentRegionAvail().x,
-							height
-						);
-						ImGui.PlotLines("", triangle, N, 0, "", MIN, MAX, waveSize);
-					});
-					utils.simpleTable("noise", "Noise Channel", () => {
-						const waveSize = new ImGui.Vec2(
-							ImGui.GetContentRegionAvail().x,
-							height
-						);
-						ImGui.PlotLines("", noise, N, 0, "", MIN, MAX, waveSize);
-					});
-					utils.simpleTable("dmc", "DMC Channel", () => {
-						const waveSize = new ImGui.Vec2(
-							ImGui.GetContentRegionAvail().x,
-							height
-						);
-						ImGui.PlotLines("", dmc, N, 0, "", MIN, MAX, waveSize);
-					});
-					utils.simpleTable("mix", "Mix", () => {
-						const waveSize = new ImGui.Vec2(
-							ImGui.GetContentRegionAvail().x,
-							height
-						);
-						ImGui.PlotLines("", mix, N, 0, "", 0, 0.5, waveSize);
-					});
-
-					utils.simpleTable("sequencer", "Sequencer", () => {
-						utils.boolean("Use 5-step sequence", true);
-					});
-				},
-				this.args.readOnly ? this.selectedTab === "Overview" : null
+			this._drawOverviewTab(
+				emulation,
+				mix,
+				pulse1,
+				pulse2,
+				triangle,
+				noise,
+				dmc,
+				n
 			);
-
-			utils.simpleTab(
-				"Pulse",
-				() => {
-					ImGui.Columns(2, "PulseCols", false);
-					["pulse1", "pulse2"].forEach((id, i) => {
-						const samples = i === 0 ? pulse1 : pulse2;
-						const channel = neees?.apu.channels?.pulses?.[i];
-						let frequency = 0,
-							duty = 0;
-						if (channel != null) {
-							const timer = channel.timer ?? 0;
-							frequency = 1789773 / (16 * (timer + 1));
-							duty = channel.registers?.control.dutyCycleId;
-						}
-
-						utils.simpleTable(id, "Pulse Channel " + (i + 1), () => {
-							const waveSize = new ImGui.Vec2(
-								ImGui.GetContentRegionAvail().x,
-								height
-							);
-							ImGui.PlotLines("", samples, maxN, 0, "", MIN, MAX, waveSize);
-
-							const constantVolume =
-								channel?.registers?.control.constantVolume ?? false;
-							const volumeOrEnvelopePeriod =
-								channel?.registers?.control.volumeOrEnvelopePeriod ?? 0;
-
-							utils.boolean("Enabled", channel?.isEnabled?.() ?? false);
-							ImGui.SameLine();
-							utils.boolean("Constant", constantVolume);
-							utils.value("Timer", channel?.timer ?? 0);
-							utils.value("  => Freq", `${frequency.toFixed(2)} hz`);
-							utils.value("Duty", `${duty} (${DUTY_PERCENTAGES[duty]})`);
-							ImGui.SameLine();
-							const dutyWave = DUTY_SEQUENCE[duty];
-							ImGui.PlotHistogram(
-								"",
-								dutyWave,
-								dutyWave.length,
-								0,
-								"",
-								0,
-								1,
-								new ImGui.Vec2(80, 16)
-							);
-							utils.value("Sample", samples[samples.length - 1] ?? 0);
-
-							utils.simpleTable(`${id}_lengthcounter`, "Length Counter", () => {
-								const count = channel?.lengthCounter?.counter ?? 0;
-
-								utils.boolean(
-									"Halt",
-									channel?.registers?.control.envelopeLoopOrLengthCounterHalt ??
-										false
-								);
-								utils.value("Count", count);
-								ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
-							});
-
-							utils.simpleTable(
-								`${id}_volumeenvelope`,
-								"Volume Envelope",
-								() => {
-									const volume = channel?.volumeEnvelope?.volume ?? 0;
-
-									utils.boolean(
-										"Start",
-										channel?.volumeEnvelope?.startFlag ?? false
-									);
-									ImGui.SameLine();
-									utils.boolean(
-										"Loop",
-										channel?.registers?.control
-											.envelopeLoopOrLengthCounterHalt ?? false
-									);
-
-									utils.value(
-										constantVolume ? "Constant volume" : "Divider period",
-										volumeOrEnvelopePeriod
-									);
-									if (!constantVolume) {
-										utils.value(
-											"Divider count",
-											channel?.volumeEnvelope?.dividerCount ?? 0
-										);
-										utils.value("Volume", volume);
-									}
-									ImGui.ProgressBar(
-										(constantVolume ? volumeOrEnvelopePeriod : volume) / 15,
-										new ImGui.Vec2(-1, 16)
-									);
-								}
-							);
-
-							utils.simpleTable(`${id}_sweep`, "Frequency Sweep", () => {
-								utils.boolean(
-									"Enabled",
-									channel?.registers?.sweep?.enabledFlag ?? false
-								);
-								ImGui.SameLine();
-								utils.boolean(
-									"Negate",
-									channel?.registers?.sweep?.negateFlag ?? false
-								);
-								utils.value(
-									"Divider period",
-									(channel?.registers?.sweep?.dividerPeriodMinusOne ?? 0) + 1
-								);
-								utils.value(
-									"Divider count",
-									channel?.frequencySweep?.dividerCount ?? 0
-								);
-								utils.value("Delta", channel?.frequencySweep?.sweepDelta ?? 0);
-								ImGui.ProgressBar(frequency / MAX_FREQ, new ImGui.Vec2(-1, 16));
-							});
-						});
-
-						if (i === 0) ImGui.NextColumn();
-					});
-					ImGui.Columns(1);
-				},
-				this.args.readOnly ? this.selectedTab === "Pulse" : null
-			);
-
-			utils.simpleTab(
-				"Triangle",
-				() => {
-					const channel = neees?.apu.channels?.triangle;
-					let frequency = 0;
-					if (channel != null) {
-						const timer = channel.timer ?? 0;
-						frequency = 1789773 / (16 * (timer + 1)) / 2;
-					}
-
-					const waveSize = new ImGui.Vec2(
-						ImGui.GetContentRegionAvail().x,
-						height
-					);
-					ImGui.PlotLines("", triangle, maxN, 0, "", MIN, MAX, waveSize);
-
-					utils.boolean("Enabled", channel?.isEnabled?.() ?? false);
-					utils.value("Timer", channel?.timer ?? 0);
-					utils.value("  => Freq", `${frequency.toFixed(2)} hz`);
-					utils.value("Sample", triangle[triangle.length - 1] ?? 0);
-
-					utils.simpleTable(`triangle_lengthcounter`, "Length Counter", () => {
-						const count = channel?.lengthCounter?.counter ?? 0;
-
-						utils.boolean(
-							"Halt",
-							channel?.registers?.lengthControl.halt ?? false
-						);
-						utils.value("Count", count);
-						ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
-					});
-
-					utils.simpleTable(
-						`triangle_linearlengthcounter`,
-						"Linear Length Counter",
-						() => {
-							const count = channel?.linearLengthCounter?.counter ?? 0;
-
-							utils.boolean(
-								"Halt",
-								channel?.registers?.lengthControl.halt ?? false
-							);
-							ImGui.SameLine();
-							utils.boolean(
-								"Reload",
-								channel?.linearLengthCounter?.reloadFlag ?? false
-							);
-							utils.value("Count", count);
-							utils.value(
-								"Reload value",
-								channel?.linearLengthCounter?.reload ?? 0
-							);
-							ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
-						}
-					);
-				},
-				this.args.readOnly ? this.selectedTab === "Triangle" : null
-			);
-
-			utils.simpleTab(
-				"Noise",
-				() => {
-					const channel = neees?.apu.channels?.noise;
-
-					const waveSize = new ImGui.Vec2(
-						ImGui.GetContentRegionAvail().x,
-						height
-					);
-					ImGui.PlotLines("", noise, maxN, 0, "", MIN, MAX, waveSize);
-
-					const constantVolume =
-						channel?.registers?.control.constantVolume ?? false;
-					const volumeOrEnvelopePeriod =
-						channel?.registers?.control.volumeOrEnvelopePeriod ?? 0;
-
-					utils.boolean("Enabled", channel?.isEnabled?.());
-					ImGui.SameLine();
-					utils.boolean("Constant", constantVolume);
-					ImGui.SameLine();
-					utils.boolean("Mode", channel?.registers?.form.mode ?? false);
-					utils.value("Divider period", channel?.registers?.form.period ?? 0);
-					utils.value("Divider count", channel?.count ?? 0);
-					utils.value(
-						"Shift",
-						"0b" + (channel?.shift ?? 0).toString(2).padStart(15, "0")
-					);
-					utils.value("Sample", noise[noise.length - 1] ?? 0);
-
-					utils.simpleTable(`noise_volumeenvelope`, "Volume Envelope", () => {
-						const volume = channel?.volumeEnvelope?.volume ?? 0;
-
-						utils.boolean("Start", channel?.volumeEnvelope?.startFlag ?? false);
-						ImGui.SameLine();
-						utils.boolean(
-							"Loop",
-							channel?.registers?.control.envelopeLoopOrLengthCounterHalt ??
-								false
-						);
-
-						utils.value(
-							constantVolume ? "Constant volume" : "Divider period",
-							volumeOrEnvelopePeriod
-						);
-						if (!constantVolume) {
-							utils.value(
-								"Divider count",
-								channel?.volumeEnvelope?.dividerCount ?? 0
-							);
-							utils.value("Volume", volume);
-						}
-						ImGui.ProgressBar(
-							(constantVolume ? volumeOrEnvelopePeriod : volume) / 15,
-							new ImGui.Vec2(-1, 16)
-						);
-					});
-
-					utils.simpleTable(`noise_lengthcounter`, "Length Counter", () => {
-						const count = channel?.lengthCounter?.counter ?? 0;
-
-						utils.boolean(
-							"Halt",
-							channel?.registers?.control.envelopeLoopOrLengthCounterHalt ??
-								false
-						);
-						utils.value("Count", count);
-						ImGui.ProgressBar(count / 255, new ImGui.Vec2(-1, 16));
-					});
-				},
-				this.args.readOnly ? this.selectedTab === "Noise" : null
-			);
-
-			utils.simpleTab(
-				"DMC",
-				() => {
-					const channel = neees?.apu.channels?.dmc;
-
-					const waveSize = new ImGui.Vec2(
-						ImGui.GetContentRegionAvail().x,
-						height
-					);
-					ImGui.PlotLines("", dmc, maxN, 0, "", MIN, MAX, waveSize);
-
-					utils.boolean("Enabled", channel?.isEnabled?.());
-					utils.value("Sample", dmc[dmc.length - 1] ?? 0);
-
-					utils.simpleTable("dmc_dpcm", "DPCM", () => {
-						const cursorByte = channel?.cursorByte ?? 0;
-						const cursorBit = channel?.cursorBit ?? 0;
-						const sampleLength = channel?.sampleLength ?? 0;
-
-						utils.boolean("Start", channel?.startFlag ?? false);
-						ImGui.SameLine();
-						utils.boolean("Active", channel?.isUsingDPCM ?? false);
-						utils.value("Buffer", channel?.buffer ?? 0);
-						utils.value("Cursor (byte)", cursorByte);
-						utils.value("Cursor (bit)", cursorBit);
-						utils.value("Divider period", channel?.dividerPeriod ?? 0);
-						utils.value("Divider count", channel?.dividerCount ?? 0);
-						utils.value(
-							"Sample address",
-							"0x" + (channel?.sampleAddress ?? 0).toString(16).padStart(4, "0")
-						);
-						utils.value("Sample length", sampleLength);
-
-						ImGui.ProgressBar(
-							(cursorByte * 8 + cursorBit) / Math.max(sampleLength * 8, 1),
-							new ImGui.Vec2(-1, 16)
-						);
-					});
-				},
-				this.args.readOnly ? this.selectedTab === "DMC" : null
-			);
+			this._drawPulseTab(neees, pulse1, pulse2, maxN);
+			this._drawTriangleTab(neees, triangle, maxN);
+			this._drawNoiseTab(neees, noise, maxN);
+			this._drawDMCTab(neees, dmc, maxN);
 
 			ImGui.EndTabBar();
+			this.selectedTab = null;
 		}
 
 		if (emulation != null && !emulation.isDebugging)
@@ -465,5 +84,335 @@ export default class Debugger_APU {
 		emulation.enabledChannels.triangle = true;
 		emulation.enabledChannels.noise = true;
 		emulation.enabledChannels.dmc = true;
+	}
+
+	_drawOverviewTab(emulation, mix, pulse1, pulse2, triangle, noise, dmc, n) {
+		widgets.simpleTab(this, "Overview", () => {
+			if (emulation != null) {
+				if (this.args.readOnly) ImGui.BeginDisabled(true);
+				ImGui.Checkbox(
+					"Pulse 1",
+					(val = emulation.enabledChannels.pulse1) =>
+						(emulation.enabledChannels.pulse1 = val)
+				);
+				ImGui.SameLine();
+				ImGui.Checkbox(
+					"Pulse 2",
+					(val = emulation.enabledChannels.pulse2) =>
+						(emulation.enabledChannels.pulse2 = val)
+				);
+				ImGui.SameLine();
+				ImGui.Checkbox(
+					"Triangle",
+					(val = emulation.enabledChannels.triangle) =>
+						(emulation.enabledChannels.triangle = val)
+				);
+				ImGui.SameLine();
+				ImGui.Checkbox(
+					"Noise",
+					(val = emulation.enabledChannels.noise) =>
+						(emulation.enabledChannels.noise = val)
+				);
+				ImGui.SameLine();
+				ImGui.Checkbox(
+					"DMC",
+					(val = emulation.enabledChannels.dmc) =>
+						(emulation.enabledChannels.dmc = val)
+				);
+				if (this.args.readOnly) ImGui.EndDisabled(true);
+			}
+
+			if (!this.args.readOnly) {
+				widgets.fullWidthFieldWithLabel("Zoom", (label) => {
+					ImGui.SliderFloat(
+						label,
+						(v = this._zoom) => (this._zoom = v),
+						0.0,
+						0.9,
+						"%.2f"
+					);
+				});
+			}
+
+			widgets.simpleTable("pulse1", "Pulse Channel 1", () => {
+				widgets.wave(pulse1, n, MIN, MAX);
+			});
+			widgets.simpleTable("pulse2", "Pulse Channel 2", () => {
+				widgets.wave(pulse2, n, MIN, MAX);
+			});
+			widgets.simpleTable("triangle", "Triangle Channel", () => {
+				widgets.wave(triangle, n, MIN, MAX);
+			});
+			widgets.simpleTable("noise", "Noise Channel", () => {
+				widgets.wave(noise, n, MIN, MAX);
+			});
+			widgets.simpleTable("dmc", "DMC Channel", () => {
+				widgets.wave(dmc, n, MIN, MAX);
+			});
+			widgets.simpleTable("mix", "Mix", () => {
+				widgets.wave(mix, n, 0, 0.5);
+			});
+
+			widgets.simpleTable("sequencer", "Sequencer", () => {
+				widgets.boolean("Use 5-step sequence", true);
+			});
+		});
+	}
+
+	_drawPulseTab(neees, pulse1, pulse2, maxN) {
+		widgets.simpleTab(this, "Pulse", () => {
+			ImGui.Columns(2, "PulseCols", false);
+
+			["pulse1", "pulse2"].forEach((id, i) => {
+				const samples = i === 0 ? pulse1 : pulse2;
+				const channel = neees?.apu.channels?.pulses?.[i];
+				let frequency = 0,
+					duty = 0;
+
+				if (channel != null) {
+					const timer = channel.timer ?? 0;
+					frequency = 1789773 / (16 * (timer + 1));
+					duty = channel.registers?.control.dutyCycleId;
+				}
+
+				widgets.simpleTable(id, "Pulse Channel " + (i + 1), () => {
+					widgets.wave(samples, maxN, MIN, MAX);
+
+					const constantVolume =
+						channel?.registers?.control.constantVolume ?? false;
+					const volumeOrEnvelopePeriod =
+						channel?.registers?.control.volumeOrEnvelopePeriod ?? 0;
+
+					widgets.boolean("Enabled", channel?.isEnabled?.() ?? false);
+					ImGui.SameLine();
+					widgets.boolean("Constant", constantVolume);
+					widgets.value("Timer", channel?.timer ?? 0);
+					widgets.value("  => Freq", `${frequency.toFixed(2)} hz`);
+					widgets.value("Duty", `${duty} (${DUTY_PERCENTAGES[duty]})`);
+					ImGui.SameLine();
+					widgets.dutyCycle(DUTY_SEQUENCE[duty]);
+					widgets.value("Sample", samples[samples.length - 1] ?? 0);
+
+					widgets.simpleTable(`${id}_lengthcounter`, "Length Counter", () => {
+						const count = channel?.lengthCounter?.counter ?? 0;
+
+						widgets.boolean(
+							"Halt",
+							channel?.registers?.control.envelopeLoopOrLengthCounterHalt ??
+								false
+						);
+						widgets.value("Count", count);
+						widgets.progressBar(count / 255);
+					});
+
+					widgets.simpleTable(`${id}_volumeenvelope`, "Volume Envelope", () => {
+						const volume = channel?.volumeEnvelope?.volume ?? 0;
+
+						widgets.boolean(
+							"Start",
+							channel?.volumeEnvelope?.startFlag ?? false
+						);
+						ImGui.SameLine();
+						widgets.boolean(
+							"Loop",
+							channel?.registers?.control.envelopeLoopOrLengthCounterHalt ??
+								false
+						);
+
+						widgets.value(
+							constantVolume ? "Constant volume" : "Divider period",
+							volumeOrEnvelopePeriod
+						);
+						if (!constantVolume) {
+							widgets.value(
+								"Divider count",
+								channel?.volumeEnvelope?.dividerCount ?? 0
+							);
+							widgets.value("Volume", volume);
+						}
+						widgets.progressBar(
+							(constantVolume ? volumeOrEnvelopePeriod : volume) / 15
+						);
+					});
+
+					widgets.simpleTable(`${id}_sweep`, "Frequency Sweep", () => {
+						widgets.boolean(
+							"Enabled",
+							channel?.registers?.sweep?.enabledFlag ?? false
+						);
+						ImGui.SameLine();
+						widgets.boolean(
+							"Negate",
+							channel?.registers?.sweep?.negateFlag ?? false
+						);
+						widgets.value(
+							"Divider period",
+							(channel?.registers?.sweep?.dividerPeriodMinusOne ?? 0) + 1
+						);
+						widgets.value(
+							"Divider count",
+							channel?.frequencySweep?.dividerCount ?? 0
+						);
+						widgets.value("Delta", channel?.frequencySweep?.sweepDelta ?? 0);
+						widgets.progressBar(frequency / MAX_FREQ);
+					});
+				});
+
+				if (i === 0) ImGui.NextColumn();
+			});
+
+			ImGui.Columns(1);
+		});
+	}
+
+	_drawTriangleTab(neees, triangle, maxN) {
+		widgets.simpleTab(this, "Triangle", () => {
+			const channel = neees?.apu.channels?.triangle;
+			let frequency = 0;
+			if (channel != null) {
+				const timer = channel.timer ?? 0;
+				frequency = 1789773 / (16 * (timer + 1)) / 2;
+			}
+
+			widgets.wave(triangle, maxN, MIN, MAX);
+
+			widgets.boolean("Enabled", channel?.isEnabled?.() ?? false);
+			widgets.value("Timer", channel?.timer ?? 0);
+			widgets.value("  => Freq", `${frequency.toFixed(2)} hz`);
+			widgets.value("Sample", triangle[triangle.length - 1] ?? 0);
+
+			widgets.simpleTable(`triangle_lengthcounter`, "Length Counter", () => {
+				const count = channel?.lengthCounter?.counter ?? 0;
+
+				widgets.boolean(
+					"Halt",
+					channel?.registers?.lengthControl.halt ?? false
+				);
+				widgets.value("Count", count);
+				widgets.progressBar(count / 255);
+			});
+
+			widgets.simpleTable(
+				`triangle_linearlengthcounter`,
+				"Linear Length Counter",
+				() => {
+					const count = channel?.linearLengthCounter?.counter ?? 0;
+
+					widgets.boolean(
+						"Halt",
+						channel?.registers?.lengthControl.halt ?? false
+					);
+					ImGui.SameLine();
+					widgets.boolean(
+						"Reload",
+						channel?.linearLengthCounter?.reloadFlag ?? false
+					);
+					widgets.value("Count", count);
+					widgets.value(
+						"Reload value",
+						channel?.linearLengthCounter?.reload ?? 0
+					);
+					widgets.progressBar(count / 255);
+				}
+			);
+		});
+	}
+
+	_drawNoiseTab(neees, noise, maxN) {
+		widgets.simpleTab(this, "Noise", () => {
+			const channel = neees?.apu.channels?.noise;
+
+			widgets.wave(noise, maxN, MIN, MAX);
+
+			const constantVolume =
+				channel?.registers?.control.constantVolume ?? false;
+			const volumeOrEnvelopePeriod =
+				channel?.registers?.control.volumeOrEnvelopePeriod ?? 0;
+
+			widgets.boolean("Enabled", channel?.isEnabled?.());
+			ImGui.SameLine();
+			widgets.boolean("Constant", constantVolume);
+			ImGui.SameLine();
+			widgets.boolean("Mode", channel?.registers?.form.mode ?? false);
+			widgets.value("Divider period", channel?.registers?.form.period ?? 0);
+			widgets.value("Divider count", channel?.count ?? 0);
+			widgets.value(
+				"Shift",
+				"0b" + (channel?.shift ?? 0).toString(2).padStart(15, "0")
+			);
+			widgets.value("Sample", noise[noise.length - 1] ?? 0);
+
+			widgets.simpleTable(`noise_volumeenvelope`, "Volume Envelope", () => {
+				const volume = channel?.volumeEnvelope?.volume ?? 0;
+
+				widgets.boolean("Start", channel?.volumeEnvelope?.startFlag ?? false);
+				ImGui.SameLine();
+				widgets.boolean(
+					"Loop",
+					channel?.registers?.control.envelopeLoopOrLengthCounterHalt ?? false
+				);
+
+				widgets.value(
+					constantVolume ? "Constant volume" : "Divider period",
+					volumeOrEnvelopePeriod
+				);
+				if (!constantVolume) {
+					widgets.value(
+						"Divider count",
+						channel?.volumeEnvelope?.dividerCount ?? 0
+					);
+					widgets.value("Volume", volume);
+				}
+				widgets.progressBar(
+					(constantVolume ? volumeOrEnvelopePeriod : volume) / 15
+				);
+			});
+
+			widgets.simpleTable(`noise_lengthcounter`, "Length Counter", () => {
+				const count = channel?.lengthCounter?.counter ?? 0;
+
+				widgets.boolean(
+					"Halt",
+					channel?.registers?.control.envelopeLoopOrLengthCounterHalt ?? false
+				);
+				widgets.value("Count", count);
+				widgets.progressBar(count / 255);
+			});
+		});
+	}
+
+	_drawDMCTab(neees, dmc, maxN) {
+		widgets.simpleTab(this, "DMC", () => {
+			const channel = neees?.apu.channels?.dmc;
+
+			widgets.wave(dmc, maxN, MIN, MAX);
+
+			widgets.boolean("Enabled", channel?.isEnabled?.());
+			widgets.value("Sample", dmc[dmc.length - 1] ?? 0);
+
+			widgets.simpleTable("dmc_dpcm", "DPCM", () => {
+				const cursorByte = channel?.cursorByte ?? 0;
+				const cursorBit = channel?.cursorBit ?? 0;
+				const sampleLength = channel?.sampleLength ?? 0;
+
+				widgets.boolean("Start", channel?.startFlag ?? false);
+				ImGui.SameLine();
+				widgets.boolean("Active", channel?.isUsingDPCM ?? false);
+				widgets.value("Buffer", channel?.buffer ?? 0);
+				widgets.value("Cursor (byte)", cursorByte);
+				widgets.value("Cursor (bit)", cursorBit);
+				widgets.value("Divider period", channel?.dividerPeriod ?? 0);
+				widgets.value("Divider count", channel?.dividerCount ?? 0);
+				widgets.value(
+					"Sample address",
+					"0x" + (channel?.sampleAddress ?? 0).toString(16).padStart(4, "0")
+				);
+				widgets.value("Sample length", sampleLength);
+
+				widgets.progressBar(
+					(cursorByte * 8 + cursorBit) / Math.max(sampleLength * 8, 1)
+				);
+			});
+		});
 	}
 }

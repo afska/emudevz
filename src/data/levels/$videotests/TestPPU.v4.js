@@ -135,73 +135,6 @@ const byte = {
 	},
 };
 
-const masterPalette = [
-	/* 0x00 */ 0xff626262,
-	/* 0x01 */ 0xff902001,
-	/* 0x02 */ 0xffa00b24,
-	/* 0x03 */ 0xff900047,
-	/* 0x04 */ 0xff620060,
-	/* 0x05 */ 0xff24006a,
-	/* 0x06 */ 0xff001160,
-	/* 0x07 */ 0xff002747,
-	/* 0x08 */ 0xff003c24,
-	/* 0x09 */ 0xff004a01,
-	/* 0x0a */ 0xff004f00,
-	/* 0x0b */ 0xff244700,
-	/* 0x0c */ 0xff623600,
-	/* 0x0d */ 0xff000000,
-	/* 0x0e */ 0xff000000,
-	/* 0x0f */ 0xff000000,
-	/* 0x10 */ 0xffababab,
-	/* 0x11 */ 0xffe1561f,
-	/* 0x12 */ 0xffff394d,
-	/* 0x13 */ 0xffef237e,
-	/* 0x14 */ 0xffb71ba3,
-	/* 0x15 */ 0xff6422b4,
-	/* 0x16 */ 0xff0e37ac,
-	/* 0x17 */ 0xff00558c,
-	/* 0x18 */ 0xff00725e,
-	/* 0x19 */ 0xff00882d,
-	/* 0x1a */ 0xff009007,
-	/* 0x1b */ 0xff478900,
-	/* 0x1c */ 0xff9d7300,
-	/* 0x1d */ 0xff000000,
-	/* 0x1e */ 0xff000000,
-	/* 0x1f */ 0xff000000,
-	/* 0x20 */ 0xffffffff,
-	/* 0x21 */ 0xffffac67,
-	/* 0x22 */ 0xffff8d95,
-	/* 0x23 */ 0xffff75c8,
-	/* 0x24 */ 0xffff6af2,
-	/* 0x25 */ 0xffc56fff,
-	/* 0x26 */ 0xff6a83ff,
-	/* 0x27 */ 0xff1fa0e6,
-	/* 0x28 */ 0xff00bfb8,
-	/* 0x29 */ 0xff01d885,
-	/* 0x2a */ 0xff35e35b,
-	/* 0x2b */ 0xff88de45,
-	/* 0x2c */ 0xffe3ca49,
-	/* 0x2d */ 0xffe4e404e,
-	/* 0x2e */ 0xff000000,
-	/* 0x2f */ 0xff000000,
-	/* 0x30 */ 0xffffffff,
-	/* 0x31 */ 0xffffe0bf,
-	/* 0x32 */ 0xffffd3d1,
-	/* 0x33 */ 0xffffc9e6,
-	/* 0x34 */ 0xffffc3f7,
-	/* 0x35 */ 0xffeec4ff,
-	/* 0x36 */ 0xffc9cbff,
-	/* 0x37 */ 0xffa9d7f7,
-	/* 0x38 */ 0xff97e3e6,
-	/* 0x39 */ 0xff97eed1,
-	/* 0x3a */ 0xffa9f3bf,
-	/* 0x3b */ 0xffc9f2b5,
-	/* 0x3c */ 0xffeeebb5,
-	/* 0x3d */ 0xffb8b8b8,
-	/* 0x3e */ 0xff000000,
-	/* 0x3f */ 0xff000000,
-];
-
 class InMemoryRegister {
 	constructor() {
 		this.value = 0;
@@ -281,7 +214,6 @@ class InMemoryRegister {
 class PPUMemory {
 	constructor() {
 		this.vram = new Uint8Array(4096);
-		this.paletteRam = new Uint8Array(32);
 	}
 
 	onLoad(cartridge, mapper) {
@@ -303,8 +235,7 @@ class PPUMemory {
 			return this.read(0x2000 + ((address - 0x3000) % 0x1000));
 
 		// 🎨 Palette RAM
-		if (address >= 0x3f00 && address <= 0x3f1f)
-			return this.paletteRam[address - 0x3f00];
+		/* TODO: IMPLEMENT */
 
 		// 🚽 Mirrors of $3F00-$3F1F
 		if (address >= 0x3f20 && address <= 0x3fff)
@@ -329,10 +260,7 @@ class PPUMemory {
 			return this.write(0x2000 + ((address - 0x3000) % 0x1000), value);
 
 		// 🎨 Palette RAM
-		if (address >= 0x3f00 && address <= 0x3f1f) {
-			this.paletteRam[address - 0x3f00] = value;
-			return;
-		}
+		/* TODO: IMPLEMENT */
 
 		// 🚽 Mirrors of $3F00-$3F1F
 		if (address >= 0x3f20 && address <= 0x3fff)
@@ -365,6 +293,8 @@ class BackgroundRenderer {
 	}
 
 	renderScanline() {
+		const FIXED_PALETTE = [0xffffffff, 0xffcecece, 0xff686868, 0xff000000];
+
 		const { scanline: y, registers, memory } = this.ppu;
 
 		const nameTableId = registers.ppuCtrl.nameTableId;
@@ -376,60 +306,15 @@ class BackgroundRenderer {
 			const tileY = Math.floor(y / 8);
 			const tileIndex = tileY * 32 + tileX;
 			const tileId = memory.read(nameTableAddress + tileIndex);
-			const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
 
 			const tileInsideY = y % 8;
 
 			const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
 			for (let xx = 0; xx < 8; xx++) {
 				const colorIndex = tile.getColorIndex(xx);
-				const color =
-					colorIndex > 0
-						? this.ppu.getColor(paletteId, colorIndex)
-						: this.ppu.getColor(0, 0);
-				this.ppu.plot(x + xx, y, color);
+				this.ppu.plot(x + xx, y, FIXED_PALETTE[colorIndex]);
 			}
 		}
-	}
-
-	_getBackgroundPaletteId(nameTableId, x, y) {
-		const SCREEN_WIDTH = 256;
-		const MEM_NAMETABLES = 0x2000;
-		const NAME_TABLE_SIZE_BYTES = 1024;
-		const ATTRIBUTE_TABLE_SIZE_BYTES = 64;
-		const ATTRIBUTE_TABLE_METABLOCK_SIZE = 32;
-		const ATTRIBUTE_TABLE_BLOCK_SIZE = 16;
-		const ATTRIBUTE_TABLE_TOTAL_METABLOCKS_X =
-			SCREEN_WIDTH / ATTRIBUTE_TABLE_METABLOCK_SIZE;
-		const ATTRIBUTE_TABLE_TOTAL_BLOCKS_X =
-			ATTRIBUTE_TABLE_METABLOCK_SIZE / ATTRIBUTE_TABLE_BLOCK_SIZE;
-		const ATTRIBUTE_TABLE_BLOCK_SIZE_BITS = 2;
-
-		const startAddress =
-			MEM_NAMETABLES +
-			(nameTableId + 1) * NAME_TABLE_SIZE_BYTES -
-			ATTRIBUTE_TABLE_SIZE_BYTES;
-
-		const metablockX = Math.floor(x / ATTRIBUTE_TABLE_METABLOCK_SIZE);
-		const metablockY = Math.floor(y / ATTRIBUTE_TABLE_METABLOCK_SIZE);
-		const metablockIndex =
-			metablockY * ATTRIBUTE_TABLE_TOTAL_METABLOCKS_X + metablockX;
-
-		const blockX = Math.floor(
-			(x % ATTRIBUTE_TABLE_METABLOCK_SIZE) / ATTRIBUTE_TABLE_BLOCK_SIZE
-		);
-		const blockY = Math.floor(
-			(y % ATTRIBUTE_TABLE_METABLOCK_SIZE) / ATTRIBUTE_TABLE_BLOCK_SIZE
-		);
-		const blockIndex = blockY * ATTRIBUTE_TABLE_TOTAL_BLOCKS_X + blockX;
-
-		const block = this.ppu.memory.read(startAddress + metablockIndex);
-
-		return byte.getBits(
-			block,
-			blockIndex * ATTRIBUTE_TABLE_BLOCK_SIZE_BITS,
-			ATTRIBUTE_TABLE_BLOCK_SIZE_BITS
-		);
 	}
 }
 
@@ -451,6 +336,10 @@ class PPUCtrl extends InMemoryRegister.PPU {
 class PPUMask extends InMemoryRegister.PPU {
 	onLoad() {
 		/* TODO: IMPLEMENT */
+	}
+
+	onWrite(value) {
+		this.setValue(value);
 	}
 }
 
@@ -615,13 +504,6 @@ export default class PPU {
 		this.frameBuffer[y * 256 + x] = color;
 	}
 
-	getColor(paletteId, colorIndex) {
-		const startAddress = 0x3f00 + paletteId * 4;
-		const masterColorIndex = this.memory.read(startAddress + colorIndex);
-
-		return masterPalette[masterColorIndex];
-	}
-
 	step(onFrame, onInterrupt) {
 		if (this.scanline === -1) this._onPreLine();
 		else if (this.scanline < 240) this._onVisibleLine();
@@ -644,7 +526,6 @@ export default class PPU {
 	_onPreLine() {
 		if (this.cycle === 1) {
 			this.registers.ppuStatus.isInVBlankInterval = 0;
-			this.registers.ppuStatus.spriteOverflow = 0;
 		}
 	}
 

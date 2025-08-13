@@ -14,14 +14,14 @@ how:
   - "los juegos escriben 4 parámetros en 🧹  PulseSweep:"
   - ⏰  un periodo de divisor, que determina qué tan lento cambiará la frecuencia
   - ➗  un <shift count>, que determina qué tan gradual será la transición
-  - ⛔  un <negate flag>, que define si el cambio será hacia abajo o hacia arriba
-  - 🔛  un <enable flag>, que activa la unidad de barrido
+  - ⛔  una <negate flag>, que define si el cambio será hacia abajo o hacia arriba
+  - 🔛  una <enable flag>, que activa la unidad de barrido
   - <{frequency_sweep.png;30x30}>
   - |-
     cada half frame el divisor cuenta hacia abajo, y si la cuenta llega a 0, calcula la cantidad de cambio así:
       ```javascript const sweepDelta = channel.timer >> shiftCount;```
   - |-
-    luego, dependiendo del <negate flag>, incrementa o disminuye el timer:
+    luego, dependiendo de la <negate flag>, incrementa o disminuye el timer:
       ```javascript channel.timer += sweepDelta * (negateFlag ? -1 : 1);```
   responses:
   - (*) ¿qué hace el <right shift>? [shifting]
@@ -54,7 +54,7 @@ exercise:
       **->** asigna ```javascript this.mute = false```
     **clock()**:
       **->** si (
-          el <enable flag> está encendido <Y>
+          la <enable flag> está encendida <Y>
           el <shift count> es mayor que 0 <Y>
           el <divider count> es 0 <Y>
           ```javascript !this.mute```
@@ -62,9 +62,9 @@ exercise:
           ```javascript const sweepDelta = this.channel.timer >> register.shiftCount;
           this.channel.timer += sweepDelta * (register.negateFlag ? -1 : 1);```
       
-      **->** si el <divider count> es 0 <O> el <start flag> está encendido
+      **->** si el <divider count> es 0 <O> la <start flag> está encendida
         **->** asigna el valor de `dividerPeriodMinusOne` de 🧹  PulseSweep + 1 a ```javascript this.dividerCount```
-        **->** apaga el <start flag>
+        **->** apaga la <start flag>
       **->** si no:
         **->** decrementa el <divider count>
     **muteIfNeeded()**:
@@ -75,7 +75,7 @@ exercise:
     **->** modifica **sample()** para que el <return temprano> también revise ```javascript this.frequencySweep.mute```
     **->** modifica **step()** para que:
       - llame al método `muteIfNeeded()` de `frequencySweep`
-      - el método `updateTimer()` solo se llame si el `enabledFlag` de 🧹  PulseSweep está apagado
+      - el método `updateTimer()` solo se llame si la `enabledFlag` de 🧹  PulseSweep está apagada
     **->** implementa este método:
     **halfFrame()**:
       **->** __continúa clockeando la envolvente como antes__

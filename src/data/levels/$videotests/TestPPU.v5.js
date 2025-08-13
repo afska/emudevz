@@ -181,7 +181,7 @@ const masterPalette = [
 	/* 0x2a */ 0xff35e35b,
 	/* 0x2b */ 0xff88de45,
 	/* 0x2c */ 0xffe3ca49,
-	/* 0x2d */ 0xffe4e404e,
+	/* 0x2d */ 0xff4e4e4e,
 	/* 0x2e */ 0xff000000,
 	/* 0x2f */ 0xff000000,
 	/* 0x30 */ 0xffffffff,
@@ -282,7 +282,6 @@ class PPUMemory {
 	constructor() {
 		this.vram = new Uint8Array(4096);
 		this.paletteRam = new Uint8Array(32);
-		this.oamRam = new Uint8Array(256);
 	}
 
 	onLoad(cartridge, mapper) {
@@ -338,90 +337,6 @@ class PPUMemory {
 		// 🚽 Mirrors of $3F00-$3F1F
 		if (address >= 0x3f20 && address <= 0x3fff)
 			return this.write(0x3f00 + ((address - 0x3f20) % 0x0020), value);
-	}
-}
-
-const TILE_SIZE_PIXELS = 8;
-const PALETTE_FOREGROUND_START = 4;
-const SPRITE_ATTR_PALETTE_BITS_START = 0;
-const SPRITE_ATTR_PALETTE_BITS_SIZE = 2;
-const SPRITE_ATTR_PRIORITY_BIT = 5;
-const SPRITE_ATTR_HORIZONTAL_FLIP_BIT = 6;
-const SPRITE_ATTR_VERTICAL_FLIP_BIT = 7;
-
-/**
- * A sprite containing an id, position, height, a tile id and some attributes.
- * Sprites are defined by (y, tileId, attributes, x).
- *                                     76543210
- *                                     |||   ++- foregroundPaletteId
- *                                     ||+------ priority (0: in front of background, 1: behind background)
- *                                     |+------- horizontalFlip
- *                                     +-------- verticalFlip
- */
-class Sprite {
-	constructor(id, x, y, is8x16, patternTableId, topTileId, attributes) {
-		this.id = id;
-		this.x = x;
-		this.y = y;
-		this.is8x16 = is8x16;
-		this.patternTableId = patternTableId;
-		this.tileId = topTileId;
-		this.attributes = attributes;
-	}
-
-	/**
-	 * Returns the tile id for an `insideY` position.
-	 * The bottom part of a 8x16 sprite uses the next tile index.
-	 */
-	tileIdFor(insideY) {
-		let index = +(insideY >= TILE_SIZE_PIXELS);
-		if (this.is8x16 && this.flipY) index = +!index;
-
-		return this.tileId + index;
-	}
-
-	/** Returns whether it should appear in a certain `scanline` or not. */
-	shouldRenderInScanline(scanline) {
-		const diffY = this.diffY(scanline);
-
-		return diffY >= 0 && diffY < this.height;
-	}
-
-	/** Returns the difference between a `scanline` and sprite's Y coordinate. */
-	diffY(scanline) {
-		return scanline - this.y;
-	}
-
-	/** Returns the palette id of the sprite. */
-	get paletteId() {
-		return (
-			PALETTE_FOREGROUND_START +
-			byte.getBits(
-				this.attributes,
-				SPRITE_ATTR_PALETTE_BITS_START,
-				SPRITE_ATTR_PALETTE_BITS_SIZE
-			)
-		);
-	}
-
-	/** Returns whether the sprite is in front of background or not. */
-	get isInFrontOfBackground() {
-		return !byte.getBit(this.attributes, SPRITE_ATTR_PRIORITY_BIT);
-	}
-
-	/** Returns whether the sprite is horizontally flipped or not. */
-	get flipX() {
-		return byte.getFlag(this.attributes, SPRITE_ATTR_HORIZONTAL_FLIP_BIT);
-	}
-
-	/** Returns whether the sprite is vertically flipped or not. */
-	get flipY() {
-		return byte.getFlag(this.attributes, SPRITE_ATTR_VERTICAL_FLIP_BIT);
-	}
-
-	/** Returns the sprite height. */
-	get height() {
-		return this.is8x16 ? 16 : 8;
 	}
 }
 
@@ -518,101 +433,6 @@ class BackgroundRenderer {
 	}
 }
 
-class SpriteRenderer {
-	constructor(ppu) {
-		this.ppu = ppu;
-	}
-
-	renderScanline() {
-		const sprites = this._evaluate();
-		this._render(sprites);
-	}
-
-	_evaluate() {
-		const MAX_SPRITES = 64;
-		const MAX_SPRITES_PER_SCANLINE = 8;
-
-		const sprites = [];
-
-		for (let spriteId = 0; spriteId < MAX_SPRITES; spriteId++) {
-			const sprite = this._createSprite(spriteId);
-
-			if (
-				sprite.shouldRenderInScanline(this.ppu.scanline) &&
-				sprites.length < MAX_SPRITES_PER_SCANLINE + 1
-			) {
-				if (sprites.length < MAX_SPRITES_PER_SCANLINE) {
-					sprites.push(sprite);
-				} else {
-					this.ppu.registers.ppuStatus.spriteOverflow = 1;
-					break;
-				}
-			}
-		}
-
-		return sprites.reverse();
-	}
-
-	_render(sprites) {
-		const y = this.ppu.scanline;
-
-		for (let sprite of sprites) {
-			const insideY = sprite.diffY(y);
-			const tile = new Tile(
-				this.ppu,
-				sprite.patternTableId,
-				sprite.tileIdFor(insideY),
-				insideY
-			);
-			const paletteColors = [
-				this.ppu.getColor(sprite.paletteId, 0),
-				this.ppu.getColor(sprite.paletteId, 1),
-				this.ppu.getColor(sprite.paletteId, 2),
-				this.ppu.getColor(sprite.paletteId, 3),
-			];
-
-			for (let insideX = 0; insideX < 8; insideX++) {
-				const colorIndex = tile.getColorIndex(insideX);
-				if (colorIndex > 0)
-					this.ppu.plot(
-						sprite.x + insideX,
-						this.ppu.scanline,
-						paletteColors[colorIndex]
-					);
-			}
-		}
-	}
-
-	_createSprite(id) {
-		const SPRITE_SIZE_BYTES = 4;
-		const SPRITE_BYTE_Y = 0;
-		const SPRITE_BYTE_TILE_ID = 1;
-		const SPRITE_BYTE_ATTRIBUTES = 2;
-		const SPRITE_BYTE_X = 3;
-		const SPRITE_8x16_PATTERN_TABLE_MASK = 0b1;
-		const SPRITE_8x16_TILE_ID_MASK = 0xfe;
-
-		const oamRam = this.ppu.memory.oamRam;
-		const ppuCtrl = this.ppu.registers.ppuCtrl;
-
-		const is8x16 = ppuCtrl.spriteSize === 1;
-
-		const address = id * SPRITE_SIZE_BYTES;
-		const yByte = oamRam[address + SPRITE_BYTE_Y];
-		const tileIdByte = oamRam[address + SPRITE_BYTE_TILE_ID];
-		const attributes = oamRam[address + SPRITE_BYTE_ATTRIBUTES];
-		const x = oamRam[address + SPRITE_BYTE_X];
-
-		const y = yByte + 1;
-		const patternTableId = is8x16
-			? tileIdByte & SPRITE_8x16_PATTERN_TABLE_MASK
-			: ppuCtrl.sprite8x8PatternTableId;
-		const tileId = is8x16 ? tileIdByte & SPRITE_8x16_TILE_ID_MASK : tileIdByte;
-
-		return new Sprite(id, x, y, is8x16, patternTableId, tileId, attributes);
-	}
-}
-
 class PPUCtrl extends InMemoryRegister.PPU {
 	onLoad() {
 		this.addField("nameTableId", 0, 2)
@@ -631,6 +451,10 @@ class PPUCtrl extends InMemoryRegister.PPU {
 class PPUMask extends InMemoryRegister.PPU {
 	onLoad() {
 		/* TODO: IMPLEMENT */
+	}
+
+	onWrite(value) {
+		this.setValue(value);
 	}
 }
 
@@ -661,14 +485,11 @@ class OAMAddr extends InMemoryRegister.PPU {
 
 class OAMData extends InMemoryRegister.PPU {
 	onRead() {
-		const oamAddress = this.ppu.registers.oamAddr.value;
-		return this.ppu.memory.oamRam[oamAddress];
+		/* TODO: IMPLEMENT */
 	}
 
 	onWrite(value) {
-		const oamAddress = this.ppu.registers.oamAddr.value;
-		this.ppu.memory.oamRam[oamAddress] = value;
-		this.ppu.registers.oamAddr.setValue(oamAddress + 1);
+		/* TODO: IMPLEMENT */
 	}
 }
 
@@ -701,16 +522,11 @@ class PPUAddr extends InMemoryRegister.PPU {
 
 class PPUData extends InMemoryRegister.PPU {
 	onLoad() {
-		this.buffer = 0;
+		/* TODO: IMPLEMENT */
 	}
 
 	onRead() {
-		let data = this.buffer;
-		const address = this.ppu.registers.ppuAddr.address;
-		this.buffer = this.ppu.memory.read(address);
-		if (address >= 0x3f00 && address <= 0x3fff) data = this.buffer;
-		this._incrementAddress();
-		return data;
+		/* TODO: IMPLEMENT */
 	}
 
 	onWrite(value) {
@@ -733,12 +549,7 @@ class PPUData extends InMemoryRegister.PPU {
 
 class OAMDMA extends InMemoryRegister.PPU {
 	onWrite(value) {
-		for (let i = 0; i < 256; i++) {
-			const address = byte.buildU16(value, i);
-			const data = this.ppu.cpu.memory.read(address);
-			this.ppu.memory.oamRam[i] = data;
-		}
-		this.ppu.cpu.extraCycles += 531;
+		/* TODO: IMPLEMENT */
 	}
 }
 
@@ -802,7 +613,6 @@ export default class PPU {
 		this.registers = new VideoRegisters(this);
 
 		this.backgroundRenderer = new BackgroundRenderer(this);
-		this.spriteRenderer = new SpriteRenderer(this);
 	}
 
 	plot(x, y, color) {
@@ -845,7 +655,6 @@ export default class PPU {
 	_onVisibleLine() {
 		if (this.cycle === 0) {
 			this.backgroundRenderer.renderScanline();
-			this.spriteRenderer.renderScanline();
 		}
 	}
 

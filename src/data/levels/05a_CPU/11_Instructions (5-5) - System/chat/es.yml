@@ -84,7 +84,7 @@ exercise:
         (de lo contrario, se agrega tal cual está)
       **->** avanza 7 ciclos (```javascript this.cycle += 7```)
       **->** asigna ~I=1~ en el registro de banderas
-      **->** asigna [PC] = al resultado de leer las direcciones ```javascript interrupt.vector``` y ```javascript interrupt.vector+1``` en Little Endian
+      **->** asigna [PC] = el resultado de leer las direcciones ```javascript interrupt.vector``` y ```javascript interrupt.vector+1``` en Little Endian
         (recuerda que tienes un método `read16(...)` para eso)
       **->** retorna 7
   responses:

@@ -7,11 +7,6 @@ before(async () => {
 
 const dummyPpu = {};
 const dummyControllers = [];
-const dummyCartridge = {
-	header: {
-		mirroringId: "VERTICAL",
-	},
-};
 const dummyMapper = {
 	cpuRead: () => 0,
 	cpuWrite: () => {},
@@ -23,13 +18,14 @@ const noop = () => {};
 
 // 5c.1 New APU
 
-it("`/code/index.js` exports an object containing the `APU` class", () => {
+it("the file `/code/index.js` exports <an object> containing the `APU` class", () => {
 	expect(mainModule.default).to.be.an("object");
-	mainModule.default.should.include.key("APU");
+	expect(mainModule.default).to.include.key("APU");
 	expect(mainModule.default.APU).to.be.a.class;
 })({
 	locales: {
-		es: "`/code/index.js` exporta un objeto que contiene la clase `APU`",
+		es:
+			"el archivo `/code/index.js` exporta <un objeto> que contiene la clase `APU`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -38,8 +34,8 @@ it("receives and saves the `cpu` property", () => {
 	const APU = mainModule.default.APU;
 	const cpu = {};
 	const apu = new APU(cpu);
-	apu.should.include.key("cpu");
-	apu.cpu.should.equal(cpu);
+	expect(apu).to.include.key("cpu");
+	expect(apu.cpu).to.equalN(cpu, "cpu");
 })({
 	locales: {
 		es: "recibe y guarda una propiedad `cpu`",
@@ -47,34 +43,34 @@ it("receives and saves the `cpu` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
 
-it("initializates the counters", () => {
+it("initializes the <counters>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.should.include.key("sampleCounter");
-	apu.should.include.key("sample");
+	expect(apu).to.include.key("sampleCounter");
+	expect(apu).to.include.key("sample");
 
-	apu.sampleCounter.should.equalN(0, "sampleCounter");
-	apu.sample.should.equalN(0, "sample");
+	expect(apu.sampleCounter).to.equalN(0, "sampleCounter");
+	expect(apu.sample).to.equalN(0, "sample");
 })({
 	locales: {
-		es: "inicializa los contadores",
+		es: "inicializa los <contadores>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
 
-it("increments the sample counter on every `step(...)` call", () => {
+it("increments the <sample counter> on every `step(...)` call", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
-	apu.should.respondTo("step");
+	expect(apu).to.respondTo("step");
 
 	for (let i = 0; i < 5; i++) {
 		apu.step(() => {});
-		apu.sampleCounter.should.equalN(i + 1, "sampleCounter");
+		expect(apu.sampleCounter).to.equalN(i + 1, "sampleCounter");
 	}
 })({
 	locales: {
-		es: "incrementa el contador de samples en cada llamada a `step(...)`",
+		es: "incrementa el <contador de samples> en cada llamada a `step(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -82,7 +78,7 @@ it("increments the sample counter on every `step(...)` call", () => {
 it("generates a new sample for every 20 `step(...)` calls", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
-	apu.should.respondTo("step");
+	expect(apu).to.respondTo("step");
 	const onSample = sinon.spy();
 
 	apu.sample = 15;
@@ -90,16 +86,16 @@ it("generates a new sample for every 20 `step(...)` calls", () => {
 	for (let i = 0; i < 19; i++) {
 		apu.step(onSample);
 
-		apu.sampleCounter.should.equalN(i + 1, "sampleCounter");
-		onSample.should.not.have.been.called;
+		expect(apu.sampleCounter).to.equalN(i + 1, "sampleCounter");
+		expect(onSample).to.not.have.been.called;
 	}
 
 	apu.step(onSample);
-	apu.sampleCounter.should.equalN(0, "sampleCounter");
-	onSample.should.have.been.calledWith(apu.sample);
+	expect(apu.sampleCounter).to.equalN(0, "sampleCounter");
+	expect(onSample).to.have.been.calledWith(apu.sample);
 })({
 	locales: {
-		es: "generate un nuevo sample por cada 20 llamadas a `step(...)`",
+		es: "genera un nuevo sample por cada 20 llamadas a `step(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -110,28 +106,28 @@ it("includes a `registers` property with 21 audio registers", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.should.include.key("registers");
+	expect(apu).to.include.key("registers");
 	expect(apu.registers, "registers").to.be.an("object");
-	apu.registers.should.respondTo("read");
-	apu.registers.should.respondTo("write");
+	expect(apu.registers).to.respondTo("read");
+	expect(apu.registers).to.respondTo("write");
 
 	const checkRegister = (key, address, read = true, write = true) => {
 		const register = _.get(apu.registers, key);
 
 		expect(register, `apu.registers.${key}`).to.be.an("object");
-		register.should.respondTo("onRead");
-		register.should.respondTo("onWrite");
+		expect(register).to.respondTo("onRead");
+		expect(register).to.respondTo("onWrite");
 		register.onRead = sinon.spy();
 		register.onWrite = sinon.spy();
 
 		apu.registers.read(address);
 		apu.registers.write(address, 123);
 
-		if (read) register.onRead.should.have.been.calledOnce;
-		else register.onRead.should.have.not.been.called;
+		if (read) expect(register.onRead).to.have.been.calledOnce;
+		else expect(register.onRead).to.not.have.been.called;
 
-		if (write) register.onWrite.should.have.been.calledWith(123);
-		else register.onWrite.should.have.not.been.called;
+		if (write) expect(register.onWrite).to.have.been.calledWith(123);
+		else expect(register.onWrite).to.not.have.been.called;
 	};
 
 	checkRegister("pulses[0].control", 0x4000);
@@ -162,7 +158,7 @@ it("includes a `registers` property with 21 audio registers", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("connects the audio registers to CPU memory (reads)", () => {
+it("connects the audio registers to CPU memory (<reads>)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const cpuMemory = new CPUMemory();
 	const cpu = { memory: cpuMemory };
@@ -209,12 +205,12 @@ it("connects the audio registers to CPU memory (reads)", () => {
 	checkRegister("apuFrameCounter", 0x4017, false);
 })({
 	locales: {
-		es: "conecta los registros de audio con la memoria de CPU (lecturas)",
+		es: "conecta los registros de audio con la memoria de CPU (<lecturas>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("connects the audio registers to CPU memory (writes)", () => {
+it("connects the audio registers to CPU memory (<writes>)", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const cpuMemory = new CPUMemory();
 	const cpu = { memory: cpuMemory };
@@ -263,12 +259,12 @@ it("connects the audio registers to CPU memory (writes)", () => {
 	checkRegister("apuFrameCounter", 0x4017);
 })({
 	locales: {
-		es: "conecta los registros de audio con la memoria de CPU (escrituras)",
+		es: "conecta los registros de audio con la memoria de CPU (<escrituras>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("except `APUStatus`, all registers are write only", () => {
+it("except `APUStatus`, all registers are <write only>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -282,16 +278,16 @@ it("except `APUStatus`, all registers are write only", () => {
 		apu.registers.apuFrameCounter,
 	].forEach((register) => {
 		register.onWrite(byte.random());
-		register.onRead().should.equalN(0, "onRead()");
+		expect(register.onRead()).to.equalN(0, "onRead()");
 	});
 })({
 	locales: {
-		es: "excepto `APUStatus`, todos los registros son solo escritura",
+		es: "excepto `APUStatus`, todos los registros son <solo escritura>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("`PulseControl`: writes `volumeOrEnvelopePeriod` (bits 0-3)", () => {
+it("`PulseControl`: writes `volumeOrEnvelopePeriod` (bits ~0-3~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -302,17 +298,17 @@ it("`PulseControl`: writes `volumeOrEnvelopePeriod` (bits 0-3)", () => {
 		const key = `${name}.volumeOrEnvelopePeriod`;
 
 		register.onWrite(0b10100000);
-		register.volumeOrEnvelopePeriod.should.equalN(0, key);
+		expect(register.volumeOrEnvelopePeriod).to.equalN(0, key);
 		register.onWrite(0b10100001);
-		register.volumeOrEnvelopePeriod.should.equalN(1, key);
+		expect(register.volumeOrEnvelopePeriod).to.equalN(1, key);
 		register.onWrite(0b10100110);
-		register.volumeOrEnvelopePeriod.should.equalN(6, key);
+		expect(register.volumeOrEnvelopePeriod).to.equalN(6, key);
 		register.onWrite(0b10101111);
-		register.volumeOrEnvelopePeriod.should.equalN(15, key);
+		expect(register.volumeOrEnvelopePeriod).to.equalN(15, key);
 	});
 })({
 	locales: {
-		es: "`PulseControl`: escribe `volumeOrEnvelopePeriod` (bits 0-3)",
+		es: "`PulseControl`: escribe `volumeOrEnvelopePeriod` (bits ~0-3~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -328,9 +324,9 @@ it("`PulseControl`: writes `constantVolume` (bit 4)", () => {
 		const key = `${name}.constantVolume`;
 
 		register.onWrite(0b10100011);
-		register.constantVolume.should.equalN(0, key);
+		expect(register.constantVolume).to.equalN(0, key);
 		register.onWrite(0b10110011);
-		register.constantVolume.should.equalN(1, key);
+		expect(register.constantVolume).to.equalN(1, key);
 	});
 })({
 	locales: {
@@ -350,9 +346,9 @@ it("`PulseControl`: writes `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
 		const key = `${name}.envelopeLoopOrLengthCounterHalt`;
 
 		register.onWrite(0b10000011);
-		register.envelopeLoopOrLengthCounterHalt.should.equalN(0, key);
+		expect(register.envelopeLoopOrLengthCounterHalt).to.equalN(0, key);
 		register.onWrite(0b10100011);
-		register.envelopeLoopOrLengthCounterHalt.should.equalN(1, key);
+		expect(register.envelopeLoopOrLengthCounterHalt).to.equalN(1, key);
 	});
 })({
 	locales: {
@@ -361,7 +357,7 @@ it("`PulseControl`: writes `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("`PulseControl`: writes `dutyCycleId` (bits 6-7)", () => {
+it("`PulseControl`: writes `dutyCycleId` (bits ~6-7~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -372,17 +368,17 @@ it("`PulseControl`: writes `dutyCycleId` (bits 6-7)", () => {
 		const key = `${name}.dutyCycleId`;
 
 		register.onWrite(0b00000011);
-		register.dutyCycleId.should.equalN(0, key);
+		expect(register.dutyCycleId).to.equalN(0, key);
 		register.onWrite(0b01000011);
-		register.dutyCycleId.should.equalN(1, key);
+		expect(register.dutyCycleId).to.equalN(1, key);
 		register.onWrite(0b10000011);
-		register.dutyCycleId.should.equalN(2, key);
+		expect(register.dutyCycleId).to.equalN(2, key);
 		register.onWrite(0b11000011);
-		register.dutyCycleId.should.equalN(3, key);
+		expect(register.dutyCycleId).to.equalN(3, key);
 	});
 })({
 	locales: {
-		es: "`PulseControl`: escribe `dutyCycleId` (bits 6-7)",
+		es: "`PulseControl`: escribe `dutyCycleId` (bits ~6-7~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -393,7 +389,7 @@ it("`TriangleTimerLow`: writes the value", () => {
 
 	const triangleTimerLow = apu.registers.triangle.timerLow;
 	triangleTimerLow.onWrite(129);
-	triangleTimerLow.value.should.equalN(129, "triangle.timerLow.value");
+	expect(triangleTimerLow.value).to.equalN(129, "triangle.timerLow.value");
 })({
 	locales: {
 		es: "`TriangleTimerLow`: escribe el valor",
@@ -401,23 +397,23 @@ it("`TriangleTimerLow`: writes the value", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("`DMCControl`: writes `dpcmPeriodId` (bits 0-3)", () => {
+it("`DMCControl`: writes `dpcmPeriodId` (bits ~0-3~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	const dmcControl = apu.registers.dmc.control;
 
 	dmcControl.onWrite(0b10100000);
-	dmcControl.dpcmPeriodId.should.equalN(0, "dmc.control.dpcmPeriodId");
+	expect(dmcControl.dpcmPeriodId).to.equalN(0, "dmc.control.dpcmPeriodId");
 	dmcControl.onWrite(0b10100001);
-	dmcControl.dpcmPeriodId.should.equalN(1, "dmc.control.dpcmPeriodId");
+	expect(dmcControl.dpcmPeriodId).to.equalN(1, "dmc.control.dpcmPeriodId");
 	dmcControl.onWrite(0b10100110);
-	dmcControl.dpcmPeriodId.should.equalN(6, "dmc.control.dpcmPeriodId");
+	expect(dmcControl.dpcmPeriodId).to.equalN(6, "dmc.control.dpcmPeriodId");
 	dmcControl.onWrite(0b10101111);
-	dmcControl.dpcmPeriodId.should.equalN(15, "dmc.control.dpcmPeriodId");
+	expect(dmcControl.dpcmPeriodId).to.equalN(15, "dmc.control.dpcmPeriodId");
 })({
 	locales: {
-		es: "`DMCControl`: escribe `dpcmPeriodId` (bits 0-3)",
+		es: "`DMCControl`: escribe `dpcmPeriodId` (bits ~0-3~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -429,9 +425,9 @@ it("`DMCControl`: writes `loop` (bit 6)", () => {
 	const dmcControl = apu.registers.dmc.control;
 
 	dmcControl.onWrite(0b10000011);
-	dmcControl.loop.should.equalN(0, "dmc.control.loop");
+	expect(dmcControl.loop).to.equalN(0, "dmc.control.loop");
 	dmcControl.onWrite(0b11000011);
-	dmcControl.loop.should.equalN(1, "dmc.control.loop");
+	expect(dmcControl.loop).to.equalN(1, "dmc.control.loop");
 })({
 	locales: {
 		es: "`DMCControl`: escribe `loop` (bit 6)",
@@ -445,7 +441,7 @@ it("`DMCSampleAddress`: writes the value", () => {
 
 	const dmcSampleAddress = apu.registers.dmc.sampleAddress;
 	dmcSampleAddress.onWrite(135);
-	dmcSampleAddress.value.should.equalN(135, "dmc.sampleAddress.value");
+	expect(dmcSampleAddress.value).to.equalN(135, "dmc.sampleAddress.value");
 })({
 	locales: {
 		es: "`DMCSampleAddress`: escribe el valor",
@@ -459,7 +455,7 @@ it("`DMCSampleLength`: writes the value", () => {
 
 	const dmcSampleLength = apu.registers.dmc.sampleLength;
 	dmcSampleLength.onWrite(172);
-	dmcSampleLength.value.should.equalN(172, "dmc.sampleLength.value");
+	expect(dmcSampleLength.value).to.equalN(172, "dmc.sampleLength.value");
 })({
 	locales: {
 		es: "`DMCSampleLength`: escribe el valor",
@@ -467,43 +463,43 @@ it("`DMCSampleLength`: writes the value", () => {
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
 
-it("`APUControl`: writes the channel enable fields (bits 0-4)", () => {
+it("`APUControl`: writes the <channel enable> fields (bits ~0-4~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	const register = apu.registers.apuControl;
 
 	register.onWrite(0b10100);
-	register.enablePulse1.should.equalN(0, "enablePulse1");
-	register.enablePulse2.should.equalN(0, "enablePulse2");
-	register.enableTriangle.should.equalN(1, "enableTriangle");
-	register.enableNoise.should.equalN(0, "enableNoise");
-	register.enableDMC.should.equalN(1, "enableDMC");
+	expect(register.enablePulse1).to.equalN(0, "enablePulse1");
+	expect(register.enablePulse2).to.equalN(0, "enablePulse2");
+	expect(register.enableTriangle).to.equalN(1, "enableTriangle");
+	expect(register.enableNoise).to.equalN(0, "enableNoise");
+	expect(register.enableDMC).to.equalN(1, "enableDMC");
 
 	register.onWrite(0b01001);
-	register.enablePulse1.should.equalN(1, "enablePulse1");
-	register.enablePulse2.should.equalN(0, "enablePulse2");
-	register.enableTriangle.should.equalN(0, "enableTriangle");
-	register.enableNoise.should.equalN(1, "enableNoise");
-	register.enableDMC.should.equalN(0, "enableDMC");
+	expect(register.enablePulse1).to.equalN(1, "enablePulse1");
+	expect(register.enablePulse2).to.equalN(0, "enablePulse2");
+	expect(register.enableTriangle).to.equalN(0, "enableTriangle");
+	expect(register.enableNoise).to.equalN(1, "enableNoise");
+	expect(register.enableDMC).to.equalN(0, "enableDMC");
 
 	register.onWrite(0b11010);
-	register.enablePulse1.should.equalN(0, "enablePulse1");
-	register.enablePulse2.should.equalN(1, "enablePulse2");
-	register.enableTriangle.should.equalN(0, "enableTriangle");
-	register.enableNoise.should.equalN(1, "enableNoise");
-	register.enableDMC.should.equalN(1, "enableDMC");
+	expect(register.enablePulse1).to.equalN(0, "enablePulse1");
+	expect(register.enablePulse2).to.equalN(1, "enablePulse2");
+	expect(register.enableTriangle).to.equalN(0, "enableTriangle");
+	expect(register.enableNoise).to.equalN(1, "enableNoise");
+	expect(register.enableDMC).to.equalN(1, "enableDMC");
 
 	register.onWrite(0b11111);
-	register.enablePulse1.should.equalN(1, "enablePulse1");
-	register.enablePulse2.should.equalN(1, "enablePulse2");
-	register.enableTriangle.should.equalN(1, "enableTriangle");
-	register.enableNoise.should.equalN(1, "enableNoise");
-	register.enableDMC.should.equalN(1, "enableDMC");
+	expect(register.enablePulse1).to.equalN(1, "enablePulse1");
+	expect(register.enablePulse2).to.equalN(1, "enablePulse2");
+	expect(register.enableTriangle).to.equalN(1, "enableTriangle");
+	expect(register.enableNoise).to.equalN(1, "enableNoise");
+	expect(register.enableDMC).to.equalN(1, "enableDMC");
 })({
 	locales: {
 		es:
-			"`APUControl`: escribe los campos de habilitación de canales (bits 0-4)",
+			"`APUControl`: escribe los campos de <habilitación de canales> (bits ~0-4~)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -516,7 +512,7 @@ it("has `PulseChannel` instances", () => {
 
 	expect(apu.channels, "channels").to.be.an("object");
 	expect(apu.channels.pulses, "pulses").to.be.an("array");
-	apu.channels.pulses.length.should.equalN(2, "pulses.length");
+	expect(apu.channels.pulses.length).to.equalN(2, "pulses.length");
 
 	for (let i = 0; i < 2; i++) {
 		expect(apu.channels.pulses[i], `pulses[${i}]`).to.be.an("object");
@@ -526,8 +522,11 @@ it("has `PulseChannel` instances", () => {
 
 	const pulse1Class = apu.channels.pulses[0].constructor;
 	const pulse2Class = apu.channels.pulses[1].constructor;
-	pulse1Class.should.equalN(pulse2Class, "class");
-	apu.channels.pulses[0].should.not.equalN(apu.channels.pulses[1], "instance");
+	expect(pulse1Class).to.equalN(pulse2Class, "class");
+	expect(apu.channels.pulses[0]).to.not.equalN(
+		apu.channels.pulses[1],
+		"instance"
+	);
 })({
 	locales: {
 		es: "tiene instancias de `PulseChannel`",
@@ -540,7 +539,7 @@ it("`PulseChannel`: has an `apu` reference", () => {
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++)
-		apu.channels.pulses[i].apu.should.equalN(apu, `[${i}].apu`);
+		expect(apu.channels.pulses[i].apu).to.equalN(apu, `[${i}].apu`);
 })({
 	locales: {
 		es: "`PulseChannel`: tiene una referencia `apu`",
@@ -553,7 +552,7 @@ it("`PulseChannel`: has an `id`", () => {
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++)
-		apu.channels.pulses[i].id.should.equalN(i, `[${i}].id`);
+		expect(apu.channels.pulses[i].id).to.equalN(i, `[${i}].id`);
 })({
 	locales: {
 		es: "`PulseChannel`: tiene un `id`",
@@ -567,8 +566,8 @@ it("`PulseChannel`: has an `enableFlagName`", () => {
 
 	const pulse1FlagName = apu.channels.pulses[0].enableFlagName;
 	const pulse2FlagName = apu.channels.pulses[1].enableFlagName;
-	pulse1FlagName.should.equalN("enablePulse1", "enableFlagName");
-	pulse2FlagName.should.equalN("enablePulse2", "enableFlagName");
+	expect(pulse1FlagName).to.equalN("enablePulse1", "enableFlagName");
+	expect(pulse2FlagName).to.equalN("enablePulse2", "enableFlagName");
 })({
 	locales: {
 		es: "`PulseChannel`: tiene un `enableFlagName`",
@@ -581,7 +580,7 @@ it("`PulseChannel`: has a `timer` initialized at 0", () => {
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++)
-		apu.channels.pulses[i].timer.should.equalN(0, "`[${i}].timer`");
+		expect(apu.channels.pulses[i].timer).to.equalN(0, "`[${i}].timer`");
 })({
 	locales: {
 		es: "`PulseChannel`: tiene un `timer` inicializado en 0",
@@ -594,7 +593,7 @@ it("`PulseChannel`: has a `registers` property, pointing to the audio registers"
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++)
-		apu.channels.pulses[i].registers.should.equalN(
+		expect(apu.channels.pulses[i].registers).to.equalN(
 			apu.registers.pulses[i],
 			`[${i}].registers`
 		);
@@ -606,47 +605,47 @@ it("`PulseChannel`: has a `registers` property, pointing to the audio registers"
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseChannel`: has an `isEnabled()` method that returns whether the channel is enabled or not in APUControl", () => {
+it("`PulseChannel`: has an `isEnabled()` method that returns whether the channel is <enabled> or not in APUControl", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.pulses[0].should.respondTo("isEnabled");
-	apu.channels.pulses[1].should.respondTo("isEnabled");
+	expect(apu.channels.pulses[0]).to.respondTo("isEnabled");
+	expect(apu.channels.pulses[1]).to.respondTo("isEnabled");
 
 	apu.registers.apuControl.onWrite(0b00);
-	apu.channels.pulses[0].isEnabled().should.equalN(false, "isEnabled()");
-	apu.channels.pulses[1].isEnabled().should.equalN(false, "isEnabled()");
+	expect(apu.channels.pulses[0].isEnabled()).to.equalN(false, "isEnabled()");
+	expect(apu.channels.pulses[1].isEnabled()).to.equalN(false, "isEnabled()");
 
 	apu.registers.apuControl.onWrite(0b01);
-	apu.channels.pulses[0].isEnabled().should.equalN(true, "isEnabled()");
-	apu.channels.pulses[1].isEnabled().should.equalN(false, "isEnabled()");
+	expect(apu.channels.pulses[0].isEnabled()).to.equalN(true, "isEnabled()");
+	expect(apu.channels.pulses[1].isEnabled()).to.equalN(false, "isEnabled()");
 
 	apu.registers.apuControl.onWrite(0b10);
-	apu.channels.pulses[0].isEnabled().should.equalN(false, "isEnabled()");
-	apu.channels.pulses[1].isEnabled().should.equalN(true, "isEnabled()");
+	expect(apu.channels.pulses[0].isEnabled()).to.equalN(false, "isEnabled()");
+	expect(apu.channels.pulses[1].isEnabled()).to.equalN(true, "isEnabled()");
 
 	apu.registers.apuControl.onWrite(0b11);
-	apu.channels.pulses[0].isEnabled().should.equalN(true, "isEnabled()");
-	apu.channels.pulses[1].isEnabled().should.equalN(true, "isEnabled()");
+	expect(apu.channels.pulses[0].isEnabled()).to.equalN(true, "isEnabled()");
+	expect(apu.channels.pulses[1].isEnabled()).to.equalN(true, "isEnabled()");
 })({
 	locales: {
 		es:
-			"`PulseChannel`: tiene un método `isEnabled()` que retorna si el canal está activo o no en APUControl",
+			"`PulseChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseChannel`: has a `sample()` method that returns a number", () => {
+it("`PulseChannel`: has a `sample()` method that <returns a number>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
-		apu.channels.pulses[i].should.respondTo("sample");
-		apu.channels.pulses[i].sample().should.be.a("number");
+		expect(apu.channels.pulses[i]).to.respondTo("sample");
+		expect(apu.channels.pulses[i].sample()).to.be.a("number");
 	}
 })({
 	locales: {
-		es: "`PulseChannel`: tiene un método `sample()` que retorna un número",
+		es: "`PulseChannel`: tiene un método `sample()` que <retorna un número>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -661,29 +660,29 @@ it("`PulseChannel`: `updateTimer()` updates `timer` based on PulseTimerLow and P
 	apu.registers.pulses[1].timerLow.onWrite(196);
 	apu.registers.pulses[1].timerHighLCL.onWrite(2);
 
-	apu.channels.pulses[0].should.respondTo("updateTimer");
+	expect(apu.channels.pulses[0]).to.respondTo("updateTimer");
 	apu.channels.pulses[0].updateTimer();
-	apu.channels.pulses[0].timer.should.equalN(507, "timer");
-	apu.channels.pulses[1].should.respondTo("updateTimer");
+	expect(apu.channels.pulses[0].timer).to.equalN(507, "timer");
+	expect(apu.channels.pulses[1]).to.respondTo("updateTimer");
 	apu.channels.pulses[1].updateTimer();
-	apu.channels.pulses[1].timer.should.equalN(708, "timer");
+	expect(apu.channels.pulses[1].timer).to.equalN(708, "timer");
 })({
 	locales: {
 		es:
-			"`PulseChannel`: `updateTimer()` actualiza `timer` basado en PulseTimerLow and PulseTimerHighLCL",
+			"`PulseChannel`: `updateTimer()` actualiza `timer` basado en PulseTimerLow y PulseTimerHighLCL",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseChannel`: `step()` calls updateTimer()", () => {
+it("`PulseChannel`: `step()` calls `updateTimer()`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
 		apu.channels.pulses[i].updateTimer = sinon.spy();
-		apu.channels.pulses[i].should.respondTo("step");
+		expect(apu.channels.pulses[i]).to.respondTo("step");
 		apu.channels.pulses[i].step();
-		apu.channels.pulses[i].updateTimer.should.have.been.called;
+		expect(apu.channels.pulses[i].updateTimer).to.have.been.called;
 	}
 })({
 	locales: {
@@ -703,7 +702,7 @@ it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => 
 	apu.step(() => {});
 
 	for (let i = 0; i < 2; i++) {
-		apu.channels.pulses[i].step.should.have.been.called;
+		expect(apu.channels.pulses[i].step).to.have.been.called;
 	}
 })({
 	locales: {
@@ -716,7 +715,7 @@ it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => 
 it("for now, new samples are mixed like `(pulse1 + pulse2) * 0.01`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
-	apu.should.respondTo("step");
+	expect(apu).to.respondTo("step");
 	const onSample = sinon.spy();
 
 	apu.channels.pulses[0].sample = () => 2;
@@ -724,11 +723,11 @@ it("for now, new samples are mixed like `(pulse1 + pulse2) * 0.01`", () => {
 
 	for (let i = 0; i < 19; i++) {
 		apu.step(onSample);
-		onSample.should.not.have.been.called;
+		expect(onSample).to.not.have.been.called;
 	}
 
 	apu.step(onSample);
-	onSample.should.have.been.calledWith(0.07, 2, 5); // (2 + 5) * 0.01
+	expect(onSample).to.have.been.calledWith(0.07, 2, 5); // (2 + 5) * 0.01
 })({
 	locales: {
 		es:
@@ -745,11 +744,11 @@ it("`PulseTimerLow`: writes the value and calls `updateTimer()`", () => {
 	apu.channels.pulses[1].updateTimer = sinon.spy();
 
 	apu.registers.write(0x4002, 251); // Pulse1TimerLow
-	apu.registers.pulses[0].timerLow.value.should.equalN(251, "value");
+	expect(apu.registers.pulses[0].timerLow.value).to.equalN(251, "value");
 	expect(apu.channels.pulses[0].updateTimer, "updateTimer").to.have.been.called;
 
 	apu.registers.write(0x4006, 196); // Pulse2TimerLow
-	apu.registers.pulses[1].timerLow.value.should.equalN(196, "value");
+	expect(apu.registers.pulses[1].timerLow.value).to.equalN(196, "value");
 	expect(apu.channels.pulses[1].updateTimer, "updateTimer").to.have.been.called;
 })({
 	locales: {
@@ -758,7 +757,7 @@ it("`PulseTimerLow`: writes the value and calls `updateTimer()`", () => {
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
-it("`PulseTimerHighLCL`: writes `timerHigh` (bits 0-2) and calls `updateTimer()`", () => {
+it("`PulseTimerHighLCL`: writes `timerHigh` (bits ~0-2~) and calls `updateTimer()`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -766,42 +765,51 @@ it("`PulseTimerHighLCL`: writes `timerHigh` (bits 0-2) and calls `updateTimer()`
 	apu.channels.pulses[1].updateTimer = sinon.spy();
 
 	apu.registers.write(0x4003, 5); // Pulse1TimerHighLCL
-	apu.registers.pulses[0].timerHighLCL.timerHigh.should.equalN(5, "timerHigh");
+	expect(apu.registers.pulses[0].timerHighLCL.timerHigh).to.equalN(
+		5,
+		"timerHigh"
+	);
 	expect(apu.channels.pulses[0].updateTimer, "updateTimer").to.have.been.called;
 
 	apu.registers.write(0x4007, 7); // Pulse2TimerHighLCL
-	apu.registers.pulses[1].timerHighLCL.timerHigh.should.equalN(7, "timerHigh");
+	expect(apu.registers.pulses[1].timerHighLCL.timerHigh).to.equalN(
+		7,
+		"timerHigh"
+	);
 	expect(apu.channels.pulses[1].updateTimer, "updateTimer").to.have.been.called;
 })({
 	locales: {
 		es:
-			"`PulseTimerHighLCL`: escribe `timerHigh` (bits 0-2) y llama a `updateTimer()`",
+			"`PulseTimerHighLCL`: escribe `timerHigh` (bits ~0-2~) y llama a `updateTimer()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.5"),
 });
 
 // 5c.6 Pulse Channels (2/5): Producing pulse waves
 
-it("`PulseChannel`: has an `oscillator` that can produce samples", () => {
+it("`PulseChannel`: has an `oscillator` that can <produce> samples", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
 		expect(apu.channels.pulses[i], `[${i}].oscillator`).to.be.an("object");
-		apu.channels.pulses[i].oscillator.frequency.should.equalN(
+		expect(apu.channels.pulses[i].oscillator.frequency).to.equalN(
 			0,
 			`[${i}].frequency`
 		);
-		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(
+		expect(apu.channels.pulses[i].oscillator.dutyCycle).to.equalN(
 			0,
 			`[${i}].dutyCycle`
 		);
-		apu.channels.pulses[i].oscillator.volume.should.equalN(15, `[${i}].volume`);
-		apu.channels.pulses[i].oscillator.should.respondTo("sample");
+		expect(apu.channels.pulses[i].oscillator.volume).to.equalN(
+			15,
+			`[${i}].volume`
+		);
+		expect(apu.channels.pulses[i].oscillator).to.respondTo("sample");
 	}
 })({
 	locales: {
-		es: "`PulseChannel`: tiene un `oscillator` que puede producir samples",
+		es: "`PulseChannel`: tiene un `oscillator` que puede <producir> samples",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.6"),
 });
@@ -822,14 +830,14 @@ it("`PulseChannel`: `sample()` updates the oscillator frequency", () => {
 	const pulse1Frequency = Math.floor(
 		apu.channels.pulses[0].oscillator.frequency
 	);
-	pulse1Frequency.should.equalN(220, "frequency");
+	expect(pulse1Frequency).to.equalN(220, "frequency");
 
 	apu.channels.pulses[1].timer = 708; // => freq = 157
 	apu.channels.pulses[1].sample();
 	const pulse2Frequency = Math.floor(
 		apu.channels.pulses[1].oscillator.frequency
 	);
-	pulse2Frequency.should.equalN(157, "frequency");
+	expect(pulse2Frequency).to.equalN(157, "frequency");
 })({
 	locales: {
 		es: "`PulseChannel`: `sample()` actualiza la frecuencia del oscilador",
@@ -853,19 +861,19 @@ it("`PulseChannel`: `sample()` updates the oscillator duty cycle", () => {
 
 		apu.channels.pulses[i].registers.control.onWrite(0b00000000);
 		apu.channels.pulses[i].sample();
-		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(0, key);
+		expect(apu.channels.pulses[i].oscillator.dutyCycle).to.equalN(0, key);
 
 		apu.channels.pulses[i].registers.control.onWrite(0b01000000);
 		apu.channels.pulses[i].sample();
-		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(1, key);
+		expect(apu.channels.pulses[i].oscillator.dutyCycle).to.equalN(1, key);
 
 		apu.channels.pulses[i].registers.control.onWrite(0b10000000);
 		apu.channels.pulses[i].sample();
-		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(2, key);
+		expect(apu.channels.pulses[i].oscillator.dutyCycle).to.equalN(2, key);
 
 		apu.channels.pulses[i].registers.control.onWrite(0b11000000);
 		apu.channels.pulses[i].sample();
-		apu.channels.pulses[i].oscillator.dutyCycle.should.equalN(3, key);
+		expect(apu.channels.pulses[i].oscillator.dutyCycle).to.equalN(3, key);
 	}
 })({
 	locales: {
@@ -890,10 +898,10 @@ it("`PulseChannel`: `sample()` updates the oscillator volume", () => {
 	apu.channels.pulses[1].registers.control.onWrite(0b00111011);
 
 	apu.channels.pulses[0].sample();
-	apu.channels.pulses[0].oscillator.volume.should.equalN(0b1100, "volume");
+	expect(apu.channels.pulses[0].oscillator.volume).to.equalN(0b1100, "volume");
 
 	apu.channels.pulses[1].sample();
-	apu.channels.pulses[1].oscillator.volume.should.equalN(0b1011, "volume");
+	expect(apu.channels.pulses[1].oscillator.volume).to.equalN(0b1011, "volume");
 })({
 	locales: {
 		es: "`PulseChannel`: `sample()` actualiza el volumen del oscilador",
@@ -921,8 +929,8 @@ it("`PulseChannel`: `sample()` calls `oscillator.sample()`", () => {
 		return random2;
 	};
 
-	apu.channels.pulses[0].sample().should.equalN(random1);
-	apu.channels.pulses[1].sample().should.equalN(random2);
+	expect(apu.channels.pulses[0].sample()).to.equalN(random1, "[0].sample()");
+	expect(apu.channels.pulses[1].sample()).to.equalN(random2, "[1].sample()");
 })({
 	locales: {
 		es: "`PulseChannel`: `sample()` llama a `oscillator.sample()`",
@@ -939,9 +947,9 @@ it("`APUFrameCounter`: writes `use5StepSequencer` (bit 7)", () => {
 	const register = apu.registers.apuFrameCounter;
 
 	register.onWrite(0b10000011);
-	register.use5StepSequencer.should.equalN(1, "use5StepSequencer");
+	expect(register.use5StepSequencer).to.equalN(1, "use5StepSequencer");
 	register.onWrite(0b00100011);
-	register.use5StepSequencer.should.equalN(0, "use5StepSequencer");
+	expect(register.use5StepSequencer).to.equalN(0, "use5StepSequencer");
 })({
 	locales: {
 		es: "`APUFrameCounter`: escribe `use5StepSequencer` (bit 7)",
@@ -949,7 +957,7 @@ it("`APUFrameCounter`: writes `use5StepSequencer` (bit 7)", () => {
 	use: ({ id }, book) => id >= book.getId("5c.7"),
 });
 
-it("`APUFrameCounter`: writing resets the frame sequencer", () => {
+it("`APUFrameCounter`: writing <resets> the frame sequencer", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -957,10 +965,10 @@ it("`APUFrameCounter`: writing resets the frame sequencer", () => {
 
 	apu.frameSequencer.counter = 8;
 	register.onWrite(0b10000011);
-	apu.frameSequencer.counter.should.equalN(0, "counter");
+	expect(apu.frameSequencer.counter).to.equalN(0, "counter");
 })({
 	locales: {
-		es: "`APUFrameCounter`: escribir reinicia el secuenciador de frames",
+		es: "`APUFrameCounter`: escribir <reinicia> el secuenciador de frames",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1003,9 +1011,9 @@ it("`FrameSequencer`: has a `counter` property and `reset()`/`step()` methods", 
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.frameSequencer.counter.should.equalN(0, "counter");
-	apu.frameSequencer.should.respondTo("reset");
-	apu.frameSequencer.should.respondTo("step");
+	expect(apu.frameSequencer.counter).to.equalN(0, "counter");
+	expect(apu.frameSequencer).to.respondTo("reset");
+	expect(apu.frameSequencer).to.respondTo("step");
 })({
 	locales: {
 		es:
@@ -1020,7 +1028,7 @@ it("`FrameSequencer`: `reset()` assigns 0 to `counter`", () => {
 
 	apu.frameSequencer.counter = 78;
 	apu.frameSequencer.reset();
-	apu.frameSequencer.counter.should.equalN(0, "counter");
+	expect(apu.frameSequencer.counter).to.equalN(0, "counter");
 })({
 	locales: {
 		es: "`FrameSequencer`: `reset()` asigna 0 a `counter`",
@@ -1034,7 +1042,7 @@ it("`FrameSequencer`: `step()` increments `counter`", () => {
 
 	apu.frameSequencer.counter = 78;
 	apu.frameSequencer.step();
-	apu.frameSequencer.counter.should.equalN(79, "counter");
+	expect(apu.frameSequencer.counter).to.equalN(79, "counter");
 })({
 	locales: {
 		es: "`FrameSequencer`: `step()` incrementa `counter`",
@@ -1111,11 +1119,11 @@ it("`FrameSequencer`: on four-step sequences, `step()` resets the counter on cyc
 	for (let i = 0; i < 14915; i++) {
 		apu.frameSequencer.step();
 		const newCount = i + 1;
-		apu.frameSequencer.counter.should.equalN(newCount, "counter");
+		expect(apu.frameSequencer.counter).to.equalN(newCount, "counter");
 	}
 
 	apu.frameSequencer.step();
-	apu.frameSequencer.counter.should.equalN(0, "counter");
+	expect(apu.frameSequencer.counter).to.equalN(0, "counter");
 })({
 	locales: {
 		es:
@@ -1193,11 +1201,11 @@ it("`FrameSequencer`: on five-step sequences, `step()` resets the counter on cyc
 	for (let i = 0; i < 18640; i++) {
 		apu.frameSequencer.step();
 		const newCount = i + 1;
-		apu.frameSequencer.counter.should.equalN(newCount, "counter");
+		expect(apu.frameSequencer.counter).to.equalN(newCount, "counter");
 	}
 
 	apu.frameSequencer.step();
-	apu.frameSequencer.counter.should.equalN(0, "counter");
+	expect(apu.frameSequencer.counter).to.equalN(0, "counter");
 })({
 	locales: {
 		es:
@@ -1210,8 +1218,8 @@ it("has two methods: `onQuarterFrameClock()` and `onHalfFrameClock()`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.should.respondTo("onQuarterFrameClock");
-	apu.should.respondTo("onHalfFrameClock");
+	expect(apu).to.respondTo("onQuarterFrameClock");
+	expect(apu).to.respondTo("onHalfFrameClock");
 })({
 	locales: {
 		es: "tiene dos métodos: `onQuarterFrameClock()` y `onHalfFrameClock()`",
@@ -1261,7 +1269,7 @@ it("`LengthCounter`: has a `counter` property that starts at 0", () => {
 
 	for (let i = 0; i < 2; i++) {
 		const lengthCounter = apu.channels.pulses[i].lengthCounter;
-		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+		expect(lengthCounter.counter).to.equalN(0, `[${i}]::counter`);
 	}
 })({
 	locales: {
@@ -1270,45 +1278,44 @@ it("`LengthCounter`: has a `counter` property that starts at 0", () => {
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`LengthCounter`: has a `reset()` method that sets `counter` = 0", () => {
+it("`LengthCounter`: `reset()` sets `counter` = 0", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
 		const lengthCounter = apu.channels.pulses[i].lengthCounter;
-		lengthCounter.should.respondTo("reset");
+		expect(lengthCounter).to.respondTo("reset");
 		lengthCounter.counter = 2;
 		lengthCounter.reset();
-		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+		expect(lengthCounter.counter).to.equalN(0, `[${i}]::counter`);
 	}
 })({
 	locales: {
-		es: "`LengthCounter`: tiene un método `reset()` que asigna `counter` = 0",
+		es: "`LengthCounter`: `reset()` asigna `counter` = 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`LengthCounter`: has an `isActive()` method that returns whether `counter` is greater than 0", () => {
+it("`LengthCounter`: `isActive()` returns whether `counter` is greater than 0", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
 		const lengthCounter = apu.channels.pulses[i].lengthCounter;
-		lengthCounter.should.respondTo("isActive");
+		expect(lengthCounter).to.respondTo("isActive");
 
 		lengthCounter.counter = 2;
-		lengthCounter.isActive().should.equalN(true, `[${i}]::isActive()`);
+		expect(lengthCounter.isActive()).to.equalN(true, `[${i}]::isActive()`);
 
 		lengthCounter.counter = 0;
-		lengthCounter.isActive().should.equalN(false, `[${i}]::isActive()`);
+		expect(lengthCounter.isActive()).to.equalN(false, `[${i}]::isActive()`);
 
 		lengthCounter.counter = 1;
-		lengthCounter.isActive().should.equalN(true, `[${i}]::isActive()`);
+		expect(lengthCounter.isActive()).to.equalN(true, `[${i}]::isActive()`);
 	}
 })({
 	locales: {
-		es:
-			"`LengthCounter`: tiene un método `isActive()` que retorna si `counter` es mayor a 0",
+		es: "`LengthCounter`: `isActive()` retorna si `counter` es mayor a 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1319,7 +1326,7 @@ it("`LengthCounter`: has a `clock(...)` method", () => {
 
 	for (let i = 0; i < 2; i++) {
 		const lengthCounter = apu.channels.pulses[i].lengthCounter;
-		lengthCounter.should.respondTo("clock");
+		expect(lengthCounter).to.respondTo("clock");
 	}
 })({
 	locales: {
@@ -1328,7 +1335,7 @@ it("`LengthCounter`: has a `clock(...)` method", () => {
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`LengthCounter`: calling `clock(...)` with `false` as the first argument just resets the counter", () => {
+it("`LengthCounter`: calling `clock(...)` with ~false~ as the first argument just <resets the counter>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1337,16 +1344,16 @@ it("`LengthCounter`: calling `clock(...)` with `false` as the first argument jus
 
 		lengthCounter.counter = 3;
 		lengthCounter.clock(false, true);
-		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+		expect(lengthCounter.counter).to.equalN(0, `[${i}]::counter`);
 
 		lengthCounter.counter = 17;
 		lengthCounter.clock(false, false);
-		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+		expect(lengthCounter.counter).to.equalN(0, `[${i}]::counter`);
 	}
 })({
 	locales: {
 		es:
-			"`LengthCounter`: llamar a `clock()` con `false` como primer argumento solo reinicia el contador",
+			"`LengthCounter`: llamar a `clock()` con ~false~ como primer argumento solo reinicia el contador",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1360,7 +1367,7 @@ it("`LengthCounter`: calling `clock(true, true)` doesn't do anything", () => {
 
 		lengthCounter.counter = 219;
 		lengthCounter.clock(true, true);
-		lengthCounter.counter.should.equalN(219, `[${i}]::counter`);
+		expect(lengthCounter.counter).to.equalN(219, `[${i}]::counter`);
 	}
 })({
 	locales: {
@@ -1379,10 +1386,10 @@ it("`LengthCounter`: calling `clock(true, false)` decrements the counter", () =>
 		lengthCounter.counter = 219;
 
 		lengthCounter.clock(true, false);
-		lengthCounter.counter.should.equalN(218, `[${i}]::counter`);
+		expect(lengthCounter.counter).to.equalN(218, `[${i}]::counter`);
 
 		lengthCounter.clock(true, false);
-		lengthCounter.counter.should.equalN(217, `[${i}]::counter`);
+		expect(lengthCounter.counter).to.equalN(217, `[${i}]::counter`);
 	}
 })({
 	locales: {
@@ -1400,7 +1407,7 @@ it("`LengthCounter`: calling `clock(true, false)` doesn't decrement if the count
 
 		lengthCounter.counter = 0;
 		lengthCounter.clock(true, false);
-		lengthCounter.counter.should.equalN(0, `[${i}]::counter`);
+		expect(lengthCounter.counter).to.equalN(0, `[${i}]::counter`);
 	}
 })({
 	locales: {
@@ -1410,7 +1417,7 @@ it("`LengthCounter`: calling `clock(true, false)` doesn't decrement if the count
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`PulseChannel`: `sample()` just returns the last sample if the channel is disabled", () => {
+it("`PulseChannel`: `sample()` just returns the <last sample> if the channel is disabled", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1453,27 +1460,33 @@ it("`PulseChannel`: `sample()` just returns the last sample if the channel is di
 	apu.channels.pulses[0].timer = 456;
 
 	// when the channel is disabled, it should return the last sample
-	apu.channels.pulses[0].sample().should.equalN(lastSample1, "[0].sample()");
-	apu.channels.pulses[1].sample().should.equalN(lastSample2, "[1].sample()");
+	expect(apu.channels.pulses[0].sample()).to.equalN(
+		lastSample1,
+		"[0].sample()"
+	);
+	expect(apu.channels.pulses[1].sample()).to.equalN(
+		lastSample2,
+		"[1].sample()"
+	);
 
 	// they shouldn't update the oscillator frequency
 	const pulse1Frequency = Math.floor(
 		apu.channels.pulses[0].oscillator.frequency
 	);
-	pulse1Frequency.should.equalN(220, "frequency");
+	expect(pulse1Frequency).to.equalN(220, "frequency");
 	const pulse2Frequency = Math.floor(
 		apu.channels.pulses[1].oscillator.frequency
 	);
-	pulse2Frequency.should.equalN(157, "frequency");
+	expect(pulse2Frequency).to.equalN(157, "frequency");
 })({
 	locales: {
 		es:
-			"`PulseChannel`: `sample()` solo retorna el último sample si el canal está desactivado",
+			"`PulseChannel`: `sample()` solo retorna el <último sample> si el canal está desactivado",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`PulseChannel`: `sample()` just returns the last sample if the length counter is not active", () => {
+it("`PulseChannel`: `sample()` just returns the <last sample> if the length counter is <not active>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1517,22 +1530,28 @@ it("`PulseChannel`: `sample()` just returns the last sample if the length counte
 		apu.registers.pulses[i].control.onWrite(0b00110000 | ((i + 1) * 2));
 
 	// when the length counter is 0, it should return the last sample
-	apu.channels.pulses[0].sample().should.equalN(lastSample1, "[0].sample()");
-	apu.channels.pulses[1].sample().should.equalN(lastSample2, "[1].sample()");
+	expect(apu.channels.pulses[0].sample()).to.equalN(
+		lastSample1,
+		"[0].sample()"
+	);
+	expect(apu.channels.pulses[1].sample()).to.equalN(
+		lastSample2,
+		"[1].sample()"
+	);
 
 	// they shouldn't update the oscillator frequency
 	const pulse1Frequency = Math.floor(
 		apu.channels.pulses[0].oscillator.frequency
 	);
-	pulse1Frequency.should.equalN(220, "frequency");
+	expect(pulse1Frequency).to.equalN(220, "frequency");
 	const pulse2Frequency = Math.floor(
 		apu.channels.pulses[1].oscillator.frequency
 	);
-	pulse2Frequency.should.equalN(157, "frequency");
+	expect(pulse2Frequency).to.equalN(157, "frequency");
 })({
 	locales: {
 		es:
-			"`PulseChannel`: `sample()` solo retorna el último sample si el contador de longitud no está activo",
+			"`PulseChannel`: `sample()` solo retorna el <último sample> si el contador de longitud <no está activo>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1542,7 +1561,7 @@ it("`PulseChannel`: has a `quarterFrame()` method", () => {
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
-		apu.channels.pulses[i].should.respondTo("quarterFrame");
+		expect(apu.channels.pulses[i]).to.respondTo("quarterFrame");
 	}
 })({
 	locales: {
@@ -1551,42 +1570,41 @@ it("`PulseChannel`: has a `quarterFrame()` method", () => {
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`PulseChannel`: has a `halfFrame()` method that updates the length counter", () => {
+it("`PulseChannel`: `halfFrame()` updates the length counter", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
 		const channel = apu.channels.pulses[i];
-		channel.should.respondTo("halfFrame");
+		expect(channel).to.respondTo("halfFrame");
 
 		channel.lengthCounter.clock = sinon.spy();
 		channel.isEnabled = () => true;
 		channel.registers.control.onWrite(0b100000); // halt = 1
 		channel.halfFrame();
-		channel.lengthCounter.clock.should.have.been.calledWith(true, 1);
+		expect(channel.lengthCounter.clock).to.have.been.calledWith(true, 1);
 
 		channel.lengthCounter.clock = sinon.spy();
 		channel.isEnabled = () => true;
 		channel.registers.control.onWrite(0b000000); // halt = 0
 		channel.halfFrame();
-		channel.lengthCounter.clock.should.have.been.calledWith(true, 0);
+		expect(channel.lengthCounter.clock).to.have.been.calledWith(true, 0);
 
 		channel.lengthCounter.clock = sinon.spy();
 		channel.isEnabled = () => false;
 		channel.registers.control.onWrite(0b000000); // halt = 0
 		channel.halfFrame();
-		channel.lengthCounter.clock.should.have.been.calledWith(false, 0);
+		expect(channel.lengthCounter.clock).to.have.been.calledWith(false, 0);
 
 		channel.lengthCounter.clock = sinon.spy();
 		channel.isEnabled = () => false;
 		channel.registers.control.onWrite(0b100000); // halt = 1
 		channel.halfFrame();
-		channel.lengthCounter.clock.should.have.been.calledWith(false, 1);
+		expect(channel.lengthCounter.clock).to.have.been.calledWith(false, 1);
 	}
 })({
 	locales: {
-		es:
-			"`PulseChannel`: tiene un método `halfFrame()` que actualiza el contador de longitud",
+		es: "`PulseChannel`: `halfFrame()` actualiza el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1600,8 +1618,8 @@ it("`onQuarterFrameClock()` calls `quarterFrame()` on the two pulse channel inst
 
 	apu.onQuarterFrameClock();
 
-	apu.channels.pulses[0].quarterFrame.should.have.been.calledOnce;
-	apu.channels.pulses[1].quarterFrame.should.have.been.calledOnce;
+	expect(apu.channels.pulses[0].quarterFrame).to.have.been.calledOnce;
+	expect(apu.channels.pulses[1].quarterFrame).to.have.been.calledOnce;
 })({
 	locales: {
 		es:
@@ -1619,8 +1637,8 @@ it("`onHalfFrameClock()` calls `halfFrame()` on the two pulse channel instances"
 
 	apu.onHalfFrameClock();
 
-	apu.channels.pulses[0].halfFrame.should.have.been.calledOnce;
-	apu.channels.pulses[1].halfFrame.should.have.been.calledOnce;
+	expect(apu.channels.pulses[0].halfFrame).to.have.been.calledOnce;
+	expect(apu.channels.pulses[1].halfFrame).to.have.been.calledOnce;
 })({
 	locales: {
 		es:
@@ -1629,33 +1647,33 @@ it("`onHalfFrameClock()` calls `halfFrame()` on the two pulse channel instances"
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
 
-it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length counter", () => {
+it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the length counter", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	apu.registers.write(0x4003, 0b10110000); // Pulse1TimerHighLCL
-	apu.registers.pulses[0].timerHighLCL.lengthCounterLoad.should.equalN(
+	expect(apu.registers.pulses[0].timerHighLCL.lengthCounterLoad).to.equalN(
 		0b10110, // index 22 => 96 in length table
 		"lengthCounterLoad"
 	);
-	apu.channels.pulses[0].lengthCounter.counter.should.equalN(
+	expect(apu.channels.pulses[0].lengthCounter.counter).to.equalN(
 		96,
 		"[0]::counter"
 	);
 
 	apu.registers.write(0x4007, 0b01100000); // Pulse2TimerHighLCL
-	apu.registers.pulses[1].timerHighLCL.lengthCounterLoad.should.equalN(
+	expect(apu.registers.pulses[1].timerHighLCL.lengthCounterLoad).to.equalN(
 		0b01100, // index 22 => 14 in length table
 		"lengthCounterLoad"
 	);
-	apu.channels.pulses[1].lengthCounter.counter.should.equalN(
+	expect(apu.channels.pulses[1].lengthCounter.counter).to.equalN(
 		14,
 		"[1]::counter"
 	);
 })({
 	locales: {
 		es:
-			"`PulseTimerHighLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+			"`PulseTimerHighLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1669,8 +1687,8 @@ it("`APUControl`: on writes, if `enablePulse1` is clear, resets the length count
 
 	apu.registers.write(0x4015, 0b00000010);
 
-	apu.channels.pulses[0].lengthCounter.counter.should.equalN(0, "counter");
-	apu.channels.pulses[1].lengthCounter.counter.should.equalN(83, "counter");
+	expect(apu.channels.pulses[0].lengthCounter.counter).to.equalN(0, "counter");
+	expect(apu.channels.pulses[1].lengthCounter.counter).to.equalN(83, "counter");
 })({
 	locales: {
 		es:
@@ -1688,8 +1706,8 @@ it("`APUControl`: on writes, if `enablePulse2` is clear, resets the length count
 
 	apu.registers.write(0x4015, 0b00000001);
 
-	apu.channels.pulses[0].lengthCounter.counter.should.equalN(72, "counter");
-	apu.channels.pulses[1].lengthCounter.counter.should.equalN(0, "counter");
+	expect(apu.channels.pulses[0].lengthCounter.counter).to.equalN(72, "counter");
+	expect(apu.channels.pulses[1].lengthCounter.counter).to.equalN(0, "counter");
 })({
 	locales: {
 		es:
@@ -1715,20 +1733,20 @@ it("`PulseChannel`: has a `volumeEnvelope` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.9"),
 });
 
-it("`VolumeEnvelope`: has `startFlag`, `dividerCount`, `volume` initialized to false, 0, 0", () => {
+it("`VolumeEnvelope`: has `startFlag`, `dividerCount`, `volume` initialized to ~false~, 0, 0", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
 		const envelope = apu.channels.pulses[i].volumeEnvelope;
-		envelope.startFlag.should.equal(false, `[${i}]::startFlag`);
-		envelope.dividerCount.should.equalN(0, `[${i}]::dividerCount`);
-		envelope.volume.should.equalN(0, `[${i}]::volume`);
+		expect(envelope.startFlag).to.equalN(false, `[${i}]::startFlag`);
+		expect(envelope.dividerCount).to.equalN(0, `[${i}]::dividerCount`);
+		expect(envelope.volume).to.equalN(0, `[${i}]::volume`);
 	}
 })({
 	locales: {
 		es:
-			"`VolumeEnvelope`: tiene `startFlag`, `dividerCount` y `volume` inicializados en false, 0, 0",
+			"`VolumeEnvelope`: tiene `startFlag`, `dividerCount` y `volume` inicializados en ~false~, 0, 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -1738,7 +1756,7 @@ it("`VolumeEnvelope`: has a `clock(...)` method", () => {
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
-		apu.channels.pulses[i].volumeEnvelope.should.respondTo("clock");
+		expect(apu.channels.pulses[i].volumeEnvelope).to.respondTo("clock");
 	}
 })({
 	locales: { es: "`VolumeEnvelope`: tiene un método `clock(...)`" },
@@ -1754,9 +1772,9 @@ it("`VolumeEnvelope`: `clock(...)` with `startFlag = true` clears it, sets `volu
 
 	envelope.clock(8, false);
 
-	envelope.startFlag.should.equalN(false, "startFlag");
-	envelope.volume.should.equalN(15, "volume");
-	envelope.dividerCount.should.equalN(8, "dividerCount");
+	expect(envelope.startFlag).to.equalN(false, "startFlag");
+	expect(envelope.volume).to.equalN(15, "volume");
+	expect(envelope.dividerCount).to.equalN(8, "dividerCount");
 })({
 	locales: {
 		es:
@@ -1775,9 +1793,9 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount > 0` decrements it and lea
 
 	envelope.clock(5, false);
 
-	envelope.dividerCount.should.equalN(2, "dividerCount");
-	envelope.volume.should.equalN(7, "volume");
-	envelope.startFlag.should.equalN(false, "startFlag");
+	expect(envelope.dividerCount).to.equalN(2, "dividerCount");
+	expect(envelope.volume).to.equalN(7, "volume");
+	expect(envelope.startFlag).to.equalN(false, "startFlag");
 })({
 	locales: {
 		es:
@@ -1796,8 +1814,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume > 0`, res
 
 	envelope.clock(9, false);
 
-	envelope.dividerCount.should.equalN(9);
-	envelope.volume.should.equalN(4);
+	expect(envelope.dividerCount).to.equalN(9, "dividerCount");
+	expect(envelope.volume).to.equalN(4, "volume");
 })({
 	locales: {
 		es:
@@ -1816,8 +1834,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with
 
 	envelope.clock(6, false);
 
-	envelope.dividerCount.should.equalN(6);
-	envelope.volume.should.equalN(0);
+	expect(envelope.dividerCount).to.equalN(6, "dividerCount");
+	expect(envelope.volume).to.equalN(0, "volume");
 })({
 	locales: {
 		es:
@@ -1836,8 +1854,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with
 
 	envelope.clock(2, true);
 
-	envelope.dividerCount.should.equalN(2);
-	envelope.volume.should.equalN(15);
+	expect(envelope.dividerCount).to.equalN(2, "dividerCount");
+	expect(envelope.volume).to.equalN(15, "volume");
 })({
 	locales: {
 		es:
@@ -1859,7 +1877,7 @@ it("`PulseChannel`: `quarterFrame()` updates the volume envelope", () => {
 		channel.registers.control.onWrite(period | (loop << 5));
 		channel.quarterFrame();
 
-		channel.volumeEnvelope.clock.should.have.been.calledWith(period, loop);
+		expect(channel.volumeEnvelope.clock).to.have.been.calledWith(period, loop);
 	}
 })({
 	locales: {
@@ -1873,10 +1891,16 @@ it("`PulseTimerHighLCL`: writes set the `startFlag` on the channel's volume enve
 	const apu = new APU({});
 
 	apu.registers.write(0x4003, 0b01000000);
-	apu.channels.pulses[0].volumeEnvelope.startFlag.should.equal(true);
+	expect(apu.channels.pulses[0].volumeEnvelope.startFlag).to.equalN(
+		true,
+		"startFlag"
+	);
 
 	apu.registers.write(0x4007, 0b11000000);
-	apu.channels.pulses[1].volumeEnvelope.startFlag.should.equal(true);
+	expect(apu.channels.pulses[1].volumeEnvelope.startFlag).to.equalN(
+		true,
+		"startFlag"
+	);
 })({
 	locales: {
 		es:
@@ -1896,17 +1920,17 @@ it("`PulseSweep`: writes `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `e
 
 	// Pulse 1
 	const sweep1 = apu.registers.pulses[0].sweep;
-	sweep1.shiftCount.should.equalN(2, "shiftCount");
-	sweep1.negateFlag.should.equalN(0, "negateFlag");
-	sweep1.dividerPeriodMinusOne.should.equalN(7, "dividerPeriodMinusOne");
-	sweep1.enabledFlag.should.equalN(0, "enabledFlag");
+	expect(sweep1.shiftCount).to.equalN(2, "shiftCount");
+	expect(sweep1.negateFlag).to.equalN(0, "negateFlag");
+	expect(sweep1.dividerPeriodMinusOne).to.equalN(7, "dividerPeriodMinusOne");
+	expect(sweep1.enabledFlag).to.equalN(0, "enabledFlag");
 
 	// Pulse 2
 	const sweep2 = apu.registers.pulses[1].sweep;
-	sweep2.shiftCount.should.equalN(3, "shiftCount");
-	sweep2.negateFlag.should.equalN(1, "negateFlag");
-	sweep2.dividerPeriodMinusOne.should.equalN(3, "dividerPeriodMinusOne");
-	sweep2.enabledFlag.should.equalN(1, "enabledFlag");
+	expect(sweep2.shiftCount).to.equalN(3, "shiftCount");
+	expect(sweep2.negateFlag).to.equalN(1, "negateFlag");
+	expect(sweep2.dividerPeriodMinusOne).to.equalN(3, "dividerPeriodMinusOne");
+	expect(sweep2.enabledFlag).to.equalN(1, "enabledFlag");
 })({
 	locales: {
 		es:
@@ -1930,20 +1954,20 @@ it("`PulseChannel`: has a `frequencySweep` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`FrequencySweep`: has `startFlag`, `dividerCount`, `mute` initialized to `false`, `0`, `false`", () => {
+it("`FrequencySweep`: has `startFlag`, `dividerCount`, `mute` initialized to ~false~, `0`, ~false~", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	for (let i = 0; i < 2; i++) {
 		const sweep = apu.channels.pulses[i].frequencySweep;
-		sweep.startFlag.should.equal(false, `[${i}]::startFlag`);
-		sweep.dividerCount.should.equalN(0, `[${i}]::dividerCount`);
-		sweep.mute.should.equalN(false, `[${i}]::mute`);
+		expect(sweep.startFlag).to.equalN(false, `[${i}]::startFlag`);
+		expect(sweep.dividerCount).to.equalN(0, `[${i}]::dividerCount`);
+		expect(sweep.mute).to.equalN(false, `[${i}]::mute`);
 	}
 })({
 	locales: {
 		es:
-			"`FrequencySweep`: tiene `startFlag`, `dividerCount` y `mute` inicializados en `false`, `0`, `false`",
+			"`FrequencySweep`: tiene `startFlag`, `dividerCount` y `mute` inicializados en ~false~, `0`, ~false~",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -1954,8 +1978,8 @@ it("`FrequencySweep`: has `clock()` and `muteIfNeeded()` methods", () => {
 
 	for (let i = 0; i < 2; i++) {
 		const sweep = apu.channels.pulses[i].frequencySweep;
-		sweep.should.respondTo("clock");
-		sweep.should.respondTo("muteIfNeeded");
+		expect(sweep).to.respondTo("clock");
+		expect(sweep).to.respondTo("muteIfNeeded");
 	}
 })({
 	locales: {
@@ -1964,7 +1988,7 @@ it("`FrequencySweep`: has `clock()` and `muteIfNeeded()` methods", () => {
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`FrequencySweep`: `clock()` increases `timer` by shift delta when enabled, `shiftCount > 0`, `dividerCount = 0`, and not muted", () => {
+it("`FrequencySweep`: `clock()` increases `timer` by <shift delta> when enabled, `shiftCount > 0`, `dividerCount = 0`, and not muted", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -1982,18 +2006,18 @@ it("`FrequencySweep`: `clock()` increases `timer` by shift delta when enabled, `
 		channel.timer = 100; // => delta = 100 >> 2 = 25
 		sweep.clock();
 
-		channel.timer.should.equalN(125, `[${i}].timer`);
-		sweep.dividerCount.should.equalN(8, `[${i}]::dividerCount`);
+		expect(channel.timer).to.equalN(125, `[${i}].timer`);
+		expect(sweep.dividerCount).to.equalN(8, `[${i}]::dividerCount`);
 	}
 })({
 	locales: {
 		es:
-			"`FrequencySweep`: `clock()` incrementa `timer` por el delta apropiado cuando está habilitado, `shiftCount > 0`, `dividerCount = 0` y no está silenciado",
+			"`FrequencySweep`: `clock()` incrementa `timer` por el <delta apropiado> cuando está habilitado, `shiftCount > 0`, `dividerCount = 0` y no está silenciado",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`FrequencySweep`: `clock()` decreases `timer` by shift delta when `negateFlag` is set (same conditions)", () => {
+it("`FrequencySweep`: `clock()` decreases `timer` by <shift delta> when `negateFlag` is set (same conditions)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2011,13 +2035,13 @@ it("`FrequencySweep`: `clock()` decreases `timer` by shift delta when `negateFla
 		channel.timer = 100; // => delta = 100 >> 2 = 25
 		sweep.clock();
 
-		channel.timer.should.equalN(75, `[${i}].timer`);
-		sweep.dividerCount.should.equalN(4, `[${i}]::dividerCount`);
+		expect(channel.timer).to.equalN(75, `[${i}].timer`);
+		expect(sweep.dividerCount).to.equalN(4, `[${i}]::dividerCount`);
 	}
 })({
 	locales: {
 		es:
-			"`FrequencySweep`: `clock()`: decrementa `timer` por el delta apropiado cuando `negateFlag` está encendida (mismas condiciones)",
+			"`FrequencySweep`: `clock()`: decrementa `timer` por el <delta apropiado> cuando `negateFlag` está encendida (mismas condiciones)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2038,8 +2062,8 @@ it("`FrequencySweep`: `clock()` reloads `dividerCount` and clears `startFlag` wh
 
 		sweep.clock();
 
-		sweep.startFlag.should.equalN(false, `[${i}]::startFlag`);
-		sweep.dividerCount.should.equalN(8, `[${i}]::dividerCount`);
+		expect(sweep.startFlag).to.equalN(false, `[${i}]::startFlag`);
+		expect(sweep.dividerCount).to.equalN(8, `[${i}]::dividerCount`);
 	}
 })({
 	locales: {
@@ -2063,8 +2087,8 @@ it("`FrequencySweep`: `clock()` when `dividerCount > 0` decrements it and leaves
 
 		sweep.clock();
 
-		sweep.dividerCount.should.equalN(4, `[${i}]::dividerCount`);
-		channel.timer.should.equalN(200, `[${i}].timer`);
+		expect(sweep.dividerCount).to.equalN(4, `[${i}]::dividerCount`);
+		expect(channel.timer).to.equalN(200, `[${i}].timer`);
 	}
 })({
 	locales: {
@@ -2074,7 +2098,7 @@ it("`FrequencySweep`: `clock()` when `dividerCount > 0` decrements it and leaves
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is < 8 or > 0x7ff`", () => {
+it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is ~< 8~ or ~> 0x7ff~", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2084,29 +2108,29 @@ it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is < 8 or > 0x7f
 
 		channel.timer = 7;
 		sweep.muteIfNeeded();
-		sweep.mute.should.equalN(true, `[${i}]::mute`);
+		expect(sweep.mute).to.equalN(true, `[${i}]::mute`);
 
 		channel.timer = 8;
 		sweep.muteIfNeeded();
-		sweep.mute.should.equalN(false, `[${i}]::mute`);
+		expect(sweep.mute).to.equalN(false, `[${i}]::mute`);
 
 		channel.timer = 0x800;
 		sweep.muteIfNeeded();
-		sweep.mute.should.equalN(true, `[${i}]::mute`);
+		expect(sweep.mute).to.equalN(true, `[${i}]::mute`);
 
 		channel.timer = 0x7ff;
 		sweep.muteIfNeeded();
-		sweep.mute.should.equalN(false, `[${i}]::mute`);
+		expect(sweep.mute).to.equalN(false, `[${i}]::mute`);
 	}
 })({
 	locales: {
 		es:
-			"`FrequencySweep`: `muteIfNeeded()` pone `mute` en true cuando `timer` is < 8 o > 0x7ff`",
+			"`FrequencySweep`: `muteIfNeeded()` enciende `mute` cuando `timer` is ~< 8~ o ~> 0x7ff~",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
-it("`PulseChannel`: `sample()` just returns the last sample if the sweep unit is muted", () => {
+it("`PulseChannel`: `sample()` just returns the <last sample> if the sweep unit is muted", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2151,22 +2175,28 @@ it("`PulseChannel`: `sample()` just returns the last sample if the sweep unit is
 	apu.channels.pulses[0].timer = 456;
 
 	// when the sweep unit is muted, it should return the last sample
-	apu.channels.pulses[0].sample().should.equalN(lastSample1, "[0].sample()");
-	apu.channels.pulses[1].sample().should.equalN(lastSample2, "[1].sample()");
+	expect(apu.channels.pulses[0].sample()).to.equalN(
+		lastSample1,
+		"[0].sample()"
+	);
+	expect(apu.channels.pulses[1].sample()).to.equalN(
+		lastSample2,
+		"[1].sample()"
+	);
 
 	// they shouldn't update the oscillator frequency
 	const pulse1Frequency = Math.floor(
 		apu.channels.pulses[0].oscillator.frequency
 	);
-	pulse1Frequency.should.equalN(220, "frequency");
+	expect(pulse1Frequency).to.equalN(220, "frequency");
 	const pulse2Frequency = Math.floor(
 		apu.channels.pulses[1].oscillator.frequency
 	);
-	pulse2Frequency.should.equalN(157, "frequency");
+	expect(pulse2Frequency).to.equalN(157, "frequency");
 })({
 	locales: {
 		es:
-			"`PulseChannel`: `sample()` solo retorna el último sample si la unidad de barrido está silenciada",
+			"`PulseChannel`: `sample()` solo retorna el <último sample> si la unidad de barrido está silenciada",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2184,8 +2214,8 @@ it("`PulseChannel`: `step()` calls `frequencySweep.muteIfNeeded()` and `updateTi
 
 		channel.step();
 
-		channel.frequencySweep.muteIfNeeded.should.have.been.calledOnce;
-		channel.updateTimer.should.have.been.calledOnce;
+		expect(channel.frequencySweep.muteIfNeeded).to.have.been.calledOnce;
+		expect(channel.updateTimer).to.have.been.calledOnce;
 	}
 })({
 	locales: {
@@ -2208,8 +2238,8 @@ it("`PulseChannel`: `step()` calls `frequencySweep.muteIfNeeded()` but not `upda
 
 		channel.step();
 
-		channel.frequencySweep.muteIfNeeded.should.have.been.calledOnce;
-		channel.updateTimer.should.not.have.been.called;
+		expect(channel.frequencySweep.muteIfNeeded).to.have.been.calledOnce;
+		expect(channel.updateTimer).to.not.have.been.called;
 	}
 })({
 	locales: {
@@ -2227,7 +2257,7 @@ it("`PulseChannel`: `halfFrame()` calls `frequencySweep.clock()`", () => {
 		const channel = apu.channels.pulses[i];
 		channel.frequencySweep.clock = sinon.spy();
 		channel.halfFrame();
-		channel.frequencySweep.clock.should.have.been.calledOnce;
+		expect(channel.frequencySweep.clock).to.have.been.calledOnce;
 	}
 })({
 	locales: {
@@ -2241,10 +2271,16 @@ it("`PulseSweep`: writes set the `startFlag` on the channel's frequency sweep", 
 	const apu = new APU({});
 
 	apu.registers.write(0x4001, 1);
-	apu.channels.pulses[0].frequencySweep.startFlag.should.equal(true);
+	expect(apu.channels.pulses[0].frequencySweep.startFlag).to.equalN(
+		true,
+		"startFlag"
+	);
 
 	apu.registers.write(0x4005, 2);
-	apu.channels.pulses[1].frequencySweep.startFlag.should.equal(true);
+	expect(apu.channels.pulses[1].frequencySweep.startFlag).to.equalN(
+		true,
+		"startFlag"
+	);
 })({
 	locales: {
 		es:
@@ -2255,14 +2291,17 @@ it("`PulseSweep`: writes set the `startFlag` on the channel's frequency sweep", 
 
 // 5c.11 Triangle Channel (1/3): Triangle waves
 
-it("`TriangleTimerHighLCL`: writes `timerHigh` (bits 0-2)", () => {
+it("`TriangleTimerHighLCL`: writes `timerHigh` (bits ~0-2~)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	apu.registers.write(0x400b, 5);
-	apu.registers.triangle.timerHighLCL.timerHigh.should.equalN(5, "timerHigh");
+	expect(apu.registers.triangle.timerHighLCL.timerHigh).to.equalN(
+		5,
+		"timerHigh"
+	);
 })({
-	locales: { es: "`TriangleTimerHighLCL`: escribe `timerHigh` (bits 0-2)" },
+	locales: { es: "`TriangleTimerHighLCL`: escribe `timerHigh` (bits ~0-2~)" },
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
@@ -2282,7 +2321,7 @@ it("`TriangleChannel`: has an `apu` reference", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.triangle.apu.should.equalN(apu, "apu");
+	expect(apu.channels.triangle.apu).to.equalN(apu, "apu");
 })({
 	locales: {
 		es: "`TriangleChannel`: tiene una referencia `apu`",
@@ -2294,7 +2333,7 @@ it("`TriangleChannel`: has a `registers` property, pointing to the audio registe
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.triangle.registers.should.equalN(
+	expect(apu.channels.triangle.registers).to.equalN(
 		apu.registers.triangle,
 		"registers"
 	);
@@ -2306,32 +2345,35 @@ it("`TriangleChannel`: has a `registers` property, pointing to the audio registe
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
-it("`TriangleChannel`: has an `oscillator` property", () => {
+it("`TriangleChannel`: has an `oscillator` property that can <produce> samples", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	const channel = apu.channels.triangle;
 	expect(channel.oscillator, "oscillator").to.be.an("object");
-	channel.oscillator.should.respondTo("sample");
-})({
-	locales: { es: "`TriangleChannel`: tiene una propiedad `oscillator`" },
-	use: ({ id }, book) => id >= book.getId("5c.11"),
-});
-
-it("`TriangleChannel`: has a `sample()` method that returns a number", () => {
-	const APU = mainModule.default.APU;
-	const apu = new APU({});
-
-	apu.channels.triangle.should.respondTo("sample");
-	apu.channels.triangle.sample().should.be.a("number");
+	expect(channel.oscillator).to.respondTo("sample");
 })({
 	locales: {
-		es: "`TriangleChannel`: tiene un método `sample()` que retorna un número",
+		es:
+			"`TriangleChannel`: tiene una propiedad `oscillator` que puede <producir> samples",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
-it("`TriangleChannel`: `sample()` returns 0 when `timer` < 2", () => {
+it("`TriangleChannel`: has a `sample()` method that <returns a number>", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	expect(apu.channels.triangle).to.respondTo("sample");
+	expect(apu.channels.triangle.sample()).to.be.a("number");
+})({
+	locales: {
+		es: "`TriangleChannel`: tiene un método `sample()` que <retorna un número>",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.11"),
+});
+
+it("`TriangleChannel`: `sample()` returns 0 when `timer` ~< 2~", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2339,19 +2381,19 @@ it("`TriangleChannel`: `sample()` returns 0 when `timer` < 2", () => {
 
 	channel.registers.timerLow.value = 1;
 	channel.registers.timerHighLCL.timerHigh = 0;
-	channel.sample().should.equalN(0, "sample()");
+	expect(channel.sample()).to.equalN(0, "sample()");
 
 	channel.registers.timerLow.value = 0;
 	channel.registers.timerHighLCL.timerHigh = 0;
-	channel.sample().should.equalN(0, "sample()");
+	expect(channel.sample()).to.equalN(0, "sample()");
 })({
 	locales: {
-		es: "`TriangleChannel`: `sample()` retorna 0 cuando `timer` < 2",
+		es: "`TriangleChannel`: `sample()` retorna 0 cuando `timer` ~< 2~",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
-it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `oscillator.sample()` when `timer` is in a valid range", () => {
+it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `oscillator.sample()` when `timer` is in a <valid range>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2370,15 +2412,15 @@ it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `os
 	const expectedFreq = 1789773 / (16 * (516 + 1)) / 2;
 	channel.oscillator.sample = () => 9;
 
-	channel.sample().should.equalN(9, "sample()");
-	Math.floor(channel.oscillator.frequency).should.equalN(
+	expect(channel.sample()).to.equalN(9, "sample()");
+	expect(Math.floor(channel.oscillator.frequency)).to.equalN(
 		Math.floor(expectedFreq),
 		"frequency"
 	);
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: `sample()` actualiza `oscillator.frequency` y retorna `oscillator.sample()` cuando `timer` está en un rango válido",
+			"`TriangleChannel`: `sample()` actualiza `oscillator.frequency` y retorna `oscillator.sample()` cuando `timer` está en un <rango válido>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2394,11 +2436,11 @@ it("mixes pulse1, pulse2 and triangle in `step()`", () => {
 
 	for (let i = 0; i < 19; i++) {
 		apu.step(onSample);
-		onSample.should.not.have.been.called;
+		expect(onSample).to.not.have.been.called;
 	}
 
 	apu.step(onSample);
-	onSample.should.have.been.calledWith(0.06, 1, 2, 3);
+	expect(onSample).to.have.been.calledWith(0.06, 1, 2, 3);
 })({
 	locales: {
 		es: "mezcla pulse1, pulse2 y triangle en `step()`",
@@ -2415,12 +2457,12 @@ it("`TriangleLengthControl`: writes `halt` (bit 7)", () => {
 	const register = apu.registers.triangle.lengthControl;
 
 	apu.registers.write(0x4008, 0b11011010);
-	register.halt.should.equalN(1, "halt");
+	expect(register.halt).to.equalN(1, "halt");
 	apu.registers.write(0x4008, 0b01011010);
-	register.halt.should.equalN(0, "halt");
+	expect(register.halt).to.equalN(0, "halt");
 })({
 	locales: {
-		es: "`PulseControl`: escribe `halt` (bit 7)",
+		es: "`TriangleLengthControl`: escribe `halt` (bit 7)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2432,7 +2474,7 @@ it("`TriangleChannel`: has a `lengthCounter` property", () => {
 	const channel = apu.channels.triangle;
 
 	expect(channel.lengthCounter, "lengthCounter").to.be.an("object");
-	channel.lengthCounter.constructor.should.equalN(
+	expect(channel.lengthCounter.constructor).to.equalN(
 		apu.channels.pulses[0].lengthCounter.constructor,
 		"class"
 	);
@@ -2441,7 +2483,7 @@ it("`TriangleChannel`: has a `lengthCounter` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`TriangleChannel`: `sample()` just returns the last sample if the channel is disabled", () => {
+it("`TriangleChannel`: `sample()` just returns the <last sample> if the channel is disabled", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2472,20 +2514,20 @@ it("`TriangleChannel`: `sample()` just returns the last sample if the channel is
 	apu.registers.triangle.timerHighLCL.onWrite(0b11111001);
 
 	// when the channel is disabled, it should return the last sample
-	apu.channels.triangle.sample().should.equalN(lastSample, "sample()");
+	expect(apu.channels.triangle.sample()).to.equalN(lastSample, "sample()");
 
 	// it shouldn't update the oscillator frequency
 	const frequency = Math.floor(apu.channels.triangle.oscillator.frequency);
-	frequency.should.equalN(110, "frequency");
+	expect(frequency).to.equalN(110, "frequency");
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: `sample()` solo retorna el último sample si el canal está desactivado",
+			"`TriangleChannel`: `sample()` solo retorna el <último sample> si el canal está desactivado",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`TriangleChannel`: `sample()` just returns the last sample if the length counter is not active", () => {
+it("`TriangleChannel`: `sample()` just returns the <last sample> if the length counter is <not active>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2516,15 +2558,15 @@ it("`TriangleChannel`: `sample()` just returns the last sample if the length cou
 	apu.channels.triangle.lengthCounter.reset();
 
 	// when the length counter is 0, it should return the last sample
-	apu.channels.triangle.sample().should.equalN(lastSample, "sample()");
+	expect(apu.channels.triangle.sample()).to.equalN(lastSample, "sample()");
 
 	// it shouldn't update the oscillator frequency
 	const frequency = Math.floor(apu.channels.triangle.oscillator.frequency);
-	frequency.should.equalN(110, "frequency");
+	expect(frequency).to.equalN(110, "frequency");
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: `sample()` solo retorna el último sample si el contador de longitud no está activo",
+			"`TriangleChannel`: `sample()` solo retorna el <último sample> si el contador de longitud <no está activo>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2535,7 +2577,7 @@ it("`TriangleChannel`: has a `quarterFrame()` method", () => {
 
 	const channel = apu.channels.triangle;
 
-	channel.should.respondTo("quarterFrame");
+	expect(channel).to.respondTo("quarterFrame");
 })({
 	locales: { es: "`TriangleChannel`: tiene un método `quarterFrame()`" },
 	use: ({ id }, book) => id >= book.getId("5c.12"),
@@ -2547,31 +2589,31 @@ it("`TriangleChannel`: has a `halfFrame()` method that updates the length counte
 
 	const channel = apu.channels.triangle;
 
-	channel.should.respondTo("halfFrame");
+	expect(channel).to.respondTo("halfFrame");
 
 	channel.lengthCounter.clock = sinon.spy();
 	channel.isEnabled = () => true;
 	channel.registers.lengthControl.onWrite(0b10000000); // halt = 1
 	channel.halfFrame();
-	channel.lengthCounter.clock.should.have.been.calledWith(true, 1);
+	expect(channel.lengthCounter.clock).to.have.been.calledWith(true, 1);
 
 	channel.lengthCounter.clock = sinon.spy();
 	channel.isEnabled = () => true;
 	channel.registers.lengthControl.onWrite(0b00000000); // halt = 0
 	channel.halfFrame();
-	channel.lengthCounter.clock.should.have.been.calledWith(true, 0);
+	expect(channel.lengthCounter.clock).to.have.been.calledWith(true, 0);
 
 	channel.lengthCounter.clock = sinon.spy();
 	channel.isEnabled = () => false;
 	channel.registers.lengthControl.onWrite(0b00000000); // halt = 0
 	channel.halfFrame();
-	channel.lengthCounter.clock.should.have.been.calledWith(false, 0);
+	expect(channel.lengthCounter.clock).to.have.been.calledWith(false, 0);
 
 	channel.lengthCounter.clock = sinon.spy();
 	channel.isEnabled = () => false;
 	channel.registers.lengthControl.onWrite(0b10000000); // halt = 1
 	channel.halfFrame();
-	channel.lengthCounter.clock.should.have.been.calledWith(false, 1);
+	expect(channel.lengthCounter.clock).to.have.been.calledWith(false, 1);
 })({
 	locales: {
 		es:
@@ -2580,21 +2622,21 @@ it("`TriangleChannel`: has a `halfFrame()` method that updates the length counte
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`TriangleChannel`: has an `isEnabled()` method that returns whether the channel is enabled or not in APUControl", () => {
+it("`TriangleChannel`: has an `isEnabled()` method that returns whether the channel is <enabled> or not in APUControl", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.triangle.should.respondTo("isEnabled");
+	expect(apu.channels.triangle).to.respondTo("isEnabled");
 
 	apu.registers.apuControl.onWrite(0b100);
-	apu.channels.triangle.isEnabled().should.equalN(true, "isEnabled()");
+	expect(apu.channels.triangle.isEnabled()).to.equalN(true, "isEnabled()");
 
 	apu.registers.apuControl.onWrite(0b000);
-	apu.channels.triangle.isEnabled().should.equalN(false, "isEnabled()");
+	expect(apu.channels.triangle.isEnabled()).to.equalN(false, "isEnabled()");
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: tiene un método `isEnabled()` que retorna si el canal está activo o no en APUControl",
+			"`TriangleChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2607,7 +2649,7 @@ it("`onQuarterFrameClock()` calls `quarterFrame()` on triangle channel", () => {
 
 	apu.onQuarterFrameClock();
 
-	apu.channels.triangle.quarterFrame.should.have.been.calledOnce;
+	expect(apu.channels.triangle.quarterFrame).to.have.been.calledOnce;
 })({
 	locales: {
 		es:
@@ -2624,7 +2666,7 @@ it("`onHalfFrameClock()` calls `halfFrame()` on triangle channel", () => {
 
 	apu.onHalfFrameClock();
 
-	apu.channels.triangle.halfFrame.should.have.been.calledOnce;
+	expect(apu.channels.triangle.halfFrame).to.have.been.calledOnce;
 })({
 	locales: {
 		es: "`onHalfFrameClock()` llama a `halfFrame()` en el canal triangular",
@@ -2632,20 +2674,20 @@ it("`onHalfFrameClock()` calls `halfFrame()` on triangle channel", () => {
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
-it("`TriangleTimerHighLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length counter", () => {
+it("`TriangleTimerHighLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the length counter", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	apu.registers.write(0x400b, 0b10110000); // TriangleTimerHighLCL
-	apu.registers.triangle.timerHighLCL.lengthCounterLoad.should.equalN(
+	expect(apu.registers.triangle.timerHighLCL.lengthCounterLoad).to.equalN(
 		0b10110, // index 22 => 96 in length table
 		"lengthCounterLoad"
 	);
-	apu.channels.triangle.lengthCounter.counter.should.equalN(96, "counter");
+	expect(apu.channels.triangle.lengthCounter.counter).to.equalN(96, "counter");
 })({
 	locales: {
 		es:
-			"`TriangleTimerHighLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+			"`TriangleTimerHighLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2658,7 +2700,7 @@ it("`APUControl`: on writes, if `enableTriangle` is clear, resets the length cou
 
 	apu.registers.write(0x4015, 0b00000010);
 
-	apu.channels.triangle.lengthCounter.counter.should.equalN(0, "counter");
+	expect(apu.channels.triangle.lengthCounter.counter).to.equalN(0, "counter");
 })({
 	locales: {
 		es:
@@ -2675,7 +2717,7 @@ it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the le
 
 	apu.registers.write(0x4015, 0b00000110);
 
-	apu.channels.triangle.lengthCounter.counter.should.equalN(72, "counter");
+	expect(apu.channels.triangle.lengthCounter.counter).to.equalN(72, "counter");
 })({
 	locales: {
 		es:
@@ -2700,17 +2742,17 @@ it("`TriangleChannel`: has a `linearLengthCounter` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
 
-it("`LinearLengthCounter`: has `reload` and `reloadFlag` initialized to `0` and `false`", () => {
+it("`LinearLengthCounter`: has `reload` and `reloadFlag` initialized to `0` and ~false~", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
 
-	linearLengthCounter.reload.should.equalN(0, "reload");
-	linearLengthCounter.reloadFlag.should.equalN(false, "reloadFlag");
+	expect(linearLengthCounter.reload).to.equalN(0, "reload");
+	expect(linearLengthCounter.reloadFlag).to.equalN(false, "reloadFlag");
 })({
 	locales: {
 		es:
-			"`LinearLengthCounter`: tiene `reload` y `reloadFlag` inicializados en `0` y `false`",
+			"`LinearLengthCounter`: tiene `reload` y `reloadFlag` inicializados en `0` y ~false~",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2720,16 +2762,16 @@ it("`LinearLengthCounter`: `isActive()` returns whether `counter` is greater tha
 	const apu = new APU({});
 	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
 
-	linearLengthCounter.should.respondTo("isActive");
+	expect(linearLengthCounter).to.respondTo("isActive");
 
 	linearLengthCounter.counter = 2;
-	linearLengthCounter.isActive().should.equalN(true, "isActive()");
+	expect(linearLengthCounter.isActive()).to.equalN(true, "isActive()");
 
 	linearLengthCounter.counter = 0;
-	linearLengthCounter.isActive().should.equalN(false, "isActive()");
+	expect(linearLengthCounter.isActive()).to.equalN(false, "isActive()");
 
 	linearLengthCounter.counter = 1;
-	linearLengthCounter.isActive().should.equalN(true, "isActive()");
+	expect(linearLengthCounter.isActive()).to.equalN(true, "isActive()");
 })({
 	locales: {
 		es: "`LinearLengthCounter`: `isActive()` retorna si `counter` es mayor a 0",
@@ -2742,7 +2784,7 @@ it("`LinearLengthCounter`: `fullReset()` resets `counter`, `reload`, and `reload
 	const apu = new APU({});
 	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
 
-	linearLengthCounter.should.respondTo("fullReset");
+	expect(linearLengthCounter).to.respondTo("fullReset");
 
 	linearLengthCounter.counter = 5;
 	linearLengthCounter.reload = 7;
@@ -2750,9 +2792,9 @@ it("`LinearLengthCounter`: `fullReset()` resets `counter`, `reload`, and `reload
 
 	linearLengthCounter.fullReset();
 
-	linearLengthCounter.counter.should.equalN(0, "counter");
-	linearLengthCounter.reload.should.equalN(0, "reload");
-	linearLengthCounter.reloadFlag.should.equalN(false, "reloadFlag");
+	expect(linearLengthCounter.counter).to.equalN(0, "counter");
+	expect(linearLengthCounter.reload).to.equalN(0, "reload");
+	expect(linearLengthCounter.reloadFlag).to.equalN(false, "reloadFlag");
 })({
 	locales: {
 		es:
@@ -2766,7 +2808,7 @@ it("`LinearLengthCounter`: `clock(false, *)` resets `counter` but keeps `reload`
 	const apu = new APU({});
 	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
 
-	linearLengthCounter.should.respondTo("clock");
+	expect(linearLengthCounter).to.respondTo("clock");
 
 	linearLengthCounter.counter = 4;
 	linearLengthCounter.reload = 9;
@@ -2774,9 +2816,9 @@ it("`LinearLengthCounter`: `clock(false, *)` resets `counter` but keeps `reload`
 
 	linearLengthCounter.clock(false, true);
 
-	linearLengthCounter.counter.should.equalN(0, "counter");
-	linearLengthCounter.reload.should.equalN(9, "reload");
-	linearLengthCounter.reloadFlag.should.equalN(true, "reloadFlag");
+	expect(linearLengthCounter.counter).to.equalN(0, "counter");
+	expect(linearLengthCounter.reload).to.equalN(9, "reload");
+	expect(linearLengthCounter.reloadFlag).to.equalN(true, "reloadFlag");
 })({
 	locales: {
 		es:
@@ -2790,7 +2832,7 @@ it("`LinearLengthCounter`: `clock(true, false)` with `reloadFlag` loads `reload`
 	const apu = new APU({});
 	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
 
-	linearLengthCounter.should.respondTo("clock");
+	expect(linearLengthCounter).to.respondTo("clock");
 
 	linearLengthCounter.reload = 9;
 	linearLengthCounter.reloadFlag = true;
@@ -2798,8 +2840,8 @@ it("`LinearLengthCounter`: `clock(true, false)` with `reloadFlag` loads `reload`
 
 	linearLengthCounter.clock(true, false);
 
-	linearLengthCounter.counter.should.equalN(9, "counter");
-	linearLengthCounter.reloadFlag.should.equalN(false, "reloadFlag");
+	expect(linearLengthCounter.counter).to.equalN(9, "counter");
+	expect(linearLengthCounter.reloadFlag).to.equalN(false, "reloadFlag");
 })({
 	locales: {
 		es:
@@ -2808,12 +2850,12 @@ it("`LinearLengthCounter`: `clock(true, false)` with `reloadFlag` loads `reload`
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
 
-it("`LinearLengthCounter`: `clock(true, true)` with `reloadFlag` and `isHalted` true loads `reload` but keeps `reloadFlag`", () => {
+it("`LinearLengthCounter`: `clock(true, true)` with `reloadFlag` and `isHalted` set loads `reload` but keeps `reloadFlag`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
 
-	linearLengthCounter.should.respondTo("clock");
+	expect(linearLengthCounter).to.respondTo("clock");
 
 	linearLengthCounter.reload = 11;
 	linearLengthCounter.reloadFlag = true;
@@ -2821,12 +2863,12 @@ it("`LinearLengthCounter`: `clock(true, true)` with `reloadFlag` and `isHalted` 
 
 	linearLengthCounter.clock(true, true);
 
-	linearLengthCounter.counter.should.equalN(11, "counter");
-	linearLengthCounter.reloadFlag.should.equalN(true, "reloadFlag");
+	expect(linearLengthCounter.counter).to.equalN(11, "counter");
+	expect(linearLengthCounter.reloadFlag).to.equalN(true, "reloadFlag");
 })({
 	locales: {
 		es:
-			"`LinearLengthCounter`: `clock(true, true)` con `reloadFlag` y `isHalted` verdadero carga `reload` y mantiene `reloadFlag`",
+			"`LinearLengthCounter`: `clock(true, true)` con `reloadFlag` y `isHalted` encendida carga `reload` y mantiene `reloadFlag`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2836,14 +2878,14 @@ it("`LinearLengthCounter`: `clock(true, *)` when `reloadFlag` false and `counter
 	const apu = new APU({});
 	const linearLengthCounter = apu.channels.triangle.linearLengthCounter;
 
-	linearLengthCounter.should.respondTo("clock");
+	expect(linearLengthCounter).to.respondTo("clock");
 
 	linearLengthCounter.reloadFlag = false;
 	linearLengthCounter.counter = 4;
 
 	linearLengthCounter.clock(true, false);
 
-	linearLengthCounter.counter.should.equalN(3, "counter");
+	expect(linearLengthCounter.counter).to.equalN(3, "counter");
 })({
 	locales: {
 		es:
@@ -2852,7 +2894,7 @@ it("`LinearLengthCounter`: `clock(true, *)` when `reloadFlag` false and `counter
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
 
-it("`TriangleChannel`: `sample()` just returns the last sample if the linear length counter is not active", () => {
+it("`TriangleChannel`: `sample()` just returns the <last sample> if the linear length counter is <not active>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -2883,15 +2925,15 @@ it("`TriangleChannel`: `sample()` just returns the last sample if the linear len
 	apu.channels.triangle.linearLengthCounter.fullReset();
 
 	// when the length counter is 0, it should return the last sample
-	apu.channels.triangle.sample().should.equalN(lastSample, "sample()");
+	expect(apu.channels.triangle.sample()).to.equalN(lastSample, "sample()");
 
 	// it shouldn't update the oscillator frequency
 	const frequency = Math.floor(apu.channels.triangle.oscillator.frequency);
-	frequency.should.equalN(110, "frequency");
+	expect(frequency).to.equalN(110, "frequency");
 })({
 	locales: {
 		es:
-			"`TriangleChannel`: `sample()` solo retorna el último sample si el contador lineal de longitud no está activo",
+			"`TriangleChannel`: `sample()` solo retorna el <último sample> si el contador lineal de longitud <no está activo>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2902,31 +2944,31 @@ it("`TriangleChannel`: `quarterFrame()` updates the linear length counter", () =
 
 	const channel = apu.channels.triangle;
 
-	channel.should.respondTo("quarterFrame");
+	expect(channel).to.respondTo("quarterFrame");
 
 	channel.linearLengthCounter.clock = sinon.spy();
 	channel.isEnabled = () => true;
 	channel.registers.lengthControl.onWrite(0b10000000); // halt = 1
 	channel.quarterFrame();
-	channel.linearLengthCounter.clock.should.have.been.calledWith(true, 1);
+	expect(channel.linearLengthCounter.clock).to.have.been.calledWith(true, 1);
 
 	channel.linearLengthCounter.clock = sinon.spy();
 	channel.isEnabled = () => true;
 	channel.registers.lengthControl.onWrite(0b00000000); // halt = 0
 	channel.quarterFrame();
-	channel.linearLengthCounter.clock.should.have.been.calledWith(true, 0);
+	expect(channel.linearLengthCounter.clock).to.have.been.calledWith(true, 0);
 
 	channel.linearLengthCounter.clock = sinon.spy();
 	channel.isEnabled = () => false;
 	channel.registers.lengthControl.onWrite(0b00000000); // halt = 0
 	channel.quarterFrame();
-	channel.linearLengthCounter.clock.should.have.been.calledWith(false, 0);
+	expect(channel.linearLengthCounter.clock).to.have.been.calledWith(false, 0);
 
 	channel.linearLengthCounter.clock = sinon.spy();
 	channel.isEnabled = () => false;
 	channel.registers.lengthControl.onWrite(0b10000000); // halt = 1
 	channel.quarterFrame();
-	channel.linearLengthCounter.clock.should.have.been.calledWith(false, 1);
+	expect(channel.linearLengthCounter.clock).to.have.been.calledWith(false, 1);
 })({
 	locales: {
 		es:
@@ -2943,8 +2985,11 @@ it("`TriangleLengthControl`: writes `linearCounterReload` and updates linear len
 	const register = apu.registers.triangle.lengthControl;
 
 	apu.registers.write(0x4008, 0b01001011);
-	register.linearCounterReload.should.equalN(0b1001011, "linearCounterReload");
-	channel.linearLengthCounter.reload.should.equalN(0b1001011, "reload");
+	expect(register.linearCounterReload).to.equalN(
+		0b1001011,
+		"linearCounterReload"
+	);
+	expect(channel.linearLengthCounter.reload).to.equalN(0b1001011, "reload");
 })({
 	locales: {
 		es:
@@ -2960,11 +3005,11 @@ it("`TriangleTimerHighLCL`: writes set `reloadFlag` on channel's linearLengthCou
 	const channel = apu.channels.triangle;
 	channel.linearLengthCounter.reloadFlag = false;
 	apu.registers.write(0x400b, 0);
-	channel.linearLengthCounter.reloadFlag.should.equalN(true, "reloadFlag");
+	expect(channel.linearLengthCounter.reloadFlag).to.equalN(true, "reloadFlag");
 })({
 	locales: {
 		es:
-			"`TriangleTimerHighLCL`: las escrituras encienden `reloadFlag` en el contador linearl de longitud del canal",
+			"`TriangleTimerHighLCL`: las escrituras encienden `reloadFlag` en el contador lineal de longitud del canal",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2981,9 +3026,9 @@ it("`APUControl`: on writes, if `enableTriangle` is clear, resets the linear len
 
 	apu.registers.apuControl.onWrite(0b00000000);
 
-	linearLengthCounter.counter.should.equalN(0, "counter");
-	linearLengthCounter.reload.should.equalN(0, "reload");
-	linearLengthCounter.reloadFlag.should.equalN(false, "reloadFlag");
+	expect(linearLengthCounter.counter).to.equalN(0, "counter");
+	expect(linearLengthCounter.reload).to.equalN(0, "reload");
+	expect(linearLengthCounter.reloadFlag).to.equalN(false, "reloadFlag");
 })({
 	locales: {
 		es:
@@ -3004,9 +3049,9 @@ it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the le
 
 	apu.registers.apuControl.onWrite(0b00000100);
 
-	linearLengthCounter.counter.should.equalN(5, "counter");
-	linearLengthCounter.reload.should.equalN(8, "reload");
-	linearLengthCounter.reloadFlag.should.equalN(true, "reloadFlag");
+	expect(linearLengthCounter.counter).to.equalN(5, "counter");
+	expect(linearLengthCounter.reload).to.equalN(8, "reload");
+	expect(linearLengthCounter.reloadFlag).to.equalN(true, "reloadFlag");
 })({
 	locales: {
 		es:
@@ -3031,7 +3076,7 @@ it("`NoiseChannel`: has an `apu` reference", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.noise.apu.should.equalN(apu, "apu");
+	expect(apu.channels.noise.apu).to.equalN(apu, "apu");
 })({
 	locales: {
 		es: "`NoiseChannel`: tiene una referencia `apu`",
@@ -3043,11 +3088,33 @@ it("`NoiseChannel`: has a `registers` property, pointing to the audio registers"
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.noise.registers.should.equalN(apu.registers.noise, "registers");
+	expect(apu.channels.noise.registers).to.equalN(
+		apu.registers.noise,
+		"registers"
+	);
 })({
 	locales: {
 		es:
 			"`NoiseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+	},
+	use: ({ id }, book) => id >= book.getId("5c.14"),
+});
+
+it("`NoiseChannel`: has an `isEnabled()` method that returns whether the channel is <enabled> or not in APUControl", () => {
+	const APU = mainModule.default.APU;
+	const apu = new APU({});
+
+	expect(apu.channels.noise).to.respondTo("isEnabled");
+
+	apu.registers.apuControl.onWrite(0b1000);
+	expect(apu.channels.noise.isEnabled()).to.equalN(true, "isEnabled()");
+
+	apu.registers.apuControl.onWrite(0b0000);
+	expect(apu.channels.noise.isEnabled()).to.equalN(false, "isEnabled()");
+})({
+	locales: {
+		es:
+			"`NoiseChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3059,7 +3126,7 @@ it("`NoiseChannel`: has a `lengthCounter` property", () => {
 	const channel = apu.channels.noise;
 
 	expect(channel.lengthCounter, "lengthCounter").to.be.an("object");
-	channel.lengthCounter.constructor.should.equalN(
+	expect(channel.lengthCounter.constructor).to.equalN(
 		apu.channels.pulses[0].lengthCounter.constructor,
 		"class"
 	);
@@ -3068,15 +3135,15 @@ it("`NoiseChannel`: has a `lengthCounter` property", () => {
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
-it("`NoiseChannel`: has a `sample()` method that returns a number", () => {
+it("`NoiseChannel`: has a `sample()` method that <returns a number>", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.noise.should.respondTo("sample");
-	apu.channels.noise.sample().should.be.a("number");
+	expect(apu.channels.noise).to.respondTo("sample");
+	expect(apu.channels.noise.sample()).to.be.a("number");
 })({
 	locales: {
-		es: "`NoiseChannel`: tiene un método `sample()` que retorna un número",
+		es: "`NoiseChannel`: tiene un método `sample()` que <retorna un número>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3089,16 +3156,16 @@ it("`NoiseChannel`: `sample()` returns 0 when disabled or length counter inactiv
 	// length counter not active
 	channel.lengthCounter.isActive = () => false;
 	apu.registers.apuControl.setValue(0b00001000);
-	channel.sample().should.equalN(0, "sample()");
+	expect(channel.sample()).to.equalN(0, "sample()");
 
 	// channel disabled
 	channel.lengthCounter.isActive = () => true;
 	apu.registers.apuControl.setValue(0b00000000);
-	channel.sample().should.equalN(0, "sample()");
+	expect(channel.sample()).to.equalN(0, "sample()");
 })({
 	locales: {
 		es:
-			"`NoiseChannel`: `sample()` retorna 0 cuando está deshabilitado o el contador de longitud no está activo",
+			"`NoiseChannel`: `sample()` retorna 0 cuando está deshabilitado o el contador de longitud <no está activo>",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3112,7 +3179,7 @@ it("calls noise channel's `step()` method on every APU `step(...)` call", () => 
 
 	apu.step(noop);
 
-	channel.step.should.have.been.called;
+	expect(channel.step).to.have.been.called;
 })({
 	locales: {
 		es:
@@ -3133,11 +3200,11 @@ it("mixes pulse1, pulse2, triangle and noise in `step()`", () => {
 
 	for (let i = 0; i < 19; i++) {
 		apu.step(onSample);
-		onSample.should.not.have.been.called;
+		expect(onSample).to.not.have.been.called;
 	}
 
 	apu.step(onSample);
-	onSample.should.have.been.calledWith(0.1, 1, 2, 3, 4);
+	expect(onSample).to.have.been.calledWith(0.1, 1, 2, 3, 4);
 })({
 	locales: {
 		es: "mezcla pulse1, pulse2, triangle y noise en `step()`",
@@ -3153,7 +3220,7 @@ it("`onQuarterFrameClock()` calls `quarterFrame()` on noise channel", () => {
 
 	apu.onQuarterFrameClock();
 
-	apu.channels.noise.quarterFrame.should.have.been.calledOnce;
+	expect(apu.channels.noise.quarterFrame).to.have.been.calledOnce;
 })({
 	locales: {
 		es: "`onQuarterFrameClock()` llama a `quarterFrame()` en NoiseChannel",
@@ -3169,7 +3236,7 @@ it("`onHalfFrameClock()` calls `halfFrame()` on noise channel", () => {
 
 	apu.onHalfFrameClock();
 
-	apu.channels.noise.halfFrame.should.have.been.calledOnce;
+	expect(apu.channels.noise.halfFrame).to.have.been.calledOnce;
 })({
 	locales: {
 		es: "`onHalfFrameClock()` llama a `halfFrame()` en NoiseChannel",
@@ -3183,23 +3250,23 @@ it("`NoiseControl`: writes `volumeOrEnvelopePeriod`, `constantVolume`, `envelope
 	const register = apu.registers.noise.control;
 
 	register.onWrite(0b00101101);
-	register.volumeOrEnvelopePeriod.should.equalN(
+	expect(register.volumeOrEnvelopePeriod).to.equalN(
 		0b1101,
 		"volumeOrEnvelopePeriod"
 	);
-	register.constantVolume.should.equalN(0, "constantVolume");
-	register.envelopeLoopOrLengthCounterHalt.should.equalN(
+	expect(register.constantVolume).to.equalN(0, "constantVolume");
+	expect(register.envelopeLoopOrLengthCounterHalt).to.equalN(
 		1,
 		"envelopeLoopOrLengthCounterHalt"
 	);
 
 	register.onWrite(0b00010010);
-	register.volumeOrEnvelopePeriod.should.equalN(
+	expect(register.volumeOrEnvelopePeriod).to.equalN(
 		0b0010,
 		"volumeOrEnvelopePeriod"
 	);
-	register.constantVolume.should.equalN(1, "constantVolume");
-	register.envelopeLoopOrLengthCounterHalt.should.equalN(
+	expect(register.constantVolume).to.equalN(1, "constantVolume");
+	expect(register.envelopeLoopOrLengthCounterHalt).to.equalN(
 		0,
 		"envelopeLoopOrLengthCounterHalt"
 	);
@@ -3211,29 +3278,29 @@ it("`NoiseControl`: writes `volumeOrEnvelopePeriod`, `constantVolume`, `envelope
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
-it("`NoiseLCL`: writes `lengthCounterLoad` (bits 3-7) and updates the length counter", () => {
+it("`NoiseLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the length counter", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	// index 22 -> length 96
 	apu.registers.write(0x400f, 0b10110000);
-	apu.registers.noise.lcl.lengthCounterLoad.should.equalN(
+	expect(apu.registers.noise.lcl.lengthCounterLoad).to.equalN(
 		0b10110,
 		"lengthCounterLoad"
 	);
-	apu.channels.noise.lengthCounter.counter.should.equalN(96, "counter");
+	expect(apu.channels.noise.lengthCounter.counter).to.equalN(96, "counter");
 
 	// index 12 -> length 14
 	apu.registers.write(0x400f, 0b01100000);
-	apu.registers.noise.lcl.lengthCounterLoad.should.equalN(
+	expect(apu.registers.noise.lcl.lengthCounterLoad).to.equalN(
 		0b01100,
 		"lengthCounterLoad"
 	);
-	apu.channels.noise.lengthCounter.counter.should.equalN(14, "counter");
+	expect(apu.channels.noise.lengthCounter.counter).to.equalN(14, "counter");
 })({
 	locales: {
 		es:
-			"`NoiseLCL`: escribe `lengthCounterLoad` (bits 3-7) y actualiza el contador de longitud",
+			"`NoiseLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3246,7 +3313,7 @@ it("`APUControl`: on writes, if `enableNoise` is clear, resets the length counte
 
 	apu.registers.write(0x4015, 0b00000111);
 
-	apu.channels.noise.lengthCounter.counter.should.equalN(0, "counter");
+	expect(apu.channels.noise.lengthCounter.counter).to.equalN(0, "counter");
 })({
 	locales: {
 		es:
@@ -3263,7 +3330,7 @@ it("`APUControl`: on writes, if `enableNoise` is set, it doesn't reset the noise
 
 	apu.registers.write(0x4015, 0b00001000);
 
-	apu.channels.noise.lengthCounter.counter.should.equalN(45, "counter");
+	expect(apu.channels.noise.lengthCounter.counter).to.equalN(45, "counter");
 })({
 	locales: {
 		es:
@@ -3274,22 +3341,22 @@ it("`APUControl`: on writes, if `enableNoise` is set, it doesn't reset the noise
 
 // 5c.15 Noise Channel (2/3): Linear-feedback shift register
 
-it("`NoiseForm`: writes `periodId` (bits 0-3) and `mode` (bit 7)", () => {
+it("`NoiseForm`: writes `periodId` (bits ~0-3~) and `mode` (bit 7)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	const register = apu.registers.noise.form;
 
 	register.onWrite(0b10000101);
-	register.periodId.should.equalN(0b0101, "periodId");
-	register.mode.should.equalN(1, "mode");
+	expect(register.periodId).to.equalN(0b0101, "periodId");
+	expect(register.mode).to.equalN(1, "mode");
 
 	register.onWrite(0b00001010);
-	register.periodId.should.equalN(0b1010, "periodId");
-	register.mode.should.equalN(0, "mode");
+	expect(register.periodId).to.equalN(0b1010, "periodId");
+	expect(register.mode).to.equalN(0, "mode");
 })({
 	locales: {
-		es: "`NoiseForm`: escribe `periodId` (bits 0-3) y `mode` (bit 7)",
+		es: "`NoiseForm`: escribe `periodId` (bits ~0-3~) y `mode` (bit 7)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3300,8 +3367,8 @@ it("`NoiseChannel`: has `shift` and `dividerCount` initialized to 1 and 0", () =
 
 	const channel = apu.channels.noise;
 
-	channel.shift.should.equalN(1, "shift");
-	channel.dividerCount.should.equalN(0, "dividerCount");
+	expect(channel.shift).to.equalN(1, "shift");
+	expect(channel.dividerCount).to.equalN(0, "dividerCount");
 })({
 	locales: {
 		es: "`NoiseChannel`: tiene `shift` y `dividerCount` inicializados en 1 y 0",
@@ -3321,7 +3388,7 @@ it("`NoiseChannel`: `sample()` returns 0 when `shift & 1` is 1", () => {
 	channel.registers.control.onWrite(0b00010101); // volume = 5
 
 	channel.shift = 1; // bit 0 == 1
-	channel.sample().should.equalN(0, "sample()");
+	expect(channel.sample()).to.equalN(0, "sample()");
 })({
 	locales: {
 		es: "`NoiseChannel`: `sample()` retorna 0 cuando `shift & 1` es 1",
@@ -3341,10 +3408,10 @@ it("`NoiseChannel`: `sample()` returns the volume when `shift & 1` is 0", () => 
 	channel.registers.control.onWrite(0b00010101); // volume = 5
 
 	channel.shift = 2; // bit 0 == 0
-	channel.sample().should.equalN(5, "sample()");
+	expect(channel.sample()).to.equalN(5, "sample()");
 })({
 	locales: {
-		es: "`NoiseChannel`: `sample()` retorna el volumen cuando `shift & 1` es 1",
+		es: "`NoiseChannel`: `sample()` retorna el volumen cuando `shift & 1` es 0",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3360,14 +3427,14 @@ it("`NoiseChannel`: `step()` increments `dividerCount` and updates `shift` every
 
 	// first call: dividerCount = 1, no shift update
 	channel.step();
-	channel.dividerCount.should.equalN(1, "dividerCount");
-	channel.shift.should.equalN(1, "shift");
+	expect(channel.dividerCount).to.equalN(1, "dividerCount");
+	expect(channel.shift).to.equalN(1, "shift");
 
 	// second call: dividerCount reaches 2 => reset and update shift
 	channel.step();
-	channel.dividerCount.should.equalN(0, "dividerCount");
+	expect(channel.dividerCount).to.equalN(0, "dividerCount");
 	// feedback = bit0 ^ bit1 = 1 ^ 0 = 1, new shift = (1>>1)=0 | (1<<14)=16384
-	channel.shift.should.equalN(16384, "shift");
+	expect(channel.shift).to.equalN(16384, "shift");
 })({
 	locales: {
 		es:
@@ -3389,15 +3456,15 @@ it("`NoiseChannel`: `step()` uses `mode` flag to compute feedback bit", () => {
 
 	// first call: dividerCount = 3, no shift update
 	channel.step();
-	channel.dividerCount.should.equalN(3, "dividerCount");
-	channel.shift.should.equalN(0b001010101001100, "shift");
+	expect(channel.dividerCount).to.equalN(3, "dividerCount");
+	expect(channel.shift).to.equalN(0b001010101001100, "shift");
 
 	// next step triggers update
 	channel.step();
-	channel.dividerCount.should.equalN(0, "dividerCount");
+	expect(channel.dividerCount).to.equalN(0, "dividerCount");
 	// feedback = bit0 ^ bit6 = 0 ^ 1 = 1,
 	// new shift = (0b001010101001100 >> 1) | (1 << 14)
-	channel.shift.should.equalN(0b100101010100110, "shift");
+	expect(channel.shift).to.equalN(0b100101010100110, "shift");
 })({
 	locales: {
 		es:
@@ -3406,7 +3473,7 @@ it("`NoiseChannel`: `step()` uses `mode` flag to compute feedback bit", () => {
 	use: ({ id }, book) => id >= book.getId("5c.15"),
 });
 
-it("`NoiseChannel`: `step()` uses an exclusive OR (`^`) for the feedback bit", () => {
+it("`NoiseChannel`: `step()` uses an exclusive OR (~^~) for the feedback bit", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const channel = apu.channels.noise;
@@ -3419,19 +3486,19 @@ it("`NoiseChannel`: `step()` uses an exclusive OR (`^`) for the feedback bit", (
 
 	// first call: dividerCount = 3, no shift update
 	channel.step();
-	channel.dividerCount.should.equalN(3, "dividerCount");
-	channel.shift.should.equalN(0b100110111001101, "shift");
+	expect(channel.dividerCount).to.equalN(3, "dividerCount");
+	expect(channel.shift).to.equalN(0b100110111001101, "shift");
 
 	// next step triggers update
 	channel.step();
-	channel.dividerCount.should.equalN(0, "dividerCount");
+	expect(channel.dividerCount).to.equalN(0, "dividerCount");
 	// feedback = bit0 ^ bit6 = 1 ^ 1 = 0
 	// new shift = (0b100110111001101 >> 1) | (0 << 14)
-	channel.shift.should.equalN(0b10011011100110, "shift");
+	expect(channel.shift).to.equalN(0b10011011100110, "shift");
 })({
 	locales: {
 		es:
-			"`NoiseChannel`: `step()` usa un OR exclusivo (`^`) para el bit de feedback",
+			"`NoiseChannel`: `step()` usa un OR exclusivo (~^~) para el bit de feedback",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3445,7 +3512,7 @@ it("`NoiseChannel`: has a `volumeEnvelope` property", () => {
 	const channel = apu.channels.noise;
 
 	expect(channel.volumeEnvelope, "volumeEnvelope").to.be.an("object");
-	channel.volumeEnvelope.constructor.should.equalN(
+	expect(channel.volumeEnvelope.constructor).to.equalN(
 		apu.channels.pulses[0].volumeEnvelope.constructor,
 		"class"
 	);
@@ -3467,7 +3534,7 @@ it("`NoiseChannel`: `sample()` uses the envelope volume when `constantVolume` is
 	channel.registers.control.onWrite(0b00000101); // volume=5, constantVolume=0
 	channel.volumeEnvelope.volume = 3;
 
-	channel.sample().should.equalN(3, "sample()");
+	expect(channel.sample()).to.equalN(3, "sample()");
 })({
 	locales: {
 		es:
@@ -3486,7 +3553,7 @@ it("`NoiseChannel`: `quarterFrame()` updates the volume envelope", () => {
 	channel.registers.control.onWrite(0b00100110); // period=6, loop=1
 	channel.quarterFrame();
 
-	channel.volumeEnvelope.clock.should.have.been.calledWith(6, 1);
+	expect(channel.volumeEnvelope.clock).to.have.been.calledWith(6, 1);
 })({
 	locales: {
 		es: "`NoiseChannel`: `quarterFrame()` actualiza la envolvente de volumen",
@@ -3502,11 +3569,11 @@ it("`NoiseLCL`: writes set the `startFlag` on the channel's volume envelope", ()
 
 	envelope.startFlag = false;
 	apu.registers.write(0x400f, 0);
-	envelope.startFlag.should.equal(true, "startFlag");
+	expect(envelope.startFlag).to.equalN(true, "startFlag");
 
 	envelope.startFlag = false;
 	apu.registers.write(0x400f, 123);
-	envelope.startFlag.should.equal(true, "startFlag");
+	expect(envelope.startFlag).to.equalN(true, "startFlag");
 })({
 	locales: {
 		es:
@@ -3533,7 +3600,7 @@ it("`DMCChannel`: has an `apu` reference", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.dmc.apu.should.equalN(apu, "apu");
+	expect(apu.channels.dmc.apu).to.equalN(apu, "apu");
 })({
 	locales: {
 		es: "`DMCChannel`: tiene una referencia `apu`",
@@ -3546,7 +3613,7 @@ it("`DMCChannel`: has a `cpu` reference", () => {
 	const cpu = {};
 	const apu = new APU(cpu);
 
-	apu.channels.dmc.cpu.should.equalN(cpu, "cpu");
+	expect(apu.channels.dmc.cpu).to.equalN(cpu, "cpu");
 })({
 	locales: {
 		es: "`DMCChannel`: tiene una referencia `cpu`",
@@ -3558,11 +3625,11 @@ it("`DMCChannel`: has a `registers` property, pointing to the audio registers", 
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
-	apu.channels.dmc.registers.should.equalN(apu.registers.dmc, "registers");
+	expect(apu.channels.dmc.registers).to.equalN(apu.registers.dmc, "registers");
 })({
 	locales: {
 		es:
-			"`NoiseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+			"`DMCChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.17"),
 });
@@ -3573,7 +3640,7 @@ it("`DMCChannel`: has an `outputSample` property initialized to 0", () => {
 
 	const channel = apu.channels.dmc;
 
-	channel.outputSample.should.equalN(0, "outputSample");
+	expect(channel.outputSample).to.equalN(0, "outputSample");
 })({
 	locales: {
 		es: "`DMCChannel`: tiene una propiedad `outputSample` inicializada en 0",
@@ -3588,7 +3655,7 @@ it("`DMCChannel`: `sample()` returns `outputSample`", () => {
 	const channel = apu.channels.dmc;
 
 	channel.outputSample = 42;
-	channel.sample().should.equalN(42, "sample()");
+	expect(channel.sample()).to.equalN(42, "sample()");
 })({
 	locales: {
 		es: "`DMCChannel`: `sample()` retorna `outputSample`",
@@ -3596,21 +3663,21 @@ it("`DMCChannel`: `sample()` returns `outputSample`", () => {
 	use: ({ id }, book) => id >= book.getId("5c.17"),
 });
 
-it("`DMCLoad`: writes `directLoad` (bits 0-6) and updates channel's `outputSample`", () => {
+it("`DMCLoad`: writes `directLoad` (bits ~0-6~) and updates channel's `outputSample`", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
 	apu.registers.write(0x4011, 0b11001000);
-	apu.registers.dmc.load.directLoad.should.equalN(0b1001000, "directLoad");
-	apu.channels.dmc.outputSample.should.equalN(0b1001000, "outputSample");
+	expect(apu.registers.dmc.load.directLoad).to.equalN(0b1001000, "directLoad");
+	expect(apu.channels.dmc.outputSample).to.equalN(0b1001000, "outputSample");
 
 	apu.registers.write(0x4011, 42);
-	apu.registers.dmc.load.directLoad.should.equalN(42, "directLoad");
-	apu.channels.dmc.outputSample.should.equalN(42, "outputSample");
+	expect(apu.registers.dmc.load.directLoad).to.equalN(42, "directLoad");
+	expect(apu.channels.dmc.outputSample).to.equalN(42, "outputSample");
 })({
 	locales: {
 		es:
-			"`DMCLoad`: escribe `directLoad` (bits 0-6) y actualiza `outputSample` del canal",
+			"`DMCLoad`: escribe `directLoad` (bits ~0-6~) y actualiza `outputSample` del canal",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.17"),
 });
@@ -3628,11 +3695,11 @@ it("mixes pulse1, pulse2, triangle, noise and dmc in `step()`", () => {
 
 	for (let i = 0; i < 19; i++) {
 		apu.step(onSample);
-		onSample.should.not.have.been.called;
+		expect(onSample).to.not.have.been.called;
 	}
 
 	apu.step(onSample);
-	onSample.should.have.been.calledWith(0.15, 1, 2, 3, 4, 5);
+	expect(onSample).to.have.been.calledWith(0.15, 1, 2, 3, 4, 5);
 })({
 	locales: {
 		es: "mezcla pulse1, pulse2, triangle, noise y dmc en `step()`",
@@ -3651,7 +3718,7 @@ it("`DMCChannel`: has a `dpcm` property with the correct DPCM class", async () =
 	const apu = new APU({});
 
 	expect(apu.channels.dmc.dpcm).to.be.an("object");
-	expect(apu.channels.dmc.dpcm.constructor).to.equal(DPCMClass);
+	expect(apu.channels.dmc.dpcm.constructor).to.equalN(DPCMClass, "class");
 })({
 	locales: {
 		es: "`DMCChannel`: tiene una propiedad `dpcm` con la clase DPCM correcta",
@@ -3668,7 +3735,7 @@ it("`DMCChannel`: `step()` calls `dpcm.update()`", () => {
 
 	channel.step();
 
-	channel.dpcm.update.should.have.been.calledOnce;
+	expect(channel.dpcm.update).to.have.been.calledOnce;
 })({
 	locales: {
 		es: "`DMCChannel`: `step()` llama a `dpcm.update()`",
@@ -3685,11 +3752,11 @@ it("`APUControl`: writing with `enableDMC` clear calls `dpcm.stop()`", () => {
 
 	apu.registers.write(0x4015, 0b00000);
 
-	dpcm.stop.should.have.been.calledOnce;
+	expect(dpcm.stop).to.have.been.calledOnce;
 })({
 	locales: {
 		es:
-			"`APUControl`: al escribir con `enableDMC` apagado llama a `dpcm.stop()`",
+			"`APUControl`: al escribir con `enableDMC` apagada llama a `dpcm.stop()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.18"),
 });
@@ -3704,11 +3771,11 @@ it("`APUControl`: writing with `enableDMC` set and no remaining bytes calls `dpc
 
 	apu.registers.write(0x4015, 0b10000);
 
-	dpcm.start.should.have.been.calledOnce;
+	expect(dpcm.start).to.have.been.calledOnce;
 })({
 	locales: {
 		es:
-			"`APUControl`: al escribir con `enableDMC` encendido y sin bytes restantes llama a `dpcm.start()`",
+			"`APUControl`: al escribir con `enableDMC` encendida y sin bytes restantes llama a `dpcm.start()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.18"),
 });
@@ -3723,18 +3790,18 @@ it("`APUControl`: writing with `enableDMC` set and remaining bytes does not call
 
 	apu.registers.write(0x4015, 0b00000);
 
-	dpcm.start.should.not.have.been.called;
+	expect(dpcm.start).to.not.have.been.called;
 })({
 	locales: {
 		es:
-			"`APUControl`: al escribir con `enableDMC` encendido y con bytes restantes no llama a `dpcm.start()`",
+			"`APUControl`: al escribir con `enableDMC` encendida y con bytes restantes no llama a `dpcm.start()`",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.18"),
 });
 
 // 5c.19 Mixer and APUStatus
 
-it("mixes pulse1, pulse2, triangle, noise and dmc in `step()`", () => {
+it("mixes pulse1, pulse2, triangle, noise and dmc in `step()` (<correct mix>)", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 	const onSample = sinon.spy();
@@ -3747,15 +3814,16 @@ it("mixes pulse1, pulse2, triangle, noise and dmc in `step()`", () => {
 
 	for (let i = 0; i < 19; i++) {
 		apu.step(onSample);
-		onSample.should.not.have.been.called;
+		expect(onSample).to.not.have.been.called;
 	}
 
 	apu.step(onSample);
 	// 0.00752*(1+2) + 0.00851*3 + 0.00494*4 + 0.00335*5 = 0.0846
-	onSample.should.have.been.calledWith(0.0846, 1, 2, 3, 4, 5);
+	expect(onSample).to.have.been.calledWith(0.0846, 1, 2, 3, 4, 5);
 })({
 	locales: {
-		es: "mezcla pulse1, pulse2, triangle, noise y dmc en `step()`",
+		es:
+			"mezcla pulse1, pulse2, triangle, noise y dmc en `step()` (<mezcla correcta>)",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.19"),
 });
@@ -3771,7 +3839,7 @@ it("`APUStatus`: reads return 0 when all channels inactive and no DMC bytes", ()
 	apu.channels.noise.lengthCounter.counter = 0;
 	apu.channels.dmc.dpcm.remainingBytes = () => 0;
 
-	apu.registers.apuStatus.onRead().should.equalN(0, "onRead()");
+	expect(apu.registers.apuStatus.onRead()).to.equalN(0, "onRead()");
 })({
 	locales: {
 		es:
@@ -3780,7 +3848,7 @@ it("`APUStatus`: reads return 0 when all channels inactive and no DMC bytes", ()
 	use: ({ id }, book) => id >= book.getId("5c.19"),
 });
 
-it("`APUStatus`: reads return a bitfield for active channels and DMC", () => {
+it("`APUStatus`: reads return a <bitfield> for active channels and DMC", () => {
 	const APU = mainModule.default.APU;
 	const apu = new APU({});
 
@@ -3792,11 +3860,11 @@ it("`APUStatus`: reads return a bitfield for active channels and DMC", () => {
 	apu.channels.dmc.dpcm.remainingBytes = () => 5; // bit 4
 
 	// expected bits: b4=1,b3=0,b2=1,b1=0,b0=1 => 0b10101 = 21
-	apu.registers.apuStatus.onRead().should.equalN(0b10101, "onRead()");
+	expect(apu.registers.apuStatus.onRead()).to.equalN(0b10101, "onRead()");
 })({
 	locales: {
 		es:
-			"`APUStatus`: las lecturas retornan un bitfield para canales activos y DMC",
+			"`APUStatus`: las lecturas retornan un <bitfield> para canales activos y DMC",
 	},
 	use: ({ id }, book) => id >= book.getId("5c.19"),
 });

@@ -181,7 +181,7 @@ const masterPalette = [
 	/* 0x2a */ 0xff35e35b,
 	/* 0x2b */ 0xff88de45,
 	/* 0x2c */ 0xffe3ca49,
-	/* 0x2d */ 0xffe4e404e,
+	/* 0x2d */ 0xff4e4e4e,
 	/* 0x2e */ 0xff000000,
 	/* 0x2f */ 0xff000000,
 	/* 0x30 */ 0xffffffff,
@@ -582,9 +582,6 @@ class SpriteRenderer {
 					const x = sprite.x + insideX;
 					const color = paletteColors[colorIndex];
 					buffer[x] = { x, sprite, color };
-
-					if (sprite.id === 0 && this.ppu.isBackgroundPixelOpaque(x, y))
-						this.ppu.registers.ppuStatus.sprite0Hit = 1;
 				}
 			}
 		}
@@ -654,6 +651,10 @@ class PPUCtrl extends InMemoryRegister.PPU {
 class PPUMask extends InMemoryRegister.PPU {
 	onLoad() {
 		/* TODO: IMPLEMENT */
+	}
+
+	onWrite(value) {
+		this.setValue(value);
 	}
 }
 
@@ -872,7 +873,6 @@ export default class PPU {
 		if (this.cycle === 1) {
 			this.registers.ppuStatus.isInVBlankInterval = 0;
 			this.registers.ppuStatus.spriteOverflow = 0;
-			this.registers.ppuStatus.sprite0Hit = 0;
 		}
 	}
 

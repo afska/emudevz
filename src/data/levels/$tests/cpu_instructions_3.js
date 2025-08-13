@@ -15,14 +15,14 @@ function newCPU(prgBytes = []) {
 
 // 5a.9 Instructions (3/5): Checks
 
-it("`BIT`: argument == 'value'", () => {
+it('`BIT`: argument == "value"', () => {
 	const instructions = mainModule.default.instructions;
-	instructions.should.include.key("BIT");
+	expect(instructions).to.include.key("BIT");
 	expect(instructions.BIT).to.be.an("object");
-	instructions.BIT.argument.should.equalN("value", "argument");
+	expect(instructions.BIT.argument).to.equalN("value", "argument");
 })({
 	locales: {
-		es: "`BIT`: argument == 'value'",
+		es: '`BIT`: argument == "value"',
 	},
 	use: ({ id }, book) => id >= book.getId("5a.9"),
 });
@@ -43,9 +43,9 @@ it("`BIT`: argument == 'value'", () => {
 
 			cpu.a.setValue(mask);
 			instructions.BIT.run(cpu, value);
-			cpu.flags.z.should.equalN(z, "z");
-			cpu.flags.n.should.equalN(n, "n");
-			cpu.flags.v.should.equalN(v, "v");
+			expect(cpu.flags.z).to.equalN(z, "z");
+			expect(cpu.flags.n).to.equalN(n, "n");
+			expect(cpu.flags.v).to.equalN(v, "v");
 		}
 	)({
 		locales: {
@@ -66,6 +66,9 @@ it("`BIT`: argument == 'value'", () => {
 		register: "a",
 		source: 10,
 		value: 120,
+		prevZ: true,
+		prevN: false,
+		prevC: true,
 		z: false,
 		n: true,
 		c: false,
@@ -75,6 +78,9 @@ it("`BIT`: argument == 'value'", () => {
 		register: "a",
 		source: 112,
 		value: 2,
+		prevZ: true,
+		prevN: true,
+		prevC: true,
 		z: false,
 		n: false,
 		c: true,
@@ -84,6 +90,9 @@ it("`BIT`: argument == 'value'", () => {
 		register: "x",
 		source: 100,
 		value: 100,
+		prevZ: false,
+		prevN: true,
+		prevC: false,
 		z: true,
 		n: false,
 		c: true,
@@ -93,61 +102,70 @@ it("`BIT`: argument == 'value'", () => {
 		register: "y",
 		source: 240,
 		value: 30,
+		prevZ: true,
+		prevN: false,
+		prevC: false,
 		z: false,
 		n: true,
 		c: true,
 	},
-].forEach(({ instruction, register, source, value, z, n, c }) => {
-	const name = register.toUpperCase();
+].forEach(
+	({ instruction, register, source, value, prevZ, prevN, prevC, z, n, c }) => {
+		const name = register.toUpperCase();
 
-	it("`" + instruction + "`: argument == 'value'", () => {
-		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
-		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("value", "argument");
-	})({
-		locales: {
-			es: "`" + instruction + "`: argument == 'value'",
-		},
-		use: ({ id }, book) => id >= book.getId("5a.9"),
-	});
-
-	it(
-		"`" +
-			instruction +
-			"`: " +
-			`compares and updates the proper flags with [${name}] = ${source} and value = ${value}`,
-		() => {
-			const cpu = newCPU();
+		it("`" + instruction + '`: argument == "value"', () => {
 			const instructions = mainModule.default.instructions;
+			expect(instructions).to.include.key(instruction);
+			expect(instructions[instruction]).to.be.an("object");
+			expect(instructions[instruction].argument).to.equalN("value", "argument");
+		})({
+			locales: {
+				es: "`" + instruction + '`: argument == "value"',
+			},
+			use: ({ id }, book) => id >= book.getId("5a.9"),
+		});
 
-			cpu[register].setValue(source);
-			instructions[instruction].run(cpu, value);
-			cpu.flags.z.should.equalN(z, "z");
-			cpu.flags.n.should.equalN(n, "n");
-			cpu.flags.c.should.equalN(c, "c");
-		}
-	)({
-		locales: {
-			es:
-				"`" +
+		it(
+			"`" +
 				instruction +
 				"`: " +
-				`compara y actualiza las banderas apropiadas con [${name}] = ${source} y value = ${value}`,
-		},
-		use: ({ id }, book) => id >= book.getId("5a.9"),
-	});
-});
+				`compares and updates the proper flags with [${name}] = ${source} and value = ${value}`,
+			() => {
+				const cpu = newCPU();
+				const instructions = mainModule.default.instructions;
+
+				cpu.flags.z = prevZ;
+				cpu.flags.n = prevN;
+				cpu.flags.C = prevC;
+
+				cpu[register].setValue(source);
+				instructions[instruction].run(cpu, value);
+				expect(cpu.flags.z).to.equalN(z, "z");
+				expect(cpu.flags.n).to.equalN(n, "n");
+				expect(cpu.flags.c).to.equalN(c, "c");
+			}
+		)({
+			locales: {
+				es:
+					"`" +
+					instruction +
+					"`: " +
+					`compara y actualiza las banderas apropiadas con [${name}] = ${source} y value = ${value}`,
+			},
+			use: ({ id }, book) => id >= book.getId("5a.9"),
+		});
+	}
+);
 
 ["AND", "EOR", "ORA"].forEach((instruction) => {
-	it("`" + instruction + "`: argument == 'value'", () => {
+	it("`" + instruction + '`: argument == "value"', () => {
 		const instructions = mainModule.default.instructions;
-		instructions.should.include.key(instruction);
+		expect(instructions).to.include.key(instruction);
 		expect(instructions[instruction]).to.be.an("object");
-		instructions[instruction].argument.should.equalN("value", "argument");
+		expect(instructions[instruction].argument).to.equalN("value", "argument");
 	})({
 		locales: {
-			es: "`" + instruction + "`: argument == 'value'",
+			es: "`" + instruction + '`: argument == "value"',
 		},
 		use: ({ id }, book) => id >= book.getId("5a.9"),
 	});
@@ -206,9 +224,9 @@ it("`BIT`: argument == 'value'", () => {
 
 			cpu.a.setValue(value1);
 			instructions[instruction].run(cpu, value2);
-			cpu.a.getValue().should.equalN(result, "getValue()");
-			cpu.flags.z.should.equalN(zero, "z");
-			cpu.flags.n.should.equalN(negative, "n");
+			expect(cpu.a.getValue()).to.equalN(result, "getValue()");
+			expect(cpu.flags.z).to.equalN(zero, "z");
+			expect(cpu.flags.n).to.equalN(negative, "n");
 		}
 	)({
 		locales: {

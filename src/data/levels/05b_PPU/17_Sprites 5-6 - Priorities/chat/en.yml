@@ -44,7 +44,7 @@ exercise:
       **->** returns whether the ~(x, y)~ pixel in `colorIndexes` is greater than 0 or not
   - 📚  in 🏞️  `BackgroundRenderer`, instead of calling the `plot(...)` method, call `plotBG(...)` passing the `colorIndex` as the last argument
   - |-
-    📚  in 🛸  `SpriteRenderer`, modify these methods:
+    📚  in 🛸  `SpriteRenderer`, <modify> these methods:
       **_render(...)**:
         **->** at the start, declare a `buffer` empty array
         **->** instead of calling ```javascript this.ppu.plot(...)```, save the information in the `buffer`:

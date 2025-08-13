@@ -22,7 +22,7 @@ main:
   - |-
     📚  implement this method in 🏞️  `BackgroundRenderer`:
     **_getPaletteId(nameTableId, x, y)**:
-      **->** add the necessary code to return the right palette id for the pixel ~(x, y)~
+      **->** <add the necessary code> to return the right palette id for the pixel ~(x, y)~
       **->** follow 📄  ~/docs/ppu/background_rendering.en.md~ for guidance on how palette ids are encoded
   - |-
     📚  change `BackgroundRenderer::renderScanline()` so it uses `_getPaletteId(...)` and draws the right color, like this:
@@ -47,8 +47,8 @@ help:
   - what, you need help? 🤣
   - well... I'm listening
   responses:
-  - help me with the math 🔢 [math]
-  - what's the backdrop color? 💧 [backdrop]
+  - (*) help me with the math 🔢 [math]
+  - (*) what's the backdrop color? 💧 [backdrop]
 
 math:
   messages:
@@ -72,13 +72,13 @@ math:
   - (you need to read 2 bits, starting from bit `blockIndex * 2`)
   - and that will give you the `paletteId` of that ~(x, y)~ point!
   responses:
-  - oof [oof]
+  - it's 100% perfectly clear now, thanks! [clear]
 
-oof:
+clear:
   messages:
-  - yeeeah... life sucks 😅
-  - well, good luck!
-  responses: []
+  - glad to help :D
+  responses:
+  - ...help
 
 backdrop:
   messages:

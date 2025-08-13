@@ -16,7 +16,8 @@ main:
 
 limit:
   messages:
-  - da la vuelta 🔄 , y el valor resultante siempre termina quedando dentro del rango válido
+  - ¡la NEEES de verdad nunca haría eso!
+  - pero debería dar la vuelta 🔄 , y el valor resultante siempre termina quedando dentro del rango válido
   - |-
     aquí, algunos ejemplos:
     ```raw ___________________________

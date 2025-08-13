@@ -1,9 +1,8 @@
-import utils from "./utils";
+import widgets from "./widgets";
 
 const ImGui = window.ImGui;
 
 const MEM_TOTAL = 0x10000;
-
 const REGIONS = [
 	{ label: "All", start: 0x0000, size: MEM_TOTAL },
 	{ label: "CPU $0000-$07FF | WRAM (2 KiB)", start: 0x0000, size: 0x0800 },
@@ -72,17 +71,17 @@ export default class Debugger_Memory {
 
 			switch (address) {
 				case 0x2002:
-					return utils.numberOr0(neees.ppu.registers?.ppuStatus.value);
+					return widgets.numberOr0(neees.ppu.registers?.ppuStatus.value);
 				case 0x2007:
-					return utils.numberOr0(neees.ppu.registers?.ppuData.buffer);
+					return widgets.numberOr0(neees.ppu.registers?.ppuData.buffer);
 				default:
-					return utils.numberOr0(neees.cpu.memory.read(address));
+					return widgets.numberOr0(neees.cpu.memory.read(address));
 			}
 		};
 	}
 
 	draw() {
-		utils.fullWidthFieldWithLabel("Region", (label) => {
+		widgets.fullWidthFieldWithLabel("Region", (label) => {
 			ImGui.Combo(
 				label,
 				(v = this._memRegion) => (this._memRegion = v),

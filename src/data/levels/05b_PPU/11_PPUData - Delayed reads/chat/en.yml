@@ -14,7 +14,7 @@ exercise:
   - simple, when a <read> is requested, you read into a buffer, but then you return the <previous value> of that buffer
   - |-
     📚  implement these methods in 📦  `PPUData`:
-    **onLoad**:
+    **onLoad()**:
       **->** initializes ```javascript this.buffer = 0```
     **onRead()**:
       **->** saves ```javascript this.buffer``` in a variable named `data`

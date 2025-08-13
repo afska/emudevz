@@ -39,12 +39,12 @@
 		{
 			"rom": "/roms/_test/NEEEStest.neees",
 			"frames": 120,
-			"ppu": "TestPPU.v2.5.js"
+			"ppu": "TestPPU.v2.js"
 		},
 		{
 			"rom": "/roms/_test/hello_world.neees",
 			"frames": 120,
-			"ppu": "TestPPU.v2.5.js"
+			"ppu": "TestPPU.v2.js"
 		}
 	],
 	"memory": {

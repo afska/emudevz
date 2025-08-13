@@ -181,7 +181,7 @@ const masterPalette = [
 	/* 0x2a */ 0xff35e35b,
 	/* 0x2b */ 0xff88de45,
 	/* 0x2c */ 0xffe3ca49,
-	/* 0x2d */ 0xffe4e404e,
+	/* 0x2d */ 0xff4e4e4e,
 	/* 0x2e */ 0xff000000,
 	/* 0x2f */ 0xff000000,
 	/* 0x30 */ 0xffffffff,
@@ -558,12 +558,11 @@ class SpriteRenderer {
 
 		for (let sprite of sprites) {
 			const insideY = sprite.diffY(y);
-			const tileInsideY = insideY % 8;
 			const tile = new Tile(
 				this.ppu,
 				sprite.patternTableId,
 				sprite.tileIdFor(insideY),
-				sprite.flipY ? 7 - tileInsideY : tileInsideY
+				insideY
 			);
 			const paletteColors = [
 				this.ppu.getColor(sprite.paletteId, 0),
@@ -573,9 +572,7 @@ class SpriteRenderer {
 			];
 
 			for (let insideX = 0; insideX < 8; insideX++) {
-				const colorIndex = tile.getColorIndex(
-					sprite.flipX ? 7 - insideX : insideX
-				);
+				const colorIndex = tile.getColorIndex(insideX);
 				if (colorIndex > 0)
 					this.ppu.plot(
 						sprite.x + insideX,
@@ -634,6 +631,10 @@ class PPUCtrl extends InMemoryRegister.PPU {
 class PPUMask extends InMemoryRegister.PPU {
 	onLoad() {
 		/* TODO: IMPLEMENT */
+	}
+
+	onWrite(value) {
+		this.setValue(value);
 	}
 }
 

@@ -65,7 +65,7 @@ exercise:
     **plot(x, y, color)**:
       **->** asigna el `color` al píxel ~(x,y)~ en el array `frameBuffer`
         (el índice para ~(x,y)~ debería ser ```javascript y * 256 + x```)
-  - 📚  luego, modifica tu método `step` para que reciba un callback `onFrame` como parámetro
+  - 📚  luego, <modifica> tu método `step` para que reciba un callback `onFrame` como parámetro
   - |-
     📚  y cada vez que detectes un nuevo frame (justo después de ```javascript this.frame++;```), llámalo con el frame buffer, así:
       ```javascript onFrame(this.frameBuffer);```
@@ -75,9 +75,18 @@ exercise:
       // <test>
       for (let x = 0; x < 256; x++) {
         for (let y = 0; y < 240; y++) {
-          this.plot(x, y, 0xff000000 | this.frame % 0xff);
+          this.plot(x, y, 0xff000000 + this.frame % 256);
         }
       }
       // </test>```
   - ¡pruébalo! al iniciar una ROM, debería lentamente pintar la pantalla de rojo 🔴
-  responses: []
+  responses:
+  - (*) ¿cómo funciona el código de prueba? [testcode]
+
+testcode:
+  messages:
+  - llena toda la pantalla con un color
+  - que es ```javascript 0xff000000``` (negro totalmente opaco) más un componente rojo que depende de ```javascript this.frame``` (¡el frame actual!)
+  - "```javascript this.frame % 256``` da el resto de dividir el frame por 256, así que el componente rojo varía de 0 a 255"
+  responses:
+  - ...exercise

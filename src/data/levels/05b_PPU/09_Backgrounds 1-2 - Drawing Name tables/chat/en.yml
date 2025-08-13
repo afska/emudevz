@@ -15,11 +15,11 @@ exercise:
   - 📚  create a 🏞️  `BackgroundRenderer` class
   - 📚  its constructor should receive and assign a `ppu` property with the PPU instance
   - |-
-    📚  make these changes to the 🖥️  `PPU` class:
+    📚  <make these changes> to the 🖥️  `PPU` class:
     **constructor(cpu)**:
       **->** instantiates the background renderer:
         ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
-        (remember to import it if you defined it in another file!)
+      (remember to import it if you defined it in another file!)
     **step(...)**:
       **->** remove the test code (```javascript // <test>...</test>```)
     **_onVisibleLine()**:
@@ -27,7 +27,7 @@ exercise:
   - |-
     📚  now, in the 🏞️  `BackgroundRenderer` class, define:
     **renderScanline()**:
-      **->** add the necessary code to render a full scanline of the background
+      **->** <add the necessary code> to render a full scanline of the background
   - bye!
   responses:
   - wait, DON'T LEAVE ME 😭 [questions]

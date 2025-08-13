@@ -27,6 +27,7 @@ export default class MarkdownView extends PureComponent {
 			<div
 				className={classNames(styles.container, "markdown-view", className)}
 				dangerouslySetInnerHTML={{ __html: this._htmlContent(content) }}
+				tabIndex={-1}
 				{...rest}
 			/>
 		);

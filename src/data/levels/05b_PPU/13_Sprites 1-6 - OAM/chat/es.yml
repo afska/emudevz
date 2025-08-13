@@ -25,7 +25,7 @@ exercise:
     **constructor(cpu)**:
       **->** instancia el renderizador de sprites:
         ```javascript this.spriteRenderer = new SpriteRenderer(this)```
-        (¡recuerda importarlo si lo definiste en otro archivo!)
+      (¡recuerda importarlo si lo definiste en otro archivo!)
   - |-
     📚  ahora, en la clase 🛸  `SpriteRenderer`, define:
     **_createSprite(id)**:

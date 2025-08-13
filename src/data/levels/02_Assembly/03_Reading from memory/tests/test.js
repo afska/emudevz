@@ -14,13 +14,16 @@ beforeEach(() => {
 });
 
 it("the address $4086 contains $4085 + 3", () => {
-	cpu.memory.readAt(0x4086).should.equalHex(initialValue + 3, "readAt(0x4086)");
+	expect(cpu.memory.readAt(0x4086)).to.equalHex(
+		initialValue + 3,
+		"readAt(0x4086)"
+	);
 })({
 	locales: { es: "la dirección $4086 contiene $4085 + 3" },
 });
 
 it("it only uses 3 instructions", () => {
-	instructions.length.should.equalN(3, "length");
+	expect(instructions.length).to.equalN(3, "length");
 })({
 	locales: { es: "solo utiliza 3 instrucciones" },
 });

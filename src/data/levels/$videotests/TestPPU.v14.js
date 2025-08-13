@@ -745,18 +745,42 @@ class PPUCtrl extends InMemoryRegister.PPU {
 
 class PPUMask extends InMemoryRegister.PPU {
 	onLoad() {
-		this.addField("showBackgroundInFirst8Pixels", 1)
+		this.addField("grayscale", 0)
+			.addField("showBackgroundInFirst8Pixels", 1)
 			.addField("showSpritesInFirst8Pixels", 2)
 			.addField("showBackground", 3)
-			.addField("showSprites", 4);
-	}
-
-	onWrite(value) {
-		this.setValue(value);
+			.addField("showSprites", 4)
+			.addField("emphasizeRed", 5)
+			.addField("emphasizeGreen", 6)
+			.addField("emphasizeBlue", 7);
 	}
 
 	isRenderingEnabled() {
 		return this.showBackground || this.showSprites;
+	}
+
+	transform(color) {
+		let r = (color >> 0) & 0xff;
+		let g = (color >> 8) & 0xff;
+		let b = (color >> 16) & 0xff;
+
+		if (this.grayscale) {
+			r = g = b = Math.floor((r + g + b) / 3);
+		}
+
+		if (this.emphasizeRed || this.emphasizeGreen || this.emphasizeBlue) {
+			const all =
+				this.emphasizeRed && this.emphasizeGreen && this.emphasizeBlue;
+			if (!this.emphasizeRed || all) r = Math.floor(r * 0.75);
+			if (!this.emphasizeGreen || all) g = Math.floor(g * 0.75);
+			if (!this.emphasizeBlue || all) b = Math.floor(b * 0.75);
+		}
+
+		return 0xff000000 | (r << 0) | (g << 8) | (b << 16);
+	}
+
+	onWrite(value) {
+		this.setValue(value);
 	}
 }
 
@@ -1215,6 +1239,10 @@ export default class PPU {
 		this.spriteRenderer = new SpriteRenderer(this);
 	}
 
+	onLoad(mapper) {
+		this.mapper = mapper;
+	}
+
 	plotBG(x, y, color, colorIndex) {
 		this.colorIndexes[y * 256 + x] = colorIndex;
 		this.plot(x, y, color);
@@ -1222,7 +1250,7 @@ export default class PPU {
 	}
 
 	plot(x, y, color) {
-		this.frameBuffer[y * 256 + x] = color;
+		this.frameBuffer[y * 256 + x] = this.registers.ppuMask.transform(color);
 	}
 
 	isBackgroundPixelOpaque(x, y) {
@@ -1265,6 +1293,7 @@ export default class PPU {
 		}
 
 		this.loopy.onPreLine(this.cycle);
+		if (this.cycle === 260) this.mapper.tick();
 	}
 
 	_onVisibleLine() {
@@ -1278,6 +1307,7 @@ export default class PPU {
 		}
 
 		this.loopy.onVisibleLine(this.cycle);
+		if (this.cycle === 260) this.mapper.tick();
 	}
 
 	_onVBlankLine(onInterrupt) {

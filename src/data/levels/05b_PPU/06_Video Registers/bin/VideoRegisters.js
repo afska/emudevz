@@ -21,7 +21,7 @@ class PPUMask extends InMemoryRegister.PPU {
   }
 
   onWrite(value) {
-    return this.setValue(value);
+    this.setValue(value);
   }
 }
 

@@ -42,7 +42,8 @@ exercise:
   - |-
     📚  add a `registers` property to 🖥️  `PPU`, assigned to:
          ```javascript new VideoRegisters(this)```
-  - "📚  lastly, map them in 🐏  `CPUMemory` (regions $2000-$2007 and $4014):"
-  - <reads> should return ```javascript this.ppu.registers.read(address)```
-  - <writes> should call ```javascript this.ppu.registers.write(address, value)``` and return
+  - |-
+    📚  lastly, map them in 🐏  `CPUMemory` (regions $2000-$2007 and $4014):
+      - <reads> should return ```javascript this.ppu.registers.read(address)```
+      - <writes> should call ```javascript this.ppu.registers.write(address, value)``` and return
   responses: []

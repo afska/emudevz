@@ -7,58 +7,62 @@ before(async () => {
 
 // 4.1 CPU Memory
 
-it("`/code/CPUMemory.js` exists as a file", () => {
-	filesystem.exists("/code/CPUMemory.js").should.be.true;
+it("there's a `/code/CPUMemory.js` file", () => {
+	expect(filesystem.exists("/code/CPUMemory.js")).to.be.true;
 })({
-	locales: { es: "`/code/CPUMemory.js` existe como archivo" },
+	locales: { es: "hay un archivo `/code/CPUMemory.js`" },
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("`/code/CPUMemory.js` is a JS module that exports a class", async () => {
+it("the file `/code/CPUMemory.js` is a JS module that exports <a class>", async () => {
 	const module = await evaluate("/code/CPUMemory.js");
 	expect(module?.default).to.exist;
 	expect(module?.default).to.be.a.class;
 })({
 	locales: {
-		es: "`/code/CPUMemory.js` es un módulo JS que exporta una clase",
+		es:
+			"el archivo `/code/CPUMemory.js` es un módulo JS que exporta <una clase>",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("`/code/index.js` imports the module from `/code/CPUMemory.js`", () => {
+it("the file `/code/index.js` <imports> the module from `/code/CPUMemory.js`", () => {
 	expect($.modules["/code/CPUMemory.js"]).to.exist;
 })({
-	locales: { es: "`/code/index.js` importa el módulo de `/code/CPUMemory.js`" },
+	locales: {
+		es:
+			"el archivo `/code/index.js` <importa> el módulo de `/code/CPUMemory.js`",
+	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("`/code/index.js` exports an object containing the class", async () => {
+it("the file `/code/index.js` exports <an object> containing the class", async () => {
 	mainModule = await evaluate();
 	const CPUMemory = (await evaluateModule($.modules["/code/CPUMemory.js"]))
 		.default;
 
 	expect(mainModule.default).to.be.an("object");
-	mainModule.default.should.include.key("CPUMemory");
-	mainModule.default.CPUMemory.should.equal(CPUMemory);
+	expect(mainModule.default).to.include.key("CPUMemory");
+	expect(mainModule.default.CPUMemory).to.equalN(CPUMemory, "CPUMemory");
 })({
 	locales: {
-		es: "`/code/index.js` exporta un objeto que contiene la clase",
+		es: "el archivo `/code/index.js` exporta <un objeto> que contiene la clase",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("has a `ram` property and `read`/`write` methods", () => {
+it("has a `ram` property and `read(...)`/`write(...)` methods", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
-	memory.should.include.key("ram");
-	memory.ram.should.be.a("Uint8Array");
-	memory.ram.length.should.equalN(2048, "length");
-	memory.should.respondTo("read");
-	memory.should.respondTo("write");
+	expect(memory).to.include.key("ram");
+	expect(memory.ram).to.be.a("Uint8Array");
+	expect(memory.ram.length).to.equalN(2048, "length");
+	expect(memory).to.respondTo("read");
+	expect(memory).to.respondTo("write");
 })({
 	locales: {
-		es: "incluye una propiedad `ram` y métodos `read`/`write`",
+		es: "incluye una propiedad `ram` y métodos `read(...)`/`write(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
@@ -70,7 +74,7 @@ it("can read from RAM ($0000-$07FF)", () => {
 	for (let i = 0; i < 2048; i++) {
 		const value = byte.random();
 		memory.ram[i] = value;
-		memory.read(i).should.equalN(value, `read(${i})`);
+		expect(memory.read(i)).to.equalN(value, `read(${i})`);
 	}
 })({
 	locales: {
@@ -79,18 +83,18 @@ it("can read from RAM ($0000-$07FF)", () => {
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("reading RAM mirror results in RAM reads", () => {
+it("reading RAM mirror results in <RAM reads>", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
 	for (let i = 0x0800; i < 0x0800 + 0x1800; i++) {
 		const value = byte.random();
 		memory.ram[(i - 0x0800) % 0x0800] = value;
-		memory.read(i).should.equalN(value, `read(${i})`);
+		expect(memory.read(i)).to.equalN(value, `read(${i})`);
 	}
 })({
 	locales: {
-		es: "leer espejo de RAM ocasiona lecturas de RAM",
+		es: "leer espejo de RAM ocasiona <lecturas de RAM>",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
@@ -102,7 +106,7 @@ it("can write to RAM ($0000-$07FF)", () => {
 	for (let i = 0; i < 2048; i++) {
 		const value = byte.random();
 		memory.write(i, value);
-		memory.ram[i].should.equalN(value, `ram[${i}]`);
+		expect(memory.ram[i]).to.equalN(value, `ram[${i}]`);
 	}
 })({
 	locales: {
@@ -111,7 +115,7 @@ it("can write to RAM ($0000-$07FF)", () => {
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
-it("writing RAM mirror results in RAM writes", () => {
+it("writing RAM mirror results in <RAM writes>", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
@@ -119,18 +123,18 @@ it("writing RAM mirror results in RAM writes", () => {
 		const value = byte.random();
 		memory.write(i, value);
 		const index = (i - 0x0800) % 0x0800;
-		memory.ram[index].should.equalN(value, `ram[${index}]`);
+		expect(memory.ram[index]).to.equalN(value, `ram[${index}]`);
 	}
 })({
 	locales: {
-		es: "escribir espejo de RAM ocasiona escrituras en RAM",
+		es: "escribir espejo de RAM ocasiona <escrituras en RAM>",
 	},
 	use: ({ id }, book) => id >= book.getId("4.1"),
 });
 
 // 4.2 Devices
 
-it("saves the devices received by `onLoad`", () => {
+it("saves the <devices> received by `onLoad(...)`", () => {
 	const CPUMemory = mainModule.default.CPUMemory;
 	const memory = new CPUMemory();
 
@@ -139,15 +143,15 @@ it("saves the devices received by `onLoad`", () => {
 	const mapper = {};
 	const controllers = [];
 
-	memory.should.respondTo("onLoad");
+	expect(memory).to.respondTo("onLoad");
 	memory.onLoad(ppu, apu, mapper, controllers);
-	memory.ppu.should.equal(ppu);
-	memory.apu.should.equal(apu);
-	memory.mapper.should.equal(mapper);
-	memory.controllers.should.equal(controllers);
+	expect(memory.ppu).to.equalN(ppu, "ppu");
+	expect(memory.apu).to.equalN(apu, "apu");
+	expect(memory.mapper).to.equalN(mapper, "mapper");
+	expect(memory.controllers).to.equalN(controllers, "controllers");
 })({
 	locales: {
-		es: "guarda los dispositivos recibidos por `onLoad`",
+		es: "guarda los <dispositivos> recibidos por `onLoad(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("4.2"),
 });
@@ -163,7 +167,7 @@ it("can read from the mapper ($4020-$FFFF)", () => {
 	memory.onLoad({}, {}, mapper, []);
 
 	for (let i = 0x4020; i <= 0xffff; i++) {
-		memory.read(i).should.equalHex(i * random, `read(${i})`);
+		expect(memory.read(i)).to.equalHex(i * random, `read(${i})`);
 	}
 })({
 	locales: {
@@ -189,8 +193,8 @@ it("can write to the mapper ($4020-$FFFF)", () => {
 	for (let i = 0x4020; i <= 0xffff; i++) {
 		const value = byte.random();
 		memory.write(i, value);
-		arg1.should.equalHex(i, "address");
-		arg2.should.equalHex(value, "value");
+		expect(arg1).to.equalHex(i, "address");
+		expect(arg2).to.equalHex(value, "value");
 	}
 })({
 	locales: {

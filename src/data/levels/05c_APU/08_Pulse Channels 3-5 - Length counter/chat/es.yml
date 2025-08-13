@@ -42,7 +42,7 @@ otherlengths:
 
 decrement:
   messages:
-  - solo si su <bandera de detención> (<halt>) no está activada
+  - solo si su <bandera de detención> (<halt>) no está encendida
   - esa sería el bit <L> en 🟦  PulseControl
   - <{length_counter_halt.png;30x30}>
   responses:

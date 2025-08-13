@@ -39,10 +39,10 @@ exercise:
     📚  implementa el primer `// TODO` de cada método:
     **read(address)**:
       **->** si `address` está dentro del rango $0000-$07FF, retorna el byte correspondiente de `ram`
-        (deja el resto del código como está)
+      **->** __deja el resto del código como está__
     **write(address, value)**:
       **->** si `address` está dentro del rango $0000-$07FF, escribe `value` al byte correspondiente de `ram` y retorna
-        (deja el resto del código como está)
+      **->** __deja el resto del código como está__
   - 📚  luego, como hiciste con 💾  `Cartridge`, agrega la clase a 📄  ~/code/index.js~
   responses:
   - (*) ¿cómo es eso de los bytes espejados? 📐 [help]

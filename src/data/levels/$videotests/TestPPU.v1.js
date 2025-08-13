@@ -26,7 +26,7 @@ export default class PPU {
 				// <test>
 				for (let x = 0; x < 256; x++) {
 					for (let y = 0; y < 240; y++) {
-						this.plot(x, y, 0xff000000 | this.frame % 0xff);
+						this.plot(x, y, 0xff000000 + (this.frame % 256));
 					}
 				}
 				// </test>
