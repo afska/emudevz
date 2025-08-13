@@ -31,6 +31,7 @@ const COLOR_SELECTED_TILE_OVERLAY_STROKE = RGBA(255, 64, 64, 192);
 const COLOR_SELECTED_TILE_OVERLAY_FILL = RGBA(255, 0, 0, 96);
 const COLOR_TILE_GRID_LINE = RGBA(255, 0, 255, 160);
 const COLOR_ATTRIBUTE_GRID_LINE = RGBA(0, 255, 0, 160);
+const COLOR_BOX_BORDER_STROKE = RGBA(128, 128, 128, 255);
 
 const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
@@ -100,7 +101,6 @@ export default class Debugger_PPU {
 		this._oamHoverIndex = null;
 		this._oamHoverInfo = null;
 		this._oamImageRect = null;
-		this._sprPrevImageRect = null;
 
 		this._destroyed = false;
 	}
@@ -709,11 +709,7 @@ export default class Debugger_PPU {
 						CHR_SIZE_PIXELS,
 						uploadPixels
 					);
-					const draw = ImGui.GetWindowDrawList();
-					const p0 = ImGui.GetCursorScreenPos();
-					const p1 = new ImGui.Vec2(p0.x + itemSize, p0.y + itemSize);
-					ImGui.Image(texture, new ImGui.Vec2(itemSize, itemSize));
-					draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
+					this._drawTextureWithBorder(texture, itemSize);
 
 					// click toggle selection
 					if (hover && ImGui.IsMouseClicked(0)) {
@@ -986,7 +982,6 @@ export default class Debugger_PPU {
 			this._oamHoverIndex = null;
 			this._oamHoverInfo = null;
 			this._oamImageRect = null;
-			this._sprPrevImageRect = null;
 
 			ImGui.Columns(2, "SpriteCols", false);
 
@@ -997,12 +992,8 @@ export default class Debugger_PPU {
 				widgets.centerNextItemX(itemWidth);
 
 				const p0 = ImGui.GetCursorScreenPos();
-				if (this._oamTexture) {
-					const draw = ImGui.GetWindowDrawList();
-					const p1 = new ImGui.Vec2(p0.x + itemWidth, p0.y + itemHeight);
-					ImGui.Image(this._oamTexture, new ImGui.Vec2(itemWidth, itemHeight));
-					draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
-				}
+				if (this._oamTexture)
+					this._drawTextureWithBorder(this._oamTexture, itemWidth);
 				this._oamImageRect = { x: p0.x, y: p0.y, w: itemWidth, h: itemHeight };
 
 				// hover picking in OAM grid
@@ -1039,20 +1030,12 @@ export default class Debugger_PPU {
 			widgets.simpleTable("spritePrev", "Preview", () => {
 				widgets.centerNextItemX(SCREEN_WIDTH);
 
-				const draw = ImGui.GetWindowDrawList();
 				const p0 = ImGui.GetCursorScreenPos();
-				const p1 = new ImGui.Vec2(p0.x + SCREEN_WIDTH, p0.y + SCREEN_HEIGHT);
-				ImGui.Image(
+				this._drawTextureWithBorder(
 					this._sprPreviewTexture,
-					new ImGui.Vec2(SCREEN_WIDTH, SCREEN_HEIGHT)
+					SCREEN_WIDTH,
+					SCREEN_HEIGHT
 				);
-				draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
-				this._sprPrevImageRect = {
-					x: p0.x,
-					y: p0.y,
-					w: SCREEN_WIDTH,
-					h: SCREEN_HEIGHT,
-				};
 
 				// hover pick on screen
 				const mouse = ImGui.GetMousePos();
@@ -1301,14 +1284,7 @@ export default class Debugger_PPU {
 					uploadPixels
 				);
 
-				const draw = ImGui.GetWindowDrawList();
-				const p0 = ImGui.GetCursorScreenPos();
-				const p1 = new ImGui.Vec2(p0.x + imageSize, p0.y + imageSize);
-				ImGui.Image(
-					this._bgPaletteTexture,
-					new ImGui.Vec2(imageSize, imageSize)
-				);
-				draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
+				this._drawTextureWithBorder(this._bgPaletteTexture, imageSize);
 			});
 
 			ImGui.NextColumn();
@@ -1371,14 +1347,7 @@ export default class Debugger_PPU {
 					uploadPixels
 				);
 
-				const draw = ImGui.GetWindowDrawList();
-				const p0 = ImGui.GetCursorScreenPos();
-				const p1 = new ImGui.Vec2(p0.x + imageSize, p0.y + imageSize);
-				ImGui.Image(
-					this._sprPaletteTexture,
-					new ImGui.Vec2(imageSize, imageSize)
-				);
-				draw.AddRect(p0, p1, COLOR_HOVER_OVERLAY_STROKE, 4, 0, 1);
+				this._drawTextureWithBorder(this._sprPaletteTexture, imageSize);
 			});
 
 			ImGui.Columns(1);
@@ -1622,6 +1591,14 @@ export default class Debugger_PPU {
 				1
 			);
 		}
+	}
+
+	_drawTextureWithBorder(texture, itemWidth, itemHeight = itemWidth) {
+		const draw = ImGui.GetWindowDrawList();
+		const p0 = ImGui.GetCursorScreenPos();
+		const p1 = new ImGui.Vec2(p0.x + itemWidth, p0.y + itemHeight);
+		ImGui.Image(texture, new ImGui.Vec2(itemWidth, itemHeight));
+		draw.AddRect(p0, p1, COLOR_BOX_BORDER_STROKE, 0, 0, 1);
 	}
 
 	_drawLineH(pixels, width, x0, x1, y, color) {
