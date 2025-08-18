@@ -993,7 +993,7 @@ export default class Debugger_PPU {
 
 				const p0 = ImGui.GetCursorScreenPos();
 				if (this._oamTexture)
-					this._drawTextureWithBorder(this._oamTexture, itemWidth);
+					this._drawTextureWithBorder(this._oamTexture, itemWidth, itemHeight);
 				this._oamImageRect = { x: p0.x, y: p0.y, w: itemWidth, h: itemHeight };
 
 				// hover picking in OAM grid
