@@ -17,7 +17,7 @@ main:
 
 golden:
   messages:
-  - un registro que documenta el resultado de correr esa misma ROM de pruebas, pero creado por un emulador que se demostró que funciona correctamente ✅
+  - un archivo que documenta el resultado de correr esa misma ROM de pruebas, pero creado por un emulador que se demostró que funciona correctamente ✅
   - "tiene -en orden-: el [PC], el bytecode, el código ensamblador decompilado, el estado de todos los registros, y el contador de ciclos"
   - hasta ahora, solo he ejecutado pruebas básicas en tu código
   - esto abarcará todo tipo de casos extremos, verificando que tu CPU sea sólida
