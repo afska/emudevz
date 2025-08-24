@@ -26,7 +26,7 @@
   - Ignore 🖍️ _color metadata_ for now.
 - On cycle `0` of every visible scanline (`0-239`), draw a row of pixels (composed by `32` tiles each).
   - Use a fixed 🎨 palette:
-    - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
+    - `[0xff000000, 0xff555555, 0xffaaaaaa, 0xffffffff]`.
 
 ##### 🎨🌈 Adding color
 

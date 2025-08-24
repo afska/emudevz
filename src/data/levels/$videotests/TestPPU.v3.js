@@ -108,7 +108,7 @@ export default class PPU {
 				this.frame++;
 
 				// <test>
-				const testPalette = [0xffffffff, 0xff999999, 0xff424242, 0xff000000];
+				const testPalette = [0xff000000, 0xff555555, 0xffaaaaaa, 0xffffffff];
 				const scale = 2;
 
 				for (let tileId = 0; tileId < 240; tileId++) {

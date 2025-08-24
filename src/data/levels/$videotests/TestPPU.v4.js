@@ -293,7 +293,7 @@ class BackgroundRenderer {
 	}
 
 	renderScanline() {
-		const FIXED_PALETTE = [0xffffffff, 0xffcecece, 0xff686868, 0xff000000];
+		const FIXED_PALETTE = [0xff000000, 0xff555555, 0xffaaaaaa, 0xffffffff];
 
 		const { scanline: y, registers, memory } = this.ppu;
 

@@ -26,7 +26,7 @@
   - Ignora por ahora los 🖍️ _metadatos de color_.
 - En el ciclo `0` de cada scanline visible (`0-239`), dibuja una fila de píxeles (compuesta por `32` tiles cada una).
   - Usa una 🎨 paleta fija:
-    - `[0xffffffff, 0xffcecece, 0xff686868, 0xff000000]`.
+    - `[0xff000000, 0xff555555, 0xffaaaaaa, 0xffffffff]`.
 
 ##### 🎨🌈 Agregando color
 
