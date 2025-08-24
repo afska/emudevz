@@ -27,6 +27,7 @@ videochat:
     {{Right}}.load(null, "stream");
     {{Right}}.stream.zoom();
   messages:
+  - <! 📹  Entrando en video chat...
   - sí, ¿ves mi habitación allí?
   - está un poco desordenada, lo sé
   - voy a mover la cámara un poco más cerca del televisor 🔍

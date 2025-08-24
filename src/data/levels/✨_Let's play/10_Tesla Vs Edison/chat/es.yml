@@ -3,6 +3,7 @@ main:
   run: |
     set((m) => m.chat.winOnEnd = true);
   messages:
+  - <! 📹  Entrando en video chat...
   - hey,
   - juguemos un juego
   - |-

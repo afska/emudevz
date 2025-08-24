@@ -168,9 +168,9 @@ export default class ChatCommand extends Command {
 
 			if (isSystemMessage) {
 				const rawMessage = message.replace(SYSTEM_PREFIX, "");
-				await this._terminal.newline();
+				if (i > 0) await this._terminal.newline();
 				await this._terminal.writeln(rawMessage, theme.COMMENT);
-				await this._terminal.newline();
+				if (i < messages.length - 1) await this._terminal.newline();
 			} else {
 				if (
 					i > 0 &&
