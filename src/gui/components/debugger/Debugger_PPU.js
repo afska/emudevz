@@ -4,6 +4,7 @@ import {
 	NameTableRenderer,
 	Sprite,
 	Tile,
+	getPaletteColors,
 } from "./neees/debugPPU";
 import widgets from "./widgets";
 
@@ -964,12 +965,7 @@ export default class Debugger_PPU {
 
 	_getSpritePalette(ppu, sprite) {
 		const backgroundColor = (ppu?.getColor?.(0, 0) ?? 0) >>> 0;
-		const palette = ppu?.getPaletteColors?.(sprite.paletteId) ?? [
-			backgroundColor,
-			backgroundColor,
-			backgroundColor,
-			backgroundColor,
-		];
+		const palette = getPaletteColors(ppu, sprite.paletteId);
 		return { backgroundColor, palette };
 	}
 

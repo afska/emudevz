@@ -73,8 +73,7 @@ export class NameTableRenderer {
 					nameTableY
 				);
 
-				const paletteColors =
-					this.ppu.getPaletteColors?.(paletteId) ?? GRAYSCALE_PALETTE;
+				const paletteColors = getPaletteColors(this.ppu, paletteId);
 				const patternTableId =
 					this.ppu.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
 				const tileStartX = nameTableX % TILE_SIZE_PIXELS;
@@ -209,4 +208,15 @@ export class Sprite {
 	get height() {
 		return this.is8x16 ? 16 : 8;
 	}
+}
+
+export function getPaletteColors(ppu, paletteId) {
+	if (!ppu || !ppu.getColor) return GRAYSCALE_PALETTE;
+
+	return [
+		ppu.getColor(paletteId, 0),
+		ppu.getColor(paletteId, 1),
+		ppu.getColor(paletteId, 2),
+		ppu.getColor(paletteId, 3),
+	];
 }
