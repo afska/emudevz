@@ -1,15 +1,18 @@
 import RingBuffer from "ringbufferjs";
 
 const AUDIO_BUFFER_SIZE = 4096;
+const MAX_IN_FLIGHT = 10;
 
 class PlayerWorklet extends AudioWorkletProcessor {
 	constructor() {
 		super();
 
 		this.buffer = new RingBuffer(AUDIO_BUFFER_SIZE);
+		this.inFlight = 0;
 
 		this.port.onmessage = (event) => {
 			for (let sample of event.data) this.buffer.enq(sample);
+			if (this.inFlight > 0) this.inFlight--;
 		};
 	}
 
@@ -27,11 +30,13 @@ class PlayerWorklet extends AudioWorkletProcessor {
 		}
 
 		// request new samples
-		this.port.postMessage({
-			need: size,
-			have: this.buffer.size(),
-			target: AUDIO_BUFFER_SIZE / 2,
-		});
+		const need = size;
+		const have = this.buffer.size();
+		const target = AUDIO_BUFFER_SIZE / 2;
+		if (this.inFlight < MAX_IN_FLIGHT) {
+			this.port.postMessage({ need, have, target });
+			this.inFlight++;
+		}
 
 		return true;
 	}
