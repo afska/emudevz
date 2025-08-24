@@ -182,6 +182,8 @@ it("`FlagsRegister`: can be <serialized> into a byte", () => {
 	const cpu = newCPU();
 	cpu.flags.i = false;
 
+	cpu.flags.should.respondTo("getValue");
+
 	expect(cpu.flags.getValue()).to.equalBin(0b00100000, "getValue()");
 	cpu.flags.z = true;
 	expect(cpu.flags.getValue()).to.equalBin(0b00100010, "[+z] => getValue()");

@@ -115,8 +115,11 @@ it("includes a `registers` property with 21 audio registers", () => {
 		const register = _.get(apu.registers, key);
 
 		expect(register, `apu.registers.${key}`).to.be.an("object");
+		expect(register).to.respondTo("onLoad");
 		expect(register).to.respondTo("onRead");
 		expect(register).to.respondTo("onWrite");
+		expect(register).to.respondTo("setValue");
+		expect(register).to.include.key("value");
 		register.onRead = sinon.spy();
 		register.onWrite = sinon.spy();
 

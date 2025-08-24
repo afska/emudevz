@@ -325,8 +325,11 @@ it("includes a `registers` property with 9 video registers", () => {
 		const register = ppu.registers[name];
 
 		expect(register).to.be.an("object");
+		expect(register).to.respondTo("onLoad");
 		expect(register).to.respondTo("onRead");
 		expect(register).to.respondTo("onWrite");
+		expect(register).to.respondTo("setValue");
+		expect(register).to.include.key("value");
 		register.onRead = sinon.spy();
 		register.onWrite = sinon.spy();
 
