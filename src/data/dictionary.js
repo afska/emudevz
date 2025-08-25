@@ -735,6 +735,13 @@ const dictionary = {
 			es:
 				"El tiempo que tarda una onda en completar una repetición completa, medido en segundos. <br /><br />Es el inverso de la frecuencia.",
 		},
+		"Pixel|_Pixels": {
+			also: { es: "Píxel|_Píxeles" },
+			icon: "🔲",
+			en: "The smallest dot on the screen that can display a single color.",
+			es:
+				"El punto más pequeño en la pantalla que puede mostrar un solo color.",
+		},
 		PPU: {
 			icon: "🖥️",
 			en:
