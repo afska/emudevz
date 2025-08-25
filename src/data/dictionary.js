@@ -240,8 +240,8 @@ const dictionary = {
 			es:
 				"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
 		},
-		"CPU address|_CPU addresses|$CPU": {
-			also: { es: "Dirección CPU|_Direcciones CPU|$CPU" },
+		"CPU address|_CPU addresses|$CPU|CPU memory": {
+			also: { es: "Dirección CPU|_Direcciones CPU|$CPU|Memoria CPU" },
 			icon: "🐏",
 			en:
 				"A memory address seen from the CPU's address space. <br /><br />In the NEEES, the CPU can access addresses from `$0000` to `$FFFF` (`64` KiB).",
@@ -719,7 +719,7 @@ const dictionary = {
 			en:
 				"A small RAM area used to store palettes. <br /><br />In the NEEES, it holds `32` bytes for background and sprite color indexes.",
 			es:
-				"Una pequeña área de RAM usada para almacenar paletas. <br /><br />En la NEEES, contiene 32 bytes para los índices de color de fondo y sprites.",
+				"Una pequeña área de RAM usada para almacenar paletas. <br /><br />En la NEEES, contiene `32` bytes para los índices de color de fondo y sprites.",
 		},
 		"Pattern table|_Pattern tables": {
 			icon: "🕊️📖",
@@ -806,8 +806,8 @@ const dictionary = {
 			es:
 				"Un registro de video que muestra si la PPU está en VBlank, si ocurrió un sprite 0 hit, o si hay desbordamiento de sprites. Leerlo también reinicia latches internos. <br /><br />Está disponible en la dirección de CPU `$2002`.",
 		},
-		"PPU address|_PPU addresses|$PPU": {
-			also: { es: "Dirección PPU|_Direcciones PPU|$PPU" },
+		"PPU address|_PPU addresses|$PPU|PPU memory": {
+			also: { es: "Dirección PPU|_Direcciones PPU|$PPU|Memoria PPU" },
 			icon: "🐏",
 			en:
 				"A memory address seen from the PPU's address space. <br /><br />In the NEEES, valid addresses go from `$0000` to `$3FFF`, with many regions being mirrored.",

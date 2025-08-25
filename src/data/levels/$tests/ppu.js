@@ -236,7 +236,7 @@ it("includes a `memory` property with a `PPUMemory` instance", () => {
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });
 
-it("`PPUMemory`: saves <devices> in `onLoad`", () => {
+it("`PPUMemory`: saves <devices> in `onLoad(...)`", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
 
@@ -246,7 +246,7 @@ it("`PPUMemory`: saves <devices> in `onLoad`", () => {
 	expect(ppu.memory.mapper).to.equalN(dummyMapper, "mapper");
 })({
 	locales: {
-		es: "`PPUMemory`: guarda <dispositivos> en `onLoad`",
+		es: "`PPUMemory`: guarda <dispositivos> en `onLoad(...)`",
 	},
 	use: ({ id }, book) => id >= book.getId("5b.4"),
 });

@@ -18,7 +18,7 @@ main:
       **->** calculates the start address of the tile's 💚  high plane:
         ```javascript lowPlaneAddress + 8```
         (let's call this `highPlaneAddress`)
-      **->** reads the correct row of each bitplane:
+      **->** reads the correct row of each <bitplane>:
         ```javascript this._lowRow``` = read PPU address ```javascript lowPlaneAddress + y``` from ```javascript ppu.memory```
         ```javascript this._highRow``` = read PPU address ```javascript highPlaneAddress + y``` from ```javascript ppu.memory```
     **getColorIndex(x)**:

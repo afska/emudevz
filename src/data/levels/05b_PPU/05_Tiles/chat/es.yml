@@ -18,7 +18,7 @@ main:
       **->** calcula la dirección inicial del 💚  high plane:
         ```javascript lowPlaneAddress + 8```
         (llamemos a esto `highPlaneAddress`)
-      **->** lee la fila correcta de cada bitplane:
+      **->** lee la fila correcta de cada <bitplane>:
         ```javascript this._lowRow``` = leer dirección PPU ```javascript lowPlaneAddress + y```
         ```javascript this._highRow``` = leer dirección PPU ```javascript highPlaneAddress + y```
     **getColorIndex(x)**:

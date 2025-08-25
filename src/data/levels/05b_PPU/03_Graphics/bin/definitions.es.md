@@ -28,9 +28,9 @@
 
 <hr />
 
-- 🎨 **Paleta**: Una lista de **índices de colores**, almacenada en 🐏 Palette RAM.
+- 🎨 **Paleta**: Una lista de `4` colores, almacenada en 🐏 Palette RAM, donde cada color es un puntero a la paleta maestra. There are `8` palettes: `4` for the background and `4` for sprites.
 
-- 👑🎨 **Paleta maestra**: Una lista de 64 **colores**, `hardcodeada`.
+- 👑🎨 **Paleta maestra**: Una lista de 64 **colores**, `hardcodeada`. Las paletas referencian estos colores con índices de `$00` a `$3F`.
 <div class="embed-image"><img alt="Master palette" src="assets/graphics/colors.png" style="width: 50%" /></div>
 
 <hr />
