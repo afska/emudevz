@@ -23,7 +23,7 @@ colors:
   messages:
   - los tiles pueden usar 4 colores (~2~ bits por píxel), pero no saben qué <colores reales> tendrán
   - solo saben que un píxel determinado es del "color 0", "color 1", "color 2" o "color 3"
-  - el color se agrega en tiempo de ejecución mediante el uso de 🎨  paletas, que definen qué debe ser cada color
+  - el color se agrega <en tiempo de ejecución> mediante el uso de 🎨  paletas, que definen qué debe ser cada color
   - "después de aplicar una paleta, los tiles pueden verse así:"
   - <{tile.png;8x8}>
   - <{tiles.png;30x30}>
@@ -56,9 +56,15 @@ moreabouttiles:
   - ah, entiendo [enough]
 
 enough:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.args.readOnly = false;
+    });
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/ppu/definitions.es.md");
   messages:
+  - <! Controles activados.
+  - <activé los controles> en la vista del depurador para que puedas jugar un rato
   - analizaremos las estructuras de memoria para tiles, fondos y sprites más tarde
   - pero ahora ya tienes una idea de cómo se organizan los gráficos en la pantalla ✨
   - "aquí dejo un resumen..."

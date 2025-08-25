@@ -14,7 +14,7 @@
 
 #### Rendering
 
-- A 🕊️ tile is an 8x8 _grayscale_ pixel grid.
+- A 🕊️ tile is an `8x8` _grayscale_ pixel grid.
 - Those pixels can be `0`, `1`, `2` or `3` depending on their color.
   - (in binary: `00`, `01`, `10` or `11`)
 

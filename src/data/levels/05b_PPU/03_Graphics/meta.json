@@ -9,7 +9,12 @@
 		"components": {
 			"Right": [
 				"debugger",
-				{ "initialTab": "PPU", "readOnly": true, "initialPPUTab": "CHR" }
+				{
+					"initialTab": "PPU",
+					"readOnly": true,
+					"initialPPUTab": "CHR",
+					"withPreview": true
+				}
 			],
 			"Left": [
 				"console",

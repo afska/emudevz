@@ -383,9 +383,9 @@ const dictionary = {
 		"Frame|_Frames": {
 			icon: "🖼️",
 			en:
-				"A full image drawn on the screen, made of multiple scanlines. <br /><br />In the NEEES, it's `256×240` pixels, and the PPU renders `60` of them per second.",
+				"A full image drawn on the screen, made of multiple scanlines. <br /><br />In the NEEES, it's `256x240` pixels, and the PPU renders `60` of them per second.",
 			es:
-				"Una imagen completa dibujada en la pantalla, compuesta por múltiples scanlines. <br /><br />En la NEEES, mide `256×240` píxeles, y la PPU renderiza `60` por segundo.",
+				"Una imagen completa dibujada en la pantalla, compuesta por múltiples scanlines. <br /><br />En la NEEES, mide `256x240` píxeles, y la PPU renderiza `60` por segundo.",
 		},
 		"Frame buffer": {
 			icon: "🔢",
@@ -524,8 +524,10 @@ const dictionary = {
 		"Master palette": {
 			also: { es: "Paleta maestra" },
 			icon: "👑🎨",
-			en: "A list of 64 colors, hardcoded.",
-			es: "Una lista de 64 colores, hardcodeada.",
+			en:
+				"A list of `64` colors, hardcoded. Palettes reference these colors with indexes from `$00` to `$3F`.",
+			es:
+				"Una lista de `64` colores, hardcodeada. Las paletas referencian estos colores con índices de `$00` a `$3F`.",
 		},
 		"Memory address|_Memory addresses|Address|_Addresses": {
 			also: {
@@ -697,9 +699,9 @@ const dictionary = {
 			also: { es: "Paleta|_Paletas" },
 			icon: "🎨",
 			en:
-				"A list of color indexes, stored in Palette RAM. <br /><br />There are `8` palettes: `4` for the background and `4` for sprites.",
+				"A list of `4` colors, stored in Palette RAM, where each color is a pointer to the master palette.<br /><br />There are `8` palettes: `4` for the background and `4` for sprites.",
 			es:
-				"Una lista de índices de colores, almacenada en Palette RAM. <br /><br />Hay `8` paletas: `4` para el fondo y `4` para sprites.",
+				"Una lista de `4` colores, almacenada en Palette RAM, donde cada color es un puntero a la paleta maestra.<br /><br />Hay `8` paletas: `4` para el fondo y `4` para sprites.",
 		},
 		"Palette id|Palette index|_Palette indexes": {
 			also: {
@@ -968,9 +970,9 @@ const dictionary = {
 		"Sprite|_Sprites": {
 			icon: "🛸",
 			en:
-				"A game object on top (or behind!) of the background that can be moved or flipped, stored in OAM. It can use one tile (`8×8` sprite) or two (`8×16` sprite).",
+				"A game object on top (or behind!) of the background that can be moved or flipped, stored in OAM. It can use one tile (`8x8` sprite) or two (`8x16` sprite).",
 			es:
-				"Un objeto del juego encima (¡o detrás!) del fondo que puede ser movido o volteado, almacenado en OAM. Puede usar un tile (sprite de `8×8`) o dos (sprite de `8×16`).",
+				"Un objeto del juego encima (¡o detrás!) del fondo que puede ser movido o volteado, almacenado en OAM. Puede usar un tile (sprite de `8x8`) o dos (sprite de `8x16`).",
 		},
 		"Sprite zero|_Sprite-zero": {
 			also: { es: "Sprite cero|_Sprite-cero" },
@@ -1029,9 +1031,9 @@ const dictionary = {
 		"Tile|_Tiles": {
 			icon: "🕊️",
 			en:
-				"An 8×8 grayscale pixel grid that represents a pattern. Tiles are stored in pattern tables.",
+				"An `8x8` grayscale pixel grid that represents a pattern. Tiles are stored in pattern tables.",
 			es:
-				"Una cuadrícula de 8×8 píxeles en escala de grises que representa un patrón. Los tiles se almacenan en pattern tables.",
+				"Una cuadrícula de `8x8` píxeles en escala de grises que representa un patrón. Los tiles se almacenan en pattern tables.",
 		},
 		"Tile id": {
 			also: { es: "Id de tile|_Id del tile" },

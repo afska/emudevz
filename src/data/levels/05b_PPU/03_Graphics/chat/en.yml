@@ -23,7 +23,7 @@ colors:
   messages:
   - tiles can use 4 colors (~2~ bits per pixel), but they don't know what <actual colors> they'll have
   - they only know that a certain pixel is "color 0", "color 1", "color 2" or "color 3"
-  - color is added at runtime by the use of 🎨  palettes, which define what each color should be
+  - color is added <at runtime> by the use of 🎨  palettes, which define what each color should be
   - "after applying a palette, tiles can look like this:"
   - <{tile.png;8x8}>
   - <{tiles.png;30x30}>
@@ -56,9 +56,15 @@ moreabouttiles:
   - ah, gotcha [enough]
 
 enough:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.args.readOnly = false;
+    });
   run-after-messages: |
     store.dispatch.savedata.openFile("/docs/ppu/definitions.en.md");
   messages:
+  - <! Controls enabled.
+  - I <enabled the controls> in the debugger view so you can play around for a while
   - we'll analyze the memory structures for tiles, backgrounds, and sprites later
   - but now you have an idea of how graphics are arranged on the screen ✨
   - "here's a summary..."
@@ -67,7 +73,7 @@ enough:
   - 🕊️  both use tiles to render
   - 👾  all tiles are in CHR-ROM or CHR-RAM, with no color
   - 🎨  color is given through palettes
-  - 👑 🎨  palettes reference entries of a fixed 64-color master palette
+  - 👑 🎨  palettes reference entries from a fixed 64-color master palette
   - "I'll write about this, with more details, here: 📄  ~/docs/ppu/definitions.en.md~"
   responses:
   - awesome [end]

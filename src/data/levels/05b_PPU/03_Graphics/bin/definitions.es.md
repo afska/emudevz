@@ -2,7 +2,7 @@
 
 <hr />
 
-- 🕊️ **Tile**: Una cuadrícula de 8x8 píxeles en _escala de grises_ que representa un **patrón**. Los tiles se almacenan en 🕊️📖 pattern tables.
+- 🕊️ **Tile**: Una cuadrícula de `8x8` píxeles en _escala de grises_ que representa un **patrón**. Los tiles se almacenan en 🕊️📖 pattern tables.
 
 <div class="embed-image"><img alt="Tile" src="assets/graphics/tile_grayscale.png" style="width: 30%" /></div>
 

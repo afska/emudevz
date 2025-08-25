@@ -340,7 +340,7 @@ export default class Debugger_PPU {
 
 	_drawNameTablesTab(ppu) {
 		widgets.simpleTab(this, "Name tables", () => {
-			if (!this.args.readOnly) {
+			if (!this.args.withPreview) {
 				ImGui.Checkbox(
 					"Scroll overlay",
 					(v = this._showScrollOverlay) => (this._showScrollOverlay = v)
@@ -1465,7 +1465,7 @@ export default class Debugger_PPU {
 	//#endregion
 
 	_drawMiniFloatingPreview(ppu) {
-		if (!this.args.readOnly) return;
+		if (!this.args.withPreview) return;
 
 		const frameBuffer = ppu?.frameBuffer;
 		if (!frameBuffer) return;

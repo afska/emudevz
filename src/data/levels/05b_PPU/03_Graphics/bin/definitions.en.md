@@ -2,7 +2,7 @@
 
 <hr />
 
-- 🕊️ **Tile**: An 8x8 _grayscale_ pixel grid that represents a **pattern**. Tiles are stored in 🕊️📖 pattern tables.
+- 🕊️ **Tile**: An `8x8` _grayscale_ pixel grid that represents a **pattern**. Tiles are stored in 🕊️📖 pattern tables.
   <div class="embed-image"><img alt="Tile" src="assets/graphics/tile_grayscale.png" style="width: 30%" /></div>
   
 - 🕊️📖 **Pattern table**: A list of 🕊️ tiles, **stored** in 👾 CHR-ROM or 👾 CHR-RAM.

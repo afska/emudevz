@@ -12,7 +12,7 @@
 
 #### Renderizado
 
-- Un 🕊️ tile es una cuadrícula de 8x8 píxeles en _escala de grises_.
+- Un 🕊️ tile es una cuadrícula de `8x8` píxeles en _escala de grises_.
 - Esos píxeles pueden ser `0`, `1`, `2` o `3` dependiendo de su color.
   - (en binario: `00`, `01`, `10` o `11`)
 
