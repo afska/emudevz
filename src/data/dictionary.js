@@ -112,6 +112,14 @@ const dictionary = {
 			es:
 				"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
 		},
+		"APU cycle|_APU cycles": {
+			also: { es: "Ciclo de APU|_Ciclos de APU" },
+			icon: "🐢",
+			en:
+				"The basic timing unit of the APU; each cycle corresponds to one APU clock tick and advances its internal state. <br /><br />The APU runs at `half` the CPU clock rate. For every APU cycle, the CPU runs `2` cycles.",
+			es:
+				"La unidad de tiempo básica de la APU; cada ciclo corresponde a un tick de reloj de la APU y avanza su estado interno. <br /><br />La APU funciona a la `mitad` de la velocidad de la CPU. Por cada ciclo de APU, la CPU ejecuta `2` ciclos.",
+		},
 		APUControl: {
 			icon: "🎛️",
 			en:
@@ -239,6 +247,14 @@ const dictionary = {
 				"A memory address seen from the CPU's address space. <br /><br />In the NEEES, the CPU can access addresses from `$0000` to `$FFFF` (`64` KiB).",
 			es:
 				"Una dirección de memoria vista desde el espacio de direcciones de la CPU. <br /><br />En la NEEES, la CPU puede acceder a direcciones entre `$0000` y `$FFFF` (`64` KiB).",
+		},
+		"CPU cycle|_CPU cycles": {
+			also: { es: "Ciclo de CPU|_Ciclos de CPU" },
+			icon: "🐎",
+			en:
+				"The basic timing unit of the CPU; each cycle corresponds to one CPU clock tick and advances its internal state.",
+			es:
+				"La unidad de tiempo básica de la CPU; cada ciclo corresponde a un tick de reloj de la CPU y avanza su estado interno.",
 		},
 		"CPU flag|_CPU flags": {
 			also: { es: "Bandera de CPU|_Banderas de CPU" },
@@ -725,6 +741,14 @@ const dictionary = {
 				"The _Picture Processing Unit_. It draws graphics by putting pixels on the screen.",
 			es:
 				"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
+		},
+		"PPU cycle|_PPU cycles": {
+			also: { es: "Ciclo de PPU|_Ciclos de PPU" },
+			icon: "🦅",
+			en:
+				"The basic timing unit of the PPU; each cycle corresponds to one PPU clock tick and advances its internal state. <br /><br />The PPU runs at `3` times the CPU clock rate. For every CPU cycle, the PPU runs `3` cycles.",
+			es:
+				"La unidad de tiempo básica de la PPU; cada ciclo corresponde a un tick de reloj de la PPU y avanza su estado interno. <br /><br />La PPU funciona a `3` veces la velocidad de la CPU. Por cada ciclo de CPU, la PPU ejecuta `3` ciclos.",
 		},
 		PPUAddr: {
 			icon: "📍",
