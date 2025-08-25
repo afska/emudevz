@@ -10,6 +10,7 @@ main:
 
 other62:
   messages:
+  - <{memory.png}>
   - other things, like RAM mirrors, memory-mapped I/O, and the cartridge data
   - 🔗  everything is connected to the memory!
   - that's how the machine code interacts with the devices

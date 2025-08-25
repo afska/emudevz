@@ -10,6 +10,7 @@ main:
 
 other62:
   messages:
+  - <{memory.png}>
   - otras cosas, como espejos de RAM, E/S mapeada en memoria y la información del cartucho
   - 🔗  ¡todo está conectado a la memoria!
   - así es como el código máquina interactúa con los dispositivos
