@@ -2,6 +2,8 @@
 main:
   run: |
     set((m) => m.chat.winOnEnd = true);
+    const saveState = JSON.parse(level.code["spacegulls_demo.ss"]);
+    {{Background}}.loadROM("/roms/.all/Spacegulls.neees", "demoRom", saveState);
   messages:
   - a brief intro to NEEES graphics! 🖌️
   - all graphics are composed of 🕊️  tiles
@@ -14,6 +16,10 @@ main:
   - what about the colors? 🌈 [colors]
 
 colors:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.ppu.selectedTab = "Palettes";
+    });
   messages:
   - tiles can use 4 colors (~2~ bits per pixel), but they don't know what <actual colors> they'll have
   - they only know that a certain pixel is "color 0", "color 1", "color 2" or "color 3"
@@ -34,6 +40,10 @@ anycolor:
   - tell me more about tiles 👀 [moreabouttiles]
 
 moreabouttiles:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.ppu.selectedTab = "Sprites";
+    });
   messages:
   - a frame is made by one 🏞️  background and multiple 🛸  sprites
   - <{full.png;30x30}>

@@ -47,13 +47,13 @@ export default class TV extends PureComponent {
 		this.setContent(content, type);
 	}
 
-	loadROM(filePath, type = "rom") {
+	loadROM(filePath, type = "rom", saveState = null) {
 		const file = filesystem.read(filePath, { binary: true });
-		this.setContent(file, type);
+		this.setContent(file, type, { _saveState: saveState });
 	}
 
-	setContent(content, type) {
-		this.setState({ content, type, _error: null, _saveState: null });
+	setContent(content, type, extra = {}) {
+		this.setState({ content, type, _error: null, _saveState: null, ...extra });
 	}
 
 	render() {

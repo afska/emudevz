@@ -696,8 +696,10 @@ const dictionary = {
 		"Palette|_Palettes": {
 			also: { es: "Paleta|_Paletas" },
 			icon: "🎨",
-			en: "A list of color indexes, stored in Palette RAM.",
-			es: "Una lista de índices de colores, almacenada en Palette RAM.",
+			en:
+				"A list of color indexes, stored in Palette RAM. <br /><br />There are `8` palettes: `4` for the background and `4` for sprites.",
+			es:
+				"Una lista de índices de colores, almacenada en Palette RAM. <br /><br />Hay `8` paletas: `4` para el fondo y `4` para sprites.",
 		},
 		"Palette id|Palette index|_Palette indexes": {
 			also: {

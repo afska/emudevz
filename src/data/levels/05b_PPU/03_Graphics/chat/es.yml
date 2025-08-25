@@ -2,6 +2,8 @@
 main:
   run: |
     set((m) => m.chat.winOnEnd = true);
+    const saveState = JSON.parse(level.code["spacegulls_demo.ss"]);
+    {{Background}}.loadROM("/roms/.all/Spacegulls.neees", "demoRom", saveState);
   messages:
   - ¡una breve introducción a los gráficos de NEEES! 🖌️
   - todos los gráficos están compuestos de 🕊️  tiles
@@ -14,6 +16,10 @@ main:
   - ¿y qué hay de los colores? 🌈 [colors]
 
 colors:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.ppu.selectedTab = "Palettes";
+    });
   messages:
   - los tiles pueden usar 4 colores (~2~ bits por píxel), pero no saben qué <colores reales> tendrán
   - solo saben que un píxel determinado es del "color 0", "color 1", "color 2" o "color 3"
@@ -34,6 +40,10 @@ anycolor:
   - cuéntame más sobre los tiles 👀 [moreabouttiles]
 
 moreabouttiles:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.ppu.selectedTab = "Sprites";
+    });
   messages:
   - un frame está formado por un 🏞️  fondo y múltiples 🛸  sprites
   - <{full.png;30x30}>

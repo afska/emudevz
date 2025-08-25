@@ -5,9 +5,13 @@
 	},
 	"ui": {
 		"run": "copy.js",
-		"layout": "mono",
+		"layout": "dual",
 		"components": {
-			"Main": [
+			"Right": [
+				"debugger",
+				{ "initialTab": "PPU", "readOnly": true, "initialPPUTab": "CHR" }
+			],
+			"Left": [
 				"console",
 				{
 					"startup": "chat -f",
@@ -17,9 +21,17 @@
 						"es": ""
 					}
 				}
+			],
+			"Background": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
 			]
 		},
-		"focus": "Main"
+		"focus": "Left",
+		"canPinEmulator": false
 	},
 	"memory": {
 		"content": {

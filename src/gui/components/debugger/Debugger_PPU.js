@@ -59,7 +59,7 @@ export default class Debugger_PPU {
 	constructor(args) {
 		this.args = args;
 
-		this.selectedTab = args.initialTab || null;
+		this.selectedTab = args.initialPPUTab || null;
 	}
 
 	init() {
@@ -73,26 +73,23 @@ export default class Debugger_PPU {
 		this._oamTextureHeight = 0;
 		this._bgPaletteTexture = widgets.newTexture(32 * 4, 32 * 4);
 		this._sprPaletteTexture = widgets.newTexture(32 * 4, 32 * 4);
-		this._bgPalettePixels = new Uint32Array(32 * 4 * (32 * 4));
-		this._sprPalettePixels = new Uint32Array(32 * 4 * (32 * 4));
-		this._paletteHoverInfo = null;
 
 		// Scanline trigger
 		this._scanlineTrigger = 241; // -1..260
 
 		// Name tables
-		this._showScrollOverlay = true;
+		this._atlasPixels = new Uint32Array(ATLAS_WIDTH * ATLAS_HEIGHT);
+		this._showScrollOverlay = !this.args.readOnly;
 		this._showTileGrid = false;
 		this._showAttributeGrid = false;
 		this._bgHoverInfo = null;
 		this._pendingHoverReq = null;
-		this._atlasPixels = new Uint32Array(ATLAS_WIDTH * ATLAS_HEIGHT);
 
 		// CHR
-		this._chrHoverInfo = null; // { tableId, tileIndex, tileAddress }
-		this._selectedCHR = null; // { tableId, tileIndex }
 		this._chr0Pixels = new Uint32Array(CHR_SIZE_PIXELS * CHR_SIZE_PIXELS);
 		this._chr1Pixels = new Uint32Array(CHR_SIZE_PIXELS * CHR_SIZE_PIXELS);
+		this._chrHoverInfo = null; // { tableId, tileIndex, tileAddress }
+		this._selectedCHR = null; // { tableId, tileIndex }
 
 		// Sprites
 		this._spriteIs8x16 = false;
@@ -103,19 +100,30 @@ export default class Debugger_PPU {
 		this._oamHoverInfo = null;
 		this._oamImageRect = null;
 
+		// Palettes
+		this._bgPalettePixels = new Uint32Array(32 * 4 * (32 * 4));
+		this._sprPalettePixels = new Uint32Array(32 * 4 * (32 * 4));
+		this._paletteHoverInfo = null;
+
+		// Mini preview
+		this._miniTexture = widgets.newTexture(SCREEN_WIDTH, SCREEN_HEIGHT);
+		this._miniPixels = new Uint32Array(SCREEN_WIDTH * SCREEN_HEIGHT);
+
 		this._destroyed = false;
 	}
 
 	draw() {
-		widgets.fullWidthFieldWithLabel("Scanline", (label) => {
-			ImGui.SliderInt(
-				label,
-				(v = this._scanlineTrigger) => (this._scanlineTrigger = v),
-				-1,
-				260,
-				"%d"
-			);
-		});
+		if (!this.args.readOnly) {
+			widgets.fullWidthFieldWithLabel("Scanline", (label) => {
+				ImGui.SliderInt(
+					label,
+					(v = this._scanlineTrigger) => (this._scanlineTrigger = v),
+					-1,
+					260,
+					"%d"
+				);
+			});
+		}
 
 		const emulation = window.EmuDevz?.emulation;
 		const neees = emulation?.neees;
@@ -144,6 +152,8 @@ export default class Debugger_PPU {
 			ImGui.EndTabBar();
 			this.selectedTab = null;
 		}
+
+		this._drawMiniFloatingPreview(ppu);
 	}
 
 	destroy() {
@@ -179,6 +189,10 @@ export default class Debugger_PPU {
 		if (this._sprPaletteTexture) {
 			widgets.deleteTexture(this._sprPaletteTexture);
 			this._sprPaletteTexture = null;
+		}
+		if (this._miniTexture) {
+			widgets.deleteTexture(this._miniTexture);
+			this._miniTexture = null;
 		}
 
 		this._destroyed = true;
@@ -326,20 +340,22 @@ export default class Debugger_PPU {
 
 	_drawNameTablesTab(ppu) {
 		widgets.simpleTab(this, "Name tables", () => {
-			ImGui.Checkbox(
-				"Scroll overlay",
-				(v = this._showScrollOverlay) => (this._showScrollOverlay = v)
-			);
-			ImGui.SameLine();
-			ImGui.Checkbox(
-				"Tile grid (8x8)",
-				(v = this._showTileGrid) => (this._showTileGrid = v)
-			);
-			ImGui.SameLine();
-			ImGui.Checkbox(
-				"Attribute grid (16x16)",
-				(v = this._showAttributeGrid) => (this._showAttributeGrid = v)
-			);
+			if (!this.args.readOnly) {
+				ImGui.Checkbox(
+					"Scroll overlay",
+					(v = this._showScrollOverlay) => (this._showScrollOverlay = v)
+				);
+				ImGui.SameLine();
+				ImGui.Checkbox(
+					"Tile grid (8x8)",
+					(v = this._showTileGrid) => (this._showTileGrid = v)
+				);
+				ImGui.SameLine();
+				ImGui.Checkbox(
+					"Attribute grid (16x16)",
+					(v = this._showAttributeGrid) => (this._showAttributeGrid = v)
+				);
+			}
 
 			this._processAtlasMouseEvents(ppu);
 
@@ -405,7 +421,7 @@ export default class Debugger_PPU {
 			ImGui.SetMouseCursor(ImGui.MouseCursor.None);
 
 			// click => select and jump to CHR
-			if (ImGui.IsMouseClicked(0) && this._bgHoverInfo) {
+			if (ImGui.IsMouseClicked(0) && this._bgHoverInfo && !this.args.readOnly) {
 				const patternTableId =
 					ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
 
@@ -713,7 +729,7 @@ export default class Debugger_PPU {
 					this._drawTextureWithBorder(texture, itemSize);
 
 					// click toggle selection
-					if (hover && ImGui.IsMouseClicked(0)) {
+					if (hover && ImGui.IsMouseClicked(0) && !this.args.readOnly) {
 						if (isSelected && this._selectedCHR.tileIndex === hover.tileIndex) {
 							this._selectedCHR = null;
 						} else {
@@ -1447,6 +1463,38 @@ export default class Debugger_PPU {
 		);
 	}
 	//#endregion
+
+	_drawMiniFloatingPreview(ppu) {
+		if (!this.args.readOnly) return;
+
+		const frameBuffer = ppu?.frameBuffer;
+		if (!frameBuffer) return;
+
+		this._miniPixels.set(frameBuffer);
+		widgets.updateTexture(
+			this._miniTexture,
+			SCREEN_WIDTH,
+			SCREEN_HEIGHT,
+			this._miniPixels
+		);
+
+		const viewport = ImGui.GetMainViewport
+			? ImGui.GetMainViewport()
+			: { WorkPos: ImGui.GetWindowPos(), WorkSize: ImGui.GetWindowSize() };
+		ImGui.SetNextWindowPos(
+			new ImGui.Vec2(
+				viewport.WorkPos.x + OVERLAY_MARGIN,
+				viewport.WorkPos.y + viewport.WorkSize.y - OVERLAY_MARGIN
+			),
+			ImGui.Cond.Always,
+			new ImGui.Vec2(0, 1)
+		);
+		const flags = ImGui.WindowFlags.AlwaysAutoResize;
+		ImGui.Begin("Preview", null, flags);
+		ImGui.SetWindowFocus();
+		ImGui.Image(this._miniTexture, new ImGui.Vec2(SCREEN_WIDTH, SCREEN_HEIGHT));
+		ImGui.End();
+	}
 
 	_drawHoverOverlay(pixels, width, height, x, y, w, h) {
 		const stroke = COLOR_HOVER_OVERLAY_STROKE;
