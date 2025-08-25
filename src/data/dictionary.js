@@ -503,8 +503,11 @@ const dictionary = {
 			es:
 				"Una convención donde el byte menos significativo se almacena primero en memoria.",
 		},
-		"Machine code": {
-			also: { es: "Código máquina" },
+		"Machine code|Game code|_Game's code|_Games' code": {
+			also: {
+				es:
+					"Código máquina|Código de juego|_Código del juego|_Código de los juegos",
+			},
 			icon: "🔢",
 			en:
 				"The bytes that the CPU interpret as code. It's often the product of translating assembly code, written by humans.",
