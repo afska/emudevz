@@ -1413,9 +1413,17 @@ export default class Debugger_PPU {
 			2
 		)}`;
 
+		const colorAddr = info.address >>> 0; // $3F00–$3F1F
+		const paletteBase = (colorAddr & ~0x03) >>> 0; // align to 4: $3F00,$3F04,...
+		const paletteId = ((colorAddr & 0x1f) >> 2) | 0; // 0–7 (0–3 BG, 4–7 SPR)
+		const isSprite = paletteId >= 4;
+
 		const lines = [
 			`Color           : $${hex.format(info.masterIndex, 2)} `,
-			`Palette address : $${hex.format(info.address, 4)} `,
+			`Color address   : $${hex.format(colorAddr, 4)} `,
+			`Palette address : $${hex.format(paletteBase, 4)}  (#${paletteId}${
+				isSprite ? " SPR" : " BKG"
+			})`,
 			`Color hex       : ${hexColor}`,
 		];
 
