@@ -52,8 +52,8 @@ export default class Debugger_CPU {
 				const scanline = neees?.ppu.scanline ?? 0;
 				if (this.isRunningStepByStep || scanline !== this._scanline) {
 					this._scanline = scanline;
-					this._logger.log(a, b, c, d, e);
-					this._logs.unshift(this._logger.lastLog);
+					const newLog = this._logger.log(a, b, c, d, e);
+					this._logs.unshift(newLog);
 					if (this._logs.length > LOG_LIMIT) this._logs.pop();
 				}
 			};
@@ -126,6 +126,8 @@ export default class Debugger_CPU {
 			ImGui.TableSetupColumn("Context", ImGui.TableColumnFlags.WidthFixed);
 			ImGui.TableHeadersRow();
 			for (let row = 0; row < this._logs.length; row++) {
+				if (this._logs[row] == null) continue;
+
 				ImGui.TableNextRow();
 				for (let col = 0; col < 4; col++) {
 					ImGui.TableSetColumnIndex(col);

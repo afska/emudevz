@@ -5,17 +5,8 @@ const hex = (value, length) =>
 	_.padStart(value.toString(16).toUpperCase(), length, "0");
 
 export default class NEEESSimpleCPULogger {
-	constructor() {
-		this.lastLog = {
-			$counter: "",
-			$commandHex: "",
-			$assembly: "",
-			$status: "",
-		};
-	}
-
 	log(cpu, originalPC, operation, input, argument) {
-		if (!originalPC || !operation || !input || !argument) return;
+		if (cpu == null || originalPC == null || operation == null) return null;
 
 		const section = (string, length) =>
 			_.padEnd(string.substr(0, length), length);
@@ -97,6 +88,6 @@ export default class NEEESSimpleCPULogger {
 		const $cpuCycle = "CYC:" + cpu.cycle;
 		const $status = `${$registers} ${$cpuCycle}`;
 
-		this.lastLog = { $counter, $commandHex, $assembly, $status };
+		return { $counter, $commandHex, $assembly, $status };
 	}
 }
