@@ -64,7 +64,7 @@ export default class Debugger_Logs {
 				if (!!b || !!c || !!d || !!e) return;
 
 				if (this._destroyed) {
-					neees.logger = null;
+					neees.cpu.logger = null;
 					return;
 				}
 

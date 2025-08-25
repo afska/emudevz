@@ -45,7 +45,7 @@ export default class Debugger_CPU {
 		) {
 			neees.cpu.logger = (a, b, c, d, e) => {
 				if (this._destroyed) {
-					neees.logger = null;
+					neees.cpu.logger = null;
 					return;
 				}
 
