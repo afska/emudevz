@@ -45,6 +45,8 @@ export default class Emulation {
 					this.neees.samples(n);
 
 					this._updateSound();
+				} else if (this.isDebugging) {
+					this._updateSound();
 				}
 			} catch (error) {
 				onError(error);
