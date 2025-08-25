@@ -85,7 +85,7 @@ export default class DebuggerGUI {
 						const isActive = ImGui.IsItemActive() && !ImGui.IsMouseDown(1);
 
 						if (label === OPTION_RUN_SCANLINE)
-							this.cpu.isRunningStepByStep = isActive;
+							this.cpu.isRunningStepByStep = isActive || isRightClicked;
 
 						if (label === OPTION_RUN_FRAME && isRightClicked) {
 							if (emulation) emulation.isDebugStepFrameRequested = true;
