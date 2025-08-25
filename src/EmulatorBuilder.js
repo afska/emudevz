@@ -24,7 +24,7 @@ export default class EmulatorBuilder {
 		let PPU = null;
 		let APU = null;
 
-		const useCPUMemory = !!(
+		let useCPUMemory = !!(
 			this.withUserCPU ||
 			this.withUserPPU ||
 			this.withUserAPU ||
@@ -40,22 +40,23 @@ export default class EmulatorBuilder {
 			PPU = mainModule.PPU;
 			APU = mainModule.APU;
 
+			// when using user's PPU and APU at the same time, and one of them is only partially
+			// completed, there can be crashes due to `CPUMemory` expecting certain properties to exist
+			// => in this special case, we fallback to the default bus
 			const needsDefaultCPUMemory =
 				this.withUserPPU &&
 				this.withUserAPU &&
 				(this.withUsePartialPPU || this.withUsePartialAPU);
-			// when using user PPU and PPU and one of them is partially completed,
-			// there can be crashes due to `CPUMemory` expecting certain properties to exist
-			// in this special case, we fallback to the default bus
+			if (needsDefaultCPUMemory) useCPUMemory = false;
 
 			if (withLastCode && this.withUserPPU && this.withUsePartialPPU) {
 				const partialModule = await this._evaluate(false);
-				if (!needsDefaultCPUMemory) CPUMemory = partialModule.CPUMemory;
+				CPUMemory = partialModule.CPUMemory;
 				PPU = partialModule.PPU;
 			}
 			if (withLastCode && this.withUserAPU && this.withUsePartialAPU) {
 				const partialModule = await this._evaluate(false);
-				if (!needsDefaultCPUMemory) CPUMemory = partialModule.CPUMemory;
+				CPUMemory = partialModule.CPUMemory;
 				APU = partialModule.APU;
 			}
 		}
