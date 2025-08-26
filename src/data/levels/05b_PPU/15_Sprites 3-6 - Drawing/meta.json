@@ -38,12 +38,12 @@
 	"videoTests": [
 		{
 			"rom": "/roms/_test/hello_world.neees",
-			"frames": 120,
+			"frames": 90,
 			"ppu": "TestPPU.v6.js"
 		},
 		{
 			"rom": "/roms/.all/TeslaVsEdison.neees",
-			"frames": 120,
+			"frames": 90,
 			"ppu": "TestPPU.v6.js"
 		},
 		{

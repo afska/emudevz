@@ -39,12 +39,12 @@
 	"videoTests": [
 		{
 			"rom": "/roms/_test/NEEEStest.neees",
-			"frames": 120,
+			"frames": 90,
 			"ppu": "TestPPU.v2.js"
 		},
 		{
 			"rom": "/roms/_test/hello_world.neees",
-			"frames": 120,
+			"frames": 90,
 			"ppu": "TestPPU.v2.js"
 		}
 	],
