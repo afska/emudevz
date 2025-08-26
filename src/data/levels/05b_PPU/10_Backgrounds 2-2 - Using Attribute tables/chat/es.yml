@@ -44,8 +44,7 @@ main:
 
 help:
   messages:
-  - ¿qué, necesitas ayuda? 🤣
-  - bueno... estoy escuchando
+  - ¿qué? ¿necesitas ayuda?
   responses:
   - (*) ayúdame con las matemáticas 🔢 [math]
   - (*) ¿cuál es el color de fondo? 💧 [backdrop]

@@ -37,18 +37,23 @@
 	},
 	"videoTests": [
 		{
-			"rom": "/roms/_test/hello_world.neees",
+			"rom": "/roms/_test/game_solarian.neees",
 			"frames": 90,
 			"ppu": "TestPPU.v7.js"
 		},
 		{
-			"rom": "/roms/.all/SuperTiltBro.neees",
+			"rom": "/roms/.all/DizzySheepDisaster.neees",
 			"frames": 90,
 			"ppu": "TestPPU.v7.js"
 		},
 		{
 			"rom": "/roms/.all/TeslaVsEdison.neees",
 			"frames": 90,
+			"ppu": "TestPPU.v7.js"
+		},
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"frames": 120,
 			"ppu": "TestPPU.v7.js"
 		}
 	],

@@ -334,6 +334,13 @@ export default class CreditsModal extends PureComponent {
 							240p Test Suite
 						</Game>
 						<Game
+							emojis="🔊🖥️"
+							link="https://github.com/sehugg/8bitworkshop/tree/master/presets"
+							author="8bitworkshop"
+						>
+							APU and PPU tests
+						</Game>
+						<Game
 							emojis="📦📥"
 							link="https://forums.nesdev.org/viewtopic.php?p=191062&sid=96d498ec05434794b59866a583ea4ed6#p191062"
 							author="Kragen (ported by rainwarrior)"

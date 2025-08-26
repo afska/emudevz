@@ -4,6 +4,26 @@ The guide is licensed under the Creative Commons Attribution 4.0 International L
 
 -----
 
+===
+apu_tester.neees,
+game_chase.neees,
+game_climber.neees,
+game_solarian.neees,
+ppu_emphasis.neees,
+ppu_mapper_irq.neees,
+ppu_split_statusbar.neees,
+ppu_road.neees
+===
+
+https://github.com/sehugg/8bitworkshop/tree/master/presets
+CC0
+
+-----
+
+===
+Falling.neees
+===
+
 https://github.com/xram64/falling-nes
 MIT License
 

@@ -37,7 +37,12 @@
 	},
 	"videoTests": [
 		{
-			"rom": "/roms/_test/hello_world.neees",
+			"rom": "/roms/.all/DizzySheepDisaster.neees",
+			"frames": 90,
+			"ppu": "TestPPU.v6.js"
+		},
+		{
+			"rom": "/roms/.all/Nalleland.neees",
 			"frames": 90,
 			"ppu": "TestPPU.v6.js"
 		},
@@ -48,7 +53,7 @@
 		},
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
-			"frames": 180,
+			"frames": 120,
 			"ppu": "TestPPU.v6.js"
 		}
 	],
