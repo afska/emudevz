@@ -1,3 +1,4 @@
+import $path from "path-browserify-esm";
 import _ from "lodash";
 import filesystem from "../../../filesystem";
 import Book from "../../../level/Book";
@@ -229,7 +230,11 @@ export default class TestCommand extends Command {
 			return false;
 		}
 
-		await this._terminal.writeln(locales.get("tests_audio_running"));
+		await this._terminal.write(locales.get("tests_audio_running"));
+		await this._terminal.writeln(
+			$path.basename(audioTest.internalRom ?? audioTest.rom),
+			theme.ACCENT
+		);
 		const tv = level.$layout.findInstance("TV");
 		if (!tv) {
 			await this._terminal.writeln(locales.get("tests_audio_no_tv"));
@@ -332,7 +337,11 @@ export default class TestCommand extends Command {
 			return false;
 		}
 
-		await this._terminal.writeln(locales.get("tests_video_running"));
+		await this._terminal.write(locales.get("tests_video_running") + " ");
+		await this._terminal.writeln(
+			$path.basename(videoTest.internalRom ?? videoTest.rom),
+			theme.ACCENT
+		);
 		const tv = level.$layout.findInstance("TV");
 		if (!tv) {
 			await this._terminal.writeln(locales.get("tests_video_no_tv"));
