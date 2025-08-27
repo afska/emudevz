@@ -1,0 +1,28 @@
+NTSC NEEES PPU Tests
+--------------------
+These ROMs test a few aspects of the NTSC NEEES PPU operation. They have been
+tested on an actual NEEES and all give a passing result. I wrote them to verify
+that my NEEES emulator's PPU was working properly.
+
+Each ROM runs several tests and reports a result code on screen and by beeping
+a number of times. A result code of 1 always indicates that all tests were
+passed; see below for the meaning of other codes for each test.
+
+The main source code for each test is included, and most tests are clearly
+divided into sections. Some of the common support code is included, but not
+all, since it runs on a custom setup. Contact me if you want to assemble the
+tests yourself.
+
+Shay Green <hotpop.com@blargg> (swap to e-mail)
+
+
+palette_ram
+-----------
+PPU palette RAM read/write and mirroring test
+
+1) Tests passed
+2) Palette read shouldn't be buffered like other VRAM
+3) Palette write/read doesn't work
+4) Palette should be mirrored within $3f00-$3fff
+5) Write to $10 should be mirrored at $00
+6) Write to $00 should be mirrored at $10

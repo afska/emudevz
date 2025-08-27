@@ -37,6 +37,11 @@
 	},
 	"videoTests": [
 		{
+			"rom": "/roms/_test/ppu_palette_ram.neees",
+			"frames": 30,
+			"ppu": "TestPPU.v9.js"
+		},
+		{
 			"rom": "/roms/_test/game_solarian.neees",
 			"frames": 90,
 			"ppu": "TestPPU.v9.js"

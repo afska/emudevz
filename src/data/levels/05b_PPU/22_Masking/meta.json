@@ -57,6 +57,11 @@
 			"ppu": "TestPPU.v11.js"
 		},
 		{
+			"rom": "/roms/_test/ppu_palette_ram.neees",
+			"frames": 30,
+			"ppu": "TestPPU.v11.js"
+		},
+		{
 			"rom": "/roms/_test/240p_test_suite.neees",
 			"frames": 90,
 			"ppu": "TestPPU.v11.js",
