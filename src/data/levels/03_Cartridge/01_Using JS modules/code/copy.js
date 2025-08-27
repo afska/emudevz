@@ -12,6 +12,7 @@
 	["ppu_mapper_irq.neees", true],
 	["ppu_road.neees", true],
 	["ppu_split_statusbar.neees", true],
+	["ppu_sprite0hit.neees", true],
 ].forEach(([file, binary]) => {
 	const path = `${Drive.TESTROMS_DIR}/${file}`;
 	filesystem.write(path, level.bin[file], { binary });
