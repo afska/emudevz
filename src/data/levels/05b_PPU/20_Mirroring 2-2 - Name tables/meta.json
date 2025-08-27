@@ -40,27 +40,27 @@
 		{
 			"rom": "/roms/_test/game_solarian.neees",
 			"frames": 90,
-			"ppu": "TestPPU.v9.js"
+			"ppu": "TestPPU.v10.js"
 		},
 		{
 			"rom": "/roms/.all/DizzySheepDisaster.neees",
 			"frames": 90,
-			"ppu": "TestPPU.v9.js"
+			"ppu": "TestPPU.v10.js"
 		},
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 120,
-			"ppu": "TestPPU.v9.js"
+			"ppu": "TestPPU.v10.js"
 		},
 		{
 			"rom": "/roms/_test/ppu_sprite0hit.neees",
 			"frames": 150,
-			"ppu": "TestPPU.v9.js"
+			"ppu": "TestPPU.v10.js"
 		},
 		{
 			"rom": "/roms/_test/ppu_palette_ram.neees",
 			"frames": 30,
-			"ppu": "TestPPU.v9.js"
+			"ppu": "TestPPU.v10.js"
 		}
 	],
 	"memory": {

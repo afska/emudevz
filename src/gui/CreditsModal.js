@@ -341,6 +341,13 @@ export default class CreditsModal extends PureComponent {
 							APU and PPU tests
 						</Game>
 						<Game
+							emojis="🎨🐏"
+							link="https://forums.nesdev.org/viewtopic.php?t=567"
+							author="blargg"
+						>
+							Palette RAM test
+						</Game>
+						<Game
 							emojis="📦📥"
 							link="https://forums.nesdev.org/viewtopic.php?p=191062&sid=96d498ec05434794b59866a583ea4ed6#p191062"
 							author="Kragen (ported by rainwarrior)"

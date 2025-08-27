@@ -517,43 +517,28 @@ class BackgroundRenderer {
 	renderScanline() {
 		const { scanline: y, registers, memory } = this.ppu;
 
+		const nameTableId = registers.ppuCtrl.nameTableId;
 		const patternTableId = registers.ppuCtrl.backgroundPatternTableId;
+		const nameTableAddress = 0x2000 + nameTableId * 1024;
 
-		for (let x = 0; x < 256; ) {
-			const scrollX = this.ppu.registers.ppuScroll.x;
-			const scrollY = registers.ppuScroll.y;
-			const scrolledX = x + scrollX;
-			const scrolledY = y + scrollY;
-			const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
-			const nameTableX = scrolledX % 256;
-			const nameTableY = scrolledY % 240;
-			const nameTableAddress = 0x2000 + nameTableId * 1024;
-
-			const tileX = Math.floor(nameTableX / 8);
-			const tileY = Math.floor(nameTableY / 8);
+		for (let x = 0; x < 256; x += 8) {
+			const tileX = Math.floor(x / 8);
+			const tileY = Math.floor(y / 8);
 			const tileIndex = tileY * 32 + tileX;
 			const tileId = memory.read(nameTableAddress + tileIndex);
-			const paletteId = this._getBackgroundPaletteId(
-				nameTableId,
-				nameTableX,
-				nameTableY
-			);
+			const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
 
-			const tileStartX = nameTableX % 8;
-			const tileInsideY = nameTableY % 8;
-			const tilePixels = Math.min(8 - tileStartX, 256 - nameTableX);
+			const tileInsideY = y % 8;
 
 			const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
-			for (let xx = 0; xx < tilePixels; xx++) {
-				const colorIndex = tile.getColorIndex(tileStartX + xx);
+			for (let xx = 0; xx < 8; xx++) {
+				const colorIndex = tile.getColorIndex(xx);
 				const color =
 					colorIndex > 0
 						? this.ppu.getColor(paletteId, colorIndex)
 						: this.ppu.getColor(0, 0);
 				this.ppu.plotBG(x + xx, y, color, colorIndex);
 			}
-
-			x += tilePixels;
 		}
 	}
 
@@ -781,15 +766,11 @@ class OAMData extends InMemoryRegister.PPU {
 
 class PPUScroll extends InMemoryRegister.PPU {
 	onLoad() {
-		this.x = 0;
-		this.y = 0;
+		/* TODO: IMPLEMENT */
 	}
 
 	onWrite(value) {
-		if (this.ppu.registers.ppuAddr.latch) this.y = value;
-		else this.x = value;
-
-		this.ppu.registers.ppuAddr.latch = !this.ppu.registers.ppuAddr.latch;
+		/* TODO: IMPLEMENT */
 	}
 }
 

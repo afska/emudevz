@@ -10,6 +10,7 @@
 	["game_solarian.neees", true],
 	["ppu_emphasis.neees", true],
 	["ppu_mapper_irq.neees", true],
+	["ppu_masking.neees", true],
 	["ppu_palette_ram.neees", true],
 	["ppu_palette_ram.txt", true],
 	["ppu_road.neees", true],

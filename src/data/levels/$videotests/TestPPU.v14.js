@@ -1239,10 +1239,6 @@ export default class PPU {
 		this.spriteRenderer = new SpriteRenderer(this);
 	}
 
-	onLoad(mapper) {
-		this.mapper = mapper;
-	}
-
 	plotBG(x, y, color, colorIndex) {
 		this.colorIndexes[y * 256 + x] = colorIndex;
 		this.plot(x, y, color);
@@ -1293,7 +1289,6 @@ export default class PPU {
 		}
 
 		this.loopy.onPreLine(this.cycle);
-		if (this.cycle === 260) this.mapper.tick();
 	}
 
 	_onVisibleLine() {
@@ -1307,7 +1302,6 @@ export default class PPU {
 		}
 
 		this.loopy.onVisibleLine(this.cycle);
-		if (this.cycle === 260) this.mapper.tick();
 	}
 
 	_onVBlankLine(onInterrupt) {

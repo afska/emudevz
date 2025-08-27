@@ -37,35 +37,45 @@
 	},
 	"videoTests": [
 		{
+			"rom": "/roms/_test/ppu_masking.neees",
+			"frames": 90,
+			"ppu": "TestPPU.v12.js"
+		},
+		{
 			"rom": "/roms/_test/game_solarian.neees",
 			"frames": 90,
-			"ppu": "TestPPU.v11.js"
+			"ppu": "TestPPU.v12.js"
 		},
 		{
 			"rom": "/roms/.all/DizzySheepDisaster.neees",
 			"frames": 90,
-			"ppu": "TestPPU.v11.js"
+			"ppu": "TestPPU.v12.js"
 		},
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 120,
-			"ppu": "TestPPU.v11.js"
+			"ppu": "TestPPU.v12.js"
 		},
 		{
 			"rom": "/roms/_test/ppu_sprite0hit.neees",
 			"frames": 150,
-			"ppu": "TestPPU.v11.js"
+			"ppu": "TestPPU.v12.js"
 		},
 		{
 			"rom": "/roms/_test/ppu_palette_ram.neees",
 			"frames": 30,
-			"ppu": "TestPPU.v11.js"
+			"ppu": "TestPPU.v12.js"
 		},
 		{
 			"rom": "/roms/_test/240p_test_suite.neees",
-			"frames": 90,
-			"ppu": "TestPPU.v11.js",
+			"frames": 120,
+			"ppu": "TestPPU.v12.js",
 			"saveState": "240ptestsuite_scroll_vertical.ss"
+		},
+		{
+			"rom": "/roms/_test/ppu_split_statusbar.neees",
+			"frames": 120,
+			"ppu": "TestPPU.v12.js"
 		}
 	],
 	"memory": {
