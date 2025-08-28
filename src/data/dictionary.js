@@ -710,9 +710,9 @@ const dictionary = {
 			},
 			icon: "🎨",
 			en:
-				"The index of a palette inside Palette RAM. Backgrounds and sprites use different sets. Ranges from `0` to `7`.",
+				"The index of a palette inside Palette RAM. Background and sprites use different sets. Ranges from `0` to `7`.",
 			es:
-				"El índice de una paleta dentro de Palette RAM. Los fondos y sprites usan conjuntos distintos. Va de `0` a `7`.",
+				"El índice de una paleta dentro de Palette RAM. El fondo y los sprites usan conjuntos distintos. Va de `0` a `7`.",
 		},
 		"Palette RAM": {
 			icon: "🐏",
@@ -982,8 +982,11 @@ const dictionary = {
 			es:
 				"El sprite con índice OAM `0`. Tiene un comportamiento especial en la PPU, como activar el sprite-zero hit cuando se superpone con el fondo.",
 		},
-		"Sprite-zero hit|_Sprite zero hit": {
-			also: { es: "Sprite zero hit|_Sprite-zero hit" },
+		"Sprite-zero hit|_Sprite zero hit|_Sprite zero hit|_Sprite-zero hits": {
+			also: {
+				es:
+					"Sprite zero hit|_Sprite-zero hit|_Sprite zero hit|_Sprite-zero hits",
+			},
 			icon: "👊",
 			en:
 				"A condition that occurs when a visible pixel of the sprite zero overlaps a visible background pixel. When this happens, the PPU sets the sprite-zero hit flag in PPUStatus. <br /><br />Games often use it to time mid-frame effects like status bars or split screens.",

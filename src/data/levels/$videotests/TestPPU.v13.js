@@ -520,7 +520,10 @@ class BackgroundRenderer {
 		const patternTableId = registers.ppuCtrl.backgroundPatternTableId;
 
 		for (let x = 0; x < 256; ) {
-			if (!this.ppu.registers.ppuMask.showBackgroundInFirst8Pixels && x < 8) {
+			if (
+				!this.ppu.registers.ppuMask.showBackground ||
+				(!this.ppu.registers.ppuMask.showBackgroundInFirst8Pixels && x < 8)
+			) {
 				this.ppu.plotBG(x, y, this.ppu.getColor(0, 0), 0);
 				x++;
 				continue;
@@ -608,6 +611,8 @@ class SpriteRenderer {
 	}
 
 	renderScanline() {
+		if (!this.ppu.registers.ppuMask.showSprites) return;
+
 		const sprites = this._evaluate();
 		const buffer = this._render(sprites);
 		this._draw(buffer);
@@ -1268,14 +1273,12 @@ export default class PPU {
 	}
 
 	_onVisibleLine() {
-		if (!this.registers.ppuMask.isRenderingEnabled()) return;
-
 		if (this.cycle === 0) {
-			if (this.registers.ppuMask.showBackground)
-				this.backgroundRenderer.renderScanline();
-			if (this.registers.ppuMask.showSprites)
-				this.spriteRenderer.renderScanline();
+			this.backgroundRenderer.renderScanline();
+			this.spriteRenderer.renderScanline();
 		}
+
+		if (!this.registers.ppuMask.isRenderingEnabled()) return;
 
 		this.loopy.onVisibleLine(this.cycle);
 	}

@@ -33,29 +33,37 @@ exercise:
       **isRenderingEnabled()**:
         **->** returns ```javascript this.showBackground || this.showSprites```
   - |-
-    📚  in 🖥️  `PPU`, you want to <not do anything> if the rendering is disabled:
-      ```javascript if (!this.registers.ppuMask.isRenderingEnabled())
-        return;```
-    <add that> at the beginning of both `_onPreLine()` and `_onVisibleLine()`!
+    📚  in 🏞️  `BackgroundRenderer`, <change>:
+      **renderScanline()**:
+        **->** if (`showBackground` is off) <OR> (`showBackgroundInFirst8Pixels` is off and `x < 8`)
+          **->** just plot (with `PPU::plotBG(...)`) the backdrop color
+          **->** increment `x`
+          **->** `continue`! don't process further!
+        (remember that the backdrop color is ```javascript this.ppu.getColor(0, 0)```)
   - |-
-    📚  only call `BackgroundRenderer::renderScanline` if `showBackground` is enabled, and only call `SpriteRenderer::renderScanline` if `showSprites` is enabled
-  responses:
-  - shouldn't I also change the renderers? [renderers]
-
-renderers:
-  messages:
-  - yup, let's see...
+    📚  in 🛸  `SpriteRenderer`, <change> the following methods:
+      **renderScanline()**:
+        **->** on the first line, if `showSprites` is off, return! <don't do anything>!
+      **_render(...)**:
+        **->** apply a similar logic:
+          ```javascript if (!showSprites || (!showSpritesInFirst8Pixels && x < 8))
+            continue;```
+      **->** in the sprite-zero hit check, add both `showBackground` and `showSprites` as conditions
+        (if one of them is `false`, no sprite-zero hits should be triggered!)
   - |-
-    📚  in 🏞️  `BackgroundRenderer`, <change> `renderScanline()`...
-      **->** if `showBackgroundInFirst8Pixels` is off and `x < 8`
-        **->** just plot (with `PPU::plotBG(...)`) the backdrop color
-        **->** increment `x`
-        **->** `continue`! don't process further!
-      (remember that the backdrop color is ```javascript this.ppu.getColor(0, 0)```)
-  - |-
-    📚  in 🛸  `SpriteRenderer`, <change> `_render(...)`...
-      **->** you need a similar logic:
-        ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
-          continue;```
-      **->** in the sprite-zero hit `if`, add `showBackground` and `showSprites` as conditions: if one of them is disabled, it shouldn't be triggered!
+    📚  in 🖥️  `PPU`, change:
+    **_onPreLine()**:
+      **->** on the first line, if `!isRenderingEnabled()` in 🎭  PPUMask, return!
+    **_onVisibleLine()**:
+      **->** on the very <last line>, if `!isRenderingEnabled()` in 🎭  PPUMask, return!
+      **->** your code should look like this:
+        ```javascript
+        if (this.cycle === 0) {
+          // render background
+          // render sprites
+        }
+        
+        if (!this.registers.ppuMask.isRenderingEnabled()) return;
+        
+        // <<we'll add more code here later!>>```
   responses: []

@@ -1,25 +1,25 @@
 main:
   messages:
-  - el registro de video 🎭  PPUMask ($2001) permite a los programas habilitar o deshabilitar partes de la renderización
+  - el registro de video 🎭  PPUMask ($2001) permite a los programas habilitar o deshabilitar partes del renderizado
   - revisa nuevamente 📄  ~/docs/ppu/video_registers.es.md~
-  - 🏛️  los bits ~m~ y ~M~ controlan si la primera columna de ~8~px debe ser visible o no para los fondos y sprites respectivamente
-  - 🏞️  ~b~ habilita la renderización de fondos
-  - 🛸  y ~s~ habilita la renderización de sprites
+  - 🏛️  los bits ~m~ y ~M~ controlan si la primera columna de ~8~px debe ser visible o no para el fondo y sprites respectivamente
+  - 🏞️  ~b~ habilita el renderizado del fondo
+  - 🛸  y ~s~ habilita el renderizado de sprites
   responses:
-  - (*) ¿por qué un juego querría deshabilitar la renderización? [why]
+  - (*) ¿por qué un juego querría deshabilitar el renderizado? [why]
   - hagámoslo [exercise]
 
 why:
   messages:
-  - por ejemplo, para llenar VRAM más rápido usando el tiempo de VDraw, ocultando posibles glitches resultado de no hacerlo en 🏝️  VBlank
-  - los juegos típicamente escriben $00 fuera de gameplay para hacer eso
-  - y luego $1E para habilitar la renderización durante el gameplay
+  - por ejemplo, para llenar la VRAM más rápido usando el tiempo de VDraw, ocultando posibles glitches resultado de no hacerlo en 🏝️  VBlank
+  - los juegos normalmente escriben $00 fuera del gameplay para hacer eso
+  - y luego $1E para habilitar el renderizado durante el gameplay
   responses:
   - ...main
 
 exercise:
   messages:
-  - 📚  en `PPUMask`, implementa el método `onLoad()`, usando `addField(...)` para mapear los bits mencionados
+  - 📚  en 🎭  `PPUMask`, implementa el método `onLoad()`, usando `addField(...)` para mapear los bits mencionados
   - |-
     usa estos nombres:
       - `showBackgroundInFirst8Pixels`
@@ -27,36 +27,43 @@ exercise:
       - `showBackground`
       - `showSprites`
   - |-
-    📚  también, agrega estos métodos:
+    📚  además, agrega estos métodos:
       **onWrite(value)**:
         **->** llama a ```javascript this.setValue(value)```
       **isRenderingEnabled()**:
-        **->** retorna ```javascript this.showBackground || this.showSprites```
+        **->** devuelve ```javascript this.showBackground || this.showSprites```
   - |-
-    📚  en 🖥️  `PPU`, quieres <no hacer nada> si la renderización está deshabilitada:
-      ```javascript if (!this.registers.ppuMask.isRenderingEnabled())
-        return;```
-    <agrega eso> al comienzo de `_onPreLine()` y `_onVisibleLine()`!
+    📚  en 🏞️  `BackgroundRenderer`, <cambia>:
+      **renderScanline()**:
+        **->** si (`showBackground` está apagada) <OR> (`showBackgroundInFirst8Pixels` está apagada y `x < 8`)
+          **->** solo dibuja (con `PPU::plotBG(...)`) el color de fondo
+          **->** incrementa `x`
+          **->** ¡`continue`! ¡no proceses más!
+        (recuerda que el color de fondo es ```javascript this.ppu.getColor(0, 0)```)
   - |-
-    📚  solo llama a `BackgroundRenderer::renderScanline` si `showBackground` está habilitado,
-    y solo llama a `SpriteRenderer::renderScanline` si `showSprites` está habilitado
-  responses:
-  - ¿no debería también cambiar los renderizadores? [renderers]
-
-renderers:
-  messages:
-  - yep, veamos...
+    📚  en 🛸  `SpriteRenderer`, <cambia> los siguientes métodos:
+      **renderScanline()**:
+        **->** en la primera línea, si `showSprites` está apagada, ¡retorna! ¡<no hagas nada>!
+      **_render(...)**:
+        **->** aplica una lógica similar:
+          ```javascript if (!showSprites || (!showSpritesInFirst8Pixels && x < 8))
+            continue;```
+      **->** en la comprobación de sprite-zero hit, agrega tanto `showBackground` como `showSprites` como condiciones
+        (si una de ellos es `false`, ¡no se debe disparar ningún sprite-zero hit!)
   - |-
-    📚  en 🏞️  `BackgroundRenderer`, <cambia> `renderScanline()`:
-      **->** si `showBackgroundInFirst8Pixels` está apagada y `x < 8`:
-        **->** solo dibuja (con `PPU::plotBG(...)`) el color de fondo
-        **->** incrementa `x`
-        **->** `continue`! ¡no proceses más!
-      (recuerda que el color de fondo es ```javascript this.ppu.getColor(0, 0)```)
-  - |-
-    📚  en 🛸  `SpriteRenderer`, <cambia> `_render(...)`...
-      **->** necesitas una lógica similar:
-        ```javascript if (!this.ppu.registers.ppuMask.showSpritesInFirst8Pixels && x < 8)
-          continue;```
-      **->** en el `if` del sprite-zero hit, agrega `showBackground` y `showSprites` como condiciones: si uno de ellos está deshabilitado, ¡no debería activarse!
+    📚  en 🖥️  `PPU`, cambia:
+    **_onPreLine()**:
+      **->** en la primera línea, si `!isRenderingEnabled()` en 🎭  PPUMask, ¡retorna!
+    **_onVisibleLine()**:
+      **->** en la <última línea>, si `!isRenderingEnabled()` en 🎭  PPUMask, ¡retorna!
+      **->** tu código debería verse así:
+        ```javascript
+        if (this.cycle === 0) {
+          // render background
+          // render sprites
+        }
+        
+        if (!this.registers.ppuMask.isRenderingEnabled()) return;
+        
+        // <<¡agregaremos más código aquí después!>>```
   responses: []

@@ -2497,43 +2497,6 @@ it("doesn't reset anything on ~scanline=-1~, ~cycle=1~ if rendering is <off>", (
 	use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("doesn't call `backgroundRenderer.renderScanline()` if background rendering is <disabled>", () => {
-	const PPU = mainModule.default.PPU;
-	const ppu = new PPU({});
-	ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
-	ppu.onLoad?.(dummyMapper);
-	ppu.registers?.ppuMask?.onWrite?.(0b00010000);
-	sinon.spy(ppu, "plot");
-	sinon.spy(ppu.backgroundRenderer, "renderScanline");
-
-	for (let frame = 0; frame < 1; frame++) {
-		for (let scanline = -1; scanline < 261; scanline++) {
-			for (let cycle = 0; cycle < 341; cycle++) {
-				ppu.plot.resetHistory();
-				ppu.backgroundRenderer.renderScanline.resetHistory();
-				ppu.step(noop, noop);
-
-				if (scanline >= 0 && scanline < 240) {
-					if (cycle !== 0) {
-						expect(ppu.backgroundRenderer.renderScanline).to.not.have.been
-							.called;
-						expect(ppu.plot).to.not.have.been.called;
-					} else {
-						expect(ppu.backgroundRenderer.renderScanline).to.not.have.been
-							.called;
-					}
-				}
-			}
-		}
-	}
-})({
-	locales: {
-		es:
-			"no llama a `backgroundRenderer.renderScanline()` si el renderizado de fondos está <desactivado>",
-	},
-	use: ({ id }, book) => id >= book.getId("5b.22"),
-});
-
 it("doesn't call `spriteRenderer.renderScanline()` if sprite rendering is <disabled>", () => {
 	const PPU = mainModule.default.PPU;
 	const ppu = new PPU({});
