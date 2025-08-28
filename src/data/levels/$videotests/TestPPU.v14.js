@@ -1247,7 +1247,7 @@ export default class PPU {
 	plotBG(x, y, color, colorIndex) {
 		this.colorIndexes[y * 256 + x] = colorIndex;
 		this.plot(x, y, color);
-		this.loopy.onPlot(x);
+		if (this.registers.ppuMask.showBackground) this.loopy.onPlot(x);
 	}
 
 	plot(x, y, color) {

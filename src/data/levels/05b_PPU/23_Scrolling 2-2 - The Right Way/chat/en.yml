@@ -29,7 +29,8 @@ exercise:
       ```javascript this.loopy.onVisibleLine(this.cycle);```
   - |-
     📚  at the end of the `plotBG(...)` method, call:
-      ```javascript this.loopy.onPlot(x);```
+      ```javascript if (this.registers.ppuMask.showBackground)
+        this.loopy.onPlot(x);```
   - |-
     📚  in 🎛️  `PPUCtrl`, remove the `nameTableId` field; replace its assignment in the `onWrite(...)` method with:
       ```javascript this.ppu.loopy.onPPUCtrlWrite(value);```
