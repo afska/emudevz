@@ -18,6 +18,9 @@ const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
 const SCALE = 1;
 
+const COLOR_DIFF = "#d9534f";
+const COLOR_OK = "#3fb950";
+
 export default class ImageDiffModal extends PureComponent {
 	state = {
 		diffMode: "swipe",
@@ -33,20 +36,15 @@ export default class ImageDiffModal extends PureComponent {
 		if (
 			(openedNow && !openedBefore) ||
 			(openedNow && this.props.sequence !== prevProps.sequence)
-		) {
-			if (this._cache) this._cache.clear();
-
-			this.setState(
-				{ index: this.props.sequence.initialIndex || 1, rendered: null },
-				this._renderCurrentIndex
-			);
-		}
+		)
+			this.reset();
 	}
 
 	reset() {
 		const { sequence } = this.props;
 
-		if (this._cache) this._cache.clear();
+		this._cache?.clear();
+		this._prepareTimeline();
 
 		this.setState(
 			{
@@ -66,6 +64,20 @@ export default class ImageDiffModal extends PureComponent {
 		const isOpen = sequence != null;
 		const isDifference = diffMode === "difference";
 
+		const isOk =
+			this._diffMap && index >= 1 && index <= (sequence?.total || 0)
+				? this._diffMap[index - 1]
+				: null;
+		const labelStyle =
+			isOk == null
+				? undefined
+				: {
+						color: isOk ? COLOR_OK : COLOR_DIFF,
+						display: "flex",
+						justifyContent: "space-between",
+						alignItems: "center",
+				  };
+
 		return (
 			<Modal
 				show={isOpen}
@@ -80,8 +92,12 @@ export default class ImageDiffModal extends PureComponent {
 					<Form>
 						{sequence && (
 							<Form.Group>
-								<Form.Label>
-									{locales.get("check_diffs_frame")} ({index}/{sequence.total})
+								<Form.Label style={labelStyle}>
+									<span>
+										{locales.get("check_diffs_frame")} ({index}/{sequence.total}
+										)
+									</span>
+									{isOk != null && <span>{isOk ? "✅" : "❌"}</span>}
 								</Form.Label>
 								<ValueSlider
 									title={`${index} / ${sequence.total}`}
@@ -94,6 +110,8 @@ export default class ImageDiffModal extends PureComponent {
 									min={1}
 									max={sequence.total}
 									disableTooltip
+									railGradient={this._railGradient}
+									hideTrack
 								/>
 							</Form.Group>
 						)}
@@ -148,9 +166,9 @@ export default class ImageDiffModal extends PureComponent {
 						>
 							{isOpen && rendered && (
 								<ImageDiff
-									/* // HACK: Flipped on purpose so green/red means "correct/incorrect" instead of "new/old" */
-									before={rendered.expected}
-									after={rendered.actual}
+									/* (used this way so green/red means "correct/incorrect" instead of "new/old") */
+									before={rendered.actual}
+									after={rendered.expected}
 									type={diffMode}
 									value={fader}
 									width={SCREEN_WIDTH * SCALE}
@@ -168,6 +186,67 @@ export default class ImageDiffModal extends PureComponent {
 		this.props.onClose();
 		this.reset();
 	};
+
+	_prepareTimeline() {
+		const { sequence } = this.props;
+
+		if (!sequence) {
+			this._diffMap = null;
+			this._railGradient = undefined;
+			return;
+		}
+
+		this._diffMap = this._computeDiffMap(sequence);
+		this._railGradient = this._buildTimelineGradient(
+			this._diffMap,
+			COLOR_OK,
+			COLOR_DIFF
+		);
+	}
+
+	_computeDiffMap(sequence) {
+		const { total, actualFrames, expectedFrames } = sequence;
+		const map = new Array(total);
+
+		for (let i = 0; i < total; i++) {
+			const a = actualFrames[i];
+			const b = expectedFrames[i];
+			let equal = true;
+			const len = Math.min(a.length, b.length);
+			for (let j = 0; j < len; j++) {
+				if (a[j] !== b[j]) {
+					equal = false;
+					break;
+				}
+			}
+			map[i] = equal; // (true = green, false = red)
+		}
+
+		return map;
+	}
+
+	_buildTimelineGradient(boolMap, green, red) {
+		const n = boolMap.length;
+		const stops = [];
+		let start = 0;
+		let current = boolMap[0];
+
+		for (let i = 1; i <= n; i++) {
+			if (i === n || boolMap[i] !== current) {
+				const from = (start / n) * 100;
+				const to = (i / n) * 100;
+				const color = current ? green : red;
+				stops.push(
+					`${color} ${from.toFixed(4)}%`,
+					`${color} ${to.toFixed(4)}%`
+				);
+				start = i;
+				current = boolMap[i];
+			}
+		}
+
+		return `linear-gradient(to right, ${stops.join(", ")})`;
+	}
 
 	_renderCurrentIndex = () => {
 		const { sequence } = this.props;

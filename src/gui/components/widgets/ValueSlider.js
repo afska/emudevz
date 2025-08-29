@@ -28,15 +28,27 @@ export default class ValueSlider extends PureComponent {
 			min = 0,
 			max = 1,
 			disabled = false,
+			railGradient = null,
+			hideTrack = false,
 			...rest
 		} = this.props;
 
-		const valueHolder =
-			value !== null
+		const valueHolder = value != null ? { value } : {};
+
+		const sx =
+			railGradient || hideTrack
 				? {
-						value,
+						...(railGradient && {
+							"& .MuiSlider-rail": {
+								opacity: 1,
+								backgroundImage: railGradient,
+							},
+						}),
+						...(hideTrack && {
+							"& .MuiSlider-track": { display: "none" },
+						}),
 				  }
-				: {};
+				: undefined;
 
 		return (
 			<Stack
@@ -66,6 +78,8 @@ export default class ValueSlider extends PureComponent {
 					defaultValue={defaultValue}
 					onChange={onChange}
 					disabled={disabled}
+					track={hideTrack ? false : undefined}
+					sx={sx}
 				/>
 			</Stack>
 		);
