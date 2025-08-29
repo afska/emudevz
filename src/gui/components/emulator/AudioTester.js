@@ -9,6 +9,7 @@ import Emulator from "./Emulator";
 import styles from "./AudioTester.module.css";
 
 const COMPARABLE_WINDOW = 1000;
+const SAMPLE_EPSILON = 1e-4;
 
 export default class AudioTester extends PureComponent {
 	_samplesA = {
@@ -170,10 +171,10 @@ export default class AudioTester extends PureComponent {
 				this._samplesA.comparedMix.length > 0 &&
 				this._samplesB.comparedMix.length > 0
 			) {
-				const sampleA = Math.floor(this._samplesA.comparedMix.shift());
-				const sampleB = Math.floor(this._samplesB.comparedMix.shift());
+				const sampleA = this._samplesA.comparedMix.shift();
+				const sampleB = this._samplesB.comparedMix.shift();
 
-				if (sampleA !== sampleB) success = false;
+				if (Math.abs(sampleA - sampleB) > SAMPLE_EPSILON) success = false;
 			}
 
 			if (!success) {
