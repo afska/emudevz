@@ -49,7 +49,7 @@ class SettingsModal extends PureComponent {
 				<Modal.Body>
 					<Form>
 						<Form.Group>
-							<Form.Label>{locales.get("language")}</Form.Label>
+							<Form.Label>🗣️ {locales.get("language")}</Form.Label>
 							<div className={styles.options}>
 								{LANGUAGES.map((it) => (
 									<div key={`language-${it}`}>
@@ -67,7 +67,7 @@ class SettingsModal extends PureComponent {
 							</div>
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
-							<Form.Label>{locales.get("speed_up_chat")}</Form.Label>
+							<Form.Label>💨 {locales.get("speed_up_chat")}</Form.Label>
 							<div className={styles.options}>
 								<div>
 									<Form.Check
@@ -94,7 +94,7 @@ class SettingsModal extends PureComponent {
 							</div>
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
-							<Form.Label>{locales.get("save_file")}</Form.Label>
+							<Form.Label>🗂️ {locales.get("save_file")}</Form.Label>
 							<div className={styles.options}>
 								<div>
 									<Button

@@ -94,8 +94,8 @@ export default class ImageDiffModal extends PureComponent {
 							<Form.Group>
 								<Form.Label style={labelStyle}>
 									<span>
-										{locales.get("check_diffs_frame")} ({index}/{sequence.total}
-										)
+										🖼️ {locales.get("check_diffs_frame")} ({index}/
+										{sequence.total})
 									</span>
 									{isOk != null && <span>{isOk ? "✅" : "❌"}</span>}
 								</Form.Label>
@@ -117,7 +117,7 @@ export default class ImageDiffModal extends PureComponent {
 						)}
 
 						<Form.Group style={{ marginTop: MARGIN }}>
-							<Form.Label>{locales.get("check_diffs_mode")}</Form.Label>
+							<Form.Label>🔎 {locales.get("check_diffs_mode")}</Form.Label>
 							<div className={styles.options}>
 								{DIFF_MODES.map((it) => (
 									<div key={`diffmode-${it}`}>

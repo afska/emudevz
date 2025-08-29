@@ -230,7 +230,7 @@ export default class TestCommand extends Command {
 			return false;
 		}
 
-		await this._terminal.write(locales.get("tests_audio_running"));
+		await this._terminal.write(locales.get("tests_audio_running") + " ");
 		await this._terminal.writeln(
 			$path.basename(audioTest.internalRom ?? audioTest.rom),
 			theme.ACCENT
