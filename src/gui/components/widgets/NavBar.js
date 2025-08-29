@@ -33,7 +33,7 @@ class NavBar extends PureComponent {
 	state = {
 		isCalculatorOpen: false,
 		areYouSureRollback: false,
-		imageDiffUrl: null,
+		imageDiffSequence: null,
 	};
 
 	render() {
@@ -68,7 +68,7 @@ class NavBar extends PureComponent {
 				/>
 
 				<ImageDiffModal
-					imageUrls={this.state.imageDiffUrl}
+					sequence={this.state.imageDiffSequence}
 					onClose={this._closeImageDiff}
 				/>
 
@@ -218,25 +218,20 @@ class NavBar extends PureComponent {
 		Level.current.launchEmulator();
 	};
 
-	_showImageDiff = async (oldImageUrl, newImageUrl) => {
+	_setImageDiff = (sequence) => {
 		this.setState({
-			imageDiffUrl: {
-				old: oldImageUrl,
-				new: newImageUrl,
-			},
+			imageDiffSequence: sequence,
 		});
 	};
 
 	_closeImageDiff = () => {
-		this.setState({
-			imageDiffUrl: null,
-		});
+		this._setImageDiff(null);
 	};
 
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
 			"new-listeners": () => this.forceUpdate(),
-			"image-diff": this._showImageDiff,
+			"image-diff": this._setImageDiff,
 			"pause-music": () => {
 				this.forceUpdate();
 			},

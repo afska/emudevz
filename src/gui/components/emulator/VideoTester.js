@@ -12,6 +12,8 @@ export default class VideoTester extends PureComponent {
 	_framesA = [];
 	_framesB = [];
 	_count = 0;
+	_failed = false;
+	_firstFailIndex = null;
 
 	render() {
 		const { PPU, rom, saveState, onClose } = this.props;
@@ -127,50 +129,60 @@ export default class VideoTester extends PureComponent {
 		if (this._framesB.length < this._testFrames)
 			this._framesB.push(frameBuffer.slice());
 
-		if (this._framesA.length > 0 && this._framesB.length > 0) {
-			const frameA = this._framesA.shift();
-			const frameB = this._framesB.shift();
+		if (
+			this._framesA.length > this._count &&
+			this._framesB.length > this._count
+		) {
+			const frameA = this._framesA[this._count];
+			const frameB = this._framesB[this._count];
 
-			let success = true;
-			for (let i = 0; i < 256 * 240; i++)
-				if (frameA[i] !== frameB[i]) success = false;
+			let same = true;
+			for (let i = 0; i < 256 * 240; i++) {
+				if (frameA[i] !== frameB[i]) {
+					same = false;
+					break;
+				}
+			}
 
-			if (!success) {
-				this._emulatorA.setBuffer(frameA);
-				this._emulatorB.setBuffer(frameB);
-				this._screenshotA = this._emulatorA.getScreenshot();
-				this._screenshotB = this._emulatorB.getScreenshot();
-				this._emulatorA.stop();
-				this._emulatorB.stop();
-				this._symbol.innerHTML = "❌";
-				this.props.onEnd({
-					success,
-					frame: this._count,
-					total: this._testFrames,
-				});
-				this._progressBar.setBarFillColor("#d9534f");
-				this._closeButton.style.display = "block";
-
-				this._checkDiffsButton.style.display = "block";
-				return;
+			if (!same) {
+				if (!this._failed) {
+					this._failed = true;
+					this._firstFailIndex = this._count;
+					this._symbol.innerHTML = "❌";
+					this._progressBar.setBarFillColor("#d9534f");
+					this._closeButton.style.display = "block";
+				}
 			}
 
 			this._count++;
 
-			if (this._count < this._testFrames) {
-				const percentage = (this._count / this._testFrames) * 100;
-				this._progressBar.setPercentage(percentage);
-				this._detail.innerHTML = this._count + " / " + this._testFrames;
-			} else {
-				this._progressBar.setPercentage(100);
-				this.props.onEnd({ success: true });
-				this._detail.innerHTML = this._count + " / " + this._testFrames;
+			const percentage = Math.min(100, (this._count / this._testFrames) * 100);
+			this._progressBar.setPercentage(percentage);
+			this._detail.innerHTML = this._count + " / " + this._testFrames;
+
+			if (this._count >= this._testFrames) {
+				if (this._failed) this._checkDiffsButton.style.display = "block";
+
+				this.props.onEnd({
+					success: !this._failed,
+					frame: this._failed ? this._firstFailIndex : this._count - 1,
+					total: this._testFrames,
+				});
 			}
 		}
 	};
 
 	_checkDiffs = () => {
-		bus.emit("image-diff", this._screenshotB, this._screenshotA);
+		const idx = this._firstFailIndex ?? Math.max(0, this._count - 1);
+
+		const sequence = {
+			total: this._testFrames,
+			initialIndex: idx + 1, // (1-based)
+			actualFrames: this._framesA,
+			expectedFrames: this._framesB,
+		};
+
+		bus.emit("image-diff", sequence);
 	};
 
 	_setError = (e) => {

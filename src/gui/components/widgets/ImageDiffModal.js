@@ -22,21 +22,48 @@ export default class ImageDiffModal extends PureComponent {
 	state = {
 		diffMode: "swipe",
 		fader: 0.5,
+		index: 1,
+		rendered: null, // { actual, expected }
 	};
 
-	componentDidMount() {
-		this.reset();
+	componentDidUpdate(prevProps) {
+		const openedNow = this.props.sequence != null;
+		const openedBefore = prevProps.sequence != null;
+
+		if (
+			(openedNow && !openedBefore) ||
+			(openedNow && this.props.sequence !== prevProps.sequence)
+		) {
+			if (this._cache) this._cache.clear();
+
+			this.setState(
+				{ index: this.props.sequence.initialIndex || 1, rendered: null },
+				this._renderCurrentIndex
+			);
+		}
 	}
 
 	reset() {
-		this.setState({ diffMode: "swipe", fader: 0.5 });
+		const { sequence } = this.props;
+
+		if (this._cache) this._cache.clear();
+
+		this.setState(
+			{
+				diffMode: "swipe",
+				fader: 0.5,
+				index: sequence?.initialIndex ?? 1,
+				rendered: null,
+			},
+			this._renderCurrentIndex
+		);
 	}
 
 	render() {
-		const { imageUrls } = this.props;
-		const { diffMode, fader } = this.state;
+		const { sequence } = this.props;
+		const { diffMode, fader, index, rendered } = this.state;
 
-		const isOpen = imageUrls != null;
+		const isOpen = sequence != null;
 		const isDifference = diffMode === "difference";
 
 		return (
@@ -51,7 +78,27 @@ export default class ImageDiffModal extends PureComponent {
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group>
+						{sequence && (
+							<Form.Group>
+								<Form.Label>
+									{locales.get("check_diffs_frame")} ({index}/{sequence.total})
+								</Form.Label>
+								<ValueSlider
+									title={`${index} / ${sequence.total}`}
+									value={index}
+									onChange={(e) => {
+										const next = Number(e.target.value);
+										this.setState({ index: next }, this._renderCurrentIndex);
+									}}
+									step={1}
+									min={1}
+									max={sequence.total}
+									disableTooltip
+								/>
+							</Form.Group>
+						)}
+
+						<Form.Group style={{ marginTop: MARGIN }}>
 							<Form.Label>{locales.get("check_diffs_mode")}</Form.Label>
 							<div className={styles.options}>
 								{DIFF_MODES.map((it) => (
@@ -99,11 +146,11 @@ export default class ImageDiffModal extends PureComponent {
 							)}
 							style={{ marginTop: MARGIN }}
 						>
-							{isOpen && (
+							{isOpen && rendered && (
 								<ImageDiff
-									/* // HACK: Flipped on purpose */
-									before={imageUrls.new}
-									after={imageUrls.old}
+									/* // HACK: Flipped on purpose so green/red means "correct/incorrect" instead of "new/old" */
+									before={rendered.expected}
+									after={rendered.actual}
 									type={diffMode}
 									value={fader}
 									width={SCREEN_WIDTH * SCALE}
@@ -121,4 +168,52 @@ export default class ImageDiffModal extends PureComponent {
 		this.props.onClose();
 		this.reset();
 	};
+
+	_renderCurrentIndex = () => {
+		const { sequence } = this.props;
+		if (!sequence) return;
+
+		const index = Math.min(Math.max(1, this.state.index), sequence.total) - 1;
+
+		this._cache = this._cache || new Map();
+		if (this._cache.has(index)) {
+			this.setState({ rendered: this._cache.get(index) });
+			return;
+		}
+
+		const rendered = {
+			expected: this._bufferToDataURL(sequence.expectedFrames[index]),
+			actual: this._bufferToDataURL(sequence.actualFrames[index]),
+		};
+		this._cache.set(index, rendered);
+		this.setState({ rendered });
+	};
+
+	_bufferToDataURL(buffer, w = SCREEN_WIDTH, h = SCREEN_HEIGHT) {
+		const canvas = document.createElement("canvas");
+		canvas.width = w;
+		canvas.height = h;
+		const ctx = canvas.getContext("2d");
+		const data = new Uint8ClampedArray(w * h * 4);
+		for (let i = 0, p = 0; i < w * h; i++, p += 4) {
+			const c = buffer[i] >>> 0;
+			data[p] = c & 0xff;
+			data[p + 1] = (c >>> 8) & 0xff;
+			data[p + 2] = (c >>> 16) & 0xff;
+			data[p + 3] = (c >>> 24) & 0xff;
+		}
+		const img = new ImageData(data, w, h);
+		ctx.putImageData(img, 0, 0);
+		return canvas.toDataURL();
+	}
 }
+
+ImageDiffModal.propTypes = {
+	sequence: PropTypes.shape({
+		total: PropTypes.number.isRequired,
+		initialIndex: PropTypes.number,
+		actualFrames: PropTypes.arrayOf(PropTypes.object).isRequired, // Uint32Array
+		expectedFrames: PropTypes.arrayOf(PropTypes.object).isRequired, // Uint32Array
+	}),
+	onClose: PropTypes.func,
+};

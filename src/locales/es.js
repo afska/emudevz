@@ -19,6 +19,7 @@ export default {
 	chapter_next: "Ir al siguiente capítulo",
 	chapter_previous: "Ir al capítulo anterior",
 	check_diffs: "Analizar diferencias",
+	check_diffs_frame: "Frame",
 	check_diffs_mode: "Modo de comparación",
 	check_diffs_mode_fade: "Desvanecer",
 	check_diffs_mode_swipe: "Deslizar",
