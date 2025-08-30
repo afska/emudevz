@@ -26,7 +26,7 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 					<canvas
 						className={styles.imgui}
 						ref={this._onCanvas}
-						tabIndex="-1"
+						// tabIndex={-1} // (don't do this! breaks buttons!)
 					></canvas>
 				</div>
 			);
