@@ -22,6 +22,8 @@ export default GenericDebugger(
 			this.progressValue = 0;
 			this.progressText = "";
 			this.didFail = false;
+			this.finalSamples = null;
+
 			this._player = null;
 			this._currentSamples = null;
 			this._trimPercent = 100;
@@ -70,7 +72,10 @@ export default GenericDebugger(
 		_drawWaves(emulation, color, which) {
 			if (!emulation) return;
 
-			this._source = { ...emulation.channelSamples };
+			this._source =
+				this.finalSamples != null
+					? this.finalSamples[which]
+					: emulation.channelSamples;
 
 			const mix = this._source.mix;
 			const pulse1 = this._source.pulse1;

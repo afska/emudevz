@@ -9,10 +9,20 @@ import Emulator from "./Emulator";
 import styles from "./AudioTester.module.css";
 
 const SAMPLE_EPSILON = 1e-4;
+const SAMPLE_GROUP = () => ({
+	mix: [],
+	pulse1: [],
+	pulse2: [],
+	triangle: [],
+	noise: [],
+	dmc: [],
+});
 
 export default class AudioTester extends PureComponent {
-	_mixA = [];
-	_mixB = [];
+	_samples = {
+		A: SAMPLE_GROUP(),
+		B: SAMPLE_GROUP(),
+	};
 	_framesA = 0;
 	_framesB = 0;
 	_count = 0;
@@ -103,8 +113,16 @@ export default class AudioTester extends PureComponent {
 
 	_onActualFrame = (frameBuffer, neees, emulation) => {
 		if (this._framesA < this._testFrames) {
-			this._mixA = [...emulation.channelSamples.mix];
+			this._samples.A.mix = [...emulation.channelSamples.mix];
+			this._samples.A.pulse1 = [...emulation.channelSamples.pulse1];
+			this._samples.A.pulse1 = [...emulation.channelSamples.pulse2];
+			this._samples.A.triangle = [...emulation.channelSamples.triangle];
+			this._samples.A.noise = [...emulation.channelSamples.noise];
+			this._samples.A.dmc = [...emulation.channelSamples.dmc];
 			this._framesA++;
+		} else {
+			this._emulatorA.stop();
+			this._onEnd();
 		}
 	};
 
@@ -112,7 +130,12 @@ export default class AudioTester extends PureComponent {
 		this.props.onFrame();
 
 		if (this._framesB < this._testFrames) {
-			this._mixB = [...emulation.channelSamples.mix];
+			this._samples.B.mix = [...emulation.channelSamples.mix];
+			this._samples.B.pulse1 = [...emulation.channelSamples.pulse1];
+			this._samples.B.pulse1 = [...emulation.channelSamples.pulse2];
+			this._samples.B.triangle = [...emulation.channelSamples.triangle];
+			this._samples.B.noise = [...emulation.channelSamples.noise];
+			this._samples.B.dmc = [...emulation.channelSamples.dmc];
 			this._framesB++;
 		}
 
@@ -120,9 +143,13 @@ export default class AudioTester extends PureComponent {
 			if (this._framesA > 0 && this._framesB > 0) {
 				let success = true;
 				let i = 0;
-				while (success && i < this._mixA.length && i < this._mixB.length) {
-					const sampleA = this._mixA[i];
-					const sampleB = this._mixB[i];
+				while (
+					success &&
+					i < this._samples.A.mix.length &&
+					i < this._samples.B.mix.length
+				) {
+					const sampleA = this._samples.A.mix[i];
+					const sampleB = this._samples.B.mix[i];
 					if (Math.abs(sampleA - sampleB) > SAMPLE_EPSILON) success = false;
 					i++;
 				}
@@ -143,9 +170,15 @@ export default class AudioTester extends PureComponent {
 			const percentage = (this._count / this._testFrames) * 100;
 			this._comparer.debuggerGUI.progressValue = percentage;
 		} else {
-			this._comparer.debuggerGUI.progressValue = 100;
-			this._emulatorA.stop();
 			this._emulatorB.stop();
+			this._onEnd();
+		}
+	};
+
+	_onEnd = () => {
+		if (this._samples.A.mix.length === this._samples.B.mix.length) {
+			this._comparer.debuggerGUI.finalSamples = this._samples;
+			this._comparer.debuggerGUI.progressValue = 100;
 			this.props.onEnd({
 				success: !this._comparer.debuggerGUI.didFail,
 				frame: this._firstFailIndex,
