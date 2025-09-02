@@ -213,7 +213,7 @@ export default class EmulatorRunner extends PureComponent {
 							style={{ marginRight: 8 }}
 							Icon={FaStop}
 							tooltip={locales.get("emulation_stop")}
-							onClick={this._stop}
+							onClick={this.stop}
 						/>
 					)}
 				</div>
@@ -231,6 +231,11 @@ export default class EmulatorRunner extends PureComponent {
 	componentWillUnmount() {
 		this._subscriber.release();
 	}
+
+	stop = () => {
+		this._emulator?.stop();
+		this.props.onStop();
+	};
 
 	_setError = (e) => {
 		console.error(e);
@@ -308,15 +313,11 @@ export default class EmulatorRunner extends PureComponent {
 		if (isFullReload) {
 			const saveState =
 				(keepState && this._emulator?.neees?.getSaveState()) || null;
+			this.stop();
 			this.props.onRestart(saveState);
 		} else {
 			this._emulator?.reloadCode(keepState);
 		}
-	};
-
-	_stop = () => {
-		this._emulator?.stop();
-		this.props.onStop();
 	};
 
 	_openROM = () => {

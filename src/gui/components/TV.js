@@ -143,6 +143,9 @@ export default class TV extends PureComponent {
 			case "rom": {
 				return (
 					<EmulatorRunner
+						ref={(ref) => {
+							this._emulatorRunner = ref;
+						}}
 						rom={content}
 						error={_error}
 						saveState={_saveState}
@@ -150,6 +153,7 @@ export default class TV extends PureComponent {
 							this.setState({ _error: e });
 						}}
 						onLoadROM={(fileContent) => {
+							this._emulatorRunner?.stop();
 							this._resetContent(fileContent);
 						}}
 						onRestart={(saveState) => {
