@@ -372,6 +372,7 @@ class MultiFile extends PureComponent {
 		if (isCtrlE) {
 			e.preventDefault();
 			this._closeSelectedFile();
+			this._refresh();
 			return;
 		}
 
