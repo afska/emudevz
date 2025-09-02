@@ -166,6 +166,8 @@ export default class Level {
 
 		if (tvRom != null) {
 			tvRom.setContent(rom, "rom");
+			const instanceName = this.$layout.getInstanceName(tvRom);
+			this.$layout.focus(instanceName);
 		} else if (bus.isListeningTo("pin")) {
 			bus.emit("pin", {
 				Component: TV,
