@@ -1,4 +1,5 @@
 import { indentSelection } from "@codemirror/commands";
+import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 
 function stripCommonIndent(text) {
@@ -42,6 +43,12 @@ function stripCommonIndent(text) {
 
 export default EditorView.domEventHandlers({
 	paste(event, view) {
+		if (
+			view.state.facet(EditorState.readOnly) ||
+			!view.state.facet(EditorView.editable)
+		)
+			return false;
+
 		event.preventDefault();
 		const raw = event.clipboardData.getData("text/plain");
 		const normalized = stripCommonIndent(raw);
