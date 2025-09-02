@@ -62,14 +62,12 @@ export default EditorView.domEventHandlers({
 		});
 
 		// indent the inserted block, then collapse cursor to its end
-		setTimeout(() => {
-			indentSelection(view);
-			const sel = view.state.selection.main;
-			const end = Math.max(sel.anchor, sel.head);
-			view.dispatch({
-				selection: { anchor: end },
-				scrollIntoView: true,
-			});
+		indentSelection(view);
+		const sel = view.state.selection.main;
+		const end = Math.max(sel.anchor, sel.head);
+		view.dispatch({
+			selection: { anchor: end },
+			scrollIntoView: true,
 		});
 
 		return true;
