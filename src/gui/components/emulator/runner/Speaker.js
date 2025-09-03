@@ -1,9 +1,12 @@
-import audioWorklet from "worklet-loader!./audioWorklet.js";
+import audioWorklet from "./audioWorklet?worker&url";
 
 const WORKLET_NAME = "player-worklet";
 const WEBAUDIO_BUFFER_SIZE = 1024;
 const SAMPLE_RATE = 44100;
 const CHANNELS = 1;
+
+let sharedAudioContext = null;
+let sharedWorkletModulePromise = null;
 
 export default class Speaker {
 	constructor(onAudioRequested = () => {}, initialVolume = 1) {
@@ -15,17 +18,21 @@ export default class Speaker {
 		if (this._audioCtx) return;
 		if (!window.AudioContext) return;
 
-		this._audioCtx = new window.AudioContext({
-			sampleRate: SAMPLE_RATE,
-		});
+		if (!sharedAudioContext)
+			sharedAudioContext = new window.AudioContext({ sampleRate: SAMPLE_RATE });
+		this._audioCtx = sharedAudioContext;
 
 		this.gainNode = this._audioCtx.createGain();
 		this.gainNode.gain.value = this.initialVolume;
 		this.gainNode.connect(this._audioCtx.destination);
 
-		await this._audioCtx.audioWorklet.addModule(audioWorklet);
+		if (!sharedWorkletModulePromise)
+			sharedWorkletModulePromise = this._audioCtx.audioWorklet.addModule(
+				audioWorklet
+			);
+		await sharedWorkletModulePromise;
 		if (this._audioCtx == null) {
-			this.stop();
+			await this.stop();
 			return;
 		}
 
@@ -53,16 +60,25 @@ export default class Speaker {
 		this.gainNode.gain.value = volume;
 	};
 
-	stop() {
+	async stop() {
 		if (this.playerWorklet) {
+			this.playerWorklet.port.onmessage = null;
 			this.playerWorklet.port.close();
 			this.playerWorklet.disconnect();
 			this.playerWorklet = null;
 		}
 
-		if (this._audioCtx) {
-			this._audioCtx.close().catch(console.error);
-			this._audioCtx = null;
+		if (this.gainNode) {
+			this.gainNode.disconnect();
+			this.gainNode = null;
+		}
+
+		const ctx = this._audioCtx;
+		this._audioCtx = null;
+		if (ctx && ctx !== sharedAudioContext) {
+			try {
+				await ctx.close();
+			} catch {}
 		}
 	}
 }

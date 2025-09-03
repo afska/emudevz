@@ -3,27 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run web",
-    "dev": "npm run web",
-    "web": "react-scripts start",
-    "desktop": "concurrently \"cross-env BROWSER=none react-scripts start\" \"cross-env ELECTRON_START_URL=http://localhost:3000 electron .\"",
+    "start": "vite",
+    "dev": "vite",
     "package": "rm -rf public/levels && node ./scripts/package-levels.js",
-    "deploy": "bash ./scripts/deploy.sh",
-    "build:web": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
-    "build:windows": "bash ./scripts/build-desktop-windows.sh",
-    "build:linux": "bash ./scripts/build-desktop-linux.sh",
-    "___": "___",
-    "test": "react-scripts test",
-    "electron": "electron",
-    "build:ghpages": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=/emudevz-supersecret-link-pls-do-not-share react-scripts build",
-    "build:electron": "cross-env GENERATE_SOURCEMAP=false PUBLIC_URL=./ react-scripts build"
+    "build": "vite build",
+    "deploy": "bash ./scripts/deploy.sh"
   },
   "//": [
     "[!] Packages with fixed versions are conflictive. Do not update them.",
     "For example, updating @codemirror breaks highlighting somehow."
   ],
   "dependencies": {
-    "@avinlab/react-flash-change": "^1.2.0",
     "@codemirror/lang-javascript": "6.1.0",
     "@codemirror/language": "6.1.0",
     "@codemirror/lint": "6.0.0",
@@ -34,14 +24,19 @@
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.16",
     "@neshacker/6502-tools": "github:afska/6502#3de7e48e797fe5e32745b467015d57b0755b96e8",
+    "@pixi/canvas-renderer": "6.3.0",
     "@pixi/layers": "^1.0.11",
     "@rematch/core": "^2.2.0",
     "@rematch/loading": "^2.1.2",
     "@rematch/persist": "^2.1.2",
     "@uiw/codemirror-extensions-langs": "4.12.3",
     "@uiw/react-codemirror": "4.11.6",
+    "@xterm/addon-fit": "0.10.0",
+    "@xterm/addon-image": "0.8.0",
+    "@xterm/addon-webgl": "^0.18.0",
+    "@xterm/xterm": "5.5.0",
     "bootstrap": "^5.2.0",
-    "broken-neees": "^1.0.62",
+    "broken-neees": "^1.0.63",
     "browserfs": "^1.4.3",
     "classnames": "^2.2.6",
     "cli-highlight": "^2.1.11",
@@ -50,6 +45,7 @@
     "eslint-linter-browserify": "^9.13.0",
     "eventemitter3": "^4.0.7",
     "globals": "^15.12.0",
+    "grapheme-splitter": "^1.0.4",
     "highlight.js": "^11.11.1",
     "history": "^4.10.1",
     "javascript-time-ago": "^2.5.11",
@@ -62,53 +58,31 @@
     "path-browserify-esm": "^1.0.6",
     "pixi-filters": "^4.2.0",
     "pixi-lights": "^3.0.0",
-    "pixi.js": "^6.3.0",
+    "pixi.js": "6.3.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.5.0",
-    "react-diff-viewer": "3.1.1",
+    "react-diff-viewer-continued": "^3.4.0",
     "react-dom": "^17.0.2",
     "react-fast-marquee": "^1.3.5",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^4.4.0",
     "react-image-diff": "^0.1.0",
-    "react-redux": "^8.0.2",
+    "react-redux": "7.2.9",
     "react-router-dom": "^5.3.3",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "ringbufferjs": "^2.0.0",
     "sinon": "^15.0.1",
     "sinon-chai": "^3.7.0",
-    "updated-xterm-for-react": "5.2.0",
-    "xterm": "5.2.0",
-    "xterm-addon-fit": "^0.5.0",
+    "updated-xterm-for-react": "5.5.1",
     "yaml": "^2.1.1"
   },
-  "main": "desktop.js",
-  "build": {
-    "productName": "emudevz",
-    "extends": null,
-    "extraFiles": [
-      "icons/icon-512x512.png"
-    ],
-    "linux": {
-      "target": "AppImage",
-      "category": "Utility"
-    },
-    "win": {
-      "target": "nsis"
-    },
-    "nsis": {
-      "oneClick": false,
-      "perMachine": true,
-      "allowElevation": true,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "installerIcon": "../public/icons/icon-windows.ico",
-      "uninstallerIcon": "../public/icons/icon-windows.ico"
-    }
+  "overrides": {
+    "@pixi/canvas-renderer": "6.3.0",
+    "@pixi/core": "6.3.0",
+    "react-redux": "7.2.9"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -119,7 +93,6 @@
         ],
         "rules": {
           "import/no-anonymous-default-export": "off",
-          "import/no-webpack-loader-syntax": "off",
           "no-eval": "off",
           "no-control-regex": "off"
         }
@@ -139,17 +112,16 @@
   ],
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
+    "@vitejs/plugin-react": "^4.4.1",
     "archiver": "^5.3.1",
     "chai": "^4.3.6",
     "concurrently": "^5.3.0",
     "cross-env": "^7.0.3",
-    "electron": "6.0.12",
-    "electron-builder": "21.2.0",
     "husky": "^1.3.1",
     "mkdirp": "^1.0.4",
     "prettier": "2.2.1",
     "pretty-quick": "^1.10.0",
     "slug": "^8.2.2",
-    "worklet-loader": "^2.0.0"
+    "vite": "^6.3.5"
   }
 }

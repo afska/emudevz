@@ -1,6 +1,5 @@
+import * as cliHighlight from "cli-highlight";
 import { theme } from "../../terminal/style";
-
-const cliHighlight = require("cli-highlight");
 
 export default {
 	highlight(code, language = "javascript") {
