@@ -1,3 +1,4 @@
+import GraphemeSplitter from "grapheme-splitter";
 import _ from "lodash";
 import filesystem from "../filesystem";
 import locales from "../locales";
@@ -158,7 +159,7 @@ export default class Terminal {
 			this._interruptIfNeeded();
 			this._xterm.write(style(text));
 		} else {
-			const characters = [...text];
+			const characters = new GraphemeSplitter().splitGraphemes(text);
 			let lastCharacter = " ";
 
 			await async.sleep();

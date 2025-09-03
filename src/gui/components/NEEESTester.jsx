@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import DiffViewer, { DiffMethod } from "react-diff-viewer";
+import DiffViewer, { DiffMethod } from "react-diff-viewer-continued";
 import { FaFastForward } from "react-icons/fa";
 import classNames from "classnames";
 import EmulatorBuilder from "../../EmulatorBuilder";

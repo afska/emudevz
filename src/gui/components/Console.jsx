@@ -1,13 +1,12 @@
 import React, { PureComponent } from "react";
+import { FitAddon } from "@xterm/addon-fit";
+import { ImageAddon } from "@xterm/addon-image";
 import { XTerm } from "updated-xterm-for-react";
-import { FitAddon } from "xterm-addon-fit";
 import dictionary from "../../data/dictionary";
 import locales from "../../locales";
 import Terminal from "../../terminal/Terminal";
 import { bus } from "../../utils";
 import styles from "./Console.module.css";
-
-const ImageAddon = window.ImageAddon.ImageAddon;
 
 const imageAddonSettings = {
 	enableSizeReports: true, // whether to enable CSI t reports (see below)
