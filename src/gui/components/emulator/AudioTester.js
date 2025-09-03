@@ -113,12 +113,7 @@ export default class AudioTester extends PureComponent {
 
 	_onActualFrame = (frameBuffer, neees, emulation) => {
 		if (this._framesA < this._testFrames) {
-			this._samples.A.mix = [...emulation.channelSamples.mix];
-			this._samples.A.pulse1 = [...emulation.channelSamples.pulse1];
-			this._samples.A.pulse1 = [...emulation.channelSamples.pulse2];
-			this._samples.A.triangle = [...emulation.channelSamples.triangle];
-			this._samples.A.noise = [...emulation.channelSamples.noise];
-			this._samples.A.dmc = [...emulation.channelSamples.dmc];
+			this._samples.A = emulation.channelSamples;
 			this._framesA++;
 		} else {
 			this._emulatorA.stop();
@@ -130,12 +125,7 @@ export default class AudioTester extends PureComponent {
 		this.props.onFrame();
 
 		if (this._framesB < this._testFrames) {
-			this._samples.B.mix = [...emulation.channelSamples.mix];
-			this._samples.B.pulse1 = [...emulation.channelSamples.pulse1];
-			this._samples.B.pulse1 = [...emulation.channelSamples.pulse2];
-			this._samples.B.triangle = [...emulation.channelSamples.triangle];
-			this._samples.B.noise = [...emulation.channelSamples.noise];
-			this._samples.B.dmc = [...emulation.channelSamples.dmc];
+			this._samples.B = emulation.channelSamples;
 			this._framesB++;
 		}
 
@@ -176,8 +166,10 @@ export default class AudioTester extends PureComponent {
 	};
 
 	_onEnd = () => {
-		if (this._samples.A.mix.length === this._samples.B.mix.length) {
-			this._comparer.debuggerGUI.finalSamples = this._samples;
+		if (this._framesA === this._framesB) {
+			this._comparer.debuggerGUI.finalSamples = JSON.parse(
+				JSON.stringify(this._samples)
+			); // (deep clone)
 			this._comparer.debuggerGUI.progressValue = 100;
 			this.props.onEnd({
 				success: !this._comparer.debuggerGUI.didFail,
