@@ -53,8 +53,8 @@ export default class Debugger_CPU {
 				if (this.isRunningStepByStep || scanline !== this._scanline) {
 					this._scanline = scanline;
 					const newLog = this._logger.log(a, b, c, d, e);
-					this._logs.unshift(newLog);
-					if (this._logs.length > LOG_LIMIT) this._logs.pop();
+					this._logs.push(newLog);
+					if (this._logs.length > LOG_LIMIT) this._logs.shift();
 				}
 			};
 			neees.cpu.logger.type = LOGGER_TYPE;
@@ -125,15 +125,20 @@ export default class Debugger_CPU {
 			);
 			ImGui.TableSetupColumn("Context", ImGui.TableColumnFlags.WidthFixed);
 			ImGui.TableHeadersRow();
-			for (let row = 0; row < this._logs.length; row++) {
-				if (this._logs[row] == null) continue;
-
-				ImGui.TableNextRow();
-				for (let col = 0; col < 4; col++) {
-					ImGui.TableSetColumnIndex(col);
-					const field = DISASSEMBLY_FIELDS[col];
-					const value = this._logs[row][field];
-					ImGui.Text(value);
+			const total = this._logs.length;
+			const clipper = new ImGui.ListClipper();
+			clipper.Begin(total);
+			while (clipper.Step()) {
+				for (let row = clipper.DisplayStart; row < clipper.DisplayEnd; row++) {
+					const revIndex = total - 1 - row;
+					if (this._logs[revIndex] == null) continue;
+					ImGui.TableNextRow();
+					for (let col = 0; col < 4; col++) {
+						ImGui.TableSetColumnIndex(col);
+						const field = DISASSEMBLY_FIELDS[col];
+						const value = this._logs[revIndex][field];
+						ImGui.Text(value);
+					}
 				}
 			}
 			ImGui.EndTable();

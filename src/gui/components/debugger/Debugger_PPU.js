@@ -79,6 +79,7 @@ export default class Debugger_PPU {
 
 		// Name tables
 		this._atlasPixels = new Uint32Array(ATLAS_WIDTH * ATLAS_HEIGHT);
+		this._atlasScratch = new Uint32Array(ATLAS_WIDTH * ATLAS_HEIGHT);
 		this._showScrollOverlay = !this.args.readOnly;
 		this._showTileGrid = false;
 		this._showAttributeGrid = false;
@@ -88,6 +89,8 @@ export default class Debugger_PPU {
 		// CHR
 		this._chr0Pixels = new Uint32Array(CHR_SIZE_PIXELS * CHR_SIZE_PIXELS);
 		this._chr1Pixels = new Uint32Array(CHR_SIZE_PIXELS * CHR_SIZE_PIXELS);
+		this._chr0Scratch = new Uint32Array(CHR_SIZE_PIXELS * CHR_SIZE_PIXELS);
+		this._chr1Scratch = new Uint32Array(CHR_SIZE_PIXELS * CHR_SIZE_PIXELS);
 		this._chrHoverInfo = null; // { tableId, tileIndex, tileAddress }
 		this._selectedCHR = null; // { tableId, tileIndex }
 
@@ -96,6 +99,7 @@ export default class Debugger_PPU {
 		this._sprites = new Array(TOTAL_SPRITES);
 		this._oamPixels = null;
 		this._sprPreviewPixels = new Uint32Array(SCREEN_WIDTH * SCREEN_HEIGHT);
+		this._sprPreviewScratch = new Uint32Array(SCREEN_WIDTH * SCREEN_HEIGHT);
 		this._oamHoverIndex = null;
 		this._oamHoverInfo = null;
 		this._oamImageRect = null;
@@ -103,6 +107,8 @@ export default class Debugger_PPU {
 		// Palettes
 		this._bgPalettePixels = new Uint32Array(32 * 4 * (32 * 4));
 		this._sprPalettePixels = new Uint32Array(32 * 4 * (32 * 4));
+		this._bgPaletteScratch = new Uint32Array(32 * 4 * (32 * 4));
+		this._sprPaletteScratch = new Uint32Array(32 * 4 * (32 * 4));
 		this._paletteHoverInfo = null;
 
 		// Mini preview
@@ -438,7 +444,8 @@ export default class Debugger_PPU {
 
 		let uploadPixels = this._atlasPixels;
 		if (hoverRect) {
-			uploadPixels = new Uint32Array(this._atlasPixels);
+			this._atlasScratch.set(this._atlasPixels);
+			uploadPixels = this._atlasScratch;
 			this._drawHoverOverlay(
 				uploadPixels,
 				ATLAS_WIDTH,
@@ -689,7 +696,10 @@ export default class Debugger_PPU {
 					const isSelected =
 						this._selectedCHR && this._selectedCHR.tableId === tableId;
 					if (hover || isSelected) {
-						uploadPixels = new Uint32Array(pixels);
+						const scratch =
+							tableId === 0 ? this._chr0Scratch : this._chr1Scratch;
+						scratch.set(pixels);
+						uploadPixels = scratch;
 						if (isSelected) {
 							const sel = this._selectedCHR.tileIndex;
 							const sx = (sel % TILES_PER_ROW) * TILE_SIZE_PIXELS;
@@ -833,6 +843,7 @@ export default class Debugger_PPU {
 			this._oamTextureWidth = oamWidth;
 			this._oamTextureHeight = oamHeight;
 			this._oamPixels = new Uint32Array(oamWidth * oamHeight);
+			this._oamScratch = new Uint32Array(oamWidth * oamHeight);
 		}
 		this._oamPixels.fill(0);
 
@@ -1088,7 +1099,8 @@ export default class Debugger_PPU {
 				if (this._oamTexture && this._oamPixels) {
 					const col = index % OAM_COLS;
 					const row = (index / OAM_COLS) | 0;
-					const uploadPixels = new Uint32Array(this._oamPixels);
+					const uploadPixels = this._oamScratch;
+					uploadPixels.set(this._oamPixels);
 					this._drawHoverOverlay(
 						uploadPixels,
 						this._oamTextureWidth,
@@ -1106,7 +1118,8 @@ export default class Debugger_PPU {
 					);
 				}
 
-				const uploadPixels = new Uint32Array(this._sprPreviewPixels);
+				const uploadPixels = this._sprPreviewScratch;
+				uploadPixels.set(this._sprPreviewPixels);
 				this._drawHoverOverlay(
 					uploadPixels,
 					SCREEN_WIDTH,
@@ -1278,7 +1291,8 @@ export default class Debugger_PPU {
 
 				let uploadPixels = this._bgPalettePixels;
 				if (hoverRect) {
-					uploadPixels = new Uint32Array(this._bgPalettePixels);
+					this._bgPaletteScratch.set(this._bgPalettePixels);
+					uploadPixels = this._bgPaletteScratch;
 					this._drawHoverOverlay(
 						uploadPixels,
 						imageSize,
@@ -1341,7 +1355,8 @@ export default class Debugger_PPU {
 				// upload + optional hover overlay + draw
 				let uploadPixels = this._sprPalettePixels;
 				if (hoverRect) {
-					uploadPixels = new Uint32Array(this._sprPalettePixels);
+					this._sprPaletteScratch.set(this._sprPalettePixels);
+					uploadPixels = this._sprPaletteScratch;
 					this._drawHoverOverlay(
 						uploadPixels,
 						imageSize,

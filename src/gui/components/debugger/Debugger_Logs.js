@@ -37,11 +37,16 @@ export default class Debugger_Logs {
 			ImGui.TableSetupScrollFreeze(0, 1);
 			ImGui.TableSetupColumn("Log");
 			ImGui.TableHeadersRow();
-			for (let row = 0; row < this._logs.length; row++) {
-				ImGui.TableNextRow();
-				ImGui.TableSetColumnIndex(0);
-
-				ImGui.Text(`${this._logs[row]}`);
+			const count = this._logs.length;
+			const clipper = new ImGui.ListClipper();
+			clipper.Begin(count);
+			while (clipper.Step()) {
+				for (let row = clipper.DisplayStart; row < clipper.DisplayEnd; row++) {
+					const revIndex = count - 1 - row;
+					ImGui.TableNextRow();
+					ImGui.TableSetColumnIndex(0);
+					ImGui.Text(`${this._logs[revIndex]}`);
+				}
 			}
 			ImGui.EndTable();
 		}
@@ -68,8 +73,8 @@ export default class Debugger_Logs {
 					return;
 				}
 
-				this._logs.unshift(text);
-				if (this._logs.length > LOG_LIMIT) this._logs.pop();
+				this._logs.push(text);
+				if (this._logs.length > LOG_LIMIT) this._logs.shift();
 			};
 			neees.cpu.logger.type = LOGGER_TYPE;
 		}
