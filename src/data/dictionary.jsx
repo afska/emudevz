@@ -4,6 +4,8 @@ import _ from "lodash";
 import locales from "../locales";
 import { toast } from "../utils";
 
+const ENTRIES_TEMPLATE = _.template("(${entries})");
+
 const dictionary = {
 	entries: {
 		"[A]|Accumulator": {
@@ -1212,7 +1214,7 @@ const dictionary = {
 		const entries = this.getEntries();
 		return new RegExp(
 			// eslint-disable-next-line
-			_.template("(${entries})")({
+			ENTRIES_TEMPLATE({
 				entries: entries
 					.filter((word) => !exclude.some((it) => this._matchesKey(it, word)))
 					.map((key) => {
