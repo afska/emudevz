@@ -63,7 +63,7 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 				// ImGui.StyleColorsDark(); // DISABLED
 				ImGui.StyleColorsClassic();
 
-				window.requestAnimationFrame(_loop);
+				self._animationFrame = window.requestAnimationFrame(_loop);
 				function _loop(time) {
 					ImGui_Impl.NewFrame(time);
 					ImGui.NewFrame();
