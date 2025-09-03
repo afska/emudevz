@@ -27,9 +27,33 @@ const MIXED_IMPORTS = [
 	/^ *import +(\w+), *{([^}]+)} +from +"(.+)" *;?$/m,
 	/^ *import +(\w+), *{([^}]+)} +from +'(.+)' *;?$/m,
 ];
-const ERROR = 2;
+const SEVERITY_ERROR = 2;
 
 let BLOB_TO_PATH_MAP = {};
+
+const MODULE_GROUPS = [];
+const MAX_MODULE_GROUPS = 10;
+
+const registerModuleGroup = (urls) => {
+	MODULE_GROUPS.push(urls);
+	destroyOldModuleGroups();
+};
+
+const destroyOldModuleGroups = () => {
+	while (MODULE_GROUPS.length > MAX_MODULE_GROUPS) {
+		const oldGroup = MODULE_GROUPS.shift();
+		if (oldGroup) {
+			for (const url of oldGroup) {
+				try {
+					URL.revokeObjectURL(url);
+				} catch (e) {
+					// ignore
+				}
+				delete BLOB_TO_PATH_MAP[url];
+			}
+		}
+	}
+};
 
 export default {
 	prepare(level, withLastCode = false) {
@@ -55,6 +79,8 @@ export default {
 			_.forEach(modules, (blobName, filePath) => {
 				BLOB_TO_PATH_MAP[blobName] = filePath;
 			});
+
+			registerModuleGroup(Object.values(modules));
 
 			return evaluateModule(module);
 		};
@@ -102,14 +128,14 @@ export default {
 
 			if (!fullStack) {
 				const warnings = this.getWarnings(Level.current).filter((it) =>
-					it.lint.some((lint) => lint.severity === ERROR)
+					it.lint.some((lint) => lint.severity === SEVERITY_ERROR)
 				);
 				if (!_.isEmpty(warnings)) {
 					fullStack = {
 						trace: warnings
 							.map((it) => {
 								const errors = it.lint
-									.filter((lint) => lint.severity === ERROR)
+									.filter((lint) => lint.severity === SEVERITY_ERROR)
 									.map(
 										(lint) =>
 											`&nbsp;&nbsp;(:${lint.line}:${lint.column}) ${lint.message}`
