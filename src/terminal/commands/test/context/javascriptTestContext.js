@@ -29,31 +29,7 @@ const MIXED_IMPORTS = [
 ];
 const SEVERITY_ERROR = 2;
 
-let BLOB_TO_PATH_MAP = {};
-
-const MODULE_GROUPS = [];
-const MAX_MODULE_GROUPS = 10;
-
-const registerModuleGroup = (urls) => {
-	MODULE_GROUPS.push(urls);
-	destroyOldModuleGroups();
-};
-
-const destroyOldModuleGroups = () => {
-	while (MODULE_GROUPS.length > MAX_MODULE_GROUPS) {
-		const oldGroup = MODULE_GROUPS.shift();
-		if (oldGroup) {
-			for (const url of oldGroup) {
-				try {
-					URL.revokeObjectURL(url);
-				} catch (e) {
-					// ignore
-				}
-				delete BLOB_TO_PATH_MAP[url];
-			}
-		}
-	}
-};
+const BLOB_TO_PATH_MAP = {};
 
 export default {
 	prepare(level, withLastCode = false) {
@@ -79,8 +55,6 @@ export default {
 			_.forEach(modules, (blobName, filePath) => {
 				BLOB_TO_PATH_MAP[blobName] = filePath;
 			});
-
-			registerModuleGroup(Object.values(modules));
 
 			return evaluateModule(module);
 		};
