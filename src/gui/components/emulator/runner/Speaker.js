@@ -1,3 +1,5 @@
+import audioWorklet from "./audioWorklet?worker&url";
+
 const WORKLET_NAME = "player-worklet";
 const WEBAUDIO_BUFFER_SIZE = 1024;
 const SAMPLE_RATE = 44100;
@@ -21,9 +23,7 @@ export default class Speaker {
 		this.gainNode.gain.value = this.initialVolume;
 		this.gainNode.connect(this._audioCtx.destination);
 
-		await this._audioCtx.audioWorklet.addModule(
-			new URL("/audioWorklet.js", import.meta.url)
-		);
+		await this._audioCtx.audioWorklet.addModule(audioWorklet);
 		if (this._audioCtx == null) {
 			await this.stop();
 			return;
