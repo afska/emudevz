@@ -5,6 +5,9 @@ const WEBAUDIO_BUFFER_SIZE = 1024;
 const SAMPLE_RATE = 44100;
 const CHANNELS = 1;
 
+let sharedAudioContext = null;
+let sharedWorkletModulePromise = null;
+
 export default class Speaker {
 	constructor(onAudioRequested = () => {}, initialVolume = 1) {
 		this.onAudioRequested = onAudioRequested;
@@ -15,15 +18,19 @@ export default class Speaker {
 		if (this._audioCtx) return;
 		if (!window.AudioContext) return;
 
-		this._audioCtx = new window.AudioContext({
-			sampleRate: SAMPLE_RATE,
-		});
+		if (!sharedAudioContext)
+			sharedAudioContext = new window.AudioContext({ sampleRate: SAMPLE_RATE });
+		this._audioCtx = sharedAudioContext;
 
 		this.gainNode = this._audioCtx.createGain();
 		this.gainNode.gain.value = this.initialVolume;
 		this.gainNode.connect(this._audioCtx.destination);
 
-		await this._audioCtx.audioWorklet.addModule(audioWorklet);
+		if (!sharedWorkletModulePromise)
+			sharedWorkletModulePromise = this._audioCtx.audioWorklet.addModule(
+				audioWorklet
+			);
+		await sharedWorkletModulePromise;
 		if (this._audioCtx == null) {
 			await this.stop();
 			return;
@@ -68,7 +75,7 @@ export default class Speaker {
 
 		const ctx = this._audioCtx;
 		this._audioCtx = null;
-		if (ctx) {
+		if (ctx && ctx !== sharedAudioContext) {
 			try {
 				await ctx.close();
 			} catch {}
