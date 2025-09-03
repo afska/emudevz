@@ -16,7 +16,6 @@ import "highlight.js/styles/base16/onedark.css";
 import "xterm/css/xterm.css";
 
 // TODO:
-// - migrate react-flash-change (peer deps)
 // - migrate pixi (peer deps)
 // - normalize npm install in readme
 // - figure out Speaker/audioWorklet free

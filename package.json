@@ -14,7 +14,6 @@
     "For example, updating @codemirror breaks highlighting somehow."
   ],
   "dependencies": {
-    "@avinlab/react-flash-change": "^1.2.0",
     "@codemirror/lang-javascript": "6.1.0",
     "@codemirror/language": "6.1.0",
     "@codemirror/lint": "6.0.0",

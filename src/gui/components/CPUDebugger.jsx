@@ -1,5 +1,4 @@
 import React, { PureComponent } from "react";
-import FlashChange from "@avinlab/react-flash-change";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Table from "react-bootstrap/Table";
 import Tooltip from "react-bootstrap/Tooltip";
@@ -8,6 +7,7 @@ import Level from "../../level/Level";
 import locales from "../../locales";
 import testContext from "../../terminal/commands/test/context";
 import { bus, hex } from "../../utils";
+import FlashChange from "../../utils/FlashChange";
 import TVNoise from "./TVNoise";
 import styles from "./CPUDebugger.module.css";
 
