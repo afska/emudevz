@@ -8,9 +8,12 @@ import ValueSlider from "./ValueSlider";
 import styles from "./ImageDiffModal.module.css";
 
 // HACK: Monkey-patching React to have PropTypes (`react-image-diff` is very old and needs this)
-React.PropTypes = PropTypes;
-const ImageDiff = require("react-image-diff");
-React.PropTypes = undefined;
+const ImageDiff = React.lazy(async () => {
+	React.PropTypes = PropTypes;
+	const mod = await import("react-image-diff");
+	React.PropTypes = undefined;
+	return mod;
+});
 
 const DIFF_MODES = ["fade", "swipe", "difference"];
 const MARGIN = 16;
@@ -79,106 +82,108 @@ export default class ImageDiffModal extends PureComponent {
 				  };
 
 		return (
-			<Modal
-				show={isOpen}
-				onHide={this._onClose}
-				centered
-				contentClassName={"crt " + styles.modalContent}
-			>
-				<Modal.Header>
-					<Modal.Title>🔍 {locales.get("check_diffs")}</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						{sequence && (
-							<Form.Group>
-								<Form.Label style={labelStyle}>
-									<span>
-										🖼️ {locales.get("check_diffs_frame")} ({index}/
-										{sequence.total})
-									</span>
-									{isOk != null && <span>{isOk ? "✅" : "❌"}</span>}
-								</Form.Label>
-								<ValueSlider
-									title={`${index} / ${sequence.total}`}
-									value={index}
-									onChange={(e) => {
-										const next = Number(e.target.value);
-										this.setState({ index: next }, this._renderCurrentIndex);
-									}}
-									step={1}
-									min={1}
-									max={sequence.total}
-									disableTooltip
-									railGradient={this._railGradient}
-									hideTrack
-								/>
-							</Form.Group>
-						)}
+			<React.Suspense fallback={<div className="running" />}>
+				<Modal
+					show={isOpen}
+					onHide={this._onClose}
+					centered
+					contentClassName={"crt " + styles.modalContent}
+				>
+					<Modal.Header>
+						<Modal.Title>🔍 {locales.get("check_diffs")}</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<Form>
+							{sequence && (
+								<Form.Group>
+									<Form.Label style={labelStyle}>
+										<span>
+											🖼️ {locales.get("check_diffs_frame")} ({index}/
+											{sequence.total})
+										</span>
+										{isOk != null && <span>{isOk ? "✅" : "❌"}</span>}
+									</Form.Label>
+									<ValueSlider
+										title={`${index} / ${sequence.total}`}
+										value={index}
+										onChange={(e) => {
+											const next = Number(e.target.value);
+											this.setState({ index: next }, this._renderCurrentIndex);
+										}}
+										step={1}
+										min={1}
+										max={sequence.total}
+										disableTooltip
+										railGradient={this._railGradient}
+										hideTrack
+									/>
+								</Form.Group>
+							)}
 
-						<Form.Group style={{ marginTop: MARGIN }}>
-							<Form.Label>🔎 {locales.get("check_diffs_mode")}</Form.Label>
-							<div className={styles.options}>
-								{DIFF_MODES.map((it) => (
-									<div key={`diffmode-${it}`}>
-										<Form.Check
-											type="radio"
-											id={`diffmode-${it}`}
-											label={locales.get(`check_diffs_mode_${it}`)}
-											checked={it === diffMode}
-											onChange={() => {
-												this.setState({ diffMode: it });
-											}}
-										/>
-									</div>
-								))}
-							</div>
-						</Form.Group>
-						<Form.Group style={{ marginTop: MARGIN }}>
-							{diffMode !== "difference"}
-							<ValueSlider
-								title={locales.get("check_diffs_balance")}
-								value={fader}
-								onChange={(e) => {
-									this.setState({ fader: e.target.value });
-								}}
-								disabled={isDifference}
-								step={0.01}
-							/>
-							<div className={styles.faderDetail}>
-								<span className={styles.expected}>
-									{locales.get("tests_video_expected_output")}:{" "}
-									{((1 - fader) * 100).toFixed(0)}%
-								</span>{" "}
-								-{" "}
-								<span className={styles.actual}>
-									{locales.get("tests_video_ppu_output")}:{" "}
-									{(fader * 100).toFixed(0)}%
-								</span>
-							</div>
-						</Form.Group>
-						<Form.Group
-							className={classNames(
-								styles.mainDiff,
-								isDifference ? styles.smooth : styles.pixelated
-							)}
-							style={{ marginTop: MARGIN }}
-						>
-							{isOpen && rendered && (
-								<ImageDiff
-									/* (used this way so green/red means "correct/incorrect" instead of "new/old") */
-									before={rendered.actual}
-									after={rendered.expected}
-									type={diffMode}
+							<Form.Group style={{ marginTop: MARGIN }}>
+								<Form.Label>🔎 {locales.get("check_diffs_mode")}</Form.Label>
+								<div className={styles.options}>
+									{DIFF_MODES.map((it) => (
+										<div key={`diffmode-${it}`}>
+											<Form.Check
+												type="radio"
+												id={`diffmode-${it}`}
+												label={locales.get(`check_diffs_mode_${it}`)}
+												checked={it === diffMode}
+												onChange={() => {
+													this.setState({ diffMode: it });
+												}}
+											/>
+										</div>
+									))}
+								</div>
+							</Form.Group>
+							<Form.Group style={{ marginTop: MARGIN }}>
+								{diffMode !== "difference"}
+								<ValueSlider
+									title={locales.get("check_diffs_balance")}
 									value={fader}
-									width={SCREEN_WIDTH * SCALE}
-									height={SCREEN_HEIGHT * SCALE}
+									onChange={(e) => {
+										this.setState({ fader: e.target.value });
+									}}
+									disabled={isDifference}
+									step={0.01}
 								/>
-							)}
-						</Form.Group>
-					</Form>
-				</Modal.Body>
-			</Modal>
+								<div className={styles.faderDetail}>
+									<span className={styles.expected}>
+										{locales.get("tests_video_expected_output")}:{" "}
+										{((1 - fader) * 100).toFixed(0)}%
+									</span>{" "}
+									-{" "}
+									<span className={styles.actual}>
+										{locales.get("tests_video_ppu_output")}:{" "}
+										{(fader * 100).toFixed(0)}%
+									</span>
+								</div>
+							</Form.Group>
+							<Form.Group
+								className={classNames(
+									styles.mainDiff,
+									isDifference ? styles.smooth : styles.pixelated
+								)}
+								style={{ marginTop: MARGIN }}
+							>
+								{isOpen && rendered && (
+									<ImageDiff
+										/* (used this way so green/red means "correct/incorrect" instead of "new/old") */
+										before={rendered.actual}
+										after={rendered.expected}
+										type={diffMode}
+										value={fader}
+										width={SCREEN_WIDTH * SCALE}
+										height={SCREEN_HEIGHT * SCALE}
+									/>
+								)}
+							</Form.Group>
+						</Form>
+					</Modal.Body>
+				</Modal>
+			</React.Suspense>
 		);
 	}
 

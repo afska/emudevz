@@ -1,4 +1,3 @@
-import React from "react";
 import { getPersistor } from "@rematch/persist";
 import { ConnectedRouter } from "connected-react-router";
 import ReactDOM from "react-dom";
@@ -15,6 +14,13 @@ import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
 import "highlight.js/styles/base16/onedark.css";
 import "xterm/css/xterm.css";
+
+// TODO:
+// - migrate react-flash-change (peer deps)
+// - migrate pixi (peer deps)
+// - normalize npm install in readme
+// - figure out Speaker/audioWorklet
+// - fix memory leaks
 
 // Set up EmuDevz global object
 window.EmuDevz = {

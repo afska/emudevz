@@ -1,10 +1,8 @@
-const { ParseLine, ParseError } = require("@neshacker/6502-tools/src/parser");
-const { assemble } = require("@neshacker/6502-tools/src/assembler/assemble");
-const {
-	Instruction,
-} = require("@neshacker/6502-tools/src/assembler/Instruction");
-const ParseNode = require("@neshacker/6502-tools/src/parser/ParseNode");
-const lineParser = require("@neshacker/6502-tools/src/parser/lineParser");
+import { Instruction } from "@neshacker/6502-tools/src/assembler/Instruction";
+import { assemble } from "@neshacker/6502-tools/src/assembler/assemble";
+import { ParseError, ParseLine } from "@neshacker/6502-tools/src/parser";
+import ParseNode from "@neshacker/6502-tools/src/parser/ParseNode";
+import lineParser from "@neshacker/6502-tools/src/parser/lineParser";
 
 function setNodeLine(line, node) {
 	node.line = line;

@@ -1,4 +1,3 @@
-import React from "react";
 import { bus } from "../../../../utils";
 import ProgressBar from "../../widgets/ProgressBar";
 import Integration from "./Integration";

@@ -1,4 +1,3 @@
-import React from "react";
 import { FaTimes } from "react-icons/fa";
 import classNames from "classnames";
 import locales from "../../../locales";
@@ -7,73 +6,76 @@ import IconButton from "../widgets/IconButton";
 import Layout from "./Layout";
 import styles from "./Layout.module.css";
 
-export default class DualLayout extends Layout {
+export default class TripleLayout extends Layout {
 	static get requiredComponentNames() {
-		return ["Left", "Right"];
+		return ["Right", "Top", "Bottom"];
 	}
 
 	static get pinLocation() {
-		return "Left";
+		return "Top";
 	}
 
 	static get secondaryPinLocation() {
 		return "Right";
 	}
 
-	state = { selected: "Left", Pin: null, SecondaryPin: null };
+	state = { selected: "Right", lastVerticalSelection: "Bottom", Pin: null };
 
 	render() {
 		this.requireComponents();
-		const { Left, Right, Background = null } = this.props;
+		const { Right, Top, Bottom } = this.props;
 		const { selected, Pin, SecondaryPin } = this.state;
 
 		return (
 			<div className={styles.container} onKeyDownCapture={this.onKeyDown}>
 				<div
+					className={classNames(styles.leftColumn, styles.column)}
 					style={{ display: Pin ? "none" : "block" }}
-					className={classNames(
-						styles.leftColumn,
-						styles.column,
-						selected === "Left" ? styles.selected : styles.unselected
-					)}
-					onMouseDown={(e) => {
-						this.focus("Left");
-					}}
 				>
-					<Left
-						ref={(ref) => {
-							this.instances.Left = ref;
-						}}
-					/>
-				</div>
-
-				{!!Background && (
 					<div
-						style={{ display: "none" }}
 						className={classNames(
-							styles.leftColumn,
-							styles.column,
-							styles.unselected
+							styles.topRow,
+							styles.row,
+							selected === "Top" ? styles.selected : styles.unselected
 						)}
-						onMouseDown={(e) => {}}
+						onMouseDown={(e) => {
+							this.focus("Top");
+						}}
 					>
-						<Background
+						<Top
 							ref={(ref) => {
-								this.instances.Background = ref;
+								this.instances.Top = ref;
 							}}
 						/>
 					</div>
-				)}
+
+					<div
+						className={classNames(
+							styles.bottomRow,
+							styles.row,
+							selected === "Bottom" ? styles.selected : styles.unselected
+						)}
+						onMouseDown={(e) => {
+							this.focus("Bottom");
+						}}
+					>
+						<Bottom
+							ref={(ref) => {
+								this.instances.Bottom = ref;
+							}}
+						/>
+					</div>
+				</div>
 
 				{Pin && (
 					<div
 						className={classNames(
 							styles.leftColumn,
 							styles.column,
-							selected === "Left" ? styles.selected : styles.unselected
+							selected === "Top" ? styles.selected : styles.unselected
 						)}
 						onMouseDown={(e) => {
-							this.focus("Left");
+							this.focus("Top");
 						}}
 					>
 						<IconButton
@@ -137,22 +139,42 @@ export default class DualLayout extends Layout {
 	}
 
 	focus(instanceName) {
+		if (!!this.state.Pin && instanceName === "Bottom") return;
+
 		this.setState({ selected: instanceName });
 
 		super.focus(instanceName);
 	}
 
 	onKeyDown = (e) => {
-		const { selected } = this.state;
+		const { selected, lastVerticalSelection, Pin } = this.state;
 
-		if (e.key === "ArrowRight" && e.altKey) {
-			if (selected === "Left") this.focus("Right");
+		if (e.key === "ArrowLeft" && e.altKey) {
+			if (selected === "Right")
+				this.focus(
+					!!Pin ? this.constructor.pinLocation : lastVerticalSelection
+				);
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
-		if (e.key === "ArrowLeft" && e.altKey) {
-			if (selected === "Right") this.focus("Left");
+		if (e.key === "ArrowRight" && e.altKey) {
+			if (selected !== "Right") {
+				this.setState({ lastVerticalSelection: selected });
+				this.focus("Right");
+			}
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+		if (e.key === "ArrowUp" && e.altKey) {
+			if (!Pin && selected !== "Top") this.focus("Top");
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+		if (e.key === "ArrowDown" && e.altKey) {
+			if (!Pin && selected !== "Bottom") this.focus("Bottom");
 			e.preventDefault();
 			e.stopPropagation();
 		}

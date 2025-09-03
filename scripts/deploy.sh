@@ -19,7 +19,7 @@ if [ -z "$USERNAME" ] || [ -z "$TOKEN" ] ; then
 fi
 
 function compile {
-	try npm run build:ghpages
+	try npm run build
 }
 
 function deploy {

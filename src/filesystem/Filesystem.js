@@ -11,27 +11,31 @@ const MARKDOWN_POSTFIX = ".md";
 
 class Filesystem {
 	constructor() {
-		const BrowserFS = require("browserfs");
-
-		this.load = new Promise((resolve, reject) => {
-			BrowserFS.configure(
-				{
-					fs: "AsyncMirror",
-					options: {
-						sync: { fs: "InMemory" },
-						async: {
-							fs: "IndexedDB",
-							options: { storeName: INDEXED_DB_STORE_NAME },
+		this.load = (async () => {
+			const BrowserFS = await import("browserfs");
+			await new Promise((resolve, reject) => {
+				BrowserFS.configure(
+					{
+						fs: "AsyncMirror",
+						options: {
+							sync: { fs: "InMemory" },
+							async: {
+								fs: "IndexedDB",
+								options: { storeName: INDEXED_DB_STORE_NAME },
+							},
 						},
 					},
-				},
-				(e) => {
-					if (e != null) reject(e);
-					this.fs = BrowserFS.BFSRequire("fs");
-					resolve();
-				}
-			);
-		});
+					(e) => {
+						if (e != null) {
+							reject(e);
+							return;
+						}
+						this.fs = BrowserFS.BFSRequire("fs");
+						resolve();
+					}
+				);
+			});
+		})();
 
 		this.symlinks = [];
 	}

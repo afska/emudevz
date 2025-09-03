@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 import Layout from "./Layout";
 import styles from "./Layout.module.css";

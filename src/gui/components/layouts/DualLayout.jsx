@@ -1,4 +1,3 @@
-import React from "react";
 import { FaTimes } from "react-icons/fa";
 import classNames from "classnames";
 import locales from "../../../locales";
@@ -7,76 +6,73 @@ import IconButton from "../widgets/IconButton";
 import Layout from "./Layout";
 import styles from "./Layout.module.css";
 
-export default class TripleLayout extends Layout {
+export default class DualLayout extends Layout {
 	static get requiredComponentNames() {
-		return ["Right", "Top", "Bottom"];
+		return ["Left", "Right"];
 	}
 
 	static get pinLocation() {
-		return "Top";
+		return "Left";
 	}
 
 	static get secondaryPinLocation() {
 		return "Right";
 	}
 
-	state = { selected: "Right", lastVerticalSelection: "Bottom", Pin: null };
+	state = { selected: "Left", Pin: null, SecondaryPin: null };
 
 	render() {
 		this.requireComponents();
-		const { Right, Top, Bottom } = this.props;
+		const { Left, Right, Background = null } = this.props;
 		const { selected, Pin, SecondaryPin } = this.state;
 
 		return (
 			<div className={styles.container} onKeyDownCapture={this.onKeyDown}>
 				<div
-					className={classNames(styles.leftColumn, styles.column)}
 					style={{ display: Pin ? "none" : "block" }}
+					className={classNames(
+						styles.leftColumn,
+						styles.column,
+						selected === "Left" ? styles.selected : styles.unselected
+					)}
+					onMouseDown={(e) => {
+						this.focus("Left");
+					}}
 				>
-					<div
-						className={classNames(
-							styles.topRow,
-							styles.row,
-							selected === "Top" ? styles.selected : styles.unselected
-						)}
-						onMouseDown={(e) => {
-							this.focus("Top");
+					<Left
+						ref={(ref) => {
+							this.instances.Left = ref;
 						}}
-					>
-						<Top
-							ref={(ref) => {
-								this.instances.Top = ref;
-							}}
-						/>
-					</div>
-
-					<div
-						className={classNames(
-							styles.bottomRow,
-							styles.row,
-							selected === "Bottom" ? styles.selected : styles.unselected
-						)}
-						onMouseDown={(e) => {
-							this.focus("Bottom");
-						}}
-					>
-						<Bottom
-							ref={(ref) => {
-								this.instances.Bottom = ref;
-							}}
-						/>
-					</div>
+					/>
 				</div>
+
+				{!!Background && (
+					<div
+						style={{ display: "none" }}
+						className={classNames(
+							styles.leftColumn,
+							styles.column,
+							styles.unselected
+						)}
+						onMouseDown={(e) => {}}
+					>
+						<Background
+							ref={(ref) => {
+								this.instances.Background = ref;
+							}}
+						/>
+					</div>
+				)}
 
 				{Pin && (
 					<div
 						className={classNames(
 							styles.leftColumn,
 							styles.column,
-							selected === "Top" ? styles.selected : styles.unselected
+							selected === "Left" ? styles.selected : styles.unselected
 						)}
 						onMouseDown={(e) => {
-							this.focus("Top");
+							this.focus("Left");
 						}}
 					>
 						<IconButton
@@ -140,42 +136,22 @@ export default class TripleLayout extends Layout {
 	}
 
 	focus(instanceName) {
-		if (!!this.state.Pin && instanceName === "Bottom") return;
-
 		this.setState({ selected: instanceName });
 
 		super.focus(instanceName);
 	}
 
 	onKeyDown = (e) => {
-		const { selected, lastVerticalSelection, Pin } = this.state;
-
-		if (e.key === "ArrowLeft" && e.altKey) {
-			if (selected === "Right")
-				this.focus(
-					!!Pin ? this.constructor.pinLocation : lastVerticalSelection
-				);
-			e.preventDefault();
-			e.stopPropagation();
-		}
+		const { selected } = this.state;
 
 		if (e.key === "ArrowRight" && e.altKey) {
-			if (selected !== "Right") {
-				this.setState({ lastVerticalSelection: selected });
-				this.focus("Right");
-			}
+			if (selected === "Left") this.focus("Right");
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
-		if (e.key === "ArrowUp" && e.altKey) {
-			if (!Pin && selected !== "Top") this.focus("Top");
-			e.preventDefault();
-			e.stopPropagation();
-		}
-
-		if (e.key === "ArrowDown" && e.altKey) {
-			if (!Pin && selected !== "Bottom") this.focus("Bottom");
+		if (e.key === "ArrowLeft" && e.altKey) {
+			if (selected === "Right") this.focus("Left");
 			e.preventDefault();
 			e.stopPropagation();
 		}

@@ -1,4 +1,3 @@
-import React from "react";
 import locales from "../../../../locales";
 import { bus } from "../../../../utils";
 import ProgressBar from "../../widgets/ProgressBar";

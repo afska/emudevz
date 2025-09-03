@@ -1,30 +1,28 @@
-import React from "react";
 import locales from "../../../../locales";
 import { bus } from "../../../../utils";
 import ProgressBar from "../../widgets/ProgressBar";
 import Tooltip from "../../widgets/Tooltip";
 import Integration from "./Integration";
 
-export default class DizzySheepDisaster extends Integration {
-	state = { percentage: 0, level: 0, deaths: 0 };
+export default class MinekartMadness extends Integration {
+	state = { percentage: 0, level: 0 };
 
 	render() {
-		const { percentage, level, deaths } = this.state;
+		const { percentage, level } = this.state;
 
 		return (
 			<Tooltip
-				title={`${locales.get(
-					"integration_dizzysheepdisaster_level"
-				)} ${level} / ${WIN_LEVEL - 1}`}
+				title={`${locales.get("integration_minekartmadness_level")} ${
+					1 + level
+				} / ${WIN_LEVEL}`}
 			>
 				<div
 					style={{ width: "50%", textAlign: "center", whiteSpace: "nowrap" }}
 				>
 					{percentage === 100 ? (
-						<span>🧲🧲🧲</span>
+						<span>💎💎💎</span>
 					) : (
 						<div>
-							<span>☠️ {deaths.toString().padStart(2, "0")}</span>
 							<ProgressBar
 								percentage={percentage}
 								barFillColor="#3398dc"
@@ -41,17 +39,16 @@ export default class DizzySheepDisaster extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		const level = this._humanHexToNumber(neees.cpu.memory.read(0x0059));
-		const deaths = this._humanHexToNumber(neees.cpu.memory.read(0x005a));
-		const percentage = ((level - 1) / (WIN_LEVEL - 1)) * 100;
+		const level = neees.cpu.memory.read(0x0486);
+		const percentage = (level / WIN_LEVEL) * 100;
 
 		if (percentage === 100) {
 			this._disconnectControllers(neees);
-			bus.emit("dizzysheepdisaster-end");
+			bus.emit("minekartmadness-end");
 		}
 
-		this.setState({ percentage, level, deaths });
+		this.setState({ percentage, level });
 	};
 }
 
-const WIN_LEVEL = 21;
+const WIN_LEVEL = 5;

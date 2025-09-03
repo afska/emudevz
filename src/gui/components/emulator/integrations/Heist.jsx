@@ -1,33 +1,28 @@
-import React from "react";
 import locales from "../../../../locales";
 import { bus } from "../../../../utils";
 import ProgressBar from "../../widgets/ProgressBar";
 import Tooltip from "../../widgets/Tooltip";
 import Integration from "./Integration";
 
-export default class Falling extends Integration {
-	state = { percentage: 0, points: 0, lives: 0 };
+export default class MinekartMadness extends Integration {
+	state = { percentage: 0, wave: 0 };
 
 	render() {
-		const { percentage, points, lives } = this.state;
+		const { percentage, wave } = this.state;
 
 		return (
 			<Tooltip
-				title={`${locales.get(
-					"integration_falling_points"
-				)} ${points} / ${HIGH_SCORE}`}
+				title={`${locales.get("integration_heist_wave")} ${
+					1 + wave
+				} / ${WIN_WAVE}`}
 			>
 				<div
 					style={{ width: "50%", textAlign: "center", whiteSpace: "nowrap" }}
 				>
 					{percentage === 100 ? (
-						<span>☁️☁️☁️</span>
+						<span>⛽⛽⛽</span>
 					) : (
 						<div>
-							<span>
-								💓 <strong>{lives}</strong>{" "}
-								{locales.get("integration_falling_lives")}
-							</span>
 							<ProgressBar
 								percentage={percentage}
 								barFillColor="#3398dc"
@@ -44,17 +39,16 @@ export default class Falling extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		const points = neees.cpu.memory.read(0x001c);
-		const lives = neees.cpu.memory.read(0x0201) & 0b1111;
-		const percentage = (points / HIGH_SCORE) * 100;
+		let wave = neees.cpu.memory.read(0x0025) + 1;
+		const percentage = (wave / WIN_WAVE) * 100;
 
 		if (percentage === 100) {
 			this._disconnectControllers(neees);
-			bus.emit("falling-end");
+			bus.emit("heist-end");
 		}
 
-		this.setState({ percentage, points, lives });
+		this.setState({ percentage, wave });
 	};
 }
 
-const HIGH_SCORE = 50;
+const WIN_WAVE = 19;

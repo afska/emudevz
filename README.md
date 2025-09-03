@@ -4,7 +4,7 @@
 
 ```bash
 # install nvm & node
-npm install
+npm install --legacy-peer-deps
 ```
 
 ## Scripts
