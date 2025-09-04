@@ -37,6 +37,11 @@
 	},
 	"audioTests": [
 		{
+			"rom": "/roms/_test/apu_sweep.neees",
+			"frames": 240,
+			"apu": "TestAPU.v6.js"
+		},
+		{
 			"rom": "/roms/_test/game_climber.neees",
 			"frames": 300,
 			"apu": "TestAPU.v6.js"

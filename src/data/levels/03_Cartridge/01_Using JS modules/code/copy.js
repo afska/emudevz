@@ -4,6 +4,7 @@
 	["hello_world.neees", true],
 	["240p_test_suite.neees", true],
 	["apu_dmc_directload_crowd.neees", true],
+	["apu_sweep.neees", true],
 	["apu_tester.neees", true],
 	["game_chase.neees", true],
 	["game_climber.neees", true],
