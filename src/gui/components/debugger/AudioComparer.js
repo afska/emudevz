@@ -12,7 +12,7 @@ const COLOR_ACTUAL_WAVE = "#e5c07b";
 const COLOR_EXPECTED_WAVE = "#577295";
 const VOLUME = 0.1;
 const NON_MIX_FACTOR = 0.01;
-const VIEW_WINDOW_SIZE = 500;
+const VIEW_WINDOW_SIZE = 250;
 const SAMPLE_EPSILON = 1e-4;
 
 const MIN = 0;
