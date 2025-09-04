@@ -890,7 +890,7 @@ class NoiseChannel {
 		if (
 			!this.isEnabled() ||
 			!this.lengthCounter.isActive() ||
-			!(this.shift & 1)
+			byte.getBit(this.shift, 0)
 		)
 			return 0;
 
