@@ -34,6 +34,7 @@ export default class TestCommand extends Command {
 			try {
 				isAudioTestSuccessful = await this._runAudioTests(level);
 			} catch (e) {
+				isAudioTestSuccessful = false;
 				console.error(e);
 				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
 			}
@@ -48,6 +49,7 @@ export default class TestCommand extends Command {
 			try {
 				isVideoTestSuccessful = await this._runVideoTests(level);
 			} catch (e) {
+				isVideoTestSuccessful = false;
 				console.error(e);
 				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
 			}
