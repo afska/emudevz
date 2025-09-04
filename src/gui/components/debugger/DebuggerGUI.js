@@ -81,6 +81,16 @@ export default class DebuggerGUI {
 				if (color) {
 					widgets.withBgColor(color, () => {
 						ImGui.Button(label);
+						if (ImGui.IsItemHovered()) {
+							if (label === OPTION_RUN_FRAME)
+								ImGui.SetTooltip(
+									"Left click: Hold to run.\nRight click: Run single frame."
+								);
+							if (label === OPTION_RUN_SCANLINE)
+								ImGui.SetTooltip(
+									"Hold left: Hold to run.\nRight click: Run single scanline."
+								);
+						}
 						const isRightClicked = ImGui.IsItemClicked(1);
 						const isActive = ImGui.IsItemActive() && !ImGui.IsMouseDown(1);
 

@@ -205,7 +205,7 @@ export default class EmulatorRunner extends PureComponent {
 							style={{ marginRight: 8 }}
 							Icon={FaSync}
 							tooltip={locales.get("emulation_reload")}
-							onClick={() => this._reload(true, true)}
+							onClick={() => this._reload(false, true)}
 						/>
 					)}
 					{!!rom && (
