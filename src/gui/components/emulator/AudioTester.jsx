@@ -170,9 +170,28 @@ export default class AudioTester extends PureComponent {
 
 	_onEnd = () => {
 		if (this._framesA === this._framesB) {
-			this._comparer.debuggerGUI.finalSamples = JSON.parse(
-				JSON.stringify(this._samples)
-			); // (deep clone)
+			this._comparer.debuggerGUI.finalSamples = this._generateFinalSamples();
+
+			const channels = Object.keys(this._samples.A);
+			channels.forEach((channel) => {
+				const lengthA = this._samples.A[channel].length;
+				const lengthB = this._samples.B[channel].length;
+				const minLength = Math.min(lengthA, lengthB);
+
+				this._comparer.debuggerGUI.finalSamples.A[
+					channel
+				] = this._comparer.debuggerGUI.finalSamples.A[channel].slice(
+					0,
+					minLength
+				);
+				this._comparer.debuggerGUI.finalSamples.B[
+					channel
+				] = this._comparer.debuggerGUI.finalSamples.B[channel].slice(
+					0,
+					minLength
+				);
+			});
+
 			this._comparer.debuggerGUI.progressValue = 100;
 			this.props.onEnd({
 				success: !this._comparer.debuggerGUI.didFail,
@@ -194,6 +213,21 @@ export default class AudioTester extends PureComponent {
 	_setInputType = () => {};
 
 	_setFps = () => {};
+
+	_generateFinalSamples() {
+		const finalSamples = JSON.parse(JSON.stringify(this._samples)); // (deep clone)
+
+		const channels = Object.keys(finalSamples.A);
+		channels.forEach((channel) => {
+			const lengthA = finalSamples.A[channel].length;
+			const lengthB = finalSamples.B[channel].length;
+			const minLength = Math.min(lengthA, lengthB);
+			finalSamples.A[channel] = finalSamples.A[channel].slice(0, minLength);
+			finalSamples.B[channel] = finalSamples.B[channel].slice(0, minLength);
+		});
+
+		return finalSamples;
+	}
 
 	get _settings() {
 		return {

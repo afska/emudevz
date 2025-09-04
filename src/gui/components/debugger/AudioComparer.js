@@ -13,6 +13,7 @@ const COLOR_EXPECTED_WAVE = "#577295";
 const VOLUME = 0.1;
 const NON_MIX_FACTOR = 0.01;
 const VIEW_WINDOW_SIZE = 500;
+const SAMPLE_EPSILON = 1e-4;
 
 const MIN = 0;
 const MAX = 15;
@@ -182,7 +183,10 @@ export default GenericDebugger(
 
 			ImGui.SameLine();
 			ImGui.AlignTextToFramePadding();
-			ImGui.Text(label);
+			const isDifferent = this._doFinalSamplesDiffer(key);
+			if (isDifferent)
+				widgets.withTextColor(COLOR_FAIL, () => ImGui.Text(label));
+			else ImGui.Text(label);
 
 			let view = samples;
 			let viewN = n;
@@ -213,6 +217,23 @@ export default GenericDebugger(
 				isPlaying && this._currentSamples ? this._currentSamples.length : viewN;
 
 			widgets.wave(showSamples, showN, min, max, height);
+		}
+
+		_doFinalSamplesDiffer(key) {
+			if (this.finalSamples == null) return false;
+
+			const a = this.finalSamples.A?.[key];
+			const b = this.finalSamples.B?.[key];
+
+			if (a.length !== b.length) return true;
+
+			for (let i = 0; i < a.length; i++) {
+				const sampleA = a[i];
+				const sampleB = b[i];
+				if (Math.abs(sampleA - sampleB) > SAMPLE_EPSILON) return true;
+			}
+
+			return false;
 		}
 
 		_isPlaying(which, key) {
