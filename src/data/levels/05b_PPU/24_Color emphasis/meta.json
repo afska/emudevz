@@ -87,6 +87,11 @@
 			"frames": 120,
 			"ppu": "TestPPU.v14.js",
 			"saveState": "240ptestsuite_scroll_hill.ss"
+		},
+		{
+			"rom": "/roms/_test/ppu_road.neees",
+			"frames": 240,
+			"ppu": "TestPPU.v14.js"
 		}
 	],
 	"memory": {
