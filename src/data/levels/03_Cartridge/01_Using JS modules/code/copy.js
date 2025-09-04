@@ -6,6 +6,7 @@
 	["apu_dmc_directload_crowd.neees", true],
 	["apu_sweep.neees", true],
 	["apu_tester.neees", true],
+	["apu_triangle_regular_length.neees", true],
 	["game_chase.neees", true],
 	["game_climber.neees", true],
 	["game_solarian.neees", true],
