@@ -53,7 +53,7 @@
 			"apu": "TestAPU.v10.js"
 		},
 		{
-			"rom": "/roms/.all/TeslaVsEdison.neees",
+			"rom": "/roms/.all/RavensGate.neees",
 			"frames": 300,
 			"apu": "TestAPU.v10.js"
 		},
