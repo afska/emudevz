@@ -4,6 +4,8 @@ const ImGui = window.ImGui;
 
 const MIN = 0;
 const MAX = 15;
+const DMC_MIN = 0;
+const DMC_MAX = 127;
 const MAX_FREQ = 1000;
 const DUTY_SEQUENCE = [
 	[1, 0, 0, 0, 0, 0, 0, 0],
@@ -147,7 +149,7 @@ export default class Debugger_APU {
 				widgets.wave(noise, n, MIN, MAX);
 			});
 			widgets.simpleTable("dmc", "DMC Channel", () => {
-				widgets.wave(dmc, n, MIN, MAX);
+				widgets.wave(dmc, n, DMC_MIN, DMC_MAX);
 			});
 			widgets.simpleTable("mix", "Mix", () => {
 				widgets.wave(mix, n, 0, 0.5);
@@ -385,7 +387,7 @@ export default class Debugger_APU {
 		widgets.simpleTab(this, "DMC", () => {
 			const channel = neees?.apu.channels?.dmc;
 
-			widgets.wave(dmc, maxN, MIN, MAX);
+			widgets.wave(dmc, maxN, DMC_MIN, DMC_MAX);
 
 			widgets.boolean("Enabled", channel?.isEnabled?.());
 			widgets.value("Sample", dmc[dmc.length - 1] ?? 0);
