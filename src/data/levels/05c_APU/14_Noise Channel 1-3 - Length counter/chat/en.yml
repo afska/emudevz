@@ -47,7 +47,7 @@ exercise:
       **->** if `!this.enableNoise`:
         **->** resets the channel's length counter
   responses:
-  - "(*) why does the template you provided use `Math.random()`? [random]"
+  - "(*) why does the template you provided use `random()`? [random]"
 
 random:
   messages:

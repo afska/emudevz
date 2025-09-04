@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - la generación de ruido es un poco más compleja que el ```javascript Math.random()``` de JavaScript
+  - la generación de ruido es un poco más compleja que una llamada a ```javascript random()```
   - "aquí hay un documento que lo describe:"
   - 📄  ~/docs/apu/noise_generation.es.md~
   - léelo y dime si tienes alguna pregunta

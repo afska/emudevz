@@ -92,7 +92,7 @@ export default GenericDebugger(
 
 			widgets.withWaveColor(color, () => {
 				this._sectionWithButton(
-					"Mix",
+					which === "A" ? "Actual Mix" : "Expected Mix",
 					mix,
 					this._source.mix,
 					n,

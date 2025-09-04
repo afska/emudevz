@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - noise generation is a bit more involved than JavaScript's ```javascript Math.random()```
+  - noise generation is a bit more involved than a ```javascript random()``` call
   - "here's a document that describes it:"
   - 📄  ~/docs/apu/noise_generation.en.md~
   - read it and let me know if you have any questions

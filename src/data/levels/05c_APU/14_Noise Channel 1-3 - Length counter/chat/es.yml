@@ -47,7 +47,7 @@ exercise:
       **->** si `!this.enableNoise`:
         **->** reinicia el contador de longitud del canal
   responses:
-  - "(*) ¿por qué la plantilla que diste usa `Math.random()`? [random]"
+  - "(*) ¿por qué la plantilla que diste usa `random()`? [random]"
 
 random:
   messages:

@@ -15,7 +15,7 @@ export default class NoiseChannel {
 
     const volume = this.registers.control.volumeOrEnvelopePeriod;
 
-    return Math.floor(Math.random() * volume);
+    return Math.floor(this.random() * volume);
   }
 
   step() {
@@ -36,4 +36,10 @@ export default class NoiseChannel {
   isEnabled() {
     return !!this.apu.registers.apuControl.enableNoise;
   }
+
+  random() {
+		if (this.s == null) this.s = 0x9e3779b9;
+		this.s = (this.s * 1664525 + 1013904223) >>> 0;
+		return this.s / 4294967296;
+	}
 }
