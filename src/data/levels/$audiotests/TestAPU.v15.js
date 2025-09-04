@@ -989,8 +989,6 @@ class DPCM {
 			this.sampleAddress = 0xc000 + this.registers.sampleAddress.value * 64;
 			// sample length = %LLLL.LLLL0001 = (L * 16) + 1 bytes
 			this.sampleLength = this.registers.sampleLength.value * 16 + 1;
-
-			this.dmcChannel.outputSample = 0;
 		}
 
 		if (!this.isActive) return;
@@ -999,19 +997,19 @@ class DPCM {
 		if (this.dividerCount >= this.dividerPeriod) this.dividerCount = 0;
 		else return;
 
-		const hasSampleFinished = this.cursorByte === this.sampleLength;
-		const hasByteFinished = this.cursorBit === 8;
+		const needFetch = this.buffer === null || this.cursorBit === 8;
+		if (needFetch) {
+			const nextByte = this.cursorByte + 1;
 
-		if (this.buffer === null || hasByteFinished) {
-			this.cursorByte++;
-			this.cursorBit = 0;
-
-			if (hasSampleFinished) {
+			if (nextByte >= this.sampleLength) {
 				this.isActive = false;
 				this.buffer = null;
-				this.dmcChannel.outputSample = 0;
+				if (this.registers.control.loop) this.start();
 				return;
 			}
+
+			this.cursorByte = nextByte;
+			this.cursorBit = 0;
 
 			let address = this.sampleAddress + this.cursorByte;
 			if (address > 0xffff) {
@@ -1021,12 +1019,12 @@ class DPCM {
 			this.buffer = this.cpu.memory.read(address);
 		}
 
-		const variation = byte.getBit(this.buffer, this.cursorBit) ? 1 : -1;
-		this.dmcChannel.outputSample += variation;
+		const variation = byte.getBit(this.buffer, this.cursorBit) ? 2 : -2;
+		const newSample = this.dmcChannel.outputSample + variation;
+		if (newSample >= 0 && newSample <= 127)
+			this.dmcChannel.outputSample = newSample;
 
 		this.cursorBit++;
-		if (hasSampleFinished && hasByteFinished && this.registers.control.loop)
-			this.start();
 	}
 
 	/**
@@ -1048,8 +1046,7 @@ class DPCM {
 	 */
 	remainingBytes() {
 		if (!this.isActive) return 0;
-
-		return this.sampleLength - this.cursorByte;
+		return Math.max(0, this.sampleLength - (this.cursorByte + 1));
 	}
 
 	get cpu() {

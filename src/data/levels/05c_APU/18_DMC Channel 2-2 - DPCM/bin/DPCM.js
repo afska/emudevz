@@ -46,18 +46,19 @@ export default class DPCM {
     if (this.dividerCount >= this.dividerPeriod) this.dividerCount = 0;
     else return;
 
-    const hasSampleFinished = this.cursorByte === this.sampleLength;
-    const hasByteFinished = this.cursorBit === 8;
+    const needFetch = this.buffer === null || this.cursorBit === 8;
+    if (needFetch) {
+      const nextByte = this.cursorByte + 1;
 
-    if (this.buffer === null || hasByteFinished) {
-      this.cursorByte++;
-      this.cursorBit = 0;
-
-      if (hasSampleFinished) {
+      if (nextByte >= this.sampleLength) {
         this.isActive = false;
         this.buffer = null;
+        if (this.registers.control.loop) this.start();
         return;
       }
+
+      this.cursorByte = nextByte;
+      this.cursorBit = 0;
 
       let address = this.sampleAddress + this.cursorByte;
       if (address > 0xffff) {
@@ -73,8 +74,6 @@ export default class DPCM {
       this.dmcChannel.outputSample = newSample;
 
     this.cursorBit++;
-    if (hasSampleFinished && hasByteFinished && this.registers.control.loop)
-      this.start();
   }
 
   /**
@@ -96,8 +95,7 @@ export default class DPCM {
    */
   remainingBytes() {
     if (!this.isActive) return 0;
-
-    return this.sampleLength - this.cursorByte;
+    return Math.max(0, this.sampleLength - (this.cursorByte + 1));
   }
 
   get cpu() {
