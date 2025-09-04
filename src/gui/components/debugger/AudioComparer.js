@@ -12,8 +12,9 @@ const COLOR_ACTUAL_WAVE = "#e5c07b";
 const COLOR_EXPECTED_WAVE = "#577295";
 const VOLUME = 0.1;
 const NON_MIX_FACTOR = 0.01;
-const VIEW_WINDOW_SIZE = 250;
 const SAMPLE_EPSILON = 1e-4;
+const MIN_WINDOW = 100;
+const MAX_WINDOW = 1000;
 
 const MIN = 0;
 const MAX = 15;
@@ -29,6 +30,7 @@ export default GenericDebugger(
 			this._player = null;
 			this._currentSamples = null;
 			this._trimPercent = 100;
+			this._window = 500;
 		}
 
 		draw() {
@@ -40,7 +42,7 @@ export default GenericDebugger(
 				() => {
 					widgets.withWaveColor(this.didFail ? COLOR_FAIL : null, () => {
 						if (this.progressValue === 100) {
-							widgets.fullWidthFieldWithLabel("", (label) => {
+							widgets.fullWidthFieldWithLabel("Scroll", (label) => {
 								const disable = !!this._player;
 								if (disable) ImGui.BeginDisabled(true);
 								ImGui.SliderInt(
@@ -61,6 +63,23 @@ export default GenericDebugger(
 					this._drawWaves(this.emulationA, COLOR_ACTUAL_WAVE, "A");
 					ImGui.NextColumn();
 					this._drawWaves(this.emulationB, COLOR_EXPECTED_WAVE, "B");
+
+					ImGui.Columns(1);
+
+					if (this.progressValue === 100) {
+						widgets.fullWidthFieldWithLabel("Window", (label) => {
+							const disable = !!this._player;
+							if (disable) ImGui.BeginDisabled(true);
+							ImGui.SliderInt(
+								label,
+								(v = this._window) => (this._window = v),
+								MIN_WINDOW,
+								MAX_WINDOW,
+								"%d"
+							);
+							if (disable) ImGui.EndDisabled();
+						});
+					}
 				}
 			);
 
@@ -196,8 +215,8 @@ export default GenericDebugger(
 				!isPlaying
 			) {
 				const center = n > 0 ? n - 1 : 0;
-				let start = center - VIEW_WINDOW_SIZE;
-				let end = center + VIEW_WINDOW_SIZE;
+				let start = center - this._window / 2;
+				let end = center + this._window / 2;
 				if (start < 0) {
 					end += -start;
 					start = 0;
@@ -255,6 +274,7 @@ export default GenericDebugger(
 
 			const id = which + "_" + key;
 			this._trimPercent = 100;
+			this._window = 500;
 
 			try {
 				let index = 0;
