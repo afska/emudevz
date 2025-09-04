@@ -37,7 +37,27 @@
 	},
 	"audioTests": [
 		{
-			"rom": "/roms/.all/SuperTiltBro.neees",
+			"rom": "/roms/_test/hello_world.neees",
+			"frames": 200,
+			"apu": "TestAPU.v5.js"
+		},
+		{
+			"rom": "/roms/_test/game_climber.neees",
+			"frames": 300,
+			"apu": "TestAPU.v5.js"
+		},
+		{
+			"rom": "/roms/.all/DizzySheepDisaster.neees",
+			"frames": 300,
+			"apu": "TestAPU.v5.js"
+		},
+		{
+			"rom": "/roms/.all/FilthyKitchen.neees",
+			"frames": 300,
+			"apu": "TestAPU.v5.js"
+		},
+		{
+			"rom": "/roms/.all/TeslaVsEdison.neees",
 			"frames": 300,
 			"apu": "TestAPU.v5.js"
 		}
