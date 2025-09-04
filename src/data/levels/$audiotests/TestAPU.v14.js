@@ -935,7 +935,7 @@ class NoiseChannel {
 	}
 
 	isEnabled() {
-		return this.apu.registers.apuControl.enableNoise;
+		return !!this.apu.registers.apuControl.enableNoise;
 	}
 }
 
