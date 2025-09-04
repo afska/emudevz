@@ -29,8 +29,8 @@ then:
   - en cada pulso del divisor, la unidad procesa <un bit> del stream y <cambia> el sample de salida
   - |-
     ese bit determina la <variación>:
-      **->** un 1 significa ~+1~
-      **->** un 0 significa ~-1~
+      **->** un 1 significa ~+2~
+      **->** un 0 significa ~-2~
   - cuando termina de procesar todos los bits (el clip de sonido se ha terminado), la reproducción se reinicia si la <bandera de bucle> está encendida
   responses:
   - esto suena complicado [exercise]

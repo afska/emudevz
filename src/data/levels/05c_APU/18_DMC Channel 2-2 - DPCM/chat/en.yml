@@ -29,8 +29,8 @@ then:
   - on each divider clock, the unit processes <one bit> from the stream and <changes> the output sample
   - |-
     that bit determines the <variation>:
-      **->** a 1 means ~+1~
-      **->** a 0 means ~-1~
+      **->** a 1 means ~+2~
+      **->** a 0 means ~-2~
   - when it finishes processing all bits (the sound clip has ended), playback is restarted if the <loop flag> is set
   responses:
   - this sounds complicated [exercise]

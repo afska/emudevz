@@ -38,8 +38,6 @@ export default class DPCM {
       this.sampleAddress = 0xc000 + this.registers.sampleAddress.value * 64;
       // sample length = %LLLL.LLLL0001 = (L * 16) + 1 bytes
       this.sampleLength = this.registers.sampleLength.value * 16 + 1;
-
-      this.dmcChannel.outputSample = 0;
     }
 
     if (!this.isActive) return;
@@ -58,7 +56,6 @@ export default class DPCM {
       if (hasSampleFinished) {
         this.isActive = false;
         this.buffer = null;
-        this.dmcChannel.outputSample = 0;
         return;
       }
 
@@ -70,8 +67,10 @@ export default class DPCM {
       this.buffer = this.cpu.memory.read(address);
     }
 
-    const variation = byte.getBit(this.buffer, this.cursorBit) ? 1 : -1;
-    this.dmcChannel.outputSample += variation;
+    const variation = byte.getBit(this.buffer, this.cursorBit) ? 2 : -2;
+    const newSample = this.dmcChannel.outputSample + variation;
+    if (newSample >= 0 && newSample <= 127)
+      this.dmcChannel.outputSample = newSample;
 
     this.cursorBit++;
     if (hasSampleFinished && hasByteFinished && this.registers.control.loop)
