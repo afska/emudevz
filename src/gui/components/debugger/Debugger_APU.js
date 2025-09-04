@@ -391,21 +391,22 @@ export default class Debugger_APU {
 			widgets.value("Sample", dmc[dmc.length - 1] ?? 0);
 
 			widgets.simpleTable("dmc_dpcm", "DPCM", () => {
-				const cursorByte = channel?.cursorByte ?? 0;
-				const cursorBit = channel?.cursorBit ?? 0;
-				const sampleLength = channel?.sampleLength ?? 0;
+				const cursorByte = channel?.dpcm?.cursorByte ?? 0;
+				const cursorBit = channel?.dpcm?.cursorBit ?? 0;
+				const sampleLength = channel?.dpcm?.sampleLength ?? 0;
 
-				widgets.boolean("Start", channel?.startFlag ?? false);
+				widgets.boolean("Start", channel?.dpcm?.startFlag ?? false);
 				ImGui.SameLine();
-				widgets.boolean("Active", channel?.isUsingDPCM ?? false);
-				widgets.value("Buffer", channel?.buffer ?? 0);
+				widgets.boolean("Active", channel?.dpcm?.isActive ?? false);
+				widgets.value("Buffer", channel?.dpcm?.buffer || 0);
 				widgets.value("Cursor (byte)", cursorByte);
 				widgets.value("Cursor (bit)", cursorBit);
-				widgets.value("Divider period", channel?.dividerPeriod ?? 0);
-				widgets.value("Divider count", channel?.dividerCount ?? 0);
+				widgets.value("Divider period", channel?.dpcm?.dividerPeriod ?? 0);
+				widgets.value("Divider count", channel?.dpcm?.dividerCount ?? 0);
 				widgets.value(
 					"Sample address",
-					"0x" + (channel?.sampleAddress ?? 0).toString(16).padStart(4, "0")
+					"0x" +
+						(channel?.dpcm?.sampleAddress ?? 0).toString(16).padStart(4, "0")
 				);
 				widgets.value("Sample length", sampleLength);
 
