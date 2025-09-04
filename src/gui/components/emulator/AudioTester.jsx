@@ -2,12 +2,15 @@ import React, { PureComponent } from "react";
 import { FaTimes } from "react-icons/fa";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
+import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
+import { bus } from "../../../utils";
 import AudioComparer from "../debugger/AudioComparer";
 import IconButton from "../widgets/IconButton";
 import Emulator from "./Emulator";
 import styles from "./AudioTester.module.css";
 
+const MIN_VOLUME = 0.1;
 const SAMPLE_EPSILON = 1e-4;
 const SAMPLE_GROUP = () => ({
 	mix: [],
@@ -209,7 +212,20 @@ export default class AudioTester extends PureComponent {
 		return this.props.test.frames;
 	}
 
+	componentDidMount() {
+		this._subscriber = bus.subscribe({
+			"music-volume-changed": (newVolume) => {
+				if (this._emulatorA?.speaker)
+					this._emulatorA?.speaker.setVolume(Math.max(newVolume, MIN_VOLUME));
+			},
+		});
+	}
+
+	componentWillUnmount() {
+		this._subscriber.release();
+	}
+
 	get _volume() {
-		return 0.1; // Math.max(store.getState().savedata.emulatorVolume, 0.1);
+		return Math.max(store.getState().savedata.musicVolume, MIN_VOLUME);
 	}
 }

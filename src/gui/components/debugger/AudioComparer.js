@@ -1,3 +1,4 @@
+import music from "../../sound/music";
 import { GenericDebugger } from "../Debugger";
 import Speaker from "../emulator/runner/Speaker";
 import widgets from "./widgets";
@@ -10,7 +11,7 @@ const COLOR_FAIL = "#d9534f";
 const COLOR_ACTUAL_WAVE = "#e5c07b";
 const COLOR_EXPECTED_WAVE = "#577295";
 const VOLUME = 0.1;
-const NON_MIX_FACTOR = 0.1;
+const NON_MIX_FACTOR = 0.01;
 const VIEW_WINDOW_SIZE = 500;
 
 const MIN = 0;
@@ -219,8 +220,13 @@ export default GenericDebugger(
 		}
 
 		_togglePlay(fullSamples, which, key) {
-			if (this._isPlaying(which, key)) this._stopSpeaker();
-			else this._startSpeaker(fullSamples, which, key);
+			if (this._isPlaying(which, key)) {
+				music.resume();
+				this._stopSpeaker();
+			} else {
+				music.pause();
+				this._startSpeaker(fullSamples, which, key);
+			}
 		}
 
 		async _startSpeaker(fullSamples, which, key) {
