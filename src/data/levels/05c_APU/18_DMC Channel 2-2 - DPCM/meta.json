@@ -38,6 +38,11 @@
 	},
 	"audioTests": [
 		{
+			"rom": "/roms/_test/apu_full_song.neees",
+			"frames": 300,
+			"apu": "TestAPU.v14.js"
+		},
+		{
 			"rom": "/roms/_test/game_climber.neees",
 			"frames": 300,
 			"apu": "TestAPU.v14.js"

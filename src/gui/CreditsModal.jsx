@@ -354,6 +354,13 @@ export default class CreditsModal extends PureComponent {
 						>
 							Crowd
 						</Game>
+						<Game
+							emojis="💯🎹"
+							link="https://github.com/zeta0134/bhop"
+							author="zeta0134 (song by celestialghost)"
+						>
+							Song demo
+						</Game>
 					</Section>
 					<Section title="🙏 Thanks to...">
 						<Game emojis="🕹️🛠️" link="https://www.nesdev.org">

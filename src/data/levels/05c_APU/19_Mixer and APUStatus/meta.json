@@ -85,6 +85,11 @@
 			"rom": "/roms/_test/apu_dmc_directload_crowd.neees",
 			"frames": 300,
 			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/apu_full_song.neees",
+			"frames": 300,
+			"apu": "TestAPU.v15.js"
 		}
 	],
 	"memory": {
