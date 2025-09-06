@@ -33,7 +33,6 @@
     "@uiw/react-codemirror": "4.11.6",
     "@xterm/addon-fit": "0.10.0",
     "@xterm/addon-image": "0.8.0",
-    "@xterm/addon-webgl": "^0.18.0",
     "@xterm/xterm": "5.5.0",
     "bootstrap": "^5.2.0",
     "broken-neees": "^1.0.67",

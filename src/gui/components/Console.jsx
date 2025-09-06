@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { FitAddon } from "@xterm/addon-fit";
 import { ImageAddon } from "@xterm/addon-image";
-import { WebglAddon } from "@xterm/addon-webgl";
 import { XTerm } from "updated-xterm-for-react";
 import dictionary from "../../data/dictionary";
 import locales from "../../locales";
@@ -29,7 +28,6 @@ export default class Console extends PureComponent {
 
 	fitAddon = new FitAddon();
 	imageAddon = new ImageAddon(imageAddonSettings);
-	webglAddon = new WebglAddon();
 
 	async initialize(args, level) {
 		this._level = level;
@@ -69,7 +67,7 @@ export default class Console extends PureComponent {
 							cursorAccent: "#111111",
 						},
 					}}
-					addons={[this.fitAddon, this.imageAddon, this.webglAddon]}
+					addons={[this.fitAddon, this.imageAddon]}
 					ref={(ref) => {
 						this.ref = ref;
 					}}
