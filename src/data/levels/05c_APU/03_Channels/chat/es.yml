@@ -143,9 +143,6 @@ addtriangle:
 
 combined:
   run: |
-    {{Right}}.do((debuggerGUI) => {
-      debuggerGUI.args.readOnly = false;
-    });
     if (emulation) {
       emulation.enabledChannels.pulse1 = true;
       emulation.enabledChannels.pulse2 = true;
@@ -153,11 +150,22 @@ combined:
       emulation.enabledChannels.noise = true;
       emulation.enabledChannels.dmc = false;
     }
+  run-after-messages: |
+    $.goTo("controls");
   messages:
   - como puedes ver, con algo de <creatividad>, ¡puedes crear melodías bastante buenas combinando todos estos canales! ✨
   - hay un canal extra que no cubrimos aquí, el 📦  Canal DMC
   - permite a los juegos enviar sus propias ondas directamente a la APU
-  - ese tendrá un tratamiento especial más adelante, ¡así que no te preocupes por eso!
+  - |+
+    ese tendrá un tratamiento especial más adelante, ¡así que no te preocupes por eso!
+  responses: []
+
+controls:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.args.readOnly = false;
+    });
+  messages:
   - <! Controles activados.
   - <activé los controles> en la vista del depurador para que puedas jugar un rato
   - cuando quieras, avísame y podemos volver a programar 👀

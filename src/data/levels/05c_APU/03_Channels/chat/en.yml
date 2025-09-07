@@ -143,9 +143,6 @@ addtriangle:
 
 combined:
   run: |
-    {{Right}}.do((debuggerGUI) => {
-      debuggerGUI.args.readOnly = false;
-    });
     if (emulation) {
       emulation.enabledChannels.pulse1 = true;
       emulation.enabledChannels.pulse2 = true;
@@ -153,11 +150,22 @@ combined:
       emulation.enabledChannels.noise = true;
       emulation.enabledChannels.dmc = false;
     }
+  run-after-messages: |
+    $.goTo("controls");
   messages:
   - as you can see, with some <creativity>, you can create some pretty nice melodies combining all these channels! ✨
   - there's one extra channel we didn't cover here, the 📦  DMC Channel
   - it allows games to provide their custom waves directly to the APU
-  - that one's getting special treatment later, so don't worry about it!
+  - |+
+    that one's getting special treatment later, so don't worry about it!
+  responses: []
+
+controls:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.args.readOnly = false;
+    });
+  messages:
   - <! Controls enabled.
   - I <enabled the controls> in the debugger view so you can play around for a while
   - once you are ready, let me know and we can go back to programming 👀
