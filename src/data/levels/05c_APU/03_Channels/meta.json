@@ -10,7 +10,8 @@
 			"Left": [
 				"console",
 				{
-					"startup": "chat"
+					"startup": "chat -f",
+					"availableCommands": ["chat"]
 				}
 			],
 			"Background": [
