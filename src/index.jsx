@@ -12,8 +12,8 @@ import { bus } from "./utils";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
-import "@xterm/xterm/css/xterm.css";
 import "highlight.js/styles/base16/onedark.css";
+import "xterm/css/xterm.css";
 
 // Set up EmuDevz global object
 window.EmuDevz = {
