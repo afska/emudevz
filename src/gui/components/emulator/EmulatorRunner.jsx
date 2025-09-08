@@ -308,6 +308,11 @@ export default class EmulatorRunner extends PureComponent {
 	};
 
 	_reload = (isFullReload = false, forceReset = false) => {
+		if (!!this.props.error) {
+			isFullReload = true;
+			forceReset = true;
+		}
+
 		const keepState = this._emulatorSettings.withHotReload && !forceReset;
 
 		if (isFullReload) {
