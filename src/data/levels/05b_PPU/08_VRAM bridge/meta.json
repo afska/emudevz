@@ -37,17 +37,17 @@
 	},
 	"videoTests": [
 		{
+			"rom": "/roms/.all/Spacegulls.neees",
+			"frames": 90,
+			"ppu": "TestPPU.v3.js"
+		},
+		{
 			"rom": "/roms/_test/NEEEStest.neees",
 			"frames": 90,
 			"ppu": "TestPPU.v3.js"
 		},
 		{
 			"rom": "/roms/_test/hello_world.neees",
-			"frames": 90,
-			"ppu": "TestPPU.v3.js"
-		},
-		{
-			"rom": "/roms/.all/Spacegulls.neees",
 			"frames": 90,
 			"ppu": "TestPPU.v3.js"
 		}
