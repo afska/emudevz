@@ -7,15 +7,19 @@ main:
   - what's it used for? [usage]
 
 usage:
+  run: |
+    {{Top}}.load("sprite_zero_splitscreen.png");
   messages:
   - games use it to perform <split-screen effects> (for example, having a static HUD at the top and a scrolling background at the bottom)
   - there was a game about a plumber that used that trick 👨 🔧
-  - by placing sprite zero at a specific position in the background, the PPU would trigger a sprite-zero hit when that part of the screen was rendered
-  - this allows games to detect the moment the PPU has reached a specific scanline, and then change the scroll coordinates mid-frame
+  - by placing a coin sprite (sprite zero) on top of a background coin, the PPU triggers a sprite-zero hit when that part of the screen is rendered
+  - this allows the game to detect the moment the PPU has reached that specific scanline, and then change the scroll coordinates mid-frame
   responses:
   - aahh [exercise]
 
 exercise:
+  run: |
+    {{Top}}.load(null, "rom");
   messages:
   - |-
     📚  in 🛸  `SpriteRenderer`, <change> the `_render(...)` method; below `buffer[x] = ...`, add:
