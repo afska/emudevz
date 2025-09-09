@@ -11,7 +11,7 @@ oam:
   - 📄  ~/docs/ppu/sprite_rendering.en.md~
   - "also, you should make use of my `Sprite` class:"
   - 📄  ~/lib/ppu/Sprite.js~
-  - it takes care of some stuff like parsing the attributes
+  - it takes care of some stuff like interpreting the attributes
   responses:
   - thx, but I still need to read the OAM, right? [exercise]
 

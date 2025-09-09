@@ -35,7 +35,7 @@ class PPUCtrl extends InMemoryRegister.PPU {
   // when onRead() is not defined, reads return 0
 
   onWrite(value) {
-    this.setValue(value); // this updates this.value and all the fields
+    this.setValue(value); // this call updates `this.value` and all the fields
 
     // you can trigger other operations here with `this.ppu`
   }

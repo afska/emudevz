@@ -30,12 +30,11 @@ exercise:
       **->** <add the necessary code> to render a full scanline of the background
   - bye!
   responses:
-  - wait, DON'T LEAVE ME 😭 [questions]
+  - "\"add the necessary code\"? really? that's all? [questions]"
 
 questions:
   messages:
-  - ok, ok 😅
-  - do you have some questions?
+  - what? you need help?
   responses:
   - (*) so, how many pixels should I draw? ⏹ [howmany]
   - (*) how do I know the current line? 🌠 [line]
@@ -59,7 +58,7 @@ line:
 
 help:
   messages:
-  - you know that `y = this.ppu.scanline`
+  - you know that ```javascript y = this.ppu.scanline```
   - and that you need to draw from ~x = 0~ to ~x = 255~
   - you also know that the screen is a grid of ~32x32~ tiles (of ~8x8~ pixels each)
   - and lastly, you already know how to draw a tile using your 🕊️  `Tile` class!

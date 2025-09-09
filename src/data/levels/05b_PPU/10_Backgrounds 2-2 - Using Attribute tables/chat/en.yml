@@ -12,7 +12,7 @@ main:
     📚  implement this method in 🖥️  `PPU`:
     **getColor(paletteId, colorIndex)**:
       **->** calculates the start address of the palette:
-        `0x3F00 + paletteId * 4`
+        ```javascript 0x3F00 + paletteId * 4```
         (let's call this `startAddress`)
       **->** reads the color index from memory:
         reads from PPU address ```javascript startAddress + colorIndex```
@@ -39,12 +39,6 @@ main:
         this.plot(x + xx, y, color);
       }```
   - note that when the color index is 0, a <backdrop color> is rendered instead (located at the first index of the first palette)
-  responses:
-  - "\"add the necessary code\"? really? that's all? [help]"
-
-help:
-  messages:
-  - what? you need help?
   responses:
   - (*) help me with the math 🔢 [math]
   - (*) what's the backdrop color? 💧 [backdrop]
@@ -77,11 +71,12 @@ clear:
   messages:
   - glad to help :D
   responses:
-  - ...help
+  - ...main
 
 backdrop:
   messages:
-  - you can think of it as a global "transparent" color
-  - index 0 of every palette will use it, and it's defined in ~palette 0, index 0~ (aka $PPU $3F00)
+  - you can think of it as a universal background color
+  - it's defined in ~palette 0, index 0~ (aka $PPU $3F00)
+  - any background pixel with color index 0 shows this color
   responses:
-  - ...help
+  - ...main

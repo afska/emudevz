@@ -24,7 +24,7 @@ main:
     **getColorIndex(x)**:
       **->** determines the bit position that corresponds to `x` (a number between 0 and 7)
         keep in mind that ~x=0~ is the leftmost pixel, and that would be ~bit 7~
-      **->** grabs that bit from ```javascript this._lowRow``` and ```javascript this._highRow``` using `javascript byte.getBit(...)`
+      **->** grabs that bit from ```javascript this._lowRow``` and ```javascript this._highRow``` using `byte.getBit(...)`
       **->** returns the resulting color index, combining the two bits with `byte.buildU2(...)`
   responses:
   - how will we test this? 🧐 [test]

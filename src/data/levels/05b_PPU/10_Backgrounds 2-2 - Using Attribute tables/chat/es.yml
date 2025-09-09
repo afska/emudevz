@@ -12,7 +12,7 @@ main:
     📚  implementa este método en 🖥️  `PPU`:
     **getColor(paletteId, colorIndex)**:
       **->** calcula la dirección inicial de la paleta:
-        `0x3F00 + paletteId * 4`
+        ```javascript 0x3F00 + paletteId * 4```
         (llamemos a esto `startAddress`)
       **->** lee el índice de color de la memoria:
         lee desde la dirección PPU ```javascript startAddress + colorIndex```
@@ -38,7 +38,7 @@ main:
           colorIndex > 0 ? this.ppu.getColor(paletteId, colorIndex) : this.ppu.getColor(0, 0);
         this.plot(x + xx, y, color);
       }```
-  - ten en cuenta que cuando el índice de color es 0, se renderiza un <color de fondo> en su lugar (ubicado en el primer índice de la primera paleta)
+  - ten en cuenta que cuando el índice de color es 0, se renderiza un <backdrop color> en su lugar (ubicado en el primer índice de la primera paleta)
   responses:
   - "\"¿agrega el código necesario\"? ¿en serio? ¿eso es todo? [help]"
 
@@ -47,7 +47,7 @@ help:
   - ¿qué? ¿necesitas ayuda?
   responses:
   - (*) ayúdame con las matemáticas 🔢 [math]
-  - (*) ¿cuál es el color de fondo? 💧 [backdrop]
+  - (*) ¿cuál es el ~backdrop color~? 💧 [backdrop]
 
 math:
   messages:
@@ -76,11 +76,13 @@ math:
 clear:
   messages:
   - me alegra ayudar :D
-  responses: []
+  responses:
+  - ...main
 
 backdrop:
   messages:
-  - puedes pensar en ello como un color "transparente" global
-  - el índice 0 de cada paleta lo usará, y está definido en ~paleta 0, índice 0~ (también conocido como $PPU $3F00)
+  - puedes pensar en ello como un color de fondo universal
+  - está definido en ~paleta 0, índice 0~ (también conocido como $PPU $3F00)
+  - cualquier píxel del fondo con índice de color 0 muestra este color
   responses:
-  - ...help
+  - ...main

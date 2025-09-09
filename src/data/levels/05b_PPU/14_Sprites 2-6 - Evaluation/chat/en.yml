@@ -3,11 +3,11 @@ main:
   - on each scanline, the sprite renderer performs a sprite evaluation 🕵️
   - it prepares the sprites that need to be rendered
   responses:
-  - mhm... how does it do it? [how]
+  - mhm... how does it know? [how]
 
 how:
   messages:
-  - it scans the entire OAM table, checking if each sprite should be drawn in the current scanline (based on ~x~, ~y~, and ~height~)
+  - it scans the entire OAM table, checking whether each sprite should be drawn in the current scanline (based on ~x~, ~y~, and ~height~)
   - it chooses the first 8 sprites
   - after finding 8 (the maximum number of sprites per scanline), if it finds <more> visible sprites, the 🏁  sprite overflow flag (bit 5 of 📊  PPUStatus) is set to notify the error to the game developer
   - sprites with lower ids are rendered on top of sprites with higher ids, so you should reverse the chosen sprite list!

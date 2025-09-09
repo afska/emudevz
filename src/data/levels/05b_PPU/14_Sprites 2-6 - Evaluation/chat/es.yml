@@ -3,7 +3,7 @@ main:
   - en cada scanline, el renderizador de sprites realiza una evaluación de sprites 🕵️
   - prepara los sprites que necesitan ser renderizados
   responses:
-  - mhm... ¿cómo lo hace? [how]
+  - mhm... ¿cómo lo sabe? [how]
 
 how:
   messages:

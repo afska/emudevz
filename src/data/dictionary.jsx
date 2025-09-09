@@ -223,9 +223,9 @@ const dictionary = {
 			also: { es: "Índice de color|_Índices de color" },
 			icon: "🎨",
 			en:
-				"A number inside a tile pixel that selects a color from the palette. It ranges from `0` to `3`. <br /><br />In sprites, index `0` is always transparent.",
+				"A number inside a tile pixel that selects a color from the palette. It ranges from `0` to `3`. <br /><br />In the background, index `0` is the `backdrop color`. <br />In sprites, index `0` is always transparent.",
 			es:
-				"Un número dentro de un píxel de tile que selecciona un color de la paleta. Va de `0` a `3`. <br /><br />En los sprites, el índice `0` siempre es transparente.",
+				"Un número dentro de un píxel de tile que selecciona un color de la paleta. Va de `0` a `3`. <br /><br />En el fondo, el índice `0` es el `backdrop color`. <br />En los sprites, el índice `0` siempre es transparente.",
 		},
 		"Controller|_Controllers": {
 			also: { es: "Mando|_Mandos" },
@@ -701,9 +701,9 @@ const dictionary = {
 			also: { es: "Paleta|_Paletas" },
 			icon: "🎨",
 			en:
-				"A list of `4` colors, stored in Palette RAM, where each color is a pointer to the master palette.<br /><br />There are `8` palettes: `4` for the background and `4` for sprites.",
+				"A list of `4` colors, stored in Palette RAM, where each color is a pointer to the master palette. <br /><br />There are `8` palettes: `4` for the background and `4` for sprites.",
 			es:
-				"Una lista de `4` colores, almacenada en Palette RAM, donde cada color es un puntero a la paleta maestra.<br /><br />Hay `8` paletas: `4` para el fondo y `4` para sprites.",
+				"Una lista de `4` colores, almacenada en Palette RAM, donde cada color es un puntero a la paleta maestra. <br /><br />Hay `8` paletas: `4` para el fondo y `4` para sprites.",
 		},
 		"Palette id|Palette index|_Palette indexes": {
 			also: {

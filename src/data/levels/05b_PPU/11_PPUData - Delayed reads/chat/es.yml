@@ -22,4 +22,12 @@ exercise:
       **->** si la dirección está entre $3F00 y $3FFF, asigna ```javascript data = this.buffer``` (omite el buffer)
       **->** llama a ```javascript this._incrementAddress()```
       **->** retorna `data`
-  responses: []
+  responses:
+  - (*) ¿cómo puedo acceder a PPUAddr? [ppuaddr]
+
+ppuaddr:
+  messages:
+  - recuerda que los registros tienen ```javascript this.ppu```
+  - así que puedes acceder a la instancia 📍  PPUAddr con ```javascript this.ppu.registers.ppuAddr```
+  responses:
+  - ...exercise
