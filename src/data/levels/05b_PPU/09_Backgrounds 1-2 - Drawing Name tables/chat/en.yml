@@ -94,3 +94,10 @@ work:
   - and compare the output toggling between BrokenNEEES and your emulator ✨
   responses:
   - ...questions
+
+corollary:
+  messages:
+  - this is awesome!!
+  - your emulator should now be able to display the title screen of most games! 🎉
+  responses:
+  - ▶️  continue [end]

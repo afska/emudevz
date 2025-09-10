@@ -25,3 +25,11 @@ main:
         return;
       }```
   responses: []
+
+corollary:
+  messages:
+  - some games actually depend on this!
+  - for example, that <plumber game> is infamous for rendering the sky as <black> instead of <blue> if the Palette RAM mirrors are not implemented
+  - now it should look blue 😅
+  responses:
+  - ▶️  continue [end]

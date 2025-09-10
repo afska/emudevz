@@ -18,3 +18,11 @@ exercise:
     📚  add at the end of the `_onPreLine()` and `_onVisibleLine()`:
       ```javascript if (this.cycle === 260) this.mapper.tick();```
   responses: []
+
+corollary:
+  messages:
+  - there's a very popular game that needs this
+  - try running 🪠  <the third installment of the plumber game>
+  - the status bar at the bottom should now display correctly!
+  responses:
+  - ▶️  continue [end]

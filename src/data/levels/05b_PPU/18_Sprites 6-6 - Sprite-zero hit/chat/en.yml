@@ -27,3 +27,10 @@ exercise:
       **->** sets ```javascript this.ppu.registers.ppuStatus.sprite0Hit = 1```
   - 📚  ah, and reset `sprite0Hit` in `PPU::_onPreLine()`, just like you did with the other two flags!
   responses: []
+
+corollary:
+  messages:
+  - games that use this trick for <split-screen effects> tend to freeze if the sprite-zero hit is not implemented correctly
+  - try running either 👨‍ 🔧  that <plumber game> or 🐺 ⛓️  ~Wolfling~, they shouldn't freeze now!
+  responses:
+  - ▶️  continue [end]

@@ -47,3 +47,10 @@ vertical:
       ```javascript sprite.flipY ? 7 - tileInsideY : tileInsideY```
   responses:
   - ...main
+
+corollary:
+  messages:
+  - do you have the game 🧸 📍  ~Nalleland~?
+  - if you run it, you'll see that now the bear <flips properly> when turning left
+  responses:
+  - ▶️  continue [end]

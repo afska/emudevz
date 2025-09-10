@@ -94,3 +94,10 @@ work:
   - y compara la salida alternando entre BrokenNEEES y tu emulador ✨
   responses:
   - ...questions
+
+corollary:
+  messages:
+  - ¡¡esto es increíble!!
+  - ¡tu emulador ahora debería poder mostrar la pantalla de título de la mayoría de los juegos! 🎉
+  responses:
+  - ▶️  continuar [end]

@@ -72,3 +72,9 @@ exercise:
             **->** si ```javascript isInFront || !isBGOpaque```:
               **->** llama a ```javascript this.ppu.plot(element.x, y, element.color);```
   responses: []
+
+corollary:
+  messages:
+  - si ejecutas 🦸 🤸  ~Super Tilt Bro~, verás que ahora las nubes se renderizan correctamente 🙂
+  responses:
+  - ▶️  continuar [end]

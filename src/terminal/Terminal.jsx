@@ -468,7 +468,7 @@ export default class Terminal {
 			run: async (commandLine) => {
 				if (this._isWritingRemoteCommand) return;
 
-				bus.emit("unpin");
+				bus.emit("unpin", { changeFocus: false });
 				this._xterm.scrollToBottom();
 
 				try {
@@ -483,6 +483,7 @@ export default class Terminal {
 						if (wait > REMOTE_RUN_TIMEOUT) break;
 					}
 					if (wait <= REMOTE_RUN_TIMEOUT) {
+						this.clear();
 						await this.addInput(commandLine, BUS_RUN_SPEED);
 						await this.confirmPrompt();
 					}

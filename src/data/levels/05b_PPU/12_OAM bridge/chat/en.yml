@@ -59,3 +59,9 @@ exercise:
         **->** assigns the obtained byte to ```javascript oamRam[i]```
       **->** adds 513 to ```javascript this.ppu.cpu.extraCycles```
   responses: []
+
+corollary:
+  messages:
+  - when launching a game, you'll now able to visualize the OAM and its sprites in the 🐞  <debugger window>
+  responses:
+  - ▶️  continue [end]

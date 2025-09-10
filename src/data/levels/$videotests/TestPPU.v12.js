@@ -533,7 +533,11 @@ class BackgroundRenderer {
 			const scrollY = registers.ppuScroll.y;
 			const scrolledX = x + scrollX;
 			const scrolledY = y + scrollY;
-			const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
+			const nameTableId =
+				(this.ppu.registers.ppuCtrl.nameTableId +
+					(scrolledX >= 256 ? 1 : 0) + // move right
+					(scrolledY >= 240 ? 2 : 0)) % // move down
+				4;
 			const nameTableX = scrolledX % 256;
 			const nameTableY = scrolledY % 240;
 			const nameTableAddress = 0x2000 + nameTableId * 1024;

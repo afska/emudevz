@@ -61,3 +61,12 @@ exercise:
       const scrolledY = this.ppu.loopy.scrolledY(y);
       const nameTableId = this.ppu.loopy.nameTableId(scrolledX);```
   responses: []
+
+corollary:
+  messages:
+  - alright...
+  - scrolling should now work for all games, in all cases
+  - I guess...
+  - I... hope 😅
+  responses:
+  - ▶️  continue [end]

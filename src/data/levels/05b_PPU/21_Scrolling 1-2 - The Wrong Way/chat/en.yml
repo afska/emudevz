@@ -105,7 +105,11 @@ then:
       const scrolledX = x + scrollX;
       const scrolledY = y + scrollY;
       // base name table address:
-      const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
+      const nameTableId = (
+        this.ppu.registers.ppuCtrl.nameTableId +
+        (scrolledX >= 256 ? 1 : 0) + // move right
+        (scrolledY >= 240 ? 2 : 0) // move down
+      ) % 4;
       const nameTableAddress = 0x2000 + nameTableId * 1024;
       // current point, relative to the name table:
       const nameTableX = scrolledX % 256;
@@ -135,3 +139,12 @@ then:
       ```javascript
         x += tilePixels;```
   responses: []
+
+corollary:
+  messages:
+  - this should be enough to scroll on most games
+  - except for that cursed <plumber game>, which will crash just after running for a few meters! 🤦
+  - but let's ignore it for now
+  - try... maybe 🌌 🔫  ~Isostasy~'s demo or 🐺 🌲  ~Wolf Spirit~
+  responses:
+  - ▶️  continue [end]

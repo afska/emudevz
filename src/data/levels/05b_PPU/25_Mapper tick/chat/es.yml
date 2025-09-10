@@ -18,3 +18,11 @@ exercise:
     📚  agrega al final de `_onPreLine()` y `_onVisibleLine()`:
       ```javascript if (this.cycle === 260) this.mapper.tick();```
   responses: []
+
+corollary:
+  messages:
+  - hay un juego muy popular que necesita esto
+  - intenta ejecutar 🪠  <la tercera entrega del juego del plomero>
+  - ¡la barra de estado en la parte inferior ahora debería mostrarse correctamente!
+  responses:
+  - ▶️  continuar [end]

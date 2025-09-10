@@ -47,3 +47,10 @@ vertical:
       ```javascript sprite.flipY ? 7 - tileInsideY : tileInsideY```
   responses:
   - ...main
+
+corollary:
+  messages:
+  - ¿tienes el juego 🧸 📍  ~Nalleland~?
+  - si lo ejecutas, verás que ahora el oso <se voltea correctamente> al girar a la izquierda
+  responses:
+  - ▶️  continuar [end]

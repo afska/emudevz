@@ -39,7 +39,7 @@ exercise:
 addone:
   messages:
   - porque los datos de los sprites se retrasan por una línea de exploración 💤
-  - en el hardware real, los sprites se dibujan una línea más abajo de la coordenada Y que los juegos establecen en el OAM
+  - en el hardware real, los sprites se dibujan una línea más abajo de la coordenada Y que los juegos establecen en la OAM
   - es decir, si el byte 0 de una entrada de OAM se establece en 0, se dibuja en la línea 1
   - y no hay forma de dibujar un sprite comenzando desde la línea 0
   responses:

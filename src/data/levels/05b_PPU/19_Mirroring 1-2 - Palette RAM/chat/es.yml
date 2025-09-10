@@ -25,3 +25,11 @@ main:
       return;
     }```
   responses: []
+
+corollary:
+  messages:
+  - ¡algunos juegos de verdad dependen de esto!
+  - por ejemplo, ese <juego del plomero> es infame por renderizar el cielo en <negro> en lugar de <azul> si los espejos de la Palette RAM no están implementados
+  - ahora debería verse azul 😅
+  responses:
+  - ▶️  continuar [end]

@@ -105,7 +105,11 @@ then:
       const scrolledX = x + scrollX;
       const scrolledY = y + scrollY;
       // dirección de la name table base:
-      const nameTableId = this.ppu.registers.ppuCtrl.nameTableId;
+      const nameTableId = (
+        this.ppu.registers.ppuCtrl.nameTableId +
+        (scrolledX >= 256 ? 1 : 0) + // move right
+        (scrolledY >= 240 ? 2 : 0) // move down
+      ) % 4;
       const nameTableAddress = 0x2000 + nameTableId * 1024;
       // punto actual, relativo a la name table:
       const nameTableX = scrolledX % 256;
@@ -135,3 +139,12 @@ then:
       ```javascript
         x += tilePixels;```
   responses: []
+
+corollary:
+  messages:
+  - esto debería ser suficiente para tener scrolling en la mayoría de los juegos
+  - excepto por ese maldito <plumber game>, que se colgará tan solo después de correr unos pocos metros 🤦
+  - pero ignoremos eso por ahora
+  - prueba... quizás la demo de 🌌 🔫  ~Isostasy~ o 🐺 🌲  ~Wolf Spirit~
+  responses:
+  - ▶️  continuar [end]

@@ -59,3 +59,9 @@ exercise:
         **->** asigna el byte obtenido a ```javascript oamRam[i]```
       **->** suma 513 a ```javascript this.ppu.cpu.extraCycles```
   responses: []
+
+corollary:
+  messages:
+  - al iniciar un juego, ahora podrás visualizar la OAM y sus sprites en la 🐞  <ventana del depurador>
+  responses:
+  - ▶️  continuar [end]

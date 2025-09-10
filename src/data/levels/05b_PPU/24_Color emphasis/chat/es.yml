@@ -46,3 +46,10 @@ exercise:
         ```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```
   - 📚  y lo más importante, ahora `PPU::plot(...)` necesita llamar al método transform de 🎭  `PPUMask` en lugar de usar directamente el `color`
   responses: []
+
+corollary:
+  messages:
+    - el énfasis de color se usa, por ejemplo, en 🕊️ 🛰️  ~Spacegulls~ durante la pausa
+    - intenta pausar el juego con <Start> y la pantalla se volverá rojiza
+  responses:
+    - ▶️  continuar [end]

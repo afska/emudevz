@@ -64,9 +64,10 @@ export class NameTableRenderer {
 				const tileX = Math.floor(nameTableX / TILE_SIZE_PIXELS);
 				const tileY = Math.floor(nameTableY / TILE_SIZE_PIXELS);
 				const tileIndex = tileY * TILES_PER_ROW + tileX;
-				const tileId = this.ppu.memory.read(
-					MEM_NAME_TABLES + nameTableId * NAME_TABLE_SIZE_BYTES + tileIndex
-				);
+				const tileId =
+					this.ppu.memory?.read?.(
+						MEM_NAME_TABLES + nameTableId * NAME_TABLE_SIZE_BYTES + tileIndex
+					) ?? 0;
 				const paletteId = this._getBackgroundPaletteId(
 					nameTableId,
 					nameTableX,

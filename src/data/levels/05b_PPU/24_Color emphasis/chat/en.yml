@@ -46,3 +46,10 @@ exercise:
         ```javascript 0xff000000 | (r << 0) | (g << 8) | (b << 16);```
   - 📚  and most importantly, `PPU::plot(...)` now needs to call 🎭  `PPUMask`'s transform method instead of using the `color` directly
   responses: []
+
+corollary:
+  messages:
+  - color emphasis is used, for example, in 🕊️ 🛰️  ~Spacegulls~ during pause
+  - try pausing the game with <Start> and the screen will become reddish
+  responses:
+  - ▶️  continue [end]

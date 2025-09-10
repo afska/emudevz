@@ -4,6 +4,10 @@ import _ from "lodash";
 export default class Layout extends PureComponent {
 	instances = {};
 
+	get isPinOpen() {
+		return this.instances.Pin != null;
+	}
+
 	get supportsPin() {
 		return this.constructor.pinLocation != null;
 	}
@@ -14,7 +18,7 @@ export default class Layout extends PureComponent {
 
 	focus(instanceName) {
 		const pinLocation = this.constructor.pinLocation;
-		if (this.instances.Pin != null && instanceName === pinLocation) {
+		if (this.isPinOpen && instanceName === pinLocation) {
 			this.instances.Pin.focus();
 			return;
 		}

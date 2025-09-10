@@ -28,3 +28,10 @@ exercise:
       **->** asigna ```javascript this.ppu.registers.ppuStatus.sprite0Hit = 1```
   - 📚  ah, y reinicia `sprite0Hit` en `PPU::_onPreLine()`, ¡igual que hiciste con las otras dos banderas!
   responses: []
+
+corollary:
+  messages:
+  - los juegos que usan este truco para <efectos de pantalla dividida> tienden a congelarse si el sprite-zero hit no está implementado correctamente
+  - intenta ejecutar 👨‍ 🔧  ese <juego del plomero> o 🐺 ⛓️  ~Wolfling~, ¡ya no deberían congelarse!
+  responses:
+  - ▶️  continuar [end]

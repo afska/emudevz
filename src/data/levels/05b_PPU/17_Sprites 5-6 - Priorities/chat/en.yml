@@ -72,3 +72,9 @@ exercise:
             **->** if ```javascript isInFront || !isBGOpaque```:
               **->** call ```javascript this.ppu.plot(element.x, y, element.color);```
   responses: []
+
+corollary:
+  messages:
+  - if you run 🦸 🤸  ~Super Tilt Bro~, you'll see that now the clouds render properly 🙂
+  responses:
+  - ▶️  continue [end]

@@ -69,3 +69,11 @@ increment:
   - este autoincremento es útil para que los juegos llenen la VRAM más rápido
   responses:
   - ...exercise
+
+corollary:
+  messages:
+  - ahora, intenta ejecutar un juego que use 👾  CHR-RAM, como 🕊️ 🛰️  ~Spacegulls~
+  - ahora puedes ver su primera 🕊️ 📖  tabla de patrones
+  - estos tiles son copiados por el código del juego a través de 📍  PPUAddr y 📦  PPUData
+  responses:
+  - ▶️  continuar [end]
