@@ -40,10 +40,14 @@ export default class ChatScript {
 	}
 
 	getSection(sectionName) {
-		const section = this.content[sectionName];
+		const section = this.getSectionOrNull(sectionName);
 		if (!section) throw new Error(`Section not found: ${sectionName}`);
 
 		return section;
+	}
+
+	getSectionOrNull(sectionName) {
+		return this.content[sectionName];
 	}
 
 	getMessagesOf(sectionName, history = []) {

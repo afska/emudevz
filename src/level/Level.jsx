@@ -6,6 +6,7 @@ import TV from "../gui/components/TV";
 import layouts from "../gui/components/layouts";
 import locales from "../locales";
 import store from "../store";
+import { COROLLARY_SECTION } from "../terminal/commands/ChatCommand";
 import { theme } from "../terminal/style";
 import { analytics, toast } from "../utils";
 import bus from "../utils/bus";
@@ -48,6 +49,10 @@ export default class Level {
 
 	static get current() {
 		return store.getState().level.instance;
+	}
+
+	get chatScript() {
+		return this.chatScripts[locales.language];
 	}
 
 	get content() {
@@ -114,7 +119,23 @@ export default class Level {
 		});
 	}
 
-	advance() {
+	advance(source) {
+		if (source !== "chat") {
+			const chatScript = this.chatScript;
+			const corollary = chatScript.getSectionOrNull(COROLLARY_SECTION);
+			if (corollary != null) {
+				setTimeout(() => {
+					Level.current.setMemory(({ chat }) => {
+						chat.sectionName = COROLLARY_SECTION;
+						chat.winOnEnd = true;
+					});
+
+					bus.emit("run", "chat");
+				});
+				return;
+			}
+		}
+
 		this._saveSnapshotIfNeeded();
 		this.unlockLetsPlayLevelIfNeeded(this.unlocksGame);
 		analytics.track("level_completed", {

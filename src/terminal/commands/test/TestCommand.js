@@ -166,7 +166,7 @@ export default class TestCommand extends Command {
 				if (winOnTestPass && !this._targetId) {
 					await this._terminal.writeln(locales.get("tests_success_continue"));
 					await this._terminal.waitForKey();
-					level.advance();
+					level.advance("test");
 					return;
 				} else {
 					await this._terminal.writeln(locales.get("tests_success"));

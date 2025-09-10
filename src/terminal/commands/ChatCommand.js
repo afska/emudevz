@@ -16,6 +16,7 @@ const SYSTEM_PREFIX = "<! ";
 const EXERCISE_PREFIX = "📚";
 const EXERCISE_SECTION = "exercise";
 const ALT_MAIN_SECTION = "main2";
+export const COROLLARY_SECTION = "corollary";
 const MESSAGE_TYPING_INTERVAL = 30;
 
 // eslint-disable-next-line
@@ -29,7 +30,7 @@ export default class ChatCommand extends Command {
 
 	async execute() {
 		const level = Level.current;
-		const chatScript = level.chatScripts[locales.language];
+		const chatScript = level.chatScript;
 		const memory = level.memory.chat;
 
 		if (memory.isOpen) {
@@ -84,7 +85,7 @@ export default class ChatCommand extends Command {
 
 		if (memory.winOnEnd) {
 			this._onClose();
-			level.advance();
+			level.advance("chat");
 			return;
 		}
 
@@ -93,7 +94,8 @@ export default class ChatCommand extends Command {
 	}
 
 	onStop() {
-		const { stopBlock } = Level.current.memory.chat;
+		const memory = Level.current.memory.chat;
+		const { stopBlock } = memory;
 		if (stopBlock != null) {
 			if (this._terminal.isExpectingKey)
 				this._terminal.writeln(stopBlock, theme.ACCENT);
@@ -101,7 +103,8 @@ export default class ChatCommand extends Command {
 			return false;
 		}
 
-		if (this._includes("-f")) return false;
+		if (this._includes("-f") || memory.sectionName === COROLLARY_SECTION)
+			return false;
 
 		this._onClose();
 
