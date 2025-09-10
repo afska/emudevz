@@ -1,5 +1,6 @@
 build/
 package.json
+package-lock.json
 *.yml
 **/bin/*.js
 *.md
