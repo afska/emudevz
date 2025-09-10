@@ -15,7 +15,7 @@ exercise:
       **onLoad(mapper)**:
         **->** saves the parameter as a property (```javascript this.mapper```)
   - |-
-    📚  add at the end of the `_onPreLine()` and `_onVisibleLine()`:
+    📚  add at the end of `_onPreLine()` and `_onVisibleLine()`:
       ```javascript if (this.cycle === 260) this.mapper.tick();```
   responses: []
 

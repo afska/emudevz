@@ -21,11 +21,11 @@ main:
         (you can import and use 📄  ~/lib/ppu/masterPalette.js~ for the list of colors)
   - |-
     📚  implement this method in 🏞️  `BackgroundRenderer`:
-    **_getPaletteId(nameTableId, x, y)**:
+    **_getBackgroundPaletteId(nameTableId, x, y)**:
       **->** <add the necessary code> to return the right palette id for the pixel ~(x, y)~
       **->** follow 📄  ~/docs/ppu/background_rendering.en.md~ for guidance on how palette ids are encoded
   - |-
-    📚  change `BackgroundRenderer::renderScanline()` so it uses `_getPaletteId(...)` and draws the right color, like this:
+    📚  change `BackgroundRenderer::renderScanline()` so it uses `_getBackgroundPaletteId(...)` and draws the right color, like this:
       ```javascript
       const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
 

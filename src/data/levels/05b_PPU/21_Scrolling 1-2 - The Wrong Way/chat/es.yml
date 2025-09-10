@@ -66,7 +66,7 @@ long:
 
 exercise:
   messages:
-  - (de nuevo, ESTO NO ES EXACTAMENTE CORRECTO, ¡pero funcionará por ahora!)
+  - (de nuevo, ~ESTO NO ES EXACTAMENTE CORRECTO~, ¡pero funcionará por ahora!)
   - |-
     📚  implementa estos métodos de 📜  `PPUScroll`:
       **onLoad()**:
@@ -100,24 +100,25 @@ then:
       ```javascript
       // coordenadas de scrolling:
       const scrollX = this.ppu.registers.ppuScroll.x;
-      const scrollY = registers.ppuScroll.y;
-      // punto actual para dibujar:
+      const scrollY = this.ppu.registers.ppuScroll.y;
+      // punto actual a dibujar:
       const scrolledX = x + scrollX;
       const scrolledY = y + scrollY;
       // dirección de la name table base:
       const nameTableId = (
         this.ppu.registers.ppuCtrl.nameTableId +
-        (scrolledX >= 256 ? 1 : 0) + // move right
-        (scrolledY >= 240 ? 2 : 0) // move down
+        (scrolledX >= 256 ? 1 : 0) + // mover a la derecha
+        (scrolledY >= 240 ? 2 : 0) // mover abajo
       ) % 4;
       const nameTableAddress = 0x2000 + nameTableId * 1024;
       // punto actual, relativo a la name table:
       const nameTableX = scrolledX % 256;
       const nameTableY = scrolledY % 240;```
     
-    a partir de ahora, cada uso de `x` y `y` debería ser reemplazado por `nameTableX` y `nameTableY`
-    (por ejemplo: el índice de lectura de la name table, la llamada ```javascript this._getBackgroundPaletteId(...)``` y ```javascript new Tile(...)``` deben ser actualizados)
-    la única excepción es la llamada `plotBG(...)`, que aún necesita trazarse en el punto ~(x,y)~ de la pantalla
+  - |-
+    📚  a partir de ahora, cada uso de `x` y `y` debería ser reemplazado por `nameTableX` y `nameTableY`
+      (por ejemplo: el índice de lectura de la name table, la llamada ```javascript this._getBackgroundPaletteId(...)``` y ```javascript new Tile(...)``` deben ser actualizados)
+  - la única excepción es la llamada `plotBG(...)`, que aún necesita trazarse en el punto ~(x,y)~ de la pantalla
   - |-
     📚  finalmente, define:
       ```javascript
@@ -127,12 +128,12 @@ then:
         8 - tileStartX,
         256 - nameTableX
       );```
-    
-    recuerda, ya no dibujarás 8 píxeles por iteración de bucle, solo dibujarás `tilePixels`, empezando desde `tileStartX`
-    así que, asegúrate de cambiar el bucle interno a algo como:
+  - recuerda, ya no dibujarás 8 píxeles por iteración de bucle, solo dibujarás `tilePixels`, empezando desde `tileStartX`
+  - |-
+    📚  así que, asegúrate de cambiar el bucle interno a algo como:
       ```javascript
         for (let xx = 0; xx < tilePixels; xx++)```
-    la llamada a `getColorIndex` tendría que usar `tileStartX`:
+    la llamada a `getColorIndex(...)` tendría que usar `tileStartX`:
       ```javascript
         tile.getColorIndex(tileStartX + xx);```
     y al final, una vez que el bucle interno termine, incrementa manualmente el índice del bucle principal:

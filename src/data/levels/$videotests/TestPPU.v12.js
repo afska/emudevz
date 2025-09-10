@@ -530,7 +530,7 @@ class BackgroundRenderer {
 			}
 
 			const scrollX = this.ppu.registers.ppuScroll.x;
-			const scrollY = registers.ppuScroll.y;
+			const scrollY = this.ppu.registers.ppuScroll.y;
 			const scrolledX = x + scrollX;
 			const scrolledY = y + scrollY;
 			const nameTableId =

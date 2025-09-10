@@ -100,7 +100,7 @@ then:
       ```javascript
       // scroll coordinates:
       const scrollX = this.ppu.registers.ppuScroll.x;
-      const scrollY = registers.ppuScroll.y;
+      const scrollY = this.ppu.registers.ppuScroll.y;
       // current point to draw:
       const scrolledX = x + scrollX;
       const scrolledY = y + scrollY;
@@ -114,10 +114,10 @@ then:
       // current point, relative to the name table:
       const nameTableX = scrolledX % 256;
       const nameTableY = scrolledY % 240;```
-    
-    from now on, every usage of `x` and `y` should be replaced by `nameTableX` and `nameTableY`
-    (for example: the name table read index, the ```javascript this._getBackgroundPaletteId(...)``` call, and ```javascript new Tile(...)``` should be updated)
-    the only exception is the `plotBG(...)` call, which still needs to plot in the ~(x,y)~ point of the screen
+  - |
+    📚  from now on, every usage of `x` and `y` should be replaced by `nameTableX` and `nameTableY`
+      (for example: the name table read index, the ```javascript this._getBackgroundPaletteId(...)``` call, and ```javascript new Tile(...)``` should be updated)
+  - the only exception is the `plotBG(...)` call, which still needs to plot in the ~(x,y)~ point of the screen
   - |-
     📚  lastly, define:
       ```javascript
@@ -127,12 +127,12 @@ then:
         8 - tileStartX,
         256 - nameTableX
       );```
-      
-    remember, you won't be drawing 8 pixels per loop iteration anymore, you will only draw `tilePixels`, starting from `tileStartX`
-    so, make sure you change the inner loop to something like:
+  - remember, you won't be drawing 8 pixels per loop iteration anymore, you will only draw `tilePixels`, starting from `tileStartX`
+  - |-
+    📚  so, make sure you change the inner loop to something like:
       ```javascript
         for (let xx = 0; xx < tilePixels; xx++)```
-    the `getColorIndex` call should use `tileStartX`:
+    the `getColorIndex(...)` call should use `tileStartX`:
       ```javascript
         tile.getColorIndex(tileStartX + xx);```
     and at the very end, once the inner loop ends, increment the main loop index manually:

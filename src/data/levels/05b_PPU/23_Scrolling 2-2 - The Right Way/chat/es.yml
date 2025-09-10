@@ -20,7 +20,7 @@ exercise:
   messages:
   - |-
     📚  importa la biblioteca y agrega una propiedad `loopy` en el constructor de 🖥️  `PPU`, asignada a:
-         ```javascript new LoopyRegister()```
+      ```javascript new LoopyRegister()```
   - |-
     📚  al final del método `_onPreLine()`, llama a:
       ```javascript this.loopy.onPreLine(this.cycle);```
