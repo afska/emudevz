@@ -1,9 +1,10 @@
 {
 	"name": {
-		"en": "📱 Devices",
-		"es": "📱 Dispositivos"
+		"en": "🎮 Controller",
+		"es": "🎮 Mando"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "dual",
 		"components": {
 			"Left": [
@@ -25,11 +26,12 @@
 	"test": {
 		"context": "javascript",
 		"inherit": ["cartridge.js", "memory.js"],
-		"mainTestFile": "memory.js"
+		"mainTestFile": "controller.js"
 	},
 	"memory": {
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksGame": "lets-play-jupiter-scope-2"
 }

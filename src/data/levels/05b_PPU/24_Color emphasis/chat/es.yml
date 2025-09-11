@@ -1,6 +1,6 @@
 main:
   messages:
-  - el PPU es capaz de "transformar" los colores de salida hasta cierto punto
+  - la PPU es capaz de "transformar" los colores de salida hasta cierto punto
   - 🎭  PPUMask tiene algunos bits que activan el <modo de escala de grises> o <énfasis de color>
   - es decir, enfatizando los componentes rojo, verde o azul de cada color
   responses:

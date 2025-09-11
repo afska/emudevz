@@ -89,7 +89,7 @@ const dictionary = {
 			en:
 				"A component of the APU responsible for generating a specific type of sound. Each channel has its own parameters and behavior. <br /><br />The NEEES has `2` Pulse Channels, `1` Triangle Channel, `1` Noise Channel, and `1` DMC Channel.",
 			es:
-				"Un componente del APU encargado de generar un tipo específico de sonido. Cada canal tiene sus propios parámetros y comportamiento. <br /><br />La NEEES tiene `2` Canales Pulso, `1` Canal Triangular, `1` Canal Ruido, y `1` Canal DMC.",
+				"Un componente de la APU encargado de generar un tipo específico de sonido. Cada canal tiene sus propios parámetros y comportamiento. <br /><br />La NEEES tiene `2` Canales Pulso, `1` Canal Triangular, `1` Canal Ruido, y `1` Canal DMC.",
 		},
 		"Audio sample|_Audio samples|Sample|_Samples": {
 			also: { es: "Sample de audio|_Samples de audio|Sample|_Samples" },
@@ -134,7 +134,7 @@ const dictionary = {
 			en:
 				"An audio register that controls the APU's sequence (4- or 5-step). <br /><br />It is available at CPU address `$4017`.",
 			es:
-				"Un registro de audio que controla la secuencia del APU (4 o 5 pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
+				"Un registro de audio que controla la secuencia de la APU (4 o 5 pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
 		},
 		APUStatus: {
 			icon: "📊",
@@ -146,7 +146,7 @@ const dictionary = {
 		"APU register|_APU registers|Audio register|_Audio registers": {
 			also: {
 				es:
-					"Registro de APU|_Registros de APU|Registro de Audio|_Registros de Audio",
+					"Registro de APU|_Registros de APU|_Registro APU|_Registros APU|Registro de Audio|_Registros de Audio",
 			},
 			icon: "🔢",
 			en:
@@ -243,7 +243,10 @@ const dictionary = {
 				"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
 		},
 		"CPU address|_CPU addresses|$CPU|CPU memory": {
-			also: { es: "Dirección CPU|_Direcciones CPU|$CPU|Memoria CPU" },
+			also: {
+				es:
+					"Dirección CPU|_Direcciones CPU|_Dirección de CPU|_Direcciones de CPU|$CPU|Memoria CPU",
+			},
 			icon: "🐏",
 			en:
 				"A memory address seen from the CPU's address space. <br /><br />In the NEEES, the CPU can access addresses from `$0000` to `$FFFF` (`64` KiB).",
@@ -809,7 +812,10 @@ const dictionary = {
 				"Un registro de video que muestra si la PPU está en VBlank, si ocurrió un sprite 0 hit, o si hay desbordamiento de sprites. Leerlo también reinicia latches internos. <br /><br />Está disponible en la dirección de CPU `$2002`.",
 		},
 		"PPU address|_PPU addresses|$PPU|PPU memory": {
-			also: { es: "Dirección PPU|_Direcciones PPU|$PPU|Memoria PPU" },
+			also: {
+				es:
+					"Dirección PPU|_Direcciones PPU|_Dirección de PPU|_Direcciones de PPU|$PPU|Memoria PPU",
+			},
 			icon: "🐏",
 			en:
 				"A memory address seen from the PPU's address space. <br /><br />In the NEEES, valid addresses go from `$0000` to `$3FFF`, with many regions being mirrored.",
@@ -819,7 +825,7 @@ const dictionary = {
 		"PPU register|_PPU registers|Video register|_Video registers": {
 			also: {
 				es:
-					"Registro de PPU|_Registros de PPU|Registro de Video|_Registros de Video",
+					"Registro de PPU|_Registros de PPU|_Registro PPU|_Registros PPU|Registro de Video|_Registros de Video",
 			},
 			icon: "🔢",
 			en:

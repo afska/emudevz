@@ -3,7 +3,7 @@ main:
   messages:
   - you have to start somewhere 😅
   - <{architecture_unified.png;100x100}>
-  - as I said earlier, you can start coding things in any order
+  - as I said earlier, you can start coding units in any order
   - and I'll patch BrokenNEEES so that it uses parts of your emulator...
   run-after-messages: |
     $.goTo("components");
@@ -14,8 +14,6 @@ components:
   - "🧠  CPU: Choose this if you'd like to emulate concepts you've learned in the Assembly chapter."
   - "🖥️  PPU: Choose this if you want to go straight to the action and put graphics on the screen."
   - "🔊  APU: Choose this if you are curious to learn how to reproduce the sound in games."
-  - "🎮  Controller: Choose this if you prefer to start mapping user inputs into memory, so that games can read them. BrokenNEEES's support for controllers works fine, so __this chapter is optional__."
-  - "🗜️  Mappers: Choose this if you are obsessed with supporting as many games as possible. BrokenNEEES supports the most common mappers (~0-4~), so __this chapter is optional__."
   responses:
   - 🧠  I'd like to start with the CPU [cpu]
   - 🖥️  I'd like to start with the PPU [ppu]

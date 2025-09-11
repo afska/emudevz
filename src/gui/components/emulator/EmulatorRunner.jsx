@@ -78,8 +78,6 @@ export default class EmulatorRunner extends PureComponent {
 									completed={this._unlockedUnits.useController}
 									active={this._emulatorSettings.useController}
 									onToggle={() => this._onToggle("useController")}
-									customInactiveIcon="⚠️"
-									customInactiveMessage="using_default_emulator"
 								/>
 								<Unit
 									icon="🗜️"

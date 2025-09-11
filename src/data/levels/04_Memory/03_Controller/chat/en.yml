@@ -1,0 +1,6 @@
+---
+main:
+  messages:
+  - as an example of <memory-mapped I/O>, let's actually implement the controller!
+  - asdsada
+  responses: []
