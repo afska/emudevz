@@ -1,6 +1,36 @@
 ---
 main:
   messages:
-  - as an example of <memory-mapped I/O>, let's actually implement the controller!
-  - asdsada
-  responses: []
+  - as an example of <memory-mapped I/O>, let's actually implement the controller! 🎮
+  - I documented how it works!
+  - check out 📄  ~/docs/controller.en.md~
+  responses:
+  - so we're finally fixing that awful controller bug? [exercise]
+
+exercise:
+  messages:
+  - yeah 😅
+  - 📚  create a 🎮  `Controller` class, using 📄  ~/tmpl/Controller.js~ as a template
+  - 📚  implement `onRead()` and `onWrite(...)` following the documentation
+  - |-
+    BrokenNEEES will instantiate and connect your controllers like this:
+      ```javascript const controller1 = new Controller(1);
+      const controller2 = new Controller(2);
+      controller1.other = controller2;
+      controller2.other = controller1;```
+  - 📚  as usual, add the class to 📄  ~/code/index.js~
+  - 📚  ah, and map the $4016 read/writes and $4017 reads in 🐏  `CPUMemory`
+  - |-
+    for example, if the `address` is ```javascript 0x4016```, return:
+      ```javascript this.controllers[0].onRead()```
+  responses:
+  - (*) why do I need the <other> controller? [other]
+
+other:
+  messages:
+  - because they are connected!
+  - writing a 1 to $4016 resets `cursor` on <both controllers>
+  - and the `strobe` flag only lives in player 1's controller
+  - so, if you are player 2, you need to use the `strobe` flag from the other controller
+  responses:
+  - ...exercise

@@ -26,7 +26,7 @@
 	"test": {
 		"context": "javascript",
 		"inherit": ["cartridge.js", "memory.js"],
-		"mainTestFile": "controller.js"
+		"mainTestFile": "memory.js"
 	},
 	"memory": {
 		"content": {

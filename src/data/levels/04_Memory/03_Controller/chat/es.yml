@@ -1,5 +1,35 @@
----
 main:
   messages:
-  - coming soon!
-  responses: []
+  - como ejemplo de <memory-mapped I/O>, ¡vamos a implementar el mando! 🎮
+  - documenté cómo funciona
+  - revisa 📄  ~/docs/controller.en.md~
+  responses:
+  - ¿así que por fin vamos a arreglar ese horrible bug del mando? [exercise]
+
+exercise:
+  messages:
+  - sí 😅
+  - 📚  crea una clase 🎮  `Controller`, usando 📄  ~/tmpl/Controller.js~ como plantilla
+  - 📚  implementa `onRead()` y `onWrite(...)` siguiendo la documentación
+  - |-
+    BrokenNEEES instanciará y conectará tus mandos así:
+      ```javascript const controller1 = new Controller(1);
+      const controller2 = new Controller(2);
+      controller1.other = controller2;
+      controller2.other = controller1;```
+  - 📚  como siempre, agrega la clase a 📄  ~/code/index.js~
+  - 📚  ah, y mapea las lecturas/escrituras de $4016 y las lecturas de $4017 en 🐏  `CPUMemory`
+  - |-
+    por ejemplo, si la `address` es ```javascript 0x4016```, devuelve:
+      ```javascript this.controllers[0].onRead()```
+  responses:
+  - (*) ¿por qué necesito el <otro> mando? [other]
+
+other:
+  messages:
+  - ¡porque están conectados!
+  - escribir un 1 en $4016 reinicia `cursor` en <ambos mandos>
+  - y la bandera `strobe` solo existe en el mando del jugador 1
+  - así que, si eres el jugador 2, necesitas usar la bandera `strobe` del otro mando
+  responses:
+  - ...exercise
