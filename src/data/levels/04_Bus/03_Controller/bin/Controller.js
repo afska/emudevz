@@ -26,6 +26,7 @@ export default class Controller {
 
   onRead() {
     /* TODO: IMPLEMENT */
+
     return 0;
   }
 

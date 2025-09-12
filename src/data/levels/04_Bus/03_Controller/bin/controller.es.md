@@ -15,9 +15,9 @@ Después de leer el estado del botón `Right`, las lecturas posteriores devolver
 ## 🔄 Modo strobe
 
 Al escribir en `$4016` (dirección del mando del jugador `1`), el **primer bit** del valor escrito configura el `modo strobe`:
-- con el bit de strobe `on`, las lecturas siempre informan el estado del botón `A`
-- con el bit de strobe `off`, las lecturas avanzan por la secuencia mencionada
+- con el bit de strobe `encendido`, las lecturas siempre informan el estado del botón `A`
+- con el bit de strobe `apagado`, las lecturas avanzan por la secuencia mencionada
 
-Al poner el bit de strobe en `on`, la secuencia **se reinicia** al botón `A` **en ambos mandos**.
+Al poner el bit de strobe en `encendido`, la secuencia **se reinicia** al botón `A` **en ambos mandos**.
 
 Escribir en `$4017` no afecta a los mandos; controla un registro de APU llamado 🧮  APUFrameCounter.

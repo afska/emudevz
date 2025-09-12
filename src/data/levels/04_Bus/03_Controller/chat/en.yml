@@ -24,7 +24,7 @@ exercise:
     for example, if the `address` is ```javascript 0x4016```, return:
       ```javascript this.controllers[0].onRead()```
   responses:
-  - (*) why do I need the <other> controller? [other]
+  - (*) why do I need to reference the <other> controller? [other]
 
 other:
   messages:

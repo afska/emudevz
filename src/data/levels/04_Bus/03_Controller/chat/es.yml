@@ -1,8 +1,8 @@
 main:
   messages:
-  - como ejemplo de <memory-mapped I/O>, ¡vamos a implementar el mando! 🎮
+  - como ejemplo de <E/S mapeada en memoria>, ¡vamos a implementar el mando! 🎮
   - documenté cómo funciona
-  - revisa 📄  ~/docs/controller.en.md~
+  - revisa 📄  ~/docs/controller.es.md~
   responses:
   - ¿así que por fin vamos a arreglar ese horrible bug del mando? [exercise]
 
@@ -23,7 +23,7 @@ exercise:
     por ejemplo, si la `address` es ```javascript 0x4016```, devuelve:
       ```javascript this.controllers[0].onRead()```
   responses:
-  - (*) ¿por qué necesito el <otro> mando? [other]
+  - (*) ¿por qué necesito referenciar al <otro> mando? [other]
 
 other:
   messages:

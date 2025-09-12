@@ -19,9 +19,9 @@ length:
   - then that value is decreased every half frame
   - and when it reaches 0, the channel is muted! 🤐
   responses:
-  - (k) how would a game load its value? [load]
-  - (k) does it always decrement its value on half frames? [decrement]
-  - (l) let's code it [exercise]
+  - (*) how would a game load its value? [load]
+  - (*) does it always decrement its value on half frames? [decrement]
+  - let's code it [exercise]
 
 load:
   messages:

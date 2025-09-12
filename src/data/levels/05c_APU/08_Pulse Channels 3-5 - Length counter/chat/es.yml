@@ -19,9 +19,9 @@ length:
   - luego ese valor se reduce cada half frame
   - ¡y cuando llega a 0, el canal se silencia! 🤐
   responses:
-  - (k) ¿cómo cargaría su valor un juego? [load]
-  - (k) ¿siempre reduce su valor en los half frames? [decrement]
-  - (l) vamos a programarlo [exercise]
+  - (*) ¿cómo cargaría su valor un juego? [load]
+  - (*) ¿siempre reduce su valor en los half frames? [decrement]
+  - vamos a programarlo [exercise]
 
 load:
   messages:
