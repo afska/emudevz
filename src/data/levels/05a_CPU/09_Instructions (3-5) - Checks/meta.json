@@ -26,7 +26,7 @@
 		"context": "javascript",
 		"inherit": [
 			"cartridge.js",
-			"memory.js",
+			"bus.js",
 			"cpu.js",
 			"cpu_instructions_1.js",
 			"cpu_instructions_2.js",

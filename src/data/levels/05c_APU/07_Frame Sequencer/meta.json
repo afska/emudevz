@@ -32,7 +32,7 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": ["cartridge.js", "memory.js", "apu.js"],
+		"inherit": ["cartridge.js", "bus.js", "apu.js"],
 		"mainTestFile": "apu.js"
 	},
 	"audioTests": [
