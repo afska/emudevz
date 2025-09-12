@@ -36,7 +36,7 @@ it("the file `/code/index.js` <imports> the module from `/code/Cartridge.js`", (
 	use: ({ id }, book) => id >= book.getId("3.1"),
 });
 
-it("the file `/code/index.js` exports <an object> containing the class", async () => {
+it("the file `/code/index.js` exports <an object> containing the `Cartridge` class", async () => {
 	mainModule = await evaluate();
 	const Cartridge = (await evaluateModule($.modules["/code/Cartridge.js"]))
 		.default;
@@ -46,7 +46,8 @@ it("the file `/code/index.js` exports <an object> containing the class", async (
 	expect(mainModule.default.Cartridge).to.equalN(Cartridge, "Cartridge");
 })({
 	locales: {
-		es: "el archivo `/code/index.js` exporta <un objeto> que contiene la clase",
+		es:
+			"el archivo `/code/index.js` exporta <un objeto> que contiene la clase `Cartridge`",
 	},
 	use: ({ id }, book) => id >= book.getId("3.1"),
 });
