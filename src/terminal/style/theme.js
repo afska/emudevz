@@ -49,6 +49,8 @@ export default {
 	COMMENT: color(230),
 	MESSAGE: color(111),
 	INPUT: color(207),
+	DIFF_ADDED: color(41),
+	DIFF_REMOVED: color(196),
 	DICTIONARY: (text) => {
 		const shouldUnderline = Level.current.id === "getting-started-architecture";
 

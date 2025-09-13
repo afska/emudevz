@@ -35,6 +35,7 @@ export default {
 	command_chat_already_open: "Already open.",
 	command_chat_description: "Runs the chat app.",
 	command_clear_description: "Clears the terminal.",
+	command_diff_description: "Shows `/code` diffs vs last completed level.",
 	command_help_description: "Shows this help.",
 	command_repl_avoid_collapsing:
 		"«to avoid collapsing big objects/arrays, run `repl -v`»",

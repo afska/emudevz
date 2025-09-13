@@ -35,6 +35,8 @@ export default {
 	command_chat_already_open: "Ya abierto.",
 	command_chat_description: "Ejecuta la app de chat.",
 	command_clear_description: "Limpia la terminal.",
+	command_diff_description:
+		"Muestra diffs de `/code` vs último nivel completado.",
 	command_help_description: "Muestra esta ayuda.",
 	command_repl_avoid_collapsing:
 		"«para evitar colapsar objetos/arrays grandes, corre `repl -v`»",

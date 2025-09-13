@@ -34,6 +34,7 @@ export default {
 	TMPL_DIR,
 	ALLROMS_DIR,
 	TESTROMS_DIR,
+	SNAPSHOTS_DIR,
 
 	init(levelId) {
 		filesystem.mkdirp(CODE_DIR);
