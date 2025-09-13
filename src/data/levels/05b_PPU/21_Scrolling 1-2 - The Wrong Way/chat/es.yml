@@ -18,6 +18,8 @@ plan:
   - suena bien, ¿cómo funciona el scrolling? [good]
 
 good:
+  run: |
+    {{Top}}.load("scrolling.gif");
   messages:
   - bueno, los juegos en realidad no mueven <el fondo>
   - mueven una ventana imaginaria contra el fondo estático
@@ -65,6 +67,8 @@ long:
   - suficiente charla, ¿cómo procedemos? [exercise]
 
 exercise:
+  run: |
+    {{Top}}.load(null, "rom");
   messages:
   - (de nuevo, ~ESTO NO ES EXACTAMENTE CORRECTO~, ¡pero funcionará por ahora!)
   - |-
