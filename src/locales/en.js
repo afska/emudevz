@@ -151,6 +151,7 @@ export default {
 		"Your ENTIRE code will be replaced by this snapshot. Are you sure?",
 	root_enabled: "Root privileges enabled. Use with caution!",
 	root_games_unlocked: "All games unlocked.",
+	root_undid_level: "Undid level: ",
 	run: "Run",
 	run_emulator: "Run emulator",
 	save: "Save",

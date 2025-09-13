@@ -53,6 +53,14 @@ export default {
 				],
 			};
 		},
+		undoCompletedLevel(state) {
+			const { completedLevels } = state;
+
+			return {
+				...state,
+				completedLevels: completedLevels.slice(0, completedLevels.length - 1),
+			};
+		},
 		setLastLevelId(state, lastLevelId) {
 			return {
 				...state,
