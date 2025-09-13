@@ -19,7 +19,7 @@ main:
 golden:
   messages:
   - un archivo que documenta el resultado de correr esa misma ROM de pruebas, pero creado por un emulador que se demostró que funciona correctamente ✅
-  - "tiene -en orden-: el [PC], el bytecode, el código ensamblador decompilado, el estado de todos los registros, y el contador de ciclos"
+  - "tiene -en orden-: el [PC], el bytecode, el código ensamblador decompilado, el estado de todos los registros (`P` es el Registro de Banderas), y el contador de ciclos"
   - hasta ahora, solo he ejecutado pruebas básicas en tu código
   - esto abarcará todo tipo de casos extremos, verificando que tu CPU sea sólida
   - si encuentras discrepancias, tendrás que averiguar la causa o buscar ayuda en línea
@@ -74,8 +74,11 @@ unexpected:
   - 💥  ¡¿qué?! 💥
   - eso fue inesperado
   - intenta analizar esa línea exacta en el archivo de log
-  - deberías poder encontrar la causa
-  - o pide ayuda en línea 🌎
+  - "la instrucción que falló está en la <línea anterior>, por ejemplo:"
+  - <{failure_example.png}>
+  - "aquí, la instrucción `ADC #$69` falló: debería haber cambiado [A] de $00 a $69, pero cambió a $4B en su lugar"
+  - deberías poder encontrar la causa usando este método
+  - si no, pide ayuda en línea 🌎
   events:
   - ...golden
 

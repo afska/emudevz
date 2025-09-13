@@ -379,8 +379,8 @@ const dictionary = {
 			es:
 				"Un campo que almacena un valor que puede ser `true` o `false`. <br /><br />Ver también: Bandera de CPU.",
 		},
-		"Flags Register": {
-			also: { es: "Registro de Banderas" },
+		"Flags Register|P register": {
+			also: { es: "Registro de Banderas|Registro P" },
 			icon: "🔢",
 			en: "A CPU register used to store multiple CPU flags.",
 			es: "Un registro de CPU usado para almacenar múltiples banderas de CPU.",

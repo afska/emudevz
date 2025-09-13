@@ -19,7 +19,7 @@ main:
 golden:
   messages:
   - a log file that documents the result of running that test ROM, but created by an emulator that was proven to work correctly ✅
-  - "it has -in order-: the [PC], the bytecode, the decompiled assembly, the state of all registers, and the cycle counter"
+  - "it has -in order-: the [PC], the bytecode, the decompiled assembly, the state of all registers (`P` is the Flags Register), and the cycle counter"
   - so far, I only ran basic tests to your code
   - this will go through all type of corner cases, verifying that your CPU is solid
   - if you find discrepancies, you'll have to figure out the cause or ask for help online
@@ -74,8 +74,11 @@ unexpected:
   - 💥  what?! 💥
   - that was unexpected
   - try analyzing that exact line in the log file
-  - you should be able to find the cause
-  - or ask for help online 🌎
+  - "the instruction that failed is in the <previous line>, for example:"
+  - <{failure_example.png}>
+  - "here, the instruction `ADC #$69` failed: it should've changed [A] from $00 to $69, but it changed to $4B instead"
+  - you should be able to find the cause using this method
+  - if not, ask for help online 🌎
   events:
   - ...golden
 
