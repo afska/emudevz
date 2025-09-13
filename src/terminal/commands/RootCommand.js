@@ -1,9 +1,11 @@
 import Level from "../../level/Level";
+import locales from "../../locales";
+import { theme } from "../style";
 import Command from "./Command";
 
-export default class SudoCommand extends Command {
+export default class RootCommand extends Command {
 	static get name() {
-		return "_sudo_";
+		return "root";
 	}
 
 	static get isHidden() {
@@ -11,7 +13,7 @@ export default class SudoCommand extends Command {
 	}
 
 	async execute() {
-		window.SUDO = true;
+		window.ROOT_USER = true;
 
 		if (this.isUnlock) {
 			const level = Level.current;
@@ -30,10 +32,18 @@ export default class SudoCommand extends Command {
 			level.unlockLetsPlayLevelIfNeeded("lets-play-falling");
 			level.unlockLetsPlayLevelIfNeeded("lets-play-from-below");
 			level.unlockLetsPlayLevelIfNeeded("lets-play-robo-ninja-climb");
+
+			await this._terminal.writehlln(
+				locales.get("root_games_unlocked"),
+				theme.SYSTEM
+			);
+			return;
 		}
+
+		await this._terminal.writehlln(locales.get("root_enabled"), theme.WARNING);
 	}
 
 	get isUnlock() {
-		return this._includes("-unlock");
+		return this._includes("-unlockgames");
 	}
 }

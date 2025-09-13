@@ -149,6 +149,8 @@ export default {
 	rollback: "Restore /code using this snapshot",
 	rollback_sure:
 		"Your ENTIRE code will be replaced by this snapshot. Are you sure?",
+	root_enabled: "Root privileges enabled. Use with caution!",
+	root_games_unlocked: "All games unlocked.",
 	run: "Run",
 	run_emulator: "Run emulator",
 	save: "Save",

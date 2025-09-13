@@ -152,6 +152,8 @@ export default {
 	rollback: "Restaurar /code usando esta copia",
 	rollback_sure:
 		"Tu código COMPLETO se reemplazará por esta copia. ¿Restaurar?",
+	root_enabled: "Privilegios root activados. ¡Usar con cuidado!",
+	root_games_unlocked: "Todos los juegos desbloqueados.",
 	run: "Ejecutar",
 	run_emulator: "Ejecutar emulador",
 	save: "Guardar",
