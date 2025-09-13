@@ -17,10 +17,10 @@ export default class SuperTiltBro extends Integration {
 						❌ <strong>Stocks</strong>{" "}
 						{locales.get("integration_supertiltbro_shouldbesettofive")}
 					</span>
-				) : player2 !== MODE_PLAYER2_HARD ? (
+				) : player2 !== MODE_PLAYER2_FAIR ? (
 					<span>
 						❌ <strong>Player 2</strong>{" "}
-						{locales.get("integration_supertiltbro_shouldbesettohard")}
+						{locales.get("integration_supertiltbro_shouldbesettofair")}
 					</span>
 				) : (
 					<span>👀 {locales.get("integration_supertiltbro_playing")}</span>
@@ -37,7 +37,7 @@ export default class SuperTiltBro extends Integration {
 		const player2 = neees.cpu.memory.read(0x00da);
 		const victory =
 			stocks === MODE_STOCKS_FIVE &&
-			player2 === MODE_PLAYER2_HARD &&
+			player2 === MODE_PLAYER2_FAIR &&
 			this._checkTiles(neees, VICTORY);
 
 		this.setState({ stocks, player2, victory });
@@ -50,7 +50,7 @@ export default class SuperTiltBro extends Integration {
 }
 
 const MODE_STOCKS_FIVE = 4;
-const MODE_PLAYER2_HARD = 3;
+const MODE_PLAYER2_FAIR = 2;
 const VICTORY = [
 	[21, 3, 0xfb],
 	[22, 3, 0xee],

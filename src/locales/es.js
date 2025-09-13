@@ -97,7 +97,7 @@ export default {
 	integration_spacegulls_zone: "Zona",
 	integration_roboninjaclimb_level: "Nivel",
 	integration_supertiltbro_shouldbesettofive: 'debería estar en "Five"',
-	integration_supertiltbro_shouldbesettohard: 'debería estar en "Hard"',
+	integration_supertiltbro_shouldbesettofair: 'debería estar en "Fair"',
 	integration_supertiltbro_playing: "Jugando desafío",
 	integration_teslavsedison_wrongmode: "Modo incorrecto!",
 	integration_wolfspirit_level: "Nivel",
