@@ -17,7 +17,6 @@ main:
 
 challenge:
   messages:
-  - tendrás que jugar en el nivel de dificultad más alto
   - elige <Local>, luego configura <Stocks> en "Five" y <jugador 2> en "Fair"
   - ah, y gana la partida 😅
   responses:

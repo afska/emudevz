@@ -17,7 +17,6 @@ main:
 
 challenge:
   messages:
-  - you'll need to play in the hardest difficulty level
   - choose <Local>, and then set <Stocks> to "Five" and <player 2> to "Fair"
   - oh, and win the match 😅
   responses:

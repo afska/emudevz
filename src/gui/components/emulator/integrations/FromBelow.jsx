@@ -47,4 +47,4 @@ export default class FromBelow extends Integration {
 	};
 }
 
-const HIGH_SCORE = 1300;
+const HIGH_SCORE = 3000;

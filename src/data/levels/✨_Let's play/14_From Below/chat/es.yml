@@ -21,7 +21,7 @@ play:
     {{Right}}.stream.setIntegration("FromBelow");
     {{Right}}.loadROM("/roms/.all/FromBelow.neees", "stream");
   messages:
-  - mi máxima hasta ahora es de ~1300~ puntos
+  - mi máxima hasta ahora es de ~3000~ puntos
   - ¡intenta alcanzarla en cualquier modo!
   events:
   - frombelow-end [finish]
