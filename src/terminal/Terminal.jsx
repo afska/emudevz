@@ -134,7 +134,7 @@ export default class Terminal {
 	}
 
 	async write(text, style = theme.NORMAL, interval = 0, withHighlight = false) {
-		if (store.getState().savedata.speedUpChat) this._speedFlag = true;
+		if (store.getState().savedata.chatSpeed === "fast") this._speedFlag = true;
 
 		text = this._normalize(text);
 

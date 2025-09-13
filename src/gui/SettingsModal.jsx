@@ -24,8 +24,8 @@ class SettingsModal extends PureComponent {
 		const {
 			language,
 			setLanguage,
-			speedUpChat,
-			setSpeedUpChat,
+			chatSpeed,
+			setChatSpeed,
 			crtFilter,
 			setCrtFilter,
 			open,
@@ -69,27 +69,38 @@ class SettingsModal extends PureComponent {
 							</div>
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
-							<Form.Label>💨 {locales.get("speed_up_chat")}</Form.Label>
+							<Form.Label>💨 {locales.get("chat_speed")}</Form.Label>
 							<div className={styles.options}>
 								<div>
 									<Form.Check
 										type="radio"
-										id="speedUpChat-no"
-										label={locales.get("no")}
-										checked={!speedUpChat}
+										id="chatSpeed-slow"
+										label={locales.get("chat_speed_slow")}
+										checked={chatSpeed === "slow"}
 										onChange={() => {
-											setSpeedUpChat(false);
+											setChatSpeed("slow");
 										}}
 									/>
 								</div>
 								<div>
 									<Form.Check
 										type="radio"
-										id="speedUpChat-yes"
-										label={locales.get("yes")}
-										checked={speedUpChat}
+										id="chatSpeed-medium"
+										label={locales.get("chat_speed_medium")}
+										checked={chatSpeed === "medium"}
 										onChange={() => {
-											setSpeedUpChat(true);
+											setChatSpeed("medium");
+										}}
+									/>
+								</div>
+								<div>
+									<Form.Check
+										type="radio"
+										id="chatSpeed-fast"
+										label={locales.get("chat_speed_fast")}
+										checked={chatSpeed === "fast"}
+										onChange={() => {
+											setChatSpeed("fast");
 										}}
 									/>
 								</div>
@@ -245,12 +256,12 @@ class SettingsModal extends PureComponent {
 
 const mapStateToProps = ({ savedata }) => ({
 	language: savedata.language,
-	speedUpChat: savedata.speedUpChat,
+	chatSpeed: savedata.chatSpeed,
 	crtFilter: savedata.crtFilter,
 });
 const mapDispatchToProps = ({ savedata }) => ({
 	setLanguage: savedata.setLanguage,
-	setSpeedUpChat: savedata.setSpeedUpChat,
+	setChatSpeed: savedata.setChatSpeed,
 	setCrtFilter: savedata.setCrtFilter,
 });
 

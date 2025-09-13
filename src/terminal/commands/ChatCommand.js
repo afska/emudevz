@@ -4,6 +4,7 @@ import Level from "../../level/Level";
 import ChatScript from "../../level/chat/ChatScript";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
+import store from "../../store";
 import { bus } from "../../utils";
 import { CANCELED } from "../errors";
 import highlighter from "../highlighter";
@@ -17,7 +18,8 @@ const EXERCISE_PREFIX = "📚";
 const EXERCISE_SECTION = "exercise";
 const ALT_MAIN_SECTION = "main2";
 export const COROLLARY_SECTION = "corollary";
-const MESSAGE_TYPING_INTERVAL = 30;
+const MESSAGE_TYPING_INTERVAL_SLOW = 30;
+const MESSAGE_TYPING_INTERVAL_MEDIUM = 15;
 
 // eslint-disable-next-line
 const LINK_DETECT_REGEXP = _.template("(^${responses}$)");
@@ -183,10 +185,15 @@ export default class ChatCommand extends Command {
 					await this._terminal.newline();
 				}
 
+				const speed = store.getState().savedata.chatSpeed;
+				const interval =
+					speed === "slow"
+						? MESSAGE_TYPING_INTERVAL_SLOW
+						: MESSAGE_TYPING_INTERVAL_MEDIUM;
 				await this._terminal.writeln(
 					MESSAGE_SYMBOL + message,
 					theme.MESSAGE,
-					MESSAGE_TYPING_INTERVAL,
+					interval,
 					true
 				);
 			}
