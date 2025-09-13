@@ -14,12 +14,11 @@ components:
   - "🧠  CPU: Choose this if you'd like to emulate concepts you've learned in the Assembly chapter."
   - "🖥️  PPU: Choose this if you want to go straight to the action and put graphics on the screen."
   - "🔊  APU: Choose this if you are curious to learn how to reproduce the sound in games."
+  - I'd advise starting with the 🧠  CPU, but what do I know...
   responses:
   - 🧠  I'd like to start with the CPU [cpu]
   - 🖥️  I'd like to start with the PPU [ppu]
   - 🔊  I'd like to start with the APU [apu]
-  - 🎮  I'd like to start with the Controller [controller]
-  - 🗜️  I'd like to start with the Mappers [mappers]
 
 cpu:
   run: |
@@ -47,28 +46,6 @@ apu:
   run: |
     const book = store.getState().book.instance;
     const chapter = book.getChapter(6);
-    const firstLevelId = chapter.levels[0].id;
-    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
-    store.dispatch.savedata.unlockChapter(firstLevelId);
-    store.dispatch.savedata.advanceTo(firstLevelId);
-  messages: []
-  responses: []
-
-controller:
-  run: |
-    const book = store.getState().book.instance;
-    const chapter = book.getChapter(7);
-    const firstLevelId = chapter.levels[0].id;
-    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
-    store.dispatch.savedata.unlockChapter(firstLevelId);
-    store.dispatch.savedata.advanceTo(firstLevelId);
-  messages: []
-  responses: []
-
-mappers:
-  run: |
-    const book = store.getState().book.instance;
-    const chapter = book.getChapter(8);
     const firstLevelId = chapter.levels[0].id;
     store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
     store.dispatch.savedata.unlockChapter(firstLevelId);
