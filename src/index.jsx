@@ -98,3 +98,15 @@ window.addEventListener(
 	},
 	false
 );
+
+// Update CRT class when the store changes
+const updateCrtClass = () => {
+	const root = document.getElementById("root");
+	if (!root) return;
+
+	const enabled = store.getState().savedata.crtFilter;
+	if (enabled) root.classList.add("crt");
+	else root.classList.remove("crt");
+};
+updateCrtClass();
+store.subscribe(updateCrtClass);

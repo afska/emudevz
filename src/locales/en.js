@@ -54,6 +54,7 @@ export default {
 	cpu: "CPU",
 	creating_file: "Creating file",
 	creating_directory: "Creating directory",
+	crt_filter: "CRT filter",
 	decimal: "Decimal",
 	delete: "Delete",
 	deleting: "Deleting",

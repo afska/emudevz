@@ -52,6 +52,7 @@ export default {
 	controller: "Mando",
 	cpu: "CPU",
 	creating_directory: "Creando directorio",
+	crt_filter: "Filtro CRT",
 	decimal: "Decimal",
 	delete: "Borrar",
 	deleting: "Borrando",

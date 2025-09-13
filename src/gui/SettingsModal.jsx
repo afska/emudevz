@@ -26,6 +26,8 @@ class SettingsModal extends PureComponent {
 			setLanguage,
 			speedUpChat,
 			setSpeedUpChat,
+			crtFilter,
+			setCrtFilter,
 			open,
 		} = this.props;
 		const {
@@ -88,6 +90,33 @@ class SettingsModal extends PureComponent {
 										checked={speedUpChat}
 										onChange={() => {
 											setSpeedUpChat(true);
+										}}
+									/>
+								</div>
+							</div>
+						</Form.Group>
+						<Form.Group style={{ marginTop: MARGIN }}>
+							<Form.Label>📺 {locales.get("crt_filter")}</Form.Label>
+							<div className={styles.options}>
+								<div>
+									<Form.Check
+										type="radio"
+										id="crtFilter-no"
+										label={locales.get("no")}
+										checked={!crtFilter}
+										onChange={() => {
+											setCrtFilter(false);
+										}}
+									/>
+								</div>
+								<div>
+									<Form.Check
+										type="radio"
+										id="crtFilter-yes"
+										label={locales.get("yes")}
+										checked={crtFilter}
+										onChange={() => {
+											setCrtFilter(true);
 										}}
 									/>
 								</div>
@@ -217,10 +246,12 @@ class SettingsModal extends PureComponent {
 const mapStateToProps = ({ savedata }) => ({
 	language: savedata.language,
 	speedUpChat: savedata.speedUpChat,
+	crtFilter: savedata.crtFilter,
 });
 const mapDispatchToProps = ({ savedata }) => ({
 	setLanguage: savedata.setLanguage,
 	setSpeedUpChat: savedata.setSpeedUpChat,
+	setCrtFilter: savedata.setCrtFilter,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);

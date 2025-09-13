@@ -10,6 +10,7 @@ const INITIAL_STATE = () => ({
 	lastLevelId: "start",
 	language: "en",
 	speedUpChat: false,
+	crtFilter: true,
 	emulatorVolume: 0,
 	musicVolume: 0.3,
 	musicTrack: 0,
@@ -72,6 +73,9 @@ export default {
 		},
 		setSpeedUpChat(state, speedUpChat) {
 			return { ...state, speedUpChat };
+		},
+		setCrtFilter(state, crtFilter) {
+			return { ...state, crtFilter };
 		},
 		setEmulatorVolume(state, emulatorVolume) {
 			return { ...state, emulatorVolume };
