@@ -1,6 +1,7 @@
 [
 	["NEEEStest.neees", true],
 	["golden.log", false],
+	["golden_log_format.md", false],
 	["hello_world.neees", true],
 	["240p_test_suite.neees", true],
 	["apu_dmc_directload_crowd.neees", true],

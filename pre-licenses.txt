@@ -5,6 +5,17 @@ The guide is licensed under the Creative Commons Attribution 4.0 International L
 -----
 
 ===
+_golden_log.png
+_interrupts.png
+_PPUData_access.png
+===
+
+From "Writing NES Emulator in Rust" by Rafael Bagmanov (@bugzmanov)
+https://bugzmanov.github.io/nes_ebook/
+
+Used with permission (Oct 28, 2024) for the EmuDevz project. © Rafael Bagmanov. All rights reserved.
+
+===
 apu_tester.neees,
 game_chase.neees,
 game_climber.neees,

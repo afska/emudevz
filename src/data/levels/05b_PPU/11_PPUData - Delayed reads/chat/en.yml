@@ -1,9 +1,9 @@
 ---
 main:
   messages:
-  - remember how games write to VRAM?
+  - remember how games write to PPU addresses (like 🐏  VRAM or 👾  CHR-ROM)?
   - <{PPUAddr_PPUData.png}>
-  - they also can <read> from VRAM, by reading from 📦  PPUData instead of writing
+  - they also can <read> from those addresses, by reading from 📦  PPUData instead of writing
   - "this operation also increments the address in 📍  PPUAddr, and has a little quirk:"
   - all reads are <delayed> by 1, except for the Palette RAM section and its mirrors
   responses:
@@ -12,6 +12,7 @@ main:
 exercise:
   messages:
   - simple, when a <read> is requested, you read into a buffer, but then you return the <previous value> of that buffer
+  - check out this other example, 📄  ~/docs/ppu/ppudata_example.md~
   - |-
     📚  implement these methods in 📦  `PPUData`:
     **onLoad()**:

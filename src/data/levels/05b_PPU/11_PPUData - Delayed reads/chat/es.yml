@@ -1,9 +1,9 @@
 ---
 main:
   messages:
-  - ¿recuerdas cómo los juegos escriben en VRAM?
+  - ¿recuerdas cómo los juegos escriben en direcciones PPU (como 🐏  VRAM o 👾  CHR-ROM)?
   - <{PPUAddr_PPUData.png}>
-  - ellos también pueden <leer> desde VRAM, leyendo de 📦  PPUData en lugar de escribir
+  - ellos también pueden <leer> desde esas direcciones, leyendo de 📦  PPUData en lugar de escribir
   - "esta operación también incrementa la dirección en 📍  PPUAddr, y tiene un pequeño truco:"
   - todas las lecturas están <retrasadas> por 1, excepto para la sección Palette RAM y sus espejos
   responses:
@@ -12,6 +12,7 @@ main:
 exercise:
   messages:
   - simple, cuando se solicita una <lectura>, lees en un buffer, pero luego retornas el <valor anterior> de ese buffer
+  - revisa este otro ejemplo, 📄  ~/docs/ppu/ppudata_example.md~
   - |-
     📚  implementa estos métodos en 📦  `PPUData`:
     **onLoad()**:

@@ -306,8 +306,7 @@ export default class CreditsModal extends PureComponent {
 							</div>
 							<div style={{ fontSize: "small", marginTop: 8 }}>
 								✅ All these games and test roms were included with the
-								permission of their authors. If I made a mistake or you'd like
-								your game here, drop me an e-mail!
+								permission of their authors.
 							</div>
 						</div>
 					</Section>
@@ -372,6 +371,13 @@ export default class CreditsModal extends PureComponent {
 							author="skilldrick"
 						>
 							Easy 6502
+						</Game>
+						<Game
+							emojis="📖🦀"
+							link="https://bugzmanov.github.io/nes_ebook/"
+							author="bugzmanov"
+						>
+							Writing NES Emulator in Rust
 						</Game>
 					</Section>
 				</Modal.Body>

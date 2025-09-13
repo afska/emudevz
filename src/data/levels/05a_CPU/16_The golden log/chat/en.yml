@@ -12,6 +12,7 @@ main:
   - I'll run your emulator and log every instruction
   - "comparing each line against the following \"golden log\":"
   - 📄  ~/roms/_test/golden.log~
+  - 📄  ~/roms/_test/golden_log_format.md~
   responses:
   - what's a golden log? 🏆 [golden]
 

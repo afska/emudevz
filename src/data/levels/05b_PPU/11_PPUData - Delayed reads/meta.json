@@ -4,6 +4,7 @@
 		"es": "📦 PPUData: Lecturas retrasadas"
 	},
 	"ui": {
+		"run": "copy.js",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [

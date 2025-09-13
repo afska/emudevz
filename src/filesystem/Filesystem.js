@@ -65,9 +65,11 @@ class Filesystem {
 				if (it.startsWith(HIDDEN_PREFIX)) return null; // (ignore dotfiles)
 				if (
 					it.endsWith(MARKDOWN_POSTFIX) &&
-					!it.endsWith(`.${locales.language}${MARKDOWN_POSTFIX}`)
-				)
+					!it.endsWith(`.${locales.language}${MARKDOWN_POSTFIX}`) &&
+					it.split(".").length > 2
+				) {
 					return null; // (ignore non-localized markdown files)
+				}
 
 				const filePath = `${path}/${it}`;
 				const displayFilePath = `${displayPath}/${it}`;

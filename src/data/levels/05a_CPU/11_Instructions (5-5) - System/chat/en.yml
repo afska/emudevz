@@ -26,10 +26,11 @@ example:
   messages:
   - sure! imagine you're a game
   - you need to move your sprites when the PPU finishes rendering its current frame, to avoid doing it while it's drawing (causing glitches 💥 )
-  - so, you put your sprite moving code in -for example- address $90CC
+  - so, you put your sprite moving code in -for example- address $AA00
   - that will be the location of your <interrupt handler>
-  - and then you "subscribe" to the NMI event by placing a pointer to $90CC in NMI's vector (which is ~$FFFA/B~)
-  - (in Little Endian, so $FFFA holds $CC and $FFFB holds $90)
+  - and then you "subscribe" to the NMI event by placing a pointer to $AA00 in NMI's vector (which is ~$FFFA/B~)
+  - (in Little Endian, so $FFFA holds $00 and $FFFB holds $AA)
+  - check out 📄  ~/docs/cpu/interrupt_example.md~
   responses:
   - what would happen when an NMI occurs? [nmi]
 
@@ -38,8 +39,8 @@ nmi:
   - "in this example, when the NMI is triggered, the CPU will:"
   - 🧱  push [PC] and the flags onto the stack
   - 🏁  set ~I=1~, which disables user interrupts
-  - 🐏  grab the value $90CC by reading $FFFA and $FFFB (NMI's vector)
-  - 🦘  jump to $90CC
+  - 🐏  grab the value $AA00 by reading $FFFA and $FFFB (NMI's vector)
+  - 🦘  jump to $AA00
   - 🚲  consume 7 cycles while doing all this
   - then, the interrupt handler will move the sprites and run `RTI` ("Return from Interrupt") to restore the previous state
   responses:
