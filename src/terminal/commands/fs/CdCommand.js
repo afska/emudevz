@@ -7,7 +7,7 @@ export default class CdCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		const path = this._resolve(this._fileArgs[0]);
+		const path = this._resolve(this._fileArgs[0], false, false);
 		const stat = filesystem.stat(path);
 
 		if (stat.isDirectory) this._shell.workingDirectory = path;

@@ -191,8 +191,16 @@ export default {
 				const state = _state_[KEY];
 				const { openFiles, selectedFile } = state;
 
-				const newOpenFiles = openFiles.filter((it) => it !== filePath);
-				if (selectedFile === filePath) this.setSelectedFile(newOpenFiles[0]);
+				const normalizedFilePath = filesystem.normalize(filePath);
+
+				const newOpenFiles = openFiles.filter((it) => {
+					return filesystem.normalize(it) !== normalizedFilePath;
+				});
+				if (
+					selectedFile != null &&
+					filesystem.normalize(selectedFile) === normalizedFilePath
+				)
+					this.setSelectedFile(newOpenFiles[0]);
 				this.setOpenFiles(newOpenFiles);
 				bus.emit("file-closed");
 			},

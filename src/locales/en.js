@@ -50,6 +50,7 @@ export default {
 		"Moves or renames something (usage: `mv old_path new_path`)",
 	command_open_description:
 		"Opens files (usage: `open file1.txt file2.js`, or `open *`)",
+	command_restore_description: "Restore `/code` files from the previous level.",
 	command_rm_description: "Removes something (usage: `rm something`)",
 	command_touch_description:
 		"Creates files (usage: `touch file1.txt file2.js`)",
@@ -122,6 +123,7 @@ export default {
 	music: "Music",
 	no: "No",
 	no_open_files: "🚫 No open files!<br>🔍 Use <code>Ctrl+P</code> to search.",
+	not_available: "⚠️  Not available.",
 	not_now: "⚠️  Not now!",
 	opening: "Opening",
 	optional: "(optional)",
@@ -148,13 +150,14 @@ export default {
 	reset_level: "Reset level progress",
 	resize_warning: "Resizing is not supported while typing.",
 	restore: "Restore",
+	restore_warning_all:
+		"⚠️  Your <ENTIRE> `/code` will be replaced with the previous level snapshot.\r\nProceed? ~(y/N)~",
+	restore_warning_paths:
+		"⚠️  The following paths in `/code` will be replaced with the previous level snapshot: ~(y/N)~",
 	rm_with_files:
 		"⚠️  This directory contains ~files~. Delete everything? ~(y/N)~",
 	rm_deleting_recursively: "💥  Deleting recursively...",
 	rm_recursive_flag: "(to skip this check, run `rm -rf`)",
-	rollback: "Restore /code using this snapshot",
-	rollback_sure:
-		"Your ENTIRE code will be replaced by this snapshot. Are you sure?",
 	root_enabled: "Root privileges enabled. Use with caution!",
 	root_games_unlocked: "All games unlocked.",
 	root_undid_level: "Undid level: ",

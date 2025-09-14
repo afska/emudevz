@@ -1,6 +1,4 @@
 import { push, replace } from "connected-react-router";
-import filesystem from "../filesystem";
-import Drive from "../filesystem/Drive";
 import {
 	SAVESTATE_KEY_PREFIX,
 	SAVESTATE_RESET_COMMAND,
@@ -95,17 +93,6 @@ export default {
 				setTimeout(() => {
 					this.goTo(state.instance.id);
 				});
-			},
-			rollback(level, _state_) {
-				const snapshot = Drive.snapshotDirOf(level.id);
-				if (!filesystem.exists(snapshot)) return;
-
-				filesystem.setSymlinks([]);
-				filesystem.rmrf("/code");
-				filesystem.cpr(snapshot, "/code");
-
-				const state = _state_[KEY];
-				this.goTo(state.instance.id);
 			},
 		};
 	},

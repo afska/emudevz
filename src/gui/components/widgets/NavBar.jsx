@@ -6,13 +6,11 @@ import {
 	FaChevronLeft,
 	FaChevronRight,
 	FaClock,
-	FaExclamationCircle,
 	FaHome,
 	FaMusic,
 	FaPause,
 	FaPlay,
 	FaTrash,
-	FaTrashRestore,
 } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
@@ -32,7 +30,6 @@ import styles from "./NavBar.module.css";
 class NavBar extends PureComponent {
 	state = {
 		isCalculatorOpen: false,
-		areYouSureRollback: false,
 		imageDiffSequence: null,
 	};
 
@@ -46,7 +43,6 @@ class NavBar extends PureComponent {
 			goToPrevious,
 			goToNext,
 			resetLevel,
-			rollbackLevel,
 			setChapterSelectOpen,
 		} = this.props;
 
@@ -162,22 +158,6 @@ class NavBar extends PureComponent {
 							tooltip={locales.get("level_history")}
 							onClick={() => this._openLevelHistory()}
 						/>
-						{book.canRollback(level) && !this.state.areYouSureRollback && (
-							<IconButton
-								style={{ marginLeft: 8 }}
-								Icon={FaTrashRestore}
-								tooltip={locales.get("rollback")}
-								onClick={() => this.setState({ areYouSureRollback: true })}
-							/>
-						)}
-						{book.canRollback(level) && this.state.areYouSureRollback && (
-							<IconButton
-								style={{ marginLeft: 8, color: "#ff2d2d" }}
-								Icon={FaExclamationCircle}
-								tooltip={locales.get("rollback_sure")}
-								onClick={() => rollbackLevel(level)}
-							/>
-						)}
 						{book.canGoToNextChapter(chapter) && (
 							<IconButton
 								Icon={FaChevronRight}
@@ -255,7 +235,6 @@ const mapDispatchToProps = ({ level }) => ({
 	goToPrevious: level.goToPrevious,
 	goToNext: level.goToNext,
 	resetLevel: level.resetProgress,
-	rollbackLevel: level.rollback,
 	setChapterSelectOpen: level.setChapterSelectOpen,
 });
 

@@ -2,6 +2,7 @@ import filesystem, { Drive } from "../../filesystem";
 import Level from "../../level/Level";
 import locales from "../../locales";
 import store from "../../store";
+import { bus } from "../../utils";
 import { theme } from "../style";
 import Command from "./Command";
 
@@ -27,6 +28,7 @@ export default class RootCommand extends Command {
 			return;
 		}
 
+		bus.emit("root-enabled");
 		await this._terminal.writehlln(locales.get("root_enabled"), theme.WARNING);
 	}
 

@@ -233,7 +233,7 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	focus = () => {
-		this.ref.view.focus();
+		this.ref?.view?.focus();
 	};
 
 	_onKeyDown = (e) => {

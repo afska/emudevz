@@ -208,6 +208,14 @@ class Filesystem {
 		this.fs.rmdirSync(path);
 	}
 
+	rmrff(path) {
+		try {
+			this.rmrf(path);
+		} catch (e) {
+			if (e.code === "ENOTDIR") this.rm(path);
+		}
+	}
+
 	rmrf(path) {
 		path = this.process(path);
 		// ---
@@ -257,6 +265,10 @@ class Filesystem {
 			isDirectory: stat.isDirectory(),
 			size: stat.size,
 		};
+	}
+
+	normalize(path, workingDirectory = "/") {
+		return this.process(this.resolve(path, workingDirectory));
 	}
 
 	resolve(path, workingDirectory) {

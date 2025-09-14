@@ -83,10 +83,6 @@ export default class Book {
 		return !level.memory.content.multifile;
 	}
 
-	canRollback(level) {
-		return level.memory.content.multifile && level.isUsingSnapshot;
-	}
-
 	previousIdOf(levelId) {
 		const level = this.getLevelDefinitionOf(levelId);
 		if (!level) return null;

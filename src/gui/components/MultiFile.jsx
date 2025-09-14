@@ -148,6 +148,7 @@ class MultiFile extends PureComponent {
 			"file-search": this._focusAndSearch,
 			"file-opened": this._onFileOpened,
 			"file-closed": this._onFileClosed,
+			"root-enabled": () => this.forceUpdate(),
 		});
 	}
 

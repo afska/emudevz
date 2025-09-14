@@ -14,24 +14,20 @@ export default class DiffCommand extends FilesystemCommand {
 	}
 
 	async _execute() {
-		const state = store.getState().savedata;
-		const { completedLevels } = state;
-		if (!completedLevels || completedLevels.length === 0) return;
+		const completedLevels = store.getState().savedata.completedLevels;
+		if (completedLevels.length === 0) return await this._notAvailable();
 
 		const currentLevelId = Level.current.id;
-		const index = _.findLastIndex(
+		let index = _.findLastIndex(
 			completedLevels,
 			(it) => it.levelId === currentLevelId
 		);
-		if (index <= 0) return;
+		if (index <= 0) index = completedLevels.length; // (not completed level)
 		const previousLevelId = completedLevels[index - 1].levelId;
 		const previousSnapshotDir = Drive.snapshotDirOf(previousLevelId);
 
-		try {
-			if (!filesystem.exists(previousSnapshotDir)) return;
-		} catch (e) {
-			return;
-		}
+		if (!filesystem.exists(previousSnapshotDir))
+			return await this._notAvailable();
 
 		const currentFiles = this._readFilesRecursively(Drive.CODE_DIR);
 		const previousFiles = this._readFilesRecursively(previousSnapshotDir);
@@ -54,16 +50,20 @@ export default class DiffCommand extends FilesystemCommand {
 				theme.SYSTEM
 			);
 
-			const ops = this._diffLines(
+			const operations = this._diffLines(
 				oldContent.split(NEWLINE_REGEXP),
 				newContent.split(NEWLINE_REGEXP)
 			);
 
-			const hunks = this._toHunks(ops, HUNKS_CONTEXT);
-			for (let h = 0; h < hunks.length; h++) {
-				if (h > 0) await this._terminal.writeln("---", theme.ACCENT);
-				for (let i = 0; i < hunks[h].length; i++) {
-					const { type, text } = hunks[h][i];
+			const hunks = this._toHunks(operations, HUNKS_CONTEXT);
+			for (let hunkIndex = 0; hunkIndex < hunks.length; hunkIndex++) {
+				if (hunkIndex > 0) await this._terminal.writeln("---", theme.ACCENT);
+				for (
+					let lineIndex = 0;
+					lineIndex < hunks[hunkIndex].length;
+					lineIndex++
+				) {
+					const { type, text } = hunks[hunkIndex][lineIndex];
 					if (type === "added")
 						await this._terminal.writeln("+ " + text, theme.DIFF_ADDED);
 					else if (type === "removed")

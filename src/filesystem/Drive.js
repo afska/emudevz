@@ -19,7 +19,7 @@ const READONLY_PATHS = [
 	/^\/roms.*/,
 	/^\/tmpl.*/,
 ];
-const PROTECTED_PATHS = [MAIN_FILE];
+const PROTECTED_PATHS = [];
 
 export default {
 	PATH_INVALID_CHARACTERS: /[^a-z0-9/._-]/gi,

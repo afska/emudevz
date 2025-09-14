@@ -50,6 +50,8 @@ export default {
 	command_mv_description:
 		"Mueve o renombra algo (uso: `mv ruta_vieja ruta_nueva`)",
 	command_open_description: "Abre archivos (uso: `open arch1.txt arch2.js`)",
+	command_restore_description:
+		"Restaura archivos de `/code` desde el nivel anterior.",
 	command_rm_description: "Remueve algo (uso: `rm algo`)",
 	command_touch_description: "Crea archivos (uso: `touch arch1.txt arch2.js`)",
 	creating_file: "Creando archivo",
@@ -125,6 +127,7 @@ export default {
 	no: "No",
 	no_open_files:
 		"🚫 ¡Ningún archivo abierto!<br>🔍 Usa <code>Ctrl+P</code> para buscar.",
+	not_available: "⚠️  No disponible.",
 	not_now: "⚠️  ¡Ahora no!",
 	opening: "Abriendo",
 	optional: "(opcional)",
@@ -152,13 +155,14 @@ export default {
 	reset_level: "Reiniciar progreso del nivel",
 	resize_warning: "No se puede redimensionar y escribir a la vez.",
 	restore: "Restaurar",
+	restore_warning_all:
+		"⚠️  <TODO> tu `/code` será reemplazado por la copia del nivel anterior.\r\n¿Continuar? ~(y/N)~",
+	restore_warning_paths:
+		"⚠️  Se reemplazarán estos paths en `/code` con la copia del nivel anterior: ~(y/N)~",
 	rm_with_files:
 		"⚠️  Este directorio contiene ~archivos~. ¿Borrar todo? ~(y/N)~",
 	rm_deleting_recursively: "💥  Borrando recursivamente...",
 	rm_recursive_flag: "(para omitir esta verificación, corre `rm -rf`)",
-	rollback: "Restaurar /code usando esta copia",
-	rollback_sure:
-		"Tu código COMPLETO se reemplazará por esta copia. ¿Restaurar?",
 	root_enabled: "Privilegios root activados. ¡Usar con cuidado!",
 	root_games_unlocked: "Todos los juegos desbloqueados.",
 	root_undid_level: "Se deshizo el nivel: ",
