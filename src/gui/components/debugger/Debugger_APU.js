@@ -401,7 +401,7 @@ export default class Debugger_APU {
 				ImGui.SameLine();
 				widgets.boolean("Active", channel?.dpcm?.isActive ?? false);
 				ImGui.SameLine();
-				widgets.boolean("Loop", channel.registers?.control.loop ?? false);
+				widgets.boolean("Loop", channel?.registers?.control.loop ?? false);
 				widgets.value("Buffer", channel?.dpcm?.buffer || 0);
 				widgets.value("Cursor (byte)", cursorByte);
 				widgets.value("Cursor (bit)", cursorBit);
