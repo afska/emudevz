@@ -13,7 +13,13 @@ export default class LsCommand extends FilesystemCommand {
 		return "ls";
 	}
 
-	static getTree(path, format = true, indent = "", filter = null, data) {
+	static getTree(
+		path,
+		format = true,
+		indent = "",
+		filter = (name) => true,
+		data
+	) {
 		try {
 			const content = data != null ? data : filesystem.lsrTree(path, filter);
 
