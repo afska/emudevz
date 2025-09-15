@@ -34,3 +34,26 @@ other:
   - so, if you are player 2, you need to use the `strobe` flag from the other controller
   responses:
   - ...exercise
+
+corollary:
+  messages:
+  - alright, let's integrate your 🎮  Controller into the emulator
+  - give me a second...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 1000);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useController");
+  messages:
+  - ✅  done!
+  - <! 🎮  Controller integrated.
+  - now, the 🎮  icon in the emulator will glow ✨
+  responses:
+  - ▶️  continue [end]

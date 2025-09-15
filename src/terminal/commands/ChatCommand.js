@@ -105,7 +105,7 @@ export default class ChatCommand extends Command {
 			return false;
 		}
 
-		if (this._includes("-f") || memory.sectionName === COROLLARY_SECTION)
+		if (this._includes("-f") || memory.history.includes(COROLLARY_SECTION))
 			return false;
 
 		this._onClose();

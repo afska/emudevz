@@ -33,3 +33,26 @@ other:
   - así que, si eres el jugador 2, necesitas usar la bandera `strobe` del otro mando
   responses:
   - ...exercise
+
+corollary:
+  messages:
+  - bien, integremos tu 🎮  Mando en el emulador
+  - dame un segundo...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 1000);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useController");
+  messages:
+  - ✅  ¡listo!
+  - <! 🎮  Mando integrado.
+  - ahora, el ícono 🎮  en el emulador brillará ✨
+  responses:
+  - ▶️  continuar [end]
