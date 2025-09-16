@@ -5,6 +5,7 @@ const DEFAULT_FILE = Drive.MAIN_FILE;
 
 const KEY = "savedata";
 const INITIAL_STATE = () => ({
+	version: 1,
 	maxChapterNumber: 1,
 	completedLevels: [],
 	lastLevelId: "start",
