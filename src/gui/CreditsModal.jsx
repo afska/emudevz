@@ -192,6 +192,13 @@ export default class CreditsModal extends PureComponent {
 									From Below
 								</Game>
 								<Game
+									emojis="🧙🗡"
+									link="https://johnybot.itch.io/guild-quest"
+									author="johnybot"
+								>
+									Guild Quest
+								</Game>
+								<Game
 									emojis="⛽💥"
 									link="https://johnybot.itch.io/heist"
 									author="johnybot"

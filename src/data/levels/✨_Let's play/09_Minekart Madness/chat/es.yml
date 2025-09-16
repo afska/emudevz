@@ -38,6 +38,8 @@ finish:
   - ¡eres bueno en esto!
   - "<! ROM recibida: 📄  /roms/MinekartMadness.neees"
   - como prometí, puse la ROM en tu directorio 📁  ~/roms~
+  - "<! ROM recibida: 📄  /roms/GuildQuest.neees"
+  - también envié otro juego llamado ~Guild Quest~
   - ¡nos vemos!
   responses:
   - ▶️  continuar [end]

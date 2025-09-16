@@ -37,6 +37,7 @@
 	"FilthyKitchen.neees",
 	"FluffySpaceEscape.neees",
 	"FromBelow.neees",
+	"GuildQuest.neees",
 	"Heist.neees",
 	"Isostasy.neees",
 	"JupiterScope2.neees",
