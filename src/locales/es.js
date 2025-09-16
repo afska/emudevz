@@ -40,6 +40,7 @@ export default {
 	command_cp_description: "Copia algo (uso: `cp ruta_orig ruta_dest`).",
 	command_diff_description:
 		"Muestra diffs de `/code` vs último nivel completado.",
+	command_disk_description: "Muestra uso y cuota de disco (usado/total y %).",
 	command_download_description: "Descarga archivos (uso: `download a b`).",
 	command_help_description: "Muestra esta ayuda.",
 	command_ls_description: "Muestra una lista de archivos.",

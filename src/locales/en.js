@@ -39,6 +39,7 @@ export default {
 	command_clear_description: "Clears the terminal.",
 	command_cp_description: "Copies something (usage: `cp orig_path dest_path`).",
 	command_diff_description: "Shows `/code` diffs vs last completed level.",
+	command_disk_description: "Shows disk usage and quota (used/total and %).",
 	command_download_description: "Downloads files (usage: `download a b`).",
 	command_help_description: "Shows this help.",
 	command_ls_description: "Shows a file list (usage: `ls`, or `ls -r`).",

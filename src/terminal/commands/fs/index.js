@@ -1,6 +1,7 @@
 import CdCommand from "./CdCommand";
 import CpCommand from "./CpCommand";
 import DiffCommand from "./DiffCommand";
+import DiskCommand from "./DiskCommand";
 import DownloadCommand from "./DownloadCommand";
 import LsCommand from "./LsCommand";
 import MkdirCommand from "./MkdirCommand";
@@ -24,4 +25,5 @@ export default [
 	RestoreCommand,
 	DownloadCommand,
 	UploadCommand,
+	DiskCommand,
 ];
