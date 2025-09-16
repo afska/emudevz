@@ -199,7 +199,7 @@ export default class CreditsModal extends PureComponent {
 									From Below
 								</Game>
 								<Game
-									emojis="🧙🗡"
+									emojis="🧙⚔️"
 									link="https://johnybot.itch.io/guild-quest"
 									author="johnybot"
 								>
