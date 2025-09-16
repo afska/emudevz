@@ -1,5 +1,6 @@
 import JSZip from "jszip";
 import _ from "lodash";
+import filepicker from "./filepicker";
 
 const DB_NAME = "emudevz";
 const INDEXED_DB_FOLDER = "indexeddb";
@@ -30,7 +31,7 @@ export default {
 					zip
 						.generateAsync({ type: "uint8array" })
 						.then((content) => {
-							saveAs(content, fileName);
+							filepicker.saveAs(content, fileName);
 							resolve();
 						})
 						.catch((error) => {
@@ -132,16 +133,4 @@ function setLocalStorage(save) {
 		const value = data[key];
 		localStorage.setItem(key, value);
 	}
-}
-
-function saveAs(content, fileName) {
-	const blob = new Blob([content], {
-		type: "application/octet-stream",
-	});
-	const url = URL.createObjectURL(blob);
-	const a = document.createElement("a");
-	a.href = url;
-	a.download = fileName;
-	a.click();
-	URL.revokeObjectURL(url);
 }

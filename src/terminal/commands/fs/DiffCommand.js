@@ -22,7 +22,7 @@ export default class DiffCommand extends FilesystemCommand {
 			completedLevels,
 			(it) => it.levelId === currentLevelId
 		);
-		if (index <= 0) index = completedLevels.length; // (not completed level)
+		if (index <= 0) index = completedLevels.length; // (level not completed)
 		const previousLevelId = completedLevels[index - 1].levelId;
 		const previousSnapshotDir = Drive.snapshotDirOf(previousLevelId);
 

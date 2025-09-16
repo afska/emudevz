@@ -111,7 +111,12 @@ class Filesystem {
 		// ---
 
 		let data = this.fs.readFileSync(path).toString();
-		if (options.binary) data = blob.base64ToArrayBuffer(data);
+		if (options.binary || options.any)
+			try {
+				data = blob.base64ToArrayBuffer(data);
+			} catch (e) {
+				if (!options.any) throw e;
+			}
 
 		return data;
 	}
