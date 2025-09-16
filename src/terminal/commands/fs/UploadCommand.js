@@ -17,6 +17,7 @@ export default class UploadCommand extends FilesystemCommand {
 				null,
 				async (fileContent, fileName) => {
 					try {
+						fileName = fileName.replace(/[^a-z0-9._-]/gi, "_");
 						if (!fileName) return;
 
 						const [__, customArgs] = extensions.getOptions(fileName);

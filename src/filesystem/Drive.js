@@ -7,6 +7,7 @@ const LIB_DIR = "/lib";
 const DOCS_DIR = "/docs";
 const ROMS_DIR = "/roms";
 const TMPL_DIR = "/tmpl";
+const USR_DIR = "/usr";
 const ALLROMS_DIR = "/roms/.all";
 const TESTROMS_DIR = "/roms/_test";
 const SNAPSHOTS_DIR = "/.snapshots";
@@ -32,6 +33,7 @@ export default {
 	DOCS_DIR,
 	ROMS_DIR,
 	TMPL_DIR,
+	USR_DIR,
 	ALLROMS_DIR,
 	TESTROMS_DIR,
 	SNAPSHOTS_DIR,
@@ -42,6 +44,7 @@ export default {
 		filesystem.mkdirp(DOCS_DIR);
 		filesystem.mkdirp(ROMS_DIR);
 		filesystem.mkdirp(TMPL_DIR);
+		filesystem.mkdirp(USR_DIR);
 		filesystem.mkdirp(ALLROMS_DIR);
 		filesystem.mkdirp(TESTROMS_DIR);
 		filesystem.mkdirp(SNAPSHOTS_DIR);
