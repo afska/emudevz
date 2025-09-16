@@ -185,6 +185,13 @@ export default class CreditsModal extends PureComponent {
 									Filthy Kitchen
 								</Game>
 								<Game
+									emojis="🐰🛰️"
+									link="https://igwgames.com/classic-gaming/ld40"
+									author="IGW Games"
+								>
+									Fluffy Space Escape
+								</Game>
+								<Game
 									emojis="🧱🐙"
 									link="https://mhughson.itch.io/from-below"
 									author="Matt Hughson"
