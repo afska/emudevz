@@ -16,6 +16,20 @@ const dictionary = {
 			es:
 				"_(Registro Acumulador)_ Un registro de CPU usado para almacenar el resultado de operaciones aritméticas y lógicas.",
 		},
+		"[PC]": {
+			icon: "🔢",
+			en:
+				"_(Program Counter)_ A CPU register used to store the address of the next instruction to execute.",
+			es:
+				"_(Contador de Programa)_ Un registro de CPU usado para almacenar la dirección de la próxima instrucción a ejecutar.",
+		},
+		"[SP]": {
+			icon: "🔢",
+			en:
+				"_(Stack Pointer)_ A CPU register used to track the top of the stack.",
+			es:
+				"_(Puntero de Pila)_ Un registro de CPU usado para localizar la cima de la pila.",
+		},
 		"[X]": {
 			icon: "🔢",
 			en:
@@ -28,34 +42,6 @@ const dictionary = {
 			en: "_(Y Register)_ A CPU register used for indexing and comparisons.",
 			es:
 				"_(Registro Y)_ Un registro de CPU usado para indexar memoria y hacer comparaciones.",
-		},
-		"[SP]": {
-			icon: "🔢",
-			en:
-				"_(Stack Pointer)_ A CPU register used to track the top of the stack.",
-			es:
-				"_(Puntero de Pila)_ Un registro de CPU usado para localizar la cima de la pila.",
-		},
-		"[PC]": {
-			icon: "🔢",
-			en:
-				"_(Program Counter)_ A CPU register used to store the address of the next instruction to execute.",
-			es:
-				"_(Contador de Programa)_ Un registro de CPU usado para almacenar la dirección de la próxima instrucción a ejecutar.",
-		},
-		"Four-step sequence|Four-step": {
-			also: { es: "Secuencia de cuatro pasos|Cuatro pasos" },
-			icon: "🔀",
-			en: "A mode of the frame sequencer that runs a four-step pattern.",
-			es:
-				"Un modo del secuenciador de frames que ejecuta un patrón de cuatro pasos.",
-		},
-		"Five-step sequence|Five-step": {
-			also: { es: "Secuencia de cinco pasos|Cinco pasos" },
-			icon: "🔀",
-			en: "A mode of the frame sequencer that runs a five-step pattern.",
-			es:
-				"Un modo del secuenciador de frames de la APU de NES que ejecuta un patrón de cinco pasos.",
 		},
 		"Address space": {
 			also: { es: "Espacio de direcciones" },
@@ -79,6 +65,74 @@ const dictionary = {
 				"The height of the wave peaks. It defines the volume or loudness of the sound.",
 			es:
 				"La altura de los picos de la onda. Define el volumen o la intensidad del sonido.",
+		},
+		APU: {
+			icon: "🔊",
+			en:
+				"The _Audio Processing Unit_. It handles sound, producing audio waves.",
+			es:
+				"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
+		},
+		"APU cycle|_APU cycles": {
+			also: { es: "Ciclo de APU|_Ciclos de APU" },
+			icon: "🐢",
+			en:
+				"The basic timing unit of the APU; each cycle corresponds to one APU clock tick and advances its internal state. <br /><br />The APU runs at `half` the CPU clock rate. For every APU cycle, the CPU runs `2` cycles.",
+			es:
+				"La unidad de tiempo básica de la APU; cada ciclo corresponde a un tick de reloj de la APU y avanza su estado interno. <br /><br />La APU funciona a la `mitad` de la velocidad de la CPU. Por cada ciclo de APU, la CPU ejecuta `2` ciclos.",
+		},
+		"APU register|_APU registers|Audio register|_Audio registers": {
+			also: {
+				es:
+					"Registro de APU|_Registros de APU|_Registro APU|_Registros APU|Registro de Audio|_Registros de Audio",
+			},
+			icon: "🔢",
+			en:
+				"A memory-mapped register used to control sound channels or volume. <br /><br />In the NEEES, they are mapped to addresses `$4000` - `$4013`, `$4015` (APUControl / APUStatus), and `$4017` (APUFrameCounter).",
+			es:
+				"Un registro mapeado en memoria usado para controlar los canales de sonido o el volumen. <br /><br />En la NEEES, están mapeados en las direcciones `$4000` - `$4013`, `$4015` (APUControl / APUStatus), y `$4017` (APUFrameCounter).",
+		},
+		APUControl: {
+			icon: "🎛️",
+			en:
+				"An audio register that enables or disables each APU channel (pulse, triangle, noise, DMC). <br /><br />It is available for writing at CPU address `$4015`.",
+			es:
+				"Un registro de control de audio que habilita o deshabilita cada canal de la APU (pulso, triangular, ruido, DMC). <br /><br />Está disponible para escritura en la dirección de CPU `$4015`.",
+		},
+		APUFrameCounter: {
+			icon: "🧮",
+			en:
+				"An audio register that controls the APU's sequence (4- or 5-step). <br /><br />It is available at CPU address `$4017`.",
+			es:
+				"Un registro de audio que controla la secuencia de la APU (4 o 5 pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
+		},
+		APUStatus: {
+			icon: "📊",
+			en:
+				"An audio status register that reports which channels are active and if DPCM is active. <br /><br />It is available for reading at CPU address `$4015`.",
+			es:
+				"Un registro de estado de audio que indica qué canales están activos y si el DPCM está activo. <br /><br />Está disponible para lectura en la dirección de CPU `$4015`.",
+		},
+		Assembly: {
+			also: { es: "Ensamblador" },
+			icon: "🔨",
+			en:
+				"A low-level programming language that maps very closely to the machine code understood by the CPU.",
+			es:
+				"Un lenguaje de programación de bajo nivel que se asemeja mucho al código máquina que la CPU entiende.",
+		},
+		"Assembly code": {
+			also: { es: "Código ensamblador" },
+			icon: "🔨",
+			en: "Code written in assembly language.",
+			es: "Código escrito en lenguaje ensamblador.",
+		},
+		"Attribute table|Attribute tables": {
+			icon: "🖍️📖",
+			en:
+				"A map of palette indexes for backgrounds, stored at the end of each name table.",
+			es:
+				"Un mapa de índices de paleta para fondos, almacenado al final de cada name table.",
 		},
 		"Audio channel|APU channel|Channel|_Audio channels|_APU channels|_Channels": {
 			also: {
@@ -106,74 +160,6 @@ const dictionary = {
 				"A representation of how sound varies over time, stored as a stream of samples that describe the wave's height at each moment. <br /><br />A wave has a form, frequency and amplitude.",
 			es:
 				"Una representación de cómo varía el sonido a lo largo del tiempo, almacenada como una secuencia de samples que describen la altura de la onda en cada instante. <br /><br />Una onda tiene forma, frecuencia y amplitud.",
-		},
-		APU: {
-			icon: "🔊",
-			en:
-				"The _Audio Processing Unit_. It handles sound, producing audio waves.",
-			es:
-				"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
-		},
-		"APU cycle|_APU cycles": {
-			also: { es: "Ciclo de APU|_Ciclos de APU" },
-			icon: "🐢",
-			en:
-				"The basic timing unit of the APU; each cycle corresponds to one APU clock tick and advances its internal state. <br /><br />The APU runs at `half` the CPU clock rate. For every APU cycle, the CPU runs `2` cycles.",
-			es:
-				"La unidad de tiempo básica de la APU; cada ciclo corresponde a un tick de reloj de la APU y avanza su estado interno. <br /><br />La APU funciona a la `mitad` de la velocidad de la CPU. Por cada ciclo de APU, la CPU ejecuta `2` ciclos.",
-		},
-		APUControl: {
-			icon: "🎛️",
-			en:
-				"An audio register that enables or disables each APU channel (pulse, triangle, noise, DMC). <br /><br />It is available for writing at CPU address `$4015`.",
-			es:
-				"Un registro de control de audio que habilita o deshabilita cada canal de la APU (pulso, triangular, ruido, DMC). <br /><br />Está disponible para escritura en la dirección de CPU `$4015`.",
-		},
-		APUFrameCounter: {
-			icon: "🧮",
-			en:
-				"An audio register that controls the APU's sequence (4- or 5-step). <br /><br />It is available at CPU address `$4017`.",
-			es:
-				"Un registro de audio que controla la secuencia de la APU (4 o 5 pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
-		},
-		APUStatus: {
-			icon: "📊",
-			en:
-				"An audio status register that reports which channels are active and if DPCM is active. <br /><br />It is available for reading at CPU address `$4015`.",
-			es:
-				"Un registro de estado de audio que indica qué canales están activos y si el DPCM está activo. <br /><br />Está disponible para lectura en la dirección de CPU `$4015`.",
-		},
-		"APU register|_APU registers|Audio register|_Audio registers": {
-			also: {
-				es:
-					"Registro de APU|_Registros de APU|_Registro APU|_Registros APU|Registro de Audio|_Registros de Audio",
-			},
-			icon: "🔢",
-			en:
-				"A memory-mapped register used to control sound channels or volume. <br /><br />In the NEEES, they are mapped to addresses `$4000` - `$4013`, `$4015` (APUControl / APUStatus), and `$4017` (APUFrameCounter).",
-			es:
-				"Un registro mapeado en memoria usado para controlar los canales de sonido o el volumen. <br /><br />En la NEEES, están mapeados en las direcciones `$4000` - `$4013`, `$4015` (APUControl / APUStatus), y `$4017` (APUFrameCounter).",
-		},
-		Assembly: {
-			also: { es: "Ensamblador" },
-			icon: "🔨",
-			en:
-				"A low-level programming language that maps very closely to the machine code understood by the CPU.",
-			es:
-				"Un lenguaje de programación de bajo nivel que se asemeja mucho al código máquina que la CPU entiende.",
-		},
-		"Assembly code": {
-			also: { es: "Código ensamblador" },
-			icon: "🔨",
-			en: "Code written in assembly language.",
-			es: "Código escrito en lenguaje ensamblador.",
-		},
-		"Attribute table|Attribute tables": {
-			icon: "🖍️📖",
-			en:
-				"A map of palette indexes for backgrounds, stored at the end of each name table.",
-			es:
-				"Un mapa de índices de paleta para fondos, almacenado al final de cada name table.",
 		},
 		"Background|_Backgrounds": {
 			also: { es: "Fondo|_Fondos" },
@@ -295,14 +281,6 @@ const dictionary = {
 			es:
 				"Una unidad usada para medir el tiempo en el sistema. La CPU, la PPU y la APU hacen su trabajo ciclo a ciclo. <br /><br />La duración de un ciclo depende de la velocidad de cada unidad.",
 		},
-		"Divider|_Dividers": {
-			also: { es: "Divisor|_Divisores" },
-			icon: "⏰",
-			en:
-				"A counter that reduces the system's master clock to a slower periodic signal by counting cycles and triggering an event at a fixed interval. <br /><br />It is used to clock other units at a slower rate. <br /><br />See also: Divider period.",
-			es:
-				"Un contador que reduce el reloj maestro del sistema a una señal periódica más lenta contando ciclos y activando un evento a intervalos fijos. <br /><br />Se usa para sincronizar otras unidades a una velocidad más baja. <br /><br />Ver también: Período de divisor.",
-		},
 		"Divider period": {
 			also: { es: "Período de divisor" },
 			icon: "⏰",
@@ -311,6 +289,14 @@ const dictionary = {
 			es:
 				"La cantidad de ciclos que un divisor espera antes de generar su siguiente salida. <br /><br />Por ejemplo, con un período de divisor de `15`, este generará un pulso de temporización cada `15` ciclos.",
 		},
+		"Divider|_Dividers": {
+			also: { es: "Divisor|_Divisores" },
+			icon: "⏰",
+			en:
+				"A counter that reduces the system's master clock to a slower periodic signal by counting cycles and triggering an event at a fixed interval. <br /><br />It is used to clock other units at a slower rate. <br /><br />See also: Divider period.",
+			es:
+				"Un contador que reduce el reloj maestro del sistema a una señal periódica más lenta contando ciclos y activando un evento a intervalos fijos. <br /><br />Se usa para sincronizar otras unidades a una velocidad más baja. <br /><br />Ver también: Período de divisor.",
+		},
 		"DMA|DMA transfer": {
 			also: { es: "DMA|Transferencia DMA" },
 			icon: "⚡",
@@ -318,6 +304,14 @@ const dictionary = {
 				"_(Direct Memory Access)_ A mechanism that copies data from one memory area to another without using the CPU to move each byte manually. <br /><br />In the NEEES, DMA is only available to transfer OAM data through the OAMDMA register.",
 			es:
 				"_(Direct Memory Access)_ Un mecanismo que copia datos de una zona de memoria a otra sin que la CPU tenga que mover cada byte manualmente. <br /><br />En la NEEES, el DMA solo está disponible para transferir datos de OAM usando el registro OAMDMA.",
+		},
+		"DMC Channel|DMC": {
+			also: { es: "Canal DMC|DMC" },
+			icon: "📦",
+			en:
+				"One of the APU's audio channels. It plays back digital samples from memory using the Delta Modulation technique, but it also can load samples directly.",
+			es:
+				"Uno de los canales de audio de la APU. Reproduce samples digitales desde la memoria usando la técnica de Modulación Delta, pero también puede cargar samples directamente.",
 		},
 		DMCControl: {
 			icon: "📦",
@@ -347,14 +341,6 @@ const dictionary = {
 			es:
 				"Un registro de audio que establece la longitud (en bytes) del sample DMC a reproducir. <br /><br />Está disponible en la dirección de CPU `$4013`.",
 		},
-		"DMC Channel|DMC": {
-			also: { es: "Canal DMC|DMC" },
-			icon: "📦",
-			en:
-				"One of the APU's audio channels. It plays back digital samples from memory using the Delta Modulation technique, but it also can load samples directly.",
-			es:
-				"Uno de los canales de audio de la APU. Reproduce samples digitales desde la memoria usando la técnica de Modulación Delta, pero también puede cargar samples directamente.",
-		},
 		"DPCM|Delta Modulation": {
 			also: { es: "DPCM|Modulación Delta" },
 			icon: "🤏",
@@ -371,6 +357,13 @@ const dictionary = {
 			es:
 				"El porcentaje de tiempo que una onda de pulso se mantiene alta durante un período. Afecta el tono y el timbre del sonido. <br /><br />En la NEEES, los Canales Pulso soportan 4 ciclos de trabajo: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) y `3` (`75%`).",
 		},
+		"Five-step sequence|Five-step": {
+			also: { es: "Secuencia de cinco pasos|Cinco pasos" },
+			icon: "🔀",
+			en: "A mode of the frame sequencer that runs a five-step pattern.",
+			es:
+				"Un modo del secuenciador de frames de la APU de NES que ejecuta un patrón de cinco pasos.",
+		},
 		"Flag|_Flags": {
 			also: { es: "Bandera|_Banderas" },
 			icon: "🏁",
@@ -385,12 +378,12 @@ const dictionary = {
 			en: "A CPU register used to store multiple CPU flags.",
 			es: "Un registro de CPU usado para almacenar múltiples banderas de CPU.",
 		},
-		"Frame|_Frames": {
-			icon: "🖼️",
-			en:
-				"A full image drawn on the screen, made of multiple scanlines. <br /><br />In the NEEES, it's `256x240` pixels, and the PPU renders `60` of them per second.",
+		"Four-step sequence|Four-step": {
+			also: { es: "Secuencia de cuatro pasos|Cuatro pasos" },
+			icon: "🔀",
+			en: "A mode of the frame sequencer that runs a four-step pattern.",
 			es:
-				"Una imagen completa dibujada en la pantalla, compuesta por múltiples scanlines. <br /><br />En la NEEES, mide `256x240` píxeles, y la PPU renderiza `60` por segundo.",
+				"Un modo del secuenciador de frames que ejecuta un patrón de cuatro pasos.",
 		},
 		"Frame buffer": {
 			icon: "🔢",
@@ -398,6 +391,13 @@ const dictionary = {
 				"A block of memory that stores the color of each pixel on the screen. It's where the frame image is built before being displayed.",
 			es:
 				"Un bloque de memoria que almacena el color de cada píxel en pantalla. Es donde se construye la imagen del frame antes de mostrarse.",
+		},
+		"Frame|_Frames": {
+			icon: "🖼️",
+			en:
+				"A full image drawn on the screen, made of multiple scanlines. <br /><br />In the NEEES, it's `256x240` pixels, and the PPU renders `60` of them per second.",
+			es:
+				"Una imagen completa dibujada en la pantalla, compuesta por múltiples scanlines. <br /><br />En la NEEES, mide `256x240` píxeles, y la PPU renderiza `60` por segundo.",
 		},
 		Frequency: {
 			also: { es: "Frecuencia" },
@@ -438,6 +438,17 @@ const dictionary = {
 			es:
 				"Un formato que describe un cartucho de NEEES. Contiene su código (PRG-ROM), gráficos (CHR-ROM), y un header con metadatos.",
 		},
+		"Instruction|_Instructions|CPU instruction|_CPU instructions": {
+			also: {
+				es:
+					"Instrucción|_Instrucciones|Instrucción de CPU|_Instrucciones de CPU",
+			},
+			icon: "📖",
+			en:
+				"A command that tells the CPU to do something, like adding numbers or jumping to another part of the program.",
+			es:
+				"Una orden que le dice a la CPU qué hacer, como sumar números o saltar a otra parte del programa.",
+		},
 		"Interrupt Disable Flag": {
 			also: { es: "Bandera Interrupt Disable" },
 			icon: "🏁",
@@ -454,17 +465,6 @@ const dictionary = {
 				"A well-known memory address associated with an event that triggers an interrupt.",
 			es:
 				"Una dirección de memoria conocida asociada a un evento que dispara una interrupción.",
-		},
-		"Instruction|_Instructions|CPU instruction|_CPU instructions": {
-			also: {
-				es:
-					"Instrucción|_Instrucciones|Instrucción de CPU|_Instrucciones de CPU",
-			},
-			icon: "📖",
-			en:
-				"A command that tells the CPU to do something, like adding numbers or jumping to another part of the program.",
-			es:
-				"Una orden que le dice a la CPU qué hacer, como sumar números o saltar a otra parte del programa.",
 		},
 		JavaScript: {
 			icon: "🗣️",
@@ -553,6 +553,14 @@ const dictionary = {
 			es:
 				"El conjunto de conexiones que enlaza los componentes con la memoria, permitiéndoles leer o escribir datos.",
 		},
+		"Memory mirror|_Memory mirrors|Mirror|_Mirrors": {
+			also: { es: "Espejo de memoria|_Espejos de memoria|Espejo|_Espejos" },
+			icon: "🚽",
+			en:
+				"A copy of a memory region that appears at another address. They are used to fill unused address space or to provide alternative access points. <br /><br />In the NEEES, many CPU and PPU regions are mirrored across the address space. <br /><br />See also: Mirroring.",
+			es:
+				"Una copia de una región de memoria que aparece en otra dirección. Se usan para llenar espacio sin usar o para ofrecer accesos alternativos. <br /><br />En la NEEES, muchas regiones de la CPU y la PPU están espejadas a lo largo del espacio de direcciones. <br /><br />Ver también: Mirroring.",
+		},
 		"Memory-mapped register|_Memory-mapped registers": {
 			also: {
 				es: "Registro mapeado en memoria|_Registros mapeados en memoria",
@@ -562,14 +570,6 @@ const dictionary = {
 				"A special memory address used to interact with hardware. Unlike CPU registers, reading or writing to them may trigger hardware behavior rather than just storing a value. <br /><br />In the NEEES, the PPU, APU, Controller, and Mappers expose these addresses so the game code can interact with the units through them.",
 			es:
 				"Una dirección de memoria especial usada para interactuar con el hardware. A diferencia de los registros de CPU, leer o escribir en ellos puede activar comportamientos del hardware en lugar de simplemente almacenar un valor. <br /><br />En la NEEES, la PPU, la APU, el Mando y los Mappers exponen estas direcciones para que el código del juego pueda comunicarse con ellos.",
-		},
-		"Memory mirror|_Memory mirrors|Mirror|_Mirrors": {
-			also: { es: "Espejo de memoria|_Espejos de memoria|Espejo|_Espejos" },
-			icon: "🚽",
-			en:
-				"A copy of a memory region that appears at another address. They are used to fill unused address space or to provide alternative access points. <br /><br />In the NEEES, many CPU and PPU regions are mirrored across the address space. <br /><br />See also: Mirroring.",
-			es:
-				"Una copia de una región de memoria que aparece en otra dirección. Se usan para llenar espacio sin usar o para ofrecer accesos alternativos. <br /><br />En la NEEES, muchas regiones de la CPU y la PPU están espejadas a lo largo del espacio de direcciones. <br /><br />Ver también: Mirroring.",
 		},
 		Mirroring: {
 			icon: "🚽",
@@ -615,6 +615,14 @@ const dictionary = {
 			es:
 				"Una interrupción de CPU disparada al principio del VBlank, cuando la PPU termina de dibujar un frame.",
 		},
+		"Noise Channel": {
+			also: { es: "Canal Ruido" },
+			icon: "💥",
+			en:
+				"One of the APU's audio channels. It generates a random-sounding signal, useful for percussion or sound effects like explosions.",
+			es:
+				"Uno de los canales de audio de la APU. Genera una señal con sonido aleatorio, útil para percusión o efectos como explosiones.",
+		},
 		NoiseControl: {
 			icon: "💥",
 			en:
@@ -636,13 +644,18 @@ const dictionary = {
 			es:
 				"Un registro de audio que carga el contador de longitud del Canal Ruido y reinicia su envolvente. <br /><br />Está disponible en la dirección de CPU `$400F`.",
 		},
-		"Noise Channel": {
-			also: { es: "Canal Ruido" },
-			icon: "💥",
+		"OAM entry|_OAM entries": {
+			also: { es: "Entrada OAM|_Entradas OAM" },
+			icon: "🛸📖",
+			en: "An entry inside the OAM table.",
+			es: "Una entrada dentro de la tabla OAM.",
+		},
+		"OAM RAM": {
+			icon: "🐏",
 			en:
-				"One of the APU's audio channels. It generates a random-sounding signal, useful for percussion or sound effects like explosions.",
+				"A dedicated RAM area used to store the contents of OAM. <br /><br />In the NEEES, it's `256` bytes and holds all the sprite data.",
 			es:
-				"Uno de los canales de audio de la APU. Genera una señal con sonido aleatorio, útil para percusión o efectos como explosiones.",
+				"Una RAM dedicada usada para almacenar el contenido de OAM. <br /><br />En la NEEES, son `256` bytes que contienen todos los datos de los sprites.",
 		},
 		"OAM|OAM table": {
 			also: { es: "OAM|Tabla OAM" },
@@ -650,12 +663,6 @@ const dictionary = {
 			en: "_(Object Attribute Memory)_ A list of sprites, stored in OAM RAM.",
 			es:
 				"_(Object Attribute Memory)_ Una lista de sprites, almacenada en OAM RAM.",
-		},
-		"OAM entry|_OAM entries": {
-			also: { es: "Entrada OAM|_Entradas OAM" },
-			icon: "🛸📖",
-			en: "An entry inside the OAM table.",
-			es: "Una entrada dentro de la tabla OAM.",
 		},
 		OAMAddr: {
 			icon: "🏠",
@@ -678,13 +685,6 @@ const dictionary = {
 			es:
 				"Un registro de video que dispara una transferencia DMA, copiando 256 bytes desde la memoria de CPU hacia OAM para actualizar todos los datos de sprites rápidamente. <br /><br />Está disponible en la dirección de CPU `$4014`.",
 		},
-		"OAM RAM": {
-			icon: "🐏",
-			en:
-				"A dedicated RAM area used to store the contents of OAM. <br /><br />In the NEEES, it's `256` bytes and holds all the sprite data.",
-			es:
-				"Una RAM dedicada usada para almacenar el contenido de OAM. <br /><br />En la NEEES, son `256` bytes que contienen todos los datos de los sprites.",
-		},
 		"Opcode|_Opcodes": {
 			icon: "🔢",
 			en:
@@ -699,14 +699,6 @@ const dictionary = {
 				"A CPU flag that indicates when an arithmetic operation results in a value too large to be represented in the available number of bits.",
 			es:
 				"Una bandera de CPU que indica cuando una operación aritmética produce un valor demasiado grande para representarse con el número de bits disponibles.",
-		},
-		"Palette|_Palettes": {
-			also: { es: "Paleta|_Paletas" },
-			icon: "🎨",
-			en:
-				"A list of `4` colors, stored in Palette RAM, where each color is a pointer to the master palette. <br /><br />There are `8` palettes: `4` for the background and `4` for sprites.",
-			es:
-				"Una lista de `4` colores, almacenada en Palette RAM, donde cada color es un puntero a la paleta maestra. <br /><br />Hay `8` paletas: `4` para el fondo y `4` para sprites.",
 		},
 		"Palette id|Palette index|_Palette indexes": {
 			also: {
@@ -726,10 +718,13 @@ const dictionary = {
 			es:
 				"Una pequeña área de RAM usada para almacenar paletas. <br /><br />En la NEEES, contiene `32` bytes para los índices de color de fondo y sprites.",
 		},
-		"Pattern table|_Pattern tables": {
-			icon: "🕊️📖",
-			en: "A list of tiles stored in CHR-ROM or CHR-RAM.",
-			es: "Una lista de tiles almacenada en CHR-ROM o CHR-RAM.",
+		"Palette|_Palettes": {
+			also: { es: "Paleta|_Paletas" },
+			icon: "🎨",
+			en:
+				"A list of `4` colors, stored in Palette RAM, where each color is a pointer to the master palette. <br /><br />There are `8` palettes: `4` for the background and `4` for sprites.",
+			es:
+				"Una lista de `4` colores, almacenada en Palette RAM, donde cada color es un puntero a la paleta maestra. <br /><br />Hay `8` paletas: `4` para el fondo y `4` para sprites.",
 		},
 		"Pattern table id": {
 			also: { es: "Id de pattern table|_Id de la pattern table" },
@@ -738,6 +733,11 @@ const dictionary = {
 				"The index of a pattern table. There are `2`: `$PPU $0000` (`0`) and `$PPU $1000` (`1`).",
 			es:
 				"El índice de una pattern table. Hay `2`: `$PPU $0000` (`0`) y `$PPU $1000` (`1`).",
+		},
+		"Pattern table|_Pattern tables": {
+			icon: "🕊️📖",
+			en: "A list of tiles stored in CHR-ROM or CHR-RAM.",
+			es: "Una lista de tiles almacenada en CHR-ROM o CHR-RAM.",
 		},
 		Period: {
 			also: { es: "Período" },
@@ -761,6 +761,17 @@ const dictionary = {
 			es:
 				"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
 		},
+		"PPU address|_PPU addresses|$PPU|PPU memory": {
+			also: {
+				es:
+					"Dirección PPU|_Direcciones PPU|_Dirección de PPU|_Direcciones de PPU|$PPU|Memoria PPU",
+			},
+			icon: "🐏",
+			en:
+				"A memory address seen from the PPU's address space. <br /><br />In the NEEES, valid addresses go from `$0000` to `$3FFF`, with many regions being mirrored.",
+			es:
+				"Una dirección de memoria vista desde el espacio de direcciones de la PPU. <br /><br />En la NEEES, las direcciones válidas van de `$0000` a `$3FFF`, con muchas regiones espejadas.",
+		},
 		"PPU cycle|_PPU cycles": {
 			also: { es: "Ciclo de PPU|_Ciclos de PPU" },
 			icon: "🦅",
@@ -768,6 +779,17 @@ const dictionary = {
 				"The basic timing unit of the PPU; each cycle corresponds to one PPU clock tick and advances its internal state. <br /><br />The PPU runs at `3` times the CPU clock rate. For every CPU cycle, the PPU runs `3` cycles.",
 			es:
 				"La unidad de tiempo básica de la PPU; cada ciclo corresponde a un tick de reloj de la PPU y avanza su estado interno. <br /><br />La PPU funciona a `3` veces la velocidad de la CPU. Por cada ciclo de CPU, la PPU ejecuta `3` ciclos.",
+		},
+		"PPU register|_PPU registers|Video register|_Video registers": {
+			also: {
+				es:
+					"Registro de PPU|_Registros de PPU|_Registro PPU|_Registros PPU|Registro de Video|_Registros de Video",
+			},
+			icon: "🔢",
+			en:
+				"A memory-mapped register used to control the PPU or read its state. <br /><br />In the NEEES, they are mapped to addresses `$2000` - `$2007`, and `$4014` (OAMDMA).",
+			es:
+				"Un registro mapeado en memoria usado para controlar la PPU o leer su estado. <br /><br />En la NEEES, están mapeados en las direcciones `$2000` - `$2007`, y `$4014` (OAMDMA).",
 		},
 		PPUAddr: {
 			icon: "📍",
@@ -811,41 +833,12 @@ const dictionary = {
 			es:
 				"Un registro de video que muestra si la PPU está en VBlank, si ocurrió un sprite 0 hit, o si hay desbordamiento de sprites. Leerlo también reinicia latches internos. <br /><br />Está disponible en la dirección de CPU `$2002`.",
 		},
-		"PPU address|_PPU addresses|$PPU|PPU memory": {
-			also: {
-				es:
-					"Dirección PPU|_Direcciones PPU|_Dirección de PPU|_Direcciones de PPU|$PPU|Memoria PPU",
-			},
-			icon: "🐏",
-			en:
-				"A memory address seen from the PPU's address space. <br /><br />In the NEEES, valid addresses go from `$0000` to `$3FFF`, with many regions being mirrored.",
-			es:
-				"Una dirección de memoria vista desde el espacio de direcciones de la PPU. <br /><br />En la NEEES, las direcciones válidas van de `$0000` a `$3FFF`, con muchas regiones espejadas.",
-		},
-		"PPU register|_PPU registers|Video register|_Video registers": {
-			also: {
-				es:
-					"Registro de PPU|_Registros de PPU|_Registro PPU|_Registros PPU|Registro de Video|_Registros de Video",
-			},
-			icon: "🔢",
-			en:
-				"A memory-mapped register used to control the PPU or read its state. <br /><br />In the NEEES, they are mapped to addresses `$2000` - `$2007`, and `$4014` (OAMDMA).",
-			es:
-				"Un registro mapeado en memoria usado para controlar la PPU o leer su estado. <br /><br />En la NEEES, están mapeados en las direcciones `$2000` - `$2007`, y `$4014` (OAMDMA).",
-		},
 		"Pre-line": {
 			icon: "🌠",
 			en:
 				'A non-visible scanline where the PPU gets things ready for the upcoming frame. Also called "_scanline -1_".',
 			es:
 				'Una scanline no visible en la que la PPU prepara todo para el próximo frame. También se la llama "_scanline -1_".',
-		},
-		"PRG-ROM": {
-			icon: "🤖",
-			en:
-				"_(Program ROM)_ A ROM chip that contains the game code, inside the cartridge.",
-			es:
-				"_(Program ROM)_ Un chip de ROM que contiene el código del juego, dentro del cartucho.",
 		},
 		"PRG-RAM": {
 			icon: "🔋",
@@ -854,61 +847,12 @@ const dictionary = {
 			es:
 				"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
 		},
-		"Pulse1Control|PulseControl": {
-			icon: "🟦",
+		"PRG-ROM": {
+			icon: "🤖",
 			en:
-				"An audio register that configures the first Pulse Channel's duty cycle, envelope, and volume. <br /><br />It is available at CPU address `$4000`.",
+				"_(Program ROM)_ A ROM chip that contains the game code, inside the cartridge.",
 			es:
-				"Un registro de audio que configura el ciclo de trabajo, la envolvente y el volumen del primer Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4000`.",
-		},
-		Pulse2Control: {
-			icon: "🟦",
-			en:
-				"An audio register that configures the second Pulse Channel's duty cycle, envelope, and volume. <br /><br />It is available at CPU address `$4004`.",
-			es:
-				"Un registro de audio que configura el ciclo de trabajo, la envolvente y el volumen del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4004`.",
-		},
-		"Pulse1Sweep|PulseSweep": {
-			icon: "🧹",
-			en:
-				"An audio register that sets up the first pulse channel's frequency sweep (rate, direction, and shift count). <br /><br />It is available at CPU address `$4001`.",
-			es:
-				"Un registro de audio que ajusta el barrido de frecuencia (velocidad, dirección y desplazamiento) del primer Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4001`.",
-		},
-		Pulse2Sweep: {
-			icon: "🧹",
-			en:
-				"An audio register that sets up the second Pulse Channel's frequency sweep (rate, direction, and shift count). <br /><br />It is available at CPU address `$4005`.",
-			es:
-				"Un registro de audio que ajusta el barrido de frecuencia (velocidad, dirección y desplazamiento) del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4005`.",
-		},
-		"Pulse1TimerHighLCL|PulseTimerHighLCL": {
-			icon: "🕛",
-			en:
-				"An audio register holding the high byte of the first Pulse Channel's timer and loading its length counter (which also starts the envelope). <br /><br />It is available at CPU address `$4003`.",
-			es:
-				"Un registro de audio que contiene el byte alto del timer del primer Canal Pulso y carga su contador de longitud (que además inicia la envolvente). <br /><br />Está disponible en la dirección de CPU `$4003`.",
-		},
-		Pulse2TimerHighLCL: {
-			icon: "🕛",
-			en:
-				"An audio register holding the high byte of the second Pulse Channel's timer and loading its length counter (which also starts the envelope). <br /><br />It is available at CPU address `$4007`.",
-			es:
-				"Un registro de audio que contiene el byte alto del timer del segundo Canal Pulso y carga su contador de longitud (que además inicia la envolvente). <br /><br />Está disponible en la dirección de CPU `$4007`.",
-		},
-		"Pulse1TimerLow|PulseTimerLow": {
-			icon: "🕡",
-			en:
-				"An audio register holding the low byte of the first Pulse Channel's timer, which determines its pitch. <br /><br />It is available at CPU address `$4002`.",
-			es:
-				"Un registro de audio que contiene el byte bajo del timer del primer Canal Pulso, que determina su tono. <br /><br />Está disponible en la dirección de CPU `$4002`.",
-		},
-		Pulse2TimerLow: {
-			icon: "🕡",
-			en:
-				"An audio register holding the low byte of the second Pulse Channel's timer, which determines its pitch. <br /><br />It is available at CPU address `$4006`.",
-			es:
-				"Un registro de audio que contiene el byte bajo del timer del segundo Canal Pulso, que determina su tono. <br /><br />Está disponible en la dirección de CPU `$4006`.",
+				"_(Program ROM)_ Un chip de ROM que contiene el código del juego, dentro del cartucho.",
 		},
 		"Pulse Channel|_Pulse Channels": {
 			also: { es: "Canal Pulso|_Canales Pulso" },
@@ -925,6 +869,62 @@ const dictionary = {
 				"A waveform that alternates between two levels, creating a sharp, blocky sound. Used by the APU's Pulse Channels. <br /><br />It looks like this:<br />`_——__—_——_`",
 			es:
 				"Una forma de onda que alterna entre dos niveles, generando un sonido fuerte y entrecortado. Usada por los Canales Pulso de la APU. <br /><br />Se ve así:<br />`_——__—_——_`",
+		},
+		"Pulse1Control|PulseControl": {
+			icon: "🟦",
+			en:
+				"An audio register that configures the first Pulse Channel's duty cycle, envelope, and volume. <br /><br />It is available at CPU address `$4000`.",
+			es:
+				"Un registro de audio que configura el ciclo de trabajo, la envolvente y el volumen del primer Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4000`.",
+		},
+		"Pulse1Sweep|PulseSweep": {
+			icon: "🧹",
+			en:
+				"An audio register that sets up the first pulse channel's frequency sweep (rate, direction, and shift count). <br /><br />It is available at CPU address `$4001`.",
+			es:
+				"Un registro de audio que ajusta el barrido de frecuencia (velocidad, dirección y desplazamiento) del primer Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4001`.",
+		},
+		"Pulse1TimerHighLCL|PulseTimerHighLCL": {
+			icon: "🕛",
+			en:
+				"An audio register holding the high byte of the first Pulse Channel's timer and loading its length counter (which also starts the envelope). <br /><br />It is available at CPU address `$4003`.",
+			es:
+				"Un registro de audio que contiene el byte alto del timer del primer Canal Pulso y carga su contador de longitud (que además inicia la envolvente). <br /><br />Está disponible en la dirección de CPU `$4003`.",
+		},
+		"Pulse1TimerLow|PulseTimerLow": {
+			icon: "🕡",
+			en:
+				"An audio register holding the low byte of the first Pulse Channel's timer, which determines its pitch. <br /><br />It is available at CPU address `$4002`.",
+			es:
+				"Un registro de audio que contiene el byte bajo del timer del primer Canal Pulso, que determina su tono. <br /><br />Está disponible en la dirección de CPU `$4002`.",
+		},
+		Pulse2Control: {
+			icon: "🟦",
+			en:
+				"An audio register that configures the second Pulse Channel's duty cycle, envelope, and volume. <br /><br />It is available at CPU address `$4004`.",
+			es:
+				"Un registro de audio que configura el ciclo de trabajo, la envolvente y el volumen del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4004`.",
+		},
+		Pulse2Sweep: {
+			icon: "🧹",
+			en:
+				"An audio register that sets up the second Pulse Channel's frequency sweep (rate, direction, and shift count). <br /><br />It is available at CPU address `$4005`.",
+			es:
+				"Un registro de audio que ajusta el barrido de frecuencia (velocidad, dirección y desplazamiento) del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4005`.",
+		},
+		Pulse2TimerHighLCL: {
+			icon: "🕛",
+			en:
+				"An audio register holding the high byte of the second Pulse Channel's timer and loading its length counter (which also starts the envelope). <br /><br />It is available at CPU address `$4007`.",
+			es:
+				"Un registro de audio que contiene el byte alto del timer del segundo Canal Pulso y carga su contador de longitud (que además inicia la envolvente). <br /><br />Está disponible en la dirección de CPU `$4007`.",
+		},
+		Pulse2TimerLow: {
+			icon: "🕡",
+			en:
+				"An audio register holding the low byte of the second Pulse Channel's timer, which determines its pitch. <br /><br />It is available at CPU address `$4006`.",
+			es:
+				"Un registro de audio que contiene el byte bajo del timer del segundo Canal Pulso, que determina su tono. <br /><br />Está disponible en la dirección de CPU `$4006`.",
 		},
 		"Quarter frame|Quarter-frame|Quarter|_Quarter frames|_Quarter-frames|_Quarters": {
 			icon: "🕒",
@@ -975,32 +975,6 @@ const dictionary = {
 			es:
 				"Una unidad interna de la APU que cicla por patrones de cuatro o cinco pasos para generar señales de tiempo para envolventes, barridos y contadores de longitud.",
 		},
-		"Sprite|_Sprites": {
-			icon: "🛸",
-			en:
-				"A game object on top (or behind!) of the background that can be moved or flipped, stored in OAM. It can use one tile (`8x8` sprite) or two (`8x16` sprite).",
-			es:
-				"Un objeto del juego encima (¡o detrás!) del fondo que puede ser movido o volteado, almacenado en OAM. Puede usar un tile (sprite de `8x8`) o dos (sprite de `8x16`).",
-		},
-		"Sprite zero|_Sprite-zero": {
-			also: { es: "Sprite cero|_Sprite-cero" },
-			icon: "🛸",
-			en:
-				"The sprite with OAM index `0`. It has special behavior in the PPU, such as triggering the sprite-zero hit when it overlaps the background.",
-			es:
-				"El sprite con índice OAM `0`. Tiene un comportamiento especial en la PPU, como activar el sprite-zero hit cuando se superpone con el fondo.",
-		},
-		"Sprite-zero hit|_Sprite zero hit|_Sprite zero hit|_Sprite-zero hits": {
-			also: {
-				es:
-					"Sprite zero hit|_Sprite-zero hit|_Sprite zero hit|_Sprite-zero hits",
-			},
-			icon: "👊",
-			en:
-				"A condition that occurs when a visible pixel of the sprite zero overlaps a visible background pixel. When this happens, the PPU sets the sprite-zero hit flag in PPUStatus. <br /><br />Games often use it to time mid-frame effects like status bars or split screens.",
-			es:
-				"Una condición que ocurre cuando un píxel visible del sprite cero se superpone con un píxel visible del fondo. Cuando eso pasa, la PPU enciende la bandera de sprite-zero hit en PPUStatus. <br /><br />Los juegos suelen usarla para sincronizar efectos a mitad de frame como barras de estado o pantallas divididas.",
-		},
 		"Sprite evaluation": {
 			also: { es: "Evaluación de sprites" },
 			icon: "🕵️",
@@ -1025,6 +999,32 @@ const dictionary = {
 			es:
 				"Una condición que ocurre cuando más de `8` sprites aparecen en la misma scanline. Solo se renderizan los primeros `8`. <br /><br />Los juegos pueden leer esta bandera desde el bit `5` de PPUStatus.",
 		},
+		"Sprite zero|_Sprite-zero": {
+			also: { es: "Sprite cero|_Sprite-cero" },
+			icon: "🛸",
+			en:
+				"The sprite with OAM index `0`. It has special behavior in the PPU, such as triggering the sprite-zero hit when it overlaps the background.",
+			es:
+				"El sprite con índice OAM `0`. Tiene un comportamiento especial en la PPU, como activar el sprite-zero hit cuando se superpone con el fondo.",
+		},
+		"Sprite-zero hit|_Sprite zero hit|_Sprite zero hit|_Sprite-zero hits": {
+			also: {
+				es:
+					"Sprite zero hit|_Sprite-zero hit|_Sprite zero hit|_Sprite-zero hits",
+			},
+			icon: "👊",
+			en:
+				"A condition that occurs when a visible pixel of the sprite zero overlaps a visible background pixel. When this happens, the PPU sets the sprite-zero hit flag in PPUStatus. <br /><br />Games often use it to time mid-frame effects like status bars or split screens.",
+			es:
+				"Una condición que ocurre cuando un píxel visible del sprite cero se superpone con un píxel visible del fondo. Cuando eso pasa, la PPU enciende la bandera de sprite-zero hit en PPUStatus. <br /><br />Los juegos suelen usarla para sincronizar efectos a mitad de frame como barras de estado o pantallas divididas.",
+		},
+		"Sprite|_Sprites": {
+			icon: "🛸",
+			en:
+				"A game object on top (or behind!) of the background that can be moved or flipped, stored in OAM. It can use one tile (`8x8` sprite) or two (`8x16` sprite).",
+			es:
+				"Un objeto del juego encima (¡o detrás!) del fondo que puede ser movido o volteado, almacenado en OAM. Puede usar un tile (sprite de `8x8`) o dos (sprite de `8x16`).",
+		},
 		"Square wave|_Square waves": {
 			also: { es: "Onda cuadrada|_Ondas cuadradas" },
 			icon: "⏹️",
@@ -1039,13 +1039,6 @@ const dictionary = {
 			es:
 				"Una estructura LIFO _(Last In, First Out)_ que los programas usan para almacenar valores. La longitud actual es medida por el [SP]. <br /><br />En la NEEES, la pila vive en WRAM entre las direcciones `$0100` y `$01FF`.",
 		},
-		"Tile|_Tiles": {
-			icon: "🕊️",
-			en:
-				"An `8x8` grayscale pixel grid that represents a pattern. Tiles are stored in pattern tables.",
-			es:
-				"Una cuadrícula de `8x8` píxeles en escala de grises que representa un patrón. Los tiles se almacenan en pattern tables.",
-		},
 		"Tile id": {
 			also: { es: "Id de tile|_Id del tile" },
 			icon: "🕊️",
@@ -1054,12 +1047,35 @@ const dictionary = {
 			es:
 				"El índice de un tile dentro de una pattern table. Va de `0` a `255`.",
 		},
+		"Tile|_Tiles": {
+			icon: "🕊️",
+			en:
+				"An `8x8` grayscale pixel grid that represents a pattern. Tiles are stored in pattern tables.",
+			es:
+				"Una cuadrícula de `8x8` píxeles en escala de grises que representa un patrón. Los tiles se almacenan en pattern tables.",
+		},
 		"Timer|_Timers": {
 			icon: "📡",
 			en:
 				"A value that sets an APU channel's oscillation rate by determining how many master-clock ticks occur between waveform steps. <br /><br />It determines the frequency, thus the pitch of the note.",
 			es:
 				"Un valor que establece la tasa de oscilación de un canal APU determinando cuántos ciclos de reloj maestro pasan entre pasos de la forma de onda. <br /><br />Determina la frecuencia, y en consecuencia el tono de una nota.",
+		},
+		"Triangle Channel": {
+			also: { es: "Canal Triangular" },
+			icon: "🔺",
+			en:
+				"One of the APU's audio channels. It plays a triangle wave with fixed volume and shape, often used for bass or melodic lines.",
+			es:
+				"Uno de los canales de audio de la APU. Reproduce una onda triangular con volumen y forma fijos, comúnmente usado para graves o melodías.",
+		},
+		"Triangle wave|_Triangle waves": {
+			also: { es: "Onda triangular|_Ondas triangulares" },
+			icon: "🔺",
+			en:
+				"A waveform shaped like a triangle, with a softer, more mellow sound. Used by the APU's Triangle Channel. <br /><br />It looks like this:<br />`/\\/\\/\\/\\`",
+			es:
+				"Una forma de onda con forma de triángulo, que produce un sonido más suave y apagado. Usada por el Canal Triangular de la APU. <br /><br />Se ve así:<br />`/\\/\\/\\/\\`",
 		},
 		TriangleLengthControl: {
 			icon: "📏",
@@ -1081,22 +1097,6 @@ const dictionary = {
 				"An audio register holding the low byte of the Triangle Channel's timer, which sets its frequency. <br /><br />It is available at CPU address `$400A`.",
 			es:
 				"Un registro de audio que contiene el byte bajo del timer del Canal Triangular, que define su frecuencia. <br /><br />Está disponible en la dirección de CPU `$400A`.",
-		},
-		"Triangle Channel": {
-			also: { es: "Canal Triangular" },
-			icon: "🔺",
-			en:
-				"One of the APU's audio channels. It plays a triangle wave with fixed volume and shape, often used for bass or melodic lines.",
-			es:
-				"Uno de los canales de audio de la APU. Reproduce una onda triangular con volumen y forma fijos, comúnmente usado para graves o melodías.",
-		},
-		"Triangle wave|_Triangle waves": {
-			also: { es: "Onda triangular|_Ondas triangulares" },
-			icon: "🔺",
-			en:
-				"A waveform shaped like a triangle, with a softer, more mellow sound. Used by the APU's Triangle Channel. <br /><br />It looks like this:<br />`/\\/\\/\\/\\`",
-			es:
-				"Una forma de onda con forma de triángulo, que produce un sonido más suave y apagado. Usada por el Canal Triangular de la APU. <br /><br />Se ve así:<br />`/\\/\\/\\/\\`",
 		},
 		"VBlank|Vertical Blank": {
 			icon: "🏝️",
