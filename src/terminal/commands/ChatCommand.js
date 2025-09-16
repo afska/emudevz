@@ -232,7 +232,7 @@ export default class ChatCommand extends Command {
 					if (e !== CANCELED) throw e;
 				}
 			}
-			await this._showResponse(command.selectedResponse);
+			await this._showResponse(command.selectedResponse, responses);
 		} finally {
 			this._linkProvider.end();
 		}
@@ -240,9 +240,19 @@ export default class ChatCommand extends Command {
 		return command.selectedResponse;
 	}
 
-	async _showResponse(response) {
-		await this._terminal.write(SELECTION_SYMBOL, theme.ACCENT);
-		await this._terminal.writeln(response.number.toString(), theme.COMMENT);
+	async _showResponse(response, responses) {
+		await this._terminal.write(
+			SELECTION_SYMBOL + `(${response.number.toString()}) `,
+			theme.ACCENT
+		);
+
+		if (responses.length > 1)
+			await this._terminal.writeln(
+				response.content.replace(/<|>/g, ""),
+				theme.COMMENT
+			);
+		else await this._terminal.newline();
+
 		await this._terminal.newline();
 	}
 
