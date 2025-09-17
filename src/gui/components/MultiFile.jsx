@@ -20,6 +20,7 @@ import Tab from "./widgets/Tab";
 import styles from "./MultiFile.module.css";
 
 const DELTA_SCROLL = 150;
+const SEARCH_BLUR_DEBOUNCE_TIME = 100;
 
 class MultiFile extends PureComponent {
 	static get id() {
@@ -74,6 +75,12 @@ class MultiFile extends PureComponent {
 						}
 					}}
 					onBlur={() => {
+						if (
+							Date.now() - window.EmuDevz.state.lastOpenNewTabTime <
+							SEARCH_BLUR_DEBOUNCE_TIME
+						)
+							return;
+
 						this.setState({ isSearching: false });
 						this.focus();
 					}}

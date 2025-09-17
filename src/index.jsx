@@ -29,6 +29,7 @@ window.EmuDevz = {
 	},
 	state: {
 		isRunningEmulatorTest: false,
+		lastOpenNewTabTime: 0,
 	},
 };
 

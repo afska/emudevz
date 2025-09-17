@@ -150,23 +150,30 @@ export default forwardRef(function FileSearch(props, ref) {
 		if (selected >= combined.length) setSelected(0);
 	}, [input, files, selected]);
 
-	const _onSelect = (filePath, lineNumber) => {
-		if (onBlur) onBlur();
-
+	const _onSelect = (filePath, lineNumber, shouldKeepFocus) => {
 		if (!Level.current.canLaunchEmulator() && filePath.endsWith(".neees")) {
 			toast.error(locales.get("cant_open_emulator"));
 			return;
 		}
 
 		if (onSelect) onSelect(filePath, lineNumber);
+
+		if (!shouldKeepFocus && onBlur) {
+			onBlur();
+		} else {
+			window.EmuDevz.state.lastOpenNewTabTime = Date.now();
+			setTimeout(() => {
+				inputRef.current?.focus();
+			});
+		}
 	};
 
-	const _onSelectFile = (file, lineNumber) => {
-		_onSelect(file.originalFilePath, lineNumber);
+	const _onSelectFile = (file, lineNumber, event) => {
+		_onSelect(file.originalFilePath, lineNumber, event.button === 1);
 	};
 
-	window._openPathFromFileSearch_ = (filePath) => {
-		_onSelect(filePath);
+	window._openPathFromFileSearch_ = (filePath, event) => {
+		_onSelect(filePath, undefined, event.button === 1);
 	};
 
 	const tree = LsCommand.getTree(DIRECTORY, false, undefined, filter).replace(
@@ -178,7 +185,7 @@ export default forwardRef(function FileSearch(props, ref) {
 
 			return (
 				icon +
-				`<span onmousedown="javascript:_openPathFromFileSearch_('${filePath}')" class="${styles.treeLink}">${name}</span>`
+				`<span onmousedown="javascript:_openPathFromFileSearch_('${filePath}', event)" class="${styles.treeLink}">${name}</span>`
 			);
 		}
 	);
@@ -240,7 +247,7 @@ export default forwardRef(function FileSearch(props, ref) {
 				onMouseMove={() => setSelected(i)}
 				onMouseDown={(e) => {
 					e.preventDefault();
-					_onSelectFile(file, match.lineNumber);
+					_onSelectFile(file, match.lineNumber, e);
 				}}
 			>
 				<span>📚 </span>
@@ -273,7 +280,7 @@ export default forwardRef(function FileSearch(props, ref) {
 				onMouseMove={() => setSelected(i)}
 				onMouseDown={(e) => {
 					e.preventDefault();
-					_onSelectFile(file);
+					_onSelectFile(file, undefined, e);
 				}}
 			>
 				<span>{icon}</span>
