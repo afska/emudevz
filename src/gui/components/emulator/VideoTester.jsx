@@ -45,7 +45,6 @@ export default class VideoTester extends PureComponent {
 						}}
 						volume={0}
 						onError={this._setError}
-						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onActualFrame}
 						syncToVideo
@@ -104,7 +103,6 @@ export default class VideoTester extends PureComponent {
 						onError={(e) => {
 							console.error(e);
 						}}
-						onInputType={this._setInputType}
 						onFps={this._setFps}
 						onFrame={this._onExpectedFrame}
 						syncToVideo
@@ -192,8 +190,6 @@ export default class VideoTester extends PureComponent {
 		const fullStack = testContext.javascript.buildStack(e);
 		this.props.onError({ reason, fullStack });
 	};
-
-	_setInputType = () => {};
 
 	_setFps = () => {};
 

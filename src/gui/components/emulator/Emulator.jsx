@@ -13,6 +13,19 @@ import styles from "./Emulator.module.css";
 export const SAVESTATE_KEY_PREFIX = "persist:emudevz:savestate-";
 export const SAVESTATE_RESET_COMMAND = "reset";
 
+const mapTypeToInput = (inputType, keyboardInput, gamepadInputs) => {
+	switch (inputType) {
+		case "keyboard":
+			return keyboardInput;
+		case "gamepad1":
+			return gamepadInputs?.[0] || gamepad.createInput();
+		case "gamepad2":
+			return gamepadInputs?.[1] || gamepad.createInput();
+		default:
+			return gamepad.createInput();
+	}
+};
+
 export default class Emulator extends Component {
 	render() {
 		const { rom, error, crt = false, screen = null, style } = this.props;
@@ -120,7 +133,10 @@ export default class Emulator extends Component {
 
 		this._stop(false);
 		if (volume > 0 || forceMusicPause) music.pause();
-		this.keyboardInput = gamepad.createInput();
+		this.keyboardInputs = {
+			1: gamepad.createInput(),
+			2: gamepad.createInput(),
+		};
 		window.addEventListener("keydown", this._onKeyDown);
 		window.addEventListener("keyup", this._onKeyUp);
 		window.addEventListener("fullscreenchange", this._onFullscreenChange);
@@ -180,16 +196,21 @@ export default class Emulator extends Component {
 		if (this.props.noInput)
 			return [gamepad.createInput(), gamepad.createInput()];
 
-		const gamepadInput = gamepad.getInput();
+		const inputTypes = store.getState().savedata.inputTypes;
+		const gamepadInputs = gamepad.getInput();
 
-		this.props.onInputType(gamepadInput ? "gamepad" : "keyboard");
+		const player1 = mapTypeToInput(
+			inputTypes[1],
+			this.keyboardInputs[1],
+			gamepadInputs
+		);
+		const player2 = mapTypeToInput(
+			inputTypes[2],
+			this.keyboardInputs[2],
+			gamepadInputs
+		);
 
-		return gamepadInput?.[0] != null
-			? [
-					gamepadInput?.[0],
-					gamepad.createInput() /*gamepadInput?.[1] || this.keyboardInput*/,
-			  ]
-			: [this.keyboardInput, gamepad.createInput()];
+		return [player1, player2];
 	};
 
 	_setFps = (fps) => {
@@ -237,20 +258,28 @@ export default class Emulator extends Component {
 		if (!document.fullscreenElement && document.activeElement.id !== "emulator")
 			return;
 
-		const button = this._getButton(1, e.key);
-		if (button == null) return;
+		const inputTypes = store.getState().savedata.inputTypes;
 
-		this.keyboardInput[button] = true;
+		for (let player = 1; player <= 2; player++) {
+			if (inputTypes[player] !== "keyboard") continue;
+
+			const button = this._getButton(player, e.key);
+			if (button) this.keyboardInputs[player][button] = true;
+		}
 	};
 
 	_onKeyUp = (e) => {
 		if (!document.fullscreenElement && document.activeElement.id !== "emulator")
 			return;
 
-		const button = this._getButton(1, e.key);
-		if (button == null) return;
+		const inputTypes = store.getState().savedata.inputTypes;
 
-		this.keyboardInput[button] = false;
+		for (let player = 1; player <= 2; player++) {
+			if (inputTypes[player] !== "keyboard") continue;
+
+			const button = this._getButton(player, e.key);
+			if (button) this.keyboardInputs[player][button] = false;
+		}
 	};
 
 	_onFullscreenChange = () => {
@@ -258,8 +287,12 @@ export default class Emulator extends Component {
 	};
 
 	_clearInput = () => {
-		for (let key in this.keyboardInput) {
-			this.keyboardInput[key] = false;
+		if (!this.keyboardInputs) return;
+
+		for (let player = 1; player <= 2; player++) {
+			for (let key in this.keyboardInputs[player]) {
+				this.keyboardInputs[player][key] = false;
+			}
 		}
 	};
 

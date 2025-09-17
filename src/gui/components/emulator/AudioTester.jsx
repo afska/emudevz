@@ -66,7 +66,6 @@ export default class AudioTester extends PureComponent {
 							}}
 							volume={this._volume}
 							onError={this._setError}
-							onInputType={this._setInputType}
 							onFps={this._setFps}
 							onStart={this._onActualEmulatorStart}
 							onFrame={this._onActualFrame}
@@ -91,7 +90,6 @@ export default class AudioTester extends PureComponent {
 							onError={(e) => {
 								console.error(e);
 							}}
-							onInputType={this._setInputType}
 							onFps={this._setFps}
 							onStart={this._onExpectedEmulatorStart}
 							onFrame={this._onExpectedFrame}
@@ -209,8 +207,6 @@ export default class AudioTester extends PureComponent {
 		const fullStack = testContext.javascript.buildStack(e);
 		this.props.onError({ reason, fullStack });
 	};
-
-	_setInputType = () => {};
 
 	_setFps = () => {};
 

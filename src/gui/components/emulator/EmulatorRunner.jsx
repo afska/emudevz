@@ -9,7 +9,7 @@ import testContext from "../../../terminal/commands/test/context";
 import { bus, filepicker } from "../../../utils";
 import music from "../../sound/music";
 import IconButton from "../widgets/IconButton";
-import Tooltip from "../widgets/Tooltip";
+import InputTypeToggle from "../widgets/InputTypeToggle";
 import VolumeSlider from "../widgets/VolumeSlider";
 import Emulator from "./Emulator";
 import Unit from "./Unit";
@@ -120,20 +120,8 @@ export default class EmulatorRunner extends PureComponent {
 							</span>
 							<span className={styles.label}>FPS</span>
 							<span className={styles.label}>|</span>
-							<Tooltip title={locales.get("using_keyboard")} placement="top">
-								<span id="keyboard" className={styles.label}>
-									⌨️
-								</span>
-							</Tooltip>
-							<Tooltip
-								title={locales.get("using_gamepad")}
-								placement="top"
-								style={{ display: "none" }}
-							>
-								<span id="gamepad" className={styles.label}>
-									🎮
-								</span>
-							</Tooltip>
+							<InputTypeToggle player={1} className={styles.label} />
+							<InputTypeToggle player={2} className={styles.label} />
 							<span className={styles.label}>|</span>
 						</div>
 						<VolumeSlider
@@ -157,7 +145,6 @@ export default class EmulatorRunner extends PureComponent {
 					volume={this._volume}
 					onStart={this._focusEmulator}
 					onError={this._setError}
-					onInputType={this._setInputType}
 					onFps={this._setFps}
 					onFrame={this._setInfo}
 					onStop={this._clearInfo}
@@ -245,16 +232,9 @@ export default class EmulatorRunner extends PureComponent {
 		this.props.onError({ html, debugInfo });
 	};
 
-	_setInputType = (inputType) => {
-		if (!this._container) return;
-		this._container.querySelector("#keyboard").style.display =
-			inputType === "keyboard" ? "block" : "none";
-		this._container.querySelector("#gamepad").style.display =
-			inputType === "gamepad" ? "block" : "none";
-	};
-
 	_setFps = (fps) => {
 		if (!this._container) return;
+
 		const cappedFps = Math.min(fps, 60);
 		const formattedFps = `${cappedFps}`.padStart(2, "0");
 		this._container.querySelector("#fps").textContent = formattedFps;

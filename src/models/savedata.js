@@ -14,8 +14,8 @@ const DEFAULT_KEY_MAP = () => ({
 		BUTTON_RIGHT: "ARROWRIGHT",
 	},
 	2: {
-		BUTTON_A: ".",
-		BUTTON_B: ",",
+		BUTTON_A: "M",
+		BUTTON_B: "N",
 		BUTTON_SELECT: "U",
 		BUTTON_START: "O",
 		BUTTON_UP: "I",
@@ -38,6 +38,7 @@ const INITIAL_STATE = () => ({
 	trackInfo: null,
 	openFiles: [Drive.MAIN_FILE],
 	selectedFile: Drive.MAIN_FILE,
+	inputTypes: { 1: "keyboard", 2: "disconnected" }, // values: "keyboard" | "gamepad1" | "gamepad2" | "disconnected"
 	keyboardMappings: DEFAULT_KEY_MAP(),
 	emulatorSettings: {
 		useCartridge: true,
@@ -119,6 +120,9 @@ export default {
 		},
 		setEmulatorSettings(state, emulatorSettings) {
 			return { ...state, emulatorSettings };
+		},
+		setInputTypes(state, inputTypes) {
+			return { ...state, inputTypes };
 		},
 		setKeyboardMappings(state, keyboardMappings) {
 			return { ...state, keyboardMappings };

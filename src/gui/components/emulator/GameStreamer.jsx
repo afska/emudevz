@@ -8,6 +8,7 @@ import store from "../../../store";
 import Tooltip from "../../components/widgets/Tooltip";
 import VolumeSlider from "../../components/widgets/VolumeSlider";
 import IconButton from "../widgets/IconButton";
+import InputTypeToggle from "../widgets/InputTypeToggle";
 import Emulator from "./Emulator";
 import integrations from "./integrations";
 import styles from "./GameStreamer.module.css";
@@ -76,12 +77,7 @@ export default class GameStreamer extends PureComponent {
 		const Integration = integrations.get(integrationId);
 
 		return (
-			<div
-				className={styles.container}
-				ref={(ref) => {
-					this._container = ref;
-				}}
-			>
+			<div className={styles.container}>
 				<div
 					className={classNames(
 						styles.bar,
@@ -117,19 +113,8 @@ export default class GameStreamer extends PureComponent {
 					<Integration getNEEES={() => this._emulator?.neees} />
 
 					<div className={styles.row}>
-						<Tooltip title={locales.get("using_keyboard")} placement="top">
-							<span id="keyboard" style={{ marginTop: 3 }}>
-								⌨️
-							</span>
-						</Tooltip>
-						<Tooltip
-							title={locales.get("using_gamepad")}
-							placement="top"
-							style={{ display: "none", marginTop: 3 }}
-						>
-							<span id="gamepad">🎮</span>
-						</Tooltip>
-						<span>&nbsp;</span>
+						<InputTypeToggle player={1} />
+						<InputTypeToggle player={2} />
 						<VolumeSlider
 							volume={null}
 							setVolume={(v) => {
@@ -177,7 +162,6 @@ export default class GameStreamer extends PureComponent {
 									console.error(err);
 									alert("💥💥💥💥💥");
 								}}
-								onInputType={this._setInputType}
 								onFps={() => {}}
 								ref={(ref) => {
 									this._emulator = ref;
@@ -196,6 +180,7 @@ export default class GameStreamer extends PureComponent {
 
 	componentWillUnmount() {
 		window.removeEventListener("resize", this._onResize);
+
 		if (this._app) {
 			try {
 				const gl = this._app.renderer.gl;
@@ -392,14 +377,6 @@ export default class GameStreamer extends PureComponent {
 		matrix.translate(points.topLeft.x, points.topLeft.y);
 
 		this._bufferSprite.transform.setFromMatrix(matrix);
-	};
-
-	_setInputType = (inputType) => {
-		if (!this._container) return;
-		this._container.querySelector("#keyboard").style.display =
-			inputType === "keyboard" ? "block" : "none";
-		this._container.querySelector("#gamepad").style.display =
-			inputType === "gamepad" ? "block" : "none";
 	};
 
 	_onResize = () => {

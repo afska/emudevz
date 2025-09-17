@@ -14,7 +14,6 @@ export default class DemoEmulatorRunner extends PureComponent {
 				settings={{ useHardware: true }}
 				volume={this._volume}
 				onError={() => {}}
-				onInputType={() => {}}
 				onFps={() => {}}
 				noInput
 				forceMusicPause
