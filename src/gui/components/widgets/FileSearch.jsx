@@ -169,10 +169,14 @@ export default forwardRef(function FileSearch(props, ref) {
 	};
 
 	const _onSelectFile = (file, lineNumber, event) => {
+		if (event.button === 2) return;
+
 		_onSelect(file.originalFilePath, lineNumber, event.button === 1);
 	};
 
 	window._openPathFromFileSearch_ = (filePath, event) => {
+		if (event.button === 2) return;
+
 		_onSelect(filePath, undefined, event.button === 1);
 	};
 
