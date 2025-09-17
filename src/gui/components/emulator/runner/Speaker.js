@@ -9,9 +9,10 @@ let sharedAudioContext = null;
 let sharedWorkletModulePromise = null;
 
 export default class Speaker {
-	constructor(onAudioRequested = () => {}, initialVolume = 1) {
+	constructor(onAudioRequested = () => {}, initialVolume = 1, options = {}) {
 		this.onAudioRequested = onAudioRequested;
 		this.initialVolume = initialVolume;
+		this.options = options;
 	}
 
 	async start() {
@@ -40,6 +41,7 @@ export default class Speaker {
 			outputChannelCount: [CHANNELS],
 			processorOptions: {
 				bufferSize: WEBAUDIO_BUFFER_SIZE,
+				ringBufferSize: this.options.ringBufferSize,
 			},
 		});
 		this.playerWorklet.connect(this.gainNode);

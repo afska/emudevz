@@ -146,6 +146,8 @@ export default class Emulator extends Component {
 			this.props.saveState != null
 				? this.props.saveState
 				: this._getSaveState();
+
+		const savedata = store.getState().savedata;
 		this._emulation = new Emulation(
 			Console,
 			bytes,
@@ -156,9 +158,11 @@ export default class Emulator extends Component {
 			this._setSaveState,
 			saveState,
 			volume,
-			syncToVideo,
-			onFrame
+			syncToVideo || savedata.emulatorSettings.syncToVideo,
+			onFrame,
+			savedata.emulatorSettings.audioBufferSize
 		);
+
 		onStart?.(this._emulation);
 		bus.emit("emulator-started");
 	}

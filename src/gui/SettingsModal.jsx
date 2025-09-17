@@ -156,6 +156,62 @@ class SettingsModal extends PureComponent {
 							)}
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
+							<Form.Label>⏱️ {locales.get("emulator_sync")}</Form.Label>
+							<div className={styles.options}>
+								<div>
+									<Form.Check
+										type="radio"
+										id="sync-audio"
+										label={locales.get("sync_to_audio")}
+										checked={!this.props.emulatorSettings.syncToVideo}
+										onChange={() => {
+											this.props.setEmulatorSettings({
+												...this.props.emulatorSettings,
+												syncToVideo: false,
+											});
+										}}
+									/>
+								</div>
+								<div>
+									<Form.Check
+										type="radio"
+										id="sync-video"
+										label={locales.get("sync_to_video")}
+										checked={this.props.emulatorSettings.syncToVideo}
+										onChange={() => {
+											this.props.setEmulatorSettings({
+												...this.props.emulatorSettings,
+												syncToVideo: true,
+											});
+										}}
+									/>
+								</div>
+							</div>
+						</Form.Group>
+						<Form.Group style={{ marginTop: MARGIN }}>
+							<Form.Label>🧰 {locales.get("buffer_size")}</Form.Label>
+							<div className={styles.options}>
+								{[1024, 2048, 4096, 8192].map((size) => (
+									<div key={`buf-${size}`}>
+										<Form.Check
+											type="radio"
+											id={`buffer-${size}`}
+											label={`${size}`}
+											checked={
+												this.props.emulatorSettings.audioBufferSize === size
+											}
+											onChange={() => {
+												this.props.setEmulatorSettings({
+													...this.props.emulatorSettings,
+													audioBufferSize: size,
+												});
+											}}
+										/>
+									</div>
+								))}
+							</div>
+						</Form.Group>
+						<Form.Group style={{ marginTop: MARGIN }}>
 							<Form.Label>🗂️ {locales.get("save_file")}</Form.Label>
 							<div className={styles.options}>
 								<div>
@@ -283,11 +339,13 @@ const mapStateToProps = ({ savedata }) => ({
 	language: savedata.language,
 	chatSpeed: savedata.chatSpeed,
 	crtFilter: savedata.crtFilter,
+	emulatorSettings: savedata.emulatorSettings,
 });
 const mapDispatchToProps = ({ savedata }) => ({
 	setLanguage: savedata.setLanguage,
 	setChatSpeed: savedata.setChatSpeed,
 	setCrtFilter: savedata.setCrtFilter,
+	setEmulatorSettings: savedata.setEmulatorSettings,
 	setDefaultKeyboardMappings: savedata.setDefaultKeyboardMappings,
 });
 

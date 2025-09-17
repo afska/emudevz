@@ -4,10 +4,12 @@ const AUDIO_BUFFER_SIZE = 4096;
 const MAX_IN_FLIGHT = 10;
 
 class PlayerWorklet extends AudioWorkletProcessor {
-	constructor() {
+	constructor(options) {
 		super();
 
-		this.buffer = new RingBuffer(AUDIO_BUFFER_SIZE);
+		const ringBufferSize =
+			options?.processorOptions?.ringBufferSize || AUDIO_BUFFER_SIZE;
+		this.buffer = new RingBuffer(ringBufferSize);
 		this.inFlight = 0;
 
 		this.port.onmessage = (event) => {

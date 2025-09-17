@@ -20,7 +20,8 @@ export default class Emulation {
 		saveState = null,
 		volume = 1,
 		syncToVideo = false,
-		onFrame = () => {}
+		onFrame = () => {},
+		audioBufferSize = null
 	) {
 		this._onFrameCallback = onFrame;
 		this._syncToVideo = syncToVideo;
@@ -36,22 +37,26 @@ export default class Emulation {
 			dmc: true,
 		};
 
-		this.speaker = new Speaker(({ need, have, target }) => {
-			try {
-				if (this._canSyncToAudio()) {
-					let n = need;
-					if (have > target + AUDIO_DRIFT_THRESHOLD) n--;
-					else if (have < target - AUDIO_DRIFT_THRESHOLD) n++;
-					this.neees.samples(n);
+		this.speaker = new Speaker(
+			({ need, have, target }) => {
+				try {
+					if (this._canSyncToAudio()) {
+						let n = need;
+						if (have > target + AUDIO_DRIFT_THRESHOLD) n--;
+						else if (have < target - AUDIO_DRIFT_THRESHOLD) n++;
+						this.neees.samples(n);
 
-					this._updateSound();
-				} else if (this.isDebugging) {
-					this._updateSound();
+						this._updateSound();
+					} else if (this.isDebugging) {
+						this._updateSound();
+					}
+				} catch (error) {
+					onError(error);
 				}
-			} catch (error) {
-				onError(error);
-			}
-		}, volume);
+			},
+			volume,
+			{ ringBufferSize: audioBufferSize }
+		);
 		this.speaker.start();
 
 		this.saveState = saveState;

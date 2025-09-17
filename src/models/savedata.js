@@ -49,6 +49,8 @@ const INITIAL_STATE = () => ({
 		useConsole: true,
 		useMappers: true,
 		withHotReload: true,
+		syncToVideo: false,
+		audioBufferSize: 4096,
 	},
 	unlockedUnits: {
 		useCartridge: false,
