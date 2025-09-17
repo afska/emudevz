@@ -10,3 +10,18 @@
 	flex-direction: row;
 	justify-content: space-around;
 }
+
+.controlsTitle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-right: 32px;
+}
+
+.controls {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}

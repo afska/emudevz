@@ -75,6 +75,7 @@ export default {
 	emulation_open_debugger: "Abrir depurador",
 	emulation_reload: "Recargar ROM",
 	emulation_stop: "Detener emulación",
+	emulator_controls: "Controles del emulador",
 	enter_a_file_name: "Ingresa un nombre de archivo...",
 	file_created: "¡Archivo creado!",
 	file_created_error: "El archivo no puede ser creado.",
@@ -158,6 +159,7 @@ export default {
 	reset_level: "Reiniciar progreso del nivel",
 	resize_warning: "No se puede redimensionar y escribir a la vez.",
 	restore: "Restaurar",
+	restore_defaults: "Restaurar valores por defecto",
 	restore_warning_all:
 		"⚠️  <TODO> tu `/code` será reemplazado por la copia del nivel anterior.\r\n¿Continuar? ~(y/N)~",
 	restore_warning_paths:

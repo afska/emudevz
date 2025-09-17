@@ -1,9 +1,29 @@
 import filesystem, { Drive } from "../filesystem";
 import { bus } from "../utils";
 
-const DEFAULT_FILE = Drive.MAIN_FILE;
-
 const KEY = "savedata";
+const DEFAULT_KEY_MAP = () => ({
+	1: {
+		BUTTON_A: " ",
+		BUTTON_B: "D",
+		BUTTON_SELECT: "BACKSPACE",
+		BUTTON_START: "ENTER",
+		BUTTON_UP: "ARROWUP",
+		BUTTON_DOWN: "ARROWDOWN",
+		BUTTON_LEFT: "ARROWLEFT",
+		BUTTON_RIGHT: "ARROWRIGHT",
+	},
+	2: {
+		BUTTON_A: ".",
+		BUTTON_B: ",",
+		BUTTON_SELECT: "U",
+		BUTTON_START: "O",
+		BUTTON_UP: "I",
+		BUTTON_DOWN: "K",
+		BUTTON_LEFT: "J",
+		BUTTON_RIGHT: "L",
+	},
+});
 const INITIAL_STATE = () => ({
 	version: 1,
 	maxChapterNumber: 1,
@@ -16,8 +36,9 @@ const INITIAL_STATE = () => ({
 	musicVolume: 0.3,
 	musicTrack: 0,
 	trackInfo: null,
-	openFiles: [DEFAULT_FILE],
-	selectedFile: DEFAULT_FILE,
+	openFiles: [Drive.MAIN_FILE],
+	selectedFile: Drive.MAIN_FILE,
+	keyboardMappings: DEFAULT_KEY_MAP(),
 	emulatorSettings: {
 		useCartridge: true,
 		useCPU: true,
@@ -98,6 +119,15 @@ export default {
 		},
 		setEmulatorSettings(state, emulatorSettings) {
 			return { ...state, emulatorSettings };
+		},
+		setKeyboardMappings(state, keyboardMappings) {
+			return { ...state, keyboardMappings };
+		},
+		setDefaultKeyboardMappings(state) {
+			return {
+				...state,
+				keyboardMappings: DEFAULT_KEY_MAP(),
+			};
 		},
 		setUnlockedUnits(state, unlockedUnits) {
 			return { ...state, unlockedUnits };

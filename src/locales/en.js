@@ -74,6 +74,7 @@ export default {
 	emulation_open_debugger: "Open debugger",
 	emulation_reload: "Reload ROM",
 	emulation_stop: "Stop emulation",
+	emulator_controls: "Emulator controls",
 	enter_a_file_name: "Enter a file name...",
 	file_created: "File created!",
 	file_created_error: "The file cannot be created.",
@@ -153,6 +154,7 @@ export default {
 	reset_level: "Reset level progress",
 	resize_warning: "Resizing is not supported while typing.",
 	restore: "Restore",
+	restore_defaults: "Restore defaults",
 	restore_warning_all:
 		"⚠️  Your <ENTIRE> `/code` will be replaced with the previous level snapshot.\r\nProceed? ~(y/N)~",
 	restore_warning_paths:

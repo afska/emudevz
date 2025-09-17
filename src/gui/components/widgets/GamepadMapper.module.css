@@ -1,0 +1,71 @@
+.gamepad {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	background: #0e0e0e !important;
+}
+
+.box {
+	padding: 8px;
+	border-radius: 6px;
+	border: 1px solid #555;
+	background: #2e2e2e72;
+	min-width: 120px;
+	align-items: center;
+	justify-content: center;
+}
+
+.dpad {
+	display: grid;
+	grid-template-columns: repeat(3, 36px);
+	grid-template-rows: repeat(3, 32px);
+	padding: 4px;
+	padding-right: 8px;
+}
+
+.startSelect {
+	display: flex;
+	min-width: 120px;
+	justify-content: center;
+	align-items: center;
+}
+
+.ab {
+	display: flex;
+	padding: 8px;
+	min-width: 120px;
+	justify-content: center;
+	align-items: center;
+}
+
+.buttonBox {
+	min-height: 24px;
+	padding: 4px;
+	margin: 4px;
+	border-radius: 4px;
+	border: 1px solid #888;
+	background: #222;
+	color: #eee;
+	font-size: 10px;
+	cursor: pointer;
+
+	display: block;
+	width: 32px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-align: center;
+}
+
+.buttonBox:hover {
+	filter: brightness(2);
+}
+
+.longButton {
+	width: 48px;
+}
+
+.redButton {
+	background: #f03a17;
+	border-radius: 32px;
+}

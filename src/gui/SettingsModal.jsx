@@ -1,10 +1,14 @@
 import React, { PureComponent } from "react";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import { FaUndo } from "react-icons/fa";
 import { connect } from "react-redux";
+import classNames from "classnames";
 import locales, { LANGUAGES } from "../locales";
 import { filepicker, savefile, toast } from "../utils";
 import Button from "./components/widgets/Button";
+import GamepadMapper from "./components/widgets/GamepadMapper";
+import IconButton from "./components/widgets/IconButton";
 import VolumeSlider from "./components/widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
 
@@ -134,6 +138,24 @@ class SettingsModal extends PureComponent {
 							</div>
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
+							<Form.Label className={styles.controlsTitle}>
+								<span>🎮 {locales.get("emulator_controls")}</span>
+								<IconButton
+									Icon={FaUndo}
+									tooltip={locales.get("restore_defaults")}
+									onClick={() => {
+										this.props.setDefaultKeyboardMappings();
+									}}
+								/>
+							</Form.Label>
+							{open && (
+								<div className={classNames(styles.options, styles.controls)}>
+									<GamepadMapper player={1} />
+									<GamepadMapper player={2} />
+								</div>
+							)}
+						</Form.Group>
+						<Form.Group style={{ marginTop: MARGIN }}>
 							<Form.Label>🗂️ {locales.get("save_file")}</Form.Label>
 							<div className={styles.options}>
 								<div>
@@ -249,7 +271,10 @@ class SettingsModal extends PureComponent {
 	};
 
 	_onClose = () => {
-		this.setState({ areYouSureRestore: false, areYouSureDelete: false });
+		this.setState({
+			areYouSureRestore: false,
+			areYouSureDelete: false,
+		});
 		this.props.setSettingsOpen(false);
 	};
 }
@@ -263,6 +288,7 @@ const mapDispatchToProps = ({ savedata }) => ({
 	setLanguage: savedata.setLanguage,
 	setChatSpeed: savedata.setChatSpeed,
 	setCrtFilter: savedata.setCrtFilter,
+	setDefaultKeyboardMappings: savedata.setDefaultKeyboardMappings,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);

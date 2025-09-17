@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import Level from "../../../level/Level";
+import store from "../../../store";
 import { bus } from "../../../utils";
 import music from "../../sound/music";
 import TVNoise from "../TVNoise";
@@ -11,17 +12,6 @@ import styles from "./Emulator.module.css";
 
 export const SAVESTATE_KEY_PREFIX = "persist:emudevz:savestate-";
 export const SAVESTATE_RESET_COMMAND = "reset";
-
-const KEY_MAP = {
-	" ": "BUTTON_A",
-	d: "BUTTON_B",
-	backspace: "BUTTON_SELECT",
-	enter: "BUTTON_START",
-	arrowup: "BUTTON_UP",
-	arrowdown: "BUTTON_DOWN",
-	arrowleft: "BUTTON_LEFT",
-	arrowright: "BUTTON_RIGHT",
-};
 
 export default class Emulator extends Component {
 	render() {
@@ -228,12 +218,27 @@ export default class Emulator extends Component {
 		if (resumeMusic) music.resume();
 	}
 
+	_getButton = (player, key) => {
+		const selectedKey = key.toUpperCase();
+		const mappings = store.getState().savedata.keyboardMappings[player];
+		let selectedButton = null;
+
+		for (let button in mappings) {
+			if (mappings[button] === selectedKey) {
+				if (selectedButton == null) selectedButton = button;
+				else return null;
+			}
+		}
+
+		return selectedButton;
+	};
+
 	_onKeyDown = (e) => {
 		if (!document.fullscreenElement && document.activeElement.id !== "emulator")
 			return;
 
-		const button = KEY_MAP[e.key?.toLowerCase()];
-		if (!button) return;
+		const button = this._getButton(1, e.key);
+		if (button == null) return;
 
 		this.keyboardInput[button] = true;
 	};
@@ -242,8 +247,8 @@ export default class Emulator extends Component {
 		if (!document.fullscreenElement && document.activeElement.id !== "emulator")
 			return;
 
-		const button = KEY_MAP[e.key?.toLowerCase()];
-		if (!button) return;
+		const button = this._getButton(1, e.key);
+		if (button == null) return;
 
 		this.keyboardInput[button] = false;
 	};
