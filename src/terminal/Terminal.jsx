@@ -25,6 +25,8 @@ const KEY_REFRESH_1 = "[15~";
 const KEY_REFRESH_2 = "";
 const KEY_CTRL_C = "\u0003";
 const KEY_BACKSPACE = "\u007F";
+const KEY_LEFT = "\u001b[D";
+const KEY_RIGHT = "\u001b[C";
 const ARGUMENT_SEPARATOR = " ";
 const NEWLINE_REGEXP = /\r\n?|\n/g;
 const WHITESPACE_REGEXP = /\s/;
@@ -228,8 +230,14 @@ export default class Terminal {
 			const isMultiLine = data.split(NEWLINE_REGEXP).length > 1;
 			if (isMultiLine && !this._input.multiLine) return;
 
-			await this.write(data, undefined, runSpeed);
-			this._input.append(data);
+			if (this._input.caretIndex === this._input.text.length) {
+				await this.write(data, undefined, runSpeed);
+				this._input.append(data);
+				this._updateRenderedRows();
+			} else {
+				this._input.insertAtCaret(data);
+				await this._redrawInput();
+			}
 		}
 	}
 
@@ -238,6 +246,7 @@ export default class Terminal {
 			const input = this._input;
 			this._input = null;
 			const isValid = input.confirm();
+			input.caretIndex = 0;
 
 			if (isValid) await this.newline();
 		}
@@ -311,11 +320,18 @@ export default class Terminal {
 
 		await this.write(sequence);
 		input.text = "";
+		input.caretIndex = 0;
 	}
 
 	async backspace() {
 		await async.sleep();
 		if (this.isExpectingInput) {
+			if (this._input.caretIndex < this._input.text.length) {
+				this._input.deleteBackwardAtCaret();
+				await this._redrawInput();
+				return;
+			}
+
 			const { x, y, ybase } = this.buffer;
 			const absY = y + ybase;
 			if (absY === this._input.position.y && x === this._input.position.x)
@@ -330,6 +346,8 @@ export default class Terminal {
 						: BACKSPACE
 				);
 				this._input.backspace();
+				this._input.caretIndex = this._input.text.length;
+				this._updateRenderedRows();
 			} else {
 				const newLine = absY - 1;
 				const indicatorOffset = this._input.getIndicatorOffset(newLine);
@@ -338,6 +356,8 @@ export default class Terminal {
 					this.width
 				);
 				const character = this._input.backspace();
+				this._input.caretIndex = this._input.text.length;
+				this._updateRenderedRows();
 
 				if (lineLength < this.width) {
 					await this.write(ansiEscapes.cursorMove(lineLength, -1));
@@ -349,6 +369,86 @@ export default class Terminal {
 				}
 			}
 		}
+	}
+
+	async _redrawInput() {
+		if (!this.isExpectingInput) return;
+
+		const input = this._input;
+		const { y, ybase } = this.buffer;
+		const currentAbsoluteY = y + ybase;
+		const startAbsoluteY = input.position.y;
+		const startColumn = input.position.x;
+
+		const previousRows = Math.max(1, input.renderedRows || 1);
+
+		let sequence = "";
+		// move to input start
+		if (currentAbsoluteY > startAbsoluteY)
+			sequence += ansiEscapes.cursorMove(
+				0,
+				-(currentAbsoluteY - startAbsoluteY)
+			);
+		sequence += ansiEscapes.cursorTo(startColumn);
+		sequence += ansiEscapes.eraseEndLine;
+		for (let i = 1; i < previousRows; i++) {
+			sequence += ansiEscapes.cursorDown();
+			sequence += ansiEscapes.cursorTo(0);
+			sequence += ansiEscapes.eraseEndLine;
+		}
+		if (previousRows > 1) {
+			sequence += ansiEscapes.cursorMove(0, -(previousRows - 1));
+			sequence += ansiEscapes.cursorTo(startColumn);
+		}
+
+		await this.write(sequence);
+		await this.write(input.text);
+
+		// update rendered rows and position cursor at caret
+		const endPos = this._computePositionAfterText(input.text, startColumn);
+		const caretText = input.text.substring(0, input.caretIndex);
+		const caretPos = this._computePositionAfterText(caretText, startColumn);
+
+		input.renderedRows = endPos.rowsDown + 1;
+
+		let moveSeq = "";
+		const rowsUp = endPos.rowsDown - caretPos.rowsDown;
+		if (rowsUp > 0) moveSeq += ansiEscapes.cursorUp(rowsUp);
+		else if (rowsUp < 0) moveSeq += ansiEscapes.cursorDown(-rowsUp);
+		const horizontal = caretPos.column - endPos.column;
+		if (horizontal !== 0) moveSeq += ansiEscapes.cursorMove(horizontal, 0);
+		if (moveSeq) await this.write(moveSeq);
+	}
+
+	_computePositionAfterText(text, startColumn) {
+		let column = startColumn;
+		let rowsDown = 0;
+
+		for (let i = 0; i < text.length; i++) {
+			const ch = text[i];
+			if (ch === SHORT_NEWLINE) {
+				rowsDown += 1;
+				column = 0;
+			} else {
+				column += 1;
+				if (column >= this.width) {
+					column = 0;
+					rowsDown += 1;
+				}
+			}
+		}
+		return { rowsDown, column };
+	}
+
+	_updateRenderedRows() {
+		if (!this.isExpectingInput) return;
+
+		const startColumn = this._input.position.x;
+		const endPos = this._computePositionAfterText(
+			this._input.text,
+			startColumn
+		);
+		this._input.renderedRows = endPos.rowsDown + 1;
 	}
 
 	cancelSpeedFlag() {
@@ -432,6 +532,23 @@ export default class Terminal {
 				await this.backspace();
 				break;
 			}
+			case KEY_LEFT: {
+				if (this.isExpectingInput && this._input.caretIndex > 0) {
+					this._input.caretIndex -= 1;
+					await this._redrawInput();
+				}
+				break;
+			}
+			case KEY_RIGHT: {
+				if (
+					this.isExpectingInput &&
+					this._input.caretIndex < this._input.text.length
+				) {
+					this._input.caretIndex += 1;
+					await this._redrawInput();
+				}
+				break;
+			}
 			default: {
 				if (this.isExpectingKey) {
 					this._keyInput.resolve(data);
@@ -466,8 +583,14 @@ export default class Terminal {
 
 		if (isKeyDown && isEnter) {
 			if (isShiftEnter && this.isExpectingInput && this._input.multiLine) {
-				await this.newline();
-				this._input.append(SHORT_NEWLINE);
+				if (this._input.caretIndex === this._input.text.length) {
+					await this.newline();
+					this._input.append(SHORT_NEWLINE);
+					this._updateRenderedRows();
+				} else {
+					this._input.insertAtCaret(SHORT_NEWLINE);
+					await this._redrawInput();
+				}
 			} else {
 				if (this._isWriting) this._speedFlag = true;
 				await this.confirmPrompt();
@@ -638,5 +761,7 @@ export default class Terminal {
 			document.body.requestFullscreen();
 			return true;
 		}
+
+		if (data === KEY_LEFT || data === KEY_RIGHT) return false;
 	}
 }
