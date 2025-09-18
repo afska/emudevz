@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import filesystem, { Drive } from "../../../filesystem";
 import Level from "../../../level/Level";
+import locales from "../../../locales";
 import store from "../../../store";
+import { toast } from "../../../utils";
 import { bus } from "../../../utils";
 import music from "../../sound/music";
 import TVNoise from "../TVNoise";
@@ -355,22 +357,25 @@ export default class Emulator extends Component {
 	_loadSaveFile() {
 		const { name } = this.props;
 		if (name == null) return null;
-		if (!this._emulation) return null;
+
+		this.name = name; // (cache game name)
 
 		const saveFilePath = `${Drive.SAVE_DIR}/${name}.sav`;
 		try {
 			if (filesystem.exists(saveFilePath)) {
 				const raw = filesystem.read(saveFilePath);
-				return JSON.parse(raw);
+				const bytes = JSON.parse(raw);
+				return bytes;
 			}
 		} catch (e) {
+			toast.error(locales.get("save_file_cannot_be_restored"));
 			console.error("💥 Corrupted save", e);
 			return null;
 		}
 	}
 
 	_saveSaveFile() {
-		const { name } = this.props;
+		const { name } = this; // (use cached game name)
 		if (name == null) return;
 		if (!this._emulation) return;
 
@@ -383,6 +388,7 @@ export default class Emulator extends Component {
 			}
 		} catch (e) {
 			console.error("💥 Error saving", e);
+			toast.error(locales.get("the_operation_failed"));
 		}
 	}
 

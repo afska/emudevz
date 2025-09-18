@@ -1,13 +1,22 @@
 import React, { PureComponent } from "react";
 import $path from "path-browserify-esm";
-import { FaBug, FaExpand, FaSearch, FaStop, FaSync } from "react-icons/fa";
+import {
+	FaBug,
+	FaExpand,
+	FaSave,
+	FaSearch,
+	FaStop,
+	FaSync,
+	FaUpload,
+} from "react-icons/fa";
 import classNames from "classnames";
 import _ from "lodash";
+import filesystem, { Drive } from "../../../filesystem";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
-import { bus, filepicker } from "../../../utils";
+import { bus, filepicker, toast } from "../../../utils";
 import music from "../../sound/music";
 import IconButton from "../widgets/IconButton";
 import InputTypeToggle from "../widgets/InputTypeToggle";
@@ -187,6 +196,22 @@ export default class EmulatorRunner extends PureComponent {
 							onClick={this._openDebugger}
 						/>
 					)}
+					{!!rom && !error && (
+						<IconButton
+							style={{ marginRight: 8 }}
+							Icon={FaSave}
+							tooltip={locales.get("emulation_save_state")}
+							onClick={this._saveStateToFile}
+						/>
+					)}
+					{!!rom && !error && (
+						<IconButton
+							style={{ marginRight: 8 }}
+							Icon={FaUpload}
+							tooltip={locales.get("emulation_load_state")}
+							onClick={this._loadStateFromFile}
+						/>
+					)}
 					{!!rom && (
 						<IconButton
 							style={{ marginRight: 8 }}
@@ -291,6 +316,48 @@ export default class EmulatorRunner extends PureComponent {
 
 	_openDebugger = () => {
 		Level.current.launchDebugger();
+	};
+
+	_saveStateToFile = () => {
+		try {
+			const { name } = this.props;
+			if (!name) return;
+
+			const neees = this._emulator?.neees;
+			if (!neees) return;
+
+			const state = neees.getSaveState();
+			const saveStatePath = `${Drive.SAVE_DIR}/${name}.state`;
+			filesystem.write(saveStatePath, JSON.stringify(state));
+			toast.success(locales.get("save_state_saved"));
+		} catch (e) {
+			console.error("💥 Error saving state", e);
+			toast.error(locales.get("the_operation_failed"));
+		}
+	};
+
+	_loadStateFromFile = () => {
+		try {
+			const { name } = this.props;
+			if (!name) return;
+
+			const neees = this._emulator?.neees;
+			if (!neees) return;
+
+			const saveStatePath = `${Drive.SAVE_DIR}/${name}.state`;
+			if (!filesystem.exists(saveStatePath)) {
+				toast.error(locales.get("save_state_not_found"));
+				return;
+			}
+
+			const raw = filesystem.read(saveStatePath);
+			const state = JSON.parse(raw);
+			neees?.setSaveState?.(state);
+			toast.success(locales.get("save_state_loaded"));
+		} catch (e) {
+			console.error("💥 Error loading state", e);
+			toast.error(locales.get("the_operation_failed"));
+		}
 	};
 
 	_reload = (isFullReload = false, forceReset = false) => {
