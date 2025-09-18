@@ -275,7 +275,42 @@ export default class Terminal {
 	}
 
 	async clearInput() {
-		while (!this._input.isEmpty()) await this.backspace();
+		if (!this.isExpectingInput) return;
+
+		const input = this._input;
+		const { x, y, ybase } = this.buffer;
+		const currentAbsoluteY = y + ybase;
+		const startAbsoluteY = input.position.y;
+		const startColumn = input.position.x;
+
+		const linesSpanned = Math.max(0, currentAbsoluteY - startAbsoluteY) + 1;
+
+		let sequence = "";
+
+		// move to the beginning of the input (after the prompt indicator)
+		if (currentAbsoluteY > startAbsoluteY)
+			sequence += ansiEscapes.cursorMove(
+				0,
+				-(currentAbsoluteY - startAbsoluteY)
+			);
+		sequence += ansiEscapes.cursorTo(startColumn);
+		sequence += ansiEscapes.eraseEndLine;
+
+		// clear any wrapped or multi-line input lines below
+		for (let i = 1; i < linesSpanned; i++) {
+			sequence += ansiEscapes.cursorDown();
+			sequence += ansiEscapes.cursorTo(0);
+			sequence += ansiEscapes.eraseEndLine;
+		}
+
+		// return cursor to the original input start position
+		if (linesSpanned > 1) {
+			sequence += ansiEscapes.cursorMove(0, -(linesSpanned - 1));
+			sequence += ansiEscapes.cursorTo(startColumn);
+		}
+
+		await this.write(sequence);
+		input.text = "";
 	}
 
 	async backspace() {
