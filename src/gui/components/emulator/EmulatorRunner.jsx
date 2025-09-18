@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import $path from "path-browserify-esm";
 import { FaBug, FaExpand, FaSearch, FaStop, FaSync } from "react-icons/fa";
 import classNames from "classnames";
 import _ from "lodash";
@@ -19,7 +20,7 @@ const COMPONENT_BORDER_RADIUS = 8;
 
 export default class EmulatorRunner extends PureComponent {
 	render() {
-		const { rom, error, saveState } = this.props;
+		const { rom, name, error, saveState } = this.props;
 
 		const isRunning = rom && !error;
 
@@ -139,6 +140,7 @@ export default class EmulatorRunner extends PureComponent {
 
 				<Emulator
 					rom={rom}
+					name={name}
 					error={error?.html}
 					saveState={saveState}
 					settings={this._emulatorSettings}
@@ -241,6 +243,11 @@ export default class EmulatorRunner extends PureComponent {
 	};
 
 	_setInfo = (__, neees) => {
+		const name =
+			this.props.name != null
+				? `<strong style="display: flex; justify-content: center">${this.props.name}</strong>`
+				: "";
+
 		const header = neees?.context?.cartridge?.header;
 		const mapperId = header?.mapperId ?? "❓";
 		const mapperName = neees?.context?.mapper?.constructor?.name ?? "❓";
@@ -249,7 +256,8 @@ export default class EmulatorRunner extends PureComponent {
 		const chr = header?.usesChrRam ? "RAM" : "ROM";
 		const prgRam = header?.hasPrgRam ? "✅" : "❌";
 
-		this._info.innerText =
+		this._info.innerHTML =
+			name +
 			`🗜️ Mapper: ${mapperId} (${mapperName})` +
 			"\n" +
 			`🚽 Mirroring: ${mirroringId}` +
@@ -304,8 +312,9 @@ export default class EmulatorRunner extends PureComponent {
 	};
 
 	_openROM = () => {
-		filepicker.open(".neees,.nes", (fileContent) => {
-			this.props.onLoadROM(fileContent);
+		filepicker.open(".neees,.nes", (fileContent, fileName) => {
+			const name = $path.parse(fileName).name;
+			this.props.onLoadROM(fileContent, name);
 		});
 	};
 

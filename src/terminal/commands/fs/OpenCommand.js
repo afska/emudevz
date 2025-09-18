@@ -1,3 +1,4 @@
+import $path from "path-browserify-esm";
 import filesystem from "../../../filesystem";
 import TV from "../../../gui/components/TV";
 import extensions from "../../../gui/extensions";
@@ -26,7 +27,8 @@ export default class OpenCommand extends FilesystemCommand {
 		if (Component === TV && customArgs.type === "rom") {
 			if (level.canLaunchEmulator()) {
 				const rom = filesystem.read(filePath, { binary: true });
-				Level.current.launchEmulator(rom);
+				const name = $path.parse(filePath).name;
+				Level.current.launchEmulator(rom, name);
 			} else return ERR_CANNOT_LAUNCH_EMULATOR;
 		} else {
 			if (level.canLaunch(Component, customArgs))

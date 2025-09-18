@@ -179,14 +179,14 @@ export default class Level {
 		);
 	}
 
-	launchEmulator(rom = null) {
+	launchEmulator(rom = null, name = null) {
 		const tvRom = this.$layout.findInstance(
 			"TV",
 			(it) => it.state.type === "rom"
 		);
 
 		if (tvRom != null) {
-			tvRom.setContent(rom, "rom");
+			tvRom.setContent(rom, "rom", name);
 			const instanceName = this.$layout.getInstanceName(tvRom);
 			this.$layout.focus(instanceName);
 		} else if (bus.isListeningTo("pin")) {

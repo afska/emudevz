@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import EmulatorBuilder from "../../../EmulatorBuilder";
+import filesystem, { Drive } from "../../../filesystem";
 import Level from "../../../level/Level";
 import store from "../../../store";
 import { bus } from "../../../utils";
@@ -28,7 +29,14 @@ const mapTypeToInput = (inputType, keyboardInput, gamepadInputs) => {
 
 export default class Emulator extends Component {
 	render() {
-		const { rom, error, crt = false, screen = null, style } = this.props;
+		const {
+			rom,
+			error,
+			name = null,
+			crt = false,
+			screen = null,
+			style,
+		} = this.props;
 
 		const innerClassName = crt ? styles.crtNoise : styles.box;
 
@@ -108,12 +116,14 @@ export default class Emulator extends Component {
 	async reloadCode(keepState = false) {
 		if (!this._emulation) return;
 
-		const saveState = keepState ? this._emulation.neees.getSaveState() : null;
+		this._saveSaveFile();
+		const saveFileBytes = this._loadSaveFile();
 
+		const saveState = keepState ? this._emulation.neees.getSaveState() : null;
 		const Console = await this._buildConsole();
 		if (Console == null) return;
 
-		this._emulation.replace(Console, saveState);
+		this._emulation.replace(Console, saveFileBytes, saveState);
 	}
 
 	async _initialize(screen) {
@@ -147,19 +157,22 @@ export default class Emulator extends Component {
 				? this.props.saveState
 				: this._getSaveState();
 
+		const saveFileBytes = this._loadSaveFile();
+
 		const savedata = store.getState().savedata;
 		this._emulation = new Emulation(
 			Console,
 			bytes,
+			saveFileBytes,
 			screen,
 			this._getInput,
 			this._setFps,
 			this._setError,
 			this._setSaveState,
+			onFrame,
 			saveState,
 			volume,
 			syncToVideo || savedata.emulatorSettings.syncToVideo,
-			onFrame,
 			savedata.emulatorSettings.audioBufferSize
 		);
 
@@ -228,6 +241,7 @@ export default class Emulator extends Component {
 
 	_stop(resumeMusic = true) {
 		if (this._emulation) {
+			this._saveSaveFile();
 			this._emulation.terminate();
 			this._emulation = null;
 		}
@@ -301,6 +315,8 @@ export default class Emulator extends Component {
 	};
 
 	_saveProgress = () => {
+		this._saveSaveFile();
+
 		if (!this.saveStateKey) return;
 		if (this._resetProgressIfNeeded()) return;
 
@@ -334,6 +350,40 @@ export default class Emulator extends Component {
 		if (!this.saveStateKey) return;
 
 		localStorage.setItem(this.saveStateKey, JSON.stringify(saveState));
+	}
+
+	_loadSaveFile() {
+		const { name } = this.props;
+		if (name == null) return null;
+		if (!this._emulation) return null;
+
+		const saveFilePath = `${Drive.SAVE_DIR}/${name}.sav`;
+		try {
+			if (filesystem.exists(saveFilePath)) {
+				const raw = filesystem.read(saveFilePath);
+				return JSON.parse(raw);
+			}
+		} catch (e) {
+			console.error("💥 Corrupted save", e);
+			return null;
+		}
+	}
+
+	_saveSaveFile() {
+		const { name } = this.props;
+		if (name == null) return;
+		if (!this._emulation) return;
+
+		try {
+			const neees = this._emulation.neees;
+			const saveFileBytes = neees?.getSaveFile?.();
+			if (saveFileBytes != null) {
+				const saveFilePath = `${Drive.SAVE_DIR}/${name}.sav`;
+				filesystem.write(saveFilePath, JSON.stringify(saveFileBytes));
+			}
+		} catch (e) {
+			console.error("💥 Error saving", e);
+		}
 	}
 
 	_onError(e) {

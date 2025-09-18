@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import $path from "path-browserify-esm";
 import filesystem from "../../filesystem";
 import OpenCommand from "../../terminal/commands/fs/OpenCommand";
 import extensions from "../extensions";
@@ -25,6 +26,7 @@ export default class TV extends PureComponent {
 	state = {
 		content: null,
 		type: "media",
+		name: null,
 		_error: null,
 		_saveState: null,
 		withFileSearch: false,
@@ -43,17 +45,26 @@ export default class TV extends PureComponent {
 	}
 
 	load(fileName, type = "media", bucket = "media") {
+		const name = $path.parse(fileName).name;
 		const content = (fileName && this._level?.[bucket]?.[fileName]) || null;
-		this.setContent(content, type);
+		this.setContent(content, name, type);
 	}
 
 	loadROM(filePath, type = "rom", saveState = null) {
+		const name = $path.parse(filePath).name;
 		const file = filesystem.read(filePath, { binary: true });
-		this.setContent(file, type, { _saveState: saveState });
+		this.setContent(file, type, name, { _saveState: saveState });
 	}
 
-	setContent(content, type, extra = {}) {
-		this.setState({ content, type, _error: null, _saveState: null, ...extra });
+	setContent(content, type, name = null, extra = {}) {
+		this.setState({
+			content,
+			type,
+			name,
+			_error: null,
+			_saveState: null,
+			...extra,
+		});
 	}
 
 	render() {
@@ -109,14 +120,17 @@ export default class TV extends PureComponent {
 		window.removeEventListener("drop", this._onFileDrop);
 	}
 
-	_resetContent(content, saveState = null) {
-		this.setState({ content: null, _error: null, _saveState: null }, () => {
-			if (content != null) this.setState({ content, _saveState: saveState });
-		});
+	_resetContent(content, saveState = null, name = null) {
+		this.setState(
+			{ content: null, name, _error: null, _saveState: null },
+			() => {
+				if (content != null) this.setState({ content, _saveState: saveState });
+			}
+		);
 	}
 
 	_renderContent() {
-		const { content, type, _error, _saveState } = this.state;
+		const { content, type, name, _error, _saveState } = this.state;
 
 		switch (type) {
 			case "media": {
@@ -147,14 +161,15 @@ export default class TV extends PureComponent {
 							this._emulatorRunner = ref;
 						}}
 						rom={content}
+						name={name}
 						error={_error}
 						saveState={_saveState}
 						onError={(e) => {
 							this.setState({ _error: e });
 						}}
-						onLoadROM={(fileContent) => {
+						onLoadROM={(fileContent, name) => {
 							this._emulatorRunner?.stop();
-							this._resetContent(fileContent);
+							this._resetContent(fileContent, null, name);
 						}}
 						onRestart={(saveState) => {
 							this._resetContent(content, saveState);
@@ -231,12 +246,13 @@ export default class TV extends PureComponent {
 		e.preventDefault();
 
 		const file = e.dataTransfer.files[0];
+		const name = $path.parse(file.name).name;
 		const reader = new FileReader();
 		if (!file) return;
 
 		reader.onload = (event) => {
 			const rom = event.target.result;
-			this.setContent(rom, "rom");
+			this.setContent(rom, "rom", name);
 		};
 
 		reader.readAsArrayBuffer(file);

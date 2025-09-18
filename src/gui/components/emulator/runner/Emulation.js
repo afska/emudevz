@@ -12,15 +12,16 @@ export default class Emulation {
 	constructor(
 		NEEES,
 		bytes,
+		saveFileBytes,
 		screen,
 		getInput = () => [{}, {}],
 		onFps = () => {},
 		onError = () => {},
 		onSaveState = () => {},
+		onFrame = () => {},
 		saveState = null,
 		volume = 1,
 		syncToVideo = false,
-		onFrame = () => {},
 		audioBufferSize = null
 	) {
 		this._onFrameCallback = onFrame;
@@ -116,7 +117,7 @@ export default class Emulation {
 		}, onFps);
 
 		try {
-			this.neees.load(bytes);
+			this.neees.load(bytes, saveFileBytes);
 			if (this.saveState != null) this.neees.setSaveState(this.saveState);
 			this.frameTimer.start();
 		} catch (error) {
@@ -124,13 +125,13 @@ export default class Emulation {
 		}
 	}
 
-	replace = (NEEES, saveState) => {
+	replace = (NEEES, saveFileBytes, saveState) => {
 		const oldFrameBuffer = new Uint32Array(this.neees.ppu.frameBuffer.length);
 		for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
 			oldFrameBuffer[i] = this.neees.ppu.frameBuffer[i];
 
 		this.neees = new NEEES(this._onFrame, this._onAudio);
-		this.neees.load(this.bytes);
+		this.neees.load(this.bytes, saveFileBytes);
 		this.saveState = saveState;
 		if (this.saveState != null) this.neees.setSaveState(this.saveState);
 
