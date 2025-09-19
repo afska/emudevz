@@ -3,6 +3,7 @@ import CpCommand from "./CpCommand";
 import DiffCommand from "./DiffCommand";
 import DiskCommand from "./DiskCommand";
 import DownloadCommand from "./DownloadCommand";
+import FindCommand from "./FindCommand";
 import LsCommand from "./LsCommand";
 import MkdirCommand from "./MkdirCommand";
 import MvCommand from "./MvCommand";
@@ -23,6 +24,7 @@ export default [
 	OpenCommand,
 	DiffCommand,
 	RestoreCommand,
+	FindCommand,
 	DownloadCommand,
 	UploadCommand,
 	DiskCommand,

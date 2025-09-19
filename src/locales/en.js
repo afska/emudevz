@@ -42,6 +42,7 @@ export default {
 	command_diff_description: "Shows `/code` diffs vs last completed level.",
 	command_disk_description: "Shows disk usage and quota (used/total and %).",
 	command_download_description: "Downloads files (usage: `download a b`).",
+	command_find_description: "Find in `/code` files (usage: `find some_text`).",
 	command_help_description: "Shows this help.",
 	command_ls_description: "Shows a file list (usage: `ls`, or `ls -r`).",
 	command_mkdir_description: "Creates directories (usage: `mkdir dir1 dir2`).",
