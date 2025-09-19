@@ -396,7 +396,7 @@ class MultiFile extends PureComponent {
 			this.focus();
 
 			if (lineNumber != null) {
-				bus.emit("highlight", { line: lineNumber - 1 });
+				bus.emit("highlight", { line: lineNumber - 1, reason: "file-search" });
 			}
 		});
 	}
