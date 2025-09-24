@@ -45,13 +45,13 @@ export default class TV extends PureComponent {
 	}
 
 	load(fileName, type = "media", bucket = "media") {
-		const name = $path.parse(fileName).name;
+		const name = fileName ? $path.parse(fileName).name : null;
 		const content = (fileName && this._level?.[bucket]?.[fileName]) || null;
 		this.setContent(content, name, type);
 	}
 
 	loadROM(filePath, type = "rom", saveState = null) {
-		const name = $path.parse(filePath).name;
+		const name = filePath ? $path.parse(filePath).name : null;
 		const file = filesystem.read(filePath, { binary: true });
 		this.setContent(file, type, name, { _saveState: saveState });
 	}

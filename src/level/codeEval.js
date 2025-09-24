@@ -46,6 +46,7 @@ export default {
 			return eval(_evalCode_);
 		} catch (e) {
 			const error = new Error(`Code eval failed: ${e}`);
+			console.trace(_evalCode_);
 			error.code = _evalCode_;
 			error.inner = e;
 			throw error;
