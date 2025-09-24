@@ -1,0 +1,57 @@
+.toggableButton {
+	flex: 1;
+}
+
+.toggableButton :global(.btn-group) {
+	width: 100%;
+	display: flex;
+}
+
+.toggableButton :global(.btn-group > .btn) {
+	flex: 0 0 auto !important;
+}
+
+.toggableButton :global(.btn-group > .btn:not(.dropdown-toggle-split)) {
+	flex: 1 1 auto !important;
+}
+
+.toggableButton :global(.btn) {
+	background: rgba(0, 0, 0, 0.5) !important;
+	color: white !important;
+	border: solid 1px gray !important;
+	border-radius: 16px !important;
+	padding: 12px !important;
+	font-size: small !important;
+	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
+		0 0 8px rgba(200, 200, 200, 0.6) !important;
+}
+
+.toggableButton :global(.btn:hover) {
+	background: #e6e6e699 !important;
+}
+
+.toggableButton :global(.dropdown-toggle-split) {
+	padding-left: 8px !important;
+	padding-right: 8px !important;
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+}
+
+.toggableButton :global(.btn-group > .btn:not(.dropdown-toggle-split)) {
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+
+.toggableButton :global(.dropdown-menu) {
+	background-color: rgba(0, 0, 0, 0.5) !important;
+	color: white !important;
+	border: solid 1px gray !important;
+}
+
+.toggableButton :global(.dropdown-item) {
+	color: white !important;
+}
+
+.toggableButton :global(.dropdown-item:hover) {
+	background: #e6e6e699 !important;
+}

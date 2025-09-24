@@ -26,6 +26,7 @@ const DEFAULT_KEY_MAP = () => ({
 });
 const INITIAL_STATE = () => ({
 	version: 1,
+	gameMode: "campaign",
 	maxChapterNumber: 1,
 	completedLevels: [],
 	lastLevelId: "start",
@@ -67,6 +68,9 @@ const INITIAL_STATE = () => ({
 export default {
 	state: INITIAL_STATE(),
 	reducers: {
+		setGameMode(state, gameMode) {
+			return { ...state, gameMode };
+		},
 		setMaxChapterNumber(state, maxChapterNumber) {
 			return { ...state, maxChapterNumber };
 		},

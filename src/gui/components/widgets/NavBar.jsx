@@ -137,7 +137,7 @@ class NavBar extends PureComponent {
 							onClick={() => {
 								if (music.isPaused) music.resume();
 								else {
-									if (window.EmuDevz.emulation != null) music.pause();
+									if (window.EmuDevz.isRunningEmulator()) music.pause();
 									else music.next();
 								}
 

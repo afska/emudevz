@@ -10,6 +10,7 @@ import ChapterSelectModal from "./ChapterSelectModal";
 import CreditsModal from "./CreditsModal";
 import SettingsModal from "./SettingsModal";
 import Button from "./components/widgets/Button";
+import ToggableButton from "./components/widgets/ToggableButton";
 import styles from "./HomeScreen.module.css";
 
 const ASSET_LOGO = "assets/logo.png";
@@ -37,9 +38,11 @@ class HomeScreen extends PureComponent {
 
 	render() {
 		const {
+			gameMode,
 			isSettingsOpen,
 			isChapterSelectOpen,
 			isCreditsOpen,
+			setGameMode,
 			setSettingsOpen,
 			setChapterSelectOpen,
 			setCreditsOpen,
@@ -83,9 +86,23 @@ class HomeScreen extends PureComponent {
 					)}
 
 					<div className={styles.buttons}>
-						<Button onClick={this._play} primary>
-							{locales.get("button_play")}
-						</Button>
+						<ToggableButton
+							onClick={this._play}
+							options={[
+								{
+									labelKey: "button_play",
+									tooltipKey: "tooltip_campaign",
+									mode: "campaign",
+								},
+								{
+									labelKey: "mode_free",
+									tooltipKey: "tooltip_free_mode",
+									mode: "free",
+								},
+							]}
+							selectedOption={gameMode}
+							onOptionSelect={(opt) => setGameMode(opt.mode)}
+						/>
 						<Button onClick={this._openSettings}>
 							{locales.get("button_settings")}
 						</Button>
@@ -264,8 +281,21 @@ class HomeScreen extends PureComponent {
 	};
 
 	_play = () => {
+		switch (this.props.gameMode) {
+			case "free":
+				return this._playFreeMode();
+			default:
+				return this._playCampaign();
+		}
+	};
+
+	_playCampaign = () => {
 		if (this.props.maxChapterNumber > 1) this.props.setChapterSelectOpen(true);
 		else this.props.play();
+	};
+
+	_playFreeMode = () => {
+		// TODO: IMPLEMENT
 	};
 
 	_quit = () => {
@@ -275,12 +305,14 @@ class HomeScreen extends PureComponent {
 
 const mapStateToProps = ({ level, savedata }) => ({
 	maxChapterNumber: savedata.maxChapterNumber,
+	gameMode: savedata.gameMode,
 	isSettingsOpen: level.isSettingsOpen,
 	isChapterSelectOpen: level.isChapterSelectOpen,
 	isCreditsOpen: level.isCreditsOpen,
 });
-const mapDispatchToProps = ({ level }) => ({
+const mapDispatchToProps = ({ level, savedata }) => ({
 	play: level.goToLastLevel,
+	setGameMode: savedata.setGameMode,
 	setSettingsOpen: level.setSettingsOpen,
 	setChapterSelectOpen: level.setChapterSelectOpen,
 	setCreditsOpen: level.setCreditsOpen,

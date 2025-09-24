@@ -10,6 +10,12 @@ export default {
 	button_play: "✨ Jugar",
 	button_quit: "🚪 Salir",
 	button_settings: "⚙️ Opciones",
+	mode_campaign: "📜 Campaña",
+	mode_free: "🔭 Modo libre",
+	tooltip_campaign:
+		"🕹️ Escribe un emulador de NEEES desde cero siguiendo los tutoriales y la documentación del juego.",
+	tooltip_free_mode:
+		"💻 Escribe un emulador para tu plataforma favorita usando el frontend y herramientas incluidos.",
 	byte: "byte",
 	bytes: "bytes",
 	calculator: "Calculadora",
