@@ -15,6 +15,7 @@
 		0 0 8px rgba(200, 200, 200, 0.6);
 	font-family: "Courier New", Courier, monospace;
 	user-select: none;
+	overflow: hidden;
 
 	display: flex;
 	flex-direction: row;
