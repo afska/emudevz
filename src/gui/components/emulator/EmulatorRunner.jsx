@@ -461,6 +461,8 @@ export default class EmulatorRunner extends PureComponent {
 			useMappers: unlockedUnits.useMappers && settings.useMappers,
 			withLatestCode: true,
 			withHotReload: settings.withHotReload,
+			syncToVideo: settings.syncToVideo,
+			audioBufferSize: settings.audioBufferSize,
 		};
 	}
 
