@@ -39,16 +39,15 @@ export default class RootCommand extends Command {
 		level.unlockLetsPlayLevelIfNeeded("lets-play-jupiter-scope-2");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-ravens-gate");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-dizzy-sheep-disaster");
-		level.unlockLetsPlayLevelIfNeeded("lets-play-trouble-at-2a03");
+		level.unlockLetsPlayLevelIfNeeded("lets-play-heist");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-super-tilt-bro");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-wolf-spirit");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-minekart-madness");
-		level.unlockLetsPlayLevelIfNeeded("lets-play-tesla-vs-edison");
-		level.unlockLetsPlayLevelIfNeeded("lets-play-heist");
-		level.unlockLetsPlayLevelIfNeeded("lets-play-feline-flood-fiasco");
+		level.unlockLetsPlayLevelIfNeeded("lets-play-fline-flood-fiasco");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-falling");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-from-below");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-robo-ninja-climb");
+		level.unlockLetsPlayLevelIfNeeded("lets-play-tesla-vs-edison");
 
 		await this._terminal.writehlln(
 			locales.get("root_games_unlocked"),
