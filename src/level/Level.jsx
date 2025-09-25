@@ -160,6 +160,8 @@ export default class Level {
 	}
 
 	canLaunchEmulator() {
+		if (this.id === Book.FREE_MODE_LEVEL) return true;
+
 		const book = Book.current;
 		const chapter = book.getChapterOf(this.id);
 		if (chapter.isSpecial) return false;

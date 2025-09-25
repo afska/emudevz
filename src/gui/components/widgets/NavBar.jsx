@@ -15,6 +15,7 @@ import {
 import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
+import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import { bus } from "../../../utils";
@@ -46,6 +47,7 @@ class NavBar extends PureComponent {
 			setChapterSelectOpen,
 		} = this.props;
 
+		const isFreeMode = level.id === Book.FREE_MODE_LEVEL;
 		const levelDefinition = book.getLevelDefinitionOf(level.id);
 		const firstLevelDefinition = _.first(chapter.levels);
 		const lastLevelDefinition = _.last(chapter.levels);
@@ -82,16 +84,18 @@ class NavBar extends PureComponent {
 						/>
 					)}
 					<span>
-						{levelDefinition.humanId} /{" "}
-						<span
-							className="highlight-link"
-							onClick={() => {
-								setChapterSelectOpen(true);
-							}}
-						>
-							{chapter.name[locales.language]}
-						</span>{" "}
-						/ {level.name[locales.language]}
+						{!chapter.isSpecial && <span>{levelDefinition.humanId} / </span>}
+						{!isFreeMode && (
+							<span
+								className="highlight-link"
+								onClick={() => {
+									setChapterSelectOpen(true);
+								}}
+							>
+								{chapter.name[locales.language]} /{" "}
+							</span>
+						)}
+						{level.name[locales.language]}
 					</span>
 					{level.isUsingSnapshot && (
 						<Badge
@@ -150,12 +154,14 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
-						<IconButton
-							style={{ marginLeft: 8 }}
-							Icon={FaClock}
-							tooltip={locales.get("level_history")}
-							onClick={() => this._openLevelHistory()}
-						/>
+						{!isFreeMode && (
+							<IconButton
+								style={{ marginLeft: 8 }}
+								Icon={FaClock}
+								tooltip={locales.get("level_history")}
+								onClick={() => this._openLevelHistory()}
+							/>
+						)}
 						{book.canGoToNextChapter(chapter) && (
 							<IconButton
 								Icon={FaChevronRight}
@@ -165,13 +171,15 @@ class NavBar extends PureComponent {
 						)}
 					</div>
 				</div>
-				<div className={styles.item}>
-					<ProgressList
-						book={book}
-						chapter={chapter}
-						selectedLevelId={level.id}
-					/>
-				</div>
+				{!isFreeMode && (
+					<div className={styles.item}>
+						<ProgressList
+							book={book}
+							chapter={chapter}
+							selectedLevelId={level.id}
+						/>
+					</div>
+				)}
 			</div>
 		);
 	}

@@ -231,10 +231,6 @@ export default {
 	tests_video_running: "🎥  Running video test:",
 	tests_warnings_found: "⚠️  Warnings found.",
 	the_operation_failed: "The operation failed.",
-	tooltip_campaign:
-		"🕹️ Write a NEEES emulator from scratch following the in-game tutorials and documentation.",
-	tooltip_free_mode:
-		"💻 Write an emulator for your favorite platform using the including frontend and tools.",
 	unlocks: "Unlocks",
 	using_bugged_emulator: "Using BrokenNEEES ❌",
 	using_default_emulator: "Using BrokenNEEES ⚠️",

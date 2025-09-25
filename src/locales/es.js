@@ -243,10 +243,6 @@ export default {
 	tests_video_running: "🎥  Corriendo prueba de video:",
 	tests_warnings_found: "⚠️  Advertencias encontradas.",
 	the_operation_failed: "La operación falló.",
-	tooltip_campaign:
-		"🕹️ Escribe un emulador de NEEES desde cero siguiendo los tutoriales y la documentación del juego.",
-	tooltip_free_mode:
-		"💻 Escribe un emulador para tu plataforma favorita usando el frontend y herramientas incluidos.",
 	unlocks: "Desbloquea",
 	using_bugged_emulator: "Usando BrokenNEEES ❌",
 	using_default_emulator: "Usando BrokenNEEES ⚠️",

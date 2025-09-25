@@ -12,6 +12,7 @@ import {
 import classNames from "classnames";
 import _ from "lodash";
 import filesystem, { Drive } from "../../../filesystem";
+import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
@@ -33,6 +34,7 @@ export default class EmulatorRunner extends PureComponent {
 
 		const isRunning = rom && !error;
 		const currentLevel = Level.current;
+		const isFreeMode = currentLevel.id === Book.FREE_MODE_LEVEL;
 
 		let ppuSuffix = "";
 		if (this._emulatorSettings.usePPU) {
@@ -73,79 +75,81 @@ export default class EmulatorRunner extends PureComponent {
 						"d-none d-lg-flex d-xl-flex d-xxl-flex"
 					)}
 				>
-					<div className={styles.unitGroup}>
-						<div className={classNames(styles.column, styles.units)}>
-							<div className={styles.row}>
-								<Unit
-									icon="🧠"
-									name={locales.get("cpu")}
-									completed={this._unlockedUnits.useCPU}
-									active={this._emulatorSettings.useCPU}
-									onToggle={() => this._onToggle("useCPU")}
-									style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
-								/>
-								<Unit
-									icon="🖥️"
-									name={locales.get("ppu")}
-									completed={this._unlockedUnits.usePPU}
-									active={this._emulatorSettings.usePPU}
-									onToggle={() => this._onToggle("usePPU")}
-									suffix={ppuSuffix}
-								/>
-								<Unit
-									icon="🔊"
-									name={locales.get("apu")}
-									completed={this._unlockedUnits.useAPU}
-									active={this._emulatorSettings.useAPU}
-									onToggle={() => this._onToggle("useAPU")}
-									suffix={apuSuffix}
-									style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
-								/>
+					{!isFreeMode && (
+						<div className={styles.unitGroup}>
+							<div className={classNames(styles.column, styles.units)}>
+								<div className={styles.row}>
+									<Unit
+										icon="🧠"
+										name={locales.get("cpu")}
+										completed={this._unlockedUnits.useCPU}
+										active={this._emulatorSettings.useCPU}
+										onToggle={() => this._onToggle("useCPU")}
+										style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
+									/>
+									<Unit
+										icon="🖥️"
+										name={locales.get("ppu")}
+										completed={this._unlockedUnits.usePPU}
+										active={this._emulatorSettings.usePPU}
+										onToggle={() => this._onToggle("usePPU")}
+										suffix={ppuSuffix}
+									/>
+									<Unit
+										icon="🔊"
+										name={locales.get("apu")}
+										completed={this._unlockedUnits.useAPU}
+										active={this._emulatorSettings.useAPU}
+										onToggle={() => this._onToggle("useAPU")}
+										suffix={apuSuffix}
+										style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
+									/>
+								</div>
+								<div className={styles.row}>
+									<Unit
+										icon="💾"
+										name={locales.get("cartridge")}
+										completed={this._unlockedUnits.useCartridge}
+										active={this._emulatorSettings.useCartridge}
+										onToggle={() => this._onToggle("useCartridge")}
+										style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
+									/>
+									<Unit
+										icon="🎮"
+										name={locales.get("controller")}
+										completed={this._unlockedUnits.useController}
+										active={this._emulatorSettings.useController}
+										onToggle={() => this._onToggle("useController")}
+									/>
+									<Unit
+										icon="🗜️"
+										name={locales.get("mappers")}
+										completed={this._unlockedUnits.useMappers}
+										active={this._emulatorSettings.useMappers}
+										onToggle={() => this._onToggle("useMappers")}
+										style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
+										customInactiveIcon="⚠️"
+										customInactiveMessage="using_default_emulator"
+									/>
+								</div>
 							</div>
-							<div className={styles.row}>
-								<Unit
-									icon="💾"
-									name={locales.get("cartridge")}
-									completed={this._unlockedUnits.useCartridge}
-									active={this._emulatorSettings.useCartridge}
-									onToggle={() => this._onToggle("useCartridge")}
-									style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
-								/>
-								<Unit
-									icon="🎮"
-									name={locales.get("controller")}
-									completed={this._unlockedUnits.useController}
-									active={this._emulatorSettings.useController}
-									onToggle={() => this._onToggle("useController")}
-								/>
-								<Unit
-									icon="🗜️"
-									name={locales.get("mappers")}
-									completed={this._unlockedUnits.useMappers}
-									active={this._emulatorSettings.useMappers}
-									onToggle={() => this._onToggle("useMappers")}
-									style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
-									customInactiveIcon="⚠️"
-									customInactiveMessage="using_default_emulator"
-								/>
-							</div>
+							<Unit
+								icon="🔥"
+								name={locales.get("hot_reload")}
+								completed={true}
+								active={this._emulatorSettings.withHotReload}
+								onToggle={() => this._onToggle("withHotReload")}
+								className={classNames(styles.units, styles.standaloneUnit)}
+								style={{ borderRadius: COMPONENT_BORDER_RADIUS }}
+								customActiveMessage="yes"
+								customInactiveMessage="no"
+							/>
 						</div>
-						<Unit
-							icon="🔥"
-							name={locales.get("hot_reload")}
-							completed={true}
-							active={this._emulatorSettings.withHotReload}
-							onToggle={() => this._onToggle("withHotReload")}
-							className={classNames(styles.units, styles.standaloneUnit)}
-							style={{ borderRadius: COMPONENT_BORDER_RADIUS }}
-							customActiveMessage="yes"
-							customInactiveMessage="no"
-						/>
-					</div>
+					)}
 					<div
 						className={classNames(
 							styles.dragMessage,
-							"d-none d-xl-flex d-xxl-flex"
+							isFreeMode ? "d-flex" : "d-none d-xl-flex d-xxl-flex"
 						)}
 						onClick={this._openROM}
 					>
@@ -198,6 +202,7 @@ export default class EmulatorRunner extends PureComponent {
 
 				<pre
 					className={styles.info}
+					style={{ display: isFreeMode ? "none" : undefined }}
 					ref={(ref) => {
 						this._info = ref;
 					}}

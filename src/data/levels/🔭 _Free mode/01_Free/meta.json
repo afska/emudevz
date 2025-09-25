@@ -1,0 +1,43 @@
+{
+	"name": {
+		"en": "🔭 Free mode",
+		"es": "🔭 Modo libre"
+	},
+	"ui": {
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"availableCommands": ["clear", "help", "repl", "test", "ls", "cd", "cp", "touch", "mkdir", "rm", "mv", "open", "find", "download", "upload", "disk", "root"]
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom",
+		"canPinEmulator": false
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": ["cartridge.js", "bus.js", "ppu.js"],
+		"mainTestFile": "ppu.js"
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}
