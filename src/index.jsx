@@ -27,8 +27,12 @@ window.EmuDevz = {
 	isRunningEmulator() {
 		return this.emulation != null;
 	},
+	isDebugging() {
+		return this.state.isRunningDebugger;
+	},
 	state: {
 		isRunningEmulatorTest: false,
+		isRunningDebugger: false,
 		lastOpenNewTabTime: 0,
 	},
 };

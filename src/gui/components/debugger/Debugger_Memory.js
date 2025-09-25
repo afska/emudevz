@@ -87,6 +87,11 @@ export default class Debugger_Memory {
 				(v = this._memRegion) => (this._memRegion = v),
 				REGIONS.map((r) => r.label)
 			);
+			if (ImGui.IsItemHovered()) {
+				ImGui.SetTooltip(
+					"If reads have side-effects, only run them if `!EmuDevz.isDebugging()`"
+				);
+			}
 		});
 
 		const region = REGIONS[this._memRegion];

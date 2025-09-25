@@ -29,26 +29,31 @@ export default class DebuggerGUI {
 	}
 
 	draw() {
-		widgets.window("Debugger", {}, () => {
-			if (ImGui.BeginTabBar("Tabs")) {
-				this._drawRunButtons();
+		try {
+			window.EmuDevz.state.isRunningDebugger = true;
+			widgets.window("Debugger", {}, () => {
+				if (ImGui.BeginTabBar("Tabs")) {
+					this._drawRunButtons();
 
-				const tabs = [
-					{ name: "Memory", pane: this.memory },
-					{ name: "CPU", pane: this.cpu },
-					{ name: "PPU", pane: this.ppu },
-					{ name: "APU", pane: this.apu },
-					{ name: "Controllers", pane: this.external },
-					{ name: "Logs", pane: this.logs },
-				];
-				for (let { name, pane } of tabs) {
-					widgets.simpleTab(this, name, () => pane.draw());
+					const tabs = [
+						{ name: "Memory", pane: this.memory },
+						{ name: "CPU", pane: this.cpu },
+						{ name: "PPU", pane: this.ppu },
+						{ name: "APU", pane: this.apu },
+						{ name: "Controllers", pane: this.external },
+						{ name: "Logs", pane: this.logs },
+					];
+					for (let { name, pane } of tabs) {
+						widgets.simpleTab(this, name, () => pane.draw());
+					}
+
+					ImGui.EndTabBar();
+					this.selectedTab = null;
 				}
-
-				ImGui.EndTabBar();
-				this.selectedTab = null;
-			}
-		});
+			});
+		} finally {
+			window.EmuDevz.state.isRunningDebugger = false;
+		}
 	}
 
 	destroy() {
