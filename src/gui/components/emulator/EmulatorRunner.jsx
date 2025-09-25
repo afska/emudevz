@@ -152,7 +152,10 @@ export default class EmulatorRunner extends PureComponent {
 						📦 {locales.get("drag_and_drop_here")}
 					</div>
 					<div className={styles.row}>
-						<div style={{ opacity: isRunning ? 1 : 0 }} className={styles.row}>
+						<div
+							style={{ display: isRunning ? "flex" : "none" }}
+							className={styles.row}
+						>
 							<span className={styles.label}>⚡️</span>
 							<span id="fps" className={styles.label}>
 								00
