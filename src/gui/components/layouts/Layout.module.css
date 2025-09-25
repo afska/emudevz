@@ -93,3 +93,9 @@
 	right: 8px;
 	top: 8px;
 }
+
+.handle {
+	position: absolute;
+	user-select: none;
+	z-index: 10;
+}

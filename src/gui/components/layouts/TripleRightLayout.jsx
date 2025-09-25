@@ -19,7 +19,17 @@ export default class TripleLayout extends Layout {
 		return "Right";
 	}
 
-	state = { selected: "Right", lastVerticalSelection: "Bottom", Pin: null };
+	static defaultProps = { resizable: false };
+
+	state = {
+		selected: "Right",
+		lastVerticalSelection: "Bottom",
+		Pin: null,
+		leftWidthPercent: 50,
+		topHeightPercent: 50,
+		isDragging: false,
+		dragType: null,
+	};
 
 	render() {
 		this.requireComponents();
@@ -27,10 +37,26 @@ export default class TripleLayout extends Layout {
 		const { selected, Pin, SecondaryPin } = this.state;
 
 		return (
-			<div className={styles.container} onKeyDownCapture={this.onKeyDown}>
+			<div
+				className={styles.container}
+				onKeyDownCapture={this.onKeyDown}
+				ref={(ref) => {
+					this._containerRef = ref;
+				}}
+				style={{ position: "relative" }}
+			>
 				<div
 					className={classNames(styles.leftColumn, styles.column)}
-					style={{ display: Pin ? "none" : "block" }}
+					style={{
+						display: Pin ? "none" : "block",
+						width: this.props.resizable
+							? `${this.state.leftWidthPercent}%`
+							: undefined,
+						position: "relative",
+					}}
+					ref={(ref) => {
+						this._leftMainRef = ref;
+					}}
 				>
 					<div
 						className={classNames(
@@ -38,6 +64,11 @@ export default class TripleLayout extends Layout {
 							styles.row,
 							selected === "Top" ? styles.selected : styles.unselected
 						)}
+						style={{
+							height: this.props.resizable
+								? `${this.state.topHeightPercent}%`
+								: undefined,
+						}}
 						onMouseDown={(e) => {
 							this.focus("Top");
 						}}
@@ -49,12 +80,32 @@ export default class TripleLayout extends Layout {
 						/>
 					</div>
 
+					{/* horizontal resize handle between top and bottom */}
+					{this.props.resizable && !Pin && (
+						<div
+							className={styles.handle}
+							onMouseDown={this._onHorizontalHandleMouseDown}
+							style={{
+								left: 0,
+								right: 0,
+								top: `calc(${this.state.topHeightPercent}% - 3px)`,
+								height: 6,
+								cursor: "row-resize",
+							}}
+						/>
+					)}
+
 					<div
 						className={classNames(
 							styles.bottomRow,
 							styles.row,
 							selected === "Bottom" ? styles.selected : styles.unselected
 						)}
+						style={{
+							height: this.props.resizable
+								? `${100 - this.state.topHeightPercent}%`
+								: undefined,
+						}}
 						onMouseDown={(e) => {
 							this.focus("Bottom");
 						}}
@@ -76,6 +127,12 @@ export default class TripleLayout extends Layout {
 						)}
 						onMouseDown={(e) => {
 							this.focus("Top");
+						}}
+						style={{
+							width: this.props.resizable
+								? `${this.state.leftWidthPercent}%`
+								: undefined,
+							position: "relative",
 						}}
 					>
 						<IconButton
@@ -102,6 +159,11 @@ export default class TripleLayout extends Layout {
 						onMouseDown={(e) => {
 							this.focus("Right");
 						}}
+						style={{
+							width: this.props.resizable
+								? `${100 - this.state.leftWidthPercent}%`
+								: undefined,
+						}}
 					>
 						<IconButton
 							Icon={FaTimes}
@@ -123,7 +185,12 @@ export default class TripleLayout extends Layout {
 						styles.column,
 						selected === "Right" ? styles.selected : styles.unselected
 					)}
-					style={{ display: SecondaryPin ? "none" : "block" }}
+					style={{
+						display: SecondaryPin ? "none" : "block",
+						width: this.props.resizable
+							? `${100 - this.state.leftWidthPercent}%`
+							: undefined,
+					}}
 					onMouseDown={(e) => {
 						this.focus("Right");
 					}}
@@ -134,6 +201,21 @@ export default class TripleLayout extends Layout {
 						}}
 					/>
 				</div>
+
+				{/* vertical resize handle between left and right */}
+				{this.props.resizable && (
+					<div
+						className={styles.handle}
+						onMouseDown={this._onVerticalHandleMouseDown}
+						style={{
+							top: 0,
+							bottom: 0,
+							left: `calc(${this.state.leftWidthPercent}% - 3px)`,
+							width: 6,
+							cursor: "col-resize",
+						}}
+					/>
+				)}
 			</div>
 		);
 	}
@@ -180,6 +262,65 @@ export default class TripleLayout extends Layout {
 		}
 	};
 
+	_onVerticalHandleMouseDown = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		this._startDrag("vertical");
+	};
+
+	_onHorizontalHandleMouseDown = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		this._startDrag("horizontal");
+	};
+
+	_startDrag(type) {
+		this.setState({ isDragging: true, dragType: type });
+		window.addEventListener("mousemove", this._onGlobalMouseMove);
+		window.addEventListener("mouseup", this._onGlobalMouseUp, { once: true });
+	}
+
+	_onGlobalMouseMove = (e) => {
+		if (!this.state.isDragging) return;
+
+		if (this.state.dragType === "vertical") {
+			const container = this._containerRef;
+			if (!container) return;
+			const rect = container.getBoundingClientRect();
+			const percent = ((e.clientX - rect.left) / rect.width) * 100;
+			this.setState(
+				{ leftWidthPercent: this._clamp(percent, 10, 90) },
+				this._emitWindowResize
+			);
+			return;
+		}
+
+		if (this.state.dragType === "horizontal") {
+			const left = this._leftMainRef;
+			if (!left) return;
+			const rect = left.getBoundingClientRect();
+			const percent = ((e.clientY - rect.top) / rect.height) * 100;
+			this.setState(
+				{ topHeightPercent: this._clamp(percent, 10, 90) },
+				this._emitWindowResize
+			);
+		}
+	};
+
+	_onGlobalMouseUp = () => {
+		this.setState({ isDragging: false, dragType: null });
+		window.removeEventListener("mousemove", this._onGlobalMouseMove);
+		this._emitWindowResize();
+	};
+
+	_emitWindowResize = () => {
+		window.dispatchEvent(new Event("resize"));
+	};
+
+	_clamp(value, min, max) {
+		return Math.min(max, Math.max(min, value));
+	}
+
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
 			pin: this._onPin,
@@ -191,5 +332,8 @@ export default class TripleLayout extends Layout {
 
 	componentWillUnmount() {
 		this._subscriber.release();
+
+		window.removeEventListener("mousemove", this._onGlobalMouseMove);
+		window.removeEventListener("mouseup", this._onGlobalMouseUp);
 	}
 }
