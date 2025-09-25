@@ -21,6 +21,9 @@ export default class EmulatorBuilder {
 	async build(withLastCode = false) {
 		let mainModule = null;
 		let CPUMemory = null;
+		let Cartridge = undefined;
+		let Controller = undefined;
+		let CPU = undefined;
 		let PPU = null;
 		let APU = null;
 
@@ -37,6 +40,9 @@ export default class EmulatorBuilder {
 		if (!this.hardware) {
 			mainModule = await this._evaluate(withLastCode);
 			CPUMemory = mainModule.CPUMemory;
+			Cartridge = this.withUserCartridge ? mainModule.Cartridge : undefined;
+			Controller = this.withUserController ? mainModule.Controller : undefined;
+			CPU = this.withUserCPU ? mainModule.CPU : undefined;
 			PPU = mainModule.PPU;
 			APU = mainModule.APU;
 
@@ -51,11 +57,17 @@ export default class EmulatorBuilder {
 
 			if (withLastCode && this.withUserPPU && this.withUsePartialPPU) {
 				const partialModule = await this._evaluate(false);
+				if (this.withUserCartridge) Cartridge = partialModule.Cartridge;
+				if (this.withUserController) Controller = partialModule.Controller;
+				if (this.withUserCPU) CPU = partialModule.CPU;
 				CPUMemory = partialModule.CPUMemory;
 				PPU = partialModule.PPU;
 			}
 			if (withLastCode && this.withUserAPU && this.withUsePartialAPU) {
 				const partialModule = await this._evaluate(false);
+				if (this.withUserCartridge) Cartridge = partialModule.Cartridge;
+				if (this.withUserController) Controller = partialModule.Controller;
+				if (this.withUserCPU) CPU = partialModule.CPU;
 				CPUMemory = partialModule.CPUMemory;
 				APU = partialModule.APU;
 			}
@@ -63,8 +75,8 @@ export default class EmulatorBuilder {
 
 		return BrokenNEEES({
 			CPUMemory: useCPUMemory ? CPUMemory : undefined,
-			Cartridge: this.withUserCartridge ? mainModule.Cartridge : undefined,
-			CPU: this.withUserCPU ? mainModule.CPU : undefined,
+			Cartridge,
+			CPU,
 			PPU:
 				this.customPPU != null
 					? this.customPPU
@@ -77,7 +89,7 @@ export default class EmulatorBuilder {
 					: this.withUserAPU
 					? APU
 					: undefined,
-			Controller: this.withUserController ? mainModule.Controller : undefined,
+			Controller,
 			mappers: this.withUserMappers ? mainModule.mappers : undefined,
 			omitReset: this.omitReset,
 			unbroken: this.unbroken,
