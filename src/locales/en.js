@@ -10,11 +10,6 @@ export default {
 	button_play: "✨ Play",
 	button_quit: "🚪 Quit",
 	button_settings: "⚙️ Settings",
-	mode_free: "🔭 Free mode",
-	tooltip_campaign:
-		"🕹️ Write a NEEES emulator from scratch following the in-game tutorials and documentation.",
-	tooltip_free_mode:
-		"💻 Write an emulator for your favorite platform using the including frontend and tools.",
 	byte: "byte",
 	bytes: "bytes",
 	calculator: "Calculator",
@@ -71,7 +66,9 @@ export default {
 	creating_directory: "Creating directory",
 	creating_file: "Creating file",
 	crt_filter: "CRT filter",
+	current_level: " (current level)",
 	decimal: "Decimal",
+	default_bus: " [default bus]",
 	delete: "Delete",
 	deleting: "Deleting",
 	disconnected: "🔌  Disconnected. Use the `chat` command to talk again!",
@@ -127,6 +124,7 @@ export default {
 	language: "Language",
 	language_en: "English",
 	language_es: "Spanish",
+	last_version: " (last version)",
 	letsplay_unlock_msg1: "New",
 	letsplay_unlock_msg2: "NEEES game",
 	letsplay_unlock_msg3: "unlocked!",
@@ -135,6 +133,7 @@ export default {
 	mappers: "Mappers",
 	memory_viewer: "Memory Viewer",
 	mkdir_parent_flag: "(to create multiple directories at once, run `mkdir -p`)",
+	mode_free: "🔭 Free mode",
 	music: "Music",
 	no: "No",
 	no_open_files: "🚫 No open files!<br>🔍 Use <code>Ctrl+P</code> to search.",
@@ -232,6 +231,10 @@ export default {
 	tests_video_running: "🎥  Running video test:",
 	tests_warnings_found: "⚠️  Warnings found.",
 	the_operation_failed: "The operation failed.",
+	tooltip_campaign:
+		"🕹️ Write a NEEES emulator from scratch following the in-game tutorials and documentation.",
+	tooltip_free_mode:
+		"💻 Write an emulator for your favorite platform using the including frontend and tools.",
 	unlocks: "Unlocks",
 	using_bugged_emulator: "Using BrokenNEEES ❌",
 	using_default_emulator: "Using BrokenNEEES ⚠️",

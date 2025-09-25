@@ -32,6 +32,33 @@ export default class EmulatorRunner extends PureComponent {
 		const { rom, name, error, saveState } = this.props;
 
 		const isRunning = rom && !error;
+		const currentLevel = Level.current;
+
+		let ppuSuffix = "";
+		if (this._emulatorSettings.usePPU) {
+			ppuSuffix = currentLevel.usesPartialPPU
+				? locales.get("current_level")
+				: currentLevel.usesPartialAPU
+				? locales.get("last_version")
+				: "";
+		}
+		let apuSuffix = "";
+		if (this._emulatorSettings.useAPU) {
+			apuSuffix = currentLevel.usesPartialAPU
+				? locales.get("current_level")
+				: currentLevel.usesPartialPPU
+				? locales.get("last_version")
+				: "";
+		}
+
+		if (
+			this._emulatorSettings.usePPU &&
+			this._emulatorSettings.useAPU &&
+			(currentLevel.usesPartialPPU || currentLevel.usesPartialAPU)
+		) {
+			ppuSuffix += locales.get("default_bus");
+			apuSuffix += locales.get("default_bus");
+		}
 
 		return (
 			<div
@@ -63,6 +90,7 @@ export default class EmulatorRunner extends PureComponent {
 									completed={this._unlockedUnits.usePPU}
 									active={this._emulatorSettings.usePPU}
 									onToggle={() => this._onToggle("usePPU")}
+									suffix={ppuSuffix}
 								/>
 								<Unit
 									icon="🔊"
@@ -70,6 +98,7 @@ export default class EmulatorRunner extends PureComponent {
 									completed={this._unlockedUnits.useAPU}
 									active={this._emulatorSettings.useAPU}
 									onToggle={() => this._onToggle("useAPU")}
+									suffix={apuSuffix}
 									style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
 								/>
 							</div>

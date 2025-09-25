@@ -18,7 +18,7 @@ const timeAgo = {
 };
 
 export default {
-	get(key, defaultValue = "[?]") {
+	get(key, defaultValue = "[?]" + key) {
 		const strings = locales[this.language] ?? {};
 
 		return strings[key] ?? locales[DEFAULT_LANGUAGE][key] ?? defaultValue;

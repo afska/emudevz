@@ -16,18 +16,19 @@ export default class Unit extends PureComponent {
 			customActiveMessage,
 			className,
 			onToggle,
+			suffix = "",
 			style,
 			...rest
 		} = this.props;
 
-		const message = active
+		const messageKey = active
 			? customActiveMessage ?? "using_your_emulator"
 			: customInactiveMessage ?? "using_bugged_emulator";
 		const statusIcon = active ? "✅" : customInactiveIcon ?? "❌";
 
 		return (
 			<Tooltip
-				title={`${icon} ${name}: ${locales.get(message)}`}
+				title={`${icon} ${name}: ${locales.get(messageKey)}` + suffix}
 				placement="right"
 				onClick={onToggle}
 			>

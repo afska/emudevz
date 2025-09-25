@@ -310,6 +310,14 @@ export default class Level {
 		return this.ui.debuggerPinType ?? "-secondary";
 	}
 
+	get usesPartialPPU() {
+		return this.id.startsWith("ppu-");
+	}
+
+	get usesPartialAPU() {
+		return this.id.startsWith("apu-");
+	}
+
 	_saveSnapshotIfNeeded() {
 		if (!this.memory.content.multifile) return;
 
