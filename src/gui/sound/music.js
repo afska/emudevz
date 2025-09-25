@@ -44,13 +44,23 @@ class Music {
 
 		this._volume = this._loadVolume();
 		this._track = this._loadTrack();
-		this._playCurrentTrack();
+		const startSecond = this._loadSecond();
+		this._playCurrentTrack(startSecond);
 		this._hasStarted = true;
 	}
 
 	next() {
 		if (this._audio) this._audio.pause();
+
 		this._track = (this._track + 1) % TRACKS.length;
+		this._saveTrack();
+		this._playCurrentTrack();
+	}
+
+	previous() {
+		if (this._audio) this._audio.pause();
+
+		this._track = (this._track - 1 + TRACKS.length) % TRACKS.length;
 		this._saveTrack();
 		this._playCurrentTrack();
 	}
@@ -69,10 +79,28 @@ class Music {
 		bus.emit("resume-music");
 	}
 
-	_playCurrentTrack() {
+	getCurrentTime() {
+		if (this._audio == null) return 0;
+
+		const value = this._audio.currentTime || 0;
+		return isFinite(value) && value >= 0 ? value : 0;
+	}
+
+	_playCurrentTrack(startSecond = 0) {
 		this._saveTrackInfo();
 		this._audio = new Audio(MUSIC_DIR + TRACKS[this._track].file);
 		this._audio.volume = this._volume;
+
+		if (startSecond > 0) {
+			this._audio.addEventListener(
+				"loadedmetadata",
+				() => {
+					this._audio.currentTime = startSecond;
+				},
+				{ once: true }
+			);
+		}
+
 		this._audio.play();
 		this._audio.onended = () => {
 			this.next();
@@ -89,6 +117,13 @@ class Music {
 	_loadTrack() {
 		const value = store.getState().savedata.musicTrack;
 		if (isFinite(value) && value >= 0 && value < TRACKS.length) return value;
+
+		return 0;
+	}
+
+	_loadSecond() {
+		const value = store.getState().savedata.musicSecond;
+		if (isFinite(value) && value >= 0) return value;
 
 		return 0;
 	}

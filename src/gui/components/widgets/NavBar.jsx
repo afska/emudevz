@@ -134,14 +134,12 @@ class NavBar extends PureComponent {
 									"?"
 								)
 							}
-							onClick={() => {
-								if (music.isPaused) music.resume();
-								else {
-									if (window.EmuDevz.isRunningEmulator()) music.pause();
-									else music.next();
-								}
-
-								this.forceUpdate();
+							onClick={(e) => {
+								this._onMusicChange(() => music.next());
+							}}
+							onContextMenu={(e) => {
+								e.preventDefault();
+								this._onMusicChange(() => music.previous());
 							}}
 						/>
 						{book.canReset(level) && (
@@ -206,6 +204,16 @@ class NavBar extends PureComponent {
 
 	_closeImageDiff = () => {
 		this._setImageDiff(null);
+	};
+
+	_onMusicChange = (action) => {
+		if (music.isPaused) music.resume();
+		else {
+			if (window.EmuDevz.isRunningEmulator()) music.pause();
+			else action();
+		}
+
+		this.forceUpdate();
 	};
 
 	componentDidMount() {

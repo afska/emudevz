@@ -115,3 +115,10 @@ const updateCrtClass = () => {
 };
 updateCrtClass();
 store.subscribe(updateCrtClass);
+
+// Persist current music second on page unload
+window.addEventListener("beforeunload", () => {
+	const second = music.getCurrentTime();
+	if (isFinite(second) && second >= 0)
+		store.dispatch.savedata.setMusicSecond(second);
+});

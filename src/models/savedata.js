@@ -36,6 +36,7 @@ const INITIAL_STATE = () => ({
 	emulatorVolume: 0,
 	musicVolume: 0.3,
 	musicTrack: 0,
+	musicSecond: 0,
 	trackInfo: null,
 	openFiles: [Drive.MAIN_FILE],
 	selectedFile: Drive.MAIN_FILE,
@@ -113,7 +114,10 @@ export default {
 			return { ...state, musicVolume };
 		},
 		setMusicTrack(state, musicTrack) {
-			return { ...state, musicTrack };
+			return { ...state, musicTrack, musicSecond: 0 };
+		},
+		setMusicSecond(state, musicSecond) {
+			return { ...state, musicSecond };
 		},
 		setTrackInfo(state, trackInfo) {
 			return { ...state, trackInfo };
