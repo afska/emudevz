@@ -235,15 +235,17 @@ export default {
 					return;
 				}
 
-				const isAlreadyOpen = openFiles.some(
+				const alreadyOpenFile = openFiles.find(
 					(it) => filesystem.normalize(it) === filesystem.normalize(filePath)
 				);
 
-				if (!isAlreadyOpen) {
+				if (alreadyOpenFile == null) {
 					this.setOpenFiles([...openFiles, filePath]);
 					this.setSelectedFile(filePath);
-					bus.emit("file-opened");
+				} else {
+					this.setSelectedFile(alreadyOpenFile);
 				}
+				bus.emit("file-opened");
 			},
 			closeFile(filePath, _state_) {
 				const state = _state_[KEY];

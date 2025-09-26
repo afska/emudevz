@@ -151,7 +151,7 @@ export default class Level {
 		const instance = this.$layout.findInstance(Component.name);
 		if (instance?.state.type === "demoRom") return false;
 
-		return (
+		return !!(
 			instance ||
 			(Component.name === "CodeEditor" || Component.name === "TV"
 				? this.$layout.findInstance("MultiFile")
