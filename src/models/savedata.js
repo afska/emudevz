@@ -227,10 +227,15 @@ export default {
 					return;
 				}
 
-				if (!openFiles.includes(filePath))
+				const isAlreadyOpen = openFiles.some(
+					(it) => filesystem.normalize(it) === filesystem.normalize(filePath)
+				);
+
+				if (!isAlreadyOpen) {
 					this.setOpenFiles([...openFiles, filePath]);
-				this.setSelectedFile(filePath);
-				bus.emit("file-opened");
+					this.setSelectedFile(filePath);
+					bus.emit("file-opened");
+				}
 			},
 			closeFile(filePath, _state_) {
 				const state = _state_[KEY];

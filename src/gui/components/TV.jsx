@@ -134,7 +134,7 @@ export default class TV extends PureComponent {
 
 		switch (type) {
 			case "media": {
-				if (!content) return <TVNoise />;
+				if (content == null) return <TVNoise />;
 
 				return (
 					<PanZoom
@@ -150,7 +150,7 @@ export default class TV extends PureComponent {
 				);
 			}
 			case "markdown": {
-				if (!content) return <TVNoise />;
+				if (content == null) return <TVNoise />;
 
 				return <MarkdownView content={content} />;
 			}
