@@ -46,11 +46,9 @@ export default class Emulation {
 						if (have > target + AUDIO_DRIFT_THRESHOLD) n--;
 						else if (have < target - AUDIO_DRIFT_THRESHOLD) n++;
 						this.neees.samples(n);
-
-						this._updateSound();
-					} else if (this.isDebugging) {
-						this._updateSound();
 					}
+
+					this._updateSound(need);
 				} catch (error) {
 					onError(error);
 				}
@@ -109,7 +107,6 @@ export default class Emulation {
 					} else {
 						this.neees.frame();
 					}
-					this._updateSound();
 				}
 			} catch (error) {
 				onError(error);
@@ -211,9 +208,13 @@ export default class Emulation {
 		}
 	};
 
-	_updateSound() {
-		this.speaker.writeSamples(this.samples);
-		this.samples = [];
+	_updateSound(maxCount) {
+		const take = Math.min(maxCount, this.samples.length);
+
+		const out = this.samples.slice(0, take);
+		this.speaker.writeSamples(out);
+
+		this.samples = this.samples.slice(take);
 	}
 
 	_updateInput(input) {
