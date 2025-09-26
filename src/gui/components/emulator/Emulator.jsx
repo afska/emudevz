@@ -6,6 +6,7 @@ import locales from "../../../locales";
 import store from "../../../store";
 import { toast } from "../../../utils";
 import { bus } from "../../../utils";
+import { getActiveScreenSize } from "../../screen";
 import music from "../../sound/music";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
@@ -41,9 +42,14 @@ export default class Emulator extends Component {
 		} = this.props;
 
 		const innerClassName = crt ? styles.crtNoise : styles.box;
+		const { width: screenW, height: screenH } = getActiveScreenSize();
+		const dynamicStyle = { aspectRatio: `${screenW} / ${screenH}` };
 
 		return (
-			<div className={!screen ? styles.content : ""} style={style}>
+			<div
+				className={!screen ? styles.content : ""}
+				style={{ ...dynamicStyle, ...style }}
+			>
 				{error ? (
 					<div className={styles.message}>
 						<span

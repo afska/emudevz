@@ -7,7 +7,7 @@
 	justify-content: center;
 	align-items: center;
 
-	aspect-ratio: 256 / 240;
+	/* aspect-ratio set dynamically in JS for free mode */
 
 	overflow: auto;
 	padding: 8px;

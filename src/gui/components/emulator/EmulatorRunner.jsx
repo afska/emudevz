@@ -274,7 +274,8 @@ export default class EmulatorRunner extends PureComponent {
 	componentDidMount() {
 		this._subscriber = bus.subscribe({
 			"sync-emulator": this._onEmulatorSync,
-			"unit-unlocked": this._onUnitUnlocked,
+			"unit-unlocked": this._refreshView,
+			"free-mode-settings-changed": this._refreshView,
 		});
 	}
 
@@ -449,7 +450,7 @@ export default class EmulatorRunner extends PureComponent {
 		this._reload(false);
 	};
 
-	_onUnitUnlocked = () => {
+	_refreshView = () => {
 		this.forceUpdate();
 	};
 

@@ -177,7 +177,7 @@ export default {
 	rm_with_files:
 		"⚠️  This directory contains ~files~. Delete everything? ~(y/N)~",
 	rom_extension: "ROM extension",
-	rom_extension_examples: "e.g.: .neees, .gb, .gbc, .md",
+	rom_extension_examples: "e.g.: .neees, .gb",
 	root_enabled: "Root privileges enabled. Use with caution!",
 	root_games_unlocked: "All games unlocked.",
 	root_undid_level: "Undid level: ",

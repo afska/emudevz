@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales from "../../../locales";
+import { bus } from "../../../utils";
 import styles from "./SettingsModal.module.css";
 
 class FreeModeSettings extends PureComponent {
@@ -62,6 +63,7 @@ class FreeModeSettings extends PureComponent {
 
 	_onClose = () => {
 		this.props.onClose();
+		bus.emit("free-mode-settings-changed");
 	};
 
 	_set(values) {
