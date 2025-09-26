@@ -18,6 +18,7 @@ import locales from "../../../locales";
 import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
 import { bus, filepicker, toast } from "../../../utils";
+import { getFilePickerFilter } from "../../rom";
 import music from "../../sound/music";
 import IconButton from "../widgets/IconButton";
 import InputTypeToggle from "../widgets/InputTypeToggle";
@@ -416,7 +417,7 @@ export default class EmulatorRunner extends PureComponent {
 	};
 
 	_openROM = () => {
-		filepicker.open(".neees,.nes", (fileContent, fileName) => {
+		filepicker.open(getFilePickerFilter(), (fileContent, fileName) => {
 			const name = $path.parse(fileName).name;
 			this.props.onLoadROM(fileContent, name);
 		});

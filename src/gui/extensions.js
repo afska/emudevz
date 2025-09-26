@@ -2,6 +2,7 @@ import $path from "path-browserify-esm";
 import Drive from "../filesystem/Drive";
 import CodeEditor from "./components/CodeEditor";
 import TV from "./components/TV";
+import { getActiveRomExtensions } from "./rom";
 
 export default {
 	getTabIcon(filePath) {
@@ -11,17 +12,19 @@ export default {
 	},
 
 	getOptions(filePath) {
+		const extension = $path.parse(filePath).ext.toLowerCase();
+
+		if (getActiveRomExtensions().includes(extension))
+			return [TV, { type: "rom", binary: true }];
+
 		const map = {
 			".js": [CodeEditor, { language: "javascript" }],
 			".asm": [CodeEditor, { language: "asm" }],
 			".webp": [TV, { type: "media" }],
 			".png": [TV, { type: "media" }],
 			".md": [TV, { type: "markdown" }],
-			".neees": [TV, { type: "rom", binary: true }],
-			".nes": [TV, { type: "rom", binary: true }],
 		};
 
-		const extension = $path.parse(filePath).ext.toLowerCase();
 		return map[extension] ?? [CodeEditor, { language: "plaintext" }];
 	},
 };
