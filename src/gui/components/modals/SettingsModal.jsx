@@ -4,12 +4,12 @@ import Modal from "react-bootstrap/Modal";
 import { FaUndo } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import locales, { LANGUAGES } from "../locales";
-import { filepicker, savefile, toast } from "../utils";
-import Button from "./components/widgets/Button";
-import GamepadMapper from "./components/widgets/GamepadMapper";
-import IconButton from "./components/widgets/IconButton";
-import VolumeSlider from "./components/widgets/VolumeSlider";
+import locales, { LANGUAGES } from "../../../locales";
+import { filepicker, savefile, toast } from "../../../utils";
+import Button from "../widgets/Button";
+import GamepadMapper from "../widgets/GamepadMapper";
+import IconButton from "../widgets/IconButton";
+import VolumeSlider from "../widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
 
 const MARGIN = 16;

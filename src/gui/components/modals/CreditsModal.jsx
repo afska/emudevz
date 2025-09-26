@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import Modal from "react-bootstrap/Modal";
-import locales from "../locales";
+import locales from "../../../locales";
 import styles from "./CreditsModal.module.css";
 
 const Section = ({ title, children, ...rest }) => {

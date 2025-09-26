@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { connect } from "react-redux";
 import locales from "../../../locales";
-import styles from "../../SettingsModal.module.css";
+import styles from "./SettingsModal.module.css";
 
 class FreeModeSettings extends PureComponent {
 	render() {

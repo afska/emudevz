@@ -21,11 +21,11 @@ import Level from "../../../level/Level";
 import locales from "../../../locales";
 import { bus } from "../../../utils";
 import music from "../../sound/music";
-import CalculatorModal from "./CalculatorModal";
-import FreeModeSettings from "./FreeModeSettings";
+import CalculatorModal from "../modals/CalculatorModal";
+import FreeModeSettingsModal from "../modals/FreeModeSettingsModal";
+import ImageDiffModal from "../modals/ImageDiffModal";
+import LevelHistoryModal from "../modals/LevelHistoryModal";
 import IconButton from "./IconButton";
-import ImageDiffModal from "./ImageDiffModal";
-import LevelHistoryModal from "./LevelHistoryModal";
 import ProgressList from "./ProgressList";
 import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
@@ -58,7 +58,7 @@ class NavBar extends PureComponent {
 
 		return (
 			<div className={styles.navbar}>
-				<FreeModeSettings
+				<FreeModeSettingsModal
 					open={this.state.isFreeModeSettingsOpen}
 					onClose={this._closeFreeModeSettings}
 				/>

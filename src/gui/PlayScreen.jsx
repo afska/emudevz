@@ -7,8 +7,8 @@ import Book from "../level/Book";
 import LevelLoader from "../level/LevelLoader";
 import locales from "../locales";
 import { bus } from "../utils";
-import ChapterSelectModal from "./ChapterSelectModal";
 import LevelScreen from "./LevelScreen";
+import ChapterSelectModal from "./components/modals/ChapterSelectModal";
 import styles from "./PlayScreen.module.css";
 
 const LEVELS_PATH = "levels";
