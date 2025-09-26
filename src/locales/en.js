@@ -231,6 +231,7 @@ export default {
 	tests_video_running: "🎥  Running video test:",
 	tests_warnings_found: "⚠️  Warnings found.",
 	the_operation_failed: "The operation failed.",
+	toggle_markdown_edit: "Toggle Markdown edit",
 	unlocks: "Unlocks",
 	using_bugged_emulator: "Using BrokenNEEES ❌",
 	using_default_emulator: "Using BrokenNEEES ⚠️",

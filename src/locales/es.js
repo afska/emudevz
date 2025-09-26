@@ -243,6 +243,7 @@ export default {
 	tests_video_running: "🎥  Corriendo prueba de video:",
 	tests_warnings_found: "⚠️  Advertencias encontradas.",
 	the_operation_failed: "La operación falló.",
+	toggle_markdown_edit: "Alternar edición de Markdown",
 	unlocks: "Desbloquea",
 	using_bugged_emulator: "Usando BrokenNEEES ❌",
 	using_default_emulator: "Usando BrokenNEEES ⚠️",

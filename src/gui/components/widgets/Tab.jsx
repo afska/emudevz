@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { FaArrowAltCircleLeft, FaTimes } from "react-icons/fa";
+import { FaArrowAltCircleLeft, FaBook, FaTimes } from "react-icons/fa";
 import classNames from "classnames";
 import locales from "../../../locales";
 import IconButton from "./IconButton";
@@ -11,8 +11,10 @@ export default class Tab extends PureComponent {
 		const {
 			title,
 			onPin,
+			onToggleMd,
 			onClose,
 			canPin = true,
+			canToggleMd = false,
 			canClose = true,
 			active = false,
 			dragging = false,
@@ -43,6 +45,14 @@ export default class Tab extends PureComponent {
 						Icon={FaArrowAltCircleLeft}
 						tooltip={locales.get("pin_left")}
 						onClick={onPin}
+						className={styles.pinButton}
+					/>
+				)}
+				{canToggleMd && (
+					<IconButton
+						Icon={FaBook}
+						tooltip={locales.get("toggle_markdown_edit")}
+						onClick={onToggleMd}
 						className={styles.pinButton}
 					/>
 				)}
