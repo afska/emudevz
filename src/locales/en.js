@@ -88,6 +88,7 @@ export default {
 	file_doesnt_exist1: "The file",
 	file_doesnt_exist2: "doesn't exist. Click here to create it.",
 	find_errors: "Find errors",
+	free_mode_settings: "Free mode settings",
 	go_back: "Go back",
 	golden_log: "Golden log",
 	help_basic:
@@ -175,6 +176,8 @@ export default {
 	rm_recursive_flag: "(to skip this check, run `rm -rf`)",
 	rm_with_files:
 		"⚠️  This directory contains ~files~. Delete everything? ~(y/N)~",
+	rom_extension: "ROM extension",
+	rom_extension_examples: "e.g.: .neees, .gb, .gbc, .md",
 	root_enabled: "Root privileges enabled. Use with caution!",
 	root_games_unlocked: "All games unlocked.",
 	root_undid_level: "Undid level: ",
@@ -187,6 +190,10 @@ export default {
 	save_state_loaded: "State loaded!",
 	save_state_not_found: "No save state available.",
 	save_state_saved: "State saved!",
+	screen_height: "Screen height",
+	screen_height_range: "1 to 600",
+	screen_width: "Screen width",
+	screen_width_range: "1 to 800",
 	scroll_left: "Scroll left",
 	scroll_right: "Scroll right",
 	search_files: "Search files...",

@@ -6,6 +6,7 @@ import {
 	FaChevronLeft,
 	FaChevronRight,
 	FaClock,
+	FaCog,
 	FaHome,
 	FaMusic,
 	FaPause,
@@ -21,6 +22,7 @@ import locales from "../../../locales";
 import { bus } from "../../../utils";
 import music from "../../sound/music";
 import CalculatorModal from "./CalculatorModal";
+import FreeModeSettings from "./FreeModeSettings";
 import IconButton from "./IconButton";
 import ImageDiffModal from "./ImageDiffModal";
 import LevelHistoryModal from "./LevelHistoryModal";
@@ -31,6 +33,7 @@ import styles from "./NavBar.module.css";
 class NavBar extends PureComponent {
 	state = {
 		isCalculatorOpen: false,
+		isFreeModeSettingsOpen: false,
 		imageDiffSequence: null,
 	};
 
@@ -55,6 +58,10 @@ class NavBar extends PureComponent {
 
 		return (
 			<div className={styles.navbar}>
+				<FreeModeSettings
+					open={this.state.isFreeModeSettingsOpen}
+					onClose={this._closeFreeModeSettings}
+				/>
 				<CalculatorModal
 					open={this.state.isCalculatorOpen}
 					onClose={this._closeCalculator}
@@ -110,6 +117,14 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
+						{isFreeMode && (
+							<IconButton
+								style={{ marginRight: 8 }}
+								Icon={FaCog}
+								tooltip={locales.get("free_mode_settings")}
+								onClick={this._openFreeModeSettings}
+							/>
+						)}
 						{book.canUseEmulator && canRunEmulator && (
 							<IconButton
 								style={{ marginRight: 8 }}
@@ -190,6 +205,14 @@ class NavBar extends PureComponent {
 
 	_closeCalculator = () => {
 		this.setState({ isCalculatorOpen: false });
+	};
+
+	_openFreeModeSettings = () => {
+		this.setState({ isFreeModeSettingsOpen: true });
+	};
+
+	_closeFreeModeSettings = () => {
+		this.setState({ isFreeModeSettingsOpen: false });
 	};
 
 	_openLevelHistory = () => {

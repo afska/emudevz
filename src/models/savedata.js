@@ -42,6 +42,11 @@ const INITIAL_STATE = () => ({
 	selectedFile: Drive.MAIN_FILE,
 	inputTypes: { 1: "keyboard", 2: "disconnected" }, // values: "keyboard" | "gamepad1" | "gamepad2" | "disconnected"
 	keyboardMappings: DEFAULT_KEY_MAP(),
+	freeModeSetings: {
+		romExtension: ".gb",
+		screenWidth: 240,
+		screenHeight: 160,
+	},
 	emulatorSettings: {
 		useCartridge: true,
 		useCPU: true,
@@ -130,6 +135,9 @@ export default {
 		},
 		setEmulatorSettings(state, emulatorSettings) {
 			return { ...state, emulatorSettings };
+		},
+		setFreeModeSetings(state, freeModeSetings) {
+			return { ...state, freeModeSetings };
 		},
 		setInputTypes(state, inputTypes) {
 			return { ...state, inputTypes };
