@@ -49,6 +49,7 @@ export default {
 		if (isFreeMode) {
 			filesystem.mkdirp(FREE_DIR + CODE_DIR);
 			filesystem.mkdirp(FREE_DIR + SAVE_DIR);
+			filesystem.mkdirp(FREE_DIR + TMPL_DIR);
 			filesystem.mkdirp(FREE_DIR + USR_DIR);
 			if (!filesystem.exists(FREE_DIR + MAIN_FILE))
 				filesystem.write(FREE_DIR + MAIN_FILE, "");
