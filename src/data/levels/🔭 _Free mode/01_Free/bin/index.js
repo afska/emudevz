@@ -1,7 +1,15 @@
+const WIDTH = 240;
+const HEIGHT = 160;
+
 class Emulator {
   constructor(onFrame, onSample) {
     this.onFrame = onFrame;
     this.onSample = onSample;
+
+    // <test>
+    this.frameBuffer = new Uint32Array(WIDTH * HEIGHT);
+    this.frame = 0;
+    // </test>
   }
 
   /**
@@ -29,11 +37,21 @@ class Emulator {
    */
   frame() {
     /* TODO: IMPLEMENT */
+    // <test>
+    this.frame++;
+    for (let x = 0; x < WIDTH; x++) {
+      for (let y = 0; y < HEIGHT; y++) {
+        this.frameBuffer[y * WIDTH + x] = 0xff000000 | this.frame % 0xff;
+      }
+    }
+    this.onFrame(this.frameBuffer);
+    // </test>
   }
 
   /**
    * Runs the emulation for `n` audio samples.
    * Used when "SYNC TO AUDIO" is active.
+   * `n`: `number`
    */
   samples(n) {
     /* TODO: IMPLEMENT */
@@ -48,7 +66,7 @@ class Emulator {
 
   /*
    * Restores the current state from a snapshot.
-   * `saveState`: `object`
+   * `saveState`: the object returned by `getSaveState()`
    */
   setSaveState(saveState) {
     /* TODO: IMPLEMENT */
