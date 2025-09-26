@@ -8,7 +8,7 @@ class Emulator {
 
     // <test>
     this.frameBuffer = new Uint32Array(WIDTH * HEIGHT);
-    this.frame = 0;
+    this.frameIndex = 0;
     // </test>
   }
 
@@ -38,10 +38,10 @@ class Emulator {
   frame() {
     /* TODO: IMPLEMENT */
     // <test>
-    this.frame++;
+    this.frameIndex++;
     for (let x = 0; x < WIDTH; x++) {
       for (let y = 0; y < HEIGHT; y++) {
-        this.frameBuffer[y * WIDTH + x] = 0xff000000 | this.frame % 0xff;
+        this.frameBuffer[y * WIDTH + x] = 0xff000000 | this.frameIndex % 0xff;
       }
     }
     this.onFrame(this.frameBuffer);

@@ -17,8 +17,16 @@ export default class EmulatorBuilder {
 	omitReset = false;
 	unbroken = false;
 	hardware = false;
+	withCustomEmulator = false;
 
 	async build(withLastCode = false) {
+		if (this.withCustomEmulator) {
+			const mainModule = await this._evaluate(true);
+			const Emulator = mainModule.Emulator;
+			if (Emulator == null) throw new Error("`Emulator` not found");
+			return Emulator;
+		}
+
 		let mainModule = null;
 		let CPUMemory = null;
 		let Cartridge = undefined;
@@ -159,6 +167,11 @@ export default class EmulatorBuilder {
 
 	setUnbroken(unbroken = false) {
 		this.unbroken = unbroken;
+		return this;
+	}
+
+	useCustomEmulator(use = true) {
+		this.withCustomEmulator = use;
 		return this;
 	}
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import EmulatorBuilder from "../../../EmulatorBuilder";
 import filesystem, { Drive } from "../../../filesystem";
+import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
@@ -193,6 +194,8 @@ export default class Emulator extends Component {
 			const { settings } = this.props;
 			const currentLevel = Level.current;
 
+			const isFreeMode = currentLevel.id === Book.FREE_MODE_LEVEL;
+
 			return settings.useHardware
 				? await new EmulatorBuilder()
 						.setHardware(true)
@@ -210,6 +213,7 @@ export default class Emulator extends Component {
 						.setCustomPPU(settings.customPPU)
 						.setCustomAPU(settings.customAPU)
 						.setUnbroken(settings.unbroken)
+						.useCustomEmulator(isFreeMode)
 						.build(settings.withLatestCode);
 		} catch (e) {
 			this._onError(e);
