@@ -100,7 +100,7 @@ class PlayScreen extends PureComponent {
 	}
 
 	async _loadLevel() {
-		const { currentLevelId, setLevel } = this.props;
+		const { currentLevelId, setLevel, closeNonExistingFiles } = this.props;
 
 		const levelPath = `${LEVELS_PATH}/level_${currentLevelId}.zip`;
 
@@ -112,6 +112,7 @@ class PlayScreen extends PureComponent {
 			})
 			.then((levelData) => new LevelLoader(levelData, currentLevelId).load())
 			.then(setLevel)
+			.then(closeNonExistingFiles)
 			.catch(this._onError);
 	}
 }
@@ -131,6 +132,7 @@ const mapStateToProps = ({ router, book, level }) => {
 const mapDispatchToProps = ({ book, level, savedata }) => ({
 	setBook: book.setBook,
 	setLevel: level.setLevel,
+	closeNonExistingFiles: savedata.closeNonExistingFiles,
 	resetLevel: level.reset,
 	validateSavedata: savedata.validate,
 	setChapterSelectOpen: level.setChapterSelectOpen,

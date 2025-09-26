@@ -239,7 +239,6 @@ export default class Level {
 		this.validate();
 
 		const { isUsingSnapshot } = Drive.init(this.id);
-		store.dispatch.savedata.closeNonExistingFiles();
 		this.isUsingSnapshot = isUsingSnapshot;
 	}
 

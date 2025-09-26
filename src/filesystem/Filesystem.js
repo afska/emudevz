@@ -41,11 +41,6 @@ class Filesystem {
 		this.symlinks = [];
 	}
 
-	_isFreeMode() {
-		const levelInstance = store.getState().level?.instance;
-		return levelInstance && levelInstance.id === Book.FREE_MODE_LEVEL;
-	}
-
 	setSymlinks(symlinks) {
 		this.symlinks = symlinks;
 	}
@@ -303,6 +298,11 @@ class Filesystem {
 			);
 
 		return path;
+	}
+
+	_isFreeMode() {
+		const levelInstance = store.getState().level?.instance;
+		return levelInstance && levelInstance.id === Book.FREE_MODE_LEVEL;
 	}
 }
 

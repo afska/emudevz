@@ -176,14 +176,14 @@ class MultiFile extends PureComponent {
 	};
 
 	_onFileOpened = () => {
-		this._tabsScroll.scrollTo({
+		this._tabsScroll?.scrollTo({
 			left: this._tabsScroll.scrollWidth,
 			behavior: "smooth",
 		});
 	};
 
 	_onFileClosed = () => {
-		this._tabsScroll.scrollTo({ left: 0, behavior: "smooth" });
+		this._tabsScroll?.scrollTo({ left: 0, behavior: "smooth" });
 	};
 
 	_search = () => {
@@ -349,11 +349,11 @@ class MultiFile extends PureComponent {
 
 	_onWheelTabs = (e) => {
 		const delta = -e.deltaY;
-		this._tabsScroll.scrollBy({ left: delta, top: 0, behavior: "instant" });
+		this._tabsScroll?.scrollBy({ left: delta, top: 0, behavior: "instant" });
 	};
 
 	_onManualScrollTabs = (delta) => {
-		this._tabsScroll.scrollBy({
+		this._tabsScroll?.scrollBy({
 			left: delta,
 			top: 0,
 			behavior: "smooth",
@@ -406,7 +406,7 @@ class MultiFile extends PureComponent {
 	}
 
 	get _tabsScroll() {
-		return this._tabs.querySelector(".horizontalDragList");
+		return this._tabs?.querySelector(".horizontalDragList");
 	}
 }
 
