@@ -1,5 +1,8 @@
 const WIDTH = 240;
 const HEIGHT = 160;
+const SAMPLE_RATE_HZ = 44100;
+const VIDEO_FRAMES_PER_SECOND = 60;
+const SAMPLES_PER_FRAME = SAMPLE_RATE_HZ / VIDEO_FRAMES_PER_SECOND;
 
 class Emulator {
   constructor(onFrame, onSample) {
@@ -7,8 +10,10 @@ class Emulator {
     this.onSample = onSample;
 
     // <test>
-    this.frameBuffer = new Uint32Array(WIDTH * HEIGHT);
-    this.frameIndex = 0;
+    this._frameBuffer = new Uint32Array(WIDTH * HEIGHT);
+    this._frameIndex = 0;
+    this._samplesSinceFrame = 0;
+    this._phase = 0;
     // </test>
   }
 
@@ -37,15 +42,9 @@ class Emulator {
    */
   frame() {
     /* TODO: IMPLEMENT */
-    // <test>
-    this.frameIndex++;
-    for (let x = 0; x < WIDTH; x++) {
-      for (let y = 0; y < HEIGHT; y++) {
-        this.frameBuffer[y * WIDTH + x] = 0xff000000 | this.frameIndex % 0xff;
-      }
-    }
-    this.onFrame(this.frameBuffer);
-    // </test>
+
+    this._generateVideo();
+    this._generateAudio(SAMPLES_PER_FRAME);
   }
 
   /**
@@ -55,6 +54,14 @@ class Emulator {
    */
   samples(n) {
     /* TODO: IMPLEMENT */
+
+    this._generateAudio(n);
+
+    this._samplesSinceFrame += n;
+    while (this._samplesSinceFrame >= SAMPLES_PER_FRAME) {
+      this._samplesSinceFrame -= SAMPLES_PER_FRAME;
+      this._generateVideo();
+    }
   }
 
   /**
@@ -71,8 +78,28 @@ class Emulator {
   setSaveState(saveState) {
     /* TODO: IMPLEMENT */
   }
+
+  // <test>
+  _generateVideo() {
+    this._frameIndex++;
+    for (let x = 0; x < WIDTH; x++) {
+      for (let y = 0; y < HEIGHT; y++) {
+        this._frameBuffer[y * WIDTH + x] = 0xff000000 | this._frameIndex % 0xff;
+      }
+    }
+    this.onFrame(this._frameBuffer);
+  }
+
+  _generateAudio(sampleCount) {
+    const phaseIncrement = (2 * Math.PI * 440) / SAMPLE_RATE_HZ;
+    for (let sampleIndex = 0; sampleIndex < sampleCount; sampleIndex++) {
+      this.onSample(Math.sin(this._phase) * 0.25);
+      this._phase += phaseIncrement;
+    }
+  }
+  // </test>
 }
 
 export default {
-  Emulator
-}
+  Emulator,
+};
