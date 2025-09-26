@@ -152,7 +152,10 @@ export default forwardRef(function FileSearch(props, ref) {
 	}, [input, files, selected]);
 
 	const _onSelect = (filePath, lineNumber, shouldKeepFocus) => {
-		if (!Level.current.canLaunchEmulator() && filePath.endsWith(".neees")) {
+		if (
+			!Level.current.canLaunchEmulator() &&
+			(filePath.endsWith(".neees") || filePath.endsWith(".nes"))
+		) {
 			toast.error(locales.get("cant_open_emulator"));
 			return;
 		}
