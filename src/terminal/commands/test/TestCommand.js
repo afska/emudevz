@@ -61,8 +61,6 @@ export default class TestCommand extends Command {
 
 			const context = level.test?.context;
 			const $ = testContext[context]?.prepare(level) || {};
-			const inherit = level.test?.inherit;
-			let mainTestFile = level.test?.mainTestFile;
 
 			let warnings = [];
 			try {
@@ -75,27 +73,14 @@ export default class TestCommand extends Command {
 
 			const overallResult = { allGreen: true, passCount: 0, failCount: 0 };
 
+			let mainTestFile = null;
 			let testFiles;
 			if (level.id === Book.FREE_MODE_LEVEL) {
-				const entries = filesystem.lsr(Drive.CODE_DIR);
-				testFiles = _.sortBy(
-					entries
-						.filter((it) => !it.isDirectory && it.name.endsWith(".test.js"))
-						.map((it) => it.filePath)
-				);
-				mainTestFile = null;
+				testFiles = this._getFreeModeTestFiles();
 			} else {
-				testFiles = _.sortBy(_.keys(level.tests));
-				if (inherit != null)
-					testFiles = inherit.flatMap((fileName) => {
-						if (fileName.endsWith("*")) {
-							const prefix = fileName.slice(0, -1);
-							const matches = testFiles.filter((it) => it.startsWith(prefix));
-							return matches;
-						}
+				testFiles = this._getNormalModeTestFiles(level);
 
-						return fileName;
-					});
+				mainTestFile = level.test?.mainTestFile;
 				if (mainTestFile != null && testFiles.includes(mainTestFile))
 					testFiles = [..._.without(testFiles, mainTestFile), mainTestFile];
 				else mainTestFile = null;
@@ -182,16 +167,13 @@ export default class TestCommand extends Command {
 					return;
 				} else {
 					await this._terminal.writeln(locales.get("tests_success"));
+					if (this._isVerbose && warnings.length > 0) await this._waitForKey();
 				}
 			} else {
 				await this._terminal.writeln(locales.get("tests_failure"));
 
 				if (this._isVerbose) {
-					await this._terminal.writeln(
-						locales.get("press_any_key_to_continue"),
-						theme.SYSTEM
-					);
-					await this._terminal.waitForKey();
+					await this._waitForKey();
 				} else {
 					await this._terminal.writehlln(
 						locales.get("tests_more"),
@@ -218,6 +200,33 @@ export default class TestCommand extends Command {
 		this._onClose();
 
 		return true;
+	}
+
+	_getFreeModeTestFiles() {
+		const entries = filesystem.lsr(Drive.CODE_DIR);
+		return _.sortBy(
+			entries
+				.filter((it) => !it.isDirectory && it.name.endsWith(".test.js"))
+				.map((it) => it.filePath)
+		);
+	}
+
+	_getNormalModeTestFiles(level) {
+		let testFiles = _.sortBy(_.keys(level.tests));
+
+		const inherit = level.test?.inherit;
+		if (inherit != null)
+			testFiles = inherit.flatMap((fileName) => {
+				if (fileName.endsWith("*")) {
+					const prefix = fileName.slice(0, -1);
+					const matches = testFiles.filter((it) => it.startsWith(prefix));
+					return matches;
+				}
+
+				return fileName;
+			});
+
+		return testFiles;
 	}
 
 	async _runAudioTests(level) {
@@ -460,6 +469,12 @@ export default class TestCommand extends Command {
 		return testDefinitions;
 	}
 
+	_getTestCode(level, fileName) {
+		return level.id === Book.FREE_MODE_LEVEL
+			? filesystem.read(fileName)
+			: level.tests[fileName];
+	}
+
 	_setUpHyperlinkProvider() {
 		const handler = (__, text) => {
 			if (this._hasEnded) return;
@@ -541,10 +556,12 @@ export default class TestCommand extends Command {
 		await this._terminal.newline();
 	}
 
-	_getTestCode(level, fileName) {
-		return level.id === Book.FREE_MODE_LEVEL
-			? filesystem.read(fileName)
-			: level.tests[fileName];
+	async _waitForKey() {
+		await this._terminal.writeln(
+			locales.get("press_any_key_to_continue"),
+			theme.SYSTEM
+		);
+		await this._terminal.waitForKey();
 	}
 
 	get _targetId() {
