@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import _ from "lodash";
-import Book from "../level/Book";
 import codeEval from "../level/codeEval";
 import components from "./components";
 import layouts from "./components/layouts";
@@ -17,7 +16,7 @@ class LevelScreen extends PureComponent {
 			level.ui.components,
 			([name]) => components[name]
 		);
-		const isFreeMode = level.id === Book.FREE_MODE_LEVEL;
+		const isFreeMode = level.isFreeMode();
 
 		return (
 			<>

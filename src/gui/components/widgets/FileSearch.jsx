@@ -9,7 +9,6 @@ import $path from "path-browserify-esm";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
 import filesystem, { fuzzy } from "../../../filesystem";
-import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import LsCommand from "../../../terminal/commands/fs/LsCommand";
@@ -154,7 +153,7 @@ export default forwardRef(function FileSearch(props, ref) {
 	}, [input, files, selected]);
 
 	const _onSelect = (filePath, lineNumber, shouldKeepFocus) => {
-		const isFreeMode = Level.current.id === Book.FREE_MODE_LEVEL;
+		const isFreeMode = Level.current.isFreeMode();
 		const isRom = isRomFileForCurrentMode(filePath);
 		if (!Level.current.canLaunchEmulator() && isRom) {
 			toast.error(locales.get("cant_open_emulator"));

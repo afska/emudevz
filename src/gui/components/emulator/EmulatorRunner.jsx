@@ -12,7 +12,6 @@ import {
 import classNames from "classnames";
 import _ from "lodash";
 import filesystem, { Drive } from "../../../filesystem";
-import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import store from "../../../store";
@@ -35,7 +34,7 @@ export default class EmulatorRunner extends PureComponent {
 
 		const isRunning = rom && !error;
 		const currentLevel = Level.current;
-		const isFreeMode = currentLevel.id === Book.FREE_MODE_LEVEL;
+		const isFreeMode = currentLevel.isFreeMode();
 
 		let ppuSuffix = "";
 		if (this._emulatorSettings.usePPU) {

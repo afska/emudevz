@@ -16,7 +16,6 @@ import {
 import { connect } from "react-redux";
 import classNames from "classnames";
 import _ from "lodash";
-import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import { bus } from "../../../utils";
@@ -50,7 +49,7 @@ class NavBar extends PureComponent {
 			setChapterSelectOpen,
 		} = this.props;
 
-		const isFreeMode = level.id === Book.FREE_MODE_LEVEL;
+		const isFreeMode = level.isFreeMode();
 		const levelDefinition = book.getLevelDefinitionOf(level.id);
 		const firstLevelDefinition = _.first(chapter.levels);
 		const lastLevelDefinition = _.last(chapter.levels);

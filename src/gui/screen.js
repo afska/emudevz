@@ -1,4 +1,3 @@
-import Book from "../level/Book";
 import Level from "../level/Level";
 import store from "../store";
 
@@ -6,7 +5,7 @@ const DEFAULT_WIDTH = 256;
 const DEFAULT_HEIGHT = 240;
 
 export function getActiveScreenSize() {
-	const isFreeMode = Level.current?.id === Book.FREE_MODE_LEVEL;
+	const isFreeMode = Level.current?.isFreeMode() || false;
 	if (isFreeMode) {
 		const settings = store.getState().savedata.freeModeSetings;
 		const width = settings?.screenWidth ?? 100;

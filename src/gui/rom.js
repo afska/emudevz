@@ -1,10 +1,9 @@
 import $path from "path-browserify-esm";
-import Book from "../level/Book";
 import Level from "../level/Level";
 import store from "../store";
 
 export function getActiveRomExtensions() {
-	const isFreeMode = Level.current?.id === Book.FREE_MODE_LEVEL;
+	const isFreeMode = Level.current?.isFreeMode() || false;
 	if (isFreeMode) {
 		const configured =
 			store.getState().savedata.freeModeSetings?.romExtension || ".gb";

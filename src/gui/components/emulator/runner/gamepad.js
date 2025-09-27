@@ -17,7 +17,7 @@ export default {
 	},
 
 	createInput() {
-		const isFreeMode = Level.current?.id === Book.FREE_MODE_LEVEL;
+		const isFreeMode = Level.current.isFreeMode();
 
 		return {
 			BUTTON_A: false,
@@ -35,7 +35,7 @@ export default {
 	},
 
 	_setButtons(input, gamepad) {
-		const isFreeMode = Level.current?.id === Book.FREE_MODE_LEVEL;
+		const isFreeMode = Level.current.isFreeMode();
 
 		input.BUTTON_A = gamepad.buttons[1].pressed;
 		input.BUTTON_B = gamepad.buttons[0].pressed;
