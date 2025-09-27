@@ -33,8 +33,7 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": ["cartridge.js", "bus.js", "ppu.js"],
-		"mainTestFile": "ppu.js"
+		"fsMode": true
 	},
 	"memory": {
 		"content": {

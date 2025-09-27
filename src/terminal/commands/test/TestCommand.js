@@ -77,7 +77,8 @@ export default class TestCommand extends Command {
 			const hasMultipleTestFiles =
 				_.keys(level.tests).length > 1 &&
 				(!this._targetId || this._targetId === "unit");
-			const winOnTestPass = !level.memory.chat.winOnEnd;
+			const winOnTestPass =
+				!level.memory.chat.winOnEnd && level.id !== Book.FREE_MODE_LEVEL;
 
 			let testFiles = _.sortBy(_.keys(level.tests));
 			if (inherit != null)

@@ -65,6 +65,13 @@ class Emulator {
   }
 
   /**
+   * Returns an array with the save file bytes, or null if the game doesn't have a save file.
+   */
+  getSaveFile() {
+    return null; /* TODO: IMPLEMENT */
+  }
+
+  /**
    * Returns an object with a snapshot of the current state.
    */
   getSaveState() {
