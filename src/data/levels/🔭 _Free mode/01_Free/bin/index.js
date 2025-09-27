@@ -29,7 +29,7 @@ class Emulator {
   /**
    * Updates a button's state.
    * `playerId`: `1` or `2`
-   * `button`: One of "BUTTON_LEFT", "BUTTON_RIGHT", "BUTTON_UP", "BUTTON_DOWN", "BUTTON_A", "BUTTON_B", "BUTTON_START", "BUTTON_SELECT"
+   * `button`: One of "BUTTON_LEFT", "BUTTON_RIGHT", "BUTTON_UP", "BUTTON_DOWN", "BUTTON_A", "BUTTON_B", "BUTTON_X", "BUTTON_Y", "BUTTON_L", "BUTTON_R", "BUTTON_START", "BUTTON_SELECT"
    * `isPressed`: `boolean`
    */
   setButton(playerId, button, isPressed) {
