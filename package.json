@@ -67,7 +67,6 @@
     "react-image-diff": "^0.1.0",
     "react-redux": "7.2.9",
     "react-router-dom": "^5.3.3",
-    "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "ringbufferjs": "^2.0.0",
     "sinon": "^15.0.1",
