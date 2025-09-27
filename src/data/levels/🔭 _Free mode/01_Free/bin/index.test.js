@@ -6,8 +6,8 @@ before(async () => {
 });
 
 it("there's a `/code/index.js` file", () => {
-	expect(filesystem.exists("/code/index.js")).to.be.true;
-})();
+	expect(false).to.be.true;
+});
 
 // it("the file `/code/Cartridge.js` is a JS module that exports <a class>", async () => {
 // 	const module = await evaluate("/code/Cartridge.js");

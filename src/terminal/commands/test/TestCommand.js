@@ -1,6 +1,6 @@
 import $path from "path-browserify-esm";
 import _ from "lodash";
-import filesystem from "../../../filesystem";
+import filesystem, { Drive } from "../../../filesystem";
 import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
@@ -74,28 +74,39 @@ export default class TestCommand extends Command {
 			}
 
 			const overallResult = { allGreen: true, passCount: 0, failCount: 0 };
-			const hasMultipleTestFiles =
-				_.keys(level.tests).length > 1 &&
-				(!this._targetId || this._targetId === "unit");
-			const winOnTestPass =
-				!level.memory.chat.winOnEnd && level.id !== Book.FREE_MODE_LEVEL;
 
-			let testFiles = _.sortBy(_.keys(level.tests));
-			if (inherit != null)
-				testFiles = inherit.flatMap((fileName) => {
-					if (fileName.endsWith("*")) {
-						const prefix = fileName.slice(0, -1);
-						const matches = testFiles.filter((it) => it.startsWith(prefix));
-						return matches;
-					}
+			let testFiles;
+			if (level.id === Book.FREE_MODE_LEVEL) {
+				const entries = filesystem.lsr(Drive.CODE_DIR);
+				testFiles = _.sortBy(
+					entries
+						.filter((it) => !it.isDirectory && it.name.endsWith(".test.js"))
+						.map((it) => it.filePath)
+				);
+				mainTestFile = null;
+			} else {
+				testFiles = _.sortBy(_.keys(level.tests));
+				if (inherit != null)
+					testFiles = inherit.flatMap((fileName) => {
+						if (fileName.endsWith("*")) {
+							const prefix = fileName.slice(0, -1);
+							const matches = testFiles.filter((it) => it.startsWith(prefix));
+							return matches;
+						}
 
-					return fileName;
-				});
-			if (mainTestFile != null && testFiles.includes(mainTestFile))
-				testFiles = [..._.without(testFiles, mainTestFile), mainTestFile];
-			else mainTestFile = null;
+						return fileName;
+					});
+				if (mainTestFile != null && testFiles.includes(mainTestFile))
+					testFiles = [..._.without(testFiles, mainTestFile), mainTestFile];
+				else mainTestFile = null;
+			}
 			if (this._targetId === "audio" || this._targetId === "video")
 				testFiles = [];
+
+			const hasMultipleTestFiles =
+				testFiles.length > 1 && (!this._targetId || this._targetId === "unit");
+			const winOnTestPass =
+				!level.memory.chat.winOnEnd && level.id !== Book.FREE_MODE_LEVEL;
 
 			const testDefinitions = await this._getTestDefinitions(
 				level,
@@ -109,7 +120,7 @@ export default class TestCommand extends Command {
 					!hasMultipleTestFiles ||
 					mainTestFile == null ||
 					fileName === mainTestFile;
-				const test = level.tests[fileName];
+				const test = this._getTestCode(level, fileName);
 
 				if (hasMultipleTestFiles)
 					await this._terminal.writeln(
@@ -428,7 +439,7 @@ export default class TestCommand extends Command {
 
 		const idProvider = { id: 0 };
 		for (let fileName of testFiles) {
-			const test = level.tests[fileName];
+			const test = this._getTestCode(level, fileName);
 			let { _tests_, ...definition } = await framework.getTestDefinition(
 				test,
 				$,
@@ -528,6 +539,12 @@ export default class TestCommand extends Command {
 		}
 
 		await this._terminal.newline();
+	}
+
+	_getTestCode(level, fileName) {
+		return level.id === Book.FREE_MODE_LEVEL
+			? filesystem.read(fileName)
+			: level.tests[fileName];
 	}
 
 	get _targetId() {

@@ -103,7 +103,7 @@ export default {
 
 			_tests_.push(testDefinition);
 
-			return (options) => {
+			return (options = {}) => {
 				testDefinition.name = options.locales?.[_locales_.language] || name;
 
 				if (
