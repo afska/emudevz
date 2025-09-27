@@ -17,6 +17,7 @@ const FREE_DIR = "/.free";
 const READONLY_PATHS = [
 	/^\/$/,
 	/^\/\.free$/,
+	/^\/\.free\/tmpl.*/,
 	/^\/\.snapshots.*/,
 	/^\/docs.*/,
 	/^\/lib.*/,

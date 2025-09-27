@@ -11,6 +11,7 @@ export default function esLintConfig(filePath = "") {
 				it: "readonly",
 				$: "readonly",
 				expect: "readonly",
+				sinon: "readonly",
 		  }
 		: {};
 
