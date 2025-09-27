@@ -289,6 +289,7 @@ class MultiFile extends PureComponent {
 				{...props}
 				addon={this._renderTemplateAddon(filePath)}
 				onKeyDown={this._onKeyDown}
+				filePath={filePath}
 			/>
 		);
 	}

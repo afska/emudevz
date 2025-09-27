@@ -35,10 +35,10 @@ const ACTION_SYNC_EMULATOR = "refreshEmulator";
 const NULL_ACTION = "none";
 const COMPILE_DEBOUNCE_MS = 500;
 const LANGUAGES = {
-	javascript: () => [
+	javascript: (filePath) => [
 		javascript(),
 		lintGutter(),
-		linter(esLint(new Linter(), esLintConfig), {
+		linter(esLint(new Linter(), esLintConfig(filePath)), {
 			delay: COMPILE_DEBOUNCE_MS,
 		}),
 		pasteIndent,
@@ -144,7 +144,13 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	render() {
-		const { getCode, forceReadOnly = false, addon = false, style } = this.props;
+		const {
+			getCode,
+			forceReadOnly = false,
+			addon = false,
+			filePath,
+			style,
+		} = this.props;
 		const {
 			_isInitialized,
 			language,
@@ -192,7 +198,7 @@ export default class CodeEditor extends PureComponent {
 					height="100%"
 					theme={oneDark}
 					readOnly={!isEditionEnabled}
-					extensions={LANGUAGES[language]()}
+					extensions={LANGUAGES[language](filePath)}
 					onChange={this._setCode}
 					autoFocus
 					ref={(ref) => {

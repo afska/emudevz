@@ -6,7 +6,9 @@ import IconButton from "../widgets/IconButton";
 import Layout from "./Layout";
 import styles from "./Layout.module.css";
 
-export default class TripleLayout extends Layout {
+const MARGIN_PERCENT = 30;
+
+export default class TripleRightLayout extends Layout {
 	static get requiredComponentNames() {
 		return ["Right", "Top", "Bottom"];
 	}
@@ -289,7 +291,13 @@ export default class TripleLayout extends Layout {
 			const rect = container.getBoundingClientRect();
 			const percent = ((e.clientX - rect.left) / rect.width) * 100;
 			this.setState(
-				{ leftWidthPercent: this._clamp(percent, 10, 90) },
+				{
+					leftWidthPercent: this._clamp(
+						percent,
+						MARGIN_PERCENT,
+						100 - MARGIN_PERCENT
+					),
+				},
 				this._emitWindowResize
 			);
 			return;
@@ -301,7 +309,13 @@ export default class TripleLayout extends Layout {
 			const rect = left.getBoundingClientRect();
 			const percent = ((e.clientY - rect.top) / rect.height) * 100;
 			this.setState(
-				{ topHeightPercent: this._clamp(percent, 10, 90) },
+				{
+					topHeightPercent: this._clamp(
+						percent,
+						MARGIN_PERCENT,
+						100 - MARGIN_PERCENT
+					),
+				},
 				this._emitWindowResize
 			);
 		}

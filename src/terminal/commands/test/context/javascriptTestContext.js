@@ -76,7 +76,7 @@ export default {
 
 					return {
 						fileName,
-						lint: linter.verify(filesystem.read(fileName), esLintConfig, {
+						lint: linter.verify(filesystem.read(fileName), esLintConfig(), {
 							filename: fileName,
 						}),
 					};

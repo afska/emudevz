@@ -94,6 +94,18 @@
           "no-eval": "off",
           "no-control-regex": "off"
         }
+      },
+      {
+        "files": ["**/*.test.js"],
+        "globals": {
+          "before": "readonly",
+          "beforeEach": "readonly",
+          "afterEach": "readonly",
+          "after": "readonly",
+          "it": "readonly",
+          "$": "readonly",
+          "expect": "readonly"
+        }
       }
     ]
   },
