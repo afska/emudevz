@@ -120,6 +120,8 @@ export default class Emulation {
 		} catch (error) {
 			onError(error);
 		}
+
+		this._onError = onError;
 	}
 
 	replace = (NEEES, saveFileBytes, saveState) => {
@@ -232,8 +234,13 @@ export default class Emulation {
 			}
 
 			for (let button in input[i])
-				if (button[0] !== "$")
-					this.neees.setButton(i + 1, button, input[i][button]);
+				if (button[0] !== "$") {
+					try {
+						this.neees.setButton(i + 1, button, input[i][button]);
+					} catch (error) {
+						this._onError(error);
+					}
+				}
 		}
 	}
 
