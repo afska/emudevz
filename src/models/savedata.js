@@ -12,6 +12,10 @@ const DEFAULT_KEY_MAP = () => ({
 		BUTTON_DOWN: "ARROWDOWN",
 		BUTTON_LEFT: "ARROWLEFT",
 		BUTTON_RIGHT: "ARROWRIGHT",
+		BUTTON_X: "Z",
+		BUTTON_Y: "X",
+		BUTTON_L: "Q",
+		BUTTON_R: "E",
 	},
 	2: {
 		BUTTON_A: "M",
@@ -22,6 +26,10 @@ const DEFAULT_KEY_MAP = () => ({
 		BUTTON_DOWN: "K",
 		BUTTON_LEFT: "J",
 		BUTTON_RIGHT: "L",
+		BUTTON_X: "H",
+		BUTTON_Y: "B",
+		BUTTON_L: "7",
+		BUTTON_R: "9",
 	},
 });
 const INITIAL_STATE = () => ({
@@ -42,6 +50,11 @@ const INITIAL_STATE = () => ({
 	selectedFile: Drive.MAIN_FILE,
 	inputTypes: { 1: "keyboard", 2: "disconnected" }, // values: "keyboard" | "gamepad1" | "gamepad2" | "disconnected"
 	keyboardMappings: DEFAULT_KEY_MAP(),
+	freeModeSetings: {
+		romExtension: ".gb",
+		screenWidth: 240,
+		screenHeight: 160,
+	},
 	emulatorSettings: {
 		useCartridge: true,
 		useCPU: true,
@@ -130,6 +143,9 @@ export default {
 		},
 		setEmulatorSettings(state, emulatorSettings) {
 			return { ...state, emulatorSettings };
+		},
+		setFreeModeSetings(state, freeModeSetings) {
+			return { ...state, freeModeSetings };
 		},
 		setInputTypes(state, inputTypes) {
 			return { ...state, inputTypes };
@@ -227,9 +243,16 @@ export default {
 					return;
 				}
 
-				if (!openFiles.includes(filePath))
+				const alreadyOpenFile = openFiles.find(
+					(it) => filesystem.normalize(it) === filesystem.normalize(filePath)
+				);
+
+				if (alreadyOpenFile == null) {
 					this.setOpenFiles([...openFiles, filePath]);
-				this.setSelectedFile(filePath);
+					this.setSelectedFile(filePath);
+				} else {
+					this.setSelectedFile(alreadyOpenFile);
+				}
 				bus.emit("file-opened");
 			},
 			closeFile(filePath, _state_) {

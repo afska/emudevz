@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
-import Button from "./Button";
+import Button from "../widgets/Button";
 import styles from "./LevelHistoryModal.module.css";
 
 class LevelHistoryModal extends PureComponent {

@@ -105,6 +105,10 @@ export default class Level {
 		return book.isFinished(this.id);
 	}
 
+	isFreeMode() {
+		return this.id === Book.FREE_MODE_LEVEL;
+	}
+
 	fillContentFromTemp() {
 		if (!this.hasStoredContent)
 			store.dispatch.content.setCurrentLevelContent(this.tempContent);
@@ -151,7 +155,7 @@ export default class Level {
 		const instance = this.$layout.findInstance(Component.name);
 		if (instance?.state.type === "demoRom") return false;
 
-		return (
+		return !!(
 			instance ||
 			(Component.name === "CodeEditor" || Component.name === "TV"
 				? this.$layout.findInstance("MultiFile")
@@ -160,6 +164,8 @@ export default class Level {
 	}
 
 	canLaunchEmulator() {
+		if (this.id === Book.FREE_MODE_LEVEL) return true;
+
 		const book = Book.current;
 		const chapter = book.getChapterOf(this.id);
 		if (chapter.isSpecial) return false;
@@ -237,7 +243,6 @@ export default class Level {
 		this.validate();
 
 		const { isUsingSnapshot } = Drive.init(this.id);
-		store.dispatch.savedata.closeNonExistingFiles();
 		this.isUsingSnapshot = isUsingSnapshot;
 	}
 

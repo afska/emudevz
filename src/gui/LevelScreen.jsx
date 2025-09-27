@@ -16,10 +16,11 @@ class LevelScreen extends PureComponent {
 			level.ui.components,
 			([name]) => components[name]
 		);
+		const isFreeMode = level.isFreeMode();
 
 		return (
 			<>
-				<Layout {...Components} ref={this.onReady} />
+				<Layout {...Components} ref={this.onReady} resizable={isFreeMode} />
 				<NavBar chapter={chapter} level={level} />
 			</>
 		);

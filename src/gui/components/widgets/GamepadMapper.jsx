@@ -22,6 +22,7 @@ class GamepadMapper extends PureComponent {
 			keyboardMappings,
 			setKeyboardMappings,
 			className,
+			extended = false,
 			...rest
 		} = this.props;
 		const { waitingKey } = this.state;
@@ -59,58 +60,100 @@ class GamepadMapper extends PureComponent {
 				className={classNames(styles.gamepad, styles.box, className)}
 				{...rest}
 			>
-				<div className={classNames(styles.box, styles.dpad)}>
-					<div />
-					<ButtonBox player={player} button="BUTTON_UP">
-						{getKeyLabel(mappings.BUTTON_UP)}
-					</ButtonBox>
-					<div />
-					<ButtonBox player={player} button="BUTTON_LEFT">
-						{getKeyLabel(mappings.BUTTON_LEFT)}
-					</ButtonBox>
-					<div />
-					<ButtonBox player={player} button="BUTTON_RIGHT">
-						{getKeyLabel(mappings.BUTTON_RIGHT)}
-					</ButtonBox>
-					<div />
-					<ButtonBox player={player} button="BUTTON_DOWN">
-						{getKeyLabel(mappings.BUTTON_DOWN)}
-					</ButtonBox>
-					<div />
-				</div>
+				{extended && (
+					<div className={styles.lr}>
+						<ButtonBox
+							player={player}
+							button="BUTTON_L"
+							className={styles.longButton}
+						>
+							{getKeyLabel(mappings.BUTTON_L)}
+						</ButtonBox>
+						<ButtonBox
+							player={player}
+							button="BUTTON_R"
+							className={styles.longButton}
+						>
+							{getKeyLabel(mappings.BUTTON_R)}
+						</ButtonBox>
+					</div>
+				)}
 
-				<div className={styles.startSelect}>
-					<ButtonBox
-						player={player}
-						button="BUTTON_SELECT"
-						className={styles.longButton}
-					>
-						{getKeyLabel(mappings.BUTTON_SELECT)}
-					</ButtonBox>
-					<ButtonBox
-						player={player}
-						button="BUTTON_START"
-						className={styles.longButton}
-					>
-						{getKeyLabel(mappings.BUTTON_START)}
-					</ButtonBox>
-				</div>
+				<div className={styles.mainGamepad}>
+					<div className={classNames(styles.box, styles.dpad)}>
+						<div />
+						<ButtonBox player={player} button="BUTTON_UP">
+							{getKeyLabel(mappings.BUTTON_UP)}
+						</ButtonBox>
+						<div />
+						<ButtonBox player={player} button="BUTTON_LEFT">
+							{getKeyLabel(mappings.BUTTON_LEFT)}
+						</ButtonBox>
+						<div />
+						<ButtonBox player={player} button="BUTTON_RIGHT">
+							{getKeyLabel(mappings.BUTTON_RIGHT)}
+						</ButtonBox>
+						<div />
+						<ButtonBox player={player} button="BUTTON_DOWN">
+							{getKeyLabel(mappings.BUTTON_DOWN)}
+						</ButtonBox>
+						<div />
+					</div>
 
-				<div className={classNames(styles.box, styles.ab)}>
-					<ButtonBox
-						player={player}
-						button="BUTTON_B"
-						className={styles.redButton}
-					>
-						{getKeyLabel(mappings.BUTTON_B)}
-					</ButtonBox>
-					<ButtonBox
-						player={player}
-						button="BUTTON_A"
-						className={styles.redButton}
-					>
-						{getKeyLabel(mappings.BUTTON_A)}
-					</ButtonBox>
+					<div className={styles.startSelect}>
+						<ButtonBox
+							player={player}
+							button="BUTTON_SELECT"
+							className={styles.longButton}
+						>
+							{getKeyLabel(mappings.BUTTON_SELECT)}
+						</ButtonBox>
+						<ButtonBox
+							player={player}
+							button="BUTTON_START"
+							className={styles.longButton}
+						>
+							{getKeyLabel(mappings.BUTTON_START)}
+						</ButtonBox>
+					</div>
+
+					<div className={styles.mainButtons}>
+						{extended && (
+							<div className={classNames(styles.box, styles.ab)}>
+								<ButtonBox
+									player={player}
+									button="BUTTON_Y"
+									className={styles.redButton}
+								>
+									{getKeyLabel(mappings.BUTTON_Y)}
+								</ButtonBox>
+								<ButtonBox
+									player={player}
+									button="BUTTON_X"
+									className={styles.redButton}
+								>
+									{getKeyLabel(mappings.BUTTON_X)}
+								</ButtonBox>
+							</div>
+						)}
+
+						<div className={classNames(styles.box, styles.ab)}>
+							<ButtonBox
+								player={player}
+								button="BUTTON_B"
+								className={styles.redButton}
+							>
+								{getKeyLabel(mappings.BUTTON_B)}
+							</ButtonBox>
+							<ButtonBox
+								player={player}
+								button="BUTTON_A"
+								className={styles.redButton}
+							>
+								{getKeyLabel(mappings.BUTTON_A)}
+							</ButtonBox>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

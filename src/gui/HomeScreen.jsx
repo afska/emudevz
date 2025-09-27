@@ -5,10 +5,11 @@ import { PointLight, lightGroup } from "pixi-lights";
 import * as PIXI from "pixi.js";
 import { Toaster } from "react-hot-toast";
 import { connect } from "react-redux";
+import Book from "../level/Book";
 import locales from "../locales";
-import ChapterSelectModal from "./ChapterSelectModal";
-import CreditsModal from "./CreditsModal";
-import SettingsModal from "./SettingsModal";
+import ChapterSelectModal from "./components/modals/ChapterSelectModal";
+import CreditsModal from "./components/modals/CreditsModal";
+import SettingsModal from "./components/modals/SettingsModal";
 import Button from "./components/widgets/Button";
 import ToggableButton from "./components/widgets/ToggableButton";
 import styles from "./HomeScreen.module.css";
@@ -91,12 +92,10 @@ class HomeScreen extends PureComponent {
 							options={[
 								{
 									labelKey: "button_play",
-									tooltipKey: "tooltip_campaign",
 									mode: "campaign",
 								},
 								{
 									labelKey: "mode_free",
-									tooltipKey: "tooltip_free_mode",
 									mode: "free",
 								},
 							]}
@@ -295,7 +294,7 @@ class HomeScreen extends PureComponent {
 	};
 
 	_playFreeMode = () => {
-		// TODO: IMPLEMENT
+		this.props.goTo(Book.FREE_MODE_LEVEL);
 	};
 
 	_quit = () => {
@@ -312,6 +311,7 @@ const mapStateToProps = ({ level, savedata }) => ({
 });
 const mapDispatchToProps = ({ level, savedata }) => ({
 	play: level.goToLastLevel,
+	goTo: level.goTo,
 	setGameMode: savedata.setGameMode,
 	setSettingsOpen: level.setSettingsOpen,
 	setChapterSelectOpen: level.setChapterSelectOpen,

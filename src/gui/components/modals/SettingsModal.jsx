@@ -4,12 +4,12 @@ import Modal from "react-bootstrap/Modal";
 import { FaUndo } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import locales, { LANGUAGES } from "../locales";
-import { filepicker, savefile, toast } from "../utils";
-import Button from "./components/widgets/Button";
-import GamepadMapper from "./components/widgets/GamepadMapper";
-import IconButton from "./components/widgets/IconButton";
-import VolumeSlider from "./components/widgets/VolumeSlider";
+import locales, { LANGUAGES } from "../../../locales";
+import { filepicker, savefile, toast } from "../../../utils";
+import Button from "../widgets/Button";
+import GamepadMapper from "../widgets/GamepadMapper";
+import IconButton from "../widgets/IconButton";
+import VolumeSlider from "../widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
 
 const MARGIN = 16;
@@ -33,6 +33,7 @@ class SettingsModal extends PureComponent {
 			crtFilter,
 			setCrtFilter,
 			open,
+			gameMode,
 		} = this.props;
 		const {
 			areYouSureRestore,
@@ -150,8 +151,8 @@ class SettingsModal extends PureComponent {
 							</Form.Label>
 							{open && (
 								<div className={classNames(styles.options, styles.controls)}>
-									<GamepadMapper player={1} />
-									<GamepadMapper player={2} />
+									<GamepadMapper player={1} extended={gameMode === "free"} />
+									<GamepadMapper player={2} extended={gameMode === "free"} />
 								</div>
 							)}
 						</Form.Group>
@@ -340,6 +341,7 @@ const mapStateToProps = ({ savedata }) => ({
 	chatSpeed: savedata.chatSpeed,
 	crtFilter: savedata.crtFilter,
 	emulatorSettings: savedata.emulatorSettings,
+	gameMode: savedata.gameMode,
 });
 const mapDispatchToProps = ({ savedata }) => ({
 	setLanguage: savedata.setLanguage,

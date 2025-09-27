@@ -176,14 +176,14 @@ class MultiFile extends PureComponent {
 	};
 
 	_onFileOpened = () => {
-		this._tabsScroll.scrollTo({
+		this._tabsScroll?.scrollTo({
 			left: this._tabsScroll.scrollWidth,
 			behavior: "smooth",
 		});
 	};
 
 	_onFileClosed = () => {
-		this._tabsScroll.scrollTo({ left: 0, behavior: "smooth" });
+		this._tabsScroll?.scrollTo({ left: 0, behavior: "smooth" });
 	};
 
 	_search = () => {
@@ -200,6 +200,30 @@ class MultiFile extends PureComponent {
 		const tabIcon = extensions.getTabIcon(filePath);
 		const [Component, customArgs] = extensions.getOptions(filePath);
 
+		const base = $path.parse(filePath).base;
+		const isMd = base.endsWith(".md");
+		const isMdTxt = base.endsWith(".md.txt");
+		const canToggleMd = !isReadOnly && (isMd || isMdTxt);
+		const onToggleMd = () => {
+			try {
+				const dir = $path.parse(filePath).dir;
+				const newBase = isMd
+					? base + ".txt"
+					: base.replace(/\.md\.txt$/, ".md");
+				const newPath = (dir === "/" ? "" : dir) + "/" + newBase;
+
+				if (filesystem.exists(newPath)) return;
+
+				filesystem.mv(filePath, newPath);
+				this.props.closeFile(filePath);
+				this.props.openFile(newPath);
+				this.props.setSelectedFile(newPath);
+				this._refresh();
+			} catch (e) {
+				toast.error(locales.get("operation_failed"));
+			}
+		};
+
 		return (
 			<Tab
 				title={tabIcon + $path.parse(filePath).base}
@@ -215,6 +239,8 @@ class MultiFile extends PureComponent {
 					this._refresh();
 				}}
 				canPin={this._layout.supportsPin && isReadOnly}
+				canToggleMd={canToggleMd}
+				onToggleMd={onToggleMd}
 				onPin={() => {
 					this.props.closeFile(filePath);
 					this._openPinnedFile(filePath, Component, customArgs);
@@ -263,6 +289,7 @@ class MultiFile extends PureComponent {
 				{...props}
 				addon={this._renderTemplateAddon(filePath)}
 				onKeyDown={this._onKeyDown}
+				filePath={filePath}
 			/>
 		);
 	}
@@ -349,11 +376,11 @@ class MultiFile extends PureComponent {
 
 	_onWheelTabs = (e) => {
 		const delta = -e.deltaY;
-		this._tabsScroll.scrollBy({ left: delta, top: 0, behavior: "instant" });
+		this._tabsScroll?.scrollBy({ left: delta, top: 0, behavior: "instant" });
 	};
 
 	_onManualScrollTabs = (delta) => {
-		this._tabsScroll.scrollBy({
+		this._tabsScroll?.scrollBy({
 			left: delta,
 			top: 0,
 			behavior: "smooth",
@@ -406,7 +433,7 @@ class MultiFile extends PureComponent {
 	}
 
 	get _tabsScroll() {
-		return this._tabs.querySelector(".horizontalDragList");
+		return this._tabs?.querySelector(".horizontalDragList");
 	}
 }
 

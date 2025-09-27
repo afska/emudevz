@@ -1,20 +1,19 @@
 import React, { Component } from "react";
 import classNames from "classnames";
+import { getActiveScreenSize } from "../../screen";
 import styles from "./Screen.module.css";
-
-const SCREEN_WIDTH = 256;
-const SCREEN_HEIGHT = 240;
 
 export default class Screen extends Component {
 	render() {
 		const { className } = this.props;
+		const { width, height } = getActiveScreenSize();
 
 		return (
 			<canvas
 				id="screen"
 				className={classNames(styles.screen, className)}
-				width={SCREEN_WIDTH}
-				height={SCREEN_HEIGHT}
+				width={width}
+				height={height}
 				ref={(canvas) => {
 					if (canvas) this._initCanvas(canvas);
 				}}
@@ -39,16 +38,12 @@ export default class Screen extends Component {
 	_initCanvas(canvas) {
 		this.canvas = canvas;
 		this.context = canvas.getContext("2d");
-		this.imageData = this.context.getImageData(
-			0,
-			0,
-			SCREEN_WIDTH,
-			SCREEN_HEIGHT
-		);
+		const { width, height } = getActiveScreenSize();
+		this.imageData = this.context.getImageData(0, 0, width, height);
 
 		// set alpha to opaque
 		this.context.fillStyle = "black";
-		this.context.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		this.context.fillRect(0, 0, width, height);
 
 		// buffer to write on next animation frame
 		this.buf = new ArrayBuffer(this.imageData.data.length);

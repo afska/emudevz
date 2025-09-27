@@ -34,12 +34,13 @@ const BLOB_TO_PATH_MAP = {};
 export default {
 	prepare(level, withLastCode = false) {
 		const code = level.content;
+		const isFreeMode = level.isFreeMode();
 
 		const $ = {
 			modules: null,
-			EmulatorBuilder,
-			testHelpers,
-			filesystem,
+			EmulatorBuilder: isFreeMode ? null : EmulatorBuilder,
+			testHelpers: isFreeMode ? null : testHelpers,
+			filesystem: isFreeMode ? null : filesystem,
 			byte,
 			lodash: _,
 		};
@@ -76,7 +77,7 @@ export default {
 
 					return {
 						fileName,
-						lint: linter.verify(filesystem.read(fileName), esLintConfig, {
+						lint: linter.verify(filesystem.read(fileName), esLintConfig(), {
 							filename: fileName,
 						}),
 					};

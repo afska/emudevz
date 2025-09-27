@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
 import Modal from "react-bootstrap/Modal";
-import Book from "../level/Book";
-import locales from "../locales";
-import { BOOK_PATH } from "./PlayScreen";
-import Chapter from "./components/widgets/Chapter";
-import LetsPlayChapter from "./components/widgets/LetsPlayChapter";
+import Book from "../../../level/Book";
+import locales from "../../../locales";
+import { BOOK_PATH } from "../../PlayScreen";
+import Chapter from "../widgets/Chapter";
+import LetsPlayChapter from "../widgets/LetsPlayChapter";
 import styles from "./ChapterSelectModal.module.css";
 
 const STATUS_OK = 200;

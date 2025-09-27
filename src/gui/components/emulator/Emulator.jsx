@@ -6,6 +6,7 @@ import locales from "../../../locales";
 import store from "../../../store";
 import { toast } from "../../../utils";
 import { bus } from "../../../utils";
+import { getActiveScreenSize } from "../../screen";
 import music from "../../sound/music";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
@@ -15,6 +16,7 @@ import styles from "./Emulator.module.css";
 
 export const SAVESTATE_KEY_PREFIX = "persist:emudevz:savestate-";
 export const SAVESTATE_RESET_COMMAND = "reset";
+const EXTENDED_BUTTONS = ["BUTTON_X", "BUTTON_Y", "BUTTON_L", "BUTTON_R"];
 
 const mapTypeToInput = (inputType, keyboardInput, gamepadInputs) => {
 	switch (inputType) {
@@ -41,9 +43,14 @@ export default class Emulator extends Component {
 		} = this.props;
 
 		const innerClassName = crt ? styles.crtNoise : styles.box;
+		const { width: screenW, height: screenH } = getActiveScreenSize();
+		const dynamicStyle = { aspectRatio: `${screenW} / ${screenH}` };
 
 		return (
-			<div className={!screen ? styles.content : ""} style={style}>
+			<div
+				className={!screen ? styles.content : ""}
+				style={{ ...dynamicStyle, ...style }}
+			>
 				{error ? (
 					<div className={styles.message}>
 						<span
@@ -187,6 +194,8 @@ export default class Emulator extends Component {
 			const { settings } = this.props;
 			const currentLevel = Level.current;
 
+			const isFreeMode = currentLevel.isFreeMode();
+
 			return settings.useHardware
 				? await new EmulatorBuilder()
 						.setHardware(true)
@@ -204,6 +213,7 @@ export default class Emulator extends Component {
 						.setCustomPPU(settings.customPPU)
 						.setCustomAPU(settings.customAPU)
 						.setUnbroken(settings.unbroken)
+						.useCustomEmulator(isFreeMode)
 						.build(settings.withLatestCode);
 		} catch (e) {
 			this._onError(e);
@@ -269,6 +279,11 @@ export default class Emulator extends Component {
 				if (selectedButton == null) selectedButton = button;
 				else return null;
 			}
+		}
+
+		const isFreeMode = Level.current.isFreeMode();
+		if (selectedButton && !isFreeMode) {
+			if (EXTENDED_BUTTONS.includes(selectedButton)) return null;
 		}
 
 		return selectedButton;

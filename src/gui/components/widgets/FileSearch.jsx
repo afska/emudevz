@@ -14,6 +14,7 @@ import locales from "../../../locales";
 import LsCommand from "../../../terminal/commands/fs/LsCommand";
 import { toast } from "../../../utils";
 import extensions from "../../extensions";
+import { isRomFileForCurrentMode } from "../../rom";
 import styles from "./FileSearch.module.css";
 
 const DIRECTORY = "";
@@ -152,7 +153,9 @@ export default forwardRef(function FileSearch(props, ref) {
 	}, [input, files, selected]);
 
 	const _onSelect = (filePath, lineNumber, shouldKeepFocus) => {
-		if (!Level.current.canLaunchEmulator() && filePath.endsWith(".neees")) {
+		const isFreeMode = Level.current.isFreeMode();
+		const isRom = isRomFileForCurrentMode(filePath);
+		if (!Level.current.canLaunchEmulator() && isRom) {
 			toast.error(locales.get("cant_open_emulator"));
 			return;
 		}

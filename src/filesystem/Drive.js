@@ -1,3 +1,4 @@
+import Book from "../level/Book";
 import Level from "../level/Level";
 import filesystem from "./Filesystem";
 
@@ -12,10 +13,12 @@ const USR_DIR = "/usr";
 const ALLROMS_DIR = "/roms/.all";
 const TESTROMS_DIR = "/roms/_test";
 const SNAPSHOTS_DIR = "/.snapshots";
+const FREE_DIR = "/.free";
 const READONLY_PATHS = [
 	/^\/$/,
+	/^\/\.free$/,
+	/^\/\.free\/tmpl.*/,
 	/^\/\.snapshots.*/,
-	/^\/$/,
 	/^\/docs.*/,
 	/^\/lib.*/,
 	/^\/roms.*/,
@@ -39,8 +42,22 @@ export default {
 	ALLROMS_DIR,
 	TESTROMS_DIR,
 	SNAPSHOTS_DIR,
+	FREE_DIR,
 
 	init(levelId) {
+		const isFreeMode = levelId === Book.FREE_MODE_LEVEL;
+
+		if (isFreeMode) {
+			filesystem.mkdirp(FREE_DIR + CODE_DIR);
+			filesystem.mkdirp(FREE_DIR + SAVE_DIR);
+			filesystem.mkdirp(FREE_DIR + TMPL_DIR);
+			filesystem.mkdirp(FREE_DIR + USR_DIR);
+			if (!filesystem.exists(FREE_DIR + MAIN_FILE))
+				filesystem.write(FREE_DIR + MAIN_FILE, "");
+			filesystem.setSymlinks([]);
+			return { isUsingSnapshot: false };
+		}
+
 		filesystem.mkdirp(CODE_DIR);
 		filesystem.mkdirp(LIB_DIR);
 		filesystem.mkdirp(DOCS_DIR);

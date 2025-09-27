@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import classNames from "classnames";
 import locales from "../../../locales";
-import ValueSlider from "./ValueSlider";
+import ValueSlider from "../widgets/ValueSlider";
 import styles from "./ImageDiffModal.module.css";
 
 // HACK: Monkey-patching React to have PropTypes (`react-image-diff` is very old and needs this)

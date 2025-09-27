@@ -1,7 +1,6 @@
 .gamepad {
 	display: flex;
-	gap: 12px;
-	align-items: center;
+	flex-direction: column;
 	background: #0e0e0e !important;
 }
 
@@ -68,4 +67,26 @@
 .redButton {
 	background: #f03a17;
 	border-radius: 32px;
+}
+
+.mainGamepad {
+	display: flex;
+	flex: 1;
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+
+.mainButtons {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.lr {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 8px;
 }

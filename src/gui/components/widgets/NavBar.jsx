@@ -6,6 +6,7 @@ import {
 	FaChevronLeft,
 	FaChevronRight,
 	FaClock,
+	FaCog,
 	FaHome,
 	FaMusic,
 	FaPause,
@@ -19,10 +20,11 @@ import Level from "../../../level/Level";
 import locales from "../../../locales";
 import { bus } from "../../../utils";
 import music from "../../sound/music";
-import CalculatorModal from "./CalculatorModal";
+import CalculatorModal from "../modals/CalculatorModal";
+import FreeModeSettingsModal from "../modals/FreeModeSettingsModal";
+import ImageDiffModal from "../modals/ImageDiffModal";
+import LevelHistoryModal from "../modals/LevelHistoryModal";
 import IconButton from "./IconButton";
-import ImageDiffModal from "./ImageDiffModal";
-import LevelHistoryModal from "./LevelHistoryModal";
 import ProgressList from "./ProgressList";
 import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
@@ -30,6 +32,7 @@ import styles from "./NavBar.module.css";
 class NavBar extends PureComponent {
 	state = {
 		isCalculatorOpen: false,
+		isFreeModeSettingsOpen: false,
 		imageDiffSequence: null,
 	};
 
@@ -46,6 +49,7 @@ class NavBar extends PureComponent {
 			setChapterSelectOpen,
 		} = this.props;
 
+		const isFreeMode = level.isFreeMode();
 		const levelDefinition = book.getLevelDefinitionOf(level.id);
 		const firstLevelDefinition = _.first(chapter.levels);
 		const lastLevelDefinition = _.last(chapter.levels);
@@ -53,6 +57,10 @@ class NavBar extends PureComponent {
 
 		return (
 			<div className={styles.navbar}>
+				<FreeModeSettingsModal
+					open={this.state.isFreeModeSettingsOpen}
+					onClose={this._closeFreeModeSettings}
+				/>
 				<CalculatorModal
 					open={this.state.isCalculatorOpen}
 					onClose={this._closeCalculator}
@@ -82,16 +90,18 @@ class NavBar extends PureComponent {
 						/>
 					)}
 					<span>
-						{levelDefinition.humanId} /{" "}
-						<span
-							className="highlight-link"
-							onClick={() => {
-								setChapterSelectOpen(true);
-							}}
-						>
-							{chapter.name[locales.language]}
-						</span>{" "}
-						/ {level.name[locales.language]}
+						{!chapter.isSpecial && <span>{levelDefinition.humanId} / </span>}
+						{!isFreeMode && (
+							<span
+								className="highlight-link"
+								onClick={() => {
+									setChapterSelectOpen(true);
+								}}
+							>
+								{chapter.name[locales.language]} /{" "}
+							</span>
+						)}
+						{level.name[locales.language]}
 					</span>
 					{level.isUsingSnapshot && (
 						<Badge
@@ -106,6 +116,14 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
+						{isFreeMode && (
+							<IconButton
+								style={{ marginRight: 8 }}
+								Icon={FaCog}
+								tooltip={locales.get("free_mode_settings")}
+								onClick={this._openFreeModeSettings}
+							/>
+						)}
 						{book.canUseEmulator && canRunEmulator && (
 							<IconButton
 								style={{ marginRight: 8 }}
@@ -150,12 +168,14 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
-						<IconButton
-							style={{ marginLeft: 8 }}
-							Icon={FaClock}
-							tooltip={locales.get("level_history")}
-							onClick={() => this._openLevelHistory()}
-						/>
+						{!isFreeMode && (
+							<IconButton
+								style={{ marginLeft: 8 }}
+								Icon={FaClock}
+								tooltip={locales.get("level_history")}
+								onClick={() => this._openLevelHistory()}
+							/>
+						)}
 						{book.canGoToNextChapter(chapter) && (
 							<IconButton
 								Icon={FaChevronRight}
@@ -165,13 +185,15 @@ class NavBar extends PureComponent {
 						)}
 					</div>
 				</div>
-				<div className={styles.item}>
-					<ProgressList
-						book={book}
-						chapter={chapter}
-						selectedLevelId={level.id}
-					/>
-				</div>
+				{!isFreeMode && (
+					<div className={styles.item}>
+						<ProgressList
+							book={book}
+							chapter={chapter}
+							selectedLevelId={level.id}
+						/>
+					</div>
+				)}
 			</div>
 		);
 	}
@@ -182,6 +204,14 @@ class NavBar extends PureComponent {
 
 	_closeCalculator = () => {
 		this.setState({ isCalculatorOpen: false });
+	};
+
+	_openFreeModeSettings = () => {
+		this.setState({ isFreeModeSettingsOpen: true });
+	};
+
+	_closeFreeModeSettings = () => {
+		this.setState({ isFreeModeSettingsOpen: false });
 	};
 
 	_openLevelHistory = () => {

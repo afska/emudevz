@@ -5,6 +5,8 @@ import { bus } from "../utils";
 const EMULATOR_ACTIVATION_LEVEL = "cartridge-using-js-modules";
 
 export default class Book {
+	static FREE_MODE_LEVEL = "free-mode-free";
+
 	constructor(metadata) {
 		_.extend(this, metadata);
 	}
@@ -38,6 +40,8 @@ export default class Book {
 	}
 
 	isUnlocked(levelId) {
+		if (levelId === Book.FREE_MODE_LEVEL) return true;
+
 		const maxChapterNumber = this._savedata.maxChapterNumber;
 		const maxChapter = this.getChapterByNumber(maxChapterNumber);
 		if (!maxChapter) return false;

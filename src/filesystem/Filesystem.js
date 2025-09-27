@@ -1,6 +1,7 @@
 import escapeStringRegexp from "escape-string-regexp";
 import $path from "path-browserify-esm";
 import _ from "lodash";
+import Book from "../level/Book";
 import locales from "../locales";
 import store from "../store";
 import { blob } from "../utils";
@@ -284,6 +285,12 @@ class Filesystem {
 	process(path) {
 		path = path.replace(/\/\//g, "/");
 
+		if (this._isFreeMode()) {
+			const freeRoot = "/.free";
+			if (!path.startsWith(freeRoot))
+				path = path === "/" ? freeRoot : freeRoot + path;
+		}
+
 		for (let symlink of this.symlinks)
 			path = path.replace(
 				new RegExp("^" + escapeStringRegexp(symlink.from), "g"),
@@ -291,6 +298,11 @@ class Filesystem {
 			);
 
 		return path;
+	}
+
+	_isFreeMode() {
+		const levelInstance = store.getState().level.instance;
+		return levelInstance && levelInstance.id === Book.FREE_MODE_LEVEL;
 	}
 }
 

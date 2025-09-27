@@ -46,11 +46,9 @@ export default class Emulation {
 						if (have > target + AUDIO_DRIFT_THRESHOLD) n--;
 						else if (have < target - AUDIO_DRIFT_THRESHOLD) n++;
 						this.neees.samples(n);
-
-						this._updateSound();
-					} else if (this.isDebugging) {
-						this._updateSound();
 					}
+
+					this._updateSound(need);
 				} catch (error) {
 					onError(error);
 				}
@@ -109,7 +107,6 @@ export default class Emulation {
 					} else {
 						this.neees.frame();
 					}
-					this._updateSound();
 				}
 			} catch (error) {
 				onError(error);
@@ -123,20 +120,29 @@ export default class Emulation {
 		} catch (error) {
 			onError(error);
 		}
+
+		this._onError = onError;
 	}
 
 	replace = (NEEES, saveFileBytes, saveState) => {
-		const oldFrameBuffer = new Uint32Array(this.neees.ppu.frameBuffer.length);
-		for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
-			oldFrameBuffer[i] = this.neees.ppu.frameBuffer[i];
+		const hasFrameBuffer = this.neees.ppu?.frameBuffer != null;
+
+		let oldFrameBuffer = null;
+		if (hasFrameBuffer) {
+			oldFrameBuffer = new Uint32Array(this.neees.ppu.frameBuffer.length);
+			for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
+				oldFrameBuffer[i] = this.neees.ppu.frameBuffer[i];
+		}
 
 		this.neees = new NEEES(this._onFrame, this._onAudio);
 		this.neees.load(this.bytes, saveFileBytes);
 		this.saveState = saveState;
 		if (this.saveState != null) this.neees.setSaveState(this.saveState);
 
-		for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
-			this.neees.ppu.frameBuffer[i] = oldFrameBuffer[i] ?? 0;
+		if (hasFrameBuffer) {
+			for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
+				this.neees.ppu.frameBuffer[i] = oldFrameBuffer[i] ?? 0;
+		}
 	};
 
 	toggleFullscreen = () => {
@@ -204,9 +210,13 @@ export default class Emulation {
 		}
 	};
 
-	_updateSound() {
-		this.speaker.writeSamples(this.samples);
-		this.samples = [];
+	_updateSound(maxCount) {
+		const take = Math.min(maxCount, this.samples.length);
+
+		const out = this.samples.slice(0, take);
+		this.speaker.writeSamples(out);
+
+		this.samples = this.samples.slice(take);
 	}
 
 	_updateInput(input) {
@@ -223,9 +233,14 @@ export default class Emulation {
 					this.isDebugStepScanlineRequested = true;
 			}
 
-			for (let button in input[i])
-				if (button[0] !== "$")
-					this.neees.setButton(i + 1, button, input[i][button]);
+			try {
+				for (let button in input[i])
+					if (button[0] !== "$") {
+						this.neees.setButton(i + 1, button, input[i][button]);
+					}
+			} catch (error) {
+				this._onError(error);
+			}
 		}
 	}
 

@@ -7,8 +7,8 @@ import Book from "../level/Book";
 import LevelLoader from "../level/LevelLoader";
 import locales from "../locales";
 import { bus } from "../utils";
-import ChapterSelectModal from "./ChapterSelectModal";
 import LevelScreen from "./LevelScreen";
+import ChapterSelectModal from "./components/modals/ChapterSelectModal";
 import styles from "./PlayScreen.module.css";
 
 const LEVELS_PATH = "levels";
@@ -100,7 +100,7 @@ class PlayScreen extends PureComponent {
 	}
 
 	async _loadLevel() {
-		const { currentLevelId, setLevel } = this.props;
+		const { currentLevelId, setLevel, closeNonExistingFiles } = this.props;
 
 		const levelPath = `${LEVELS_PATH}/level_${currentLevelId}.zip`;
 
@@ -112,6 +112,7 @@ class PlayScreen extends PureComponent {
 			})
 			.then((levelData) => new LevelLoader(levelData, currentLevelId).load())
 			.then(setLevel)
+			.then(closeNonExistingFiles)
 			.catch(this._onError);
 	}
 }
@@ -131,6 +132,7 @@ const mapStateToProps = ({ router, book, level }) => {
 const mapDispatchToProps = ({ book, level, savedata }) => ({
 	setBook: book.setBook,
 	setLevel: level.setLevel,
+	closeNonExistingFiles: savedata.closeNonExistingFiles,
 	resetLevel: level.reset,
 	validateSavedata: savedata.validate,
 	setChapterSelectOpen: level.setChapterSelectOpen,

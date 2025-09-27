@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import classNames from "classnames";
+import { getActiveScreenSize } from "../screen";
 import styles from "./TVNoise.module.css";
-
-const SCREEN_WIDTH = 256;
-const SCREEN_HEIGHT = 240;
 
 export default class TVNoise extends Component {
 	static get id() {
@@ -16,8 +14,8 @@ export default class TVNoise extends Component {
 		return (
 			<canvas
 				className={classNames(styles.container, className)}
-				width={SCREEN_WIDTH}
-				height={SCREEN_HEIGHT}
+				width={getActiveScreenSize().width}
+				height={getActiveScreenSize().height}
 				ref={(canvas) => {
 					if (canvas) this._initCanvas(canvas);
 				}}

@@ -91,6 +91,7 @@ export default {
 	file_doesnt_exist1: "El archivo",
 	file_doesnt_exist2: "no existe. Clickea aquí para crearlo.",
 	find_errors: "Encontrar errores",
+	free_mode_settings: "Opciones de modo libre",
 	go_back: "Volver",
 	golden_log: "Golden log",
 	help_basic:
@@ -183,6 +184,8 @@ export default {
 	rm_recursive_flag: "(para omitir esta verificación, corre `rm -rf`)",
 	rm_with_files:
 		"⚠️  Este directorio contiene ~archivos~. ¿Borrar todo? ~(y/N)~",
+	rom_extension: "Extensión de ROM",
+	rom_extension_examples: "ej.: .neees, .gb",
 	root_enabled: "Privilegios root activados. ¡Usar con cuidado!",
 	root_games_unlocked: "Todos los juegos desbloqueados.",
 	root_undid_level: "Se deshizo el nivel: ",
@@ -196,6 +199,10 @@ export default {
 	save_state_loaded: "¡Estado cargado!",
 	save_state_not_found: "No hay estado guardado disponible.",
 	save_state_saved: "¡Estado guardado!",
+	screen_height: "Alto de pantalla",
+	screen_height_range: "1 a 600",
+	screen_width: "Ancho de pantalla",
+	screen_width_range: "1 a 800",
 	scroll_left: "Scrollear a la izquierda",
 	scroll_right: "Scrollear a la derecha",
 	search_files: "Buscar archivos...",
@@ -243,10 +250,7 @@ export default {
 	tests_video_running: "🎥  Corriendo prueba de video:",
 	tests_warnings_found: "⚠️  Advertencias encontradas.",
 	the_operation_failed: "La operación falló.",
-	tooltip_campaign:
-		"🕹️ Escribe un emulador de NEEES desde cero siguiendo los tutoriales y la documentación del juego.",
-	tooltip_free_mode:
-		"💻 Escribe un emulador para tu plataforma favorita usando el frontend y herramientas incluidos.",
+	toggle_markdown_edit: "Alternar edición de Markdown",
 	unlocks: "Desbloquea",
 	using_bugged_emulator: "Usando BrokenNEEES ❌",
 	using_default_emulator: "Usando BrokenNEEES ⚠️",
