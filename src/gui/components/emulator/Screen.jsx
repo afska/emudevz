@@ -6,13 +6,14 @@ import styles from "./Screen.module.css";
 export default class Screen extends Component {
 	render() {
 		const { className } = this.props;
+		const { width, height } = getActiveScreenSize();
 
 		return (
 			<canvas
 				id="screen"
 				className={classNames(styles.screen, className)}
-				width={getActiveScreenSize().width}
-				height={getActiveScreenSize().height}
+				width={width}
+				height={height}
 				ref={(canvas) => {
 					if (canvas) this._initCanvas(canvas);
 				}}
@@ -42,12 +43,7 @@ export default class Screen extends Component {
 
 		// set alpha to opaque
 		this.context.fillStyle = "black";
-		this.context.fillRect(
-			0,
-			0,
-			getActiveScreenSize().width,
-			getActiveScreenSize().height
-		);
+		this.context.fillRect(0, 0, width, height);
 
 		// buffer to write on next animation frame
 		this.buf = new ArrayBuffer(this.imageData.data.length);
