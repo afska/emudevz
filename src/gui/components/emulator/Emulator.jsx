@@ -17,6 +17,7 @@ import styles from "./Emulator.module.css";
 
 export const SAVESTATE_KEY_PREFIX = "persist:emudevz:savestate-";
 export const SAVESTATE_RESET_COMMAND = "reset";
+const EXTENDED_BUTTONS = ["BUTTON_X", "BUTTON_Y", "BUTTON_L", "BUTTON_R"];
 
 const mapTypeToInput = (inputType, keyboardInput, gamepadInputs) => {
 	switch (inputType) {
@@ -279,6 +280,11 @@ export default class Emulator extends Component {
 				if (selectedButton == null) selectedButton = button;
 				else return null;
 			}
+		}
+
+		const isFreeMode = Level.current.id === Book.FREE_MODE_LEVEL;
+		if (selectedButton && !isFreeMode) {
+			if (EXTENDED_BUTTONS.includes(selectedButton)) return null;
 		}
 
 		return selectedButton;

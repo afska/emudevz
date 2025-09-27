@@ -33,6 +33,7 @@ class SettingsModal extends PureComponent {
 			crtFilter,
 			setCrtFilter,
 			open,
+			gameMode,
 		} = this.props;
 		const {
 			areYouSureRestore,
@@ -150,8 +151,8 @@ class SettingsModal extends PureComponent {
 							</Form.Label>
 							{open && (
 								<div className={classNames(styles.options, styles.controls)}>
-									<GamepadMapper player={1} />
-									<GamepadMapper player={2} />
+									<GamepadMapper player={1} extended={gameMode === "free"} />
+									<GamepadMapper player={2} extended={gameMode === "free"} />
 								</div>
 							)}
 						</Form.Group>
@@ -340,6 +341,7 @@ const mapStateToProps = ({ savedata }) => ({
 	chatSpeed: savedata.chatSpeed,
 	crtFilter: savedata.crtFilter,
 	emulatorSettings: savedata.emulatorSettings,
+	gameMode: savedata.gameMode,
 });
 const mapDispatchToProps = ({ savedata }) => ({
 	setLanguage: savedata.setLanguage,
