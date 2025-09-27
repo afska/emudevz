@@ -91,7 +91,7 @@ class Emulator {
     this._frameIndex++;
     for (let x = 0; x < WIDTH; x++) {
       for (let y = 0; y < HEIGHT; y++) {
-        this._frameBuffer[y * WIDTH + x] = 0xff000000 | this._frameIndex % 0xff;
+        this._frameBuffer[y * WIDTH + x] = 0xff000000 | this._frameIndex % 256;
       }
     }
     this.onFrame(this._frameBuffer);

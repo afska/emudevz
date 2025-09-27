@@ -233,14 +233,14 @@ export default class Emulation {
 					this.isDebugStepScanlineRequested = true;
 			}
 
-			for (let button in input[i])
-				if (button[0] !== "$") {
-					try {
+			try {
+				for (let button in input[i])
+					if (button[0] !== "$") {
 						this.neees.setButton(i + 1, button, input[i][button]);
-					} catch (error) {
-						this._onError(error);
 					}
-				}
+			} catch (error) {
+				this._onError(error);
+			}
 		}
 	}
 

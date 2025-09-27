@@ -17,6 +17,9 @@ it("`frame()` calls `onFrame` once", () => {
   const onSample = sinon.spy();
 
   const emulator = new Emulator(onFrame, onSample);
+  expect(emulator.onFrame).to.equal(onFrame);
+  expect(emulator.onSample).to.equal(onSample);
+
   emulator.should.respondTo("frame");
   emulator.frame();
   expect(onFrame).to.have.been.calledOnce;

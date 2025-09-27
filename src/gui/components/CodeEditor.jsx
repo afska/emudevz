@@ -35,7 +35,7 @@ const ACTION_SYNC_EMULATOR = "refreshEmulator";
 const NULL_ACTION = "none";
 const COMPILE_DEBOUNCE_MS = 500;
 const LANGUAGES = {
-	javascript: (filePath) => [
+	javascript: (filePath = "") => [
 		javascript(),
 		lintGutter(),
 		linter(esLint(new Linter(), esLintConfig(filePath)), {
@@ -148,7 +148,7 @@ export default class CodeEditor extends PureComponent {
 			getCode,
 			forceReadOnly = false,
 			addon = false,
-			filePath,
+			filePath = "",
 			style,
 		} = this.props;
 		const {

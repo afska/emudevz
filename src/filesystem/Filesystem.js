@@ -301,7 +301,7 @@ class Filesystem {
 	}
 
 	_isFreeMode() {
-		const levelInstance = store.getState().level?.instance;
+		const levelInstance = store.getState().level.instance;
 		return levelInstance && levelInstance.id === Book.FREE_MODE_LEVEL;
 	}
 }
