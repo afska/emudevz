@@ -2,8 +2,10 @@ import FrameTimer from "./FrameTimer";
 import Speaker from "./Speaker";
 
 const APU_SAMPLE_RATE = 44100;
+const PPU_FRAME_RATE = 60.098;
 const MAX_SAMPLE_MEMORY_SECONDS = 10;
 const AUDIO_DRIFT_THRESHOLD = 64;
+const SAMPLES_PER_FRAME = Math.floor(44100 / 60.098) + 1;
 
 /**
  * An emulator runner instance.
@@ -46,9 +48,8 @@ export default class Emulation {
 						if (have > target + AUDIO_DRIFT_THRESHOLD) n--;
 						else if (have < target - AUDIO_DRIFT_THRESHOLD) n++;
 						this.neees.samples(n);
+						this._updateSound();
 					}
-
-					this._updateSound();
 				} catch (error) {
 					onError(error);
 				}
@@ -106,7 +107,10 @@ export default class Emulation {
 						this.neees.scanline(true);
 					} else {
 						this.neees.frame();
+						if (this.samples.length !== SAMPLES_PER_FRAME)
+							this.samples = this._resample(this.samples, SAMPLES_PER_FRAME);
 					}
+					this._updateSound();
 				}
 			} catch (error) {
 				onError(error);
@@ -213,6 +217,24 @@ export default class Emulation {
 	_updateSound() {
 		this.speaker.writeSamples(this.samples);
 		this.samples = [];
+	}
+
+	_resample(src, target) {
+		const n = src.length;
+		if (n === target) return src.slice();
+		if (n === 0) return new Array(target).fill(0);
+		if (n === 1) return new Array(target).fill(src[0]);
+
+		const out = new Array(target);
+		for (let i = 0; i < target; i++) {
+			const t = (i * (n - 1)) / (target - 1);
+			const k = Math.floor(t);
+			const a = src[k];
+			const b = src[k + 1] ?? a;
+			out[i] = a + (b - a) * (t - k);
+		}
+
+		return out;
 	}
 
 	_updateInput(input) {
