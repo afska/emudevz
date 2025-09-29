@@ -153,7 +153,7 @@ export default {
 	player_1: "- Jugador 1 -",
 	player_2: "- Jugador 2 -",
 	plot:
-		"En el año 2300, el mundo sufrió un ciberataque masivo que <b>destruyó</b> toda la Internet. Desde entonces, tu amigo online y tú están intentando entender las escasas piezas de documentación sobre la NEEES, una consola de videojuegos antigua lanzada en 1983. Con tus habilidades de programación, deberás crear un emulador que corra esos juegos viejos, ayudando a preservar la historia de los videojuegos.",
+		"En el año 32767, el mundo sufrió un ciberataque masivo que <b>destruyó</b> toda la Internet. Desde entonces, tu amigo online y tú están intentando entender las escasas piezas de documentación sobre la NEEES, una consola de videojuegos antigua lanzada en 1983. Con tus habilidades de programación, deberás crear un emulador que corra esos juegos viejos, ayudando a preservar la historia de los videojuegos.",
 	ppu: "PPU",
 	press_any_key_to_continue: "⌨️  Presiona cualquier tecla para continuar.",
 	register_A: "Registro Acumulador",
