@@ -93,6 +93,7 @@ export default {
 	},
 
 	clear: async () => {
+		window.EmuDevz.state.isClearingSavefile = true;
 		localStorage.clear();
 
 		const clearObjectStore = (db, storeName) =>

@@ -33,6 +33,7 @@ window.EmuDevz = {
 	state: {
 		isRunningEmulatorTest: false,
 		isRunningDebugger: false,
+		isClearingSavefile: false,
 		lastOpenNewTabTime: 0,
 	},
 };
@@ -118,6 +119,8 @@ store.subscribe(updateCrtClass);
 
 // Persist current music second on page unload
 window.addEventListener("beforeunload", () => {
+	if (window.EmuDevz.state.isClearingSavefile) return;
+
 	const second = music.getCurrentTime();
 	if (isFinite(second) && second >= 0)
 		store.dispatch.savedata.setMusicSecond(second);
