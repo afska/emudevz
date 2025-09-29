@@ -290,6 +290,8 @@ export default class Emulator extends Component {
 	};
 
 	_onKeyDown = (e) => {
+		this.speaker?.resume();
+
 		if (!document.fullscreenElement && document.activeElement.id !== "emulator")
 			return;
 

@@ -31,9 +31,6 @@ const CRT_SPEED = 0.25;
 const MIN_WIDTH = 512;
 const MIN_HEIGHT = 256;
 
-const isChromeOrChromium =
-	/Chrome/i.test(navigator.userAgent) || /Chromium/i.test(navigator.userAgent);
-
 class HomeScreen extends PureComponent {
 	state = { fontsLoaded: false };
 
@@ -70,21 +67,10 @@ class HomeScreen extends PureComponent {
 				<CreditsModal open={isCreditsOpen} setCreditsOpen={setCreditsOpen} />
 
 				<div id="ui" className={styles.ui}>
-					{isChromeOrChromium ? (
-						<div
-							className={styles.box}
-							dangerouslySetInnerHTML={{ __html: locales.get("plot") }}
-						/>
-					) : (
-						<div
-							className={styles.box}
-							style={{ backgroundColor: "#ff180078" }}
-						>
-							😅 This doesn't work well on non Chromium-based web browsers.
-							<br />
-							💡 Try using another browser.
-						</div>
-					)}
+					<div
+						className={styles.box}
+						dangerouslySetInnerHTML={{ __html: locales.get("plot") }}
+					/>
 
 					<div className={styles.buttons}>
 						<ToggableButton

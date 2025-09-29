@@ -50,6 +50,14 @@ export default class Speaker {
 		};
 	}
 
+	get state() {
+		return this._audioCtx?.state ?? "off";
+	}
+
+	resume() {
+		return this._audioCtx?.resume();
+	}
+
 	writeSamples = (samples) => {
 		if (!this.playerWorklet) return;
 

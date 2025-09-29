@@ -1,6 +1,8 @@
 import FrameTimer from "./FrameTimer";
 import Speaker from "./Speaker";
 
+const PRESS_KEY_TO_ENABLE_AUDIO = "Press any key to enable audio!";
+
 const APU_SAMPLE_RATE = 44100;
 const PPU_FRAME_RATE = 60.098;
 const MAX_SAMPLE_MEMORY_SECONDS = 10;
@@ -57,7 +59,9 @@ export default class Emulation {
 			volume,
 			{ ringBufferSize: audioBufferSize }
 		);
-		this.speaker.start();
+		this.speaker.start().then(() => {
+			if (this.speaker.state === "suspended") alert(PRESS_KEY_TO_ENABLE_AUDIO);
+		});
 
 		this.saveState = saveState;
 		this.isSaveStateRequested = false;
