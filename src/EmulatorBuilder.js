@@ -28,7 +28,7 @@ export default class EmulatorBuilder {
 		}
 
 		let mainModule = null;
-		let CPUMemory = null;
+		let CPUMemory = undefined;
 		let Cartridge = undefined;
 		let Controller = undefined;
 		let CPU = undefined;
@@ -44,24 +44,38 @@ export default class EmulatorBuilder {
 			this.customPPU ||
 			this.customAPU
 		);
+		// when using user's PPU and APU at the same time, and one of them is only partially
+		// completed, there can be crashes due to `CPUMemory` expecting certain properties to exist
+		// => in this special case, we fallback to the default bus
+		const needsDefaultCPUMemory =
+			this.withUserPPU &&
+			this.withUserAPU &&
+			(this.withUsePartialPPU || this.withUsePartialAPU);
+		if (needsDefaultCPUMemory) useCPUMemory = false;
 
 		if (!this.hardware) {
 			mainModule = await this._evaluate(withLastCode);
-			CPUMemory = mainModule.CPUMemory;
-			Cartridge = this.withUserCartridge ? mainModule.Cartridge : undefined;
-			Controller = this.withUserController ? mainModule.Controller : undefined;
-			CPU = this.withUserCPU ? mainModule.CPU : undefined;
+			if (useCPUMemory) {
+				if (mainModule.CPUMemory == null)
+					throw new Error("`CPUMemory` not found");
+				CPUMemory = mainModule.CPUMemory;
+			}
+			if (this.withUserCartridge) {
+				if (mainModule.Cartridge == null)
+					throw new Error("`Cartridge` not found");
+				Cartridge = mainModule.Cartridge;
+			}
+			if (this.withUserController) {
+				if (mainModule.Controller == null)
+					throw new Error("`Controller` not found");
+				Controller = mainModule.Controller;
+			}
+			if (this.withUserCPU) {
+				if (mainModule.CPU == null) throw new Error("`CPU` not found");
+				CPU = mainModule.CPU;
+			}
 			PPU = mainModule.PPU;
 			APU = mainModule.APU;
-
-			// when using user's PPU and APU at the same time, and one of them is only partially
-			// completed, there can be crashes due to `CPUMemory` expecting certain properties to exist
-			// => in this special case, we fallback to the default bus
-			const needsDefaultCPUMemory =
-				this.withUserPPU &&
-				this.withUserAPU &&
-				(this.withUsePartialPPU || this.withUsePartialAPU);
-			if (needsDefaultCPUMemory) useCPUMemory = false;
 
 			if (withLastCode && this.withUserPPU && this.withUsePartialPPU) {
 				const partialModule = await this._evaluate(false);
@@ -82,7 +96,7 @@ export default class EmulatorBuilder {
 		}
 
 		return BrokenNEEES({
-			CPUMemory: useCPUMemory ? CPUMemory : undefined,
+			CPUMemory,
 			Cartridge,
 			CPU,
 			PPU:
