@@ -118,7 +118,7 @@ export default class CreditsModal extends PureComponent {
 							CC BY-NC 4.0
 						</Game>
 						<br />
-						This game uses open-source software, check{" "}
+						This game uses third-party assets and software, check{" "}
 						<a href="licenses.txt" target="_blank" rel="noreferrer">
 							Licenses
 						</a>
