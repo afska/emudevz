@@ -88,6 +88,9 @@ class HomeScreen extends PureComponent {
 							selectedOption={gameMode}
 							onOptionSelect={(opt) => setGameMode(opt.mode)}
 						/>
+						<Button onClick={this._support}>
+							{locales.get("button_support")}
+						</Button>
 						<Button onClick={this._openSettings}>
 							{locales.get("button_settings")}
 						</Button>
@@ -281,6 +284,10 @@ class HomeScreen extends PureComponent {
 
 	_playFreeMode = () => {
 		this.props.goTo(Book.FREE_MODE_LEVEL);
+	};
+
+	_support = () => {
+		window.open("https://buymeacoffee.com/afska");
 	};
 
 	_quit = () => {

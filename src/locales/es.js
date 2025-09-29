@@ -10,6 +10,7 @@ export default {
 	button_play: "✨ Jugar",
 	button_quit: "🚪 Salir",
 	button_settings: "⚙️ Opciones",
+	button_support: "💜 Apoya mi trabajo",
 	byte: "byte",
 	bytes: "bytes",
 	calculator: "Calculadora",

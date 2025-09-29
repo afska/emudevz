@@ -21,7 +21,7 @@ export default class ToggableButton extends PureComponent {
 
 		return (
 			<div className={classNames(styles.toggableButton, className)}>
-				<div>
+				<div className={styles.buttonGroup}>
 					<SplitButton
 						id="toggable-button"
 						title={label}

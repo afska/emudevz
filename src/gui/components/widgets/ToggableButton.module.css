@@ -1,4 +1,11 @@
 .toggableButton {
+	flex: 1.75;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.toggableButton .buttonGroup {
+	display: flex;
 	flex: 1;
 }
 
