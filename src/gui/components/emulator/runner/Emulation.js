@@ -5,7 +5,7 @@ const APU_SAMPLE_RATE = 44100;
 const PPU_FRAME_RATE = 60.098;
 const MAX_SAMPLE_MEMORY_SECONDS = 10;
 const AUDIO_DRIFT_THRESHOLD = 64;
-const SAMPLES_PER_FRAME = Math.floor(44100 / 60.098) + 1;
+const SAMPLES_PER_FRAME = Math.floor(APU_SAMPLE_RATE / PPU_FRAME_RATE) + 1;
 
 /**
  * An emulator runner instance.

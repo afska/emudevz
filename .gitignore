@@ -27,5 +27,4 @@ yarn-error.log*
 *.exe
 *.AppImage
 public/levels
-public/licenses.txt
 *.mp3

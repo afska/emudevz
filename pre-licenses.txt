@@ -146,6 +146,11 @@ MIT © avin
 
 -----
 
+https://github.com/cezary/react-image-diff
+MIT © cezary
+
+-----
+
 https://gist.github.com/frbarbre/b47c5383244e6c364ec480a664c8fa0d
 Copyright (c) 2025 by frbarbre (https://codepen.io/frbarbre/pen/BaObOXL)
 Fork of an original work CSS CRT screen effect (https://codepen.io/lbebber/pen/XJRdrV)
