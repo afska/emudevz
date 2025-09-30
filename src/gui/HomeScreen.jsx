@@ -124,7 +124,7 @@ class HomeScreen extends PureComponent {
 							className="link-button"
 							onClick={this._openFAQ}
 						>
-							[{locales.get("_faq")}]
+							{locales.get("_faq")}
 						</button>
 						{" 📜 "}
 						<button
@@ -132,7 +132,7 @@ class HomeScreen extends PureComponent {
 							className="link-button"
 							onClick={this._openCredits}
 						>
-							[{locales.get("_credits")}]
+							{locales.get("_credits")}
 						</button>
 					</div>
 				</div>

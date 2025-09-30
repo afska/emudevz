@@ -1,6 +1,7 @@
 export default {
 	_created_by: "Created by",
 	_credits: "Credits",
+	_faq: "FAQ",
 	_music_by: "Music by",
 	also: "also",
 	apu: "APU",
