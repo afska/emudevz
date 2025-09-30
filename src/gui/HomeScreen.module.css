@@ -24,6 +24,11 @@
 	margin-top: 16px;
 }
 
+.button {
+	display: flex;
+	flex: 1;
+}
+
 .box {
 	background: rgba(30, 30, 30, 0.5);
 	padding: 12px;

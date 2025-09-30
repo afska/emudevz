@@ -73,27 +73,33 @@ class HomeScreen extends PureComponent {
 					/>
 
 					<div className={styles.buttons}>
-						<ToggableButton
-							onClick={this._play}
-							options={[
-								{
-									labelKey: "button_play",
-									mode: "campaign",
-								},
-								{
-									labelKey: "mode_free",
-									mode: "free",
-								},
-							]}
-							selectedOption={gameMode}
-							onOptionSelect={(opt) => setGameMode(opt.mode)}
-						/>
-						<Button onClick={this._support}>
-							{locales.get("button_support")}
-						</Button>
-						<Button onClick={this._openSettings}>
-							{locales.get("button_settings")}
-						</Button>
+						<div className={styles.button}>
+							<ToggableButton
+								onClick={this._play}
+								options={[
+									{
+										labelKey: "button_play",
+										mode: "campaign",
+									},
+									{
+										labelKey: "mode_free",
+										mode: "free",
+									},
+								]}
+								selectedOption={gameMode}
+								onOptionSelect={(opt) => setGameMode(opt.mode)}
+							/>
+						</div>
+						<div className={styles.button}>
+							<Button onClick={this._support}>
+								{locales.get("button_support")}
+							</Button>
+						</div>
+						<div className={styles.button}>
+							<Button onClick={this._openSettings}>
+								{locales.get("button_settings")}
+							</Button>
+						</div>
 						{window.DESKTOP_MODE && (
 							<Button onClick={this._quit}>{locales.get("button_quit")}</Button>
 						)}
@@ -112,6 +118,14 @@ class HomeScreen extends PureComponent {
 						>
 							Synthenia
 						</a>
+						{" ❓ "}
+						<button
+							type="button"
+							className="link-button"
+							onClick={this._openFAQ}
+						>
+							[{locales.get("_faq")}]
+						</button>
 						{" 📜 "}
 						<button
 							type="button"
