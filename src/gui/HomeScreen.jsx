@@ -126,6 +126,14 @@ class HomeScreen extends PureComponent {
 						>
 							{locales.get("_faq")}
 						</button>
+						{" 🌐 "}
+						<button
+							type="button"
+							className="link-button"
+							onClick={this._openCommunity}
+						>
+							{locales.get("_community")}
+						</button>
 						{" 📜 "}
 						<button
 							type="button"
@@ -302,6 +310,10 @@ class HomeScreen extends PureComponent {
 
 	_openFAQ = () => {
 		this.props.goTo(Book.FAQ_LEVEL);
+	};
+
+	_openCommunity = () => {
+		window.open("https://discord.gg/mFGDxSxEJu");
 	};
 
 	_support = () => {

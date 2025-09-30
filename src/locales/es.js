@@ -1,4 +1,5 @@
 export default {
+	_community: "Comunidad",
 	_created_by: "Creado por",
 	_credits: "Créditos",
 	_faq: "FAQ",
