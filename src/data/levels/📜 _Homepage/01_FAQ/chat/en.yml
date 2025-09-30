@@ -1,0 +1,133 @@
+---
+main:
+  messages:
+  - 🚧  **EmuDevz** is <not ready> yet! come back later 🚧
+  - |-
+    in the meantime, you can:
+      **->** 🎥  watch the trailer
+      **->** 🌐  join our Discord for updates
+      **->** 🔊  listen to the OST
+      **->** 💜  support my stuff
+  responses:
+  - (*) a game about coding emulators? <why>? [why]
+  - (*) but is it a <game> or a <tutorial>? [tutorial]
+  - (*) so the NEEES, huh? [name]
+  - (*) does the game require <programming knowledge>? [requirements]
+  - (*) what <topics> are you going to cover? [topics]
+  - (*) is this <free> / open-source? [free]
+  - (*) <when> will the game be released? [release]
+  - (*) how can I <help>? [help]
+
+why:
+  messages:
+  - yeah
+  - it was <super fun> for me to build my first emulator 👾
+  - and I want to encourage other people to learn how to build one too!
+  responses:
+  - ...main
+
+tutorial:
+  messages:
+  - honestly, whatever you want to call it! 🤷
+  - I'd say <it's a game> since it has a clear goal, a set of rules, and tasks where you can success or fail
+  responses:
+  - ...main
+
+name:
+  messages:
+  - yep 🙂
+  - we call it the <"No Entiendo" Enigmatic Enjoyment Solution>
+  - it's like the <NES> but simplified for didactics
+  - it runs most <NES games> fine, except those that rely on trickier hardware details
+  responses:
+  - ...main
+
+requirements:
+  messages:
+  - for now, <yes>, but that might change in the future! 😅
+  - some <object-oriented programming> knowledge and <basic understanding> of computer systems will be assumed
+  - "(that is: bytes, signed integers, boolean logic, numbering systems, etc.)"
+  - the coding will be done in JavaScript
+  responses:
+  - ...main
+
+topics:
+  messages:
+  - the player will receive a <buggy> (but <modular>) emulator called BrokenNEEES
+  - and the objective is to replace the broken units with new ones coded from scratch
+  - in any order!
+  - |-
+    you can <expect to learn>:
+      **->** 🔨  Basic 6502 assembly
+      **->** 💾  Cartridge emulation
+      **->** 🚌  Memory buses emulation
+      **->** 🧠  CPU emulation (official instructions), tested with nestest and unit tests
+      **->** 🖥️  PPU emulation, tested with video and unit tests
+      **->** 🔊  APU emulation, tested with audio and unit tests
+      **->** 🎮  Controller and 🗜️  Mapper emulation (<NROM>, <MMC1>, <UxROM>, <CNROM>, and <MMC3>) as a bonus
+  - |-
+    things that will be <out of scope>:
+      **->** 👮  Illegal opcodes
+      **->** 🎯  Accurate timing
+      **->** 🔌  Open-bus behavior
+      **->** 👻  Obscure hardware quirks
+  - |-
+    things that will be <semi-out of scope> (explained, but already resolved):
+      **->** ✨  Emulator frontend (platform-specific code)
+      **->** 🔄  Synchronization between units
+      **->** 📥  Save states
+  - also, the game will provide a library to facilitate correct scrolling (with Loopy's t and v registers) since it can be very hard to grasp and it doesn't add add too much, so the player will only focus in render the scrolled background
+  responses:
+  - why not target <accuracy>? [accuracy]
+
+
+accuracy:
+  messages:
+  - I think trying to achieve accuracy in a first emulation project is a <bad idea> 💀
+  - as it would only add accidental complexity and put off players from learning the important concepts
+  - |+
+    people can learn the basics about the hardware and emulation, and target accuracy <later>
+  - in other words, when you finish this, you'll have a solid emulator that runs a big percentage of <NES games> from mappers 0 to 4
+  - |+
+    it won't pass a lot of Blargg's test ROMs, but it'll look and sound fine! just don't expect to build the next Mesen 😊
+  - things are <simplified> here, and this is also why I picked a different name for the console
+  - if any doubts, this is not a <NES>! so it cannot be inaccurate to something it isn't 😉
+  responses:
+  - ...main
+
+release:
+  messages:
+  - when it's finished!!
+  - this project is taking an extremely enormous chunk of my time
+  - I started it in 2022 and even though I can now see the finish line, I estimate that it'll take this at least 1 more year
+  - but I already said that two times, so I don't know 😅
+  - join our server to subscribe for updates
+  responses:
+  - ok, but what's the <current state> of completion? [state]
+
+free:
+  messages:
+  - it will be 👍
+  - I just decided not to release a demo, as I wouldn't have time to give proper support for it
+  - but the game will be free and open-source once released
+  - available <on the web> as a GitHub page
+  - the code will be <MIT>-licensed and levels will be <CC BY-NC>
+  responses:
+  - ...main
+
+state:
+  messages:
+  - the biggest missing part is that I need to figure out the best way to explain the APU
+  - and Controller, and some Mappers, but those are bonus chapters so I might consider releasing those after <1.0>
+  responses:
+  - ...main
+
+help:
+  messages:
+  - well, right now, the game needs programming skills
+  - I'd like to change that by adding guides explaining the basics 🎓
+  - if you are a <programmer> and want to collaborate on that, it would be very welcome
+  - also, if you are an <artist>, you can contribute assets 🎨
+  - in any case, ping me and I'll provide more info on what's needed
+  responses:
+  - ...main

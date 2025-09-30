@@ -300,6 +300,10 @@ class HomeScreen extends PureComponent {
 		this.props.goTo(Book.FREE_MODE_LEVEL);
 	};
 
+	_openFAQ = () => {
+		this.props.goTo(Book.FAQ_LEVEL);
+	};
+
 	_support = () => {
 		window.open("https://buymeacoffee.com/afska");
 	};

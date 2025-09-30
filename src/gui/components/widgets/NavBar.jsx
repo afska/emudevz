@@ -50,6 +50,7 @@ class NavBar extends PureComponent {
 		} = this.props;
 
 		const isFreeMode = level.isFreeMode();
+		const isSpecialLevel = level.isFAQ() || isFreeMode;
 		const levelDefinition = book.getLevelDefinitionOf(level.id);
 		const firstLevelDefinition = _.first(chapter.levels);
 		const lastLevelDefinition = _.last(chapter.levels);
@@ -82,7 +83,7 @@ class NavBar extends PureComponent {
 						tooltip={locales.get("go_back")}
 						onClick={goBack}
 					/>
-					{book.canGoToPreviousChapter(chapter) && (
+					{book.canGoToPreviousChapter(chapter) && !isSpecialLevel && (
 						<IconButton
 							Icon={FaChevronLeft}
 							tooltip={locales.get("chapter_previous")}
@@ -91,7 +92,7 @@ class NavBar extends PureComponent {
 					)}
 					<span>
 						{!chapter.isSpecial && <span>{levelDefinition.humanId} / </span>}
-						{!isFreeMode && (
+						{!isSpecialLevel && (
 							<span
 								className="highlight-link"
 								onClick={() => {
@@ -160,7 +161,7 @@ class NavBar extends PureComponent {
 								this._onMusicChange(() => music.previous());
 							}}
 						/>
-						{book.canReset(level) && (
+						{book.canReset(level) && !isSpecialLevel && (
 							<IconButton
 								style={{ marginLeft: 8 }}
 								Icon={FaTrash}
@@ -168,7 +169,7 @@ class NavBar extends PureComponent {
 								onClick={resetLevel}
 							/>
 						)}
-						{!isFreeMode && (
+						{!isSpecialLevel && (
 							<IconButton
 								style={{ marginLeft: 8 }}
 								Icon={FaClock}
@@ -176,7 +177,7 @@ class NavBar extends PureComponent {
 								onClick={() => this._openLevelHistory()}
 							/>
 						)}
-						{book.canGoToNextChapter(chapter) && (
+						{book.canGoToNextChapter(chapter) && !isSpecialLevel && (
 							<IconButton
 								Icon={FaChevronRight}
 								tooltip={locales.get("chapter_next")}
@@ -185,7 +186,7 @@ class NavBar extends PureComponent {
 						)}
 					</div>
 				</div>
-				{!isFreeMode && (
+				{!isSpecialLevel && (
 					<div className={styles.item}>
 						<ProgressList
 							book={book}

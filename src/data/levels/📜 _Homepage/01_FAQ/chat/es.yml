@@ -1,0 +1,6 @@
+---
+main:
+  messages:
+  - not available!
+  responses:
+  - ok [end]

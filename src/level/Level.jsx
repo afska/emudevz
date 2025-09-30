@@ -109,6 +109,10 @@ export default class Level {
 		return this.id === Book.FREE_MODE_LEVEL;
 	}
 
+	isFAQ() {
+		return this.id === Book.FAQ_LEVEL;
+	}
+
 	fillContentFromTemp() {
 		if (!this.hasStoredContent)
 			store.dispatch.content.setCurrentLevelContent(this.tempContent);
