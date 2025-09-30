@@ -3,7 +3,7 @@ export default {
 	_created_by: "Created by",
 	_credits: "Credits",
 	_faq: "FAQ",
-	_music_by: "Music by",
+	_ost: "Soundtrack",
 	also: "also",
 	apu: "APU",
 	backup: "Backup",

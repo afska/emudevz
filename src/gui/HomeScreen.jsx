@@ -110,13 +110,13 @@ class HomeScreen extends PureComponent {
 						<a href="https://r-labs.io" target="_blank" rel="noreferrer">
 							[r]labs
 						</a>
-						{" 🎶 " + locales.get("_music_by") + " "}
+						{" 🎶 "}
 						<a
-							href="https://open.spotify.com/artist/7ewiTkC0wCMdpx1Wp1z140"
+							href="https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ"
 							target="_blank"
 							rel="noreferrer"
 						>
-							Synthenia
+							{locales.get("_ost")}
 						</a>
 						{" ❓ "}
 						<button
