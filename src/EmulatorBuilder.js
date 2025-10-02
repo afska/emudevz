@@ -82,7 +82,7 @@ export default class EmulatorBuilder {
 				if (this.withUserCartridge) Cartridge = partialModule.Cartridge;
 				if (this.withUserController) Controller = partialModule.Controller;
 				if (this.withUserCPU) CPU = partialModule.CPU;
-				CPUMemory = partialModule.CPUMemory;
+				if (useCPUMemory) CPUMemory = partialModule.CPUMemory;
 				PPU = partialModule.PPU;
 			}
 			if (withLastCode && this.withUserAPU && this.withUsePartialAPU) {
@@ -90,7 +90,7 @@ export default class EmulatorBuilder {
 				if (this.withUserCartridge) Cartridge = partialModule.Cartridge;
 				if (this.withUserController) Controller = partialModule.Controller;
 				if (this.withUserCPU) CPU = partialModule.CPU;
-				CPUMemory = partialModule.CPUMemory;
+				if (useCPUMemory) CPUMemory = partialModule.CPUMemory;
 				APU = partialModule.APU;
 			}
 		}
