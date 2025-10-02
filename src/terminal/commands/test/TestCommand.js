@@ -26,21 +26,6 @@ export default class TestCommand extends Command {
 	async execute() {
 		const level = Level.current;
 
-		let isAudioTestSuccessful = true;
-		if (
-			!_.isEmpty(level.audioTests) &&
-			(!this._targetId || this._targetId === "audio")
-		) {
-			try {
-				isAudioTestSuccessful = await this._runAudioTests(level);
-			} catch (e) {
-				isAudioTestSuccessful = false;
-				console.error(e);
-				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
-			}
-			await this._terminal.newline();
-		}
-
 		let isVideoTestSuccessful = true;
 		if (
 			!_.isEmpty(level.videoTests) &&
@@ -50,6 +35,21 @@ export default class TestCommand extends Command {
 				isVideoTestSuccessful = await this._runVideoTests(level);
 			} catch (e) {
 				isVideoTestSuccessful = false;
+				console.error(e);
+				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
+			}
+			await this._terminal.newline();
+		}
+
+		let isAudioTestSuccessful = true;
+		if (
+			!_.isEmpty(level.audioTests) &&
+			(!this._targetId || this._targetId === "audio")
+		) {
+			try {
+				isAudioTestSuccessful = await this._runAudioTests(level);
+			} catch (e) {
+				isAudioTestSuccessful = false;
 				console.error(e);
 				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
 			}

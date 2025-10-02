@@ -4,16 +4,173 @@
 		"es": "🚧 Próximamente"
 	},
 	"ui": {
-		"layout": "mono",
+		"layout": "tripleRight",
 		"components": {
-			"Main": [
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
 				"console",
 				{
 					"startup": "chat"
 				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
 			]
 		},
-		"focus": "Main"
+		"focus": "Bottom",
+		"canPinEmulator": false
 	},
-	"unlocksGame": "lets-play-robo-ninja-climb"
+	"test": {
+		"context": "javascript",
+		"inherit": [
+			"cartridge.js",
+			"bus.js",
+			"cpu.js",
+			"cpu_instructions_1.js",
+			"cpu_instructions_2.js",
+			"cpu_instructions_3.js",
+			"cpu_instructions_4.js",
+			"cpu_instructions_5.js",
+			"cpu_addressing_modes_1.js",
+			"cpu_addressing_modes_2.js",
+			"ppu.js",
+			"apu.js"
+		]
+	},
+	"videoTests": [
+		{
+			"rom": "/roms/_test/ppu_mapper_irq.neees",
+			"frames": 120,
+			"ppu": "TestPPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/game_solarian.neees",
+			"frames": 90,
+			"ppu": "TestPPU.v15.js"
+		},
+		{
+			"rom": "/roms/.all/DizzySheepDisaster.neees",
+			"frames": 90,
+			"ppu": "TestPPU.v15.js"
+		},
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"frames": 120,
+			"ppu": "TestPPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/ppu_sprite0hit.neees",
+			"frames": 150,
+			"ppu": "TestPPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/ppu_palette_ram.neees",
+			"frames": 30,
+			"ppu": "TestPPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/240p_test_suite.neees",
+			"frames": 120,
+			"ppu": "TestPPU.v15.js",
+			"saveState": "240ptestsuite_scroll_vertical.ss"
+		},
+		{
+			"rom": "/roms/_test/ppu_split_statusbar.neees",
+			"frames": 120,
+			"ppu": "TestPPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/ppu_masking.neees",
+			"frames": 90,
+			"ppu": "TestPPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/240p_test_suite.neees",
+			"frames": 120,
+			"ppu": "TestPPU.v15.js",
+			"saveState": "240ptestsuite_scroll_hill.ss"
+		},
+		{
+			"rom": "/roms/_test/ppu_road.neees",
+			"frames": 240,
+			"ppu": "TestPPU.v14.js"
+		},
+		{
+			"rom": "/roms/_test/ppu_emphasis.neees",
+			"frames": 90,
+			"ppu": "TestPPU.v15.js"
+		}
+	],
+	"audioTests": [
+		{
+			"rom": "/roms/.all/SuperTiltBro.neees",
+			"frames": 300,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/game_climber.neees",
+			"frames": 300,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/.all/DizzySheepDisaster.neees",
+			"frames": 300,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/.all/FilthyKitchen.neees",
+			"frames": 300,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/.all/RavensGate.neees",
+			"frames": 300,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/hello_world.neees",
+			"frames": 200,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/apu_sweep.neees",
+			"frames": 240,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/apu_triangle_regular_length.neees",
+			"frames": 60,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/apu_noise.neees",
+			"frames": 400,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/apu_dmc_directload_crowd.neees",
+			"frames": 300,
+			"apu": "TestAPU.v15.js"
+		},
+		{
+			"rom": "/roms/_test/apu_full_song.neees",
+			"frames": 300,
+			"apu": "TestAPU.v15.js"
+		}
+	],
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
 }
