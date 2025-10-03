@@ -8,6 +8,7 @@ const PPU_FRAME_RATE = 60.098;
 const MAX_SAMPLE_MEMORY_SECONDS = 10;
 const AUDIO_DRIFT_THRESHOLD = 64;
 const SAMPLES_PER_FRAME = Math.floor(APU_SAMPLE_RATE / PPU_FRAME_RATE) + 1;
+const MAX_IN_FLIGHT = 10; // (tied to audioWorklet.js)
 
 /**
  * An emulator runner instance.
@@ -155,6 +156,15 @@ export default class Emulation {
 
 	toggleFullscreen = () => {
 		this.screen.toggleFullscreen();
+	};
+
+	toggleDebugging = () => {
+		this.isDebugging = !this.isDebugging;
+
+		if (!this.isDebugging) {
+			// clear pending audio requests
+			for (let i = 0; i < MAX_IN_FLIGHT; i++) this.speaker.writeSamples([]);
+		}
 	};
 
 	terminate = () => {

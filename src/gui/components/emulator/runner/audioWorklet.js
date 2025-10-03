@@ -1,7 +1,7 @@
 import RingBuffer from "ringbufferjs";
 
 const AUDIO_BUFFER_SIZE = 4096;
-const MAX_IN_FLIGHT = 10;
+const MAX_IN_FLIGHT = 10; // (tied to Emulation.js)
 
 class PlayerWorklet extends AudioWorkletProcessor {
 	constructor(options) {

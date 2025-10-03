@@ -121,7 +121,7 @@ export default class DebuggerGUI {
 					});
 				} else {
 					if (ImGui.Button(label)) {
-						if (emulation) emulation.isDebugging = !emulation.isDebugging;
+						if (emulation) emulation.toggleDebugging();
 					}
 				}
 				if (i < btns.length - 1) ImGui.SameLine();
