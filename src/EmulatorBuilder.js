@@ -22,9 +22,7 @@ export default class EmulatorBuilder {
 	async build(withLastCode = false) {
 		if (this.withCustomEmulator) {
 			const mainModule = await this._evaluate(true);
-			const Emulator = mainModule.Emulator;
-			if (Emulator == null) throw new Error("`Emulator` not found");
-			return Emulator;
+			return this._getComponent(mainModule, "Emulator");
 		}
 
 		let mainModule = null;
@@ -32,8 +30,8 @@ export default class EmulatorBuilder {
 		let Cartridge = undefined;
 		let Controller = undefined;
 		let CPU = undefined;
-		let PPU = null;
-		let APU = null;
+		let PPU = undefined;
+		let APU = undefined;
 
 		let useCPUMemory = !!(
 			this.withUserCPU ||
@@ -56,42 +54,44 @@ export default class EmulatorBuilder {
 		if (!this.hardware) {
 			mainModule = await this._evaluate(withLastCode);
 			if (useCPUMemory) {
-				if (mainModule.CPUMemory == null)
-					throw new Error("`CPUMemory` not found");
-				CPUMemory = mainModule.CPUMemory;
+				CPUMemory = this._getComponent(mainModule, "CPUMemory");
 			}
-			if (this.withUserCartridge) {
-				if (mainModule.Cartridge == null)
-					throw new Error("`Cartridge` not found");
-				Cartridge = mainModule.Cartridge;
-			}
+			if (this.withUserCartridge)
+				Cartridge = this._getComponent(mainModule, "Cartridge");
 			if (this.withUserController) {
-				if (mainModule.Controller == null)
-					throw new Error("`Controller` not found");
-				Controller = mainModule.Controller;
+				Controller = this._getComponent(mainModule, "Controller");
 			}
 			if (this.withUserCPU) {
-				if (mainModule.CPU == null) throw new Error("`CPU` not found");
-				CPU = mainModule.CPU;
+				CPU = this._getComponent(mainModule, "CPU");
 			}
-			PPU = mainModule.PPU;
-			APU = mainModule.APU;
+			if (this.withUserPPU) {
+				PPU = this._getComponent(mainModule, "PPU");
+			}
+			if (this.withUserAPU) {
+				APU = this._getComponent(mainModule, "APU");
+			}
 
 			if (withLastCode && this.withUserPPU && this.withUsePartialPPU) {
 				const partialModule = await this._evaluate(false);
-				if (this.withUserCartridge) Cartridge = partialModule.Cartridge;
-				if (this.withUserController) Controller = partialModule.Controller;
-				if (this.withUserCPU) CPU = partialModule.CPU;
-				if (useCPUMemory) CPUMemory = partialModule.CPUMemory;
-				PPU = partialModule.PPU;
+				if (this.withUserCartridge)
+					Cartridge = this._getComponent(partialModule, "Cartridge");
+				if (this.withUserController)
+					Controller = this._getComponent(partialModule, "Controller");
+				if (this.withUserCPU) CPU = this._getComponent(partialModule, "CPU");
+				if (useCPUMemory)
+					CPUMemory = this._getComponent(partialModule, "CPUMemory");
+				PPU = this._getComponent(partialModule, "PPU");
 			}
 			if (withLastCode && this.withUserAPU && this.withUsePartialAPU) {
 				const partialModule = await this._evaluate(false);
-				if (this.withUserCartridge) Cartridge = partialModule.Cartridge;
-				if (this.withUserController) Controller = partialModule.Controller;
-				if (this.withUserCPU) CPU = partialModule.CPU;
-				if (useCPUMemory) CPUMemory = partialModule.CPUMemory;
-				APU = partialModule.APU;
+				if (this.withUserCartridge)
+					Cartridge = this._getComponent(partialModule, "Cartridge");
+				if (this.withUserController)
+					Controller = this._getComponent(partialModule, "Controller");
+				if (this.withUserCPU) CPU = this._getComponent(partialModule, "CPU");
+				if (useCPUMemory)
+					CPUMemory = this._getComponent(partialModule, "CPUMemory");
+				APU = this._getComponent(partialModule, "APU");
 			}
 		}
 
@@ -99,18 +99,8 @@ export default class EmulatorBuilder {
 			CPUMemory,
 			Cartridge,
 			CPU,
-			PPU:
-				this.customPPU != null
-					? this.customPPU
-					: this.withUserPPU
-					? PPU
-					: undefined,
-			APU:
-				this.customAPU != null
-					? this.customAPU
-					: this.withUserAPU
-					? APU
-					: undefined,
+			PPU: this.customPPU != null ? this.customPPU : PPU,
+			APU: this.customAPU != null ? this.customAPU : APU,
 			Controller,
 			mappers: this.withUserMappers ? mainModule.mappers : undefined,
 			omitReset: this.omitReset,
@@ -196,5 +186,11 @@ export default class EmulatorBuilder {
 		mainModule = (await $.evaluate()).default;
 
 		return mainModule;
+	}
+
+	_getComponent(evaluatedModule, componentName) {
+		const component = evaluatedModule[componentName];
+		if (component == null) throw new Error(`\`${componentName}\` not found`);
+		return component;
 	}
 }
