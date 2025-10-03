@@ -534,10 +534,12 @@ it("maps the $4016 <reads/writes> and $4017 <reads> to the controllers", () => {
 	sinon.stub(controller2, "onRead").returns(345);
 	sinon.spy(controller2, "onWrite");
 
-	cpuMemory.onLoad({} /* ppu */, {} /* apu */, {} /* mapper */, [
-		controller1,
-		controller2,
-	]);
+	cpuMemory.onLoad(
+		{} /* ppu */,
+		{ registers: { write: () => {} } } /* apu */,
+		{} /* mapper */,
+		[controller1, controller2]
+	);
 
 	cpuMemory.read(0x4016).should.equal(123, "read(0x4016)");
 	expect(controller1.onRead).to.have.been.calledOnce;
