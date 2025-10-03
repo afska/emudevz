@@ -188,7 +188,7 @@ export default {
 	rm_with_files:
 		"⚠️  Este directorio contiene ~archivos~. ¿Borrar todo? ~(y/N)~",
 	rom_extension: "Extensión de ROM",
-	rom_extension_examples: "ej.: .neees, .gb",
+	rom_extension_examples: "ej.: .neees",
 	root_enabled: "Privilegios root activados. ¡Usar con cuidado!",
 	root_games_unlocked: "Todos los juegos desbloqueados.",
 	root_undid_level: "Se deshizo el nivel: ",
