@@ -1,0 +1,25 @@
+---
+main:
+  messages:
+  - the <real> final test is playing a game from start to finish!
+  - let's play a game
+  - this time, using your emulator 🤯
+  - |-
+    it's called 🤖 🧗  ~Robo-Ninja Climb~
+    <{screenshot.png;30x30}>
+  - if you complete it, I'll send you the <ROM file>
+  - in the ~*.neees~ format
+  responses:
+  - that sounds easy 🙌 [play]
+
+play:
+  run: |
+    {{Top}}.runner.setIntegration("RoboNinjaClimb");
+    {{Top}}.loadROM("/roms/.all/RoboNinjaClimb.neees");
+  messages:
+  - well, it's not 🙃
+  - actually, you'll die a lot
+  - I'll wait here 👀
+  responses: []
+  # events:
+  # - roboninjaclimb-end [finish]

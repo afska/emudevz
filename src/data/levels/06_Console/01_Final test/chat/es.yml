@@ -1,0 +1,10 @@
+---
+main:
+  messages:
+  - ¡no puede ser!
+  - ¿lo lograste?!
+  - hagamos una prueba <FINAL>
+  - incluyendo todas las pruebas de <unit>, <video> y <audio> juntas
+  - esto asegurará que tu 💾  Cartridge, 🚌  Bus, 🧠  CPU, 🖥️  PPU y 🔊  APU funcionen correctamente
+  - ejecuta el comando `test` una última vez y si aparece algo, arréglalo
+  responses: []

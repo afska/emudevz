@@ -108,3 +108,10 @@
 .label {
 	margin-right: 4px;
 }
+
+.integration {
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	align-items: center;
+}

@@ -7,6 +7,7 @@ const EMULATOR_ACTIVATION_LEVEL = "cartridge-using-js-modules";
 export default class Book {
 	static FAQ_LEVEL = "homepage-faq";
 	static FREE_MODE_LEVEL = "free-mode-free";
+	static FINAL_TEST_LEVEL = "console-the-real-final-test";
 
 	constructor(metadata) {
 		_.extend(this, metadata);

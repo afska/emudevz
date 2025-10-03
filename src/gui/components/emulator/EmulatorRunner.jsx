@@ -24,17 +24,27 @@ import InputTypeToggle from "../widgets/InputTypeToggle";
 import VolumeSlider from "../widgets/VolumeSlider";
 import Emulator from "./Emulator";
 import Unit from "./Unit";
+import integrations from "./integrations";
 import styles from "./EmulatorRunner.module.css";
 
 const COMPONENT_BORDER_RADIUS = 8;
 
 export default class EmulatorRunner extends PureComponent {
+	state = { integrationId: null };
+
+	setIntegration(integrationId) {
+		this.setState({ integrationId });
+	}
+
 	render() {
 		const { rom, name, error, saveState } = this.props;
+		const { integrationId } = this.state;
 
 		const isRunning = rom && !error;
 		const currentLevel = Level.current;
 		const isFreeMode = currentLevel.isFreeMode();
+
+		const Integration = integrations.get(integrationId);
 
 		let ppuSuffix = "";
 		if (this._emulatorSettings.usePPU) {
@@ -75,7 +85,7 @@ export default class EmulatorRunner extends PureComponent {
 						"d-none d-lg-flex d-xl-flex d-xxl-flex"
 					)}
 				>
-					{!isFreeMode && (
+					{!isFreeMode && Integration == null && (
 						<div className={styles.unitGroup}>
 							<div className={classNames(styles.column, styles.units)}>
 								<div className={styles.row}>
@@ -146,15 +156,22 @@ export default class EmulatorRunner extends PureComponent {
 							/>
 						</div>
 					)}
-					<div
-						className={classNames(
-							styles.dragMessage,
-							isFreeMode ? "d-flex" : "d-none d-xl-flex d-xxl-flex"
-						)}
-						onClick={this._openROM}
-					>
-						📦 {locales.get("drag_and_drop_here")}
-					</div>
+					{Integration != null && (
+						<div className={styles.integration}>
+							<Integration getNEEES={() => this._emulator?.neees} />
+						</div>
+					)}
+					{Integration == null && (
+						<div
+							className={classNames(
+								styles.dragMessage,
+								isFreeMode ? "d-flex" : "d-none d-xl-flex d-xxl-flex"
+							)}
+							onClick={this._openROM}
+						>
+							📦 {locales.get("drag_and_drop_here")}
+						</div>
+					)}
 					<div className={styles.row}>
 						<div
 							style={{ display: isRunning ? "flex" : "none" }}
@@ -257,7 +274,7 @@ export default class EmulatorRunner extends PureComponent {
 							onClick={() => this._reload(false, true)}
 						/>
 					)}
-					{!!rom && (
+					{!!rom && Integration == null && (
 						<IconButton
 							style={{ marginRight: 8 }}
 							Icon={FaStop}
@@ -454,19 +471,28 @@ export default class EmulatorRunner extends PureComponent {
 	};
 
 	get _emulatorSettings() {
+		const { integrationId } = this.state;
+		const hasIntegration = integrationId != null;
 		const settings = store.getState().savedata.emulatorSettings;
 		const unlockedUnits = this._unlockedUnits;
 
 		return {
-			useCartridge: unlockedUnits.useCartridge && settings.useCartridge,
-			useCPU: unlockedUnits.useCPU && settings.useCPU,
-			usePPU: unlockedUnits.usePPU && settings.usePPU,
-			useAPU: unlockedUnits.useAPU && settings.useAPU,
-			useController: unlockedUnits.useController && settings.useController,
-			useConsole: unlockedUnits.useConsole && settings.useConsole,
-			useMappers: unlockedUnits.useMappers && settings.useMappers,
+			useCartridge:
+				(unlockedUnits.useCartridge && settings.useCartridge) || hasIntegration,
+			useCPU: (unlockedUnits.useCPU && settings.useCPU) || hasIntegration,
+			usePPU: (unlockedUnits.usePPU && settings.usePPU) || hasIntegration,
+			useAPU: (unlockedUnits.useAPU && settings.useAPU) || hasIntegration,
+			useController:
+				(unlockedUnits.useController && settings.useController) ||
+				hasIntegration,
+			useConsole: hasIntegration
+				? false
+				: unlockedUnits.useConsole && settings.useConsole,
+			useMappers: hasIntegration
+				? false
+				: unlockedUnits.useMappers && settings.useMappers,
 			withLatestCode: true,
-			withHotReload: settings.withHotReload,
+			withHotReload: settings.withHotReload || hasIntegration,
 			syncToVideo: settings.syncToVideo,
 			audioBufferSize: settings.audioBufferSize,
 		};
