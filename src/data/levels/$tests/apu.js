@@ -6,7 +6,16 @@ before(async () => {
 });
 
 const dummyPpu = {};
-const dummyControllers = [];
+const dummyControllers = [
+	{
+		onRead: () => 0,
+		onWrite: () => {},
+	},
+	{
+		onRead: () => 0,
+		onWrite: () => {},
+	},
+];
 const dummyMapper = {
 	cpuRead: () => 0,
 	cpuWrite: () => {},

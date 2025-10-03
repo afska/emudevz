@@ -73,7 +73,16 @@ const masterPalette = [
 ];
 
 const dummyApu = {};
-const dummyControllers = [];
+const dummyControllers = [
+	{
+		onRead: () => 0,
+		onWrite: () => {},
+	},
+	{
+		onRead: () => 0,
+		onWrite: () => {},
+	},
+];
 const dummyCartridge = {
 	header: {
 		mirroringId: "VERTICAL",
