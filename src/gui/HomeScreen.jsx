@@ -110,14 +110,6 @@ class HomeScreen extends PureComponent {
 						<a href="https://r-labs.io" target="_blank" rel="noreferrer">
 							[r]labs
 						</a>
-						{" 🎶 "}
-						<a
-							href="https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ"
-							target="_blank"
-							rel="noreferrer"
-						>
-							{locales.get("_ost")}
-						</a>
 						{" ❓ "}
 						<button
 							type="button"
@@ -133,6 +125,14 @@ class HomeScreen extends PureComponent {
 							onClick={this._openCommunity}
 						>
 							{locales.get("_community")}
+						</button>
+						{" 🎶 "}
+						<button
+							type="button"
+							className="link-button"
+							onClick={this._openSoundtrack}
+						>
+							{locales.get("_ost")}
 						</button>
 						{" 📜 "}
 						<button
@@ -314,6 +314,12 @@ class HomeScreen extends PureComponent {
 
 	_openCommunity = () => {
 		window.open("https://discord.gg/mFGDxSxEJu");
+	};
+
+	_openSoundtrack = () => {
+		window.open(
+			"https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ"
+		);
 	};
 
 	_support = () => {
