@@ -3,7 +3,7 @@ main:
   run: |
     set((m) => m.chat.winOnEnd = true);
   messages:
-  - la prueba final <real> es jugar un juego de principio a fin!
+  - ¡la prueba final <real> es jugar un juego de principio a fin!
   - juguemos un juego
   - esta vez, usando tu emulador 🤯
   - |-
