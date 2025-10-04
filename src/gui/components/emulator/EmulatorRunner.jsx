@@ -31,6 +31,7 @@ const COMPONENT_BORDER_RADIUS = 8;
 
 export default class EmulatorRunner extends PureComponent {
 	state = { integrationId: null };
+	didUseSaveState = false;
 
 	setIntegration(integrationId) {
 		this.setState({ integrationId });
@@ -85,7 +86,7 @@ export default class EmulatorRunner extends PureComponent {
 						"d-none d-lg-flex d-xl-flex d-xxl-flex"
 					)}
 				>
-					{!isFreeMode && Integration == null && (
+					{!isFreeMode && integrationId == null && (
 						<div className={styles.unitGroup}>
 							<div className={classNames(styles.column, styles.units)}>
 								<div className={styles.row}>
@@ -156,12 +157,12 @@ export default class EmulatorRunner extends PureComponent {
 							/>
 						</div>
 					)}
-					{Integration != null && (
+					{integrationId != null && (
 						<div className={styles.integration}>
 							<Integration getNEEES={() => this._emulator?.neees} />
 						</div>
 					)}
-					{Integration == null && (
+					{integrationId == null && (
 						<div
 							className={classNames(
 								styles.dragMessage,
@@ -274,7 +275,7 @@ export default class EmulatorRunner extends PureComponent {
 							onClick={() => this._reload(false, true)}
 						/>
 					)}
-					{!!rom && Integration == null && (
+					{!!rom && integrationId == null && (
 						<IconButton
 							style={{ marginRight: 8 }}
 							Icon={FaStop}
@@ -302,6 +303,7 @@ export default class EmulatorRunner extends PureComponent {
 	stop = () => {
 		this._emulator?.stop();
 		this.props.onStop();
+		this.didUseSaveState = false;
 	};
 
 	_setError = (e) => {
@@ -409,6 +411,7 @@ export default class EmulatorRunner extends PureComponent {
 			const state = JSON.parse(raw);
 			neees?.setSaveState?.(state);
 			toast.success(locales.get("save_state_loaded"));
+			this.didUseSaveState = true;
 		} catch (e) {
 			console.error("💥 Error loading state", e);
 			toast.error(locales.get("the_operation_failed"));
