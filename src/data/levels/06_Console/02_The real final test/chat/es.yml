@@ -1,6 +1,67 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
-  - ¡próximamente!
+  - la prueba final <real> es jugar un juego de principio a fin!
+  - juguemos un juego
+  - esta vez, usando tu emulador 🤯
+  - |-
+    it's called 🤖 🧗  ~Robo-Ninja Climb~
+    <{screenshot.png;30x30}>
+  - aquí controlas a <Robo-Ninja>, practicando sus habilidades de escalar y saltar antes de salir a salvar el mundo
+  - si lo completas, te enviaré el <archivo ROM>
+  - en el formato ~*.neees~
   responses:
-  - ok [end]
+  - suena fácil 🙌 [play]
+
+play:
+  run-after-messages: |
+    {{Top}}.runner.setIntegration("RoboNinjaClimb");
+    {{Top}}.loadROM("/roms/.all/RoboNinjaClimb.neees");
+  messages:
+  - bueno, no lo es 🙃
+  - de hecho, morirás muchísimo
+  - te esperaré aquí 👀
+  events:
+  - roboninjaclimb-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["RoboNinjaClimb.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+
+    if ({{Top}}.runner.didUseSaveState) {
+      $.goTo("savestate-yes");
+    } else {
+      $.goTo("savestate-no");
+    }
+  messages: []
+  responses: []
+
+savestate-yes:
+  messages:
+  - usaste... <save states>?!
+  - eso es trampa 😅
+  - de todos modos... lo lograste
+  - "<! ROM recibida: 📄  /roms/RoboNinjaClimb.neees"
+  - como prometí, puse la ROM en tu directorio 📁  ~/roms~
+  - ¡disfruta!
+  responses:
+  - ▶️  continuar [end]
+
+
+savestate-no:
+  messages:
+  - ¡increíble! ¡¡lo terminaste sin <save states>!!
+  - eso es pura habilidad 🚀
+  - "<! ROM recibida: 📄  /roms/RoboNinjaClimb.neees"
+  - como prometí, puse la ROM en tu directorio 📁  ~/roms~
+  - ¡disfruta tu victoria! te la ganaste
+  responses:
+  - ▶️  continuar [end]
+
