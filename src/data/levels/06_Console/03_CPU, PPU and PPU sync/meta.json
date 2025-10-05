@@ -1,0 +1,36 @@
+{
+	"name": {
+		"en": "🔄 CPU, PPU and APU sync",
+		"es": "🔄 CPU, PPU and APU sync"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"code",
+				{
+					"language": "javascript",
+					"action": "none",
+					"initialCodeFile": "sync.js",
+					"readOnly": true
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": []
+	},
+	"memory": {
+		"content": {
+			"protected": true
+		}
+	}
+}
