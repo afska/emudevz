@@ -1,0 +1,10 @@
+---
+main:
+  messages:
+  - no way!
+  - you did it?!
+  - let's run a <FINAL> test
+  - including all the <unit>, <video>, and <audio> tests together
+  - this will ensure your 💾  Cartridge, 🚌  Bus, 🧠  CPU, 🖥️  PPU and 🔊  APU work correctly
+  - run the `test` command one last time and if something comes up, fix it!
+  responses: []
