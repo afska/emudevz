@@ -1,10 +1,45 @@
 ---
 main:
   messages:
-  - no way!
-  - you did it?!
-  - let's run a <FINAL> test
-  - including all the <unit>, <video>, and <audio> tests together
-  - this will ensure your 💾  Cartridge, 🚌  Bus, 🧠  CPU, 🖥️  PPU and 🔊  APU work correctly
-  - run the `test` command one last time and if something comes up, fix it!
-  responses: []
+  - ok, it's time
+  - I think you're ready to know
+  responses:
+  - what? [what]
+
+what:
+  messages:
+  - I'm actually...
+  - the creator of BrokenNEEES
+  - it has been rough since <AI> took over and most manual programming efforts died
+  - I miss <manual programming>, a lot
+  - I wanted to make someone out there enjoy programming like I do
+  - then I found you, your interest in emulation made me want to help
+  - the emulator isn't actually <broken>, those were bugs I planted on purpose 😅
+  - the goal was to have an excuse to teach someone something I love
+  - that is why I always have some code ready to nudge you forward
+  - I hope you are not mad
+  responses:
+  - why fake bugs? [why]
+  - so, what now? [next]
+
+why:
+  messages:
+  - you don't learn the soul of an emulator by reading, you learn it by doing!
+  - and being able to actually play the games without bugs is a great motivator 👾
+  responses:
+  - (*) so your "real NEEES" was also your emulator? [real]
+  - fine, what is next? [next]
+
+real:
+  messages:
+  - 😅 🤣 ☠️
+  responses:
+  - ...why
+
+next:
+  messages:
+  - I'm gonna hand over the missing code so you can have full control over your emulator
+  - at least the 🌀  emulator core
+  - asdasd
+  responses:
+  - ok [end]
