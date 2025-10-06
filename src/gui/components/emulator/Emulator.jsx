@@ -128,7 +128,15 @@ export default class Emulator extends Component {
 		this._saveSaveFile();
 		const saveFileBytes = this._loadSaveFile();
 
-		const saveState = keepState ? this._emulation.neees.getSaveState() : null;
+		const saveState = keepState
+			? (() => {
+					try {
+						return this._emulation.neees.getSaveState();
+					} catch (e) {
+						return null;
+					}
+			  })()
+			: null;
 		const Console = await this._buildConsole();
 		if (Console == null) return;
 
@@ -177,7 +185,7 @@ export default class Emulator extends Component {
 			this._getInput,
 			this._setFps,
 			this._setError,
-			this._setSaveState,
+			this._storeSaveState,
 			onFrame,
 			saveState,
 			volume,
@@ -339,12 +347,21 @@ export default class Emulator extends Component {
 		if (!this.saveStateKey) return;
 		if (this._resetProgressIfNeeded()) return;
 
-		if (this.neees != null) this._setSaveState(this.neees.getSaveState());
+		if (this.neees != null)
+			this._storeSaveState(
+				(() => {
+					try {
+						return this.neees.getSaveState();
+					} catch (e) {
+						return null;
+					}
+				})()
+			);
 	};
 
 	_resetProgressIfNeeded = () => {
 		if (this._getRawSaveState() === SAVESTATE_RESET_COMMAND) {
-			this._setSaveState(null);
+			this._storeSaveState(null);
 			return true;
 		}
 		return false;
@@ -365,7 +382,7 @@ export default class Emulator extends Component {
 		return localStorage.getItem(this.saveStateKey);
 	}
 
-	_setSaveState(saveState) {
+	_storeSaveState(saveState) {
 		if (!this.saveStateKey) return;
 
 		localStorage.setItem(this.saveStateKey, JSON.stringify(saveState));

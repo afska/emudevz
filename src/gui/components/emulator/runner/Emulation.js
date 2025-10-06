@@ -92,18 +92,27 @@ export default class Emulation {
 			this.isDebugStepScanlineRequested = false;
 
 			if (this.isSaveStateRequested && !this.wasSaveStateRequested) {
-				this.saveState = this.neees.getSaveState();
 				this.wasSaveStateRequested = true;
 
-				onSaveState(this.saveState);
+				try {
+					this.saveState = this.neees.getSaveState();
+					onSaveState(this.saveState);
+				} catch (e) {
+					console.error("Error saving state", e);
+				}
 			}
 			if (
 				this.isLoadStateRequested &&
 				!this.wasLoadStateRequested &&
 				this.saveState != null
 			) {
-				this.neees.setSaveState(this.saveState);
 				this.wasLoadStateRequested = true;
+
+				try {
+					this.neees.setSaveState(this.saveState);
+				} catch (e) {
+					console.error("Error loading state", e);
+				}
 			}
 
 			try {
@@ -124,7 +133,11 @@ export default class Emulation {
 
 		try {
 			this.neees.load(bytes, saveFileBytes);
-			if (this.saveState != null) this.neees.setSaveState(this.saveState);
+			try {
+				if (this.saveState != null) this.neees.setSaveState(this.saveState);
+			} catch (e) {
+				throw new Error("Error loading save state: " + e.message);
+			}
 			this.frameTimer.start();
 		} catch (error) {
 			onError(error);
@@ -146,7 +159,11 @@ export default class Emulation {
 		this.neees = new NEEES(this._onFrame, this._onAudio);
 		this.neees.load(this.bytes, saveFileBytes);
 		this.saveState = saveState;
-		if (this.saveState != null) this.neees.setSaveState(this.saveState);
+		try {
+			if (this.saveState != null) this.neees.setSaveState(this.saveState);
+		} catch (e) {
+			throw new Error("Error loading save state: " + e.message);
+		}
 
 		if (hasFrameBuffer) {
 			for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)

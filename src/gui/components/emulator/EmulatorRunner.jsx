@@ -428,7 +428,15 @@ export default class EmulatorRunner extends PureComponent {
 
 		if (isFullReload) {
 			const saveState =
-				(keepState && this._emulator?.neees?.getSaveState()) || null;
+				(keepState &&
+					(() => {
+						try {
+							return this._emulator?.neees?.getSaveState();
+						} catch (e) {
+							return null;
+						}
+					})()) ||
+				null;
 			this.stop();
 			this.props.onRestart(saveState);
 		} else {
