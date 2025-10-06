@@ -1,7 +1,6 @@
 import audioWorklet from "./audioWorklet?worker&url";
 
 const WORKLET_NAME = "player-worklet";
-const WEBAUDIO_BUFFER_SIZE = 1024;
 const SAMPLE_RATE = 44100;
 const CHANNELS = 1;
 
@@ -40,7 +39,6 @@ export default class Speaker {
 		this.playerWorklet = new AudioWorkletNode(this._audioCtx, WORKLET_NAME, {
 			outputChannelCount: [CHANNELS],
 			processorOptions: {
-				bufferSize: WEBAUDIO_BUFFER_SIZE,
 				ringBufferSize: this.options.ringBufferSize,
 			},
 		});

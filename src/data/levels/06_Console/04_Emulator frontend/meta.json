@@ -1,7 +1,7 @@
 {
 	"name": {
-		"en": "🔄 CPU, PPU and APU sync",
-		"es": "🔄 CPU, PPU and APU sync"
+		"en": "🌸 Emulator frontend",
+		"es": "🌸 Frontend del emulador"
 	},
 	"ui": {
 		"layout": "dual",
@@ -17,8 +17,11 @@
 				{
 					"language": "javascript",
 					"action": "none",
-					"initialCodeFile": "Emulator.example.js",
-					"readOnly": true
+					"initialCodeFile": "screen.js",
+					"readOnly": true,
+					"extraLangOptions": {
+						"parserOptions": { "ecmaFeatures": { "jsx": true } }
+					}
 				}
 			]
 		},

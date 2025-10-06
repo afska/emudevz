@@ -357,6 +357,24 @@ const dictionary = {
 			es:
 				"El porcentaje de tiempo que una onda de pulso se mantiene alta durante un período. Afecta el tono y el timbre del sonido. <br /><br />En la NEEES, los Canales Pulso soportan 4 ciclos de trabajo: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) y `3` (`75%`).",
 		},
+		"Emulator core": {
+			also: { es: "Núcleo de emulador" },
+			icon: "🌀",
+			en:
+				"The component of an emulator responsible for simulating the target system's hardware components (CPU, PPU, APU, and memory buses) in software.",
+			es:
+				"La parte de un emulador encargada de simular por software los componentes de hardware del sistema objetivo (CPU, PPU, APU y buses de memoria).",
+		},
+		"Emulator frontend": {
+			also: {
+				es: "Front-end del emulador",
+			},
+			icon: "🌸",
+			en:
+				"The component of an emulator that provides the user interface, input handling, and configuration surrounding the core simulation.",
+			es:
+				"La parte de un emulador que proporciona la interfaz de usuario, gestiona las entradas y la configuración alrededor de la simulación del núcleo.",
+		},
 		"Five-step sequence|Five-step": {
 			also: { es: "Secuencia de cinco pasos|Cinco pasos" },
 			icon: "🔀",

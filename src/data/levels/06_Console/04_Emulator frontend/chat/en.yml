@@ -1,0 +1,106 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.winOnEnd = true;
+      level.content = level.code["Screen.example.js"];
+    });
+  messages:
+  - all tasks we completed before were related to our 🌀  emulator core
+  - and so far I purposely avoided talking about the 🌸  emulator frontend since it's <platform-dependent>
+  - but let's do a quick review of how it works
+  - our frontend is made with 🌐  <web technologies>
+  - to display pixels, we initialize a ```raw <canvas />``` element which the `setBuffer(...)` method fills using the frame buffer (a __$AABBGGRR__ pixel matrix) that the 🖥️  PPU generates
+  responses:
+  - right, and what about audio? 🔊 [audio]
+
+audio:
+  run: |
+    set(() => {
+      level.content = level.code["audioWorklet.example.js"];
+    });
+  messages:
+  - for audio, we create an <audio worklet> processor that can receive samples from the emulator and insert them into a <ring buffer> 💍
+  - each time the audio device <needs> more samples, `process(...)` gets called, where we dequeue from the ring buffer and provide them
+  - we also request the emulator for more samples, which is important when we're <syncing to audio>
+  responses:
+  - syncing to... <audio>? 🤔 [syncmethods]
+
+syncmethods:
+  messages:
+  - "basically, we can drive our emulator in two ways:"
+  - "📹  <Sync to video>: we emulate whole frames, timing the execution with our display"
+  - "🔊  <Sync to audio>: we emulate <N> samples each time the audio device requests them"
+  - both methods have their pros and cons, but in general <sync to audio> is preferred and gives better results
+  responses:
+  - (*) how can I sync to video? [synctovideo]
+  - (*) how can I sync to audio? [synctoaudio]
+  - show me an example 🔍 [example]
+
+synctovideo:
+  run: |
+    set(() => {
+      level.content = level.code["FrameTimer.example.js"];
+    });
+  messages:
+  - we call `requestAnimationFrame(...)` to get notified when we're able to refresh the screen
+  - then, if <16.66 ms> (~1000~ / 60) have passed since the last time, we request to our emulator core a new frame with `onFrame()`
+  - after the new frame is generated, we can update our pixel canvas and push the new audio samples
+  - "⚠️  that last part requires <special attention> when syncing to video:"
+  - if the emulator generated more samples than needed due to timing inaccuracies (for example, 740 samples instead of 735 (~44100~ / 60)), that chunk should be <resampled> to prevent overloading the ring buffer (causing audio glitches)
+  - |-
+    the frontend code would look like this:
+      ```javascript this.frameTimer = new FrameTimer(() => {
+        // <<update input here>>
+
+        if (syncToVideo) {
+          // run for a whole frame
+          this.emulator.frame(); // sends the pixels to the canvas
+
+          if (this.samples.length !== 735)
+            this.samples = this._resample(this.samples, 735);
+
+          this._updateAudio(); // sends the samples to the audio worklet
+        }
+      });```
+  responses:
+  - ...syncmethods
+
+synctoaudio:
+  run: |
+    set(() => {
+      level.content = level.code["Speaker.example.js"];
+    }); 
+  messages:
+  - we start an `AudioContext`, a worklet instance, and provide a `writeSamples(...)` method so the emulator can provide samples
+  - whenever the audio system requests more samples, we call `onAudioRequested({ need, have, target })`
+  - the goal here is to maintain the ring buffer filled with `target` samples, which is half the buffer size, correcting if needed
+  - |-
+    the frontend code would look like this:
+      ```javascript this.speaker = new Speaker(
+        ({ need, have, target }) => {
+          if (syncToAudio) {
+            let n = need;
+            if (have > target + 64) n--;
+            else if (have < target - 64) n++;
+
+            // run for n samples
+            this.emulator.samples(n); // might send pixels to the canvas
+          
+            this._updateSound(); // sends the samples to the audio worklet
+          }
+        });```
+  responses:
+  - ...syncmethods
+
+example:
+  run: |
+    set(() => {
+      level.content = level.code["EmulatorFrontend.example.js"];
+    }); 
+  messages:
+  - here's an example of a simplified emulator frontend
+  - it interacts with the `Emulator` class I showcased in the previous level
+  - have a look at it!
+  responses:
+  - ▶️  continue [end]

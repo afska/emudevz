@@ -1,6 +1,6 @@
 import globals from "globals";
 
-export default function esLintConfig(filePath = "") {
+export default function esLintConfig(filePath = "", extraLangOptions = {}) {
 	const isTestFile = filePath.endsWith(".test.js");
 	const testGlobals = isTestFile
 		? {
@@ -19,6 +19,7 @@ export default function esLintConfig(filePath = "") {
 		languageOptions: {
 			ecmaVersion: 2022,
 			sourceType: "module",
+			...extraLangOptions,
 			globals: {
 				...globals.browser,
 				EmuDevz: "readonly",

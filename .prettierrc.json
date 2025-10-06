@@ -16,7 +16,7 @@
 			}
 		},
 		{
-			"files": ["**/code/base_emulator.js"],
+			"files": ["**/code/*.example.js"],
 			"options": {
 				"useTabs": false
 			}

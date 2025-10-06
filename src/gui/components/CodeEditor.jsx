@@ -35,10 +35,10 @@ const ACTION_SYNC_EMULATOR = "refreshEmulator";
 const NULL_ACTION = "none";
 const COMPILE_DEBOUNCE_MS = 500;
 const LANGUAGES = {
-	javascript: (filePath = "") => [
+	javascript: (filePath = "", extraLangOptions = {}) => [
 		javascript(),
 		lintGutter(),
-		linter(esLint(new Linter(), esLintConfig(filePath)), {
+		linter(esLint(new Linter(), esLintConfig(filePath, extraLangOptions)), {
 			delay: COMPILE_DEBOUNCE_MS,
 		}),
 		pasteIndent,
@@ -140,6 +140,7 @@ export default class CodeEditor extends PureComponent {
 			onlyEnableActionWhen: args.onlyEnableActionWhen || null,
 			onlyEnableEditionWhen: args.onlyEnableEditionWhen || null,
 			isDisabled: window.EmuDevz.state.isRunningEmulatorTest,
+			extraLangOptions: args.extraLangOptions || {},
 		});
 	}
 
@@ -158,6 +159,7 @@ export default class CodeEditor extends PureComponent {
 			isCompiling,
 			actionName,
 			onlyEnableEditionWhen,
+			extraLangOptions,
 		} = this.state;
 		if (!_isInitialized) return false;
 
@@ -198,7 +200,7 @@ export default class CodeEditor extends PureComponent {
 					height="100%"
 					theme={oneDark}
 					readOnly={!isEditionEnabled}
-					extensions={LANGUAGES[language](filePath)}
+					extensions={LANGUAGES[language](filePath, extraLangOptions)}
 					onChange={this._setCode}
 					autoFocus
 					ref={(ref) => {
