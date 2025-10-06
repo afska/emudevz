@@ -20,6 +20,12 @@
 			"options": {
 				"useTabs": false
 			}
+		},
+		{
+			"files": ["src/data/levels/$tests/*.js"],
+			"options": {
+				"useTabs": false
+			}
 		}
 	],
 	"arrowParens": "always",

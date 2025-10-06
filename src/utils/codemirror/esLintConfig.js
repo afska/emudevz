@@ -12,6 +12,7 @@ export default function esLintConfig(filePath = "", extraLangOptions = {}) {
 				$: "readonly",
 				expect: "readonly",
 				sinon: "readonly",
+				evaluateModule: "readonly",
 		  }
 		: {};
 
