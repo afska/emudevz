@@ -138,7 +138,7 @@ export default {
 	letsplay_unlock_msg3: "desbloqueado!",
 	level_history: "Historial de niveles",
 	loading: "Cargando...",
-	mappers: "Mappers",
+	emulator: "Emulador",
 	memory_viewer: "Visor de Memoria",
 	mkdir_parent_flag:
 		"(para crear varios directorios a la vez, corre `mkdir -p`)",

@@ -62,7 +62,6 @@ const INITIAL_STATE = () => ({
 		useAPU: true,
 		useController: true,
 		useConsole: true,
-		useMappers: true,
 		withHotReload: true,
 		syncToVideo: false,
 		audioBufferSize: 4096,
@@ -74,7 +73,6 @@ const INITIAL_STATE = () => ({
 		useAPU: false,
 		useController: false,
 		useConsole: false,
-		useMappers: false,
 	},
 	unlockedLetsPlayLevels: [],
 });

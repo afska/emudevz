@@ -201,7 +201,6 @@ export default class VideoTester extends PureComponent {
 			useAPU: false,
 			useController: false,
 			useConsole: false,
-			useMappers: false,
 			unbroken: true,
 		};
 	}

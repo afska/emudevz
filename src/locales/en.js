@@ -134,7 +134,7 @@ export default {
 	letsplay_unlock_msg3: "unlocked!",
 	level_history: "Level history",
 	loading: "Loading...",
-	mappers: "Mappers",
+	emulator: "Emulator",
 	memory_viewer: "Memory Viewer",
 	mkdir_parent_flag: "(to create multiple directories at once, run `mkdir -p`)",
 	mode_free: "🔭 Free mode",

@@ -10,3 +10,10 @@
 	filter: brightness(1.1) drop-shadow(0px 0px 4px #ffffff);
 	cursor: pointer;
 }
+
+.disabled {
+	pointer-events: none;
+	filter: none;
+	cursor: auto;
+	background: #323232;
+}

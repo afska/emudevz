@@ -97,6 +97,7 @@ export default class EmulatorRunner extends PureComponent {
 										active={this._emulatorSettings.useCPU}
 										onToggle={() => this._onToggle("useCPU")}
 										style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
+										disabled={this._emulatorSettings.useConsole}
 									/>
 									<Unit
 										icon="🖥️"
@@ -105,6 +106,7 @@ export default class EmulatorRunner extends PureComponent {
 										active={this._emulatorSettings.usePPU}
 										onToggle={() => this._onToggle("usePPU")}
 										suffix={ppuSuffix}
+										disabled={this._emulatorSettings.useConsole}
 									/>
 									<Unit
 										icon="🔊"
@@ -113,6 +115,7 @@ export default class EmulatorRunner extends PureComponent {
 										active={this._emulatorSettings.useAPU}
 										onToggle={() => this._onToggle("useAPU")}
 										suffix={apuSuffix}
+										disabled={this._emulatorSettings.useConsole}
 										style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
 									/>
 								</div>
@@ -123,6 +126,7 @@ export default class EmulatorRunner extends PureComponent {
 										completed={this._unlockedUnits.useCartridge}
 										active={this._emulatorSettings.useCartridge}
 										onToggle={() => this._onToggle("useCartridge")}
+										disabled={this._emulatorSettings.useConsole}
 										style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
 									/>
 									<Unit
@@ -131,13 +135,14 @@ export default class EmulatorRunner extends PureComponent {
 										completed={this._unlockedUnits.useController}
 										active={this._emulatorSettings.useController}
 										onToggle={() => this._onToggle("useController")}
+										disabled={this._emulatorSettings.useConsole}
 									/>
 									<Unit
-										icon="🗜️"
-										name={locales.get("mappers")}
-										completed={this._unlockedUnits.useMappers}
-										active={this._emulatorSettings.useMappers}
-										onToggle={() => this._onToggle("useMappers")}
+										icon="🕹️"
+										name={locales.get("emulator")}
+										completed={this._unlockedUnits.useConsole}
+										active={this._emulatorSettings.useConsole}
+										onToggle={() => this._onToggle("useConsole")}
 										style={{ borderBottomRightRadius: COMPONENT_BORDER_RADIUS }}
 										customInactiveIcon="⚠️"
 										customInactiveMessage="using_default_emulator"
@@ -500,9 +505,6 @@ export default class EmulatorRunner extends PureComponent {
 			useConsole: hasIntegration
 				? false
 				: unlockedUnits.useConsole && settings.useConsole,
-			useMappers: hasIntegration
-				? false
-				: unlockedUnits.useMappers && settings.useMappers,
 			withLatestCode: true,
 			withHotReload: settings.withHotReload || hasIntegration,
 			syncToVideo: settings.syncToVideo,

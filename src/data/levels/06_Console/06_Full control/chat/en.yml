@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
   - ok, it's time
   - I think you're ready to know
@@ -10,17 +12,17 @@ what:
   messages:
   - I'm actually...
   - the creator of BrokenNEEES
-  - it has been rough since <AI> took over and most manual programming efforts died
+  - it has been rough since <AI> took over and most manual programming efforts have died
   - I miss <manual programming>, a lot
   - I wanted to make someone out there enjoy programming like I do
-  - then I found you, your interest in emulation made me want to help
+  - then I found you, and your interest in emulation made me want to help
   - the emulator isn't actually <broken>, those were bugs I planted on purpose 😅
   - the goal was to have an excuse to teach someone something I love
   - that is why I always have some code ready to nudge you forward
   - I hope you are not mad
   responses:
   - why fake bugs? [why]
-  - so, what now? [next]
+  - so, what now? [integrate]
 
 why:
   messages:
@@ -28,7 +30,7 @@ why:
   - and being able to actually play the games without bugs is a great motivator 👾
   responses:
   - (*) so your "real NEEES" was also your emulator? [real]
-  - fine, what is next? [next]
+  - fine, what is next? [integrate]
 
 real:
   messages:
@@ -36,10 +38,45 @@ real:
   responses:
   - ...why
 
-next:
+integrate:
+  run: |
+    {{Top}}.load(null, "rom");
   messages:
-  - I'm gonna hand over the missing code so you can have full control over your emulator
-  - at least the 🌀  emulator core
-  - asdasd
+  - I'm gonna give you full control over the 🕹️  Emulator
+  - let's see...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 500);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useConsole");
+  messages:
+  - ✅  done!
+  - <! 🕹️  NEEES integrated.
+  - now, the 🕹️  icon in the emulator will glow ✨
+  - if you enable it, the frontend will look up an `Emulator` class in 📄  ~/code/index.js~
+  - and there will be no trace of BrokenNEEES
   responses:
-  - ok [end]
+  - but I don't have that class! [exercise]
+
+exercise:
+  messages:
+  - yeah, let's hand over the missing code to you
+  - you'll have full control of, at least, the 🌀  emulator core
+  - |-
+    📚  create code files from these templates:
+      📄  ~/tmpl/Emulator.js~
+      📄  ~/tmpl/saveStates.js~
+      📄  ~/tmpl/mappers/mappers.js~
+      📄  ~/tmpl/mappers/0_NROM.js~
+  - 📚  import `Emulator.js` and export the object under the `Emulator` key in 📄  ~/code/index.js~
+  - notice that, when doing this, only <NROM> (mapper 0) games will work
+  - you will fix that in the 🗜️  Mappers chapter
+  responses:
+  - ▶️  continue [end]

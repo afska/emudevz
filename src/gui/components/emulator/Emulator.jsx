@@ -215,13 +215,12 @@ export default class Emulator extends Component {
 						.addUserPPU(settings.usePPU)
 						.addUserAPU(settings.useAPU)
 						.addUserController(settings.useController)
-						.addUserMappers(settings.useMappers)
 						.usePartialPPU(currentLevel.usesPartialPPU)
 						.usePartialAPU(currentLevel.usesPartialAPU)
 						.setCustomPPU(settings.customPPU)
 						.setCustomAPU(settings.customAPU)
 						.setUnbroken(settings.unbroken)
-						.useCustomEmulator(isFreeMode)
+						.useCustomEmulator(settings.useConsole || isFreeMode)
 						.build(settings.withLatestCode);
 		} catch (e) {
 			this._onError(e);

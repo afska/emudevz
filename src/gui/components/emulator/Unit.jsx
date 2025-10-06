@@ -17,6 +17,7 @@ export default class Unit extends PureComponent {
 			className,
 			onToggle,
 			suffix = "",
+			disabled = false,
 			style,
 			...rest
 		} = this.props;
@@ -35,7 +36,8 @@ export default class Unit extends PureComponent {
 				<span
 					className={classNames(
 						styles.unit,
-						completed && styles.completed,
+						(completed || disabled) && styles.completed,
+						disabled && styles.disabled,
 						className
 					)}
 					style={style}

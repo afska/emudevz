@@ -1,6 +1,81 @@
----
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
-  - coming soon!
+  - ok, llegó el momento
+  - creo que ya es hora de que lo sepas
   responses:
-  - ok [end]
+  - ¿qué? [what]
+
+what:
+  messages:
+  - en realidad soy...
+  - el creador de BrokenNEEES
+  - ha sido difícil desde que la <IA> tomó el control y la mayoría de los esfuerzos de programación manual desaparecieron
+  - extraño mucho la <programación manual>
+  - quería lograr que alguien por ahí disfrutara de programar tanto como yo
+  - entonces te encontré, y tu interés por la emulación me dio ganas de ayudar
+  - el emulador en realidad no está <roto>, esos eran errores que dejé a propósito 😅
+  - la idea era tener una excusa para enseñar algo que me apasiona
+  - es por eso que siempre tengo algo de código listo para impulsarte un poco más
+  - espero que no te moleste
+  responses:
+  - ¿por qué fingir errores? [why]
+  - entonces, ¿qué sigue? [integrate]
+
+why:
+  messages:
+  - no se aprende el alma de un emulador leyendo, se aprende haciéndolo
+  - ¡y poder jugar sin errores es una gran motivación! 👾
+  responses:
+  - (*) entonces, ¿la "NEEES real" también era tu emulador? [real]
+  - bien, ¿qué sigue? [integrate]
+
+real:
+  messages:
+  - 😅 🤣 ☠️
+  responses:
+  - ...why
+
+integrate:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - voy a darte control total del 🕹️  Emulador
+  - veamos...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 500);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useConsole");
+  messages:
+  - ✅  ¡listo!
+  - <! 🕹️  NEEES integrada.
+  - ahora el ícono 🕹️  del emulador brillará ✨
+  - si lo activas, el frontend buscará una clase `Emulator` en 📄  ~/code/index.js~
+  - y no quedará rastro alguno de BrokenNEEES
+  responses:
+  - ¡pero no tengo esa clase! [exercise]
+
+exercise:
+  messages:
+  - sí, voy a entregarte el código que falta
+  - tendrás control total al menos del 🌀  núcleo del emulador
+  - |-
+    📚  crea archivos de código a partir de estas plantillas:
+      📄  ~/tmpl/Emulator.js~
+      📄  ~/tmpl/saveStates.js~
+      📄  ~/tmpl/mappers/mappers.js~
+      📄  ~/tmpl/mappers/0_NROM.js~
+  - 📚  importa `Emulator.js` y exporta el objeto bajo la clave `Emulator` en 📄  ~/code/index.js~
+  - ten en cuenta que, al hacerlo, solo funcionarán los juegos <NROM> (mapper 0)
+  - corregirás eso en el capítulo de 🗜️  Mappers
+  responses:
+  - ▶️  continuar [end]

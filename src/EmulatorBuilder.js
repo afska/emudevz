@@ -8,8 +8,6 @@ export default class EmulatorBuilder {
 	withUserPPU = false;
 	withUserAPU = false;
 	withUserController = false;
-	withUserConsole = false;
-	withUserMappers = false;
 	withUsePartialPPU = false;
 	withUsePartialAPU = false;
 	customPPU = null;
@@ -38,7 +36,6 @@ export default class EmulatorBuilder {
 			this.withUserPPU ||
 			this.withUserAPU ||
 			this.withUserController ||
-			this.withUserMappers ||
 			this.customPPU ||
 			this.customAPU
 		);
@@ -102,7 +99,6 @@ export default class EmulatorBuilder {
 			PPU: this.customPPU != null ? this.customPPU : PPU,
 			APU: this.customAPU != null ? this.customAPU : APU,
 			Controller,
-			mappers: this.withUserMappers ? mainModule.mappers : undefined,
 			omitReset: this.omitReset,
 			unbroken: this.unbroken,
 		});
@@ -131,16 +127,6 @@ export default class EmulatorBuilder {
 
 	addUserController(add = true) {
 		this.withUserController = add;
-		return this;
-	}
-
-	addUserConsole(add = true) {
-		this.withUserConsole = add;
-		return this;
-	}
-
-	addUserMappers(add = true) {
-		this.withUserMappers = add;
 		return this;
 	}
 
