@@ -40,5 +40,6 @@
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksGame": "lets-play-tesla-vs-edison"
 }

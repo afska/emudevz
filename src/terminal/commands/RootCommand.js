@@ -46,7 +46,6 @@ export default class RootCommand extends Command {
 		level.unlockLetsPlayLevelIfNeeded("lets-play-fline-flood-fiasco");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-falling");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-from-below");
-		level.unlockLetsPlayLevelIfNeeded("lets-play-robo-ninja-climb");
 		level.unlockLetsPlayLevelIfNeeded("lets-play-tesla-vs-edison");
 
 		await this._terminal.writehlln(
