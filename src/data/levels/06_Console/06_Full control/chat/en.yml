@@ -79,4 +79,26 @@ exercise:
   - notice that, when doing this, only <NROM> (mapper 0) games will work
   - you will fix that in the 🗜️  Mappers chapter
   responses:
+  - (*) what about the tests? 🧪 [tests]
   - ▶️  continue [end]
+
+tests:
+  messages:
+  - you want the unit tests? 🤔
+  - yeah, if you improve the emulator later, I guess they can be useful to ensure everything works
+  - |-
+    and of course you'll have to eventually update them, so here they are:
+      📄  ~/tmpl/tests/apu.test.js~
+      📄  ~/tmpl/tests/bus.test.js~
+      📄  ~/tmpl/tests/cartridge.test.js~
+      📄  ~/tmpl/tests/cpu.test.js~
+      📄  ~/tmpl/tests/cpu_addressing_modes_1.test.js~
+      📄  ~/tmpl/tests/cpu_addressing_modes_2.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_1.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_2.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_3.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_4.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_5.test.js~
+      📄  ~/tmpl/tests/ppu.test.js~
+  responses:
+  - ...exercise

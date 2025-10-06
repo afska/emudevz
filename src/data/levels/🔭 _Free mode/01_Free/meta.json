@@ -17,7 +17,25 @@
 			"Bottom": [
 				"console",
 				{
-					"availableCommands": ["clear", "help", "repl", "test", "ls", "cd", "cp", "touch", "mkdir", "rm", "mv", "open", "find", "download", "upload", "disk", "root"]
+					"availableCommands": [
+						"clear",
+						"help",
+						"repl",
+						"test",
+						"ls",
+						"cd",
+						"cp",
+						"touch",
+						"mkdir",
+						"rm",
+						"mv",
+						"open",
+						"find",
+						"download",
+						"upload",
+						"disk",
+						"root"
+					]
 				}
 			],
 			"Top": [
@@ -32,7 +50,8 @@
 		"canPinEmulator": false
 	},
 	"test": {
-		"context": "javascript"
+		"context": "javascript",
+		"fsMode": true
 	},
 	"memory": {
 		"content": {

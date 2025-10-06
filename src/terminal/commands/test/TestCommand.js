@@ -75,8 +75,8 @@ export default class TestCommand extends Command {
 
 			let mainTestFile = null;
 			let testFiles;
-			if (level.id === Book.FREE_MODE_LEVEL) {
-				testFiles = this._getFreeModeTestFiles();
+			if (level.test?.fsMode) {
+				testFiles = this._getFsModeTestFiles();
 			} else {
 				testFiles = this._getNormalModeTestFiles(level);
 
@@ -90,8 +90,7 @@ export default class TestCommand extends Command {
 
 			const hasMultipleTestFiles =
 				testFiles.length > 1 && (!this._targetId || this._targetId === "unit");
-			const winOnTestPass =
-				!level.memory.chat.winOnEnd && level.id !== Book.FREE_MODE_LEVEL;
+			const winOnTestPass = !level.memory.chat.winOnEnd && !level.test?.fsMode;
 
 			const testDefinitions = await this._getTestDefinitions(
 				level,
@@ -202,7 +201,7 @@ export default class TestCommand extends Command {
 		return true;
 	}
 
-	_getFreeModeTestFiles() {
+	_getFsModeTestFiles() {
 		const entries = filesystem.lsr(Drive.CODE_DIR);
 		return _.sortBy(
 			entries
@@ -470,7 +469,7 @@ export default class TestCommand extends Command {
 	}
 
 	_getTestCode(level, fileName) {
-		return level.id === Book.FREE_MODE_LEVEL
+		return level.test?.fsMode
 			? filesystem.read(fileName)
 			: level.tests[fileName];
 	}

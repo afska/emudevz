@@ -78,4 +78,26 @@ exercise:
   - ten en cuenta que, al hacerlo, solo funcionarán los juegos <NROM> (mapper 0)
   - corregirás eso en el capítulo de 🗜️  Mappers
   responses:
+  - (*) ¿y las pruebas? 🧪 [tests]
   - ▶️  continuar [end]
+
+tests:
+  messages:
+  - ¿quieres las pruebas unitarias? 🤔
+  - sí, si más adelante mejoras el emulador, supongo que pueden servir para asegurarte de que todo funcione bien
+  - |-
+    y por supuesto, tendrás que actualizarlas en algún momento, así que aquí están:
+      📄  ~/tmpl/tests/apu.test.js~
+      📄  ~/tmpl/tests/bus.test.js~
+      📄  ~/tmpl/tests/cartridge.test.js~
+      📄  ~/tmpl/tests/cpu.test.js~
+      📄  ~/tmpl/tests/cpu_addressing_modes_1.test.js~
+      📄  ~/tmpl/tests/cpu_addressing_modes_2.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_1.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_2.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_3.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_4.test.js~
+      📄  ~/tmpl/tests/cpu_instructions_5.test.js~
+      📄  ~/tmpl/tests/ppu.test.js~
+  responses:
+  - ...exercise

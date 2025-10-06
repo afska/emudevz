@@ -33,7 +33,8 @@
 	},
 	"test": {
 		"context": "javascript",
-		"inherit": []
+		"inherit": ["*"],
+		"fsMode": true
 	},
 	"memory": {
 		"content": {
