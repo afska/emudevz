@@ -54,6 +54,7 @@ export default class Emulation {
 						this._updateSound();
 					}
 				} catch (error) {
+					this.terminate();
 					onError(error);
 				}
 			},
@@ -127,6 +128,7 @@ export default class Emulation {
 					this._updateSound();
 				}
 			} catch (error) {
+				this.terminate();
 				onError(error);
 			}
 		}, onFps);
@@ -140,6 +142,7 @@ export default class Emulation {
 			}
 			this.frameTimer.start();
 		} catch (error) {
+			this.terminate();
 			onError(error);
 		}
 
@@ -147,27 +150,32 @@ export default class Emulation {
 	}
 
 	replace = (NEEES, saveFileBytes, saveState) => {
-		const hasFrameBuffer = this.neees.ppu?.frameBuffer != null;
-
-		let oldFrameBuffer = null;
-		if (hasFrameBuffer) {
-			oldFrameBuffer = new Uint32Array(this.neees.ppu.frameBuffer.length);
-			for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
-				oldFrameBuffer[i] = this.neees.ppu.frameBuffer[i];
-		}
-
-		this.neees = new NEEES(this._onFrame, this._onAudio);
-		this.neees.load(this.bytes, saveFileBytes);
-		this.saveState = saveState;
 		try {
-			if (this.saveState != null) this.neees.setSaveState(this.saveState);
-		} catch (e) {
-			throw new Error("Error loading save state: " + e.message);
-		}
+			const hasFrameBuffer = this.neees.ppu?.frameBuffer != null;
 
-		if (hasFrameBuffer) {
-			for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
-				this.neees.ppu.frameBuffer[i] = oldFrameBuffer[i] ?? 0;
+			let oldFrameBuffer = null;
+			if (hasFrameBuffer) {
+				oldFrameBuffer = new Uint32Array(this.neees.ppu.frameBuffer.length);
+				for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
+					oldFrameBuffer[i] = this.neees.ppu.frameBuffer[i];
+			}
+
+			this.neees = new NEEES(this._onFrame, this._onAudio);
+			this.neees.load(this.bytes, saveFileBytes);
+			this.saveState = saveState;
+			try {
+				if (this.saveState != null) this.neees.setSaveState(this.saveState);
+			} catch (e) {
+				throw new Error("Error loading save state: " + e.message);
+			}
+
+			if (hasFrameBuffer) {
+				for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
+					this.neees.ppu.frameBuffer[i] = oldFrameBuffer[i] ?? 0;
+			}
+		} catch (error) {
+			this.terminate();
+			this._onError(error);
 		}
 	};
 
@@ -288,6 +296,7 @@ export default class Emulation {
 						this.neees.setButton(i + 1, button, input[i][button]);
 					}
 			} catch (error) {
+				this.terminate();
 				this._onError(error);
 			}
 		}
