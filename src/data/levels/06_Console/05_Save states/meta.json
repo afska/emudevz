@@ -1,0 +1,36 @@
+{
+	"name": {
+		"en": "📸 Save states",
+		"es": "📸 Save states"
+	},
+	"ui": {
+		"layout": "dual",
+		"components": {
+			"Left": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Right": [
+				"code",
+				{
+					"language": "javascript",
+					"action": "none",
+					"initialCodeFile": "saveStates.example.js",
+					"readOnly": true
+				}
+			]
+		},
+		"focus": "Left"
+	},
+	"test": {
+		"context": "javascript",
+		"inherit": []
+	},
+	"memory": {
+		"content": {
+			"protected": true
+		}
+	}
+}

@@ -1,0 +1,8 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - coming soon!
+  responses:
+  - ok [end]
