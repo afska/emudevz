@@ -367,7 +367,7 @@ const dictionary = {
 		},
 		"Emulator frontend": {
 			also: {
-				es: "Front-end del emulador",
+				es: "Frontend del emulador",
 			},
 			icon: "🌸",
 			en:

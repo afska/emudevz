@@ -17,7 +17,6 @@
 				{
 					"language": "javascript",
 					"action": "none",
-					"initialCodeFile": "screen.js",
 					"readOnly": true,
 					"extraLangOptions": {
 						"parserOptions": { "ecmaFeatures": { "jsx": true } }

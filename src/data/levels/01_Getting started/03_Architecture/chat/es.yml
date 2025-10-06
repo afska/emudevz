@@ -63,8 +63,8 @@ apu:
   messages:
   - es la <Unidad de Procesamiento de Audio>
   - maneja el sonido, produciendo ondas de audio
-  - como ondas de pulso, triangulares, ruido e incluso muestras personalizadas
-  - emite un stream de 44100 muestras por segundo
+  - como ondas de pulso, triangulares, ruido e incluso samples personalizados
+  - emite un stream de 44100 samples por segundo
   responses:
   - ...main
 

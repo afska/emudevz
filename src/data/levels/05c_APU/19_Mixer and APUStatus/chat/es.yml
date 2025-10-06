@@ -2,7 +2,7 @@
 main:
   messages:
   - el toque final será el <mezclador> 🥣
-  - nuestra lógica actual de "sumar todas las muestras y dividir por 100" no está del todo bien
+  - nuestra lógica actual de "sumar todas los samples y dividir por 100" no está del todo bien
   - |-
     podemos emular el mezclador de la APU usando esta fórmula:
       ```javascript (

@@ -5,7 +5,6 @@ main:
       m.chat.winOnEnd = true;
       level.content = level.code["Screen.example.js"];
     });
-    bus.emit("content-changed");
   messages:
   - all tasks we completed before were related to our 🌀  emulator core
   - and so far I purposely avoided talking about the 🌸  emulator frontend since it's <platform-dependent>
@@ -22,7 +21,7 @@ audio:
     });
     bus.emit("content-changed");
   messages:
-  - for audio, we create an <audio worklet> processor that can receive samples from the emulator and insert them into a <ring buffer> 💍
+  - for audio, we create an <audio worklet> processor that can receive samples from the emulator and put them into a <ring buffer> 💍
   - each time the audio device <needs> more samples, `process(...)` gets called, where we dequeue from the ring buffer and provide them
   - we also request the emulator for more samples, which is important when we're <syncing to audio>
   responses:
@@ -47,7 +46,7 @@ synctovideo:
     bus.emit("content-changed");
   messages:
   - we call `requestAnimationFrame(...)` to get notified when we're able to refresh the screen
-  - then, if <16.66 ms> (~1000~ / 60) have passed since the last time, we request to our emulator core a new frame with `onFrame()`
+  - then, if <16.66 ms> (~1000~ / 60) have passed since the last time, we request our emulator core a new frame with `onFrame()`
   - after the new frame is generated, we can update our pixel canvas and push the new audio samples
   - "⚠️  that last part requires <special attention> when syncing to video:"
   - if the emulator generated more samples than needed due to timing inaccuracies (for example, 740 samples instead of 735 (~44100~ / 60)), that chunk should be <resampled> to prevent overloading the ring buffer (causing audio glitches)

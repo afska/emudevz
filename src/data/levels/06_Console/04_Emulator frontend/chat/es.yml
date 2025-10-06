@@ -1,7 +1,110 @@
 ---
 main:
   run: |
-    set((m) => m.chat.winOnEnd = true);
+    set((m) => {
+      m.chat.winOnEnd = true;
+      level.content = level.code["Screen.example.js"];
+    });
   messages:
-  - coming soon!
-  responses: []
+  - todas las tareas que completamos antes estaban relacionadas con nuestro 🌀  núcleo del emulador
+  - y hasta ahora evité intencionalmente hablar sobre el 🌸  frontend del emulador ya que es <dependiente de la plataforma>
+  - pero hagamos una revisión rápida de cómo funciona
+  - nuestro frontend está hecho con 🌐  <tecnologías web>
+  - para mostrar píxeles, inicializamos un elemento ```raw <canvas />``` que el método `setBuffer(...)` llena usando el frame buffer (una matriz de píxeles __$AABBGGRR__) que genera la 🖥️  PPU
+  responses:
+  - correcto, ¿y qué hay del audio? 🔊 [audio]
+
+audio:
+  run: |
+    set(() => {
+      level.content = level.code["audioWorklet.example.js"];
+    });
+    bus.emit("content-changed");
+  messages:
+  - para el audio, creamos un procesador <audio worklet> que puede recibir samples del emulador y colocarlos en un <ring buffer> 💍
+  - cada vez que el dispositivo de audio <necesita> más samples, se llama a `process(...)`, donde extraemos del ring buffer y los proporcionamos
+  - también solicitamos al emulador más samples, lo cual es importante cuando estamos <sincronizando con el audio>
+  responses:
+  - ¿sincronizando con... <el audio>? 🤔 [syncmethods]
+
+syncmethods:
+  messages:
+  - "básicamente, podemos ejecutar nuestro emulador de dos maneras:"
+  - "📹  <Sincronizar con video>: emulamos frames completos, sincronizando la ejecución con nuestra pantalla"
+  - "🔊  <Sincronizar con audio>: emulamos <N> samples cada vez que el dispositivo de audio los solicita"
+  - ambos métodos tienen sus pros y sus contras, pero en general <sincronizar con audio> es preferido y da mejores resultados
+  responses:
+  - (*) ¿cómo puedo sincronizar con video? [synctovideo]
+  - (*) ¿cómo puedo sincronizar con audio? [synctoaudio]
+  - muéstrame un ejemplo 🔍 [example]
+
+synctovideo:
+  run: |
+    set(() => {
+      level.content = level.code["FrameTimer.example.js"];
+    });
+    bus.emit("content-changed");
+  messages:
+  - llamamos a `requestAnimationFrame(...)` para recibir una notificación cuando podamos actualizar la pantalla
+  - luego, si han pasado <16.66 ms> (~1000~ / 60) desde la última vez, solicitamos a nuestro núcleo del emulador un nuevo frame con `onFrame()`
+  - después de generar el nuevo frame, podemos actualizar nuestro canvas de píxeles y enviar los nuevos samples de audio
+  - "⚠️  esa última parte requiere <atención especial> al sincronizar con video:"
+  - si el emulador generó más samples de los necesarios debido a imprecisiones de tiempo (por ejemplo, 740 samples en lugar de 735 (~44100~ / 60)), ese fragmento debe ser <resampleado> para evitar sobrecargar el ring buffer (provocando fallos de audio)
+  - |-
+    el código del frontend se vería así:
+      ```javascript this.frameTimer = new FrameTimer(() => {
+        // <<update input here>>
+
+        if (syncToVideo) {
+          // ejecutar por un cuadro completo
+          this.emulator.frame(); // envía los píxeles al canvas
+
+          if (this.samples.length !== 735)
+            this.samples = this._resample(this.samples, 735);
+
+          this._updateAudio(); // envía los samples al audio worklet
+        }
+      });```
+  responses:
+  - ...syncmethods
+
+synctoaudio:
+  run: |
+    set(() => {
+      level.content = level.code["Speaker.example.js"];
+    }); 
+    bus.emit("content-changed");
+  messages:
+  - iniciamos un `AudioContext`, una instancia del worklet, y proporcionamos un método `writeSamples(...)` para que el emulador pueda enviar los samples
+  - cada vez que el sistema de audio solicita más samples, llamamos a `onAudioRequested({ need, have, target })`
+  - el objetivo aquí es mantener el ring buffer lleno con `target` samples, que es la mitad del tamaño del buffer, corrigiendo si es necesario
+  - |-
+    el código del frontend se vería así:
+      ```javascript this.speaker = new Speaker(
+        ({ need, have, target }) => {
+          if (syncToAudio) {
+            let n = need;
+            if (have > target + 64) n--;
+            else if (have < target - 64) n++;
+
+            // ejecutar por n samples
+            this.emulator.samples(n); // puede enviar píxeles al canvas
+          
+            this._updateSound(); // envía los samples al audio worklet
+          }
+        });```
+  responses:
+  - ...syncmethods
+
+example:
+  run: |
+    set(() => {
+      level.content = level.code["EmulatorFrontend.example.js"];
+    });
+    bus.emit("content-changed");
+  messages:
+  - aquí tienes un ejemplo de un frontend de emulador simplificado
+  - interactúa con la clase `Emulator` que mostré en el nivel anterior
+  - ¡échale un vistazo!
+  responses:
+  - ▶️  continuar [end]
