@@ -22,7 +22,6 @@ export default class Emulation {
 		getInput = () => [{}, {}],
 		onFps = () => {},
 		onError = () => {},
-		onSaveState = () => {},
 		onFrame = () => {},
 		saveState = null,
 		volume = 1,
@@ -66,10 +65,6 @@ export default class Emulation {
 		});
 
 		this.saveState = saveState;
-		this.isSaveStateRequested = false;
-		this.isLoadStateRequested = false;
-		this.wasSaveStateRequested = false;
-		this.wasLoadStateRequested = false;
 		this.isDebugging = false;
 		this.isDebugStepFrameRequested = false;
 		this.isDebugStepScanlineRequested = false;
@@ -91,30 +86,6 @@ export default class Emulation {
 			const isDebugStepScanlineRequested = this.isDebugStepScanlineRequested;
 			this.isDebugStepFrameRequested = false;
 			this.isDebugStepScanlineRequested = false;
-
-			if (this.isSaveStateRequested && !this.wasSaveStateRequested) {
-				this.wasSaveStateRequested = true;
-
-				try {
-					this.saveState = this.neees.getSaveState();
-					onSaveState(this.saveState);
-				} catch (e) {
-					console.error("Error saving state", e);
-				}
-			}
-			if (
-				this.isLoadStateRequested &&
-				!this.wasLoadStateRequested &&
-				this.saveState != null
-			) {
-				this.wasLoadStateRequested = true;
-
-				try {
-					this.neees.setSaveState(this.saveState);
-				} catch (e) {
-					console.error("Error loading state", e);
-				}
-			}
 
 			try {
 				if (!this._canSyncToAudio()) {
@@ -279,10 +250,6 @@ export default class Emulation {
 	_updateInput(input) {
 		for (let i = 0; i < 2; i++) {
 			if (i === 0) {
-				this.isSaveStateRequested = input[i].$saveState;
-				this.isLoadStateRequested = input[i].$loadState;
-				if (!input[i].$saveState) this.wasSaveStateRequested = false;
-				if (!input[i].$loadState) this.wasLoadStateRequested = false;
 				if (input[i].$startDebugging) this.isDebugging = true;
 				if (input[i].$stopDebugging) this.isDebugging = false;
 				if (input[i].$debugStepFrame) this.isDebugStepFrameRequested = true;

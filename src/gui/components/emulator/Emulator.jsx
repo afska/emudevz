@@ -133,6 +133,7 @@ export default class Emulator extends Component {
 					try {
 						return this._emulation.neees.getSaveState();
 					} catch (e) {
+						console.error(e);
 						return null;
 					}
 			  })()
@@ -185,7 +186,6 @@ export default class Emulator extends Component {
 			this._getInput,
 			this._setFps,
 			this._setError,
-			this._storeSaveState,
 			onFrame,
 			saveState,
 			volume,
@@ -353,6 +353,7 @@ export default class Emulator extends Component {
 					try {
 						return this.neees.getSaveState();
 					} catch (e) {
+						console.error(e);
 						return null;
 					}
 				})()

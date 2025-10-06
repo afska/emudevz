@@ -172,7 +172,7 @@ export default class TV extends PureComponent {
 							this._resetContent(fileContent, null, name);
 						}}
 						onRestart={(saveState) => {
-							this._resetContent(content, saveState);
+							this._resetContent(content, saveState, name);
 						}}
 						onStop={() => {
 							this._resetContent(null);

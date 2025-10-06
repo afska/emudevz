@@ -433,6 +433,7 @@ export default class EmulatorRunner extends PureComponent {
 						try {
 							return this._emulator?.neees?.getSaveState();
 						} catch (e) {
+							console.error(e);
 							return null;
 						}
 					})()) ||
