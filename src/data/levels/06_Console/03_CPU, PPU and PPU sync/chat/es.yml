@@ -1,5 +1,19 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
-  - coming soon!
-  responses: []
+  - ¡lo has hecho genial hasta ahora! 💪
+  - en los siguientes niveles, te mostraré algo de código para cubrir los temas de los que aún no hemos hablado
+  - echemos un vistazo a cómo BrokenNEEES ejecuta nuestros componentes <por dentro>
+  - <{unit_speeds.png}>
+  - la 🧠  CPU, 🖥️  PPU y 🔊  APU funcionan a estas velocidades
+  - esto significa que por cada ciclo de CPU, deberíamos ejecutar 3 ciclos de PPU y ~0.5~ ciclos de APU
+  - revisa el método `step()`
+  - |-
+    también puedes ver:
+    - 💾  carga de ROM (`load(...)`)
+    - 🎮  actualización de botones (`setButton(...)`)
+    - 🔋  manejo de archivos de guardado (`getSaveFile()`)
+  responses:
+  - ▶️  continuar [end]

@@ -17,7 +17,7 @@
 				{
 					"language": "javascript",
 					"action": "none",
-					"initialCodeFile": "sync.js",
+					"initialCodeFile": "base_emulator.js",
 					"readOnly": true
 				}
 			]

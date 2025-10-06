@@ -20,9 +20,9 @@ class Emulator {
   /**
    * Loads a ROM file.
    * `bytes`: `Uint8Array`
-   * `saveFileBytes`: `Uint8Array`
+   * `saveFileBytes`: `Uint8Array` or null
    */
-  load(bytes, saveFileBytes) {
+  load(bytes, saveFileBytes = null) {
     /* TODO: IMPLEMENT */
   }
 

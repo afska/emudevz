@@ -8,6 +8,18 @@
 				"useTabs": false,
 				"tabWidth": 2
 			}
+		},
+		{
+			"files": ["**/bin/*.js"],
+			"options": {
+				"useTabs": false
+			}
+		},
+		{
+			"files": ["**/code/base_emulator.js"],
+			"options": {
+				"useTabs": false
+			}
 		}
 	],
 	"arrowParens": "always",

@@ -9,7 +9,7 @@ it("the file `/code/index.js` exports <an object> containing the `Emulator` clas
   expect(mainModule.default).to.be.an("object");
   expect(mainModule.default).to.include.key("Emulator");
   expect(mainModule.default.Emulator).to.be.a.class;
-})
+});
 
 it("`frame()` calls `onFrame` once", () => {
   const { Emulator } = mainModule.default;

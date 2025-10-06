@@ -1,6 +1,19 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
-  - let's <have a look> at how to sync all units
-  - coming soon!
-  responses: []
+  - you've done great so far! 💪
+  - in the following levels, I'll show you some code to cover the topics we haven't talked about yet
+  - let's have a look at how BrokenNEEES runs our components <under the hood>
+  - <{unit_speeds.png}>
+  - the 🧠  CPU, 🖥️  PPU and 🔊  APU run at these speeds
+  - this means that for every CPU cycle, we should run 3 PPU cycles and ~0.5~ APU cycles
+  - check out the `step()` method
+  - |-
+    you can also check:
+    - 💾  ROM loading (`load(...)`)
+    - 🎮  buttons update (`setButton(...)`)
+    - 🔋  save file handling (`getSaveFile()`)
+  responses:
+  - ▶️  continue [end]
