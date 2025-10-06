@@ -1,6 +1,99 @@
----
 main:
   messages:
-  - not available!
+  - ¡hola!
+  - ¿tienes preguntas? 👀
   responses:
-  - ok [end]
+  - (*) ¿un juego sobre programar emuladores? <por qué>? [why]
+  - (*) pero, ¿es un <juego> o un <tutorial>? [tutorial]
+  - (*) ¿así que la NEEES, eh? [name]
+  - (*) ¿el juego requiere <conocimientos de programación>? [requirements]
+  - (*) ¿qué <temas> se tratan? [topics]
+  - (*) ¿es <gratis> / de código abierto? [free]
+
+why:
+  messages:
+  - sí
+  - hacer mi primer emulador fue <super divertido> 👾
+  - y quiero motivar a otras personas a aprender cómo crear uno también
+  responses:
+  - ...main
+
+tutorial:
+  messages:
+  - ¡honestamente, como prefieras llamarlo! 🤷
+  - yo diría que <es un juego> porque tiene un objetivo claro, un conjunto de reglas y tareas en las que puedes tener éxito o fallar
+  responses:
+  - ...main
+
+name:
+  messages:
+  - sí 🙂
+  - es como la <NES> pero simplificada para fines didácticos
+  - ejecuta la mayoría de los <juegos de NES> sin problema, excepto los que dependen de detalles de hardware más complejos
+  responses:
+  - ...main
+
+requirements:
+  messages:
+  - se asume cierto conocimiento de <programación orientada a objetos> y una <comprensión básica> de los sistemas informáticos
+  - "(es decir: bytes, enteros con signo, lógica booleana, sistemas de numeración, etc.)"
+  - la programación se realizará en JavaScript
+  responses:
+  - ...main
+
+topics:
+  messages:
+  - el jugador recibirá un emulador <defectuoso> (pero <modular>) llamado BrokenNEEES
+  - y el objetivo será reemplazar las unidades dañadas por otras nuevas programadas desde cero
+  - ¡en cualquier orden!
+  - |-
+    puedes <esperar aprender>:
+      **->** 🔨  Ensamblador 6502 básico
+      **->** 💾  Emulación del Cartucho
+      **->** 🚌  Emulación de Buses de memoria
+      **->** 🎮  Emulación de Mandos
+      **->** 🧠  Emulación de CPU (instrucciones oficiales), probada con <nestest> y pruebas unitarias
+      **->** 🖥️  Emulación de PPU, probada con pruebas de video y unitarias
+      **->** 🔊  Emulación de APU, probada con pruebas de audio y unitarias
+      **->** 🗜️  Emulación de Mappers (<NROM>, <MMC1>, <UxROM>, <CNROM> y <MMC3>) como extra
+  - |-
+    cosas que estarán <fuera del alcance>:
+      **->** 👮  Opcodes ilegales
+      **->** 🎯  Timing preciso
+      **->** 🔌  Comportamiento de open-bus
+      **->** 👻  Particularidades de hardware poco comunes
+      **->** ✋  Interrupciones de la APU
+  - |-
+    cosas que estarán <parcialmente fuera del alcance> (explicadas, pero ya resueltas):
+      **->** 🔄  Sincronización entre unidades
+      **->** ✨  Frontend del emulador (código específico de la plataforma)
+      **->** 📥  Save states
+  - |-
+    además, el juego incluirá archivos de biblioteca para facilitar algunas tareas como:
+      **->** 📜  Scrolling correcto de la PPU (con los registros `t` y `v` de <Loopy>)
+      **->** 🤏  Reproducción DPCM de la APU
+  responses:
+  - ¿por qué no apuntar a la <precisión>? [accuracy]
+
+accuracy:
+  messages:
+  - creo que intentar lograr precisión en un primer proyecto de emulación es una <mala idea> 💀
+  - solo añadiría complejidad innecesaria y desanimaría a quienes quieran aprender los conceptos importantes
+  - |+
+    la gente puede aprender las bases del hardware y la emulación, y apuntar a la precisión <más adelante>
+  - en otras palabras, cuando termines esto tendrás un emulador sólido que ejecuta un gran porcentaje de <juegos de NES> de los mappers 0 a 4
+  - |+
+    no pasará muchas de las ROMs de prueba de <Blargg>, ¡pero se verá y sonará bien! solo no esperes crear el próximo <Mesen> 😊
+  - aquí las cosas están <simplificadas>, y por eso también elegí un nombre diferente para la consola
+  - si hay alguna duda, ¡esto no es una <NES>! así que no puede ser inexacto respecto a algo que no es 😉
+  responses:
+  - ...main
+
+free:
+  messages:
+  - lo es 👍
+  - aunque si te gusta el trabajo, con gusto aceptaría donaciones :-)
+  - básicamente el código está bajo licencia <MIT>, mientras que los niveles están bajo <CC BY-NC>
+  - revisa la sección de <Créditos> para todos los detalles
+  responses:
+  - ...main
