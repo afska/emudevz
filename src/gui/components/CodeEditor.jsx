@@ -174,7 +174,14 @@ export default class CodeEditor extends PureComponent {
 		const isCompilingSpinnerShown = !isNullAction && isCompiling;
 
 		return (
-			<div className={styles.container} style={style}>
+			<div
+				className={styles.container}
+				style={style}
+				ref={(ref) => {
+					if (!ref) return;
+					this._container = ref;
+				}}
+			>
 				{addon}
 				{isCompilingSpinnerShown && (
 					<div className={styles.spinner}>
@@ -227,6 +234,7 @@ export default class CodeEditor extends PureComponent {
 			"emulator-stopped": () => {
 				this.setState({ actionName: ACTION_RUN });
 			},
+			"content-changed": this._blink,
 		});
 	}
 
@@ -316,6 +324,18 @@ export default class CodeEditor extends PureComponent {
 			}
 		}
 	}, COMPILE_DEBOUNCE_MS);
+
+	_blink = () => {
+		this._container.classList.remove("quickflash");
+
+		setTimeout(() => {
+			try {
+				this._container.classList.add("quickflash");
+			} catch (e) {
+				// maybe already detached
+			}
+		});
+	};
 
 	_getAction() {
 		const { actionName } = this.state;

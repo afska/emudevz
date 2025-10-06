@@ -5,6 +5,7 @@ main:
       m.chat.winOnEnd = true;
       level.content = level.code["Screen.example.js"];
     });
+    bus.emit("content-changed");
   messages:
   - all tasks we completed before were related to our 🌀  emulator core
   - and so far I purposely avoided talking about the 🌸  emulator frontend since it's <platform-dependent>
@@ -19,6 +20,7 @@ audio:
     set(() => {
       level.content = level.code["audioWorklet.example.js"];
     });
+    bus.emit("content-changed");
   messages:
   - for audio, we create an <audio worklet> processor that can receive samples from the emulator and insert them into a <ring buffer> 💍
   - each time the audio device <needs> more samples, `process(...)` gets called, where we dequeue from the ring buffer and provide them
@@ -42,6 +44,7 @@ synctovideo:
     set(() => {
       level.content = level.code["FrameTimer.example.js"];
     });
+    bus.emit("content-changed");
   messages:
   - we call `requestAnimationFrame(...)` to get notified when we're able to refresh the screen
   - then, if <16.66 ms> (~1000~ / 60) have passed since the last time, we request to our emulator core a new frame with `onFrame()`
@@ -71,6 +74,7 @@ synctoaudio:
     set(() => {
       level.content = level.code["Speaker.example.js"];
     }); 
+    bus.emit("content-changed");
   messages:
   - we start an `AudioContext`, a worklet instance, and provide a `writeSamples(...)` method so the emulator can provide samples
   - whenever the audio system requests more samples, we call `onAudioRequested({ need, have, target })`
@@ -97,7 +101,8 @@ example:
   run: |
     set(() => {
       level.content = level.code["EmulatorFrontend.example.js"];
-    }); 
+    });
+    bus.emit("content-changed");
   messages:
   - here's an example of a simplified emulator frontend
   - it interacts with the `Emulator` class I showcased in the previous level

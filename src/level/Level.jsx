@@ -116,6 +116,7 @@ export default class Level {
 	fillContentFromTemp() {
 		if (!this.hasStoredContent)
 			store.dispatch.content.setCurrentLevelContent(this.tempContent);
+		bus.emit("content-changed");
 	}
 
 	setMemory(change) {
