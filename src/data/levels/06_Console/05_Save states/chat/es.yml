@@ -3,6 +3,11 @@ main:
   run: |
     set((m) => m.chat.winOnEnd = true);
   messages:
-  - coming soon!
+  - 📸  los <save states> son solo snapshots del estado de ejecución, por lo que son muy sencillos de implementar
+  - solo tienes que <serializar> el estado actual de tu emulador en una estructura (como un <objeto>)
+  - y poder <restaurarlo> desde un snapshot existente
+  - para evitar acoplar todos los componentes entre sí, sin embargo, sería recomendable permitir que cada clase sepa cómo serializarse y restaurarse a sí misma
+  - por ejemplo, `CPU::getSaveState()` podría serializar solo el estado de la 🧠  CPU, y `APU::getSaveState()` el estado de la 🔊  APU
+  - de la misma forma, `CPU::setSaveState(saveState)` y `APU::setSaveState(saveState)` restaurarían el estado de cada unidad
   responses:
-  - ok [end]
+  - ▶️  continuar [end]

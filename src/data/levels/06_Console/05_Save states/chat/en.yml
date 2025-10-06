@@ -4,9 +4,10 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - 📸  <save states> are just snapshots of the execution state, so they are trivial to implement
-  - you just have to serialize your emulator's current state into a structure (like an object)
-  - and be able to restore it from a existing snapshot
-  - to avoid coupling every component with each other, though, it'd be advisable to let each class know how to serialize itself
+  - you just have to <serialize> your emulator's current state into a structure (like an <object>)
+  - and be able to <restore> it from an existing snapshot
+  - to avoid coupling every component with each other, though, it'd be advisable to let each class know how to serialize and restore itself
   - for example, `CPU::getSaveState()` could serialize just the 🧠  CPU state, and `APU::getSaveState()` the 🔊  APU state
+  - in the same way, `CPU::setSaveState(saveState)` and `APU::setSaveState(saveState)` would restore the state of each unit
   responses:
   - ▶️  continue [end]
