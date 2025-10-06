@@ -92,11 +92,14 @@ export default class TestCommand extends Command {
 				testFiles.length > 1 && (!this._targetId || this._targetId === "unit");
 			const winOnTestPass = !level.memory.chat.winOnEnd && !level.test?.fsMode;
 
-			const testDefinitions = await this._getTestDefinitions(
-				level,
-				$,
-				testFiles
-			);
+			let testDefinitions = [];
+			try {
+				testDefinitions = await this._getTestDefinitions(level, $, testFiles);
+			} catch (e) {
+				console.error(e);
+				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
+				return;
+			}
 
 			for (let testDefinition of testDefinitions) {
 				const fileName = testDefinition.fileName;
