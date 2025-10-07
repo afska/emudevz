@@ -1,0 +1,38 @@
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - ahora que sabes cómo implementar nuevos mappers (📄  ~/docs/lib/Mapper.es.md~), te dejaré agregar el siguiente
+  - un mapper común que <realiza> bank-switching es <UxROM> (también conocido como mapper 2)
+  responses:
+  - hagámoslo 🚀 [exercise]
+
+exercise:
+  messages:
+  - |-
+    📚  crea una clase 📏  `UxROM` que extienda `Mapper`:
+    **constructor()**:
+      **->** asigna ```javascript this.page = 0```
+    **cpuRead(address)**:
+      **->** si la `address` está entre $4020-$7FFF:
+        **->** devuelve 0
+      **->** si la `address` está entre $8000-$BFFF:
+        **->** devuelve ```javascript this.$getPrgPage(this.page)[address - 0x8000]```
+      **->** si la `address` está entre $C000-$FFFF:
+        **->** devuelve ```javascript this.$getPrgPage(this.prgPages.length - 1)[address - 0xC000]```
+    **cpuWrite(address, value)**:
+      **->** si la `address` es >= $8000:
+        **->** asigna `value` como la <página actual>
+    **ppuRead(address)**:
+      **->** devuelve ```javascript this.$getChrPage(0)[address]```
+    **ppuWrite(address, value)**:
+      **->** si no ```javascript this.cartridge.header.usesChrRam```:
+        **->** devuelve (solo CHR-RAM es escribible)
+      **->** asigna ```javascript this.$getChrPage(0)[address] = value```
+    **getSaveState()**:
+      **->** devuelve un objeto que combina ```javascript super.getSaveState()``` con uno que incluye la <página actual>
+    **setSaveState(saveState)**:
+      **->** llama a ```javascript super.setSaveState(saveState)``` pero también restaura la <página actual>
+  - 📚  agrega tu clase `UxROM` a 📄  ~/code/mappers/mappers.js~
+  responses:
+  - ▶️  continuar [end]

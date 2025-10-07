@@ -1,5 +1,7 @@
 ---
 main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
   messages:
   - alright... let's review what a 🗜️  Mapper is
   - a mapper is a chip inside the cartridge that controls how the ROM data is read by the console

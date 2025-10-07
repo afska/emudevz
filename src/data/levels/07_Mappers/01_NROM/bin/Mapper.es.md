@@ -13,6 +13,7 @@ Esta clase facilita la implementación de los mappers de NEEES.
    - `ppuRead(address)`
    - `ppuWrite(address, value)`
 3. Usa `$getPrgPage(page)` y `$getChrPage(page)` para obtener una página específica de `PRG` o `CHR`.
+  * Alternativamente, puedes acceder manualmente a los arrays `prgPages` y `chrPages`.
 4. Implementa `getSaveState()` y `setSaveState(saveState)` para crear y restaurar correctamente los save states.
 5. Puedes sobrescribir `prgRomPageSize()` y `chrRomPageSize()` para cambiar el tamaño de las páginas.
 6. Puedes sobrescribir `onLoad()` para ejecutar operaciones cuando se carga una ROM.
