@@ -4,7 +4,7 @@ main:
   - ok, I'll leave the rest of the mappers as <an exercise for the reader>
   - there are lots of them! 👀
   - in fact, the iNEEES format (in its non-extended version) has support for at least 256 mappers 🤯
-  - to have parity with BrokenNEEES, you should aim for <MMC1> (mapper 1) and <MMC3> (mapper 4)
+  - to have parity with BrokenNEEES, you should aim for <MMC1> (mapper 1), <CNROM> (mapper 3) and <MMC3> (mapper 4)
   - there's plenty of documentation online, so go check them out!
   - bye!!
   responses: []
