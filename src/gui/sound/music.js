@@ -86,6 +86,7 @@ const TRACKS = [
 		file: "20_19-back-to-light.mp3",
 		artist: "Synthenia",
 		title: "Back to Light",
+		skip: true,
 	},
 ];
 
@@ -126,6 +127,8 @@ class Music {
 		this._track = this._forcedTrackIndex || (this._track + 1) % TRACKS.length;
 		this._saveTrack();
 		this._playCurrentTrack();
+		if (this._forcedTrackIndex === null && TRACKS[this._track].skip)
+			this.next();
 	}
 
 	previous() {
@@ -136,6 +139,8 @@ class Music {
 			(this._track - 1 + TRACKS.length) % TRACKS.length;
 		this._saveTrack();
 		this._playCurrentTrack();
+		if (this._forcedTrackIndex === null && TRACKS[this._track].skip)
+			this.previous();
 	}
 
 	pause() {
