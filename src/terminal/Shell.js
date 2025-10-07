@@ -4,6 +4,7 @@ import filesystem from "../filesystem";
 import locales from "../locales";
 import Program from "./Program";
 import commands from "./commands";
+import RootCommand from "./commands/RootCommand";
 import { DISPOSED } from "./errors";
 import { theme } from "./style";
 
@@ -45,7 +46,8 @@ export default class Shell extends Program {
 		const Command = commands.find((it) => it.name === commandName);
 		const isAvailable =
 			this.availableCommands.includes(commandName) ||
-			_.isEmpty(this.availableCommands);
+			_.isEmpty(this.availableCommands) ||
+			commandName === RootCommand.name;
 
 		if (!Command || !isAvailable) {
 			await this._terminal.writeln(
