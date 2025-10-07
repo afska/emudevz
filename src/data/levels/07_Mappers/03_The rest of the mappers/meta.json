@@ -1,0 +1,42 @@
+{
+	"name": {
+		"en": "🗜️ The rest of the mappers",
+		"es": "🗜️ El resto de los mappers"
+	},
+	"ui": {
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom",
+		"canPinEmulator": false
+	},
+	"test": {
+		"context": "javascript",
+		"fsMode": true
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

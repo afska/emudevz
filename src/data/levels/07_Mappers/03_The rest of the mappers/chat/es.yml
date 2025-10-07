@@ -1,0 +1,9 @@
+main:
+  messages:
+  - bueno, dejaré el resto de los mappers como <un ejercicio para el lector>
+  - ¡hay muchísimos! 👀
+  - de hecho, el formato iNEEES (en su versión no extendida) tiene soporte para al menos 256 mappers 🤯
+  - para tener paridad con BrokenNEEES, deberías apuntar a <MMC1> (mapper 1) y <MMC3> (mapper 4)
+  - hay mucha documentación en línea, ¡así que échales un vistazo!
+  - ¡adiós!
+  responses: []
