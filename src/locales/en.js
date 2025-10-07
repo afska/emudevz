@@ -144,7 +144,7 @@ export default {
 	not_available: "⚠️  Not available.",
 	not_now: "⚠️  Not now!",
 	opening: "Opening",
-	optional: "(optional)",
+	optional: "(bonus)",
 	pin_left: "Pin left",
 	player_1: "- Player 1 -",
 	player_2: "- Player 2 -",
