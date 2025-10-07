@@ -119,29 +119,29 @@ class HomeScreen extends PureComponent {
 							{locales.get("_faq")}
 						</button>
 						{" 🎥 "}
-						<button
-							type="button"
-							className="link-button"
-							onClick={this._openTrailer}
+						<a
+							href="https://www.youtube.com/watch?v=sBhFulSp4KQ"
+							target="_blank"
+							rel="noreferrer"
 						>
 							{locales.get("_trailer")}
-						</button>
+						</a>
 						{" 🎶 "}
-						<button
-							type="button"
-							className="link-button"
-							onClick={this._openSoundtrack}
+						<a
+							href="https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ"
+							target="_blank"
+							rel="noreferrer"
 						>
 							{locales.get("_ost")}
-						</button>
+						</a>
 						{" 🌐 "}
-						<button
-							type="button"
-							className="link-button"
-							onClick={this._openCommunity}
+						<a
+							href="https://discord.gg/mFGDxSxEJu"
+							target="_blank"
+							rel="noreferrer"
 						>
 							{locales.get("_community")}
-						</button>
+						</a>
 						{" 📜 "}
 						<button
 							type="button"
@@ -318,20 +318,6 @@ class HomeScreen extends PureComponent {
 
 	_openFAQ = () => {
 		this.props.goTo(Book.FAQ_LEVEL);
-	};
-
-	_openTrailer = () => {
-		window.open("https://www.youtube.com/watch?v=sBhFulSp4KQ");
-	};
-
-	_openSoundtrack = () => {
-		window.open(
-			"https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ"
-		);
-	};
-
-	_openCommunity = () => {
-		window.open("https://discord.gg/mFGDxSxEJu");
 	};
 
 	_support = () => {
