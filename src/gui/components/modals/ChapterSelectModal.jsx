@@ -89,7 +89,12 @@ export default class ChapterSelectModal extends PureComponent {
 							<div className={styles.verticalLine} />
 							<Chapter book={book} chapter={book.getChapter(7)} />
 							<div className={styles.verticalLine} />
-							<Chapter book={book} chapter={book.getChapter(8)} optional />
+							<Chapter
+								book={book}
+								chapter={book.getChapter(8)}
+								optional
+								lastOne
+							/>
 						</div>
 					)}
 				</Modal.Body>

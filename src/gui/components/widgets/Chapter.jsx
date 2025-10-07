@@ -19,13 +19,14 @@ class Chapter extends PureComponent {
 			nested = false,
 			right = false,
 			left = false,
+			lastOne = false,
 			className,
 			children,
 			...rest
 		} = this.props;
 
 		const isUnlocked = this._isUnlocked;
-		const totalLevels = chapter.levels.length;
+		const totalLevels = chapter.levels.length + (lastOne ? -1 : 0);
 		const totalCompleted = chapter.levels.filter((it) => book.isFinished(it.id))
 			.length;
 		const percentage = Math.round((totalCompleted / totalLevels) * 100);
