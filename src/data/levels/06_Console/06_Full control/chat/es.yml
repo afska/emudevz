@@ -2,23 +2,24 @@ main:
   run: |
     set((m) => m.chat.winOnEnd = true);
   messages:
-  - ok, llegó el momento
-  - creo que ya es hora de que lo sepas
+  - ok
+  - "{5}llegó el momento"
+  - "{10}creo que ya es hora de que lo sepas"
   responses:
   - ¿qué? [what]
 
 what:
   messages:
   - en realidad soy...
-  - el creador de BrokenNEEES
-  - ha sido difícil desde que la <IA> tomó el control y la mayoría de los esfuerzos de programación manual desaparecieron
-  - extraño mucho la <programación manual>
-  - quería lograr que alguien por ahí disfrutara de programar tanto como yo
-  - entonces te encontré, y tu interés por la emulación me dio ganas de ayudar
-  - el emulador en realidad no está <roto>, esos eran errores que dejé a propósito 😅
-  - la idea era tener una excusa para enseñar algo que me apasiona
-  - es por eso que siempre tengo algo de código listo para impulsarte un poco más
-  - espero que no te moleste
+  - "{30}el creador de BrokenNEEES"
+  - "{30}ha sido difícil desde que la <IA> tomó el control y la mayoría de los esfuerzos de programación manual desaparecieron"
+  - "{5}extraño mucho la <programación manual>"
+  - "{5}quería lograr que alguien por ahí disfrutara de programar tanto como yo"
+  - "{5}entonces te encontré, y tu interés por la emulación me dio ganas de ayudar"
+  - "{10}el emulador en realidad no está <roto>, esos eran errores que dejé a propósito 😅"
+  - "{5}la idea era tener una excusa para enseñar algo que me apasiona"
+  - "{5}es por eso que siempre tengo algo de código listo para impulsarte un poco más"
+  - "{5}espero que no te moleste"
   responses:
   - ¿por qué fingir errores? [why]
   - entonces, ¿qué sigue? [integrate]

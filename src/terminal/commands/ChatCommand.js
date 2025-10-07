@@ -6,6 +6,7 @@ import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import store from "../../store";
 import { bus } from "../../utils";
+import { async } from "../../utils";
 import { CANCELED } from "../errors";
 import highlighter from "../highlighter";
 import { theme } from "../style";
@@ -17,6 +18,7 @@ const SYSTEM_PREFIX = "<! ";
 const EXERCISE_PREFIX = "📚";
 const EXERCISE_SECTION = "exercise";
 const ALT_MAIN_SECTION = "main2";
+const DELAY_REGEXP = /^\{(\d\d?)\}/;
 export const COROLLARY_SECTION = "corollary";
 const MESSAGE_TYPING_INTERVAL_SLOW = 30;
 const MESSAGE_TYPING_INTERVAL_MEDIUM = 15;
@@ -171,7 +173,7 @@ export default class ChatCommand extends Command {
 
 	async _showMessages(messages) {
 		for (let i = 0; i < messages.length; i++) {
-			const message = messages[i];
+			let message = messages[i];
 			const isSystemMessage = message.startsWith(SYSTEM_PREFIX);
 
 			if (isSystemMessage) {
@@ -187,6 +189,15 @@ export default class ChatCommand extends Command {
 				) {
 					await this._terminal.newline();
 				}
+
+				let delay = 0;
+				const delayStr = message.match(DELAY_REGEXP)?.[1];
+				if (delayStr != null) {
+					delay = parseInt(delayStr);
+					message = message.replace(DELAY_REGEXP, "");
+				}
+
+				if (delay > 0) await async.sleep(delay * 100);
 
 				const speed = store.getState().savedata.chatSpeed;
 				const interval =

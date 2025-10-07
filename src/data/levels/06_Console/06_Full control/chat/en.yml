@@ -3,23 +3,24 @@ main:
   run: |
     set((m) => m.chat.winOnEnd = true);
   messages:
-  - ok, it's time
-  - I think you're ready to know
+  - ok
+  - "{5}it's time"
+  - "{10}I think you're ready to know"
   responses:
   - what? [what]
 
 what:
   messages:
   - I'm actually...
-  - the creator of BrokenNEEES
-  - it has been rough since <AI> took over and most manual programming efforts have died
-  - I miss <manual programming>, a lot
-  - I wanted to make someone out there enjoy programming like I do
-  - then I found you, and your interest in emulation made me want to help
-  - the emulator isn't actually <broken>, those were bugs I planted on purpose 😅
-  - the goal was to have an excuse to teach someone something I love
-  - that is why I always have some code ready to nudge you forward
-  - I hope you are not mad
+  - "{30}the creator of BrokenNEEES"
+  - "{30}it has been rough since <AI> took over and most manual programming efforts have died"
+  - "{5}I miss <manual programming>, a lot"
+  - "{5}I wanted to make someone out there enjoy programming like I do"
+  - "{5}then I found you, and your interest in emulation made me want to help"
+  - "{10}the emulator isn't actually <broken>, those were bugs I planted on purpose 😅"
+  - "{5}the goal was to have an excuse to teach someone something I love"
+  - "{5}that is why I always have some code ready to nudge you forward"
+  - "{5}I hope you are not mad"
   responses:
   - why fake bugs? [why]
   - so, what now? [integrate]
