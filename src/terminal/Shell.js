@@ -22,7 +22,7 @@ export default class Shell extends Program {
 
 	get allAvailableCommands() {
 		return _.isEmpty(this.availableCommands)
-			? commands.map((it) => it.name)
+			? commands.filter((it) => !it.isHidden).map((it) => it.name)
 			: this.availableCommands;
 	}
 
