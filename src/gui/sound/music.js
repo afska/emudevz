@@ -95,6 +95,7 @@ class Music {
 		this._track = 0;
 		this._audio = null;
 		this._hasStarted = false;
+		this._forcedTrackIndex = null;
 	}
 
 	setVolume(value) {
@@ -122,7 +123,7 @@ class Music {
 	next() {
 		if (this._audio) this._audio.pause();
 
-		this._track = (this._track + 1) % TRACKS.length;
+		this._track = this._forcedTrackIndex || (this._track + 1) % TRACKS.length;
 		this._saveTrack();
 		this._playCurrentTrack();
 	}
@@ -130,7 +131,9 @@ class Music {
 	previous() {
 		if (this._audio) this._audio.pause();
 
-		this._track = (this._track - 1 + TRACKS.length) % TRACKS.length;
+		this._track =
+			this._forcedTrackIndex ||
+			(this._track - 1 + TRACKS.length) % TRACKS.length;
 		this._saveTrack();
 		this._playCurrentTrack();
 	}
@@ -147,6 +150,18 @@ class Music {
 		this.isPaused = false;
 
 		bus.emit("resume-music");
+	}
+
+	forceTrack(title) {
+		const trackIndex = TRACKS.findIndex((it) => it.title === title);
+		if (trackIndex === -1) return;
+
+		this._forcedTrackIndex = trackIndex;
+		if (this._track !== this._forcedTrackIndex) this.next();
+	}
+
+	removeForcedTrack() {
+		this._forcedTrackIndex = null;
 	}
 
 	getCurrentTime() {

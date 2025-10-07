@@ -4,6 +4,7 @@ import codeEval from "../level/codeEval";
 import components from "./components";
 import layouts from "./components/layouts";
 import NavBar from "./components/widgets/NavBar";
+import music from "./sound/music";
 
 class LevelScreen extends PureComponent {
 	$timeouts = [];
@@ -44,6 +45,10 @@ class LevelScreen extends PureComponent {
 				}
 			} else throw new Error(`Code not found: ${initFile}`);
 		}
+
+		const specialSong = level.ui.specialSong;
+		if (specialSong != null) music.forceTrack(specialSong);
+		else music.removeForcedTrack();
 
 		this.$timeouts.push(
 			setTimeout(() => {

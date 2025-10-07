@@ -5,6 +5,7 @@
 	},
 	"ui": {
 		"run": "copy.js",
+		"specialSong": "Back to Light",
 		"layout": "tripleRight",
 		"components": {
 			"Right": [
