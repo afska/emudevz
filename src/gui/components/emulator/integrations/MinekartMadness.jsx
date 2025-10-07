@@ -43,7 +43,7 @@ export default class MinekartMadness extends Integration {
 		const percentage = (level / WIN_LEVEL) * 100;
 
 		if (percentage === 100) {
-			this._disconnectControllers(neees);
+			this.props.getEmulator().stop();
 			bus.emit("minekartmadness-end");
 		}
 
@@ -51,4 +51,4 @@ export default class MinekartMadness extends Integration {
 	};
 }
 
-const WIN_LEVEL = 5;
+const WIN_LEVEL = 4;

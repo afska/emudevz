@@ -74,6 +74,8 @@ export default class GameStreamer extends PureComponent {
 		const { id, rom } = this.props;
 		const { integrationId, isLoading } = this.state;
 
+		const autoSaveAndRestore = id !== "lets-play-minekart-madness" ? id : null;
+
 		const Integration = integrations.get(integrationId);
 
 		return (
@@ -110,7 +112,10 @@ export default class GameStreamer extends PureComponent {
 						</span>
 					</div>
 
-					<Integration getNEEES={() => this._emulator?.neees} />
+					<Integration
+						getNEEES={() => this._emulator?.neees}
+						getEmulator={() => this._emulator}
+					/>
 
 					<div className={styles.row}>
 						<InputTypeToggle player={1} />
@@ -153,7 +158,7 @@ export default class GameStreamer extends PureComponent {
 										this._setBuffer(buffer);
 									},
 								}}
-								autoSaveAndRestore={id}
+								autoSaveAndRestore={autoSaveAndRestore}
 								rom={rom}
 								error={null}
 								settings={{ useHardware: true }}
