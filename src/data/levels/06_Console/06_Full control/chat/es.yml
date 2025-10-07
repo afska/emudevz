@@ -27,14 +27,14 @@ what:
 why:
   messages:
   - no se aprende el alma de un emulador leyendo, se aprende haciéndolo
-  - ¡y poder jugar sin errores es una gran motivación! 👾
+  - "{5}¡y poder jugar sin errores es una gran motivación! 👾"
   responses:
   - (*) entonces, ¿la "NEEES real" también era tu emulador? [real]
   - bien, ¿qué sigue? [integrate]
 
 real:
   messages:
-  - 😅 🤣 ☠️
+  - "{10}😅 🤣 ☠️"
   responses:
   - ...why
 
@@ -43,7 +43,7 @@ integrate:
     {{Top}}.load(null, "rom");
   messages:
   - voy a darte control total del 🕹️  Emulador
-  - veamos...
+  - "{5}veamos..."
   run-after-messages: |
     level.startEffect("earthquake");
     setTimeout(() => {

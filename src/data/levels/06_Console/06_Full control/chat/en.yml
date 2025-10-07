@@ -28,14 +28,14 @@ what:
 why:
   messages:
   - you don't learn the soul of an emulator by reading, you learn it by doing!
-  - and being able to actually play the games without bugs is a great motivator 👾
+  - "{5}and being able to actually play the games without bugs is a great motivator 👾"
   responses:
   - (*) so your "real NEEES" was also your emulator? [real]
   - fine, what is next? [integrate]
 
 real:
   messages:
-  - 😅 🤣 ☠️
+  - "{10}😅 🤣 ☠️"
   responses:
   - ...why
 
@@ -44,7 +44,7 @@ integrate:
     {{Top}}.load(null, "rom");
   messages:
   - I'm gonna give you full control over the 🕹️  Emulator
-  - let's see...
+  - "{5}let's see..."
   run-after-messages: |
     level.startEffect("earthquake");
     setTimeout(() => {
