@@ -1,0 +1,43 @@
+{
+	"name": {
+		"en": "🤖 NROM",
+		"es": "🤖 NROM"
+	},
+	"ui": {
+		"run": "copy.js",
+		"layout": "tripleRight",
+		"components": {
+			"Right": [
+				"multifile",
+				{
+					"language": "javascript",
+					"action": "run"
+				}
+			],
+			"Bottom": [
+				"console",
+				{
+					"startup": "chat"
+				}
+			],
+			"Top": [
+				"tv",
+				{
+					"content": null,
+					"type": "rom"
+				}
+			]
+		},
+		"focus": "Bottom",
+		"canPinEmulator": false
+	},
+	"test": {
+		"context": "javascript",
+		"fsMode": true
+	},
+	"memory": {
+		"content": {
+			"multifile": true
+		}
+	}
+}

@@ -40,22 +40,22 @@ export default class Mapper {
   onLoad() {}
 
   /** Maps a CPU read operation (`address` is in CPU range $4020-$FFFF). */
-  cpuRead(/*address*/) {
+  cpuRead(address) {
     throw new Error("not_implemented");
   }
 
   /** Maps a CPU write operation (`address` is in CPU range $4020-$FFFF). */
-  cpuWrite(/*address, value*/) {
+  cpuWrite(address, value) {
     throw new Error("not_implemented");
   }
 
   /** Maps a PPU read operation (`address` is in PPU range $0000-$1FFF). */
-  ppuRead(/*address*/) {
+  ppuRead(address) {
     throw new Error("not_implemented");
   }
 
   /** Maps a PPU write operation (`address` is in PPU range $0000-$1FFF). */
-  ppuWrite(/*address, value*/) {
+  ppuWrite(address, value) {
     throw new Error("not_implemented");
   }
 

@@ -21,7 +21,7 @@ export default class NROM extends Mapper {
     }
   }
 
-  cpuWrite() {
+  cpuWrite(address, value) {
     // Unused
   }
 

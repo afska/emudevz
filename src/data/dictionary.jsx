@@ -168,6 +168,13 @@ const dictionary = {
 			es:
 				"Una imagen estática detrás de los sprites, almacenada en una name table.",
 		},
+		"Bank-switching|Bank switching": {
+			icon: "🔄",
+			en:
+				"A technique that swaps which memory bank is mapped into the CPU or PPU address space, allowing access to more code or graphics than the fixed address range permits.",
+			es:
+				"Una técnica que intercambia qué banco de memoria está mapeado en el espacio de direcciones de CPU o PPU, permitiendo acceder a más código o gráficos de los que permite el rango de direcciones fijo.",
+		},
 		BrokenNEEES: {
 			icon: "🕹️",
 			en:

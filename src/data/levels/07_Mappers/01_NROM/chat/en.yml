@@ -1,0 +1,47 @@
+---
+main:
+  messages:
+  - alright... let's review what a 🗜️  Mapper is
+  - a mapper is a chip inside the cartridge that controls how the ROM data is read by the console
+  - they allow games to use bigger code or graphics by letting them do bank-switching between multiple 🤖  PRG-ROM or 👾  CHR-ROM chips
+  - some of them add special capabilities like changing mirroring on the fly, or triggering an interrupt on a particular scanline 🌠
+  - the more mappers your emulator supports, the more games are compatible 👾
+  - BrokenNEEES supports the most common mappers (~0-4~)
+  - but since the handover, I only gave you the Mapper 0, which is called <NROM>
+  responses:
+  - what's bank-switching? [bank]
+
+bank:
+  messages:
+  - bank-switching is a technique that lets a cartridge swap which part of the ROM is visible to the console at a given time
+  - since the console can only "see" a limited memory range, the mapper changes which memory bank is mapped there
+  - for example, a game might have 256 KB of 🤖  PRG-ROM, but the CPU can only address 32 KB at once
+  - so the mapper swaps different 32 KB chunks in and out as needed 🐏
+  - this allows much larger games to run without requiring more address lines or memory inside the console
+  - basically, the cartridge decides <what data> the console sees at any given time
+  responses:
+  - how does the game decide what chunk to use? [howdoes]
+
+howdoes:
+  messages:
+  - it writes to certain memory addresses (typically in the 💾  Cartridge space, $4020-$FFFF)
+  - the mapper intercepts the writes and uses the written value to select which ROM bank should be visible
+  - for example, writing a number to $8000 might tell the mapper to switch the current PRG-ROM bank
+  - this way, the game code itself controls which chunk of data or code it wants to access next
+  responses:
+  - how does <NROM> do it? [nrom]
+
+nrom:
+  messages:
+  - it doesn't 🤣
+  - <NROM> is the simplest kind of cartridge, it has no mapper chip at all!
+  - the 🧠  CPU and 🖥️  PPU are permanently connected to fixed parts of the ROM
+  - typically, it includes 32 KB of PRG-ROM and 8 KB of CHR-ROM (or CHR-RAM in some cases)
+  - it's perfect for small games and the easiest one to emulate 🧩
+  - |-
+    check out these files to understand how it works:
+      📄  ~/docs/lib/Mapper.en.md~
+      📄  ~/code/mappers/0_NROM.js~
+      📄  ~/code/mappers/mappers.js~
+  responses:
+  - ▶️  continue [end]
