@@ -118,13 +118,13 @@ class HomeScreen extends PureComponent {
 						>
 							{locales.get("_faq")}
 						</button>
-						{" 🌐 "}
+						{" 🎥 "}
 						<button
 							type="button"
 							className="link-button"
-							onClick={this._openCommunity}
+							onClick={this._openTrailer}
 						>
-							{locales.get("_community")}
+							{locales.get("_trailer")}
 						</button>
 						{" 🎶 "}
 						<button
@@ -133,6 +133,14 @@ class HomeScreen extends PureComponent {
 							onClick={this._openSoundtrack}
 						>
 							{locales.get("_ost")}
+						</button>
+						{" 🌐 "}
+						<button
+							type="button"
+							className="link-button"
+							onClick={this._openCommunity}
+						>
+							{locales.get("_community")}
 						</button>
 						{" 📜 "}
 						<button
@@ -312,14 +320,18 @@ class HomeScreen extends PureComponent {
 		this.props.goTo(Book.FAQ_LEVEL);
 	};
 
-	_openCommunity = () => {
-		window.open("https://discord.gg/mFGDxSxEJu");
+	_openTrailer = () => {
+		window.open("https://www.youtube.com/watch?v=sBhFulSp4KQ");
 	};
 
 	_openSoundtrack = () => {
 		window.open(
 			"https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ"
 		);
+	};
+
+	_openCommunity = () => {
+		window.open("https://discord.gg/mFGDxSxEJu");
 	};
 
 	_support = () => {

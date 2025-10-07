@@ -4,6 +4,7 @@ export default {
 	_credits: "Credits",
 	_faq: "FAQ",
 	_ost: "Soundtrack",
+	_trailer: "Trailer",
 	also: "also",
 	apu: "APU",
 	backup: "Backup",
