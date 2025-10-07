@@ -382,6 +382,7 @@ export default class CodeEditor extends PureComponent {
 
 	_highlight(line) {
 		if (!this.ref) return;
+		if (line === -1) return;
 
 		setTimeout(() => {
 			lineHighlighter.highlightLine(this.ref, this.props.getCode(), line);
