@@ -56,7 +56,7 @@ topics:
       **->** 🧠  CPU emulation (official instructions), tested with <nestest> and unit tests
       **->** 🖥️  PPU emulation, tested with video and unit tests
       **->** 🔊  APU emulation, tested with audio and unit tests
-      **->** 🗜️  Mapper emulation (<NROM>, <MMC1>, <UxROM>, <CNROM>, and <MMC3>) as a bonus
+      **->** 🗜️  Mapper emulation as a bonus
   - |-
     things that will be <out of scope>:
       **->** 👮  Illegal opcodes

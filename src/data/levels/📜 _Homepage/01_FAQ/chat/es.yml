@@ -55,7 +55,7 @@ topics:
       **->** 🧠  Emulación de CPU (instrucciones oficiales), probada con <nestest> y pruebas unitarias
       **->** 🖥️  Emulación de PPU, probada con pruebas de video y unitarias
       **->** 🔊  Emulación de APU, probada con pruebas de audio y unitarias
-      **->** 🗜️  Emulación de Mappers (<NROM>, <MMC1>, <UxROM>, <CNROM> y <MMC3>) como extra
+      **->** 🗜️  Emulación de Mappers como bonus
   - |-
     cosas que estarán <fuera del alcance>:
       **->** 👮  Opcodes ilegales
