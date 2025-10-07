@@ -6,10 +6,10 @@ main:
   - antes de empezar, revisemos cómo usar la computadora
   - puedes lanzar multiples apps desde esta terminal
   responses:
-  - 💬  cuéntame sobre esta app [app]
-  - 💬  cuéntame sobre otras apps [otherapps]
-  - 💬  ¿qué hay en la otra mitad de la pantalla? [tv]
-  - 💬  ¿algún atajo de teclado que deba aprender? [shortcuts]
+  - (*) 💬  cuéntame sobre esta app [app]
+  - (*) 💬  cuéntame sobre otras apps [otherapps]
+  - (*) 💬  ¿qué hay en la otra mitad de la pantalla? [tv]
+  - (*) 💬  ¿algún atajo de teclado que deba aprender? [shortcuts]
   - 👌  entendido [end]
 
 app:

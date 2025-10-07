@@ -34,7 +34,7 @@ namehow:
   - because I have a NEEES right here 😉
   - and I'm trying to reverse-engineer it
   responses:
-  - DO YOU HAVE A WORKING NEEES? [workingnes]
+  - YOU HAVE A WORKING NEEES? [workingnes]
 
 workingnes:
   messages:

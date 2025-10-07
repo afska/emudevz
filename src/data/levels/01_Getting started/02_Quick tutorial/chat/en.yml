@@ -6,10 +6,10 @@ main:
   - before starting, let's review how to use the computer
   - you can launch several apps from this terminal
   responses:
-  - 💬  tell me about this app [app]
-  - 💬  tell me about other apps [otherapps]
-  - 💬  what's in the other half of the screen? [tv]
-  - 💬  any keyboard shortcuts I should learn? [shortcuts]
+  - (*) 💬  tell me about this app [app]
+  - (*) 💬  tell me about other apps [otherapps]
+  - (*) 💬  what's in the other half of the screen? [tv]
+  - (*) 💬  any keyboard shortcuts I should learn? [shortcuts]
   - 👌  gotcha [end]
 
 app:
