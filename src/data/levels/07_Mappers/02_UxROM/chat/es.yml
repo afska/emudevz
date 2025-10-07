@@ -34,5 +34,16 @@ exercise:
     **setSaveState(saveState)**:
       **->** llama a ```javascript super.setSaveState(saveState)``` pero también restaura la <página actual>
   - 📚  agrega tu clase `UxROM` a 📄  ~/code/mappers/mappers.js~
+  - |-
+    para probar este mapper, puedes correr uno de los siguientes juegos:
+      💦 🏛️  <Bobl>
+      🦅 🧷  <Crowborg>
+      🦟 🍳  <Filthy Kitchen>
+      🌌 🔫  <Isostasy>
+      🕊️ 🛰️  <Spacegulls>
+      🦸 🤸  <Super Tilt Bro>
+      🏭 🔩  <TroubleAt2A03>
+      🐺 🌲  <WolfSpirit>
+      🐺 ⛓️  <Wolfling>
   responses:
   - ▶️  continuar [end]
