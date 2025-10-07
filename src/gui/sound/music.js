@@ -3,20 +3,90 @@ import { bus } from "../../utils";
 
 const MUSIC_DIR = "music/";
 const TRACKS = [
-	{ file: "0-plisken.mp3", artist: "Synthenia", title: "Detective Plisken" },
-	{ file: "1-reveng.mp3", artist: "Synthenia", title: "RevEng" },
-	{ file: "2-memories.mp3", artist: "Synthenia", title: "Memories" },
-	{ file: "3-neural.mp3", artist: "Synthenia", title: "Neural Emulation" },
-	{ file: "4-unknown.mp3", artist: "Synthenia", title: "Unknown Opcode" },
-	{ file: "5-lazer.mp3", artist: "Synthenia", title: "Lazer Idols" },
 	{
-		file: "6-lynx.mp3",
+		file: "01_10-detective-plisken.mp3",
+		artist: "Synthenia",
+		title: "Detective Plisken",
+	},
+	{ file: "02_15-reveng.mp3", artist: "Synthenia", title: "RevEng" },
+	{ file: "03_05-memories.mp3", artist: "Synthenia", title: "Memories" },
+	{
+		file: "04_07-neural-emulation.mp3",
+		artist: "Synthenia",
+		title: "Neural Emulation",
+	},
+	{
+		file: "05_04-unknown-opcode.mp3",
+		artist: "Synthenia",
+		title: "Unknown Opcode",
+	},
+	{ file: "06_14-lazer-idols.mp3", artist: "Synthenia", title: "Lazer Idols" },
+	{ file: "07_17-water-level.mp3", artist: "Synthenia", title: "Water Level" },
+	{
+		file: "08_11-voltage-overload.mp3",
+		artist: "Synthenia",
+		title: "Voltage Overload",
+	},
+	{
+		file: "09_02-bet-bits.mp3",
+		artist: "Synthenia",
+		title: "Bet Bits",
+	},
+	{
+		file: "10_03-crumbling-cities.mp3",
+		artist: "Synthenia",
+		title: "Crumbling Cities",
+	},
+	{
+		file: "11_20-there-is-a-lynx-in-the-shower.mp3",
 		artist: "Synthenia",
 		title: "There is a lynx in the shower",
 	},
-	{ file: "7-ffff.mp3", artist: "Synthenia", title: "Beyond $FFFF" },
-	{ file: "8-water.mp3", artist: "Synthenia", title: "Water Level" },
-	{ file: "9-voltage.mp3", artist: "Synthenia", title: "Voltage Overload" },
+	{
+		file: "12_01-hiding-is-futile.mp3",
+		artist: "Synthenia",
+		title: "Hiding Is Futile",
+	},
+	{
+		file: "13_08-unexpected-mainframe-interaction.mp3",
+		artist: "Synthenia",
+		title: "Unexpected Mainframe Interaction",
+	},
+	{
+		file: "14_09-burning.mp3",
+		artist: "Synthenia",
+		title: "Burning",
+	},
+	{
+		file: "15_12-host.mp3",
+		artist: "Synthenia",
+		title: "H.O.S.T.",
+	},
+	{
+		file: "16_13-burn-the-broadcaster.mp3",
+		artist: "Synthenia",
+		title: "Burn the Broadcaster",
+	},
+	{
+		file: "17_06-victor-and-wounded.mp3",
+		artist: "Synthenia",
+		title: "Victor & Wounded",
+	},
+	{
+		file: "18_18-beyond-0xffff.mp3",
+		artist: "Synthenia",
+		title: "Beyond $FFFF",
+	},
+	{
+		file: "19_16-one-last-bugfix.mp3",
+		artist: "Synthenia",
+		title: "One Last Bugfix",
+	},
+	{
+		file: "20_19-back-to-light.mp3",
+		artist: "Synthenia",
+		title: "Back to Light",
+	},
 ];
 
 class Music {
