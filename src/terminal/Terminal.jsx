@@ -67,6 +67,14 @@ window._openPath_ = (filePath) => {
 
 export default class Terminal {
 	constructor(xterm, dictionary) {
+		// HACK: Disabling mobile keyboard
+		document
+			.querySelectorAll("textarea.xterm-helper-textarea")
+			.forEach((el) => {
+				el.setAttribute("virtualkeyboardpolicy", "manual");
+				el.setAttribute("readonly", "");
+			});
+
 		this._xterm = xterm;
 		this._input = null;
 		this._keyInput = null;

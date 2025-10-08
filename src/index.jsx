@@ -125,3 +125,28 @@ window.addEventListener("beforeunload", () => {
 	if (isFinite(second) && second >= 0)
 		store.dispatch.savedata.setMusicSecond(second);
 });
+
+// Show overlay if window is too small
+const MIN_W = 650;
+const MIN_H = 350;
+const overlay =
+	document.getElementById("too-small-overlay") ||
+	(() => {
+		const element = document.createElement("div");
+		element.id = "too-small-overlay";
+		element.style.cssText = `
+      position:fixed; inset:0; width:100dvw; height:100dvh; display:flex;
+      z-index:999; background:#000; color:#fff; font-family:monospace;
+      font-size:xx-large; align-items:center; justify-content:center;
+      user-select:none; pointer-events:auto`;
+		element.textContent = "❌ Window too small!";
+		document.body.appendChild(element);
+		return element;
+	})();
+function updateTooSmallOverlay() {
+	overlay.style.display =
+		innerWidth < MIN_W || innerHeight < MIN_H ? "flex" : "none";
+}
+addEventListener("resize", updateTooSmallOverlay, { passive: true });
+addEventListener("orientationchange", updateTooSmallOverlay, { passive: true });
+updateTooSmallOverlay();
