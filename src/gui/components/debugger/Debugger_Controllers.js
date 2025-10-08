@@ -17,33 +17,8 @@ const CONTROLLER_BUTTONS = [
 	"Right",
 ];
 
-export default class Debugger_External {
-	draw() {
-		const pressedButtons = this._readPressedButtons();
-
-		ImGui.Columns(2, "external_controller_columns", false);
-
-		for (let c = 0; c < 2; c++) {
-			widgets.simpleTable("controller" + (c + 1), `Controller ${c + 1}`, () => {
-				for (let i = 0; i < UI_BUTTONS.length; i++) {
-					const label = UI_BUTTONS[i];
-					const position = CONTROLLER_BUTTONS.indexOf(label);
-					const pressed = pressedButtons[c][position];
-
-					widgets.booleanSquare(pressed, label, PRESSED_COLOR);
-
-					ImGui.SameLine(0, 5);
-				}
-			});
-			ImGui.NextColumn();
-		}
-
-		ImGui.Columns(1);
-	}
-
-	_readPressedButtons() {
-		const neees = window.EmuDevz.emulation?.neees;
-
+export default class Debugger_Controllers {
+	static readPressedButtons(neees) {
 		const bits = [Array(8).fill(false), Array(8).fill(false)];
 
 		if (neees != null) {
@@ -71,5 +46,33 @@ export default class Debugger_External {
 		}
 
 		return bits;
+	}
+
+	draw() {
+		const pressedButtons = this._readPressedButtons();
+
+		ImGui.Columns(2, "external_controller_columns", false);
+
+		for (let c = 0; c < 2; c++) {
+			widgets.simpleTable("controller" + (c + 1), `Controller ${c + 1}`, () => {
+				for (let i = 0; i < UI_BUTTONS.length; i++) {
+					const label = UI_BUTTONS[i];
+					const position = CONTROLLER_BUTTONS.indexOf(label);
+					const pressed = pressedButtons[c][position];
+
+					widgets.booleanSquare(pressed, label, PRESSED_COLOR);
+
+					ImGui.SameLine(0, 5);
+				}
+			});
+			ImGui.NextColumn();
+		}
+
+		ImGui.Columns(1);
+	}
+
+	_readPressedButtons() {
+		const neees = window.EmuDevz.emulation?.neees;
+		return Debugger_Controllers.readPressedButtons(neees);
 	}
 }

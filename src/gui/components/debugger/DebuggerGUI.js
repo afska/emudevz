@@ -1,6 +1,6 @@
 import Debugger_APU from "./Debugger_APU";
 import Debugger_CPU from "./Debugger_CPU";
-import Debugger_External from "./Debugger_External";
+import Debugger_Controllers from "./Debugger_Controllers";
 import Debugger_Logs from "./Debugger_Logs";
 import Debugger_Memory from "./Debugger_Memory";
 import Debugger_PPU from "./Debugger_PPU";
@@ -20,7 +20,7 @@ export default class DebuggerGUI {
 		this.cpu = new Debugger_CPU(args);
 		this.ppu = new Debugger_PPU(args);
 		this.apu = new Debugger_APU(args);
-		this.external = new Debugger_External(args);
+		this.controllers = new Debugger_Controllers(args);
 		this.logs = new Debugger_Logs(args);
 	}
 
@@ -40,7 +40,7 @@ export default class DebuggerGUI {
 						{ name: "CPU", pane: this.cpu },
 						{ name: "PPU", pane: this.ppu },
 						{ name: "APU", pane: this.apu },
-						{ name: "Controllers", pane: this.external },
+						{ name: "Controllers", pane: this.controllers },
 						{ name: "Logs", pane: this.logs },
 					];
 					for (let { name, pane } of tabs) {

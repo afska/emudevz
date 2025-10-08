@@ -7,6 +7,7 @@ import locales from "../../../locales";
 import store from "../../../store";
 import Tooltip from "../../components/widgets/Tooltip";
 import VolumeSlider from "../../components/widgets/VolumeSlider";
+import Debugger_Controllers from "../debugger/Debugger_Controllers";
 import IconButton from "../widgets/IconButton";
 import InputTypeToggle from "../widgets/InputTypeToggle";
 import Emulator from "./Emulator";
@@ -20,6 +21,16 @@ const ASSET_LIGHTS = {
 	tv: "assets/stream/light-tv.png",
 	monitor: "assets/stream/light-monitor.png",
 	buttons: "assets/stream/light-buttons-and-lamp.png",
+};
+const ASSET_INPUT_LIGHTS = {
+	up: "assets/stream/light_up.png",
+	down: "assets/stream/light_down.png",
+	left: "assets/stream/light_left.png",
+	right: "assets/stream/light_right.png",
+	a: "assets/stream/light_a.png",
+	b: "assets/stream/light_b.png",
+	select: "assets/stream/light_select.png",
+	start: "assets/stream/light_start.png",
 };
 const LIGHT_STROBE_SPEEDS = {
 	// low => slower strobe
@@ -212,6 +223,9 @@ export default class GameStreamer extends PureComponent {
 		Object.entries(ASSET_LIGHTS).forEach(([key, path]) => {
 			loader.add(`light_${key}`, path);
 		});
+		Object.entries(ASSET_INPUT_LIGHTS).forEach(([key, path]) => {
+			loader.add(`input_light_${key}`, path);
+		});
 
 		let error = false;
 		loader.onError.add(() => {
@@ -263,11 +277,29 @@ export default class GameStreamer extends PureComponent {
 			app.stage.addChild(tvOverlay);
 
 			this._lightSprites = {};
+			this._inputLightSprites = {};
 			const lightOrder = ["tv", "buttons", "monitor"];
 			lightOrder.forEach((key) => {
 				const sprite = new PIXI.Sprite(resources[`light_${key}`].texture);
 				sprite.alpha = LIGHT_OPACITY.min;
 				this._lightSprites[key] = sprite;
+				app.stage.addChild(sprite);
+			});
+
+			const inputOrder = [
+				"up",
+				"down",
+				"left",
+				"right",
+				"a",
+				"b",
+				"select",
+				"start",
+			];
+			inputOrder.forEach((key) => {
+				const sprite = new PIXI.Sprite(resources[`input_light_${key}`].texture);
+				sprite.visible = false;
+				this._inputLightSprites[key] = sprite;
 				app.stage.addChild(sprite);
 			});
 
@@ -280,6 +312,28 @@ export default class GameStreamer extends PureComponent {
 					sprite.alpha =
 						LIGHT_OPACITY.min +
 						Math.sin(app.ticker.lastTime * speed) * LIGHT_OPACITY.range;
+				});
+
+				// controller input lights
+				const neees = this._emulator?.neees;
+				const pressed = Debugger_Controllers.readPressedButtons(neees);
+				const controller1 = pressed[0] || Array(8).fill(false);
+
+				// (order must match emulator controller bit order used by Debugger_Controllers)
+				const controllerButtonOrder = [
+					"a",
+					"b",
+					"select",
+					"start",
+					"up",
+					"down",
+					"left",
+					"right",
+				];
+
+				controllerButtonOrder.forEach((label, index) => {
+					const sprite = this._inputLightSprites[label];
+					if (sprite) sprite.visible = !!controller1[index];
 				});
 			});
 
@@ -440,6 +494,15 @@ export default class GameStreamer extends PureComponent {
 					sprite.x = bg.x;
 					sprite.y = bg.y;
 				});
+
+				if (this._inputLightSprites) {
+					Object.values(this._inputLightSprites).forEach((sprite) => {
+						sprite.width = bg.width;
+						sprite.height = bg.height;
+						sprite.x = bg.x;
+						sprite.y = bg.y;
+					});
+				}
 
 				this._updateBufferTransform();
 			}
