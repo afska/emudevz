@@ -12,9 +12,9 @@ const APU_STEPS_PER_CPU_CYCLE = 0.5;
 export default class Emulator {
   constructor(onFrame, onSample) {
     this.onFrame = onFrame;
-    this.onSample = (sample) => {
+    this.onSample = (sample, pulse1, pulse2, triangle, noise, dmc) => {
       this.sampleCount++;
-      onSample(sample);
+      onSample(sample, pulse1, pulse2, triangle, noise, dmc);
     };
 
     this.cpuMemory = new CPUMemory();

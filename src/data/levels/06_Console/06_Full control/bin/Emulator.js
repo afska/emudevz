@@ -13,9 +13,9 @@ const APU_STEPS_PER_CPU_CYCLE = 0.5;
 export default class Emulator {
   constructor(onFrame, onSample) {
     this.onFrame = onFrame;
-    this.onSample = (sample) => {
+    this.onSample = (sample, pulse1, pulse2, triangle, noise, dmc) => {
       this.sampleCount++;
-      onSample(sample);
+      onSample(sample, pulse1, pulse2, triangle, noise, dmc);
     };
 
     this.cpuMemory = new CPUMemory();
@@ -26,6 +26,8 @@ export default class Emulator {
     this.sampleCount = 0;
     this.pendingPPUCycles = 0;
     this.pendingAPUCycles = 0;
+
+    this.onScanline = null;
   }
 
   /**
@@ -150,6 +152,8 @@ export default class Emulator {
   }
 
   _clockPPU(cpuCycles) {
+    const scanline = this.ppu.scanline;
+
     let unitCycles =
       this.pendingPPUCycles + cpuCycles * PPU_STEPS_PER_CPU_CYCLE;
     this.pendingPPUCycles = 0;
@@ -161,8 +165,22 @@ export default class Emulator {
     };
 
     for (let i = 0; i < unitCycles; i++) {
+      // <optimization>
+      if (
+        (this.ppu.cycle > 1 && this.ppu.cycle < 256) ||
+        (this.ppu.cycle > 260 && this.ppu.cycle < 304) ||
+        (this.ppu.cycle > 304 && this.ppu.cycle < 340)
+      ) {
+        this.ppu.cycle++;
+        continue;
+      }
+      // </optimization>
+
       this.ppu.step(this.onFrame, onIntr);
     }
+
+    if (this.ppu.scanline !== scanline && this.onScanline != null)
+      this.onScanline();
 
     return cpuCycles;
   }

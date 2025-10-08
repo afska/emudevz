@@ -64,11 +64,15 @@ export default {
 				}
 
 				_dispatch_.savedata.setLastLevelId(levelId);
-				_dispatch_(push(`/levels/${levelId}?r=${Math.random()}`));
+				let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
+				if (isNaN(r)) r = 1;
+				_dispatch_(replace(`/levels/${levelId}?r=${r}`));
 			},
 			goToReplacing(levelId) {
 				_dispatch_.savedata.setLastLevelId(levelId);
-				_dispatch_(replace(`/levels/${levelId}?r=${Math.random()}`));
+				let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
+				if (isNaN(r)) r = 1;
+				_dispatch_(replace(`/levels/${levelId}?r=${r}`));
 			},
 			goToLastLevel(__, _state_) {
 				this.goTo(_state_.savedata.lastLevelId);
