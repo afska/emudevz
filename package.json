@@ -49,7 +49,6 @@
     "lodash": "^4.17.21",
     "marked": "^16.0.0",
     "marked-highlight": "^2.2.2",
-    "mixpanel-browser": "^2.45.0",
     "nes-emu": "^1.0.52",
     "path-browserify-esm": "^1.0.6",
     "pixi-filters": "^4.2.0",

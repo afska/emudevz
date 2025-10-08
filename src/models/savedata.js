@@ -34,6 +34,7 @@ const DEFAULT_KEY_MAP = () => ({
 });
 const INITIAL_STATE = () => ({
 	version: 1,
+	saveId: guid(),
 	gameMode: "campaign",
 	maxChapterNumber: 1,
 	completedLevels: [],
@@ -287,3 +288,11 @@ export default {
 		};
 	},
 };
+
+function guid() {
+	const s4 = () =>
+		Math.floor((1 + Math.random()) * 0x10000)
+			.toString(16)
+			.slice(-4);
+	return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
+}

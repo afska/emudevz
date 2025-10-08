@@ -1,18 +1,23 @@
-import mixpanel from "mixpanel-browser";
+import store from "../store";
 
-mixpanel.init("e08d1345f64cc5e93e02e9cd0175bace"); // FIXME: USE CUSTOM PROXY
+const URL = "https://emudevz.r-labs.io/event";
 
 export default {
-	requestFeedback(type, message) {
-		const feedback = prompt(message);
-		if (feedback) {
-			this.track("feedback", {
-				type,
-				data: feedback,
+	track(eventName, args = {}) {
+		const state = store.getState();
+		const distinctId = state.savedata.saveId;
+		const eventData = { ...args, distinct_id: distinctId };
+
+		fetch(URL, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ eventName, eventData }),
+		})
+			.then((res) => {
+				if (!res.ok) throw new Error("failed");
+			})
+			.catch(() => {
+				console.warn("Analytics track failed", eventName, args);
 			});
-		}
-	},
-	track(eventName, args) {
-		mixpanel.track(eventName, args);
 	},
 };
