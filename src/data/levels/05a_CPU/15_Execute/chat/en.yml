@@ -13,7 +13,7 @@ cycles:
   - and I will!
   - the time it takes for the CPU to execute an action is measured in cycles
   - cycles are very important if we want to build a "cycle-accurate" emulator (we don't!)
-  - but they still matter to keep the different units (CPU, PPU, APU) on sync 🔄
+  - but they still matter to keep the different units (CPU, PPU, APU) in sync 🔄
   - so every opcode knows how many cycles it should take
   responses:
   - (*) why don't we want to build a "cycle-accurate" emulator? [accuracy]
@@ -35,7 +35,7 @@ exercise:
     **_fetchOperation()**:
       **->** reads a byte from the memory address that [PC] points at
         (let's call this `opcode`)
-      **->** finds the operation related with that opcode:
+      **->** finds the operation related to that opcode:
         ```javascript this.operations[opcode]```
         (let's call this `operation`)
       **->** if `operation` doesn't exist, throws an "Invalid opcode." error

@@ -35,7 +35,7 @@ viewport:
   - escriben dos veces, primero para la <coordenada X>, luego para la <coordenada Y>
   - y la PPU mueve la ventana, dibujando solo parte de las name tables afectadas
   responses:
-  - entonces... si los juegos escriben dos veces, la PPU tiene que recordar qué coordenada están configurando, ¿cierto? [twice]
+  - entonces... si los juegos escriben dos veces, la PPU tiene que recordar cuál coordenada están configurando, ¿cierto? [twice]
 
 twice:
   messages:

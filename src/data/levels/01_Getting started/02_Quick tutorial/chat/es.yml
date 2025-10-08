@@ -4,7 +4,7 @@ main:
     set((m) => m.chat.winOnEnd = true);
   messages:
   - antes de empezar, revisemos cómo usar la computadora
-  - puedes lanzar multiples apps desde esta terminal
+  - puedes lanzar múltiples apps desde esta terminal
   responses:
   - (*) 💬  cuéntame sobre esta app [app]
   - (*) 💬  cuéntame sobre otras apps [otherapps]

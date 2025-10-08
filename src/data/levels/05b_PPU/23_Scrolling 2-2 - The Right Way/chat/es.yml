@@ -56,7 +56,7 @@ exercise:
         this.ppu.loopy.vAddress.setValue(value);
       }```
   - |-
-    📚  por último, en 🏞️  `BackgroundRenderer`, remplaza las constantes `scrolledX`, `scrolledY` and `nameTableId` con:
+    📚  por último, en 🏞️  `BackgroundRenderer`, reemplaza las constantes `scrolledX`, `scrolledY` y `nameTableId` con:
       ```javascript const scrolledX = this.ppu.loopy.scrolledX(x);
       const scrolledY = this.ppu.loopy.scrolledY(y);
       const nameTableId = this.ppu.loopy.nameTableId(scrolledX);```

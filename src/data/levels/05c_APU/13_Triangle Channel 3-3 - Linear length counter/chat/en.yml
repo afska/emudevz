@@ -4,7 +4,7 @@ main:
   - previously, I said the Triangle Channel has two length counters 📏
   - "the other one is the Linear length counter, which has 3 main differences:"
   - |-
-    🎯  it lets games write exactly the length they want instead of using a prefixed length table
+    🎯  it lets games write exactly the length they want instead of using a predefined length table
       (still pretty limited, because the field is only 7-bit wide, so the maximum length is 127)
   - |-
     ⛓️  its value is not loaded immediately:

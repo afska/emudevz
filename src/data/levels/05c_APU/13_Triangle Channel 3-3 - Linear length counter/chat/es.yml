@@ -4,7 +4,7 @@ main:
   - anteriormente, dije que el Canal Triangular tiene dos contadores de longitud 📏
   - "el otro es el contador lineal de longitud, que tiene 3 diferencias principales:"
   - |-
-    🎯  permite a los juegos escribir exactamente la longitud que quieren en lugar de usar una tabla de longitudes prefijada
+    🎯  permite a los juegos escribir exactamente la longitud que quieren en lugar de usar una tabla de longitudes predefinida
       (aún bastante limitado, porque el campo tiene solo 7 bits, así que la longitud máxima es 127)
   - |-
     ⛓️  su valor no se carga de inmediato:

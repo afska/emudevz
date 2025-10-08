@@ -37,7 +37,7 @@ exercise:
       const pulse2 = this.channels.pulses[1].sample();
       this.sample = (pulse1 + pulse2) * 0.01;```
   - |-
-    📚  remplaza la llamada a `onSample(...)` con:
+    📚  reemplaza la llamada a `onSample(...)` con:
       ```javascript onSample(this.sample, pulse1, pulse2);```
   - |-
     📚  implementa en 🕡  `PulseTimerLow`:

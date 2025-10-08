@@ -77,15 +77,15 @@ class PPUStatus extends InMemoryRegister.PPU {
 }
 
 const ppuStatus = new PPUStatus(ppu);
-ppuStatus.onRead(); // 0b0b10000000
+ppuStatus.onRead(); // 0b10000000
 
 ppuStatus.isInVBlankInterval = 0;
-ppuStatus.onRead(); // 0b0b00000000
+ppuStatus.onRead(); // 0b00000000
 
 ppuStatus.isInVBlankInterval = 1;
 ppuStatus.spriteOverflow = 1;
-ppuStatus.onRead(); // 0b0b10100000
+ppuStatus.onRead(); // 0b10100000
 
 ppuStatus.sprite0Hit = 1;
-ppuStatus.onRead(); // 0b0b11100000
+ppuStatus.onRead(); // 0b11100000
 ```

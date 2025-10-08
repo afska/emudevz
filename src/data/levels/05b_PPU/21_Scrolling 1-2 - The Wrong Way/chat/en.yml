@@ -35,7 +35,7 @@ viewport:
   - they write twice, first for the <X coordinate>, then for the <Y coordinate>
   - and the PPU moves the viewport, only drawing part of the affected name tables
   responses:
-  - so... if games write twice, the PPU has to remember what coordinate they are setting, right? [twice]
+  - so... if games write twice, the PPU has to remember which coordinate they are setting, right? [twice]
 
 twice:
   messages:

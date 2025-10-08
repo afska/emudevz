@@ -12,7 +12,7 @@ main:
 interrupt:
   messages:
   - it's a signal that pauses the current program in order to handle a specific event
-  - when such an event happens, the CPU saves its state ([PC] and flags register) in the stack
+  - when such an event happens, the CPU saves its state ([PC] and the flags register) in the stack
   - and jumps to a well-known memory address (called vector) associated with that event
   - after handling the event, the execution usually returns to where it was left off
   - "in the NEEES, there are 3 events:"
@@ -50,7 +50,7 @@ nmi:
 
 cycle:
   messages:
-  - that's time it takes to process an interrupt 🕖
+  - that's the time it takes to process an interrupt 🕖
   - we didn't talk much about cycles so far
   - I've only made you add two mysterious properties to the 🧠  `CPU` class, remember?
   - those called `cycles` and `extraCycles`

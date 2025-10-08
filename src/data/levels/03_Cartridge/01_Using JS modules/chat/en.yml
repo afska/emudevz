@@ -22,7 +22,7 @@ notcool:
   run-after-messages: |
     $.goTo("play");
   messages:
-  - argh, this kids can't appreciate cool things nowadays 😔
+  - argh, these kids can't appreciate cool things nowadays 😔
   - |+
     anywho, I need to make sure you know how to create <JS modules>
   responses: []

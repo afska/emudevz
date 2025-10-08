@@ -105,7 +105,7 @@ tests:
 
 credits:
   comment: |-
-    // HACK: Using monospace numbers (𝟶 𝟷 𝟸 𝟹 𝟺 𝟻 𝟼 𝟽 𝟾 𝟿) to workaround a dictionary bug
+    // HACK: Using monospace numbers (𝟶 𝟷 𝟸 𝟹 𝟺 𝟻 𝟼 𝟽 𝟾 𝟿) to work around a dictionary bug
     // tied to src/gui/components/modals/CreditsModal.jsx
     // tied to src/data/levels/06_Console/06_Full control/chat/*.yml
     // tied to src/data/levels/06_Console/06_Full control/meta.yml

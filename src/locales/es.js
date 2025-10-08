@@ -54,7 +54,8 @@ export default {
 	command_mkdir_description: "Crear directorios (uso: `mkdir dir1 dir2`).",
 	command_mv_description:
 		"Mover o renombrar algo (uso: `mv ruta_vieja ruta_nueva`).",
-	command_open_description: "Abrir archivos (uso: `open arch1.txt arch2.js`).",
+	command_open_description:
+		"Abrir archivos (uso: `open arch1.txt arch2.js`, o `open *`).",
 	command_repl_avoid_collapsing:
 		"«para evitar colapsar objetos/arrays grandes, corre `repl -v`»",
 	command_repl_description: "Abrir un REPL de JavaScript.",
@@ -87,6 +88,7 @@ export default {
 	emulation_reload: "Recargar ROM",
 	emulation_save_state: "Guardar estado",
 	emulation_stop: "Detener emulación",
+	emulator: "Emulador",
 	emulator_controls: "Controles del emulador",
 	emulator_sync: "Sincronización del emulador",
 	enter_a_file_name: "Ingresa un nombre de archivo...",
@@ -139,11 +141,9 @@ export default {
 	letsplay_unlock_msg3: "desbloqueado!",
 	level_history: "Historial de niveles",
 	loading: "Cargando...",
-	emulator: "Emulador",
 	memory_viewer: "Visor de Memoria",
 	mkdir_parent_flag:
 		"(para crear varios directorios a la vez, corre `mkdir -p`)",
-	mode_campaign: "📜 Campaña",
 	mode_free: "🔭 Modo libre",
 	music: "Música",
 	no: "No",
@@ -152,7 +152,7 @@ export default {
 	not_available: "⚠️  No disponible.",
 	not_now: "⚠️  ¡Ahora no!",
 	opening: "Abriendo",
-	optional: "(optional)",
+	optional: "(opcional)",
 	pin_left: "Fijar a la izquierda",
 	player_1: "- Jugador 1 -",
 	player_2: "- Jugador 2 -",

@@ -31,7 +31,7 @@ exercise:
         **->** returns (only CHR-RAM is writable)
       **->** assigns ```javascript this.$getChrPage(0)[address] = value```
     **getSaveState()**:
-      **->** returns an object combining ```javascript super.getSaveState()``` with a one that includes the <current page>
+      **->** returns an object combining ```javascript super.getSaveState()``` with one that includes the <current page>
     **setSaveState(saveState)**:
       **->** calls ```javascript super.setSaveState(saveState)``` but also restores the <current page>
   - 📚  add your `UxROM` class to 📄  ~/code/mappers/mappers.js~

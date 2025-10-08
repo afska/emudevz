@@ -26,7 +26,7 @@
 
 <hr />
 
-- 🎨 **Palette**: A list of `4` colors, stored in 🐏 Palette RAM, where each color is a pointer to the master palette. Hay `8` paletas: `4` para el fondo y `4` para sprites.
+- 🎨 **Palette**: A list of `4` colors, stored in 🐏 Palette RAM, where each color is a pointer to the master palette. There are `8` palettes: `4` for the background and `4` for sprites.
 
 - 👑🎨 **Master palette**: A list of 64 **colors**, `hardcoded`. Palettes reference these colors with indexes from `$00` to `$3F`.
 <div class="embed-image"><img alt="Master palette" src="assets/graphics/colors.png" style="width: 50%" /></div>

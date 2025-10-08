@@ -12,7 +12,7 @@ main:
   - just a <viewer>
   - it has an example of a basic NEEES program
   responses:
-  - (*) the viewer doesn't scare me, what it does is the weird looking numbers at the bottom [debugger]
+  - (*) the viewer doesn't scare me, what does are the weird looking numbers at the bottom [debugger]
   - what language is this? 😮 [language]
   - ⏭️  I already know this [iknow]
 

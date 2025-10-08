@@ -102,9 +102,9 @@ const dictionary = {
 		APUFrameCounter: {
 			icon: "🧮",
 			en:
-				"An audio register that controls the APU's sequence (4- or 5-step). <br /><br />It is available at CPU address `$4017`.",
+				"An audio register that controls the APU's sequence (`4`- or `5`-step). <br /><br />It is available at CPU address `$4017`.",
 			es:
-				"Un registro de audio que controla la secuencia de la APU (4 o 5 pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
+				"Un registro de audio que controla la secuencia de la APU (`4` o `5` pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
 		},
 		APUStatus: {
 			icon: "📊",
@@ -186,9 +186,9 @@ const dictionary = {
 			also: { es: "Bandera Carry" },
 			icon: "🏁",
 			en:
-				"A CPU flag that indicates when an arithmetic operation has produced a _carry_. <br /><br />In the NEEES, that happens when the result exceeds the 8-bit capacity (`255` for unsigned numbers).",
+				"A CPU flag that indicates when an arithmetic operation has produced a _carry_. <br /><br />In the NEEES, that happens when the result exceeds the `8`-bit capacity (`255` for unsigned numbers).",
 			es:
-				"Una bandera de CPU que indica cuando una operación aritmética produjo un _carry_. <br /><br />En la NEEES, esto ocurre cuando el resultado sobrepasa el límite de 8 bits (`255` para números sin signo).",
+				"Una bandera de CPU que indica cuando una operación aritmética produjo un _carry_. <br /><br />En la NEEES, esto ocurre cuando el resultado sobrepasa el límite de `8` bits (`255` para números sin signo).",
 		},
 		"Cartridge|_Cartridges": {
 			also: { es: "Cartucho|_Cartuchos" },
@@ -224,9 +224,9 @@ const dictionary = {
 			also: { es: "Mando|_Mandos" },
 			icon: "🎮",
 			en:
-				"An 8-button gamepad (_D-pad + A,B + START,SELECT_). <br /><br />The NEEES accepts _(without extra hardware)_ up to two controllers.",
+				"An `8`-button gamepad (_D-pad + A,B + START,SELECT_). <br /><br />The NEEES accepts _(without extra hardware)_ up to two controllers.",
 			es:
-				"Un joystick de 8 botones (_D-pad + A,B + START,SELECT_). <br /><br />La NEEES acepta _(sin hardware extra)_ hasta dos mandos.",
+				"Un joystick de `8` botones (_D-pad + A,B + START,SELECT_). <br /><br />La NEEES acepta _(sin hardware extra)_ hasta dos mandos.",
 		},
 		CPU: {
 			icon: "🧠",
@@ -330,9 +330,9 @@ const dictionary = {
 		DMCLoad: {
 			icon: "📥",
 			en:
-				"An audio register that holds the direct 7-bit sample level for the DMC Channel. <br /><br />It is available at CPU address `$4011`.",
+				"An audio register that holds the direct `7`-bit sample level for the DMC Channel. <br /><br />It is available at CPU address `$4011`.",
 			es:
-				"Un registro de audio que contiene el nivel de sample directo de 7 bits para el Canal DMC. <br /><br />Está disponible en la dirección de CPU `$4011`.",
+				"Un registro de audio que contiene el nivel de sample directo de `7` bits para el Canal DMC. <br /><br />Está disponible en la dirección de CPU `$4011`.",
 		},
 		DMCSampleAddress: {
 			icon: "🐏",
@@ -360,9 +360,9 @@ const dictionary = {
 			also: { es: "Ciclo de trabajo|_Ciclos de trabajo" },
 			icon: "📊",
 			en:
-				"The percentage of time a pulse wave stays high during one period. Affects the tone and timbre of the sound. <br /><br />In the NEEES, Pulse Channels supports 4 duty cycles: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) and `3` (`75%`).",
+				"The percentage of time a pulse wave stays high during one period. Affects the tone and timbre of the sound. <br /><br />In the NEEES, Pulse Channels supports `4` duty cycles: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) and `3` (`75%`).",
 			es:
-				"El porcentaje de tiempo que una onda de pulso se mantiene alta durante un período. Afecta el tono y el timbre del sonido. <br /><br />En la NEEES, los Canales Pulso soportan 4 ciclos de trabajo: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) y `3` (`75%`).",
+				"El porcentaje de tiempo que una onda de pulso se mantiene alta durante un período. Afecta el tono y el timbre del sonido. <br /><br />En la NEEES, los Canales Pulso soportan `4` ciclos de trabajo: `0` (`12.5%`), `1` (`25%`), `2` (`50%`) y `3` (`75%`).",
 		},
 		"Emulator core": {
 			also: { es: "Núcleo de emulador" },
@@ -706,9 +706,9 @@ const dictionary = {
 		OAMDMA: {
 			icon: "⚡",
 			en:
-				"A video register that triggers a DMA transfer, copying 256 bytes from CPU memory into OAM to update all sprite data quickly. <br /><br />It is available at CPU address `$4014`.",
+				"A video register that triggers a DMA transfer, copying `256` bytes from CPU memory into OAM to update all sprite data quickly. <br /><br />It is available at CPU address `$4014`.",
 			es:
-				"Un registro de video que dispara una transferencia DMA, copiando 256 bytes desde la memoria de CPU hacia OAM para actualizar todos los datos de sprites rápidamente. <br /><br />Está disponible en la dirección de CPU `$4014`.",
+				"Un registro de video que dispara una transferencia DMA, copiando `256` bytes desde la memoria de CPU hacia OAM para actualizar todos los datos de sprites rápidamente. <br /><br />Está disponible en la dirección de CPU `$4014`.",
 		},
 		"Opcode|_Opcodes": {
 			icon: "🔢",
@@ -840,7 +840,7 @@ const dictionary = {
 		PPUMask: {
 			icon: "🎭",
 			en:
-				"A video register used to enable or disable parts of the background and sprites, as well as apply color effects like greyscale or emphasis. <br /><br />It is available at CPU address `$2001`.",
+				"A video register used to enable or disable parts of the background and sprites, as well as apply color effects like grayscale or emphasis. <br /><br />It is available at CPU address `$2001`.",
 			es:
 				"Un registro de video usado para habilitar o deshabilitar partes del fondo y los sprites, además de aplicar efectos de color como escala de grises o énfasis. <br /><br />Está disponible en la dirección de CPU `$2001`.",
 		},
@@ -854,9 +854,9 @@ const dictionary = {
 		PPUStatus: {
 			icon: "📊",
 			en:
-				"A video register that shows whether the PPU is in VBlank, if sprite 0 hit occurred, or if there's sprite overflow. Reading it also resets internal latches. <br /><br />It is available at CPU address `$2002`.",
+				"A video register that shows whether the PPU is in VBlank, if sprite zero hit occurred, or if there's sprite overflow. Reading it also resets internal latches. <br /><br />It is available at CPU address `$2002`.",
 			es:
-				"Un registro de video que muestra si la PPU está en VBlank, si ocurrió un sprite 0 hit, o si hay desbordamiento de sprites. Leerlo también reinicia latches internos. <br /><br />Está disponible en la dirección de CPU `$2002`.",
+				"Un registro de video que muestra si la PPU está en VBlank, si ocurrió un sprite zero hit, o si hay desbordamiento de sprites. Leerlo también reinicia latches internos. <br /><br />Está disponible en la dirección de CPU `$2002`.",
 		},
 		"Pre-line": {
 			icon: "🌠",

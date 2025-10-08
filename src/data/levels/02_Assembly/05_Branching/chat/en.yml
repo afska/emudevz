@@ -100,7 +100,7 @@ testing:
   messages:
   - I've set up a <random number generator> 🔢
   - every time you change/run your code, it'll set either a 7 or another random byte on $4080
-  - with ~50%~ of chances each
+  - with a ~50%~ chance each
   - so when it's 7, your code should write $EE
   - and when it's not, $AA should be written
   responses:

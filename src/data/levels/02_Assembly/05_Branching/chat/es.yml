@@ -9,7 +9,7 @@ main:
   messages:
   - hasta ahora, solo corrimos programas sin <bifurcaciones>
   - vamos a cambiar eso
-  - el lenguaje ensamblador para 6502 tiene multiples instrucciones para bifurcar 🌲
+  - el lenguaje ensamblador para 6502 tiene múltiples instrucciones para bifurcar 🌲
   - todas ellas saltan cuando ciertas banderas están encendidas o no
   responses:
   - (*) ¿"para 6502"? 🤔 [asm6502]

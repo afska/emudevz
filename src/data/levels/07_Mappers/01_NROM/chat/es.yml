@@ -6,7 +6,7 @@ main:
   - un mapper es un chip dentro del cartucho que controla cómo la consola lee los datos de la ROM
   - permiten que los juegos usen más código o gráficos al cambiar entre varios chips 🤖  PRG-ROM o 👾  CHR-ROM mediante bank-switching
   - algunos añaden capacidades especiales, como cambiar el mirroring en tiempo real o activar una interrupción en una scanline específica 🌠
-  - cuanto más mappers sea compatible tu emulador, más juegos podrá ejecutar 👾
+  - cuantos más mappers sea compatible tu emulador, más juegos podrá ejecutar 👾
   - BrokenNEEES es compatible con los mappers más comunes (~0-4~)
   - pero desde que te transferí el control, solo te di el Mapper 0, que se llama <NROM>
   responses:

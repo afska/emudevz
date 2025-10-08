@@ -16,7 +16,7 @@ main:
 
 main2:
   messages:
-  - what do you think it'll happen if we use `ADC` to calculate 200 + 60?
+  - what do you think will happen if we use `ADC` to calculate 200 + 60?
   responses:
   - (*) [A] will be equal to 2️⃣ 6️⃣ 0️⃣ [a260]
   - (*) [A] will be equal to 2️⃣ 5️⃣ 5️⃣ [a255]
@@ -74,7 +74,7 @@ flags:
   - it's a boolean (~1~-bit value) set by the processor
   - it gives information about the previous instruction
   - there are 6 flags, so they all live in a single byte
-  - (that byte is called flags register)
+  - (that byte is called the flags register)
   - try running the code ⏩
   events:
   - end [carry]

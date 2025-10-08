@@ -2,7 +2,7 @@ main:
   messages:
   - the 🎭  PPUMask video register ($2001) lets programs enable or disable parts of the rendering
   - check out again 📄  ~/docs/ppu/video_registers.en.md~
-  - 🏛️  the ~m~ and ~M~ bits controls whether the first ~8~px column should be visible or not for backgrounds and sprites respectively
+  - 🏛️  the ~m~ and ~M~ bits control whether the first ~8~px column should be visible or not for backgrounds and sprites respectively
   - 🏞️  ~b~ enables background rendering
   - 🛸  and ~s~ enables sprite rendering
   responses:
@@ -11,7 +11,7 @@ main:
 
 why:
   messages:
-  - for example, to fill VRAM faster using VDraw time, hiding possible glitches result of not doing it on 🏝️  VBlank
+  - for example, to fill VRAM faster using VDraw time, hiding possible glitches resulting from not doing it on 🏝️  VBlank
   - games typically write $00 outside gameplay to do that
   - and then $1E to enable rendering during gameplay
   responses:

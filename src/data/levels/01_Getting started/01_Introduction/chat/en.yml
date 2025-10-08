@@ -82,7 +82,7 @@ javascript:
   messages:
   - that'll work perfect
   - but you also need some object-oriented programming knowledge
-  - and basic understanding of computer systems
+  - and a basic understanding of computer systems
   - (bytes, signed integers, boolean logic, numbering systems, etc.)
   responses:
   - ok, let's do this [end]

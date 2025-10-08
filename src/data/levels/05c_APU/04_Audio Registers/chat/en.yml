@@ -14,7 +14,7 @@ example:
   - in the ~Bits~ column, ~DD~ is the duty cycle, ~C~ the constant-volume flag, and ~NNNN~ the volume
   - so, in this case, the game writes a 150 (binary ~10010110~) to $4000
   - and then the 🔊  APU uses that value to alter the pulse wave
-  - the write to $4000 affects 4 parameters at the same time (~DD~, ~L~, ~C~, y ~NNNN~)
+  - the write to $4000 affects 4 parameters at the same time (~DD~, ~L~, ~C~, and ~NNNN~)
   - <{Pulse1Control.png}>
   responses:
   - so, these registers only hold numbers? 🔢 [numbers]

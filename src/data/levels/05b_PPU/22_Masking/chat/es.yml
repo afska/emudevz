@@ -11,7 +11,7 @@ main:
 
 why:
   messages:
-  - por ejemplo, para llenar la VRAM más rápido usando el tiempo de VDraw, ocultando posibles glitches resultado de no hacerlo en 🏝️  VBlank
+  - por ejemplo, para llenar la VRAM más rápido usando el tiempo de VDraw, ocultando posibles glitches que puedan surgir de no hacerlo en 🏝️  VBlank
   - los juegos normalmente escriben $00 fuera del gameplay para hacer eso
   - y luego $1E para habilitar el renderizado durante el gameplay
   responses:

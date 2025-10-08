@@ -27,7 +27,7 @@ addrdata:
 dma:
   messages:
   - DMA ("Direct Memory Access") is a hardware mechanism to copy bytes from one memory region to another one really fast
-  - in the NEEES, this is provided by the ⚡  OAMDMA register, which let games fill 🐏  OAM RAM by copying bytes from CPU memory
+  - in the NEEES, this is provided by the ⚡  OAMDMA register, which lets games fill 🐏  OAM RAM by copying bytes from CPU memory
   - writing ```raw $```~XX~ to that register will copy 256 bytes from CPU addresses ```raw $```~XX~```raw 00```-```raw $```~XX~```raw FF``` to the internal OAM RAM
   - this operation will take around 513 CPU cycles, during which the CPU is suspended
   responses:
@@ -62,6 +62,6 @@ exercise:
 
 corollary:
   messages:
-  - when launching a game, you'll now able to visualize the OAM and its sprites in the 🐞  <debugger window>
+  - when launching a game, you'll now be able to visualize the OAM and its sprites in the 🐞  <debugger window>
   responses:
   - ▶️  continue [end]

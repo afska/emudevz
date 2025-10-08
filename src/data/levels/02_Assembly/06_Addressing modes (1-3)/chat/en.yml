@@ -154,7 +154,7 @@ seeit:
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
-  - see it? it jumped, and now [PC] now points to $4021
+  - see it? it jumped, and now [PC] points to $4021
   responses:
   - I see [exercise]
   
@@ -181,5 +181,5 @@ what:
   messages:
   - after your change, instead of jumping backwards, it should skip the `STY $1001` and jump to our new last instruction
   - ⚠️  don't change the `JMP` itself, the idea is that the same `JMP ($4080)` jumps to another place
-  - you'll need to look the address of the last `INX` inside the machine code 😉
+  - you'll need to look up the address of the last `INX` inside the machine code 😉
   responses: []
