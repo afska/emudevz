@@ -8,6 +8,24 @@
 
 ## Key features
 
+- Full 🕹️ NEEES emulation guide from scratch
+- Interactive 🔨 6502 Assembly tutorial
+- Implement 🧠 CPU, 🖥️ PPU, and 🔊 APU in any order
+- Play 👾 homebrew games to unlock ROMs
+- 🧪 Unit tests, video tests, and audio tests are provided
+- 💻 Unix-style shell and code editor
+- 🎶 Original retro-synthwave soundtrack
+- 📃 Included documentation and in-game dictionary
+- 🗣️ Fully localized into English and Spanish
+- 🐞 Powerful debugger with:
+  * 🐏 Memory viewer
+  * 🔢 Instruction log
+  * 🏞️ Name tables, CHR, Sprites, Palettes
+  * ♒ Individual APU channel views
+  * 🎮 Controllers
+  * 🗃️ Emulator logging
+- 🔭 **Free mode** to use the IDE to develop emulators for other systems!
+
 ## Development
 
 ### Install and run
@@ -24,7 +42,7 @@ npm start
   `npm run build`
 - Deploy to GitHub Pages:
   `npm run deploy <GH_USERNAME> <GH_TOKEN>`
-  
+
 ### Generate licenses
 
 ```
