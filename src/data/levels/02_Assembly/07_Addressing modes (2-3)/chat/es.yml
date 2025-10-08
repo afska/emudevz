@@ -1,6 +1,17 @@
 ---
 main:
   run: |
+    if (m.$exercise) {
+      $.goTo("exercise");
+    } else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+      {{Bottom}}.setMemoryStart(0x0);
+    }
+
     set((m) => {
       m.chat.stopBlock = locales.get("not_now");
       m.$canRun = false;
@@ -121,6 +132,7 @@ exercise:
       m.chat.stopBlock = null;
       m.$canRun = true;
       m.$canEdit = true;
+      m.$exercise = true;
       m.content.useTemp = false;
     });
     {{Bottom}}.setDelay(0);

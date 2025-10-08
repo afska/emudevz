@@ -29,7 +29,7 @@ otherapps:
 
 tv:
   messages:
-  - esa es la TV
+  - esa es la <TV>
   - va a ser de gran ayuda para abrir archivos multimedia
   - o correr nuestro emulador 👀
   responses:

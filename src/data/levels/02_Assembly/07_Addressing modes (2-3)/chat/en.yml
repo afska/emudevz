@@ -1,12 +1,16 @@
 ---
 main:
   run: |
-    set((m) => {
-      m.chat.stopBlock = locales.get("not_now");
-      m.$canRun = false;
-      m.$canEdit = false;
-    });
-    {{Bottom}}.setMemoryStart(0x0);
+    if (m.$exercise) {
+      $.goTo("exercise");
+    } else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+      {{Bottom}}.setMemoryStart(0x0);
+    }
   messages: []
   events:
   - compiled [main2]
@@ -121,6 +125,7 @@ exercise:
       m.chat.stopBlock = null;
       m.$canRun = true;
       m.$canEdit = true;
+      m.$exercise = true;
       m.content.useTemp = false;
     });
     {{Bottom}}.setDelay(0);

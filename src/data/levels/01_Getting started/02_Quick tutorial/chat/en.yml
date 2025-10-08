@@ -29,7 +29,7 @@ otherapps:
 
 tv:
   messages:
-  - that's the TV
+  - that's the <TV>
   - it'll be of great help for opening multimedia files
   - or running our emulator 👀
   responses:

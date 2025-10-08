@@ -76,10 +76,10 @@ step7:
   - "`STA ($01,X)` can be interpreted as something like `STA ($01+X)`"
   - so if we add [X], we'd have `STA ($0003)`
   - from here, things proceed like standard "Indirect" addressing
-  - this end up writing the value of [A] to $4080
+  - this ends up writing the value of [A] to $4080
   - <{STA_indexedindirect.png}>
   responses:
-  - (*) what was that? 🤨 [whatwasthat]
+  - (*) again, please? 🤨 [whatwasthat]
   - makes total sense 👍 [makessense]
 
 whatwasthat:
