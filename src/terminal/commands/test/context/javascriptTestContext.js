@@ -92,7 +92,7 @@ export default {
 					"There's some recursive stuff goin' on. Check your imports?"
 				);
 			} else {
-				throw new Error("Something has gone very wrong!");
+				throw e;
 			}
 		}
 	},
