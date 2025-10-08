@@ -55,3 +55,10 @@ errors:
       ```javascript throw new Error(\"a message\");```
   responses:
   - ...exercise
+
+corollary:
+  messages:
+  - from now on, you can see your changes with the `diff` command
+  - if you need to undo your changes, run the `restore` command
+  responses:
+  - ▶️  continue [end]

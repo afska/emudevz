@@ -73,10 +73,3 @@ modules:
       ```javascript import SomeClass from "./relative/path/to/SomeClass"```
   responses:
   - ...exercise
-
-corollary:
-  messages:
-  - from now on, you can see your changes with the `diff` command
-  - if you need to undo your changes, run the `restore` command
-  responses:
-  - ▶️  continue [end]
