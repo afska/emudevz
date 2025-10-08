@@ -40,7 +40,7 @@ export default class CPUMemory {
   }
 
   write(address, value) {
-    // 🐏 2 KiB internal RAM
+    // 🐏 WRAM (2 KiB)
     /* TODO: IMPLEMENT */
 
     // 🚽 Mirrors of $0000-$07FF
