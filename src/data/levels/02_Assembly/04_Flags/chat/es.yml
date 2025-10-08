@@ -1,23 +1,20 @@
 ---
 main:
   run: |
-    if (level.hasStoredContent) $.goTo("exercise");
-    else {
-      set((m) => {
-        m.chat.stopBlock = locales.get("not_now");
-        m.$canRun = false;
-        m.$canEdit = false;
-      });
-    }
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
   run-after-messages: |
-    $.goTo("question");
+    $.goTo("main2");
   messages:
   - como dije, cada registro puede almacenar <un solo byte>
   - así que sus valores están siempre entre 0 ($00) y 255 ($FF)
   - no puedes, por ejemplo, guardar el número 260 en ellos 👮
   responses: []
 
-question:
+main2:
   messages:
   - ¿qué pensás que pasaría si usáramos `ADC` para calcular 200 + 60?
   responses:
@@ -31,25 +28,25 @@ a260:
   messages:
   - nop, su valor máximo es 255, así que eso no es posible 👮
   - intenta de nuevo
-  - ...question
+  - ...main2
   responses:
-  - ...question
+  - ...main2
 
 a255:
   messages:
   - eso tendría sentido, pero no es lo que sucede 👎
   - intenta de nuevo
-  - ...question
+  - ...main2
   responses:
-  - ...question
+  - ...main2
 
 error:
   messages:
   - las CPUs no <tiran errores>
   - intenta de nuevo
-  - ...question
+  - ...main2
   responses:
-  - ...question
+  - ...main2
 
 explodes:
   messages:
@@ -57,9 +54,9 @@ explodes:
   - eso explicaría los problemas de temperatura de mi PC 🌡️
   - probablemente es un programa intentando desbordar los registros de CPU
   - no, intenta de nuevo
-  - ...question
+  - ...main2
   responses:
-  - ...question
+  - ...main2
 
 a4:
   messages:

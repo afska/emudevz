@@ -149,7 +149,7 @@ ldaexplanation:
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
-  - exactamente, LDA significa "LoaD Accumulator"
+  - exactamente, `LDA` significa "LoaD Accumulator"
   - 💸  los números con el prefijo ~$~ están en notación hexadecimal
   - "🔢  los números con el prefijo ~#~ son valores literales"
   - "🐏  los números sin el prefijo ~#~ refieren a direcciones de memoria"
@@ -163,7 +163,7 @@ sta:
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
-  - STA significa "STore Accumulator"
+  - "`STA` significa \"STore Accumulator\""
   - y como puedes ver, escribe el contenido de [A] en una dirección de memoria
   - en este ejemplo, en la dirección $4070
   - así que ahora la celda $4070 del <Visor de Memoria> tiene un $01

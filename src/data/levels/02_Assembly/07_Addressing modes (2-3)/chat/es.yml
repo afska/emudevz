@@ -16,9 +16,6 @@ main2:
     bus.emit("step");
   messages:
   - aquí es donde el direccionamiento se pone interesante 🧐
-  - en el modo de direccionamiento "Zero Page,X", se da una dirección de la página cero
-  - y luego se suma el valor de [X]
-  - ejecuta las primeras dos instrucciones ⏩
   responses:
   - ¿por qué? [why]
 

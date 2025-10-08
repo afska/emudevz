@@ -1,23 +1,20 @@
 ---
 main:
   run: |
-    if (level.hasStoredContent) $.goTo("exercise");
-    else {
-      set((m) => {
-        m.chat.stopBlock = locales.get("not_now");
-        m.$canRun = false;
-        m.$canEdit = false;
-      });
-    }
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
   run-after-messages: |
-    $.goTo("question");
+    $.goTo("main2");
   messages:
   - as I said, each register can hold a <single byte>
   - so their values are always between 0 ($00) and 255 ($FF)
   - you can't, for example, set the number 260 to them 👮
   responses: []
 
-question:
+main2:
   messages:
   - what do you think it'll happen if we use `ADC` to calculate 200 + 60?
   responses:
@@ -31,25 +28,25 @@ a260:
   messages:
   - nope, its max value is 255, so that's not possible 👮
   - try again
-  - ...question
+  - ...main2
   responses:
-  - ...question
+  - ...main2
 
 a255:
   messages:
   - that would make sense, but it's not what happens 👎
   - try again
-  - ...question
+  - ...main2
   responses:
-  - ...question
+  - ...main2
 
 error:
   messages:
   - CPUs don't <throw errors>
   - try again
-  - ...question
+  - ...main2
   responses:
-  - ...question
+  - ...main2
 
 explodes:
   messages:
@@ -57,9 +54,9 @@ explodes:
   - that would explain my PC's temperature problems 🌡️
   - it's probably a program trying to overflow CPU registers
   - no, try again
-  - ...question
+  - ...main2
   responses:
-  - ...question
+  - ...main2
 
 a4:
   messages:

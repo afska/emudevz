@@ -1,7 +1,5 @@
 ---
 main:
-  run: |
-    if (m.$end) $.goTo("exercise");
   messages:
   - we're gonna start coding in JavaScript
   - <! Computer upgraded.
@@ -44,8 +42,6 @@ play:
   responses: []
 
 exercise:
-  run: |
-    set((m) => m.$end = true);
   messages:
   - 📚  create a file in 📄  ~/code/Cartridge.js~
   - 📚  its <default export> should be an <empty class>

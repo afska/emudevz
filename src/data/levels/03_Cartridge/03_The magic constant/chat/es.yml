@@ -17,8 +17,6 @@ neeesfiles:
   - ¿qué quieres que haga? [exercise]
 
 exercise:
-  run: |
-    set((m) => m.$end = true);
   messages:
   - 📚  agrega un constructor a la clase 💾  `Cartridge` que reciba los bytes de la ROM
   - 📚  guárdalos en una propiedad llamada `bytes`
