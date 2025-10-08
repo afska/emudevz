@@ -933,7 +933,7 @@
 										exports.ctx.fill();
 									} else {
 										// no vertex color
-										const image = draw_cmd.TextureId; // HACK
+										const image = draw_cmd.TextureId;
 										const width =
 											image instanceof HTMLVideoElement
 												? image.videoWidth

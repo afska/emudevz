@@ -81,7 +81,7 @@ exercise:
   - you will fix that in the 🗜️  Mappers chapter
   responses:
   - (*) what about the tests? 🧪 [tests]
-  - ▶️  continue [end]
+  - ▶️  continue [credits]
 
 tests:
   messages:
@@ -103,3 +103,76 @@ tests:
       📄  ~/tmpl/tests/ppu.test.js~
   responses:
   - ...exercise
+
+credits:
+  comment: |-
+    // HACK: Using monospace numbers (𝟶 𝟷 𝟸 𝟹 𝟺 𝟻 𝟼 𝟽 𝟾 𝟿) to workaround a dictionary bug
+    // tied to src/gui/components/modals/CreditsModal.jsx
+    // tied to src/data/levels/06_Console/06_Full control/chat/*.yml
+    // tied to src/data/levels/06_Console/06_Full control/meta.yml
+  messages:
+  - "{10}THANKS"
+  - "{10}FOR"
+  - |+
+    {10}PLAYING! 💜
+  - |+
+    {10}<EmuDevz> - https://github.com/afska/emudevz
+  - "{10}🧪  by @afska"
+  - |+
+    {10}and a lot of people, actually!!
+  - "{10}🎼  **Music** by @Synthenia"
+  - |+
+    {10}🎨  **Art** by @AngryMuffin and @DamianDeAmicis
+  - "{10}👾  **Homebrew games** by:"
+  - "{10}  💦 🏛️  Böbl by <Morphcat Games>"
+  - "{10}  🍒 🃏  Concentration Room by <PinoBatch>"
+  - "{10}  🦅 🧷  Crowborg by <miau6502>"
+  - "{10}  💫 🐑  Dizzy Sheep Disaster by <IGW Games>"
+  - "{10}  💤 🐶  Dream Dog Dilemma by <IGW Games>"
+  - "{10}  🙌 ☁️  Falling by <xram64>"
+  - "{10}  🌊 🐈  Feline Flood Fiasco by <IGW Games>"
+  - "{10}  🦟 🍳  Filthy Kitchen by <dustmop>"
+  - "{10}  🐰 🛰️  Fluffy Space Escape by <IGW Games>"
+  - "{10}  🧱 🐙  From Below by <Matt Hughson>"
+  - "{10}  🧙 ⚔️  Guild Quest by <johnybot>"
+  - "{10}  ⛽ 💥  Heist by <johnybot>"
+  - "{10}  🌌 🔫  Isostasy Demo by <Gravel Studios>"
+  - "{10}  🚀 💥  Jupiter Scope 𝟸 by <nin-kuuku>"
+  - "{10}  💎 ⛏️  Minekart Madness by <Matt Hughson>"
+  - "{10}  🐸 🌍  Missing Lands by <IGW Games>"
+  - "{10}  🧸 📍  Nalleland by <Nallebeorn>"
+  - "{10}  🦅 ⛩️  Raven's Gate by <MercuryBD>"
+  - "{10}  🤖 🧗  Robo-Ninja Climb by <Bite The Chilli>"
+  - "{10}  🕊️ 🛰️  Spacegulls by <Morphcat Games>"
+  - "{10}  🧚 🧹  Star Power Demo by <nia-prene>"
+  - "{10}  🦸 🤸  Super Tilt Bro by <sgadrat>"
+  - "{10}  📻 💡  Tesla Vs Edison by <samophlange>"
+  - "{10}  🌳 🏠  Thwaite by <PinoBatch>"
+  - "{10}  🏭 🔩  Trouble At 2A03 by <Team Disposable>"
+  - "{10}  🐺 ⛓️  Wolfling by <Lazycow>"
+  - |+
+    {10}  🐺 🌲  Wolf Spirit by <valdirSalgueiro>
+  - "{10}🕵️  **Test ROMs** by:"
+  - "{10}  🧠 🔎  nestest by <kevtris>"
+  - "{10}  👋 🌎  Hello world by <PinoBatch>"
+  - "{10}  📺 🔎  240p Test Suite by <PinoBatch>"
+  - "{10}  🔊 🖥️  Multiple test ROMs by <8bitworkshop>"
+  - "{10}  🎨 🐏  PaletteRAM test by <blargg>"
+  - "{10}  📦 📥  Crowd by <Kragen (ported by rainwarrior)>"
+  - |+
+    {10}  💯 🎹  Song demo by <zeta0134 (song by celestialghost)>
+  - "{10}🙏  **Thanks to**..."
+  - "{10}  🕹️ 🛠️  NesDev"
+  - "{10}  👌 💻  Easy 𝟼𝟻𝟶𝟸 by <skilldrick>"
+  - |+
+    {10}  📖 🦀  Writing NES Emulator in Rust by <bugzmanov>
+  - "{10}🔑  **Licenses**:"
+  - "{10}  💿 💻  **Code** is licensed under The MIT License"
+  - |+
+    {10}  📖 ✏️  **Levels** are licensed under is licensed under CC BY-NC 𝟺.𝟶
+  - |+
+    {10}this game uses <third-party> assets and software, check licenses.txt
+  - if you enjoyed this, please consider supporting my work 💜
+  - see ya! 👋
+  responses:
+  - ▶️  continue [end]

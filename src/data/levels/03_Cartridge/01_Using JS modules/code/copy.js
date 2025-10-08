@@ -39,7 +39,7 @@
 	"FromBelow.neees",
 	"GuildQuest.neees",
 	"Heist.neees",
-	"Isostasy.neees",
+	"IsostasyDemo.neees",
 	"JupiterScope2.neees",
 	"MinekartMadness.neees",
 	"MissingLands.neees",

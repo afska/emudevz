@@ -38,7 +38,7 @@ finish:
     const directory = `${Drive.ROMS_DIR}`;
     filesystem.mkdirp(directory);
 
-    ["Nalleland.neees", "Isostasy.neees"].forEach((file) => {
+    ["Nalleland.neees", "IsostasyDemo.neees"].forEach((file) => {
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
@@ -46,8 +46,8 @@ finish:
   - te has convertido en un experto en este juego 🤯
   - "<! ROM recibida: 📄  /roms/Nalleland.js"
   - como prometí, puse la ROM en tu directorio 📁  ~/roms~
-  - "<! ROM recibida: 📄  /roms/Isostasy.js"
-  - también envié otro juego llamado 🌌 🔫  ~Isostasy~
+  - "<! ROM recibida: 📄  /roms/IsostasyDemo.js"
+  - también envié otro juego llamado 🌌 🔫  ~Isostasy Demo~
   - disfruta 😎
   responses:
   - ▶️  continuar [end]

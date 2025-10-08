@@ -8,6 +8,7 @@ export default class Book {
 	static FAQ_LEVEL = "homepage-faq";
 	static FREE_MODE_LEVEL = "free-mode-free";
 	static FINAL_TEST_LEVEL = "console-the-real-final-test";
+	static FINAL_LEVEL = "console-full-control";
 
 	constructor(metadata) {
 		_.extend(this, metadata);

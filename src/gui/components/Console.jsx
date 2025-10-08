@@ -46,7 +46,8 @@ export default class Console extends PureComponent {
 			title,
 			subtitle,
 			args.availableCommands,
-			args.startup
+			args.startup,
+			args.links
 		);
 	}
 

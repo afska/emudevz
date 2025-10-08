@@ -18,7 +18,193 @@
 			"Bottom": [
 				"console",
 				{
-					"startup": "chat"
+					"startup": "chat",
+					"links": [
+						{
+							"text": "https://github.com/afska/emudevz",
+							"href": "https://github.com/afska/emudevz"
+						},
+						{
+							"text": "@afska",
+							"href": "https://r-labs.io"
+						},
+						{
+							"text": "@Synthenia",
+							"href": "https://open.spotify.com/artist/7ewiTkC0wCMdpx1Wp1z140"
+						},
+						{
+							"text": "@AngryMuffin",
+							"href": "https://x.com/AngryMuffinDSFW"
+						},
+						{
+							"text": "@DamianDeAmicis",
+							"href": "https://www.instagram.com/damiandeamicis"
+						},
+						{
+							"text": "Böbl",
+							"href": "https://morphcatgames.itch.io/bobl"
+						},
+						{
+							"text": "Concentration Room",
+							"href": "https://github.com/pinobatch/croom-nes"
+						},
+						{
+							"text": "Crowborg",
+							"href": "https://miau6502.itch.io/crowborg"
+						},
+						{
+							"text": "Dizzy Sheep Disaster",
+							"href": "https://igwgames.com/classic-gaming/do-sheep-dream-of-velcro"
+						},
+						{
+							"text": "Dream Dog Dilemma",
+							"href": "https://igwgames.com/classic-gaming/dream-dog-dilemma"
+						},
+						{
+							"text": "Falling",
+							"href": "https://github.com/xram64/falling-nes"
+						},
+						{
+							"text": "Feline Flood Fiasco",
+							"href": "https://igwgames.com/classic-gaming/feline-flood-fiasco"
+						},
+						{
+							"text": "Filthy Kitchen",
+							"href": "https://dustmop.itch.io/filthy-kitchen"
+						},
+						{
+							"text": "Fluffy Space Escape",
+							"href": "https://igwgames.com/classic-gaming/ld40"
+						},
+						{
+							"text": "From Below",
+							"href": "https://mhughson.itch.io/from-below"
+						},
+						{
+							"text": "Guild Quest",
+							"href": "https://johnybot.itch.io/guild-quest"
+						},
+						{
+							"text": "Heist",
+							"href": "https://johnybot.itch.io/heist"
+						},
+						{
+							"text": "Isostasy Demo",
+							"href": "https://gravelstudios.itch.io/isostasy"
+						},
+						{
+							"text": "Jupiter Scope 𝟸",
+							"href": "https://forums.nesdev.org/viewtopic.php?t=22135"
+						},
+						{
+							"text": "Minekart Madness",
+							"href": "https://mhughson.itch.io/minekart-madness"
+						},
+						{
+							"text": "Missing Lands",
+							"href": "https://igwgames.com/classic-gaming/missing-lands"
+						},
+						{
+							"text": "Nalleland",
+							"href": "https://nallebeorn.itch.io/nalleland"
+						},
+						{
+							"text": "Raven's Gate",
+							"href": "https://mercurybd.itch.io/ravens-gate-nes"
+						},
+						{
+							"text": "Robo-Ninja Climb",
+							"href": "https://www.bitethechili.com/roboninja-climb"
+						},
+						{
+							"text": "Spacegulls",
+							"href": "https://morphcatgames.itch.io/spacegulls"
+						},
+						{
+							"text": "Star Power Demo",
+							"href": "https://nia-prene.itch.io/star-power-demo"
+						},
+						{
+							"text": "Super Tilt Bro",
+							"href": "https://sgadrat.itch.io/super-tilt-bro"
+						},
+						{
+							"text": "Tesla Vs Edison",
+							"href": "https://forums.nesdev.org/viewtopic.php?t=18042"
+						},
+						{
+							"text": "Thwaite",
+							"href": "https://github.com/pinobatch/thwaite-nes"
+						},
+						{
+							"text": "Trouble At 2A03",
+							"href": "https://team-disposable.itch.io/trouble-in-2a03"
+						},
+						{
+							"text": "Wolfling",
+							"href": "https://lazycow.itch.io/wolfling"
+						},
+						{
+							"text": "Wolf Spirit",
+							"href": "https://valdirsalgueiro.itch.io/wolf-spirit"
+						},
+						{
+							"text": "nestest",
+							"href": "https://www.qmtpro.com/~nes/misc/nestest.txt"
+						},
+						{
+							"text": "Hello world",
+							"href": "https://pineight.com/nes/"
+						},
+						{
+							"text": "240p Test Suite",
+							"href": "https://pineight.com/nes/"
+						},
+						{
+							"text": "Multiple test ROMs",
+							"href": "https://github.com/sehugg/8bitworkshop/tree/master/presets"
+						},
+						{
+							"text": "PaletteRAM test",
+							"href": "https://forums.nesdev.org/viewtopic.php?t=567"
+						},
+						{
+							"text": "Crowd",
+							"href": "https://forums.nesdev.org/viewtopic.php?p=191062&sid=96d498ec05434794b59866a583ea4ed6#p191062"
+						},
+						{
+							"text": "Song demo",
+							"href": "https://github.com/zeta0134/bhop"
+						},
+						{
+							"text": "NesDev",
+							"href": "https://www.nesdev.org"
+						},
+						{
+							"text": "Easy 𝟼𝟻𝟶𝟸",
+							"href": "https://skilldrick.github.io/easy6502"
+						},
+						{
+							"text": "Writing NES Emulator in Rust",
+							"href": "https://bugzmanov.github.io/nes_ebook/"
+						},
+						{
+							"text": "The MIT License",
+							"href": "https://opensource.org/license/mit"
+						},
+						{
+							"text": "CC BY-NC 𝟺.𝟶",
+							"href": "https://creativecommons.org/licenses/by-nc/4.0"
+						},
+						{
+							"text": "licenses.txt",
+							"href": "licenses.txt"
+						},
+						{
+							"text": "supporting my work",
+							"href": "https://buymeacoffee.com/afska"
+						}
+					]
 				}
 			],
 			"Top": [

@@ -93,7 +93,8 @@ export default class Terminal {
 		title = null,
 		subtitle = null,
 		availableCommands = [],
-		startup = null
+		startup = null,
+		links = null
 	) {
 		title = addSpaceAfterEmoji(title);
 
@@ -105,6 +106,8 @@ export default class Terminal {
 			await this.newline();
 			this._shell.runLine(startup);
 		} else this.restart();
+
+		if (links != null) this._setUpTextLinks(links);
 	}
 
 	async run(program) {
@@ -143,10 +146,13 @@ export default class Terminal {
 		if (withHighlight) {
 			const parts = highlighter.highlightText(
 				text,
-				this._dictionaryLinkProvider?.regexp
+				this._dictionaryLinkProvider?.regexp,
+				this._textLinkProvider?.regexp
 			);
 
 			for (let part of parts) {
+				if (part.text == null) continue;
+
 				if (part.isAccent) await this.write(part.text, part.style, interval);
 				else if (part.isCode) await this.write(part.text, part.style);
 				else await this.write(part.text, style, interval);
@@ -481,6 +487,7 @@ export default class Terminal {
 		this._fileLinkProvider.dispose();
 		if (this._dictionaryLinkProvider != null)
 			this._dictionaryLinkProvider.dispose();
+		if (this._textLinkProvider != null) this._textLinkProvider.dispose();
 	}
 
 	static tryCreateFile(filePath, initialContent = "") {
@@ -675,6 +682,23 @@ export default class Terminal {
 			ignore: /^\d\d?\) /,
 		});
 		this._dictionaryLinkProvider.regexp = regexp;
+	}
+
+	_setUpTextLinks(links) {
+		const linkTexts = links.map((link) => link.text);
+		const regexp = new RegExp(`(${linkTexts.join("|")})`, "iu");
+
+		const handler = (__, match) => {
+			const link = links.find((link) => link.text === match);
+			if (link) {
+				window.open(link.href);
+			}
+		};
+
+		this._textLinkProvider = this.registerLinkProvider(regexp, handler, {
+			ignore: /^\d\d?\) /,
+		});
+		this._textLinkProvider.regexp = regexp;
 	}
 
 	_requestInterrupt() {

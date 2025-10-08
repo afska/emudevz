@@ -9,7 +9,7 @@ const RAW = "raw";
 export default {
 	SILENT_CHARACTERS: /[~<>`]/g,
 
-	highlightText(text, dictionaryRegexp = null) {
+	highlightText(text, dictionaryRegexp = null, textLinkRegexp = null) {
 		let parts = [{ text }];
 
 		parts = this._highlightCode(parts);
@@ -50,6 +50,13 @@ export default {
 		if (dictionaryRegexp != null) {
 			parts = this._highlightAccent(parts, {
 				regexp: dictionaryRegexp,
+				style: theme.DICTIONARY,
+			});
+		}
+
+		if (textLinkRegexp != null) {
+			parts = this._highlightAccent(parts, {
+				regexp: textLinkRegexp,
 				style: theme.DICTIONARY,
 			});
 		}

@@ -37,6 +37,8 @@ export default class CreditsModal extends PureComponent {
 	render() {
 		const { open } = this.props;
 
+		// tied to src/data/levels/06_Console/06_Full control/chat/*.yml
+		// tied to src/data/levels/06_Console/06_Full control/meta.yml
 		return (
 			<Modal
 				show={open}
@@ -217,7 +219,7 @@ export default class CreditsModal extends PureComponent {
 									link="https://gravelstudios.itch.io/isostasy"
 									author="Gravel Studios"
 								>
-									Isostasy (Demo)
+									Isostasy Demo
 								</Game>
 								<Game
 									emojis="🚀💥"
@@ -351,7 +353,7 @@ export default class CreditsModal extends PureComponent {
 							link="https://github.com/sehugg/8bitworkshop/tree/master/presets"
 							author="8bitworkshop"
 						>
-							APU and PPU tests
+							Multiple test ROMs
 						</Game>
 						<Game
 							emojis="🎨🐏"

@@ -122,6 +122,7 @@ class Music {
 	}
 
 	next() {
+		if (!this._hasStarted) return;
 		if (this._audio) this._audio.pause();
 
 		this._track = this._forcedTrackIndex || (this._track + 1) % TRACKS.length;
@@ -132,6 +133,7 @@ class Music {
 	}
 
 	previous() {
+		if (!this._hasStarted) return;
 		if (this._audio) this._audio.pause();
 
 		this._track =
@@ -177,6 +179,8 @@ class Music {
 	}
 
 	_playCurrentTrack(startSecond = 0) {
+		if (this._audio) this._audio.pause();
+
 		this._saveTrackInfo();
 		this._audio = new Audio(MUSIC_DIR + TRACKS[this._track].file);
 		this._audio.volume = this._volume;

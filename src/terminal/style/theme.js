@@ -52,7 +52,9 @@ export default {
 	DIFF_ADDED: color(41),
 	DIFF_REMOVED: color(196),
 	DICTIONARY: (text) => {
-		const shouldUnderline = Level.current.id === "getting-started-architecture";
+		const shouldUnderline =
+			Level.current.id === "getting-started-architecture" ||
+			Level.current.id === "console-full-control";
 
 		return shouldUnderline
 			? effect(4, RESET.UNDERLINE)(color(195)(text))
