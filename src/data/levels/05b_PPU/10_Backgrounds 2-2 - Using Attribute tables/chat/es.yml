@@ -40,12 +40,6 @@ main:
       }```
   - ten en cuenta que cuando el índice de color es 0, se renderiza un <backdrop color> en su lugar (ubicado en el primer índice de la primera paleta)
   responses:
-  - "\"¿agrega el código necesario\"? ¿en serio? ¿eso es todo? [help]"
-
-help:
-  messages:
-  - ¿qué? ¿necesitas ayuda?
-  responses:
   - (*) ayúdame con las matemáticas 🔢 [math]
   - (*) ¿cuál es el ~backdrop color~? 💧 [backdrop]
 

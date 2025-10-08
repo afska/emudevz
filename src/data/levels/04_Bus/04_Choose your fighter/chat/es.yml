@@ -25,6 +25,7 @@ cpu:
     const book = store.getState().book.instance;
     const chapter = book.getChapter(4);
     const firstLevelId = chapter.levels[0].id;
+    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
     store.dispatch.savedata.unlockChapter(firstLevelId);
     store.dispatch.savedata.advanceTo(firstLevelId);
   messages: []
@@ -35,6 +36,7 @@ ppu:
     const book = store.getState().book.instance;
     const chapter = book.getChapter(5);
     const firstLevelId = chapter.levels[0].id;
+    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
     store.dispatch.savedata.unlockChapter(firstLevelId);
     store.dispatch.savedata.advanceTo(firstLevelId);
   messages: []
@@ -45,6 +47,7 @@ apu:
     const book = store.getState().book.instance;
     const chapter = book.getChapter(6);
     const firstLevelId = chapter.levels[0].id;
+    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
     store.dispatch.savedata.unlockChapter(firstLevelId);
     store.dispatch.savedata.advanceTo(firstLevelId);
   messages: []

@@ -118,7 +118,7 @@ then:
       // current point, relative to the name table:
       const nameTableX = scrolledX % 256;
       const nameTableY = scrolledY % 240;```
-  - |
+  - |-
     📚  from now on, every usage of `x` and `y` should be replaced by `nameTableX` and `nameTableY`
       (for example: the name table read index, the ```javascript this._getBackgroundPaletteId(...)``` call, and ```javascript new Tile(...)``` should be updated)
   - the only exception is the `plotBG(...)` call, which still needs to plot in the ~(x,y)~ point of the screen

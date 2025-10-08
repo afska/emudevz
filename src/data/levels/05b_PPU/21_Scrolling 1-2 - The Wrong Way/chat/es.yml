@@ -118,7 +118,6 @@ then:
       // punto actual, relativo a la name table:
       const nameTableX = scrolledX % 256;
       const nameTableY = scrolledY % 240;```
-    
   - |-
     📚  a partir de ahora, cada uso de `x` y `y` debería ser reemplazado por `nameTableX` y `nameTableY`
       (por ejemplo: el índice de lectura de la name table, la llamada ```javascript this._getBackgroundPaletteId(...)``` y ```javascript new Tile(...)``` deben ser actualizados)
