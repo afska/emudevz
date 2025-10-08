@@ -45,7 +45,7 @@ window._openPath_ = (filePath) => {
 		toast.error(
 			<span
 				onClick={() => {
-					this.constructor.tryCreateFile(filePath);
+					Terminal.tryCreateFile(filePath);
 				}}
 			>
 				<span className="toast-link">
