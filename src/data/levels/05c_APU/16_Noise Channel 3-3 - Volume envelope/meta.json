@@ -81,5 +81,6 @@
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksGame": "lets-play-from-below"
 }

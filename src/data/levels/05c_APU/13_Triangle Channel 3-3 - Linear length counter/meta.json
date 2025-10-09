@@ -76,5 +76,6 @@
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksGame": "lets-play-falling"
 }

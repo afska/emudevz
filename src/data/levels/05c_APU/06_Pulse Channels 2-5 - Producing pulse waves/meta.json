@@ -67,5 +67,6 @@
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksGame": "lets-play-feline-flood-fiasco"
 }
