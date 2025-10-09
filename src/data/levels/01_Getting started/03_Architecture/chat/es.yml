@@ -69,9 +69,9 @@ apu:
 
 start:
   messages:
-  - para emular la CPU, tendrás que interpretar el código de los juegos
-  - están escritos en lenguaje ensamblador, por lo que deberás estudiar eso primero
-  - ¡adentrémonos en ello!
+  - primero deberías aprender cómo funciona la 🧠  CPU
+  - para emularla, tendremos que interpretar el código de los juegos
+  - están escritos en lenguaje ensamblador, así que estudiemos eso primero
   - ¿vamos?
   responses:
   - bueno, vamos [end]

@@ -69,9 +69,9 @@ apu:
 
 start:
   messages:
-  - to emulate the CPU, we'll have to interpret games' code
-  - they're written in assembly, so you need to study that first
-  - let's jump into it!
+  - you should learn first how the 🧠  CPU works
+  - to emulate it, we'll have to interpret games' code
+  - they're written in assembly, so let's study that first
   - are you ready?
   responses:
   - yeah, let's go [end]
