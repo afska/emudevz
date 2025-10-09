@@ -125,7 +125,7 @@ class Music {
 		if (!this._hasStarted) return;
 		if (this._audio) this._audio.pause();
 
-		this._track = this._forcedTrackIndex || (this._track + 1) % TRACKS.length;
+		this._track = this._forcedTrackIndex ?? (this._track + 1) % TRACKS.length;
 		this._saveTrack();
 		this._playCurrentTrack();
 		if (this._forcedTrackIndex === null && TRACKS[this._track].skip)
@@ -137,7 +137,7 @@ class Music {
 		if (this._audio) this._audio.pause();
 
 		this._track =
-			this._forcedTrackIndex ||
+			this._forcedTrackIndex ??
 			(this._track - 1 + TRACKS.length) % TRACKS.length;
 		this._saveTrack();
 		this._playCurrentTrack();
