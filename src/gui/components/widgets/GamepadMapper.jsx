@@ -27,6 +27,8 @@ class GamepadMapper extends PureComponent {
 		} = this.props;
 		const { waitingKey } = this.state;
 
+		if (keyboardMappings == null) return null;
+
 		const mappings = keyboardMappings[player];
 
 		const ButtonBox = ({ button, className, children, ...rest }) => {
