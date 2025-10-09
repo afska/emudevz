@@ -43,7 +43,8 @@ export default class Falling extends Integration {
 		const neees = this.props.getNEEES();
 		if (!neees) return;
 
-		const points = neees.cpu.memory.read(0x001c);
+		let points = neees.cpu.memory.read(0x001c);
+		if (points > HIGH_SCORE) points = HIGH_SCORE;
 		const lives = neees.cpu.memory.read(0x0201) & 0b1111;
 		const percentage = (points / HIGH_SCORE) * 100;
 
