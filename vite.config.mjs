@@ -21,6 +21,9 @@ export default defineConfig(({ mode }) => {
 			keepNames: true,
 			minifyIdentifiers: false,
 		},
+		build: {
+			rollupOptions: { treeshake: false },
+		},
 	};
 });
 function setEnv(mode) {
