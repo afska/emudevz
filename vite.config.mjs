@@ -99,10 +99,11 @@ function sourcemapPlugin() {
 	return {
 		name: "sourcemap-plugin",
 		config(_, { mode }) {
-			const { GENERATE_SOURCEMAP } = loadEnv(mode, ".", ["GENERATE_SOURCEMAP"]);
+			// const { GENERATE_SOURCEMAP } = loadEnv(mode, ".", ["GENERATE_SOURCEMAP"]);
+
 			return {
 				build: {
-					sourcemap: GENERATE_SOURCEMAP === "true",
+					sourcemap: true, // GENERATE_SOURCEMAP === "true",
 				},
 			};
 		},
