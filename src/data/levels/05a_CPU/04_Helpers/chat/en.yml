@@ -13,7 +13,16 @@ main:
     **updateZero(value)**:
       **->** sets ```javascript z=true``` if `value` is 0, or ```javascript z=false``` otherwise
     **updateNegative(value)**:
-      **->** sets ```javascript n=true``` if ```javascript byte.isNegative(value)```, or ```javascript n=false``` otherwise
+      **->** sets ```javascript n=true``` if the byte is negative, or ```javascript n=false``` otherwise
+      (here, "negative" means that its <bit 7> is 1)
+      (you can use ```javascript byte.isNegative(value)``` from the <byte library>)
     **updateZeroAndNegative(value)**:
       **->** calls `updateZero(...)` and `updateNegative(...)` with the `value`
+  responses:
+  - byte library? [library]
+
+library:
+  messages:
+  - yeah, just a helper to assist with bit manipulation tasks
+  - it's in 📄  ~/lib/byte.js~, just import it as another module and use it
   responses: []

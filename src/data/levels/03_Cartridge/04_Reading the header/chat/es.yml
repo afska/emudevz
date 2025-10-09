@@ -79,16 +79,16 @@ exercise:
       mirroringId: "VERTICAL", // (obtener esto de <Flags 6>)
       mapperId: 4 // (obtener esto de <Flags 6> y <Flags 7>)
     }```
+  - si no sabes cómo operar con bits, puedes usar mi biblioteca 📖
+  - está en 📄  ~/lib/byte.js~, solo impórtala como otro módulo más y úsala
   responses:
   - (*) necesito un poco de ayuda 📐 [bits]
 
 bits:
   messages:
-  - si no sabes cómo operar con bits, puedes usar mi biblioteca 📖
-  - está en 📄  ~/lib/byte.js~, solo impórtala como otro módulo más y úsala
   - los métodos que querrás usar son `getFlag(...)`, `highNybbleOf(...)`, `lowNybbleOf(...)` y `buildU8(...)`
   responses:
-  - ¿cómo puedo usar el módulo? [import]
+  - ¿cómo puedo usar el módulo de la library? [import]
 
 import:
   messages:
