@@ -52,7 +52,7 @@ errors:
   messages:
   - |-
     to throw errors, use:
-      ```javascript throw new Error(\"a message\");```
+      ```javascript throw new Error("a message");```
   responses:
   - ...exercise
 
