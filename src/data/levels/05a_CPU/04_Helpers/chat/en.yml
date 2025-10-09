@@ -13,7 +13,7 @@ main:
     **updateZero(value)**:
       **->** sets ```javascript z=true``` if `value` is 0, or ```javascript z=false``` otherwise
     **updateNegative(value)**:
-      **->** sets ```javascript n=true``` if the byte is negative, or ```javascript n=false``` otherwise
+      **->** sets ```javascript n=true``` if the value is negative, or ```javascript n=false``` otherwise
       (here, "negative" means that its <bit 7> is 1)
       (you can use ```javascript byte.isNegative(value)``` from the <byte library>)
     **updateZeroAndNegative(value)**:
