@@ -149,9 +149,9 @@ const dictionary = {
 			also: { es: "Sample de audio|_Samples de audio|Sample|_Samples" },
 			icon: "📈",
 			en:
-				"A number that represents the height of a wave at a specific point in time. Waves are stored as a stream of these values. <br /><br/>In the NEEES, these are numbers in the `0-15` range. When emulating the APU, we use a `44100` Hz sample rate.",
+				"A number that represents the height of a wave at a specific point in time. Waves are stored as a stream of these values. <br /><br/>In the NEEES, these are numbers in the `0-15` range. When emulating the APU, we use a `44100` Hz sample rate. <br /><br />The word `sample` can also refer to a recorded `sound clip` (multiple samples), so its interpretation depends on the context.",
 			es:
-				"Un número que representa la altura de una onda en un punto específico en el tiempo. Las ondas se almacenan como una secuencia de estos valores. <br /><br/>En la NEEES, estos números están en el rango `0-15`. Al emular la APU, usamos una frecuencia de muestreo de `44100` Hz.",
+				"Un número que representa la altura de una onda en un punto específico en el tiempo. Las ondas se almacenan como una secuencia de estos valores. <br /><br/>En la NEEES, estos números están en el rango `0-15`. Al emular la APU, usamos una frecuencia de muestreo de `44100` Hz. <br /><br/>La palabra `sample` también puede referirse a un `clip de sonido` grabado (múltiples samples), por lo que su interpretación depende del contexto.",
 		},
 		"Audio wave|_Audio waves|Wave|_Waves": {
 			also: { es: "Onda de audio|_Ondas de audio|Onda|_Ondas" },
