@@ -33,7 +33,7 @@ skip:
     level.unlockLetsPlayLevelIfNeeded("lets-play-spacegulls");
     const book = store.getState().book.instance;
     const chapter = book.getChapterOf(level.id);
-    const lastLevelId = _.last(chapter.levels).id;
+    const lastLevelId = chapter.levels[chapter.levels.length - 1].id;
     const nextLevelId = book.nextIdOf(lastLevelId, true);
     store.dispatch.savedata.unlockChapter(nextLevelId);
     store.dispatch.savedata.advanceTo(nextLevelId);
