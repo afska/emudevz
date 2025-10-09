@@ -10,7 +10,6 @@ import IconButton from "../widgets/IconButton";
 import Emulator from "./Emulator";
 import styles from "./AudioTester.module.css";
 
-const MIN_VOLUME = 0.1;
 const SAMPLE_EPSILON = 1e-4;
 const SAMPLE_GROUP = () => ({
 	mix: [],
@@ -64,7 +63,7 @@ export default class AudioTester extends PureComponent {
 								useAPU: true,
 								withLatestCode: false,
 							}}
-							volume={this._volume}
+							volume={0}
 							onError={this._setError}
 							onFps={this._setFps}
 							onStart={this._onActualEmulatorStart}
@@ -239,22 +238,5 @@ export default class AudioTester extends PureComponent {
 
 	get _testFrames() {
 		return this.props.test.frames;
-	}
-
-	componentDidMount() {
-		this._subscriber = bus.subscribe({
-			"music-volume-changed": (newVolume) => {
-				if (this._emulatorA?.speaker)
-					this._emulatorA?.speaker.setVolume(Math.max(newVolume, MIN_VOLUME));
-			},
-		});
-	}
-
-	componentWillUnmount() {
-		this._subscriber.release();
-	}
-
-	get _volume() {
-		return Math.max(store.getState().savedata.musicVolume, MIN_VOLUME);
 	}
 }
