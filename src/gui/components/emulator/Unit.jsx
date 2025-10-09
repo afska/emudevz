@@ -6,7 +6,7 @@ import styles from "./Unit.module.css";
 
 export default class Unit extends PureComponent {
 	render() {
-		const {
+		let {
 			icon,
 			name,
 			completed,
@@ -17,10 +17,15 @@ export default class Unit extends PureComponent {
 			className,
 			onToggle,
 			suffix = "",
-			disabled = false,
+			useConsole = false,
 			style,
 			...rest
 		} = this.props;
+
+		if (useConsole) {
+			active = true;
+			completed = true;
+		}
 
 		const messageKey = active
 			? customActiveMessage ?? "using_your_emulator"
@@ -36,8 +41,8 @@ export default class Unit extends PureComponent {
 				<span
 					className={classNames(
 						styles.unit,
-						(completed || disabled) && styles.completed,
-						disabled && styles.disabled,
+						completed && styles.completed,
+						useConsole && styles.disabled,
 						className
 					)}
 					style={style}

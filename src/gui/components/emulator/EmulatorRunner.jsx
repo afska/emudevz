@@ -97,7 +97,7 @@ export default class EmulatorRunner extends PureComponent {
 										active={this._emulatorSettings.useCPU}
 										onToggle={() => this._onToggle("useCPU")}
 										style={{ borderTopLeftRadius: COMPONENT_BORDER_RADIUS }}
-										disabled={this._emulatorSettings.useConsole}
+										useConsole={this._emulatorSettings.useConsole}
 									/>
 									<Unit
 										icon="🖥️"
@@ -106,7 +106,7 @@ export default class EmulatorRunner extends PureComponent {
 										active={this._emulatorSettings.usePPU}
 										onToggle={() => this._onToggle("usePPU")}
 										suffix={ppuSuffix}
-										disabled={this._emulatorSettings.useConsole}
+										useConsole={this._emulatorSettings.useConsole}
 									/>
 									<Unit
 										icon="🔊"
@@ -115,7 +115,7 @@ export default class EmulatorRunner extends PureComponent {
 										active={this._emulatorSettings.useAPU}
 										onToggle={() => this._onToggle("useAPU")}
 										suffix={apuSuffix}
-										disabled={this._emulatorSettings.useConsole}
+										useConsole={this._emulatorSettings.useConsole}
 										style={{ borderTopRightRadius: COMPONENT_BORDER_RADIUS }}
 									/>
 								</div>
@@ -126,7 +126,7 @@ export default class EmulatorRunner extends PureComponent {
 										completed={this._unlockedUnits.useCartridge}
 										active={this._emulatorSettings.useCartridge}
 										onToggle={() => this._onToggle("useCartridge")}
-										disabled={this._emulatorSettings.useConsole}
+										useConsole={this._emulatorSettings.useConsole}
 										style={{ borderBottomLeftRadius: COMPONENT_BORDER_RADIUS }}
 									/>
 									<Unit
@@ -135,7 +135,7 @@ export default class EmulatorRunner extends PureComponent {
 										completed={this._unlockedUnits.useController}
 										active={this._emulatorSettings.useController}
 										onToggle={() => this._onToggle("useController")}
-										disabled={this._emulatorSettings.useConsole}
+										useConsole={this._emulatorSettings.useConsole}
 									/>
 									<Unit
 										icon="🕹️"
