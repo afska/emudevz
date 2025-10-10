@@ -22,9 +22,10 @@ where:
 
 label:
   messages:
-  - el ensamblador que encontré no soporta eso 😔
-  - pero eso es posible con otros ensambladores
-  - y `JSR @init` generaría el mismo código máquina que `JSR $4029`
+  - ¡también es una opción!
+  - pero tienes que decirle al ensamblador dónde empieza el código
+  - usando una directiva como `.org $4020`
+  - en ese caso, `JSR @init` generaría el mismo código máquina que `JSR $4029`
   responses:
   - ...where
 
