@@ -42,18 +42,20 @@ export default class TestCommand extends Command {
 		}
 
 		let isAudioTestSuccessful = true;
-		if (
-			!_.isEmpty(level.audioTests) &&
-			(!this._targetId || this._targetId === "audio")
-		) {
-			try {
-				isAudioTestSuccessful = await this._runAudioTests(level);
-			} catch (e) {
-				isAudioTestSuccessful = false;
-				console.error(e);
-				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
+		if (isVideoTestSuccessful) {
+			if (
+				!_.isEmpty(level.audioTests) &&
+				(!this._targetId || this._targetId === "audio")
+			) {
+				try {
+					isAudioTestSuccessful = await this._runAudioTests(level);
+				} catch (e) {
+					isAudioTestSuccessful = false;
+					console.error(e);
+					await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
+				}
+				await this._terminal.newline();
 			}
-			await this._terminal.newline();
 		}
 
 		try {
