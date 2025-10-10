@@ -413,8 +413,13 @@ export default class CPUDebugger extends PureComponent {
 			bus.emit("run-enabled", true);
 		}, this.state._delay);
 
-		this._cpu.step();
-		this._updateState("step");
+		try {
+			this._cpu.step();
+			this._updateState("step");
+		} catch (e) {
+			const message = testContext.javascript.buildHTMLError(e);
+			this.setState({ _error: message });
+		}
 	};
 
 	_onReset = () => {
