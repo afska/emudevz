@@ -879,7 +879,7 @@ class OAMDMA extends InMemoryRegister.PPU {
 			const data = this.ppu.cpu.memory.read(address);
 			this.ppu.memory.oamRam[i] = data;
 		}
-		this.ppu.cpu.extraCycles += 531;
+		this.ppu.cpu.extraCycles += 513;
 	}
 }
 
