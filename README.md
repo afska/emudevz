@@ -43,7 +43,7 @@ npm start
 - Sort locales:
   `node scripts/sort-locales.js`
 - Sort dictionary entries:
-  `node scripts/sort-locales.js`
+  `node scripts/sort-dictionary.js`
 - Build:
   `npm run build`
 - Deploy to GitHub Pages:
