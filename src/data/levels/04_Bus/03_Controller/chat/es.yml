@@ -20,10 +20,13 @@ exercise:
   - 📚  como siempre, agrega la clase a 📄  ~/code/index.js~
   - 📚  ah, y mapea las lecturas/escrituras de $4016 y las lecturas de $4017 en 🐏  `CPUMemory`
   - |-
-    por ejemplo, si la `address` es ```javascript 0x4016```, devuelve:
+    por ejemplo, si la `address` es ```javascript 0x4016```, retorna:
       ```javascript this.controllers[0].onRead()```
   responses:
   - (*) ¿por qué necesito referenciar al <otro> mando? [other]
+  - (*) espera, explícame la plantilla 🤔 [template]
+  - (*) necesito ayuda para implementar `onRead(...)` [onread]
+  - (*) necesito ayuda para implementar `onWrite(...)` [onwrite]
 
 other:
   messages:
@@ -31,6 +34,60 @@ other:
   - escribir un 1 en $4016 reinicia `cursor` en <ambos mandos>
   - y la bandera `strobe` solo existe en el mando del jugador 1
   - así que, si eres el jugador 2, necesitas usar la bandera `strobe` del otro mando
+  responses:
+  - ...exercise
+
+template:
+  messages:
+  - la clase propuesta 🎮  `Controller` configura un array `_buttons` con valores booleanos
+  - esto indica si un botón está <presionado> o <liberado>
+  - el array está ordenado siguiendo la secuencia descrita en el archivo de documentación
+  - el método `update(...)` será llamado <automáticamente> por BrokenNEEES para actualizar el estado de cada botón
+  - y los juegos harán <polling> a las direcciones $4016 y $4017 (llamadas a `onRead(...)`) para leer el estado actual
+  responses:
+  - ¿cómo funciona el polling? [poll]
+
+poll:
+  messages:
+  - |-
+    en un juego de NEEES, un procedimiento típico para leer las entradas es:
+      **->** escribir un 1 en $4016
+      **->** escribir un 0 en $4016
+      **->** (leer $4016 y $4017) 8 veces
+  responses:
+  - ...exercise
+
+onread:
+  messages:
+  - |-
+    **onRead()**:
+      **->** guarda el valor correcto de strobe en una constante
+        (es decir, ```javascript this.strobe``` para <jugador 1> y ```javascript this.other.strobe``` para <jugador 2>)
+        (llamemos a esto `strobe`)
+
+      **->** si el cursor es >= 8, retorna 1
+
+      **->** si `strobe`:
+        **->** retorna el estado del primer botón <como número>
+          (```javascript +boolean``` lo convierte en número)
+      **else:**
+        **->** determina si el botón actual está presionado (según ```javascript this.cursor```)
+          (llamemos a esto `isPressed`)
+        **->** incrementa ```javascript this.cursor```
+        **->** retorna ```javascript +isPressed```
+  responses:
+  - ...exercise
+
+onwrite:
+  messages:
+  - |-
+    **onWrite(value)**:
+      **->** asigna <el bit 0> de `value` (como booleano) a ```javascript this.strobe```
+        (puedes usar `byte.getFlag(...)` de 📄  ~/lib/byte.js~)
+
+      **->** si `this.strobe`:
+        **->** reinicia ```javascript this.cursor``` a 0
+        **->** reinicia ```javascript this.other.cursor``` a 0
   responses:
   - ...exercise
 

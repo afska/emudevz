@@ -45,7 +45,7 @@ finish:
 
 savestate-yes:
   messages:
-  - usaste... <save states>?!
+  - ¿usaste... <save states>?!
   - eso es trampa 😅
   - de todos modos... lo lograste
   - "<! ROM recibida: 📄  /roms/RoboNinjaClimb.neees"

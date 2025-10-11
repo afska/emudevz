@@ -19,7 +19,7 @@ main:
 iknow:
   messages:
   - 🤔
-  - estás <de verdad> familiarizado con 6502 assembly?
+  - ¿estás <de verdad> familiarizado con 6502 assembly?
   - (registros, banderas, bifurcaciones, modos de direccionamiento, pila y subrutinas)
   - si no, en el próximo capítulo vas a <sufrir>
   - meh, puedes volver y jugarlo cuando quieras, de todas formas
@@ -130,7 +130,7 @@ registers:
   - bueno, [A] significa "Accumulator" y su uso depende del programa
   - "[PC] siempre apunta a la próxima instrucción a ejecutar"
   responses:
-  - "entonces, con `LDA #$01` simplemente le dijiste al procesador que almacenara el número $01 en [A]? 😲 [ldaexplanation]"
+  - "¿entonces, con `LDA #$01` simplemente le dijiste al procesador que almacenara el número $01 en [A]? 😲 [ldaexplanation]"
   - "(*) me dan curiosidad los otros: [X], [Y] y [SP] [theothers]"
 
 theothers:

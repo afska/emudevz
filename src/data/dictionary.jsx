@@ -102,9 +102,9 @@ const dictionary = {
 		APUFrameCounter: {
 			icon: "🧮",
 			en:
-				"An audio register that controls the APU's sequence (`4`- or `5`-step). <br /><br />It is available at CPU address `$4017`.",
+				"An audio register that controls the APU's sequencer (`4`- or `5`-step). <br /><br />It is available at CPU address `$4017`.",
 			es:
-				"Un registro de audio que controla la secuencia de la APU (`4` o `5` pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
+				"Un registro de audio que controla el secuenciador de la APU (`4` o `5` pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
 		},
 		APUStatus: {
 			icon: "📊",
@@ -990,9 +990,9 @@ const dictionary = {
 			es:
 				"Una función de la PPU que permite a los desarrolladores mover el fondo ajustando la porción visible de la name table.",
 		},
-		"Sequencer|Sequence|Frame sequencer|Frame counter": {
+		"Sequencer|Frame sequencer|Frame counter": {
 			also: {
-				es: "Secuenciador|Secuencia|Secuenciador de Frames|Contador de Frames",
+				es: "Secuenciador|Secuenciador de Frames|Contador de Frames",
 			},
 			icon: "🔀",
 			en:

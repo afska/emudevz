@@ -31,7 +31,7 @@ exercise:
       **onWrite(value)**:
         **->** llama a ```javascript this.setValue(value)```
       **isRenderingEnabled()**:
-        **->** devuelve ```javascript this.showBackground || this.showSprites```
+        **->** retorna ```javascript this.showBackground || this.showSprites```
   - |-
     📚  en 🏞️  `BackgroundRenderer`, <cambia>:
       **renderScanline()**:

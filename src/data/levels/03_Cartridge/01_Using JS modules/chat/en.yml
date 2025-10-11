@@ -54,6 +54,7 @@ exercise:
       export default { Cartridge }```
   responses:
   - (*) export? modules? 🧐 [modules]
+  - (*) how can I copy code from the terminal? [copy]
 
 modules:
   messages:
@@ -71,5 +72,11 @@ modules:
     to import a module:
       ```javascript import aFunction from "./relative/path/to/aFunction"```
       ```javascript import SomeClass from "./relative/path/to/SomeClass"```
+  responses:
+  - ...exercise
+
+copy:
+  messages:
+  - in the terminal, instead of `Ctrl+C` and `Ctrl+V`, you can use `Ctrl+Shift+C` and `Ctrl+Shift+V`
   responses:
   - ...exercise

@@ -25,6 +25,7 @@ exercise:
   - (*) ¿cómo puedo agregar un constructor? 😳 [constructor]
   - (*) necesito ayuda verificando los bytes 🥺 [help]
   - (*) ayúdame a tirar un error 🤔 [errors]
+  - (*) ¿cómo puedo depurar? 🐞 [debug]
 
 constructor:
   messages:
@@ -53,6 +54,18 @@ errors:
   - |-
     para tirar errores, usa:
       ```javascript throw new Error("un mensaje");```
+  responses:
+  - ...exercise
+
+debug:
+  messages:
+  - hay varias formas de depurar tu código
+  - ➰  usando el comando `repl` para crear tus clases manualmente o probar expresiones JS
+  - 🐞  agregando una sentencia `debugger;` en tu código y usando las herramientas de desarrollo del navegador
+  - 🧾  agregando un `console.log(...)`, que muestra algo en las herramientas de desarrollo del navegador
+  - |-
+    🗃️  agregando un `EmuDevz.log(...)`, que muestra una cadena en la pestaña `Log` del 🐞  <Depurador>
+      (esto será útil más adelante, cuando ejecutes ROMs en el emulador)
   responses:
   - ...exercise
 

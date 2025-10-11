@@ -25,6 +25,9 @@ exercise:
       ```javascript this.controllers[0].onRead()```
   responses:
   - (*) why do I need to reference the <other> controller? [other]
+  - (*) wait, explain the template 🤔 [template]
+  - (*) I need help implementing `onRead(...)` [onread]
+  - (*) I need help implementing `onWrite(...)` [onwrite]
 
 other:
   messages:
@@ -32,6 +35,60 @@ other:
   - writing a 1 to $4016 resets `cursor` on <both controllers>
   - and the `strobe` flag only lives in player 1's controller
   - so, if you are player 2, you need to use the `strobe` flag from the other controller
+  responses:
+  - ...exercise
+
+template:
+  messages:
+  - the proposed 🎮  `Controller` class sets up a `_buttons` array with booleans
+  - this signals whether a button is <pressed> or <released>
+  - the array is sorted following the sequence described in the documentation file
+  - the `update(...)` method is gonna be called <automatically> by BrokenNEEES to update the state of each button
+  - and games will <poll> addresses $4016 and $4017 (`onRead(...)` calls) to poll the current state
+  responses:
+  - how does the polling work? [poll]
+
+poll:
+  messages:
+  - |-
+    in a NEEES game, a typical procedure to read the inputs is:
+      **->** write a 1 to $4016
+      **->** write a 0 to $4016
+      **->** (read $4016 and $4017) 8 times
+  responses:
+  - ...exercise
+
+onread:
+  messages:
+  - |-
+    **onRead()**:
+      **->** stores the correct strobe value in a constant
+        (that is, ```javascript this.strobe``` for <player 1> and ```javascript this.other.strobe``` for <player 2>)
+        (let's call this `strobe`)
+
+      **->** if the cursor is >= 8, returns 1
+
+      **->** if `strobe`:
+        **->** returns the state of the first button <as a number>
+          (```javascript +boolean``` converts it to a number)
+      **else:**
+        **->** determines whether the current button is pressed (based on ```javascript this.cursor```)
+          (let's call this `isPressed`)
+        **->** increments ```javascript this.cursor```
+        **->** returns ```javascript +isPressed```
+  responses:
+  - ...exercise
+
+onwrite:
+  messages:
+  - |-
+    **onWrite(value)**:
+      **->** assigns <bit 0> of `value` (as a boolean) to ```javascript this.strobe```
+        (you can use `byte.getFlag(...)` from 📄  ~/lib/byte.js~)
+
+      **->** if `this.strobe`:
+        **->** resets ```javascript this.cursor``` to 0
+        **->** resets ```javascript this.other.cursor``` to 0
   responses:
   - ...exercise
 
