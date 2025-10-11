@@ -355,7 +355,7 @@ it("`Stack`: can push and pop values", () => {
   for (let i = 0; i < 256; i++) bytes.push(byte.random());
 
   for (let i = 0; i < 256; i++) stack.push(bytes[i]);
-  for (let i = 255; i <= 0; i--)
+  for (let i = 255; i >= 0; i--)
     expect(stack.pop()).to.equalHex(bytes[i], `[${i}] pop()`);
 })({
   locales: {
