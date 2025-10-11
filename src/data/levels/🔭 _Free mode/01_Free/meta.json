@@ -33,8 +33,7 @@
 						"find",
 						"download",
 						"upload",
-						"disk",
-						"root"
+						"disk"
 					]
 				}
 			],
