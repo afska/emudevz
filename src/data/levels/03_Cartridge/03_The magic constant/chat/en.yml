@@ -62,9 +62,9 @@ debug:
   - there's multiple ways of debugging your code
   - ➰  using the `repl` command to manually instantiate your classes or try JS expressions
   - 🐞  adding a `debugger;` statement to your code and using your browser's native dev tools
-  - 🧾  adding a `console.log(...)`, which logs something into your browser's dev tools
+  - 🧾  calling `console.log(...)`, which logs something into your browser's dev tools
   - |-
-    🗃️  adding an `EmuDevz.log(...)`, which logs a string into the `Log` tab of the 🐞  <Debugger>
+    🗃️  calling `EmuDevz.log(...)`, which logs a string into the `Log` tab of the 🐞  <Debugger>
       (this one will be useful later, when running ROMs in the emulator)
   responses:
   - ...exercise
