@@ -382,3 +382,32 @@ code {
 	flex-direction: column;
 	flex: 1;
 }
+
+/* Too small overlay */
+
+#too-small-overlay {
+	position: fixed;
+	inset: 0;
+	width: 100dvw;
+	height: 100dvh;
+	display: none;
+	z-index: 999;
+	background: #000;
+	color: #fff;
+	font-family: monospace;
+	align-items: center;
+	justify-content: center;
+	user-select: none;
+	pointer-events: auto;
+}
+
+.too-small-overlay__content {
+	text-align: center;
+	font-size: xx-large;
+}
+
+.too-small-overlay__subtitle {
+	margin-top: 0.5rem;
+	font-size: medium;
+	opacity: 0.85;
+}
