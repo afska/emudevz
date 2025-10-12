@@ -82,7 +82,7 @@ address:
   - every location (and pretty much everything on the NEEES) can store a single byte
   - a byte can store any number between 0 ($00) and 255 ($FF)
   responses:
-  - the NEEES only had 2048 bytes of WRAM, why there are 65536 addresses? [butyousaid]
+  - the NEEES only had 2048 bytes of WRAM, why are there 65536 addresses? [butyousaid]
   - <<!m.$hasEnded>> ...machinecode
   - <<m.$hasEnded>> ...finish
 
