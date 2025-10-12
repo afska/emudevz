@@ -192,6 +192,10 @@
 	animation: lightflicker 3s infinite;
 }
 
+.megazoom .pointLight {
+	animation: none;
+}
+
 @keyframes lightflicker {
 	0% {
 		opacity: 0;
