@@ -119,7 +119,7 @@ export default class TestCommand extends Command {
 				Level.current.startEffect("running");
 				let results;
 				try {
-					results = await framework.test(test, testDefinition);
+					results = await framework.test(test, testDefinition, this._isDebug);
 				} finally {
 					Level.current.stopEffect();
 				}
@@ -177,10 +177,18 @@ export default class TestCommand extends Command {
 				await this._terminal.writeln(locales.get("tests_failure"));
 
 				if (this._isVerbose) {
+					await this._terminal.writehlln(
+						locales.get("tests_debug"),
+						theme.COMMENT
+					);
 					await this._waitForKey();
 				} else {
 					await this._terminal.writehlln(
 						locales.get("tests_more"),
+						theme.COMMENT
+					);
+					await this._terminal.writehlln(
+						locales.get("tests_debug"),
 						theme.COMMENT
 					);
 				}
@@ -578,5 +586,9 @@ export default class TestCommand extends Command {
 
 	get _isVerbose() {
 		return this._includes("-v");
+	}
+
+	get _isDebug() {
+		return this._includes("-d");
 	}
 }

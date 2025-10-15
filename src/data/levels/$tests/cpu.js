@@ -618,13 +618,19 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
   expect(cycles).to.equalN(2, "NOP => cycles");
   expect(cpu.pc.getValue()).to.equalHex(0x8001, "NOP => pc");
   expect(cpu.cycle).to.equalN(9, "NOP => cycle");
-  expect(cpu.logger).to.have.been.calledWith(
-    cpu,
-    0x8000,
-    cpu.operations[0xea],
-    null,
-    null
-  );
+  try {
+    expect(cpu.logger).to.have.been.calledWith(
+      cpu,
+      0x8000,
+      cpu.operations[0xea],
+      null,
+      null
+    );
+  } catch (e) {
+    throw new Error(
+      `\`this.logger\` should have been called with (cpu, 0x8000, cpu.operations[0xea], null, null)`
+    );
+  }
 
   // LDA #$05
   cpu.logger = sinon.spy();
@@ -632,13 +638,19 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
   expect(cycles).to.equalN(2, "LDA #$05 => cycles");
   expect(cpu.pc.getValue()).to.equalHex(0x8003, "LDA #$05 => pc");
   expect(cpu.cycle).to.equalN(11, "LDA #$05 => cycle");
-  expect(cpu.logger).to.have.been.calledWith(
-    cpu,
-    0x8001,
-    cpu.operations[0xa9],
-    0x05,
-    0x05
-  );
+  try {
+    expect(cpu.logger).to.have.been.calledWith(
+      cpu,
+      0x8001,
+      cpu.operations[0xa9],
+      0x05,
+      0x05
+    );
+  } catch (e) {
+    throw new Error(
+      `\`this.logger\` should have been called with (cpu, 0x8001, cpu.operations[0xa9], 0x05, 0x05)`
+    );
+  }
 
   // STA $0201
   cpu.logger = sinon.spy();
@@ -646,13 +658,19 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
   expect(cycles).to.equalN(4, "STA $0201 => cycles");
   expect(cpu.pc.getValue()).to.equalHex(0x8006, "STA $0201 => pc");
   expect(cpu.cycle).to.equalN(15, "STA $0201 => cycle");
-  expect(cpu.logger).to.have.been.calledWith(
-    cpu,
-    0x8003,
-    cpu.operations[0x8d],
-    0x0201,
-    0x0201
-  );
+  try {
+    expect(cpu.logger).to.have.been.calledWith(
+      cpu,
+      0x8003,
+      cpu.operations[0x8d],
+      0x0201,
+      0x0201
+    );
+  } catch (e) {
+    throw new Error(
+      `\`this.logger\` should have been called with (cpu, 0x8003, cpu.operations[0x8d], 0x0201, 0x0201)`
+    );
+  }
 
   // LDX $0201
   cpu.logger = sinon.spy();
@@ -660,13 +678,19 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
   expect(cycles).to.equalN(4, "LDX $0201 => cycles");
   expect(cpu.pc.getValue()).to.equalHex(0x8009, "LDX $0201 => pc");
   expect(cpu.cycle).to.equalN(19, "LDX $0201 => cycle");
-  expect(cpu.logger).to.have.been.calledWith(
-    cpu,
-    0x8006,
-    cpu.operations[0xae],
-    0x0201,
-    0x0005
-  );
+  try {
+    expect(cpu.logger).to.have.been.calledWith(
+      cpu,
+      0x8006,
+      cpu.operations[0xae],
+      0x0201,
+      0x0005
+    );
+  } catch (e) {
+    throw new Error(
+      `\`this.logger\` should have been called with (cpu, 0x8006, cpu.operations[0xae], 0x0201, 0x0005)`
+    );
+  }
 })({
   locales: {
     es:

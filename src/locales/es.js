@@ -239,6 +239,7 @@ export default {
 	tests_errors_found: "🚫  Errores encontrados.",
 	tests_failure: "💥  Algunas pruebas fallaron. Arregla tu código.",
 	tests_more: "💬  Para más información, corre `test -v [númeroDeTest]`",
+	tests_debug: "🐞  Para depurar, abre tus dev tools y corre `test -d`",
 	tests_more_units:
 		"💡  Para un tipo específico de pruebas, corre `test audio` | `test video` | `test unit`",
 	tests_success: "🎉  Todas las pruebas pasaron.",

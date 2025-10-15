@@ -228,6 +228,7 @@ export default {
 	tests_errors_found: "🚫  Errors found.",
 	tests_failure: "💥  Some tests are broken. Fix your code.",
 	tests_more: "💬  For more info, run `test -v [testNumber]`",
+	tests_debug: "🐞  To debug, open your dev tools and run `test -d`",
 	tests_more_units:
 		"💡  For a specific test type, run `test audio` | `test video` | `test unit`",
 	tests_success: "🎉  All tests passed.",
