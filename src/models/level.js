@@ -3,6 +3,7 @@ import {
 	SAVESTATE_KEY_PREFIX,
 	SAVESTATE_RESET_COMMAND,
 } from "../gui/components/emulator/Emulator";
+import Book from "../level/Book";
 import { analytics } from "../utils";
 
 const KEY = "level";
@@ -75,6 +76,14 @@ export default {
 				_dispatch_(replace(`/levels/${levelId}?r=${r}`));
 			},
 			goToLastLevel(__, _state_) {
+				if (
+					_state_.savedata.lastLevelId === Book.FAQ_LEVEL ||
+					_state_.savedata.lastLevelId === Book.FREE_MODE_LEVEL
+				) {
+					this.goTo(Book.START_LEVEL);
+					return;
+				}
+
 				this.goTo(_state_.savedata.lastLevelId);
 			},
 			goHome() {

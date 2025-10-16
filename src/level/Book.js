@@ -5,6 +5,7 @@ import { bus } from "../utils";
 const EMULATOR_ACTIVATION_LEVEL = "cartridge-using-js-modules";
 
 export default class Book {
+	static START_LEVEL = "getting-started-introduction";
 	static FAQ_LEVEL = "homepage-faq";
 	static FREE_MODE_LEVEL = "free-mode-free";
 	static FINAL_TEST_LEVEL = "console-the-real-final-test";
