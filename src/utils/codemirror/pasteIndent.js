@@ -2,7 +2,7 @@ import { indentSelection } from "@codemirror/commands";
 import { EditorState } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 
-function stripCommonIndent(text) {
+function stripCommonIndent(text, tabSize = 4) {
 	const lines = text.replace(/\r\n/g, "\n").split("\n");
 	if (lines.length <= 1) return text;
 
@@ -12,10 +12,7 @@ function stripCommonIndent(text) {
 		if (line.trim() === "") continue;
 		const match = line.match(/^[ \t]*/)?.[0] || "";
 		let indent = 0;
-		for (const ch of match) {
-			if (ch === "\t") indent += 4;
-			else indent += 1;
-		}
+		for (const ch of match) indent += ch === "\t" ? tabSize : 1;
 		if (indent < minIndent) minIndent = indent;
 	}
 	if (minIndent === 0 || minIndent === Infinity) return text;
@@ -24,12 +21,12 @@ function stripCommonIndent(text) {
 	return lines
 		.map((line) => {
 			if (line.trim() === "") return "";
-			let removed = 0;
-			let i = 0;
+			let removed = 0,
+				i = 0;
 			while (i < line.length && removed < minIndent) {
 				const ch = line[i];
 				if (ch === "\t") {
-					removed += 4;
+					removed += tabSize;
 					i += 1;
 				} else if (ch === " ") {
 					removed += 1;
@@ -51,7 +48,8 @@ export default EditorView.domEventHandlers({
 
 		event.preventDefault();
 		const raw = event.clipboardData.getData("text/plain");
-		const normalized = stripCommonIndent(raw);
+		const normalized = stripCommonIndent(raw, view.state.tabSize ?? 4);
+
 		const { from, to } = view.state.selection.main;
 
 		// insert with the pasted block selected so indentSelection affects it
@@ -61,13 +59,23 @@ export default EditorView.domEventHandlers({
 			userEvent: "input.paste",
 		});
 
-		// indent the inserted block, then collapse cursor to its end
-		indentSelection(view);
-		const sel = view.state.selection.main;
-		const end = Math.max(sel.anchor, sel.head);
-		view.dispatch({
-			selection: { anchor: end },
-			scrollIntoView: true,
+		const pasteStart = from;
+		const pasteEnd = from + normalized.length;
+
+		// defer indent so language services/extensions settle
+		view.focus();
+		requestAnimationFrame(() => {
+			const sel = view.state.selection.main;
+			const selStart = Math.min(sel.anchor, sel.head);
+			const selEnd = Math.max(sel.anchor, sel.head);
+			const overlapsPaste = selStart < pasteEnd && selEnd > pasteStart;
+
+			if (overlapsPaste) {
+				indentSelection(view);
+				const s = view.state.selection.main;
+				const end = Math.max(s.anchor, s.head);
+				view.dispatch({ selection: { anchor: end }, scrollIntoView: true });
+			}
 		});
 
 		return true;
