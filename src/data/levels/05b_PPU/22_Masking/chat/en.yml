@@ -45,11 +45,11 @@ exercise:
       **renderScanline()**:
         **->** on the first line, if `showSprites` is off, return! <don't do anything>!
       **_render(...)**:
-        **->** apply a similar logic:
-          ```javascript if (!showSprites || (!showSpritesInFirst8Pixels && x < 8))
+        **->** ignores the first 8 pixels if needed:
+          ```javascript if (!showSpritesInFirst8Pixels && x < 8)
             continue;```
-      **->** in the sprite-zero hit check, add both `showBackground` and `showSprites` as conditions
-        (if one of them is `false`, no sprite-zero hits should be triggered!)
+      **->** in the sprite-zero hit check, add `showBackground` as a condition
+        (if `showBackground` is `false`, no sprite-zero hits should be triggered!)
   - |-
     📚  in 🖥️  `PPU`, change:
     **_onPreLine()**:

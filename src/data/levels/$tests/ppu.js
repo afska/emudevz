@@ -1772,7 +1772,7 @@ it("calls `spriteRenderer.renderScanline()` on cycle 0 of every <visible scanlin
 
 // 5b.18 Sprites (6/6): Sprite-zero hit
 
-it("`SpriteRenderer`: `_render(...)` sets the sprite-zero hit flag when an <opaque pixel> from sprite 0 is drawn over an <opaque pixel> from background", () => {
+it("`SpriteRenderer`: sets the sprite-zero hit flag when an <opaque pixel> from sprite 0 is drawn over an <opaque pixel> from background", () => {
   const PPU = mainModule.default.PPU;
   const ppu = new PPU({});
   ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1795,7 +1795,7 @@ it("`SpriteRenderer`: `_render(...)` sets the sprite-zero hit flag when an <opaq
   ppu.memory.oamRam[4 * 0 + 1] = 91; // tile
   ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
   ppu.memory.oamRam[4 * 0 + 3] = 20; // x
-  ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+  ppu.spriteRenderer.renderScanline();
   expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(0, "sprite0Hit");
 
   // sprite 1 (in y=43) => no hit
@@ -1804,7 +1804,7 @@ it("`SpriteRenderer`: `_render(...)` sets the sprite-zero hit flag when an <opaq
   ppu.memory.oamRam[4 * 1 + 1] = 91; // tile
   ppu.memory.oamRam[4 * 1 + 2] = 0b10; // attr
   ppu.memory.oamRam[4 * 1 + 3] = 20; // x
-  ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+  ppu.spriteRenderer.renderScanline();
   expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(0, "sprite0Hit");
 
   // sprite 0 (in y=43) => hit
@@ -1813,7 +1813,7 @@ it("`SpriteRenderer`: `_render(...)` sets the sprite-zero hit flag when an <opaq
   ppu.memory.oamRam[4 * 0 + 1] = 91; // tile
   ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
   ppu.memory.oamRam[4 * 0 + 3] = 20; // x
-  ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+  ppu.spriteRenderer.renderScanline();
   expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(1, "sprite0Hit");
 
   // sprite 0 (in y=43) (wrong tile) => no hit
@@ -1822,12 +1822,12 @@ it("`SpriteRenderer`: `_render(...)` sets the sprite-zero hit flag when an <opaq
   ppu.memory.oamRam[4 * 0 + 1] = 92; // tile
   ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
   ppu.memory.oamRam[4 * 0 + 3] = 20; // x
-  ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+  ppu.spriteRenderer.renderScanline();
   expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(0, "sprite0Hit");
 })({
   locales: {
     es:
-      "`SpriteRenderer`: `_render(...)` enciende la bandera de sprite-zero hit cuando un <píxel opaco> del sprite 0 es dibujado sobre un <píxel opaco> del fondo",
+      "`SpriteRenderer`: enciende la bandera de sprite-zero hit cuando un <píxel opaco> del sprite 0 es dibujado sobre un <píxel opaco> del fondo",
   },
   use: ({ id }, book) => id >= book.getId("5b.18"),
 });
@@ -2506,7 +2506,7 @@ it("doesn't reset anything on ~scanline=-1~, ~cycle=1~ if rendering is <off>", (
   use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
-it("`SpriteRenderer`: `_render(...)` does <NOT> set the sprite-zero hit flag when background is hidden OR sprites are hidden by `PPUMask`", () => {
+it("`SpriteRenderer`: does <NOT> set the sprite-zero hit flag when background is hidden OR sprites are hidden by `PPUMask`", () => {
   const PPU = mainModule.default.PPU;
   const ppu = new PPU({});
   ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -2534,7 +2534,7 @@ it("`SpriteRenderer`: `_render(...)` does <NOT> set the sprite-zero hit flag whe
   ppu.registers?.ppuMask?.onWrite?.(0b10110);
   ppu.registers.ppuStatus.sprite0Hit = 0;
   placeSprite0AtY43();
-  ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+  ppu.spriteRenderer.renderScanline();
   expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(
     0,
     "sprite0Hit (BG hidden)"
@@ -2544,7 +2544,7 @@ it("`SpriteRenderer`: `_render(...)` does <NOT> set the sprite-zero hit flag whe
   ppu.registers?.ppuMask?.onWrite?.(0b01110);
   ppu.registers.ppuStatus.sprite0Hit = 0;
   placeSprite0AtY43();
-  ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+  ppu.spriteRenderer.renderScanline();
   expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(
     0,
     "sprite0Hit (sprites hidden)"
@@ -2552,7 +2552,7 @@ it("`SpriteRenderer`: `_render(...)` does <NOT> set the sprite-zero hit flag whe
 })({
   locales: {
     es:
-      "`SpriteRenderer`: `_render(...)` <NO> enciende la bandera de sprite-zero hit cuando `PPUMask` oculta el fondo <u> oculta los sprites",
+      "`SpriteRenderer`: <NO> enciende la bandera de sprite-zero hit cuando `PPUMask` oculta el fondo <u> oculta los sprites",
   },
   use: ({ id }, book) => id >= book.getId("5b.22"),
 });

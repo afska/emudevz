@@ -45,11 +45,11 @@ exercise:
       **renderScanline()**:
         **->** en la primera línea, si `showSprites` está apagada, ¡retorna! ¡<no hagas nada>!
       **_render(...)**:
-        **->** aplica una lógica similar:
-          ```javascript if (!showSprites || (!showSpritesInFirst8Pixels && x < 8))
+        **->** ignora los primeros 8 pixeles si es necesario:
+          ```javascript if (!showSpritesInFirst8Pixels && x < 8)
             continue;```
-      **->** en la comprobación de sprite-zero hit, agrega tanto `showBackground` como `showSprites` como condiciones
-        (si una de ellos es `false`, ¡no se debe disparar ningún sprite-zero hit!)
+      **->** en la comprobación de sprite-zero hit, agrega `showBackground` como condición
+        (si `showBackground` es `false`, ¡no se debe disparar ningún sprite-zero hit!)
   - |-
     📚  en 🖥️  `PPU`, cambia:
     **_onPreLine()**:
