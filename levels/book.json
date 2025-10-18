@@ -1,0 +1,1512 @@
+{
+  "chapters": [
+    {
+      "id": 0,
+      "number": 1,
+      "humanId": "1",
+      "name": {
+        "en": "📜 Intro",
+        "es": "📜 Intro"
+      },
+      "description": {
+        "en": "📜 Introduction, tutorial, and NEEES hardware",
+        "es": "📜 Introducción, tutorial y hardware de NEEES"
+      },
+      "levels": [
+        {
+          "id": "getting-started-introduction",
+          "humanId": "1.1",
+          "globalId": 0,
+          "name": {
+            "en": "❓ Introduction",
+            "es": "❓ Introducción"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "getting-started-quick-tutorial",
+          "humanId": "1.2",
+          "globalId": 1,
+          "name": {
+            "en": "📙 Quick tutorial",
+            "es": "📙 Tutorial rápido"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "getting-started-architecture",
+          "humanId": "1.3",
+          "globalId": 2,
+          "name": {
+            "en": "🏟️ Architecture",
+            "es": "🏟️ Arquitectura"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": false
+    },
+    {
+      "id": 1,
+      "number": 2,
+      "humanId": "2",
+      "name": {
+        "en": "🏗️ Assembly",
+        "es": "🏗️ Ensamblador"
+      },
+      "description": {
+        "en": "🏗️ Learn 6502 assembly",
+        "es": "🏗️ Aprende ensamblador 6502"
+      },
+      "levels": [
+        {
+          "id": "assembly-example-program",
+          "humanId": "2.1",
+          "globalId": 3,
+          "name": {
+            "en": "📝 Example program",
+            "es": "📝 Programa de ejemplo"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "assembly-now-its-your-turn",
+          "humanId": "2.2",
+          "globalId": 4,
+          "name": {
+            "en": "👆 Now it's your turn",
+            "es": "👆 Ahora es tu turno"
+          },
+          "helpLines": [
+            1,
+            4
+          ]
+        },
+        {
+          "id": "assembly-reading-from-memory",
+          "humanId": "2.3",
+          "globalId": 5,
+          "name": {
+            "en": "🐏 Reading from memory",
+            "es": "🐏 Leyendo de la memoria"
+          },
+          "helpLines": [
+            1,
+            2,
+            3,
+            4,
+            9,
+            12,
+            14,
+            15
+          ]
+        },
+        {
+          "id": "assembly-flags",
+          "humanId": "2.4",
+          "globalId": 6,
+          "name": {
+            "en": "🏁 Flags",
+            "es": "🏁 Banderas"
+          },
+          "helpLines": [
+            1,
+            2,
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        {
+          "id": "assembly-branching",
+          "humanId": "2.5",
+          "globalId": 7,
+          "name": {
+            "en": "🔀 Branching",
+            "es": "🔀 Bifurcaciones"
+          },
+          "helpLines": [
+            1,
+            2,
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            29
+          ],
+          "unlocksGame": "lets-play-spacegulls"
+        },
+        {
+          "id": "assembly-addressing-modes-1-3",
+          "humanId": "2.6",
+          "globalId": 8,
+          "name": {
+            "en": "📍 Addressing modes (1/3)",
+            "es": "📍 Modos de direccionamiento (1/3)"
+          },
+          "helpLines": [
+            1,
+            2,
+            3,
+            4,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            29
+          ]
+        },
+        {
+          "id": "assembly-addressing-modes-2-3",
+          "humanId": "2.7",
+          "globalId": 9,
+          "name": {
+            "en": "📍 Addressing modes (2/3)",
+            "es": "📍 Modos de direccionamiento (2/3)"
+          },
+          "helpLines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            29
+          ]
+        },
+        {
+          "id": "assembly-addressing-modes-3-3",
+          "humanId": "2.8",
+          "globalId": 10,
+          "name": {
+            "en": "📍 Addressing modes (3/3)",
+            "es": "📍 Modos de direccionamiento (3/3)"
+          },
+          "helpLines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            29
+          ]
+        },
+        {
+          "id": "assembly-stack",
+          "humanId": "2.9",
+          "globalId": 11,
+          "name": {
+            "en": "🧱 Stack",
+            "es": "🧱 Pila"
+          },
+          "helpLines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            29
+          ]
+        },
+        {
+          "id": "assembly-subroutines",
+          "humanId": "2.10",
+          "globalId": 12,
+          "name": {
+            "en": "📞 Subroutines",
+            "es": "📞 Subrutinas"
+          },
+          "helpLines": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ]
+        }
+      ],
+      "help": {
+        "en": "`LDA #$01`    ; Loads the number $01 into the [A] register\n`LDA $01`     ; Loads the value of address $0001 into [A]\n`LDA $1F4B`   ; Loads the value of address $1F4B into [A]\n`STA $4070`   ; Writes [A] to address $4070\n`STA $60,X`   ; Writes [A] to address $60+[X]\n`STA $2030,X` ; Writes [A] to address $2030+[X]\n`STA ($01,X)` ; = STA ($01+X)\n`STA ($03),Y` ; = STA ($03)+Y\n  ; [X] and [Y] variants: `LDX`, `STX`, `LDY`, `STY`\n`TXA`         ; Transfers [X] to [A]\n  ; variants: `TAX`, `TYA`, `TAY`\n`ADC #30`     ; Adds 30 to [A] (using the Carry Flag)\n`SBC #30`     ; Subtracts 30 from [A] (using the Carry Flag)\n`INX`         ; Increments [X]\n  ; [Y] variant: `INY`\n`DEX`         ; Decrements [X]\n  ; [Y] variant: `DEY`\n@jump:        ; Defines a label that can be referenced later\n`CPX #3`      ; Sets Z=1 if [X] == 3\n  ; [Y] variant: `CPY`\n`BEQ @jump`   ; Jumps to @jump if Z == 1\n`BNE @jump`   ; Jumps to @jump if Z == 0\n`JMP $4030`   ; Jumps to $4030 (sets [PC] = $4030)\n`JMP ($4030)` ; Jumps to an address made by $4030 and $4031\n`PHA`         ; Pushes [A] onto the Stack\n`PLA`         ; Pulls from the Stack to [A]\n`JSR $4029`   ; Jumps to subroutine in $4029\n`RTS`         ; Jumps back to the previous instruction\n`BRK`         ; Ends the program\n",
+        "es": "`LDA #$01`    ; Carga el número $01 en el registro [A]\n`LDA $01`     ; Carga el valor de la dirección $1F4B en [A]\n`LDA $1F4B`   ; Carga el valor de la dirección $1F4B en [A]\n`STA $4070`   ; Escribe [A] en la dirección $4070\n`STA $60,X`   ; Escribe [A] en la dirección $60+[X]\n`STA $2030,X` ; Escribe [A] en la dirección $2030+[X]\n`STA ($01,X)` ; = STA ($01+X)\n`STA ($03),Y` ; = STA ($03)+Y\n  ; variantes con [X] e [Y]: `LDX`, `STX`, `LDY`, `STY`\n`TXA`         ; Transfiere [X] a [A]\n  ; variantes: `TAX`, `TYA`, `TAY`\n`ADC #30`     ; Suma 30 a [A] (usando la Bandera Carry)\n`SBC #30`     ; Resta 30 a [A] (usando la Bandera Carry)\n`INX`         ; Incrementa [X]\n  ; variante con [Y]: `INY`\n`DEX`         ; Decrementa [X]\n  ; variante con [Y]: `DEY`\n@jump:        ; Define una etiqueta que puede ser referenciada luego\n`CPX #3`      ; Asigna el Z=1 si [X] == 3\n  ; variante con [Y]: `CPY`\n`BEQ @jump`   ; Salta a @jump si Z == 1\n`BNE @jump`   ; Salta a @jump si Z == 0\n`JMP $4030`   ; Salta a $4030 (asigna [PC] = $4030)\n`JMP ($4030)` ; Salta a una dirección formada por $4030 and $4031\n`PHA`         ; Pone [A] en la Pila\n`PLA`         ; Saca de la Pila hacia [A]\n`JSR $4029`   ; Salta a la subrutina en $4029\n`RTS`         ; Salta de vuelta a la instrucción anterior\n`BRK`         ; Termina el programa\n"
+      },
+      "isSpecial": false
+    },
+    {
+      "id": 2,
+      "number": 3,
+      "humanId": "3",
+      "name": {
+        "en": "💾 Cartridge",
+        "es": "💾 Cartucho"
+      },
+      "description": {
+        "en": "💾 Read code and graphics from ROM files",
+        "es": "💾 Lee el código y gráficos de archivos ROM"
+      },
+      "levels": [
+        {
+          "id": "cartridge-using-js-modules",
+          "humanId": "3.1",
+          "globalId": 13,
+          "name": {
+            "en": "📄 Using JS modules",
+            "es": "📄 Usando módulos JS"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cartridge-a-broken-emulator",
+          "humanId": "3.2",
+          "globalId": 14,
+          "name": {
+            "en": "💀 A broken emulator",
+            "es": "💀 Un emulador roto"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cartridge-the-magic-constant",
+          "humanId": "3.3",
+          "globalId": 15,
+          "name": {
+            "en": "✨ The magic constant",
+            "es": "✨ La constante mágica"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cartridge-reading-the-header",
+          "humanId": "3.4",
+          "globalId": 16,
+          "name": {
+            "en": "🗣️ Reading the header",
+            "es": "🗣️ Leyendo la cabecera"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-nalleland"
+        },
+        {
+          "id": "cartridge-locating-the-program",
+          "humanId": "3.5",
+          "globalId": 17,
+          "name": {
+            "en": "🤖 Locating the program",
+            "es": "🤖 Ubicando el programa"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cartridge-locating-the-graphics",
+          "humanId": "3.6",
+          "globalId": 18,
+          "name": {
+            "en": "👾 Locating the graphics",
+            "es": "👾 Ubicando los gráficos"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cartridge-integrating-our-work",
+          "humanId": "3.7",
+          "globalId": 19,
+          "name": {
+            "en": "⚙️ Integrating our work",
+            "es": "⚙️ Integrando nuestro trabajo"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": false
+    },
+    {
+      "id": 3,
+      "number": 4,
+      "humanId": "4",
+      "name": {
+        "en": "🚌 Bus",
+        "es": "🚌 Bus"
+      },
+      "description": {
+        "en": "🚌 Map RAM and devices into memory",
+        "es": "🚌 Mapea RAM y dispositivos en la memoria"
+      },
+      "levels": [
+        {
+          "id": "bus-cpu-memory",
+          "humanId": "4.1",
+          "globalId": 20,
+          "name": {
+            "en": "🐏 CPU Memory",
+            "es": "🐏 Memoria de CPU"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "bus-devices",
+          "humanId": "4.2",
+          "globalId": 21,
+          "name": {
+            "en": "📱 Devices",
+            "es": "📱 Dispositivos"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "bus-controller",
+          "humanId": "4.3",
+          "globalId": 22,
+          "name": {
+            "en": "🎮 Controller",
+            "es": "🎮 Mando"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-jupiter-scope-2"
+        },
+        {
+          "id": "bus-choose-your-fighter",
+          "humanId": "4.4",
+          "globalId": 23,
+          "name": {
+            "en": "🥊 Choose your fighter",
+            "es": "🥊 Elige tu luchador"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": false
+    },
+    {
+      "id": 4,
+      "number": 5,
+      "humanId": "5a",
+      "name": {
+        "en": "🧠 CPU",
+        "es": "🧠 CPU"
+      },
+      "description": {
+        "en": "🧠 Emulate the console's brain",
+        "es": "🧠 Emula el cerebro de la consola"
+      },
+      "levels": [
+        {
+          "id": "cpu-new-cpu",
+          "humanId": "5a.1",
+          "globalId": 24,
+          "name": {
+            "en": "🧠 New CPU",
+            "es": "🧠 Nueva CPU"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-registers",
+          "humanId": "5a.2",
+          "globalId": 25,
+          "name": {
+            "en": "🔢 Registers",
+            "es": "🔢 Registros"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-flags",
+          "humanId": "5a.3",
+          "globalId": 26,
+          "name": {
+            "en": "🏁 Flags",
+            "es": "🏁 Banderas"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-helpers",
+          "humanId": "5a.4",
+          "globalId": 27,
+          "name": {
+            "en": "🙏 Helpers",
+            "es": "🙏 Utilidades"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-stack",
+          "humanId": "5a.5",
+          "globalId": 28,
+          "name": {
+            "en": "🧱 Stack",
+            "es": "🧱 Pila"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-little-endian",
+          "humanId": "5a.6",
+          "globalId": 29,
+          "name": {
+            "en": "🔌 Little Endian",
+            "es": "🔌 Little Endian"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-ravens-gate"
+        },
+        {
+          "id": "cpu-instructions-1-5-arithmetic",
+          "humanId": "5a.7",
+          "globalId": 30,
+          "name": {
+            "en": "🧮 Instructions (1/5): Arithmetic",
+            "es": "🧮 Instrucciones (1/5): Aritméticas"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-instructions-2-5-data",
+          "humanId": "5a.8",
+          "globalId": 31,
+          "name": {
+            "en": "📈 Instructions (2/5): Data",
+            "es": "📈 Instrucciones (2/5): Datos"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-instructions-3-5-checks",
+          "humanId": "5a.9",
+          "globalId": 32,
+          "name": {
+            "en": "✅ Instructions (3/5): Checks",
+            "es": "✅ Instrucciones (3/5): Verificaciones"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-instructions-4-5-branching",
+          "humanId": "5a.10",
+          "globalId": 33,
+          "name": {
+            "en": "🔀 Instructions (4/5): Branching",
+            "es": "🔀 Instrucciones (4/5): Bifurcaciones"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-instructions-5-5-system",
+          "humanId": "5a.11",
+          "globalId": 34,
+          "name": {
+            "en": "🧙 Instructions (5/5): System (interrupts)",
+            "es": "🧙 Instrucciones (5/5): Sistema (interrupciones)"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-dizzy-sheep-disaster"
+        },
+        {
+          "id": "cpu-addressing-modes-1-2",
+          "humanId": "5a.12",
+          "globalId": 35,
+          "name": {
+            "en": "📍 Addressing modes (1/2): Simple",
+            "es": "📍 Modos de direccionamiento (1/2): Simples"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-addressing-modes-2-2",
+          "humanId": "5a.13",
+          "globalId": 36,
+          "name": {
+            "en": "📍 Addressing modes (2/2): Indexed",
+            "es": "📍 Modos de direccionamiento (2/2): Indexados"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-operations",
+          "humanId": "5a.14",
+          "globalId": 37,
+          "name": {
+            "en": "📋 Operations",
+            "es": "📋 Operaciones"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-execute",
+          "humanId": "5a.15",
+          "globalId": 38,
+          "name": {
+            "en": "▶️ Execute",
+            "es": "▶️ Execute"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-heist"
+        },
+        {
+          "id": "cpu-the-golden-log",
+          "humanId": "5a.16",
+          "globalId": 39,
+          "name": {
+            "en": "🏆 The golden log",
+            "es": "🏆 El golden log"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "cpu-integrating-the-cpu",
+          "humanId": "5a.17",
+          "globalId": 40,
+          "name": {
+            "en": "⚙️ Integrating the CPU",
+            "es": "⚙️ Integrando la CPU"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": false
+    },
+    {
+      "id": 5,
+      "number": 5,
+      "humanId": "5b",
+      "name": {
+        "en": "🖥️ PPU",
+        "es": "🖥️ PPU"
+      },
+      "description": {
+        "en": "🖥️ Draw graphics on the screen",
+        "es": "🖥️ Dibuja gráficos en la pantalla"
+      },
+      "levels": [
+        {
+          "id": "ppu-new-ppu",
+          "humanId": "5b.1",
+          "globalId": 41,
+          "name": {
+            "en": "🖥️ New PPU",
+            "es": "🖥️ Nueva PPU"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-frame-buffer",
+          "humanId": "5b.2",
+          "globalId": 42,
+          "name": {
+            "en": "🖼️ Frame buffer",
+            "es": "🖼️ Frame buffer"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-graphics",
+          "humanId": "5b.3",
+          "globalId": 43,
+          "name": {
+            "en": "🖌️ Graphics",
+            "es": "🖌️ Gráficos"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-ppu-memory",
+          "humanId": "5b.4",
+          "globalId": 44,
+          "name": {
+            "en": "🚌 PPU Memory",
+            "es": "🚌 Memoria de PPU"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-tiles",
+          "humanId": "5b.5",
+          "globalId": 45,
+          "name": {
+            "en": "🕊️ Tiles",
+            "es": "🕊️ Tiles"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-video-registers",
+          "humanId": "5b.6",
+          "globalId": 46,
+          "name": {
+            "en": "🔢 Video Registers",
+            "es": "🔢 Registros de Video"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-vblank-detection",
+          "humanId": "5b.7",
+          "globalId": 47,
+          "name": {
+            "en": "🏝️ VBlank detection",
+            "es": "🏝️ Detección de VBlank"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-vram-bridge",
+          "humanId": "5b.8",
+          "globalId": 48,
+          "name": {
+            "en": "🌉 VRAM bridge",
+            "es": "🌉 Puente de VRAM"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-backgrounds-1-2-drawing-name-tables",
+          "humanId": "5b.9",
+          "globalId": 49,
+          "name": {
+            "en": "🏞️ Backgrounds (1/2): Drawing Name tables",
+            "es": "🏞️ Fondos (1/2): Dibujando Name tables"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-backgrounds-2-2-using-attribute-tables",
+          "humanId": "5b.10",
+          "globalId": 50,
+          "name": {
+            "en": "🌈 Backgrounds (2/2): Using Attribute tables",
+            "es": "🌈 Fondos (2/2): Usando Attribute tables"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-super-tilt-bro"
+        },
+        {
+          "id": "ppu-ppudata-delayed-reads",
+          "humanId": "5b.11",
+          "globalId": 51,
+          "name": {
+            "en": "📦 PPUData: Delayed reads",
+            "es": "📦 PPUData: Lecturas retrasadas"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-oam-bridge",
+          "humanId": "5b.12",
+          "globalId": 52,
+          "name": {
+            "en": "🌉 OAM bridge",
+            "es": "🌉 Puente OAM"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-sprites-1-6-oam",
+          "humanId": "5b.13",
+          "globalId": 53,
+          "name": {
+            "en": "🛸 Sprites (1/6): OAM",
+            "es": "🛸 Sprites (1/6): OAM"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-sprites-2-6-evaluation",
+          "humanId": "5b.14",
+          "globalId": 54,
+          "name": {
+            "en": "🕵️ Sprites (2/6): Evaluation",
+            "es": "🕵️ Sprites (2/6): Evaluación"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-sprites-3-6-drawing",
+          "humanId": "5b.15",
+          "globalId": 55,
+          "name": {
+            "en": "🖌️ Sprites (3/6): Drawing",
+            "es": "🖌️ Sprites (3/6): Dibujado"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-sprites-4-6-flipping",
+          "humanId": "5b.16",
+          "globalId": 56,
+          "name": {
+            "en": "🤸 Sprites (4/6): Flipping",
+            "es": "🤸 Sprites (4/6): Volteado"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-sprites-5-6-priorities",
+          "humanId": "5b.17",
+          "globalId": 57,
+          "name": {
+            "en": "🔝 Sprites (5/6): Priorities",
+            "es": "🔝 Sprites (5/6): Prioridades"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-sprites-6-6-sprite-zero-hit",
+          "humanId": "5b.18",
+          "globalId": 58,
+          "name": {
+            "en": "👊 Sprites (6/6): Sprite-zero hit",
+            "es": "👊 Sprites (6/6): Sprite-zero hit"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-wolf-spirit"
+        },
+        {
+          "id": "ppu-mirroring-1-2-palette-ram",
+          "humanId": "5b.19",
+          "globalId": 59,
+          "name": {
+            "en": "🎨 Mirroring (1/2): Palette RAM",
+            "es": "🎨 Mirroring (1/2): Palette RAM"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-mirroring-2-2-name-tables",
+          "humanId": "5b.20",
+          "globalId": 60,
+          "name": {
+            "en": "🏞️ Mirroring (2/2): Name tables",
+            "es": "🏞️ Mirroring (2/2): Name tables"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-scrolling-1-2-the-wrong-way",
+          "humanId": "5b.21",
+          "globalId": 61,
+          "name": {
+            "en": "📜 Scrolling (1/2): The Wrong Way™",
+            "es": "📜 Scrolling (1/2): Haciéndolo mal™"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-masking",
+          "humanId": "5b.22",
+          "globalId": 62,
+          "name": {
+            "en": "🎭 Masking",
+            "es": "🎭 Masking"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-scrolling-2-2-the-right-way",
+          "humanId": "5b.23",
+          "globalId": 63,
+          "name": {
+            "en": "🎯 Scrolling (2/2): The Right Way™",
+            "es": "🎯 Scrolling (2/2): Haciéndolo bien™"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-minekart-madness"
+        },
+        {
+          "id": "ppu-color-emphasis",
+          "humanId": "5b.24",
+          "globalId": 64,
+          "name": {
+            "en": "🍭 Color emphasis",
+            "es": "🍭 Énfasis de color"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "ppu-mapper-tick",
+          "humanId": "5b.25",
+          "globalId": 65,
+          "name": {
+            "en": "🗜️ Mapper tick",
+            "es": "🗜️ Mapper tick"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": false
+    },
+    {
+      "id": 6,
+      "number": 5,
+      "humanId": "5c",
+      "name": {
+        "en": "🔊 APU",
+        "es": "🔊 APU"
+      },
+      "description": {
+        "en": "🔊 Produce sound and music",
+        "es": "🔊 Produce sonido y música"
+      },
+      "levels": [
+        {
+          "id": "apu-new-apu",
+          "humanId": "5c.1",
+          "globalId": 66,
+          "name": {
+            "en": "🔊 New APU",
+            "es": "🔊 Nueva APU"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-making-some-noise",
+          "humanId": "5c.2",
+          "globalId": 67,
+          "name": {
+            "en": "📢 Making some noise",
+            "es": "📢 Haciendo ruido"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-channels",
+          "humanId": "5c.3",
+          "globalId": 68,
+          "name": {
+            "en": "🎛️ Channels",
+            "es": "🎛️ Canales"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-audio-registers",
+          "humanId": "5c.4",
+          "globalId": 69,
+          "name": {
+            "en": "🔢 Audio Registers",
+            "es": "🔢 Registros de Audio"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-pulse-channels-1-5-channel-setup",
+          "humanId": "5c.5",
+          "globalId": 70,
+          "name": {
+            "en": "⚙️ Pulse Channels (1/5): Channel setup",
+            "es": "⚙️ Canales Pulso (1/5): Configuración del canal"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-pulse-channels-2-5-producing-pulse-waves",
+          "humanId": "5c.6",
+          "globalId": 71,
+          "name": {
+            "en": "📣 Pulse Channels (2/5): Producing pulse waves",
+            "es": "📣 Canales Pulso (2/5): Produciendo ondas de pulso"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-feline-flood-fiasco"
+        },
+        {
+          "id": "apu-frame-sequencer",
+          "humanId": "5c.7",
+          "globalId": 72,
+          "name": {
+            "en": "🔀 Frame Sequencer",
+            "es": "🔀 Secuenciador de Frame"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-pulse-channels-3-5-length-counter",
+          "humanId": "5c.8",
+          "globalId": 73,
+          "name": {
+            "en": "📏 Pulse Channels (3/5): Length counter",
+            "es": "📏 Canales Pulso (3/5): Contador de longitud"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-pulse-channels-4-5-volume-envelope",
+          "humanId": "5c.9",
+          "globalId": 74,
+          "name": {
+            "en": "📉 Pulse Channels (4/5): Volume envelope",
+            "es": "📉 Canales Pulso (4/5): Envolvente de volumen"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-pulse-channels-5-5-frequency-sweep",
+          "humanId": "5c.10",
+          "globalId": 75,
+          "name": {
+            "en": "🧹 Pulse Channels (5/5): Frequency sweep",
+            "es": "🧹 Canales Pulso (5/5): Barrido de frecuencia"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-triangle-channel-1-3-triangle-waves",
+          "humanId": "5c.11",
+          "globalId": 76,
+          "name": {
+            "en": "🔺 Triangle Channel (1/3): Triangle waves",
+            "es": "🔺 Canal Triangular (1/3): Ondas triangulares"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-triangle-channel-2-3-regular-length-counter",
+          "humanId": "5c.12",
+          "globalId": 77,
+          "name": {
+            "en": "📏 Triangle Channel (2/3): Regular length counter",
+            "es": "📏 Canal Triangular (2/3): Contador de longitud normal"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-triangle-channel-3-3-linear-length-counter",
+          "humanId": "5c.13",
+          "globalId": 78,
+          "name": {
+            "en": "📏 Triangle Channel (3/3): Linear length counter",
+            "es": "📏 Canal Triangular (3/3): Contador lineal de longitud"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-falling"
+        },
+        {
+          "id": "apu-noise-channel-1-3-length-counter",
+          "humanId": "5c.14",
+          "globalId": 79,
+          "name": {
+            "en": "📏 Noise Channel (1/3): Length counter",
+            "es": "📏 Canal Ruido (1/3): Contador de longitud"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-noise-channel-2-3-linear-feedback-shift-register",
+          "humanId": "5c.15",
+          "globalId": 80,
+          "name": {
+            "en": "📏 Noise Channel (2/3): Linear-feedback shift register",
+            "es": "📏 Canal Ruido (2/3): Shift register de feedback lineal"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-noise-channel-3-3-volume-envelope",
+          "humanId": "5c.16",
+          "globalId": 81,
+          "name": {
+            "en": "📉 Noise Channel (3/3): Volume envelope",
+            "es": "📉 Canal Ruido (3/3): Envolvente de volumen"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-from-below"
+        },
+        {
+          "id": "apu-dmc-channel-1-2-direct-load",
+          "humanId": "5c.17",
+          "globalId": 82,
+          "name": {
+            "en": "📦 DMC Channel (1/2): Direct load",
+            "es": "📦 Canal DMC (1/2): Carga directa"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-dmc-channel-2-2-dpcm",
+          "humanId": "5c.18",
+          "globalId": 83,
+          "name": {
+            "en": "🤏 DMC Channel (2/2): DPCM",
+            "es": "🤏 Canal DMC (2/2): DPCM"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "apu-mixer-and-apustatus",
+          "humanId": "5c.19",
+          "globalId": 84,
+          "name": {
+            "en": "📊 Mixer and APUStatus",
+            "es": "📊 Mezclador y APUStatus"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": false
+    },
+    {
+      "id": 7,
+      "number": 6,
+      "humanId": "6",
+      "name": {
+        "en": "🕹️ Console",
+        "es": "🕹️ Consola"
+      },
+      "description": {
+        "en": "🕹️ Integrate all your components here",
+        "es": "🕹️ Integra todos tus componentes aquí"
+      },
+      "levels": [
+        {
+          "id": "console-final-test",
+          "humanId": "6.1",
+          "globalId": 85,
+          "name": {
+            "en": "👹 Final test",
+            "es": "👹 Prueba final"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "console-the-real-final-test",
+          "humanId": "6.2",
+          "globalId": 86,
+          "name": {
+            "en": "🤖 The real final test",
+            "es": "🤖 La prueba final real"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "console-cpu-ppu-and-ppu-sync",
+          "humanId": "6.3",
+          "globalId": 87,
+          "name": {
+            "en": "🔄 CPU, PPU and APU sync",
+            "es": "🔄 CPU, PPU and APU sync"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "console-emulator-frontend",
+          "humanId": "6.4",
+          "globalId": 88,
+          "name": {
+            "en": "🌸 Emulator frontend",
+            "es": "🌸 Frontend del emulador"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "console-save-states",
+          "humanId": "6.5",
+          "globalId": 89,
+          "name": {
+            "en": "📸 Save states",
+            "es": "📸 Save states"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "console-full-control",
+          "humanId": "6.6",
+          "globalId": 90,
+          "name": {
+            "en": "🤹 Full control",
+            "es": "🤹 Control total"
+          },
+          "helpLines": [],
+          "unlocksGame": "lets-play-tesla-vs-edison"
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": false
+    },
+    {
+      "id": 8,
+      "number": 7,
+      "humanId": "7",
+      "name": {
+        "en": "🗜️ Mappers",
+        "es": "🗜️ Mappers"
+      },
+      "description": {
+        "en": "🗜️ Add mappers for extra compatibility",
+        "es": "🗜️ Agrega mappers para mayor compatibilidad"
+      },
+      "levels": [
+        {
+          "id": "mappers-nrom",
+          "humanId": "7.1",
+          "globalId": 91,
+          "name": {
+            "en": "🤖 NROM",
+            "es": "🤖 NROM"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "mappers-uxrom",
+          "humanId": "7.2",
+          "globalId": 92,
+          "name": {
+            "en": "🤖 UxROM",
+            "es": "🤖 UxROM"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "mappers-the-rest-of-the-mappers",
+          "humanId": "7.3",
+          "globalId": 93,
+          "name": {
+            "en": "🗜️ The rest of the mappers",
+            "es": "🗜️ El resto de los mappers"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": false
+    },
+    {
+      "id": -1,
+      "number": "✨",
+      "humanId": "✨",
+      "name": {
+        "en": "👾 Let's play NEEES games!",
+        "es": "📜 ¡Juguemos juegos de NEEES!"
+      },
+      "description": null,
+      "levels": [
+        {
+          "id": "lets-play-spacegulls",
+          "humanId": "✨.1",
+          "globalId": 94,
+          "name": {
+            "en": "🕊️🛰️ Spacegulls",
+            "es": "🕊️🛰️ Spacegulls"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-nalleland",
+          "humanId": "✨.2",
+          "globalId": 95,
+          "name": {
+            "en": "🧸 📍 Nalleland",
+            "es": "🧸 📍 Nalleland"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-jupiter-scope-2",
+          "humanId": "✨.3",
+          "globalId": 96,
+          "name": {
+            "en": "🚀💥 Jupiter Scope 2",
+            "es": "🚀💥 Jupiter Scope 2"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-ravens-gate",
+          "humanId": "✨.4",
+          "globalId": 97,
+          "name": {
+            "en": "🦅⛩️ Raven's Gate",
+            "es": "🦅⛩️ Raven's Gate"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-dizzy-sheep-disaster",
+          "humanId": "✨.5",
+          "globalId": 98,
+          "name": {
+            "en": "💫🐑 Dizzy Sheep Disaster",
+            "es": "💫🐑 Dizzy Sheep Disaster"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-heist",
+          "humanId": "✨.6",
+          "globalId": 99,
+          "name": {
+            "en": "⛽💥 Heist",
+            "es": "⛽💥 Heist"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-super-tilt-bro",
+          "humanId": "✨.7",
+          "globalId": 100,
+          "name": {
+            "en": "🦸🤸 Super Tilt Bro",
+            "es": "🦸🤸 Super Tilt Bro"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-wolf-spirit",
+          "humanId": "✨.8",
+          "globalId": 101,
+          "name": {
+            "en": "🐺🌲 Wolf Spirit",
+            "es": "🐺🌲 Wolf Spirit"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-minekart-madness",
+          "humanId": "✨.9",
+          "globalId": 102,
+          "name": {
+            "en": "💎⛏️ Minekart Madness",
+            "es": "💎⛏️ Minekart Madness"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-feline-flood-fiasco",
+          "humanId": "✨.10",
+          "globalId": 103,
+          "name": {
+            "en": "🌊🐈 Feline Flood Fiasco",
+            "es": "🌊🐈 Feline Flood Fiasco"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-falling",
+          "humanId": "✨.11",
+          "globalId": 104,
+          "name": {
+            "en": "🙌☁️ Falling",
+            "es": "🙌☁️ Falling"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-from-below",
+          "humanId": "✨.12",
+          "globalId": 105,
+          "name": {
+            "en": "🧱🐙 From Below",
+            "es": "🧱🐙 From Below"
+          },
+          "helpLines": []
+        },
+        {
+          "id": "lets-play-tesla-vs-edison",
+          "humanId": "✨.13",
+          "globalId": 106,
+          "name": {
+            "en": "📻💡 Tesla Vs Edison",
+            "es": "📻💡 Tesla Vs Edison"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": true
+    },
+    {
+      "id": -1,
+      "number": "📜 ",
+      "humanId": "📜 ",
+      "name": {
+        "en": "📜 Homepage",
+        "es": "📜 Homepage"
+      },
+      "description": null,
+      "levels": [
+        {
+          "id": "homepage-faq",
+          "humanId": "📜 .1",
+          "globalId": 107,
+          "name": {
+            "en": "❓ FAQ",
+            "es": "❓ FAQ"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": true
+    },
+    {
+      "id": -1,
+      "number": "🔭 ",
+      "humanId": "🔭 ",
+      "name": {
+        "en": "🔭 Free mode",
+        "es": "🔭 Modo libre"
+      },
+      "description": null,
+      "levels": [
+        {
+          "id": "free-mode-free",
+          "humanId": "🔭 .1",
+          "globalId": 108,
+          "name": {
+            "en": "🔭 Free mode",
+            "es": "🔭 Modo libre"
+          },
+          "helpLines": []
+        }
+      ],
+      "help": {
+        "en": "",
+        "es": ""
+      },
+      "isSpecial": true
+    }
+  ]
+}
