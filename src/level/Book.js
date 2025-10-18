@@ -10,6 +10,8 @@ export default class Book {
 	static FREE_MODE_LEVEL = "free-mode-free";
 	static FINAL_TEST_LEVEL = "console-the-real-final-test";
 	static FINAL_LEVEL = "console-full-control";
+	static CHAPTER_IDS = { CPU: 4, PPU: 5, APU: 6 };
+	static INTEGRATION_CHAPTER_NUMBER = 6;
 	static LAST_CHAPTER_NUMBER = 7;
 
 	constructor(metadata) {
@@ -67,6 +69,13 @@ export default class Book {
 			return this._savedata.unlockedLetsPlayLevels.includes(level.id);
 		} else if (chapter.number < maxChapterNumber) {
 			return true;
+		} else if (chapter.number === this.constructor.INTEGRATION_CHAPTER_NUMBER) {
+			// HACK: hardcoding a bit
+			const ids = this.constructor.CHAPTER_IDS;
+			const nextPendingCPU = this.nextPendingLevelOfChapter(ids.CPU);
+			const nextPendingPPU = this.nextPendingLevelOfChapter(ids.PPU);
+			const nextPendingAPU = this.nextPendingLevelOfChapter(ids.APU);
+			return !nextPendingCPU && !nextPendingPPU && !nextPendingAPU;
 		} else if (chapter.number === maxChapterNumber + 1) {
 			const nextPendingLevel = this.nextPendingLevelOfChapter(maxChapter.id);
 			return !nextPendingLevel;
