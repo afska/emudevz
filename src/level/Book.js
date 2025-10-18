@@ -10,6 +10,7 @@ export default class Book {
 	static FREE_MODE_LEVEL = "free-mode-free";
 	static FINAL_TEST_LEVEL = "console-the-real-final-test";
 	static FINAL_LEVEL = "console-full-control";
+	static LAST_CHAPTER_NUMBER = 7;
 
 	constructor(metadata) {
 		_.extend(this, metadata);
@@ -39,6 +40,12 @@ export default class Book {
 	}
 
 	canGoToNextChapter(chapter) {
+		if (
+			chapter.isSpecial ||
+			chapter.number === this.constructor.LAST_CHAPTER_NUMBER
+		)
+			return false;
+
 		const nextLevelId = this.nextIdOf(_.last(chapter.levels).id, true);
 		return this.isUnlocked(nextLevelId);
 	}
