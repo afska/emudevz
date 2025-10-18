@@ -2506,6 +2506,57 @@ it("doesn't reset anything on ~scanline=-1~, ~cycle=1~ if rendering is <off>", (
   use: ({ id }, book) => id >= book.getId("5b.22"),
 });
 
+it("`SpriteRenderer`: `_render(...)` does <NOT> set the sprite-zero hit flag when background is hidden OR sprites are hidden by `PPUMask`", () => {
+  const PPU = mainModule.default.PPU;
+  const ppu = new PPU({});
+  ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+
+  // set scanline
+  ppu.scanline = 45;
+
+  // mock mapper so it returns CHRs for tile 91
+  ppu.memory.mapper.ppuRead = (address) => {
+    return address >= 91 * 16 && address < 91 * 16 + 16 ? 0xff : 0;
+  };
+
+  // plot background
+  for (let x = 0; x < 256; x++) ppu.plotBG(x, ppu.scanline, 0xff000000, 1);
+
+  // sprite 0 (in y=43) => hit (if BG+sprites were shown)
+  const placeSprite0AtY43 = () => {
+    ppu.memory.oamRam[4 * 0 + 0] = 43; // y
+    ppu.memory.oamRam[4 * 0 + 1] = 91; // tile
+    ppu.memory.oamRam[4 * 0 + 2] = 0b10; // attr
+    ppu.memory.oamRam[4 * 0 + 3] = 20; // x
+  };
+
+  // background hidden (bit 3 off) => no hit
+  ppu.registers?.ppuMask?.onWrite?.(0b10110);
+  ppu.registers.ppuStatus.sprite0Hit = 0;
+  placeSprite0AtY43();
+  ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+  expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(
+    0,
+    "sprite0Hit (BG hidden)"
+  );
+
+  // sprites hidden (bit 4 off) => no hit
+  ppu.registers?.ppuMask?.onWrite?.(0b01110);
+  ppu.registers.ppuStatus.sprite0Hit = 0;
+  placeSprite0AtY43();
+  ppu.spriteRenderer._render(ppu.spriteRenderer._evaluate());
+  expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(
+    0,
+    "sprite0Hit (sprites hidden)"
+  );
+})({
+  locales: {
+    es:
+      "`SpriteRenderer`: `_render(...)` <NO> enciende la bandera de sprite-zero hit cuando `PPUMask` oculta el fondo <u> oculta los sprites",
+  },
+  use: ({ id }, book) => id >= book.getId("5b.22"),
+});
+
 // 5b.24 Color emphasis
 
 it("`PPUMask`: writes `grayscale` (bit 0)", () => {
