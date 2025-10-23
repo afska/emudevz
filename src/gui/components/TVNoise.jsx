@@ -27,21 +27,22 @@ export default class TVNoise extends Component {
 		cancelAnimationFrame(this._frameId);
 	}
 
+	_makeNoise(ctx) {
+		return 	}
+
 	_initCanvas(canvas) {
 		const self = this;
 		const context = canvas.getContext("2d");
+		const noiseFrames = new Array(256).fill(null).map(() => {
+			const idata = context.createImageData(256, 240);
+			const buffer32 = new Uint32Array(idata.data.buffer);
+			for (let i = 0; i < buffer32.length; i++) buffer32[i] = ((255 * Math.random()) | 0) << 24;
+			return idata;
+		});
 
 		function noise(ctx) {
-			let w = ctx.canvas.width,
-				h = ctx.canvas.height,
-				idata = ctx.createImageData(w, h),
-				buffer32 = new Uint32Array(idata.data.buffer),
-				len = buffer32.length,
-				i = 0;
-
-			for (; i < len; ) buffer32[i++] = ((255 * Math.random()) | 0) << 24;
-
-			ctx.putImageData(idata, 0, 0);
+			const idx = Math.floor(Math.random() * 256);
+			ctx.putImageData(noiseFrames[idx], 0, 0);
 		}
 
 		let toggle = true;
