@@ -10,7 +10,7 @@ const read = (cpu, address) => {
 	const value = cpu.memory.read(address);
 	if (!_.isFinite(value))
 		throw new Error(
-			"`cpu.memory.read(" + hex(address, 4) + ")` is not a number?!"
+			"`cpu.memory.read(0x" + hex(address, 4) + ")` is not a number?!"
 		);
 
 	return value;

@@ -601,7 +601,6 @@
 		}
 		DrawOptionsLine(s, mem_data, mem_size, base_display_addr) {
 			// IM_UNUSED(mem_data);
-			const style = ImGui__namespace.GetStyle();
 			// const char* format_range = OptUpperCaseHex ? "Range %0*" _PRISizeT "X..%0*" _PRISizeT "X" : "Range %0*" _PRISizeT "x..%0*" _PRISizeT "x";
 			const format_range = (n_min, a_min, n_max, a_max) => {
 				let s_min = a_min.toString(16).padStart(n_min, "0");
@@ -631,10 +630,6 @@
 					if (this.Cols < 1) this.Cols = 1;
 				}
 				ImGui__namespace.PopItemWidth();
-				ImGui__namespace.Checkbox(
-					"Show Data Preview",
-					(_ = this.OptShowDataPreview) => (this.OptShowDataPreview = _)
-				);
 				ImGui__namespace.Checkbox(
 					"Show HexII",
 					(_ = this.OptShowHexII) => (this.OptShowHexII = _)
@@ -667,30 +662,6 @@
 					base_display_addr + mem_size - 1
 				)
 			);
-			ImGui__namespace.SameLine();
-			ImGui__namespace.PushItemWidth(
-				(s.AddrDigitsCount + 1) * s.GlyphWidth + style.FramePadding.x * 2.0
-			);
-			if (
-				ImGui__namespace.InputText(
-					"##addr",
-					this.AddrInputBuf,
-					32,
-					ImGui__namespace.InputTextFlags.CharsHexadecimal |
-						ImGui__namespace.InputTextFlags.EnterReturnsTrue
-				)
-			) {
-				// size_t goto_addr;
-				let goto_addr;
-				// if (sscanf(AddrInputBuf, "%" _PRISizeT "X", &goto_addr) === 1)
-				if (
-					Number.isInteger((goto_addr = parseInt(this.AddrInputBuf.buffer, 16)))
-				) {
-					this.GotoAddr = goto_addr - base_display_addr;
-					this.HighlightMin = this.HighlightMax = -1;
-				}
-			}
-			ImGui__namespace.PopItemWidth();
 			if (this.GotoAddr !== -1) {
 				if (this.GotoAddr < mem_size) {
 					ImGui__namespace.BeginChild("##scrolling");
