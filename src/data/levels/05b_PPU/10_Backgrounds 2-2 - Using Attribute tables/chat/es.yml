@@ -36,7 +36,7 @@ main:
         const colorIndex = tile.getColorIndex(xx);
         const color =
           colorIndex > 0 ? this.ppu.getColor(paletteId, colorIndex) : this.ppu.getColor(0, 0);
-        this.plot(x + xx, y, color);
+        this.ppu.plot(x + xx, y, color);
       }```
   - ten en cuenta que cuando el índice de color es 0, se renderiza un <backdrop color> en su lugar (ubicado en el primer índice de la primera paleta)
   responses:
