@@ -30,8 +30,7 @@ class GamepadMapper extends PureComponent {
 			let isDuplicate = false;
 			if (keyForThisButton) {
 				let count = 0;
-				for (let k of Object.keys(mappings))
-					if (mappings[k] === keyForThisButton) count++;
+				for (let k in mappings) if (mappings[k] === keyForThisButton) count++;
 				isDuplicate = count > 1;
 			}
 

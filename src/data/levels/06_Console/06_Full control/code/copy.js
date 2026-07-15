@@ -13,7 +13,7 @@ filesystem.mkdirp(`${Drive.TMPL_DIR}/tests`);
 	filesystem.write(`${Drive.LIB_DIR}/${file}`, level.bin[file]);
 });
 
-for (let fileName of Object.keys(level.tests)) {
+for (let fileName in level.tests) {
 	const newName = fileName.replace(".js", "") + ".test.js";
 	filesystem.write(`${Drive.TMPL_DIR}/tests/${newName}`, level.tests[fileName]);
 }

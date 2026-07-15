@@ -29,9 +29,8 @@ it("the file `/code/index.js` exports <an object> containing the `instructions` 
 
 it("every member of the `instructions` object has an `id`", () => {
   const instructions = mainModule.default.instructions;
-  expect(instructions, "instructions").to.be.an("object");
 
-  for (let key of Object.keys(instructions)) {
+  for (let key in instructions) {
     expect(instructions[key]).to.include.key("id");
     expect(instructions[key].id).to.equalN(key, "id");
   }

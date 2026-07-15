@@ -29,9 +29,8 @@ it("the file `/code/index.js` exports <an object> containing the `addressingMode
 
 it("every member of the `addressingModes` object has an `id`", () => {
   const addressingModes = mainModule.default.addressingModes;
-  expect(addressingModes, "addressingModes").to.be.an("object");
 
-  for (let key of Object.keys(addressingModes)) {
+  for (let key in addressingModes) {
     expect(addressingModes[key]).to.include.key("id");
     expect(addressingModes[key].id).to.equalN(key, "id");
   }

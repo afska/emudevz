@@ -92,7 +92,7 @@ export default class LevelLoader {
 		const files = {};
 		const prefix = `${folder}/`;
 
-		for (let filePath of Object.keys(zip.files)) {
+		for (let filePath in zip.files) {
 			if (!zip.files[filePath].dir && filePath.startsWith(prefix)) {
 				const fileName = filePath.replace(prefix, "");
 				files[fileName] = await read(filePath);

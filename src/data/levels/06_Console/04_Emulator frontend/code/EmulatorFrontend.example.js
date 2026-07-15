@@ -82,7 +82,7 @@ export default class EmulatorFrontend {
 
   _updateInput(input) {
     for (let i = 0; i < 2; i++) {
-      for (let button of Object.keys(input[i]))
+      for (let button in input[i])
         this.neees.setButton(i + 1, button, input[i][button]);
     }
   }

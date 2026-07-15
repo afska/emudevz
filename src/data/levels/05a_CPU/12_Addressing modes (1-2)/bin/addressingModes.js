@@ -103,7 +103,7 @@ const addressingModes = {
   },
 };
 
-for (let key of Object.keys(addressingModes)) {
+for (let key in addressingModes) {
   addressingModes[key].id = key;
 }
 

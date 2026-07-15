@@ -299,7 +299,7 @@ export default class Emulator extends Component {
 		const mappings = store.getState().savedata.keyboardMappings[player];
 		let selectedButton = null;
 
-		for (let button of Object.keys(mappings)) {
+		for (let button in mappings) {
 			if (mappings[button] === selectedKey) {
 				if (selectedButton == null) selectedButton = button;
 				else return null;
@@ -351,7 +351,7 @@ export default class Emulator extends Component {
 		if (!this.keyboardInputs) return;
 
 		for (let player = 1; player <= 2; player++) {
-			for (let key of Object.keys(this.keyboardInputs[player])) {
+			for (let key in this.keyboardInputs[player]) {
 				this.keyboardInputs[player][key] = false;
 			}
 		}
