@@ -350,7 +350,7 @@ export default {
 				const state = _state_[KEY];
 				const book = _state_.book.instance;
 
-				for (let key in INITIAL_STATE()) {
+				for (let key of Object.keys(INITIAL_STATE())) {
 					if (state[key] == null) {
 						this._setKey({ key, value: INITIAL_STATE()[key] });
 					}

@@ -125,7 +125,7 @@ export default class ChatScript {
 	validate() {
 		if (this.content.main == null) throw new Error("No main section");
 
-		for (let sectionName in this.content) {
+		for (let sectionName of Object.keys(this.content)) {
 			const section = this.content[sectionName];
 
 			if (!Array.isArray(section.messages))

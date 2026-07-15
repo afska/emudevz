@@ -50,7 +50,7 @@ const instructions = {
   },
 };
 
-for (let key in instructions) {
+for (let key of Object.keys(instructions)) {
   instructions[key].id = key;
 }
 

@@ -56,7 +56,7 @@ export default {
 		// IndexedDB
 		let hasDBFiles = false;
 		const prefix = INDEXED_DB_FOLDER + "/";
-		for (let file in zip.files) {
+		for (let file of Object.keys(zip.files)) {
 			if (file !== prefix && file.startsWith(prefix)) {
 				window.atob(file.replace(prefix, ""));
 				hasDBFiles = true;
@@ -76,7 +76,7 @@ export default {
 		// IndexedDB
 		const db = await openDB();
 		const prefix = INDEXED_DB_FOLDER + "/";
-		for (let file in zip.files) {
+		for (let file of Object.keys(zip.files)) {
 			if (file !== prefix && file.startsWith(prefix)) {
 				const key = window.atob(file.replace(prefix, ""));
 				const content = await zip.file(file).async("uint8array");
@@ -130,7 +130,7 @@ function getLocalStorage() {
 
 function setLocalStorage(save) {
 	const data = JSON.parse(save);
-	for (let key in data) {
+	for (let key of Object.keys(data)) {
 		const value = data[key];
 		localStorage.setItem(key, value);
 	}

@@ -259,7 +259,7 @@ export default class Emulation {
 			}
 
 			try {
-				for (let button in input[i])
+				for (let button of Object.keys(input[i]))
 					if (button[0] !== "$") {
 						this.neees.setButton(i + 1, button, input[i][button]);
 					}
