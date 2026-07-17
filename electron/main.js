@@ -1,6 +1,7 @@
 const {
 	app,
 	BrowserWindow,
+	screen,
 	shell,
 	ipcMain,
 	protocol,
@@ -15,6 +16,8 @@ const fsp = require("node:fs/promises");
 const isDev = !app.isPackaged;
 const isWindows = process.platform === "win32";
 const isMacOS = process.platform === "darwin";
+const WINDOW_WIDTH = 1280;
+const WINDOW_HEIGHT = 800;
 
 app.setName("EmuDevz");
 
@@ -47,15 +50,14 @@ function createWindow() {
 		? path.join(__dirname, "..", "public", "icons")
 		: path.join(app.getAppPath(), "build", "icons");
 	const iconPath = path.join(iconBase, "icon-512x512.png");
+	const windowBounds = getPrimaryDisplayWindowBounds();
 
 	// Main window
 	const win = new BrowserWindow({
 		title: "EmuDevz",
-		width: 1280,
-		height: 800,
+		...windowBounds,
 		fullscreen: !isWindows,
 		resizable: true,
-		center: true,
 		autoHideMenuBar: true,
 		icon: iconPath,
 		backgroundColor: "#000000",
@@ -286,3 +288,17 @@ ipcMain.handle("open-devtools", () => {
 	const win = BrowserWindow.getFocusedWindow();
 	if (win) win.webContents.openDevTools({ mode: "detach" });
 });
+
+function getPrimaryDisplayWindowBounds() {
+	const { workArea } = screen.getPrimaryDisplay();
+
+	return {
+		x:
+			workArea.x + Math.max(0, Math.round((workArea.width - WINDOW_WIDTH) / 2)),
+		y:
+			workArea.y +
+			Math.max(0, Math.round((workArea.height - WINDOW_HEIGHT) / 2)),
+		width: WINDOW_WIDTH,
+		height: WINDOW_HEIGHT,
+	};
+}
