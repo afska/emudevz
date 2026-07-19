@@ -76,9 +76,13 @@ export default class NEEESTestLogger {
 				const $argument = hexArgument(argument);
 				let finalAddress = null;
 
+				const extraCycles = cpu.extraCycles;
 				try {
 					finalAddress = operation.addressingMode.getAddress(cpu, input);
-				} catch (e) {}
+				} catch (e) {
+				} finally {
+					cpu.extraCycles = extraCycles;
+				}
 
 				switch (operation.addressingMode.id) {
 					case "IMPLICIT":

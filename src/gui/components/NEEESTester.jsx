@@ -143,7 +143,10 @@ export default class NEEESTester extends PureComponent {
 			const rom = new Uint8Array(
 				filesystem.read(NEEESTEST_PATH, { binary: true })
 			);
-			const NEEES = await new EmulatorBuilder().addUserCPU().build();
+			const NEEES = await new EmulatorBuilder()
+				.setUnbroken(true)
+				.addUserCPU()
+				.build();
 			const neees = new NEEES();
 			neees.load(rom);
 			neees.logger = new NEEESTestLogger();
