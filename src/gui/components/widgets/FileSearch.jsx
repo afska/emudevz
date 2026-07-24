@@ -44,6 +44,7 @@ export default forwardRef(function FileSearch(props, ref) {
 	const [input, setInput] = useState("");
 	const [selected, setSelected] = useState(0);
 	const [matches, setMatches] = useState([]);
+	const containerRef = useRef(null);
 	const inputRef = useRef(null);
 
 	// class index: array of { className, filePath, lineNumber }
@@ -190,6 +191,15 @@ export default forwardRef(function FileSearch(props, ref) {
 		_onSelect(filePath, undefined, event.button === 1);
 	};
 
+	const _onInputBlur = () => {
+		if (containerRef.current?.matches(":hover")) {
+			inputRef.current?.focus();
+			return;
+		}
+
+		if (onBlur) onBlur();
+	};
+
 	const tree = LsCommand.getTree(DIRECTORY, false, undefined, filter).replace(
 		/\[\[\[(.+)\]\]\]/g,
 		(__, filePath) => {
@@ -206,14 +216,18 @@ export default forwardRef(function FileSearch(props, ref) {
 
 	const render = () => {
 		return (
-			<div className={classNames(styles.container, className)} {...rest}>
+			<div
+				className={classNames(styles.container, className)}
+				ref={containerRef}
+				{...rest}
+			>
 				<Form.Control
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
 					placeholder={locales.get("enter_a_file_name")}
 					spellCheck={false}
 					className={styles.input}
-					onBlur={onBlur}
+					onBlur={_onInputBlur}
 					onKeyDown={_onKeyDown}
 					ref={inputRef}
 				/>
