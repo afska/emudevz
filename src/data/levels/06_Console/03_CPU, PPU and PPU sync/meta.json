@@ -9,7 +9,7 @@
 			"Left": [
 				"console",
 				{
-					"startup": "chat"
+					"startup": "chat -f"
 				}
 			],
 			"Right": [
@@ -22,7 +22,8 @@
 				}
 			]
 		},
-		"focus": "Left"
+		"focus": "Left",
+		"canPinEmulator": false
 	},
 	"test": {
 		"context": "javascript",
