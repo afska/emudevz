@@ -96,7 +96,8 @@
   "overrides": {
     "@pixi/canvas-renderer": "6.3.0",
     "@pixi/core": "6.3.0",
-    "react-redux": "7.2.9"
+    "react-redux": "7.2.9",
+    "get-func-name": "2.0.1"
   },
   "eslintConfig": {
     "extends": "react-app",
