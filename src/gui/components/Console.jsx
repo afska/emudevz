@@ -68,6 +68,10 @@ export default class Console extends PureComponent {
 			<div
 				className={styles.xtermContainer}
 				onKeyDownCapture={this._onKeyDownCapture}
+				ref={(ref) => {
+					if (!ref) return;
+					this._container = ref;
+				}}
 			>
 				<XTerm
 					className={styles.xtermContainer}
@@ -99,6 +103,7 @@ export default class Console extends PureComponent {
 
 		this._subscriber = bus.subscribe({
 			"theme-changed": this._refreshTheme,
+			"console-changed": this._blink,
 		});
 	}
 
@@ -143,6 +148,18 @@ export default class Console extends PureComponent {
 			...theme,
 		};
 		term.refresh(0, term.rows - 1);
+	};
+
+	_blink = () => {
+		this._container.classList.remove("quickflash");
+
+		setTimeout(() => {
+			try {
+				this._container.classList.add("quickflash");
+			} catch (e) {
+				// maybe already detached
+			}
+		});
 	};
 }
 

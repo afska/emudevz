@@ -3,6 +3,7 @@ import _ from "lodash";
 import filesystem from "../filesystem";
 import _links from "../gui/_links";
 import { sfx } from "../gui/sound";
+import Level from "../level/Level";
 import locales from "../locales";
 import { getAdvancedSetting } from "../models/savedata";
 import store from "../store";
@@ -990,5 +991,8 @@ export default class Terminal {
 }
 
 function hasInstantChat() {
-	return getAdvancedSetting((obj) => obj.chat?.instant);
+	return (
+		getAdvancedSetting((obj) => obj.chat?.instant) ||
+		Level.current.memory.chat.instant
+	);
 }

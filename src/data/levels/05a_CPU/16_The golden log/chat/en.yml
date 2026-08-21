@@ -36,43 +36,34 @@ golden:
 
 pageboundary:
   run: |
+    bus.emit("console-changed");
     set((m) => {
+      m.chat.instant = true
       m.$canRun = false;
     });
   messages:
   - ah... the <page boundary bug> 😅
   - I totally forgot about it!
-  responses:
-  - the what? [thewhat]
-
-thewhat:
-  messages:
   - there's a bug in how the NEEES processes the "Indirect" addressing mode
-  responses:
-  - a bug in the hardware?! 🤔 [hardware]
-
-hardware:
-  messages:
-  - yes, and if we want to emulate the hardware accurately... we have to also emulate the bugs 😅
-  responses:
-  - can't I just fix the bug? 😤 [fix]
-
-fix:
-  messages:
-  - you can, but you'd be breaking compatibility with some games that depend (whether accidentally or intentionally) on that bug
+  - yeah, a bug in the hardware
+  - and if we want to emulate the hardware accurately... we have to also emulate the bugs 😅
+  - if you try to "fix it", you'd be breaking compatibility with some games that depend (whether accidentally or intentionally) on that bug
   - I've improvised a quick documentation file talking about it
   - it's in 📄  ~/docs/cpu/page_boundary_bug.en.md~
   - 📚  introduce that bug and try again!
   run-after-messages: |
     set((m) => {
       m.$canRun = true;
+      m.chat.instant = false;
     });
   events:
   - ...golden
 
 unexpected:
   run: |
+    bus.emit("console-changed");
     set((m) => {
+      m.chat.instant = true
       m.$canRun = false;
     });
   messages:
@@ -88,6 +79,7 @@ unexpected:
   run-after-messages: |
     set((m) => {
       m.$canRun = true;
+      m.chat.instant = false;
     });
   events:
   - ...golden

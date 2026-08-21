@@ -45,6 +45,7 @@ export default class Level {
 					history: [],
 					winOnEnd: false,
 					stopBlock: null,
+					instant: false,
 				},
 				content: {
 					multifile: false,

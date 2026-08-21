@@ -36,43 +36,34 @@ golden:
 
 pageboundary:
   run: |
+    bus.emit("console-changed");
     set((m) => {
+      m.chat.instant = true
       m.$canRun = false;
     });
   messages:
   - ah... el <page boundary bug> 😅
   - ¡me olvidé completamente de él!
-  responses:
-  - ¿el qué? [thewhat]
-
-thewhat:
-  messages:
   - hay un bug en cómo la NEEES procesa el modo de direccionamiento "Indirect"
-  responses:
-  - ¡¿un bug en el hardware?! 🤔 [hardware]
-
-hardware:
-  messages:
-  - sí, y si queremos emular el hardware precisamente... tenemos también que emular los bugs 😅
-  responses:
-  - ¿no puedo simplemente arreglar el bug? 😤 [fix]
-
-fix:
-  messages:
-  - puedes, pero estarías rompiendo la compatibilidad con algunos juegos que dependen (ya sea accidentalmente o intencionalmente) de ese bug
+  - sí, un bug en el hardware
+  - y si queremos emular el hardware precisamente... tenemos también que emular los bugs 😅
+  - si intentas 'arreglarlo', estarías rompiendo la compatibilidad con algunos juegos que dependen (ya sea accidentalmente o intencionalmente) de ese bug
   - improvisé un archivo de documentación corto hablando sobre esto
   - está en 📄  ~/docs/cpu/page_boundary_bug.es.md~
   - 📚  ¡introduce el bug e intenta de nuevo!
   run-after-messages: |
     set((m) => {
       m.$canRun = true;
+      m.chat.instant = false;
     });
   events:
   - ...golden
 
 unexpected:
   run: |
+    bus.emit("console-changed");
     set((m) => {
+      m.chat.instant = true
       m.$canRun = false;
     });
   messages:
@@ -88,6 +79,7 @@ unexpected:
   run-after-messages: |
     set((m) => {
       m.$canRun = true;
+      m.chat.instant = false;
     });
   events:
   - ...golden

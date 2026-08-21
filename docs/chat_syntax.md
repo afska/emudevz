@@ -20,6 +20,9 @@ more:
     // configure level to win on `end`
     set((m) => m.chat.winOnEnd = true);
 
+    // for more `m` properties: see `src/level/Level.jsx` (`this.memory = ...`)
+    // for more global symbols: see `src/level/codeEval.js` (`// eval scope`)
+
     // call methods on the {{Bottom}} layout directly
     {{Bottom}}.setSelectedCells([]);
   messages:
