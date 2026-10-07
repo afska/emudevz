@@ -1,0 +1,38 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+    - наш 💾  Cartridge готов!
+    - теперь я могу изменить твой код так, чтобы BrokenNEEES использовал твою реализацию
+    - и хотя бы баг с испорченным CHR-ROM исчезнет 🐞
+    - ну что, начинаем?
+  responses:
+    - конечно, хочу попробовать! [tryit]
+
+tryit:
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 3000);
+  messages:
+    - окей, дай мне несколько секунд
+    - задача непростая 👀
+    - приступаю
+    - " ... ... "
+  events:
+    - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useCartridge");
+  messages:
+    - ✅  готово!
+    - <! 💾  Cartridge подключён.
+    - теперь значок 💾  в эмуляторе будет светиться ✨
+    - нажимай на него, чтобы переключаться между своей реализацией и сломанной
+    - попробуй открыть игры, они будут выглядеть гоораздо лучше 😉
+  responses:
+    - ▶️  продолжить [end]

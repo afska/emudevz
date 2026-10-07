@@ -1,0 +1,54 @@
+---
+main:
+  messages:
+    - с чего-то нужно начинать 😅
+    - <{architecture_unified.png;100x100}>
+    - как уже говорилось, компоненты можно писать в любом порядке
+    - а я подстрою BrokenNEEES, чтобы он использовал части твоего эмулятора...
+  run-after-messages: |
+    $.goTo("components");
+  responses: []
+
+components:
+  messages:
+    - "🧠  CPU: Выбери его, если хочется реализовать то, что мы изучили в главе об ассемблере."
+    - "🖥️  PPU: Выбери его, если хочется сразу перейти к делу и вывести графику на экран."
+    - "🔊  APU: Выбери его, если интересно узнать, как воспроизводить звук в играх."
+    - по-моему, лучше начать с 🧠  CPU, но кто меня слушает...
+  responses:
+    - 🧠  хочу начать с CPU [cpu]
+    - 🖥️  хочу начать с PPU [ppu]
+    - 🔊  хочу начать с APU [apu]
+
+cpu:
+  run: |
+    const book = store.getState().book.instance;
+    const chapter = book.getChapter(4);
+    const firstLevelId = chapter.levels[0].id;
+    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
+    store.dispatch.savedata.unlockChapter(firstLevelId);
+    store.dispatch.savedata.advanceTo(firstLevelId);
+  messages: []
+  responses: []
+
+ppu:
+  run: |
+    const book = store.getState().book.instance;
+    const chapter = book.getChapter(5);
+    const firstLevelId = chapter.levels[0].id;
+    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
+    store.dispatch.savedata.unlockChapter(firstLevelId);
+    store.dispatch.savedata.advanceTo(firstLevelId);
+  messages: []
+  responses: []
+
+apu:
+  run: |
+    const book = store.getState().book.instance;
+    const chapter = book.getChapter(6);
+    const firstLevelId = chapter.levels[0].id;
+    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
+    store.dispatch.savedata.unlockChapter(firstLevelId);
+    store.dispatch.savedata.advanceTo(firstLevelId);
+  messages: []
+  responses: []

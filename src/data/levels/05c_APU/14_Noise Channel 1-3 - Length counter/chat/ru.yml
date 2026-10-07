@@ -1,0 +1,58 @@
+---
+main:
+  messages:
+  - "💥  шумовой канал немного... <шумный>"
+  - "очень важно правильно его заглушать, с этого и начнём"
+  - "а уже потом займёмся самой эмуляцией шума!"
+  responses:
+  - "как его заглушить? [exercise]"
+
+exercise:
+  messages:
+  - "как обычно: следить за 🎛️  APUControl и 📏  счётчиком длины"
+  - "у него есть и 📉  огибающая! её разберём позже"
+  - "это уже знакомые вещи, поэтому я дам базовый шаблон, а тебе останется всё подключить"
+  - "📚  создай класс `NoiseChannel` по шаблону 📄  ~/tmpl/apu/NoiseChannel.js~"
+  - |-
+    📚  в 🔊  `APU`:
+    **->** импортируй канал и добавь ключ `noise` в ```javascript this.channels``` с новым экземпляром
+    **->** в `step()`, перед увеличением счётчика отсчётов, вызывай ```javascript this.channels.noise.step()```
+    **->** там же, в `step()`, добавь шумовой канал в смесь:
+      ```javascript const noise = this.channels.noise.sample();
+      this.sample = (pulse1 + pulse2 + triangle + noise) * 0.01;
+
+      onSample(this.sample, pulse1, pulse2, triangle, noise);```
+    **->** в `onQuarterFrameClock()` вызывай `quarterFrame()` у экземпляра шумового канала
+    **->** в `onHalfFrameClock()` вызывай `halfFrame()` у экземпляра шумового канала
+  - |-
+      📚  реализуй в 💥  `NoiseControl`:
+      **onLoad()**:
+        **->** через ```javascript this.addField(...)``` задаёт 3 поля: `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`
+        (сверяйся с 📄  ~/docs/apu/audio_registers.ru.md~)
+      **onWrite(value)**:
+        **->** задаёт значение через ```javascript this.setValue(...)```
+  - |-
+      📚  реализуй в 📏  `NoiseLCL`:
+      **onLoad()**:
+        **->** через ```javascript this.addField(...)``` задаёт 5-битное поле `lengthCounterLoad`, начиная с бита 3
+      **onWrite(value)**:
+        **->** задаёт значение через ```javascript this.setValue(...)```
+        **->** определяет новую длину по элементу массива `noteLengths` с индексом ```javascript this.lengthCounterLoad```
+          (массив возьми из 📄  ~/lib/apu/noteLengths.js~)
+        **->** записывает новую длину в свойство `counter` счётчика длины канала
+  - |-
+    📚  реализуй в 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __сохрани текущее поведение__
+      **->** если `!this.enableNoise`:
+        **->** сбрасывает счётчик длины канала
+  responses:
+  - "(*) почему в твоём шаблоне используется `random()`? [random]"
+
+random:
+  messages:
+  - "конечно, NEEES работает иначе"
+  - "это только чтобы уже можно было хоть что-то услышать!"
+  - "правильной эмуляцией шума займёмся на следующем уровне"
+  responses:
+  - ...exercise

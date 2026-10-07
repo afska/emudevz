@@ -150,6 +150,7 @@ export default {
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",
+	language_ru: "Ruso",
 	last_version: " (última versión)",
 	left: "Izquierda",
 	letsplay_unlock_msg1: "¡Nuevo",
@@ -344,4 +345,20 @@ export default {
 	yes: "Sí",
 	your_cpu_works: "¡Tu CPU funciona!",
 	your_emulator: "Tu emulador",
+	press_key_to_enable_audio: "¡Pulsa cualquier tecla para activar el audio!",
+	error_loading_assets: "Error al cargar los recursos.",
+	error_loading_save_state: "Error al cargar el estado guardado: ",
+	error_book_not_found: "No se encontró el libro",
+	error_unknown_level: "Nivel inexistente: ",
+	error_level_not_found: "No se encontró el nivel.",
+	mapper: "Mapper",
+	mirroring: "Reflejo",
+	image_content: "contenido",
+	zoom_in: "Acercar",
+	zoom_out: "Alejar",
+	zoom_reset: "Restablecer zoom",
+	error_safari:
+		"Safari tiene problemas conocidos que impiden que el juego funcione. Usa un navegador basado en Chromium o Firefox.",
+	error_emojis:
+		"Tu sistema no puede mostrar algunos emojis del juego. Puedes seguir jugando, ¡pero la ambientación se verá afectada!",
 };

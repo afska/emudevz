@@ -1,36 +1,53 @@
 {
 	"name": {
 		"en": "🦸🤸 Super Tilt Bro",
-		"es": "🦸🤸 Super Tilt Bro"
+
+		"es": "🦸🤸 Super Tilt Bro",
+
+		"ru": "🦸🤸 Super Tilt Bro"
 	},
+
 	"ui": {
 		"layout": "dual",
+
 		"components": {
 			"Left": [
 				"console",
+
 				{
 					"startup": "chat -f",
+
 					"availableCommands": ["chat"],
+
 					"subtitle": {
 						"en": "",
-						"es": ""
+
+						"es": "",
+
+						"ru": ""
 					}
 				}
 			],
+
 			"Right": [
 				"tv",
+
 				{
 					"content": null,
+
 					"type": "stream"
 				}
 			]
 		},
+
 		"focus": "Left"
 	},
+
 	"memory": {
 		"content": {
 			"protected": true
 		}
 	},
+
 	"unlocksAchievementOnEnd": "game-super-tilt-bro"
 }

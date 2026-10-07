@@ -30,6 +30,7 @@ function newCPU(prgBytes = []) {
     expect(instructions[instruction].argument).to.equalN("address", "argument");
   })({
     locales: {
+      ru: "`" + instruction + '`: argument == "address"',
       es: "`" + instruction + '`: argument == "address"',
     },
     use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -46,6 +47,11 @@ function newCPU(prgBytes = []) {
     expect(cpu.extraCycles).to.equalN(1, "extraCycles");
   })({
     locales: {
+      ru:
+        "`" +
+        instruction +
+        "`: " +
+        `выполняет переход, если флаг ~${name}~ сброшен`,
       es:
         "`" +
         instruction +
@@ -70,6 +76,11 @@ function newCPU(prgBytes = []) {
     }
   )({
     locales: {
+      ru:
+        "`" +
+        instruction +
+        "`: " +
+        `не выполняет переход, если флаг ~${name}~ установлен`,
       es:
         "`" +
         instruction +
@@ -95,6 +106,7 @@ function newCPU(prgBytes = []) {
     expect(instructions[instruction].argument).to.equalN("address", "argument");
   })({
     locales: {
+      ru: "`" + instruction + '`: argument == "address"',
       es: "`" + instruction + '`: argument == "address"',
     },
     use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -111,6 +123,11 @@ function newCPU(prgBytes = []) {
     expect(cpu.extraCycles).to.equalN(1, "extraCycles");
   })({
     locales: {
+      ru:
+        "`" +
+        instruction +
+        "`: " +
+        `выполняет переход, если флаг ~${name}~ установлен`,
       es:
         "`" +
         instruction +
@@ -135,6 +152,11 @@ function newCPU(prgBytes = []) {
     }
   )({
     locales: {
+      ru:
+        "`" +
+        instruction +
+        "`: " +
+        `не выполняет переход, если флаг ~${name}~ сброшен`,
       es:
         "`" +
         instruction +
@@ -152,6 +174,7 @@ it('`JMP`: argument == "address"', () => {
   expect(instructions.JMP.argument).to.equalN("address", "argument");
 })({
   locales: {
+    ru: '`JMP`: argument == "address"',
     es: '`JMP`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -166,6 +189,7 @@ it("`JMP`: jumps to the address", () => {
   expect(cpu.pc.getValue()).to.equalHex(0x1234, "getValue()");
 })({
   locales: {
+    ru: "`JMP`: выполняет переход по адресу",
     es: "`JMP`: salta a la dirección",
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -178,6 +202,7 @@ it('`JSR`: argument == "address"', () => {
   expect(instructions.JSR.argument).to.equalN("address", "argument");
 })({
   locales: {
+    ru: '`JSR`: argument == "address"',
     es: '`JSR`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -193,6 +218,7 @@ it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
   expect(cpu.pc.getValue()).to.equalHex(0x1234, "getValue()");
 })({
   locales: {
+    ru: "`JSR`: помещает [PC] - 1 в стек и выполняет переход по адресу",
     es: "`JSR`: pone [PC] - 1 en la pila y salta a la dirección",
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -205,6 +231,7 @@ it('`RTI`: argument == "no"', () => {
   expect(instructions.RTI.argument).to.equalN("no", "argument");
 })({
   locales: {
+    ru: '`RTI`: argument == "no"',
     es: '`RTI`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -222,6 +249,7 @@ it("`RTI`: updates the flags and [PC] from the stack", () => {
   expect(cpu.pc.getValue()).to.equalHex(0xfe35, "getValue()");
 })({
   locales: {
+    ru: "`RTI`: обновляет флаги и [PC] значениями из стека",
     es: "`RTI`: actualiza las banderas y [PC] desde la pila",
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -234,6 +262,7 @@ it('`RTS`: argument == "no"', () => {
   expect(instructions.RTS.argument).to.equalN("no", "argument");
 })({
   locales: {
+    ru: '`RTS`: argument == "no"',
     es: '`RTS`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -249,6 +278,7 @@ it("`RTS`: updates [PC] from a value in the stack + 1", () => {
   expect(cpu.pc.getValue()).to.equalHex(0xfe36, "getValue()");
 })({
   locales: {
+    ru: "`RTS`: записывает в [PC] значение из стека + 1",
     es: "`RTS`: actualiza [PC] desde un valor en la pila + 1",
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),

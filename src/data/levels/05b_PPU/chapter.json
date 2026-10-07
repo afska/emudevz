@@ -1,10 +1,17 @@
 {
 	"name": {
 		"en": "🖥️ PPU",
-		"es": "🖥️ PPU"
+
+		"es": "🖥️ PPU",
+
+		"ru": "🖥️ PPU"
 	},
+
 	"description": {
 		"en": "🖥️ Draw graphics on the screen",
-		"es": "🖥️ Dibuja gráficos en la pantalla"
+
+		"es": "🖥️ Dibuja gráficos en la pantalla",
+
+		"ru": "🖥️ Рисуй графику на экране"
 	}
 }

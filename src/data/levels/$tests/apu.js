@@ -34,6 +34,7 @@ it("the file `/code/index.js` exports <an object> containing the `APU` class", (
   expect(mainModule.default.APU).to.be.a.class;
 })({
   locales: {
+    ru: "файл `/code/index.js` экспортирует <объект>, содержащий класс `APU`",
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene la clase `APU`",
   },
@@ -48,6 +49,7 @@ it("receives and saves the `cpu` property", () => {
   expect(apu.cpu).to.equalN(cpu, "cpu");
 })({
   locales: {
+    ru: "принимает и сохраняет свойство `cpu`",
     es: "recibe y guarda una propiedad `cpu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.1"),
@@ -64,6 +66,7 @@ it("initializes the <counters>", () => {
   expect(apu.sample).to.equalN(0, "sample");
 })({
   locales: {
+    ru: "инициализирует <счётчики>",
     es: "inicializa los <contadores>",
   },
   use: ({ id }, book) => id >= book.getId("5c.1"),
@@ -80,6 +83,7 @@ it("increments the <sample counter> on every `step(...)` call", () => {
   }
 })({
   locales: {
+    ru: "увеличивает <счётчик отсчётов> при каждом вызове `step(...)`",
     es: "incrementa el <contador de samples> en cada llamada a `step(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.1"),
@@ -105,6 +109,7 @@ it("generates a new sample for every 20 `step(...)` calls", () => {
   expect(onSample).to.have.been.calledWith(apu.sample);
 })({
   locales: {
+    ru: "создаёт новый отсчёт каждые 20 вызовов `step(...)`",
     es: "genera un nuevo sample por cada 20 llamadas a `step(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.1"),
@@ -176,6 +181,7 @@ it("includes a `registers` property with 21 audio registers", () => {
   checkRegister("apuFrameCounter", 0x4017);
 })({
   locales: {
+    ru: "содержит свойство `registers` с 21 звуковым регистром",
     es: "incluye una propiedad `registers` con 21 registros de audio",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -244,6 +250,7 @@ it("connects the audio registers to CPU memory (<reads>)", () => {
   checkRegister("apuFrameCounter", 0x4017, false);
 })({
   locales: {
+    ru: "подключает звуковые регистры к памяти CPU (<чтение>)",
     es: "conecta los registros de audio con la memoria de CPU (<lecturas>)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -298,6 +305,7 @@ it("connects the audio registers to CPU memory (<writes>)", () => {
   checkRegister("apuFrameCounter", 0x4017);
 })({
   locales: {
+    ru: "подключает звуковые регистры к памяти CPU (<запись>)",
     es: "conecta los registros de audio con la memoria de CPU (<escrituras>)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -321,6 +329,7 @@ it("except `APUStatus`, all registers are <write only>", () => {
   });
 })({
   locales: {
+    ru: "все регистры, кроме `APUStatus`, доступны <только для записи>",
     es: "excepto `APUStatus`, todos los registros son <solo escritura>",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -347,6 +356,7 @@ it("`PulseControl`: writes `volumeOrEnvelopePeriod` (bits ~0-3~)", () => {
   });
 })({
   locales: {
+    ru: "`PulseControl`: записывает `volumeOrEnvelopePeriod` (биты ~0-3~)",
     es: "`PulseControl`: escribe `volumeOrEnvelopePeriod` (bits ~0-3~)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -369,6 +379,7 @@ it("`PulseControl`: writes `constantVolume` (bit 4)", () => {
   });
 })({
   locales: {
+    ru: "`PulseControl`: записывает `constantVolume` (бит 4)",
     es: "`PulseControl`: escribe `constantVolume` (bit 4)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -391,6 +402,7 @@ it("`PulseControl`: writes `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
   });
 })({
   locales: {
+    ru: "`PulseControl`: записывает `envelopeLoopOrLengthCounterHalt` (бит 5)",
     es: "`PulseControl`: escribe `envelopeLoopOrLengthCounterHalt` (bit 5)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -417,6 +429,7 @@ it("`PulseControl`: writes `dutyCycleId` (bits ~6-7~)", () => {
   });
 })({
   locales: {
+    ru: "`PulseControl`: записывает `dutyCycleId` (биты ~6-7~)",
     es: "`PulseControl`: escribe `dutyCycleId` (bits ~6-7~)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -431,6 +444,7 @@ it("`TriangleTimerLow`: writes the value", () => {
   expect(triangleTimerLow.value).to.equalN(129, "triangle.timerLow.value");
 })({
   locales: {
+    ru: "`TriangleTimerLow`: записывает значение",
     es: "`TriangleTimerLow`: escribe el valor",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -452,6 +466,7 @@ it("`DMCControl`: writes `dpcmPeriodId` (bits ~0-3~)", () => {
   expect(dmcControl.dpcmPeriodId).to.equalN(15, "dmc.control.dpcmPeriodId");
 })({
   locales: {
+    ru: "`DMCControl`: записывает `dpcmPeriodId` (биты ~0-3~)",
     es: "`DMCControl`: escribe `dpcmPeriodId` (bits ~0-3~)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -469,6 +484,7 @@ it("`DMCControl`: writes `loop` (bit 6)", () => {
   expect(dmcControl.loop).to.equalN(1, "dmc.control.loop");
 })({
   locales: {
+    ru: "`DMCControl`: записывает `loop` (бит 6)",
     es: "`DMCControl`: escribe `loop` (bit 6)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -483,6 +499,7 @@ it("`DMCSampleAddress`: writes the value", () => {
   expect(dmcSampleAddress.value).to.equalN(135, "dmc.sampleAddress.value");
 })({
   locales: {
+    ru: "`DMCSampleAddress`: записывает значение",
     es: "`DMCSampleAddress`: escribe el valor",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -497,6 +514,7 @@ it("`DMCSampleLength`: writes the value", () => {
   expect(dmcSampleLength.value).to.equalN(172, "dmc.sampleLength.value");
 })({
   locales: {
+    ru: "`DMCSampleLength`: записывает значение",
     es: "`DMCSampleLength`: escribe el valor",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
@@ -537,6 +555,7 @@ it("`APUControl`: writes the <channel enable> fields (bits ~0-4~)", () => {
   expect(register.enableDMC).to.equalN(1, "enableDMC");
 })({
   locales: {
+    ru: "`APUControl`: записывает поля <включения каналов> (биты ~0-4~)",
     es:
       "`APUControl`: escribe los campos de <habilitación de canales> (bits ~0-4~)",
   },
@@ -562,6 +581,7 @@ it("`APUStatus`: reads return 0 (for now)", () => {
   expect(apu.registers.apuStatus.onRead()).to.equalN(0, "onRead()");
 })({
   locales: {
+    ru: "`APUStatus`: чтение возвращает 0 (пока)",
     es: "`APUStatus`: las lecturas retornan 0 (por ahora)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4") && id < book.getId("5c.19"),
@@ -592,6 +612,7 @@ it("has `PulseChannel` instances", () => {
   );
 })({
   locales: {
+    ru: "содержит экземпляры `PulseChannel`",
     es: "tiene instancias de `PulseChannel`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
@@ -605,6 +626,7 @@ it("`PulseChannel`: has an `apu` reference", () => {
     expect(apu.channels.pulses[i].apu).to.equalN(apu, `[${i}].apu`);
 })({
   locales: {
+    ru: "`PulseChannel`: содержит ссылку `apu`",
     es: "`PulseChannel`: tiene una referencia `apu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
@@ -618,6 +640,7 @@ it("`PulseChannel`: has an `id`", () => {
     expect(apu.channels.pulses[i].id).to.equalN(i, `[${i}].id`);
 })({
   locales: {
+    ru: "`PulseChannel`: содержит `id`",
     es: "`PulseChannel`: tiene un `id`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
@@ -633,6 +656,7 @@ it("`PulseChannel`: has an `enableFlagName`", () => {
   expect(pulse2FlagName).to.equalN("enablePulse2", "enableFlagName");
 })({
   locales: {
+    ru: "`PulseChannel`: содержит `enableFlagName`",
     es: "`PulseChannel`: tiene un `enableFlagName`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
@@ -646,6 +670,7 @@ it("`PulseChannel`: has a `timer` initialized at 0", () => {
     expect(apu.channels.pulses[i].timer).to.equalN(0, "`[${i}].timer`");
 })({
   locales: {
+    ru: "`PulseChannel`: содержит `timer` с начальным значением 0",
     es: "`PulseChannel`: tiene un `timer` inicializado en 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
@@ -662,6 +687,8 @@ it("`PulseChannel`: has a `registers` property, pointing to the audio registers"
     );
 })({
   locales: {
+    ru:
+      "`PulseChannel`: содержит свойство `registers`, указывающее на звуковые регистры",
     es:
       "`PulseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
   },
@@ -692,6 +719,8 @@ it("`PulseChannel`: has an `isEnabled()` method that returns whether the channel
   expect(apu.channels.pulses[1].isEnabled()).to.equalN(true, "isEnabled()");
 })({
   locales: {
+    ru:
+      "`PulseChannel`: содержит метод `isEnabled()`, который возвращает, <включён> ли канал в APUControl",
     es:
       "`PulseChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
   },
@@ -708,6 +737,7 @@ it("`PulseChannel`: has a `sample()` method that <returns a number>", () => {
   }
 })({
   locales: {
+    ru: "`PulseChannel`: содержит метод `sample()`, который <возвращает число>",
     es: "`PulseChannel`: tiene un método `sample()` que <retorna un número>",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
@@ -731,6 +761,8 @@ it("`PulseChannel`: `updateTimer()` updates `timer` based on PulseTimerLow and P
   expect(apu.channels.pulses[1].timer).to.equalN(708, "timer");
 })({
   locales: {
+    ru:
+      "`PulseChannel`: `updateTimer()` обновляет `timer` по PulseTimerLow и PulseTimerHighLCL",
     es:
       "`PulseChannel`: `updateTimer()` actualiza `timer` basado en PulseTimerLow y PulseTimerHighLCL",
   },
@@ -749,6 +781,7 @@ it("`PulseChannel`: `step()` calls `updateTimer()`", () => {
   }
 })({
   locales: {
+    ru: "`PulseChannel`: `step()` вызывает `updateTimer()`",
     es: "`PulseChannel`: `step()` llama a `updateTimer()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
@@ -769,6 +802,8 @@ it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => 
   }
 })({
   locales: {
+    ru:
+      "вызывает метод `step()` импульсных каналов при каждом вызове `step(...)` APU",
     es:
       "llama al método `step()` de los Canales Pulso en cada llamado a `step(...)` de la APU",
   },
@@ -793,6 +828,7 @@ it("for now, new samples are mixed like `(pulse1 + pulse2) * 0.01`", () => {
   expect(onSample).to.have.been.calledWith(0.07, 2, 5); // (2 + 5) * 0.01
 })({
   locales: {
+    ru: "пока новые отсчёты смешиваются по формуле `(pulse1 + pulse2) * 0.01`",
     es:
       "por ahora, los nuevos samples se mezclan como `(pulse1 + pulse2) * 0.01`",
   },
@@ -815,6 +851,7 @@ it("`PulseTimerLow`: writes the value and calls `updateTimer()`", () => {
   expect(apu.channels.pulses[1].updateTimer, "updateTimer").to.have.been.called;
 })({
   locales: {
+    ru: "`PulseTimerLow`: записывает значение и вызывает `updateTimer()`",
     es: "`PulseTimerLow`: escribe el valor y llama a `updateTimer()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
@@ -842,6 +879,8 @@ it("`PulseTimerHighLCL`: writes `timerHigh` (bits ~0-2~) and calls `updateTimer(
   expect(apu.channels.pulses[1].updateTimer, "updateTimer").to.have.been.called;
 })({
   locales: {
+    ru:
+      "`PulseTimerHighLCL`: записывает `timerHigh` (биты ~0-2~) и вызывает `updateTimer()`",
     es:
       "`PulseTimerHighLCL`: escribe `timerHigh` (bits ~0-2~) y llama a `updateTimer()`",
   },
@@ -872,6 +911,8 @@ it("`PulseChannel`: has an `oscillator` that can <produce> samples", () => {
   }
 })({
   locales: {
+    ru:
+      "`PulseChannel`: содержит `oscillator`, который умеет <создавать> отсчёты",
     es: "`PulseChannel`: tiene un `oscillator` que puede <producir> samples",
   },
   use: ({ id }, book) => id >= book.getId("5c.6"),
@@ -903,6 +944,7 @@ it("`PulseChannel`: `sample()` updates the oscillator frequency", () => {
   expect(pulse2Frequency).to.equalN(157, "frequency");
 })({
   locales: {
+    ru: "`PulseChannel`: `sample()` обновляет частоту генератора",
     es: "`PulseChannel`: `sample()` actualiza la frecuencia del oscilador",
   },
   use: ({ id }, book) => id >= book.getId("5c.6"),
@@ -940,6 +982,8 @@ it("`PulseChannel`: `sample()` updates the oscillator duty cycle", () => {
   }
 })({
   locales: {
+    ru:
+      "`PulseChannel`: `sample()` обновляет коэффициент заполнения генератора",
     es:
       "`PulseChannel`: `sample()` actualiza el ciclo de trabajo del oscilador",
   },
@@ -973,6 +1017,7 @@ it("`PulseChannel`: `sample()` updates the oscillator volume", () => {
   );
 })({
   locales: {
+    ru: "`PulseChannel`: `sample()` обновляет громкость генератора",
     es: "`PulseChannel`: `sample()` actualiza el volumen del oscilador",
   },
   use: ({ id }, book) => id >= book.getId("5c.6"),
@@ -1002,6 +1047,7 @@ it("`PulseChannel`: `sample()` calls `oscillator.sample()`", () => {
   expect(apu.channels.pulses[1].sample()).to.equalN(random2, "[1].sample()");
 })({
   locales: {
+    ru: "`PulseChannel`: `sample()` вызывает `oscillator.sample()`",
     es: "`PulseChannel`: `sample()` llama a `oscillator.sample()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.6"),
@@ -1021,6 +1067,7 @@ it("`APUFrameCounter`: writes `use5StepSequencer` (bit 7)", () => {
   expect(register.use5StepSequencer).to.equalN(0, "use5StepSequencer");
 })({
   locales: {
+    ru: "`APUFrameCounter`: записывает `use5StepSequencer` (бит 7)",
     es: "`APUFrameCounter`: escribe `use5StepSequencer` (bit 7)",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
@@ -1037,6 +1084,7 @@ it("`APUFrameCounter`: writing <resets> the frame sequencer", () => {
   expect(apu.frameSequencer.counter).to.equalN(0, "counter");
 })({
   locales: {
+    ru: "`APUFrameCounter`: запись <сбрасывает> секвенсор кадров",
     es: "`APUFrameCounter`: escribir <reinicia> el secuenciador de frames",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
@@ -1058,6 +1106,7 @@ it("`APUFrameCounter`: writing triggers both a quarter frame and a half frame", 
   expect(apu.onHalfFrameClock, "onHalfFrameClock").to.have.been.calledOnce;
 })({
   locales: {
+    ru: "`APUFrameCounter`: запись вызывает события четверти и половины кадра",
     es:
       "`APUFrameCounter`: escribir dispara tanto un quarter frame como un half frame",
   },
@@ -1071,6 +1120,7 @@ it("has a `frameSequencer` property", () => {
   expect(apu.frameSequencer, "frameSequencer").to.be.an("object");
 })({
   locales: {
+    ru: "содержит свойство `frameSequencer`",
     es: "tiene una propiedad `frameSequencer`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
@@ -1085,6 +1135,8 @@ it("`FrameSequencer`: has a `counter` property and `reset()`/`step()` methods", 
   expect(apu.frameSequencer).to.respondTo("step");
 })({
   locales: {
+    ru:
+      "`FrameSequencer`: содержит свойство `counter` и методы `reset()`/`step()`",
     es:
       "`FrameSequencer`: tiene una propiedad `counter` y métodos `reset()`/`step()`",
   },
@@ -1100,6 +1152,7 @@ it("`FrameSequencer`: `reset()` assigns 0 to `counter`", () => {
   expect(apu.frameSequencer.counter).to.equalN(0, "counter");
 })({
   locales: {
+    ru: "`FrameSequencer`: `reset()` присваивает `counter` значение 0",
     es: "`FrameSequencer`: `reset()` asigna 0 a `counter`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
@@ -1114,6 +1167,7 @@ it("`FrameSequencer`: `step()` increments `counter`", () => {
   expect(apu.frameSequencer.counter).to.equalN(79, "counter");
 })({
   locales: {
+    ru: "`FrameSequencer`: `step()` увеличивает `counter`",
     es: "`FrameSequencer`: `step()` incrementa `counter`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
@@ -1145,6 +1199,8 @@ it("`FrameSequencer`: on four-step sequences, `step()` triggers quarter frames o
   }
 })({
   locales: {
+    ru:
+      "`FrameSequencer`: в последовательности из четырёх шагов `step()` вызывает четверти кадра на циклах 3729, 7457, 11186, 14916",
     es:
       "`FrameSequencer`: en secuencias de cuatro pasos, `step()` dispara quarter frames en los ciclos 3729, 7457, 11186, 14916",
   },
@@ -1173,6 +1229,8 @@ it("`FrameSequencer`: on four-step sequences, `step()` triggers half frames on c
   }
 })({
   locales: {
+    ru:
+      "`FrameSequencer`: в последовательности из четырёх шагов `step()` вызывает половины кадра на циклах 7457, 14916",
     es:
       "`FrameSequencer`: en secuencias de cuatro pasos, `step()` dispara half frames en los ciclos 7457, 14916",
   },
@@ -1195,6 +1253,8 @@ it("`FrameSequencer`: on four-step sequences, `step()` resets the counter on cyc
   expect(apu.frameSequencer.counter).to.equalN(0, "counter");
 })({
   locales: {
+    ru:
+      "`FrameSequencer`: в последовательности из четырёх шагов `step()` сбрасывает счётчик на цикле 14916",
     es:
       "`FrameSequencer`: en secuencias de cuatro pasos, `step()` reinicia el contador en el ciclo 14916",
   },
@@ -1227,6 +1287,8 @@ it("`FrameSequencer`: on five-step sequences, `step()` triggers quarter frames o
   }
 })({
   locales: {
+    ru:
+      "`FrameSequencer`: в последовательности из пяти шагов `step()` вызывает четверти кадра на циклах 3729, 7457, 11186, 18641",
     es:
       "`FrameSequencer`: en secuencias de cinco pasos, `step()` dispara quarter frames en los ciclos 3729, 7457, 11186, 14916",
   },
@@ -1255,6 +1317,8 @@ it("`FrameSequencer`: on five-step sequences, `step()` triggers half frames on c
   }
 })({
   locales: {
+    ru:
+      "`FrameSequencer`: в последовательности из пяти шагов `step()` вызывает половины кадра на циклах 7457, 18641",
     es:
       "`FrameSequencer`: en secuencias de cinco pasos, `step()` dispara half frames en los ciclos 7457, 18641",
   },
@@ -1277,6 +1341,8 @@ it("`FrameSequencer`: on five-step sequences, `step()` resets the counter on cyc
   expect(apu.frameSequencer.counter).to.equalN(0, "counter");
 })({
   locales: {
+    ru:
+      "`FrameSequencer`: в последовательности из пяти шагов `step()` сбрасывает счётчик на цикле 18641",
     es:
       "`FrameSequencer`: en secuencias de cinco pasos, `step()` reinicia el contador en el ciclo 14916",
   },
@@ -1291,6 +1357,7 @@ it("has two methods: `onQuarterFrameClock()` and `onHalfFrameClock()`", () => {
   expect(apu).to.respondTo("onHalfFrameClock");
 })({
   locales: {
+    ru: "содержит два метода: `onQuarterFrameClock()` и `onHalfFrameClock()`",
     es: "tiene dos métodos: `onQuarterFrameClock()` y `onHalfFrameClock()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
@@ -1308,6 +1375,7 @@ it("updates the frame sequencer on every `step(...)` call", () => {
   }
 })({
   locales: {
+    ru: "обновляет секвенсор кадров при каждом вызове `step(...)`",
     es: "actualiza el secuenciador de frames en cada llamada a `step(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
@@ -1338,6 +1406,7 @@ it("calls `frameSequencer.step()` <before> calling `onSample(...)`", () => {
   }
 })({
   locales: {
+    ru: "вызывает `frameSequencer.step()` <перед> вызовом `onSample(...)`",
     es: "llama a `frameSequencer.step()` <antes> de llamar a `onSample(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
@@ -1357,6 +1426,7 @@ it("`PulseChannel`: has a `lengthCounter` property", () => {
   }
 })({
   locales: {
+    ru: "`PulseChannel`: содержит свойство `lengthCounter`",
     es: "`PulseChannel`: tiene una propiedad `lengthCounter`",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
@@ -1372,6 +1442,7 @@ it("`LengthCounter`: has a `counter` property that starts at 0", () => {
   }
 })({
   locales: {
+    ru: "`LengthCounter`: содержит свойство `counter` с начальным значением 0",
     es: "`LengthCounter`: tiene una propiedad `counter` que empieza en 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
@@ -1390,6 +1461,7 @@ it("`LengthCounter`: `reset()` sets `counter` = 0", () => {
   }
 })({
   locales: {
+    ru: "`LengthCounter`: `reset()` задаёт `counter` = 0",
     es: "`LengthCounter`: `reset()` asigna `counter` = 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
@@ -1414,6 +1486,7 @@ it("`LengthCounter`: `isActive()` returns whether `counter` is greater than 0", 
   }
 })({
   locales: {
+    ru: "`LengthCounter`: `isActive()` возвращает, больше ли `counter` нуля",
     es: "`LengthCounter`: `isActive()` retorna si `counter` es mayor a 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
@@ -1429,6 +1502,7 @@ it("`LengthCounter`: has a `clock(...)` method", () => {
   }
 })({
   locales: {
+    ru: "`LengthCounter`: содержит метод `clock(...)`",
     es: "`LengthCounter`: tiene un método `clock(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
@@ -1451,6 +1525,8 @@ it("`LengthCounter`: calling `clock(...)` with ~false~ as the first argument jus
   }
 })({
   locales: {
+    ru:
+      "`LengthCounter`: вызов `clock(...)` с ~false~ в первом аргументе просто <сбрасывает счётчик>",
     es:
       "`LengthCounter`: llamar a `clock()` con ~false~ como primer argumento solo reinicia el contador",
   },
@@ -1470,6 +1546,7 @@ it("`LengthCounter`: calling `clock(true, true)` doesn't do anything", () => {
   }
 })({
   locales: {
+    ru: "`LengthCounter`: вызов `clock(true, true)` ничего не меняет",
     es: "`LengthCounter`: llamar a `clock(true, true)` no hace nada",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
@@ -1492,6 +1569,7 @@ it("`LengthCounter`: calling `clock(true, false)` decrements the counter", () =>
   }
 })({
   locales: {
+    ru: "`LengthCounter`: вызов `clock(true, false)` уменьшает счётчик",
     es: "`LengthCounter`: llamar a `clock(true, false)` decrementa el contador",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
@@ -1510,6 +1588,8 @@ it("`LengthCounter`: calling `clock(true, false)` doesn't decrement if the count
   }
 })({
   locales: {
+    ru:
+      "`LengthCounter`: вызов `clock(true, false)` не уменьшает счётчик, если он равен 0",
     es:
       "`LengthCounter`: llamar a `clock(true, false)` no decrementa si el contador es 0",
   },
@@ -1585,6 +1665,8 @@ it("`PulseChannel`: `sample()` just returns the <last sample> if the channel is 
   expect(pulse2Frequency).to.equalN(157, "frequency");
 })({
   locales: {
+    ru:
+      "`PulseChannel`: `sample()` просто возвращает <последний отсчёт>, если канал выключен",
     es:
       "`PulseChannel`: `sample()` solo retorna el <último sample> si el canal está desactivado",
   },
@@ -1661,6 +1743,8 @@ it("`PulseChannel`: `sample()` just returns the <last sample> if the length coun
   expect(pulse2Frequency).to.equalN(157, "frequency");
 })({
   locales: {
+    ru:
+      "`PulseChannel`: `sample()` просто возвращает <последний отсчёт>, если счётчик длины <неактивен>",
     es:
       "`PulseChannel`: `sample()` solo retorna el <último sample> si el contador de longitud <no está activo>",
   },
@@ -1676,6 +1760,7 @@ it("`PulseChannel`: has a `quarterFrame()` method", () => {
   }
 })({
   locales: {
+    ru: "`PulseChannel`: содержит метод `quarterFrame()`",
     es: "`PulseChannel`: tiene un método `quarterFrame()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
@@ -1715,6 +1800,7 @@ it("`PulseChannel`: `halfFrame()` updates the length counter", () => {
   }
 })({
   locales: {
+    ru: "`PulseChannel`: `halfFrame()` обновляет счётчик длины",
     es: "`PulseChannel`: `halfFrame()` actualiza el contador de longitud",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
@@ -1733,6 +1819,8 @@ it("`onQuarterFrameClock()` calls `quarterFrame()` on the two pulse channel inst
   expect(apu.channels.pulses[1].quarterFrame).to.have.been.calledOnce;
 })({
   locales: {
+    ru:
+      "`onQuarterFrameClock()` вызывает `quarterFrame()` у обоих экземпляров импульсных каналов",
     es:
       "`onQuarterFrameClock()` llama a `quarterFrame()` en las dos instancias del canal pulso",
   },
@@ -1752,6 +1840,8 @@ it("`onHalfFrameClock()` calls `halfFrame()` on the two pulse channel instances"
   expect(apu.channels.pulses[1].halfFrame).to.have.been.calledOnce;
 })({
   locales: {
+    ru:
+      "`onHalfFrameClock()` вызывает `halfFrame()` у обоих экземпляров импульсных каналов",
     es:
       "`onHalfFrameClock()` llama a `halfFrame()` en las dos instancias del canal pulso",
   },
@@ -1783,6 +1873,8 @@ it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the
   );
 })({
   locales: {
+    ru:
+      "`PulseTimerHighLCL`: записывает `lengthCounterLoad` (биты ~3-7~) и обновляет счётчик длины",
     es:
       "`PulseTimerHighLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
   },
@@ -1802,6 +1894,8 @@ it("`APUControl`: on writes, if `enablePulse1` is clear, resets the length count
   expect(apu.channels.pulses[1].lengthCounter.counter).to.equalN(83, "counter");
 })({
   locales: {
+    ru:
+      "`APUControl`: при записи сбрасывает счётчик длины, если `enablePulse1` сброшен",
     es:
       "`APUControl`: en escrituras, si `enablePulse1` está apagada, reinicia el contador de longitud",
   },
@@ -1821,6 +1915,8 @@ it("`APUControl`: on writes, if `enablePulse2` is clear, resets the length count
   expect(apu.channels.pulses[1].lengthCounter.counter).to.equalN(0, "counter");
 })({
   locales: {
+    ru:
+      "`APUControl`: при записи сбрасывает счётчик длины, если `enablePulse2` сброшен",
     es:
       "`APUControl`: en escrituras, si `enablePulse2` está apagada, reinicia el contador de longitud",
   },
@@ -1840,7 +1936,10 @@ it("`PulseChannel`: has a `volumeEnvelope` property", () => {
     ).to.be.an("object");
   }
 })({
-  locales: { es: "`PulseChannel`: tiene una propiedad `volumeEnvelope`" },
+  locales: {
+    ru: "`PulseChannel`: содержит свойство `volumeEnvelope`",
+    es: "`PulseChannel`: tiene una propiedad `volumeEnvelope`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
 
@@ -1856,6 +1955,8 @@ it("`VolumeEnvelope`: has `startFlag`, `dividerCount`, `volume` initialized to ~
   }
 })({
   locales: {
+    ru:
+      "`VolumeEnvelope`: начальные значения `startFlag`, `dividerCount`, `volume` равны ~false~, 0, 0",
     es:
       "`VolumeEnvelope`: tiene `startFlag`, `dividerCount` y `volume` inicializados en ~false~, 0, 0",
   },
@@ -1870,7 +1971,10 @@ it("`VolumeEnvelope`: has a `clock(...)` method", () => {
     expect(apu.channels.pulses[i].volumeEnvelope).to.respondTo("clock");
   }
 })({
-  locales: { es: "`VolumeEnvelope`: tiene un método `clock(...)`" },
+  locales: {
+    ru: "`VolumeEnvelope`: содержит метод `clock(...)`",
+    es: "`VolumeEnvelope`: tiene un método `clock(...)`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
 
@@ -1888,6 +1992,8 @@ it("`VolumeEnvelope`: `clock(...)` with `startFlag = true` clears it, sets `volu
   expect(envelope.dividerCount).to.equalN(8, "dividerCount");
 })({
   locales: {
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `startFlag = true` сбрасывает флаг, задаёт `volume` равным 15 и `dividerCount` равным периоду",
     es:
       "`VolumeEnvelope`: `clock(...)` con `startFlag = true` lo apaga, fija `volume` en 15 y `dividerCount` en el periodo",
   },
@@ -1909,6 +2015,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount > 0` decrements it and lea
   expect(envelope.startFlag).to.equalN(false, "startFlag");
 })({
   locales: {
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `dividerCount > 0` уменьшает счётчик, не меняя остальное",
     es:
       "`VolumeEnvelope`: `clock(...)` cuando `dividerCount > 0` lo decrementa y deja el resto intacto",
   },
@@ -1929,6 +2037,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume > 0`, res
   expect(envelope.volume).to.equalN(4, "volume");
 })({
   locales: {
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `dividerCount = 0` и `volume > 0` перезагружает `dividerCount` и уменьшает `volume`",
     es:
       "`VolumeEnvelope`: `clock(...)` cuando `dividerCount = 0` y `volume > 0`, reinicia `dividerCount` y decrementa `volume`",
   },
@@ -1949,6 +2059,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with
   expect(envelope.volume).to.equalN(0, "volume");
 })({
   locales: {
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `dividerCount = 0`, `volume = 0` и `loop = false` перезагружает только `dividerCount`",
     es:
       "`VolumeEnvelope`: `clock(...)` cuando `dividerCount = 0` y `volume = 0` con `loop = false`, reinicia solo `dividerCount`",
   },
@@ -1969,6 +2081,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with
   expect(envelope.volume).to.equalN(15, "volume");
 })({
   locales: {
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `dividerCount = 0`, `volume = 0` и `loop = true` перезагружает и `dividerCount`, и `volume`",
     es:
       "`VolumeEnvelope`: `clock(...)` cuando `dividerCount = 0` y `volume = 0` con `loop = true`, reinicia `dividerCount` y `volume`",
   },
@@ -1992,6 +2106,7 @@ it("`PulseChannel`: `quarterFrame()` updates the volume envelope", () => {
   }
 })({
   locales: {
+    ru: "`PulseChannel`: `quarterFrame()` обновляет огибающую громкости",
     es: "`PulseChannel`: `quarterFrame()` actualiza la envolvente de volumen",
   },
   use: ({ id }, book) => id >= book.getId("5c.9"),
@@ -2014,6 +2129,8 @@ it("`PulseTimerHighLCL`: writes set the `startFlag` on the channel's volume enve
   );
 })({
   locales: {
+    ru:
+      "`PulseTimerHighLCL`: запись устанавливает `startFlag` огибающей громкости канала",
     es:
       "`PulseTimerHighLCL`: las escrituras encienden `startFlag` en la envolvente de volumen del canal",
   },
@@ -2044,6 +2161,8 @@ it("`PulseSweep`: writes `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `e
   expect(sweep2.enabledFlag).to.equalN(1, "enabledFlag");
 })({
   locales: {
+    ru:
+      "`PulseSweep`: записывает `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`",
     es:
       "`PulseSweep`: escribe `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`",
   },
@@ -2061,7 +2180,10 @@ it("`PulseChannel`: has a `frequencySweep` property", () => {
     ).to.be.an("object");
   }
 })({
-  locales: { es: "`PulseChannel`: tiene una propiedad `frequencySweep`" },
+  locales: {
+    ru: "`PulseChannel`: содержит свойство `frequencySweep`",
+    es: "`PulseChannel`: tiene una propiedad `frequencySweep`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
@@ -2077,6 +2199,8 @@ it("`FrequencySweep`: has `startFlag`, `dividerCount`, `mute` initialized to ~fa
   }
 })({
   locales: {
+    ru:
+      "`FrequencySweep`: начальные значения `startFlag`, `dividerCount`, `mute` равны ~false~, `0`, ~false~",
     es:
       "`FrequencySweep`: tiene `startFlag`, `dividerCount` y `mute` inicializados en ~false~, `0`, ~false~",
   },
@@ -2094,6 +2218,7 @@ it("`FrequencySweep`: has `clock()` and `muteIfNeeded()` methods", () => {
   }
 })({
   locales: {
+    ru: "`FrequencySweep`: содержит методы `clock()` и `muteIfNeeded()`",
     es: "`FrequencySweep`: tiene métodos `clock()` y `muteIfNeeded()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
@@ -2122,6 +2247,8 @@ it("`FrequencySweep`: `clock()` increases `timer` by <shift delta> when enabled,
   }
 })({
   locales: {
+    ru:
+      "`FrequencySweep`: `clock()` увеличивает `timer` на <дельту сдвига>, если свип включён, `shiftCount > 0`, `dividerCount = 0` и канал не заглушён",
     es:
       "`FrequencySweep`: `clock()` incrementa `timer` por el <delta apropiado> cuando está habilitado, `shiftCount > 0`, `dividerCount = 0` y no está silenciado",
   },
@@ -2151,6 +2278,8 @@ it("`FrequencySweep`: `clock()` decreases `timer` by <shift delta> when `negateF
   }
 })({
   locales: {
+    ru:
+      "`FrequencySweep`: `clock()` уменьшает `timer` на <дельту сдвига>, если установлен `negateFlag` (при тех же условиях)",
     es:
       "`FrequencySweep`: `clock()`: decrementa `timer` por el <delta apropiado> cuando `negateFlag` está encendida (mismas condiciones)",
   },
@@ -2178,6 +2307,8 @@ it("`FrequencySweep`: `clock()` reloads `dividerCount` and clears `startFlag` wh
   }
 })({
   locales: {
+    ru:
+      "`FrequencySweep`: `clock()` перезагружает `dividerCount` и сбрасывает `startFlag`, если `startFlag` установлен",
     es:
       "`FrequencySweep`: `clock()` recarga `dividerCount` y limpia `startFlag` cuando `startFlag` está encendida",
   },
@@ -2203,6 +2334,8 @@ it("`FrequencySweep`: `clock()` when `dividerCount > 0` decrements it and leaves
   }
 })({
   locales: {
+    ru:
+      "`FrequencySweep`: `clock()` при `dividerCount > 0` уменьшает счётчик, не меняя `timer`",
     es:
       "`FrequencySweep`: `clock()` cuando `dividerCount > 0` lo decrementa y deja `timer` intacto",
   },
@@ -2235,6 +2368,8 @@ it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is ~< 8~ or ~> 0
   }
 })({
   locales: {
+    ru:
+      "`FrequencySweep`: `muteIfNeeded()` устанавливает `mute`, если `timer` ~< 8~ или ~> 0x7ff~",
     es:
       "`FrequencySweep`: `muteIfNeeded()` enciende `mute` cuando `timer` is ~< 8~ o ~> 0x7ff~",
   },
@@ -2306,6 +2441,8 @@ it("`PulseChannel`: `sample()` just returns the <last sample> if the sweep unit 
   expect(pulse2Frequency).to.equalN(157, "frequency");
 })({
   locales: {
+    ru:
+      "`PulseChannel`: `sample()` просто возвращает <последний отсчёт>, если блок свипа заглушает канал",
     es:
       "`PulseChannel`: `sample()` solo retorna el <último sample> si la unidad de barrido está silenciada",
   },
@@ -2330,6 +2467,8 @@ it("`PulseChannel`: `step()` calls `frequencySweep.muteIfNeeded()` and `updateTi
   }
 })({
   locales: {
+    ru:
+      "`PulseChannel`: `step()` вызывает `frequencySweep.muteIfNeeded()` и `updateTimer()`, если `sweep.enabledFlag` сброшен",
     es:
       "`PulseChannel`: `step()` llama a `frequencySweep.muteIfNeeded()` y a `updateTimer()` cuando `sweep.enabledFlag` está en 0",
   },
@@ -2354,6 +2493,8 @@ it("`PulseChannel`: `step()` calls `frequencySweep.muteIfNeeded()` but not `upda
   }
 })({
   locales: {
+    ru:
+      "`PulseChannel`: `step()` вызывает `frequencySweep.muteIfNeeded()`, но не `updateTimer()`, если `sweep.enabledFlag` установлен",
     es:
       "`PulseChannel`: `step()` llama a `frequencySweep.muteIfNeeded()` pero no a `updateTimer()` cuando `sweep.enabledFlag` está encendida",
   },
@@ -2372,6 +2513,7 @@ it("`PulseChannel`: `halfFrame()` calls `frequencySweep.clock()`", () => {
   }
 })({
   locales: {
+    ru: "`PulseChannel`: `halfFrame()` вызывает `frequencySweep.clock()`",
     es: "`PulseChannel`: `halfFrame()` llama a `frequencySweep.clock()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
@@ -2394,6 +2536,7 @@ it("`PulseSweep`: writes set the `startFlag` on the channel's frequency sweep", 
   );
 })({
   locales: {
+    ru: "`PulseSweep`: запись устанавливает `startFlag` свипа частоты канала",
     es:
       "`PulseSweep`: las escrituras encienden `startFlag` en el barrido de frecuencia del canal",
   },
@@ -2412,7 +2555,10 @@ it("`TriangleTimerHighLCL`: writes `timerHigh` (bits ~0-2~)", () => {
     "timerHigh"
   );
 })({
-  locales: { es: "`TriangleTimerHighLCL`: escribe `timerHigh` (bits ~0-2~)" },
+  locales: {
+    ru: "`TriangleTimerHighLCL`: записывает `timerHigh` (биты ~0-2~)",
+    es: "`TriangleTimerHighLCL`: escribe `timerHigh` (bits ~0-2~)",
+  },
   use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
@@ -2423,6 +2569,7 @@ it("has a `TriangleChannel` instance", () => {
   expect(apu.channels.triangle, "triangle").to.be.an("object");
 })({
   locales: {
+    ru: "содержит экземпляр `TriangleChannel`",
     es: "tiene una instancia de `TriangleChannel`",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
@@ -2435,6 +2582,7 @@ it("`TriangleChannel`: has an `apu` reference", () => {
   expect(apu.channels.triangle.apu).to.equalN(apu, "apu");
 })({
   locales: {
+    ru: "`TriangleChannel`: содержит ссылку `apu`",
     es: "`TriangleChannel`: tiene una referencia `apu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
@@ -2450,6 +2598,8 @@ it("`TriangleChannel`: has a `registers` property, pointing to the audio registe
   );
 })({
   locales: {
+    ru:
+      "`TriangleChannel`: содержит свойство `registers`, указывающее на звуковые регистры",
     es:
       "`TriangleChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
   },
@@ -2465,6 +2615,8 @@ it("`TriangleChannel`: has an `oscillator` property that can <produce> samples",
   expect(channel.oscillator).to.respondTo("sample");
 })({
   locales: {
+    ru:
+      "`TriangleChannel`: содержит свойство `oscillator`, которое умеет <создавать> отсчёты",
     es:
       "`TriangleChannel`: tiene una propiedad `oscillator` que puede <producir> samples",
   },
@@ -2479,6 +2631,8 @@ it("`TriangleChannel`: has a `sample()` method that <returns a number>", () => {
   expect(apu.channels.triangle.sample()).to.be.a("number");
 })({
   locales: {
+    ru:
+      "`TriangleChannel`: содержит метод `sample()`, который <возвращает число>",
     es: "`TriangleChannel`: tiene un método `sample()` que <retorna un número>",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
@@ -2499,6 +2653,7 @@ it("`TriangleChannel`: `sample()` returns 0 when `timer` ~< 2~", () => {
   expect(channel.sample()).to.equalN(0, "sample()");
 })({
   locales: {
+    ru: "`TriangleChannel`: `sample()` возвращает 0 при `timer` ~< 2~",
     es: "`TriangleChannel`: `sample()` retorna 0 cuando `timer` ~< 2~",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
@@ -2530,6 +2685,8 @@ it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `os
   );
 })({
   locales: {
+    ru:
+      "`TriangleChannel`: `sample()` обновляет `oscillator.frequency` и возвращает `oscillator.sample()`, если `timer` находится в <допустимом диапазоне>",
     es:
       "`TriangleChannel`: `sample()` actualiza `oscillator.frequency` y retorna `oscillator.sample()` cuando `timer` está en un <rango válido>",
   },
@@ -2554,6 +2711,7 @@ it("mixes pulse1, pulse2 and triangle in `step()`", () => {
   expect(onSample).to.have.been.calledWith(0.06, 1, 2, 3);
 })({
   locales: {
+    ru: "смешивает pulse1, pulse2 и triangle в `step()`",
     es: "mezcla pulse1, pulse2 y triangle en `step()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.11") && id < book.getId("5c.19"),
@@ -2573,6 +2731,7 @@ it("`TriangleLengthControl`: writes `halt` (bit 7)", () => {
   expect(register.halt).to.equalN(0, "halt");
 })({
   locales: {
+    ru: "`TriangleLengthControl`: записывает `halt` (бит 7)",
     es: "`TriangleLengthControl`: escribe `halt` (bit 7)",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
@@ -2590,7 +2749,10 @@ it("`TriangleChannel`: has a `lengthCounter` property", () => {
     "class"
   );
 })({
-  locales: { es: "`TriangleChannel`: tiene una propiedad `lengthCounter`" },
+  locales: {
+    ru: "`TriangleChannel`: содержит свойство `lengthCounter`",
+    es: "`TriangleChannel`: tiene una propiedad `lengthCounter`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
@@ -2632,6 +2794,8 @@ it("`TriangleChannel`: `sample()` just returns the <last sample> if the channel 
   expect(frequency).to.equalN(110, "frequency");
 })({
   locales: {
+    ru:
+      "`TriangleChannel`: `sample()` просто возвращает <последний отсчёт>, если канал выключен",
     es:
       "`TriangleChannel`: `sample()` solo retorna el <último sample> si el canal está desactivado",
   },
@@ -2676,6 +2840,8 @@ it("`TriangleChannel`: `sample()` just returns the <last sample> if the length c
   expect(frequency).to.equalN(110, "frequency");
 })({
   locales: {
+    ru:
+      "`TriangleChannel`: `sample()` просто возвращает <последний отсчёт>, если счётчик длины <неактивен>",
     es:
       "`TriangleChannel`: `sample()` solo retorna el <último sample> si el contador de longitud <no está activo>",
   },
@@ -2690,7 +2856,10 @@ it("`TriangleChannel`: has a `quarterFrame()` method", () => {
 
   expect(channel).to.respondTo("quarterFrame");
 })({
-  locales: { es: "`TriangleChannel`: tiene un método `quarterFrame()`" },
+  locales: {
+    ru: "`TriangleChannel`: содержит метод `quarterFrame()`",
+    es: "`TriangleChannel`: tiene un método `quarterFrame()`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
@@ -2727,6 +2896,8 @@ it("`TriangleChannel`: has a `halfFrame()` method that updates the length counte
   expect(channel.lengthCounter.clock).to.have.been.calledWith(false, 1);
 })({
   locales: {
+    ru:
+      "`TriangleChannel`: содержит метод `halfFrame()`, обновляющий счётчик длины",
     es:
       "`TriangleChannel`: tiene un método `halfFrame()` que actualiza el contador de longitud",
   },
@@ -2746,6 +2917,8 @@ it("`TriangleChannel`: has an `isEnabled()` method that returns whether the chan
   expect(apu.channels.triangle.isEnabled()).to.equalN(false, "isEnabled()");
 })({
   locales: {
+    ru:
+      "`TriangleChannel`: содержит метод `isEnabled()`, который возвращает, <включён> ли канал в APUControl",
     es:
       "`TriangleChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
   },
@@ -2763,6 +2936,8 @@ it("`onQuarterFrameClock()` calls `quarterFrame()` on triangle channel", () => {
   expect(apu.channels.triangle.quarterFrame).to.have.been.calledOnce;
 })({
   locales: {
+    ru:
+      "`onQuarterFrameClock()` вызывает `quarterFrame()` у треугольного канала",
     es:
       "`onQuarterFrameClock()` llama a `quarterFrame()` en el canal triangular",
   },
@@ -2780,6 +2955,7 @@ it("`onHalfFrameClock()` calls `halfFrame()` on triangle channel", () => {
   expect(apu.channels.triangle.halfFrame).to.have.been.calledOnce;
 })({
   locales: {
+    ru: "`onHalfFrameClock()` вызывает `halfFrame()` у треугольного канала",
     es: "`onHalfFrameClock()` llama a `halfFrame()` en el canal triangular",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
@@ -2797,6 +2973,8 @@ it("`TriangleTimerHighLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates 
   expect(apu.channels.triangle.lengthCounter.counter).to.equalN(96, "counter");
 })({
   locales: {
+    ru:
+      "`TriangleTimerHighLCL`: записывает `lengthCounterLoad` (биты ~3-7~) и обновляет счётчик длины",
     es:
       "`TriangleTimerHighLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
   },
@@ -2814,6 +2992,8 @@ it("`APUControl`: on writes, if `enableTriangle` is clear, resets the length cou
   expect(apu.channels.triangle.lengthCounter.counter).to.equalN(0, "counter");
 })({
   locales: {
+    ru:
+      "`APUControl`: при записи сбрасывает счётчик длины, если `enableTriangle` сброшен",
     es:
       "`APUControl`: en escrituras, si `enableTriangle` está apagada, reinicia el contador de longitud",
   },
@@ -2831,6 +3011,8 @@ it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the le
   expect(apu.channels.triangle.lengthCounter.counter).to.equalN(72, "counter");
 })({
   locales: {
+    ru:
+      "`APUControl`: при записи не сбрасывает счётчик длины, если `enableTriangle` установлен",
     es:
       "`APUControl`: en escrituras, si `enableTriangle` está encendida, no reinicia el contador de longitud",
   },
@@ -2848,6 +3030,7 @@ it("`TriangleChannel`: has a `linearLengthCounter` property", () => {
   expect(channel.linearLengthCounter, "linearLengthCounter").to.be.an("object");
 })({
   locales: {
+    ru: "`TriangleChannel`: содержит свойство `linearLengthCounter`",
     es: "`TriangleChannel`: tiene una propiedad `linearLengthCounter`",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
@@ -2862,6 +3045,8 @@ it("`LinearLengthCounter`: has `reload` and `reloadFlag` initialized to `0` and 
   expect(linearLengthCounter.reloadFlag).to.equalN(false, "reloadFlag");
 })({
   locales: {
+    ru:
+      "`LinearLengthCounter`: начальные значения `reload` и `reloadFlag` равны `0` и ~false~",
     es:
       "`LinearLengthCounter`: tiene `reload` y `reloadFlag` inicializados en `0` y ~false~",
   },
@@ -2885,6 +3070,8 @@ it("`LinearLengthCounter`: `isActive()` returns whether `counter` is greater tha
   expect(linearLengthCounter.isActive()).to.equalN(true, "isActive()");
 })({
   locales: {
+    ru:
+      "`LinearLengthCounter`: `isActive()` возвращает, больше ли `counter` нуля",
     es: "`LinearLengthCounter`: `isActive()` retorna si `counter` es mayor a 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
@@ -2908,6 +3095,8 @@ it("`LinearLengthCounter`: `fullReset()` resets `counter`, `reload`, and `reload
   expect(linearLengthCounter.reloadFlag).to.equalN(false, "reloadFlag");
 })({
   locales: {
+    ru:
+      "`LinearLengthCounter`: `fullReset()` сбрасывает `counter`, `reload` и `reloadFlag`",
     es:
       "`LinearLengthCounter`: `fullReset()` reinicia `counter`, `reload` y `reloadFlag`",
   },
@@ -2932,6 +3121,8 @@ it("`LinearLengthCounter`: `clock(false, *)` resets `counter` but keeps `reload`
   expect(linearLengthCounter.reloadFlag).to.equalN(true, "reloadFlag");
 })({
   locales: {
+    ru:
+      "`LinearLengthCounter`: `clock(false, *)` сбрасывает `counter`, но сохраняет `reload` и `reloadFlag`",
     es:
       "`LinearLengthCounter`: `clock(false, *)` reinicia `counter` pero mantiene `reload` y `reloadFlag`",
   },
@@ -2955,6 +3146,8 @@ it("`LinearLengthCounter`: `clock(true, false)` with `reloadFlag` loads `reload`
   expect(linearLengthCounter.reloadFlag).to.equalN(false, "reloadFlag");
 })({
   locales: {
+    ru:
+      "`LinearLengthCounter`: `clock(true, false)` при установленном `reloadFlag` загружает `reload` в `counter` и сбрасывает `reloadFlag`",
     es:
       "`LinearLengthCounter`: `clock(true, false)` con `reloadFlag` carga `reload` en `counter` y apaga `reloadFlag`",
   },
@@ -2978,6 +3171,8 @@ it("`LinearLengthCounter`: `clock(true, true)` with `reloadFlag` and `isHalted` 
   expect(linearLengthCounter.reloadFlag).to.equalN(true, "reloadFlag");
 })({
   locales: {
+    ru:
+      "`LinearLengthCounter`: `clock(true, true)` при установленных `reloadFlag` и `isHalted` загружает `reload`, но сохраняет `reloadFlag`",
     es:
       "`LinearLengthCounter`: `clock(true, true)` con `reloadFlag` y `isHalted` encendida carga `reload` y mantiene `reloadFlag`",
   },
@@ -2999,6 +3194,8 @@ it("`LinearLengthCounter`: `clock(true, *)` when `reloadFlag` false and `counter
   expect(linearLengthCounter.counter).to.equalN(3, "counter");
 })({
   locales: {
+    ru:
+      "`LinearLengthCounter`: `clock(true, *)` при сброшенном `reloadFlag` и `counter > 0` уменьшает `counter`",
     es:
       "`LinearLengthCounter`: `clock(true, *)` cuando `reloadFlag` es false y `counter > 0` decrementa `counter`",
   },
@@ -3043,6 +3240,8 @@ it("`TriangleChannel`: `sample()` just returns the <last sample> if the linear l
   expect(frequency).to.equalN(110, "frequency");
 })({
   locales: {
+    ru:
+      "`TriangleChannel`: `sample()` просто возвращает <последний отсчёт>, если линейный счётчик длины <неактивен>",
     es:
       "`TriangleChannel`: `sample()` solo retorna el <último sample> si el contador lineal de longitud <no está activo>",
   },
@@ -3082,6 +3281,7 @@ it("`TriangleChannel`: `quarterFrame()` updates the linear length counter", () =
   expect(channel.linearLengthCounter.clock).to.have.been.calledWith(false, 1);
 })({
   locales: {
+    ru: "`TriangleChannel`: `quarterFrame()` обновляет линейный счётчик длины",
     es:
       "`TriangleChannel`: `quarterFrame()` actualiza el contador lineal de longitud",
   },
@@ -3103,6 +3303,8 @@ it("`TriangleLengthControl`: writes `linearCounterReload` and updates linear len
   expect(channel.linearLengthCounter.reload).to.equalBin(0b1001011, "reload");
 })({
   locales: {
+    ru:
+      "`TriangleLengthControl`: записывает `linearCounterReload` и обновляет `reload` линейного счётчика длины",
     es:
       "`TriangleLengthControl`: escribe `linearCounterReload` y actualiza el `reload` del contador lineal de longitud",
   },
@@ -3119,6 +3321,8 @@ it("`TriangleTimerHighLCL`: writes set `reloadFlag` on channel's linearLengthCou
   expect(channel.linearLengthCounter.reloadFlag).to.equalN(true, "reloadFlag");
 })({
   locales: {
+    ru:
+      "`TriangleTimerHighLCL`: запись устанавливает `reloadFlag` у linearLengthCounter канала",
     es:
       "`TriangleTimerHighLCL`: las escrituras encienden `reloadFlag` en el contador lineal de longitud del canal",
   },
@@ -3142,6 +3346,8 @@ it("`APUControl`: on writes, if `enableTriangle` is clear, resets the linear len
   expect(linearLengthCounter.reloadFlag).to.equalN(false, "reloadFlag");
 })({
   locales: {
+    ru:
+      "`APUControl`: при записи сбрасывает линейный счётчик длины, если `enableTriangle` сброшен",
     es:
       "`APUControl`: en escrituras, si `enablePulse1` está apagada, reinicia el contador lineal de longitud",
   },
@@ -3165,6 +3371,8 @@ it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the le
   expect(linearLengthCounter.reloadFlag).to.equalN(true, "reloadFlag");
 })({
   locales: {
+    ru:
+      "`APUControl`: при записи не сбрасывает счётчик длины, если `enableTriangle` установлен",
     es:
       "`APUControl`: en escrituras, si `enableTriangle` está encendida, no reinicia el contador lineal de longitud",
   },
@@ -3179,7 +3387,10 @@ it("has a `NoiseChannel` instance", () => {
 
   expect(apu.channels.noise, "noise").to.be.an("object");
 })({
-  locales: { es: "tiene una instancia de `NoiseChannel`" },
+  locales: {
+    ru: "содержит экземпляр `NoiseChannel`",
+    es: "tiene una instancia de `NoiseChannel`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
@@ -3190,6 +3401,7 @@ it("`NoiseChannel`: has an `apu` reference", () => {
   expect(apu.channels.noise.apu).to.equalN(apu, "apu");
 })({
   locales: {
+    ru: "`NoiseChannel`: содержит ссылку `apu`",
     es: "`NoiseChannel`: tiene una referencia `apu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
@@ -3205,6 +3417,8 @@ it("`NoiseChannel`: has a `registers` property, pointing to the audio registers"
   );
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: содержит свойство `registers`, указывающее на звуковые регистры",
     es:
       "`NoiseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
   },
@@ -3224,6 +3438,8 @@ it("`NoiseChannel`: has an `isEnabled()` method that returns whether the channel
   expect(apu.channels.noise.isEnabled()).to.equalN(false, "isEnabled()");
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: содержит метод `isEnabled()`, который возвращает, <включён> ли канал в APUControl",
     es:
       "`NoiseChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
   },
@@ -3242,7 +3458,10 @@ it("`NoiseChannel`: has a `lengthCounter` property", () => {
     "class"
   );
 })({
-  locales: { es: "`NoiseChannel`: tiene una propiedad `lengthCounter`" },
+  locales: {
+    ru: "`NoiseChannel`: содержит свойство `lengthCounter`",
+    es: "`NoiseChannel`: tiene una propiedad `lengthCounter`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
@@ -3254,6 +3473,7 @@ it("`NoiseChannel`: has a `sample()` method that <returns a number>", () => {
   expect(apu.channels.noise.sample()).to.be.a("number");
 })({
   locales: {
+    ru: "`NoiseChannel`: содержит метод `sample()`, который <возвращает число>",
     es: "`NoiseChannel`: tiene un método `sample()` que <retorna un número>",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
@@ -3275,6 +3495,8 @@ it("`NoiseChannel`: `sample()` returns 0 when disabled or length counter inactiv
   expect(channel.sample()).to.equalN(0, "sample()");
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: `sample()` возвращает 0, если канал выключен или счётчик длины неактивен",
     es:
       "`NoiseChannel`: `sample()` retorna 0 cuando está desactivado o el contador de longitud <no está activo>",
   },
@@ -3293,6 +3515,8 @@ it("calls noise channel's `step()` method on every APU `step(...)` call", () => 
   expect(channel.step).to.have.been.called;
 })({
   locales: {
+    ru:
+      "вызывает метод `step()` шумового канала при каждом вызове `step(...)` APU",
     es:
       "llama al método `step()` del canal ruido en cada llamada a `step(...)` de la APU",
   },
@@ -3318,6 +3542,7 @@ it("mixes pulse1, pulse2, triangle and noise in `step()`", () => {
   expect(onSample).to.have.been.calledWith(0.1, 1, 2, 3, 4);
 })({
   locales: {
+    ru: "смешивает pulse1, pulse2, triangle и noise в `step()`",
     es: "mezcla pulse1, pulse2, triangle y noise en `step()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.14") && id < book.getId("5c.19"),
@@ -3334,6 +3559,7 @@ it("`onQuarterFrameClock()` calls `quarterFrame()` on noise channel", () => {
   expect(apu.channels.noise.quarterFrame).to.have.been.calledOnce;
 })({
   locales: {
+    ru: "`onQuarterFrameClock()` вызывает `quarterFrame()` у шумового канала",
     es: "`onQuarterFrameClock()` llama a `quarterFrame()` en NoiseChannel",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
@@ -3350,6 +3576,7 @@ it("`onHalfFrameClock()` calls `halfFrame()` on noise channel", () => {
   expect(apu.channels.noise.halfFrame).to.have.been.calledOnce;
 })({
   locales: {
+    ru: "`onHalfFrameClock()` вызывает `halfFrame()` у шумового канала",
     es: "`onHalfFrameClock()` llama a `halfFrame()` en NoiseChannel",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
@@ -3383,6 +3610,8 @@ it("`NoiseControl`: writes `volumeOrEnvelopePeriod`, `constantVolume`, `envelope
   );
 })({
   locales: {
+    ru:
+      "`NoiseControl`: записывает `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`",
     es:
       "`NoiseControl`: escribe `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`",
   },
@@ -3410,6 +3639,8 @@ it("`NoiseLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the length c
   expect(apu.channels.noise.lengthCounter.counter).to.equalN(14, "counter");
 })({
   locales: {
+    ru:
+      "`NoiseLCL`: записывает `lengthCounterLoad` (биты ~3-7~) и обновляет счётчик длины",
     es:
       "`NoiseLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
   },
@@ -3427,6 +3658,8 @@ it("`APUControl`: on writes, if `enableNoise` is clear, resets the length counte
   expect(apu.channels.noise.lengthCounter.counter).to.equalN(0, "counter");
 })({
   locales: {
+    ru:
+      "`APUControl`: при записи сбрасывает счётчик длины, если `enableNoise` сброшен",
     es:
       "`APUControl`: en escrituras, si `enableNoise` está apagada, reinicia el contador de longitud",
   },
@@ -3444,6 +3677,8 @@ it("`APUControl`: on writes, if `enableNoise` is set, it doesn't reset the noise
   expect(apu.channels.noise.lengthCounter.counter).to.equalN(45, "counter");
 })({
   locales: {
+    ru:
+      "`APUControl`: при записи не сбрасывает счётчик длины шумового канала, если `enableNoise` установлен",
     es:
       "`APUControl`: en escrituras, si `enableNoise` está encendida, no reinicia el contador de longitud",
   },
@@ -3467,6 +3702,7 @@ it("`NoiseForm`: writes `periodId` (bits ~0-3~) and `mode` (bit 7)", () => {
   expect(register.mode).to.equalN(0, "mode");
 })({
   locales: {
+    ru: "`NoiseForm`: записывает `periodId` (биты ~0-3~) и `mode` (бит 7)",
     es: "`NoiseForm`: escribe `periodId` (bits ~0-3~) y `mode` (bit 7)",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
@@ -3482,6 +3718,8 @@ it("`NoiseChannel`: has `shift` and `dividerCount` initialized to 1 and 0", () =
   expect(channel.dividerCount).to.equalN(0, "dividerCount");
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: начальные значения `shift` и `dividerCount` равны 1 и 0",
     es: "`NoiseChannel`: tiene `shift` y `dividerCount` inicializados en 1 y 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
@@ -3502,6 +3740,7 @@ it("`NoiseChannel`: `sample()` returns 0 when `shift & 1` is 1", () => {
   expect(channel.sample()).to.equalN(0, "sample()");
 })({
   locales: {
+    ru: "`NoiseChannel`: `sample()` возвращает 0, если `shift & 1` равен 1",
     es: "`NoiseChannel`: `sample()` retorna 0 cuando `shift & 1` es 1",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
@@ -3522,6 +3761,8 @@ it("`NoiseChannel`: `sample()` returns the volume when `shift & 1` is 0", () => 
   expect(channel.sample()).to.equalN(5, "sample()");
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: `sample()` возвращает громкость, если `shift & 1` равен 0",
     es: "`NoiseChannel`: `sample()` retorna el volumen cuando `shift & 1` es 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
@@ -3548,6 +3789,8 @@ it("`NoiseChannel`: `step()` increments `dividerCount` and updates `shift` every
   expect(channel.shift).to.equalN(16384, "shift");
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: `step()` увеличивает `dividerCount` и обновляет `shift` каждый период шума",
     es:
       "`NoiseChannel`: `step()` incrementa `dividerCount` y actualiza `shift` cada período de ruido",
   },
@@ -3568,6 +3811,8 @@ it("`NoiseChannel`: `step()` resets `dividerCount` when it's >= the noise period
   expect(channel.dividerCount).to.equalN(0, "dividerCount");
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: `step()` сбрасывает `dividerCount`, если он >= периода шума",
     es:
       "`NoiseChannel`: `step()` reinicia `dividerCount` cuando es >= al período de ruido",
   },
@@ -3598,6 +3843,8 @@ it("`NoiseChannel`: `step()` uses `mode` flag to compute feedback bit", () => {
   expect(channel.shift).to.equalBin(0b100101010100110, "shift");
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: `step()` использует флаг `mode` для вычисления бита обратной связи",
     es:
       "`NoiseChannel`: `step()` usa la bandera `mode` para calcular el bit de feedback",
   },
@@ -3628,6 +3875,8 @@ it("`NoiseChannel`: `step()` uses an exclusive OR (~^~) for the feedback bit", (
   expect(channel.shift).to.equalBin(0b10011011100110, "shift");
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: `step()` использует исключающее ИЛИ (~^~) для бита обратной связи",
     es:
       "`NoiseChannel`: `step()` usa un OR exclusivo (~^~) para el bit de feedback",
   },
@@ -3648,7 +3897,10 @@ it("`NoiseChannel`: has a `volumeEnvelope` property", () => {
     "class"
   );
 })({
-  locales: { es: "`NoiseChannel`: tiene una propiedad `volumeEnvelope`" },
+  locales: {
+    ru: "`NoiseChannel`: содержит свойство `volumeEnvelope`",
+    es: "`NoiseChannel`: tiene una propiedad `volumeEnvelope`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.16"),
 });
 
@@ -3668,6 +3920,8 @@ it("`NoiseChannel`: `sample()` uses the envelope volume when `constantVolume` is
   expect(channel.sample()).to.equalN(3, "sample()");
 })({
   locales: {
+    ru:
+      "`NoiseChannel`: `sample()` использует громкость огибающей, если `constantVolume` сброшен",
     es:
       "`NoiseChannel`: `sample()` usa el volumen de la envolvente cuando `constantVolume` está desactivado",
   },
@@ -3687,6 +3941,7 @@ it("`NoiseChannel`: `quarterFrame()` updates the volume envelope", () => {
   expect(channel.volumeEnvelope.clock).to.have.been.calledWith(6, 1);
 })({
   locales: {
+    ru: "`NoiseChannel`: `quarterFrame()` обновляет огибающую громкости",
     es: "`NoiseChannel`: `quarterFrame()` actualiza la envolvente de volumen",
   },
   use: ({ id }, book) => id >= book.getId("5c.16"),
@@ -3707,6 +3962,8 @@ it("`NoiseLCL`: writes set the `startFlag` on the channel's volume envelope", ()
   expect(envelope.startFlag).to.equalN(true, "startFlag");
 })({
   locales: {
+    ru:
+      "`NoiseLCL`: запись устанавливает `startFlag` огибающей громкости канала",
     es:
       "`NoiseLCL`: las escrituras encienden `startFlag` en la envolvente de volumen del canal",
   },
@@ -3723,7 +3980,10 @@ it("has a `DMCChannel` instance", () => {
 
   expect(apu.channels.dmc, "dmc").to.be.an("object");
 })({
-  locales: { es: "tiene una instancia de `DMCChannel`" },
+  locales: {
+    ru: "содержит экземпляр `DMCChannel`",
+    es: "tiene una instancia de `DMCChannel`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.17"),
 });
 
@@ -3734,6 +3994,7 @@ it("`DMCChannel`: has an `apu` reference", () => {
   expect(apu.channels.dmc.apu).to.equalN(apu, "apu");
 })({
   locales: {
+    ru: "`DMCChannel`: содержит ссылку `apu`",
     es: "`DMCChannel`: tiene una referencia `apu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
@@ -3747,6 +4008,7 @@ it("`DMCChannel`: has a `cpu` reference", () => {
   expect(apu.channels.dmc.cpu).to.equalN(cpu, "cpu");
 })({
   locales: {
+    ru: "`DMCChannel`: содержит ссылку `cpu`",
     es: "`DMCChannel`: tiene una referencia `cpu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
@@ -3759,6 +4021,8 @@ it("`DMCChannel`: has a `registers` property, pointing to the audio registers", 
   expect(apu.channels.dmc.registers).to.equalN(apu.registers.dmc, "registers");
 })({
   locales: {
+    ru:
+      "`DMCChannel`: содержит свойство `registers`, указывающее на звуковые регистры",
     es:
       "`DMCChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
   },
@@ -3774,6 +4038,8 @@ it("`DMCChannel`: has an `outputSample` property initialized to 0", () => {
   expect(channel.outputSample).to.equalN(0, "outputSample");
 })({
   locales: {
+    ru:
+      "`DMCChannel`: содержит свойство `outputSample` с начальным значением 0",
     es: "`DMCChannel`: tiene una propiedad `outputSample` inicializada en 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
@@ -3789,6 +4055,7 @@ it("`DMCChannel`: `sample()` returns `outputSample`", () => {
   expect(channel.sample()).to.equalN(42, "sample()");
 })({
   locales: {
+    ru: "`DMCChannel`: `sample()` возвращает `outputSample`",
     es: "`DMCChannel`: `sample()` retorna `outputSample`",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
@@ -3810,6 +4077,8 @@ it("`DMCLoad`: writes `directLoad` (bits ~0-6~) and updates channel's `outputSam
   expect(apu.channels.dmc.outputSample).to.equalN(42, "outputSample");
 })({
   locales: {
+    ru:
+      "`DMCLoad`: записывает `directLoad` (биты ~0-6~) и обновляет `outputSample` канала",
     es:
       "`DMCLoad`: escribe `directLoad` (bits ~0-6~) y actualiza `outputSample` del canal",
   },
@@ -3836,6 +4105,7 @@ it("mixes pulse1, pulse2, triangle, noise and dmc in `step()`", () => {
   expect(onSample).to.have.been.calledWith(0.15, 1, 2, 3, 4, 5);
 })({
   locales: {
+    ru: "смешивает pulse1, pulse2, triangle, noise и dmc в `step()`",
     es: "mezcla pulse1, pulse2, triangle, noise y dmc en `step()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.17") && id < book.getId("5c.19"),
@@ -3856,6 +4126,7 @@ it("`DMCChannel`: has a `dpcm` property with the correct DPCM class", async () =
   expect(apu.channels.dmc.dpcm.constructor).to.equalN(DPCMClass, "class");
 })({
   locales: {
+    ru: "`DMCChannel`: содержит свойство `dpcm` с нужным классом DPCM",
     es: "`DMCChannel`: tiene una propiedad `dpcm` con la clase DPCM correcta",
   },
   use: ({ id }, book) => id >= book.getId("5c.18"),
@@ -3873,6 +4144,7 @@ it("`DMCChannel`: `step()` calls `dpcm.update()`", () => {
   expect(channel.dpcm.update).to.have.been.calledOnce;
 })({
   locales: {
+    ru: "`DMCChannel`: `step()` вызывает `dpcm.update()`",
     es: "`DMCChannel`: `step()` llama a `dpcm.update()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.18"),
@@ -3890,6 +4162,8 @@ it("`APUControl`: writing with `enableDMC` clear calls `dpcm.stop()`", () => {
   expect(dpcm.stop).to.have.been.calledOnce;
 })({
   locales: {
+    ru:
+      "`APUControl`: запись при сброшенном `enableDMC` вызывает `dpcm.stop()`",
     es:
       "`APUControl`: al escribir con `enableDMC` apagada llama a `dpcm.stop()`",
   },
@@ -3909,6 +4183,8 @@ it("`APUControl`: writing with `enableDMC` set and no remaining bytes calls `dpc
   expect(dpcm.start).to.have.been.calledOnce;
 })({
   locales: {
+    ru:
+      "`APUControl`: запись при установленном `enableDMC` и отсутствии оставшихся байтов вызывает `dpcm.start()`",
     es:
       "`APUControl`: al escribir con `enableDMC` encendida y sin bytes restantes llama a `dpcm.start()`",
   },
@@ -3928,6 +4204,8 @@ it("`APUControl`: writing with `enableDMC` set and remaining bytes does not call
   expect(dpcm.start).to.not.have.been.called;
 })({
   locales: {
+    ru:
+      "`APUControl`: запись при установленном `enableDMC` и наличии оставшихся байтов не вызывает `dpcm.start()`",
     es:
       "`APUControl`: al escribir con `enableDMC` encendida y con bytes restantes no llama a `dpcm.start()`",
   },
@@ -3957,6 +4235,8 @@ it("mixes pulse1, pulse2, triangle, noise and dmc in `step()` (<correct mix>)", 
   expect(onSample).to.have.been.calledWith(0.0846, 1, 2, 3, 4, 5);
 })({
   locales: {
+    ru:
+      "смешивает pulse1, pulse2, triangle, noise и dmc в `step()` (<правильная смесь>)",
     es:
       "mezcla pulse1, pulse2, triangle, noise y dmc en `step()` (<mezcla correcta>)",
   },
@@ -3977,6 +4257,8 @@ it("`APUStatus`: reads return 0 when all channels inactive and no DMC bytes", ()
   expect(apu.registers.apuStatus.onRead()).to.equalN(0, "onRead()");
 })({
   locales: {
+    ru:
+      "`APUStatus`: чтение возвращает 0, если все каналы неактивны и у DMC нет байтов",
     es:
       "`APUStatus`: las lecturas retornan 0 cuando todos los canales están inactivos y DMC sin bytes",
   },
@@ -3998,6 +4280,7 @@ it("`APUStatus`: reads return a <bitfield> for active channels and DMC", () => {
   expect(apu.registers.apuStatus.onRead()).to.equalBin(0b10101, "onRead()");
 })({
   locales: {
+    ru: "`APUStatus`: чтение возвращает <битовое поле> активных каналов и DMC",
     es:
       "`APUStatus`: las lecturas retornan un <bitfield> para canales activos y DMC",
   },

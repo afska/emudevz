@@ -237,7 +237,7 @@ export default class GameStreamer extends PureComponent {
 			this.setState({ isLoading: false });
 
 			if (error) {
-				alert("Error loading assets.");
+				alert(locales.get("error_loading_assets"));
 				return;
 			}
 

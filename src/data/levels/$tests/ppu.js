@@ -106,6 +106,7 @@ it("the file `/code/index.js` exports <an object> containing the `PPU` class", (
   expect(mainModule.default.PPU).to.be.a.class;
 })({
   locales: {
+    ru: "файл `/code/index.js` экспортирует <объект>, содержащий класс `PPU`",
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene la clase `PPU`",
   },
@@ -120,6 +121,7 @@ it("receives and saves the `cpu` property", () => {
   expect(ppu.cpu).to.equalN(cpu, "cpu");
 })({
   locales: {
+    ru: "принимает и сохраняет свойство `cpu`",
     es: "recibe y guarda una propiedad `cpu`",
   },
   use: ({ id }, book) => id >= book.getId("5b.1"),
@@ -138,6 +140,7 @@ it("initializes the <counters>", () => {
   expect(ppu.frame).to.equalN(0, "frame");
 })({
   locales: {
+    ru: "инициализирует <счётчики>",
     es: "inicializa los <contadores>",
   },
   use: ({ id }, book) => id >= book.getId("5b.1"),
@@ -166,6 +169,7 @@ it("`step(...)` increments the <counters>", () => {
   expect(ppu.cycle).to.equalN(0, "cycle");
 })({
   locales: {
+    ru: "`step(...)` увеличивает <счётчики>",
     es: "`step(...)` incrementa los <contadores>",
   },
   use: ({ id }, book) => id >= book.getId("5b.1"),
@@ -182,6 +186,7 @@ it("has a `frameBuffer` property", () => {
   expect(ppu.frameBuffer.length).to.equalN(256 * 240, "length");
 })({
   locales: {
+    ru: "имеет свойство `frameBuffer`",
     es: "tiene una propiedad `frameBuffer`",
   },
   use: ({ id }, book) => id >= book.getId("5b.2"),
@@ -199,6 +204,7 @@ it("`plot(...)` <draws> into the frame buffer", () => {
   );
 })({
   locales: {
+    ru: "`plot(...)` <рисует> в буфере кадра",
     es: "`plot(...)` <dibuja> en el frame buffer",
   },
   use: ({ id }, book) => id >= book.getId("5b.2"),
@@ -227,6 +233,8 @@ it("calls `onFrame(...)` every time `step(...)` reaches a <new frame>", () => {
   expect(onFrame).to.have.been.calledOnce;
 })({
   locales: {
+    ru:
+      "вызывает `onFrame(...)` каждый раз, когда `step(...)` достигает <нового кадра>",
     es:
       "llama a `onFrame(...)` cada vez que `step(...)` alcanza un <nuevo frame>",
   },
@@ -245,6 +253,7 @@ it("includes a `memory` property with a `PPUMemory` instance", () => {
   expect(ppu.memory).to.respondTo("write");
 })({
   locales: {
+    ru: "содержит свойство `memory` с экземпляром `PPUMemory`",
     es: "incluye una propiedad `memory` con una instancia de `PPUMemory`",
   },
   use: ({ id }, book) => id >= book.getId("5b.4"),
@@ -260,6 +269,7 @@ it("`PPUMemory`: saves <devices> in `onLoad(...)`", () => {
   expect(ppu.memory.mapper).to.equalN(dummyMapper, "mapper");
 })({
   locales: {
+    ru: "`PPUMemory`: сохраняет <устройства> в `onLoad(...)`",
     es: "`PPUMemory`: guarda <dispositivos> en `onLoad(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5b.4"),
@@ -282,6 +292,7 @@ it("`PPUMemory`: connects the mapper (<reads>)", () => {
   }
 })({
   locales: {
+    ru: "`PPUMemory`: подключает маппер (<чтение>)",
     es: "`PPUMemory`: conecta el mapper (<lecturas>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.4"),
@@ -310,6 +321,7 @@ it("`PPUMemory`: connects the mapper (<writes>)", () => {
   }
 })({
   locales: {
+    ru: "`PPUMemory`: подключает маппер (<запись>)",
     es: "`PPUMemory`: conecta el mapper (<escrituras>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.4"),
@@ -360,6 +372,7 @@ it("includes a `registers` property with 9 video registers", () => {
   });
 })({
   locales: {
+    ru: "содержит свойство `registers` с 9 видеорегистрами",
     es: "incluye una propiedad `registers` con 9 registros de video",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -407,6 +420,7 @@ it("connects the video registers to CPU memory (<reads>)", () => {
   });
 })({
   locales: {
+    ru: "подключает видеорегистры к памяти CPU (<чтение>)",
     es: "conecta los registros de video con la memoria de CPU (<lecturas>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -439,6 +453,7 @@ it("connects the video registers to CPU memory (<writes>)", () => {
   });
 })({
   locales: {
+    ru: "подключает видеорегистры к памяти CPU (<запись>)",
     es: "conecta los registros de video con la memoria de CPU (<escrituras>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -453,6 +468,7 @@ it("`PPUCtrl`: write only", () => {
   expect(ppuCtrl.onRead()).to.equalN(0, "onRead()");
 })({
   locales: {
+    ru: "`PPUCtrl`: только для записи",
     es: "`PPUCtrl`: solo escritura",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -473,6 +489,7 @@ it("`PPUCtrl`: writes `nameTableId` (bits ~0-1~)", () => {
   expect(ppuCtrl.nameTableId).to.equalN(3, "nameTableId");
 })({
   locales: {
+    ru: "`PPUCtrl`: записывает `nameTableId` (биты ~0-1~)",
     es: "`PPUCtrl`: escribe `nameTableId` (bits ~0-1~)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6") && id < book.getId("5b.23"),
@@ -489,6 +506,7 @@ it("`PPUCtrl`: writes `vramAddressIncrement32` (bit 2)", () => {
   expect(ppuCtrl.vramAddressIncrement32).to.equalN(1, "vramAddressIncrement32");
 })({
   locales: {
+    ru: "`PPUCtrl`: записывает `vramAddressIncrement32` (бит 2)",
     es: "`PPUCtrl`: escribe `vramAddressIncrement32` (bit 2)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6") && id < book.getId("5b.23"),
@@ -511,6 +529,7 @@ it("`PPUCtrl`: writes `sprite8x8PatternTableId` (bit 3)", () => {
   );
 })({
   locales: {
+    ru: "`PPUCtrl`: записывает `sprite8x8PatternTableId` (бит 3)",
     es: "`PPUCtrl`: escribe `sprite8x8PatternTableId` (bit 3)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -533,6 +552,7 @@ it("`PPUCtrl`: writes `backgroundPatternTableId` (bit 4)", () => {
   );
 })({
   locales: {
+    ru: "`PPUCtrl`: записывает `backgroundPatternTableId` (бит 4)",
     es: "`PPUCtrl`: escribe `backgroundPatternTableId` (bit 4)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -549,6 +569,7 @@ it("`PPUCtrl`: writes `spriteSize` (bit 5)", () => {
   expect(ppuCtrl.spriteSize).to.equalN(1, "spriteSize");
 })({
   locales: {
+    ru: "`PPUCtrl`: записывает `spriteSize` (бит 5)",
     es: "`PPUCtrl`: escribe `spriteSize` (bit 5)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -565,6 +586,7 @@ it("`PPUCtrl`: writes `generateNMIOnVBlank` (bit 7)", () => {
   expect(ppuCtrl.generateNMIOnVBlank).to.equalN(1, "generateNMIOnVBlank");
 })({
   locales: {
+    ru: "`PPUCtrl`: записывает `generateNMIOnVBlank` (бит 7)",
     es: "`PPUCtrl`: escribe `generateNMIOnVBlank` (bit 7)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -581,6 +603,7 @@ it("`PPUStatus`: read only", () => {
   expect(ppuStatus.onRead()).to.equalN(123, "onRead()");
 })({
   locales: {
+    ru: "`PPUStatus`: только для чтения",
     es: "`PPUStatus`: solo lectura",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -596,6 +619,7 @@ it("`PPUStatus`: reads `spriteOverflow` (bit 5)", () => {
   expect(byte.getBit(ppuStatus.onRead(), 5)).to.equalN(1, "bit 5");
 })({
   locales: {
+    ru: "`PPUStatus`: читает `spriteOverflow` (бит 5)",
     es: "`PPUStatus`: lee `spriteOverflow` (bit 5)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -611,6 +635,7 @@ it("`PPUStatus`: reads `sprite0Hit` (bit 6)", () => {
   expect(byte.getBit(ppuStatus.onRead(), 6)).to.equalN(1, "bit 6");
 })({
   locales: {
+    ru: "`PPUStatus`: читает `sprite0Hit` (бит 6)",
     es: "`PPUStatus`: lee `sprite0Hit` (bit 6)",
   },
   use: ({ id }, book) => id >= book.getId("5b.6"),
@@ -628,6 +653,8 @@ it("`PPUStatus`: reads `isInVBlankInterval` (bit 7) (<ON by default>)", () => {
   expect(byte.getBit(ppuStatus.onRead(), 7)).to.equalN(1, "bit 7");
 })({
   locales: {
+    ru:
+      "`PPUStatus`: читает `isInVBlankInterval` (бит 7) (<по умолчанию включён>)",
     es:
       "`PPUStatus`: lee `isInVBlankInterval` (bit 7) (<encendida por defecto>)",
   },
@@ -650,6 +677,7 @@ it("`PPUStatus`: resets `isInVBlankInterval` after reading", () => {
   expect(ppuStatus.isInVBlankInterval).to.equalN(0, "isInVBlankInterval");
 })({
   locales: {
+    ru: "`PPUStatus`: сбрасывает `isInVBlankInterval` после чтения",
     es: "`PPUStatus`: reinicia `isInVBlankInterval` luego de leer",
   },
   use: ({ id }, book) => id >= book.getId("5b.7"),
@@ -664,6 +692,8 @@ it("has methods: `_onPreLine()`, `_onVisibleLine()`, `_onVBlankLine(...)`", () =
   expect(ppu).to.respondTo("_onVBlankLine");
 })({
   locales: {
+    ru:
+      "имеет методы: `_onPreLine()`, `_onVisibleLine()`, `_onVBlankLine(...)`",
     es:
       "tiene métodos `_onPreLine()`, `_onVisibleLine()`, `_onVBlankLine(...)`",
   },
@@ -709,6 +739,7 @@ it("calls `_onPreLine(...)` on scanline ~-1~", () => {
   }
 })({
   locales: {
+    ru: "вызывает `_onPreLine(...)` на строке ~-1~",
     es: "llama a `_onPreLine(...)` en la scanline ~-1~",
   },
   use: ({ id }, book) => id >= book.getId("5b.7"),
@@ -753,6 +784,7 @@ it("calls `_onVisibleLine()` on scanlines ~[0, 240)~", () => {
   }
 })({
   locales: {
+    ru: "вызывает `_onVisibleLine()` на строках ~[0, 240)~",
     es: "llama a `_onVisibleLine()` en las scanlines ~[0, 240)~",
   },
   use: ({ id }, book) => id >= book.getId("5b.7"),
@@ -797,6 +829,8 @@ it("calls `_onVBlankLine(...)` on scanline 241, with the `onInterrupt` argument"
   }
 })({
   locales: {
+    ru:
+      "вызывает `_onVBlankLine(...)` на строке 241 с аргументом `onInterrupt`",
     es:
       "llama a `_onVBlankLine(...)` en la scanline 241, con el argumento `onInterrupt`",
   },
@@ -831,6 +865,8 @@ it("resets `PPUStatus::isInVBlankInterval` on ~scanline=-1~, ~cycle=1~", () => {
   }
 })({
   locales: {
+    ru:
+      "сбрасывает `PPUStatus::isInVBlankInterval` при ~scanline=-1~, ~cycle=1~",
     es: "reinicia `PPUStatus::isInVBlankInterval` en ~scanline=-1~, ~cycle=1~",
   },
   use: ({ id }, book) => id >= book.getId("5b.7"),
@@ -877,6 +913,8 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on ~scanline=241~, 
   }
 })({
   locales: {
+    ru:
+      "устанавливает `PPUStatus::isInVBlankInterval` и вызывает NMI при ~scanline=241~, ~cycle=1~, если `PPUCtrl::generateNMIOnVBlank` включено",
     es:
       "enciende `PPUStatus::isInVBlankInterval` y dispara una NMI en ~scanline=241~, ~cycle=1~ cuando `PPUCtrl::generateNMIOnVBlank` está encendida",
   },
@@ -920,6 +958,8 @@ it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on ~scanline
   }
 })({
   locales: {
+    ru:
+      "устанавливает `PPUStatus::isInVBlankInterval` и не вызывает NMI при ~scanline=241~, ~cycle=1~, если `PPUCtrl::generateNMIOnVBlank` <выключено>",
     es:
       "enciende `PPUStatus::isInVBlankInterval` y no dispara una NMI en ~scanline=241~, ~cycle=1~ cuando `PPUCtrl::generateNMIOnVBlank` está <apagada>",
   },
@@ -956,6 +996,8 @@ it("never sets `PPUStatus::isInVBlankInterval` if ~scanline < 241~", () => {
   }
 })({
   locales: {
+    ru:
+      "никогда не устанавливает `PPUStatus::isInVBlankInterval` при ~scanline < 241~",
     es: "nunca enciende `PPUStatus::isInVBlankInterval` si ~scanline < 241~",
   },
   use: ({ id }, book) => id >= book.getId("5b.7"),
@@ -972,6 +1014,7 @@ it("`PPUMemory`: has a `vram` property", () => {
   expect(ppu.memory.vram.length).to.equalN(4096, "length");
 })({
   locales: {
+    ru: "`PPUMemory`: имеет свойство `vram`",
     es: "`PPUMemory`: incluye una propiedad `vram`",
   },
   use: ({ id }, book) => id >= book.getId("5b.8"),
@@ -988,6 +1031,7 @@ it("`PPUMemory`: connects VRAM (<reads>)", () => {
   }
 })({
   locales: {
+    ru: "`PPUMemory`: подключает VRAM (<чтение>)",
     es: "`PPUMemory`: conecta VRAM (<lecturas>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.20"),
@@ -1004,6 +1048,7 @@ it("`PPUMemory`: connects VRAM to PPU memory (<writes>)", () => {
   }
 })({
   locales: {
+    ru: "`PPUMemory`: подключает VRAM к памяти PPU (<запись>)",
     es: "`PPUMemory`: conecta VRAM (<escrituras>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.20"),
@@ -1018,6 +1063,7 @@ it("`PPUAddr`: write only", () => {
   expect(ppuAddr.onRead()).to.equalN(0, "onRead()");
 })({
   locales: {
+    ru: "`PPUAddr`: только для записи",
     es: "`PPUAddr`: solo escritura",
   },
   use: ({ id }, book) => id >= book.getId("5b.8"),
@@ -1035,6 +1081,7 @@ it("`PPUAddr`: initializes two properties, `latch` and `address`", () => {
   expect(ppuAddr.address).to.equalN(0, "address");
 })({
   locales: {
+    ru: "`PPUAddr`: инициализирует два свойства, `latch` и `address`",
     es: "`PPUAddr`: inicializa dos propiedades, `latch` y `address`",
   },
   use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
@@ -1062,6 +1109,7 @@ it("`PPUAddr`: writes the MSB first, then the LSB", () => {
   expect(ppuAddr.latch).to.equalN(false, "latch");
 })({
   locales: {
+    ru: "`PPUAddr`: записывает сначала старший байт, затем младший",
     es: "`PPUAddr`: escribe primero el MSB, luego el LSB",
   },
   use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
@@ -1083,6 +1131,7 @@ it("`PPUData`: writes the value to PPU memory using `PPUAddr::address`", () => {
   expect(ppu.memory.read(0x2023)).to.equalN(value, "read(0x2023)");
 })({
   locales: {
+    ru: "`PPUData`: записывает значение в память PPU по `PPUAddr::address`",
     es:
       "`PPUData`: escribe el valor en la memoria PPU usando `PPUAddr::address`",
   },
@@ -1107,6 +1156,7 @@ it("`PPUData`: autoincrements the address by 1 (<writes>)", () => {
   expect(ppuAddr.address).to.equalHex(0x2025, "address");
 })({
   locales: {
+    ru: "`PPUData`: автоматически увеличивает адрес на 1 (<запись>)",
     es: "`PPUData`: autoincrementa la dirección por 1 (<escrituras>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.8"),
@@ -1132,6 +1182,8 @@ it("`PPUData`: autoincrements the address by 32 if `PPUCtrl::vramAddressIncremen
   expect(ppuAddr.address).to.equalHex(0x2063, "address");
 })({
   locales: {
+    ru:
+      "`PPUData`: автоматически увеличивает адрес на 32, если `PPUCtrl::vramAddressIncrement32` включено (<запись>)",
     es:
       "`PPUData`: autoincrementa la dirección por 32 si `PPUCtrl::vramAddressIncrement32` (<escrituras>)",
   },
@@ -1158,6 +1210,8 @@ it("`PPUData`: autoincrements the address without exceeding $FFFF (<writes>)", (
   expect(ppuAddr.address).to.equalN(31, "address");
 })({
   locales: {
+    ru:
+      "`PPUData`: автоматически увеличивает адрес, не превышая $FFFF (<запись>)",
     es:
       "`PPUData`: autoincrementa la dirección sin excederse de $FFFF (<escrituras>)",
   },
@@ -1180,6 +1234,7 @@ it("`PPUStatus`: resets `PPUAddr::latch` after reading", () => {
   expect(ppuAddr.latch).to.equalN(false, "latch");
 })({
   locales: {
+    ru: "`PPUStatus`: сбрасывает `PPUAddr::latch` после чтения",
     es: "`PPUStatus`: reinicia `PPUAddr::latch` luego de leer",
   },
   use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
@@ -1196,6 +1251,7 @@ it("has a `backgroundRenderer` property", () => {
   expect(ppu.backgroundRenderer.ppu).to.equalN(ppu, "ppu");
 })({
   locales: {
+    ru: "имеет свойство `backgroundRenderer`",
     es: "tiene una propiedad `backgroundRenderer`",
   },
   use: ({ id }, book) => id >= book.getId("5b.9"),
@@ -1215,6 +1271,8 @@ it("`BackgroundRenderer`: `renderScanline()` calls `PPU::plot(...)` 256 times", 
   expect(ppu.plot.callCount).to.equalN(256, "plot.callCount");
 })({
   locales: {
+    ru:
+      "`BackgroundRenderer`: `renderScanline()` вызывает `PPU::plot(...)` 256 раз",
     es:
       "`BackgroundRenderer`: `renderScanline()` llama a `PPU::plot(...)` 256 veces",
   },
@@ -1254,6 +1312,8 @@ it("calls `backgroundRenderer.renderScanline()` on cycle 0 of every <visible sca
   }
 })({
   locales: {
+    ru:
+      "вызывает `backgroundRenderer.renderScanline()` на такте 0 каждой <видимой строки>",
     es:
       "llama a `backgroundRenderer.renderScanline()` en el ciclo 0 de cada <scanline visible>",
   },
@@ -1271,6 +1331,7 @@ it("`PPUMemory`: has a `paletteRam` property", () => {
   expect(ppu.memory.paletteRam.length).to.equalN(32, "length");
 })({
   locales: {
+    ru: "`PPUMemory`: имеет свойство `paletteRam`",
     es: "`PPUMemory` incluye una propiedad `paletteRam`",
   },
   use: ({ id }, book) => id >= book.getId("5b.10"),
@@ -1296,6 +1357,7 @@ it("`PPUMemory`: connects Palette RAM (<reads>)", () => {
   }
 })({
   locales: {
+    ru: "`PPUMemory`: подключает RAM палитр (<чтение>)",
     es: "`PPUMemory`: conecta Palette RAM (<lecturas>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.10"),
@@ -1321,6 +1383,7 @@ it("`PPUMemory`: connects Palette RAM (<writes>)", () => {
   }
 })({
   locales: {
+    ru: "`PPUMemory`: подключает RAM палитр (<запись>)",
     es: "`PPUMemory`: conecta Palette RAM (<escrituras>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.10"),
@@ -1350,6 +1413,7 @@ it("`getColor(...)` reads color palettes", () => {
   }
 })({
   locales: {
+    ru: "`getColor(...)` читает цветовые палитры",
     es: "`getColor(...)` lee paletas de colores",
   },
   use: ({ id }, book) => id >= book.getId("5b.10"),
@@ -1377,6 +1441,7 @@ it("`PPUData`: reads the value at `PPUAddr::address` <with delay>", () => {
   expect(ppuData.onRead()).to.equalHex(0x9e, "third read");
 })({
   locales: {
+    ru: "`PPUData`: читает значение по `PPUAddr::address` <с задержкой>",
     es: "`PPUData`: lee el valor en `PPUAddr::address` <con retraso>",
   },
   use: ({ id }, book) => id >= book.getId("5b.11"),
@@ -1396,6 +1461,7 @@ it("`PPUData`: reads from Palette RAM <without delay>", () => {
   expect(ppuData.onRead()).to.equalN(123, "first read");
 })({
   locales: {
+    ru: "`PPUData`: читает из RAM палитр <без задержки>",
     es: "`PPUData`: lee de Palette RAM <sin retraso>",
   },
   use: ({ id }, book) => id >= book.getId("5b.11"),
@@ -1418,6 +1484,7 @@ it("`PPUData`: autoincrements the address by 1 (<reads>)", () => {
   expect(ppuAddr.address).to.equalHex(0x2025, "address");
 })({
   locales: {
+    ru: "`PPUData`: автоматически увеличивает адрес на 1 (<чтение>)",
     es: "`PPUData`: autoincrementa la dirección por 1 (<lecturas>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.11"),
@@ -1442,6 +1509,8 @@ it("`PPUData`: autoincrements the address by 32 if `PPUCtrl::vramAddressIncremen
   expect(ppuAddr.address).to.equalHex(0x2063, "address");
 })({
   locales: {
+    ru:
+      "`PPUData`: автоматически увеличивает адрес на 32, если `PPUCtrl::vramAddressIncrement32` включено (<чтение>)",
     es:
       "`PPUData`: autoincrementa la dirección por 32 si `PPUCtrl::vramAddressIncrement32` (<lecturas>)",
   },
@@ -1467,6 +1536,8 @@ it("`PPUData`: autoincrements the address without exceeding $FFFF (<reads>)", ()
   expect(ppuAddr.address).to.equalN(31, "address");
 })({
   locales: {
+    ru:
+      "`PPUData`: автоматически увеличивает адрес, не превышая $FFFF (<чтение>)",
     es:
       "`PPUData`: autoincrementa la dirección sin excederse de $FFFF (<lecturas>)",
   },
@@ -1484,6 +1555,7 @@ it("`PPUMemory`: has an `oamRam` property", () => {
   expect(ppu.memory.oamRam.length).to.equalN(256, "length");
 })({
   locales: {
+    ru: "`PPUMemory`: имеет свойство `oamRam`",
     es: "`PPUMemory`: incluye una propiedad `oamRam`",
   },
   use: ({ id }, book) => id >= book.getId("5b.12"),
@@ -1503,6 +1575,7 @@ it("`OAMData`: writes the value to OAM RAM using `OAMAddr::value`", () => {
   expect(ppu.memory.oamRam[23]).to.equalN(value, "oamRam[23]");
 })({
   locales: {
+    ru: "`OAMData`: записывает значение в OAM RAM по `OAMAddr::value`",
     es: "`OAMData`: escribe el valor en OAM RAM usando `OAMAddr::value`",
   },
   use: ({ id }, book) => id >= book.getId("5b.12"),
@@ -1524,6 +1597,7 @@ it("`OAMData`: autoincrements the address by 1 (<writes>)", () => {
   expect(oamAddr.value).to.equalN(25, "address");
 })({
   locales: {
+    ru: "`OAMData`: автоматически увеличивает адрес на 1 (<запись>)",
     es: "`OAMData`: autoincrementa la dirección por 1 (<escrituras>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.12"),
@@ -1542,6 +1616,8 @@ it("`OAMData`: autoincrements the address without exceeding $FF (<writes>)", () 
   expect(oamAddr.value).to.equalN(0, "address");
 })({
   locales: {
+    ru:
+      "`OAMData`: автоматически увеличивает адрес, не превышая $FF (<запись>)",
     es:
       "`OAMData`: autoincrementa la dirección sin excederse de $FF (<escrituras>)",
   },
@@ -1557,6 +1633,7 @@ it("`OAMDMA`: write only", () => {
   expect(ppuCtrl.onRead()).to.equalN(0, "onRead()");
 })({
   locales: {
+    ru: "`OAMDMA`: только для записи",
     es: "`OAMDMA`: solo escritura",
   },
   use: ({ id }, book) => id >= book.getId("5b.12"),
@@ -1582,6 +1659,7 @@ it("`OAMDMA`: copies the whole page to OAM and adds 513 cycles", () => {
   expect(cpu.extraCycles).to.equalN(516, "extraCycles"); // 3 + 513
 })({
   locales: {
+    ru: "`OAMDMA`: копирует всю страницу в OAM и добавляет 513 тактов",
     es: "`OAMDMA`: copia la página entera a OAM y agrega 513 ciclos",
   },
   use: ({ id }, book) => id >= book.getId("5b.12"),
@@ -1598,6 +1676,7 @@ it("has a `spriteRenderer` property", () => {
   expect(ppu.spriteRenderer.ppu).to.equalN(ppu, "ppu");
 })({
   locales: {
+    ru: "имеет свойство `spriteRenderer`",
     es: "tiene una propiedad `spriteRenderer`",
   },
   use: ({ id }, book) => id >= book.getId("5b.13"),
@@ -1641,6 +1720,8 @@ it("`SpriteRenderer`: `_createSprite(...)` creates a `Sprite` instance from OAM 
   expect(sprite.height).to.equalN(8, "height");
 })({
   locales: {
+    ru:
+      "`SpriteRenderer`: `_createSprite(...)` создаёт экземпляр `Sprite` из данных OAM (<8x8>)",
     es:
       "`SpriteRenderer`: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (<8x8>)",
   },
@@ -1695,6 +1776,8 @@ it("`SpriteRenderer`: `_createSprite(...)` creates a `Sprite` instance from OAM 
   expect(sprite.height).to.equalN(16, "height");
 })({
   locales: {
+    ru:
+      "`SpriteRenderer`: `_createSprite(...)` создаёт экземпляр `Sprite` из данных OAM (<8x16>)",
     es:
       "`SpriteRenderer`: `_createSprite(...)` crea una instancia de `Sprite` desde los datos OAM (<8x16>)",
   },
@@ -1737,6 +1820,7 @@ it("`SpriteRenderer`: `_evaluate()` returns a sprite array", () => {
   expect(ppu.registers.ppuStatus.spriteOverflow).to.equalN(0, "spriteOverflow");
 })({
   locales: {
+    ru: "`SpriteRenderer`: `_evaluate()` возвращает массив спрайтов",
     es: "`SpriteRenderer`: `_evaluate()` retorna una lista de sprites",
   },
   use: ({ id }, book) => id >= book.getId("5b.14"),
@@ -1764,6 +1848,8 @@ it("`SpriteRenderer`: `_evaluate()` sets the sprite overflow flag when there are
   expect(ppu.registers.ppuStatus.spriteOverflow).to.equalN(1, "spriteOverflow");
 })({
   locales: {
+    ru:
+      "`SpriteRenderer`: `_evaluate()` устанавливает флаг переполнения спрайтов, когда <подходящих спрайтов> больше 8",
     es:
       "`SpriteRenderer`: `_evaluate()` enciende la bandera de sprite overflow cuando hay más de 8 <sprites candidatos>",
   },
@@ -1798,6 +1884,7 @@ it("resets `PPUStatus::spriteOverflow` on ~scanline=-1~, ~cycle=1~", () => {
   }
 })({
   locales: {
+    ru: "сбрасывает `PPUStatus::spriteOverflow` при ~scanline=-1~, ~cycle=1~",
     es: "reinicia `PPUStatus::spriteOverflow` en ~scanline=-1~, ~cycle=1~",
   },
   use: ({ id }, book) => id >= book.getId("5b.14"),
@@ -1837,6 +1924,8 @@ it("calls `spriteRenderer.renderScanline()` on cycle 0 of every <visible scanlin
   }
 })({
   locales: {
+    ru:
+      "вызывает `spriteRenderer.renderScanline()` на такте 0 каждой <видимой строки>",
     es:
       "llama a `spriteRenderer.renderScanline()` en el ciclo 0 de cada <scanline visible>",
   },
@@ -1899,6 +1988,8 @@ it("`SpriteRenderer`: sets the sprite-zero hit flag when an <opaque pixel> from 
   expect(ppu.registers.ppuStatus.sprite0Hit).to.equalN(0, "sprite0Hit");
 })({
   locales: {
+    ru:
+      "`SpriteRenderer`: устанавливает флаг попадания нулевого спрайта, когда <непрозрачный пиксель> спрайта 0 рисуется поверх <непрозрачного пикселя> фона",
     es:
       "`SpriteRenderer`: enciende la bandera de sprite-zero hit cuando un <píxel opaco> del sprite 0 es dibujado sobre un <píxel opaco> del fondo",
   },
@@ -1927,6 +2018,7 @@ it("resets `PPUStatus::sprite0Hit` on ~scanline=-1~, ~cycle=1~", () => {
   }
 })({
   locales: {
+    ru: "сбрасывает `PPUStatus::sprite0Hit` при ~scanline=-1~, ~cycle=1~",
     es: "reinicia `PPUStatus::sprite0Hit` en ~scanline=-1~, ~cycle=1~",
   },
   use: ({ id }, book) => id >= book.getId("5b.18"),
@@ -1949,6 +2041,7 @@ it("`PPUMemory`: mirrors Palette RAM correctly (<reads>)", () => {
   expect(ppu.memory.read(0x3f1c)).to.equalN(4, "read(0x3f1c)");
 })({
   locales: {
+    ru: "`PPUMemory`: правильно зеркалирует RAM палитр (<чтение>)",
     es: "`PPUMemory`: espeja la Palette RAM correctamente (<lecturas>)",
   },
   use: ({ id }, book) => id >= book.getId("5b.19"),
@@ -1969,6 +2062,7 @@ it("`PPUMemory`: mirrors Palette RAM correctly in PPU memory (<writes>)", () => 
   expect(ppu.memory.paletteRam[12]).to.equalN(4, "paletteRam[12]");
 })({
   locales: {
+    ru: "`PPUMemory`: правильно зеркалирует RAM палитр в памяти PPU (<запись>)",
     es:
       "`PPUMemory`: espeja la Palette RAM correctamente en la memoria de PPU (<escrituras>)",
   },
@@ -2026,6 +2120,7 @@ it("`PPUMemory`: can change the name table mirroring", () => {
   expect(ppu.memory._mirroring.$2C00).to.equalHex(0xc00, "_mirroring.$2C00");
 })({
   locales: {
+    ru: "`PPUMemory`: может менять зеркалирование таблиц имён",
     es: "`PPUMemory`: puede cambiar el mirroring de name tables",
   },
   use: ({ id }, book) => id >= book.getId("5b.20"),
@@ -2051,6 +2146,8 @@ it('`PPUMemory`: ignores name table mirroring changes if the cartridge header se
   });
 })({
   locales: {
+    ru:
+      '`PPUMemory`: игнорирует изменения зеркалирования таблиц имён, если в заголовке картриджа задан режим "FOUR_SCREEN"',
     es:
       '`PPUMemory`: ignora cambios de mirroring de name tables si la cabecera del cartucho establece el modo "FOUR_SCREEN"',
   },
@@ -2089,6 +2186,8 @@ it("`PPUMemory`: autosets the mirroring type based on the cartridge header", () 
   expect(ppu.memory.mirroringId).to.equalN("FOUR_SCREEN", "mirroringId");
 })({
   locales: {
+    ru:
+      "`PPUMemory`: автоматически задаёт тип зеркалирования по заголовку картриджа",
     es:
       "`PPUMemory`: autoasigna el tipo de mirroring basado en la cabecera del cartucho",
   },
@@ -2127,6 +2226,7 @@ it("[~HORIZONTAL~ mirroring] connects VRAM to PPU memory (<reads>)", () => {
   }
 })({
   locales: {
+    ru: "[зеркалирование ~HORIZONTAL~] подключает VRAM к памяти PPU (<чтение>)",
     es:
       "[~HORIZONTAL~ mirroring] conecta VRAM con la memoria de PPU (<lecturas>)",
   },
@@ -2164,6 +2264,7 @@ it("[~HORIZONTAL~ mirroring] connects VRAM to PPU memory (<writes>)", () => {
   }
 })({
   locales: {
+    ru: "[зеркалирование ~HORIZONTAL~] подключает VRAM к памяти PPU (<запись>)",
     es:
       "[~HORIZONTAL~ mirroring] conecta VRAM con la memoria de PPU (<escrituras>)",
   },
@@ -2202,6 +2303,7 @@ it("[~VERTICAL~ mirroring] connects VRAM to PPU memory (<reads>)", () => {
   }
 })({
   locales: {
+    ru: "[зеркалирование ~VERTICAL~] подключает VRAM к памяти PPU (<чтение>)",
     es:
       "[~VERTICAL~ mirroring] conecta VRAM con la memoria de PPU (<lecturas>)",
   },
@@ -2239,6 +2341,7 @@ it("[~VERTICAL~ mirroring] connects VRAM to PPU memory (<writes>)", () => {
   }
 })({
   locales: {
+    ru: "[зеркалирование ~VERTICAL~] подключает VRAM к памяти PPU (<запись>)",
     es:
       "[~VERTICAL~ mirroring] conecta VRAM con la memoria de PPU (<escrituras>)",
   },
@@ -2293,6 +2396,7 @@ it("[~VERTICAL~ mirroring] connects VRAM to PPU memory (<writes>)", () => {
     }
   })({
     locales: {
+      ru: `[зеркалирование ~${mirroringId}~] подключает VRAM к памяти PPU (<чтение>)`,
       es: `[~${mirroringId}~ mirroring] conecta VRAM con la memoria de PPU (<lecturas>)`,
     },
     use: ({ id }, book) => id >= book.getId("5b.20"),
@@ -2341,6 +2445,7 @@ it("[~VERTICAL~ mirroring] connects VRAM to PPU memory (<writes>)", () => {
     }
   })({
     locales: {
+      ru: `[зеркалирование ~${mirroringId}~] подключает VRAM к памяти PPU (<запись>)`,
       es: `[~${mirroringId}~ mirroring] conecta VRAM con la memoria de PPU (<escrituras>)`,
     },
     use: ({ id }, book) => id >= book.getId("5b.20"),
@@ -2379,6 +2484,8 @@ it("[~FOUR_SCREEN~ mirroring] connects VRAM to PPU memory (<reads>)", () => {
   }
 })({
   locales: {
+    ru:
+      "[зеркалирование ~FOUR_SCREEN~] подключает VRAM к памяти PPU (<чтение>)",
     es:
       "[~FOUR_SCREEN~ mirroring] conecta VRAM con la memoria de PPU (<lecturas>)",
   },
@@ -2416,6 +2523,8 @@ it("[~FOUR_SCREEN~ mirroring] connects VRAM to PPU memory (<writes>)", () => {
   }
 })({
   locales: {
+    ru:
+      "[зеркалирование ~FOUR_SCREEN~] подключает VRAM к памяти PPU (<запись>)",
     es:
       "[~FOUR_SCREEN~ mirroring] conecta VRAM con la memoria de PPU (<escrituras>)",
   },
@@ -2433,6 +2542,7 @@ it("`PPUMask`: write only", () => {
   expect(ppuMask.onRead()).to.equalN(0, "onRead()");
 })({
   locales: {
+    ru: "`PPUMask`: только для записи",
     es: "`PPUMask`: solo escritura",
   },
   use: ({ id }, book) => id >= book.getId("5b.22"),
@@ -2455,6 +2565,7 @@ it("`PPUMask`: writes `showBackgroundInFirst8Pixels` (bit 1)", () => {
   );
 })({
   locales: {
+    ru: "`PPUMask`: записывает `showBackgroundInFirst8Pixels` (бит 1)",
     es: "`PPUMask`: escribe `showBackgroundInFirst8Pixels` (bit 1)",
   },
   use: ({ id }, book) => id >= book.getId("5b.22"),
@@ -2477,6 +2588,7 @@ it("`PPUMask`: writes `showSpritesInFirst8Pixels` (bit 2)", () => {
   );
 })({
   locales: {
+    ru: "`PPUMask`: записывает `showSpritesInFirst8Pixels` (бит 2)",
     es: "`PPUMask`: escribe `showSpritesInFirst8Pixels` (bit 2)",
   },
   use: ({ id }, book) => id >= book.getId("5b.22"),
@@ -2493,6 +2605,7 @@ it("`PPUMask`: writes `showBackground` (bit 3)", () => {
   expect(ppuMask.showBackground).to.equalN(1, "showBackground");
 })({
   locales: {
+    ru: "`PPUMask`: записывает `showBackground` (бит 3)",
     es: "`PPUMask`: escribe `showBackground` (bit 3)",
   },
   use: ({ id }, book) => id >= book.getId("5b.22"),
@@ -2509,6 +2622,7 @@ it("`PPUMask`: writes `showSprites` (bit 4)", () => {
   expect(ppuMask.showSprites).to.equalN(1, "showSprites");
 })({
   locales: {
+    ru: "`PPUMask`: записывает `showSprites` (бит 4)",
     es: "`PPUMask`: escribe `showSprites` (bit 4)",
   },
   use: ({ id }, book) => id >= book.getId("5b.22"),
@@ -2535,6 +2649,8 @@ it("`PPUMask`: has an `isRenderingEnabled` method that returns ~true~ if the bac
   expect(ppuMask.isRenderingEnabled()).to.equalN(1, "isRenderingEnabled()");
 })({
   locales: {
+    ru:
+      "`PPUMask`: имеет метод `isRenderingEnabled`, возвращающий ~true~, если фон или спрайты <включены>",
     es:
       "`PPUMask`: tiene un método `isRenderingEnabled` que retorna ~true~ si el fondo o los sprites están <habilitados>",
   },
@@ -2586,6 +2702,8 @@ it("`SpriteRenderer`: does <NOT> set the sprite-zero hit flag when background is
   );
 })({
   locales: {
+    ru:
+      "`SpriteRenderer`: <НЕ> устанавливает флаг попадания нулевого спрайта, если `PPUMask` скрывает фон ИЛИ спрайты",
     es:
       "`SpriteRenderer`: <NO> enciende la bandera de sprite-zero hit cuando `PPUMask` oculta el fondo <u> oculta los sprites",
   },
@@ -2607,6 +2725,7 @@ it("has a `loopy` property with the correct LoopyRegister class", async () => {
   expect(ppu.loopy.constructor).to.equalN(LoopyRegisterClass, "class");
 })({
   locales: {
+    ru: "имеет свойство `loopy` с правильным классом LoopyRegister",
     es: "tiene una propiedad `loopy` con la clase LoopyRegister correcta",
   },
   use: ({ id }, book) => id >= book.getId("5b.23"),
@@ -2628,6 +2747,8 @@ it("`_onPreLine()`: copies the vertical scroll from `loopy.tAddress` to `loopy.v
   expect(ppu.loopy.nameTableId(0)).to.equalN(2, "loopy.nameTableId(0)");
 })({
   locales: {
+    ru:
+      "`_onPreLine()`: копирует вертикальную прокрутку из `loopy.tAddress` в `loopy.vAddress`",
     es:
       "`_onPreLine()`: copia el scroll vertical desde `loopy.tAddress` hacia `loopy.vAddress`",
   },
@@ -2649,6 +2770,8 @@ it("`_onVisibleLine()`: copies the horizontal scroll from `loopy.tAddress` to `l
   expect(ppu.loopy.nameTableId(56)).to.equalN(1, "loopy.nameTableId(56)");
 })({
   locales: {
+    ru:
+      "`_onVisibleLine()`: копирует горизонтальную прокрутку из `loopy.tAddress` в `loopy.vAddress`",
     es:
       "`_onVisibleLine()`: copia el scroll horizontal desde `loopy.tAddress` hacia `loopy.vAddress`",
   },
@@ -2666,6 +2789,8 @@ it("`_onPreLine()`: doesn't call `loopy.onPreLine(...)` if rendering is off", ()
   expect(ppu.loopy.onPreLine).to.not.have.been.called;
 })({
   locales: {
+    ru:
+      "`_onPreLine()`: не вызывает `loopy.onPreLine(...)`, если отрисовка выключена",
     es:
       "`_onPreLine()`: no llama a `loopy.onPreLine(...)` si el renderizado está apagado",
   },
@@ -2684,6 +2809,8 @@ it("`_onVisibleLine()`: doesn't call `loopy.onVisibleLine(...)` if rendering is 
   expect(ppu.loopy.onVisibleLine).to.not.have.been.called;
 })({
   locales: {
+    ru:
+      "`_onVisibleLine()`: не вызывает `loopy.onVisibleLine(...)`, если отрисовка выключена",
     es:
       "`_onVisibleLine()`: no llama a `loopy.onVisibleLine(...)` si el renderizado está apagado",
   },
@@ -2714,6 +2841,8 @@ it("`plotBG(...)`: advances the horizontal loopy scroll every 8 pixels if the ba
   );
 })({
   locales: {
+    ru:
+      "`plotBG(...)`: продвигает горизонтальную прокрутку loopy каждые 8 пикселей, если фон виден",
     es:
       "`plotBG(...)`: avanza el scroll horizontal de loopy cada 8 píxeles si el fondo está visible",
   },
@@ -2740,6 +2869,8 @@ it("`PPUCtrl`: doesn't expose `nameTableId` anymore, and writes it into `loopy.t
   expect(ppu.loopy.tAddress.nameTableId).to.equalN(3, "nameTableId");
 })({
   locales: {
+    ru:
+      "`PPUCtrl`: больше не предоставляет `nameTableId`, а записывает его в `loopy.tAddress`",
     es:
       "`PPUCtrl`: ya no expone `nameTableId`, y lo escribe en `loopy.tAddress`",
   },
@@ -2763,6 +2894,7 @@ it("`PPUStatus`: resets the shared write toggle for `PPUScroll`", () => {
   expect(ppu.loopy.tAddress.fineY).to.equalN(0, "tAddress.fineY");
 })({
   locales: {
+    ru: "`PPUStatus`: сбрасывает общий переключатель записи для `PPUScroll`",
     es:
       "`PPUStatus`: reinicia el selector compartido de escrituras para `PPUScroll`",
   },
@@ -2788,6 +2920,7 @@ it("`PPUStatus`: resets the shared write toggle for `PPUAddr`", () => {
   expect(ppuAddr.address).to.equalHex(0x3456, "address");
 })({
   locales: {
+    ru: "`PPUStatus`: сбрасывает общий переключатель записи для `PPUAddr`",
     es:
       "`PPUStatus`: reinicia el selector compartido de escrituras para `PPUAddr`",
   },
@@ -2813,6 +2946,8 @@ it("`PPUScroll`: writes the horizontal scroll first, then the vertical scroll", 
   expect(ppu.loopy.tAddress.fineY).to.equalN(5, "tAddress.fineY");
 })({
   locales: {
+    ru:
+      "`PPUScroll`: записывает сначала горизонтальную прокрутку, затем вертикальную",
     es:
       "`PPUScroll`: escribe primero el scroll horizontal, y luego el vertical",
   },
@@ -2836,6 +2971,8 @@ it("`PPUAddr`: doesn't expose `latch` anymore, and `address` proxies `loopy.vAdd
   expect(ppuAddr.address).to.equalHex(0x3fff, "address");
 })({
   locales: {
+    ru:
+      "`PPUAddr`: больше не предоставляет `latch`, а `address` обращается к `loopy.vAddress`",
     es:
       "`PPUAddr`: ya no expone `latch`, y `address` es un proxy de `loopy.vAddress`",
   },
@@ -2855,6 +2992,7 @@ it("`PPUMask`: writes `grayscale` (bit 0)", () => {
   expect(ppuMask.grayscale).to.equalN(1, "grayscale");
 })({
   locales: {
+    ru: "`PPUMask`: записывает `grayscale` (бит 0)",
     es: "`PPUMask`: escribe `grayscale` (bit 0)",
   },
   use: ({ id }, book) => id >= book.getId("5b.24"),
@@ -2871,6 +3009,7 @@ it("`PPUMask`: writes `emphasizeRed` (bit 5)", () => {
   expect(ppuMask.emphasizeRed).to.equalN(1, "emphasizeRed");
 })({
   locales: {
+    ru: "`PPUMask`: записывает `emphasizeRed` (бит 5)",
     es: "`PPUMask`: escribe `emphasizeRed` (bit 5)",
   },
   use: ({ id }, book) => id >= book.getId("5b.24"),
@@ -2887,6 +3026,7 @@ it("`PPUMask`: writes `emphasizeGreen` (bit 6)", () => {
   expect(ppuMask.emphasizeGreen).to.equalN(1, "emphasizeGreen");
 })({
   locales: {
+    ru: "`PPUMask`: записывает `emphasizeGreen` (бит 6)",
     es: "`PPUMask`: escribe `emphasizeGreen` (bit 6)",
   },
   use: ({ id }, book) => id >= book.getId("5b.24"),
@@ -2903,6 +3043,7 @@ it("`PPUMask`: writes `emphasizeBlue` (bit 7)", () => {
   expect(ppuMask.emphasizeBlue).to.equalN(1, "emphasizeBlue");
 })({
   locales: {
+    ru: "`PPUMask`: записывает `emphasizeBlue` (бит 7)",
     es: "`PPUMask`: escribe `emphasizeBlue` (bit 7)",
   },
   use: ({ id }, book) => id >= book.getId("5b.24"),
@@ -2919,6 +3060,7 @@ it("`onLoad(...)` saves the `mapper`", () => {
   expect(ppu.mapper).to.equalN(dummyMapper, "mapper");
 })({
   locales: {
+    ru: "`onLoad(...)` сохраняет `mapper`",
     es: "`onLoad(...)` guarda el `mapper`",
   },
   use: ({ id }, book) => id >= book.getId("5b.25"),
@@ -2956,6 +3098,7 @@ it("calls `mapper.tick()` on cycle 260 if ~scanline < 240~", () => {
   }
 })({
   locales: {
+    ru: "вызывает `mapper.tick()` на такте 260 при ~scanline < 240~",
     es: "llama a `mapper.tick()` en el ciclo 260 si ~scanline < 240~",
   },
   use: ({ id }, book) => id >= book.getId("5b.25"),
@@ -2989,6 +3132,7 @@ it("doesn't call `mapper.tick()` if rendering is <disabled>", () => {
   }
 })({
   locales: {
+    ru: "не вызывает `mapper.tick()`, если отрисовка <выключена>",
     es: "no llama a `mapper.tick()` si el renderizado está <desactivado>",
   },
   use: ({ id }, book) => id >= book.getId("5b.25"),

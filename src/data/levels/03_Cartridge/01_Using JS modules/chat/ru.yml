@@ -1,0 +1,82 @@
+---
+main:
+  messages:
+    - начинаем писать код на JavaScript
+    - <! Компьютер улучшен.
+    - кстати, твой компьютер получил <улучшение>
+    - теперь можно использовать НЕСКОЛЬКО файлов 🗃️ 📁
+    - круто, да?
+  responses:
+    - это вообще-то обычная функция [notcool]
+    - почему у тебя столько контроля над моим компьютером? 😶 [hacked]
+
+hacked:
+  run-after-messages: |
+    $.goTo("play");
+  messages:
+    - а с чего ты решаешь, что это <ТВОЙ> компьютер?
+    - ...notcool
+  responses: []
+
+notcool:
+  run-after-messages: |
+    $.goTo("play");
+  messages:
+    - эх, нынешняя молодёжь не умеет ценить классные штуки 😔
+    - |
+      в общем, мне нужно убедиться, что ты знаешь, как создавать <JS-модули>
+  responses: []
+
+play:
+  run-after-messages: |
+    $.goTo("exercise");
+    bus.emit("kill");
+  messages:
+    - в редакторе открыт твой <главный файл кода> (точка входа эмулятора)
+    - он находится в 📄  ~/code/index.js~
+    - теперь у тебя есть куча новых команд для работы с файлами 🚀
+    - правда, менять можно только содержимое 📁  ~/code~
+    - запусти `help -a` и немного с ними поиграй
+    - снова открой чат, когда можно будет продолжать
+    - <! Отключено.
+  responses: []
+
+exercise:
+  messages:
+    - 📚  создай файл 📄  ~/code/Cartridge.js~
+    - 📚  его <экспортом по умолчанию> должен быть <пустой класс>
+    - 📚  затем импортируй этот файл в 📄  ~/code/index.js~
+    - 📚  и экспортируй <объектный литерал> с единственным ключом (`Cartridge`), который ссылается на этот класс
+    - |-
+      твой файл ~index.js~ должен выглядеть так:
+        ```javascript
+        import Cartridge from "./Cartridge";
+        export default { Cartridge }```
+  responses:
+    - (*) экспорт? модули? 🧐 [modules]
+    - (*) как скопировать код из терминала? [copy]
+
+modules:
+  messages:
+    - да, каждый файл — модуль, у которого есть <экспортируемое> значение
+    - этим значением может быть любое <JS-выражение>, а использовать его в другом месте можно, <импортировав> модуль
+    - |-
+      вот небольшая подсказка...
+
+      чтобы задать экспортируемое значение модуля:
+        ```javascript export default "A_STRING"```
+        ```javascript export default { an: "object", number: 123 }```
+        ```javascript export default [1, 2, 3]```
+        ```javascript export default function aFunction() { }```
+        ```javascript export default class SomeClass { }```
+      чтобы импортировать модуль:
+        ```javascript import aFunction from "./relative/path/to/aFunction"```
+        ```javascript import SomeClass from "./relative/path/to/SomeClass"```
+  responses:
+    - ...exercise
+
+copy:
+  messages:
+    - в терминале вместо `Ctrl+C` и `Ctrl+V` используются `Ctrl+Shift+C` и `Ctrl+Shift+V`
+  responses:
+    - ...exercise

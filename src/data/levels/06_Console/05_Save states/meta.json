@@ -1,34 +1,50 @@
 {
 	"name": {
 		"en": "📸 Save states",
-		"es": "📸 Save states"
+
+		"es": "📸 Save states",
+
+		"ru": "📸 Сохранение состояний"
 	},
+
 	"ui": {
 		"layout": "dual",
+
 		"components": {
 			"Left": [
 				"console",
+
 				{
 					"startup": "chat -f"
 				}
 			],
+
 			"Right": [
 				"code",
+
 				{
 					"language": "javascript",
+
 					"action": "none",
+
 					"initialCodeFile": "saveStates.example.js",
+
 					"readOnly": true
 				}
 			]
 		},
+
 		"focus": "Left",
+
 		"canPinEmulator": false
 	},
+
 	"test": {
 		"context": "javascript",
+
 		"inherit": []
 	},
+
 	"memory": {
 		"content": {
 			"protected": true

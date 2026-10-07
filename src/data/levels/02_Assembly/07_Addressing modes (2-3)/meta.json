@@ -1,46 +1,66 @@
 {
 	"name": {
 		"en": "📍 Addressing modes (2/3)",
-		"es": "📍 Modos de direccionamiento (2/3)"
+
+		"es": "📍 Modos de direccionamiento (2/3)",
+
+		"ru": "📍 Режимы адресации (2/3)"
 	},
+
 	"ui": {
 		"layout": "triple",
+
 		"components": {
 			"Left": [
 				"console",
+
 				{
 					"startup": "chat",
+
 					"availableCommands": ["chat", "test", "help", "clear"]
 				}
 			],
+
 			"Bottom": [
 				"cpu",
+
 				{
 					"delay": 250,
+
 					"hideStack": true
 				}
 			],
+
 			"Top": [
 				"code",
+
 				{
 					"language": "asm",
+
 					"initialCodeFile": "content.asm",
+
 					"action": "step",
+
 					"onlyEnableActionWhen": "m.$canRun",
+
 					"onlyEnableEditionWhen": "m.$canEdit"
 				}
 			]
 		},
+
 		"focus": "Left"
 	},
+
 	"test": {
 		"context": "asm"
 	},
+
 	"memory": {
 		"content": {
 			"useTemp": true
 		}
 	},
+
 	"help": {
 		"addLines": [5, 6]
 	}

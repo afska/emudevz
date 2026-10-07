@@ -1,0 +1,106 @@
+---
+main:
+  messages:
+  - теперь всё готово
+  - начнём рисовать 🏞️  фон!
+  responses:
+  - да НАКОНЕЦ-ТО! [exercise]
+
+exercise:
+  messages:
+  - на этот раз нужно следовать документации
+  - прочитай 📄  ~/docs/ppu/background_rendering.ru.md~
+  - и попробуй разобраться, как рисовать фон <в оттенках серого>
+  - когда всё станет понятно...
+  - 📚  создай класс 🏞️  `BackgroundRenderer`
+  - 📚  его конструктор должен принимать экземпляр PPU и сохранять его в свойство `ppu`
+  - |-
+    📚  <внеси эти изменения> в класс 🖥️  `PPU`:
+    **constructor(cpu)**:
+      **->** создаёт экземпляр отрисовщика фона:
+        ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
+        (не забудь импортировать его, если класс находится в другом файле!)
+    **step(...)**:
+      **->** удали тестовый код (```javascript // <test>...</test>```)
+    **_onVisibleLine()**:
+      **->** если такт равен ~0~, вызови `backgroundRenderer.renderScanline()`
+  - |-
+    📚  теперь в классе 🏞️  `BackgroundRenderer` определи:
+    **renderScanline()**:
+      **->** <добавь нужный код> для отрисовки полной строки фона
+  - пока!
+  responses:
+  - "«добавь нужный код»? серьёзно? и всё? [questions]"
+
+questions:
+  messages:
+  - что? нужна помощь?
+  responses:
+  - (*) так сколько пикселей нужно нарисовать? ⏹ [howmany]
+  - (*) как узнать текущую строку? 🌠 [line]
+  - (*) помоги немного 🆘 [help]
+  - (*) всё получилось, но некоторые игры, кажется, не работают 🤔 [work]
+
+howmany:
+  messages:
+  - экран имеет размер ~256x240~
+  - для каждой видимой строки нужно вызвать `plot` ровно для 256 пикселей
+  - настоящее железо рисует один пиксель за такт, а мы для простоты нарисуем всё сразу
+  - поэтому строку нужно рисовать только при `cycle`, равном 0
+  responses:
+  - ...questions
+
+line:
+  messages:
+  - текущая строка находится в ```javascript this.ppu.scanline```
+  responses:
+  - ...questions
+
+help:
+  messages:
+  - известно, что ```javascript y = this.ppu.scanline```
+  - и что рисовать нужно от ~x = 0~ до ~x = 255~
+  - ещё известно, что экран — это сетка из ~32x30~ тайлов (по ~8x8~ пикселей каждый)
+  - и наконец, рисование тайлов через класс 🕊️  `Tile` уже освоено!
+  - |-
+    один из вариантов реализации выглядит примерно так:
+      ```javascript
+      const FIXED_PALETTE = [0xff000000, 0xff555555, 0xffaaaaaa, 0xffffffff];
+
+      const y = this.ppu.scanline;
+      for (let x = 0; x < 256; x += 8) {
+        const nameTableId = 0; // TODO: Get name table id
+        const patternTableId = 0; // TODO: Get pattern table id
+
+        const tileX = Math.floor(x / 8);
+        const tileY = Math.floor(y / 8);
+        const tileIndex = tileY * 32 + tileX;
+        const tileId = 0; // TODO: Read tile id from memory
+
+        const tileInsideY = y % 8;
+
+        const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
+        for (let xx = 0; xx < 8; xx++) {
+          const colorIndex = tile.getColorIndex(xx); // 0 to 3
+          const color = 0; // TODO: Grab a color from FIXED_PALETTE
+          // TODO: Plot the color at pixel (x + xx, y)
+        }
+      }```
+  responses:
+  - ...questions
+
+work:
+  messages:
+  - ну, работы ещё много!
+  - главное, что некоторые игры теперь должны правильно показывать фон
+  - например, загляни в 📄  ~/roms/_test/hello_world.neees~
+  - и сравни картинку, переключаясь между BrokenNEEES и своим эмулятором ✨
+  responses:
+  - ...questions
+
+corollary:
+  messages:
+  - это потрясающе!!
+  - теперь твой эмулятор должен показывать титульный экран большинства игр! 🎉
+  responses:
+  - ▶️  продолжить [end]

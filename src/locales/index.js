@@ -1,20 +1,24 @@
 import TimeAgo from "javascript-time-ago";
 import timeAgoEn from "javascript-time-ago/locale/en";
 import timeAgoEs from "javascript-time-ago/locale/es";
+import timeAgoRu from "javascript-time-ago/locale/ru";
 import _ from "lodash";
 import store from "../store";
 import en from "./en";
 import es from "./es";
+import ru from "./ru";
 
 TimeAgo.addLocale(timeAgoEn);
 TimeAgo.addLocale(timeAgoEs);
+TimeAgo.addLocale(timeAgoRu);
 
 const DEFAULT_LANGUAGE = "en";
 
-const locales = { en, es };
+const locales = { en, es, ru };
 const timeAgo = {
 	en: new TimeAgo("en"),
 	es: new TimeAgo("es"),
+	ru: new TimeAgo("ru"),
 };
 
 export default {

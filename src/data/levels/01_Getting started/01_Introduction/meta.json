@@ -1,23 +1,35 @@
 {
 	"name": {
 		"en": "❓ Introduction",
-		"es": "❓ Introducción"
+
+		"es": "❓ Introducción",
+
+		"ru": "❓ Введение"
 	},
+
 	"ui": {
 		"layout": "mono",
+
 		"components": {
 			"Main": [
 				"console",
+
 				{
 					"startup": "chat -f",
+
 					"availableCommands": ["chat"],
+
 					"subtitle": {
 						"en": "",
-						"es": ""
+
+						"es": "",
+
+						"ru": ""
 					}
 				}
 			]
 		},
+
 		"focus": "Main"
 	}
 }

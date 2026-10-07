@@ -26,10 +26,12 @@ export const TERMINAL_ANSI_INDICES = {
 export const GLOBAL_THEME_GROUPS = [
 	{
 		title: {
+			ru: "Фон",
 			en: "Background",
 			es: "Fondo",
 		},
 		description: {
+			ru: "Основной фон игры.",
 			en: "Base background of the game.",
 			es: "Fondo base del juego.",
 		},
@@ -52,10 +54,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "CRT-фильтр",
 			en: "CRT filter",
 			es: "Filtro CRT",
 		},
 		description: {
+			ru: "Цвета строк развёртки и тонкая настройка CRT-фильтра.",
 			en: "CRT filter scanline colors and fine-tuning.",
 			es: "Colores del filtro CRT y ajuste fino de las scanlines.",
 		},
@@ -69,10 +73,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Подсветка",
 			en: "Highlight",
 			es: "Resaltado",
 		},
 		description: {
+			ru: "Цвет свечения и тени.",
 			en: "Drop-shadow highlight color.",
 			es: "Color de resplandor/sombra.",
 		},
@@ -82,10 +88,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Основной цвет",
 			en: "Primary color",
 			es: "Color primario",
 		},
 		description: {
+			ru: "Основной цвет темы.",
 			en: "Theme's main color.",
 			es: "Color principal del tema.",
 		},
@@ -119,10 +127,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Дополнительный цвет",
 			en: "Secondary color",
 			es: "Color secundario",
 		},
 		description: {
+			ru: "Дополнительный цвет темы.",
 			en: "Theme's secondary color.",
 			es: "Color secundario del tema.",
 		},
@@ -143,10 +153,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Нейтральный цвет",
 			en: "Neutral color",
 			es: "Color neutro",
 		},
 		description: {
+			ru: "Нейтральный цвет темы (например, серый).",
 			en: "Neutral theme color (like gray).",
 			es: "Color neutro del tema (como gris).",
 		},
@@ -180,10 +192,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Особые цвета",
 			en: "Special colors",
 			es: "Colores especiales",
 		},
 		description: {
+			ru: "Цвета с особым значением.",
 			en: "Colors with a special meaning.",
 			es: "Colores con un significado especial.",
 		},
@@ -199,10 +213,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Текст",
 			en: "Text",
 			es: "Texto",
 		},
 		description: {
+			ru: "Основной цвет текста.",
 			en: "General text color.",
 			es: "Color de texto general.",
 		},
@@ -239,10 +255,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Ссылка",
 			en: "Hyperlink",
 			es: "Hipervínculo",
 		},
 		description: {
+			ru: "Цвет ссылок.",
 			en: "Hyperlink color.",
 			es: "Color de los hipervínculos.",
 		},
@@ -263,10 +281,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Редактор кода",
 			en: "Code editor",
 			es: "Editor de código",
 		},
 		description: {
+			ru: "Цвета редактора кода.",
 			en: "Code editor colors.",
 			es: "Colores del editor de código.",
 		},
@@ -285,10 +305,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Уведомления",
 			en: "Toasts",
 			es: "Notificaciones",
 		},
 		description: {
+			ru: "Всплывающие уведомления.",
 			en: "Toast messages.",
 			es: "Mensajes emergentes (toasts).",
 		},
@@ -303,10 +325,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Диалоговые окна",
 			en: "Modals",
 			es: "Modales",
 		},
 		description: {
+			ru: "Диалоговые окна.",
 			en: "Modal dialogs.",
 			es: "Diálogos modales.",
 		},
@@ -325,10 +349,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Поля ввода",
 			en: "Inputs",
 			es: "Entradas",
 		},
 		description: {
+			ru: "Элементы форм.",
 			en: "Form controls.",
 			es: "Controles de formulario.",
 		},
@@ -343,10 +369,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Кнопки",
 			en: "Buttons",
 			es: "Botones",
 		},
 		description: {
+			ru: "Внешний вид кнопок.",
 			en: "Buttons appearance.",
 			es: "Apariencia de los botones.",
 		},
@@ -380,10 +408,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Плавающая кнопка",
 			en: "FAB",
 			es: "Botón flotante",
 		},
 		description: {
+			ru: "Внешний вид плавающей кнопки действия.",
 			en: "Floating Action Button appearance.",
 			es: "Apariencia del botón flotante de acción.",
 		},
@@ -404,10 +434,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Панели и индикаторы",
 			en: "Bars",
 			es: "Barras",
 		},
 		description: {
+			ru: "Индикаторы прогресса и элементы панели навигации.",
 			en: "Bars like progress bars or NavBar items.",
 			es:
 				"Barras como barras de progreso o elementos de la barra de navegación.",
@@ -437,10 +469,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Выбор главы",
 			en: "Chapter select",
 			es: "Selector de capítulo",
 		},
 		description: {
+			ru: "Окно выбора главы.",
 			en: "Chapter select modal.",
 			es: "Modal de selección de capítulo.",
 		},
@@ -459,10 +493,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Отладчик CPU",
 			en: "CPU Debugger",
 			es: "Depurador de CPU",
 		},
 		description: {
+			ru: "Внешний вид отладчика из главы об ассемблере.",
 			en: "Appearance of the debugger featured in the Assembly chapter.",
 			es: "Apariencia del depurador usado en el capítulo de Assembly.",
 		},
@@ -516,10 +552,12 @@ export const GLOBAL_THEME_GROUPS = [
 	},
 	{
 		title: {
+			ru: "Сравнение изображений",
 			en: "Image diff",
 			es: "Comparador de imágenes",
 		},
 		description: {
+			ru: "Инструмент сравнения изображений.",
 			en: "Image comparer tool.",
 			es: "Herramienta para comparar imágenes.",
 		},

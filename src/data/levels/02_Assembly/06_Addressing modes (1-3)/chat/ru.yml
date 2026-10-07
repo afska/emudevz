@@ -1,0 +1,185 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
+  messages:
+    - "на всякий случай: у каждой инструкции бывает один <аргумент> или ни одного"
+    - а после сборки одна инструкция может занимать 1, 2 или 3 байта
+    - <{compilation_full.png}>
+  responses:
+    - зачем ты мне это рассказываешь? [why]
+
+why:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - ссылаться на эти аргументы можно разными способами
+    - они называются режимами адресации
+    - выполни первую инструкцию ⏩
+  events:
+    - step [implicit]
+
+implicit:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4020]);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - у инструкции `INX` нет аргументов, поэтому она занимает только 1 байт
+    - ([PC] изменился с $4020 на $4021)
+    - это называется неявным режимом адресации ("Implicit")
+    - аргумент <подразумевается> самой инструкцией
+    - продолжай ⏩
+  events:
+    - step [immediate]
+
+immediate:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4021, 0x4022]);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - "здесь у `LDA #$08` аргумент занимает 1 байт, поэтому вся инструкция занимает 2 байта"
+    - код операции (opcode) и число 8
+    - это непосредственный режим адресации ("Immediate")
+    - в котором аргумент — <непосредственное> значение байта
+    - продолжай ⏩
+  events:
+    - step [absolute]
+
+absolute:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4023, 0x4024, 0x4025]);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - а `LDA $C002` принимает адрес памяти
+    - аргумент занимает 2 байта, поэтому после сборки получается 3 байта
+    - это абсолютный режим адресации ("Absolute")
+    - в котором аргумент — <полный> адрес памяти
+    - продолжай ⏩
+  events:
+    - step [zeropage]
+
+zeropage:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4026, 0x4027]);
+  messages:
+    - "`LDA $15` тоже принимает адрес памяти"
+    - но короткий — он занимает только 1 байт
+    - полный адрес был бы $0015
+    - это режим адресации нулевой страницы ("Zero Page")
+    - в котором аргумент — <часть> адреса памяти
+  responses:
+    - выглядит как то же самое 😓 [samething]
+
+samething:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - он быстрее абсолютного режима, потому что прочитать нужно только один байт
+    - и места в собранном коде занимает меньше
+    - но доступна только первая страница (первые 256 байт)
+    - продолжай ⏩
+  events:
+    - step [relative]
+
+relative:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4028, 0x4029]);
+  messages:
+    - инструкции ветвления используют относительный режим адресации ("Relative")
+    - они принимают один байт — смещение относительно следующей инструкции
+    - посмотри на машинный код `BNE @label` по адресу $4028
+    - $D0 — код операции `BNE`, а $02 по адресу $4029 — смещение перехода 🦘
+    - "значит, [PC] перейдёт к $402A + 2: прямо на $402C, где начинается `@label`"
+    - (байты двух инструкций `INY` будут пропущены)
+  responses:
+    - интересно, вот как работают ветвления [whoa]
+
+whoa:
+  run: |
+    {{Bottom}}.setSelectedCells([0x4036, 0x4037, 0x4038]);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - последний режим чуть сложнее 😶
+    - косвенная адресация ("Indirect") использует абсолютный адрес, чтобы прочитать другой адрес
+    - чтение по первому адресу даёт младший байт ("low byte", ```raw $00```~XX~)
+    - а чтение следующего байта (адрес + 1) даёт старший байт ("high byte", ```raw $```~XX~```raw 00```)
+    - сходу разобраться непросто, так что давай выполним пример ⏩
+  events:
+    - step [step1]
+
+step1:
+  messages: []
+  events:
+    - step [step2]
+
+step2:
+  messages: []
+  events:
+    - step [step3]
+
+step3:
+  messages: []
+  events:
+    - step [step4]
+
+step4:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - теперь по адресу $4080 находится $21, а по адресу $4081 — $40
+    - так что в этом случае `JMP ($4080)` безусловно перейдёт к $4021
+    - <{JMP_indirect.png}>
+    - и получится бесконечный цикл ⏩
+  events:
+    - step [seeit]
+
+seeit:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - видишь? переход состоялся, и теперь [PC] указывает на $4021
+  responses:
+    - вижу [exercise]
+
+exercise:
+  run: |
+    level.fillContentFromTemp();
+    set((m) => {
+      m.chat.stopBlock = null;
+      m.$canRun = true;
+      m.$canEdit = true;
+      m.content.useTemp = false;
+    });
+    {{Bottom}}.setSelectedCells([]);
+  messages:
+    - вот так...
+    - 📚  для тренировки добавь в конец кода инструкцию `STY $1001`
+    - 📚  затем инструкцию `INX`
+    - 📚  и наконец измени строки 10 и 12 так, чтобы косвенный `JMP` переходил прямо на новую `INX` 👀
+    - 📚  когда всё будет готово, запусти команду `test`
+  responses:
+    - погоди, что? [what]
+
+what:
+  messages:
+    - после изменения вместо перехода назад программа должна пропустить `STY $1001` и перейти к нашей новой последней инструкции
+    - "⚠️  сам `JMP` не меняй: нужно, чтобы та же инструкция `JMP ($4080)` перешла в другое место"
+    - понадобится найти адрес последней `INX` в машинном коде 😉
+  responses: []

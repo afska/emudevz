@@ -145,6 +145,7 @@ export default {
 	language: "Language",
 	language_en: "English",
 	language_es: "Spanish",
+	language_ru: "Russian",
 	last_version: " (last version)",
 	left: "Left",
 	letsplay_unlock_msg1: "New",
@@ -329,4 +330,20 @@ export default {
 	yes: "Yes",
 	your_cpu_works: "Your CPU works!",
 	your_emulator: "Your emulator",
+	press_key_to_enable_audio: "Press any key to enable audio!",
+	error_loading_assets: "Error loading assets.",
+	error_loading_save_state: "Error loading save state: ",
+	error_book_not_found: "Book not found",
+	error_unknown_level: "Unexisting level: ",
+	error_level_not_found: "Level not found.",
+	mapper: "Mapper",
+	mirroring: "Mirroring",
+	image_content: "content",
+	zoom_in: "Zoom in",
+	zoom_out: "Zoom out",
+	zoom_reset: "Reset zoom",
+	error_safari:
+		"Sorry, Safari has known issues that break the game. Please use a Chromium-based browser or Firefox.",
+	error_emojis:
+		"Your system can't display some emojis used by the game. You can still play, but the vibes will be compromised!",
 };

@@ -1,49 +1,71 @@
 {
 	"name": {
 		"en": "🔀 Branching",
-		"es": "🔀 Bifurcaciones"
+
+		"es": "🔀 Bifurcaciones",
+
+		"ru": "🔀 Ветвление"
 	},
+
 	"ui": {
 		"layout": "triple",
+
 		"components": {
 			"Left": [
 				"console",
+
 				{
 					"startup": "chat",
+
 					"availableCommands": ["chat", "test", "help", "clear"]
 				}
 			],
+
 			"Bottom": [
 				"cpu",
+
 				{
 					"delay": 250,
+
 					"hideStack": true
 				}
 			],
+
 			"Top": [
 				"code",
+
 				{
 					"language": "asm",
+
 					"initialCodeFile": "content.asm",
+
 					"action": "step",
+
 					"onlyEnableActionWhen": "m.$canRun",
+
 					"onlyEnableEditionWhen": "m.$canEdit"
 				}
 			]
 		},
+
 		"focus": "Left"
 	},
+
 	"test": {
 		"context": "asm",
+
 		"precode": "pre.asm"
 	},
+
 	"memory": {
 		"content": {
 			"useTemp": true
 		}
 	},
+
 	"help": {
 		"addLines": [16, 17, 18, 19, 20, 21, 22, 29]
 	},
+
 	"unlocksGame": "lets-play-spacegulls"
 }

@@ -1,37 +1,55 @@
 {
 	"name": {
 		"en": "📝 Example program",
-		"es": "📝 Programa de ejemplo"
+
+		"es": "📝 Programa de ejemplo",
+
+		"ru": "📝 Пример программы"
 	},
+
 	"ui": {
 		"layout": "triple",
+
 		"components": {
 			"Left": [
 				"console",
+
 				{
 					"startup": "chat",
+
 					"availableCommands": ["chat", "help", "clear"]
 				}
 			],
+
 			"Bottom": [
 				"cpu",
+
 				{
 					"delay": 1500,
+
 					"hideFlags": true,
+
 					"hideStack": true
 				}
 			],
+
 			"Top": [
 				"code",
+
 				{
 					"language": "asm",
+
 					"initialCodeFile": "content.asm",
+
 					"readOnly": true,
+
 					"action": "step",
+
 					"onlyShowActionWhen": "m.$canRun"
 				}
 			]
 		},
+
 		"focus": "Left"
 	}
 }

@@ -1,8 +1,10 @@
+import locales from "../../../locales";
+
 export default function PanZoom(props) {
 	return (
 		<img
 			src={props.src}
-			alt="content"
+			alt={locales.get("image_content")}
 			style={{
 				userSelect: "none",
 				pointerEvents: "none",

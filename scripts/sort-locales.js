@@ -15,6 +15,7 @@ async function main() {
 			const targets = [
 				$path.join(process.cwd(), "src/locales/en.js"),
 				$path.join(process.cwd(), "src/locales/es.js"),
+				$path.join(process.cwd(), "src/locales/ru.js"),
 			];
 			for (const target of targets) {
 				const { count, changed } = sort.sortFileByExportDefaultObject(target);

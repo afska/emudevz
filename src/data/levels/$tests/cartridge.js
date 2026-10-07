@@ -10,7 +10,10 @@ before(async () => {
 it("there's a `/code/Cartridge.js` file", () => {
   expect(filesystem.exists("/code/Cartridge.js")).to.be.true;
 })({
-  locales: { es: "hay un archivo `/code/Cartridge.js`" },
+  locales: {
+    ru: "существует файл `/code/Cartridge.js`",
+    es: "hay un archivo `/code/Cartridge.js`",
+  },
   use: ({ id }, book) => id >= book.getId("3.1"),
 });
 
@@ -20,6 +23,7 @@ it("the file `/code/Cartridge.js` is a JS module that exports <a class>", async 
   expect(module?.default).to.be.a.class;
 })({
   locales: {
+    ru: "файл `/code/Cartridge.js` — JS-модуль, который экспортирует <класс>",
     es:
       "el archivo `/code/Cartridge.js` es un módulo JS que exporta <una clase>",
   },
@@ -30,6 +34,7 @@ it("the file `/code/index.js` <imports> the module from `/code/Cartridge.js`", (
   expect($.modules["/code/Cartridge.js"]).to.exist;
 })({
   locales: {
+    ru: "файл `/code/index.js` <импортирует> модуль из `/code/Cartridge.js`",
     es:
       "el archivo `/code/index.js` <importa> el módulo de `/code/Cartridge.js`",
   },
@@ -46,6 +51,8 @@ it("the file `/code/index.js` exports <an object> containing the `Cartridge` cla
   expect(mainModule.default.Cartridge).to.equalN(Cartridge, "Cartridge");
 })({
   locales: {
+    ru:
+      "файл `/code/index.js` экспортирует <объект>, содержащий класс `Cartridge`",
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene la clase `Cartridge`",
   },
@@ -61,6 +68,8 @@ it("instantiating a `Cartridge` with a <valid header> saves a `bytes` property",
   expect(new Cartridge(bytes).bytes).to.equalN(bytes, "bytes");
 })({
   locales: {
+    ru:
+      "создание `Cartridge` с <корректным заголовком> сохраняет свойство `bytes`",
     es:
       "instanciar un `Cartridge` con una <cabecera válida> guarda una propiedad `bytes`",
   },
@@ -82,6 +91,7 @@ it("instantiating a `Cartridge` with an <invalid header> throws an error", () =>
   });
 })({
   locales: {
+    ru: "создание `Cartridge` с <некорректным заголовком> вызывает ошибку",
     es: "instanciar un `Cartridge` con una <cabecera inválida> tira un error",
   },
   use: ({ id }, book) => id >= book.getId("3.3"),
@@ -103,6 +113,7 @@ it("has a `header` property with <metadata> (PRG-ROM pages)", () => {
   }
 })({
   locales: {
+    ru: "содержит свойство `header` с <метаданными> (страницы PRG-ROM)",
     es: "tiene una propiedad `header` con <metadatos> (páginas de PRG-ROM)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
@@ -124,6 +135,7 @@ it("has a `header` property with <metadata> (CHR-ROM pages)", () => {
   }
 })({
   locales: {
+    ru: "содержит свойство `header` с <метаданными> (страницы CHR-ROM)",
     es: "tiene una propiedad `header` con <metadatos> (páginas de CHR-ROM)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
@@ -149,6 +161,8 @@ it("has a `header` property with <metadata> (512-byte padding)", () => {
   });
 })({
   locales: {
+    ru:
+      "содержит свойство `header` с <метаданными> (блок заполнения в 512 байт)",
     es: "tiene una propiedad `header` con <metadatos> (padding de 512 bytes)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
@@ -171,6 +185,7 @@ it("has a `header` property with <metadata> (PRG-RAM presence)", () => {
   });
 })({
   locales: {
+    ru: "содержит свойство `header` с <метаданными> (наличие PRG-RAM)",
     es: "tiene una propiedad `header` con <metadatos> (presencia de PRG-RAM)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
@@ -195,6 +210,8 @@ it("has a `header` property with <metadata> (mirroring id)", () => {
   });
 })({
   locales: {
+    ru:
+      "содержит свойство `header` с <метаданными> (идентификатор зеркалирования)",
     es: "tiene una propiedad `header` con <metadatos> (id de mirroring)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
@@ -214,6 +231,7 @@ it("has a `header` property with <metadata> (mapper id)", () => {
   }
 })({
   locales: {
+    ru: "содержит свойство `header` с <метаданными> (идентификатор маппера)",
     es: "tiene una propiedad `header` con <metadatos> (id de mapper)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
@@ -259,6 +277,7 @@ it("`prg()` returns <the code> (no padding)", () => {
   expect(userPrg, "prg()").to.eql(new Uint8Array(prg));
 })({
   locales: {
+    ru: "`prg()` возвращает <код> (без блока заполнения)",
     es: "`prg()` retorna <el código> (sin relleno)",
   },
   use: ({ id }, book) => id >= book.getId("3.5"),
@@ -276,6 +295,7 @@ it("`prg()` returns <the code> (with padding)", () => {
   expect(userPrg, "prg()").to.eql(new Uint8Array(prg));
 })({
   locales: {
+    ru: "`prg()` возвращает <код> (с блоком заполнения)",
     es: "`prg()` retorna <el código> (con relleno)",
   },
   use: ({ id }, book) => id >= book.getId("3.5"),
@@ -295,6 +315,7 @@ it("`chr()` returns <the graphics> (using CHR-ROM)", () => {
   expect(userChr, "chr()").to.eql(new Uint8Array(chr));
 })({
   locales: {
+    ru: "`chr()` возвращает <графику> (используя CHR-ROM)",
     es: "`chr()` retorna <los gráficos> (usando CHR-ROM)",
   },
   use: ({ id }, book) => id >= book.getId("3.6"),
@@ -312,6 +333,7 @@ it("`chr()` returns <the graphics> (using CHR-RAM)", () => {
   expect(userChr, "chr()").to.eql(new Uint8Array(8192));
 })({
   locales: {
+    ru: "`chr()` возвращает <графику> (используя CHR-RAM)",
     es: "`chr()` retorna <los gráficos> (usando CHR-RAM)",
   },
   use: ({ id }, book) => id >= book.getId("3.6"),

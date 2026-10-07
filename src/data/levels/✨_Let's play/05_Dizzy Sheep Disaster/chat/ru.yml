@@ -1,0 +1,44 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется 💫 🐑  ~Dizzy Sheep Disaster~
+    <{screenshot.png;30x30}>
+  - "необычная головоломка про овечку-липучку и <магниты>"
+  - "если получится пройти игру, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "~магниты~? [play]"
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("DizzySheepDisaster");
+    {{Right}}.loadROM("/roms/.all/DizzySheepDisaster.neees", "stream");
+  messages:
+  - "сейчас увидишь!"
+  events:
+  - dizzysheepdisaster-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["DizzySheepDisaster.neees", "DreamDogDilemma.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - "последний уровень был непростым!"
+  - "<! Получен ROM: 📄  /roms/DizzySheepDisaster.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/DreamDogDilemma.neees"
+  - "а ещё тебе отправлена другая игра от тех же авторов — 💤 🐶  ~Dream Dog Dilemma~"
+  - "веселись!"
+  responses:
+  - "▶️  продолжить [end]"

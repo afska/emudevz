@@ -1,0 +1,79 @@
+---
+main:
+  messages:
+  - так, давай рисовать тайлы
+  - прочитай 📄  ~/docs/ppu/tile_rendering.ru.md~
+  - там объясняется, как тайлы закодированы в памяти
+  - создадим класс, который поможет получать цвета тайла
+  - PPU рисует по 🌠  строкам развёртки, поэтому класс получит параметр (`y`) с индексом строки, которую нужно нарисовать
+  - |-
+    📚  создай класс 🕊️  `Tile` со следующим содержимым:
+    **constructor(ppu, patternTableId, tileId, y)**:
+      **->** вычисляет начальный адрес таблицы паттернов:
+        $0000 или $1000 в зависимости от `patternTableId` (~0~ или ~1~)
+        (назовём его `tableAddress`)
+      **->** вычисляет начальный адрес 💜  младшей плоскости тайла:
+        ```javascript tableAddress + tileId * 16```
+        (назовём его `lowPlaneAddress`)
+      **->** вычисляет начальный адрес 💚  старшей плоскости тайла:
+        ```javascript lowPlaneAddress + 8```
+        (назовём его `highPlaneAddress`)
+      **->** читает нужную строку каждой <битовой плоскости>:
+        ```javascript this._lowRow``` = прочитать адрес PPU ```javascript lowPlaneAddress + y``` из ```javascript ppu.memory```
+        ```javascript this._highRow``` = прочитать адрес PPU ```javascript highPlaneAddress + y``` из ```javascript ppu.memory```
+    **getColorIndex(x)**:
+      **->** определяет позицию бита, соответствующую `x` (числу от 0 до 7)
+        (учти, что ~x=0~ — крайний левый пиксель, то есть ~бит 7~)
+      **->** извлекает этот бит из ```javascript this._lowRow``` и ```javascript this._highRow``` через `byte.getBit(...)`
+      **->** возвращает получившийся индекс цвета, объединяя два бита через `byte.buildU2(...)`
+  responses:
+  - как будем это проверять? 🧐 [test]
+
+test:
+  messages:
+  - хороший вопрос! 😁
+  - |+
+    📚  в своём 🖥️  `PPU` импортируй класс 🕊️  `Tile` и замени тестовый код (перед вызовом `onFrame`) на:
+
+      ```javascript
+      // <test>
+      const testPalette = [0xff000000, 0xff555555, 0xffaaaaaa, 0xffffffff];
+      const scale = 2;
+      
+      for (let tileId = 0; tileId < 240; tileId++) {
+        const scaledSize = 8 * scale;
+        const tilesPerRow = 256 / scaledSize;
+        const startX = (tileId % tilesPerRow) * scaledSize;
+        const startY = Math.floor(tileId / tilesPerRow) * scaledSize;
+        
+        for (let y = 0; y < 8; y++) {
+          const tile = new Tile(this, 0, tileId, y);
+          
+          for (let x = 0; x < 8; x++) {
+            const color = testPalette[tile.getColorIndex(x)];
+            
+            for (let scaledY = 0; scaledY < scale; scaledY++) {
+              for (let scaledX = 0; scaledX < scale; scaledX++) {
+                this.plot(
+                  startX + x * scale + scaledX, 
+                  startY + y * scale + scaledY, 
+                  color
+                );
+              }
+            }
+          }
+        }
+      }
+      // </test>```
+  - это нарисует первые 240 тайлов из 👾  CHR-ROM
+  - с масштабом ~2x~ (тайлы ~16x16~ вместо ~8x8~)
+  - ⚠️  это сработает <только> в играх с 👾  CHR-ROM ⚠️
+  responses:
+  - а что будет с играми, использующими 👾  CHR-RAM? [chrram]
+
+chrram:
+  messages:
+  - в таких играх тайлы загружаются динамически через игровой код 🤖
+  - а сейчас 🧠  CPU <никак не может> записывать данные в память нашего 🖥️  PPU
+  - поэтому в таких случаях на экране будет пусто
+  responses: []

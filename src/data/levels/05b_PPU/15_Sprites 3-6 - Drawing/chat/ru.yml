@@ -1,0 +1,93 @@
+main:
+  messages:
+  - мы уже знаем, какие спрайты нужно рисовать и как отрисовывать тайлы,
+  - так что рисовать спрайты будет довольно <легко>
+  - |-
+    метод отрисовки одной 🌠  строки будет выглядеть так:
+      ```javascript
+      renderScanline() {
+        const sprites = this._evaluate();
+        this._render(sprites); // we need to define this!
+      }```
+  responses:
+  - легко... да? [exercise]
+
+exercise:
+  messages:
+  - сделаем следующее
+  - |-
+      📚  в классе 🖥️  `PPU` <измени>:
+      **_onVisibleLine()**:
+        **->** сразу после вызова `renderScanline()` у `backgroundRenderer`...
+        **->** ...сделай то же самое для `spriteRenderer`
+  - |-
+      📚  теперь реализуй эти методы в 🛸  `SpriteRenderer`:
+      **renderScanline()**:
+        **->** используй код из моего предыдущего сообщения!
+      **_render(sprites)**:
+        **->** определяет координату y:
+          ```javascript this.ppu.scanline;```
+          (назовём её `y`)
+        **->** для каждого `sprite` в `sprites`:
+          **->** вычисляет «внутреннюю» координату Y:
+            ```javascript sprite.diffY(y)```
+            (назовём её `insideY`)
+          **->** создаёт экземпляр 🕊️  `Tile`, передавая ppu, идентификатор таблицы паттернов, идентификатор тайла и `insideY % 8`
+            (назовём его `tile`)
+          **->** создаёт массив из 4 цветов палитры ```javascript sprite.paletteId```
+            (назовём его `paletteColors`)
+          **->** ```javascript for (let insideX = 0; insideX < 8; insideX++)```:
+            **->** получает индекс цвета пикселя через ```javascript tile.getColorIndex(insideX)```
+              (назовём его `colorIndex`)
+            **->** если ```javascript colorIndex > 0``` (то есть пиксель непрозрачен):
+              **->** вызывает ```javascript this.ppu.plot(...)``` для отрисовки пикселя
+  responses:
+  - (*) какую таблицу паттернов использовать? [patterntable]
+  - (*) какой идентификатор тайла использовать? [tileid]
+  - (*) почему ~insideY % 8~? [whymod8]
+  - (*) как получить цвета палитры? [palette]
+  - (*) какие ~X~ и ~Y~ использовать при отрисовке пикселей? [coordinates]
+  - (*) какой цвет использовать при отрисовке пикселей? [color]
+
+patterntable:
+  messages:
+  - спроси у спрайта!
+  - "```javascript sprite.patternTableId```"
+  responses:
+  - ...exercise
+
+tileid:
+  messages:
+  - спрайт знает!
+  - "```javascript sprite.tileIdFor(insideY)```"
+  responses:
+  - ...exercise
+
+whymod8:
+  messages:
+  - чтобы правильно поддерживать спрайты ~8x16~!
+  - когда режим ~8x16~ включён через 🎛️  PPUCtrl, каждый спрайт использует два тайла, расположенных один над другим
+  - например, ~y=10~ в спрайте ~8x16~ означает ~y=2~ его второго тайла
+  responses:
+  - ...exercise
+
+palette:
+  messages:
+  - |-
+    например, <цвет 2> можно получить через:
+    ```javascript this.ppu.getColor(sprite.paletteId, 2)```
+  responses:
+  - ...exercise
+
+coordinates:
+  messages:
+  - позиция ~x~ должна быть ```javascript sprite.x + insideX```
+  - позиция ~y~ — текущая строка развёртки
+  responses:
+  - ...exercise
+
+color:
+  messages:
+  - обращение к `paletteColors` по `colorIndex` даст нужный ~цвет~
+  responses:
+  - ...exercise

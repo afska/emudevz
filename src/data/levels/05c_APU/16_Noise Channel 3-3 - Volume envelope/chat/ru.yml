@@ -1,0 +1,22 @@
+---
+main:
+  messages:
+  - "добавить огибающую будет очень просто ✨"
+  - "ведь она работает точно так же, как в 🟦  импульсных каналах"
+  - |-
+    📚  в 💥  `NoiseChannel`:
+    **->** импортируй свой класс 📉  `VolumeEnvelope` и добавь свойство `volumeEnvelope` с новым экземпляром
+    **->** измени **sample()**, чтобы `volume` зависело от флага `constantVolume` в 💥  NoiseControl:
+      **->** при постоянной громкости сохрани текущую логику
+      **->** иначе используй ```javascript this.volumeEnvelope.volume```
+    **->** реализуй этот метод:
+    **quarterFrame()**:
+      **->** вызывает метод `clock(...)` огибающей громкости
+        (для `period` возьми `volumeOrEnvelopePeriod` из 💥  NoiseControl)
+        (для `loop` возьми `envelopeLoopOrLengthCounterHalt` из 💥  NoiseControl)
+  - |-
+    📚  реализуй в 📏  `NoiseLCL`:
+    **onWrite(value)**:
+      **->** __сохрани текущее поведение__
+      **->** устанавливает `startFlag` огибающей громкости канала
+  responses: []

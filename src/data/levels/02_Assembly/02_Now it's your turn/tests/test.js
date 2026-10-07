@@ -13,23 +13,35 @@ it("it doesn't load anything from the zero page", () => {
 		);
 	}
 })({
-	locales: { es: "no carga nada de la página cero" },
+	locales: {
+		ru: "ничего не загружает из нулевой страницы",
+		es: "no carga nada de la página cero",
+	},
 });
 
 it("the address $4055 contains $7C", () => {
 	expect(cpu.memory.readAt(0x4055)).to.equalHex(0x7c, "readAt(0x4055)");
 })({
-	locales: { es: "la dirección $4055 contiene $7C" },
+	locales: {
+		ru: "адрес $4055 содержит $7C",
+		es: "la dirección $4055 contiene $7C",
+	},
 });
 
 it("the address $4072 also contains $7C", () => {
 	expect(cpu.memory.readAt(0x4072)).to.equalHex(0x7c, "readAt(0x4072)");
 })({
-	locales: { es: "la dirección $4072 también contiene $7C" },
+	locales: {
+		ru: "адрес $4072 тоже содержит $7C",
+		es: "la dirección $4072 también contiene $7C",
+	},
 });
 
 it("the address $40B8 contains $18", () => {
 	expect(cpu.memory.readAt(0x40b8)).to.equalHex(0x18, "readAt(0x40b8)");
 })({
-	locales: { es: "la dirección $40B8 contiene $18" },
+	locales: {
+		ru: "адрес $40B8 содержит $18",
+		es: "la dirección $40B8 contiene $18",
+	},
 });

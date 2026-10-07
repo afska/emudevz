@@ -1,20 +1,29 @@
 {
 	"name": {
 		"en": "🏟️ Architecture",
-		"es": "🏟️ Arquitectura"
+
+		"es": "🏟️ Arquitectura",
+
+		"ru": "🏟️ Архитектура"
 	},
+
 	"ui": {
 		"layout": "dual",
+
 		"components": {
 			"Left": [
 				"console",
+
 				{
 					"startup": "chat",
+
 					"availableCommands": ["chat", "clear", "help"]
 				}
 			],
+
 			"Right": ["tv", {}]
 		},
+
 		"focus": "Left"
 	}
 }

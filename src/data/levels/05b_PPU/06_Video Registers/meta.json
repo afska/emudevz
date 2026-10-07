@@ -1,53 +1,78 @@
 {
 	"name": {
 		"en": "🔢 Video Registers",
-		"es": "🔢 Registros de Video"
+
+		"es": "🔢 Registros de Video",
+
+		"ru": "🔢 Видеорегистры"
 	},
+
 	"ui": {
 		"run": "copy.js",
+
 		"layout": "tripleRight",
+
 		"components": {
 			"Right": [
 				"multifile",
+
 				{
 					"language": "javascript",
+
 					"action": "run"
 				}
 			],
+
 			"Bottom": [
 				"console",
+
 				{
 					"startup": "chat"
 				}
 			],
+
 			"Top": [
 				"tv",
+
 				{
 					"content": null,
+
 					"type": "rom"
 				}
 			]
 		},
+
 		"focus": "Bottom",
+
 		"canPinEmulator": false
 	},
+
 	"test": {
 		"context": "javascript",
+
 		"inherit": ["cartridge.js", "bus.js", "ppu.js"],
+
 		"mainTestFile": "ppu.js"
 	},
+
 	"videoTests": [
 		{
 			"rom": "/roms/_test/NEEEStest.neees",
+
 			"frames": 90,
+
 			"ppu": "TestPPU.v2.js"
 		},
+
 		{
 			"rom": "/roms/_test/hello_world.neees",
+
 			"frames": 90,
+
 			"ppu": "TestPPU.v2.js"
 		}
 	],
+
 	"memory": {
 		"content": {
 			"multifile": true

@@ -1,45 +1,64 @@
 {
 	"name": {
 		"en": "🧱 Stack",
-		"es": "🧱 Pila"
+
+		"es": "🧱 Pila",
+
+		"ru": "🧱 Стек"
 	},
+
 	"ui": {
 		"layout": "triple",
+
 		"components": {
 			"Left": [
 				"console",
+
 				{
 					"startup": "chat",
+
 					"availableCommands": ["chat", "test", "help", "clear"]
 				}
 			],
+
 			"Bottom": [
 				"cpu",
+
 				{
 					"delay": 250
 				}
 			],
+
 			"Top": [
 				"code",
+
 				{
 					"language": "asm",
+
 					"initialCodeFile": "content.asm",
+
 					"action": "step",
+
 					"onlyEnableActionWhen": "m.$canRun",
+
 					"onlyEnableEditionWhen": "m.$canEdit"
 				}
 			]
 		},
+
 		"focus": "Left"
 	},
+
 	"test": {
 		"context": "asm"
 	},
+
 	"memory": {
 		"content": {
 			"useTemp": true
 		}
 	},
+
 	"help": {
 		"addLines": [25, 26]
 	}

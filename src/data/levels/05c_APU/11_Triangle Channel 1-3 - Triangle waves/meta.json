@@ -1,73 +1,110 @@
 {
 	"name": {
 		"en": "🔺 Triangle Channel (1/3): Triangle waves",
-		"es": "🔺 Canal Triangular (1/3): Ondas triangulares"
+
+		"es": "🔺 Canal Triangular (1/3): Ondas triangulares",
+
+		"ru": "🔺 Треугольный канал (1/3): Треугольные волны"
 	},
+
 	"ui": {
 		"run": "copy.js",
+
 		"layout": "tripleRight",
+
 		"components": {
 			"Right": [
 				"multifile",
+
 				{
 					"language": "javascript",
+
 					"action": "run"
 				}
 			],
+
 			"Bottom": [
 				"console",
+
 				{
 					"startup": "chat"
 				}
 			],
+
 			"Top": [
 				"tv",
+
 				{
 					"content": null,
+
 					"type": "rom"
 				}
 			]
 		},
+
 		"focus": "Bottom",
+
 		"canPinEmulator": false
 	},
+
 	"test": {
 		"context": "javascript",
+
 		"inherit": ["cartridge.js", "bus.js", "apu.js"],
+
 		"mainTestFile": "apu.js"
 	},
+
 	"audioTests": [
 		{
 			"rom": "/roms/_test/game_climber.neees",
+
 			"frames": 300,
+
 			"apu": "TestAPU.v7.js"
 		},
+
 		{
 			"rom": "/roms/.all/DizzySheepDisaster.neees",
+
 			"frames": 300,
+
 			"apu": "TestAPU.v7.js"
 		},
+
 		{
 			"rom": "/roms/.all/FilthyKitchen.neees",
+
 			"frames": 300,
+
 			"apu": "TestAPU.v7.js"
 		},
+
 		{
 			"rom": "/roms/.all/TeslaVsEdison.neees",
+
 			"frames": 300,
+
 			"apu": "TestAPU.v7.js"
 		},
+
 		{
 			"rom": "/roms/_test/hello_world.neees",
+
 			"frames": 200,
+
 			"apu": "TestAPU.v7.js"
 		},
+
 		{
 			"rom": "/roms/_test/apu_sweep.neees",
+
 			"frames": 240,
+
 			"apu": "TestAPU.v7.js"
 		}
 	],
+
 	"memory": {
 		"content": {
 			"multifile": true

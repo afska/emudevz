@@ -9,6 +9,11 @@ it("the file `/code/index.js` exports <an object> containing the `Emulator` clas
   expect(mainModule.default).to.be.an("object");
   expect(mainModule.default).to.include.key("Emulator");
   expect(mainModule.default.Emulator).to.be.a.class;
+})({
+  locales: {
+    ru:
+      "файл `/code/index.js` экспортирует <объект>, содержащий класс `Emulator`",
+  },
 });
 
 it("`frame()` calls `onFrame` once", () => {
@@ -23,4 +28,4 @@ it("`frame()` calls `onFrame` once", () => {
   emulator.should.respondTo("frame");
   emulator.frame();
   expect(onFrame).to.have.been.calledOnce;
-});
+})({ locales: { ru: "`frame()` вызывает `onFrame` один раз" } });

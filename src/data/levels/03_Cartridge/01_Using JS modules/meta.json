@@ -1,36 +1,51 @@
 {
 	"name": {
 		"en": "📄 Using JS modules",
-		"es": "📄 Usando módulos JS"
+
+		"es": "📄 Usando módulos JS",
+
+		"ru": "📄 Использование JS-модулей"
 	},
+
 	"ui": {
 		"run": "copy.js",
+
 		"layout": "dual",
+
 		"components": {
 			"Left": [
 				"console",
+
 				{
 					"startup": "chat"
 				}
 			],
+
 			"Right": [
 				"multifile",
+
 				{
 					"language": "javascript",
+
 					"action": "run"
 				}
 			]
 		},
+
 		"focus": "Left"
 	},
+
 	"test": {
 		"context": "javascript",
+
 		"inherit": ["cartridge.js"]
 	},
+
 	"memory": {
 		"content": {
 			"multifile": true
 		}
 	},
+
 	"unlocksAchievementOnStart": "assembly-complete"
 }

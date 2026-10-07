@@ -1,0 +1,138 @@
+---
+main:
+  run: |
+    if (m.$exercise) {
+      $.goTo("exercise");
+    } else {
+      set((m) => {
+        m.chat.stopBlock = locales.get("not_now");
+        m.$canRun = false;
+        m.$canEdit = false;
+      });
+      {{Bottom}}.setMemoryStart(0x0);
+    }
+  messages: []
+  events:
+    - compiled [main2]
+
+main2:
+  run: |
+    bus.emit("step");
+  messages:
+    - вот тут с адресацией становится интереснее 🧐
+  responses:
+    - почему? [why]
+
+why:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - в режиме адресации "Zero Page,X" задаётся адрес нулевой страницы
+    - а затем к нему прибавляется значение [X]
+    - выполни первые две инструкции ⏩
+  events:
+    - step [zero1]
+
+zero1:
+  messages: []
+  events:
+    - step [zero2]
+
+zero2:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - в итоге $CD (содержимое [A]) записалось по адресу $0062
+    - который получился из $60 + [X]
+    - <{STA_zeropagex.png}>
+    - "обрати внимание: в <просмотре памяти> теперь отображается нулевая страница — это моя небольшая доработка"
+    - можешь посмотреть самостоятельно 👀
+    - выполни следующие две инструкции ⏩
+  events:
+    - step [zero3]
+
+zero3:
+  messages: []
+  events:
+    - step [zero4]
+
+zero4:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+    - видишь? <та же> инструкция (`STA $60,X`) дала <другой> результат 🤯
+    - поскольку теперь [X] равен 3, запись произошла по адресу $0063
+  responses:
+    - а если сумма не помещается в байт? [wrap]
+
+wrap:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - адрес просто оборачивается к началу 🎁
+    - сейчас покажу
+    - выполни ещё две инструкции ⏩
+  events:
+    - step [wrap1]
+
+wrap1:
+  messages: []
+  events:
+    - step [wrap2]
+
+wrap2:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+    {{Bottom}}.setMemoryStart(0x4020);
+  messages:
+    - как видишь, $CD записалось по адресу $05
+    - следующий режим адресации называется "Absolute,X"
+    - это абсолютный вариант "Zero Page,X"
+    - сейчас верну <просмотр памяти> к $4020, чтобы всё было видно
+    - выполни оставшийся код ⏩
+  events:
+    - step [rest1]
+
+rest1:
+  messages: []
+  events:
+    - step [rest2]
+
+rest2:
+  messages:
+    - $CD записалось по адресу $4052 😋
+    - ($4050 + содержимое [X])
+  responses:
+    - прикольно! а можно использовать [Y] вместо [X]? [yvariants]
+
+yvariants:
+  messages:
+    - да, есть варианты этих режимов с [Y]
+    - правда, не все инструкции их поддерживают 👎
+    - они называются "Zero Page,Y" и "Absolute,Y"
+    - хочешь сделать кое-что забавное?
+  responses:
+    - хмм... да? [exercise]
+
+exercise:
+  run: |
+    level.fillContentFromTemp();
+    set((m) => {
+      m.chat.stopBlock = null;
+      m.$canRun = true;
+      m.$canEdit = true;
+      m.$exercise = true;
+      m.content.useTemp = false;
+    });
+    {{Bottom}}.setDelay(0);
+    {{Bottom}}.setMemoryStart(0x4020);
+  messages:
+    - 📚  удали весь код
+    - 📚  напиши программу, которая кричит через адреса памяти 😱
+    - то есть записывает $AA ровно 64 раза с $4080 по $40BF
+    - 📚  как всегда, когда всё будет готово, запусти команду `test`
+  responses: []

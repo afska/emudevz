@@ -1,0 +1,47 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется 🙌 ☁️  ~Falling~
+    <{screenshot.png;30x30}>
+  - "простая игра про <бесконечное падение>: уклоняйся от препятствий и собирай предметы"
+  - "если получится пройти игру, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "хм... а как победить? [play]"
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("Falling");
+    {{Right}}.loadROM("/roms/.all/Falling.neees", "stream");
+  messages:
+  - "никак..."
+  - "ладно, пусть победой будут 30 очков"
+  - 👀
+  events:
+  - falling-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["Falling.neees", "Thwaite.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - "как... у тебя..."
+  - "ладно"
+  - "<! Получен ROM: 📄  /roms/Falling.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/Thwaite.neees"
+  - "а ещё тебе отправлена игра 🌳 🏠  ~Thwaite~"
+  - "пока, до встречи!"
+  responses:
+  - "▶️  продолжить [end]"

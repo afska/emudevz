@@ -1,36 +1,53 @@
 {
 	"name": {
 		"en": "💫🐑 Dizzy Sheep Disaster",
-		"es": "💫🐑 Dizzy Sheep Disaster"
+
+		"es": "💫🐑 Dizzy Sheep Disaster",
+
+		"ru": "💫🐑 Dizzy Sheep Disaster"
 	},
+
 	"ui": {
 		"layout": "dual",
+
 		"components": {
 			"Left": [
 				"console",
+
 				{
 					"startup": "chat -f",
+
 					"availableCommands": ["chat"],
+
 					"subtitle": {
 						"en": "",
-						"es": ""
+
+						"es": "",
+
+						"ru": ""
 					}
 				}
 			],
+
 			"Right": [
 				"tv",
+
 				{
 					"content": null,
+
 					"type": "stream"
 				}
 			]
 		},
+
 		"focus": "Left"
 	},
+
 	"memory": {
 		"content": {
 			"protected": true
 		}
 	},
+
 	"unlocksAchievementOnEnd": "game-dizzy-sheep-disaster"
 }

@@ -1,0 +1,28 @@
+---
+main:
+  messages:
+    - создадим вспомогательные методы, чтобы упростить дальнейшие задачи
+    - |-
+      📚  в классах 🔢  `Register8Bit` и 🔢  `Register16Bit` реализуй:
+      **increment()**:
+        **->** вызывает `setValue(...)` с результатом ```javascript getValue()+1```
+      **decrement()**:
+        **->** вызывает `setValue(...)` с результатом ```javascript getValue()-1```
+    - |-
+      📚  в 🏁  `FlagsRegister` реализуй:
+      **updateZero(value)**:
+        **->** устанавливает ```javascript z=true```, если `value` равен 0, иначе ```javascript z=false```
+      **updateNegative(value)**:
+        **->** устанавливает ```javascript n=true```, если значение отрицательное, иначе ```javascript n=false```
+        (здесь "отрицательное" означает, что его <бит 7> равен 1)
+        (можно использовать ```javascript byte.isNegative(value)``` из <библиотеки byte>)
+      **updateZeroAndNegative(value)**:
+        **->** вызывает `updateZero(...)` и `updateNegative(...)` с `value`
+  responses:
+    - библиотека byte? [library]
+
+library:
+  messages:
+    - да, это просто помощник для работы с битами
+    - она находится в 📄  ~/lib/byte.js~, просто импортируй её как любой другой модуль
+  responses: []

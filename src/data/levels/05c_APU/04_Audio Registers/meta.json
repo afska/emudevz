@@ -1,48 +1,70 @@
 {
 	"name": {
 		"en": "🔢 Audio Registers",
-		"es": "🔢 Registros de Audio"
+
+		"es": "🔢 Registros de Audio",
+
+		"ru": "🔢 Аудиорегистры"
 	},
+
 	"ui": {
 		"run": "copy.js",
+
 		"layout": "tripleRight",
+
 		"components": {
 			"Right": [
 				"multifile",
+
 				{
 					"language": "javascript",
+
 					"action": "run"
 				}
 			],
+
 			"Bottom": [
 				"console",
+
 				{
 					"startup": "chat"
 				}
 			],
+
 			"Top": [
 				"tv",
+
 				{
 					"content": null,
+
 					"type": "rom"
 				}
 			]
 		},
+
 		"focus": "Bottom",
+
 		"canPinEmulator": false
 	},
+
 	"test": {
 		"context": "javascript",
+
 		"inherit": ["cartridge.js", "bus.js", "apu.js"],
+
 		"mainTestFile": "apu.js"
 	},
+
 	"audioTests": [
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
+
 			"frames": 120,
+
 			"apu": "TestAPU.v2.js"
 		}
 	],
+
 	"memory": {
 		"content": {
 			"multifile": true

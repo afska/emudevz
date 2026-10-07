@@ -1,28 +1,42 @@
 {
 	"name": {
 		"en": "🥊 Choose your fighter",
-		"es": "🥊 Elige tu luchador"
+
+		"es": "🥊 Elige tu luchador",
+
+		"ru": "🥊 Выбери своего бойца"
 	},
+
 	"ui": {
 		"layout": "mono",
+
 		"components": {
 			"Main": [
 				"console",
+
 				{
 					"startup": "chat -f",
+
 					"availableCommands": ["chat"],
+
 					"subtitle": {
 						"en": "",
-						"es": ""
+
+						"es": "",
+
+						"ru": ""
 					}
 				}
 			]
 		},
+
 		"focus": "Main"
 	},
+
 	"memory": {
 		"content": {
 			"multifile": true,
+
 			"protected": true
 		}
 	}

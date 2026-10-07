@@ -1,0 +1,117 @@
+---
+main:
+  messages:
+    - давай реализуем контроллер как пример <ввода-вывода через память>! 🎮
+    - его работа уже описана в документации!
+    - посмотри 📄  ~/docs/controller.ru.md~
+  responses:
+    - так мы наконец исправим тот ужасный баг контроллера? [exercise]
+
+exercise:
+  messages:
+    - ага 😅
+    - 📚  создай класс 🎮  `Controller`, взяв 📄  ~/tmpl/Controller.js~ за шаблон
+    - 📚  реализуй `onRead()` и `onWrite(...)` по документации
+    - |-
+      BrokenNEEES создаст и соединит твои контроллеры так:
+        ```javascript const controller1 = new Controller(1);
+        const controller2 = new Controller(2);
+        controller1.other = controller2;
+        controller2.other = controller1;```
+    - 📚  как обычно, добавь класс в 📄  ~/code/index.js~
+    - 📚  а ещё подключи чтение и запись $4016 и чтение $4017 в 🐏  `CPUMemory`
+    - |-
+      например, если `address` равен ```javascript 0x4016```, верни:
+        ```javascript this.controllers[0].onRead()```
+  responses:
+    - (*) зачем нужна ссылка на <другой> контроллер? [other]
+    - (*) погоди, объясни шаблон 🤔 [template]
+    - (*) нужна помощь с реализацией `onRead(...)` [onread]
+    - (*) нужна помощь с реализацией `onWrite(...)` [onwrite]
+
+other:
+  messages:
+    - потому что они связаны!
+    - запись 1 по адресу $4016 сбрасывает `cursor` у <обоих контроллеров>
+    - а флаг `strobe` есть только у контроллера игрока 1
+    - поэтому контроллеру игрока 2 нужен флаг `strobe` другого контроллера
+  responses:
+    - ...exercise
+
+template:
+  messages:
+    - в предложенном классе 🎮  `Controller` создаётся массив `_buttons` с булевыми значениями
+    - они показывают, <нажата> кнопка или <отпущена>
+    - элементы массива идут в порядке, описанном в документации
+    - BrokenNEEES будет <автоматически> вызывать метод `update(...)` для обновления состояния каждой кнопки
+    - а игры будут <опрашивать> адреса $4016 и $4017 (вызывать `onRead(...)`), чтобы получить текущее состояние
+  responses:
+    - как работает опрос? [poll]
+
+poll:
+  messages:
+    - |-
+      в игре для NEEES обычная процедура чтения ввода выглядит так:
+        **->** записать 1 по адресу $4016
+        **->** записать 0 по адресу $4016
+        **->** (прочитать $4016 и $4017) 8 раз
+  responses:
+    - ...exercise
+
+onread:
+  messages:
+    - |-
+      **onRead()**:
+        **->** сохраняет нужное значение строба в константу
+          (```javascript this.strobe``` для <игрока 1> и ```javascript this.other.strobe``` для <игрока 2>)
+          (назовём её `strobe`)
+
+        **->** если курсор >= 8, возвращает 1
+
+        **->** если `strobe`:
+          **->** возвращает состояние первой кнопки <числом>
+            (```javascript +boolean``` преобразует его в число)
+        **иначе:**
+          **->** определяет, нажата ли текущая кнопка (по ```javascript this.cursor```)
+            (назовём это значение `isPressed`)
+          **->** увеличивает ```javascript this.cursor```
+          **->** возвращает ```javascript +isPressed```
+  responses:
+    - ...exercise
+
+onwrite:
+  messages:
+    - |-
+      **onWrite(value)**:
+        **->** записывает <бит 0> значения `value` (как булево значение) в ```javascript this.strobe```
+          (можно использовать `byte.getFlag(...)` из 📄  ~/lib/byte.js~)
+
+        **->** если `this.strobe`:
+          **->** сбрасывает ```javascript this.cursor``` в 0
+          **->** сбрасывает ```javascript this.other.cursor``` в 0
+  responses:
+    - ...exercise
+
+corollary:
+  messages:
+    - хорошо, давай подключим твой 🎮  Controller к эмулятору
+    - дай мне секунду...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 1000);
+  events:
+    - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useController");
+  messages:
+    - ✅  готово!
+    - <! 🎮  Controller подключён.
+    - теперь значок 🎮  в эмуляторе будет светиться ✨
+    - и можно будет нажимать <A> и <Right> одновременно 😅
+  responses:
+    - ▶️  продолжить [end]
