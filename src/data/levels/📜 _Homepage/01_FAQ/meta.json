@@ -19,14 +19,17 @@
 					},
 					"links": [
 						{
+							"lang": "en",
 							"text": "your support",
 							"isSupport": true
 						},
 						{
+							"lang": "es",
 							"text": "tu apoyo",
 							"isSupport": true
 						},
 						{
+							"lang": "ru",
 							"text": "твоя поддержка",
 							"isSupport": true
 						}

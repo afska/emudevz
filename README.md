@@ -36,6 +36,8 @@
 
 ## Development
 
+See [translation_guide.md](docs/translation_guide.md).
+
 ### Install and run
 
 ```bash
