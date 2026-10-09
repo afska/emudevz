@@ -15,7 +15,7 @@ it("it jumps to the right address", () => {
 	expect(cpu.pc.value).to.equalHex(address, "pc");
 })({
 	locales: {
-		ru: "переходит по правильному адресу",
 		es: "salta a la dirección correcta",
+		ru: "переходит по правильному адресу",
 	},
 });

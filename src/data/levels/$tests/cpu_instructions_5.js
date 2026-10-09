@@ -42,8 +42,8 @@ it("the CPU can handle <RESET> interrupts", () => {
   expect(returnValue).to.equalN(7, "interrupt(...)");
 })({
   locales: {
-    ru: "CPU обрабатывает прерывания <RESET>",
     es: "la CPU puede manejar interrupciones <RESET>",
+    ru: "CPU обрабатывает прерывания <RESET>",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -74,8 +74,8 @@ it("the CPU can handle NMI interrupts", () => {
   expect(returnValue).to.equalN(7, "interrupt(...)");
 })({
   locales: {
-    ru: "CPU обрабатывает прерывания NMI",
     es: "la CPU puede manejar interrupciones NMI",
+    ru: "CPU обрабатывает прерывания NMI",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -105,8 +105,8 @@ it("the CPU can handle <IRQ> interrupts", () => {
   expect(returnValue).to.equalN(7, "interrupt(...)");
 })({
   locales: {
-    ru: "CPU обрабатывает прерывания <IRQ>",
     es: "la CPU puede manejar interrupciones <IRQ>",
+    ru: "CPU обрабатывает прерывания <IRQ>",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -137,8 +137,8 @@ it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
   expect(returnValue).to.equalN(0, "interrupt(...)");
 })({
   locales: {
-    ru: "CPU игнорирует прерывания <IRQ>, если флаг ~I~ установлен",
     es: "la CPU ignora interrupciones <IRQ> si la bandera ~I~ está encendida",
+    ru: "CPU игнорирует прерывания <IRQ>, если флаг ~I~ установлен",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -150,8 +150,8 @@ it('`BRK`: argument == "no"', () => {
   expect(instructions.BRK.argument).to.equalN("no", "argument");
 })({
   locales: {
-    ru: '`BRK`: argument == "no"',
     es: '`BRK`: argument == "no"',
+    ru: '`BRK`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -177,10 +177,10 @@ it("`BRK`: increments [PC] and triggers a <BRK> interrupt (bit 4 from flags shou
   expect(cpu.pc.getValue()).to.equalHex(0x3125, "getValue()");
 })({
   locales: {
-    ru:
-      "`BRK`: увеличивает [PC] и вызывает прерывание <BRK> (бит 4 в байте флагов должен быть установлен)",
     es:
       "`BRK`: incrementa [PC] y dispara una interrupción <BRK> (el bit 4 de las banderas debería estar encendido)",
+    ru:
+      "`BRK`: увеличивает [PC] и вызывает прерывание <BRK> (бит 4 в байте флагов должен быть установлен)",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -204,8 +204,8 @@ it("`BRK`: works even if the ~I~ flag is set", () => {
   expect(cpu.pc.getValue()).to.equalHex(0x3125, "getValue()");
 })({
   locales: {
-    ru: "`BRK`: работает, даже если флаг ~I~ установлен",
     es: "`BRK`: funciona incluso cuando la bandera ~I~ está encendida",
+    ru: "`BRK`: работает, даже если флаг ~I~ установлен",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -217,8 +217,8 @@ it('`NOP`: argument == "no"', () => {
   expect(instructions.NOP.argument).to.equalN("no", "argument");
 })({
   locales: {
-    ru: '`NOP`: argument == "no"',
     es: '`NOP`: argument == "no"',
+    ru: '`NOP`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -232,8 +232,8 @@ it("`NOP`: implements `run(...)` as an empty function", () => {
   );
 })({
   locales: {
-    ru: "`NOP`: реализует `run(...)` как пустую функцию",
     es: "`NOP`: implementa `run(...)` como una función vacía",
+    ru: "`NOP`: реализует `run(...)` как пустую функцию",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });

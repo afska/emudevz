@@ -23,9 +23,9 @@ it("the file `/code/index.js` exports <an object> containing the `CPU` class", (
   expect(mainModule.default.CPU).to.be.a.class;
 })({
   locales: {
-    ru: "файл `/code/index.js` экспортирует <объект>, содержащий класс `CPU`",
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene la clase `CPU`",
+    ru: "файл `/code/index.js` экспортирует <объект>, содержащий класс `CPU`",
   },
   use: ({ id }, book) => id >= book.getId("5a.1"),
 });
@@ -40,8 +40,8 @@ it("includes a `memory` property with the <received> `cpuMemory`", () => {
   expect(cpu.memory).to.equalN(cpuMemory, "memory");
 })({
   locales: {
-    ru: "содержит свойство `memory` с <переданной> `cpuMemory`",
     es: "incluye una propiedad `memory` con la `cpuMemory` <recibida>",
+    ru: "содержит свойство `memory` с <переданной> `cpuMemory`",
   },
   use: ({ id }, book) => id >= book.getId("5a.1"),
 });
@@ -56,8 +56,8 @@ it("includes two <mysterious properties>: `cycle` and `extraCycles`", () => {
   });
 })({
   locales: {
-    ru: "содержит два <загадочных свойства>: `cycle` и `extraCycles`",
     es: "incluye dos <propiedades misteriosas>: `cycle` y `extraCycles`",
+    ru: "содержит два <загадочных свойства>: `cycle` и `extraCycles`",
   },
   use: ({ id }, book) => id >= book.getId("5a.1"),
 });
@@ -74,8 +74,8 @@ it("includes all the registers", () => {
   });
 })({
   locales: {
-    ru: "содержит все регистры",
     es: "incluye todos los registros",
+    ru: "содержит все регистры",
   },
   use: ({ id }, book) => id >= book.getId("5a.2"),
 });
@@ -89,8 +89,8 @@ it("all registers start from 0", () => {
   });
 })({
   locales: {
-    ru: "начальное значение всех регистров — 0",
     es: "todos los registros comienzan en 0",
+    ru: "начальное значение всех регистров — 0",
   },
   use: ({ id }, book) => id >= book.getId("5a.2"),
 });
@@ -106,9 +106,9 @@ it("`Register8Bit`: can save and read values (<valid> range)", () => {
   });
 })({
   locales: {
+    es: "`Register8Bit`: puede guardar y leer valores (rango <válido>)",
     ru:
       "`Register8Bit`: сохраняет и читает значения (в <допустимом> диапазоне)",
-    es: "`Register8Bit`: puede guardar y leer valores (rango <válido>)",
   },
   use: ({ id }, book) => id >= book.getId("5a.2"),
 });
@@ -129,9 +129,9 @@ it("`Register8Bit`: wraps with values <outside> the range", () => {
   });
 })({
   locales: {
+    es: "`Register8Bit`: da la vuelta con valores <fuera> del rango",
     ru:
       "`Register8Bit`: сохраняет только младшие биты значений <за пределами> диапазона",
-    es: "`Register8Bit`: da la vuelta con valores <fuera> del rango",
   },
   use: ({ id }, book) => id >= book.getId("5a.2"),
 });
@@ -145,9 +145,9 @@ it("`Register16Bit`: can save and read values (<valid> range)", () => {
   }
 })({
   locales: {
+    es: "`Register16Bit`: puede guardar y leer valores (rango <válido>)",
     ru:
       "`Register16Bit`: сохраняет и читает значения (в <допустимом> диапазоне)",
-    es: "`Register16Bit`: puede guardar y leer valores (rango <válido>)",
   },
   use: ({ id }, book) => id >= book.getId("5a.2"),
 });
@@ -163,9 +163,9 @@ it("`Register16Bit`: wraps with values <outside> the range", () => {
   }
 })({
   locales: {
+    es: "`Register16Bit`: da la vuelta con valores <fuera> del rango",
     ru:
       "`Register16Bit`: сохраняет только младшие биты значений <за пределами> диапазона",
-    es: "`Register16Bit`: da la vuelta con valores <fuera> del rango",
   },
   use: ({ id }, book) => id >= book.getId("5a.2"),
 });
@@ -185,8 +185,8 @@ it("includes a `flags` property with 6 booleans", () => {
   });
 })({
   locales: {
-    ru: "содержит свойство `flags` с 6 логическими значениями",
     es: "incluye una propiedad `flags` con 6 booleanos",
+    ru: "содержит свойство `flags` с 6 логическими значениями",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -218,8 +218,8 @@ it("`FlagsRegister`: can be <packed> into a byte", () => {
   expect(cpu.flags.getValue()).to.equalBin(0b10101100, "[-z] => getValue()");
 })({
   locales: {
-    ru: "`FlagsRegister`: может быть <упакован> в байт",
     es: "`FlagsRegister`: puede ser <empaquetado> en un byte",
+    ru: "`FlagsRegister`: может быть <упакован> в байт",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -255,8 +255,8 @@ it("`FlagsRegister`: can be <set> from a byte", () => {
   expect(cpu.flags.n).to.equalN(true, "n");
 })({
   locales: {
-    ru: "`FlagsRegister`: может быть <установлен> из байта",
     es: "`FlagsRegister`: puede ser <asignado> desde un byte",
+    ru: "`FlagsRegister`: может быть <установлен> из байта",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -271,8 +271,8 @@ it("`FlagsRegister`: can assign ~C~ from a byte (bit 0)", () => {
   expect(cpu.flags.c).to.equalN(false, "c");
 })({
   locales: {
-    ru: "`FlagsRegister`: устанавливает ~C~ из байта (бит 0)",
     es: "`FlagsRegister`: puede asignar ~C~ desde un byte (bit 0)",
+    ru: "`FlagsRegister`: устанавливает ~C~ из байта (бит 0)",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -287,8 +287,8 @@ it("`FlagsRegister`: can assign ~Z~ from a byte (bit 1)", () => {
   expect(cpu.flags.z).to.equalN(false, "z");
 })({
   locales: {
-    ru: "`FlagsRegister`: устанавливает ~Z~ из байта (бит 1)",
     es: "`FlagsRegister`: puede asignar ~Z~ desde un byte (bit 1)",
+    ru: "`FlagsRegister`: устанавливает ~Z~ из байта (бит 1)",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -303,8 +303,8 @@ it("`FlagsRegister`: can assign ~I~ from a byte (bit 2)", () => {
   expect(cpu.flags.i).to.equalN(false, "i");
 })({
   locales: {
-    ru: "`FlagsRegister`: устанавливает ~I~ из байта (бит 2)",
     es: "`FlagsRegister`: puede asignar ~I~ desde un byte (bit 2)",
+    ru: "`FlagsRegister`: устанавливает ~I~ из байта (бит 2)",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -319,8 +319,8 @@ it("`FlagsRegister`: can assign ~D~ from a byte (bit 3)", () => {
   expect(cpu.flags.d).to.equalN(false, "d");
 })({
   locales: {
-    ru: "`FlagsRegister`: устанавливает ~D~ из байта (бит 3)",
     es: "`FlagsRegister`: puede asignar ~D~ desde un byte (bit 3)",
+    ru: "`FlagsRegister`: устанавливает ~D~ из байта (бит 3)",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -335,8 +335,8 @@ it("`FlagsRegister`: can assign ~V~ from a byte (bit 6)", () => {
   expect(cpu.flags.v).to.equalN(false, "v");
 })({
   locales: {
-    ru: "`FlagsRegister`: устанавливает ~V~ из байта (бит 6)",
     es: "`FlagsRegister`: puede asignar ~V~ desde un byte (bit 6)",
+    ru: "`FlagsRegister`: устанавливает ~V~ из байта (бит 6)",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -351,8 +351,8 @@ it("`FlagsRegister`: can assign ~N~ from a byte (bit 7)", () => {
   expect(cpu.flags.n).to.equalN(false, "n");
 })({
   locales: {
-    ru: "`FlagsRegister`: устанавливает ~N~ из байта (бит 7)",
     es: "`FlagsRegister`: puede asignar ~N~ desde un byte (bit 7)",
+    ru: "`FlagsRegister`: устанавливает ~N~ из байта (бит 7)",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -385,8 +385,8 @@ it("can <increment> and <decrement> registers", () => {
   expect(cpu.pc.getValue()).to.equalHex(pc + 4 - 2, "getValue()");
 })({
   locales: {
-    ru: "<увеличивает> и <уменьшает> значения регистров",
     es: "puede <incrementar> y <decrementar> registros",
+    ru: "<увеличивает> и <уменьшает> значения регистров",
   },
   use: ({ id }, book) => id >= book.getId("5a.4"),
 });
@@ -404,8 +404,8 @@ it("can update the Zero Flag", () => {
   expect(cpu.flags.z).to.equalN(false, "z");
 })({
   locales: {
-    ru: "обновляет флаг нуля",
     es: "puede actualizar la Bandera Zero",
+    ru: "обновляет флаг нуля",
   },
   use: ({ id }, book) => id >= book.getId("5a.4"),
 });
@@ -423,8 +423,8 @@ it("can update the Negative Flag", () => {
   expect(cpu.flags.n).to.equalN(false, "n");
 })({
   locales: {
-    ru: "обновляет флаг отрицательного результата",
     es: "puede actualizar la Bandera Negative",
+    ru: "обновляет флаг отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.4"),
 });
@@ -441,8 +441,8 @@ it("can update the Zero and Negative flags", () => {
   expect(cpu.flags.updateNegative).to.have.been.calledWith(28);
 })({
   locales: {
-    ru: "обновляет флаги нуля и отрицательного результата",
     es: "puede actualizar las Banderas Zero y Negative",
+    ru: "обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.4"),
 });
@@ -459,8 +459,8 @@ it("includes a `stack` property with `push(...)`/`pop()` methods", () => {
   expect(cpu.stack).to.respondTo("pop");
 })({
   locales: {
-    ru: "содержит свойство `stack` с методами `push(...)`/`pop()`",
     es: "incluye una propiedad `stack` con métodos `push(...)`/`pop()`",
+    ru: "содержит свойство `stack` с методами `push(...)`/`pop()`",
   },
   use: ({ id }, book) => id >= book.getId("5a.5"),
 });
@@ -477,8 +477,8 @@ it("`Stack`: can push and pop values", () => {
     expect(stack.pop()).to.equalHex(bytes[i], `[${i}] pop()`);
 })({
   locales: {
-    ru: "`Stack`: помещает значения в стек и извлекает их",
     es: "`Stack`: puede poner y sacar elementos",
+    ru: "`Stack`: помещает значения в стек и извлекает их",
   },
   use: ({ id }, book) => id >= book.getId("5a.5"),
 });
@@ -493,8 +493,8 @@ it("`Stack`: `push(...)` updates RAM and decrements [SP]", () => {
   expect(sp.getValue()).to.equalHex(0xfe, "getValue()");
 })({
   locales: {
-    ru: "`Stack`: `push(...)` обновляет RAM и уменьшает [SP]",
     es: "`Stack`: `push(...)` actualiza la RAM y decrementa [SP]",
+    ru: "`Stack`: `push(...)` обновляет RAM и уменьшает [SP]",
   },
   use: ({ id }, book) => id >= book.getId("5a.5"),
 });
@@ -510,8 +510,8 @@ it("`Stack`: `pop()` reads RAM and increments [SP]", () => {
   expect(sp.getValue()).to.equalHex(0xff, "getValue()");
 })({
   locales: {
-    ru: "`Stack`: `pop()` читает RAM и увеличивает [SP]",
     es: "`Stack`: `pop()` lee la RAM e incrementa [SP]",
+    ru: "`Stack`: `pop()` читает RAM и увеличивает [SP]",
   },
   use: ({ id }, book) => id >= book.getId("5a.5"),
 });
@@ -529,10 +529,10 @@ it("`CPUMemory`: `read16(...)` reads <16-bit values> from the memory bus", () =>
   expect(cpu.memory.read16(0x8000)).to.equalHex(0x1234, "read16(...)");
 })({
   locales: {
-    ru:
-      "`CPUMemory`: `read16(...)` читает <16-битные значения> через шину памяти",
     es:
       "`CPUMemory`: `read16(...)` puede leer <valores de 16 bits> del bus de memoria",
+    ru:
+      "`CPUMemory`: `read16(...)` читает <16-битные значения> через шину памяти",
   },
   use: ({ id }, book) => id >= book.getId("5a.6"),
 });
@@ -547,8 +547,8 @@ it("`Stack`: `push16(...)` pushes <16-bit values> onto the stack", () => {
   expect(cpu.stack.pop()).to.equalHex(0x12, "pop()");
 })({
   locales: {
-    ru: "`Stack`: `push16(...)` помещает <16-битные значения> в стек",
     es: "`Stack`: `push16(...)` pone <valores de 16 bits> en la pila",
+    ru: "`Stack`: `push16(...)` помещает <16-битные значения> в стек",
   },
   use: ({ id }, book) => id >= book.getId("5a.6"),
 });
@@ -563,8 +563,8 @@ it("`Stack`: `pop16()` pops <16-bit values> from the stack", () => {
   expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
 })({
   locales: {
-    ru: "`Stack`: `pop16()` извлекает <16-битные значения> из стека",
     es: "`Stack`: `pop16()` saca <valores de 16 bits> de la pila",
+    ru: "`Stack`: `pop16()` извлекает <16-битные значения> из стека",
   },
   use: ({ id }, book) => id >= book.getId("5a.6"),
 });
@@ -598,8 +598,8 @@ it("defines a list of 151 `operations`", () => {
   expect(count).to.equalN(151, "count");
 })({
   locales: {
-    ru: "задаёт список из 151 операции в `operations`",
     es: "define una lista con 151 `operations`",
+    ru: "задаёт список из 151 операции в `operations`",
   },
   use: ({ id }, book) => id >= book.getId("5a.14"),
 });
@@ -646,8 +646,8 @@ it("can fetch the next operation", () => {
   );
 })({
   locales: {
-    ru: "извлекает следующую операцию",
     es: "puede ir a buscar la próxima operación",
+    ru: "извлекает следующую операцию",
   },
   use: ({ id }, book) => id >= book.getId("5a.15"),
 });
@@ -662,8 +662,8 @@ it("throws an error when it finds an <invalid> opcode", () => {
   expect(() => cpu._fetchOperation()).to.throw(Error, /Invalid opcode/);
 })({
   locales: {
-    ru: "вызывает ошибку при <некорректном> опкоде",
     es: "tira un error cuando encuentra un opcode <inválido>",
+    ru: "вызывает ошибку при <некорректном> опкоде",
   },
   use: ({ id }, book) => id >= book.getId("5a.15"),
 });
@@ -696,8 +696,8 @@ it("can fetch the <next input>", () => {
   );
 })({
   locales: {
-    ru: "извлекает <следующие входные данные>",
     es: "puede ir a buscar el <próximo input>",
+    ru: "извлекает <следующие входные данные>",
   },
   use: ({ id }, book) => id >= book.getId("5a.15"),
 });
@@ -715,8 +715,8 @@ it("can fetch <the argument> based on `operation` and `input`", () => {
   expect(cpu._fetchArgument(cpu.operations[0xa9], 0x05)).to.equalHex(0x05);
 })({
   locales: {
-    ru: "получает <аргумент> на основе `operation` и `input`",
     es: "puede ir a buscar <el argumento> basándose en `operation` e `input`",
+    ru: "получает <аргумент> на основе `operation` и `input`",
   },
   use: ({ id }, book) => id >= book.getId("5a.15"),
 });
@@ -733,8 +733,8 @@ it("can add cycles based on `operation`", () => {
   expect(cpu.extraCycles).to.equalN(0, "extraCycles");
 })({
   locales: {
-    ru: "добавляет такты на основе `operation`",
     es: "puede agregar ciclos basándose en `operation`",
+    ru: "добавляет такты на основе `operation`",
   },
   use: ({ id }, book) => id >= book.getId("5a.15"),
 });
@@ -828,10 +828,10 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
   }
 })({
   locales: {
-    ru:
-      "выполняет 4 простые операции, обновляет все счётчики и вызывает функцию `logger`",
     es:
       "puede ejecutar 4 operaciones simples, actualizando todos los contadores, y llamando a una función `logger`",
+    ru:
+      "выполняет 4 простые операции, обновляет все счётчики и вызывает функцию `logger`",
   },
   use: ({ id }, book) => id >= book.getId("5a.15"),
 });
@@ -858,8 +858,8 @@ it("doesn't crash if `logger` is `null` or `undefined`", () => {
   }
 })({
   locales: {
-    ru: "работает без сбоев, если `logger` равен `null` или `undefined`",
     es: "no crashea si `logger` es `null` o `undefined`",
+    ru: "работает без сбоев, если `logger` равен `null` или `undefined`",
   },
   use: ({ id }, book) => id >= book.getId("5a.15"),
 });

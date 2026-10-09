@@ -16,8 +16,8 @@ it("it doesn't change the initial code", () => {
 	);
 })({
 	locales: {
-		ru: "не меняет исходный код",
 		es: "no modifica el código inicial",
+		ru: "не меняет исходный код",
 	},
 });
 
@@ -25,8 +25,8 @@ it("it only uses 4 instructions", () => {
 	expect(instructions.length).to.equalN(4, "length");
 })({
 	locales: {
-		ru: "использует только 4 инструкции",
 		es: "solo usa 4 instrucciones",
+		ru: "использует только 4 инструкции",
 	},
 });
 
@@ -36,14 +36,14 @@ it("it uses `SBC`", () => {
 	);
 	expect(usesSbc).to.be.true;
 })({
-	locales: { ru: "использует `SBC`", es: "usa `SBC`" },
+	locales: { es: "usa `SBC`", ru: "использует `SBC`" },
 });
 
 it("after execution, the Zero Flag is 1", () => {
 	expect(cpu.flags.z).to.be.true;
 })({
 	locales: {
-		ru: "после выполнения флаг нуля равен 1",
 		es: "luego de la ejecución, la Bandera Zero es 1",
+		ru: "после выполнения флаг нуля равен 1",
 	},
 });

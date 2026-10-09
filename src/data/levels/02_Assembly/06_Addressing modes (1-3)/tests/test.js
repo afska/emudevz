@@ -18,8 +18,8 @@ it("the first 7 instructions are equal", () => {
 	expect(instructions[6]?.line).to.eqNoCase("INY", "7th instruction");
 })({
 	locales: {
-		ru: "первые 7 инструкций не меняются",
 		es: "las primeras 7 instrucciones son iguales",
+		ru: "первые 7 инструкций не меняются",
 	},
 });
 
@@ -31,8 +31,8 @@ it("sets up an indirect jump to $403C", () => {
 	expect(instructions[11]?.line).to.eqNoCase("JMP ($4080)", "12th instruction");
 })({
 	locales: {
-		ru: "настраивает косвенный переход на $403C",
 		es: "configura un salto indirecto hacia $403C",
+		ru: "настраивает косвенный переход на $403C",
 	},
 });
 
@@ -47,8 +47,8 @@ it("the last 2 instructions are `STY $1001` and `INX`", () => {
 	);
 })({
 	locales: {
-		ru: "последние 2 инструкции — `STY $1001` и `INX`",
 		es: "las últimas dos instrucciones son `STY $1001` y `INX`",
+		ru: "последние 2 инструкции — `STY $1001` и `INX`",
 	},
 });
 
@@ -59,7 +59,7 @@ it("the assembled code is OK", () => {
 	);
 })({
 	locales: {
-		ru: "код ассемблируется правильно",
 		es: "el código ensamblado está bien",
+		ru: "код ассемблируется правильно",
 	},
 });
