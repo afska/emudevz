@@ -40,7 +40,7 @@ fourscreen:
   - finally, there are some game cartridges that contain extra RAM for 2 more physical name tables
   - allowing them to use a "FOUR_SCREEN" mapping
   - <{4screen.png}>
-  - this is the reason why we defined our `vram` array property in `PPUScreen` as 4096 bytes
+  - this is the reason why we defined our `vram` array property in `PPUMemory` as 4096 bytes
   responses:
   - let's implement this [exercise]
 
