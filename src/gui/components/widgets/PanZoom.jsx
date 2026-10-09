@@ -4,7 +4,7 @@ export default function PanZoom(props) {
 	return (
 		<img
 			src={props.src}
-			alt={locales.get("image_content")}
+			alt="content"
 			style={{
 				userSelect: "none",
 				pointerEvents: "none",

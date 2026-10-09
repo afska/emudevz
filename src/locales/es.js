@@ -101,6 +101,15 @@ export default {
 	emulator_controls: "Controles del emulador",
 	emulator_sync: "Sincronización del emulador",
 	enter_a_file_name: "Ingresa un nombre de archivo...",
+	error_book_not_found: "No se encontró el libro",
+	error_emojis:
+		"Tu sistema no puede mostrar algunos emojis del juego. Puedes seguir jugando, ¡pero la ambientación se verá afectada!",
+	error_level_not_found: "No se encontró el nivel.",
+	error_loading_assets: "Error al cargar los recursos.",
+	error_loading_save_state: "Error al cargar el estado guardado: ",
+	error_safari:
+		"Safari tiene problemas conocidos que impiden que el juego funcione. Usa un navegador basado en Chromium o Firefox.",
+	error_unknown_level: "Nivel inexistente: ",
 	file_created: "¡Archivo creado!",
 	file_created_error: "El archivo no puede ser creado.",
 	file_doesnt_exist1: "El archivo",
@@ -158,7 +167,9 @@ export default {
 	letsplay_unlock_msg3: "desbloqueado!",
 	level_history: "Historial de niveles",
 	loading: "Cargando...",
+	mapper: "Mapper",
 	memory_viewer: "Visor de Memoria",
+	mirroring: "Mirroring",
 	mkdir_parent_flag:
 		"(para crear varios directorios a la vez, corre `mkdir -p`)",
 	mode_free: "🔭 Modo libre",
@@ -188,6 +199,7 @@ export default {
 		"En el año 32767, el mundo sufrió un ciberataque masivo que <b>destruyó</b> toda la Internet. Desde entonces, tu amigo online y tú están intentando entender las escasas piezas de documentación sobre la NEEES, una consola de videojuegos antigua lanzada en 1983. Con tus habilidades de programación, deberás crear un emulador que corra esos juegos viejos, ayudando a preservar la historia de los videojuegos.",
 	ppu: "PPU",
 	press_any_key_to_continue: "⌨️  Presiona cualquier tecla para continuar.",
+	press_key_to_enable_audio: "¡Pulsa cualquier tecla para activar el audio!",
 	previous_tab: "Pestaña anterior (escritorio)",
 	prompt_too_long: "¡¿Qué?! ¡El prompt es demasiado largo!",
 	psa_savefile:
@@ -345,20 +357,7 @@ export default {
 	yes: "Sí",
 	your_cpu_works: "¡Tu CPU funciona!",
 	your_emulator: "Tu emulador",
-	press_key_to_enable_audio: "¡Pulsa cualquier tecla para activar el audio!",
-	error_loading_assets: "Error al cargar los recursos.",
-	error_loading_save_state: "Error al cargar el estado guardado: ",
-	error_book_not_found: "No se encontró el libro",
-	error_unknown_level: "Nivel inexistente: ",
-	error_level_not_found: "No se encontró el nivel.",
-	mapper: "Mapper",
-	mirroring: "Reflejo",
-	image_content: "contenido",
 	zoom_in: "Acercar",
 	zoom_out: "Alejar",
 	zoom_reset: "Restablecer zoom",
-	error_safari:
-		"Safari tiene problemas conocidos que impiden que el juego funcione. Usa un navegador basado en Chromium o Firefox.",
-	error_emojis:
-		"Tu sistema no puede mostrar algunos emojis del juego. Puedes seguir jugando, ¡pero la ambientación se verá afectada!",
 };
