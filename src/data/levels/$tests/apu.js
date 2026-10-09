@@ -1288,7 +1288,7 @@ it("`FrameSequencer`: on five-step sequences, `step()` triggers quarter frames o
 })({
   locales: {
     es:
-      "`FrameSequencer`: en secuencias de cinco pasos, `step()` dispara quarter frames en los ciclos 3729, 7457, 11186, 14916",
+      "`FrameSequencer`: en secuencias de cinco pasos, `step()` dispara quarter frames en los ciclos 3729, 7457, 11186, 18641",
     ru:
       "`FrameSequencer`: в последовательности из пяти шагов `step()` вызывает четверти кадра на циклах 3729, 7457, 11186, 18641",
   },

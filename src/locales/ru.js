@@ -335,7 +335,7 @@ export default {
 	tests_video_running: "🎥  Запуск видеотеста:",
 	tests_warnings_found: "⚠️  Найдены предупреждения.",
 	the_operation_failed: "Операция не удалась.",
-	toggle_markdown_edit: "Переключить MarkDown-редактор",
+	toggle_markdown_edit: "Переключить Markdown-редактор",
 	unlocks: "Разблокированные",
 	up: "Вверх",
 	using_bugged_emulator: "Используется BrokenNEEES ❌",
