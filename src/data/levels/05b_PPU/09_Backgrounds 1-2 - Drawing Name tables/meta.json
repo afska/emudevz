@@ -1,102 +1,69 @@
 {
 	"name": {
 		"en": "🏞️ Backgrounds (1/2): Drawing Name tables",
-
 		"es": "🏞️ Fondos (1/2): Dibujando Name tables",
-
 		"ru": "🏞️ Фоны (1/2): Рисование таблиц имён"
 	},
-
 	"ui": {
 		"run": "copy.js",
-
 		"layout": "tripleRight",
-
 		"components": {
 			"Right": [
 				"multifile",
-
 				{
 					"language": "javascript",
-
 					"action": "run"
 				}
 			],
-
 			"Bottom": [
 				"console",
-
 				{
 					"startup": "chat"
 				}
 			],
-
 			"Top": [
 				"tv",
-
 				{
 					"content": null,
-
 					"type": "rom"
 				}
 			]
 		},
-
 		"focus": "Bottom",
-
 		"canPinEmulator": false
 	},
-
 	"test": {
 		"context": "javascript",
-
 		"inherit": ["cartridge.js", "bus.js", "ppu.js"],
-
 		"mainTestFile": "ppu.js"
 	},
-
 	"videoTests": [
 		{
 			"rom": "/roms/_test/hello_world.neees",
-
 			"frames": 30,
-
 			"ppu": "TestPPU.v4.js"
 		},
-
 		{
 			"rom": "/roms/_test/game_climber.neees",
-
 			"frames": 60,
-
 			"ppu": "TestPPU.v4.js"
 		},
-
 		{
 			"rom": "/roms/.all/FromBelow.neees",
-
 			"frames": 60,
-
 			"ppu": "TestPPU.v4.js"
 		},
-
 		{
 			"rom": "/roms/.all/TeslaVsEdison.neees",
-
 			"frames": 90,
-
 			"ppu": "TestPPU.v4.js"
 		},
-
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
-
 			"frames": 120,
-
 			"ppu": "TestPPU.v4.js"
 		}
 	],
-
 	"memory": {
 		"content": {
 			"multifile": true

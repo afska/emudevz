@@ -1,56 +1,40 @@
 {
 	"name": {
 		"en": "📞 Subroutines",
-
 		"es": "📞 Subrutinas",
-
 		"ru": "📞 Подпрограммы"
 	},
-
 	"ui": {
 		"layout": "triple",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat",
-
 					"availableCommands": ["chat", "help", "clear"]
 				}
 			],
-
 			"Bottom": [
 				"cpu",
-
 				{
 					"delay": 250
 				}
 			],
-
 			"Top": [
 				"code",
-
 				{
 					"language": "asm",
-
 					"initialCodeFile": "content.asm",
-
 					"readOnly": true,
-
 					"action": "step"
 				}
 			]
 		},
-
 		"focus": "Left"
 	},
-
 	"test": {
 		"context": "asm"
 	},
-
 	"help": {
 		"addLines": [27, 28]
 	}

@@ -1,52 +1,37 @@
 {
 	"name": {
 		"en": "💀 A broken emulator",
-
 		"es": "💀 Un emulador roto",
-
 		"ru": "💀 Сломанный эмулятор"
 	},
-
 	"ui": {
 		"layout": "dual",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat"
 				}
 			],
-
 			"Right": [
 				"tv",
-
 				{
 					"type": "rom",
-
 					"withFileSearch": true
 				}
 			]
 		},
-
 		"focus": "Left",
-
 		"canPinEmulator": false,
-
 		"debuggerPinType": ""
 	},
-
 	"test": {
 		"context": "javascript",
-
 		"inherit": ["cartridge.js"]
 	},
-
 	"memory": {
 		"content": {
 			"multifile": true,
-
 			"protected": true
 		}
 	}

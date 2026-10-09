@@ -1,56 +1,40 @@
 {
 	"name": {
 		"en": "👆 Now it's your turn",
-
 		"es": "👆 Ahora es tu turno",
-
 		"ru": "👆 Теперь твоя очередь"
 	},
-
 	"ui": {
 		"layout": "triple",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat",
-
 					"availableCommands": ["chat", "test", "help", "clear"]
 				}
 			],
-
 			"Bottom": [
 				"cpu",
-
 				{
 					"delay": 500,
-
 					"hideFlags": true,
-
 					"hideStack": true
 				}
 			],
-
 			"Top": [
 				"code",
-
 				{
 					"language": "asm",
-
 					"action": "step"
 				}
 			]
 		},
-
 		"focus": "Left"
 	},
-
 	"test": {
 		"context": "asm"
 	},
-
 	"help": {
 		"addLines": [1, 4]
 	}

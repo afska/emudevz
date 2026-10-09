@@ -1,46 +1,33 @@
 {
 	"name": {
 		"en": "🙏 Helpers",
-
 		"es": "🙏 Utilidades",
-
 		"ru": "🙏 Вспомогательные функции"
 	},
-
 	"ui": {
 		"layout": "dual",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat"
 				}
 			],
-
 			"Right": [
 				"multifile",
-
 				{
 					"language": "javascript",
-
 					"action": "run"
 				}
 			]
 		},
-
 		"focus": "Left"
 	},
-
 	"test": {
 		"context": "javascript",
-
 		"inherit": ["cartridge.js", "bus.js", "cpu.js"],
-
 		"mainTestFile": "cpu.js"
 	},
-
 	"memory": {
 		"content": {
 			"multifile": true

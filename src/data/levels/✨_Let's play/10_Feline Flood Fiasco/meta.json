@@ -1,53 +1,38 @@
 {
 	"name": {
 		"en": "🌊🐈 Feline Flood Fiasco",
-
 		"es": "🌊🐈 Feline Flood Fiasco",
-
 		"ru": "🌊🐈 Feline Flood Fiasco"
 	},
-
 	"ui": {
 		"layout": "dual",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat -f",
-
 					"availableCommands": ["chat"],
-
 					"subtitle": {
 						"en": "",
-
 						"es": "",
-
 						"ru": ""
 					}
 				}
 			],
-
 			"Right": [
 				"tv",
-
 				{
 					"content": null,
-
 					"type": "stream"
 				}
 			]
 		},
-
 		"focus": "Left"
 	},
-
 	"memory": {
 		"content": {
 			"protected": true
 		}
 	},
-
 	"unlocksAchievementOnEnd": "game-feline-flood-fiasco"
 }

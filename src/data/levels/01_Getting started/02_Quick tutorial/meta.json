@@ -1,29 +1,21 @@
 {
 	"name": {
 		"en": "📙 Quick tutorial",
-
 		"es": "📙 Tutorial rápido",
-
 		"ru": "📙 Краткое обучение"
 	},
-
 	"ui": {
 		"layout": "dual",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat",
-
 					"availableCommands": ["chat", "clear", "help"]
 				}
 			],
-
 			"Right": ["tv", {}]
 		},
-
 		"focus": "Left"
 	}
 }

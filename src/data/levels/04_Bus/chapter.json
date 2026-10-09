@@ -1,17 +1,12 @@
 {
 	"name": {
 		"en": "🚌 Bus",
-
 		"es": "🚌 Bus",
-
 		"ru": "🚌 Шина"
 	},
-
 	"description": {
 		"en": "🚌 Map RAM and devices into memory",
-
 		"es": "🚌 Mapea RAM y dispositivos en la memoria",
-
 		"ru": "🚌 Подключи RAM и устройства к адресному пространству"
 	}
 }

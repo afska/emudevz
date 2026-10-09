@@ -1,90 +1,58 @@
 {
 	"name": {
 		"en": "🔭 Free mode",
-
 		"es": "🔭 Modo libre",
-
 		"ru": "🔭 Свободный режим"
 	},
-
 	"ui": {
 		"run": "copy.js",
-
 		"layout": "tripleRight",
-
 		"components": {
 			"Right": [
 				"multifile",
-
 				{
 					"language": "javascript",
-
 					"action": "run"
 				}
 			],
-
 			"Bottom": [
 				"console",
-
 				{
 					"availableCommands": [
 						"clear",
-
 						"help",
-
 						"repl",
-
 						"test",
-
 						"ls",
-
 						"cd",
-
 						"cp",
-
 						"touch",
-
 						"mkdir",
-
 						"rm",
-
 						"mv",
-
 						"open",
-
 						"find",
-
 						"download",
-
 						"upload",
-
 						"disk"
 					]
 				}
 			],
-
 			"Top": [
 				"tv",
-
 				{
 					"content": null,
-
 					"type": "rom"
 				}
 			]
 		},
-
 		"focus": "Bottom",
-
 		"canPinEmulator": false
 	},
-
 	"test": {
 		"context": "javascript",
-
 		"fsMode": true
 	},
-
 	"memory": {
 		"content": {
 			"multifile": true

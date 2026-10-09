@@ -1,50 +1,35 @@
 {
 	"name": {
 		"en": "🔄 CPU, PPU and APU sync",
-
 		"es": "🔄 CPU, PPU and APU sync",
-
 		"ru": "🔄 Синхронизация CPU, PPU и APU"
 	},
-
 	"ui": {
 		"layout": "dual",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat -f"
 				}
 			],
-
 			"Right": [
 				"code",
-
 				{
 					"language": "javascript",
-
 					"action": "none",
-
 					"initialCodeFile": "Emulator.example.js",
-
 					"readOnly": true
 				}
 			]
 		},
-
 		"focus": "Left",
-
 		"canPinEmulator": false
 	},
-
 	"test": {
 		"context": "javascript",
-
 		"inherit": []
 	},
-
 	"memory": {
 		"content": {
 			"protected": true

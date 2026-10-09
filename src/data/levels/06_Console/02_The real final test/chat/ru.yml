@@ -61,7 +61,6 @@ savestate-yes:
   responses:
   - "▶️  продолжить [end]"
 
-
 savestate-no:
   run: |
     window.EmuDevz.achievements.unlock("emulator-robo-ninja-player")
@@ -72,4 +71,3 @@ savestate-no:
   - "наслаждайся заслуженной победой! 🚀"
   responses:
   - "▶️  продолжить [end]"
-

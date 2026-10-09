@@ -1,62 +1,43 @@
 {
 	"name": {
 		"en": "⚙️ Pulse Channels (1/5): Channel setup",
-
 		"es": "⚙️ Canales Pulso (1/5): Configuración del canal",
-
 		"ru": "⚙️ Импульсные каналы (1/5): Настройка каналов"
 	},
-
 	"ui": {
 		"run": "copy.js",
-
 		"layout": "tripleRight",
-
 		"components": {
 			"Right": [
 				"multifile",
-
 				{
 					"language": "javascript",
-
 					"action": "run"
 				}
 			],
-
 			"Bottom": [
 				"console",
-
 				{
 					"startup": "chat"
 				}
 			],
-
 			"Top": [
 				"tv",
-
 				{
 					"content": null,
-
 					"type": "rom"
 				}
 			]
 		},
-
 		"focus": "Bottom",
-
 		"canPinEmulator": false
 	},
-
 	"test": {
 		"context": "javascript",
-
 		"inherit": ["cartridge.js", "bus.js", "apu.js"],
-
 		"mainTestFile": "apu.js"
 	},
-
 	"audioTests": [],
-
 	"memory": {
 		"content": {
 			"multifile": true

@@ -1,53 +1,38 @@
 {
 	"name": {
 		"en": "💎⛏️ Minekart Madness",
-
 		"es": "💎⛏️ Minekart Madness",
-
 		"ru": "💎⛏️ Minekart Madness"
 	},
-
 	"ui": {
 		"layout": "dual",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat -f",
-
 					"availableCommands": ["chat"],
-
 					"subtitle": {
 						"en": "",
-
 						"es": "",
-
 						"ru": ""
 					}
 				}
 			],
-
 			"Right": [
 				"tv",
-
 				{
 					"content": null,
-
 					"type": "stream"
 				}
 			]
 		},
-
 		"focus": "Left"
 	},
-
 	"memory": {
 		"content": {
 			"protected": true
 		}
 	},
-
 	"unlocksAchievementOnEnd": "game-minekart-madness"
 }

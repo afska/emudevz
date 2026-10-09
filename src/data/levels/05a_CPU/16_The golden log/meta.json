@@ -1,74 +1,49 @@
 {
 	"name": {
 		"en": "🏆 The golden log",
-
 		"es": "🏆 El golden log",
-
 		"ru": "🏆 Эталонный лог"
 	},
-
 	"ui": {
 		"run": "copy.js",
-
 		"layout": "tripleBottom",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat -f",
-
 					"subtitle": {
 						"en": "",
-
 						"es": "",
-
 						"ru": ""
 					}
 				}
 			],
-
 			"Right": [
 				"multifile",
-
 				{
 					"language": "javascript"
 				}
 			],
-
 			"Bottom": ["neeestester", {}]
 		},
-
 		"focus": "Left"
 	},
-
 	"test": {
 		"context": "javascript",
-
 		"inherit": [
 			"cartridge.js",
-
 			"bus.js",
-
 			"cpu.js",
-
 			"cpu_instructions_1.js",
-
 			"cpu_instructions_2.js",
-
 			"cpu_instructions_3.js",
-
 			"cpu_instructions_4.js",
-
 			"cpu_instructions_5.js",
-
 			"cpu_addressing_modes_1.js",
-
 			"cpu_addressing_modes_2.js"
 		]
 	},
-
 	"memory": {
 		"content": {
 			"multifile": true

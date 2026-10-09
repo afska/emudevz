@@ -1,34 +1,24 @@
 {
 	"name": {
 		"en": "🌸 Emulator frontend",
-
 		"es": "🌸 Frontend del emulador",
-
 		"ru": "🌸 Интерфейс эмулятора"
 	},
-
 	"ui": {
 		"layout": "dual",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat -f"
 				}
 			],
-
 			"Right": [
 				"code",
-
 				{
 					"language": "javascript",
-
 					"action": "none",
-
 					"readOnly": true,
-
 					"extraLangOptions": {
 						"parserOptions": {
 							"ecmaFeatures": {
@@ -39,18 +29,13 @@
 				}
 			]
 		},
-
 		"focus": "Left",
-
 		"canPinEmulator": false
 	},
-
 	"test": {
 		"context": "javascript",
-
 		"inherit": []
 	},
-
 	"memory": {
 		"content": {
 			"protected": true

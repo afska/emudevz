@@ -1,70 +1,48 @@
 {
 	"name": {
 		"en": "🖌️ Graphics",
-
 		"es": "🖌️ Gráficos",
-
 		"ru": "🖌️ Графика"
 	},
-
 	"ui": {
 		"run": "copy.js",
-
 		"layout": "dual",
-
 		"components": {
 			"Right": [
 				"debugger",
-
 				{
 					"initialTab": "PPU",
-
 					"readOnly": true,
-
 					"initialPPUTab": "CHR",
-
 					"withPreview": true
 				}
 			],
-
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat -f",
-
 					"availableCommands": ["chat"],
-
 					"subtitle": {
 						"en": "",
-
 						"es": "",
-
 						"ru": ""
 					}
 				}
 			],
-
 			"Background": [
 				"tv",
-
 				{
 					"content": null,
-
 					"type": "rom"
 				}
 			]
 		},
-
 		"focus": "Left",
-
 		"canPinEmulator": false
 	},
-
 	"memory": {
 		"content": {
 			"multifile": true,
-
 			"protected": true
 		}
 	}

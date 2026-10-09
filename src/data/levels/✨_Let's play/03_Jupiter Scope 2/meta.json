@@ -1,53 +1,38 @@
 {
 	"name": {
 		"en": "🚀💥 Jupiter Scope 2",
-
 		"es": "🚀💥 Jupiter Scope 2",
-
 		"ru": "🚀💥 Jupiter Scope 2"
 	},
-
 	"ui": {
 		"layout": "dual",
-
 		"components": {
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat -f",
-
 					"availableCommands": ["chat"],
-
 					"subtitle": {
 						"en": "",
-
 						"es": "",
-
 						"ru": ""
 					}
 				}
 			],
-
 			"Right": [
 				"tv",
-
 				{
 					"content": null,
-
 					"type": "stream"
 				}
 			]
 		},
-
 		"focus": "Left"
 	},
-
 	"memory": {
 		"content": {
 			"protected": true
 		}
 	},
-
 	"unlocksAchievementOnEnd": "game-jupiter-scope-2"
 }

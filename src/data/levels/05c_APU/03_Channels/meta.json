@@ -1,56 +1,40 @@
 {
 	"name": {
 		"en": "🎛️ Channels",
-
 		"es": "🎛️ Canales",
-
 		"ru": "🎛️ Каналы"
 	},
-
 	"ui": {
 		"layout": "dual",
-
 		"components": {
 			"Right": [
 				"debugger",
-
 				{
 					"readOnly": true,
-
 					"initialTab": "APU"
 				}
 			],
-
 			"Left": [
 				"console",
-
 				{
 					"startup": "chat -f",
-
 					"availableCommands": ["chat"]
 				}
 			],
-
 			"Background": [
 				"tv",
-
 				{
 					"content": null,
-
 					"type": "rom"
 				}
 			]
 		},
-
 		"focus": "Left",
-
 		"canPinEmulator": false
 	},
-
 	"memory": {
 		"content": {
 			"multifile": true,
-
 			"protected": true
 		}
 	}

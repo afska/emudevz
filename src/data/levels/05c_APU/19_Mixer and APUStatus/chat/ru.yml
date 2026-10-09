@@ -30,4 +30,3 @@ exercise:
         **->** бит 4: у блока DPCM канала <DMC> `remainingBytes() > 0`
         **[!]** для сборки значения можно использовать `byte.bitfield(...)`
   responses: []
- 

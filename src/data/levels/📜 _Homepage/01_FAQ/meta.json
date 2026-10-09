@@ -1,49 +1,35 @@
 {
 	"name": {
 		"en": "❓ FAQ",
-
 		"es": "❓ FAQ",
-
 		"ru": "❓ FAQ"
 	},
-
 	"ui": {
 		"layout": "mono",
-
 		"components": {
 			"Main": [
 				"console",
-
 				{
 					"startup": "chat -f",
-
 					"availableCommands": ["chat"],
-
 					"subtitle": {
 						"en": "",
-
 						"es": "",
-
 						"ru": ""
 					},
-
 					"links": [
 						{
 							"text": "your support",
-
 							"isSupport": true
 						},
-
 						{
 							"text": "tu apoyo",
-
 							"isSupport": true
 						}
 					]
 				}
 			]
 		},
-
 		"focus": "Main"
 	}
 }
