@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" style="background: black">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="shortcut icon" href="favicon.ico" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+		<meta name="theme-color" content="#000000" />
+		<link rel="manifest" href="manifest.webmanifest" />
+		<link href="fonts/css.css" rel="stylesheet" />
+		<title>EmuDevz</title>
+
+		<meta
+			name="description"
+			content="EmuDevz: A game about building emulators!"
+		/>
+		<meta property="og:title" content="EmuDevz" />
+		<meta
+			property="og:description"
+			content="A game about building emulators!"
+		/>
+		<meta
+			property="og:image"
+			content="https://afska.github.io/emudevz/assets/logo.png"
+		/>
+		<meta property="og:url" content="https://afska.github.io/emudevz" />
+		<meta property="og:type" content="website" />
+
+		<script type="module" crossorigin src="./assets/index-BVBaqQ1s.js"></script>
+		<link rel="stylesheet" crossorigin href="./assets/index-07G-gnit.css">
+	</head>
+	<body style="display: none">
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<script src="xterm-addon-image.js"></script>
+		<script src="imgui.umd.js"></script>
+		<script src="imgui_impl.umd.js"></script>
+		<script src="imgui_memory_editor.umd.js"></script>
+
+		<div id="container">
+			<div class="screen">
+				<div id="root" class="crt"></div>
+				<!-- class="crt" -->
+			</div>
+		</div>
+
+		<div>&nbsp;</div>
+		<!-- // HACK: Force browser to download the default font -->
+
+		<div id="too-small-overlay" class="_overlay">
+			<div class="_overlay_content">
+				❌ Window too small!
+				<div class="_overlay_subtitle">
+					This is a desktop-only experience!<br />Press Ctrl- to zoom out.
+				</div>
+			</div>
+		</div>
+
+		<div id="webgl-overlay" class="_overlay">
+			<div class="_overlay_content">
+				❌ WebGL is disabled!
+				<div class="_overlay_subtitle">
+					Please enable it and reload the page.
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
