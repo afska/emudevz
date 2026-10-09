@@ -25,6 +25,10 @@
 						{
 							"text": "tu apoyo",
 							"isSupport": true
+						},
+						{
+							"text": "твоя поддержка",
+							"isSupport": true
 						}
 					]
 				}
