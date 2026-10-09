@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - ¿recuerdas cómo los juegos escriben en direcciones PPU (como 🐏  VRAM o 👾  CHR-ROM)?
+  - ¿recuerdas cómo los juegos escriben en direcciones PPU (como 🐏  VRAM o 👾  CHR-RAM)?
   - <{PPUAddr_PPUData.png}>
   - ellos también pueden <leer> desde esas direcciones, leyendo de 📦  PPUData en lugar de escribir
   - "esta operación también incrementa la dirección en 📍  PPUAddr, y tiene un pequeño truco:"
