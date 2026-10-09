@@ -1097,6 +1097,7 @@ it("`PPUData`: autoincrements the address by 1 (<writes>)", () => {
 
   const ppuAddr = ppu.registers.ppuAddr;
   const ppuData = ppu.registers.ppuData;
+  ppuAddr.onWrite = sinon.spy();
 
   ppuAddr.address = 0x2023;
 
@@ -1105,6 +1106,8 @@ it("`PPUData`: autoincrements the address by 1 (<writes>)", () => {
 
   ppuData.onWrite(byte.random());
   expect(ppuAddr.address).to.equalHex(0x2025, "address");
+
+  expect(ppuAddr.onWrite).to.not.have.been.called;
 })({
   locales: {
     es: "`PPUData`: autoincrementa la dirección por 1 (<escrituras>)",
@@ -1121,6 +1124,7 @@ it("`PPUData`: autoincrements the address by 32 if `PPUCtrl::vramAddressIncremen
   const ppuCtrl = ppu.registers.ppuCtrl;
   const ppuAddr = ppu.registers.ppuAddr;
   const ppuData = ppu.registers.ppuData;
+  ppuAddr.onWrite = sinon.spy();
 
   ppuCtrl.vramAddressIncrement32 = 1;
   ppuAddr.address = 0x2023;
@@ -1130,6 +1134,8 @@ it("`PPUData`: autoincrements the address by 32 if `PPUCtrl::vramAddressIncremen
 
   ppuData.onWrite(byte.random());
   expect(ppuAddr.address).to.equalHex(0x2063, "address");
+
+  expect(ppuAddr.onWrite).to.not.have.been.called;
 })({
   locales: {
     es:
