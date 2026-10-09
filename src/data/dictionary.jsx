@@ -30,9 +30,6 @@ const dictionary = {
 				"_(Contador de Programa)_ Un registro de CPU usado para almacenar la dirección de la próxima instrucción a ejecutar.",
 			ru:
 				"_(Счётчик команд)_ Регистр CPU, в котором хранится адрес следующей инструкции для выполнения.",
-			also: {
-				ru: "[PC]|_[PC]",
-			},
 		},
 		"[SP]": {
 			icon: "🔢",
@@ -41,9 +38,6 @@ const dictionary = {
 			es:
 				"_(Puntero de Pila)_ Un registro de CPU usado para localizar la cima de la pila.",
 			ru: "_(Указатель стека)_ Регистр CPU, который отслеживает вершину стека.",
-			also: {
-				ru: "[SP]|_[SP]",
-			},
 		},
 		"[X]": {
 			icon: "🔢",
@@ -53,9 +47,6 @@ const dictionary = {
 				"_(Registro X)_ Un registro de CPU usado para indexar memoria y controlar ciclos.",
 			ru:
 				"_(Регистр X)_ Регистр CPU для индексации памяти и управления циклами.",
-			also: {
-				ru: "[X]|_[X]",
-			},
 		},
 		"[Y]": {
 			icon: "🔢",
@@ -63,9 +54,6 @@ const dictionary = {
 			es:
 				"_(Registro Y)_ Un registro de CPU usado para indexar memoria y hacer comparaciones.",
 			ru: "_(Регистр Y)_ Регистр CPU для индексации и сравнений.",
-			also: {
-				ru: "[Y]|_[Y]",
-			},
 		},
 		"Address space": {
 			also: {
@@ -114,9 +102,6 @@ const dictionary = {
 				"La _Unidad de Procesamiento de Audio_. Maneja el sonido, produciendo ondas de audio.",
 			ru:
 				"_Audio Processing Unit_ — блок обработки звука. Создаёт звуковые волны.",
-			also: {
-				ru: "APU|_APU",
-			},
 		},
 		"APU cycle|_APU cycles": {
 			also: {
@@ -154,9 +139,6 @@ const dictionary = {
 				"Un registro de control de audio que habilita o deshabilita cada canal de la APU (pulso, triangular, ruido, DMC). <br /><br />Está disponible para escritura en la dirección de CPU `$4015`.",
 			ru:
 				"Аудиорегистр, который включает или отключает каждый канал APU (импульсный, треугольный, шумовой, DMC). <br /><br />Доступен для записи по адресу CPU `$4015`.",
-			also: {
-				ru: "APUControl|_APUControl",
-			},
 		},
 		APUFrameCounter: {
 			icon: "🧮",
@@ -166,9 +148,6 @@ const dictionary = {
 				"Un registro de audio que controla el secuenciador de la APU (`4` o `5` pasos). <br /><br />Está disponible en la dirección de CPU `$4017`.",
 			ru:
 				"Аудиорегистр, который управляет секвенсором APU (режим на `4` или `5` шагов). <br /><br />Доступен по адресу CPU `$4017`.",
-			also: {
-				ru: "APUFrameCounter|_APUFrameCounter",
-			},
 		},
 		APUStatus: {
 			icon: "📊",
@@ -178,9 +157,6 @@ const dictionary = {
 				"Un registro de estado de audio que indica qué canales están activos y si el DPCM está activo. <br /><br />Está disponible para lectura en la dirección de CPU `$4015`.",
 			ru:
 				"Аудиорегистр состояния, который показывает, какие каналы активны и активен ли DPCM. <br /><br />Доступен для чтения по адресу CPU `$4015`.",
-			also: {
-				ru: "APUStatus|_APUStatus",
-			},
 		},
 		Assembly: {
 			also: {
@@ -295,9 +271,6 @@ const dictionary = {
 				"Un emulador de NEEES encontrado en línea. Está lleno de bugs, pero tiene un diseño modular, por lo que se le pueden reemplazar componentes como el Cartucho, la CPU, PPU y APU.",
 			ru:
 				"Эмулятор NEEES, найденный в интернете. Багов в нём хоть отбавляй, зато конструкция модульная: можно заменить картридж, CPU, PPU и APU.",
-			also: {
-				ru: "BrokenNEEES|_BrokenNEEES",
-			},
 		},
 		"Carry Flag": {
 			also: {
@@ -334,9 +307,6 @@ const dictionary = {
 				"_(Character RAM)_ Un chip de RAM donde algunos juegos escriben sus gráficos vía código. Algunos cartuchos usan este tipo de memoria en lugar de CHR-ROM.",
 			ru:
 				"_(Character RAM)_ Микросхема RAM, в которую некоторые игры записывают свою графику из кода. В некоторых картриджах она используется вместо CHR-ROM.",
-			also: {
-				ru: "CHR-RAM|_CHR-RAM",
-			},
 		},
 		"CHR-ROM": {
 			icon: "👾",
@@ -346,9 +316,6 @@ const dictionary = {
 				"_(Character ROM)_ Un chip de ROM que contiene los gráficos del juego, dentro del cartucho.",
 			ru:
 				"_(Character ROM)_ Микросхема ROM внутри картриджа, в которой хранится графика игры.",
-			also: {
-				ru: "CHR-ROM|_CHR-ROM",
-			},
 		},
 		"Color index|_Color indexes": {
 			also: {
@@ -386,9 +353,6 @@ const dictionary = {
 				"La _Unidad Central de Procesamiento_. Lee el código de los juegos y ejecuta sus instrucciones.",
 			ru:
 				"_Central Processing Unit_ — центральный процессор. Читает код игр и выполняет их инструкции.",
-			also: {
-				ru: "CPU|_CPU",
-			},
 		},
 		"CPU address|_CPU addresses|$CPU|CPU memory": {
 			also: {
@@ -531,9 +495,6 @@ const dictionary = {
 				"Un registro de audio que controla la reproducción de sample del Canal DMC, y ajusta su índice de tasa de reproducción. <br /><br />Está disponible en la dirección de CPU `$4010`.",
 			ru:
 				"Аудиорегистр, который управляет воспроизведением сэмплов DMC-канала и задаёт индекс скорости воспроизведения. <br /><br />Доступен по адресу CPU `$4010`.",
-			also: {
-				ru: "DMCControl|_DMCControl",
-			},
 		},
 		DMCLoad: {
 			icon: "📥",
@@ -543,9 +504,6 @@ const dictionary = {
 				"Un registro de audio que contiene el nivel de sample directo de `7` bits para el Canal DMC. <br /><br />Está disponible en la dirección de CPU `$4011`.",
 			ru:
 				"Аудиорегистр, который хранит напрямую загруженный `7`-битный уровень сэмпла DMC-канала. <br /><br />Доступен по адресу CPU `$4011`.",
-			also: {
-				ru: "DMCLoad|_DMCLoad",
-			},
 		},
 		DMCSampleAddress: {
 			icon: "🐏",
@@ -555,9 +513,6 @@ const dictionary = {
 				"Un registro de audio que establece el byte alto de la dirección de inicio del sample DMC en memoria. <br /><br />Está disponible en la dirección de CPU `$4012`.",
 			ru:
 				"Аудиорегистр, который задаёт старший байт начального адреса DMC-сэмпла в памяти. <br /><br />Доступен по адресу CPU `$4012`.",
-			also: {
-				ru: "DMCSampleAddress|_DMCSampleAddress",
-			},
 		},
 		DMCSampleLength: {
 			icon: "📐",
@@ -567,9 +522,6 @@ const dictionary = {
 				"Un registro de audio que establece la longitud (en bytes) del sample DMC a reproducir. <br /><br />Está disponible en la dirección de CPU `$4013`.",
 			ru:
 				"Аудиорегистр, который задаёт длину воспроизводимого DMC-сэмпла в байтах. <br /><br />Доступен по адресу CPU `$4013`.",
-			also: {
-				ru: "DMCSampleLength|_DMCSampleLength",
-			},
 		},
 		"DPCM|Delta Modulation": {
 			also: {
@@ -759,9 +711,6 @@ const dictionary = {
 				"Un formato que describe un cartucho de NEEES. Contiene su código (PRG-ROM), gráficos (CHR-ROM), y un header con metadatos.",
 			ru:
 				"Формат описания картриджа NEEES. Содержит код (PRG-ROM), графику (CHR-ROM) и заголовок с метаданными.",
-			also: {
-				ru: "iNEEES|_iNEEES",
-			},
 		},
 		"Instruction|_Instructions|CPU instruction|_CPU instructions": {
 			also: {
@@ -813,9 +762,6 @@ const dictionary = {
 				'Un lenguaje de programación creado para que los sitios web puedan anunciar orgullosamente _"¡Bienvenido!"_ mediante una caja de alerta imposible de cerrar, pero algunas personas hacen emuladores con él.',
 			ru:
 				"Язык программирования, придуманный, чтобы сайты могли гордо объявлять _«Добро пожаловать!»_ через неудержимое окно alert. Но кое-кто пишет на нём эмуляторы.",
-			also: {
-				ru: "JavaScript|_JavaScript",
-			},
 		},
 		"Least significant byte|LSB|Low byte": {
 			also: {
@@ -1013,9 +959,6 @@ const dictionary = {
 				"La pieza de hardware que estamos tratando de emular. La gente piensa que significa _'No Entiendo' El Entretenimiento Saludable_.",
 			ru:
 				"Устройство, которое мы пытаемся эмулировать. Считается, что название расшифровывается как _'No Entiendo' Enigmatic Enjoyment Solution_.",
-			also: {
-				ru: "NEEES|_NEEES",
-			},
 		},
 		"Negative Flag": {
 			also: {
@@ -1039,9 +982,6 @@ const dictionary = {
 				"_(Non-maskable interrupt)_ Una interrupción de CPU disparada al principio del VBlank, cuando la PPU termina de dibujar un frame.",
 			ru:
 				"_(Non-maskable interrupt, немаскируемое прерывание)_ Прерывание CPU, которое возникает в начале VBlank, когда PPU заканчивает рисовать кадр.",
-			also: {
-				ru: "NMI|_NMI",
-			},
 		},
 		"Noise Channel": {
 			also: {
@@ -1064,9 +1004,6 @@ const dictionary = {
 				"Un registro de audio que configura la envolvente y el comportamiento del contador de longitud del Canal Ruido. <br /><br />Está disponible en la dirección de CPU `$400C`.",
 			ru:
 				"Аудиорегистр, который настраивает огибающую и поведение счётчика длины шумового канала. <br /><br />Доступен по адресу CPU `$400C`.",
-			also: {
-				ru: "NoiseControl|_NoiseControl",
-			},
 		},
 		NoiseForm: {
 			icon: "🌪️",
@@ -1076,9 +1013,6 @@ const dictionary = {
 				"Un registro de audio que selecciona el modo del Canal Ruido (ruido periódico o blanco) y su periodo. <br /><br />Está disponible en la dirección de CPU `$400E`.",
 			ru:
 				"Аудиорегистр, который выбирает режим шумового канала (периодический или белый шум) и его период. <br /><br />Доступен по адресу CPU `$400E`.",
-			also: {
-				ru: "NoiseForm|_NoiseForm",
-			},
 		},
 		NoiseLCL: {
 			icon: "📏",
@@ -1088,9 +1022,6 @@ const dictionary = {
 				"Un registro de audio que carga el contador de longitud del Canal Ruido y reinicia su envolvente. <br /><br />Está disponible en la dirección de CPU `$400F`.",
 			ru:
 				"Аудиорегистр, который загружает счётчик длины шумового канала и перезапускает его огибающую. <br /><br />Доступен по адресу CPU `$400F`.",
-			also: {
-				ru: "NoiseLCL|_NoiseLCL",
-			},
 		},
 		"OAM entry|_OAM entries": {
 			also: {
@@ -1110,9 +1041,6 @@ const dictionary = {
 				"Una RAM dedicada usada para almacenar el contenido de OAM. <br /><br />En la NEEES, son `256` bytes que contienen todos los datos de los sprites.",
 			ru:
 				"Отдельная область RAM для хранения содержимого OAM. <br /><br />В NEEES она занимает `256` байт и содержит все данные спрайтов.",
-			also: {
-				ru: "OAM RAM|_OAM RAM",
-			},
 		},
 		"OAM|OAM table": {
 			also: {
@@ -1134,9 +1062,6 @@ const dictionary = {
 				"Un registro de video que establece la dirección dentro de OAM donde se leerán o escribirán los datos del próximo sprite. <br /><br />Está disponible en la dirección de CPU `$2003`.",
 			ru:
 				"Видеорегистр, который задаёт адрес внутри OAM для следующего чтения или записи данных спрайта. <br /><br />Доступен по адресу CPU `$2003`.",
-			also: {
-				ru: "OAMAddr|_OAMAddr",
-			},
 		},
 		OAMData: {
 			icon: "📝",
@@ -1146,9 +1071,6 @@ const dictionary = {
 				"Un registro de video que lee o escribe datos OAM en la dirección apuntada por OAMAddr. Luego de cada lectura/escritura, OAMAddr es autoincrementada. <br /><br />Está disponible en la dirección de CPU `$2004`.",
 			ru:
 				"Видеорегистр, который читает или записывает данные OAM по адресу из OAMAddr. После каждого чтения или записи OAMAddr автоматически увеличивается. <br /><br />Доступен по адресу CPU `$2004`.",
-			also: {
-				ru: "OAMData|_OAMData",
-			},
 		},
 		OAMDMA: {
 			icon: "⚡",
@@ -1158,9 +1080,6 @@ const dictionary = {
 				"Un registro de video que dispara una transferencia DMA, copiando `256` bytes desde la memoria de CPU hacia OAM para actualizar todos los datos de sprites rápidamente. <br /><br />Está disponible en la dirección de CPU `$4014`.",
 			ru:
 				"Видеорегистр, который запускает передачу DMA: копирует `256` байт из памяти CPU в OAM, быстро обновляя все данные спрайтов. <br /><br />Доступен по адресу CPU `$4014`.",
-			also: {
-				ru: "OAMDMA|_OAMDMA",
-			},
 		},
 		"Opcode|_Opcodes": {
 			icon: "🔢",
@@ -1283,9 +1202,6 @@ const dictionary = {
 				"La _Unidad de Procesamiento de Imagen_. Dibuja gráficos poniendo píxeles en la pantalla.",
 			ru:
 				"_Picture Processing Unit_ — блок обработки изображения. Рисует графику, выводя пиксели на экран.",
-			also: {
-				ru: "PPU|_PPU",
-			},
 		},
 		"PPU address|_PPU addresses|$PPU|PPU memory": {
 			also: {
@@ -1338,9 +1254,6 @@ const dictionary = {
 				"Un registro de video que establece la dirección PPU para futuras lecturas o escrituras. <br /><br />Debe escribirse dos veces: primero el byte alto, luego el byte bajo. <br /><br />Está disponible en la dirección de CPU `$2006`.",
 			ru:
 				"Видеорегистр, который задаёт адрес PPU для следующих операций чтения или записи. <br /><br />В него нужно записать дважды: сначала старший байт, затем младший. <br /><br />Доступен по адресу CPU `$2006`.",
-			also: {
-				ru: "PPUAddr|_PPUAddr",
-			},
 		},
 		PPUCtrl: {
 			icon: "🎛️",
@@ -1350,9 +1263,6 @@ const dictionary = {
 				"Un registro de video que configura ajustes básicos de la PPU como la habilitación de NMI, el tamaño de los sprites, la selección de pattern tables y la base del name table. <br /><br />Está disponible en la dirección de CPU `$2000`.",
 			ru:
 				"Видеорегистр с основными настройками PPU: включение NMI, размер спрайтов, выбор таблицы паттернов и базовой таблицы имён. <br /><br />Доступен по адресу CPU `$2000`.",
-			also: {
-				ru: "PPUCtrl|_PPUCtrl",
-			},
 		},
 		PPUData: {
 			icon: "📦",
@@ -1362,9 +1272,6 @@ const dictionary = {
 				"Un registro de video que lee o escribe un byte de datos desde/hacia la dirección PPU apuntada por PPUAddr. Luego de cada lectura/escritura, PPUAddr es autoincrementada. <br /><br />Está disponible en la dirección de CPU `$2007`.",
 			ru:
 				"Видеорегистр, который читает или записывает байт по адресу PPU из PPUAddr. После каждого чтения или записи PPUAddr автоматически увеличивается. <br /><br />Доступен по адресу CPU `$2007`.",
-			also: {
-				ru: "PPUData|_PPUData",
-			},
 		},
 		PPUMask: {
 			icon: "🎭",
@@ -1374,9 +1281,6 @@ const dictionary = {
 				"Un registro de video usado para habilitar o deshabilitar partes del fondo y los sprites, además de aplicar efectos de color como escala de grises o énfasis. <br /><br />Está disponible en la dirección de CPU `$2001`.",
 			ru:
 				"Видеорегистр, который включает или отключает части фона и спрайтов, а также задаёт цветовые эффекты: оттенки серого или усиление цветов. <br /><br />Доступен по адресу CPU `$2001`.",
-			also: {
-				ru: "PPUMask|_PPUMask",
-			},
 		},
 		PPUScroll: {
 			icon: "📜",
@@ -1386,9 +1290,6 @@ const dictionary = {
 				"Un registro de video que establece la posición de scroll del fondo. <br /><br />Se escribe dos veces por frame: una para el scroll horizontal, otra para el vertical. <br /><br />Está disponible en la dirección de CPU `$2005`.",
 			ru:
 				"Видеорегистр, который задаёт положение прокрутки фона. <br /><br />В него записывают дважды за кадр: один раз для X, один для Y. <br /><br />Доступен по адресу CPU `$2005`.",
-			also: {
-				ru: "PPUScroll|_PPUScroll",
-			},
 		},
 		PPUStatus: {
 			icon: "📊",
@@ -1398,9 +1299,6 @@ const dictionary = {
 				"Un registro de video que muestra si la PPU está en VBlank, si ocurrió un sprite zero hit, o si hay desbordamiento de sprites. Leerlo también reinicia latches internos. <br /><br />Está disponible en la dirección de CPU `$2002`.",
 			ru:
 				"Видеорегистр, который показывает, находится ли PPU в VBlank, было ли попадание нулевого спрайта и есть ли переполнение спрайтов. Чтение также сбрасывает внутренние защёлки. <br /><br />Доступен по адресу CPU `$2002`.",
-			also: {
-				ru: "PPUStatus|_PPUStatus",
-			},
 		},
 		"Pre-line": {
 			icon: "🌠",
@@ -1423,9 +1321,6 @@ const dictionary = {
 				"_(Program RAM)_ Un chip de RAM (alimentado a batería) que contiene la partida, dentro del cartucho.",
 			ru:
 				"_(Program RAM)_ Микросхема RAM с батарейным питанием внутри картриджа, в которой хранится сохранение игры.",
-			also: {
-				ru: "PRG-RAM|_PRG-RAM",
-			},
 		},
 		"PRG-ROM": {
 			icon: "🤖",
@@ -1435,9 +1330,6 @@ const dictionary = {
 				"_(Program ROM)_ Un chip de ROM que contiene el código del juego, dentro del cartucho.",
 			ru:
 				"_(Program ROM)_ Микросхема ROM внутри картриджа, в которой хранится код игры.",
-			also: {
-				ru: "PRG-ROM|_PRG-ROM",
-			},
 		},
 		"Pulse Channel|_Pulse Channels": {
 			also: {
@@ -1475,9 +1367,6 @@ const dictionary = {
 				"Un registro de audio que configura el ciclo de trabajo, la envolvente y el volumen del primer Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4000`.",
 			ru:
 				"Аудиорегистр, который настраивает коэффициент заполнения, огибающую и громкость первого импульсного канала. <br /><br />Доступен по адресу CPU `$4000`.",
-			also: {
-				ru: "Pulse1Control|PulseControl|_Pulse1Control|_PulseControl",
-			},
 		},
 		"Pulse1Sweep|PulseSweep": {
 			icon: "🧹",
@@ -1487,9 +1376,6 @@ const dictionary = {
 				"Un registro de audio que ajusta el barrido de frecuencia (velocidad, dirección y desplazamiento) del primer Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4001`.",
 			ru:
 				"Аудиорегистр, который настраивает свип частоты первого импульсного канала: скорость, направление и величину сдвига. <br /><br />Доступен по адресу CPU `$4001`.",
-			also: {
-				ru: "Pulse1Sweep|PulseSweep|_Pulse1Sweep|_PulseSweep",
-			},
 		},
 		"Pulse1TimerHighLCL|PulseTimerHighLCL": {
 			icon: "🕛",
@@ -1499,10 +1385,6 @@ const dictionary = {
 				"Un registro de audio que contiene el byte alto del timer del primer Canal Pulso y carga su contador de longitud (que además inicia la envolvente). <br /><br />Está disponible en la dirección de CPU `$4003`.",
 			ru:
 				"Аудиорегистр, который хранит старший байт таймера первого импульсного канала и загружает его счётчик длины (заодно запускается огибающая). <br /><br />Доступен по адресу CPU `$4003`.",
-			also: {
-				ru:
-					"Pulse1TimerHighLCL|PulseTimerHighLCL|_Pulse1TimerHighLCL|_PulseTimerHighLCL",
-			},
 		},
 		"Pulse1TimerLow|PulseTimerLow": {
 			icon: "🕡",
@@ -1512,9 +1394,6 @@ const dictionary = {
 				"Un registro de audio que contiene el byte bajo del timer del primer Canal Pulso, que determina su tono. <br /><br />Está disponible en la dirección de CPU `$4002`.",
 			ru:
 				"Аудиорегистр, который хранит младший байт таймера первого импульсного канала, определяющего высоту звука. <br /><br />Доступен по адресу CPU `$4002`.",
-			also: {
-				ru: "Pulse1TimerLow|PulseTimerLow|_Pulse1TimerLow|_PulseTimerLow",
-			},
 		},
 		Pulse2Control: {
 			icon: "🟦",
@@ -1524,9 +1403,6 @@ const dictionary = {
 				"Un registro de audio que configura el ciclo de trabajo, la envolvente y el volumen del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4004`.",
 			ru:
 				"Аудиорегистр, который настраивает коэффициент заполнения, огибающую и громкость второго импульсного канала. <br /><br />Доступен по адресу CPU `$4004`.",
-			also: {
-				ru: "Pulse2Control|_Pulse2Control",
-			},
 		},
 		Pulse2Sweep: {
 			icon: "🧹",
@@ -1536,9 +1412,6 @@ const dictionary = {
 				"Un registro de audio que ajusta el barrido de frecuencia (velocidad, dirección y desplazamiento) del segundo Canal Pulso. <br /><br />Está disponible en la dirección de CPU `$4005`.",
 			ru:
 				"Аудиорегистр, который настраивает свип частоты второго импульсного канала: скорость, направление и величину сдвига. <br /><br />Доступен по адресу CPU `$4005`.",
-			also: {
-				ru: "Pulse2Sweep|_Pulse2Sweep",
-			},
 		},
 		Pulse2TimerHighLCL: {
 			icon: "🕛",
@@ -1548,9 +1421,6 @@ const dictionary = {
 				"Un registro de audio que contiene el byte alto del timer del segundo Canal Pulso y carga su contador de longitud (que además inicia la envolvente). <br /><br />Está disponible en la dirección de CPU `$4007`.",
 			ru:
 				"Аудиорегистр, который хранит старший байт таймера второго импульсного канала и загружает его счётчик длины (заодно запускается огибающая). <br /><br />Доступен по адресу CPU `$4007`.",
-			also: {
-				ru: "Pulse2TimerHighLCL|_Pulse2TimerHighLCL",
-			},
 		},
 		Pulse2TimerLow: {
 			icon: "🕡",
@@ -1560,9 +1430,6 @@ const dictionary = {
 				"Un registro de audio que contiene el byte bajo del timer del segundo Canal Pulso, que determina su tono. <br /><br />Está disponible en la dirección de CPU `$4006`.",
 			ru:
 				"Аудиорегистр, который хранит младший байт таймера второго импульсного канала, определяющего высоту звука. <br /><br />Доступен по адресу CPU `$4006`.",
-			also: {
-				ru: "Pulse2TimerLow|_Pulse2TimerLow",
-			},
 		},
 		"Quarter frame|Quarter-frame|Quarter|_Quarter frames|_Quarter-frames|_Quarters": {
 			icon: "🕒",
@@ -1815,9 +1682,6 @@ const dictionary = {
 				"Un registro de audio que establece el valor de recarga del contador lineal de longitud del Canal Triangular y controla la detención del contador de longitud. <br /><br />Está disponible en la dirección de CPU `$4008`.",
 			ru:
 				"Аудиорегистр, который задаёт значение перезагрузки линейного счётчика длины треугольного канала и управляет остановкой его обычного счётчика длины. <br /><br />Доступен по адресу CPU `$4008`.",
-			also: {
-				ru: "TriangleLengthControl|_TriangleLengthControl",
-			},
 		},
 		TriangleTimerHighLCL: {
 			icon: "🕛",
@@ -1827,9 +1691,6 @@ const dictionary = {
 				"Un registro de audio que contiene el byte alto del timer del Canal Triangular y carga su contador de longitud. <br /><br />Está disponible en la dirección de CPU `$400B`.",
 			ru:
 				"Аудиорегистр, который хранит старший байт таймера треугольного канала и загружает его счётчик длины. <br /><br />Доступен по адресу CPU `$400B`.",
-			also: {
-				ru: "TriangleTimerHighLCL|_TriangleTimerHighLCL",
-			},
 		},
 		TriangleTimerLow: {
 			icon: "🕡",
@@ -1839,9 +1700,6 @@ const dictionary = {
 				"Un registro de audio que contiene el byte bajo del timer del Canal Triangular, que define su frecuencia. <br /><br />Está disponible en la dirección de CPU `$400A`.",
 			ru:
 				"Аудиорегистр, который хранит младший байт таймера треугольного канала, задающего частоту. <br /><br />Доступен по адресу CPU `$400A`.",
-			also: {
-				ru: "TriangleTimerLow|_TriangleTimerLow",
-			},
 		},
 		"VBlank|Vertical Blank": {
 			icon: "🏝️",
@@ -1863,9 +1721,6 @@ const dictionary = {
 				"El período en el que la PPU está dibujando activamente el frame, scanline por scanline. Comienza después de la pre-line y termina antes del VBlank.",
 			ru:
 				"Период, когда PPU активно рисует кадр строка за строкой. Начинается после предварительной строки и заканчивается перед VBlank.",
-			also: {
-				ru: "VDraw|_VDraw",
-			},
 		},
 		"Video register|_Video registers": {
 			also: {
@@ -1904,9 +1759,6 @@ const dictionary = {
 				"_(Video RAM)_ Un chip de RAM de `2` KiB que vive en la PPU. Almacena name tables.",
 			ru:
 				"_(Video RAM)_ Микросхема RAM объёмом `2` КиБ внутри PPU. Хранит таблицы имён.",
-			also: {
-				ru: "VRAM|_VRAM",
-			},
 		},
 		Waveform: {
 			also: {
@@ -1929,9 +1781,6 @@ const dictionary = {
 				"_(Work RAM)_ Un chip de RAM de `2` KiB que vive en la CPU. Propósito general.",
 			ru:
 				"_(Work RAM)_ Микросхема RAM общего назначения объёмом `2` КиБ внутри CPU.",
-			also: {
-				ru: "WRAM|_WRAM",
-			},
 		},
 		"Zero Flag": {
 			also: {
