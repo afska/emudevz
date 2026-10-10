@@ -2,24 +2,27 @@
 
 If you want to add support for other languages, you should change these files (example: Japanese - `ja`):
 
-- Create a locale file in `src/locales/ja.js`.
-- Change `src/locales/index.js` so it includes the new `ja` key and the correct `TimeAgo` instance.
-- Add a `language_ja` key in all `src/locales/{languageId}.js` files to localize the name that appears in the Settings modal.
-- Update `src/data/dictionary.jsx` to include translations for `ja`.
-- Add a `ja.yml` to each level for the chat script.
+- Create a locale file in `src/data/locales/ja.js` with all the UI translations.
+  - You can run `node scripts/sort-locales.js` to sort keys alphabetically.
+  - Add a `language_ja` key to all the language files to localize the language name.
+- Change `src/locales.js` so it includes the new `ja` key and the correct `TimeAgo` instance.
+- Update `src/data/dictionaryEntries.js` to include translations for `ja`.
+  - You can run `node scripts/sort-dictionary.js` to sort keys alphabetically.
+- Add a `ja.yml` to each level in `src/data/levels` for the chat script.
   - See `docs/chat_syntax.md` for some other considerations about the chat format.
   - Ensure the JS scripts are the same (besides small details like linking to `.ja.md` files instead of `.en.md`) and the final translated file ends up with the same number of lines as the English version.
   - Also, ensure the JS code snippets shown to the user are the same.
   - The final credits shouldn't be localized.
-- Add localized documentation files (look for `*.en.md` files and create equivalent `*.ja.md` files) and update the `copy.js` scripts to copy them.
 - Change the `meta.json` file in each level to localize the `name` and the console `subtitle` keys.
   - In the `FAQ` level, also update the `links` key.
+- Add localized documentation files (look for `*.en.md` files and create equivalent `*.ja.md` files) and update the `copy.js` scripts to copy them.
 - Localize all unit tests in `src/data/levels/$tests` and the `test.js` files. **This is optional**.
-- Localize all theme titles and descriptions in `src/models/themes/theme.js`.
 - Create a file in `src/data/levels/02_Assembly/$help/ja.txt` with help for the Assembly chapter.
   - Each line should correspond to the same line in the other languages.
 
 ## Notes
+
+- You can run a basic consistency check by running `node scripts/check-localization.js`.
 
 - When adding the `ja:` key in an object, please do it alphabetically. For example:
 ```json

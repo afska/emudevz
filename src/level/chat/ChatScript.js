@@ -1,5 +1,5 @@
-import dictionary from "../../data/dictionary";
 import codeEval from "../codeEval";
+import dictionary from "../dictionary";
 
 const REGEXP = {
 	if: /^<<(.+)>> /,

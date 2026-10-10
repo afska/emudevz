@@ -1,10 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import {
-	getDefaultGlobalTheme,
-	getDefaultLayoutBrightness,
-} from "../models/themes/theme";
 import { dlc } from "../utils";
+import { getDefaultGlobalTheme, getDefaultLayoutBrightness } from "./theme";
 
 class GlobalThemeProvider extends PureComponent {
 	componentDidMount() {

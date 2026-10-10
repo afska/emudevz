@@ -1,13 +1,13 @@
 import _ from "lodash";
 import filesystem, { Drive } from "../filesystem";
-import store from "../store";
-import { bus } from "../utils";
 import {
 	getDefaultConsoleTheme,
 	getDefaultGlobalTheme,
 	getDefaultLayoutBrightness,
 	getDefaultTerminalAnsiTheme,
-} from "./themes/theme";
+} from "../gui/theme";
+import store from "../store";
+import { bus } from "../utils";
 
 const KEY = "savedata";
 const DEFAULT_KEY_MAP = () => ({

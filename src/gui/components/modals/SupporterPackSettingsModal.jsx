@@ -4,6 +4,9 @@ import Modal from "react-bootstrap/Modal";
 import { FaDownload, FaUndo, FaUpload } from "react-icons/fa";
 import { connect } from "react-redux";
 import locales from "../../../locales";
+import { bus, filepicker, toast } from "../../../utils";
+import AlphaColorInput from "../../../utils/AlphaColorInput";
+import { sfx } from "../../sound";
 import {
 	GLOBAL_THEME_GROUPS,
 	TERMINAL_ANSI_INDICES,
@@ -11,10 +14,7 @@ import {
 	getDefaultGlobalTheme,
 	getDefaultLayoutBrightness,
 	getDefaultTerminalAnsiTheme,
-} from "../../../models/themes/theme";
-import { bus, filepicker, toast } from "../../../utils";
-import AlphaColorInput from "../../../utils/AlphaColorInput";
-import { sfx } from "../../sound";
+} from "../../theme";
 import IconButton from "../widgets/IconButton";
 import VolumeSlider from "../widgets/VolumeSlider";
 import modalStyles from "./SettingsModal.module.css";
@@ -158,25 +158,20 @@ class SupporterPackSettingsModal extends PureComponent {
 							<h5 className={styles.sectionTitleLarge}>
 								{locales.get("supporter_global_theme_title")}
 							</h5>
-							{GLOBAL_THEME_GROUPS.map((group) => {
-								const lang = locales.language;
-								const title = group.title[lang];
-								const description =
-									group.description == null ? null : group.description[lang];
-
-								return (
-									<div key={title} className={styles.group}>
-										<h6 className={styles.groupTitle}>{title}</h6>
-										{description && (
-											<p className={styles.sectionDescription}>{description}</p>
-										)}
-										{this._renderColorPickerGrid(
-											this._buildGlobalThemeGroupItems(group),
-											true
-										)}
-									</div>
-								);
-							})}
+							{GLOBAL_THEME_GROUPS.map((group) => (
+								<div key={group.title} className={styles.group}>
+									<h6 className={styles.groupTitle}>
+										{locales.get(group.title)}
+									</h6>
+									<p className={styles.sectionDescription}>
+										{locales.get(group.description)}
+									</p>
+									{this._renderColorPickerGrid(
+										this._buildGlobalThemeGroupItems(group),
+										true
+									)}
+								</div>
+							))}
 
 							<Form.Check
 								type="checkbox"

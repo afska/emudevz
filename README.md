@@ -63,6 +63,8 @@ npm start
 
 - Package levels:
   `npm run package`
+- Check locales:
+  `node scripts/check-localization.js`
 - Sort locales:
   `node scripts/sort-locales.js`
 - Sort dictionary entries:

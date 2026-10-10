@@ -1,4 +1,4 @@
-import { ansi256ToHex } from "../../utils/ansi256";
+import { ansi256ToHex } from "../utils/ansi256";
 
 export const INVERTABLE_IMAGES = [
 	"header",
@@ -25,16 +25,8 @@ export const TERMINAL_ANSI_INDICES = {
 
 export const GLOBAL_THEME_GROUPS = [
 	{
-		title: {
-			ru: "Фон",
-			en: "Background",
-			es: "Fondo",
-		},
-		description: {
-			ru: "Основной фон игры.",
-			en: "Base background of the game.",
-			es: "Fondo base del juego.",
-		},
+		title: "theme_background_title",
+		description: "theme_background_description",
 		variants: [
 			{ key: "background", label: "base", defaultValue: "#000000" },
 			{ key: "background-crt", label: "crt", defaultValue: "#121010" },
@@ -53,16 +45,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "CRT-фильтр",
-			en: "CRT filter",
-			es: "Filtro CRT",
-		},
-		description: {
-			ru: "Цвета строк развёртки и тонкая настройка CRT-фильтра.",
-			en: "CRT filter scanline colors and fine-tuning.",
-			es: "Colores del filtro CRT y ajuste fino de las scanlines.",
-		},
+		title: "theme_crt_filter_title",
+		description: "theme_crt_filter_description",
 		variants: [
 			{ key: "crt-gradient1", label: "gradient1", defaultValue: "#12101000" },
 			{ key: "crt-gradient2", label: "gradient2", defaultValue: "#00000040" },
@@ -72,31 +56,15 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Подсветка",
-			en: "Highlight",
-			es: "Resaltado",
-		},
-		description: {
-			ru: "Цвет свечения и тени.",
-			en: "Drop-shadow highlight color.",
-			es: "Color de resplandor/sombra.",
-		},
+		title: "theme_highlight_title",
+		description: "theme_highlight_description",
 		variants: [
 			{ key: "highlight", label: "highlight", defaultValue: "#ffffff" },
 		],
 	},
 	{
-		title: {
-			ru: "Основной цвет",
-			en: "Primary color",
-			es: "Color primario",
-		},
-		description: {
-			ru: "Основной цвет темы.",
-			en: "Theme's main color.",
-			es: "Color principal del tema.",
-		},
+		title: "theme_primary_color_title",
+		description: "theme_primary_color_description",
 		variants: [
 			{ key: "primary", label: "base", defaultValue: "#466a8e" },
 			{
@@ -126,16 +94,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Дополнительный цвет",
-			en: "Secondary color",
-			es: "Color secundario",
-		},
-		description: {
-			ru: "Дополнительный цвет темы.",
-			en: "Theme's secondary color.",
-			es: "Color secundario del tema.",
-		},
+		title: "theme_secondary_color_title",
+		description: "theme_secondary_color_description",
 		variants: [
 			{ key: "secondary", label: "base", defaultValue: "#c39f79" },
 			{ key: "secondary-vibrant", label: "vibrant", defaultValue: "#e8a931" },
@@ -152,16 +112,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Нейтральный цвет",
-			en: "Neutral color",
-			es: "Color neutro",
-		},
-		description: {
-			ru: "Нейтральный цвет темы (например, серый).",
-			en: "Neutral theme color (like gray).",
-			es: "Color neutro del tema (como gris).",
-		},
+		title: "theme_neutral_color_title",
+		description: "theme_neutral_color_description",
 		variants: [
 			{
 				key: "neutral-border",
@@ -191,16 +143,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Особые цвета",
-			en: "Special colors",
-			es: "Colores especiales",
-		},
-		description: {
-			ru: "Цвета с особым значением.",
-			en: "Colors with a special meaning.",
-			es: "Colores con un significado especial.",
-		},
+		title: "theme_special_colors_title",
+		description: "theme_special_colors_description",
 		variants: [
 			{ key: "success", label: "success", defaultValue: "#5cb85c" },
 			{ key: "failure", label: "failure", defaultValue: "#d9534f" },
@@ -212,16 +156,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Текст",
-			en: "Text",
-			es: "Texto",
-		},
-		description: {
-			ru: "Основной цвет текста.",
-			en: "General text color.",
-			es: "Color de texto general.",
-		},
+		title: "theme_text_title",
+		description: "theme_text_description",
 		variants: [
 			{ key: "text", label: "base", defaultValue: "#ffffff" },
 			{ key: "text-dim", label: "dim", defaultValue: "#b7bbc7" },
@@ -254,16 +190,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Ссылка",
-			en: "Hyperlink",
-			es: "Hipervínculo",
-		},
-		description: {
-			ru: "Цвет ссылок.",
-			en: "Hyperlink color.",
-			es: "Color de los hipervínculos.",
-		},
+		title: "theme_hyperlink_title",
+		description: "theme_hyperlink_description",
 		variants: [
 			{ key: "link", label: "base", defaultValue: "#0d6efd" },
 			{ key: "link-hover", label: "hover", defaultValue: "#0a58ca" },
@@ -280,16 +208,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Редактор кода",
-			en: "Code editor",
-			es: "Editor de código",
-		},
-		description: {
-			ru: "Цвета редактора кода.",
-			en: "Code editor colors.",
-			es: "Colores del editor de código.",
-		},
+		title: "theme_code_editor_title",
+		description: "theme_code_editor_description",
 		variants: [
 			{
 				key: "editor-error",
@@ -304,16 +224,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Уведомления",
-			en: "Toasts",
-			es: "Notificaciones",
-		},
-		description: {
-			ru: "Всплывающие уведомления.",
-			en: "Toast messages.",
-			es: "Mensajes emergentes (toasts).",
-		},
+		title: "theme_toasts_title",
+		description: "theme_toasts_description",
 		variants: [
 			{
 				key: "toast-background",
@@ -324,16 +236,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Диалоговые окна",
-			en: "Modals",
-			es: "Modales",
-		},
-		description: {
-			ru: "Диалоговые окна.",
-			en: "Modal dialogs.",
-			es: "Diálogos modales.",
-		},
+		title: "theme_modals_title",
+		description: "theme_modals_description",
 		variants: [
 			{
 				key: "modal-background",
@@ -348,16 +252,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Поля ввода",
-			en: "Inputs",
-			es: "Entradas",
-		},
-		description: {
-			ru: "Элементы форм.",
-			en: "Form controls.",
-			es: "Controles de formulario.",
-		},
+		title: "theme_inputs_title",
+		description: "theme_inputs_description",
 		variants: [
 			{
 				key: "input-background",
@@ -368,16 +264,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Кнопки",
-			en: "Buttons",
-			es: "Botones",
-		},
-		description: {
-			ru: "Внешний вид кнопок.",
-			en: "Buttons appearance.",
-			es: "Apariencia de los botones.",
-		},
+		title: "theme_buttons_title",
+		description: "theme_buttons_description",
 		variants: [
 			{
 				key: "button-background",
@@ -407,16 +295,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Плавающая кнопка",
-			en: "FAB",
-			es: "Botón flotante",
-		},
-		description: {
-			ru: "Внешний вид плавающей кнопки действия.",
-			en: "Floating Action Button appearance.",
-			es: "Apariencia del botón flotante de acción.",
-		},
+		title: "theme_fab_title",
+		description: "theme_fab_description",
 		variants: [
 			{
 				key: "fab-background",
@@ -433,17 +313,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Панели и индикаторы",
-			en: "Bars",
-			es: "Barras",
-		},
-		description: {
-			ru: "Индикаторы прогресса и элементы панели навигации.",
-			en: "Bars like progress bars or NavBar items.",
-			es:
-				"Barras como barras de progreso o elementos de la barra de navegación.",
-		},
+		title: "theme_bars_title",
+		description: "theme_bars_description",
 		variants: [
 			{
 				key: "bar-background",
@@ -468,16 +339,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Выбор главы",
-			en: "Chapter select",
-			es: "Selector de capítulo",
-		},
-		description: {
-			ru: "Окно выбора главы.",
-			en: "Chapter select modal.",
-			es: "Modal de selección de capítulo.",
-		},
+		title: "theme_chapter_select_title",
+		description: "theme_chapter_select_description",
 		variants: [
 			{
 				key: "chapter-opt-background",
@@ -492,16 +355,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Отладчик CPU",
-			en: "CPU Debugger",
-			es: "Depurador de CPU",
-		},
-		description: {
-			ru: "Внешний вид отладчика из главы об ассемблере.",
-			en: "Appearance of the debugger featured in the Assembly chapter.",
-			es: "Apariencia del depurador usado en el capítulo de Assembly.",
-		},
+		title: "theme_cpu_debugger_title",
+		description: "theme_cpu_debugger_description",
 		variants: [
 			{
 				key: "cpu-debugger-table-bg",
@@ -551,16 +406,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			ru: "Сравнение изображений",
-			en: "Image diff",
-			es: "Comparador de imágenes",
-		},
-		description: {
-			ru: "Инструмент сравнения изображений.",
-			en: "Image comparer tool.",
-			es: "Herramienta para comparar imágenes.",
-		},
+		title: "theme_image_diff_title",
+		description: "theme_image_diff_description",
 		variants: [
 			{
 				key: "diff-expected",

@@ -3,10 +3,10 @@ import timeAgoEn from "javascript-time-ago/locale/en";
 import timeAgoEs from "javascript-time-ago/locale/es";
 import timeAgoRu from "javascript-time-ago/locale/ru";
 import _ from "lodash";
-import store from "../store";
-import en from "./en";
-import es from "./es";
-import ru from "./ru";
+import en from "./data/locales/en";
+import es from "./data/locales/es";
+import ru from "./data/locales/ru";
+import store from "./store";
 
 TimeAgo.addLocale(timeAgoEn);
 TimeAgo.addLocale(timeAgoEs);
