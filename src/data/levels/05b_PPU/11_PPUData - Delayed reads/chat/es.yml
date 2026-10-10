@@ -24,7 +24,7 @@ exercise:
       **->** llama a ```javascript this._incrementAddress()```
       **->** retorna `data`
   responses:
-  - (*) ¿cómo puedo acceder a PPUAddr? [ppuaddr]
+  - (*) ¿cómo puedo acceder a 📍  PPUAddr? [ppuaddr]
 
 ppuaddr:
   messages:

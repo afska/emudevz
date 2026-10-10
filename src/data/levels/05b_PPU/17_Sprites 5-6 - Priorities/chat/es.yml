@@ -40,7 +40,7 @@ why:
   - ¿recuerdas que los sprites con ids más bajos se dibujan por delante?
   - bueno, en cualquier píxel, si el sprite opaco más <delante> tiene prioridad <detrás>, un píxel opaco del fondo se dibuja por delante de él
   - "y lo crucial: en ese píxel no puedes usar el sprite de prioridad siguiente"
-  - esto significa que el sprite más <delante> puede bloquear a otros sprites incluso cuando está detrás del fondo
+  - esto significa que el sprite más delante puede bloquear a otros sprites incluso cuando está detrás del fondo
   - por eso primero guardamos el píxel ganador del sprite en un buffer, y después lo mezclamos con el fondo
   responses:
   - ...fix

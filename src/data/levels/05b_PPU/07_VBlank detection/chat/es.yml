@@ -33,7 +33,7 @@ exercise:
         **->** llama a ```javascript this._onVisibleLine()```
       **->** si ```javascript this.scanline``` es 241:
         **->** llama a ```javascript this._onVBlankLine(onInterrupt)```
-      **->** ...resto del código...
+      **->** ___...resto del código...___
       **[!]** nota que agregamos un parámetro `onInterrupt`
   - |-
     📚  ahora, agrega estos métodos:

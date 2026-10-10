@@ -38,5 +38,5 @@ exercise:
         **->** через ```javascript this.addField(...)``` задаёт 7-битное поле `directLoad`, начиная с бита 0
       **onWrite(value)**:
         **->** задаёт значение через ```javascript this.setValue(...)```
-        **->** задаёт выходной отсчёт канала равным ```javascript this.directLoad```
+        **->** задаёт <выходной отсчёт> канала равным ```javascript this.directLoad```
   responses: []

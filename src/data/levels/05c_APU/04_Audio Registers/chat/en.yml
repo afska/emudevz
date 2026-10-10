@@ -42,5 +42,5 @@ exercise:
     📚  lastly, map them in 🐏  `CPUMemory` (regions $4000-$4013, $4015 and $4017):
       - <reads> should return ```javascript this.apu.registers.read(address)```
       - <writes> should call ```javascript this.apu.registers.write(address, value)``` and return
-  - be careful with 🧮  APUFrameCounter, as it shares its address with the second 🎮  controller port; do not map <reads>! only writes!
+  - be careful with 🧮  APUFrameCounter, as it shares its address with the second 🎮  controller port; do not map <reads>! only <writes>!
   responses: []

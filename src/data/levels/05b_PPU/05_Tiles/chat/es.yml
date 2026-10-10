@@ -19,8 +19,8 @@ main:
         ```javascript lowPlaneAddress + 8```
         (llamemos a esto `highPlaneAddress`)
       **->** lee la fila correcta de cada <bitplane>:
-        ```javascript this._lowRow``` = leer dirección PPU ```javascript lowPlaneAddress + y```
-        ```javascript this._highRow``` = leer dirección PPU ```javascript highPlaneAddress + y```
+        ```javascript this._lowRow``` = leer dirección PPU ```javascript lowPlaneAddress + y``` desde ```javascript ppu.memory```
+        ```javascript this._highRow``` = leer dirección PPU ```javascript highPlaneAddress + y```desde ```javascript ppu.memory```
     **getColorIndex(x)**:
       **->** determina la posición del bit que corresponde a `x` (un número entre 0 y 7)
         (ten en cuenta que ~x=0~ es el píxel más a la izquierda, y eso sería ~bit 7~)
