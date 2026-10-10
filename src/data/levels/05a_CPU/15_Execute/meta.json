@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "▶️ Execute",
-		"es": "▶️ Execute"
+		"es": "▶️ Execute",
+		"ru": "▶️ Выполнение"
 	},
 	"ui": {
 		"layout": "dual",

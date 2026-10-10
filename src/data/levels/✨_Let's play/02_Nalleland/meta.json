@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🧸 📍 Nalleland",
-		"es": "🧸 📍 Nalleland"
+		"es": "🧸 📍 Nalleland",
+		"ru": "🧸 📍 Nalleland"
 	},
 	"ui": {
 		"layout": "dual",
@@ -13,7 +14,8 @@
 					"availableCommands": ["chat"],
 					"subtitle": {
 						"en": "",
-						"es": ""
+						"es": "",
+						"ru": ""
 					}
 				}
 			],

@@ -1,0 +1,29 @@
+---
+main:
+  messages:
+    - opcode означает "operation code", код операции
+    - так... что такое <операция>? 🤔
+    - это сочетание 📖  инструкции и 📍  режима адресации
+    - "вот несколько примеров:"
+    - |-
+      `STA $4080`: инструкция `STA` + режим `ABSOLUTE`
+        => код операции $8D
+    - |-
+      `STA $30,X`: инструкция `STA` + режим `INDEXED_ABSOLUTE_X`
+        => код операции $9D
+    - |-
+      `STA ($55),Y`: инструкция `STA` + режим `INDIRECT_INDEXED`
+        => код операции $91
+  responses:
+    - значит, у `STA` могут быть разные коды операций в зависимости от режима адресации? [exercise]
+
+exercise:
+  messages:
+    - именно ✅
+    - "вот функция, которая определяет все коды операций за тебя:"
+    - 📄  ~/lib/cpu/defineOperations.js~
+    - тебе нужно только вызвать её, передав уже готовые объекты `instructions` и `addressingModes`
+    - |-
+      📚  добавь в свой 🧠  `CPU` следующее свойство:
+        ```javascript this.operations = defineOperations(instructions, addressingModes);```
+  responses: []

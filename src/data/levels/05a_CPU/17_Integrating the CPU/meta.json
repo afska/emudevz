@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "⚙️ Integrating the CPU",
-		"es": "⚙️ Integrando la CPU"
+		"es": "⚙️ Integrando la CPU",
+		"ru": "⚙️ Подключение CPU"
 	},
 	"ui": {
 		"layout": "dual",
@@ -12,7 +13,13 @@
 					"startup": "chat"
 				}
 			],
-			"Right": ["tv", { "type": "rom", "withFileSearch": true }]
+			"Right": [
+				"tv",
+				{
+					"type": "rom",
+					"withFileSearch": true
+				}
+			]
 		},
 		"focus": "Left",
 		"canPinEmulator": false,

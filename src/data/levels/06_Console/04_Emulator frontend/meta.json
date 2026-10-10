@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🌸 Emulator frontend",
-		"es": "🌸 Frontend del emulador"
+		"es": "🌸 Frontend del emulador",
+		"ru": "🌸 Интерфейс эмулятора"
 	},
 	"ui": {
 		"layout": "dual",
@@ -19,7 +20,11 @@
 					"action": "none",
 					"readOnly": true,
 					"extraLangOptions": {
-						"parserOptions": { "ecmaFeatures": { "jsx": true } }
+						"parserOptions": {
+							"ecmaFeatures": {
+								"jsx": true
+							}
+						}
 					}
 				}
 			]

@@ -91,7 +91,7 @@ butyousaid:
   - ¡buena pregunta!
   - solo tiene 2 KiB de memoria real
   - pero la CPU puede <ver> hasta 64 KiB
-  - así que los primeros dos kilobytes son RAM de verdad
+  - así que los primeros dos kilobytes son <RAM de verdad>
   - y el resto se usa para interactuar con el hardware 💻
   - <{memory.png}>
   - eso no importa mucho en este capítulo

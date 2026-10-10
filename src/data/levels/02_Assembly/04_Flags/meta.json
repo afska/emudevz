@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🏁 Flags",
-		"es": "🏁 Banderas"
+		"es": "🏁 Banderas",
+		"ru": "🏁 Флаги"
 	},
 	"ui": {
 		"layout": "triple",

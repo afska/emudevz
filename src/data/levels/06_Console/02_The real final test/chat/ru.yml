@@ -1,0 +1,73 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<настоящая> финальная проверка — пройти игру от начала до конца!"
+  - "давай поиграем"
+  - "на этот раз — в твоём эмуляторе 🤯"
+  - |-
+    она называется 🤖 🧗  ~Robo-Ninja Climb~
+    <{screenshot.png;30x30}>
+  - "здесь ты управляешь <робо-ниндзя>, который тренируется лазать и прыгать перед спасением мира"
+  - "если получится пройти игру, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "звучит просто 🙌 [play]"
+
+play:
+  run-after-messages: |
+    {{Top}}.runner.setIntegration("RoboNinjaClimb");
+    {{Top}}.loadROM("/roms/.all/RoboNinjaClimb.neees");
+    layout.focus("Top");
+  messages:
+  - "вообще-то погибать придётся часто"
+  - "если станет совсем тяжело..."
+  - "ну, эмулятор-то твой!"
+  - "всегда можно попробовать <взломать игру> 😉"
+  - "где-то в WRAM её код наверняка хранит <здоровье> и другие параметры"
+  - "просто <доберись до конца> любым способом 👀"
+  - "__(только без __<сохранений состояния>__, так неинтересно!)__"
+  events:
+  - roboninjaclimb-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["RoboNinjaClimb.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+
+    if ({{Top}}.runner.didUseSaveState) {
+      $.goTo("savestate-yes");
+    } else {
+      $.goTo("savestate-no");
+    }
+  messages: []
+  responses: []
+
+savestate-yes:
+  run: |
+    window.EmuDevz.achievements.unlock("emulator-robo-ninja-cheater")
+  messages:
+  - "ты используешь... <сохранения состояния>?!"
+  - "вот хитрость 😅"
+  - "речь шла о другом взломе, но ладно, сойдёт!"
+  - "<! Получен ROM: 📄  /roms/RoboNinjaClimb.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "наслаждайся!"
+  responses:
+  - "▶️  продолжить [end]"
+
+savestate-no:
+  run: |
+    window.EmuDevz.achievements.unlock("emulator-robo-ninja-player")
+  messages:
+  - "невероятно! либо это божественная игра... либо божественный взлом 🤣"
+  - "<! Получен ROM: 📄  /roms/RoboNinjaClimb.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "наслаждайся заслуженной победой! 🚀"
+  responses:
+  - "▶️  продолжить [end]"

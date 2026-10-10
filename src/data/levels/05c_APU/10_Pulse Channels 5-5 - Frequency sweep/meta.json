@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🧹 Pulse Channels (5/5): Frequency sweep",
-		"es": "🧹 Canales Pulso (5/5): Barrido de frecuencia"
+		"es": "🧹 Canales Pulso (5/5): Barrido de frecuencia",
+		"ru": "🧹 Импульсные каналы (5/5): Свип частоты"
 	},
 	"ui": {
 		"layout": "tripleRight",

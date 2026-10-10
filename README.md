@@ -36,6 +36,8 @@
 
 ## Development
 
+See [translation_guide.md](docs/translation_guide.md).
+
 ### Install and run
 
 ```bash
@@ -61,6 +63,8 @@ npm start
 
 - Package levels:
   `npm run package`
+- Check locales:
+  `node scripts/check-localization.js`
 - Sort locales:
   `node scripts/sort-locales.js`
 - Sort dictionary entries:

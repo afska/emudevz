@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🗜️ The rest of the mappers",
-		"es": "🗜️ El resto de los mappers"
+		"es": "🗜️ El resto de los mappers",
+		"ru": "🗜️ Остальные мапперы"
 	},
 	"ui": {
 		"run": "copy.js",

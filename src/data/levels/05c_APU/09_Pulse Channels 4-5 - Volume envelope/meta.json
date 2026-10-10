@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📉 Pulse Channels (4/5): Volume envelope",
-		"es": "📉 Canales Pulso (4/5): Envolvente de volumen"
+		"es": "📉 Canales Pulso (4/5): Envolvente de volumen",
+		"ru": "📉 Импульсные каналы (4/5): Огибающая громкости"
 	},
 	"ui": {
 		"layout": "tripleRight",

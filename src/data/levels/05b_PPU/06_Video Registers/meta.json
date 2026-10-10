@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔢 Video Registers",
-		"es": "🔢 Registros de Video"
+		"es": "🔢 Registros de Video",
+		"ru": "🔢 Видеорегистры"
 	},
 	"ui": {
 		"run": "copy.js",

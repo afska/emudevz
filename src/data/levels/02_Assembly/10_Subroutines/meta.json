@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📞 Subroutines",
-		"es": "📞 Subrutinas"
+		"es": "📞 Subrutinas",
+		"ru": "📞 Подпрограммы"
 	},
 	"ui": {
 		"layout": "triple",

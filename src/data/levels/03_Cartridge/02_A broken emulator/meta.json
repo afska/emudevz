@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "💀 A broken emulator",
-		"es": "💀 Un emulador roto"
+		"es": "💀 Un emulador roto",
+		"ru": "💀 Сломанный эмулятор"
 	},
 	"ui": {
 		"layout": "dual",
@@ -12,7 +13,13 @@
 					"startup": "chat"
 				}
 			],
-			"Right": ["tv", { "type": "rom", "withFileSearch": true }]
+			"Right": [
+				"tv",
+				{
+					"type": "rom",
+					"withFileSearch": true
+				}
+			]
 		},
 		"focus": "Left",
 		"canPinEmulator": false,

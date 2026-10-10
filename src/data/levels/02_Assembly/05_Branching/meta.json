@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔀 Branching",
-		"es": "🔀 Bifurcaciones"
+		"es": "🔀 Bifurcaciones",
+		"ru": "🔀 Ветвление"
 	},
 	"ui": {
 		"layout": "triple",

@@ -1,3 +1,5 @@
+import locales from "../../../locales";
+
 export default function PanZoom(props) {
 	return (
 		<img

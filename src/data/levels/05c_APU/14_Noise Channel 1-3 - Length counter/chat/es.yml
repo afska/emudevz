@@ -36,7 +36,7 @@ exercise:
       **onLoad()**:
         **->** usa ```javascript this.addField(...)``` para definir un campo de 5 bits `lengthCounterLoad` desde el bit 3
       **onWrite(value)**:
-        **->** __mantén el comportamiento existente__
+      **->** asigna el valor con ```javascript this.setValue(...)```
         **->** determina la nueva longitud accediendo al array `noteLengths` con el índice ```javascript this.lengthCounterLoad```
           (usa 📄  ~/lib/apu/noteLengths.js~ para obtener el array)
         **->** asigna el nuevo valor a la propiedad `counter` del contador de longitud

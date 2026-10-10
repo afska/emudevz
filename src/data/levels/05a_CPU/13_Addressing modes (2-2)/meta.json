@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📍 Addressing modes (2/2): Indexed",
-		"es": "📍 Modos de direccionamiento (2/2): Indexados"
+		"es": "📍 Modos de direccionamiento (2/2): Indexados",
+		"ru": "📍 Режимы адресации (2/2): Индексные"
 	},
 	"ui": {
 		"layout": "dual",

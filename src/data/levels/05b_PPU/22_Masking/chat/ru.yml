@@ -1,0 +1,78 @@
+main:
+  messages:
+  - видеорегистр 🎭  PPUMask ($2001) позволяет программам включать или отключать части отрисовки
+  - ещё раз загляни в 📄  ~/docs/ppu/video_registers.ru.md~
+  - 🏛️  биты ~m~ и ~M~ управляют видимостью первого столбца шириной ~8~ пикселей для фона и спрайтов соответственно
+  - 🏞️  ~b~ включает отрисовку фона
+  - 🛸  а ~s~ включает отрисовку спрайтов
+  responses:
+  - (*) зачем игре отключать отрисовку? [why]
+  - давай сделаем [exercise]
+
+why:
+  messages:
+  - например, чтобы быстрее заполнить VRAM во время VDraw, скрыв возможные артефакты от записи вне 🏝️  VBlank
+  - обычно игры записывают для этого $00 вне игрового процесса
+  - а затем $1E, чтобы включить отрисовку во время игры
+  responses:
+  - ...main
+
+exercise:
+  messages:
+  - 📚  в 🎭  `PPUMask` реализуй метод `onLoad()`, используя `addField(...)` для отображения указанных битов
+  - |-
+    используй эти имена:
+      - `showBackgroundInFirst8Pixels`
+      - `showSpritesInFirst8Pixels`
+      - `showBackground`
+      - `showSprites`
+  - |-
+    📚  ещё добавь эти методы:
+      **onWrite(value)**:
+        **->** вызывает ```javascript this.setValue(value)```
+      **isRenderingEnabled()**:
+        **->** возвращает ```javascript this.showBackground || this.showSprites```
+  - |-
+    📚  в 🏞️  `BackgroundRenderer` <измени>:
+      **renderScanline()**:
+        **->** если (`showBackground` выключено) <ИЛИ> (`showBackgroundInFirst8Pixels` выключено и `x < 8`)
+          **->** просто рисует цвет подложки (через `PPU::plotBG(...)`)
+          **->** увеличивает `x`
+          **->** выполняет `continue`! дальше ничего не обрабатывай!
+        (помни, цвет подложки — ```javascript this.ppu.getColor(0, 0)```)
+  - |-
+    📚  в 🛸  `SpriteRenderer` <измени> следующие методы:
+      **renderScanline()**:
+        **->** в самом начале, если `showSprites` выключено, завершает метод! <ничего не делает>!
+      **_render(...)**:
+        **->** при необходимости игнорирует первые 8 пикселей:
+          ```javascript if (!showSpritesInFirst8Pixels && x < 8)
+            continue;```
+      **->** в проверку попадания нулевого спрайта добавь условие `showBackground`
+        (если `showBackground` равно `false`, попадания нулевого спрайта не должны срабатывать!)
+  - |-
+    📚  в 🖥️  `PPU` измени:
+    **_onPreLine()**:
+      **->** в самой <последней строке>, если `!isRenderingEnabled()` в 🎭  PPUMask, завершает метод!
+      **->** код должен выглядеть так:
+        ```javascript
+        if (this.cycle === 1) {
+          // ... reset PPUStatus flags ...
+        }
+        
+        if (!this.registers.ppuMask.isRenderingEnabled()) return;
+        
+        // <<we'll add more code here later!>>```
+    **_onVisibleLine()**:
+      **->** в самой <последней строке>, если `!isRenderingEnabled()` в 🎭  PPUMask, завершает метод!
+      **->** код должен выглядеть так:
+        ```javascript
+        if (this.cycle === 0) {
+          // render background
+          // render sprites
+        }
+        
+        if (!this.registers.ppuMask.isRenderingEnabled()) return;
+        
+        // <<we'll add more code here later!>>```
+  responses: []

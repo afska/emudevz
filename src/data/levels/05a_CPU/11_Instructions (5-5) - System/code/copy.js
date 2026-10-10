@@ -2,6 +2,6 @@
 	filesystem.write(`${Drive.LIB_DIR}/${file}`, level.bin[file]);
 });
 
-["interrupt_example.md"].forEach((file) => {
+["interrupt_example.md", "interrupt_example.ru.md"].forEach((file) => {
 	filesystem.write(`${Drive.DOCS_DIR}/cpu/${file}`, level.bin[file]);
 });

@@ -1,4 +1,4 @@
-["controller.en.md", "controller.es.md"].forEach((file) => {
+["controller.en.md", "controller.es.md", "controller.ru.md"].forEach((file) => {
 	filesystem.write(`${Drive.DOCS_DIR}/${file}`, level.bin[file]);
 });
 

@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📍 Addressing modes (1/2): Simple",
-		"es": "📍 Modos de direccionamiento (1/2): Simples"
+		"es": "📍 Modos de direccionamiento (1/2): Simples",
+		"ru": "📍 Режимы адресации (1/2): Простые"
 	},
 	"ui": {
 		"run": "copy.js",

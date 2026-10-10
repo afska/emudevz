@@ -1,0 +1,110 @@
+---
+main:
+  messages:
+    - хей
+    - загляни в свою папку 📁  ~/docs~!
+  responses:
+    - что там? [header]
+
+header:
+  messages:
+    - там есть документация от меня 🤓
+    - посмотри 📄  ~/docs/iNEEES.ru.md~
+    - это документ с описанием формата iNEEES
+    - его можно открыть командой `open` или <нажать> на путь к файлу
+    - прочитай и скажи, всё ли понятно
+  responses:
+    - 🤔  кажется, понятно [exercise]
+    - (*) что такое маппер? 🗜️ [mapper]
+    - (*) что такое зеркалирование? 🚽 [mirroring]
+    - (*) объясни, что такое PRG-ROM, CHR-ROM, PRG-RAM и CHR-RAM 🐏 [memories]
+    - (*) заполнитель? 🧸 [padding]
+    - (*) что ещё за "ниббл"? 🦴 [nybble]
+
+mapper:
+  messages:
+    - это что-то вроде "чипа расширения", который есть в каждой игре
+    - мапперы помогают консоли читать более крупные программы и блоки графики
+    - а ещё позволяют играм делать более сложные вещи, например менять зеркалирование на лету
+    - подробнее об этом позже! 🔜
+  responses:
+    - ...header
+
+mirroring:
+  messages:
+    - зеркалирование определяет, что показывается за правой и нижней границами экрана
+    - в зависимости от его типа PPU использует разные области памяти для отрисовки фона 🎨
+    - пока это не так важно
+  responses:
+    - ...header
+
+memories:
+  messages:
+    - окей, попробуем...
+    - "🤖  PRG-ROM: память только для чтения, содержащая программу"
+    - "👾  CHR-ROM: память только для чтения, содержащая графику"
+    - "👾  CHR-RAM: память с возможностью записи для хранения графики во время работы"
+    - "🔋  PRG-RAM: (необязательная) память с возможностью записи для сохранения прогресса игры"
+    - каждая игра использует либо CHR-ROM, либо CHR-RAM
+    - если она использует CHR-RAM, в файле iNEEES не будет последнего раздела CHR-ROM
+  responses:
+    - ...header
+
+padding:
+  messages:
+    - просто нули, часть файла, которую можно игнорировать
+  responses:
+    - ...header
+
+nybble:
+  messages:
+    - ниббл — это половина байта
+    - '"младший ниббл" — младшие 4 бита (```raw 0000```~1011~)'
+    - а "старший ниббл" — старшие 4 бита (~1011~```raw 0000```)
+  responses:
+    - ...header
+
+exercise:
+  messages:
+    - отлично 💪
+    - первые 16 байт файла — это 🗣️  заголовок
+    - |-
+      📚  добавим в класс 💾  `Cartridge` свойство `header` следующего вида:
+      ```javascript {
+        prgRomPages: 2, // (obtain this from byte 4)
+        chrRomPages: 1, // (obtain this from byte 5)
+        usesChrRam: false, // (true if chrRomPages === 0)
+        has512BytePadding: false, // (obtain this from <Flags 6>)
+        hasPrgRam: false, // (obtain this from <Flags 6>)
+        mirroringId: "VERTICAL", // (obtain this from <Flags 6>)
+        mapperId: 4 // (obtain this from <Flags 6> and <Flags 7>)
+      }```
+    - если ты не знаешь, как работать с битами, можно использовать мою библиотеку 📖
+    - она находится в 📄  ~/lib/byte.js~, просто импортируй её как любой другой модуль
+  responses:
+    - (*) немного помощи с битами 📐 [bits]
+
+bits:
+  messages:
+    - тебе пригодятся методы `getFlag(...)`, `highNybbleOf(...)`, `lowNybbleOf(...)` и `buildU8(...)`
+  responses:
+    - как использовать модуль библиотеки? [import]
+
+import:
+  messages:
+    - |-
+      просто импортируй его так:
+        ```javascript import byte from "/lib/byte";```
+    - 💡  библиотеку можно проверить командой `repl`
+    - это интерактивная консоль JS! 🤯
+    - |-
+      попробуй выполнить эти строки:
+      ```javascript
+      // (0x means <hexadecimal> and 0b means <binary>)
+      byte.getFlag(0b00000100, 2) // bit 2 is 1 => true
+      byte.getFlag(0b00000100, 4) // bit 4 is 0 => false
+      byte.highNybbleOf(0b00110100) // high nybble is 0b0011 => 3
+      byte.lowNybbleOf(0b00110100) // low nybble is 0b0100 => 4
+      byte.buildU8(0b0011, 0b0100) // 0b00110100 => 52```
+  responses:
+    - ...exercise

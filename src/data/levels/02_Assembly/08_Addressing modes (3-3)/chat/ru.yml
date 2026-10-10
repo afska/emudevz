@@ -1,0 +1,132 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.winOnEnd = true;
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+    });
+    {{Bottom}}.setMemoryStart(0x0);
+  messages:
+    - а теперь самые безумные режимы 😓
+    - начнём с индексированной косвенной адресации ("Indexed Indirect")
+    - это что-то среднее между "Zero Page,X" и "Indirect"
+    - берёшь адрес нулевой страницы и прибавляешь к нему значение [X]
+    - а затем по полученному адресу читаешь двухбайтовый адрес
+  responses:
+    - становится как-то слишком запутанно [what]
+
+what:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - знаю 😅 🔫
+    - давай попробуем на примере
+    - выполни первые 4 инструкции ⏩
+  events:
+    - step [step1]
+
+step1:
+  messages: []
+  events:
+    - step [step2]
+
+step2:
+  messages: []
+  events:
+    - step [step3]
+
+step3:
+  messages: []
+  events:
+    - step [step4]
+
+step4:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - мы подготовили память для косвенной адресации
+    - по адресу $0003 находится $80
+    - по адресу $0004 находится $40
+    - сейчас переключу <просмотр памяти> на привычную область
+    - выполни следующие 3 инструкции ⏩
+  events:
+    - step [step5]
+
+step5:
+  run: |
+    {{Bottom}}.setMemoryStart(0x4020);
+    {{Bottom}}.setSelectedCells([0x402c, 0x402d]);
+  messages: []
+  events:
+    - step [step6]
+
+step6:
+  messages: []
+  events:
+    - step [step7]
+
+step7:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+    - мы загрузили $FA в [A], а $02 в [X]
+    - "`STA ($01,X)` можно представить как что-то вроде `STA ($01+X)`"
+    - так что после прибавления [X] получилось бы `STA ($0003)`
+    - дальше всё происходит как при обычной косвенной адресации ("Indirect")
+    - в итоге значение [A] записывается по адресу $4080
+    - <{STA_indexedindirect.png}>
+  responses:
+    - (*) можно ещё раз? 🤨 [whatwasthat]
+    - всё совершенно логично 👍 [makessense]
+
+whatwasthat:
+  messages:
+    - помнишь косвенный режим ("Indirect")?
+    - он строит адрес, читая байты по другому адресу и следующему за ним
+    - в этом случае он прочитал $80 из $0003 и $40 из $0004
+    - первый стал младшим байтом
+    - а второй — старшим
+    - так что получился новый адрес $4080 ✨
+  responses:
+    - ...step7
+
+makessense:
+  run: |
+    {{Bottom}}.setSelectedCells([0x4030, 0x4031]);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+    - поговорим о косвенной индексированной адресации ("Indirect Indexed")
+    - последний режим, обещаю 🤞
+    - вместо прибавления [X] к адресу <до> косвенного чтения
+    - он прибавляет [Y] сразу <после> него
+    - выполни оставшийся код ⏩
+    - "и помни: по адресу $4085 уже лежит $BE"
+  events:
+    - step [step8]
+
+step8:
+  messages: []
+  events:
+    - step [step9]
+
+step9:
+  messages:
+    - это $BE загрузилось в [A] 🤯
+    - как мы уже видели, с текущими значениями `($0003)` даёт $4080
+    - инструкция просто прибавила к нему [Y], и итоговый адрес стал $4085
+    - <{LDA_indirectindexed.png}>
+  responses:
+    - кажется, мозг перегрелся, можно пропустить практику? 😓 [skip]
+
+skip:
+  messages:
+    - конечно, всё равно ты нечасто с этим столкнёшься
+    - тебе предстоит писать эмулятор
+    - так что нужно создать <интерпретатор> этих конструкций
+    - а не сами конструкции 😉
+  responses:
+    - ясно... [end]

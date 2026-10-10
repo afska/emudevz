@@ -1,0 +1,82 @@
+---
+main:
+  messages:
+  - чтобы появились цвета, сначала нужно дать играм возможность записывать информацию о них
+  - первым делом отобразим 🐏  RAM палитр в память PPU
+  - затем добавим методы для чтения цветовых палитр
+  - и наконец, научим 🏞️  `BackgroundRenderer` рисовать с помощью палитр
+  - 📚  по примеру `PPUMemory::vram` добавь в 🐏  `PPUMemory` свойство `paletteRam`
+  - массив должен вмещать 32 байта
+  - 📚  отобрази диапазон $3F00-$3F1F в RAM палитр (для чтения и записи)
+  - |-
+    📚  реализуй этот метод в 🖥️  `PPU`:
+    **getColor(paletteId, colorIndex)**:
+      **->** вычисляет начальный адрес палитры:
+        ```javascript 0x3F00 + paletteId * 4```
+        (назовём его `startAddress`)
+      **->** читает индекс цвета из памяти:
+        читает по адресу PPU ```javascript startAddress + colorIndex```
+        (назовём его `masterColorIndex`)
+      **->** возвращает цвет из основной палитры, используя `masterColorIndex % 64`
+        (список цветов можно импортировать из 📄  ~/lib/ppu/masterPalette.js~)
+  - |-
+    📚  реализуй этот метод в 🏞️  `BackgroundRenderer`:
+    **_getBackgroundPaletteId(nameTableId, x, y)**:
+      **->** <добавь нужный код>, возвращающий правильный идентификатор палитры для пикселя ~(x, y)~
+      **->** способ кодирования идентификаторов палитр описан в 📄  ~/docs/ppu/background_rendering.ru.md~
+  - |-
+    📚  измени `BackgroundRenderer::renderScanline()`, чтобы он использовал `_getBackgroundPaletteId(...)` и рисовал нужный цвет, вот так:
+      ```javascript
+      const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
+
+      const tileInsideY = y % 8;
+
+      const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
+      for (let xx = 0; xx < 8; xx++) {
+        const colorIndex = tile.getColorIndex(xx);
+        const color =
+          colorIndex > 0 ? this.ppu.getColor(paletteId, colorIndex) : this.ppu.getColor(0, 0);
+        this.ppu.plot(x + xx, y, color);
+      }```
+  - учти, что при индексе цвета 0 вместо него рисуется <цвет подложки> (первый цвет первой палитры)
+  responses:
+  - (*) помоги с вычислениями 🔢 [math]
+  - (*) что такое цвет подложки? 💧 [backdrop]
+
+math:
+  messages:
+  - 🔍  сначала по точке ~(x, y)~ нужно определить, в каком <метаблоке> она находится
+  - <метаблок> — это ~2x2 блока~, ~4x4~ тайла или ~32x32~ пикселя (с какой стороны посмотреть)
+  - поэтому ```javascript Math.floor(x / 32)``` и ```javascript Math.floor(y / 32)``` дадут числа, которые можно назвать `metablockX` и `metablockY`
+  - это матрица, так что `metablockIndex` вычисляется как ```javascript metablockY * 8 + metablockX```
+  - (умножаем на 8, потому что в каждом ряду 8 метаблоков)
+  - |-
+    📖  с этим `metablockIndex` можно прочитать `block`:
+      ```javascript this.ppu.memory.read(startAddress + metablockIndex);```
+  - (`startAddress` — начальный адрес 🖍️ 📖  таблицы атрибутов, то есть последних 64 байт 🏞️ 📖  таблицы имён)
+  - 🔍  получив `block`, теперь по точке ~(x, y)~ нужно определить, в каком <блоке> она находится
+  - |-
+    <блок> — это ~2x2~ тайла или ~16x16~ пикселей, поэтому:
+      ```javascript
+      const blockX = Math.floor((x % 32) / 16);
+      const blockY = Math.floor((y % 32) / 16);
+      const blockIndex = blockY * 2 + blockX;```
+  - 🕵️  с этим `blockIndex` можно извлечь нужные биты из `block` через `byte.getBits(...)`
+  - (нужно получить 2 бита, начиная с бита `blockIndex * 2`)
+  - это и даст `paletteId` для точки ~(x, y)~!
+  responses:
+  - теперь всё на 100% понятно, спасибо! [clear]
+
+clear:
+  messages:
+  - всегда пожалуйста :D
+  responses:
+  - ...main
+
+backdrop:
+  messages:
+  - считай его общим цветом заднего плана
+  - он задан в ~палитре 0, по индексу 0~ (то есть по адресу PPU $3F00)
+  - любой пиксель фона с индексом цвета 0 показывает этот цвет
+  responses:
+  - ...main

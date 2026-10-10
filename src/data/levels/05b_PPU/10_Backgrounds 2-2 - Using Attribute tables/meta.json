@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🌈 Backgrounds (2/2): Using Attribute tables",
-		"es": "🌈 Fondos (2/2): Usando Attribute tables"
+		"es": "🌈 Fondos (2/2): Usando Attribute tables",
+		"ru": "🌈 Фоны (2/2): Использование таблиц атрибутов"
 	},
 	"ui": {
 		"run": "copy.js",

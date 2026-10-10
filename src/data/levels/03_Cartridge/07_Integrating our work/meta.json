@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "⚙️ Integrating our work",
-		"es": "⚙️ Integrando nuestro trabajo"
+		"es": "⚙️ Integrando nuestro trabajo",
+		"ru": "⚙️ Собираем всё вместе"
 	},
 	"ui": {
 		"layout": "dual",
@@ -12,7 +13,13 @@
 					"startup": "chat"
 				}
 			],
-			"Right": ["tv", { "type": "rom", "withFileSearch": true }]
+			"Right": [
+				"tv",
+				{
+					"type": "rom",
+					"withFileSearch": true
+				}
+			]
 		},
 		"focus": "Left",
 		"canPinEmulator": false,

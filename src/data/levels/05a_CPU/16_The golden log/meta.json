@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🏆 The golden log",
-		"es": "🏆 El golden log"
+		"es": "🏆 El golden log",
+		"ru": "🏆 Эталонный лог"
 	},
 	"ui": {
 		"run": "copy.js",
@@ -13,7 +14,8 @@
 					"startup": "chat -f",
 					"subtitle": {
 						"en": "",
-						"es": ""
+						"es": "",
+						"ru": ""
 					}
 				}
 			],

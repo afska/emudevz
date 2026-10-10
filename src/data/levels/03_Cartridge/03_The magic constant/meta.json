@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "✨ The magic constant",
-		"es": "✨ La constante mágica"
+		"es": "✨ La constante mágica",
+		"ru": "✨ Магическая константа"
 	},
 	"ui": {
 		"layout": "dual",

@@ -78,9 +78,9 @@ exercise:
         **->** asigna ```javascript this.y = 0```
       **onWrite(value)**:
         **->** si el `latch` de 📍  PPUAddr es ```javascript false```:
-          **->** escribe el `valor` en ```javascript this.x```
+          **->** escribe el `value` en ```javascript this.x```
         **->** si es ```javascript true```:
-          **->** escribe el `valor` en ```javascript this.y```
+          **->** escribe el `value` en ```javascript this.y```
         (puedes acceder al `latch` con ```javascript this.ppu.registers.ppuAddr.latch```)
         **->** cambia el `latch` al valor opuesto
   responses:

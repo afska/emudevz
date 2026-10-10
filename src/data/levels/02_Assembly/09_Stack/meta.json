@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🧱 Stack",
-		"es": "🧱 Pila"
+		"es": "🧱 Pila",
+		"ru": "🧱 Стек"
 	},
 	"ui": {
 		"layout": "triple",

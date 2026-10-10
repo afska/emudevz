@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🧙 Instructions (5/5): System (interrupts)",
-		"es": "🧙 Instrucciones (5/5): Sistema (interrupciones)"
+		"es": "🧙 Instrucciones (5/5): Sistema (interrupciones)",
+		"ru": "🧙 Инструкции (5/5): Система (прерывания)"
 	},
 	"ui": {
 		"run": "copy.js",

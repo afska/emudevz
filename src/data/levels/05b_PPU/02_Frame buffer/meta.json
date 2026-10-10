@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🖼️ Frame buffer",
-		"es": "🖼️ Frame buffer"
+		"es": "🖼️ Frame buffer",
+		"ru": "🖼️ Буфер кадра"
 	},
 	"ui": {
 		"run": "copy.js",

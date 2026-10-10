@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔀 Frame Sequencer",
-		"es": "🔀 Secuenciador de Frame"
+		"es": "🔀 Secuenciador de Frame",
+		"ru": "🔀 Секвенсор кадров"
 	},
 	"ui": {
 		"layout": "tripleRight",

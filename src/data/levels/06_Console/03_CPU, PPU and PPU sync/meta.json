@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔄 CPU, PPU and APU sync",
-		"es": "🔄 CPU, PPU and APU sync"
+		"es": "🔄 CPU, PPU and APU sync",
+		"ru": "🔄 Синхронизация CPU, PPU и APU"
 	},
 	"ui": {
 		"layout": "dual",

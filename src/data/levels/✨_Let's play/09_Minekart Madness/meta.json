@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "💎⛏️ Minekart Madness",
-		"es": "💎⛏️ Minekart Madness"
+		"es": "💎⛏️ Minekart Madness",
+		"ru": "💎⛏️ Minekart Madness"
 	},
 	"ui": {
 		"layout": "dual",
@@ -13,7 +14,8 @@
 					"availableCommands": ["chat"],
 					"subtitle": {
 						"en": "",
-						"es": ""
+						"es": "",
+						"ru": ""
 					}
 				}
 			],

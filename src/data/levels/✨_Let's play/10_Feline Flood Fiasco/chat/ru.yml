@@ -1,0 +1,44 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется 🌊 🐈  ~Feline Flood Fiasco~
+    <{screenshot.png;30x30}>
+  - "головоломка, в которой нужно <спасти котиков> от наводнения"
+  - "если получится пройти игру, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "спасать котиков — это здорово [play]"
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("FelineFloodFiasco");
+    {{Right}}.loadROM("/roms/.all/FelineFloodFiasco.neees", "stream");
+  messages:
+  - "да, здесь всё пошагово, так что продумывай каждый ход!"
+  events:
+  - felinefloodfiasco-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["FelineFloodFiasco.neees", "FluffySpaceEscape.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - "все котики спасены?!"
+  - "<! Получен ROM: 📄  /roms/FelineFloodFiasco.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/FluffySpaceEscape.neees"
+  - "а ещё тебе отправлена другая игра от тех же авторов — 🐰 🛰️  ~Fluffy Space Escape~"
+  - "приятных головоломок!"
+  responses:
+  - "▶️  продолжить [end]"

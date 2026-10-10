@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🏟️ Architecture",
-		"es": "🏟️ Arquitectura"
+		"es": "🏟️ Arquitectura",
+		"ru": "🏟️ Архитектура"
 	},
 	"ui": {
 		"layout": "dual",

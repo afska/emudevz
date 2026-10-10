@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🌉 VRAM bridge",
-		"es": "🌉 Puente de VRAM"
+		"es": "🌉 Puente de VRAM",
+		"ru": "🌉 Мост к VRAM"
 	},
 	"ui": {
 		"layout": "tripleRight",

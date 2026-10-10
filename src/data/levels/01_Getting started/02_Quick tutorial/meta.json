@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📙 Quick tutorial",
-		"es": "📙 Tutorial rápido"
+		"es": "📙 Tutorial rápido",
+		"ru": "📙 Краткое обучение"
 	},
 	"ui": {
 		"layout": "dual",

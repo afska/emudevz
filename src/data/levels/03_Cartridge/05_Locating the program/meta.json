@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🤖 Locating the program",
-		"es": "🤖 Ubicando el programa"
+		"es": "🤖 Ubicando el programa",
+		"ru": "🤖 Поиск программы"
 	},
 	"ui": {
 		"layout": "dual",

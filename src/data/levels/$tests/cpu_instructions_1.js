@@ -23,6 +23,8 @@ it("the file `/code/index.js` exports <an object> containing the `instructions` 
   locales: {
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene el objeto `instructions`",
+    ru:
+      "файл `/code/index.js` экспортирует <объект>, содержащий объект `instructions`",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -37,6 +39,7 @@ it("every member of the `instructions` object has an `id`", () => {
 })({
   locales: {
     es: "cada miembro del objeto `instructions` tiene un `id`",
+    ru: "каждый элемент объекта `instructions` содержит `id`",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -49,6 +52,7 @@ it('`ADC`: argument == "value"', () => {
 })({
   locales: {
     es: '`ADC`: argument == "value"',
+    ru: '`ADC`: argument == "value"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -63,6 +67,7 @@ it("`ADC`: adds the value to the Accumulator", () => {
 })({
   locales: {
     es: "`ADC`: suma el valor al Acumulador",
+    ru: "`ADC`: прибавляет значение к аккумулятору",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -78,6 +83,7 @@ it("`ADC`: adds the Carry bit", () => {
 })({
   locales: {
     es: "`ADC`: suma el bit de Carry",
+    ru: "`ADC`: прибавляет бит переноса",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -97,6 +103,7 @@ it("`ADC`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`ADC`: actualiza las banderas Zero y Negative",
+    ru: "`ADC`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -143,6 +150,7 @@ it("`ADC`: updates the Carry and Overflow flags", () => {
 })({
   locales: {
     es: "`ADC`: actualiza las banderas Carry y Overflow",
+    ru: "`ADC`: обновляет флаги переноса и переполнения",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -155,6 +163,7 @@ it('`ASL`: argument == "address"', () => {
 })({
   locales: {
     es: '`ASL`: argument == "address"',
+    ru: '`ASL`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -170,6 +179,7 @@ it("`ASL`: multiplies the value by 2", () => {
 })({
   locales: {
     es: "`ASL`: multiplica el valor por 2",
+    ru: "`ASL`: умножает значение на 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -185,6 +195,7 @@ it("`ASL`: fills the Carry Flag with bit 7", () => {
 })({
   locales: {
     es: "`ASL`: llena la Bandera Carry con el bit 7",
+    ru: "`ASL`: записывает бит 7 во флаг переноса",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -205,6 +216,7 @@ it("`ASL`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`ASL`: actualiza las banderas Zero y Negative",
+    ru: "`ASL`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -223,6 +235,7 @@ it("`ASL`: wraps around to 8 bits", () => {
 })({
   locales: {
     es: "`ASL`: da la vuelta a 8 bits",
+    ru: "`ASL`: сохраняет только младшие 8 бит результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -235,6 +248,7 @@ it('`ASLa`: argument == "no"', () => {
 })({
   locales: {
     es: '`ASLa`: argument == "no"',
+    ru: '`ASLa`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -250,6 +264,7 @@ it("`ASLa`: multiplies [A] by 2", () => {
 })({
   locales: {
     es: "`ASLa`: multiplica [A] por 2",
+    ru: "`ASLa`: умножает [A] на 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -265,6 +280,7 @@ it("`ASLa`: fills the Carry Flag with bit 7", () => {
 })({
   locales: {
     es: "`ASLa`: llena la Bandera Carry con el bit 7",
+    ru: "`ASLa`: записывает бит 7 во флаг переноса",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -285,6 +301,7 @@ it("`ASLa`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`ASLa`: actualiza las banderas Zero y Negative",
+    ru: "`ASLa`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -303,6 +320,7 @@ it("`ASLa`: wraps around to 8 bits", () => {
 })({
   locales: {
     es: "`ASLa`: da la vuelta a 8 bits",
+    ru: "`ASLa`: сохраняет только младшие 8 бит результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -315,6 +333,7 @@ it('`DEC`: argument == "address"', () => {
 })({
   locales: {
     es: '`DEC`: argument == "address"',
+    ru: '`DEC`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -329,6 +348,7 @@ it("`DEC`: decrements the value", () => {
 })({
   locales: {
     es: "`DEC`: decrementa el valor",
+    ru: "`DEC`: уменьшает значение на 1",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -345,6 +365,7 @@ it("`DEC`: updates the Zero Flag", () => {
 })({
   locales: {
     es: "`DEC`: actualiza la Bandera Zero",
+    ru: "`DEC`: обновляет флаг нуля",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -361,6 +382,7 @@ it("`DEC`: updates the Negative Flag", () => {
 })({
   locales: {
     es: "`DEC`: actualiza la Bandera Negative",
+    ru: "`DEC`: обновляет флаг отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -373,6 +395,7 @@ it('`INC`: argument == "address"', () => {
 })({
   locales: {
     es: '`INC`: argument == "address"',
+    ru: '`INC`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -387,6 +410,7 @@ it("`INC`: increments the value in memory", () => {
 })({
   locales: {
     es: "`INC`: incrementa el valor en memoria",
+    ru: "`INC`: увеличивает значение в памяти на 1",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -403,6 +427,7 @@ it("`INC`: sets the Zero Flag", () => {
 })({
   locales: {
     es: "`INC`: actualiza la Bandera Zero",
+    ru: "`INC`: устанавливает флаг нуля",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -419,6 +444,7 @@ it("`INC`: sets the Negative Flag", () => {
 })({
   locales: {
     es: "`INC`: actualiza la Bandera Negative",
+    ru: "`INC`: устанавливает флаг отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -431,6 +457,7 @@ it('`DEX`: argument == "no"', () => {
 })({
   locales: {
     es: '`DEX`: argument == "no"',
+    ru: '`DEX`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -455,6 +482,7 @@ it("`DEX`: decrements the [X] register and updates the flags", () => {
 })({
   locales: {
     es: "`DEX`: decrementa el registro [X] y actualiza las banderas",
+    ru: "`DEX`: уменьшает регистр [X] на 1 и обновляет флаги",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -467,6 +495,7 @@ it('`DEY`: argument == "no"', () => {
 })({
   locales: {
     es: '`DEY`: argument == "no"',
+    ru: '`DEY`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -491,6 +520,7 @@ it("`DEY`: decrements the [Y] register and updates the flags", () => {
 })({
   locales: {
     es: "`DEY`: decrementa el registro [Y] y actualiza las banderas",
+    ru: "`DEY`: уменьшает регистр [Y] на 1 и обновляет флаги",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -503,6 +533,7 @@ it('`INX`: argument == "no"', () => {
 })({
   locales: {
     es: '`INX`: argument == "no"',
+    ru: '`INX`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -527,6 +558,7 @@ it("`INX`: increments the [X] register and updates the flags", () => {
 })({
   locales: {
     es: "`INX`: incrementa el registro [X] y actualiza las banderas",
+    ru: "`INX`: увеличивает регистр [X] на 1 и обновляет флаги",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -539,6 +571,7 @@ it('`INY`: argument == "no"', () => {
 })({
   locales: {
     es: '`INY`: argument == "no"',
+    ru: '`INY`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -563,6 +596,7 @@ it("`INY`: increments the [Y] register and updates the flags", () => {
 })({
   locales: {
     es: "`INY`: incrementa el registro [Y] y actualiza las banderas",
+    ru: "`INY`: увеличивает регистр [Y] на 1 и обновляет флаги",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -575,6 +609,7 @@ it('`LSR`: argument == "address"', () => {
 })({
   locales: {
     es: '`LSR`: argument == "address"',
+    ru: '`LSR`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -590,6 +625,7 @@ it("`LSR`: divides the value by 2", () => {
 })({
   locales: {
     es: "`LSR`: divide el valor entre 2",
+    ru: "`LSR`: делит значение на 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -605,6 +641,7 @@ it("`LSR`: fills the Carry Flag with bit 0", () => {
 })({
   locales: {
     es: "`LSR`: llena la Bandera Carry con el bit 0",
+    ru: "`LSR`: записывает бит 0 во флаг переноса",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -625,6 +662,7 @@ it("`LSR`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`LSR`: actualiza las banderas Zero y Negative",
+    ru: "`LSR`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -637,6 +675,7 @@ it('`LSRa`: argument == "no"', () => {
 })({
   locales: {
     es: '`LSRa`: argument == "no"',
+    ru: '`LSRa`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -652,6 +691,7 @@ it("`LSRa`: divides [A] by 2", () => {
 })({
   locales: {
     es: "`LSRa`: divide [A] entre 2",
+    ru: "`LSRa`: делит [A] на 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -667,6 +707,7 @@ it("`LSRa`: fills the Carry Flag with bit 0", () => {
 })({
   locales: {
     es: "`LSRa`: llena la Bandera Carry con el bit 0",
+    ru: "`LSRa`: записывает бит 0 во флаг переноса",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -687,6 +728,7 @@ it("`LSRa`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`LSRa`: actualiza las banderas Zero y Negative",
+    ru: "`LSRa`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -699,6 +741,7 @@ it('`ROL`: argument == "address"', () => {
 })({
   locales: {
     es: '`ROL`: argument == "address"',
+    ru: '`ROL`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -713,6 +756,7 @@ it("`ROL`: multiplies the value by 2", () => {
 })({
   locales: {
     es: "`ROL`: multiplica el valor por 2",
+    ru: "`ROL`: умножает значение на 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -728,6 +772,7 @@ it("`ROL`: fills the Carry Flag with bit 7", () => {
 })({
   locales: {
     es: "`ROL`: llena la Bandera Carry con el bit 7",
+    ru: "`ROL`: записывает бит 7 во флаг переноса",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -743,6 +788,7 @@ it("`ROL`: sets the bit 0 with the Carry Flag", () => {
 })({
   locales: {
     es: "`ROL`: llena el bit 0 con la Bandera Carry",
+    ru: "`ROL`: записывает флаг переноса в бит 0",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -765,6 +811,7 @@ it("`ROL`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`ROL`: actualiza las banderas Zero y Negative",
+    ru: "`ROL`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -783,6 +830,7 @@ it("`ROL`: wraps around to 8 bits", () => {
 })({
   locales: {
     es: "`ROL`: da la vuelta a 8 bits",
+    ru: "`ROL`: сохраняет только младшие 8 бит результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -795,6 +843,7 @@ it('`ROLa`: argument == "no"', () => {
 })({
   locales: {
     es: '`ROLa`: argument == "no"',
+    ru: '`ROLa`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -809,6 +858,7 @@ it("`ROLa`: multiplies [A] by 2", () => {
 })({
   locales: {
     es: "`ROLa`: multiplica [A] por 2",
+    ru: "`ROLa`: умножает [A] на 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -824,6 +874,7 @@ it("`ROLa`: fills the Carry Flag with bit 7", () => {
 })({
   locales: {
     es: "`ROLa`: llena la Bandera Carry con el bit 7",
+    ru: "`ROLa`: записывает бит 7 во флаг переноса",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -839,6 +890,7 @@ it("`ROLa`: sets the bit 0 with the Carry Flag", () => {
 })({
   locales: {
     es: "`ROLa`: llena el bit 0 con la Bandera Carry",
+    ru: "`ROLa`: записывает флаг переноса в бит 0",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -861,6 +913,7 @@ it("`ROLa`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`ROLa`: actualiza las banderas Zero y Negative",
+    ru: "`ROLa`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -879,6 +932,7 @@ it("`ROLa`: wraps around to 8 bits", () => {
 })({
   locales: {
     es: "`ROLa`: da la vuelta a 8 bits",
+    ru: "`ROLa`: сохраняет только младшие 8 бит результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -891,6 +945,7 @@ it('`ROR`: argument == "address"', () => {
 })({
   locales: {
     es: '`ROR`: argument == "address"',
+    ru: '`ROR`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -905,6 +960,7 @@ it("`ROR`: divides the value by 2", () => {
 })({
   locales: {
     es: "`ROR`: divide el valor entre 2",
+    ru: "`ROR`: делит значение на 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -920,6 +976,7 @@ it("`ROR`: fills the Carry Flag with bit 0", () => {
 })({
   locales: {
     es: "`ROR`: llena la Bandera Carry con el bit 0",
+    ru: "`ROR`: записывает бит 0 во флаг переноса",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -935,6 +992,7 @@ it("`ROR`: sets the bit 7 with the Carry Flag", () => {
 })({
   locales: {
     es: "`ROR`: llena el bit 7 con la Bandera Carry",
+    ru: "`ROR`: записывает флаг переноса в бит 7",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -958,6 +1016,7 @@ it("`ROR`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`ROR`: actualiza las banderas Zero y Negative",
+    ru: "`ROR`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -970,6 +1029,7 @@ it('`RORa`: argument == "no"', () => {
 })({
   locales: {
     es: '`RORa`: argument == "no"',
+    ru: '`RORa`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -984,6 +1044,7 @@ it("`RORa`: divides [A] by 2", () => {
 })({
   locales: {
     es: "`RORa`: divide [A] entre 2",
+    ru: "`RORa`: делит [A] на 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -999,6 +1060,7 @@ it("`RORa`: fills the Carry Flag with bit 0", () => {
 })({
   locales: {
     es: "`RORa`: llena la Bandera Carry con el bit 0",
+    ru: "`RORa`: записывает бит 0 во флаг переноса",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -1014,6 +1076,7 @@ it("`RORa`: sets the bit 7 with the Carry Flag", () => {
 })({
   locales: {
     es: "`RORa`: llena el bit 7 con la Bandera Carry",
+    ru: "`RORa`: записывает флаг переноса в бит 7",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -1037,6 +1100,7 @@ it("`RORa`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`RORa`: actualiza las banderas Zero y Negative",
+    ru: "`RORa`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -1049,6 +1113,7 @@ it('`SBC`: argument == "value"', () => {
 })({
   locales: {
     es: '`SBC`: argument == "value"',
+    ru: '`SBC`: argument == "value"',
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -1063,6 +1128,7 @@ it("`SBC`: subtracts the value from the Accumulator - 1 when ~C~ is clear", () =
 })({
   locales: {
     es: "`SBC`: resta el valor del Acumulador - 1 cuando ~C~ está apagada",
+    ru: "`SBC`: вычитает значение из аккумулятора и ещё 1, если ~C~ сброшен",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -1078,6 +1144,8 @@ it("`SBC`: subtracts the value from the Accumulator - 0 when ~C~ is set", () => 
 })({
   locales: {
     es: "`SBC`: resta el valor del Acumulador - 0 cuando ~C~ está encendida",
+    ru:
+      "`SBC`: вычитает значение из аккумулятора без дополнительного вычитания, если ~C~ установлен",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -1099,6 +1167,7 @@ it("`SBC`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`SBC`: actualiza las banderas Zero y Negative",
+    ru: "`SBC`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });
@@ -1168,6 +1237,7 @@ it("`SBC`: updates the Carry and Overflow flags", () => {
 })({
   locales: {
     es: "`SBC`: actualiza las banderas Carry y Overflow",
+    ru: "`SBC`: обновляет флаги переноса и переполнения",
   },
   use: ({ id }, book) => id >= book.getId("5a.7"),
 });

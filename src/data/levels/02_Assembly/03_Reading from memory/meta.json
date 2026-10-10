@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🐏 Reading from memory",
-		"es": "🐏 Leyendo de la memoria"
+		"es": "🐏 Leyendo de la memoria",
+		"ru": "🐏 Чтение из памяти"
 	},
 	"ui": {
 		"layout": "triple",

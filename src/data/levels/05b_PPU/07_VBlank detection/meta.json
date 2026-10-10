@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🏝️ VBlank detection",
-		"es": "🏝️ Detección de VBlank"
+		"es": "🏝️ Detección de VBlank",
+		"ru": "🏝️ Обнаружение VBlank"
 	},
 	"ui": {
 		"run": "copy.js",

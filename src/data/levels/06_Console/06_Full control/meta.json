@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🤹 Full control",
-		"es": "🤹 Control total"
+		"es": "🤹 Control total",
+		"ru": "🤹 Полный контроль"
 	},
 	"ui": {
 		"run": "copy.js",

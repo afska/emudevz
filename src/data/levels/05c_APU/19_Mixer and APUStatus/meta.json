@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📊 Mixer and APUStatus",
-		"es": "📊 Mezclador y APUStatus"
+		"es": "📊 Mezclador y APUStatus",
+		"ru": "📊 Микшер и APUStatus"
 	},
 	"ui": {
 		"layout": "tripleRight",

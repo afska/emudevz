@@ -396,9 +396,9 @@ export default class EmulatorRunner extends PureComponent {
 
 		this._info.innerHTML =
 			name +
-			`🗜️ Mapper: ${mapperId} (${mapperName})` +
+			`🗜️ ${locales.get("mapper")}: ${mapperId} (${mapperName})` +
 			"\n" +
-			`🚽 Mirroring: ${mirroringId}` +
+			`🚽 ${locales.get("mirroring")}: ${mirroringId}` +
 			"\n" +
 			`👾 CHR: ${chr}` +
 			"\n" +

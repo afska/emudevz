@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🎭 Masking",
-		"es": "🎭 Masking"
+		"es": "🎭 Masking",
+		"ru": "🎭 Маскирование"
 	},
 	"ui": {
 		"layout": "tripleRight",

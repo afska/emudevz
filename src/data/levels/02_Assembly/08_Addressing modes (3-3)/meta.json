@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📍 Addressing modes (3/3)",
-		"es": "📍 Modos de direccionamiento (3/3)"
+		"es": "📍 Modos de direccionamiento (3/3)",
+		"ru": "📍 Режимы адресации (3/3)"
 	},
 	"ui": {
 		"layout": "triple",

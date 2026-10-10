@@ -1,0 +1,53 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется 🦸 🤸  ~Super Tilt Bro~
+    <{screenshot.png;30x30}>
+  - "<файтинг>, где нужно выбить другого игрока за пределы арены"
+  - "если получится выполнить моё испытание, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "что за испытание? 👀 [challenge]"
+
+challenge:
+  messages:
+  - "выбери <Local>, затем поставь <Stocks> на «Five», а <player 2> — на «Fair»"
+  - "ах да, и выиграй матч 😅"
+  responses:
+  - "да, это мне по силам 🥊 [play]"
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("SuperTiltBro");
+    {{Right}}.loadROM("/roms/.all/SuperTiltBro.neees", "stream");
+  messages:
+  - "ладно"
+  - "В БОЙ! 👊"
+  events:
+  - supertiltbro-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["SuperTiltBro.neees", "Wolfling.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - "ТВОЯ"
+  - "ПОБЕДА!"
+  - "<! Получен ROM: 📄  /roms/SuperTiltBro.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/Wolfling.neees"
+  - "а ещё тебе отправлена игра 🐺 ⛓️  ~Wolfling~"
+  - "продолжай сражаться 💪"
+  responses:
+  - "▶️  продолжить [end]"

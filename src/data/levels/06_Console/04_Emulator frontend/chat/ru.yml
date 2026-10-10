@@ -1,0 +1,110 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.winOnEnd = true;
+      level.content = level.code["Screen.example.js"];
+    });
+  messages:
+  - "все предыдущие задачи касались 🌀  ядра нашего эмулятора"
+  - "а 🌸  интерфейс эмулятора мы намеренно обходили: он <зависит от платформы>"
+  - "но давай быстро разберём, как он работает"
+  - "наш интерфейс построен на 🌐  <веб-технологиях>"
+  - "для вывода пикселей создаётся элемент ```raw <canvas />```, который метод `setBuffer(...)` заполняет данными буфера кадра — матрицей пикселей __$AABBGGRR__, созданной 🖥️  PPU"
+  responses:
+  - "понятно, а что со звуком? 🔊 [audio]"
+
+audio:
+  run: |
+    set(() => {
+      level.content = level.code["audioWorklet.example.js"];
+    });
+    bus.emit("content-changed");
+  messages:
+  - "для звука создаётся обработчик <audio worklet>, который получает отсчёты от эмулятора и помещает их в <кольцевой буфер> 💍"
+  - "когда звуковому устройству <нужны> новые отсчёты, вызывается `process(...)`: в нём мы берём отсчёты из кольцевого буфера и отдаём устройству"
+  - "ещё мы запрашиваем у эмулятора новые отсчёты — это важно при <синхронизации по звуку>"
+  responses:
+  - "синхронизации по... <звуку>? 🤔 [syncmethods]"
+
+syncmethods:
+  messages:
+  - "работой эмулятора можно управлять двумя способами:"
+  - "📹  <Синхронизация по видео>: эмулируем целые кадры, подстраивая время выполнения под экран"
+  - "🔊  <Синхронизация по звуку>: эмулируем <N> отсчётов каждый раз, когда звуковое устройство их запрашивает"
+  - "у обоих способов есть плюсы и минусы, но обычно <синхронизация по звуку> предпочтительнее и даёт лучшие результаты"
+  responses:
+  - "(*) как синхронизироваться по видео? [synctovideo]"
+  - "(*) как синхронизироваться по звуку? [synctoaudio]"
+  - "покажи пример 🔍 [example]"
+
+synctovideo:
+  run: |
+    set(() => {
+      level.content = level.code["FrameTimer.example.js"];
+    });
+    bus.emit("content-changed");
+  messages:
+  - "вызываем `requestAnimationFrame(...)`, чтобы получить уведомление, когда экран можно обновить"
+  - "если с прошлого обновления прошло <16.66 мс> (~1000~ / 60), запрашиваем у ядра эмулятора новый кадр через `onFrame()`"
+  - "когда кадр готов, обновляем пиксели canvas и передаём новые звуковые отсчёты"
+  - "⚠️  при синхронизации по видео последний шаг требует <особого внимания>:"
+  - "если из-за неточности таймингов эмулятор создал лишние отсчёты — например, 740 вместо 735 (~44100~ / 60), — блок нужно <пересэмплировать>, чтобы не переполнить кольцевой буфер и не получить звуковые артефакты"
+  - |-
+    код интерфейса будет выглядеть так:
+      ```javascript this.frameTimer = new FrameTimer(() => {
+        // <<update input here>>
+
+        if (syncToVideo) {
+          // run for a whole frame
+          this.emulator.frame(); // sends the pixels to the canvas
+
+          if (this.samples.length !== 735)
+            this.samples = this._resample(this.samples, 735);
+
+          this._updateAudio(); // sends the samples to the audio worklet
+        }
+      });```
+  responses:
+  - ...syncmethods
+
+synctoaudio:
+  run: |
+    set(() => {
+      level.content = level.code["Speaker.example.js"];
+    }); 
+    bus.emit("content-changed");
+  messages:
+  - "создаём `AudioContext`, экземпляр worklet и метод `writeSamples(...)`, через который эмулятор будет передавать отсчёты"
+  - "когда звуковая система запрашивает новые отсчёты, вызываем `onAudioRequested({ need, have, target })`"
+  - "задача — поддерживать в кольцевом буфере `target` отсчётов, то есть половину его размера, и при необходимости корректировать их количество"
+  - |-
+    код интерфейса будет выглядеть так:
+      ```javascript this.speaker = new Speaker(
+        ({ need, have, target }) => {
+          if (syncToAudio) {
+            let n = need;
+            if (have > target + 64) n--;
+            else if (have < target - 64) n++;
+
+            // run for n samples
+            this.emulator.samples(n); // might send pixels to the canvas
+          
+            this._updateSound(); // sends the samples to the audio worklet
+          }
+        });```
+  responses:
+  - ...syncmethods
+
+example:
+  run: |
+    set(() => {
+      level.content = level.code["EmulatorFrontend.example.js"];
+    });
+    bus.emit("content-changed");
+  messages:
+  - "вот пример упрощённого интерфейса эмулятора"
+  - "он взаимодействует с классом `Emulator`, который мы рассматривали на прошлом уровне"
+  - "посмотри его!"
+  responses:
+  - "▶️  продолжить [end]"

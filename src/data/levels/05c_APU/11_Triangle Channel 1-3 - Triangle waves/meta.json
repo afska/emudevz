@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔺 Triangle Channel (1/3): Triangle waves",
-		"es": "🔺 Canal Triangular (1/3): Ondas triangulares"
+		"es": "🔺 Canal Triangular (1/3): Ondas triangulares",
+		"ru": "🔺 Треугольный канал (1/3): Треугольные волны"
 	},
 	"ui": {
 		"run": "copy.js",

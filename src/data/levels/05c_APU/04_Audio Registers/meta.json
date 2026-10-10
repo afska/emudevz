@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔢 Audio Registers",
-		"es": "🔢 Registros de Audio"
+		"es": "🔢 Registros de Audio",
+		"ru": "🔢 Аудиорегистры"
 	},
 	"ui": {
 		"run": "copy.js",

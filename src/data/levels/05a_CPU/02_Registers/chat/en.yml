@@ -17,7 +17,7 @@ main:
 limit:
   messages:
   - the real NEEES would never do that!
-  - but it should wrap 🎁 , and the resulting value always ends up being inside the valid range
+  - but it should wrap 🔄 , and the resulting value always ends up being inside the valid range
   - |-
     here, some examples:
     ```raw ___________________________

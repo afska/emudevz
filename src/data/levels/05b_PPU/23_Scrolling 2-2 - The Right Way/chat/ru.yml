@@ -1,0 +1,72 @@
+main:
+  messages:
+  - есть!
+  - всё только что готово
+  - смотри, 📄  ~/lib/ppu/LoopyRegister.js~
+  responses:
+  - а кто это — loopy? [loopy]
+
+loopy:
+  messages:
+  - это ник человека, которому удалось разобраться, как <на самом деле> работает регистр прокрутки PPU
+  - печальная правда в том...
+  - что прокрутка PPU устроена не так, как мы сейчас её реализовали 😅
+  - всё гораздо сложнее
+  - к счастью, мой код поможет легко реализовать прокрутку Правильным Способом™ ✨
+  responses:
+  - что нужно изменить? [exercise]
+
+exercise:
+  messages:
+  - |-
+    📚  импортируй библиотеку и добавь в конструктор 🖥️  `PPU` свойство `loopy` со значением:
+      ```javascript new LoopyRegister()```
+  - |-
+    📚  в конце метода `_onPreLine()` вызови:
+      ```javascript this.loopy.onPreLine(this.cycle);```
+  - |-
+    📚  в конце метода `_onVisibleLine()` вызови:
+      ```javascript this.loopy.onVisibleLine(this.cycle);```
+  - |-
+    📚  в конце метода `plotBG(...)` вызови:
+      ```javascript if (this.registers.ppuMask.showBackground)
+        this.loopy.onPlot(x);```
+  - |-
+    📚  в 🎛️  `PPUCtrl` удали поле `nameTableId` и добавь в конец `onWrite(...)`:
+      ```javascript this.ppu.loopy.onPPUCtrlWrite(value);```
+  - |-
+    📚  в 📊  `PPUStatus` замени код сброса `latch` в `PPUAddr` на:
+      ```javascript this.ppu.loopy.onPPUStatusRead();```
+  - |-
+    📚  в 📜  `PPUScroll` удали метод `onLoad()` и замени `onWrite(...)` на:
+      ```javascript onWrite(value) {
+        this.ppu.loopy.onPPUScrollWrite(value);
+      }```
+  - |-
+    📚  в 📍  `PPUAddr` удали метод `onLoad()` и замени `onWrite(...)` на:
+      ```javascript onWrite(value) {
+        this.ppu.loopy.onPPUAddrWrite(value);
+      }```
+    ещё добавь это динамическое свойство:
+      ```javascript get address() {
+        return this.ppu.loopy.vAddress.getValue()
+      }
+
+      set address(value) {
+        this.ppu.loopy.vAddress.setValue(value);
+      }```
+  - |-
+    📚  наконец, в 🏞️  `BackgroundRenderer` замени константы `scrolledX`, `scrolledY` и `nameTableId` на:
+      ```javascript const scrolledX = this.ppu.loopy.scrolledX(x);
+      const scrolledY = this.ppu.loopy.scrolledY();
+      const nameTableId = this.ppu.loopy.nameTableId(scrolledX);```
+  responses: []
+
+corollary:
+  messages:
+  - ну что...
+  - теперь прокрутка должна работать во всех играх и во всех случаях
+  - наверное...
+  - очень... надеюсь 😅
+  responses:
+  - ▶️  продолжить [end]

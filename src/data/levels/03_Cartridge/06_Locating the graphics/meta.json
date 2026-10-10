@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "👾 Locating the graphics",
-		"es": "👾 Ubicando los gráficos"
+		"es": "👾 Ubicando los gráficos",
+		"ru": "👾 Поиск графики"
 	},
 	"ui": {
 		"layout": "dual",

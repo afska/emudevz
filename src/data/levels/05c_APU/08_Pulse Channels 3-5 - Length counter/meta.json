@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📏 Pulse Channels (3/5): Length counter",
-		"es": "📏 Canales Pulso (3/5): Contador de longitud"
+		"es": "📏 Canales Pulso (3/5): Contador de longitud",
+		"ru": "📏 Импульсные каналы (3/5): Счётчик длины"
 	},
 	"ui": {
 		"run": "copy.js",

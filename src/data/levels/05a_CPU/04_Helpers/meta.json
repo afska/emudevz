@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🙏 Helpers",
-		"es": "🙏 Utilidades"
+		"es": "🙏 Utilidades",
+		"ru": "🙏 Вспомогательные функции"
 	},
 	"ui": {
 		"layout": "dual",

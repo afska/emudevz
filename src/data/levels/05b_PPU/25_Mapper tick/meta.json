@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🗜️ Mapper tick",
-		"es": "🗜️ Mapper tick"
+		"es": "🗜️ Mapper tick",
+		"ru": "🗜️ Такт маппера"
 	},
 	"ui": {
 		"layout": "tripleRight",

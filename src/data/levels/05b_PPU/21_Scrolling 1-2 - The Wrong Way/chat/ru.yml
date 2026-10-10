@@ -1,0 +1,154 @@
+main:
+  messages:
+  - прокрутка — это возможность PPU, позволяющая разработчикам двигать фон
+  - реализовать её в эмуляторе NEEES непросто 🥵
+  - не из-за самого перемещения фона, а из-за неочевидного поведения регистров прокрутки
+  - попыток было много, но успеха удалось добиться лишь избранным
+  responses:
+  - у тебя есть план? [plan]
+
+plan:
+  messages:
+  - ага, вместе справимся
+  - попробую помочь и вынести сложные части в библиотеку
+  - на это понадобится время
+  - пока можно добавить простую реализацию прокрутки, которая сработает не во всех играх
+  - но для большинства подойдёт!
+  responses:
+  - звучит хорошо, как работает прокрутка? [good]
+
+good:
+  run: |
+    {{Top}}.load("scrolling.gif");
+  messages:
+  - на самом деле игры двигают не <фон>
+  - они перемещают воображаемое окно просмотра по неподвижному фону
+  - этого достаточно для ощущения движения 🌀
+  responses:
+  - а как перемещается окно просмотра? [viewport]
+
+viewport:
+  messages:
+  - вот так
+  - <{3rdparty_nametable_scrolling.png}>
+  - игры записывают позицию окна просмотра в 📜  PPUScroll
+  - выполняют две записи, сначала для <координаты X>, затем для <координаты Y>
+  - и PPU двигает окно просмотра, рисуя только часть затронутых таблиц имён
+  responses:
+  - так... если игра записывает дважды, PPU нужно помнить, какую координату она задаёт, верно? [twice]
+
+twice:
+  messages:
+  - именно
+  - помнишь, как работает 📍  `PPUAddr`? с `latch`, переключающейся после каждой записи?
+  - здесь так же
+  - более того, используется та же самая `latch`!
+  responses:
+  - понятно... [isee]
+
+isee:
+  messages:
+  - первые игры для NEEES прокручивали фон только в одном направлении
+  - игры с <горизонтальным> зеркалированием таблиц имён использовали только <вертикальную> прокрутку
+  - а игры с <вертикальным> зеркалированием — только <горизонтальную>
+  - <{3rdparty_vertical_horizontal.png}>
+  responses:
+  - не понимаю, если физических таблиц имён только две, как игры делают длинные карты? [long]
+
+long:
+  messages:
+  - постепенно обновляют части фона, когда те находятся за пределами окна просмотра
+  - кстати, позиция окна отсчитывается от <базовой таблицы имён>
+  - помни, первые два бита 🎛️  `PPUCtrl` выбирают текущую таблицу имён
+  - (у тебя это свойство `registers.ppuCtrl.nameTableId`)
+  - если базовая таблица имён равна 1, окно просмотра должно начинаться с таблицы по адресу $2400
+  - <{3rdparty_scrolled_nametables.png}>
+  responses:
+  - хватит разговоров, что делать дальше? [exercise]
+
+exercise:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - (ещё раз, ~ЭТО НЕ СОВСЕМ ПРАВИЛЬНО~, но пока сойдёт!)
+  - |-
+    📚  реализуй эти методы в 📜  `PPUScroll`:
+      **onLoad()**:
+        **->** задаёт ```javascript this.x = 0```
+        **->** задаёт ```javascript this.y = 0```
+      **onWrite(value)**:
+        **->** если `latch` в 📍  PPUAddr равно ```javascript false```:
+          **->** записывает `value` в ```javascript this.x```
+        **->** если равно ```javascript true```:
+          **->** записывает `value` в ```javascript this.y```
+        (`latch` доступна через ```javascript this.ppu.registers.ppuAddr.latch```)
+        **->** переключает `latch` на противоположное значение
+  responses:
+  - хорошо, а потом? [then]
+
+then:
+  messages:
+  - потом в ```javascript ppuScroll.x``` и ```javascript ppuScroll.y``` будут координаты прокрутки!
+  - теперь можно применить прокрутку к фону!
+  - |-
+    📚  в 🏞️  `BackgroundRenderer` <измени> `renderScanline()`:
+      **->** если раньше там было что-то вроде...
+        ```javascript
+          for (let x = 0; x < 256; x += 8)```
+      ...замени это на...
+        ```javascript
+          for (let x = 0; x < 256;)```
+      больше не получится рисовать блоками по 8 пикселей, теперь иногда нужно рисовать только часть тайла!
+  - |-
+    📚  определим несколько вещей:
+      ```javascript
+      // scroll coordinates:
+      const scrollX = this.ppu.registers.ppuScroll.x;
+      const scrollY = this.ppu.registers.ppuScroll.y;
+      // current point to draw:
+      const scrolledX = x + scrollX;
+      const scrolledY = y + scrollY;
+      // base name table address:
+      const nameTableId = (
+        this.ppu.registers.ppuCtrl.nameTableId +
+        (scrolledX >= 256 ? 1 : 0) + // move right
+        (scrolledY >= 240 ? 2 : 0) // move down
+      ) % 4;
+      const nameTableAddress = 0x2000 + nameTableId * 1024;
+      // current point, relative to the name table:
+      const nameTableX = scrolledX % 256;
+      const nameTableY = scrolledY % 240;```
+  - |-
+    📚  теперь каждое использование `x` и `y` нужно заменить на `nameTableX` и `nameTableY`
+      (например, обнови индекс чтения таблицы имён, вызов ```javascript this._getBackgroundPaletteId(...)``` и ```javascript new Tile(...)```)
+  - единственное исключение — вызов `plotBG(...)`, который всё ещё рисует в точке ~(x,y)~ экрана
+  - |-
+    📚  наконец, определи:
+      ```javascript
+      const tileStartX = nameTableX % 8;
+      const tileInsideY = nameTableY % 8;
+      const tilePixels = Math.min(
+        8 - tileStartX,
+        256 - x
+      );```
+  - помни, теперь на каждой итерации цикла рисуется не 8 пикселей, а только `tilePixels`, начиная с `tileStartX`
+  - |-
+    📚  поэтому измени внутренний цикл примерно так:
+      ```javascript
+        for (let xx = 0; xx < tilePixels; xx++)```
+    вызов `getColorIndex(...)` должен учитывать `tileStartX`:
+      ```javascript
+        tile.getColorIndex(tileStartX + xx);```
+    а в самом конце, после внутреннего цикла, увеличивай индекс внешнего цикла вручную:
+      ```javascript
+        x += tilePixels;```
+  responses: []
+
+corollary:
+  messages:
+  - этого должно хватить для прокрутки в большинстве игр
+  - кроме той проклятой <игры про водопроводчика>, которая зависнет после первых нескольких метров бега! 🤦
+  - но пока оставим её в покое
+  - попробуй... например, демо 🌌 🔫  ~Isostasy~ или 🐺 🌲  ~Wolf Spirit~
+  responses:
+  - ▶️  продолжить [end]

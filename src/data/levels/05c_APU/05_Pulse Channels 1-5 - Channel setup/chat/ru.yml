@@ -1,0 +1,57 @@
+---
+main:
+  messages:
+  - "импульсному каналу 1 ведь нужно знать, какую ноту воспроизводить?"
+  - "код игры записывает 11-битное значение таймера в регистры 🕡  Pulse1TimerLow и 🕛  Pulse1TimerHighLCL"
+  - "значение таймера можно перевести в частоту по этой формуле ⚗️"
+  - "```javascript f = fCPU / (16 * (t + 1))```"
+  - "`fCPU` — частота CPU (~1789773~), а `t` — значение таймера"
+  responses:
+  - "покажи пример [example]"
+
+example:
+  messages:
+  - "по этой формуле, чтобы получить ноту с частотой 220 Гц, игре нужно значение таймера 507"
+  - "поэтому игра записывает 251 (младший байт числа 507) в $4002 и 1 (старший байт числа 507) в $4003"
+  - <{Pulse1Timer.png}>
+  - "и тогда импульсный канал APU автоматически начинает колебаться с частотой 220 Гц"
+  responses:
+  - "давай всё подключим? [exercise]"
+
+exercise:
+  messages:
+  - "нам нужен класс для импульсных каналов!"
+  - "📚  создай класс `PulseChannel` по шаблону 📄  ~/tmpl/apu/PulseChannel.js~"
+  - |-
+    📚  добавь в 🔊  `APU` свойство `channels` со значением:
+      ```javascript {
+        pulses: [
+          new PulseChannel(this, 0, "enablePulse1"),
+          new PulseChannel(this, 1, "enablePulse2")
+        ],
+      }```
+  - "📚  вызывай метод `step()` обоих импульсных каналов в начале 🔊  `APU::step()`"
+  - |-
+    📚  замени текущий <пробный код> в  🔊  `APU::sample(...)` примерно таким:
+      ```javascript const pulse1 = this.channels.pulses[0].sample();
+      const pulse2 = this.channels.pulses[1].sample();
+      this.sample = (pulse1 + pulse2) * 0.01;```
+  - |-
+    📚  замени вызов `onSample(...)` на:
+      ```javascript onSample(this.sample, pulse1, pulse2);```
+  - |-
+    📚  реализуй в 🕡  `PulseTimerLow`:
+    **onWrite(value)**:
+      **->** задаёт значение через ```javascript this.setValue(...)```
+      **->** вызывает ```javascript updateTimer()``` у экземпляра импульсного канала
+  - |-
+    📚  реализуй в 🕛  `PulseTimerHighLCL`:
+    **onLoad()**:
+      **->** через ```javascript this.addField(...)``` задаёт 3-битное поле `timerHigh`, начиная с бита 0
+    **onWrite(value)**:
+      **->** задаёт значение через ```javascript this.setValue(...)```
+      **->** вызывает ```javascript updateTimer()``` у экземпляра импульсного канала
+  - |-
+    из звуковых регистров можно обратиться к текущему экземпляру канала так:
+      ```javascript this.apu.channels.pulses[this.id]```
+  responses: []

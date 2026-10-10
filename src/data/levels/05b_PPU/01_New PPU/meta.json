@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🖥️ New PPU",
-		"es": "🖥️ Nueva PPU"
+		"es": "🖥️ Nueva PPU",
+		"ru": "🖥️ Новый PPU"
 	},
 	"ui": {
 		"run": "copy.js",

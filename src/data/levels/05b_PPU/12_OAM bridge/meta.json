@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🌉 OAM bridge",
-		"es": "🌉 Puente OAM"
+		"es": "🌉 Puente OAM",
+		"ru": "🌉 Мост к OAM"
 	},
 	"ui": {
 		"layout": "tripleRight",

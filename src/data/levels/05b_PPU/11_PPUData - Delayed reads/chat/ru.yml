@@ -1,0 +1,34 @@
+---
+main:
+  messages:
+  - помнишь, как игры записывают по адресам PPU (например, в 🐏  VRAM или 👾  CHR-RAM)?
+  - <{PPUAddr_PPUData.png}>
+  - они могут и <читать> по этим адресам, выполняя чтение из 📦  PPUData вместо записи
+  - "эта операция тоже увеличивает адрес в 📍  PPUAddr, но есть одна особенность:"
+  - все чтения <задерживаются> на 1 операцию, кроме области RAM палитр и её зеркал
+  responses:
+  - как реализовать задержку? ⌛ [exercise]
+
+exercise:
+  messages:
+  - просто, при запросе <чтения> читаешь данные в буфер, но возвращаешь <предыдущее значение> этого буфера
+  - посмотри ещё один пример в 📄  ~/docs/ppu/ppudata_example.ru.md~
+  - |-
+    📚  реализуй эти методы в 📦  `PPUData`:
+    **onLoad()**:
+      **->** инициализирует ```javascript this.buffer = 0```
+    **onRead()**:
+      **->** сохраняет ```javascript this.buffer``` в переменную `data`
+      **->** читает по адресу PPU ```javascript ppuAddr.address``` и сохраняет результат в ```javascript this.buffer```
+      **->** если адрес между $3F00 и $3FFF, задаёт ```javascript data = this.buffer``` (обходит буфер)
+      **->** вызывает ```javascript this._incrementAddress()```
+      **->** возвращает `data`
+  responses:
+  - (*) как обратиться к 📍  PPUAddr? [ppuaddr]
+
+ppuaddr:
+  messages:
+  - помни, что у регистров есть ```javascript this.ppu```
+  - поэтому экземпляр 📍  PPUAddr доступен через ```javascript this.ppu.registers.ppuAddr```
+  responses:
+  - ...exercise

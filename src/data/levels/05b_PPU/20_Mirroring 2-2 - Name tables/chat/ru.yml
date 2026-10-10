@@ -1,0 +1,86 @@
+main:
+  messages:
+  - в карте памяти PPU есть область для 4 таблиц имён по адресам PPU $2000-$2FFF
+  - каждая таблица имён занимает 1024 байта (или $400 в шестнадцатеричном виде), так что эти 4 таблицы расположены по адресам $2000, $2400, $2800 и $2C00
+  - но настоящее железо NEEES имеет VRAM только для <двух> из них
+  - поэтому маппер зеркалирует остальные интересными способами ✨
+  - и это зеркалирование помогает играм реализовать прокрутку
+  - давай разберём варианты
+  responses:
+  - класс, показывай 👀 [show]
+
+show:
+  messages:
+  - назовём «физические» таблицы имён (те, которые действительно можно хранить в VRAM) «A» и «B»
+  - "зеркалирование \"HORIZONTAL\" связывает $2000 и $2400 с первой физической таблицей имён (\"A\"), а $2800 и $2C00 — со второй (\"B\")"
+  - <{horizontal.png}>
+  - понятно? они зеркалируются по горизонтали 😉
+  responses:
+  - ага! [vertical]
+
+vertical:
+  messages:
+  - "зеркалирование \"VERTICAL\" связывает $2000 с \"A\", а $2400 с \"B\", затем повторяет это в $2800 и $2C00"
+  - <{vertical.png}>
+  - а теперь они зеркалируются по вертикали 😊
+  responses:
+  - конечно [single]
+
+single:
+  messages:
+  - ещё есть игры, использующие одну таблицу имён, повторённую 4 раза (вторая физическая таблица остаётся неиспользованной)
+  - <{single.png}>
+  - в зависимости от маппера это может быть и «B» четыре раза
+  - первый вариант называется «ONE_SCREEN_LOWER_BANK», второй — «ONE_SCREEN_UPPER_BANK»
+  responses:
+  - логично [fourscreen]
+
+fourscreen:
+  messages:
+  - наконец, в некоторых картриджах есть дополнительная RAM ещё для 2 физических таблиц имён
+  - это позволяет использовать отображение «FOUR_SCREEN»
+  - <{4screen.png}>
+  - вот почему массив `vram` в `PPUMemory` у нас имеет размер 4096 байт
+  responses:
+  - давай реализуем [exercise]
+
+exercise:
+  messages:
+  - все типы отображения уже собраны в удобную таблицу здесь 📄  ~/lib/ppu/mirroringTypes.js~
+  - ключи (`$2000`, `$2400`, `$2800` и `$2C00`) — логические адреса PPU
+  - а значения (в основном `0x000` и `0x400`) — смещения физических таблиц имён в массиве `PPUMemory::vram`
+  - 📚  в 🐏  `PPUMemory` импортируй файл `mirroringTypes`
+  - |-
+    📚  определи этот метод:
+    **changeNameTableMirroringTo(mirroringId)**:
+      **->** если ```javascript this.cartridge.header.mirroringId === "FOUR_SCREEN"```
+        **->** задаёт ```javascript mirroringId = "FOUR_SCREEN"```
+      **->** задаёт ```javascript this.mirroringId = mirroringId```
+      **->** задаёт ```javascript this._mirroring = mirroringTypes[mirroringId]```
+      (мапперы будут вызывать этот метод, когда им потребуется изменить тип зеркалирования)
+  - 📚  измени `onLoad(...)`, чтобы он вызывал новый метод с начальным типом зеркалирования (помни, он хранится в ```javascript cartridge.header.mirroringId```)
+  - 📚  отобрази диапазоны $2000-$23FF, $2400-$27FF, $2800-$2BFF и $2C00-$2FFF в VRAM по текущему `mirroring` (для чтения и записи)
+  responses:
+  - (*) например? 🧐 [example]
+
+example:
+  messages:
+  - найди раздел «Name tables 0 to 3 (VRAM + mirror)» в методах `read(...)` и `write(...)`
+  - |-
+    сейчас `read(...)` должен выглядеть так:
+      ```javascript
+      if (address >= 0x2000 && address <= 0x2fff)
+        return this.vram[address - 0x2000];```
+  - нужно отобразить 4 области в соответствии с указателями в ```javascript this._mirroring```
+  - |-
+    давай реализуем первые два случая
+      ```javascript
+      if (address >= 0x2000 && address <= 0x2fff) {
+        if (address >= 0x2000 && address < 0x2400)
+          return this.vram[this._mirroring.$2000 + (address - 0x2000)];
+        if (address >= 0x2400 && address < 0x2800)
+          return this.vram[this._mirroring.$2400 + (address - 0x2400)];
+        // TODO: Finish the others!
+      }```
+  responses:
+  - ...exercise

@@ -1,0 +1,90 @@
+---
+main:
+  messages:
+    - реализуем метод `step()`, который выполняет следующую <операцию>
+    - он будет читать следующий код операции и аргументы из 🤖  PRG-ROM
+    - вызывать нужную инструкцию и режим адресации
+    - и увеличивать счётчики тактов
+  responses:
+    - а как же обещание объяснить такты 🚲 [cycles]
+
+cycles:
+  messages:
+    - и объясню!
+    - время, которое CPU тратит на действие, измеряется в тактах
+    - такты очень важны, если делать эмулятор, точный до каждого такта (у нас задача проще!)
+    - но они всё равно нужны для синхронизации разных компонентов (CPU, PPU, APU) 🔄
+    - поэтому для каждого кода операции известно, сколько тактов он должен занимать
+  responses:
+    - (*) почему мы не делаем эмулятор, точный до каждого такта? [accuracy]
+    - ✅  хорошо, как действовать дальше? [exercise]
+
+accuracy:
+  messages:
+    - потому что это сложная задача 🥵
+    - особенно без опыта разработки эмуляторов
+    - некоторые сложные для эмуляции игры требуют высокой точности
+    - но большинство остальных работают и так, поэтому нам она не понадобится
+  responses:
+    - ...cycles
+
+exercise:
+  messages:
+    - |-
+      📚  сначала добавим в твой 🧠  `CPU` эти методы:
+      **_fetchOperation()**:
+        **->** читает байт по адресу памяти, на который указывает [PC]
+          (назовём его `opcode`)
+        **->** находит операцию, соответствующую этому коду:
+          ```javascript this.operations[opcode]```
+          (назовём её `operation`)
+        **->** если `operation` не существует, выбрасывает ошибку "Invalid opcode."
+        **->** увеличивает [PC]
+        **->** возвращает `operation`
+      **_fetchInput(operation)**:
+        **->** читает 0, 1 (методом `read(...)`) или 2 байта (методом `read16(...)`) по адресу памяти, на который указывает [PC], в зависимости от ```javascript operation.addressingMode.inputSize```
+          (назовём результат `input`)
+        **->** увеличивает [PC] (~0~, 1 или 2 раза), чтобы пропустить эти байты
+        **->** возвращает `input` (или ```javascript null```)
+      **_fetchArgument(operation, input)**:
+        **->** возвращает результат обработки `input` режимом адресации
+          - если ```javascript operation.instruction.argument === "value"```, это:
+              ```javascript operation.addressingMode.getValue(this, input, operation.hasPageCrossPenalty)```
+          - иначе:
+              ```javascript operation.addressingMode.getAddress(this, input, operation.hasPageCrossPenalty)```
+      **_addCycles(operation)**:
+        **->** вычисляет, сколько тактов заняла `operation`:
+          ```javascript operation.cycles + this.extraCycles```
+          (назовём результат `cycles`)
+        **->** обновляет счётчики тактов:
+          ```javascript this.cycle += cycles;```
+          ```javascript this.extraCycles = 0;```
+        **->** возвращает `cycles`
+  responses:
+    - а что с методом `step()`, о котором ты говоришь? [step]
+
+step:
+  messages:
+    - |-
+      📚  используя остальные методы, наш `step()` получится легко:
+        ```javascript step() {
+          const originalPC = this.pc.getValue();
+          
+          const operation = this._fetchOperation();
+          const input = this._fetchInput(operation);
+          const argument = this._fetchArgument(operation, input);
+
+          if (this.logger != null) {
+            this.logger(
+              this,
+              originalPC,
+              operation,
+              input,
+              argument
+            )
+          }
+          
+          operation.instruction.run(this, argument);
+          return this._addCycles(operation);
+        }```
+  responses: []

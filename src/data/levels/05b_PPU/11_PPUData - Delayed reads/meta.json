@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📦 PPUData: Delayed reads",
-		"es": "📦 PPUData: Lecturas retrasadas"
+		"es": "📦 PPUData: Lecturas retrasadas",
+		"ru": "📦 PPUData: Чтение с задержкой"
 	},
 	"ui": {
 		"run": "copy.js",

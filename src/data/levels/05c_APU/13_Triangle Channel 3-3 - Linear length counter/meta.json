@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📏 Triangle Channel (3/3): Linear length counter",
-		"es": "📏 Canal Triangular (3/3): Contador lineal de longitud"
+		"es": "📏 Canal Triangular (3/3): Contador lineal de longitud",
+		"ru": "📏 Треугольный канал (3/3): Линейный счётчик длины"
 	},
 	"ui": {
 		"layout": "tripleRight",

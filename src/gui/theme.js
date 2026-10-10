@@ -1,4 +1,4 @@
-import { ansi256ToHex } from "../../utils/ansi256";
+import { ansi256ToHex } from "../utils/ansi256";
 
 export const INVERTABLE_IMAGES = [
 	"header",
@@ -25,14 +25,8 @@ export const TERMINAL_ANSI_INDICES = {
 
 export const GLOBAL_THEME_GROUPS = [
 	{
-		title: {
-			en: "Background",
-			es: "Fondo",
-		},
-		description: {
-			en: "Base background of the game.",
-			es: "Fondo base del juego.",
-		},
+		title: "theme_background_title",
+		description: "theme_background_description",
 		variants: [
 			{ key: "background", label: "base", defaultValue: "#000000" },
 			{ key: "background-crt", label: "crt", defaultValue: "#121010" },
@@ -51,14 +45,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "CRT filter",
-			es: "Filtro CRT",
-		},
-		description: {
-			en: "CRT filter scanline colors and fine-tuning.",
-			es: "Colores del filtro CRT y ajuste fino de las scanlines.",
-		},
+		title: "theme_crt_filter_title",
+		description: "theme_crt_filter_description",
 		variants: [
 			{ key: "crt-gradient1", label: "gradient1", defaultValue: "#12101000" },
 			{ key: "crt-gradient2", label: "gradient2", defaultValue: "#00000040" },
@@ -68,27 +56,15 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Highlight",
-			es: "Resaltado",
-		},
-		description: {
-			en: "Drop-shadow highlight color.",
-			es: "Color de resplandor/sombra.",
-		},
+		title: "theme_highlight_title",
+		description: "theme_highlight_description",
 		variants: [
 			{ key: "highlight", label: "highlight", defaultValue: "#ffffff" },
 		],
 	},
 	{
-		title: {
-			en: "Primary color",
-			es: "Color primario",
-		},
-		description: {
-			en: "Theme's main color.",
-			es: "Color principal del tema.",
-		},
+		title: "theme_primary_color_title",
+		description: "theme_primary_color_description",
 		variants: [
 			{ key: "primary", label: "base", defaultValue: "#466a8e" },
 			{
@@ -118,14 +94,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Secondary color",
-			es: "Color secundario",
-		},
-		description: {
-			en: "Theme's secondary color.",
-			es: "Color secundario del tema.",
-		},
+		title: "theme_secondary_color_title",
+		description: "theme_secondary_color_description",
 		variants: [
 			{ key: "secondary", label: "base", defaultValue: "#c39f79" },
 			{ key: "secondary-vibrant", label: "vibrant", defaultValue: "#e8a931" },
@@ -142,14 +112,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Neutral color",
-			es: "Color neutro",
-		},
-		description: {
-			en: "Neutral theme color (like gray).",
-			es: "Color neutro del tema (como gris).",
-		},
+		title: "theme_neutral_color_title",
+		description: "theme_neutral_color_description",
 		variants: [
 			{
 				key: "neutral-border",
@@ -179,14 +143,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Special colors",
-			es: "Colores especiales",
-		},
-		description: {
-			en: "Colors with a special meaning.",
-			es: "Colores con un significado especial.",
-		},
+		title: "theme_special_colors_title",
+		description: "theme_special_colors_description",
 		variants: [
 			{ key: "success", label: "success", defaultValue: "#5cb85c" },
 			{ key: "failure", label: "failure", defaultValue: "#d9534f" },
@@ -198,14 +156,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Text",
-			es: "Texto",
-		},
-		description: {
-			en: "General text color.",
-			es: "Color de texto general.",
-		},
+		title: "theme_text_title",
+		description: "theme_text_description",
 		variants: [
 			{ key: "text", label: "base", defaultValue: "#ffffff" },
 			{ key: "text-dim", label: "dim", defaultValue: "#b7bbc7" },
@@ -238,14 +190,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Hyperlink",
-			es: "Hipervínculo",
-		},
-		description: {
-			en: "Hyperlink color.",
-			es: "Color de los hipervínculos.",
-		},
+		title: "theme_hyperlink_title",
+		description: "theme_hyperlink_description",
 		variants: [
 			{ key: "link", label: "base", defaultValue: "#0d6efd" },
 			{ key: "link-hover", label: "hover", defaultValue: "#0a58ca" },
@@ -262,14 +208,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Code editor",
-			es: "Editor de código",
-		},
-		description: {
-			en: "Code editor colors.",
-			es: "Colores del editor de código.",
-		},
+		title: "theme_code_editor_title",
+		description: "theme_code_editor_description",
 		variants: [
 			{
 				key: "editor-error",
@@ -284,14 +224,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Toasts",
-			es: "Notificaciones",
-		},
-		description: {
-			en: "Toast messages.",
-			es: "Mensajes emergentes (toasts).",
-		},
+		title: "theme_toasts_title",
+		description: "theme_toasts_description",
 		variants: [
 			{
 				key: "toast-background",
@@ -302,14 +236,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Modals",
-			es: "Modales",
-		},
-		description: {
-			en: "Modal dialogs.",
-			es: "Diálogos modales.",
-		},
+		title: "theme_modals_title",
+		description: "theme_modals_description",
 		variants: [
 			{
 				key: "modal-background",
@@ -324,14 +252,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Inputs",
-			es: "Entradas",
-		},
-		description: {
-			en: "Form controls.",
-			es: "Controles de formulario.",
-		},
+		title: "theme_inputs_title",
+		description: "theme_inputs_description",
 		variants: [
 			{
 				key: "input-background",
@@ -342,14 +264,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Buttons",
-			es: "Botones",
-		},
-		description: {
-			en: "Buttons appearance.",
-			es: "Apariencia de los botones.",
-		},
+		title: "theme_buttons_title",
+		description: "theme_buttons_description",
 		variants: [
 			{
 				key: "button-background",
@@ -379,14 +295,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "FAB",
-			es: "Botón flotante",
-		},
-		description: {
-			en: "Floating Action Button appearance.",
-			es: "Apariencia del botón flotante de acción.",
-		},
+		title: "theme_fab_title",
+		description: "theme_fab_description",
 		variants: [
 			{
 				key: "fab-background",
@@ -403,15 +313,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Bars",
-			es: "Barras",
-		},
-		description: {
-			en: "Bars like progress bars or NavBar items.",
-			es:
-				"Barras como barras de progreso o elementos de la barra de navegación.",
-		},
+		title: "theme_bars_title",
+		description: "theme_bars_description",
 		variants: [
 			{
 				key: "bar-background",
@@ -436,14 +339,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Chapter select",
-			es: "Selector de capítulo",
-		},
-		description: {
-			en: "Chapter select modal.",
-			es: "Modal de selección de capítulo.",
-		},
+		title: "theme_chapter_select_title",
+		description: "theme_chapter_select_description",
 		variants: [
 			{
 				key: "chapter-opt-background",
@@ -458,14 +355,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "CPU Debugger",
-			es: "Depurador de CPU",
-		},
-		description: {
-			en: "Appearance of the debugger featured in the Assembly chapter.",
-			es: "Apariencia del depurador usado en el capítulo de Assembly.",
-		},
+		title: "theme_cpu_debugger_title",
+		description: "theme_cpu_debugger_description",
 		variants: [
 			{
 				key: "cpu-debugger-table-bg",
@@ -515,14 +406,8 @@ export const GLOBAL_THEME_GROUPS = [
 		],
 	},
 	{
-		title: {
-			en: "Image diff",
-			es: "Comparador de imágenes",
-		},
-		description: {
-			en: "Image comparer tool.",
-			es: "Herramienta para comparar imágenes.",
-		},
+		title: "theme_image_diff_title",
+		description: "theme_image_diff_description",
 		variants: [
 			{
 				key: "diff-expected",

@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🛸 Sprites (1/6): OAM",
-		"es": "🛸 Sprites (1/6): OAM"
+		"es": "🛸 Sprites (1/6): OAM",
+		"ru": "🛸 Спрайты (1/6): OAM"
 	},
 	"ui": {
 		"run": "copy.js",

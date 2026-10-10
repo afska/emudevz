@@ -4,9 +4,9 @@ import { Marked } from "marked";
 import { markedHighlight } from "marked-highlight";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import dictionary from "../../../data/dictionary";
-import { INVERTABLE_IMAGES } from "../../../models/themes/theme";
+import dictionary from "../../../level/dictionary";
 import { dlc, image as imageUtils } from "../../../utils";
+import { INVERTABLE_IMAGES } from "../../theme";
 import styles from "./MarkdownView.module.css";
 
 const LINK_FILE_REGEXP = /📄 {1}([a-z0-9/._-]+)/iu;

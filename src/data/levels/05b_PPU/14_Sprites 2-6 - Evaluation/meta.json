@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🕵️ Sprites (2/6): Evaluation",
-		"es": "🕵️ Sprites (2/6): Evaluación"
+		"es": "🕵️ Sprites (2/6): Evaluación",
+		"ru": "🕵️ Спрайты (2/6): Отбор"
 	},
 	"ui": {
 		"layout": "tripleRight",

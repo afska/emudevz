@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🤖 The real final test",
-		"es": "🤖 La prueba final real"
+		"es": "🤖 La prueba final real",
+		"ru": "🤖 Настоящая финальная проверка"
 	},
 	"ui": {
 		"layout": "tripleRight",
