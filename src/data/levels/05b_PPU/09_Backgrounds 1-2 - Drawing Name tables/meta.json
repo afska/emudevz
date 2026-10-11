@@ -44,11 +44,6 @@
 			"ppu": "TestPPU.v4.js"
 		},
 		{
-			"rom": "/roms/_test/game_climber.neees",
-			"frames": 60,
-			"ppu": "TestPPU.v4.js"
-		},
-		{
 			"rom": "/roms/.all/FromBelow.neees",
 			"frames": 60,
 			"ppu": "TestPPU.v4.js"
@@ -61,6 +56,11 @@
 		{
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 120,
+			"ppu": "TestPPU.v4.js"
+		},
+		{
+			"rom": "/roms/_test/game_climber.neees",
+			"frames": 60,
 			"ppu": "TestPPU.v4.js"
 		}
 	],
