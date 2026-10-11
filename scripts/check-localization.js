@@ -64,6 +64,21 @@ for (let lang of LANGUAGES) {
 			`Missing localization for language "${lang}" in dictionary entry "${id}"`
 		);
 
+	// Assembly help keeps the code and semicolon positions
+	const helpPath = $path.join(LEVELS_DIR, "02_Assembly/$help");
+	const helpFile = $path.join(helpPath, `${lang}.txt`);
+	checkLines(
+		fs.readFileSync($path.join(helpPath, "en.txt"), "utf8"),
+		fs.readFileSync(helpFile, "utf8"),
+		helpFile,
+		lang,
+		(line) => [
+			line.split(";")[0],
+			line.match(/`[^`]*`/g) || [],
+			Array.from(line.matchAll(/;/g), (it) => it.index),
+		]
+	);
+
 	// Check chapters
 	const chapterFolders = readDirs(LEVELS_DIR);
 	for (let chapterFolder of chapterFolders) {
@@ -158,15 +173,50 @@ for (let lang of LANGUAGES) {
 			}
 			checkChat(chatEn, chat, `${chapterFolder}/${levelFolder}`, lang);
 
+			// Localized links have the same actions and appear in the chat
+			const links = levelMetadata.ui?.components?.Main?.[1]?.links || [];
+			const linkActions = ["en", lang].map((language) =>
+				links
+					.filter((it) => it.lang === language)
+					.map((it) => _.omit(it, "text", "lang"))
+			);
+			if (!_.isEqual(linkActions[0], linkActions[1]))
+				throw new Error(
+					`Links differ from English\nLanguage: ${lang}\nLevel: ${levelPath}`
+				);
+			for (let link of links.filter((it) => it.lang === lang))
+				if (
+					!Object.values(chat).some((section) =>
+						section.messages?.some((message) => message.includes(link.text))
+					)
+				)
+					throw new Error(
+						`Link text missing from chat\nLanguage: ${lang}\nFile: ${chatFile}\nText: ${link.text}`
+					);
+
 			// Check documentation files
-			let enDocFilePaths = [];
+			let docFiles = [];
 			try {
-				enDocFilePaths = fs
+				docFiles = fs
 					.readdirSync($path.join(levelPath, "bin"))
-					.filter((it) => it.endsWith(".en.md"))
-					.map((it) => $path.join(levelPath, "bin", it));
+					.filter((it) => it.endsWith(".md"));
 			} catch {}
-			for (let docFilePath of enDocFilePaths) {
+			if (docFiles.length) {
+				const copyFile = $path.join(levelPath, "code/copy.js");
+				const copiedFiles = Array.from(
+					acorn.tokenizer(fs.readFileSync(copyFile, "utf8"), {
+						ecmaVersion: "latest",
+					}),
+					(it) => it.value
+				);
+				for (let file of docFiles)
+					if (!copiedFiles.includes(file))
+						throw new Error(
+							`Documentation file missing from ${copyFile}: ${file}`
+						);
+			}
+			for (let file of docFiles.filter((it) => it.endsWith(".en.md"))) {
+				const docFilePath = $path.join(levelPath, "bin", file);
 				const enDocFile = fs.readFileSync(docFilePath).toString("utf-8");
 				const localizedDocFilePath = docFilePath.replace(
 					".en.md",
@@ -184,20 +234,16 @@ for (let lang of LANGUAGES) {
 					);
 				}
 
-				checkDocumentation(
+				checkLines(
 					enDocFile,
 					localizedDocFile,
 					localizedDocFilePath,
-					lang
+					lang,
+					getDocumentationSignature
 				);
 			}
 		}
 	}
-
-	// TODO: Check copy.js scripts
-	// TODO: Check meta files
-	// TODO: Check FAQ's links
-	// TODO: Check Assembly help files
 }
 
 console.log("✅ All seems fine!");
@@ -295,6 +341,33 @@ function checkChat(base, translated, location, lang, field = "") {
 		fail("Chat content differs from English");
 }
 
+function checkLines(base, translated, location, lang, getSignature) {
+	const [baseLines, translatedLines] = [base, translated].map((text) =>
+		text.split(/\r?\n/)
+	);
+	const fail = (message, english, translation) => {
+		throw new Error(
+			`${message}\nLanguage: ${lang}\nFile: ${location}\nEnglish:\n${english}\nTranslation:\n${translation}`
+		);
+	};
+	if (baseLines.length !== translatedLines.length)
+		fail(
+			"Line count differs from English",
+			baseLines.length,
+			translatedLines.length
+		);
+
+	for (let i = 0; i < baseLines.length; i++) {
+		const signatures = [baseLines[i], translatedLines[i]].map(getSignature);
+		if (!_.isEqual(signatures[0], signatures[1]))
+			fail(
+				`Content differs from English\nLine: ${i + 1}`,
+				baseLines[i],
+				translatedLines[i]
+			);
+	}
+}
+
 function getChatSignature(text, field) {
 	const condition = text.match(/^<<.+>> /)?.[0];
 	if (condition) text = text.slice(condition.length);
@@ -319,38 +392,15 @@ function getChatSignature(text, field) {
 	};
 }
 
-function checkDocumentation(base, translated, location, lang) {
-	const [baseLines, translatedLines] = [base, translated].map((text) =>
-		text.split(/\r?\n/)
-	);
-	const fail = (message, english, translation) => {
-		throw new Error(
-			`${message}\nLanguage: ${lang}\nFile: ${location}\nEnglish:\n${english}\nTranslation:\n${translation}`
-		);
-	};
-	if (baseLines.length !== translatedLines.length)
-		fail(
-			"Documentation line count differs from English",
-			baseLines.length,
-			translatedLines.length
-		);
-
-	for (let i = 0; i < baseLines.length; i++) {
-		const signatures = [baseLines[i], translatedLines[i]].map((line) => [
-			line.trim() === "",
-			(
-				line.match(/^\s*#+ |^\s*(?:[-+]|\d+\.) |`+|\*+|_+|~~|[<>|\[\]]/g) || []
-			).sort(),
-			line.match(/\bsrc="[^"]*"/g) || [],
-			getEmojis(line),
-		]);
-		if (!_.isEqual(signatures[0], signatures[1]))
-			fail(
-				`Documentation content differs from English\nLine: ${i + 1}`,
-				baseLines[i],
-				translatedLines[i]
-			);
-	}
+function getDocumentationSignature(line) {
+	return [
+		line.trim() === "",
+		(
+			line.match(/^\s*#+ |^\s*(?:[-+]|\d+\.) |`+|\*+|_+|~~|[<>|\[\]]/g) || []
+		).sort(),
+		line.match(/\bsrc="[^"]*"/g) || [],
+		getEmojis(line),
+	];
 }
 
 function stripCodeComments(code) {
