@@ -120,7 +120,12 @@ export default class TestCommand extends Command {
 				Level.startEffect("running", { sfx: false });
 				let results;
 				try {
-					results = await framework.test(test, testDefinition, this._isDebug);
+					const debugMode = this._isDebug
+						? this._numericTargetId != null
+							? "always"
+							: "onFailure"
+						: "off";
+					results = await framework.test(test, testDefinition, debugMode);
 				} finally {
 					Level.stopEffect();
 				}
@@ -634,7 +639,12 @@ export default class TestCommand extends Command {
 	}
 
 	get _rawTargetId() {
-		return this._args.filter((it) => it.toLowerCase() !== "-v")[0] || "";
+		return (
+			this._args.filter((it) => {
+				const lowerCaseArg = it.toLowerCase();
+				return lowerCaseArg !== "-v" && lowerCaseArg !== "-d";
+			})[0] || ""
+		);
 	}
 
 	get _isVerbose() {
