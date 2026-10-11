@@ -6,9 +6,11 @@
 - El 👾 CHR-ROM dentro del 💾 cartucho contiene `2` 🕊️📖 pattern tables.
   - (eso está disponible en las direcciones PPU `$0000-$1FFF`)
 
+<div class="embed-image"><img alt="Pattern table memory" src="assets/graphics/tile_bitplanes.png" style="width: 100%" /></div>
+
 #### Ejemplo de pattern table
 
-<div class="embed-image"><img alt="Pattern table memory" src="assets/graphics/tile_bitplanes.png" style="width: 100%" /></div>
+<div class="embed-image"><img alt="Pattern table" src="assets/graphics/tiles_grayscale.png" style="width: 30%" /></div>
 
 #### Renderizado
 

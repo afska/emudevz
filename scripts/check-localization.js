@@ -127,7 +127,7 @@ for (let lang of LANGUAGES) {
 					.readFileSync($path.join(levelPath, LEVEL_METADATA_FILE))
 					.toString();
 				levelMetadata = JSON.parse(levelJSON);
-			} catch (e) {
+			} catch {
 				throw new Error(`Invalid level metadata: ${levelFolder}`);
 			}
 
@@ -142,7 +142,7 @@ for (let lang of LANGUAGES) {
 			// Level name use the same emojis
 			if (!areUsingSameEmojis(levelMetadata.name.en, levelMetadata.name[lang]))
 				throw new Error(
-					`Key ("name") for language "${lang}" in level metadata from"${chapterFolder}"/"${levelFolder}" should use the same emojis as the English version`
+					`Key ("name") for language "${lang}" in level metadata from "${chapterFolder}"/"${levelFolder}" should use the same emojis as the English version`
 				);
 
 			// Chat structure, formatting, and code match the English version
@@ -150,13 +150,51 @@ for (let lang of LANGUAGES) {
 			const chatEn = YAML.parse(
 				fs.readFileSync($path.join(levelPath, "chat/en.yml"), "utf8")
 			);
-			const chat = YAML.parse(fs.readFileSync(chatFile, "utf8"));
+			let chat;
+			try {
+				chat = YAML.parse(fs.readFileSync(chatFile, "utf8"));
+			} catch {
+				throw new Error(`Chat file not found: ${chatFile}`);
+			}
 			checkChat(chatEn, chat, `${chapterFolder}/${levelFolder}`, lang);
+
+			// Check documentation files
+			let enDocFilePaths = [];
+			try {
+				enDocFilePaths = fs
+					.readdirSync($path.join(levelPath, "bin"))
+					.filter((it) => it.endsWith(".en.md"))
+					.map((it) => $path.join(levelPath, "bin", it));
+			} catch {}
+			for (let docFilePath of enDocFilePaths) {
+				const enDocFile = fs.readFileSync(docFilePath).toString("utf-8");
+				const localizedDocFilePath = docFilePath.replace(
+					".en.md",
+					`.${lang}.md`
+				);
+
+				let localizedDocFile;
+				try {
+					localizedDocFile = fs
+						.readFileSync(localizedDocFilePath)
+						.toString("utf-8");
+				} catch {
+					throw new Error(
+						`Documentation file not found: ${localizedDocFilePath}`
+					);
+				}
+
+				checkDocumentation(
+					enDocFile,
+					localizedDocFile,
+					localizedDocFilePath,
+					lang
+				);
+			}
 		}
 	}
 
 	// TODO: Check copy.js scripts
-	// TODO: Check documentation
 	// TODO: Check meta files
 	// TODO: Check FAQ's links
 	// TODO: Check Assembly help files
@@ -279,6 +317,40 @@ function getChatSignature(text, field) {
 			getEmojis(line).sort(),
 		]),
 	};
+}
+
+function checkDocumentation(base, translated, location, lang) {
+	const [baseLines, translatedLines] = [base, translated].map((text) =>
+		text.split(/\r?\n/)
+	);
+	const fail = (message, english, translation) => {
+		throw new Error(
+			`${message}\nLanguage: ${lang}\nFile: ${location}\nEnglish:\n${english}\nTranslation:\n${translation}`
+		);
+	};
+	if (baseLines.length !== translatedLines.length)
+		fail(
+			"Documentation line count differs from English",
+			baseLines.length,
+			translatedLines.length
+		);
+
+	for (let i = 0; i < baseLines.length; i++) {
+		const signatures = [baseLines[i], translatedLines[i]].map((line) => [
+			line.trim() === "",
+			(
+				line.match(/^\s*#+ |^\s*(?:[-+]|\d+\.) |`+|\*+|_+|~~|[<>|\[\]]/g) || []
+			).sort(),
+			line.match(/\bsrc="[^"]*"/g) || [],
+			getEmojis(line),
+		]);
+		if (!_.isEqual(signatures[0], signatures[1]))
+			fail(
+				`Documentation content differs from English\nLine: ${i + 1}`,
+				baseLines[i],
+				translatedLines[i]
+			);
+	}
 }
 
 function stripCodeComments(code) {

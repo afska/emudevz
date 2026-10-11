@@ -8,10 +8,10 @@ Esta clase facilita la implementación de los mappers de NEEES.
 
 1. Crea una clase que extienda `Mapper`.
 2. Sobrescribe e implementa los siguientes métodos:
-   - `cpuRead(address)`
-   - `cpuWrite(address, value)`
-   - `ppuRead(address)`
-   - `ppuWrite(address, value)`
+  - `cpuRead(address)`
+  - `cpuWrite(address, value)`
+  - `ppuRead(address)`
+  - `ppuWrite(address, value)`
 3. Usa `$getPrgPage(page)` y `$getChrPage(page)` para obtener una página específica de `PRG` o `CHR`.
   * Alternativamente, puedes acceder manualmente a los arrays `prgPages` y `chrPages`.
 4. Implementa `getSaveState()` y `setSaveState(saveState)` para crear y restaurar correctamente los save states.
