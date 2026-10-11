@@ -7,7 +7,7 @@ main:
       ```javascript
       renderScanline() {
         const sprites = this._evaluate();
-        this._render(sprites); // we need to define this!
+        this._render(sprites); // этот метод ещё нужно определить!
       }```
   responses:
   - легко... да? [exercise]

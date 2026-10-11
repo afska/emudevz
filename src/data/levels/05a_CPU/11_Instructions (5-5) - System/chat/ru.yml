@@ -31,7 +31,7 @@ example:
   - это будет расположение твоего <обработчика прерывания>
   - затем ты "подписываешься" на событие NMI, помещая указатель на $AA00 в вектор NMI (~$FFFA/B~)
   - (в порядке Little Endian, то есть в $FFFA находится $00, а в $FFFB — $AA)
-  - посмотри 📄  ~/docs/cpu/interrupt_example.ru.md~
+  - посмотри 📄  ~/docs/cpu/interrupt_example.md~
   responses:
   - что произойдёт при NMI? [nmi]
 

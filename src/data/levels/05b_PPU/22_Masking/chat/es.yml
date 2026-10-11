@@ -68,8 +68,8 @@ exercise:
       **->** tu código debería verse así:
         ```javascript
         if (this.cycle === 0) {
-          // render background
-          // render sprites
+          // renderizar fondo
+          // renderizar sprites
         }
         
         if (!this.registers.ppuMask.isRenderingEnabled()) return;

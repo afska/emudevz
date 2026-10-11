@@ -71,13 +71,13 @@ exercise:
   - |-
     📚  добавим в класс 💾  `Cartridge` свойство `header` следующего вида:
     ```javascript {
-      prgRomPages: 2, // (obtain this from byte 4)
-      chrRomPages: 1, // (obtain this from byte 5)
-      usesChrRam: false, // (true if chrRomPages === 0)
-      has512BytePadding: false, // (obtain this from <Flags 6>)
-      hasPrgRam: false, // (obtain this from <Flags 6>)
-      mirroringId: "VERTICAL", // (obtain this from <Flags 6>)
-      mapperId: 4 // (obtain this from <Flags 6> and <Flags 7>)
+      prgRomPages: 2, // (возьми значение из байта 4)
+      chrRomPages: 1, // (возьми значение из байта 5)
+      usesChrRam: false, // (true, если chrRomPages === 0)
+      has512BytePadding: false, // (возьми значение из раздела <Флаги 6>)
+      hasPrgRam: false, // (возьми значение из раздела <Флаги 6>)
+      mirroringId: "VERTICAL", // (возьми значение из раздела <Флаги 6>)
+      mapperId: 4 // (возьми значение из разделов <Флаги 6> и <Флаги 7>)
     }```
   - если ты не знаешь, как работать с битами, можно использовать мою библиотеку 📖
   - она находится в 📄  ~/lib/byte.js~, просто импортируй её как любой другой модуль
@@ -100,11 +100,11 @@ import:
   - |-
     попробуй выполнить эти строки:
     ```javascript
-    // (0x means <hexadecimal> and 0b means <binary>)
-    byte.getFlag(0b00000100, 2) // bit 2 is 1 => true
-    byte.getFlag(0b00000100, 4) // bit 4 is 0 => false
-    byte.highNybbleOf(0b00110100) // high nybble is 0b0011 => 3
-    byte.lowNybbleOf(0b00110100) // low nybble is 0b0100 => 4
+    // (0x обозначает <шестнадцатеричное> число, а 0b — <двоичное>)
+    byte.getFlag(0b00000100, 2) // бит 2 равен 1 => true
+    byte.getFlag(0b00000100, 4) // бит 4 равен 0 => false
+    byte.highNybbleOf(0b00110100) // старший ниббл равен 0b0011 => 3
+    byte.lowNybbleOf(0b00110100) // младший ниббл равен 0b0100 => 4
     byte.buildU8(0b0011, 0b0100) // 0b00110100 => 52```
   responses:
   - ...exercise

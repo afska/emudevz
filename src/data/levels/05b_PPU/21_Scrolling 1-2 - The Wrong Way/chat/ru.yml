@@ -102,20 +102,20 @@ then:
   - |-
     📚  определим несколько вещей:
       ```javascript
-      // scroll coordinates:
+      // координаты прокрутки:
       const scrollX = this.ppu.registers.ppuScroll.x;
       const scrollY = this.ppu.registers.ppuScroll.y;
-      // current point to draw:
+      // текущая точка для отрисовки:
       const scrolledX = x + scrollX;
       const scrolledY = y + scrollY;
-      // base name table address:
+      // базовый адрес таблицы имён:
       const nameTableId = (
         this.ppu.registers.ppuCtrl.nameTableId +
-        (scrolledX >= 256 ? 1 : 0) + // move right
-        (scrolledY >= 240 ? 2 : 0) // move down
+        (scrolledX >= 256 ? 1 : 0) + // переход вправо
+        (scrolledY >= 240 ? 2 : 0) // переход вниз
       ) % 4;
       const nameTableAddress = 0x2000 + nameTableId * 1024;
-      // current point, relative to the name table:
+      // текущая точка относительно таблицы имён:
       const nameTableX = scrolledX % 256;
       const nameTableY = scrolledY % 240;```
   - |-

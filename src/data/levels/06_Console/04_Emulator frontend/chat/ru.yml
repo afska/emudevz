@@ -53,16 +53,16 @@ synctovideo:
   - |-
     код интерфейса будет выглядеть так:
       ```javascript this.frameTimer = new FrameTimer(() => {
-        // <<update input here>>
+        // <<обнови состояние ввода здесь>>
 
         if (syncToVideo) {
-          // run for a whole frame
-          this.emulator.frame(); // sends the pixels to the canvas
+          // выполнить один кадр целиком
+          this.emulator.frame(); // передаёт пиксели в canvas
 
           if (this.samples.length !== 735)
             this.samples = this._resample(this.samples, 735);
 
-          this._updateAudio(); // sends the samples to the audio worklet
+          this._updateAudio(); // передаёт звуковые отсчёты в audio worklet
         }
       });```
   responses:
@@ -87,10 +87,10 @@ synctoaudio:
             if (have > target + 64) n--;
             else if (have < target - 64) n++;
 
-            // run for n samples
-            this.emulator.samples(n); // might send pixels to the canvas
+            // выполнить n звуковых отсчётов
+            this.emulator.samples(n); // может передать пиксели в canvas
           
-            this._updateSound(); // sends the samples to the audio worklet
+            this._updateSound(); // передаёт звуковые отсчёты в audio worklet
           }
         });```
   responses:

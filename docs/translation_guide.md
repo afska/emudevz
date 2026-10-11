@@ -5,19 +5,21 @@ If you want to add support for other languages, you should change these files (e
 - Create a locale file in `src/data/locales/ja.js` with all the UI translations.
   - You can run `node scripts/sort-locales.js` to sort keys alphabetically.
   - Add a `language_ja` key to all the language files to localize the language name.
+  - Don't translate the ones starting with `zoom_`.
 - Change `src/locales.js` so it includes the new `ja` key and the correct `TimeAgo` instance.
 - Update `src/data/dictionaryEntries.js` to include translations for `ja`.
   - You can run `node scripts/sort-dictionary.js` to sort keys alphabetically.
 - Add a `ja.yml` to each level in `src/data/levels` for the chat script.
   - See `docs/chat_syntax.md` for some other considerations about the chat format.
   - Ensure the JS scripts are the same (besides small details like linking to `.ja.md` files instead of `.en.md`) and the final translated file ends up with the same number of lines as the English version.
-  - Also, ensure the JS code snippets shown to the user are the same.
+  - Also, ensure the JS code snippets shown to the user are the same, but comments should be translated.
   - The final credits shouldn't be localized.
 - Change the `meta.json` file in each level to localize the `name` and the console `subtitle` keys.
   - In the `FAQ` level, also update the `links` key.
 - Change the `chapter.json` file in each chapter to localize the `name` and `description` keys.
 - Add localized documentation files (look for `*.en.md` files and create equivalent `*.ja.md` files) and update the `copy.js` scripts to copy them.
-- Localize all unit tests in `src/data/levels/$tests` and the `test.js` files. **This is optional**.
+  - Don't localize files that simply end with `*.md`, as these typically just contain an image and it's fine to have just one version for all languages.
+- Localize all unit tests in `src/data/levels/$tests` and the `test.js` files.
 - Create a file in `src/data/levels/02_Assembly/$help/ja.txt` with help for the Assembly chapter.
   - Each line should correspond to the same line in the other languages.
   - Add `$help/ja.txt` to `scripts/package-levels.js`

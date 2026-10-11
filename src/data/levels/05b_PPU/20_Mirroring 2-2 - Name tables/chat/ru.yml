@@ -80,7 +80,7 @@ example:
           return this.vram[this._mirroring.$2000 + (address - 0x2000)];
         if (address >= 0x2400 && address < 0x2800)
           return this.vram[this._mirroring.$2400 + (address - 0x2400)];
-        // TODO: Finish the others!
+        // TODO: допиши остальные варианты!
       }```
   responses:
   - ...exercise

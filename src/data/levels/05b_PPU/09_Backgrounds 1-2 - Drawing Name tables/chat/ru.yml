@@ -69,21 +69,21 @@ help:
 
       const y = this.ppu.scanline;
       for (let x = 0; x < 256; x += 8) {
-        const nameTableId = 0; // TODO: Get name table id
-        const patternTableId = 0; // TODO: Get pattern table id
+        const nameTableId = 0; // TODO: получи ID таблицы имён
+        const patternTableId = 0; // TODO: получи ID таблицы паттернов
 
         const tileX = Math.floor(x / 8);
         const tileY = Math.floor(y / 8);
         const tileIndex = tileY * 32 + tileX;
-        const tileId = 0; // TODO: Read tile id from memory
+        const tileId = 0; // TODO: прочитай ID тайла из памяти
 
         const tileInsideY = y % 8;
 
         const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
         for (let xx = 0; xx < 8; xx++) {
-          const colorIndex = tile.getColorIndex(xx); // 0 to 3
-          const color = 0; // TODO: Grab a color from FIXED_PALETTE
-          // TODO: Plot the color at pixel (x + xx, y)
+          const colorIndex = tile.getColorIndex(xx); // от 0 до 3
+          const color = 0; // TODO: возьми цвет из FIXED_PALETTE
+          // TODO: нарисуй пиксель (x + xx, y) этим цветом
         }
       }```
   responses:

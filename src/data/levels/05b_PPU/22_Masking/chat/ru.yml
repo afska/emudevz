@@ -57,22 +57,22 @@ exercise:
       **->** код должен выглядеть так:
         ```javascript
         if (this.cycle === 1) {
-          // ... reset PPUStatus flags ...
+          // ... сброс флагов PPUStatus ...
         }
         
         if (!this.registers.ppuMask.isRenderingEnabled()) return;
         
-        // <<we'll add more code here later!>>```
+        // <<позже добавим сюда ещё код!>>```
     **_onVisibleLine()**:
       **->** в самой <последней строке>, если `!isRenderingEnabled()` в 🎭  PPUMask, завершает метод!
       **->** код должен выглядеть так:
         ```javascript
         if (this.cycle === 0) {
-          // render background
-          // render sprites
+          // отрисовка фона
+          // отрисовка спрайтов
         }
         
         if (!this.registers.ppuMask.isRenderingEnabled()) return;
         
-        // <<we'll add more code here later!>>```
+        // <<позже добавим сюда ещё код!>>```
   responses: []
