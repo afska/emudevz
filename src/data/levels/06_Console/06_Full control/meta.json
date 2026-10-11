@@ -178,6 +178,14 @@
 							"href": "https://github.com/zeta0134/bhop"
 						},
 						{
+							"text": "Post-game guide",
+							"href": "https://github.com/afska/emudevz/pull/36"
+						},
+						{
+							"text": "Russian localization",
+							"href": "https://github.com/afska/emudevz/pull/48"
+						},
+						{
 							"text": "NesDev",
 							"href": "https://www.nesdev.org"
 						},
