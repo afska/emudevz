@@ -1,10 +1,12 @@
 {
 	"name": {
 		"en": "🕹️ Console",
-		"es": "🕹️ Consola"
+		"es": "🕹️ Consola",
+		"ru": "🕹️ Консоль"
 	},
 	"description": {
 		"en": "🕹️ Integrate all your components here",
-		"es": "🕹️ Integra todos tus componentes aquí"
+		"es": "🕹️ Integra todos tus componentes aquí",
+		"ru": "🕹️ Соедини здесь все свои компоненты"
 	}
 }

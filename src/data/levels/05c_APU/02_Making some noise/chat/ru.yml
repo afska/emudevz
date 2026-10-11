@@ -1,0 +1,65 @@
+---
+main:
+  messages:
+  - "⚠️  <ОСТОРОЖНО, ГРОМКО!!!> ⚠️"
+  - "<сделай звук на устройстве очень тихим, чтобы поберечь уши>"
+  - "давай пошумим!"
+  - "сначала подключу твой 🔊  APU к эмулятору"
+  responses:
+  - "давай [integrate]"
+
+integrate:
+  messages:
+  - "это должно быть быстро..."
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 500);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useAPU");
+  messages:
+  - "✅  готово!"
+  - "<! 🔊  APU подключён."
+  - "теперь значок 🔊  в эмуляторе будет светиться ✨"
+  - "кода APU пока почти нет, так что звука ещё не будет"
+  - "но мы до него доберёмся!"
+  - "давай напишем код <пробной волны>"
+  responses:
+  - "прямоугольной, например? ⏹️ [exercise]"
+
+exercise:
+  messages:
+  - "точно! сейчас у тебя должно быть что-то вроде ```javascript onSample(this.sample)```"
+  - |-
+    📚  <перед> этим вызовом `onSample(...)` добавь:
+      ```javascript
+      // <test>
+      this.time = (this.time || 0) + 1 / 44100;
+      const frequency = 440;
+      const period = 1 / frequency;
+      const dutyCycle = 0.5;
+      this.sample = (this.time % period) < period * dutyCycle ? 1 : 0;
+      // </test>```
+  - "попробуй! при загрузке ROM должна звучать прямоугольная волна с нотой <ля первой октавы (A4)> (~440~ Гц) 🎵"
+  responses:
+  - "(*) что такое duty cycle? [duty]"
+
+duty:
+  messages:
+  - "у импульсной волны duty cycle — это коэффициент заполнения: доля времени, когда сигнал <высокий>, а не <низкий>"
+  - "например, при заполнении <50%> сигнал проводит одинаковое время в обоих состояниях: такую волну называют прямоугольной"
+  - <{wave_square.png;32x32}>
+  - "при заполнении <25%> она выглядит так"
+  - <{wave_square_25duty.png;32x32}>
+  - "а при <75%> — так"
+  - <{wave_square_75duty.png;32x32}>
+  - "звучат они <совсем по-разному>! попробуй менять константу `dutyCycle` и послушать результат"
+  - "(только потом верни `dutyCycle` к `0.5`: тесты ожидают именно форму волны из примера 😉 )"
+  responses:
+  - ...exercise

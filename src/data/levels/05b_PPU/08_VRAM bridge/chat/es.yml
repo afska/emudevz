@@ -35,8 +35,7 @@ example:
     STA $2006
 
     LDA #$D7
-    STA $2007
-    ```
+    STA $2007```
   responses:
   - ...how
 

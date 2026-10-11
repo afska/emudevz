@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔌 Little Endian",
-		"es": "🔌 Little Endian"
+		"es": "🔌 Little Endian",
+		"ru": "🔌 Little Endian"
 	},
 	"ui": {
 		"layout": "dual",

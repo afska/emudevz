@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔝 Sprites (5/6): Priorities",
-		"es": "🔝 Sprites (5/6): Prioridades"
+		"es": "🔝 Sprites (5/6): Prioridades",
+		"ru": "🔝 Спрайты (5/6): Приоритеты"
 	},
 	"ui": {
 		"layout": "tripleRight",

@@ -1,0 +1,51 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется 🚀 💥  ~Jupiter Scope 2~
+    <{screenshot.png;30x30}>
+  - "вертикальный <космический шутер>"
+  - "если получится побить мой рекорд, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "а какой у тебя рекорд? 🤔 [highest]"
+
+highest:
+  messages:
+  - "ровно ~10000~ очков на сложности <normal>"
+  - "набери столько же в режиме <normal> или <hard> — и победа за тобой 🏆"
+  responses:
+  - "у тебя нет шансов! 💪 [play]"
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("JupiterScope2");
+    {{Right}}.loadROM("/roms/.all/JupiterScope2.neees", "stream");
+  messages:
+  - "посмотрим 😁"
+  events:
+  - jupiterscope2-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["JupiterScope2.neees", "StarPowerDemo.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - "хм... похоже, мой рекорд не такой уж высокий 😅"
+  - "<! Получен ROM: 📄  /roms/JupiterScope2.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/StarPowerDemo.neees"
+  - "а ещё тебе отправлена игра 🧚 🧹  ~Star Power Demo~"
+  - "удачной стрельбы 💣"
+  responses:
+  - "▶️  продолжить [end]"

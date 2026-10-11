@@ -1,0 +1,49 @@
+---
+main:
+  messages:
+  - "создание шума устроено чуть сложнее, чем вызов ```javascript random()```"
+  - "вот документ с описанием:"
+  - "📄  ~/docs/apu/noise_generation.ru.md~"
+  - "прочитай и дай знать, если возникнут вопросы"
+  responses:
+  - "на выходе — громкость? что? [volume]"
+
+volume:
+  messages:
+  - "да, 💥  шумовой канал не создаёт настоящих «волн»"
+  - "его отсчёты — это либо <уровень громкости>, либо 0"
+  - "выбор зависит от бита 0 <сдвигового регистра>"
+  - "огибающей у нас пока нет, поэтому продолжаем считать громкость постоянной"
+  responses:
+  - "звучит круто, можно писать код [exercise]"
+
+exercise:
+  messages:
+  - "отлично!"
+  - |-
+      📚  реализуй в 🌪️  `NoiseForm`:
+      **onLoad()**:
+        **->** через ```javascript this.addField(...)``` задаёт 2 поля: `periodId`, `mode`
+        (сверяйся с 📄  ~/docs/apu/audio_registers.ru.md~)
+      **onWrite(value)**:
+        **->** задаёт значение через ```javascript this.setValue(...)```
+  - |-
+      📚  реализуй в 💥  `NoiseChannel`:
+      **constructor(apu)**:
+        **->** задаёт ```javascript this.shift = 1```
+        **->** задаёт ```javascript this.dividerCount = 0```
+      **sample()**:
+        **->** добавь в условие <раннего выхода> проверку ```javascript (this.shift & 1)```
+          (выходной отсчёт равен 0, если установлен первый бит <сдвигового регистра>)
+        **->** замени <основное возвращаемое значение> ```javascript Math.floor(...)``` на просто `volume`
+      **step()**:
+        **->** увеличивает <счётчик делителя>
+        **->** если <счётчик делителя> >= ```javascript noisePeriods[this.registers.form.periodId]```:
+          (`noisePeriods` можно взять из 📄  ~/lib/apu/noisePeriods.js~)
+          **->** сбрасывает <счётчик делителя>
+        **->** иначе:
+          **->** выходит из метода
+        
+        **->** обновляет ```javascript this.shift``` по логике, описанной здесь:
+          📄  ~/docs/apu/noise_generation.ru.md~
+  responses: []

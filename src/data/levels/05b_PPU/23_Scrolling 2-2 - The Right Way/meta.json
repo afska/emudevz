@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🎯 Scrolling (2/2): The Right Way™",
-		"es": "🎯 Scrolling (2/2): Haciéndolo bien™"
+		"es": "🎯 Scrolling (2/2): Haciéndolo bien™",
+		"ru": "🎯 Прокрутка (2/2): Правильный способ™"
 	},
 	"ui": {
 		"run": "copy.js",

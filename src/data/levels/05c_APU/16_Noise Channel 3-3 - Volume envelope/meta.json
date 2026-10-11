@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📉 Noise Channel (3/3): Volume envelope",
-		"es": "📉 Canal Ruido (3/3): Envolvente de volumen"
+		"es": "📉 Canal Ruido (3/3): Envolvente de volumen",
+		"ru": "📉 Шумовой канал (3/3): Огибающая громкости"
 	},
 	"ui": {
 		"layout": "tripleRight",

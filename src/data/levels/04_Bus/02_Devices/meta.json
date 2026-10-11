@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📱 Devices",
-		"es": "📱 Dispositivos"
+		"es": "📱 Dispositivos",
+		"ru": "📱 Устройства"
 	},
 	"ui": {
 		"layout": "dual",

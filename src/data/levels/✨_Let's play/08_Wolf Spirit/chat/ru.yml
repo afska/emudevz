@@ -1,0 +1,47 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется 🐺 🌲  ~Wolf Spirit~
+    <{screenshot.png;30x30}>
+  - "платформер про <злого духа>, который проклял мир"
+  - "если получится пройти игру, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "а играть можно за волка? [play]"
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("WolfSpirit");
+    {{Right}}.loadROM("/roms/.all/WolfSpirit.neees", "stream");
+  messages:
+  - "да!"
+  - "вперёд, останови духа"
+  events:
+  - wolfspirit-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["WolfSpirit.neees", "FilthyKitchen.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - "ого"
+  - "равновесие восстановлено"
+  - "по крайней мере, в <демоверсии>"
+  - "<! Получен ROM: 📄  /roms/WolfSpirit.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/FilthyKitchen.neees"
+  - "а ещё тебе отправлена игра 🦟 🍳  ~Filthy Kitchen~"
+  - "веселись!"
+  responses:
+  - "▶️  продолжить [end]"

@@ -9,8 +9,8 @@ import { Toaster } from "react-hot-toast";
 import { FaTimes } from "react-icons/fa";
 import { connect } from "react-redux";
 import _ from "lodash";
-import dictionary from "../data/dictionary";
 import Book from "../level/Book";
+import dictionary from "../level/dictionary";
 import locales from "../locales";
 import { dlc } from "../utils";
 import _links from "./_links";
@@ -42,10 +42,6 @@ const CRT_SPEED = 0.25;
 const MIN_WIDTH = 512;
 const MIN_HEIGHT = 256;
 const LOGO_MAX_SIZE = 256;
-const ERROR_SAFARI =
-	"Sorry, Safari has known issues that break the game. Please use a Chromium-based browser or Firefox.";
-const ERROR_EMOJIS =
-	"Your system can't display some emojis used by the game. You can still play, but the vibes will be compromised!";
 
 class HomeScreen extends PureComponent {
 	state = { fontsLoaded: false };
@@ -175,13 +171,14 @@ class HomeScreen extends PureComponent {
 				{window.EmuDevz.isDesktop() && (
 					<div className={styles.controlsHint}>
 						<div>
-							➕ <strong>Zoom in</strong>: &nbsp;&nbsp;&nbsp;Ctrl +
+							➕ <strong>{locales.get("zoom_in")}</strong>:
+							&nbsp;&nbsp;&nbsp;Ctrl +
 						</div>
 						<div>
-							➖ <strong>Zoom out</strong>: &nbsp;&nbsp;Ctrl -
+							➖ <strong>{locales.get("zoom_out")}</strong>: &nbsp;&nbsp;Ctrl -
 						</div>
 						<div>
-							🔄 <strong>Reset zoom</strong>: Ctrl 0
+							🔄 <strong>{locales.get("zoom_reset")}</strong>: Ctrl 0
 						</div>
 					</div>
 				)}
@@ -235,7 +232,7 @@ class HomeScreen extends PureComponent {
 
 		loader.onComplete.add(() => {
 			if (error) {
-				alert("Error loading assets.");
+				alert(locales.get("error_loading_assets"));
 				return;
 			}
 
@@ -408,7 +405,7 @@ class HomeScreen extends PureComponent {
 	_showSafariWarningIfNeeded() {
 		const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 		const isSafari = /^((?!chrome|chromium|android).)*safari/i.test(userAgent);
-		if (isSafari) alert(ERROR_SAFARI);
+		if (isSafari) alert(locales.get("error_safari"));
 	}
 
 	_showEmojiWarningIfNeeded() {
@@ -428,7 +425,7 @@ class HomeScreen extends PureComponent {
 			.value();
 		if (!_.isEmpty(unsupportedEmojis)) {
 			console.warn("⚠️ Unsupported emojis", unsupportedEmojis);
-			alert(ERROR_EMOJIS);
+			alert(locales.get("error_emojis"));
 		}
 	}
 }

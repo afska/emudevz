@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🧠 New CPU",
-		"es": "🧠 Nueva CPU"
+		"es": "🧠 Nueva CPU",
+		"ru": "🧠 Новый CPU"
 	},
 	"ui": {
 		"run": "copy.js",

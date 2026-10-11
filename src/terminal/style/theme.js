@@ -1,5 +1,5 @@
+import { TERMINAL_ANSI_INDICES as THEME } from "../../gui/theme";
 import Level from "../../level/Level";
-import { TERMINAL_ANSI_INDICES as THEME } from "../../models/themes/theme";
 import store from "../../store";
 import { dlc, image as imageUtils } from "../../utils";
 

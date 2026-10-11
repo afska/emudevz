@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔀 Instructions (4/5): Branching",
-		"es": "🔀 Instrucciones (4/5): Bifurcaciones"
+		"es": "🔀 Instrucciones (4/5): Bifurcaciones",
+		"ru": "🔀 Инструкции (4/5): Ветвление"
 	},
 	"ui": {
 		"layout": "dual",

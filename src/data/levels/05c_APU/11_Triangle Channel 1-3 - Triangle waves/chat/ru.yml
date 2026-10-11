@@ -1,0 +1,51 @@
+---
+main:
+  messages:
+  - "давай реализуем 🔺  треугольный канал!"
+  - "сначала, как обычно, нужно получить значение таймера"
+  - "его младшие 8 бит находятся в регистре 🕡  TriangleTimerLow, а старшие 3 — в 🕛  TriangleTimerHighLCL"
+  - <{triangle_timer.png}>
+  - "из таймера можно получить частоту по той же формуле, что у импульсных каналов"
+  - "но треугольный канал звучит <на октаву ниже>, поэтому результат нужно разделить на два ⚗️"
+  - "```javascript frequency = 1789773 / (16 * (timer + 1)) / 2```"
+  responses:
+  - "а, вот почему он используется для басовых партий 🎸 [exercise]"
+
+exercise:
+  messages:
+  - "именно!"
+  - "с созданием самой треугольной волны помогу — вот код моего генератора:"
+  - "📄  ~/lib/apu/TriangleOscillator.js~"
+  - |-
+    📚  реализуй в 🕛  `TriangleTimerHighLCL`:
+    **onLoad()**:
+      **->** через ```javascript this.addField(...)``` задаёт 3-битное поле `timerHigh`, начиная с бита 0
+    **onWrite(value)**:
+      **->** задаёт значение через ```javascript this.setValue(...)```
+  - |-
+    📚  создай класс 🔺  `TriangleChannel` со следующим:
+    **constructor(apu)**:
+      **->** сохраняет параметр в свойстве (```javascript this.apu```)
+      **->** сохраняет объект регистров треугольного канала в свойстве:
+        ```javascript this.registers = this.apu.registers.triangle;```
+      **->** сохраняет в свойстве ```javascript this.oscillator``` новый экземпляр присланного `TriangleOscillator`
+    **sample()**:
+      **->** вычисляет значение таймера по 🕡  TriangleTimerLow и полю `timerHigh` из 🕛  TriangleTimerHighLCL
+        (объедини их через `byte.buildU16(...)`)
+        (назовём результат `timer`)
+      **->** если `timer` меньше 2 или больше ~0x7ff~:
+        **->** возвращает 0 — здесь канал замолкает
+      **->** задаёт частоту генератора по формуле:
+        ```javascript this.oscillator.frequency = 1789773 / (16 * (timer + 1)) / 2;```
+      **->** вызывает метод `sample()` генератора и возвращает его результат
+  - |-
+    📚  в 🔊  `APU`:
+    **->** импортируй канал и добавь ключ `triangle` в ```javascript this.channels``` с новым экземпляром
+    **->** в `step()` добавь треугольный канал в смесь:
+      ```javascript const pulse1 = this.channels.pulses[0].sample();
+      const pulse2 = this.channels.pulses[1].sample();
+      const triangle = this.channels.triangle.sample();
+      this.sample = (pulse1 + pulse2 + triangle) * 0.01;
+
+      onSample(this.sample, pulse1, pulse2, triangle);```
+  responses: []

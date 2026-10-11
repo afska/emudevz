@@ -1,0 +1,89 @@
+---
+main:
+  messages:
+  - "при запуске эмулятора можно заметить, что <звуки прыжков> и другие <эффекты> звучат немного..."
+  - "скучновато"
+  - "блок свипа постепенно повышает или понижает частоту, создавая тот самый звук прыжка знаменитых <водопроводчиков>! 👨‍ 🔧"
+  responses:
+  - "как это работает? [how]"
+
+how:
+  messages:
+  - "похоже на огибающую, но вместо <громкости> меняется таймер канала, а значит, и <высота звука>!"
+  - "правда, чуть сложнее: изменение здесь не <постоянное>"
+  - "игры записывают в 🧹  PulseSweep 4 параметра:"
+  - "⏰  период делителя — определяет, насколько медленно меняется частота"
+  - "➗  <число разрядов сдвига> — определяет, насколько плавным будет изменение"
+  - "⛔  <флаг отрицательного направления> — определяет, идёт изменение вниз или вверх"
+  - "🔛  <флаг включения> — включает блок свипа"
+  - <{frequency_sweep.png;30x30}>
+  - |-
+    каждую половину кадра делитель уменьшает счётчик; когда тот достигает 0, величина изменения вычисляется так:
+      ```javascript const sweepDelta = channel.timer >> shiftCount;```
+  - |-
+    затем, в зависимости от <флага отрицательного направления>, таймер увеличивается или уменьшается:
+      ```javascript channel.timer += sweepDelta * (negateFlag ? -1 : 1);```
+  responses:
+  - "(*) что делает <сдвиг вправо>? [shifting]"
+  - "круто, теперь можно написать код [exercise]"
+
+shifting:
+  messages:
+  - "`number >> 1` сдвигает биты `number` на один разряд вправо"
+  - "это делит число на 2"
+  - "`number >> 2` сдвигает на два разряда и делит число на 4"
+  - "на практике, чем больше <число разрядов сдвига>, тем плавнее изменение"
+  responses: 
+  - ...how
+
+exercise:
+  messages:
+  - |-
+    📚  реализуй в 🧹  `PulseSweep`:
+    **onLoad()**:
+      **->** через ```javascript this.addField(...)``` задаёт 4 поля: `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`
+      (сверяйся с 📄  ~/docs/apu/audio_registers.ru.md~)
+    **onWrite(value)**:
+      **->** задаёт значение через ```javascript this.setValue(...)```
+  - |-
+    📚  создай класс 🧹  `FrequencySweep` со следующим:
+    **constructor(channel)**:
+      **->** сохраняет параметр в свойстве (```javascript this.channel```)
+      **->** задаёт ```javascript this.startFlag = false```
+      **->** задаёт ```javascript this.dividerCount = 0```
+      **->** задаёт ```javascript this.mute = false```
+    **clock()**:
+      **->** если (
+          <флаг включения> установлен <И>
+          <число разрядов сдвига> больше 0 <И>
+          <счётчик делителя> равен 0 <И>
+          ```javascript !this.mute```
+        ):
+          ```javascript const sweepDelta = this.channel.timer >> register.shiftCount;
+          this.channel.timer += sweepDelta * (register.negateFlag ? -1 : 1);```
+        (где `register` — это, конечно, 🧹  PulseSweep)
+      **->** если <счётчик делителя> равен 0 <ИЛИ> установлен <флаг запуска>
+        **->** задаёт ```javascript this.dividerCount``` равным `dividerPeriodMinusOne` из 🧹  PulseSweep
+        **->** сбрасывает <флаг запуска>
+      **->** иначе:
+        **->** уменьшает <счётчик делителя>
+    **muteIfNeeded()**:
+      **->** задаёт ```javascript this.mute = this.channel.timer < 8 || this.channel.timer > 0x7ff```
+  - |-
+    📚  в 🟦  `PulseChannel`:
+    **->** импортируй этот класс и добавь свойство `frequencySweep` с новым экземпляром (передай ```javascript this``` в конструктор!)
+    **->** измени **sample()**, чтобы <ранний выход> также учитывал ```javascript this.frequencySweep.mute```
+    **->** измени **step()** так:
+      - вызывается метод `muteIfNeeded()` у `frequencySweep`
+      - метод `updateTimer()` вызывается только при сброшенном `enabledFlag` в 🧹  PulseSweep
+    **->** реализуй этот метод:
+    **halfFrame()**:
+      **->** __продолжай обновлять счётчик длины, как раньше__
+      **->** вызывает ```javascript this.frequencySweep.clock()```
+  - |-
+    📚  ах да, ещё кое-что в 🧹  `PulseSweep`:
+    **onWrite(value)**:
+      **->** __сохрани текущее поведение__
+      **->** здесь нужно установить `startFlag` у `frequencySweep` канала!
+      (тогда делитель перезагрузится на следующем такте)
+  responses: []

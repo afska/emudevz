@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📣 Pulse Channels (2/5): Producing pulse waves",
-		"es": "📣 Canales Pulso (2/5): Produciendo ondas de pulso"
+		"es": "📣 Canales Pulso (2/5): Produciendo ondas de pulso",
+		"ru": "📣 Импульсные каналы (2/5): Генерация импульсных волн"
 	},
 	"ui": {
 		"run": "copy.js",

@@ -12,7 +12,11 @@ const GLOBAL_AUDIOTEST_FOLDER = "$audiotests";
 const GLOBAL_VIDEOTEST_FOLDER = "$videotests";
 const LOCAL_TEST_FOLDER = "tests";
 const LOCAL_CODE_FOLDER = "code";
-const CHAPTER_HELP_FILES = { en: "$help/en.txt", es: "$help/es.txt" };
+const CHAPTER_HELP_FILES = {
+	en: "$help/en.txt",
+	es: "$help/es.txt",
+	ru: "$help/ru.txt",
+};
 const CHAPTER_METADATA_FILE = "chapter.json";
 const LEVEL_METADATA_FILE = "meta.json";
 const BOOK_FILE = "book.json";

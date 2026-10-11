@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🗣️ Reading the header",
-		"es": "🗣️ Leyendo la cabecera"
+		"es": "🗣️ Leyendo la cabecera",
+		"ru": "🗣️ Чтение заголовка"
 	},
 	"ui": {
 		"run": "copy.js",

@@ -1,10 +1,12 @@
 {
 	"name": {
 		"en": "🔊 APU",
-		"es": "🔊 APU"
+		"es": "🔊 APU",
+		"ru": "🔊 APU"
 	},
 	"description": {
 		"en": "🔊 Produce sound and music",
-		"es": "🔊 Produce sonido y música"
+		"es": "🔊 Produce sonido y música",
+		"ru": "🔊 Создавай звуки и музыку"
 	}
 }

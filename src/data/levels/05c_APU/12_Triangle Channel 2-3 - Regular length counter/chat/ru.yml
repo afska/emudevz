@@ -1,0 +1,65 @@
+---
+main:
+  messages:
+  - "слышишь, как звучит эмулятор? 😂"
+  - "нужно срочно научить эти треугольные волны замолкать!"
+  - "треугольный канал должен замолкать:"
+  - "📡  когда таймер меньше 2 (уже сделано ✅ )"
+  - "🔇  когда игра выключает канал записью в 🎛️  APUControl"
+  - "📏  когда счётчик длины равен 0"
+  - "📏  когда линейный счётчик длины равен 0"
+  responses:
+  - "(*) два счётчика длины? [two]"
+  - "что будем делать? [exercise]"
+
+two:
+  messages:
+  - "да!"
+  - "второй работает немного иначе"
+  - "об этом позже!"
+  responses: 
+  - ...main
+
+exercise:
+  messages:
+  - |-
+    📚  реализуй в 📏  `TriangleLengthControl`:
+    **onLoad()**:
+      **->** через ```javascript this.addField(...)``` задаёт поле `halt` в бите 7
+    **onWrite(value)**:
+      **->** задаёт значение через ```javascript this.setValue(...)```
+  - |-
+    📚  в 🔺  `TriangleChannel`:
+    **->** импортируй класс 📏  `LengthCounter` и добавь свойство `lengthCounter` с новым экземпляром
+    **->** измени **sample()**: если ```javascript !this.isEnabled()``` или счётчик длины неактивен, возвращай последний созданный отсчёт, ничего не меняя
+    **->** добавь следующие методы:
+    **quarterFrame()**:
+      **[!]** пока оставь пустым
+    **halfFrame()**:
+      **->** вызывает метод `clock(...)` счётчика длины
+        (первым аргументом передай ```javascript this.isEnabled()```)
+        (для флага остановки возьми добавленный `halt` из регистра 📏  TriangleLengthControl)
+    **isEnabled()**:
+      **->** возвращает ```javascript !!this.apu.registers.apuControl.enableTriangle```
+  - |-
+    📚  в 🔊  `APU`:
+    **onQuarterFrameClock()**:
+      **->** вызывает `quarterFrame()` у экземпляра треугольного канала
+    **onHalfFrameClock()**:
+      **->** вызывает `halfFrame()` у экземпляра треугольного канала
+  - |-
+    📚  реализуй в 🕛  `TriangleTimerHighLCL`:
+    **onLoad()**:
+      **->** через ```javascript this.addField(...)``` задаёт 5-битное поле `lengthCounterLoad`, начиная с бита 3
+    **onWrite(value)**:
+      **->** __сохрани текущее поведение__
+      **->** определяет новую длину по элементу массива `noteLengths` с индексом ```javascript this.lengthCounterLoad```
+        (массив возьми из 📄  ~/lib/apu/noteLengths.js~)
+      **->** записывает новую длину в свойство `counter` счётчика длины канала
+  - |-
+    📚  реализуй в 🎛️  `APUControl`:
+    **onWrite(value)**:
+      **->** __сохрани текущее поведение__
+      **->** если `!this.enableTriangle`:
+        **->** сбрасывает счётчик длины канала
+  responses: []

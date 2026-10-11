@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🐏 CPU Memory",
-		"es": "🐏 Memoria de CPU"
+		"es": "🐏 Memoria de CPU",
+		"ru": "🐏 Память CPU"
 	},
 	"ui": {
 		"run": "copy.js",

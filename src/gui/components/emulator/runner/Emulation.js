@@ -1,7 +1,6 @@
+import locales from "../../../../locales";
 import FrameTimer from "./FrameTimer";
 import Speaker from "./Speaker";
-
-const PRESS_KEY_TO_ENABLE_AUDIO = "Press any key to enable audio!";
 
 const APU_SAMPLE_RATE = 44100;
 const PPU_FRAME_RATE = 60.098;
@@ -61,7 +60,8 @@ export default class Emulation {
 			{ ringBufferSize: audioBufferSize }
 		);
 		this.speaker.start().then(() => {
-			if (this.speaker.state === "suspended") alert(PRESS_KEY_TO_ENABLE_AUDIO);
+			if (this.speaker.state === "suspended")
+				alert(locales.get("press_key_to_enable_audio"));
 		});
 
 		this.saveState = saveState;
@@ -110,7 +110,7 @@ export default class Emulation {
 			try {
 				if (this.saveState != null) this.neees.setSaveState(this.saveState);
 			} catch (e) {
-				throw new Error("Error loading save state: " + e.message);
+				throw new Error(locales.get("error_loading_save_state") + e.message);
 			}
 			this.frameTimer.start();
 		} catch (error) {
@@ -138,7 +138,7 @@ export default class Emulation {
 			try {
 				if (this.saveState != null) this.neees.setSaveState(this.saveState);
 			} catch (e) {
-				throw new Error("Error loading save state: " + e.message);
+				throw new Error(locales.get("error_loading_save_state") + e.message);
 			}
 
 			if (hasFrameBuffer) {

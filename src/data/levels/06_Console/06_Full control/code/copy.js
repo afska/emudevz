@@ -15,5 +15,9 @@ filesystem.mkdirp(`${Drive.TMPL_DIR}/tests`);
 
 for (let fileName in level.tests) {
 	const newName = fileName.replace(".js", "") + ".test.js";
-	filesystem.write(`${Drive.TMPL_DIR}/tests/${newName}`, level.tests[fileName]);
+	const content = level.tests[fileName].replace(
+		/^([ \t]*)locales: \{\r?\n[\s\S]*?^\1\},\r?\n/gm,
+		""
+	); // (remove test name localizations)
+	filesystem.write(`${Drive.TMPL_DIR}/tests/${newName}`, content);
 }

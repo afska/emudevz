@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔢 Registers",
-		"es": "🔢 Registros"
+		"es": "🔢 Registros",
+		"ru": "🔢 Регистры"
 	},
 	"ui": {
 		"layout": "dual",

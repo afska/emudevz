@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🖌️ Sprites (3/6): Drawing",
-		"es": "🖌️ Sprites (3/6): Dibujado"
+		"es": "🖌️ Sprites (3/6): Dibujado",
+		"ru": "🖌️ Спрайты (3/6): Рисование"
 	},
 	"ui": {
 		"layout": "tripleRight",

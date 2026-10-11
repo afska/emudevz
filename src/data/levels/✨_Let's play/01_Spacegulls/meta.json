@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🕊️🛰️ Spacegulls",
-		"es": "🕊️🛰️ Spacegulls"
+		"es": "🕊️🛰️ Spacegulls",
+		"ru": "🕊️🛰️ Spacegulls"
 	},
 	"ui": {
 		"layout": "dual",
@@ -13,7 +14,8 @@
 					"availableCommands": ["chat"],
 					"subtitle": {
 						"en": "",
-						"es": ""
+						"es": "",
+						"ru": ""
 					}
 				}
 			],

@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🤖 NROM",
-		"es": "🤖 NROM"
+		"es": "🤖 NROM",
+		"ru": "🤖 NROM"
 	},
 	"ui": {
 		"run": "copy.js",

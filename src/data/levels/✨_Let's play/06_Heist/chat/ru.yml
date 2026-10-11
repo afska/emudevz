@@ -1,0 +1,47 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется ⛽ 💥  ~Heist~
+    <{screenshot.png;30x30}>
+  - "здесь нужно защищать самый ценный ресурс войны — <топливо>"
+  - "если получится пройти игру, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "от кого защищать? [play]"
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("Heist");
+    {{Right}}.loadROM("/roms/.all/Heist.neees", "stream");
+  messages:
+  - "от врагов!"
+  - "они хотят украсть его для своих зловещих планов"
+  - "попробуй продержаться... скажем, хотя бы до <20-й волны>"
+  - "засчитаю это как победу"
+  events:
+  - heist-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["Heist.neees", "ConcentrationRoom.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - "отличная работа!"
+  - "<! Получен ROM: 📄  /roms/Heist.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/ConcentrationRoom.neees"
+  - "а ещё тебе отправлена игра 🍒 🃏  ~Concentration Room~"
+  - "пока!"
+  responses:
+  - "▶️  продолжить [end]"

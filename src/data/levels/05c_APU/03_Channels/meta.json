@@ -1,12 +1,19 @@
 {
 	"name": {
 		"en": "🎛️ Channels",
-		"es": "🎛️ Canales"
+		"es": "🎛️ Canales",
+		"ru": "🎛️ Каналы"
 	},
 	"ui": {
 		"layout": "dual",
 		"components": {
-			"Right": ["debugger", { "readOnly": true, "initialTab": "APU" }],
+			"Right": [
+				"debugger",
+				{
+					"readOnly": true,
+					"initialTab": "APU"
+				}
+			],
 			"Left": [
 				"console",
 				{

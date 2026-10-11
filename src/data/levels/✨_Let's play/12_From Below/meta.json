@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🧱🐙 From Below",
-		"es": "🧱🐙 From Below"
+		"es": "🧱🐙 From Below",
+		"ru": "🧱🐙 From Below"
 	},
 	"ui": {
 		"layout": "dual",
@@ -13,7 +14,8 @@
 					"availableCommands": ["chat"],
 					"subtitle": {
 						"en": "",
-						"es": ""
+						"es": "",
+						"ru": ""
 					}
 				}
 			],

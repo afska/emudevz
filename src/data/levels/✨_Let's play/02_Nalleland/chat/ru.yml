@@ -1,0 +1,53 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется 🧸 📍  ~Nalleland~
+    <{screenshot.png;30x30}>
+  - "на этот раз ты управляешь медвежонком-путешественником ~Nalle~, который справляется с опасностями с помощью <зачарованной булавки>"
+  - "если получится выполнить моё испытание, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "что за испытание? 👀 [challenge]"
+
+challenge:
+  messages:
+  - "нужно пройти игру в режиме «limited lives» — с ограниченными жизнями"
+  - "включи его в меню <modes> и доберись до конца!"
+  - "(лучше сначала потренироваться в обычном режиме 😅 )"
+  responses:
+  - "понятно 👾 [play]"
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("Nalleland");
+    {{Right}}.loadROM("/roms/.all/Nalleland.neees", "stream");
+  messages:
+  - "посмотрим, что у тебя получится 👀"
+  events:
+  - nalleland-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["Nalleland.neees", "IsostasyDemo.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - "вау!"
+  - "теперь эта игра у тебя как на ладони 🤯"
+  - "<! Получен ROM: 📄  /roms/Nalleland.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/IsostasyDemo.neees"
+  - "а ещё тебе отправлена игра 🌌 🔫  ~Isostasy Demo~"
+  - "наслаждайся 😎"
+  responses:
+  - "▶️  продолжить [end]"

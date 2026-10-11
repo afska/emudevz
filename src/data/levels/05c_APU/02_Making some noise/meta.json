@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📢 Making some noise",
-		"es": "📢 Haciendo ruido"
+		"es": "📢 Haciendo ruido",
+		"ru": "📢 Пошумим"
 	},
 	"ui": {
 		"layout": "tripleRight",

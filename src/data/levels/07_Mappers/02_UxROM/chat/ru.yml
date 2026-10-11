@@ -1,0 +1,52 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "теперь понятно, как реализовать новый маппер (📄  ~/docs/lib/Mapper.ru.md~), так что следующий оставлю тебе"
+  - "один из распространённых мапперов, который <умеет> переключать банки, — <UxROM>, он же маппер 2"
+  responses:
+  - "за дело 🚀 [exercise]"
+
+exercise:
+  messages:
+  - |-
+    📚  создай класс 📏  `UxROM`, унаследованный от `Mapper`:
+    **constructor()**:
+      **->** задаёт ```javascript this.page = 0```
+    **cpuRead(address)**:
+      **->** если `address` находится в диапазоне $4020-$7FFF:
+        **->** возвращает 0
+      **->** если `address` находится в диапазоне $8000-$BFFF:
+        **->** возвращает ```javascript this.$getPrgPage(this.page)[address - 0x8000]```
+      **->** если `address` находится в диапазоне $C000-$FFFF:
+        **->** возвращает ```javascript this.$getPrgPage(this.prgPages.length - 1)[address - 0xC000]```
+    **cpuWrite(address, value)**:
+      **->** если `address` >= $8000:
+        **->** сохраняет `value` как <текущую страницу>
+    **ppuRead(address)**:
+      **->** возвращает ```javascript this.$getChrPage(0)[address]```
+    **ppuWrite(address, value)**:
+      **->** если не ```javascript this.cartridge.header.usesChrRam```:
+        **->** выходит из метода (запись доступна только в CHR-RAM)
+      **->** присваивает ```javascript this.$getChrPage(0)[address] = value```
+    **getSaveState()**:
+      **->** возвращает объект, объединяющий ```javascript super.getSaveState()``` с объектом, содержащим <текущую страницу>
+    **setSaveState(saveState)**:
+      **->** вызывает ```javascript super.setSaveState(saveState)``` и также восстанавливает <текущую страницу>
+  - |-
+    📚  добавь свой класс `UxROM` в 📄  ~/code/mappers/mappers.js~
+      (если файла нет, создай его по 📄  ~/tmpl/mappers/mappers.js~)
+  - |-
+    для проверки маппера запусти одну из этих игр:
+      💦 🏛️  <Böbl>
+      🦅 🧷  <Crowborg>
+      🦟 🍳  <Filthy Kitchen>
+      🌌 🔫  <Isostasy Demo>
+      🕊️ 🛰️  <Spacegulls>
+      🦸 🤸  <Super Tilt Bro>
+      🏭 🔩  <TroubleAt2A03>
+      🐺 🌲  <WolfSpirit>
+      🐺 ⛓️  <Wolfling>
+  responses:
+  - "▶️  продолжить [end]"

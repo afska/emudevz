@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🐺🌲 Wolf Spirit",
-		"es": "🐺🌲 Wolf Spirit"
+		"es": "🐺🌲 Wolf Spirit",
+		"ru": "🐺🌲 Wolf Spirit"
 	},
 	"ui": {
 		"layout": "dual",
@@ -13,7 +14,8 @@
 					"availableCommands": ["chat"],
 					"subtitle": {
 						"en": "",
-						"es": ""
+						"es": "",
+						"ru": ""
 					}
 				}
 			],

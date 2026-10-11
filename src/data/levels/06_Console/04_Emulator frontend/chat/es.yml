@@ -53,10 +53,10 @@ synctovideo:
   - |-
     el código del frontend se vería así:
       ```javascript this.frameTimer = new FrameTimer(() => {
-        // <<update input here>>
+        // <<actualizar el input aquí>>
 
         if (syncToVideo) {
-          // ejecutar por un cuadro completo
+          // ejecutar por un frame completo
           this.emulator.frame(); // envía los píxeles al canvas
 
           if (this.samples.length !== 735)

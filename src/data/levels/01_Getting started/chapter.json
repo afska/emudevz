@@ -1,10 +1,12 @@
 {
 	"name": {
 		"en": "📜 Intro",
-		"es": "📜 Intro"
+		"es": "📜 Intro",
+		"ru": "📜 Введение"
 	},
 	"description": {
 		"en": "📜 Introduction, tutorial, and NEEES hardware",
-		"es": "📜 Introducción, tutorial y hardware de NEEES"
+		"es": "📜 Introducción, tutorial y hardware de NEEES",
+		"ru": "📜 Введение, обучение и устройство NEEES"
 	}
 }

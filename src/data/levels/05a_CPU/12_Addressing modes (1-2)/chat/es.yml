@@ -29,8 +29,8 @@ exercise:
   - 📚  implementa los modos de direccionamiento restantes
   - 📚  y exporta el objeto bajo la clave `addressingModes` en 📄  ~/code/index.js~
   responses:
-  - ayúdame con el modo "Relative" 😅 [relative]
-  - ayúdame con el modo "Indirect" 😅 [indirect]
+  - (*) ayúdame con el modo "Relative" 😅 [relative]
+  - (*) ayúdame con el modo "Indirect" 😅 [indirect]
 
 relative:
   messages:

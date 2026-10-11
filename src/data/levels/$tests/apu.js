@@ -36,6 +36,7 @@ it("the file `/code/index.js` exports <an object> containing the `APU` class", (
   locales: {
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene la clase `APU`",
+    ru: "файл `/code/index.js` экспортирует <объект>, содержащий класс `APU`",
   },
   use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -49,6 +50,7 @@ it("receives and saves the `cpu` property", () => {
 })({
   locales: {
     es: "recibe y guarda una propiedad `cpu`",
+    ru: "принимает и сохраняет свойство `cpu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -65,6 +67,7 @@ it("initializes the <counters>", () => {
 })({
   locales: {
     es: "inicializa los <contadores>",
+    ru: "инициализирует <счётчики>",
   },
   use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -81,6 +84,7 @@ it("increments the <sample counter> on every `step(...)` call", () => {
 })({
   locales: {
     es: "incrementa el <contador de samples> en cada llamada a `step(...)`",
+    ru: "увеличивает <счётчик отсчётов> при каждом вызове `step(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -106,6 +110,7 @@ it("generates a new sample for every 20 `step(...)` calls", () => {
 })({
   locales: {
     es: "genera un nuevo sample por cada 20 llamadas a `step(...)`",
+    ru: "создаёт новый отсчёт каждые 20 вызовов `step(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.1"),
 });
@@ -177,6 +182,7 @@ it("includes a `registers` property with 21 audio registers", () => {
 })({
   locales: {
     es: "incluye una propiedad `registers` con 21 registros de audio",
+    ru: "содержит свойство `registers` с 21 звуковым регистром",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -245,6 +251,7 @@ it("connects the audio registers to CPU memory (<reads>)", () => {
 })({
   locales: {
     es: "conecta los registros de audio con la memoria de CPU (<lecturas>)",
+    ru: "подключает звуковые регистры к памяти CPU (<чтение>)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -299,6 +306,7 @@ it("connects the audio registers to CPU memory (<writes>)", () => {
 })({
   locales: {
     es: "conecta los registros de audio con la memoria de CPU (<escrituras>)",
+    ru: "подключает звуковые регистры к памяти CPU (<запись>)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -322,6 +330,7 @@ it("except `APUStatus`, all registers are <write only>", () => {
 })({
   locales: {
     es: "excepto `APUStatus`, todos los registros son <solo escritura>",
+    ru: "все регистры, кроме `APUStatus`, доступны <только для записи>",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -348,6 +357,7 @@ it("`PulseControl`: writes `volumeOrEnvelopePeriod` (bits ~0-3~)", () => {
 })({
   locales: {
     es: "`PulseControl`: escribe `volumeOrEnvelopePeriod` (bits ~0-3~)",
+    ru: "`PulseControl`: записывает `volumeOrEnvelopePeriod` (биты ~0-3~)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -370,6 +380,7 @@ it("`PulseControl`: writes `constantVolume` (bit 4)", () => {
 })({
   locales: {
     es: "`PulseControl`: escribe `constantVolume` (bit 4)",
+    ru: "`PulseControl`: записывает `constantVolume` (бит 4)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -392,6 +403,7 @@ it("`PulseControl`: writes `envelopeLoopOrLengthCounterHalt` (bit 5)", () => {
 })({
   locales: {
     es: "`PulseControl`: escribe `envelopeLoopOrLengthCounterHalt` (bit 5)",
+    ru: "`PulseControl`: записывает `envelopeLoopOrLengthCounterHalt` (бит 5)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -418,6 +430,7 @@ it("`PulseControl`: writes `dutyCycleId` (bits ~6-7~)", () => {
 })({
   locales: {
     es: "`PulseControl`: escribe `dutyCycleId` (bits ~6-7~)",
+    ru: "`PulseControl`: записывает `dutyCycleId` (биты ~6-7~)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -432,6 +445,7 @@ it("`TriangleTimerLow`: writes the value", () => {
 })({
   locales: {
     es: "`TriangleTimerLow`: escribe el valor",
+    ru: "`TriangleTimerLow`: записывает значение",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -453,6 +467,7 @@ it("`DMCControl`: writes `dpcmPeriodId` (bits ~0-3~)", () => {
 })({
   locales: {
     es: "`DMCControl`: escribe `dpcmPeriodId` (bits ~0-3~)",
+    ru: "`DMCControl`: записывает `dpcmPeriodId` (биты ~0-3~)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -470,6 +485,7 @@ it("`DMCControl`: writes `loop` (bit 6)", () => {
 })({
   locales: {
     es: "`DMCControl`: escribe `loop` (bit 6)",
+    ru: "`DMCControl`: записывает `loop` (бит 6)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -484,6 +500,7 @@ it("`DMCSampleAddress`: writes the value", () => {
 })({
   locales: {
     es: "`DMCSampleAddress`: escribe el valor",
+    ru: "`DMCSampleAddress`: записывает значение",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -498,6 +515,7 @@ it("`DMCSampleLength`: writes the value", () => {
 })({
   locales: {
     es: "`DMCSampleLength`: escribe el valor",
+    ru: "`DMCSampleLength`: записывает значение",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -539,6 +557,7 @@ it("`APUControl`: writes the <channel enable> fields (bits ~0-4~)", () => {
   locales: {
     es:
       "`APUControl`: escribe los campos de <habilitación de canales> (bits ~0-4~)",
+    ru: "`APUControl`: записывает поля <включения каналов> (биты ~0-4~)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4"),
 });
@@ -563,6 +582,7 @@ it("`APUStatus`: reads return 0 (for now)", () => {
 })({
   locales: {
     es: "`APUStatus`: las lecturas retornan 0 (por ahora)",
+    ru: "`APUStatus`: чтение возвращает 0 (пока)",
   },
   use: ({ id }, book) => id >= book.getId("5c.4") && id < book.getId("5c.19"),
 });
@@ -593,6 +613,7 @@ it("has `PulseChannel` instances", () => {
 })({
   locales: {
     es: "tiene instancias de `PulseChannel`",
+    ru: "содержит экземпляры `PulseChannel`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -606,6 +627,7 @@ it("`PulseChannel`: has an `apu` reference", () => {
 })({
   locales: {
     es: "`PulseChannel`: tiene una referencia `apu`",
+    ru: "`PulseChannel`: содержит ссылку `apu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -619,6 +641,7 @@ it("`PulseChannel`: has an `id`", () => {
 })({
   locales: {
     es: "`PulseChannel`: tiene un `id`",
+    ru: "`PulseChannel`: содержит `id`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -634,6 +657,7 @@ it("`PulseChannel`: has an `enableFlagName`", () => {
 })({
   locales: {
     es: "`PulseChannel`: tiene un `enableFlagName`",
+    ru: "`PulseChannel`: содержит `enableFlagName`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -647,6 +671,7 @@ it("`PulseChannel`: has a `timer` initialized at 0", () => {
 })({
   locales: {
     es: "`PulseChannel`: tiene un `timer` inicializado en 0",
+    ru: "`PulseChannel`: содержит `timer` с начальным значением 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -664,6 +689,8 @@ it("`PulseChannel`: has a `registers` property, pointing to the audio registers"
   locales: {
     es:
       "`PulseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+    ru:
+      "`PulseChannel`: содержит свойство `registers`, указывающее на звуковые регистры",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -694,6 +721,8 @@ it("`PulseChannel`: has an `isEnabled()` method that returns whether the channel
   locales: {
     es:
       "`PulseChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
+    ru:
+      "`PulseChannel`: содержит метод `isEnabled()`, который возвращает, <включён> ли канал в APUControl",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -709,6 +738,7 @@ it("`PulseChannel`: has a `sample()` method that <returns a number>", () => {
 })({
   locales: {
     es: "`PulseChannel`: tiene un método `sample()` que <retorna un número>",
+    ru: "`PulseChannel`: содержит метод `sample()`, который <возвращает число>",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -733,6 +763,8 @@ it("`PulseChannel`: `updateTimer()` updates `timer` based on PulseTimerLow and P
   locales: {
     es:
       "`PulseChannel`: `updateTimer()` actualiza `timer` basado en PulseTimerLow y PulseTimerHighLCL",
+    ru:
+      "`PulseChannel`: `updateTimer()` обновляет `timer` по PulseTimerLow и PulseTimerHighLCL",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -750,6 +782,7 @@ it("`PulseChannel`: `step()` calls `updateTimer()`", () => {
 })({
   locales: {
     es: "`PulseChannel`: `step()` llama a `updateTimer()`",
+    ru: "`PulseChannel`: `step()` вызывает `updateTimer()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -771,6 +804,8 @@ it("calls Pulse Channels' `step()` method on every APU `step(...)` call", () => 
   locales: {
     es:
       "llama al método `step()` de los Canales Pulso en cada llamado a `step(...)` de la APU",
+    ru:
+      "вызывает метод `step()` импульсных каналов при каждом вызове `step(...)` APU",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -795,6 +830,7 @@ it("for now, new samples are mixed like `(pulse1 + pulse2) * 0.01`", () => {
   locales: {
     es:
       "por ahora, los nuevos samples se mezclan como `(pulse1 + pulse2) * 0.01`",
+    ru: "пока новые отсчёты смешиваются по формуле `(pulse1 + pulse2) * 0.01`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5") && id < book.getId("5c.19"),
 });
@@ -816,6 +852,7 @@ it("`PulseTimerLow`: writes the value and calls `updateTimer()`", () => {
 })({
   locales: {
     es: "`PulseTimerLow`: escribe el valor y llama a `updateTimer()`",
+    ru: "`PulseTimerLow`: записывает значение и вызывает `updateTimer()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -844,6 +881,8 @@ it("`PulseTimerHighLCL`: writes `timerHigh` (bits ~0-2~) and calls `updateTimer(
   locales: {
     es:
       "`PulseTimerHighLCL`: escribe `timerHigh` (bits ~0-2~) y llama a `updateTimer()`",
+    ru:
+      "`PulseTimerHighLCL`: записывает `timerHigh` (биты ~0-2~) и вызывает `updateTimer()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.5"),
 });
@@ -873,6 +912,8 @@ it("`PulseChannel`: has an `oscillator` that can <produce> samples", () => {
 })({
   locales: {
     es: "`PulseChannel`: tiene un `oscillator` que puede <producir> samples",
+    ru:
+      "`PulseChannel`: содержит `oscillator`, который умеет <создавать> отсчёты",
   },
   use: ({ id }, book) => id >= book.getId("5c.6"),
 });
@@ -904,6 +945,7 @@ it("`PulseChannel`: `sample()` updates the oscillator frequency", () => {
 })({
   locales: {
     es: "`PulseChannel`: `sample()` actualiza la frecuencia del oscilador",
+    ru: "`PulseChannel`: `sample()` обновляет частоту генератора",
   },
   use: ({ id }, book) => id >= book.getId("5c.6"),
 });
@@ -942,6 +984,8 @@ it("`PulseChannel`: `sample()` updates the oscillator duty cycle", () => {
   locales: {
     es:
       "`PulseChannel`: `sample()` actualiza el ciclo de trabajo del oscilador",
+    ru:
+      "`PulseChannel`: `sample()` обновляет коэффициент заполнения генератора",
   },
   use: ({ id }, book) => id >= book.getId("5c.6"),
 });
@@ -974,6 +1018,7 @@ it("`PulseChannel`: `sample()` updates the oscillator volume", () => {
 })({
   locales: {
     es: "`PulseChannel`: `sample()` actualiza el volumen del oscilador",
+    ru: "`PulseChannel`: `sample()` обновляет громкость генератора",
   },
   use: ({ id }, book) => id >= book.getId("5c.6"),
 });
@@ -1003,6 +1048,7 @@ it("`PulseChannel`: `sample()` calls `oscillator.sample()`", () => {
 })({
   locales: {
     es: "`PulseChannel`: `sample()` llama a `oscillator.sample()`",
+    ru: "`PulseChannel`: `sample()` вызывает `oscillator.sample()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.6"),
 });
@@ -1022,6 +1068,7 @@ it("`APUFrameCounter`: writes `use5StepSequencer` (bit 7)", () => {
 })({
   locales: {
     es: "`APUFrameCounter`: escribe `use5StepSequencer` (bit 7)",
+    ru: "`APUFrameCounter`: записывает `use5StepSequencer` (бит 7)",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1038,6 +1085,7 @@ it("`APUFrameCounter`: writing <resets> the frame sequencer", () => {
 })({
   locales: {
     es: "`APUFrameCounter`: escribir <reinicia> el secuenciador de frames",
+    ru: "`APUFrameCounter`: запись <сбрасывает> секвенсор кадров",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1060,6 +1108,7 @@ it("`APUFrameCounter`: writing triggers both a quarter frame and a half frame", 
   locales: {
     es:
       "`APUFrameCounter`: escribir dispara tanto un quarter frame como un half frame",
+    ru: "`APUFrameCounter`: запись вызывает события четверти и половины кадра",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1072,6 +1121,7 @@ it("has a `frameSequencer` property", () => {
 })({
   locales: {
     es: "tiene una propiedad `frameSequencer`",
+    ru: "содержит свойство `frameSequencer`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1087,6 +1137,8 @@ it("`FrameSequencer`: has a `counter` property and `reset()`/`step()` methods", 
   locales: {
     es:
       "`FrameSequencer`: tiene una propiedad `counter` y métodos `reset()`/`step()`",
+    ru:
+      "`FrameSequencer`: содержит свойство `counter` и методы `reset()`/`step()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1101,6 +1153,7 @@ it("`FrameSequencer`: `reset()` assigns 0 to `counter`", () => {
 })({
   locales: {
     es: "`FrameSequencer`: `reset()` asigna 0 a `counter`",
+    ru: "`FrameSequencer`: `reset()` присваивает `counter` значение 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1115,6 +1168,7 @@ it("`FrameSequencer`: `step()` increments `counter`", () => {
 })({
   locales: {
     es: "`FrameSequencer`: `step()` incrementa `counter`",
+    ru: "`FrameSequencer`: `step()` увеличивает `counter`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1147,6 +1201,8 @@ it("`FrameSequencer`: on four-step sequences, `step()` triggers quarter frames o
   locales: {
     es:
       "`FrameSequencer`: en secuencias de cuatro pasos, `step()` dispara quarter frames en los ciclos 3729, 7457, 11186, 14916",
+    ru:
+      "`FrameSequencer`: в последовательности из четырёх шагов `step()` вызывает четверти кадра на циклах 3729, 7457, 11186, 14916",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1175,6 +1231,8 @@ it("`FrameSequencer`: on four-step sequences, `step()` triggers half frames on c
   locales: {
     es:
       "`FrameSequencer`: en secuencias de cuatro pasos, `step()` dispara half frames en los ciclos 7457, 14916",
+    ru:
+      "`FrameSequencer`: в последовательности из четырёх шагов `step()` вызывает половины кадра на циклах 7457, 14916",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1197,6 +1255,8 @@ it("`FrameSequencer`: on four-step sequences, `step()` resets the counter on cyc
   locales: {
     es:
       "`FrameSequencer`: en secuencias de cuatro pasos, `step()` reinicia el contador en el ciclo 14916",
+    ru:
+      "`FrameSequencer`: в последовательности из четырёх шагов `step()` сбрасывает счётчик на цикле 14916",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1228,7 +1288,9 @@ it("`FrameSequencer`: on five-step sequences, `step()` triggers quarter frames o
 })({
   locales: {
     es:
-      "`FrameSequencer`: en secuencias de cinco pasos, `step()` dispara quarter frames en los ciclos 3729, 7457, 11186, 14916",
+      "`FrameSequencer`: en secuencias de cinco pasos, `step()` dispara quarter frames en los ciclos 3729, 7457, 11186, 18641",
+    ru:
+      "`FrameSequencer`: в последовательности из пяти шагов `step()` вызывает четверти кадра на циклах 3729, 7457, 11186, 18641",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1257,6 +1319,8 @@ it("`FrameSequencer`: on five-step sequences, `step()` triggers half frames on c
   locales: {
     es:
       "`FrameSequencer`: en secuencias de cinco pasos, `step()` dispara half frames en los ciclos 7457, 18641",
+    ru:
+      "`FrameSequencer`: в последовательности из пяти шагов `step()` вызывает половины кадра на циклах 7457, 18641",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1279,6 +1343,8 @@ it("`FrameSequencer`: on five-step sequences, `step()` resets the counter on cyc
   locales: {
     es:
       "`FrameSequencer`: en secuencias de cinco pasos, `step()` reinicia el contador en el ciclo 14916",
+    ru:
+      "`FrameSequencer`: в последовательности из пяти шагов `step()` сбрасывает счётчик на цикле 18641",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1292,6 +1358,7 @@ it("has two methods: `onQuarterFrameClock()` and `onHalfFrameClock()`", () => {
 })({
   locales: {
     es: "tiene dos métodos: `onQuarterFrameClock()` y `onHalfFrameClock()`",
+    ru: "содержит два метода: `onQuarterFrameClock()` и `onHalfFrameClock()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1309,6 +1376,7 @@ it("updates the frame sequencer on every `step(...)` call", () => {
 })({
   locales: {
     es: "actualiza el secuenciador de frames en cada llamada a `step(...)`",
+    ru: "обновляет секвенсор кадров при каждом вызове `step(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1339,6 +1407,7 @@ it("calls `frameSequencer.step()` <before> calling `onSample(...)`", () => {
 })({
   locales: {
     es: "llama a `frameSequencer.step()` <antes> de llamar a `onSample(...)`",
+    ru: "вызывает `frameSequencer.step()` <перед> вызовом `onSample(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.7"),
 });
@@ -1358,6 +1427,7 @@ it("`PulseChannel`: has a `lengthCounter` property", () => {
 })({
   locales: {
     es: "`PulseChannel`: tiene una propiedad `lengthCounter`",
+    ru: "`PulseChannel`: содержит свойство `lengthCounter`",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1373,6 +1443,7 @@ it("`LengthCounter`: has a `counter` property that starts at 0", () => {
 })({
   locales: {
     es: "`LengthCounter`: tiene una propiedad `counter` que empieza en 0",
+    ru: "`LengthCounter`: содержит свойство `counter` с начальным значением 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1391,6 +1462,7 @@ it("`LengthCounter`: `reset()` sets `counter` = 0", () => {
 })({
   locales: {
     es: "`LengthCounter`: `reset()` asigna `counter` = 0",
+    ru: "`LengthCounter`: `reset()` задаёт `counter` = 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1415,6 +1487,7 @@ it("`LengthCounter`: `isActive()` returns whether `counter` is greater than 0", 
 })({
   locales: {
     es: "`LengthCounter`: `isActive()` retorna si `counter` es mayor a 0",
+    ru: "`LengthCounter`: `isActive()` возвращает, больше ли `counter` нуля",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1430,6 +1503,7 @@ it("`LengthCounter`: has a `clock(...)` method", () => {
 })({
   locales: {
     es: "`LengthCounter`: tiene un método `clock(...)`",
+    ru: "`LengthCounter`: содержит метод `clock(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1453,6 +1527,8 @@ it("`LengthCounter`: calling `clock(...)` with ~false~ as the first argument jus
   locales: {
     es:
       "`LengthCounter`: llamar a `clock()` con ~false~ como primer argumento solo reinicia el contador",
+    ru:
+      "`LengthCounter`: вызов `clock(...)` с ~false~ в первом аргументе просто <сбрасывает счётчик>",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1471,6 +1547,7 @@ it("`LengthCounter`: calling `clock(true, true)` doesn't do anything", () => {
 })({
   locales: {
     es: "`LengthCounter`: llamar a `clock(true, true)` no hace nada",
+    ru: "`LengthCounter`: вызов `clock(true, true)` ничего не меняет",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1493,6 +1570,7 @@ it("`LengthCounter`: calling `clock(true, false)` decrements the counter", () =>
 })({
   locales: {
     es: "`LengthCounter`: llamar a `clock(true, false)` decrementa el contador",
+    ru: "`LengthCounter`: вызов `clock(true, false)` уменьшает счётчик",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1512,6 +1590,8 @@ it("`LengthCounter`: calling `clock(true, false)` doesn't decrement if the count
   locales: {
     es:
       "`LengthCounter`: llamar a `clock(true, false)` no decrementa si el contador es 0",
+    ru:
+      "`LengthCounter`: вызов `clock(true, false)` не уменьшает счётчик, если он равен 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1587,6 +1667,8 @@ it("`PulseChannel`: `sample()` just returns the <last sample> if the channel is 
   locales: {
     es:
       "`PulseChannel`: `sample()` solo retorna el <último sample> si el canal está desactivado",
+    ru:
+      "`PulseChannel`: `sample()` просто возвращает <последний отсчёт>, если канал выключен",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1663,6 +1745,8 @@ it("`PulseChannel`: `sample()` just returns the <last sample> if the length coun
   locales: {
     es:
       "`PulseChannel`: `sample()` solo retorna el <último sample> si el contador de longitud <no está activo>",
+    ru:
+      "`PulseChannel`: `sample()` просто возвращает <последний отсчёт>, если счётчик длины <неактивен>",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1677,6 +1761,7 @@ it("`PulseChannel`: has a `quarterFrame()` method", () => {
 })({
   locales: {
     es: "`PulseChannel`: tiene un método `quarterFrame()`",
+    ru: "`PulseChannel`: содержит метод `quarterFrame()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1716,6 +1801,7 @@ it("`PulseChannel`: `halfFrame()` updates the length counter", () => {
 })({
   locales: {
     es: "`PulseChannel`: `halfFrame()` actualiza el contador de longitud",
+    ru: "`PulseChannel`: `halfFrame()` обновляет счётчик длины",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1735,6 +1821,8 @@ it("`onQuarterFrameClock()` calls `quarterFrame()` on the two pulse channel inst
   locales: {
     es:
       "`onQuarterFrameClock()` llama a `quarterFrame()` en las dos instancias del canal pulso",
+    ru:
+      "`onQuarterFrameClock()` вызывает `quarterFrame()` у обоих экземпляров импульсных каналов",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1754,6 +1842,8 @@ it("`onHalfFrameClock()` calls `halfFrame()` on the two pulse channel instances"
   locales: {
     es:
       "`onHalfFrameClock()` llama a `halfFrame()` en las dos instancias del canal pulso",
+    ru:
+      "`onHalfFrameClock()` вызывает `halfFrame()` у обоих экземпляров импульсных каналов",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1785,6 +1875,8 @@ it("`PulseTimerHighLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the
   locales: {
     es:
       "`PulseTimerHighLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
+    ru:
+      "`PulseTimerHighLCL`: записывает `lengthCounterLoad` (биты ~3-7~) и обновляет счётчик длины",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1804,6 +1896,8 @@ it("`APUControl`: on writes, if `enablePulse1` is clear, resets the length count
   locales: {
     es:
       "`APUControl`: en escrituras, si `enablePulse1` está apagada, reinicia el contador de longitud",
+    ru:
+      "`APUControl`: при записи сбрасывает счётчик длины, если `enablePulse1` сброшен",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1823,6 +1917,8 @@ it("`APUControl`: on writes, if `enablePulse2` is clear, resets the length count
   locales: {
     es:
       "`APUControl`: en escrituras, si `enablePulse2` está apagada, reinicia el contador de longitud",
+    ru:
+      "`APUControl`: при записи сбрасывает счётчик длины, если `enablePulse2` сброшен",
   },
   use: ({ id }, book) => id >= book.getId("5c.8"),
 });
@@ -1840,7 +1936,10 @@ it("`PulseChannel`: has a `volumeEnvelope` property", () => {
     ).to.be.an("object");
   }
 })({
-  locales: { es: "`PulseChannel`: tiene una propiedad `volumeEnvelope`" },
+  locales: {
+    es: "`PulseChannel`: tiene una propiedad `volumeEnvelope`",
+    ru: "`PulseChannel`: содержит свойство `volumeEnvelope`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
 
@@ -1858,6 +1957,8 @@ it("`VolumeEnvelope`: has `startFlag`, `dividerCount`, `volume` initialized to ~
   locales: {
     es:
       "`VolumeEnvelope`: tiene `startFlag`, `dividerCount` y `volume` inicializados en ~false~, 0, 0",
+    ru:
+      "`VolumeEnvelope`: начальные значения `startFlag`, `dividerCount`, `volume` равны ~false~, 0, 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -1870,7 +1971,10 @@ it("`VolumeEnvelope`: has a `clock(...)` method", () => {
     expect(apu.channels.pulses[i].volumeEnvelope).to.respondTo("clock");
   }
 })({
-  locales: { es: "`VolumeEnvelope`: tiene un método `clock(...)`" },
+  locales: {
+    es: "`VolumeEnvelope`: tiene un método `clock(...)`",
+    ru: "`VolumeEnvelope`: содержит метод `clock(...)`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
 
@@ -1890,6 +1994,8 @@ it("`VolumeEnvelope`: `clock(...)` with `startFlag = true` clears it, sets `volu
   locales: {
     es:
       "`VolumeEnvelope`: `clock(...)` con `startFlag = true` lo apaga, fija `volume` en 15 y `dividerCount` en el periodo",
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `startFlag = true` сбрасывает флаг, задаёт `volume` равным 15 и `dividerCount` равным периоду",
   },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -1911,6 +2017,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount > 0` decrements it and lea
   locales: {
     es:
       "`VolumeEnvelope`: `clock(...)` cuando `dividerCount > 0` lo decrementa y deja el resto intacto",
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `dividerCount > 0` уменьшает счётчик, не меняя остальное",
   },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -1931,6 +2039,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume > 0`, res
   locales: {
     es:
       "`VolumeEnvelope`: `clock(...)` cuando `dividerCount = 0` y `volume > 0`, reinicia `dividerCount` y decrementa `volume`",
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `dividerCount = 0` и `volume > 0` перезагружает `dividerCount` и уменьшает `volume`",
   },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -1951,6 +2061,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with
   locales: {
     es:
       "`VolumeEnvelope`: `clock(...)` cuando `dividerCount = 0` y `volume = 0` con `loop = false`, reinicia solo `dividerCount`",
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `dividerCount = 0`, `volume = 0` и `loop = false` перезагружает только `dividerCount`",
   },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -1971,6 +2083,8 @@ it("`VolumeEnvelope`: `clock(...)` when `dividerCount = 0` and `volume = 0` with
   locales: {
     es:
       "`VolumeEnvelope`: `clock(...)` cuando `dividerCount = 0` y `volume = 0` con `loop = true`, reinicia `dividerCount` y `volume`",
+    ru:
+      "`VolumeEnvelope`: `clock(...)` при `dividerCount = 0`, `volume = 0` и `loop = true` перезагружает и `dividerCount`, и `volume`",
   },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -1993,6 +2107,7 @@ it("`PulseChannel`: `quarterFrame()` updates the volume envelope", () => {
 })({
   locales: {
     es: "`PulseChannel`: `quarterFrame()` actualiza la envolvente de volumen",
+    ru: "`PulseChannel`: `quarterFrame()` обновляет огибающую громкости",
   },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -2016,6 +2131,8 @@ it("`PulseTimerHighLCL`: writes set the `startFlag` on the channel's volume enve
   locales: {
     es:
       "`PulseTimerHighLCL`: las escrituras encienden `startFlag` en la envolvente de volumen del canal",
+    ru:
+      "`PulseTimerHighLCL`: запись устанавливает `startFlag` огибающей громкости канала",
   },
   use: ({ id }, book) => id >= book.getId("5c.9"),
 });
@@ -2046,6 +2163,8 @@ it("`PulseSweep`: writes `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `e
   locales: {
     es:
       "`PulseSweep`: escribe `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`",
+    ru:
+      "`PulseSweep`: записывает `shiftCount`, `negateFlag`, `dividerPeriodMinusOne`, `enabledFlag`",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2061,7 +2180,10 @@ it("`PulseChannel`: has a `frequencySweep` property", () => {
     ).to.be.an("object");
   }
 })({
-  locales: { es: "`PulseChannel`: tiene una propiedad `frequencySweep`" },
+  locales: {
+    es: "`PulseChannel`: tiene una propiedad `frequencySweep`",
+    ru: "`PulseChannel`: содержит свойство `frequencySweep`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
 
@@ -2079,6 +2201,8 @@ it("`FrequencySweep`: has `startFlag`, `dividerCount`, `mute` initialized to ~fa
   locales: {
     es:
       "`FrequencySweep`: tiene `startFlag`, `dividerCount` y `mute` inicializados en ~false~, `0`, ~false~",
+    ru:
+      "`FrequencySweep`: начальные значения `startFlag`, `dividerCount`, `mute` равны ~false~, `0`, ~false~",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2095,6 +2219,7 @@ it("`FrequencySweep`: has `clock()` and `muteIfNeeded()` methods", () => {
 })({
   locales: {
     es: "`FrequencySweep`: tiene métodos `clock()` y `muteIfNeeded()`",
+    ru: "`FrequencySweep`: содержит методы `clock()` и `muteIfNeeded()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2124,6 +2249,8 @@ it("`FrequencySweep`: `clock()` increases `timer` by <shift delta> when enabled,
   locales: {
     es:
       "`FrequencySweep`: `clock()` incrementa `timer` por el <delta apropiado> cuando está habilitado, `shiftCount > 0`, `dividerCount = 0` y no está silenciado",
+    ru:
+      "`FrequencySweep`: `clock()` увеличивает `timer` на <дельту сдвига>, если свип включён, `shiftCount > 0`, `dividerCount = 0` и канал не заглушён",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2153,6 +2280,8 @@ it("`FrequencySweep`: `clock()` decreases `timer` by <shift delta> when `negateF
   locales: {
     es:
       "`FrequencySweep`: `clock()`: decrementa `timer` por el <delta apropiado> cuando `negateFlag` está encendida (mismas condiciones)",
+    ru:
+      "`FrequencySweep`: `clock()` уменьшает `timer` на <дельту сдвига>, если установлен `negateFlag` (при тех же условиях)",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2180,6 +2309,8 @@ it("`FrequencySweep`: `clock()` reloads `dividerCount` and clears `startFlag` wh
   locales: {
     es:
       "`FrequencySweep`: `clock()` recarga `dividerCount` y limpia `startFlag` cuando `startFlag` está encendida",
+    ru:
+      "`FrequencySweep`: `clock()` перезагружает `dividerCount` и сбрасывает `startFlag`, если `startFlag` установлен",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2205,6 +2336,8 @@ it("`FrequencySweep`: `clock()` when `dividerCount > 0` decrements it and leaves
   locales: {
     es:
       "`FrequencySweep`: `clock()` cuando `dividerCount > 0` lo decrementa y deja `timer` intacto",
+    ru:
+      "`FrequencySweep`: `clock()` при `dividerCount > 0` уменьшает счётчик, не меняя `timer`",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2237,6 +2370,8 @@ it("`FrequencySweep`: `muteIfNeeded()` sets `mute` when `timer` is ~< 8~ or ~> 0
   locales: {
     es:
       "`FrequencySweep`: `muteIfNeeded()` enciende `mute` cuando `timer` is ~< 8~ o ~> 0x7ff~",
+    ru:
+      "`FrequencySweep`: `muteIfNeeded()` устанавливает `mute`, если `timer` ~< 8~ или ~> 0x7ff~",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2308,6 +2443,8 @@ it("`PulseChannel`: `sample()` just returns the <last sample> if the sweep unit 
   locales: {
     es:
       "`PulseChannel`: `sample()` solo retorna el <último sample> si la unidad de barrido está silenciada",
+    ru:
+      "`PulseChannel`: `sample()` просто возвращает <последний отсчёт>, если блок свипа заглушает канал",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2332,6 +2469,8 @@ it("`PulseChannel`: `step()` calls `frequencySweep.muteIfNeeded()` and `updateTi
   locales: {
     es:
       "`PulseChannel`: `step()` llama a `frequencySweep.muteIfNeeded()` y a `updateTimer()` cuando `sweep.enabledFlag` está en 0",
+    ru:
+      "`PulseChannel`: `step()` вызывает `frequencySweep.muteIfNeeded()` и `updateTimer()`, если `sweep.enabledFlag` сброшен",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2356,6 +2495,8 @@ it("`PulseChannel`: `step()` calls `frequencySweep.muteIfNeeded()` but not `upda
   locales: {
     es:
       "`PulseChannel`: `step()` llama a `frequencySweep.muteIfNeeded()` pero no a `updateTimer()` cuando `sweep.enabledFlag` está encendida",
+    ru:
+      "`PulseChannel`: `step()` вызывает `frequencySweep.muteIfNeeded()`, но не `updateTimer()`, если `sweep.enabledFlag` установлен",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2373,6 +2514,7 @@ it("`PulseChannel`: `halfFrame()` calls `frequencySweep.clock()`", () => {
 })({
   locales: {
     es: "`PulseChannel`: `halfFrame()` llama a `frequencySweep.clock()`",
+    ru: "`PulseChannel`: `halfFrame()` вызывает `frequencySweep.clock()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2396,6 +2538,7 @@ it("`PulseSweep`: writes set the `startFlag` on the channel's frequency sweep", 
   locales: {
     es:
       "`PulseSweep`: las escrituras encienden `startFlag` en el barrido de frecuencia del canal",
+    ru: "`PulseSweep`: запись устанавливает `startFlag` свипа частоты канала",
   },
   use: ({ id }, book) => id >= book.getId("5c.10"),
 });
@@ -2412,7 +2555,10 @@ it("`TriangleTimerHighLCL`: writes `timerHigh` (bits ~0-2~)", () => {
     "timerHigh"
   );
 })({
-  locales: { es: "`TriangleTimerHighLCL`: escribe `timerHigh` (bits ~0-2~)" },
+  locales: {
+    es: "`TriangleTimerHighLCL`: escribe `timerHigh` (bits ~0-2~)",
+    ru: "`TriangleTimerHighLCL`: записывает `timerHigh` (биты ~0-2~)",
+  },
   use: ({ id }, book) => id >= book.getId("5c.11"),
 });
 
@@ -2424,6 +2570,7 @@ it("has a `TriangleChannel` instance", () => {
 })({
   locales: {
     es: "tiene una instancia de `TriangleChannel`",
+    ru: "содержит экземпляр `TriangleChannel`",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2436,6 +2583,7 @@ it("`TriangleChannel`: has an `apu` reference", () => {
 })({
   locales: {
     es: "`TriangleChannel`: tiene una referencia `apu`",
+    ru: "`TriangleChannel`: содержит ссылку `apu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2452,6 +2600,8 @@ it("`TriangleChannel`: has a `registers` property, pointing to the audio registe
   locales: {
     es:
       "`TriangleChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+    ru:
+      "`TriangleChannel`: содержит свойство `registers`, указывающее на звуковые регистры",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2467,6 +2617,8 @@ it("`TriangleChannel`: has an `oscillator` property that can <produce> samples",
   locales: {
     es:
       "`TriangleChannel`: tiene una propiedad `oscillator` que puede <producir> samples",
+    ru:
+      "`TriangleChannel`: содержит свойство `oscillator`, которое умеет <создавать> отсчёты",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2480,6 +2632,8 @@ it("`TriangleChannel`: has a `sample()` method that <returns a number>", () => {
 })({
   locales: {
     es: "`TriangleChannel`: tiene un método `sample()` que <retorna un número>",
+    ru:
+      "`TriangleChannel`: содержит метод `sample()`, который <возвращает число>",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2500,6 +2654,7 @@ it("`TriangleChannel`: `sample()` returns 0 when `timer` ~< 2~", () => {
 })({
   locales: {
     es: "`TriangleChannel`: `sample()` retorna 0 cuando `timer` ~< 2~",
+    ru: "`TriangleChannel`: `sample()` возвращает 0 при `timer` ~< 2~",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2532,6 +2687,8 @@ it("`TriangleChannel`: `sample()` updates `oscillator.frequency` and returns `os
   locales: {
     es:
       "`TriangleChannel`: `sample()` actualiza `oscillator.frequency` y retorna `oscillator.sample()` cuando `timer` está en un <rango válido>",
+    ru:
+      "`TriangleChannel`: `sample()` обновляет `oscillator.frequency` и возвращает `oscillator.sample()`, если `timer` находится в <допустимом диапазоне>",
   },
   use: ({ id }, book) => id >= book.getId("5c.11"),
 });
@@ -2555,6 +2712,7 @@ it("mixes pulse1, pulse2 and triangle in `step()`", () => {
 })({
   locales: {
     es: "mezcla pulse1, pulse2 y triangle en `step()`",
+    ru: "смешивает pulse1, pulse2 и triangle в `step()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.11") && id < book.getId("5c.19"),
 });
@@ -2574,6 +2732,7 @@ it("`TriangleLengthControl`: writes `halt` (bit 7)", () => {
 })({
   locales: {
     es: "`TriangleLengthControl`: escribe `halt` (bit 7)",
+    ru: "`TriangleLengthControl`: записывает `halt` (бит 7)",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2590,7 +2749,10 @@ it("`TriangleChannel`: has a `lengthCounter` property", () => {
     "class"
   );
 })({
-  locales: { es: "`TriangleChannel`: tiene una propiedad `lengthCounter`" },
+  locales: {
+    es: "`TriangleChannel`: tiene una propiedad `lengthCounter`",
+    ru: "`TriangleChannel`: содержит свойство `lengthCounter`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
@@ -2634,6 +2796,8 @@ it("`TriangleChannel`: `sample()` just returns the <last sample> if the channel 
   locales: {
     es:
       "`TriangleChannel`: `sample()` solo retorna el <último sample> si el canal está desactivado",
+    ru:
+      "`TriangleChannel`: `sample()` просто возвращает <последний отсчёт>, если канал выключен",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2678,6 +2842,8 @@ it("`TriangleChannel`: `sample()` just returns the <last sample> if the length c
   locales: {
     es:
       "`TriangleChannel`: `sample()` solo retorna el <último sample> si el contador de longitud <no está activo>",
+    ru:
+      "`TriangleChannel`: `sample()` просто возвращает <последний отсчёт>, если счётчик длины <неактивен>",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2690,7 +2856,10 @@ it("`TriangleChannel`: has a `quarterFrame()` method", () => {
 
   expect(channel).to.respondTo("quarterFrame");
 })({
-  locales: { es: "`TriangleChannel`: tiene un método `quarterFrame()`" },
+  locales: {
+    es: "`TriangleChannel`: tiene un método `quarterFrame()`",
+    ru: "`TriangleChannel`: содержит метод `quarterFrame()`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
 
@@ -2729,6 +2898,8 @@ it("`TriangleChannel`: has a `halfFrame()` method that updates the length counte
   locales: {
     es:
       "`TriangleChannel`: tiene un método `halfFrame()` que actualiza el contador de longitud",
+    ru:
+      "`TriangleChannel`: содержит метод `halfFrame()`, обновляющий счётчик длины",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2748,6 +2919,8 @@ it("`TriangleChannel`: has an `isEnabled()` method that returns whether the chan
   locales: {
     es:
       "`TriangleChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
+    ru:
+      "`TriangleChannel`: содержит метод `isEnabled()`, который возвращает, <включён> ли канал в APUControl",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2765,6 +2938,8 @@ it("`onQuarterFrameClock()` calls `quarterFrame()` on triangle channel", () => {
   locales: {
     es:
       "`onQuarterFrameClock()` llama a `quarterFrame()` en el canal triangular",
+    ru:
+      "`onQuarterFrameClock()` вызывает `quarterFrame()` у треугольного канала",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2781,6 +2956,7 @@ it("`onHalfFrameClock()` calls `halfFrame()` on triangle channel", () => {
 })({
   locales: {
     es: "`onHalfFrameClock()` llama a `halfFrame()` en el canal triangular",
+    ru: "`onHalfFrameClock()` вызывает `halfFrame()` у треугольного канала",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2799,6 +2975,8 @@ it("`TriangleTimerHighLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates 
   locales: {
     es:
       "`TriangleTimerHighLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
+    ru:
+      "`TriangleTimerHighLCL`: записывает `lengthCounterLoad` (биты ~3-7~) и обновляет счётчик длины",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2816,6 +2994,8 @@ it("`APUControl`: on writes, if `enableTriangle` is clear, resets the length cou
   locales: {
     es:
       "`APUControl`: en escrituras, si `enableTriangle` está apagada, reinicia el contador de longitud",
+    ru:
+      "`APUControl`: при записи сбрасывает счётчик длины, если `enableTriangle` сброшен",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2833,6 +3013,8 @@ it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the le
   locales: {
     es:
       "`APUControl`: en escrituras, si `enableTriangle` está encendida, no reinicia el contador de longitud",
+    ru:
+      "`APUControl`: при записи не сбрасывает счётчик длины, если `enableTriangle` установлен",
   },
   use: ({ id }, book) => id >= book.getId("5c.12"),
 });
@@ -2849,6 +3031,7 @@ it("`TriangleChannel`: has a `linearLengthCounter` property", () => {
 })({
   locales: {
     es: "`TriangleChannel`: tiene una propiedad `linearLengthCounter`",
+    ru: "`TriangleChannel`: содержит свойство `linearLengthCounter`",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2864,6 +3047,8 @@ it("`LinearLengthCounter`: has `reload` and `reloadFlag` initialized to `0` and 
   locales: {
     es:
       "`LinearLengthCounter`: tiene `reload` y `reloadFlag` inicializados en `0` y ~false~",
+    ru:
+      "`LinearLengthCounter`: начальные значения `reload` и `reloadFlag` равны `0` и ~false~",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2886,6 +3071,8 @@ it("`LinearLengthCounter`: `isActive()` returns whether `counter` is greater tha
 })({
   locales: {
     es: "`LinearLengthCounter`: `isActive()` retorna si `counter` es mayor a 0",
+    ru:
+      "`LinearLengthCounter`: `isActive()` возвращает, больше ли `counter` нуля",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2910,6 +3097,8 @@ it("`LinearLengthCounter`: `fullReset()` resets `counter`, `reload`, and `reload
   locales: {
     es:
       "`LinearLengthCounter`: `fullReset()` reinicia `counter`, `reload` y `reloadFlag`",
+    ru:
+      "`LinearLengthCounter`: `fullReset()` сбрасывает `counter`, `reload` и `reloadFlag`",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2934,6 +3123,8 @@ it("`LinearLengthCounter`: `clock(false, *)` resets `counter` but keeps `reload`
   locales: {
     es:
       "`LinearLengthCounter`: `clock(false, *)` reinicia `counter` pero mantiene `reload` y `reloadFlag`",
+    ru:
+      "`LinearLengthCounter`: `clock(false, *)` сбрасывает `counter`, но сохраняет `reload` и `reloadFlag`",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2957,6 +3148,8 @@ it("`LinearLengthCounter`: `clock(true, false)` with `reloadFlag` loads `reload`
   locales: {
     es:
       "`LinearLengthCounter`: `clock(true, false)` con `reloadFlag` carga `reload` en `counter` y apaga `reloadFlag`",
+    ru:
+      "`LinearLengthCounter`: `clock(true, false)` при установленном `reloadFlag` загружает `reload` в `counter` и сбрасывает `reloadFlag`",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -2980,6 +3173,8 @@ it("`LinearLengthCounter`: `clock(true, true)` with `reloadFlag` and `isHalted` 
   locales: {
     es:
       "`LinearLengthCounter`: `clock(true, true)` con `reloadFlag` y `isHalted` encendida carga `reload` y mantiene `reloadFlag`",
+    ru:
+      "`LinearLengthCounter`: `clock(true, true)` при установленных `reloadFlag` и `isHalted` загружает `reload`, но сохраняет `reloadFlag`",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3001,6 +3196,8 @@ it("`LinearLengthCounter`: `clock(true, *)` when `reloadFlag` false and `counter
   locales: {
     es:
       "`LinearLengthCounter`: `clock(true, *)` cuando `reloadFlag` es false y `counter > 0` decrementa `counter`",
+    ru:
+      "`LinearLengthCounter`: `clock(true, *)` при сброшенном `reloadFlag` и `counter > 0` уменьшает `counter`",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3045,6 +3242,8 @@ it("`TriangleChannel`: `sample()` just returns the <last sample> if the linear l
   locales: {
     es:
       "`TriangleChannel`: `sample()` solo retorna el <último sample> si el contador lineal de longitud <no está activo>",
+    ru:
+      "`TriangleChannel`: `sample()` просто возвращает <последний отсчёт>, если линейный счётчик длины <неактивен>",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3084,6 +3283,7 @@ it("`TriangleChannel`: `quarterFrame()` updates the linear length counter", () =
   locales: {
     es:
       "`TriangleChannel`: `quarterFrame()` actualiza el contador lineal de longitud",
+    ru: "`TriangleChannel`: `quarterFrame()` обновляет линейный счётчик длины",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3105,6 +3305,8 @@ it("`TriangleLengthControl`: writes `linearCounterReload` and updates linear len
   locales: {
     es:
       "`TriangleLengthControl`: escribe `linearCounterReload` y actualiza el `reload` del contador lineal de longitud",
+    ru:
+      "`TriangleLengthControl`: записывает `linearCounterReload` и обновляет `reload` линейного счётчика длины",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3121,6 +3323,8 @@ it("`TriangleTimerHighLCL`: writes set `reloadFlag` on channel's linearLengthCou
   locales: {
     es:
       "`TriangleTimerHighLCL`: las escrituras encienden `reloadFlag` en el contador lineal de longitud del canal",
+    ru:
+      "`TriangleTimerHighLCL`: запись устанавливает `reloadFlag` у linearLengthCounter канала",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3144,6 +3348,8 @@ it("`APUControl`: on writes, if `enableTriangle` is clear, resets the linear len
   locales: {
     es:
       "`APUControl`: en escrituras, si `enablePulse1` está apagada, reinicia el contador lineal de longitud",
+    ru:
+      "`APUControl`: при записи сбрасывает линейный счётчик длины, если `enableTriangle` сброшен",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3167,6 +3373,8 @@ it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the le
   locales: {
     es:
       "`APUControl`: en escrituras, si `enableTriangle` está encendida, no reinicia el contador lineal de longitud",
+    ru:
+      "`APUControl`: при записи не сбрасывает счётчик длины, если `enableTriangle` установлен",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
@@ -3179,7 +3387,10 @@ it("has a `NoiseChannel` instance", () => {
 
   expect(apu.channels.noise, "noise").to.be.an("object");
 })({
-  locales: { es: "tiene una instancia de `NoiseChannel`" },
+  locales: {
+    es: "tiene una instancia de `NoiseChannel`",
+    ru: "содержит экземпляр `NoiseChannel`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
@@ -3191,6 +3402,7 @@ it("`NoiseChannel`: has an `apu` reference", () => {
 })({
   locales: {
     es: "`NoiseChannel`: tiene una referencia `apu`",
+    ru: "`NoiseChannel`: содержит ссылку `apu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3207,6 +3419,8 @@ it("`NoiseChannel`: has a `registers` property, pointing to the audio registers"
   locales: {
     es:
       "`NoiseChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+    ru:
+      "`NoiseChannel`: содержит свойство `registers`, указывающее на звуковые регистры",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3226,6 +3440,8 @@ it("`NoiseChannel`: has an `isEnabled()` method that returns whether the channel
   locales: {
     es:
       "`NoiseChannel`: tiene un método `isEnabled()` que retorna si el canal está <activo> o no en APUControl",
+    ru:
+      "`NoiseChannel`: содержит метод `isEnabled()`, который возвращает, <включён> ли канал в APUControl",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3242,7 +3458,10 @@ it("`NoiseChannel`: has a `lengthCounter` property", () => {
     "class"
   );
 })({
-  locales: { es: "`NoiseChannel`: tiene una propiedad `lengthCounter`" },
+  locales: {
+    es: "`NoiseChannel`: tiene una propiedad `lengthCounter`",
+    ru: "`NoiseChannel`: содержит свойство `lengthCounter`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
 
@@ -3255,6 +3474,7 @@ it("`NoiseChannel`: has a `sample()` method that <returns a number>", () => {
 })({
   locales: {
     es: "`NoiseChannel`: tiene un método `sample()` que <retorna un número>",
+    ru: "`NoiseChannel`: содержит метод `sample()`, который <возвращает число>",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3277,6 +3497,8 @@ it("`NoiseChannel`: `sample()` returns 0 when disabled or length counter inactiv
   locales: {
     es:
       "`NoiseChannel`: `sample()` retorna 0 cuando está desactivado o el contador de longitud <no está activo>",
+    ru:
+      "`NoiseChannel`: `sample()` возвращает 0, если канал выключен или счётчик длины неактивен",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3295,6 +3517,8 @@ it("calls noise channel's `step()` method on every APU `step(...)` call", () => 
   locales: {
     es:
       "llama al método `step()` del canal ruido en cada llamada a `step(...)` de la APU",
+    ru:
+      "вызывает метод `step()` шумового канала при каждом вызове `step(...)` APU",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3319,6 +3543,7 @@ it("mixes pulse1, pulse2, triangle and noise in `step()`", () => {
 })({
   locales: {
     es: "mezcla pulse1, pulse2, triangle y noise en `step()`",
+    ru: "смешивает pulse1, pulse2, triangle и noise в `step()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.14") && id < book.getId("5c.19"),
 });
@@ -3335,6 +3560,7 @@ it("`onQuarterFrameClock()` calls `quarterFrame()` on noise channel", () => {
 })({
   locales: {
     es: "`onQuarterFrameClock()` llama a `quarterFrame()` en NoiseChannel",
+    ru: "`onQuarterFrameClock()` вызывает `quarterFrame()` у шумового канала",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3351,6 +3577,7 @@ it("`onHalfFrameClock()` calls `halfFrame()` on noise channel", () => {
 })({
   locales: {
     es: "`onHalfFrameClock()` llama a `halfFrame()` en NoiseChannel",
+    ru: "`onHalfFrameClock()` вызывает `halfFrame()` у шумового канала",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3385,6 +3612,8 @@ it("`NoiseControl`: writes `volumeOrEnvelopePeriod`, `constantVolume`, `envelope
   locales: {
     es:
       "`NoiseControl`: escribe `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`",
+    ru:
+      "`NoiseControl`: записывает `volumeOrEnvelopePeriod`, `constantVolume`, `envelopeLoopOrLengthCounterHalt`",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3412,6 +3641,8 @@ it("`NoiseLCL`: writes `lengthCounterLoad` (bits ~3-7~) and updates the length c
   locales: {
     es:
       "`NoiseLCL`: escribe `lengthCounterLoad` (bits ~3-7~) y actualiza el contador de longitud",
+    ru:
+      "`NoiseLCL`: записывает `lengthCounterLoad` (биты ~3-7~) и обновляет счётчик длины",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3429,6 +3660,8 @@ it("`APUControl`: on writes, if `enableNoise` is clear, resets the length counte
   locales: {
     es:
       "`APUControl`: en escrituras, si `enableNoise` está apagada, reinicia el contador de longitud",
+    ru:
+      "`APUControl`: при записи сбрасывает счётчик длины, если `enableNoise` сброшен",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3446,6 +3679,8 @@ it("`APUControl`: on writes, if `enableNoise` is set, it doesn't reset the noise
   locales: {
     es:
       "`APUControl`: en escrituras, si `enableNoise` está encendida, no reinicia el contador de longitud",
+    ru:
+      "`APUControl`: при записи не сбрасывает счётчик длины шумового канала, если `enableNoise` установлен",
   },
   use: ({ id }, book) => id >= book.getId("5c.14"),
 });
@@ -3468,6 +3703,7 @@ it("`NoiseForm`: writes `periodId` (bits ~0-3~) and `mode` (bit 7)", () => {
 })({
   locales: {
     es: "`NoiseForm`: escribe `periodId` (bits ~0-3~) y `mode` (bit 7)",
+    ru: "`NoiseForm`: записывает `periodId` (биты ~0-3~) и `mode` (бит 7)",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3483,6 +3719,8 @@ it("`NoiseChannel`: has `shift` and `dividerCount` initialized to 1 and 0", () =
 })({
   locales: {
     es: "`NoiseChannel`: tiene `shift` y `dividerCount` inicializados en 1 y 0",
+    ru:
+      "`NoiseChannel`: начальные значения `shift` и `dividerCount` равны 1 и 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3503,6 +3741,7 @@ it("`NoiseChannel`: `sample()` returns 0 when `shift & 1` is 1", () => {
 })({
   locales: {
     es: "`NoiseChannel`: `sample()` retorna 0 cuando `shift & 1` es 1",
+    ru: "`NoiseChannel`: `sample()` возвращает 0, если `shift & 1` равен 1",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3523,6 +3762,8 @@ it("`NoiseChannel`: `sample()` returns the volume when `shift & 1` is 0", () => 
 })({
   locales: {
     es: "`NoiseChannel`: `sample()` retorna el volumen cuando `shift & 1` es 0",
+    ru:
+      "`NoiseChannel`: `sample()` возвращает громкость, если `shift & 1` равен 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3550,6 +3791,8 @@ it("`NoiseChannel`: `step()` increments `dividerCount` and updates `shift` every
   locales: {
     es:
       "`NoiseChannel`: `step()` incrementa `dividerCount` y actualiza `shift` cada período de ruido",
+    ru:
+      "`NoiseChannel`: `step()` увеличивает `dividerCount` и обновляет `shift` каждый период шума",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3570,6 +3813,8 @@ it("`NoiseChannel`: `step()` resets `dividerCount` when it's >= the noise period
   locales: {
     es:
       "`NoiseChannel`: `step()` reinicia `dividerCount` cuando es >= al período de ruido",
+    ru:
+      "`NoiseChannel`: `step()` сбрасывает `dividerCount`, если он >= периода шума",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3600,6 +3845,8 @@ it("`NoiseChannel`: `step()` uses `mode` flag to compute feedback bit", () => {
   locales: {
     es:
       "`NoiseChannel`: `step()` usa la bandera `mode` para calcular el bit de feedback",
+    ru:
+      "`NoiseChannel`: `step()` использует флаг `mode` для вычисления бита обратной связи",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3630,6 +3877,8 @@ it("`NoiseChannel`: `step()` uses an exclusive OR (~^~) for the feedback bit", (
   locales: {
     es:
       "`NoiseChannel`: `step()` usa un OR exclusivo (~^~) para el bit de feedback",
+    ru:
+      "`NoiseChannel`: `step()` использует исключающее ИЛИ (~^~) для бита обратной связи",
   },
   use: ({ id }, book) => id >= book.getId("5c.15"),
 });
@@ -3648,7 +3897,10 @@ it("`NoiseChannel`: has a `volumeEnvelope` property", () => {
     "class"
   );
 })({
-  locales: { es: "`NoiseChannel`: tiene una propiedad `volumeEnvelope`" },
+  locales: {
+    es: "`NoiseChannel`: tiene una propiedad `volumeEnvelope`",
+    ru: "`NoiseChannel`: содержит свойство `volumeEnvelope`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.16"),
 });
 
@@ -3670,6 +3922,8 @@ it("`NoiseChannel`: `sample()` uses the envelope volume when `constantVolume` is
   locales: {
     es:
       "`NoiseChannel`: `sample()` usa el volumen de la envolvente cuando `constantVolume` está desactivado",
+    ru:
+      "`NoiseChannel`: `sample()` использует громкость огибающей, если `constantVolume` сброшен",
   },
   use: ({ id }, book) => id >= book.getId("5c.16"),
 });
@@ -3688,6 +3942,7 @@ it("`NoiseChannel`: `quarterFrame()` updates the volume envelope", () => {
 })({
   locales: {
     es: "`NoiseChannel`: `quarterFrame()` actualiza la envolvente de volumen",
+    ru: "`NoiseChannel`: `quarterFrame()` обновляет огибающую громкости",
   },
   use: ({ id }, book) => id >= book.getId("5c.16"),
 });
@@ -3709,6 +3964,8 @@ it("`NoiseLCL`: writes set the `startFlag` on the channel's volume envelope", ()
   locales: {
     es:
       "`NoiseLCL`: las escrituras encienden `startFlag` en la envolvente de volumen del canal",
+    ru:
+      "`NoiseLCL`: запись устанавливает `startFlag` огибающей громкости канала",
   },
   use: ({ id }, book) => id >= book.getId("5c.16"),
 });
@@ -3723,7 +3980,10 @@ it("has a `DMCChannel` instance", () => {
 
   expect(apu.channels.dmc, "dmc").to.be.an("object");
 })({
-  locales: { es: "tiene una instancia de `DMCChannel`" },
+  locales: {
+    es: "tiene una instancia de `DMCChannel`",
+    ru: "содержит экземпляр `DMCChannel`",
+  },
   use: ({ id }, book) => id >= book.getId("5c.17"),
 });
 
@@ -3735,6 +3995,7 @@ it("`DMCChannel`: has an `apu` reference", () => {
 })({
   locales: {
     es: "`DMCChannel`: tiene una referencia `apu`",
+    ru: "`DMCChannel`: содержит ссылку `apu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
 });
@@ -3748,6 +4009,7 @@ it("`DMCChannel`: has a `cpu` reference", () => {
 })({
   locales: {
     es: "`DMCChannel`: tiene una referencia `cpu`",
+    ru: "`DMCChannel`: содержит ссылку `cpu`",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
 });
@@ -3761,6 +4023,8 @@ it("`DMCChannel`: has a `registers` property, pointing to the audio registers", 
   locales: {
     es:
       "`DMCChannel`: tiene una propiedad `registers`, apuntando a los registros de audio",
+    ru:
+      "`DMCChannel`: содержит свойство `registers`, указывающее на звуковые регистры",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
 });
@@ -3775,6 +4039,8 @@ it("`DMCChannel`: has an `outputSample` property initialized to 0", () => {
 })({
   locales: {
     es: "`DMCChannel`: tiene una propiedad `outputSample` inicializada en 0",
+    ru:
+      "`DMCChannel`: содержит свойство `outputSample` с начальным значением 0",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
 });
@@ -3790,6 +4056,7 @@ it("`DMCChannel`: `sample()` returns `outputSample`", () => {
 })({
   locales: {
     es: "`DMCChannel`: `sample()` retorna `outputSample`",
+    ru: "`DMCChannel`: `sample()` возвращает `outputSample`",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
 });
@@ -3812,6 +4079,8 @@ it("`DMCLoad`: writes `directLoad` (bits ~0-6~) and updates channel's `outputSam
   locales: {
     es:
       "`DMCLoad`: escribe `directLoad` (bits ~0-6~) y actualiza `outputSample` del canal",
+    ru:
+      "`DMCLoad`: записывает `directLoad` (биты ~0-6~) и обновляет `outputSample` канала",
   },
   use: ({ id }, book) => id >= book.getId("5c.17"),
 });
@@ -3837,6 +4106,7 @@ it("mixes pulse1, pulse2, triangle, noise and dmc in `step()`", () => {
 })({
   locales: {
     es: "mezcla pulse1, pulse2, triangle, noise y dmc en `step()`",
+    ru: "смешивает pulse1, pulse2, triangle, noise и dmc в `step()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.17") && id < book.getId("5c.19"),
 });
@@ -3857,6 +4127,7 @@ it("`DMCChannel`: has a `dpcm` property with the correct DPCM class", async () =
 })({
   locales: {
     es: "`DMCChannel`: tiene una propiedad `dpcm` con la clase DPCM correcta",
+    ru: "`DMCChannel`: содержит свойство `dpcm` с нужным классом DPCM",
   },
   use: ({ id }, book) => id >= book.getId("5c.18"),
 });
@@ -3874,6 +4145,7 @@ it("`DMCChannel`: `step()` calls `dpcm.update()`", () => {
 })({
   locales: {
     es: "`DMCChannel`: `step()` llama a `dpcm.update()`",
+    ru: "`DMCChannel`: `step()` вызывает `dpcm.update()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.18"),
 });
@@ -3892,6 +4164,8 @@ it("`APUControl`: writing with `enableDMC` clear calls `dpcm.stop()`", () => {
   locales: {
     es:
       "`APUControl`: al escribir con `enableDMC` apagada llama a `dpcm.stop()`",
+    ru:
+      "`APUControl`: запись при сброшенном `enableDMC` вызывает `dpcm.stop()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.18"),
 });
@@ -3911,6 +4185,8 @@ it("`APUControl`: writing with `enableDMC` set and no remaining bytes calls `dpc
   locales: {
     es:
       "`APUControl`: al escribir con `enableDMC` encendida y sin bytes restantes llama a `dpcm.start()`",
+    ru:
+      "`APUControl`: запись при установленном `enableDMC` и отсутствии оставшихся байтов вызывает `dpcm.start()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.18"),
 });
@@ -3930,6 +4206,8 @@ it("`APUControl`: writing with `enableDMC` set and remaining bytes does not call
   locales: {
     es:
       "`APUControl`: al escribir con `enableDMC` encendida y con bytes restantes no llama a `dpcm.start()`",
+    ru:
+      "`APUControl`: запись при установленном `enableDMC` и наличии оставшихся байтов не вызывает `dpcm.start()`",
   },
   use: ({ id }, book) => id >= book.getId("5c.18"),
 });
@@ -3959,6 +4237,8 @@ it("mixes pulse1, pulse2, triangle, noise and dmc in `step()` (<correct mix>)", 
   locales: {
     es:
       "mezcla pulse1, pulse2, triangle, noise y dmc en `step()` (<mezcla correcta>)",
+    ru:
+      "смешивает pulse1, pulse2, triangle, noise и dmc в `step()` (<правильная смесь>)",
   },
   use: ({ id }, book) => id >= book.getId("5c.19"),
 });
@@ -3979,6 +4259,8 @@ it("`APUStatus`: reads return 0 when all channels inactive and no DMC bytes", ()
   locales: {
     es:
       "`APUStatus`: las lecturas retornan 0 cuando todos los canales están inactivos y DMC sin bytes",
+    ru:
+      "`APUStatus`: чтение возвращает 0, если все каналы неактивны и у DMC нет байтов",
   },
   use: ({ id }, book) => id >= book.getId("5c.19"),
 });
@@ -4000,6 +4282,7 @@ it("`APUStatus`: reads return a <bitfield> for active channels and DMC", () => {
   locales: {
     es:
       "`APUStatus`: las lecturas retornan un <bitfield> para canales activos y DMC",
+    ru: "`APUStatus`: чтение возвращает <битовое поле> активных каналов и DMC",
   },
   use: ({ id }, book) => id >= book.getId("5c.19"),
 });

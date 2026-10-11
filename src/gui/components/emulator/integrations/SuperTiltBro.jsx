@@ -14,12 +14,13 @@ export default class SuperTiltBro extends Integration {
 					<span>💪💪💪</span>
 				) : stocks !== MODE_STOCKS_FIVE ? (
 					<span>
-						❌ <strong>Stocks</strong>{" "}
+						❌ <strong>{locales.get("integration_supertiltbro_stocks")}</strong>{" "}
 						{locales.get("integration_supertiltbro_shouldbesettofive")}
 					</span>
 				) : player2 !== MODE_PLAYER2_FAIR ? (
 					<span>
-						❌ <strong>Player 2</strong>{" "}
+						❌{" "}
+						<strong>{locales.get("integration_supertiltbro_player2")}</strong>{" "}
 						{locales.get("integration_supertiltbro_shouldbesettofair")}
 					</span>
 				) : (

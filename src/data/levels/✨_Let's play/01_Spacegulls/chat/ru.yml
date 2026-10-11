@@ -1,0 +1,75 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется 🕊️ 🛰️  ~Spacegulls~
+    <{screenshot.png;30x30}>
+  - "классный платформер про <птиц> в космосе"
+  - "если получится пройти игру, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "как мы будем играть? наш эмулятор ещё не готов 😕 [notready]"
+
+notready:
+  messages:
+  - "у меня есть рабочая NEEES, помнишь? 😉"
+  - "на дворе современность — просто включу трансляцию"
+  - "давай запустим <видеочат>"
+  responses:
+  - "ВИДЕОЧАТ?! [videochat]"
+
+videochat:
+  run: |
+    {{Right}}.load(null, "stream");
+    {{Right}}.stream.zoom();
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "да, видишь мою комнату?"
+  - "знаю, тут немного беспорядок"
+  - "сейчас подвину камеру поближе к телевизору 🔍"
+  run-after-messages: |
+    $.goTo("zoom");
+  responses: []
+
+zoom:
+  messages:
+  - "а ещё порт контроллера доработан, чтобы твой ввод работал на моей настоящей NEEES ✨"
+  responses:
+  - "значит, теперь можно играть? 👾 [play]"
+
+play:
+  run: |
+    {{Right}}.stream.setIntegration("Spacegulls");
+    {{Right}}.load("Spacegulls.neees", "stream", "bin");
+  messages:
+  - "да"
+  - "вот игра"
+  - "можно играть на ⌨️  клавиатуре или с 🎮  геймпадом"
+  - "наведи курсор на значок ⌨️  <в правом верхнем углу>, чтобы посмотреть управление с клавиатуры"
+  - "💾  при выходе из уровня прогресс <сохранится>"
+  - "я буду здесь и посмотрю 👀"
+  events:
+  - spacegulls-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["Spacegulls.neees", "Bobl.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+    });
+  messages:
+  - "ОГОНЬ!"
+  - "теперь это ~героическая победа~"
+  - "<! Получен ROM: 📄  /roms/Spacegulls.neees"
+  - "как и обещалось, дамп игры теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/Bobl.neees"
+  - "а ещё тебе отправлена другая игра от тех же авторов — 💦 🏛️  ~Böbl~, посмотри!"
+  - "(если пока непонятно, как пользоваться файлами, скоро разберёмся!)"
+  responses:
+  - "▶️  продолжить [end]"

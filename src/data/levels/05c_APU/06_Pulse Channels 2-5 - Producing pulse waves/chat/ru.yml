@@ -1,0 +1,40 @@
+---
+main:
+  messages:
+  - "до этого мы создавали пробные импульсные волны"
+  - "а теперь ещё и знаем, какую ноту воспроизводить"
+  - "пора связать эти вещи и реализовать импульсные каналы!"
+  responses:
+  - "звучит хорошо 👍 [exercise]"
+
+exercise:
+  messages:
+  - "логика создания импульсной волны уже вынесена в 📄  ~/lib/apu/PulseOscillator.js~"
+  - "📚  импортируй этот класс в 🟦  `PulseChannel` и добавь свойство `oscillator` с новым экземпляром"
+  - |-
+    📚  реализуй этот метод:
+    **sample()**:
+      **->** задаёт нужную частоту в ```javascript this.oscillator.frequency``` по значению ```javascript this.timer```
+        вспомни формулу: ```javascript f = 1789773 / (16 * (t + 1))```
+      **->** задаёт ```javascript this.oscillator.dutyCycle``` равным `dutyCycleId` из 🟦  `PulseControl`
+      **->** задаёт ```javascript this.oscillator.volume``` равным `volumeOrEnvelopePeriod` из 🟦  `PulseControl`
+      **->** возвращает ```javascript this.oscillator.sample()```
+  - "попробуй запустить несколько игр!"
+  - "звучать будет не <идеально>: каналы пока не всегда замолкают, да и много чего ещё не хватает 😅"
+  - "но части игровых мелодий уже можно будет услышать"
+  responses:
+  - "(*) как обратиться к регистрам? [access]"
+
+access:
+  messages:
+  - |-
+    в нашем классе `PulseChannel` есть свойство `registers`:
+      ```javascript this.registers = this.apu.registers.pulses[this.id];```
+  - |-
+    в конструкторе `AudioRegisters` видно, что у него такая структура:
+      `{ control, sweep, timerLow, timerHighLCL }`
+  - |-
+    тогда, например, для доступа к громкости 🟦  PulseControl можно написать:
+      ```javascript this.registers.control.volumeOrEnvelopePeriod```
+  responses:
+  - ...exercise

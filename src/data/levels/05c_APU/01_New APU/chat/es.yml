@@ -23,7 +23,7 @@ wave:
   - <{wave_square.png}>
   - esta es una onda cuadrada de máximo volumen, una forma de onda común usada por la APU
   - el período indica el tiempo que tarda en completar una repetición entera
-  - "`período = 1 / frecuencia`, así que períodos más bajos generan notas más agudas"
+  - "`period = 1 / frequency`, así que períodos más bajos generan notas más agudas"
   - más amplitud significa más volumen
   - y como dije, estas se almacenan como una secuencia de samples
   - aquí hay una onda más compleja

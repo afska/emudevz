@@ -44,7 +44,7 @@ export default class CreditsModal extends PureComponent {
 		const { open } = this.props;
 
 		// tied to src/data/levels/06_Console/06_Full control/chat/*.yml
-		// tied to src/data/levels/06_Console/06_Full control/meta.yml
+		// tied to src/data/levels/06_Console/06_Full control/meta.json
 		return (
 			<Modal
 				show={open}
@@ -381,6 +381,22 @@ export default class CreditsModal extends PureComponent {
 							author="zeta0134 (song by celestialghost)"
 						>
 							Song demo
+						</Game>
+					</Section>
+					<Section title="⭐ Contributions">
+						<Game
+							emojis="🎓📝"
+							link="https://github.com/afska/emudevz/pull/36"
+							author="thedax"
+						>
+							Post-game guide
+						</Game>
+						<Game
+							emojis="🌐🇷🇺"
+							link="https://github.com/afska/emudevz/pull/48"
+							author="Volner"
+						>
+							Russian localization
 						</Game>
 					</Section>
 					<Section title="🙏 Thanks to...">

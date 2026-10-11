@@ -31,6 +31,7 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`" + instruction + '`: argument == "no"',
+      ru: "`" + instruction + '`: argument == "no"',
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -45,6 +46,7 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`" + instruction + "`: " + `apaga la bandera ~${name}~`,
+      ru: "`" + instruction + "`: " + `сбрасывает флаг ~${name}~`,
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -65,6 +67,7 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`" + instruction + '`: argument == "value"',
+      ru: "`" + instruction + '`: argument == "value"',
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -80,6 +83,11 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`" + instruction + "`: " + `carga [${name}] (valor positivo)`,
+      ru:
+        "`" +
+        instruction +
+        "`: " +
+        `загружает [${name}] (положительное значение)`,
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -96,6 +104,11 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`" + instruction + "`: " + `carga [${name}] (valor negativo)`,
+      ru:
+        "`" +
+        instruction +
+        "`: " +
+        `загружает [${name}] (отрицательное значение)`,
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -111,6 +124,7 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`" + instruction + "`: " + `carga [${name}] (valor cero)`,
+      ru: "`" + instruction + "`: " + `загружает [${name}] (нулевое значение)`,
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -124,6 +138,7 @@ it('`PHA`: argument == "no"', () => {
 })({
   locales: {
     es: '`PHA`: argument == "no"',
+    ru: '`PHA`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -138,6 +153,7 @@ it("`PHA`: pushes [A] onto the stack", () => {
 })({
   locales: {
     es: "`PHA`: pone [A] en la pila",
+    ru: "`PHA`: помещает [A] в стек",
   },
   use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -150,6 +166,7 @@ it('`PHP`: argument == "no"', () => {
 })({
   locales: {
     es: '`PHP`: argument == "no"',
+    ru: '`PHP`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -169,6 +186,7 @@ it("`PHP`: pushes the flags onto the stack", () => {
 })({
   locales: {
     es: "`PHP`: pone las banderas en la pila",
+    ru: "`PHP`: помещает флаги в стек",
   },
   use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -181,6 +199,7 @@ it('`PLA`: argument == "no"', () => {
 })({
   locales: {
     es: '`PLA`: argument == "no"',
+    ru: '`PLA`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -195,6 +214,7 @@ it("`PLA`: sets [A] with a value from the stack", () => {
 })({
   locales: {
     es: "`PLA`: asigna [A] con un valor de la pila",
+    ru: "`PLA`: записывает в [A] значение из стека",
   },
   use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -215,6 +235,7 @@ it("`PLA`: updates the Zero and Negative flags", () => {
 })({
   locales: {
     es: "`PLA`: actualiza las banderas Zero y Negative",
+    ru: "`PLA`: обновляет флаги нуля и отрицательного результата",
   },
   use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -227,6 +248,7 @@ it('`PLP`: argument == "no"', () => {
 })({
   locales: {
     es: '`PLP`: argument == "no"',
+    ru: '`PLP`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -248,6 +270,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
 })({
   locales: {
     es: "`PLP`: asigna las banderas con un valor de la pila",
+    ru: "`PLP`: устанавливает флаги по значению из стека",
   },
   use: ({ id }, book) => id >= book.getId("5a.8"),
 });
@@ -267,6 +290,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
   })({
     locales: {
       es: "`" + instruction + '`: argument == "no"',
+      ru: "`" + instruction + '`: argument == "no"',
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -281,6 +305,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
   })({
     locales: {
       es: "`" + instruction + "`: " + `enciende la bandera ~${name}~`,
+      ru: "`" + instruction + "`: " + `устанавливает флаг ~${name}~`,
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -301,6 +326,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
   })({
     locales: {
       es: "`" + instruction + '`: argument == "address"',
+      ru: "`" + instruction + '`: argument == "address"',
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -322,6 +348,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
         instruction +
         "`: " +
         `escribe [${name}] en la dirección de memoria`,
+      ru: "`" + instruction + "`: " + `записывает [${name}] по адресу памяти`,
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -370,6 +397,7 @@ it("`PLP`: sets the flags with a value from the stack", () => {
   })({
     locales: {
       es: "`" + instruction + '`: argument == "no"',
+      ru: "`" + instruction + '`: argument == "no"',
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -394,6 +422,11 @@ it("`PLP`: sets the flags with a value from the stack", () => {
         instruction +
         "`: " +
         `transfiere el valor de [${sourceName}] a [${targetName}]`,
+      ru:
+        "`" +
+        instruction +
+        "`: " +
+        `переносит значение из [${sourceName}] в [${targetName}]`,
     },
     use: ({ id }, book) => id >= book.getId("5a.8"),
   });
@@ -419,6 +452,11 @@ it("`PLP`: sets the flags with a value from the stack", () => {
       locales: {
         es:
           "`" + instruction + "`: " + `actualiza las banderas Zero y Negative`,
+        ru:
+          "`" +
+          instruction +
+          "`: " +
+          `обновляет флаги нуля и отрицательного результата`,
       },
       use: ({ id }, book) => id >= book.getId("5a.8"),
     });
@@ -452,6 +490,11 @@ it("`PLP`: sets the flags with a value from the stack", () => {
           instruction +
           "`: " +
           `<NO> actualiza las banderas Zero y Negative`,
+        ru:
+          "`" +
+          instruction +
+          "`: " +
+          `<НЕ> обновляет флаги нуля и отрицательного результата`,
       },
       use: ({ id }, book) => id >= book.getId("5a.8"),
     });

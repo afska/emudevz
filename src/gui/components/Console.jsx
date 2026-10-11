@@ -1,17 +1,14 @@
 import React, { PureComponent } from "react";
 import { XTerm } from "updated-xterm-for-react";
 import { FitAddon } from "xterm-addon-fit";
-import dictionary from "../../data/dictionary";
+import dictionary from "../../level/dictionary";
 import locales from "../../locales";
-import {
-	TERMINAL_ANSI_INDICES,
-	getDefaultTerminalAnsiTheme,
-} from "../../models/themes/theme";
 import store from "../../store";
 import Terminal from "../../terminal/Terminal";
 import { bus, dlc } from "../../utils";
 import { ansi256ToHex } from "../../utils/ansi256";
 import { checkKeyBinding } from "../../utils/keyBindings";
+import { TERMINAL_ANSI_INDICES, getDefaultTerminalAnsiTheme } from "../theme";
 import styles from "./Console.module.css";
 
 const ImageAddon = window.ImageAddon.ImageAddon;

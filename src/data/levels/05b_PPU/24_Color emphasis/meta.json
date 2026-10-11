@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🍭 Color emphasis",
-		"es": "🍭 Énfasis de color"
+		"es": "🍭 Énfasis de color",
+		"ru": "🍭 Усиление цветов"
 	},
 	"ui": {
 		"layout": "tripleRight",

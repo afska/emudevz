@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🖌️ Graphics",
-		"es": "🖌️ Gráficos"
+		"es": "🖌️ Gráficos",
+		"ru": "🖌️ Графика"
 	},
 	"ui": {
 		"run": "copy.js",
@@ -23,7 +24,8 @@
 					"availableCommands": ["chat"],
 					"subtitle": {
 						"en": "",
-						"es": ""
+						"es": "",
+						"ru": ""
 					}
 				}
 			],

@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🤸 Sprites (4/6): Flipping",
-		"es": "🤸 Sprites (4/6): Volteado"
+		"es": "🤸 Sprites (4/6): Volteado",
+		"ru": "🤸 Спрайты (4/6): Отражение"
 	},
 	"ui": {
 		"layout": "tripleRight",

@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📝 Example program",
-		"es": "📝 Programa de ejemplo"
+		"es": "📝 Programa de ejemplo",
+		"ru": "📝 Пример программы"
 	},
 	"ui": {
 		"layout": "triple",

@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🕊️ Tiles",
-		"es": "🕊️ Tiles"
+		"es": "🕊️ Tiles",
+		"ru": "🕊️ Тайлы"
 	},
 	"ui": {
 		"run": "copy.js",

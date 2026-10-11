@@ -86,14 +86,17 @@ class PlayScreen extends PureComponent {
 
 		fetch(BOOK_PATH)
 			.then((req) => {
-				if (req.status !== STATUS_OK) throw new Error("Book not found");
+				if (req.status !== STATUS_OK)
+					throw new Error(locales.get("error_book_not_found"));
 				return req.json();
 			})
 			.then((book) => new Book(book))
 			.then(setBook)
 			.then(() => {
 				if (!this.currentChapter)
-					throw new Error(`Unexisting level: ${this.props.currentLevelId}`);
+					throw new Error(
+						locales.get("error_unknown_level") + this.props.currentLevelId
+					);
 				this.props.validateSavedata();
 			})
 			.catch(this._onError);
@@ -107,7 +110,8 @@ class PlayScreen extends PureComponent {
 		await filesystem.load;
 		await fetch(levelPath)
 			.then((req) => {
-				if (req.status !== STATUS_OK) throw new Error("Level not found.");
+				if (req.status !== STATUS_OK)
+					throw new Error(locales.get("error_level_not_found"));
 				return req.arrayBuffer();
 			})
 			.then((levelData) => new LevelLoader(levelData, currentLevelId).load())

@@ -38,5 +38,5 @@ exercise:
         **->** uses ```javascript this.addField(...)``` to define a 7-bit `directLoad` field from bit 0
       **onWrite(value)**:
         **->** sets the value with ```javascript this.setValue(...)```
-        **->** sets the channel's output sample to ```javascript this.directLoad```
+        **->** sets the channel's <output sample> to ```javascript this.directLoad```
   responses: []

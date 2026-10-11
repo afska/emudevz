@@ -2,8 +2,7 @@
 
 The **Indirect** addressing mode has a bug.
 
-If the address falls on a page boundary `($aaFF)`, it fetches the least significant byte from
-`$aaFF` as expected, but takes the most significant byte from `$aa00` (instead of `$ab00`).
+If the address falls on a page boundary `($aaFF)`, it fetches the least significant byte from `$aaFF` as expected, but takes the most significant byte from `$aa00` (instead of `$ab00`).
 
 So, instead of just calling `read16(address)`, the implementation of the **Indirect** mode should be like this:
 

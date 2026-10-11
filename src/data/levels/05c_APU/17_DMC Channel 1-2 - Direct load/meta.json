@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📦 DMC Channel (1/2): Direct load",
-		"es": "📦 Canal DMC (1/2): Carga directa"
+		"es": "📦 Canal DMC (1/2): Carga directa",
+		"ru": "📦 DMC-канал (1/2): Прямая загрузка"
 	},
 	"ui": {
 		"run": "copy.js",

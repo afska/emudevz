@@ -1,5 +1,6 @@
 import React from "react";
 import Tooltip from "../gui/components/widgets/Tooltip";
+import locales from "../locales";
 import styles from "./AlphaColorInput.module.css";
 
 export default function AlphaColorInput({
@@ -114,7 +115,7 @@ export default function AlphaColorInput({
 	const handleX = center + Math.cos(angle) * radius;
 	const handleY = center + Math.sin(angle) * radius;
 
-	const baseTitle = `Opacity: ${Math.round(alpha * 100)}%`;
+	const baseTitle = `${locales.get("opacity")}: ${Math.round(alpha * 100)}%`;
 	const title = label ? `${label} - ${baseTitle}` : baseTitle;
 
 	return (

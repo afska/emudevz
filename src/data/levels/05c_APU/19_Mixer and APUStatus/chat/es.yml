@@ -5,12 +5,12 @@ main:
   - nuestra lógica actual de "sumar todos los samples y dividir por 100" no está del todo bien
   - |-
     podemos emular el mezclador de la APU usando esta fórmula:
-      ```javascript (
-        0.00752 * (pulse1 + pulse2) +
-        0.00851 * triangle +
-        0.00494 * noise +
-        0.00335 * dmc
-      )```
+    ```javascript (
+      0.00752 * (pulse1 + pulse2) +
+      0.00851 * triangle +
+      0.00494 * noise +
+      0.00335 * dmc
+    )```
   - ah, y también vamos a emular el último registro, 📊  APUStatus
   - no es muy útil, pero es solo por completitud
   responses:

@@ -17,7 +17,10 @@ it("the first 7 instructions are equal", () => {
 	expect(instructions[5]?.line).to.eqNoCase("INY", "6th instruction");
 	expect(instructions[6]?.line).to.eqNoCase("INY", "7th instruction");
 })({
-	locales: { es: "las primeras 7 instrucciones son iguales" },
+	locales: {
+		es: "las primeras 7 instrucciones son iguales",
+		ru: "первые 7 инструкций не меняются",
+	},
 });
 
 it("sets up an indirect jump to $403C", () => {
@@ -27,7 +30,10 @@ it("sets up an indirect jump to $403C", () => {
 	expect(instructions[10]?.line).to.eqNoCase("STA $4081", "11th instruction");
 	expect(instructions[11]?.line).to.eqNoCase("JMP ($4080)", "12th instruction");
 })({
-	locales: { es: "configura un salto indirecto hacia $403C" },
+	locales: {
+		es: "configura un salto indirecto hacia $403C",
+		ru: "настраивает косвенный переход на $403C",
+	},
 });
 
 it("the last 2 instructions are `STY $1001` and `INX`", () => {
@@ -40,7 +46,10 @@ it("the last 2 instructions are `STY $1001` and `INX`", () => {
 		"last instruction"
 	);
 })({
-	locales: { es: "las últimas dos instrucciones son `STY $1001` y `INX`" },
+	locales: {
+		es: "las últimas dos instrucciones son `STY $1001` y `INX`",
+		ru: "последние 2 инструкции — `STY $1001` и `INX`",
+	},
 });
 
 it("the assembled code is OK", () => {
@@ -49,5 +58,8 @@ it("the assembled code is OK", () => {
 		new Uint8Array([0xe8, 0xa9, 0x08, 0xad, 0x02, 0xc0, 0xa5, 0x15, 0xd0, 0x02, 0xc8, 0xc8, 0xa9, 0x3c, 0x8d, 0x80, 0x40, 0xa9, 0x40, 0x8d, 0x81, 0x40, 0x6c, 0x80, 0x40, 0x8c, 0x01, 0x10, 0xe8])
 	);
 })({
-	locales: { es: "el código ensamblado está bien" },
+	locales: {
+		es: "el código ensamblado está bien",
+		ru: "код ассемблируется правильно",
+	},
 });

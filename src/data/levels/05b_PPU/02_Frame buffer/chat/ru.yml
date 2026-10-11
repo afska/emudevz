@@ -1,0 +1,92 @@
+---
+main:
+  run: |
+    {{Top}}.load("frameBuffer.png");
+  messages:
+  - данные изображения будем хранить в буфере кадра
+  - по сути, это большой массив с цветом каждого пикселя
+  - каждый элемент — 32-битное число __$AABBGGRR__
+  - "\"AA\" задаёт непрозрачность (в нашей NEEES это всегда $FF)"
+  - "\"BB\", \"GG\" и \"RR\" задают количество <синего>, <зелёного> и <красного>"
+  responses:
+  - (*) покажешь примеры цветов? [examples]
+  - хочу что-нибудь нарисовать на экране! 🖌️ [integrate]
+
+examples:
+  messages:
+  - "вот несколько примеров цветов:"
+  - "❤️  ```javascript 0xFF0000FF``` = красный"
+  - "💚  ```javascript 0xFF00FF00``` = зелёный"
+  - "💙  ```javascript 0xFFFF0000``` = синий"
+  - "⚪  ```javascript 0xFFFFFFFF``` = белый"
+  - "🖤  ```javascript 0xFF000000``` = чёрный"
+  - "🦈  ```javascript 0xFF989898``` = серый"
+  - "💛  ```javascript 0xFF00F8F8``` = жёлтый"
+  responses:
+  - ...main
+
+integrate:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - для начала подключу твой 🖥️  PPU к эмулятору
+  - это должно быть быстро...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 500);
+  events: 
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("usePPU");
+  messages:
+  - ✅  готово!
+  - <! 🖥️  PPU подключён.
+  - теперь значок 🖥️  в эмуляторе будет светиться ✨
+  - кода PPU пока почти нет, так что на экране ничего не появится
+  - но скоро всё будет!
+  responses:
+  - пора писать код 🤟 [exercise]
+
+exercise:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - |-
+    📚  так, добавим в конструктор твоего PPU:
+      ```javascript
+      this.frameBuffer = new Uint32Array(256*240);```
+  - |-
+    📚  реализуй этот метод:
+    **plot(x, y, color)**:
+      **->** присваивает `color` пикселю ~(x,y)~ в массиве `frameBuffer`
+        (индекс для ~(x,y)~ вычисляется как ```javascript y * 256 + x```)
+  - 📚  затем <измени> метод `step`, чтобы он принимал callback `onFrame` в качестве параметра
+  - |-
+    📚  и при обнаружении нового кадра (сразу после ```javascript this.frame++;```) вызывай его с буфером кадра, вот так:
+      ```javascript onFrame(this.frameBuffer);```
+  - |-
+    📚  чтобы убедиться, что всё работает, добавь этот код перед вызовом `onFrame`:
+      ```javascript
+      // <test>
+      for (let x = 0; x < 256; x++) {
+        for (let y = 0; y < 240; y++) {
+          this.plot(x, y, 0xff000000 + this.frame % 256);
+        }
+      }
+      // </test>```
+  - попробуй! при загрузке ROM экран должен постепенно окрашиваться в красный 🔴
+  responses:
+  - (*) как работает тестовый код? [testcode]
+
+testcode:
+  messages:
+  - он заполняет весь экран одним цветом
+  - это ```javascript 0xff000000``` (полностью непрозрачный чёрный) плюс красная составляющая, которая зависит от ```javascript this.frame``` (текущего кадра!)
+  - "```javascript this.frame % 256``` даёт остаток от деления номера кадра на 256, так что красная составляющая циклически меняется от 0 до 255"
+  responses:
+  - ...exercise

@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "✅ Instructions (3/5): Checks",
-		"es": "✅ Instrucciones (3/5): Verificaciones"
+		"es": "✅ Instrucciones (3/5): Verificaciones",
+		"ru": "✅ Инструкции (3/5): Проверки"
 	},
 	"ui": {
 		"layout": "dual",

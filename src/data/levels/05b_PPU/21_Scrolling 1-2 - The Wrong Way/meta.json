@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "📜 Scrolling (1/2): The Wrong Way™",
-		"es": "📜 Scrolling (1/2): Haciéndolo mal™"
+		"es": "📜 Scrolling (1/2): Haciéndolo mal™",
+		"ru": "📜 Прокрутка (1/2): Неправильный способ™"
 	},
 	"ui": {
 		"layout": "tripleRight",

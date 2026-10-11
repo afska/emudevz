@@ -29,6 +29,7 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`INDEXED_ZERO_PAGE_" + name + "`: <inputSize> == 1",
+      ru: "`INDEXED_ZERO_PAGE_" + name + "`: <inputSize> == 1",
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -54,6 +55,11 @@ function newCPU(prgBytes = []) {
         name +
         "`: `getAddress(...)` " +
         `retorna la dirección + [${name}]`,
+      ru:
+        "`INDEXED_ZERO_PAGE_" +
+        name +
+        "`: `getAddress(...)` " +
+        `возвращает адрес + [${name}]`,
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -78,6 +84,10 @@ function newCPU(prgBytes = []) {
         "`INDEXED_ZERO_PAGE_" +
         name +
         "`: `getValue(...)` lee de memoria la dirección retornada por `getAddress(...)`",
+      ru:
+        "`INDEXED_ZERO_PAGE_" +
+        name +
+        "`: `getValue(...)` читает из памяти по адресу, который возвращает `getAddress(...)`",
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -93,6 +103,10 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`INDEXED_ZERO_PAGE_" + name + "`: no puede cruzar la primera página",
+      ru:
+        "`INDEXED_ZERO_PAGE_" +
+        name +
+        "`: не выходит за границу первой страницы",
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -112,6 +126,7 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`INDEXED_ABSOLUTE_" + name + "`: <inputSize> == 2",
+      ru: "`INDEXED_ABSOLUTE_" + name + "`: <inputSize> == 2",
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -137,6 +152,11 @@ function newCPU(prgBytes = []) {
         name +
         "`: `getAddress(...)` " +
         `retorna la dirección + [${name}]`,
+      ru:
+        "`INDEXED_ABSOLUTE_" +
+        name +
+        "`: `getAddress(...)` " +
+        `возвращает адрес + [${name}]`,
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -161,6 +181,10 @@ function newCPU(prgBytes = []) {
         "`INDEXED_ABSOLUTE_" +
         name +
         "`: `getValue(...)` lee de memoria la dirección retornada por `getAddress(...)`",
+      ru:
+        "`INDEXED_ABSOLUTE_" +
+        name +
+        "`: `getValue(...)` читает из памяти по адресу, который возвращает `getAddress(...)`",
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -176,6 +200,7 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`INDEXED_ABSOLUTE_" + name + "`: no puede cruzar $FFFF",
+      ru: "`INDEXED_ABSOLUTE_" + name + "`: не выходит за границу $FFFF",
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -199,6 +224,10 @@ function newCPU(prgBytes = []) {
     locales: {
       es:
         "`INDEXED_ABSOLUTE_" + name + "`: agrega 1 ciclo si <cruza de página>",
+      ru:
+        "`INDEXED_ABSOLUTE_" +
+        name +
+        "`: добавляет 1 такт при <пересечении границы страницы>",
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -221,6 +250,10 @@ function newCPU(prgBytes = []) {
         "`INDEXED_ABSOLUTE_" +
         name +
         "`: no agrega ningún ciclo si <no cruza de página>",
+      ru:
+        "`INDEXED_ABSOLUTE_" +
+        name +
+        "`: не добавляет тактов, если <граница страницы не пересекается>",
     },
     use: ({ id }, book) => id >= book.getId("5a.13"),
   });
@@ -234,6 +267,7 @@ it("`INDEXED_INDIRECT`: <inputSize> == 1", () => {
 })({
   locales: {
     es: "`INDEXED_INDIRECT`: <inputSize> == 1",
+    ru: "`INDEXED_INDIRECT`: <inputSize> == 1",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -253,6 +287,8 @@ it("`INDEXED_INDIRECT`: `getAddress(...)` grabs the (address + [X]) from memory"
   locales: {
     es:
       "`INDEXED_INDIRECT`: `getAddress(...)` toma la (dirección + [X]) desde la memoria",
+    ru:
+      "`INDEXED_INDIRECT`: `getAddress(...)` читает 16-битный адрес из памяти по адресу (входное значение + [X])",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -273,6 +309,8 @@ it("`INDEXED_INDIRECT`: `getValue(...)` reads from memory the address returned b
   locales: {
     es:
       "`INDEXED_INDIRECT`: `getValue(...)` lee de memoria la dirección retornada por `getAddress(...)`",
+    ru:
+      "`INDEXED_INDIRECT`: `getValue(...)` читает из памяти по адресу, который возвращает `getAddress(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -291,6 +329,7 @@ it("`INDEXED_INDIRECT`: cannot cross the first page", () => {
 })({
   locales: {
     es: "`INDEXED_INDIRECT`: no puede cruzar la primera página",
+    ru: "`INDEXED_INDIRECT`: не выходит за границу первой страницы",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -310,6 +349,8 @@ it("`INDEXED_INDIRECT`: the 16-bit read <wraps> within the first page", () => {
   locales: {
     es:
       "`INDEXED_INDIRECT`: la lectura de 16 bits <se envuelve> dentro de la primera página",
+    ru:
+      "`INDEXED_INDIRECT`: при 16-битном чтении адрес следующего байта <возвращается к началу> нулевой страницы",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -322,6 +363,7 @@ it("`INDIRECT_INDEXED`: <inputSize> == 1", () => {
 })({
   locales: {
     es: "`INDIRECT_INDEXED`: <inputSize> == 1",
+    ru: "`INDIRECT_INDEXED`: <inputSize> == 1",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -341,6 +383,8 @@ it("`INDIRECT_INDEXED`: `getAddress(...)` grabs the address from memory, then ad
   locales: {
     es:
       "`INDIRECT_INDEXED`: `getAddress(...)` toma la dirección desde la memoria, luego suma [Y]",
+    ru:
+      "`INDIRECT_INDEXED`: `getAddress(...)` получает адрес из памяти, затем прибавляет [Y]",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -361,6 +405,8 @@ it("`INDIRECT_INDEXED`: `getValue(...)` reads from memory the address returned b
   locales: {
     es:
       "`INDIRECT_INDEXED`: `getValue(...)` lee de memoria la dirección retornada por `getAddress(...)`",
+    ru:
+      "`INDIRECT_INDEXED`: `getValue(...)` читает из памяти по адресу, который возвращает `getAddress(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -379,6 +425,7 @@ it("`INDIRECT_INDEXED`: cannot cross $FFFF", () => {
 })({
   locales: {
     es: "`INDIRECT_INDEXED`: no puede cruzar $FFFF",
+    ru: "`INDIRECT_INDEXED`: не выходит за границу $FFFF",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -398,6 +445,8 @@ it("`INDIRECT_INDEXED`: the 16-bit read <wraps> within the first page", () => {
   locales: {
     es:
       "`INDIRECT_INDEXED`: la lectura de 16 bits <se envuelve> dentro de la primera página",
+    ru:
+      "`INDIRECT_INDEXED`: при 16-битном чтении адрес следующего байта <возвращается к началу> нулевой страницы",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -419,6 +468,8 @@ it("`INDIRECT_INDEXED`: adds 1 cycle if it <crosses page>", () => {
 })({
   locales: {
     es: "`INDIRECT_INDEXED`: agrega 1 ciclo si <cruza de página>",
+    ru:
+      "`INDIRECT_INDEXED`: добавляет 1 такт при <пересечении границы страницы>",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });
@@ -435,6 +486,8 @@ it("`INDIRECT_INDEXED`: doesn't add any cycles if there's <no page-cross>", () =
 })({
   locales: {
     es: "`INDIRECT_INDEXED`: no agrega ningún ciclo si <no cruza de página>",
+    ru:
+      "`INDIRECT_INDEXED`: не добавляет тактов, если <граница страницы не пересекается>",
   },
   use: ({ id }, book) => id >= book.getId("5a.13"),
 });

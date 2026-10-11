@@ -35,7 +35,7 @@ exercise:
     📚  en 🎛️  `PPUCtrl`, elimina el campo `nameTableId` y agrega esto al final de `onWrite(...)`:
       ```javascript this.ppu.loopy.onPPUCtrlWrite(value);```
   - |-
-    📚  en 📊  `PPUStatus`, reemplaza el código que desactiva el `latch` de 📍  `PPUAddr` con:
+    📚  en 📊  `PPUStatus`, reemplaza el código que desactiva el `latch` de `PPUAddr` con:
       ```javascript this.ppu.loopy.onPPUStatusRead();```
   - |-
     📚  en 📜  `PPUScroll`, elimina el método `onLoad()` y reemplaza `onWrite(...)` con:

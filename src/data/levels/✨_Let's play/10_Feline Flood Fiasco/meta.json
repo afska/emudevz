@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🌊🐈 Feline Flood Fiasco",
-		"es": "🌊🐈 Feline Flood Fiasco"
+		"es": "🌊🐈 Feline Flood Fiasco",
+		"ru": "🌊🐈 Feline Flood Fiasco"
 	},
 	"ui": {
 		"layout": "dual",
@@ -13,7 +14,8 @@
 					"availableCommands": ["chat"],
 					"subtitle": {
 						"en": "",
-						"es": ""
+						"es": "",
+						"ru": ""
 					}
 				}
 			],

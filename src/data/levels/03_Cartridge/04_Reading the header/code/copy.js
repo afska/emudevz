@@ -1,4 +1,4 @@
-["iNEEES.en.md", "iNEEES.es.md"].forEach((file) => {
+["iNEEES.en.md", "iNEEES.es.md", "iNEEES.ru.md"].forEach((file) => {
 	filesystem.write(`${Drive.DOCS_DIR}/${file}`, level.bin[file]);
 });
 ["architecture.png", "cartridge.png"].forEach((file) => {

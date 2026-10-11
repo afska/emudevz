@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🔊 New APU",
-		"es": "🔊 Nueva APU"
+		"es": "🔊 Nueva APU",
+		"ru": "🔊 Новый APU"
 	},
 	"ui": {
 		"run": "copy.js",

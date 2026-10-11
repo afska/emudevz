@@ -1,0 +1,173 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "давай быстро познакомимся со звуковыми каналами APU!"
+  - "проверь, что <громкость музыки> выше нуля, и продолжим"
+  responses:
+  - "▶️  начать [start]"
+
+start:
+  run: |
+    {{Background}}.loadROM("/roms/.all/SuperTiltBro.neees", "demoRom");
+  messages:
+  - "это потрясающая музыка из 🦸 🤸  <Super Tilt Bro>"
+  - "здесь можно услышать почти все звуковые каналы в деле"
+  - "начнём с 🟦  импульсных каналов"
+  responses:
+  - "что такое импульсные каналы? 🟦 [pulse]"
+
+pulse:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = true;
+      emulation.enabledChannels.pulse2 = false;
+      emulation.enabledChannels.triangle = false;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - "эти каналы создают импульсные волны"
+  - "их <два>"
+  - "сейчас звучит только <импульсный канал 1>"
+  responses:
+  - "давай послушаем <импульсный канал 2> 👀 [pulse2]"
+  
+pulse2:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = false;
+      emulation.enabledChannels.pulse2 = true;
+      emulation.enabledChannels.triangle = false;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - "это <импульсный канал 2>"
+  - "он создаёт такие же волны, как <импульсный канал 1>"
+  - "а магия начинается, когда они звучат вместе"
+  responses:
+  - "давай послушаем оба вместе [together]"
+
+together:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = true;
+      emulation.enabledChannels.pulse2 = true;
+      emulation.enabledChannels.triangle = false;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - "слышишь?"
+  - "вместе эти два импульсных канала могут создавать <яркие мелодии> 🎶"
+  responses:
+  - "тут столько всего происходит [alot]"
+
+alot:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.apu.selectedTab = "Pulse";
+    });
+  messages:
+  - "ну... у них много <возможностей>"
+  - "например, настройка коэффициента заполнения, <плавное затухание громкости> и <изменение высоты нот>!"
+  responses:
+  - "круто! а что с другими каналами? [triangle]"
+
+triangle:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.apu.selectedTab = "Overview";
+    });
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = false;
+      emulation.enabledChannels.pulse2 = false;
+      emulation.enabledChannels.triangle = true;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - "это 🔺  треугольный канал"
+  - "он создаёт треугольные волны с постоянной громкостью"
+  - "и обычно отвечает за <басовые партии> 🎸"
+  responses:
+  - "добавь к нему основную мелодию 🎶 [pulseagain]"
+
+pulseagain:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = true;
+      emulation.enabledChannels.pulse2 = true;
+      emulation.enabledChannels.triangle = true;
+      emulation.enabledChannels.noise = false;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - "ага"
+  - "теперь у нас есть основная мелодия и бас"
+  - "осталось добавить..."
+  responses:
+  - "шумовой канал, наверное? 💥 [noise]"
+
+noise:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = false;
+      emulation.enabledChannels.pulse2 = false;
+      emulation.enabledChannels.triangle = false;
+      emulation.enabledChannels.noise = true;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - "да!"
+  - "💥  шумовой канал создаёт <псевдослучайный шум>"
+  - "его обычно используют для 🥁  <ударных> и 💥  <спецэффектов>"
+  responses:
+  - "давай ещё включим треугольный канал 🔺 [addtriangle]"
+
+addtriangle:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = false;
+      emulation.enabledChannels.pulse2 = false;
+      emulation.enabledChannels.triangle = true;
+      emulation.enabledChannels.noise = true;
+      emulation.enabledChannels.dmc = false;
+    }
+  messages:
+  - "вижу, голова уже качается в такт — давай снова объединим все каналы!"
+  responses:
+  - "да! 🤘 [combined]"
+
+combined:
+  run: |
+    if (emulation) {
+      emulation.enabledChannels.pulse1 = true;
+      emulation.enabledChannels.pulse2 = true;
+      emulation.enabledChannels.triangle = true;
+      emulation.enabledChannels.noise = true;
+      emulation.enabledChannels.dmc = false;
+    }
+  run-after-messages: |
+    $.goTo("controls");
+  messages:
+  - "как видишь, немного <фантазии> — и из сочетания всех этих каналов получается отличная музыка! ✨"
+  - "есть ещё один канал, который мы пока пропустили: 📦  DMC"
+  - "он позволяет играм передавать в APU собственные волны"
+  - |+
+    его подробно разберём позже, так что пока не переживай!
+  responses: []
+
+controls:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.args.readOnly = false;
+    });
+  messages:
+  - "<! Управление включено."
+  - "теперь в отладчике <доступно управление>, так что можешь немного поэкспериментировать"
+  - "когда захочется продолжить, дай знать — и вернёмся к программированию 👀"
+  responses:
+  - "▶️  можно продолжать [end]"

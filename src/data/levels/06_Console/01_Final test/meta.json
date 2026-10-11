@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "👹 Final test",
-		"es": "👹 Prueba final"
+		"es": "👹 Prueba final",
+		"ru": "👹 Финальная проверка"
 	},
 	"ui": {
 		"layout": "tripleRight",

@@ -7,6 +7,7 @@
 <div class="embed-image"><img alt="Tile" src="assets/graphics/tile_grayscale.png" style="width: 30%" /></div>
 
 - 🕊️📖 **Pattern table**: Una lista de 🕊️ tiles, almacenada en 👾 CHR-ROM o 👾 CHR-RAM.
+
 <div class="embed-image"><img alt="Pattern table" src="assets/graphics/tiles_grayscale.png" style="width: 30%" /></div>
 
 <hr />
@@ -24,6 +25,7 @@
 - 🛸 **Sprite**: Un **objeto del juego** encima (¡o detrás!) del fondo que puede ser movido o volteado, almacenado en 🛸📖 OAM. Puede usar uno (sprite de `8x8`) o dos (sprite de `8x16`) 🕊️ tiles.
 
 - 🛸📖 **OAM**: _(Object Attribute Memory)_ Una lista de sprites, almacenada en 🐏 OAM RAM.
+
 <div class="embed-image"><img alt="Sprites" src="assets/graphics/sprites.png" style="width: 30%" /></div>
 
 <hr />
@@ -31,6 +33,7 @@
 - 🎨 **Paleta**: Una lista de `4` colores, almacenada en 🐏 Palette RAM, donde cada color es un puntero a la paleta maestra. Hay `8` paletas: `4` para el fondo y `4` para sprites.
 
 - 👑🎨 **Paleta maestra**: Una lista de 64 **colores**, `hardcodeada`. Las paletas referencian estos colores con índices de `$00` a `$3F`.
+
 <div class="embed-image"><img alt="Master palette" src="assets/graphics/colors.png" style="width: 50%" /></div>
 
 <hr />

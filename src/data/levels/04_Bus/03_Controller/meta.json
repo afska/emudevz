@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🎮 Controller",
-		"es": "🎮 Mando"
+		"es": "🎮 Mando",
+		"ru": "🎮 Контроллер"
 	},
 	"ui": {
 		"run": "copy.js",

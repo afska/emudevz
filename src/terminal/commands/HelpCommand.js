@@ -31,7 +31,7 @@ export default class HelpCommand extends Command {
 				theme.COMMENT
 			);
 			await this._terminal.writehlln(help.trim());
-		} else if (Book.current.canUseEmulator) {
+		} else if (Book.current.canUseEmulator && !Level.current.isFreeMode()) {
 			await this._terminal.writehlln(
 				NEWLINE + locales.get("debug_tips"),
 				theme.COMMENT

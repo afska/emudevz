@@ -1,0 +1,45 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - "<! 📹  Подключение к видеочату..."
+  - "привет,"
+  - "давай поиграем"
+  - |-
+    игра называется 🧱 🐙  ~From Below~
+    <{screenshot.png;30x30}>
+  - "классическая игра с падающими блоками и небольшой особенностью — <кракеном>"
+  - "если получится побить мой рекорд, я отправлю тебе <файл ROM>"
+  - "в формате ~*.neees~"
+  responses:
+  - "а твой рекорд — это...? [play]"
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("FromBelow");
+    {{Right}}.loadROM("/roms/.all/FromBelow.neees", "stream");
+  messages:
+  - "пока мой рекорд — ~3000~ очков"
+  - "попробуй набрать столько же в любом режиме!"
+  events:
+  - frombelow-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["FromBelow.neees", "TroubleAt2A03.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - "твой результат лучше моего 😅"
+  - "<! Получен ROM: 📄  /roms/FromBelow.neees"
+  - "как и обещалось, ROM теперь в твоей папке 📁  ~/roms~"
+  - "<! Получен ROM: 📄  /roms/TroubleAt2A03.neees"
+  - "а ещё тебе отправлена игра 🏭 🔩  ~Trouble At 2A03~"
+  - "веселись!"
+  responses:
+  - "▶️  продолжить [end]"

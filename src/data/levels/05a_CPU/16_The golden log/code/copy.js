@@ -1,3 +1,7 @@
-["page_boundary_bug.en.md", "page_boundary_bug.es.md"].forEach((file) => {
+[
+	"page_boundary_bug.en.md",
+	"page_boundary_bug.es.md",
+	"page_boundary_bug.ru.md",
+].forEach((file) => {
 	filesystem.write(`${Drive.DOCS_DIR}/cpu/${file}`, level.bin[file]);
 });

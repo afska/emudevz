@@ -108,7 +108,7 @@ credits:
     // HACK: Using monospace numbers (𝟶 𝟷 𝟸 𝟹 𝟺 𝟻 𝟼 𝟽 𝟾 𝟿) to work around a dictionary bug
     // tied to src/gui/components/modals/CreditsModal.jsx
     // tied to src/data/levels/06_Console/06_Full control/chat/*.yml
-    // tied to src/data/levels/06_Console/06_Full control/meta.yml
+    // tied to src/data/levels/06_Console/06_Full control/meta.json
   messages:
   - "{10}THANKS"
   - "{10}FOR"
@@ -160,6 +160,10 @@ credits:
   - "{10}  📦 📥  Crowd by <Kragen (ported by rainwarrior)>"
   - |+
     {10}  💯 🎹  Song demo by <zeta0134 (song by celestialghost)>
+  - "{10}⭐  **Contributions**:"
+  - "{10}  🎓 📝  Post-game guide by <thedax>"
+  - |+
+    {10}  🌐 🇷🇺  Russian localization by <Volner>
   - "{10}🙏  **Thanks to**..."
   - "{10}  🕹️ 🛠️  NesDev"
   - "{10}  👌 💻  Easy 𝟼𝟻𝟶𝟸 by <skilldrick>"

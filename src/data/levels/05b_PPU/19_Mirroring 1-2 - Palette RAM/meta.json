@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🎨 Mirroring (1/2): Palette RAM",
-		"es": "🎨 Mirroring (1/2): Palette RAM"
+		"es": "🎨 Mirroring (1/2): Palette RAM",
+		"ru": "🎨 Зеркалирование (1/2): RAM палитр"
 	},
 	"ui": {
 		"layout": "tripleRight",

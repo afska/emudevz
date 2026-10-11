@@ -1,0 +1,90 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - дарова
+  - ну что, начинаем? 👀 👀
+  responses:
+  - что начинаем? [forwhat]
+  - (*) что это вообще? [what]
+
+what:
+  messages:
+  - это `chat`
+  - лучшее приложение для переписки, которое у нас есть 🤷
+  responses:
+  - ...main
+
+forwhat:
+  messages:
+  - мы собираемся сделать эмулятор NEEES, помнишь?
+  responses:
+  - (*) для начала, почему она называется NEEES? [name]
+  - я не знаю, как сделать эмулятор 😳 [idontknow]
+
+name:
+  messages:
+  - вроде это <«No Entiendo» Enigmatic Enjoyment Solution>, но точно не знаю
+  responses:
+  - откуда ты вообще всё это знаешь? [namehow]
+
+namehow:
+  messages:
+  - потому что у меня прямо тут есть NEEES 😉
+  - и я пытаюсь разобраться, как она устроена
+  responses:
+  - У ТЕБЯ ЕСТЬ РАБОЧАЯ NEEES? [workingnes]
+
+workingnes:
+  messages:
+  - безумие, да?
+  - работает отлично, хотя сейчас она разобрана и подключена к куче логических анализаторов
+  - она досталась мне от предков
+  - наверное, они в гробу переворачиваются от того, что теперь происходит с их бедной NEEES 😅
+  responses:
+  - ...forwhat
+
+idontknow:
+  messages:
+  - не переживай, вместе разберёмся...
+  - ты ведь умеешь программировать?
+  - умеешь же? 🤔
+  responses:
+  - могу написать что-нибудь на JavaScript [javascript]
+  - хмм... [hmm]
+
+hmm:
+  messages:
+  - ну, программировать я тебя научить не смогу
+  - поищи помощь и возвращайся, когда можно будет начинать
+  responses:
+  - ладно, ладно, можно начинать [ready]
+
+ready:
+  messages:
+  - вот это ОЧЕНЬ быстро
+  - теперь знаешь JavaScript?
+  - докажи, напиши что-нибудь 👀
+  responses:
+  - console.log("hello world") [woo]
+  - alert("foo bar baz") [woo]
+
+woo:
+  run: |
+    window.EmuDevz.achievements.unlock("misc-learn-javascript");
+  messages:
+  - ого! 💡
+  - сколько всего ты знаешь
+  - ...javascript
+  responses:
+  - ...javascript
+
+javascript:
+  messages:
+  - отлично подойдёт
+  - но ещё понадобятся знания объектно-ориентированного программирования
+  - и базовое понимание устройства компьютеров
+  - (байты, целые числа со знаком, булева логика, системы счисления и так далее)
+  responses:
+  - окей, погнали [end]

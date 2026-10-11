@@ -1,7 +1,8 @@
 {
 	"name": {
 		"en": "🤖 UxROM",
-		"es": "🤖 UxROM"
+		"es": "🤖 UxROM",
+		"ru": "🤖 UxROM"
 	},
 	"ui": {
 		"layout": "tripleRight",

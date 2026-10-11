@@ -1,0 +1,67 @@
+main:
+  messages:
+  - игры также задают внешний вид спрайтов во время выполнения 🛸
+  - для этого они записывают таблицу OAM («Object Attribute Memory» — память атрибутов объектов)
+  - эта таблица находится во <внутренней> области памяти 🐏  OAM RAM
+  responses:
+  - как игра может записывать в 🐏  OAM RAM? [how]
+
+how:
+  messages:
+  - "есть два способа:"
+  - "1) через регистры 🏠  OAMAddr и 📝  OAMData"
+  - "2) через ⚡  OAMDMA"
+  responses:
+  - (*) расскажи про 🏠  OAMAddr и 📝  OAMData [addrdata]
+  - (*) расскажи про ⚡  OAMDMA [dma]
+  - давай реализуем этот мост [exercise]
+
+addrdata:
+  messages:
+  - тут особо нечего рассказывать
+  - всё как с 📍  PPUAddr и 📦  PPUData
+  - только они обращаются к 🐏  OAM RAM вместо памяти PPU
+  responses:
+  - ...how
+
+dma:
+  messages:
+  - DMA («Direct Memory Access» — прямой доступ к памяти) — аппаратный механизм быстрого копирования байтов из одной области памяти в другую
+  - в NEEES за это отвечает регистр ⚡  OAMDMA, позволяющий играм заполнять 🐏  OAM RAM копированием байтов из памяти CPU
+  - запись ```raw $```~XX~ в этот регистр скопирует 256 байт из диапазона адресов CPU ```raw $```~XX~```raw 00```-```raw $```~XX~```raw FF``` во внутреннюю OAM RAM
+  - операция займёт около 513 тактов CPU, на время которых CPU приостанавливается
+  responses:
+  - ...how
+
+exercise:
+  messages:
+  - 📚  по примеру `PPUMemory::vram` добавь в 🐏  `PPUMemory` свойство `oamRam`
+  - массив должен вмещать 256 байт
+  - на этот раз отображать его в адресное пространство не нужно, OAM — полностью <внутренняя> память
+  - |-
+    📚  реализуй эти методы в 📝  `OAMData`:
+    **onRead()**:
+      **->** сохраняет текущий адрес OAM:
+        ```javascript const oamAddress = this.ppu.registers.oamAddr.value;```
+        (поле `value` определено в `InMemoryRegister` и содержит текущее значение)
+      **->** возвращает соответствующий байт OAM RAM по `oamAddress`
+    **onWrite(value)**:
+      **->** сохраняет текущий адрес OAM (`oamAddress`)
+      **->** записывает `value` в соответствующий байт OAM RAM по `oamAddress`
+      **->** увеличивает адрес OAM:
+        ```javascript this.ppu.registers.oamAddr.setValue(oamAddress + 1);```
+  - |-
+    📚  реализуй этот метод в ⚡  `OAMDMA`:
+    **onWrite(value)**:
+      **->** ```javascript for (i = 0; i < 256; i++)```:
+        **->** собирает адрес (старший байт: `value`, младший байт: `i`)
+        **->** читает по этому адресу память CPU (```javascript this.ppu.cpu``` даёт доступ к 🧠  `CPU`)
+        **->** присваивает полученный байт ```javascript oamRam[i]```
+      **->** добавляет 513 к ```javascript this.ppu.cpu.extraCycles```
+  responses: []
+
+corollary:
+  messages:
+  - теперь при запуске игры можно увидеть OAM и её спрайты в 🐞  <окне отладчика>
+  responses:
+  - ▶️  продолжить [end]
