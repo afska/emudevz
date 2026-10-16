@@ -3,7 +3,7 @@ main:
   run: |
     set((m) => m.chat.winOnEnd = true);
   messages:
-  - "`JSR` and `RTS` (\"Jump to Subroutine\" and \"Return from Subroutine\") are a dynamic duo that you'll usually see used together"
+  - "`JSR` and `RTS` (\"Jump to SubRoutine\" and \"ReTurn from Subroutine\") are a dynamic duo that you'll usually see used together"
   - "`JSR` jumps to another part of the code, and `RTS` returns to the previous position"
   - it's basically like calling a function and returning! 📞
   - check out the example ⏩
