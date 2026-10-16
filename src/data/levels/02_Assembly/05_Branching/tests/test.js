@@ -13,7 +13,7 @@ it("when $4080 is 7, it writes $EE to $40BF", () => {
 });
 
 it("when $4080 is not 7, it writes $AA to $40BF", () => {
-	const non7Bytes = [...Array(255).keys()].filter((it) => it !== 7);
+	const non7Bytes = [...Array(256).keys()].filter((it) => it !== 7);
 	non7Bytes.forEach((byte) => {
 		const cpu = compile().cpu;
 		cpu.memory.writeAt(0x4080, byte);
