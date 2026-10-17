@@ -27,12 +27,12 @@ chai.Assertion.addChainableMethod("equalN", function (expected, name) {
 	);
 });
 
-chai.Assertion.addChainableMethod("eqNoCase", function (expected, name) {
-	const expectedUpperCase = expected.toUpperCase();
-	const actualUpperCase = this._obj?.toUpperCase?.() ?? this._obj;
+chai.Assertion.addChainableMethod("eq6502", function (expected, name) {
+	const normalize = (value) =>
+		typeof value === "string" ? value.replace(/\s+/g, "").toUpperCase() : value;
 
 	this.assert(
-		actualUpperCase === expectedUpperCase,
+		normalize(this._obj) === normalize(expected),
 		`expected ${name} to equal ${expected}, but got ${this._obj}`,
 		`expected ${name} not to equal ${expected}`
 	);

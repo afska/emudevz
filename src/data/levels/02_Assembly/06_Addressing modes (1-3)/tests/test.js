@@ -9,13 +9,13 @@ beforeEach(() => {
 });
 
 it("the first 7 instructions are equal", () => {
-	expect(instructions[0]?.line).to.eqNoCase("INX", "1st instruction");
-	expect(instructions[1]?.line).to.eqNoCase("LDA #$08", "2nd instruction");
-	expect(instructions[2]?.line).to.eqNoCase("LDA $C002", "3rd instruction");
-	expect(instructions[3]?.line).to.eqNoCase("LDA $15", "4th instruction");
-	expect(instructions[4]?.line).to.eqNoCase("BNE @label", "5th instruction");
-	expect(instructions[5]?.line).to.eqNoCase("INY", "6th instruction");
-	expect(instructions[6]?.line).to.eqNoCase("INY", "7th instruction");
+	expect(instructions[0]?.line).to.eq6502("INX", "1st instruction");
+	expect(instructions[1]?.line).to.eq6502("LDA #$08", "2nd instruction");
+	expect(instructions[2]?.line).to.eq6502("LDA $C002", "3rd instruction");
+	expect(instructions[3]?.line).to.eq6502("LDA $15", "4th instruction");
+	expect(instructions[4]?.line).to.eq6502("BNE @label", "5th instruction");
+	expect(instructions[5]?.line).to.eq6502("INY", "6th instruction");
+	expect(instructions[6]?.line).to.eq6502("INY", "7th instruction");
 })({
 	locales: {
 		es: "las primeras 7 instrucciones son iguales",
@@ -24,11 +24,11 @@ it("the first 7 instructions are equal", () => {
 });
 
 it("sets up an indirect jump to $403C", () => {
-	expect(instructions[7]?.line).to.eqNoCase("LDA #$3C", "8th instruction");
-	expect(instructions[8]?.line).to.eqNoCase("STA $4080", "9th instruction");
-	expect(instructions[9]?.line).to.eqNoCase("LDA #$40", "10th instruction");
-	expect(instructions[10]?.line).to.eqNoCase("STA $4081", "11th instruction");
-	expect(instructions[11]?.line).to.eqNoCase("JMP ($4080)", "12th instruction");
+	expect(instructions[7]?.line).to.eq6502("LDA #$3C", "8th instruction");
+	expect(instructions[8]?.line).to.eq6502("STA $4080", "9th instruction");
+	expect(instructions[9]?.line).to.eq6502("LDA #$40", "10th instruction");
+	expect(instructions[10]?.line).to.eq6502("STA $4081", "11th instruction");
+	expect(instructions[11]?.line).to.eq6502("JMP ($4080)", "12th instruction");
 })({
 	locales: {
 		es: "configura un salto indirecto hacia $403C",
@@ -37,11 +37,11 @@ it("sets up an indirect jump to $403C", () => {
 });
 
 it("the last 2 instructions are `STY $1001` and `INX`", () => {
-	expect(instructions[instructions.length - 2]?.line).to.eqNoCase(
+	expect(instructions[instructions.length - 2]?.line).to.eq6502(
 		"STY $1001",
 		"penultimate instruction"
 	);
-	expect(instructions[instructions.length - 1]?.line).to.eqNoCase(
+	expect(instructions[instructions.length - 1]?.line).to.eq6502(
 		"INX",
 		"last instruction"
 	);

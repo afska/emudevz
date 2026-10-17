@@ -7,7 +7,7 @@ beforeEach(() => {
 });
 
 it("it doesn't load anything from the zero page", () => {
-	if (/^LD[AXY] \$[0-9A-F]{1,2}/im.test(code)) {
+	if (/^\s*LD[AXY]\s+\$[0-9A-F]{1,2}/im.test(code)) {
 		throw new Error(
 			"Your code is probably doing something wrong.\nRemember: if you want to load a $99, it's `LDA #$99` instead of `LDA $99`"
 		);
