@@ -31,6 +31,7 @@ it("the file `/code/Cartridge.js` is a JS module that exports <a class>", async 
 });
 
 it("the file `/code/index.js` <imports> the module from `/code/Cartridge.js`", () => {
+	await evaluate();
   expect($.modules["/code/Cartridge.js"]).to.exist;
 })({
   locales: {
