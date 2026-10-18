@@ -66,7 +66,7 @@ it("instantiating a `Cartridge` with a <valid header> saves a `bytes` property",
   const Cartridge = mainModule.default.Cartridge;
 
   const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, ...new Uint8Array(12)]);
-  expect(new Cartridge(bytes).bytes).to.equalN(bytes, "bytes");
+  expect(new Cartridge(bytes).bytes).to.eql(bytes, "bytes");
 })({
   locales: {
     es:
