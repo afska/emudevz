@@ -153,7 +153,7 @@ export default {
 };
 
 function shouldPreventReload() {
-	return getAdvancedSetting((obj) => obj.layout?.preventReload);
+	return getAdvancedSetting((obj) => obj.general?.preventReload);
 }
 
 function waitUntilBrowserFsAsyncMirrorIsIdle() {

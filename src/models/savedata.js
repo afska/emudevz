@@ -56,6 +56,21 @@ export const DEFAULT_KEY_BINDINGS = Object.freeze({
 
 export const DEFAULT_ADVANCED_SETTINGS = JSON.stringify(
 	{
+		general: {
+			runAutoloadFile: false,
+			preventReload: false,
+		},
+		layout: {
+			triple: {
+				resizable: false,
+			},
+		},
+		chat: {
+			instant: false,
+		},
+		audio: {
+			playAudioTests: false,
+		},
 		codeEditor: {
 			lineNumbers: true,
 			highlightActiveLineGutter: true,
@@ -81,18 +96,6 @@ export const DEFAULT_ADVANCED_SETTINGS = JSON.stringify(
 			foldKeymap: true,
 			completionKeymap: true,
 			lintKeymap: true,
-		},
-		layout: {
-			triple: {
-				resizable: false,
-			},
-			preventReload: false,
-		},
-		chat: {
-			instant: false,
-		},
-		audio: {
-			playAudioTests: false,
 		},
 	},
 	null,

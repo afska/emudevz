@@ -115,7 +115,10 @@ class PlayScreen extends PureComponent {
 				return req.arrayBuffer();
 			})
 			.then((levelData) => new LevelLoader(levelData, currentLevelId).load())
-			.then(setLevel)
+			.then((level) => {
+				setLevel(level);
+				level.runAutoloadIfNeeded();
+			})
 			.then(closeNonExistingFiles)
 			.catch(this._onError);
 	}

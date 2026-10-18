@@ -6,6 +6,7 @@ import TV from "../gui/components/TV";
 import layouts from "../gui/components/layouts";
 import { sfx } from "../gui/sound";
 import locales from "../locales";
+import { getAdvancedSetting } from "../models/savedata";
 import store from "../store";
 import { COROLLARY_SECTION } from "../terminal/commands/ChatCommand";
 import { theme } from "../terminal/style";
@@ -15,6 +16,7 @@ import Book from "./Book";
 import ChatScript from "./chat/ChatScript";
 
 const NEWLINE_REGEXP = /\n|\r\n|\r/;
+const AUTOLOAD_PATH = "/usr/autoload.js";
 
 export default class Level {
 	static startEffect(effectName, options = { sfx: true }) {
@@ -357,6 +359,24 @@ export default class Level {
 		Level.stopEffect();
 	}
 
+	runAutoloadIfNeeded() {
+		if (!this._shouldRunAutoloadFile()) return;
+
+		let autoload = "";
+		try {
+			autoload = filesystem.read(AUTOLOAD_PATH);
+		} catch (e) {}
+
+		if (autoload === "") return;
+
+		try {
+			eval(autoload);
+		} catch (e) {
+			console.error("❌  Invalid autoload script: " + e.message);
+			console.error(e);
+		}
+	}
+
 	get debuggerPinSuffix() {
 		return this.ui.debuggerPinType ?? "-secondary";
 	}
@@ -376,5 +396,9 @@ export default class Level {
 
 		if (!filesystem.exists(snapshotDir))
 			filesystem.cpr(Drive.CODE_DIR, snapshotDir);
+	}
+
+	_shouldRunAutoloadFile() {
+		return getAdvancedSetting((obj) => obj.general?.runAutoloadFile);
 	}
 }
