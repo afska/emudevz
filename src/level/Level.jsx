@@ -370,7 +370,7 @@ export default class Level {
 		if (autoload === "") return;
 
 		try {
-			eval(autoload);
+			(0, eval)(autoload);
 		} catch (e) {
 			console.error("❌  Invalid autoload script: " + e.message);
 			console.error(e);
