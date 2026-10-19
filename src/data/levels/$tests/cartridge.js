@@ -30,7 +30,8 @@ it("the file `/code/Cartridge.js` is a JS module that exports <a class>", async 
   use: ({ id }, book) => id >= book.getId("3.1"),
 });
 
-it("the file `/code/index.js` <imports> the module from `/code/Cartridge.js`", () => {
+it("the file `/code/index.js` <imports> the module from `/code/Cartridge.js`", async () => {
+  mainModule = await evaluate();
   expect($.modules["/code/Cartridge.js"]).to.exist;
 })({
   locales: {
@@ -65,7 +66,7 @@ it("instantiating a `Cartridge` with a <valid header> saves a `bytes` property",
   const Cartridge = mainModule.default.Cartridge;
 
   const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, ...new Uint8Array(12)]);
-  expect(new Cartridge(bytes).bytes).to.equalN(bytes, "bytes");
+  expect(new Cartridge(bytes).bytes, "bytes").to.eql(bytes);
 })({
   locales: {
     es:
