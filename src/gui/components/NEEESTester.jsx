@@ -161,10 +161,10 @@ export default class NEEESTester extends PureComponent {
 				diffLine: 0,
 			});
 			return true;
-		} catch (e) {
-			console.error(e);
+		} catch (err) {
+			console.error(err);
 
-			const message = this._getMessage(e);
+			const message = this._getMessage(err);
 			this.setState({ _error: message });
 			return false;
 		}
@@ -199,8 +199,8 @@ export default class NEEESTester extends PureComponent {
 
 			try {
 				this._neees.cpu.step();
-			} catch (e) {
-				const message = this._getMessage(e);
+			} catch (err) {
+				const message = this._getMessage(err);
 				this.setState({ _error: message });
 				sfx.play("failure");
 				return;
@@ -229,7 +229,7 @@ export default class NEEESTester extends PureComponent {
 		this._container = ref;
 	};
 
-	_getMessage(e) {
-		return testContext.javascript.buildHTMLError(e);
+	_getMessage(err) {
+		return testContext.javascript.buildHTMLError(err);
 	}
 }

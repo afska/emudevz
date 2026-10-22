@@ -7,7 +7,7 @@ export default {
 				const result = await window.steam.isDlcInstalled();
 				if (result.ok && result.installed) this.has = true;
 				return;
-			} catch (e) {}
+			} catch (err) {}
 		}
 
 		return;

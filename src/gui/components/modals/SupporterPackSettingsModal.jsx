@@ -179,8 +179,8 @@ class SupporterPackSettingsModal extends PureComponent {
 								label={locales.get("supporter_invert_images_label")}
 								checked={!!invertTransparentImages}
 								style={{ marginTop: 16 }}
-								onChange={(event) =>
-									this._setInvertTransparentImages(event.target.checked)
+								onChange={(e) =>
+									this._setInvertTransparentImages(e.target.checked)
 								}
 								className={styles.terminalCheckbox}
 							/>
@@ -468,8 +468,8 @@ class SupporterPackSettingsModal extends PureComponent {
 				bus.emit("theme-changed");
 				toast.success(locales.get("it_worked"));
 				sfx.play("load");
-			} catch (e) {
-				console.error("💥 Failed to import theme JSON", e);
+			} catch (err) {
+				console.error("💥 Failed to import theme JSON", err);
 				toast.error(locales.get("the_operation_failed"));
 			}
 		});

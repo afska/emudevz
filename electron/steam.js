@@ -44,7 +44,7 @@ function registerIpc(ipcMain) {
 			const ok = client.achievement.activate(achievementId);
 			return { ok };
 		} catch (err) {
-			const reason = err?.message || e?.toString() || "?";
+			const reason = err?.message || err?.toString() || "?";
 			console.warn(
 				"⚠️ Cannot unlock achievement: ",
 				achievementId,

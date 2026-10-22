@@ -89,8 +89,8 @@ export default class AudioTester extends PureComponent {
 								withLatestCode: false,
 							}}
 							volume={0}
-							onError={(e) => {
-								console.error(e);
+							onError={(err) => {
+								console.error(err);
 							}}
 							onFps={this._setFps}
 							onStart={this._onExpectedEmulatorStart}
@@ -222,11 +222,11 @@ export default class AudioTester extends PureComponent {
 		}
 	};
 
-	_setError = (e) => {
-		console.error(e);
+	_setError = (err) => {
+		console.error(err);
 
-		const reason = e?.message || e?.toString() || "?";
-		const fullStack = testContext.javascript.buildStack(e);
+		const reason = err?.message || err?.toString() || "?";
+		const fullStack = testContext.javascript.buildStack(err);
 		this.props.onError({ reason, fullStack });
 	};
 

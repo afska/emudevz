@@ -29,7 +29,7 @@ export default class FindCommand extends FilesystemCommand {
 				let content;
 				try {
 					content = filesystem.read(filePath);
-				} catch (e) {
+				} catch (err) {
 					continue;
 				}
 

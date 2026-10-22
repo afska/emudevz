@@ -41,10 +41,10 @@ export default class FilesystemCommand extends Command {
 	async execute() {
 		try {
 			await this._execute();
-		} catch (e) {
-			if (e?.isUserEvent) return;
+		} catch (err) {
+			if (err?.isUserEvent) return;
 
-			const message = e?.message || e?.toString() || "?";
+			const message = err?.message || err?.toString() || "?";
 			await this._terminal.writeln(
 				"❌  " + theme.ERROR(message.replace(ERROR_PREFIX, ""))
 			);

@@ -60,9 +60,9 @@ export default forwardRef(function FileSearch(props, ref) {
 			let files = [];
 			try {
 				files = filesystem.lsr(DIRECTORY);
-			} catch (e) {
+			} catch (err) {
 				console.error(`❌ Cannot list directory: ${DIRECTORY}`);
-				console.error(e);
+				console.error(err);
 			}
 			const newFiles = files
 				.map((file) => {
@@ -88,7 +88,7 @@ export default forwardRef(function FileSearch(props, ref) {
 						let codeFiles = [];
 						try {
 							codeFiles = filesystem.lsr(dir);
-						} catch (e) {
+						} catch (err) {
 							continue;
 						}
 						codeFiles.forEach((file) => {
@@ -97,7 +97,7 @@ export default forwardRef(function FileSearch(props, ref) {
 							let content = "";
 							try {
 								content = filesystem.read(file.filePath);
-							} catch (e) {
+							} catch (err) {
 								return;
 							}
 							const lines = content.split("\n");
@@ -115,8 +115,8 @@ export default forwardRef(function FileSearch(props, ref) {
 					}
 
 					classIndexRef.current = index;
-				} catch (e) {
-					console.error("❌ Failed to build class index from code dirs", e);
+				} catch (err) {
+					console.error("❌ Failed to build class index from code dirs", err);
 				}
 			}
 		} else {

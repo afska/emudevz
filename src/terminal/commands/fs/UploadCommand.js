@@ -36,8 +36,8 @@ export default class UploadCommand extends FilesystemCommand {
 							});
 						}
 						resolve();
-					} catch (e) {
-						reject(e);
+					} catch (err) {
+						reject(err);
 					}
 				},
 				resolve

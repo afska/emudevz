@@ -23,10 +23,10 @@ export class WebLinkProvider {
 	_addCallbacks(links) {
 		return links.map((link) => {
 			link.leave = this._options.leave;
-			link.hover = (event, uri) => {
+			link.hover = (e, uri) => {
 				if (this._options.hover) {
 					const { range } = link;
-					this._options.hover(event, uri, range);
+					this._options.hover(e, uri, range);
 				}
 			};
 			return link;
@@ -47,7 +47,7 @@ export class WebLinkProvider {
 // 		return urlString
 // 			.toLocaleLowerCase()
 // 			.startsWith(parsedBase.toLocaleLowerCase());
-// 	} catch (e) {
+// 	} catch (err) {
 // 		return false;
 // 	}
 // }

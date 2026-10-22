@@ -408,7 +408,7 @@ class SettingsModal extends PureComponent {
 			try {
 				try {
 					await savefile.check(fileContent);
-				} catch (e) {
+				} catch (err) {
 					toast.error(locales.get("save_file_cannot_be_restored"));
 					return;
 				}
@@ -437,7 +437,7 @@ class SettingsModal extends PureComponent {
 		try {
 			await savefile.clear();
 			this._reload();
-		} catch (e) {
+		} catch (err) {
 			this.setState({ isLoadingSaveDelete: false });
 		}
 	};

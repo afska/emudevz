@@ -32,9 +32,9 @@ export default class Shell extends Program {
 			this._terminal.autocompleteOptions = this.allAvailableCommands;
 			const commandLine = await this._getNextCommandLine();
 			await this.runLine(commandLine);
-		} catch (e) {
-			if (!e.isUserEvent) throw e;
-			if (e !== DISPOSED) this._terminal.restart();
+		} catch (err) {
+			if (!err.isUserEvent) throw err;
+			if (err !== DISPOSED) this._terminal.restart();
 			return "error";
 		}
 	}
@@ -89,7 +89,7 @@ export default class Shell extends Program {
 					);
 				});
 				this._terminal.autocompleteOptions = files;
-			} catch (e) {
+			} catch (err) {
 				this._terminal.autocompleteOptions = [];
 			}
 		} else

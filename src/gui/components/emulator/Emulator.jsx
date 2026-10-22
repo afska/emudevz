@@ -136,8 +136,8 @@ export default class Emulator extends Component {
 			? (() => {
 					try {
 						return this._emulation.neees.getSaveState();
-					} catch (e) {
-						console.error(e);
+					} catch (err) {
+						console.error(err);
 						return null;
 					}
 			  })()
@@ -202,8 +202,8 @@ export default class Emulator extends Component {
 
 			onStart?.(this._emulation);
 			bus.emit("emulator-started");
-		} catch (e) {
-			this._setError(e);
+		} catch (err) {
+			this._setError(err);
 		}
 	}
 
@@ -232,9 +232,9 @@ export default class Emulator extends Component {
 						.setUnbroken(settings.unbroken)
 						.useCustomEmulator(settings.useConsole || isFreeMode)
 						.build(settings.withLatestCode);
-		} catch (e) {
-			console.error(e);
-			this._setError(e);
+		} catch (err) {
+			console.error(err);
+			this._setError(err);
 			return null;
 		}
 	}
@@ -368,8 +368,8 @@ export default class Emulator extends Component {
 				(() => {
 					try {
 						return this.neees.getSaveState();
-					} catch (e) {
-						console.error(e);
+					} catch (err) {
+						console.error(err);
 						return null;
 					}
 				})()
@@ -390,7 +390,7 @@ export default class Emulator extends Component {
 
 		try {
 			return JSON.parse(this._getRawSaveState());
-		} catch (e) {
+		} catch (err) {
 			return null;
 		}
 	}
@@ -421,9 +421,9 @@ export default class Emulator extends Component {
 				const bytes = JSON.parse(raw);
 				return bytes;
 			}
-		} catch (e) {
+		} catch (err) {
 			toast.error(locales.get("save_file_cannot_be_restored"));
-			console.error("💥 Corrupted save", e);
+			console.error("💥 Corrupted save", err);
 			return null;
 		}
 	}
@@ -440,8 +440,8 @@ export default class Emulator extends Component {
 				const saveFilePath = `${Drive.SAVE_DIR}/${name}${SAVE_FILE_EXTENSION}`;
 				filesystem.write(saveFilePath, JSON.stringify(saveFileBytes));
 			}
-		} catch (e) {
-			console.error("💥 Error saving", e);
+		} catch (err) {
+			console.error("💥 Error saving", err);
 			toast.error(locales.get("the_operation_failed"));
 		}
 	}

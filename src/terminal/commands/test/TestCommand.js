@@ -34,9 +34,9 @@ export default class TestCommand extends Command {
 		) {
 			try {
 				isVideoTestSuccessful = await this._runVideoTests(level);
-			} catch (e) {
+			} catch (err) {
 				isVideoTestSuccessful = false;
-				console.error(e);
+				console.error(err);
 				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
 			}
 			await this._terminal.newline();
@@ -50,9 +50,9 @@ export default class TestCommand extends Command {
 			) {
 				try {
 					isAudioTestSuccessful = await this._runAudioTests(level);
-				} catch (e) {
+				} catch (err) {
 					isAudioTestSuccessful = false;
-					console.error(e);
+					console.error(err);
 					await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
 				}
 				await this._terminal.newline();
@@ -69,8 +69,8 @@ export default class TestCommand extends Command {
 			try {
 				if (testContext[context]?.getWarnings != null)
 					warnings = testContext[context]?.getWarnings(level);
-			} catch (e) {
-				this._terminal.writeln(e?.message || "?", theme.ERROR);
+			} catch (err) {
+				this._terminal.writeln(err?.message || "?", theme.ERROR);
 				return;
 			}
 
@@ -98,8 +98,8 @@ export default class TestCommand extends Command {
 			let testDefinitions = [];
 			try {
 				testDefinitions = await this._getTestDefinitions(level, $, testFiles);
-			} catch (e) {
-				console.error(e);
+			} catch (err) {
+				console.error(err);
 				await this._terminal.writeln("💥 💥 💥 💥 💥", theme.ERROR);
 				return;
 			}
@@ -361,8 +361,8 @@ export default class TestCommand extends Command {
 			}
 
 			return result.success;
-		} catch (e) {
-			if (e === INTERRUPTED) {
+		} catch (err) {
+			if (err === INTERRUPTED) {
 				tv.setContent(null, "rom");
 				throw INTERRUPTED;
 			}
@@ -373,7 +373,7 @@ export default class TestCommand extends Command {
 				locales.get("tests_emulator_crashed"),
 				theme.ERROR
 			);
-			await this._printError(e);
+			await this._printError(err);
 			tv.setContent(null, "rom");
 		}
 
@@ -481,8 +481,8 @@ export default class TestCommand extends Command {
 			}
 
 			return result.success;
-		} catch (e) {
-			if (e === INTERRUPTED) {
+		} catch (err) {
+			if (err === INTERRUPTED) {
 				tv.setContent(null, "rom");
 				throw INTERRUPTED;
 			}
@@ -493,7 +493,7 @@ export default class TestCommand extends Command {
 				locales.get("tests_emulator_crashed"),
 				theme.ERROR
 			);
-			await this._printError(e);
+			await this._printError(err);
 			tv.setContent(null, "rom");
 		}
 

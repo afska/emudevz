@@ -114,7 +114,7 @@ document.onkeydown = (e) => {
 document.onclick = () => music.start(); // run music!
 
 // On "fullscreenchange" events
-document.onfullscreenchange = (event) => {
+document.onfullscreenchange = (e) => {
 	const isFullscreen = document.fullscreenElement?.id === "screen";
 	document.body.style.filter = isFullscreen ? "blur(4px)" : "none";
 	if (!isFullscreen) document.getElementById("emulator")?.focus();

@@ -5,11 +5,11 @@ let lastWarning = -Infinity;
 export default function runUserCode(action, fallback = 0) {
 	try {
 		return action() ?? fallback;
-	} catch (error) {
+	} catch (err) {
 		const now = Date.now();
 
 		if (now - lastWarning >= SECOND) {
-			console.warn("⚠️ Debugger user code failed", error);
+			console.warn("⚠️ Debugger user code failed", err);
 			lastWarning = now;
 		}
 

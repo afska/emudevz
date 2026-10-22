@@ -12,8 +12,8 @@ class PlayerWorklet extends AudioWorkletProcessor {
 		this.buffer = new RingBuffer(ringBufferSize);
 		this.inFlight = 0;
 
-		this.port.onmessage = (event) => {
-			for (let sample of event.data) this.buffer.enq(sample);
+		this.port.onmessage = (e) => {
+			for (let sample of e.data) this.buffer.enq(sample);
 			if (this.inFlight > 0) this.inFlight--;
 		};
 	}
@@ -25,7 +25,7 @@ class PlayerWorklet extends AudioWorkletProcessor {
 		try {
 			const samples = this.buffer.deqN(size);
 			for (let i = 0; i < size; i++) output[i] = samples[i];
-		} catch (e) {
+		} catch (err) {
 			// buffer underrun (needed {size}, got {this.buffer.size()})
 			// ignore empty buffers... assume audio has just stopped
 			for (let i = 0; i < size; i++) output[i] = 0;

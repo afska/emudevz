@@ -761,7 +761,7 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
       null,
       null
     );
-  } catch (e) {
+  } catch (err) {
     throw new Error(
       `\`this.logger\` should have been called with (cpu, 0x8000, cpu.operations[0xea], null, null)`
     );
@@ -781,7 +781,7 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
       0x05,
       0x05
     );
-  } catch (e) {
+  } catch (err) {
     throw new Error(
       `\`this.logger\` should have been called with (cpu, 0x8001, cpu.operations[0xa9], 0x05, 0x05)`
     );
@@ -801,7 +801,7 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
       0x0201,
       0x0201
     );
-  } catch (e) {
+  } catch (err) {
     throw new Error(
       `\`this.logger\` should have been called with (cpu, 0x8003, cpu.operations[0x8d], 0x0201, 0x0201)`
     );
@@ -821,7 +821,7 @@ it("can run 4 simple operations, updating all counters, and calling a `logger` f
       0x0201,
       0x0005
     );
-  } catch (e) {
+  } catch (err) {
     throw new Error(
       `\`this.logger\` should have been called with (cpu, 0x8006, cpu.operations[0xae], 0x0201, 0x0005)`
     );
@@ -844,7 +844,7 @@ it("doesn't crash if `logger` is `null` or `undefined`", () => {
   cpu.logger = null;
   try {
     cpu.step();
-  } catch (e) {
+  } catch (err) {
     throw new Error("step() crashed when logger === null");
   }
 
@@ -853,7 +853,7 @@ it("doesn't crash if `logger` is `null` or `undefined`", () => {
   cpu.logger = undefined;
   try {
     cpu.step();
-  } catch (e) {
+  } catch (err) {
     throw new Error("step() crashed when logger === undefined");
   }
 })({

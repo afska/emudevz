@@ -373,7 +373,7 @@ export default {
 
 				try {
 					if (!filesystem.exists(filePath)) return;
-				} catch (e) {
+				} catch (err) {
 					return;
 				}
 

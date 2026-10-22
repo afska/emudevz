@@ -15,8 +15,8 @@ export default class MvCommand extends FilesystemCommand {
 			const stat = filesystem.stat(newPath);
 			const name = $path.parse(oldPath).base;
 			if (stat.isDirectory) newPath += `/${name}`;
-		} catch (e) {
-			if (e.code !== "ENOENT") throw e;
+		} catch (err) {
+			if (err.code !== "ENOENT") throw err;
 		}
 
 		this._resolve(newPath, true);

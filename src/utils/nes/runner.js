@@ -49,7 +49,7 @@ export default {
 				for (let i = 0; i < 0xffff; i++)
 					cpu.memory.writeAt(i, preCpu.memory.readAt(i));
 				cpu.sp.value = preCpu.sp.value;
-			} catch (e) {
+			} catch (err) {
 				throw new Error("Pre-code failed!");
 			}
 		}

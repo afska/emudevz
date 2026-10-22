@@ -395,16 +395,16 @@ export default class CPUDebugger extends PureComponent {
 				}
 			);
 			bus.emit("compiled");
-		} catch (e) {
+		} catch (err) {
 			if (
-				e?.message?.startsWith("Parse Error") ||
-				e?.message?.startsWith("Assembly Error")
+				err?.message?.startsWith("Parse Error") ||
+				err?.message?.startsWith("Assembly Error")
 			) {
-				e.handled = true;
-				this.setState({ _error: e.message });
+				err.handled = true;
+				this.setState({ _error: err.message });
 			}
 
-			throw e;
+			throw err;
 		}
 	};
 

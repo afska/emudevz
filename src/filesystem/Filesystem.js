@@ -26,9 +26,9 @@ class Filesystem {
 							},
 						},
 					},
-					(e) => {
-						if (e != null) {
-							reject(e);
+					(err) => {
+						if (err != null) {
+							reject(err);
 							return;
 						}
 						this.fs = BrowserFS.BFSRequire("fs");
@@ -122,8 +122,8 @@ class Filesystem {
 				const imagePrefix = "data:application/octet-stream;base64,";
 				if (data.startsWith(imagePrefix)) data = data.replace(imagePrefix, "");
 				data = blob.base64ToArrayBuffer(data);
-			} catch (e) {
-				if (!options.any) throw e;
+			} catch (err) {
+				if (!options.any) throw err;
 			}
 
 		return data;
@@ -184,19 +184,19 @@ class Filesystem {
 				try {
 					this.fs.mkdirSync(path);
 					success = true;
-				} catch (e) {
-					if (e.code === "ENOENT") {
-						this.mkdirp(e.path);
+				} catch (err) {
+					if (err.code === "ENOENT") {
+						this.mkdirp(err.path);
 						continue;
 					}
 
-					throw e;
+					throw err;
 				}
 			} while (!success);
-		} catch (e) {
-			if (e.code === "EEXIST") return;
+		} catch (err) {
+			if (err.code === "EEXIST") return;
 
-			throw e;
+			throw err;
 		}
 	}
 
@@ -225,8 +225,8 @@ class Filesystem {
 	rmrff(path) {
 		try {
 			this.rmrf(path);
-		} catch (e) {
-			if (e.code === "ENOTDIR") this.rm(path);
+		} catch (err) {
+			if (err.code === "ENOTDIR") this.rm(path);
 		}
 	}
 
@@ -263,10 +263,10 @@ class Filesystem {
 		try {
 			this.stat(path);
 			return true;
-		} catch (e) {
-			if (e.code === "ENOENT") {
+		} catch (err) {
+			if (err.code === "ENOENT") {
 				return false;
-			} else throw e;
+			} else throw err;
 		}
 	}
 

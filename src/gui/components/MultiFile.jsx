@@ -223,7 +223,7 @@ class MultiFile extends PureComponent {
 				this.props.openFile(newPath);
 				this.props.setSelectedFile(newPath);
 				this._refresh();
-			} catch (e) {
+			} catch (err) {
 				toast.error(locales.get("operation_failed"));
 			}
 		};
@@ -338,15 +338,15 @@ class MultiFile extends PureComponent {
 						try {
 							const code = filesystem.read(filePath);
 							return code;
-						} catch (e) {
+						} catch (err) {
 							return "";
 						}
 					},
 					setCode: (code) => {
 						try {
 							filesystem.write(filePath, code, { silent: true });
-						} catch (e) {
-							console.error(e);
+						} catch (err) {
+							console.error(err);
 							this._closeSelectedFile();
 						}
 					},
@@ -361,9 +361,9 @@ class MultiFile extends PureComponent {
 		let content = null;
 		try {
 			content = filesystem.read(filePath, { binary: !!customArgs.binary });
-		} catch (e) {
+		} catch (err) {
 			console.error(`❌ Cannot read file: ${filePath}`);
-			console.error(e);
+			console.error(err);
 		}
 
 		const args = {

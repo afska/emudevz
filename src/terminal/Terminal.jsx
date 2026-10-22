@@ -135,9 +135,9 @@ export default class Terminal {
 			const exitCode = await this._currentProgram.run();
 
 			if (!exitCode) sfx.play("close");
-		} catch (e) {
-			if (e === DISPOSED) return;
-			throw e;
+		} catch (err) {
+			if (err === DISPOSED) return;
+			throw err;
 		}
 	}
 
@@ -450,7 +450,7 @@ export default class Terminal {
 			OpenCommand.open(filePath);
 			toast.success(locales.get("file_created"));
 			sfx.play("save");
-		} catch (e) {
+		} catch (err) {
 			toast.error(locales.get("file_created_error"));
 		}
 	}

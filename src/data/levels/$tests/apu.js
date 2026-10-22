@@ -210,7 +210,7 @@ it("connects the audio registers to CPU memory (<reads>)", () => {
 
       try {
         expect(result).to.equal(returnValue);
-      } catch (e) {
+      } catch (err) {
         throw new Error(
           `\`cpuMemory.read(${toHex(
             address

@@ -110,14 +110,14 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 
 			try {
 				ImGui_Impl.Shutdown();
-			} catch (e) {
-				console.warn(e);
+			} catch (err) {
+				console.warn(err);
 			}
 
 			try {
 				ImGui.DestroyContext();
-			} catch (e) {
-				console.warn(e);
+			} catch (err) {
+				console.warn(err);
 			}
 		}
 

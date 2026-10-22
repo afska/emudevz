@@ -51,9 +51,9 @@ export default class Emulation {
 						this.neees.samples(n);
 						this._updateSound();
 					}
-				} catch (error) {
+				} catch (err) {
 					this.terminate();
-					onError(error);
+					onError(err);
 				}
 			},
 			volume,
@@ -99,9 +99,9 @@ export default class Emulation {
 					}
 					this._updateSound();
 				}
-			} catch (error) {
+			} catch (err) {
 				this.terminate();
-				onError(error);
+				onError(err);
 			}
 		}, onFps);
 
@@ -109,13 +109,13 @@ export default class Emulation {
 			this.neees.load(bytes, saveFileBytes);
 			try {
 				if (this.saveState != null) this.neees.setSaveState(this.saveState);
-			} catch (e) {
-				throw new Error(locales.get("error_loading_save_state") + e.message);
+			} catch (err) {
+				throw new Error(locales.get("error_loading_save_state") + err.message);
 			}
 			this.frameTimer.start();
-		} catch (error) {
+		} catch (err) {
 			this.terminate();
-			onError(error);
+			onError(err);
 		}
 
 		this._onError = onError;
@@ -137,17 +137,17 @@ export default class Emulation {
 			this.saveState = saveState;
 			try {
 				if (this.saveState != null) this.neees.setSaveState(this.saveState);
-			} catch (e) {
-				throw new Error(locales.get("error_loading_save_state") + e.message);
+			} catch (err) {
+				throw new Error(locales.get("error_loading_save_state") + err.message);
 			}
 
 			if (hasFrameBuffer) {
 				for (let i = 0; i < this.neees.ppu.frameBuffer.length; i++)
 					this.neees.ppu.frameBuffer[i] = oldFrameBuffer[i] ?? 0;
 			}
-		} catch (error) {
+		} catch (err) {
 			this.terminate();
-			this._onError(error);
+			this._onError(err);
 		}
 	};
 
@@ -263,9 +263,9 @@ export default class Emulation {
 					if (button[0] !== "$") {
 						this.neees.setButton(i + 1, button, input[i][button]);
 					}
-			} catch (error) {
+			} catch (err) {
 				this.terminate();
-				this._onError(error);
+				this._onError(err);
 			}
 		}
 	}

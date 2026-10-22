@@ -52,19 +52,19 @@ export default function AlphaColorInput({
 	React.useEffect(() => {
 		if (!isDragging) return;
 
-		const handleMove = (event) => {
-			event.preventDefault();
+		const handleMove = (e) => {
+			e.preventDefault();
 			const dragState = dragStateRef.current;
 			if (!dragState) return;
 
-			const deltaX = event.clientX - dragState.startX;
-			const deltaY = event.clientY - dragState.startY;
+			const deltaX = e.clientX - dragState.startX;
+			const deltaY = e.clientY - dragState.startY;
 			const distanceSquared = deltaX * deltaX + deltaY * deltaY;
 
 			if (!dragState.hasDragged && distanceSquared > 4 * 4)
 				dragState.hasDragged = true;
 
-			if (dragState.hasDragged) updateAlphaFromEvent(event);
+			if (dragState.hasDragged) updateAlphaFromEvent(e);
 		};
 
 		const handleUp = () => {
@@ -85,25 +85,25 @@ export default function AlphaColorInput({
 		};
 	}, [isDragging, rgb, alpha, onChange]);
 
-	const handleMouseDown = (event) => {
-		if (event.button !== 0) return;
+	const handleMouseDown = (e) => {
+		if (e.button !== 0) return;
 
-		event.preventDefault();
+		e.preventDefault();
 		dragStateRef.current = {
-			startX: event.clientX,
-			startY: event.clientY,
+			startX: e.clientX,
+			startY: e.clientY,
 			hasDragged: false,
 		};
 		setIsDragging(true);
 	};
 
-	const handleContextMenu = (event) => {
-		event.preventDefault();
+	const handleContextMenu = (e) => {
+		e.preventDefault();
 		if (onReset) onReset();
 	};
 
-	const handleColorChange = (event) => {
-		const newRgb = event.target.value; // #rrggbb from native picker
+	const handleColorChange = (e) => {
+		const newRgb = e.target.value; // #rrggbb from native picker
 		onChange(makeHexWithAlpha(newRgb, alpha));
 	};
 

@@ -312,20 +312,20 @@ export default class CodeEditor extends PureComponent {
 			this.setState({ isCompiling: false });
 			bus.emit("code", code);
 			this.setState({ isReady: true, errorStart: -1, errorEnd: -1 });
-		} catch (e) {
+		} catch (err) {
 			this.setState({ isReady: false });
 
-			if (e.err?.name === "SyntaxError") {
-				const lineIndex = e.lineNumber - 1;
+			if (err.err?.name === "SyntaxError") {
+				const lineIndex = err.lineNumber - 1;
 				const { index: lineStart } = errorMarker.findLine(code, lineIndex);
 
 				this.setState({
-					errorStart: lineStart + e.err.location.start.offset,
-					errorEnd: lineStart + e.err.location.end.offset,
+					errorStart: lineStart + err.err.location.start.offset,
+					errorEnd: lineStart + err.err.location.end.offset,
 				});
-			} else if (!e.handled) {
+			} else if (!err.handled) {
 				// (throwing errors inside `onChange` can mess up updates)
-				console.error(e, code);
+				console.error(err, code);
 			}
 		}
 	}, COMPILE_DEBOUNCE_MS);
@@ -336,7 +336,7 @@ export default class CodeEditor extends PureComponent {
 		setTimeout(() => {
 			try {
 				this._container.classList.add("quickflash");
-			} catch (e) {
+			} catch (err) {
 				// maybe already detached
 			}
 		});
@@ -405,8 +405,8 @@ export default class CodeEditor extends PureComponent {
 					y: "center",
 				}),
 			});
-		} catch (e) {
-			console.warn("Failed to scroll", e);
+		} catch (err) {
+			console.warn("Failed to scroll", err);
 		}
 	}
 

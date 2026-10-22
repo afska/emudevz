@@ -28,8 +28,8 @@ module.exports = function sortFiles(files) {
 				} keys)`
 			);
 		}
-	} catch (error) {
-		console.error("❌  " + error.message);
+	} catch (err) {
+		console.error("❌  " + err.message);
 		process.exitCode = 1;
 	}
 };

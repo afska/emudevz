@@ -322,8 +322,8 @@ export default GenericDebugger(
 
 				await speaker.start();
 				this._player = { speaker, id };
-			} catch (e) {
-				console.error(e);
+			} catch (err) {
+				console.error(err);
 				alert("💥💥💥💥💥");
 			}
 		}

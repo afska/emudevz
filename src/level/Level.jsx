@@ -365,15 +365,15 @@ export default class Level {
 		let autoload = "";
 		try {
 			autoload = filesystem.read(AUTOLOAD_PATH);
-		} catch (e) {}
+		} catch (err) {}
 
 		if (autoload === "") return;
 
 		try {
 			(0, eval)(autoload);
-		} catch (e) {
-			console.error("❌  Invalid autoload script: " + e.message);
-			console.error(e);
+		} catch (err) {
+			console.error("❌  Invalid autoload script: " + err.message);
+			console.error(err);
 		}
 	}
 

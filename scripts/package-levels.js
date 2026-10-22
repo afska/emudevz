@@ -61,9 +61,9 @@ async function pkg() {
 				.readFileSync($path.join(chapterPath, CHAPTER_METADATA_FILE))
 				.toString();
 			chapterMetadata = JSON.parse(chapterJSON);
-		} catch (e) {
+		} catch (err) {
 			console.error(`❌ Invalid chapter metadata: ${chapterFolder}`);
-			console.error(e);
+			console.error(err);
 			process.exit(0);
 		}
 
@@ -82,7 +82,7 @@ async function pkg() {
 			help: _.mapValues(CHAPTER_HELP_FILES, (helpFile) => {
 				try {
 					return fs.readFileSync($path.join(chapterPath, helpFile)).toString();
-				} catch (e) {
+				} catch (err) {
 					return "";
 				}
 			}),
@@ -104,9 +104,9 @@ async function pkg() {
 					.readFileSync($path.join(levelPath, LEVEL_METADATA_FILE))
 					.toString();
 				levelMetadata = JSON.parse(levelJSON);
-			} catch (e) {
+			} catch (err) {
 				console.error(`❌ Invalid level metadata: ${chapterFolder}`);
-				console.error(e);
+				console.error(err);
 				process.exit(0);
 			}
 

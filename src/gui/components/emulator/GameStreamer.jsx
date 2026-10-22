@@ -201,14 +201,14 @@ export default class GameStreamer extends PureComponent {
 			try {
 				const gl = this._app.renderer.gl;
 				gl.getExtension("WEBGL_lose_context")?.loseContext();
-			} catch (e) {
-				console.warn(e);
+			} catch (err) {
+				console.warn(err);
 			}
 
 			try {
 				this._app.destroy(true, true);
-			} catch (e) {
-				console.warn(e);
+			} catch (err) {
+				console.warn(err);
 			}
 		}
 	}

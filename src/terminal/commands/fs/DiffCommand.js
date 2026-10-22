@@ -90,7 +90,7 @@ export default class DiffCommand extends FilesystemCommand {
 				const rel = file.filePath.replace(rootDir + "/", "");
 				map[rel] = filesystem.read(file.filePath);
 			}
-		} catch (e) {}
+		} catch (err) {}
 
 		return map;
 	}

@@ -24,7 +24,7 @@ export default class NEEESSimpleCPULogger {
 
 			try {
 				finalAddress = operation.addressingMode.getAddress?.(cpu, input) ?? 0;
-			} catch (e) {}
+			} catch (err) {}
 
 			switch (operation.addressingMode.id) {
 				case "IMPLICIT":

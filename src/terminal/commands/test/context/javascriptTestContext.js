@@ -83,23 +83,23 @@ export default {
 					};
 				})
 				.filter((it) => !_.isEmpty(it.lint));
-		} catch (e) {
-			console.error(e);
-			const message = e?.message?.toLowerCase() || "?";
+		} catch (err) {
+			console.error(err);
+			const message = err?.message?.toLowerCase() || "?";
 
 			if (message.includes("call stack")) {
 				throw new Error(
 					"There's some recursive stuff goin' on. Check your imports?"
 				);
 			} else {
-				throw e;
+				throw err;
 			}
 		}
 	},
 
-	buildHTMLError(e) {
+	buildHTMLError(err) {
 		try {
-			let fullStack = this.buildStack(e);
+			let fullStack = this.buildStack(err);
 
 			if (!fullStack) {
 				const warnings = this.getWarnings(Level.current).filter((it) =>
@@ -125,7 +125,8 @@ export default {
 			}
 
 			const combined =
-				(e?.message || "?") + (fullStack != null ? "\n" + fullStack.trace : "");
+				(err?.message || "?") +
+				(fullStack != null ? "\n" + fullStack.trace : "");
 			const linkified = combined.replace(
 				/(\/[^\s:()]+?\.[A-Za-z0-9_]+)(:\d+:\d+)?/g,
 				(_, path, linecol) =>
@@ -133,8 +134,8 @@ export default {
 					(linecol || "")
 			);
 			return linkified.replace(/\n/g, "<br>");
-		} catch (e) {
-			return e?.message || "?";
+		} catch (err) {
+			return err?.message || "?";
 		}
 	},
 
@@ -291,7 +292,7 @@ export default {
 				filesystem.stat(absolutePath)
 			);
 			if (stat.isDirectory) throw new Error("Invalid");
-		} catch (e) {
+		} catch (err) {
 			throw new Error(
 				`Import failed (📌  ${filePath} 📌 ):\n  => ${matches[0]}`
 			);

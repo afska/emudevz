@@ -43,8 +43,8 @@ export default class Speaker {
 			},
 		});
 		this.playerWorklet.connect(this.gainNode);
-		this.playerWorklet.port.onmessage = (event) => {
-			this.onAudioRequested(event.data);
+		this.playerWorklet.port.onmessage = (e) => {
+			this.onAudioRequested(e.data);
 		};
 	}
 

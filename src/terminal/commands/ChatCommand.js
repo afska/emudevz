@@ -143,12 +143,12 @@ export default class ChatCommand extends Command {
 		let exercise = null;
 		try {
 			exercise = chatScript.getSection(EXERCISE_SECTION);
-		} catch (e) {}
+		} catch (err) {}
 
 		let altMainSection = null;
 		try {
 			altMainSection = chatScript.getSection(ALT_MAIN_SECTION);
-		} catch (e) {}
+		} catch (err) {}
 		const initialName =
 			altMainSection != null ? ALT_MAIN_SECTION : ChatScript.INITIAL_SECTION;
 
@@ -250,8 +250,8 @@ export default class ChatCommand extends Command {
 				try {
 					const response = await this._terminal.waitForKey();
 					command.selectedResponse = getResponse(response);
-				} catch (e) {
-					if (e !== CANCELED) throw e;
+				} catch (err) {
+					if (err !== CANCELED) throw err;
 				}
 			}
 			await this._showResponse(command.selectedResponse, responses);

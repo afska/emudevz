@@ -57,7 +57,7 @@ export default class LsCommand extends FilesystemCommand {
 				})
 				.filter((it) => it != null)
 				.join("\n");
-		} catch (e) {
+		} catch (err) {
 			return "";
 		}
 	}

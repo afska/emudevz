@@ -1,11 +1,11 @@
 export default {
 	open(extension, onFilePicked, onCancel = () => {}) {
-		const handleFileSelect = async (event) => {
-			event.target.removeEventListener("change", handleFileSelect);
+		const handleFileSelect = async (e) => {
+			e.target.removeEventListener("change", handleFileSelect);
 
 			if (input.files.length === 0) return onCancel();
 
-			const file = event.target.files[0];
+			const file = e.target.files[0];
 			const fileContent = await this._readFile(file);
 			onFilePicked(fileContent, file.name);
 		};
@@ -18,8 +18,8 @@ export default {
 		input.click();
 	},
 	openMultiple(extension, onFilesPicked, onCancel = () => {}) {
-		const handleFileSelect = async (event) => {
-			event.target.removeEventListener("change", handleFileSelect);
+		const handleFileSelect = async (e) => {
+			e.target.removeEventListener("change", handleFileSelect);
 
 			if (input.files.length === 0) return onCancel();
 

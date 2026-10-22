@@ -169,8 +169,8 @@ export default class TV extends PureComponent {
 						name={name}
 						error={_error}
 						saveState={_saveState}
-						onError={(e) => {
-							this.setState({ _error: e });
+						onError={(err) => {
+							this.setState({ _error: err });
 						}}
 						onLoadROM={(fileContent, name) => {
 							this.runner?.stop();
@@ -217,8 +217,8 @@ export default class TV extends PureComponent {
 						test={content.test}
 						onEnd={content.onEnd}
 						onFrame={content.onFrame}
-						onError={(e) => {
-							content.onError(e);
+						onError={(err) => {
+							content.onError(err);
 						}}
 						onClose={() => {
 							if (window.EmuDevz.state.isRunningEmulatorTest) return;
@@ -236,8 +236,8 @@ export default class TV extends PureComponent {
 						test={content.test}
 						onEnd={content.onEnd}
 						onFrame={content.onFrame}
-						onError={(e) => {
-							content.onError(e);
+						onError={(err) => {
+							content.onError(err);
 						}}
 						onClose={() => {
 							if (window.EmuDevz.state.isRunningEmulatorTest) return;
@@ -264,8 +264,8 @@ export default class TV extends PureComponent {
 		const name = $path.parse(file.name).name;
 		const reader = new FileReader();
 
-		reader.onload = (event) => {
-			const rom = event.target.result;
+		reader.onload = (e) => {
+			const rom = e.target.result;
 			this.setContent(rom, "rom", name);
 			window.EmuDevz.achievements.unlock("misc-dumper");
 		};

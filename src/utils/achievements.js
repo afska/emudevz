@@ -19,8 +19,8 @@ export default {
 					this.unlock("misc-plumber");
 				}
 			})
-			.catch((e) => {
-				console.error("Error computing ROM hash", e);
+			.catch((err) => {
+				console.error("Error computing ROM hash", err);
 			});
 	},
 

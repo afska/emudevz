@@ -17,13 +17,13 @@ export default class RmCommand extends FilesystemCommand {
 					`${locales.get("deleting")} ${theme.ACCENT(arg)}...`
 				);
 				filesystem.rm(path);
-			} catch (e) {
-				if (e.code !== "EISDIR") throw e;
+			} catch (err) {
+				if (err.code !== "EISDIR") throw err;
 
 				try {
 					filesystem.rmdir(path);
-				} catch (e) {
-					if (e.code !== "ENOTEMPTY") throw e;
+				} catch (err) {
+					if (err.code !== "ENOTEMPTY") throw err;
 
 					if (await this._recursiveCheck()) {
 						await this._terminal.writeln(

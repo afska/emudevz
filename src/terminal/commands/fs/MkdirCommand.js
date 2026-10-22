@@ -19,14 +19,14 @@ export default class MkdirCommand extends FilesystemCommand {
 			try {
 				if (this._isParent) filesystem.mkdirp(path);
 				else filesystem.mkdir(path);
-			} catch (e) {
-				if (e.code === "ENOENT" && !this._isParent) {
+			} catch (err) {
+				if (err.code === "ENOENT" && !this._isParent) {
 					await this._terminal.writehlln(
 						locales.get("mkdir_parent_flag"),
 						theme.COMMENT
 					);
 				}
-				throw e;
+				throw err;
 			}
 		}
 	}

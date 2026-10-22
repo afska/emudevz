@@ -33,13 +33,13 @@ export default class ReplCommand extends Command {
 				locales.get("repl_code_success"),
 				theme.COMMENT
 			);
-		} catch (e) {
+		} catch (err) {
 			await this._terminal.writehlln(
 				locales.get("repl_code_error"),
 				theme.WARNING
 			);
-			if (e?.message != null)
-				await this._terminal.writehlln(e.message, theme.ERROR);
+			if (err?.message != null)
+				await this._terminal.writehlln(err.message, theme.ERROR);
 		}
 
 		const context = contextEval.create($);
@@ -54,8 +54,8 @@ export default class ReplCommand extends Command {
 						theme.INPUT(PROMPT_SYMBOL),
 						true
 					);
-				} catch (e) {
-					if (e !== CANCELED) throw e;
+				} catch (err) {
+					if (err !== CANCELED) throw err;
 				}
 			}
 			this._addInputHistory(expression);
@@ -79,9 +79,9 @@ export default class ReplCommand extends Command {
 						theme.COMMENT
 					);
 				}
-			} catch (e) {
+			} catch (err) {
 				await this._terminal.writeln(
-					"❌  " + theme.ERROR(e?.message || e?.toString() || "?")
+					"❌  " + theme.ERROR(err?.message || err?.toString() || "?")
 				);
 			}
 		}
@@ -125,10 +125,10 @@ export default class ReplCommand extends Command {
 							return JSON.stringify(sanitized, null, 2);
 						}
 					}
-				} catch (e) {
-					if (e.message.includes("Converting circular structure to JSON"))
+				} catch (err) {
+					if (err.message.includes("Converting circular structure to JSON"))
 						return OBJECT;
-					else throw e;
+					else throw err;
 				}
 			case "string":
 				return JSON.stringify(expression);

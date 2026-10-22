@@ -79,7 +79,7 @@ export default class NEEESTestLogger {
 				const extraCycles = cpu.extraCycles;
 				try {
 					finalAddress = operation.addressingMode.getAddress(cpu, input);
-				} catch (e) {
+				} catch (err) {
 				} finally {
 					cpu.extraCycles = extraCycles;
 				}
@@ -167,9 +167,9 @@ export default class NEEESTestLogger {
 			const $status = `${$registers} ${$cpuCycle}`;
 
 			this.lastLog = $counter + $commandHex + $assembly + $status;
-		} catch (e) {
-			console.error(e);
-			throw e;
+		} catch (err) {
+			console.error(err);
+			throw err;
 		}
 	}
 }

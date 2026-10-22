@@ -410,7 +410,7 @@ it("connects the video registers to CPU memory (<reads>)", () => {
     expect(register.onRead).to.have.been.calledOnce;
     try {
       expect(result).to.equal(returnValue);
-    } catch (e) {
+    } catch (err) {
       throw new Error(
         `\`cpuMemory.read(${toHex(
           address
@@ -721,7 +721,7 @@ it("calls `_onPreLine(...)` on scanline ~-1~", () => {
       if (scanline === -1) {
         try {
           expect(ppu._onPreLine).to.have.been.called;
-        } catch (e) {
+        } catch (err) {
           throw new Error(
             `_onPreLine should be called on scanline=${scanline}, cycle=${cycle}`
           );
@@ -729,7 +729,7 @@ it("calls `_onPreLine(...)` on scanline ~-1~", () => {
       } else {
         try {
           expect(ppu._onPreLine).to.not.have.been.called;
-        } catch (e) {
+        } catch (err) {
           throw new Error(
             `_onPreLine should NOT be called on scanline=${scanline}, cycle=${cycle}`
           );
@@ -766,7 +766,7 @@ it("calls `_onVisibleLine()` on scanlines ~[0, 240)~", () => {
       if (scanline >= 0 && scanline < 240) {
         try {
           expect(ppu._onVisibleLine).to.have.been.called;
-        } catch (e) {
+        } catch (err) {
           throw new Error(
             `_onVisibleLine should be called on scanline=${scanline}, cycle=${cycle}`
           );
@@ -774,7 +774,7 @@ it("calls `_onVisibleLine()` on scanlines ~[0, 240)~", () => {
       } else {
         try {
           expect(ppu._onVisibleLine).to.not.have.been.called;
-        } catch (e) {
+        } catch (err) {
           throw new Error(
             `_onVisibleLine should NOT be called on scanline=${scanline}, cycle=${cycle}`
           );
@@ -811,7 +811,7 @@ it("calls `_onVBlankLine(...)` on scanline 241, with the `onInterrupt` argument"
       if (scanline === 241) {
         try {
           expect(ppu._onVBlankLine).to.have.been.calledWith(onInterrupt);
-        } catch (e) {
+        } catch (err) {
           throw new Error(
             `_onVBlankLine should be called on scanline=${scanline}, cycle=${cycle}`
           );
@@ -819,7 +819,7 @@ it("calls `_onVBlankLine(...)` on scanline 241, with the `onInterrupt` argument"
       } else {
         try {
           expect(ppu._onVBlankLine).to.not.have.been.called;
-        } catch (e) {
+        } catch (err) {
           throw new Error(
             `_onVBlankLine should NOT be called on scanline=${scanline}, cycle=${cycle}`
           );

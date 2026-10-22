@@ -153,7 +153,7 @@ export default class Console extends PureComponent {
 		setTimeout(() => {
 			try {
 				this._container.classList.add("quickflash");
-			} catch (e) {
+			} catch (err) {
 				// maybe already detached
 			}
 		});

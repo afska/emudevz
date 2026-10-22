@@ -65,7 +65,7 @@ export default class RootCommand extends Command {
 
 		try {
 			if (filesystem.exists(snapshotDir)) filesystem.rmrf(snapshotDir);
-		} catch (e) {
+		} catch (err) {
 			// ignore
 		}
 

@@ -39,7 +39,7 @@ function stripCommonIndent(text, tabSize = 4) {
 }
 
 export default EditorView.domEventHandlers({
-	paste(event, view) {
+	paste(e, view) {
 		if (
 			view.state.facet(EditorState.readOnly) ||
 			!view.state.facet(EditorView.editable)
@@ -48,8 +48,8 @@ export default EditorView.domEventHandlers({
 
 		if (view.state.selection.ranges.length > 1) return false;
 
-		event.preventDefault();
-		const raw = event.clipboardData.getData("text/plain");
+		e.preventDefault();
+		const raw = e.clipboardData.getData("text/plain");
 		const normalized = stripCommonIndent(raw, view.state.tabSize ?? 4);
 
 		const { from, to } = view.state.selection.main;

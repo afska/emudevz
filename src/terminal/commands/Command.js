@@ -35,8 +35,8 @@ export default class Command extends Program {
 	async run() {
 		try {
 			await this.execute(this._args, this._shell);
-		} catch (e) {
-			if (e !== INTERRUPTED) throw e;
+		} catch (err) {
+			if (err !== INTERRUPTED) throw err;
 		}
 
 		if (this._restartOnEnd) this._terminal.restart();

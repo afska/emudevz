@@ -20,8 +20,8 @@ export default {
 
 		// IndexedDB
 		return new Promise((resolve, reject) => {
-			cursor.onsuccess = (event) => {
-				const cursor = event.target.result;
+			cursor.onsuccess = (e) => {
+				const cursor = e.target.result;
 				if (cursor) {
 					zip
 						.folder(INDEXED_DB_FOLDER)
@@ -34,14 +34,14 @@ export default {
 							filepicker.saveAs(content, fileName);
 							resolve();
 						})
-						.catch((error) => {
-							reject(error);
+						.catch((err) => {
+							reject(err);
 						});
 				}
 			};
 
-			cursor.onerror = (error) => {
-				reject(error);
+			cursor.onerror = (err) => {
+				reject(err);
 			};
 		});
 	},

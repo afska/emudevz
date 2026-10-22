@@ -44,11 +44,11 @@ export default {
 
 		try {
 			return eval(_evalCode_);
-		} catch (e) {
-			const error = new Error(`Code eval failed: ${e}`);
+		} catch (err) {
+			const error = new Error(`Code eval failed: ${err}`);
 			console.trace(_evalCode_);
 			error.code = _evalCode_;
-			error.inner = e;
+			error.inner = err;
 			throw error;
 		}
 	},

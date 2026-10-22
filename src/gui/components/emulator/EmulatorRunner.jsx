@@ -351,13 +351,13 @@ export default class EmulatorRunner extends PureComponent {
 		this.didUseSaveState = false;
 	};
 
-	_setError = (e) => {
-		console.error(e);
+	_setError = (err) => {
+		console.error(err);
 
-		const stack = testContext.javascript.buildStack(e);
+		const stack = testContext.javascript.buildStack(err);
 		const debugInfo = stack?.location; // format: { filePath, lineNumber }
 
-		const html = testContext.javascript.buildHTMLError(e);
+		const html = testContext.javascript.buildHTMLError(err);
 		this.props.onError({ html, debugInfo });
 	};
 
@@ -451,8 +451,8 @@ export default class EmulatorRunner extends PureComponent {
 			toast.success(locales.get("save_state_saved"));
 
 			sfx.play("save");
-		} catch (e) {
-			console.error("💥 Error saving state", e);
+		} catch (err) {
+			console.error("💥 Error saving state", err);
 			toast.error(locales.get("the_operation_failed"));
 		}
 	};
@@ -482,8 +482,8 @@ export default class EmulatorRunner extends PureComponent {
 			this.didUseSaveState = true;
 
 			sfx.play("load");
-		} catch (e) {
-			console.error("💥 Error loading state", e);
+		} catch (err) {
+			console.error("💥 Error loading state", err);
 			toast.error(locales.get("the_operation_failed"));
 		}
 	};
@@ -503,8 +503,8 @@ export default class EmulatorRunner extends PureComponent {
 					(() => {
 						try {
 							return this._emulator?.neees?.getSaveState();
-						} catch (e) {
-							console.error(e);
+						} catch (err) {
+							console.error(err);
 							return null;
 						}
 					})()) ||

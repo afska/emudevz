@@ -100,10 +100,10 @@ function createWindow() {
 	// - Ctrl++ or Ctrl+NumpadAdd: Zoom in
 	// - Ctrl-- or Ctrl+NumpadSubtract: Zoom out
 	// - Ctrl+0: Reset zoom
-	win.webContents.on("before-input-event", (event, input) => {
+	win.webContents.on("before-input-event", (e, input) => {
 		if (input.type === "keyDown" && input.alt && input.code === "F4") {
 			// (force-close on Alt+F4 even if the renderer captures keys)
-			event.preventDefault();
+			e.preventDefault();
 			win.close();
 			return;
 		}
@@ -113,14 +113,14 @@ function createWindow() {
 			input.type === "keyDown" &&
 			(input.key === "BrowserBack" || input.key === "BrowserForward")
 		) {
-			event.preventDefault();
+			e.preventDefault();
 			return;
 		}
 		if (
 			input.type === "mouseDown" &&
 			(input.key === "BrowserBack" || input.key === "BrowserForward")
 		) {
-			event.preventDefault();
+			e.preventDefault();
 			return;
 		}
 
@@ -135,7 +135,7 @@ function createWindow() {
 		) {
 			// HACK: W11 has a bug where fullscreen electron apps that use the Steam overlay create ghost alt-tab entries
 			if (!isWindows) win.setFullScreen(!win.isFullScreen());
-			event.preventDefault();
+			e.preventDefault();
 			return;
 		}
 
@@ -156,7 +156,7 @@ function createWindow() {
 		) {
 			const current = win.webContents.getZoomFactor();
 			win.webContents.setZoomFactor(clamp(current + step, 0.5, 3));
-			event.preventDefault();
+			e.preventDefault();
 			return;
 		}
 		// Zoom out
@@ -170,7 +170,7 @@ function createWindow() {
 		) {
 			const current = win.webContents.getZoomFactor();
 			win.webContents.setZoomFactor(clamp(current - step, 0.5, 3));
-			event.preventDefault();
+			e.preventDefault();
 			return;
 		}
 		// Reset zoom
@@ -179,7 +179,7 @@ function createWindow() {
 			(input.key === "0" || input.code === "Digit0" || input.code === "Numpad0")
 		) {
 			win.webContents.setZoomFactor(1);
-			event.preventDefault();
+			e.preventDefault();
 			return;
 		}
 	});
@@ -193,10 +193,10 @@ function createWindow() {
 		return { action: "allow" };
 	});
 
-	win.webContents.on("will-navigate", (event, url) => {
+	win.webContents.on("will-navigate", (e, url) => {
 		if (!isExternalHttpUrl(url)) return;
 
-		event.preventDefault();
+		e.preventDefault();
 		shell.openExternal(url);
 	});
 

@@ -91,7 +91,7 @@ for (let lang of LANGUAGES) {
 				.readFileSync($path.join(chapterPath, CHAPTER_METADATA_FILE))
 				.toString();
 			chapterMetadata = JSON.parse(chapterJSON);
-		} catch (e) {
+		} catch (err) {
 			throw new Error(`Invalid chapter metadata: ${chapterFolder}`);
 		}
 

@@ -48,14 +48,14 @@ export default {
 
 					results.push({ id, name, passed: true });
 					break;
-				} catch (e) {
+				} catch (err) {
 					if (_i_ === 0 && _debugMode_ === "onFailure") continue; // run again with debugger
 
 					let testCode = test.toString();
 					let testErrorLine =
-						e.stack != null &&
-						!e?.message?.startsWith("🐒") &&
-						e.stack.match(/<anonymous>:(\d+):\d+/);
+						err.stack != null &&
+						!err?.message?.startsWith("🐒") &&
+						err.stack.match(/<anonymous>:(\d+):\d+/);
 					if (testErrorLine != null)
 						testCode = this._markExactErrorLine(
 							testErrorLine,
@@ -68,8 +68,8 @@ export default {
 						name,
 						passed: false,
 						testCode,
-						reason: e?.message || e?.toString() || "?",
-						fullStack: testContext.javascript.buildStack(e),
+						reason: err?.message || err?.toString() || "?",
+						fullStack: testContext.javascript.buildStack(err),
 					});
 					break;
 				}

@@ -76,9 +76,9 @@ class PlayScreen extends PureComponent {
 		return book?.getChapterOf(currentLevelId);
 	}
 
-	_onError = (e) => {
-		this.setState({ error: e?.message || e?.toString() || "?" });
-		console.error(e);
+	_onError = (err) => {
+		this.setState({ error: err?.message || err?.toString() || "?" });
+		console.error(err);
 	};
 
 	_loadBook() {
