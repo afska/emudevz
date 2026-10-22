@@ -1,3 +1,4 @@
+import runUserCode from "./runUserCode";
 import widgets from "./widgets";
 
 const ImGui = window.ImGui;
@@ -70,7 +71,9 @@ export default class Debugger_Memory {
 			if (region.label === "PPU OAM RAM")
 				return widgets.numberOr0(neees.ppu.memory?.oamRam?.[address] ?? 0);
 			else if (region.label.startsWith("PPU"))
-				return widgets.numberOr0(neees.ppu.memory?.read?.(address) ?? 0);
+				return widgets.numberOr0(
+					runUserCode(() => neees.ppu.memory?.read?.(address))
+				);
 
 			// reimplementing some memory-mapped reads to avoid triggering side effects
 
@@ -79,11 +82,13 @@ export default class Debugger_Memory {
 
 			switch (address) {
 				case 0x2002:
-					return widgets.numberOr0(neees.ppu.registers?.ppuStatus.value);
+					return widgets.numberOr0(neees.ppu.registers?.ppuStatus?.value ?? 0);
 				case 0x2007:
-					return widgets.numberOr0(neees.ppu.registers?.ppuData.buffer);
+					return widgets.numberOr0(neees.ppu.registers?.ppuData?.buffer ?? 0);
 				default:
-					return widgets.numberOr0(neees.cpu.memory.read(address));
+					return widgets.numberOr0(
+						runUserCode(() => neees.cpu.memory?.read?.(address))
+					);
 			}
 		};
 	}

@@ -6,6 +6,7 @@ import {
 	Tile,
 	getPaletteColors,
 } from "./neees/debugPPU";
+import runUserCode from "./runUserCode";
 import widgets from "./widgets";
 
 const ImGui = window.ImGui;
@@ -119,6 +120,10 @@ export default class Debugger_PPU {
 	}
 
 	draw() {
+		const neees = window.EmuDevz.emulation?.neees;
+		if (!neees) return;
+		const ppu = neees.ppu;
+
 		if (!this.args.readOnly) {
 			widgets.fullWidthFieldWithLabel("Scanline", (label) => {
 				ImGui.SliderInt(
@@ -131,11 +136,7 @@ export default class Debugger_PPU {
 			});
 		}
 
-		const emulation = window.EmuDevz?.emulation;
-		const neees = emulation?.neees;
-		const ppu = neees?.ppu;
-
-		if (neees != null && neees.onScanline == null) {
+		if (neees.onScanline == null) {
 			neees.onScanline = () => {
 				if (this._destroyed) {
 					neees.onScanline = null;
@@ -270,7 +271,7 @@ export default class Debugger_PPU {
 			for (let tileY = 0; tileY < 30; tileY++) {
 				for (let tileX = 0; tileX < 32; tileX++) {
 					const address = base + tileY * 32 + tileX;
-					const tileIndex = ppu.memory?.read?.(address) ?? 0;
+					const tileIndex = runUserCode(() => ppu.memory?.read?.(address));
 
 					if (tileIndex === this._selectedCHR.tileIndex) {
 						const rectX = offsetX + tileX * TILE_SIZE_PIXELS;
@@ -297,12 +298,14 @@ export default class Debugger_PPU {
 		const req = this._pendingHoverReq;
 		if (!req) return;
 
-		const tileIndex = ppu.memory?.read?.(req.ppuAddress) ?? 0;
+		const tileIndex = runUserCode(() => ppu.memory?.read?.(req.ppuAddress));
 		const patternTableId =
 			ppu.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
 		const tileAddress = (patternTableId ? 0x1000 : 0x0000) + tileIndex * 16;
 
-		const attribute = ppu.memory?.read?.(req.attributeAddress) ?? 0;
+		const attribute = runUserCode(() =>
+			ppu.memory?.read?.(req.attributeAddress)
+		);
 		const shift = (req.tileY & 2 ? 4 : 0) + (req.tileX & 2 ? 2 : 0);
 		const paletteId = (attribute >> shift) & 0x03;
 		const paletteAddress = 0x3f00 + paletteId * 4;
@@ -314,17 +317,17 @@ export default class Debugger_PPU {
 				const colorIndex = row.getColorIndex(x);
 				const color =
 					colorIndex > 0
-						? ppu.getColor?.(paletteId, colorIndex) ?? 0
-						: ppu.getColor?.(0, 0) ?? 0;
+						? runUserCode(() => ppu.getColor?.(paletteId, colorIndex))
+						: runUserCode(() => ppu.getColor?.(0, 0));
 				previewColors[y * TILE_SIZE_PIXELS + x] = color >>> 0;
 			}
 		}
 
 		const paletteColors = [
-			ppu.getColor?.(0, 0) ?? 0,
-			ppu.getColor?.(paletteId, 1) ?? 0,
-			ppu.getColor?.(paletteId, 2) ?? 0,
-			ppu.getColor?.(paletteId, 3) ?? 0,
+			runUserCode(() => ppu.getColor?.(0, 0)),
+			runUserCode(() => ppu.getColor?.(paletteId, 1)),
+			runUserCode(() => ppu.getColor?.(paletteId, 2)),
+			runUserCode(() => ppu.getColor?.(paletteId, 3)),
 		].map((c) => c >>> 0);
 
 		this._bgHoverInfo = {
@@ -431,7 +434,7 @@ export default class Debugger_PPU {
 			// click => select and jump to CHR
 			if (ImGui.IsMouseClicked(0) && this._bgHoverInfo && !this.args.readOnly) {
 				const patternTableId =
-					ppu?.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
+					ppu.registers?.ppuCtrl?.backgroundPatternTableId ?? 0;
 
 				this._selectedCHR = {
 					tableId: patternTableId,
@@ -468,14 +471,13 @@ export default class Debugger_PPU {
 	}
 
 	_drawViewportOverlay(pixels, width, height, ppu) {
-		if (ppu.loopy == null || typeof ppu.loopy !== "object") return;
-
+		if (!ppu.loopy?.tAddress) return;
 		const { tAddress, fineX } = ppu.loopy;
 		const baseNameTableId = tAddress.nameTableId ?? 0;
 		const withinNameTableX =
-			tAddress.coarseX * TILE_SIZE_PIXELS + (fineX ?? 0) ?? 0;
+			(tAddress.coarseX ?? 0) * TILE_SIZE_PIXELS + (fineX ?? 0);
 		const withinNameTableY =
-			tAddress.coarseY * TILE_SIZE_PIXELS + (tAddress.fineY ?? 0) ?? 0;
+			(tAddress.coarseY ?? 0) * TILE_SIZE_PIXELS + (tAddress.fineY ?? 0);
 
 		let atlasNameTableX = baseNameTableId & 1;
 		let atlasNameTableY = (baseNameTableId >> 1) & 1;
@@ -822,7 +824,7 @@ export default class Debugger_PPU {
 
 	//#region Sprites
 	_updateSprites(ppu) {
-		this._spriteIs8x16 = ppu.registers?.ppuCtrl?.spriteSize === 1;
+		this._spriteIs8x16 = (ppu.registers?.ppuCtrl?.spriteSize ?? 0) === 1;
 
 		const oam = this._readAllOAM(ppu);
 		this._sprites = new Array(TOTAL_SPRITES);
@@ -914,7 +916,8 @@ export default class Debugger_PPU {
 			patternTableId = entry.tile & 0b1 ? 1 : 0; // from tile LSB
 			tileId = (entry.tile & 0xfe) >>> 0; // even tile = top
 		} else {
-			patternTableId = ppu.registers?.ppuCtrl?.sprite8x8PatternTableId ? 1 : 0;
+			patternTableId =
+				ppu.registers?.ppuCtrl?.sprite8x8PatternTableId ?? 0 ? 1 : 0;
 			tileId = entry.tile >>> 0;
 		}
 
@@ -993,7 +996,7 @@ export default class Debugger_PPU {
 	}
 
 	_getSpritePalette(ppu, sprite) {
-		const backgroundColor = (ppu?.getColor?.(0, 0) ?? 0) >>> 0;
+		const backgroundColor = runUserCode(() => ppu.getColor?.(0, 0)) >>> 0;
 		const palette = getPaletteColors(ppu, sprite.paletteId);
 		return { backgroundColor, palette };
 	}
@@ -1274,8 +1277,9 @@ export default class Debugger_PPU {
 					const col = Math.floor(lx / tileSize);
 					const row = Math.floor(ly / tileSize);
 					const address = 0x3f00 + row * 4 + col;
-					const masterIndex = (ppu?.memory?.read?.(address) ?? 0) & 0x3f;
-					const color = ppu?.getColor?.(row, col) ?? 0;
+					const masterIndex =
+						runUserCode(() => ppu.memory?.read?.(address)) & 0x3f;
+					const color = runUserCode(() => ppu.getColor?.(row, col));
 
 					hoverRect = {
 						x: col * tileSize,
@@ -1337,8 +1341,9 @@ export default class Debugger_PPU {
 					const col = Math.floor(lx / tileSize);
 					const row = Math.floor(ly / tileSize);
 					const address = 0x3f10 + row * 4 + col;
-					const masterIndex = (ppu?.memory?.read?.(address) ?? 0) & 0x3f;
-					const color = ppu?.getColor?.(4 + row, col) ?? 0;
+					const masterIndex =
+						runUserCode(() => ppu.memory?.read?.(address)) & 0x3f;
+					const color = runUserCode(() => ppu.getColor?.(4 + row, col));
 
 					hoverRect = {
 						x: col * tileSize,
@@ -1423,7 +1428,8 @@ export default class Debugger_PPU {
 	_renderPaletteTexture(ppu, startPaletteId, pixels, imageSize, tileSize) {
 		for (let row = 0; row < 4; row++) {
 			for (let col = 0; col < 4; col++) {
-				const color = (ppu.getColor?.(startPaletteId + row, col) ?? 0) >>> 0;
+				const color =
+					runUserCode(() => ppu.getColor?.(startPaletteId + row, col)) >>> 0;
 
 				const x0 = col * tileSize;
 				const y0 = row * tileSize;
@@ -1484,7 +1490,7 @@ export default class Debugger_PPU {
 	_drawMiniFloatingPreview(ppu) {
 		if (!this.args.withPreview) return;
 
-		const frameBuffer = ppu?.frameBuffer;
+		const frameBuffer = ppu.frameBuffer;
 		if (!frameBuffer) return;
 
 		this._miniPixels.set(frameBuffer);

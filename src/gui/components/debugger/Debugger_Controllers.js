@@ -1,3 +1,4 @@
+import runUserCode from "./runUserCode";
 import widgets from "./widgets";
 
 const ImGui = window.ImGui;
@@ -18,9 +19,11 @@ const CONTROLLER_BUTTONS = [
 
 export default class Debugger_Controllers {
 	static readPressedButtons(neees) {
-		const bits = [Array(8).fill(false), Array(8).fill(false)];
+		const fallback = [Array(8).fill(false), Array(8).fill(false)];
+		if (!neees) return fallback;
 
-		if (neees != null) {
+		return runUserCode(() => {
+			const bits = fallback.map((buttons) => [...buttons]);
 			const [ctrl1, ctrl2] = neees.context.controllers;
 
 			// backup strobe and cursors
@@ -28,23 +31,25 @@ export default class Debugger_Controllers {
 			const prevCursor1 = ctrl1.cursor;
 			const prevCursor2 = ctrl2.cursor;
 
-			// pulse strobe on ctrl1
-			ctrl1.onWrite(1);
-			ctrl1.onWrite(0);
+			try {
+				// pulse strobe on ctrl1
+				ctrl1.onWrite?.(1);
+				ctrl1.onWrite?.(0);
 
-			// read 8 bits from each
-			for (let i = 0; i < 8; i++) {
-				bits[0][i] = !!ctrl1.onRead();
-				bits[1][i] = !!ctrl2.onRead();
+				// read 8 bits from each
+				for (let i = 0; i < 8; i++) {
+					bits[0][i] = !!ctrl1.onRead?.();
+					bits[1][i] = !!ctrl2.onRead?.();
+				}
+			} finally {
+				// restore strobe and cursors
+				ctrl1.strobe = prevStrobe;
+				ctrl1.cursor = prevCursor1;
+				ctrl2.cursor = prevCursor2;
 			}
 
-			// restore strobe and cursors
-			ctrl1.strobe = prevStrobe;
-			ctrl1.cursor = prevCursor1;
-			ctrl2.cursor = prevCursor2;
-		}
-
-		return bits;
+			return bits;
+		}, fallback);
 	}
 
 	draw() {

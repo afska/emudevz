@@ -23,7 +23,7 @@ export default class NEEESSimpleCPULogger {
 			let finalAddress = null;
 
 			try {
-				finalAddress = operation.addressingMode.getAddress(cpu, input);
+				finalAddress = operation.addressingMode.getAddress?.(cpu, input) ?? 0;
 			} catch (e) {}
 
 			switch (operation.addressingMode.id) {
@@ -45,7 +45,7 @@ export default class NEEESSimpleCPULogger {
 					return `($${$input}) = ${hex(finalAddress, 4)}`;
 				case "INDEXED_INDIRECT":
 					return `($${$input},X) @ ${hex(
-						byte.toU8(input + cpu.x.getValue()),
+						byte.toU8(input + (cpu.x?.getValue?.() ?? 0)),
 						2
 					)} = ${hex(finalAddress, 4)}`;
 				case "INDIRECT_INDEXED":
@@ -76,14 +76,16 @@ export default class NEEESSimpleCPULogger {
 			["a", "x", "y"]
 				.map((register) => {
 					return (
-						register.toUpperCase() + ":" + hex(cpu[register].getValue(), 2)
+						register.toUpperCase() +
+						":" +
+						hex(cpu[register]?.getValue?.() ?? 0, 2)
 					);
 				})
 				.join(" ") +
 			" P:" +
-			hex(cpu.flags.getValue(), 2) +
+			hex(cpu.flags?.getValue?.() ?? 0, 2) +
 			" SP:" +
-			hex(cpu.sp.getValue(), 2);
+			hex(cpu.sp?.getValue?.() ?? 0, 2);
 
 		const $cpuCycle = "CYC:" + cpu.cycle;
 		const $status = `${$registers} ${$cpuCycle}`;

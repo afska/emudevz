@@ -1,3 +1,4 @@
+import runUserCode from "./runUserCode";
 import widgets from "./widgets";
 
 const ImGui = window.ImGui;
@@ -45,7 +46,12 @@ export default class Debugger_Logs {
 					const revIndex = count - 1 - row;
 					ImGui.TableNextRow();
 					ImGui.TableSetColumnIndex(0);
-					ImGui.Text(`${this._logs[revIndex]}`);
+					ImGui.Text(
+						runUserCode(
+							() => String(this._logs[revIndex]),
+							"[Debugger user code failed]"
+						)
+					);
 				}
 			}
 			ImGui.EndTable();

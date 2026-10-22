@@ -1,3 +1,4 @@
+import runUserCode from "./runUserCode";
 import widgets from "./widgets";
 
 const ImGui = window.ImGui;
@@ -14,14 +15,6 @@ const DUTY_SEQUENCE = [
 	[0, 0, 1, 1, 1, 1, 1, 1],
 ];
 const DUTY_PERCENTAGES = ["12.5%", "25%", "50%", "75"];
-
-function isEnabled(channel) {
-	try {
-		return channel?.isEnabled?.() ?? false;
-	} catch {
-		return false;
-	}
-}
 
 export default class Debugger_APU {
 	constructor(args) {
@@ -182,25 +175,28 @@ export default class Debugger_APU {
 				if (channel != null) {
 					const timer = channel.timer ?? 0;
 					frequency = 1789773 / (16 * (timer + 1));
-					duty = channel.registers?.control.dutyCycleId;
+					duty = channel.registers?.control?.dutyCycleId ?? 0;
 				}
 
 				widgets.simpleTable(id, "Pulse Channel " + (i + 1), () => {
 					widgets.wave(samples, maxN, MIN, MAX);
 
 					const constantVolume =
-						channel?.registers?.control.constantVolume ?? false;
+						channel?.registers?.control?.constantVolume ?? false;
 					const volumeOrEnvelopePeriod =
-						channel?.registers?.control.volumeOrEnvelopePeriod ?? 0;
+						channel?.registers?.control?.volumeOrEnvelopePeriod ?? 0;
 
-					widgets.boolean("Enabled", isEnabled(channel));
+					widgets.boolean(
+						"Enabled",
+						runUserCode(() => channel?.isEnabled?.(), false)
+					);
 					ImGui.SameLine();
 					widgets.boolean("Constant", constantVolume);
 					widgets.value("Timer", channel?.timer ?? 0);
 					widgets.value("  => Freq", `${frequency.toFixed(2)} hz`);
 					widgets.value("Duty", `${duty} (${DUTY_PERCENTAGES[duty]})`);
 					ImGui.SameLine();
-					widgets.dutyCycle(DUTY_SEQUENCE[duty]);
+					widgets.dutyCycle(DUTY_SEQUENCE[duty] ?? DUTY_SEQUENCE[0]);
 					widgets.value("Sample", samples[samples.length - 1] ?? 0);
 
 					widgets.simpleTable(`${id}_lengthcounter`, "Length Counter", () => {
@@ -208,7 +204,7 @@ export default class Debugger_APU {
 
 						widgets.boolean(
 							"Halt",
-							channel?.registers?.control.envelopeLoopOrLengthCounterHalt ??
+							channel?.registers?.control?.envelopeLoopOrLengthCounterHalt ??
 								false
 						);
 						widgets.value("Count", count);
@@ -225,7 +221,7 @@ export default class Debugger_APU {
 						ImGui.SameLine();
 						widgets.boolean(
 							"Loop",
-							channel?.registers?.control.envelopeLoopOrLengthCounterHalt ??
+							channel?.registers?.control?.envelopeLoopOrLengthCounterHalt ??
 								false
 						);
 
@@ -286,7 +282,10 @@ export default class Debugger_APU {
 
 			widgets.wave(triangle, maxN, MIN, MAX);
 
-			widgets.boolean("Enabled", isEnabled(channel));
+			widgets.boolean(
+				"Enabled",
+				runUserCode(() => channel?.isEnabled?.(), false)
+			);
 			widgets.value("Timer", channel?.timer ?? 0);
 			widgets.value("  => Freq", `${frequency.toFixed(2)} hz`);
 			widgets.value("Sample", triangle[triangle.length - 1] ?? 0);
@@ -296,7 +295,7 @@ export default class Debugger_APU {
 
 				widgets.boolean(
 					"Halt",
-					channel?.registers?.lengthControl.halt ?? false
+					channel?.registers?.lengthControl?.halt ?? false
 				);
 				widgets.value("Count", count);
 				widgets.progressBar(count / 255);
@@ -310,7 +309,7 @@ export default class Debugger_APU {
 
 					widgets.boolean(
 						"Halt",
-						channel?.registers?.lengthControl.halt ?? false
+						channel?.registers?.lengthControl?.halt ?? false
 					);
 					ImGui.SameLine();
 					widgets.boolean(
@@ -335,16 +334,19 @@ export default class Debugger_APU {
 			widgets.wave(noise, maxN, MIN, MAX);
 
 			const constantVolume =
-				channel?.registers?.control.constantVolume ?? false;
+				channel?.registers?.control?.constantVolume ?? false;
 			const volumeOrEnvelopePeriod =
-				channel?.registers?.control.volumeOrEnvelopePeriod ?? 0;
+				channel?.registers?.control?.volumeOrEnvelopePeriod ?? 0;
 
-			widgets.boolean("Enabled", isEnabled(channel));
+			widgets.boolean(
+				"Enabled",
+				runUserCode(() => channel?.isEnabled?.(), false)
+			);
 			ImGui.SameLine();
 			widgets.boolean("Constant", constantVolume);
 			ImGui.SameLine();
-			widgets.boolean("Mode", channel?.registers?.form.mode ?? false);
-			widgets.value("Divider period", channel?.registers?.form.period ?? 0);
+			widgets.boolean("Mode", channel?.registers?.form?.mode ?? false);
+			widgets.value("Divider period", channel?.registers?.form?.period ?? 0);
 			widgets.value("Divider count", channel?.count ?? 0);
 			widgets.value(
 				"Shift",
@@ -359,7 +361,7 @@ export default class Debugger_APU {
 				ImGui.SameLine();
 				widgets.boolean(
 					"Loop",
-					channel?.registers?.control.envelopeLoopOrLengthCounterHalt ?? false
+					channel?.registers?.control?.envelopeLoopOrLengthCounterHalt ?? false
 				);
 
 				widgets.value(
@@ -383,7 +385,7 @@ export default class Debugger_APU {
 
 				widgets.boolean(
 					"Halt",
-					channel?.registers?.control.envelopeLoopOrLengthCounterHalt ?? false
+					channel?.registers?.control?.envelopeLoopOrLengthCounterHalt ?? false
 				);
 				widgets.value("Count", count);
 				widgets.progressBar(count / 255);
@@ -397,7 +399,10 @@ export default class Debugger_APU {
 
 			widgets.wave(dmc, maxN, DMC_MIN, DMC_MAX);
 
-			widgets.boolean("Enabled", isEnabled(channel));
+			widgets.boolean(
+				"Enabled",
+				runUserCode(() => channel?.isEnabled?.(), false)
+			);
 			widgets.value("Sample", dmc[dmc.length - 1] ?? 0);
 
 			widgets.simpleTable("dmc_dpcm", "DPCM", () => {
@@ -409,7 +414,7 @@ export default class Debugger_APU {
 				ImGui.SameLine();
 				widgets.boolean("Active", channel?.dpcm?.isActive ?? false);
 				ImGui.SameLine();
-				widgets.boolean("Loop", channel?.registers?.control.loop ?? false);
+				widgets.boolean("Loop", channel?.registers?.control?.loop ?? false);
 				widgets.value("Buffer", channel?.dpcm?.buffer || 0);
 				widgets.value("Cursor (byte)", cursorByte);
 				widgets.value("Cursor (bit)", cursorBit);

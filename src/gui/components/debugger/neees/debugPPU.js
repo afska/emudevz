@@ -1,4 +1,5 @@
 import { byte } from "../../../../utils";
+import runUserCode from "../runUserCode";
 
 const PATTERN_TABLE_SIZE = 0x1000;
 const TILE_SIZE_PIXELS = 8;
@@ -16,8 +17,12 @@ export class Tile {
 		const firstPlane = tileId * TILE_TOTAL_BYTES;
 		const secondPlane = firstPlane + TILE_TOTAL_BYTES / 2;
 
-		this._lowRow = ppu.memory?.read?.(startAddress + firstPlane + y) ?? 0;
-		this._highRow = ppu.memory?.read?.(startAddress + secondPlane + y) ?? 0;
+		this._lowRow = runUserCode(() =>
+			ppu.memory?.read?.(startAddress + firstPlane + y)
+		);
+		this._highRow = runUserCode(() =>
+			ppu.memory?.read?.(startAddress + secondPlane + y)
+		);
 	}
 
 	getColorIndex(x) {
@@ -53,7 +58,7 @@ export class NameTableRenderer {
 
 	render(nameTableId, offsetX, offsetY, plot) {
 		for (let y = 0; y < SCREEN_HEIGHT; y++) {
-			const backgroundColor = this.ppu.getColor?.(0, 0) ?? 0;
+			const backgroundColor = runUserCode(() => this.ppu.getColor?.(0, 0));
 
 			for (let x = 0; x < SCREEN_WIDTH; ) {
 				const scrolledX = x;
@@ -64,10 +69,11 @@ export class NameTableRenderer {
 				const tileX = Math.floor(nameTableX / TILE_SIZE_PIXELS);
 				const tileY = Math.floor(nameTableY / TILE_SIZE_PIXELS);
 				const tileIndex = tileY * TILES_PER_ROW + tileX;
-				const tileId =
+				const tileId = runUserCode(() =>
 					this.ppu.memory?.read?.(
 						MEM_NAME_TABLES + nameTableId * NAME_TABLE_SIZE_BYTES + tileIndex
-					) ?? 0;
+					)
+				);
 				const paletteId = this._getBackgroundPaletteId(
 					nameTableId,
 					nameTableX,
@@ -116,7 +122,9 @@ export class NameTableRenderer {
 		);
 		const regionIndex = regionY * ATTRIBUTE_TABLE_TOTAL_REGIONS_X + regionX;
 
-		const block = this.ppu.memory?.read?.(startAddress + blockIndex) ?? 0;
+		const block = runUserCode(() =>
+			this.ppu.memory?.read?.(startAddress + blockIndex)
+		);
 
 		return byte.getBits(
 			block,
@@ -212,12 +220,13 @@ export class Sprite {
 }
 
 export function getPaletteColors(ppu, paletteId) {
-	if (!ppu || !ppu.getColor) return GRAYSCALE_PALETTE;
-
-	return [
-		ppu.getColor(paletteId, 0),
-		ppu.getColor(paletteId, 1),
-		ppu.getColor(paletteId, 2),
-		ppu.getColor(paletteId, 3),
-	];
+	return runUserCode(() => {
+		if (!ppu.getColor) return GRAYSCALE_PALETTE;
+		return [
+			ppu.getColor(paletteId, 0),
+			ppu.getColor(paletteId, 1),
+			ppu.getColor(paletteId, 2),
+			ppu.getColor(paletteId, 3),
+		];
+	}, GRAYSCALE_PALETTE);
 }

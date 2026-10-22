@@ -1,5 +1,6 @@
 import { hex } from "../../../utils";
 import { NEEESSimpleCPULogger } from "../../../utils/nes";
+import runUserCode from "./runUserCode";
 import widgets from "./widgets";
 
 const ImGui = window.ImGui;
@@ -49,10 +50,13 @@ export default class Debugger_CPU {
 					return;
 				}
 
-				const scanline = neees?.ppu.scanline ?? 0;
+				const scanline = neees.ppu.scanline ?? 0;
 				if (this.isRunningStepByStep || scanline !== this._scanline) {
 					this._scanline = scanline;
-					const newLog = this._logger.log(a, b, c, d, e);
+					const newLog = runUserCode(
+						() => this._logger.log(a, b, c, d, e),
+						null
+					);
 					this._logs.push(newLog);
 					if (this._logs.length > LOG_LIMIT) this._logs.shift();
 				}
@@ -76,7 +80,9 @@ export default class Debugger_CPU {
 			for (let i = 0; i < REGISTERS.length; i++) {
 				ImGui.TableSetColumnIndex(i);
 				const registerField = REGISTER_FIELDS[i];
-				const value = widgets.numberOr0(neees?.cpu[registerField]?.getValue());
+				const value = widgets.numberOr0(
+					runUserCode(() => neees?.cpu[registerField]?.getValue?.())
+				);
 				ImGui.Text("$" + hex.format(value, registerField === "pc" ? 4 : 2));
 			}
 			ImGui.EndTable();
