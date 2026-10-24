@@ -53,6 +53,8 @@ export default {
 		"Mostrar diffs de `/code` vs último nivel completado.",
 	command_disk_description: "Mostrar uso y cuota de disco (usado/total y %).",
 	command_download_description: "Descargar archivos (uso: `download a b`).",
+	command_export_description:
+		"Exportar tu emulador como un sitio web independiente.",
 	command_find_description:
 		"Buscar en archivos de `/code` (uso: `find algún_texto`).",
 	command_help_description: "Mostrar esta ayuda.",
@@ -110,6 +112,9 @@ export default {
 	error_safari:
 		"Safari tiene problemas conocidos que impiden que el juego funcione. Usa un navegador basado en Chromium o Firefox.",
 	error_unknown_level: "Nivel inexistente: ",
+	export_error: "No se pudo exportar el emulador:",
+	export_success:
+		"FixedNEEES.zip exportado. Extráelo y publícalo como un sitio web estático.",
 	file_created: "¡Archivo creado!",
 	file_created_error: "El archivo no puede ser creado.",
 	file_doesnt_exist1: "El archivo",

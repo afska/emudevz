@@ -15,6 +15,10 @@ export default class FindCommand extends FilesystemCommand {
 		return "find";
 	}
 
+	static get isHelpCollapsed() {
+		return false;
+	}
+
 	async _execute() {
 		const query = this._getQuery();
 		if (query.length === 0) return;

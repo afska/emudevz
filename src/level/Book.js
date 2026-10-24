@@ -168,6 +168,13 @@ export default class Book {
 		return _.find(this.chapters, { number: chapterNumber }) || null;
 	}
 
+	isLevelInFinalChapter(levelId) {
+		return (
+			this.getChapterOf(levelId)?.number ===
+			this.constructor.LAST_CHAPTER_NUMBER
+		);
+	}
+
 	getChapterOf(levelId) {
 		const index = _.findIndex(this.chapters, (chapter) => {
 			return _.some(chapter.levels, (level) => level.id === levelId);

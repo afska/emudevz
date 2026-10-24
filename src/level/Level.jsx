@@ -276,6 +276,11 @@ export default class Level {
 		});
 	}
 
+	isInFinalChapter() {
+		const book = Book.current;
+		return book.isLevelInFinalChapter(this.id);
+	}
+
 	init() {
 		this.validate();
 

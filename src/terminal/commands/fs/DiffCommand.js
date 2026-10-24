@@ -13,6 +13,10 @@ export default class DiffCommand extends FilesystemCommand {
 		return "diff";
 	}
 
+	static get isHelpCollapsed() {
+		return false;
+	}
+
 	async _execute() {
 		const completedLevels = store.getState().savedata.completedLevels;
 		if (completedLevels.length === 0) return await this._notAvailable();

@@ -52,6 +52,7 @@ export default {
 	command_diff_description: "Show `/code` diffs vs last completed level.",
 	command_disk_description: "Show disk usage and quota (used/total and %).",
 	command_download_description: "Download files (usage: `download a b`).",
+	command_export_description: "Export your emulator as a standalone website.",
 	command_find_description: "Find in `/code` files (usage: `find some_text`).",
 	command_help_description: "Show this help.",
 	command_ls_description: "List files (usage: `ls`, or `ls -r`).",
@@ -106,6 +107,9 @@ export default {
 	error_safari:
 		"Sorry, Safari has known issues that break the game. Please use a Chromium-based browser or Firefox.",
 	error_unknown_level: "Unexisting level: ",
+	export_error: "Could not export the emulator:",
+	export_success:
+		"Exported FixedNEEES.zip. Extract it and deploy as a static website.",
 	file_created: "File created!",
 	file_created_error: "The file cannot be created.",
 	file_doesnt_exist1: "The file",

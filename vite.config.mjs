@@ -21,6 +21,7 @@ export default defineConfig(({ mode }) => {
 			keepNames: true,
 			minifyIdentifiers: false,
 		},
+		optimizeDeps: { entries: ["index.html"] },
 		build: {
 			rollupOptions: { treeshake: false },
 		},

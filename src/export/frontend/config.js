@@ -1,0 +1,5 @@
+export default {
+	SYNC_TO_AUDIO: true,
+	AUDIO_BUFFER_SIZE: 4096,
+	AUDIO_DRIFT_THRESHOLD: 64,
+};

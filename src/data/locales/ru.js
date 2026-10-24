@@ -55,6 +55,8 @@ export default {
 	command_disk_description:
 		"Показать использование диска и квоту (использовано/всего и %).",
 	command_download_description: "Скачать файлы (например: `download a b`).",
+	command_export_description:
+		"Экспортировать эмулятор как самостоятельный сайт.",
 	command_find_description:
 		"Найти в файлах `/code` (например: `find some_text`).",
 	command_help_description: "Показать эту справку.",
@@ -113,6 +115,9 @@ export default {
 	error_safari:
 		"В Safari есть известные проблемы, из-за которых игра не работает. Используй браузер на основе Chromium или Firefox.",
 	error_unknown_level: "Неизвестный уровень: ",
+	export_error: "Не удалось экспортировать эмулятор:",
+	export_success:
+		"FixedNEEES.zip экспортирован. Распакуйте его и опубликуйте как статический сайт.",
 	file_created: "Файл создан!",
 	file_created_error: "Файл не может быть создан.",
 	file_doesnt_exist1: "Файла",
