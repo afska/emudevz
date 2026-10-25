@@ -11,6 +11,10 @@
 		<link href="./css/fonts.css" rel="stylesheet" />
 		<link href="./css/style.css" rel="stylesheet" />
 		<title>FixedNEEES</title>
+		<script>
+			if (window.location.href.startsWith("file://"))
+				alert("The file:// protocol is not supported. Use a file server.");
+		</script>
 		<script type="module" src="./frontend/main.js"></script>
 	</head>
 	<body>
