@@ -22,16 +22,16 @@ concurrency:
 
 jobs:
   build_win:
-    runs-on: ubuntu-latest
-    container: electronuserland/builder:wine
+    runs-on: ubuntu-24.04
+    container: electronuserland/builder:wine@sha256:d91127d54da6c183efcbc587534daba402108b63be9d92844114c735dffe4e37
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: 20
+          node-version: '20.20.2'
           cache: 'npm'
 
       - name: Install dependencies
@@ -61,22 +61,22 @@ jobs:
         run: npm run steam:build:win
 
       - name: Upload artifact (win-unpacked)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: win-unpacked
           path: release/win-unpacked
           if-no-files-found: error
 
   build_linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: 20
+          node-version: '20.20.2'
           cache: 'npm'
 
       - name: Install dependencies
@@ -103,22 +103,22 @@ jobs:
         run: npm run steam:build:linux
 
       - name: Upload artifact (linux-unpacked)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: linux-unpacked
           path: release/linux-unpacked
           if-no-files-found: error
 
   build_mac:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
-          node-version: 20
+          node-version: '20.20.2'
           cache: 'npm'
 
       - name: Install dependencies
@@ -145,14 +145,14 @@ jobs:
         run: npm run steam:build:mac
 
       - name: Upload artifact (mac-arm64)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: mac-arm64
           path: release/mac-arm64
           if-no-files-found: error
 
   deploy_win:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - build_win
       - build_linux
@@ -184,7 +184,7 @@ jobs:
           releaseBranch: ${{ vars.STEAM_RELEASE_BRANCH || 'release' }}
 
   deploy_linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - deploy_win
     steps:
@@ -214,7 +214,7 @@ jobs:
           releaseBranch: ${{ vars.STEAM_RELEASE_BRANCH || 'release' }}
 
   deploy_mac:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs:
       - deploy_linux
     steps:
