@@ -2,11 +2,13 @@
 	"name": {
 		"en": "💾 Cartridge",
 		"es": "💾 Cartucho",
+		"fr": "💾 Cartouche",
 		"ru": "💾 Картридж"
 	},
 	"description": {
 		"en": "💾 Read code and graphics from ROM files",
 		"es": "💾 Lee el código y gráficos de archivos ROM",
+		"fr": "💾 Lis le code et les graphismes depuis des fichiers ROM",
 		"ru": "💾 Читай код и графику из ROM-файлов"
 	}
 }

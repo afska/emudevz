@@ -2,11 +2,13 @@
 	"name": {
 		"en": "🗜️ Mappers",
 		"es": "🗜️ Mappers",
+		"fr": "🗜️ Mappers",
 		"ru": "🗜️ Мапперы"
 	},
 	"description": {
 		"en": "🗜️ Add mappers for extra compatibility",
 		"es": "🗜️ Agrega mappers para mayor compatibilidad",
+		"fr": "🗜️ Ajoute des mappers pour plus de compatibilité",
 		"ru": "🗜️ Добавь мапперы для большей совместимости"
 	}
 }
