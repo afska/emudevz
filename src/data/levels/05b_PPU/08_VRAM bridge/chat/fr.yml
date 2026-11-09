@@ -1,0 +1,100 @@
+---
+main:
+  messages:
+  - les jeux définissent, au runtime, à quoi ressemble l'arrière-plan 🏞️
+  - ils créent une carte avec des tuiles et la stockent dans 🐏  VRAM
+  responses:
+  - comment un jeu peut écrire dans 🐏  VRAM ? [how]
+
+how:
+  messages:
+  - via les registres vidéo 📍  PPUAddr et 📦  PPUData
+  - c'est comme un pont qui relie le 🧠  CPU et le 🖥️  PPU
+  - d'abord, les jeux mettent dans 📍  PPUAddr l'adresse PPU où ils veulent écrire
+  - "(deux écritures consécutives : une pour l'octet de poids fort, et une pour l'octet de poids faible)"
+  - ensuite, ils écrivent dans 📦  PPUData l'octet qu'ils veulent mettre à cette adresse
+  - <{PPUAddr_PPUData.png}>
+  - ça permet au code du jeu d'accéder à n'importe quelle région de la mémoire PPU, y compris 👾  CHR-RAM, 🐏  VRAM et 🎨  Palette RAM
+  responses:
+  - (*) donne-moi un autre exemple 🤔 [example]
+  - bien, je pense que je dois définir la VRAM quelque part [exercise]
+
+example:
+  messages:
+  - je vais te donner le même exemple, mais en assembleur
+  - disons qu'un jeu NEEES veut écrire l'octet $D7 à l'adresse PPU $208F
+  - le code machine ne peut écrire qu'à des adresses CPU, hein ?
+  - les adresses PPU sont dans leur propre espace d'adressage séparé
+  - ce qu'ils font, c'est utiliser 📍  PPUAddr et 📦  PPUData <comme un pont> entre le 🧠  CPU et le 🖥️  PPU
+  - |-
+    dans notre exemple, ils feraient :
+    ```raw
+    LDA #$20
+    STA $2006
+    LDA #$8F
+    STA $2006
+
+    LDA #$D7
+    STA $2007```
+  responses:
+  - ...how
+
+exercise:
+  messages:
+  - ouais, mieux vaut commencer par là
+  - 📚  comme tu l'as fait avec `CPUMemory::ram`, ajoute une propriété `vram` dans 🐏  `PPUMemory`
+  - le tableau doit stocker 4096 octets
+  - (je sais que j'ai dit plusieurs fois qu'il n'y a que 2 KiB de VRAM, mais certains jeux étendent cette mémoire avec des puces supplémentaires dans leur cartouche, et c'est plus simple d'émuler ça en allouant un gros bloc de 4 KiB 🤷 )
+  - 📚  mappe la plage $2000-$2FFF vers la VRAM (lectures et écritures)
+  - |-
+    📚  implémente ces méthodes dans 📍  `PPUAddr` :
+    **onLoad()**:
+      **->** initialise deux propriétés :
+        ```javascript this.latch = false```
+        ```javascript this.address = 0```
+        (on va les utiliser pour modéliser le comportement alternant entre octet de poids fort / faible à chaque opération d'écriture)
+    **onWrite(value)**:
+      **->** si `latch` est ```javascript false```:
+        **->** écrit uniquement l'octet de poids fort de `address`, avec `value`
+          (laisse la partie basse telle quelle)
+      **->** si c'est ```javascript true```:
+        **->** écrit uniquement l'octet de poids faible de `address`, avec `value`
+          (laisse la partie haute telle quelle)
+      (tu peux utiliser `buildU16(...)`, `highByteOf(...)` et `lowByteOf(...)`)
+      **->** bascule `latch` vers la valeur opposée
+  - |-
+    📚  implémente ces méthodes dans 📦  `PPUData` :
+    **onWrite(value)**:
+      **->** écrit `value` à l'adresse PPU ```javascript ppuAddr.address```
+        (tu peux accéder à l'instance 🐏  `PPUMemory` avec ```javascript this.ppu.memory```)
+        (tu peux accéder à l'instance 📍  `PPUAddr` avec ```javascript this.ppu.registers.ppuAddr```)
+      **->** appelle ```javascript this._incrementAddress()```
+    **_incrementAddress()**:
+      **->** si ```javascript ppuCtrl.vramAddressIncrement32``` est ~1~:
+        **->** incrémente ```javascript ppuAddr.address``` de 32
+      **->** sinon :
+        **->** incrémente ```javascript ppuAddr.address``` de 1
+     **[!]** assure-toi que l'adresse ne dépasse jamais 65535 en utilisant `byte.toU16(...)`
+  - |-
+    📚  enfin, <modifie> dans 📊  `PPUStatus` :
+    **onRead()**:
+      **->** après avoir remis `isInVBlankInterval` à zéro, réinitialise aussi le `latch` de 📍  `PPUAddr`
+  responses:
+  - (*) c'est quoi cet incrément d'adresse ? 🤔 [increment]
+
+increment:
+  messages:
+  - ah ouais, j'avais oublié de te dire
+  - le PPU incrémente l'adresse automatiquement après une écriture dans 📦  PPUData
+  - selon ce qui est dans 🎛️  PPUCtrl, ça peut être ~+1~ ou ~+32~
+  - cet auto-incrément est utile pour que les jeux remplissent la VRAM plus vite
+  responses:
+  - ...exercise
+
+corollary:
+  messages:
+  - maintenant, essaie de lancer un jeu qui utilise 👾  CHR-RAM, comme 🕊️ 🛰️  ~Spacegulls~
+  - tu peux maintenant voir sa première 🕊️ 📖  table de motifs !
+  - ces tuiles sont copiées par le code du jeu via 📍  PPUAddr et 📦  PPUData
+  responses:
+  - ▶️  continue [end]

@@ -1,0 +1,49 @@
+---
+main:
+  messages:
+  - le 🧠  CPU et le 🖥️  PPU communiquent via un ensemble de 9 registres mappés en mémoire
+  - ils se trouvent aux adresses CPU $2000-$2007 et $4014
+  - jette un œil à 📄  ~/docs/ppu/video_registers.en.md~
+  - certains sont 🔍  <en lecture seule> (lus par 🧠  CPU, écrits par 🖥️  PPU)
+  - certains sont ✏️  <en écriture seule> (lus par 🖥️  PPU, écrits par 🧠  CPU)
+  - et quelques-uns sont <bidirectionnels>  🔍 ✏️
+  responses:
+  - donne-moi un exemple 🙏 [example]
+
+example:
+  messages:
+  - il y a deux 🕊️ 📖  tables de motifs, tu t'en souviens ?
+  - eh bien, le code du jeu doit indiquer au 🖥️  PPU laquelle utiliser
+  - pour les arrière-plans, c'est géré par le bit 4 de $2000 (🎛️  PPUCtrl)
+  - on l'appelle ~B~ dans notre colonne ~Bits~
+  - par exemple, si un jeu veut utiliser la deuxième table, il écrirait 16 (binaire ```raw 000```~1~```raw 0000```) dans $2000
+  - ou n'importe quel nombre avec le bit 4 à 1 !
+  - une écriture dans $2000 affecte 6 paramètres en même temps (~V~, ~H~, ~B~, ~S~, ~I~ et ~NN~)
+  - <{PPUCtrl.png}>
+  responses:
+  - donc, ces registres ne contiennent que des nombres ? 🔢 [numbers]
+
+numbers:
+  messages:
+  - oui, mais certains produisent des <effets spéciaux> quand le 🧠  CPU les lit ou y écrit
+  - ces effets de bord peuvent réinitialiser un tampon interne, incrémenter des compteurs, ou même copier des données !
+  - "j'ai codé une classe qui va t'aider à implémenter ça, tu devrais l'utiliser 📖"
+  responses:
+  - comment je peux l'utiliser ? [exercise]
+
+exercise:
+  messages:
+  - lis la documentation à 📄  ~/docs/lib/InMemoryRegister.en.md~
+  - et utilise 📄  ~/tmpl/ppu/VideoRegisters.js~ comme modèle pour le fichier des registres vidéo
+  - les registres 🎛️  `PPUCtrl` et 📊  `PPUStatus` sont déjà implémentés
+  - remarque comment ils appellent `addField(...)` pour chaque bit défini dans la colonne ~Bits~
+  - "ça crée des <propriétés automatiques> : après une écriture, le PPU peut accéder à leurs valeurs (p. ex. ```javascript ppuCtrl.spriteSize```)"
+  - 📚  crée une classe `VideoRegisters` en utilisant ce modèle
+  - |-
+    📚  ajoute une propriété `registers` à 🖥️  `PPU`, assignée à :
+      ```javascript new VideoRegisters(this)```
+  - |-
+    📚  enfin, mappe-les dans 🐏  `CPUMemory` (régions $2000-$2007 et $4014) :
+      - les <lectures> doivent retourner ```javascript this.ppu.registers.read(address)```
+      - les <écritures> doivent appeler ```javascript this.ppu.registers.write(address, value)``` et retourner
+  responses: []

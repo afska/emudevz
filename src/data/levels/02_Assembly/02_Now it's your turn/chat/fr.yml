@@ -1,0 +1,32 @@
+---
+main:
+  messages:
+  - à toi de jouer 😛
+  - 📚  fais un programme qui écrit le nombre $7C aux adresses $4055 et $4072
+  - 📚  puis, le nombre $18 à l'adresse $40B8
+  - teste ton programme avec le bouton ⏩
+  - 📚  quand tu es prêt·e, ferme le chat et lance la commande `test`
+  responses:
+  - non, j'ai besoin d'aide 😔 [help]
+  - tu peux me réexpliquer comment lancer l'autre commande ? [othercommands]
+
+othercommands:
+  messages:
+  - bien sûr
+  - appuie sur ~Ctrl+C~
+  - tape `test`, puis Entrée
+  responses:
+  - compris [main]
+
+help:
+  messages:
+  - rappelle-toi qu'avant d'écrire en mémoire, tu dois charger la valeur dans [A]
+  - c'est une opération en deux étapes
+  - <{LDA_STA.png}>
+  - "aussi, quand tu tapes des nombres littéraux, tu dois les préfixer par ~#~"
+  - "par ex. si tu veux charger un $99 dans [A], c'est `LDA #$99` et pas `LDA $99`"
+  - <{LDA_immediate.png}>
+  - "(sinon, ça chargerait dans [A] la valeur qui se trouve à l'adresse mémoire $0099)"
+  - <{LDA_memory.png}>
+  responses:
+  - merci, je vais essayer [end]

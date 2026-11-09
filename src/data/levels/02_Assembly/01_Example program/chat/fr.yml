@@ -1,0 +1,195 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.winOnEnd = true;
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+    });
+  messages:
+  - laisse-moi te présenter l'éditeur de code
+  - enfin, c'est pas encore un <éditeur> 😅
+  - juste un <visualiseur>
+  - il contient un exemple de programme NEEES basique
+  responses:
+  - (*) le visualiseur me fait pas peur, ce sont les chiffres bizarres en bas [debugger]
+  - c'est quoi ce langage ? 😮 [language]
+  - ⏭️  je connais déjà tout ça [iknow]
+
+iknow:
+  messages:
+  - 🤔
+  - tu es <vraiment> à l'aise avec l'assembleur 6502 ?
+  - (registres, flags, branchements, modes d'adressage, pile et sous-routines)
+  - sinon, dans le prochain chapitre tu vas <souffrir>
+  - bah, tu peux revenir le faire quand tu veux, de toute façon
+  - tu veux passer TOUT le chapitre ?
+  responses:
+  - ⏭️  oui, je passe [skip]
+  - ❌  non, je suis pas sûr·e [main]
+
+skip:
+  run: |
+    level.unlockLetsPlayLevelIfNeeded("lets-play-spacegulls");
+    const book = store.getState().book.instance;
+    const chapter = book.getChapterOf(level.id);
+    const lastLevelId = chapter.levels[chapter.levels.length - 1].id;
+    const nextLevelId = book.nextIdOf(lastLevelId, true);
+    store.dispatch.savedata.unlockChapter(nextLevelId);
+    store.dispatch.savedata.advanceTo(nextLevelId);
+  messages: []
+  events:
+  - null [end]
+
+debugger:
+  messages:
+  - le CPU debugger ?
+  - t'inquiète
+  - je vais tout t'expliquer !
+  responses:
+  - ...main
+
+language:
+  messages:
+  - c'est de l'assembleur !
+  - le niveau d'abstraction le plus bas dans les ordinateurs 💻
+  - ça se traduit directement en octets exécutés par le CPU
+  responses:
+  - "\"se traduit\" ? [machinecode]"
+
+machinecode:
+  run: |
+    {{Bottom}}.setSelectedCells([0x4020, 0x4021, 0x4022, 0x4023, 0x4024, 0x4025, 0x4026, 0x4027, 0x4028, 0x4029, 0x402A, 0x402B, 0x402C, 0x402D, 0x402E]);
+  messages:
+  - exactement
+  - un ~assembleur~ convertit le code assembleur en octets en mémoire
+  - on appelle ces octets le code machine, c'est ce que le CPU comprend
+  - regarde le <Memory Viewer> en bas à droite de l'écran !
+  - dans cette simulation, le code commence à l'adresse mémoire $4020
+  - si tu passes ta souris sur une de ces adresses, ça montre où commence chaque instruction
+  - <{compilation.png}>
+  responses:
+  - (*) c'est quoi une adresse mémoire ? [address]
+  - c'est quoi les autres chiffres ? 👀 [otherthings]
+
+address:
+  run: |
+    set((m) => m.$address = true);
+  messages:
+  - un nombre qui représente un emplacement en mémoire 🐏
+  - dans le NEEES, ils font 2 octets
+  - donc ils vont de 0 ($0000) à 65535 ($FFFF)
+  - chaque emplacement (et à peu près tout dans le NEEES) peut stocker un seul octet
+  - un octet peut stocker n'importe quel nombre entre 0 ($00) et 255 ($FF)
+  responses:
+  - le NEEES avait seulement 2048 octets de WRAM, pourquoi il y a 65536 adresses ? [butyousaid]
+  - <<!m.$hasEnded>> ...machinecode
+  - <<m.$hasEnded>> ...finish
+
+butyousaid:
+  messages:
+  - bonne question !
+  - il n'a que 2 KiB de vraie mémoire
+  - mais le CPU peut <voir> jusqu'à 64 KiB
+  - donc les deux premiers kilooctets sont de la <vraie RAM>
+  - et le reste sert à interagir avec le matériel 💻
+  - <{memory.png}>
+  - ça a pas trop d'importance dans ce chapitre
+  - on simule une RAM de 64 KiB pour simplifier
+  responses:
+  - <<!m.$hasEnded>> ...machinecode
+  - <<m.$hasEnded>> ...finish
+
+otherthings:
+  run-after-messages: |
+    {{Bottom}}.setSelectedCells([]);
+    set((m) => m.$canRun = true);
+  messages:
+  - on va lancer le code pour le découvrir
+  - <! Exécution activée.
+  - j'ai ajouté un bouton ⏩  dans la section code
+  - "tu peux cliquer dessus ? 🙏"
+  events:
+  - step [lda]
+
+lda:
+  run: |
+    set((m) => m.$canRun = false);
+  messages:
+  - super !
+  - si tu regardais attentivement, tu as probablement remarqué que [A] est passé de $00 à $01
+  - et [PC] est passé de $4020 à $4022 🤯
+  - ce sont des registres CPU, des emplacements accessibles rapidement
+  - chaque registre peut contenir un seul octet (~8~ bits) de données
+  - sauf [PC] ("Program Counter") qui fait 2 octets
+  responses:
+  - à quoi sert chaque registre ? [registers]
+
+registers:
+  messages:
+  - alors, [A] c'est l'Accumulateur et son utilité dépend du programme
+  - "[PC] pointe toujours vers la prochaine instruction à exécuter"
+  responses:
+  - "donc, avec `LDA #$01` tu viens de dire au processeur de stocker le nombre $01 dans [A] ? 😲 [ldaexplanation]"
+  - "(*) je suis curieux·se pour les autres : [X], [Y], et [SP] [theothers]"
+
+theothers:
+  run: |
+    set((m) => m.$others = true);
+  messages:
+  - j'en parlerai plus tard, mais en gros
+  - "[X] et [Y] peuvent stocker n'importe quelle valeur, comme [A]"
+  - ils ont une signification spéciale quand on travaille avec des adresses mémoire 🐏
+  - et [SP] c'est le "Stack Pointer"
+  responses:
+  - <<!m.$hasEnded>> ...registers
+  - <<m.$hasEnded>> ...finish
+
+ldaexplanation:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - exactement, `LDA` ça veut dire "LoaD Accumulator"
+  - 💸  les nombres préfixés par ~$~ sont en notation hexadécimale
+  - "🔢  les nombres préfixés par ~#~ sont des valeurs littérales"
+  - "🐏  les nombres sans le préfixe ~#~ font référence à des adresses mémoire"
+  - maintenant lance la prochaine instruction ! ⏩
+  events:
+  - step [sta]
+
+sta:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - "`STA` ça veut dire \"STore Accumulator\""
+  - et comme tu peux le voir, ça écrit le contenu de [A] dans une adresse mémoire
+  - dans cet exemple, à l'adresse $4070
+  - donc maintenant la cellule $4070 du <Memory Viewer> contient $01
+  - lance les instructions restantes ⏩
+  events:
+  - end [finish]
+
+finish:
+  run: |
+    set((m) => m.$hasEnded = true);
+    {{Bottom}}.setDelay(500);
+  messages:
+  - super, maintenant tu connais le fonctionnement de base d'un CPU
+  - clique sur le bouton ⏮  et relance la simulation autant de fois que nécessaire
+  - quand tu es prêt·e, on peut passer au niveau suivant
+  responses:
+  - 💪  je pense que je suis prêt·e [end]
+  - <<!m.$others>> (*) et [X], [Y], et [SP] ? [theothers]
+  - <<!m.$address>> (*) encore... c'est quoi une adresse mémoire ? [address]
+  - (*) j'aime pas cliquer sur des boutons [clicking]
+
+clicking:
+  messages:
+  - hmm...
+  - tu peux naviguer vers la section code avec ~Alt+Up~
+  - puis appuyer sur ~Alt+Enter~
+  - et revenir avec ~Alt+Left~
+  responses:
+  - ...finish

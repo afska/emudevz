@@ -1,0 +1,82 @@
+---
+main:
+  messages:
+  - pour permettre les couleurs, il faut d'abord que les jeux puissent écrire des informations de couleur
+  - donc, en premier lieu, on va mapper la 🐏  Palette RAM dans notre mémoire PPU
+  - ensuite, on va ajouter des méthodes pour lire les palettes de couleurs
+  - et enfin, on va faire en sorte que 🏞️  `BackgroundRenderer` utilise les palettes pour rendre
+  - 📚  comme tu l'as fait avec `PPUMemory::vram`, ajoute une propriété `paletteRam` dans 🐏  `PPUMemory`
+  - le tableau doit stocker 32 octets
+  - 📚  mappe la plage $3F00-$3F1F vers la Palette RAM (lectures et écritures)
+  - |-
+    📚  implémente cette méthode dans 🖥️  `PPU` :
+    **getColor(paletteId, colorIndex)**:
+      **->** calcule l'adresse de début de la palette :
+        ```javascript 0x3F00 + paletteId * 4```
+        (appelons ça `startAddress`)
+      **->** lit l'index de couleur depuis la mémoire :
+        lit depuis l'adresse PPU ```javascript startAddress + colorIndex```
+        (appelons ça `masterColorIndex`)
+      **->** retourne une couleur depuis la palette maître, en utilisant `masterColorIndex % 64`
+        (tu peux importer et utiliser 📄  ~/lib/ppu/masterPalette.js~ pour la liste des couleurs)
+  - |-
+    📚  implémente cette méthode dans 🏞️  `BackgroundRenderer` :
+    **_getBackgroundPaletteId(nameTableId, x, y)**:
+      **->** <ajoute le code nécessaire> pour retourner le bon identifiant de palette pour le pixel ~(x, y)~
+      **->** suis 📄  ~/docs/ppu/background_rendering.en.md~ pour savoir comment les identifiants de palette sont encodés
+  - |-
+    📚  modifie `BackgroundRenderer::renderScanline()` pour utiliser `_getBackgroundPaletteId(...)` et dessiner la bonne couleur, comme ceci :
+      ```javascript
+      const paletteId = this._getBackgroundPaletteId(nameTableId, x, y);
+
+      const tileInsideY = y % 8;
+
+      const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
+      for (let xx = 0; xx < 8; xx++) {
+        const colorIndex = tile.getColorIndex(xx);
+        const color =
+          colorIndex > 0 ? this.ppu.getColor(paletteId, colorIndex) : this.ppu.getColor(0, 0);
+        this.ppu.plot(x + xx, y, color);
+      }```
+  - note que quand l'index de couleur est 0, une <couleur de fond> est rendue à la place (située au premier index de la première palette)
+  responses:
+  - (*) aide-moi avec les maths 🔢 [math]
+  - (*) c'est quoi la couleur de fond ? 💧 [backdrop]
+
+math:
+  messages:
+  - 🔍  d'abord, à partir du point ~(x, y)~, tu dois savoir dans quel <métablock> tu te trouves
+  - un <métablock> c'est ~2x2 blocs~, ~4x4~ tuiles, ou ~32x32~ pixels (comme tu veux le voir)
+  - donc ```javascript Math.floor(x / 32)``` et ```javascript Math.floor(y / 32)``` te donnent des nombres qu'on peut appeler `metablockX` et `metablockY`
+  - comme c'est une matrice, pour calculer le `metablockIndex` on peut faire ```javascript metablockY * 8 + metablockX```
+  - (on multiplie par 8 car il y a 8 métablocks par ligne)
+  - |-
+    📖  avec ce `metablockIndex`, tu peux lire le `block` :
+      ```javascript this.ppu.memory.read(startAddress + metablockIndex);```
+  - (`startAddress` serait l'adresse de début de la 🖍️ 📖  table d'attributs, c.-à-d. les 64 derniers octets de la 🏞️ 📖  table de noms)
+  - 🔍  avec ce `block`, à partir du point ~(x, y)~, tu dois maintenant savoir dans quel <bloc> tu te trouves
+  - |-
+    un <bloc> c'est ~2x2~ tuiles ou ~16x16~ pixels, donc :
+      ```javascript
+      const blockX = Math.floor((x % 32) / 16);
+      const blockY = Math.floor((y % 32) / 16);
+      const blockIndex = blockY * 2 + blockX;```
+  - 🕵️  avec ce `blockIndex`, tu peux récupérer les bits requis depuis `block` en utilisant `byte.getBits(...)`
+  - (tu dois récupérer 2 bits, à partir du bit `blockIndex * 2`)
+  - et ça te donnera le `paletteId` de ce point ~(x, y)~ !
+  responses:
+  - c'est 100% parfaitement clair maintenant, merci ! [clear]
+
+clear:
+  messages:
+  - avec plaisir :D
+  responses:
+  - ...main
+
+backdrop:
+  messages:
+  - tu peux y penser comme une couleur de fond universelle
+  - elle est définie dans ~palette 0, index 0~ (alias PPU $3F00)
+  - tout pixel d'arrière-plan avec l'index de couleur 0 affiche cette couleur
+  responses:
+  - ...main

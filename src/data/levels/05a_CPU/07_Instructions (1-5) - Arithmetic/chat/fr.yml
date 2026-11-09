@@ -1,0 +1,57 @@
+---
+main:
+  messages:
+  - "il y a 3 types d'instructions :"
+  - "🚫  les instructions qui n'attendent <aucun argument>"
+  - "🐏  les instructions qui attendent <une adresse mémoire>"
+  - "🔢  les instructions qui attendent <une valeur>"
+  - je vais illustrer ça en implémentant 3 instructions courantes dans un format particulier
+  - regarde ton fichier 📄  ~/tmpl/cpu/instructions.js~ !
+  responses:
+  - d'accord... combien y a-t-il d'instructions arithmétiques ? [exercise]
+
+exercise:
+  messages:
+  - il y en a 16, mais j'en ai déjà codé 3 pour toi ! 😎
+  - et certaines se ressemblent pas mal
+  - 📚  crée un objet en suivant le même format que l'exemple
+  - 📚  implémente toutes les 16 instructions arithmétiques dedans
+  - 📚  et exporte-le sous la clé `instructions` dans 📄  ~/code/index.js~
+  - tu as besoin de docs sur ce que chaque instruction doit faire
+  - alors consulte 📄  ~/docs/cpu/instructions.fr.md~
+  responses:
+  - (*) j'ai besoin d'aide pour déplacer des bits 😅 [bits]
+  - (*) j'ai besoin d'aide pour mettre à jour les drapeaux ~Z~ et ~N~ 😅 [flags]
+
+bits:
+  messages:
+  - utilise l'opérateur ~<<~ pour déplacer des bits vers la gauche, et ~>>~ pour les déplacer vers la droite
+  - par exemple
+  - "```javascript 0b00001100 << 1``` produirait ```javascript 0b00011000```"
+  - et ```javascript 0b01000001 >> 1``` produirait ```javascript 0b00100000```
+  responses:
+  - c'est comme ça qu'on décale des bits, mais la rotation ? [rotation]
+
+rotation:
+  messages:
+  - pour faire pivoter des bits vers la droite (mettons, ```javascript 0b00000001 >> 1```), tu dois mettre le bit 0 (qui se perd après le décalage) à la dernière position (bit 7)
+  - |-
+    donc, si tu as un `number`, tu peux faire :
+      ```javascript byte.setBit(number >> 1, 7, byte.getBit(number, 0))```
+  - |-
+    ou, sans utiliser la bibliothèque byte :
+      ```javascript (number >> 1) | ((number & 1) << 7)```
+  - note que ce n'est pas ce que font `ROL` ou `ROR`, car eux font pivoter en utilisant le drapeau ~C~
+  responses:
+  - ...exercise
+
+flags:
+  messages:
+  - dans presque toutes les instructions qui produisent une valeur, les drapeaux ~Z~ et ~N~ sont mis à jour
+  - tu dois mettre ~Z=1~ quand la valeur produite est 0, et ~Z=0~ quand elle ne l'est pas
+  - aussi, mets ~N=1~ quand l'octet est négatif, et ~N=0~ quand il ne l'est pas
+  - |-
+    tu as déjà des méthodes pour ça, utilise juste :
+      `cpu.flags.updateZeroAndNegative(...)`
+  responses:
+  - ...exercise

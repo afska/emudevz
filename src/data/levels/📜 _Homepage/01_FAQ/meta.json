@@ -2,6 +2,7 @@
 	"name": {
 		"en": "❓ FAQ",
 		"es": "❓ FAQ",
+		"fr": "❓ FAQ",
 		"ru": "❓ FAQ"
 	},
 	"ui": {
@@ -15,6 +16,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					},
 					"links": [
@@ -26,6 +28,11 @@
 						{
 							"lang": "es",
 							"text": "tu apoyo",
+							"isSupport": true
+						},
+						{
+							"lang": "fr",
+							"text": "ton soutien",
 							"isSupport": true
 						},
 						{

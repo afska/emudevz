@@ -1,0 +1,23 @@
+---
+main:
+  messages:
+  - parfois, les valeurs sont représentées sur plus d'1 octet
+  - par exemple quand une instruction CPU a une adresse de 16 bits comme argument
+  - ou quand on utilise l'instruction `RTS` et que le CPU doit restaurer [PC] depuis la pile
+  - dans ces cas, la convention Little Endian est utilisée 🔌
+  - "ça veut dire : l'octet le moins significatif (\"low byte\") est stocké en premier, puis l'octet le plus significatif (\"high byte\")"
+  - <{little_endian.png}>
+  - |-
+    📚  implémente cette méthode dans 🐏  `CPUMemory` :
+    **read16(address)**:
+      **->** retourne un nombre de 16 bits
+        - le low byte est obtenu en lisant `address` en mémoire
+        - le high byte est obtenu en lisant ```javascript address+1```
+  - |-
+    📚  et ces deux méthodes dans 🧱  `Stack` :
+    **push16(bigNumber)**:
+      **->** appelle `push(...)` deux fois (d'abord avec le high byte de `bigNumber`, puis avec son low byte)
+    **pop16()**:
+      **->** retourne un nombre de 16 bits en appelant `pop()` deux fois (d'abord le low byte, puis le high byte)
+  - 💡  n'oublie pas d'utiliser 📄  ~/lib/byte.js~ !
+  responses: []

@@ -1,0 +1,70 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
+  messages:
+  - la pile 🧱  est une structure <LIFO> ("Last In, First Out") que les programmes peuvent utiliser pour stocker des valeurs
+  - la profondeur actuelle de la pile est mesurée par le "Stack Pointer" ([SP])
+  - dans un processeur 6502, elle réside en mémoire entre $0100 et $01FF 🐏
+  - "[SP] vaut initialement $FF, ce qui pointe vers le dernier octet de la pile ($01FF)"
+  - quand un octet est poussé sur la pile, [SP] devient $FE (ou l'adresse mémoire $01FE), et ainsi de suite
+  - voici un exemple de pile avec 2 valeurs (en $01FF et $01FE), donc [SP] pointe vers $01FD
+  - <{stack.png}>
+  responses:
+  - et comment je peux y mettre des valeurs ? [put]
+
+put:
+  messages:
+  - "tu utilises deux instructions :"
+  - "⬆️  `PHA` (\"PusH Accumulator\"), qui ajoute [A] à la pile"
+  - <{stack_PHA.png}>
+  - "⬇️  `PLA` (\"PulL Accumulator\"), qui retire le dernier octet de la pile et le charge dans [A]"
+  - <{stack_PLA.png}>
+  responses:
+  - tu peux m'expliquer le code d'exemple ? [example]
+
+example:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - ça crée deux boucles ➰
+  - "`@save` met les nombres impairs de $4080 à $4087"
+  - et `@load` met ces nombres en ordre inverse de $4098 à $409F
+  - le premier <pousse> des valeurs sur la pile, le second <tire> des valeurs depuis la pile
+  - maintenant ton débogueur a une section Stack 👀
+  - lance le code et vérifie par toi-même ⏩
+  responses:
+  - super, j'ai compris [exercise]
+  - (*) pourquoi `PLA` ne retire pas la valeur de la pile ? [remove]
+
+remove:
+  messages:
+  - elle la "retire" juste en incrémentant [SP]
+  - la valeur est quand même conservée en mémoire 😅
+  - il n'y a pas de raison de l'effacer, car tu n'accèdes à la pile qu'avec les instructions appropriées
+  responses:
+  - ...example
+
+exercise:
+  run: |
+    level.test.precode = "pretest.asm";
+    level.fillContentFromTemp();
+    set((m) => {
+      m.chat.stopBlock = null;
+      m.$canRun = true;
+      m.$canEdit = true;
+      m.content.useTemp = false;
+    });
+  messages:
+  - voilà, un exercice
+  - 📚  efface tout le code
+  - ta pile aura 2 valeurs préchargées aléatoires
+  - 📚  tu n'as qu'à les tirer et les charger dans 2 adresses mémoire consécutives
+  - 📚  ensuite, effectue un `JMP` indirect 🦘
+  - p.ex. si ta pile contient -de haut en bas- $C4 et $3E, quand ton programme se termine, [PC] devrait être $3EC4
+  - 📚  lance `test` quand tout est terminé 😊
+  responses: []

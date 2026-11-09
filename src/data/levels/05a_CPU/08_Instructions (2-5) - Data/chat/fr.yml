@@ -1,0 +1,34 @@
+---
+main:
+  messages:
+  - les instructions de données sont assez simples
+  - comme leur nom l'indique, elles servent toutes à stocker et déplacer des données 😉
+  - 📚  en suivant 📄  ~/docs/cpu/instructions.fr.md~,
+  - implémente toutes les instructions de données dans ton objet `instructions` !
+  responses:
+  - (*) j'ai besoin d'aide avec `PHP` 😅 [php]
+
+php:
+  messages:
+  - hein ?
+  - les gens utilisent encore ce langage ?
+  responses:
+  - non, je parle de l'instruction [inst]
+
+inst:
+  messages:
+  - ah oui, pardon... 🤣
+  - dans `PHP`, tu dois pousser un nombre sur la pile
+  - ce nombre est le résultat de l'appel à ```javascript cpu.flags.getValue()```
+  - mais tu dois mettre son bit 4 à 1 (utilise ```javascript byte.setBit(flags, 4, 1)```)
+  responses:
+  - pourquoi ? [why]
+
+why:
+  messages:
+  - parce que c'est ce que fait le hardware !
+  - en développant un émulateur, on ne s'intéresse pas au <pourquoi> les choses fonctionnent d'une certaine façon
+  - on s'intéresse seulement au <comment> elles fonctionnent 🤷
+  - donc mets ce bit 4 à 1, s'il te plaît
+  responses:
+  - ...main

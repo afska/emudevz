@@ -1,0 +1,75 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey,
+  - on joue à un jeu
+  - |-
+    ça s'appelle 🕊️ 🛰️  ~Spacegulls~
+    <{screenshot.png;30x30}>
+  - un chouette platformer avec des <oiseaux> dans l'espace
+  - si tu le termines, je t'envoie le <fichier ROM>
+  - au format ~*.neees~
+  responses:
+  - comment on va jouer ? notre émulateur n'est pas prêt 😕 [notready]
+
+notready:
+  messages:
+  - j'ai un NEEES qui fonctionne, tu te souviens ? 😉
+  - on est à l'époque moderne, je peux juste te le streamer
+  - on allume le <chat vidéo>
+  responses:
+  - le CHAT VIDÉO ?! [videochat]
+
+videochat:
+  run: |
+    {{Right}}.load(null, "stream");
+    {{Right}}.stream.zoom();
+  messages:
+  - <! 📹  Entering video chat...
+  - ouais, tu vois ma chambre là ?
+  - c'est un peu le bazar, je sais
+  - laisse-moi rapprocher un peu la caméra de la télé 🔍
+  run-after-messages: |
+    $.goTo("zoom");
+  responses: []
+
+zoom:
+  messages:
+  - ah, j'ai hacké le port manette pour que tes inputs marchent sur mon vrai NEEES ✨
+  responses:
+  - alors, on peut jouer maintenant ? 👾 [play]
+
+play:
+  run: |
+    {{Right}}.stream.setIntegration("Spacegulls");
+    {{Right}}.load("Spacegulls.neees", "stream", "bin");
+  messages:
+  - ouais
+  - voilà le jeu
+  - tu peux jouer avec ton ⌨️  clavier ou une 🎮  manette
+  - passe la souris sur l'icône ⌨️  en <haut à droite> pour voir les contrôles clavier
+  - 💾  ta progression sera <sauvegardée> quand tu quittes ce niveau
+  - je regarde 👀
+  events:
+  - spacegulls-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["Spacegulls.neees", "Bobl.neees"].forEach((file) => {
+      filesystem.write(`${directory}/${file}`, level.bin[file], { binary: true });
+    });
+  messages:
+  - SUPER !
+  - maintenant t'es un ~héros~
+  - "<! ROM received: 📄  /roms/Spacegulls.neees"
+  - comme promis, j'ai mis un dump du jeu dans ton répertoire 📁  ~/roms~
+  - "<! ROM received: 📄  /roms/Bobl.neees"
+  - j'ai aussi envoyé un autre jeu du même auteur appelé 💦 🏛️  ~Böbl~, jette un œil !
+  - (si tu sais pas encore comment utiliser des fichiers, tu vas bientôt l'apprendre !)
+  responses:
+  - ▶️  continuer [end]

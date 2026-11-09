@@ -170,6 +170,7 @@ export default {
 	language: "Язык",
 	language_en: "Английский",
 	language_es: "Испанский",
+	language_fr: "Французский",
 	language_ru: "Русский",
 	last_version: " (Последняя версия)",
 	left: "Влево",

@@ -1,0 +1,90 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - hey
+  - on commence ? 👀 👀
+  responses:
+  - commencer quoi ? [forwhat]
+  - (*) c'est quoi ça ? [what]
+
+what:
+  messages:
+  - c'est `chat`
+  - la meilleure app de messagerie instantanée qu'on a 🤷
+  responses:
+  - ...main
+
+forwhat:
+  messages:
+  - on va construire un émulateur NEEES, tu te souviens ?
+  responses:
+  - (*) d'abord, pourquoi ça s'appelle "NEEES" ? [name]
+  - je sais pas comment faire un émulateur 😳 [idontknow]
+
+name:
+  messages:
+  - je crois que ça veut dire <'No Entiendo' Enigmatic Enjoyment Solution>, mais j'en suis pas sûr·e
+  responses:
+  - comment tu connais tout ça ? [namehow]
+
+namehow:
+  messages:
+  - parce que j'ai une NEEES juste là 😉
+  - et j'essaie de faire de la rétro-ingénierie dessus
+  responses:
+  - T'AS UNE NEEES QUI MARCHE ? [workingnes]
+
+workingnes:
+  messages:
+  - dingue, non ?
+  - elle tourne nickel, sauf qu'elle est démontée et branchée à plein d'analyseurs logiques
+  - elle appartenait à mon ancêtre
+  - mon ancêtre doit se retourner dans sa tombe après ce que j'ai fait à sa pauvre NEEES 😅
+  responses:
+  - ...forwhat
+
+idontknow:
+  messages:
+  - t'inquiète, on va se débrouiller ensemble...
+  - tu sais programmer, non ?
+  - non ? 🤔
+  responses:
+  - je peux écrire du JavaScript [javascript]
+  - hmm... [hmm]
+
+hmm:
+  messages:
+  - bon, je peux pas t'apprendre à coder
+  - cherche de l'aide, et reviens quand c'est bon
+  responses:
+  - ok, ok, c'est bon [ready]
+
+ready:
+  messages:
+  - c'était VRAIMENT rapide
+  - tu connais JavaScript maintenant ?
+  - prouve-le, écris du code 👀
+  responses:
+  - console.log("hello world") [woo]
+  - alert("foo bar baz") [woo]
+
+woo:
+  run: |
+    window.EmuDevz.achievements.unlock("misc-learn-javascript");
+  messages:
+  - waouh ! 💡
+  - t'en sais des choses
+  - ...javascript
+  responses:
+  - ...javascript
+
+javascript:
+  messages:
+  - ça va très bien fonctionner
+  - mais il te faut aussi des notions de programmation orientée objet
+  - et une compréhension basique des systèmes informatiques
+  - (octets, entiers signés, logique booléenne, systèmes de numération, etc.)
+  responses:
+  - ok, on y va [end]

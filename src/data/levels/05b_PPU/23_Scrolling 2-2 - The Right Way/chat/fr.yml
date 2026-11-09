@@ -1,0 +1,72 @@
+main:
+  messages:
+  - oui !
+  - je viens de le terminer
+  - regarde, 📄  ~/lib/ppu/LoopyRegister.js~
+  responses:
+  - c'est qui Loopy ? [loopy]
+
+loopy:
+  messages:
+  - quelqu'un qui a fait du reverse engineering sur la façon dont le registre de scrolling du PPU fonctionne <vraiment>
+  - la triste vérité c'est...
+  - le scrolling du PPU ne fonctionne pas de la façon dont on l'a implémenté là 😅
+  - c'est bien plus compliqué que ça
+  - heureusement, avec mon code, tu peux facilement implémenter le scrolling The Right Way™ ✨
+  responses:
+  - qu'est-ce qu'on doit changer ? [exercise]
+
+exercise:
+  messages:
+  - |-
+    📚  importe la bibliothèque et ajoute une propriété `loopy` au constructeur de 🖥️  `PPU`, assignée à :
+      ```javascript new LoopyRegister()```
+  - |-
+    📚  à la fin de la méthode `_onPreLine()`, appelle :
+      ```javascript this.loopy.onPreLine(this.cycle);```
+  - |-
+    📚  à la fin de la méthode `_onVisibleLine()`, appelle :
+      ```javascript this.loopy.onVisibleLine(this.cycle);```
+  - |-
+    📚  à la fin de la méthode `plotBG(...)`, appelle :
+      ```javascript if (this.registers.ppuMask.showBackground)
+        this.loopy.onPlot(x);```
+  - |-
+    📚  dans 🎛️  `PPUCtrl`, supprime le champ `nameTableId`, et ajoute ça à la fin de `onWrite(...)` :
+      ```javascript this.ppu.loopy.onPPUCtrlWrite(value);```
+  - |-
+    📚  dans 📊  `PPUStatus`, remplace le code qui désactive le `latch` de `PPUAddr` par :
+      ```javascript this.ppu.loopy.onPPUStatusRead();```
+  - |-
+    📚  dans 📜  `PPUScroll`, supprime la méthode `onLoad()` et remplace `onWrite(...)` par :
+      ```javascript onWrite(value) {
+        this.ppu.loopy.onPPUScrollWrite(value);
+      }```
+  - |-
+    📚  dans 📍  `PPUAddr`, supprime la méthode `onLoad()` et remplace `onWrite(...)` par :
+      ```javascript onWrite(value) {
+        this.ppu.loopy.onPPUAddrWrite(value);
+      }```
+    ajoute aussi cette propriété dynamique :
+      ```javascript get address() {
+        return this.ppu.loopy.vAddress.getValue()
+      }
+
+      set address(value) {
+        this.ppu.loopy.vAddress.setValue(value);
+      }```
+  - |-
+    📚  enfin, dans 🏞️  `BackgroundRenderer`, remplace les constantes `scrolledX`, `scrolledY` et `nameTableId` par :
+      ```javascript const scrolledX = this.ppu.loopy.scrolledX(x);
+      const scrolledY = this.ppu.loopy.scrolledY();
+      const nameTableId = this.ppu.loopy.nameTableId(scrolledX);```
+  responses: []
+
+corollary:
+  messages:
+  - bon...
+  - le scrolling devrait maintenant fonctionner pour tous les jeux, dans tous les cas
+  - j'espère...
+  - j'... espère 😅
+  responses:
+  - ▶️  continuer [end]

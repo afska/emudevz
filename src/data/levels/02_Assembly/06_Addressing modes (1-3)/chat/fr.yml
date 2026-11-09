@@ -1,0 +1,185 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
+  messages:
+  - au cas où tu ne l'aurais pas remarqué, toutes les instructions peuvent prendre un ou zéro <argument>
+  - et une instruction compilée peut occuper 1, 2 ou 3 octets
+  - <{compilation_full.png}>
+  responses:
+  - pourquoi tu me dis ça ? [why]
+
+why:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - il y a différentes façons de référencer ces arguments
+  - et on les appelle les modes d'adressage
+  - lance la première instruction ⏩
+  events:
+  - step [implicit]
+
+implicit:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4020]);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - l'instruction `INX` ne prend pas d'arguments, donc elle ne fait que 1 octet
+  - ([PC] est passé de $4020 à $4021)
+  - c'est ce qu'on appelle le mode d'adressage "Implicite"
+  - l'argument est <impliqué> par l'instruction elle-même
+  - continue ⏩
+  events:
+  - step [immediate]
+
+immediate:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4021, 0x4022]);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - "ici, `LDA #$08` prend 1 octet comme argument, donc elle fait 2 octets"
+  - l'"operation code" (opcode) et le 8
+  - c'est le mode d'adressage "Immédiat"
+  - où l'argument est un octet <littéral>
+  - continue ⏩
+  events:
+  - step [absolute]
+
+absolute:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4023, 0x4024, 0x4025]);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - "`LDA $C002` prend plutôt une adresse mémoire"
+  - comme il a un argument de 2 octets, ça compile en 3 octets
+  - c'est le mode d'adressage "Absolu"
+  - où l'argument est une adresse mémoire <complète>
+  - continue ⏩
+  events:
+  - step [zeropage]
+
+zeropage:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4026, 0x4027]);
+  messages:
+  - "`LDA $15` prend aussi une adresse mémoire"
+  - mais une courte, car c'est seulement 1 octet
+  - l'adresse complète serait $0015
+  - c'est le mode d'adressage "Page zéro"
+  - où l'argument est une adresse mémoire <partielle>
+  responses:
+  - ça ressemble à la même chose 😓 [samething]
+
+samething:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - c'est plus rapide que le mode "Absolu", car un seul octet doit être lu
+  - et ça prend aussi moins de place dans le code assemblé
+  - mais seule la première page (les 256 premiers octets) est accessible
+  - continue ⏩
+  events:
+  - step [relative]
+
+relative:
+  run: |
+    set((m) => m.$canRun = false);
+    {{Bottom}}.setSelectedCells([0x4028, 0x4029]);
+  messages:
+  - les instructions de branchement utilisent le mode d'adressage "Relatif"
+  - elles prennent un seul octet, utilisé comme décalage par rapport à l'instruction suivante
+  - regarde le code machine de `BNE @label` en $4028
+  - $D0 est l'opcode de `BNE`, et le $02 en $4029 est l'offset de saut 🦘
+  - "ça veut dire que [PC] va sauter à $402A + 2 : directement en $402C, là où `@label` commence"
+  - (ça va passer au-dessus des octets des deux `INY`)
+  responses:
+  - intéressant, donc c'est comme ça que fonctionne le branchement [whoa]
+
+whoa:
+  run: |
+    {{Bottom}}.setSelectedCells([0x4036, 0x4037, 0x4038]);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - le dernier est un peu complexe 😶
+  - "l'adressage \"Indirect\" utilise une adresse absolue pour chercher une autre adresse"
+  - lire la première adresse donne l'octet de poids faible (aussi appelé "low byte", ```raw $00```~XX~)
+  - et lire l'octet suivant (adresse + 1) donne l'octet de poids fort (aussi appelé "high byte", ```raw $```~XX~```raw 00```)
+  - c'est peut-être difficile à comprendre, alors allons exécuter l'exemple ⏩
+  events:
+  - step [step1]
+
+step1:
+  messages: []
+  events:
+  - step [step2]
+
+step2:
+  messages: []
+  events:
+  - step [step3]
+
+step3:
+  messages: []
+  events:
+  - step [step4]
+
+step4:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - maintenant $4080 contient $21, et $4081 contient $40
+  - donc, dans ce cas, `JMP ($4080)` va sauter inconditionnellement à $4021
+  - <{JMP_indirect.png}>
+  - créant une boucle infinie ⏩
+  events:
+  - step [seeit]
+
+seeit:
+  run: |
+    set((m) => m.$canRun = false);
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - tu vois ? il a sauté, et maintenant [PC] pointe vers $4021
+  responses:
+  - je vois [exercise]
+
+exercise:
+  run: |
+    level.fillContentFromTemp();
+    set((m) => {
+      m.chat.stopBlock = null;
+      m.$canRun = true;
+      m.$canEdit = true;
+      m.content.useTemp = false;
+    });
+    {{Bottom}}.setSelectedCells([]);
+  messages:
+  - voilà...
+  - 📚  comme exercice, modifie le code en ajoutant une instruction `STY $1001` à la fin
+  - 📚  puis une instruction `INX`
+  - 📚  et enfin, modifie les lignes 10 et 12, pour que le `JMP` indirect aille directement dans le nouvel `INX` 👀
+  - 📚  quand tu as fini, lance la commande `test`
+  responses:
+  - attends, quoi ? [what]
+
+what:
+  messages:
+  - après ta modification, au lieu de sauter en arrière, ça devrait passer au-dessus du `STY $1001` et aller à notre nouvelle dernière instruction
+  - ⚠️  ne change pas le `JMP` lui-même, l'idée c'est que le même `JMP ($4080)` saute à un autre endroit
+  - tu devras chercher l'adresse du dernier `INX` dans le code machine 😉
+  responses: []

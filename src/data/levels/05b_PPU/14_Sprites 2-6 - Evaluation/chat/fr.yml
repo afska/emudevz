@@ -1,0 +1,51 @@
+main:
+  messages:
+  - à chaque scanline, le sprite renderer effectue une évaluation des sprites 🕵️
+  - il prépare les sprites qui doivent être rendus
+  responses:
+  - hmm... comment il sait ? [how]
+
+how:
+  messages:
+  - il parcourt toute la table OAM pour vérifier si chaque sprite doit être dessiné dans la scanline courante (en fonction de ~x~, ~y~ et ~height~)
+  - il choisit les 8 premiers sprites
+  - après en avoir trouvé 8 (le nombre maximum de sprites par scanline), s'il trouve <encore> des sprites visibles, le flag 🏁  sprite overflow (bit 5 de 📊  PPUStatus) est activé pour signaler l'erreur au développeur du jeu
+  - les sprites avec des ids plus petits sont rendus au-dessus des sprites avec des ids plus grands, donc tu dois inverser la liste de sprites choisis !
+  responses:
+  - ok je crois que j'ai compris [exercise]
+  - (*) seulement 8 sprites par scanline ? [only8]
+
+only8:
+  messages:
+  - ouais
+  - mais les jeux utilisent des astuces pour contourner cette limite
+  - par exemple, ils les font clignoter pour donner l'illusion qu'il y a plus de sprites sur la même ligne
+  responses:
+  - ...how
+
+exercise:
+  messages:
+  - |-
+    📚  sympa, implémente la méthode suivante dans 🛸  `SpriteRenderer` :
+    **_evaluate()**:
+      **->** définit un tableau `sprites`
+      **->** pour chaque id de sprite possible (~0-63~) :
+        **->** crée un `sprite` avec ```javascript this._createSprite(...)```
+        **->** si le `sprite` doit être rendu dans la scanline courante :
+          **->** si `sprites` a moins de 8 éléments :
+            **->** ajoute `sprite` au tableau `sprites`
+          **->** sinon :
+            **->** définit ```javascript this.ppu.registers.ppuStatus.spriteOverflow = 1```
+            **->** arrête la boucle
+      **->** retourne `sprites` dans l'ordre inversé
+  - 📚  aussi, tu dois remettre `spriteOverflow` à 0 sur ~scanline=-1; cycle=1~, comme tu l'as fait précédemment avec `isInVBlankInterval`
+  - fais-le dans `PPU::_onPreLine()`
+  responses:
+  - (*) comment savoir si un sprite doit être rendu ? [visible]
+
+visible:
+  messages:
+  - il y a une méthode pour ça dans ma bibliothèque Sprite
+  - utilise ```javascript sprite.shouldRenderInScanline(this.ppu.scanline)```
+  responses:
+  - ...exercise

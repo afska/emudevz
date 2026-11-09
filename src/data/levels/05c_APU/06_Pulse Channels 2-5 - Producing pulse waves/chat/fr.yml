@@ -1,0 +1,40 @@
+---
+main:
+  messages:
+  - jusqu'ici, on a créé quelques ondes pulse de test
+  - et maintenant on sait aussi quelle note on doit jouer
+  - c'est le moment de connecter les deux et d'implémenter les Pulse Channels !
+  responses:
+  - ça me va 👍 [exercise]
+
+exercise:
+  messages:
+  - j'ai abstrait la logique de génération d'ondes pulse dans 📄  ~/lib/apu/PulseOscillator.js~
+  - 📚  dans 🟦  `PulseChannel`, importe cette classe et ajoute une propriété `oscillator` avec une nouvelle instance
+  - |-
+    📚  implémente cette méthode :
+    **sample()**:
+      **->** définit ```javascript this.oscillator.frequency``` à la bonne fréquence, d'après ```javascript this.timer```
+        rappel de la formule : ```javascript f = 1789773 / (16 * (t + 1))```
+      **->** définit ```javascript this.oscillator.dutyCycle``` au `dutyCycleId` du 🟦  `PulseControl`
+      **->** définit ```javascript this.oscillator.volume``` au `volumeOrEnvelopePeriod` du 🟦  `PulseControl`
+      **->** retourne ```javascript this.oscillator.sample()```
+  - essaie quelques jeux !
+  - ça ne sonnera pas <super bien> puisque les canaux ne sont pas toujours mis en sourdine et il manque plein de trucs 😅
+  - mais tu commenceras à entendre une partie des mélodies des jeux
+  responses:
+  - (*) comment j'accède aux registres ? [access]
+
+access:
+  messages:
+  - |-
+    notre classe `PulseChannel` définit un attribut `registers` :
+      ```javascript this.registers = this.apu.registers.pulses[this.id];```
+  - |-
+    si tu regardes le constructeur de `AudioRegisters`, tu verras qu'il a la forme suivante :
+      `{ control, sweep, timerLow, timerHighLCL }`
+  - |-
+    ensuite, par exemple, pour accéder au volume du 🟦  PulseControl, tu peux écrire :
+      ```javascript this.registers.control.volumeOrEnvelopePeriod```
+  responses:
+  - ...exercise

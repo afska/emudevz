@@ -1,0 +1,79 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+    const saveState = JSON.parse(level.code["spacegulls_demo.ss"]);
+    {{Background}}.loadROM("/roms/.all/Spacegulls.neees", "demoRom", saveState);
+  messages:
+  - une petite intro aux graphismes de la NEEES ! 🖌️
+  - tous les graphismes sont composés de 🕊️  tuiles
+  - une tuile, c'est une grille de pixels ~8x8~
+  - <{tile_grayscale.png;8x8}>
+  - et ~8x8~, c'est vraiment petit ! donc une tuile représente généralement une partie d'une image plus grande
+  - elles sont toutes stockées dans 🕊️ 📖  des pattern tables, dans la 👾  CHR-ROM (ou CHR-RAM) de la cartouche
+  - <{tiles_grayscale.png;30x30}>
+  responses:
+  - et les couleurs ? 🌈 [colors]
+
+colors:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.ppu.selectedTab = "Palettes";
+    });
+  messages:
+  - les tuiles peuvent utiliser 4 couleurs (~2~ bits par pixel), mais elles ne savent pas quelles <couleurs réelles> elles auront
+  - elles savent juste qu'un pixel est "couleur 0", "couleur 1", "couleur 2" ou "couleur 3"
+  - la couleur est ajoutée <à l'exécution> grâce aux 🎨  palettes, qui définissent à quoi doit ressembler chaque couleur
+  - "après application d'une palette, les tuiles peuvent ressembler à ça :"
+  - <{tile.png;8x8}>
+  - <{tiles.png;30x30}>
+  responses:
+  - donc avec une palette, je peux appliquer n'importe quelle couleur ? 🤔 [anycolor]
+
+anycolor:
+  messages:
+  - eh bien... non 😅
+  - la NEEES ne peut afficher que 64 couleurs bien définies
+  - <{colors.png}>
+  - donc chaque palette référence des entrées de ce catalogue, connu sous le nom de palette maître
+  responses:
+  - dis-m'en plus sur les tuiles 👀 [moreabouttiles]
+
+moreabouttiles:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.ppu.selectedTab = "Sprites";
+    });
+  messages:
+  - une frame est constituée d'un 🏞️  fond et de plusieurs 🛸  sprites
+  - <{full.png;30x30}>
+  - 🏞️  le fond est statique, mais les jeux peuvent le faire bouger via le scrolling
+  - <{background.png;30x30}>
+  - 🛸  les sprites sont des objets qui peuvent être facilement déplacés ou retournés, dessinés par-dessus le fond
+  - <{sprites.png;30x30}>
+  - les deux utilisent des tuiles pour le rendu
+  responses:
+  - ah, compris [enough]
+
+enough:
+  run: |
+    {{Right}}.do((debuggerGUI) => {
+      debuggerGUI.args.readOnly = false;
+    });
+  run-after-messages: |
+    store.dispatch.savedata.openFile("/docs/ppu/definitions.en.md");
+  messages:
+  - <! Contrôles activés.
+  - j'ai <activé les contrôles> dans la vue du débogueur pour que tu puisses explorer un peu
+  - on analysera les structures mémoire pour les tuiles, les fonds et les sprites plus tard
+  - mais maintenant tu as une idée de comment les graphismes sont organisés à l'écran ✨
+  - "voilà un résumé..."
+  - 🏞️  il y a une image de fond
+  - 🛸  il y a plusieurs sprites
+  - 🕊️  les deux utilisent des tuiles pour le rendu
+  - 👾  toutes les tuiles sont dans la CHR-ROM ou CHR-RAM, sans couleur
+  - 🎨  la couleur est donnée via les palettes
+  - 👑 🎨  les palettes référencent des entrées d'une palette maître fixe de 64 couleurs
+  - "j'écrirai là-dessus, avec plus de détails, ici : 📄  ~/docs/ppu/definitions.en.md~"
+  responses:
+  - super [end]

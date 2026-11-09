@@ -1,0 +1,154 @@
+main:
+  messages:
+  - le scrolling est une fonctionnalité du PPU qui permet aux développeurs de déplacer le background
+  - l'implémenter dans un émulateur NEEES c'est dur 🥵
+  - pas parce que c'est compliqué de déplacer le background, mais parce que les registres de scroll se comportent de façon non intuitive
+  - beaucoup de gens ont essayé, mais seuls les élus y sont arrivés
+  responses:
+  - t'as un plan ? [plan]
+
+plan:
+  messages:
+  - ouais, on peut le faire ensemble
+  - je vais essayer de t'aider en encapsulant les parties délicates dans une bibliothèque
+  - ça va prendre un moment
+  - en attendant, tu peux ajouter une implémentation basique du scrolling qui ne marchera pas pour tous les jeux
+  - mais ça ira pour la majorité d'entre eux !
+  responses:
+  - ça marche, comment fonctionne le scrolling ? [good]
+
+good:
+  run: |
+    {{Top}}.load("scrolling.gif");
+  messages:
+  - eh bien, les jeux ne déplacent pas vraiment <le background>
+  - ils déplacent un viewport imaginaire contre le background statique
+  - c'est suffisant pour créer l'illusion de mouvement 🌀
+  responses:
+  - et comment le viewport se déplace ? [viewport]
+
+viewport:
+  messages:
+  - comme ça
+  - <{3rdparty_nametable_scrolling.png}>
+  - les jeux écrivent dans 📜  PPUScroll la position du viewport
+  - ils écrivent deux fois, d'abord pour la <coordonnée X>, puis pour la <coordonnée Y>
+  - et le PPU déplace le viewport, ne dessinant qu'une partie des name tables concernées
+  responses:
+  - donc... si les jeux écrivent deux fois, le PPU doit retenir quelle coordonnée ils définissent, non ? [twice]
+
+twice:
+  messages:
+  - exactement
+  - tu te souviens comment fonctionne 📍  `PPUAddr` ? avec un `latch` qui bascule après chaque écriture ?
+  - eh bien, comme ça
+  - en fait, ça utilise ce même `latch` !
+  responses:
+  - je vois... [isee]
+
+isee:
+  messages:
+  - les premiers jeux NEEES ne scrollaient que dans une direction
+  - les jeux avec un mirroring de name table <horizontal> ne scrollaient que <verticalement>
+  - et les jeux avec un mirroring de name table <vertical> ne scrollaient que <horizontalement>
+  - <{3rdparty_vertical_horizontal.png}>
+  responses:
+  - je comprends pas, s'il y a seulement deux name tables physiques, comment les jeux arrivent à avoir de grandes maps ? [long]
+
+long:
+  messages:
+  - ils mettent à jour les parties du background progressivement quand le viewport n'est pas dessus
+  - au fait, la position du viewport est basée sur la <name table de base>
+  - souviens-toi que les deux premiers bits de 🎛️  `PPUCtrl` sélectionnent la name table courante
+  - (tu l'as mappé comme `registers.ppuCtrl.nameTableId`)
+  - donc, si la name table de base est 1, ça signifie que le viewport devrait commencer à la name table positionnée en $2400
+  - <{3rdparty_scrolled_nametables.png}>
+  responses:
+  - assez parlé, comment on procède ? [exercise]
+
+exercise:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - (encore une fois, ~CE N'EST PAS EXACTEMENT CORRECT~, mais ça marchera pour l'instant !)
+  - |-
+    📚  implémente ces méthodes de 📜  `PPUScroll` :
+      **onLoad()**:
+        **->** définit ```javascript this.x = 0```
+        **->** définit ```javascript this.y = 0```
+      **onWrite(value)**:
+        **->** si le `latch` de 📍  PPUAddr vaut ```javascript false``` :
+          **->** écrit la `value` dans ```javascript this.x```
+        **->** s'il vaut ```javascript true``` :
+          **->** écrit la `value` dans ```javascript this.y```
+        (tu peux accéder au `latch` avec ```javascript this.ppu.registers.ppuAddr.latch```)
+        **->** bascule le `latch` à la valeur opposée
+  responses:
+  - ok, et ensuite ? [then]
+
+then:
+  messages:
+  - ensuite tu auras dans ```javascript ppuScroll.x``` et ```javascript ppuScroll.y``` les coordonnées de scroll !
+  - tu peux maintenant appliquer le scrolling aux backgrounds !
+  - |-
+    📚  va dans 🏞️  `BackgroundRenderer` et <modifie> `renderScanline()` :
+      **->** si tu avais auparavant quelque chose comme...
+        ```javascript
+          for (let x = 0; x < 256; x += 8)```
+      ...remplace-le par...
+        ```javascript
+          for (let x = 0; x < 256;)```
+      tu ne dessineras plus par blocs de 8 pixels, tu dois être prêt à ne dessiner qu'une partie de certaines tuiles !
+  - |-
+    📚  définissons quelques variables :
+      ```javascript
+      // coordonnées de scroll :
+      const scrollX = this.ppu.registers.ppuScroll.x;
+      const scrollY = this.ppu.registers.ppuScroll.y;
+      // point courant à dessiner :
+      const scrolledX = x + scrollX;
+      const scrolledY = y + scrollY;
+      // adresse de la name table de base :
+      const nameTableId = (
+        this.ppu.registers.ppuCtrl.nameTableId +
+        (scrolledX >= 256 ? 1 : 0) + // déplacer à droite
+        (scrolledY >= 240 ? 2 : 0) // déplacer en bas
+      ) % 4;
+      const nameTableAddress = 0x2000 + nameTableId * 1024;
+      // point courant, relatif à la name table :
+      const nameTableX = scrolledX % 256;
+      const nameTableY = scrolledY % 240;```
+  - |-
+    📚  à partir de maintenant, toute utilisation de `x` et `y` doit être remplacée par `nameTableX` et `nameTableY`
+      (par exemple : l'index de lecture de la name table, l'appel ```javascript this._getBackgroundPaletteId(...)```, et ```javascript new Tile(...)``` doivent être mis à jour)
+  - la seule exception est l'appel `plotBG(...)`, qui doit toujours tracer au point ~(x,y)~ de l'écran
+  - |-
+    📚  enfin, définis :
+      ```javascript
+      const tileStartX = nameTableX % 8;
+      const tileInsideY = nameTableY % 8;
+      const tilePixels = Math.min(
+        8 - tileStartX,
+        256 - x
+      );```
+  - souviens-toi, tu ne dessineras plus 8 pixels par itération de boucle, tu ne dessineras que `tilePixels`, en partant de `tileStartX`
+  - |-
+    📚  donc, assure-toi de changer la boucle interne en quelque chose comme :
+      ```javascript
+        for (let xx = 0; xx < tilePixels; xx++)```
+    l'appel `getColorIndex(...)` doit utiliser `tileStartX` :
+      ```javascript
+        tile.getColorIndex(tileStartX + xx);```
+    et tout à la fin, une fois que la boucle interne se termine, incrémente manuellement l'index de la boucle principale :
+      ```javascript
+        x += tilePixels;```
+  responses: []
+
+corollary:
+  messages:
+  - ça devrait suffire pour faire scroller la plupart des jeux
+  - sauf ce fichu <jeu du plombier>, qui plantera juste après quelques mètres ! 🤦
+  - mais ignorons ça pour l'instant
+  - essaie... peut-être la démo de 🌌 🔫  ~Isostasy~ ou 🐺 🌲  ~Wolf Spirit~
+  responses:
+  - ▶️  continuer [end]

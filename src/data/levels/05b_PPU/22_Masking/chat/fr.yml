@@ -1,0 +1,78 @@
+main:
+  messages:
+  - le registre vidéo 🎭  PPUMask ($2001) permet aux programmes d'activer ou désactiver des parties du rendu
+  - regarde encore 📄  ~/docs/ppu/video_registers.en.md~
+  - 🏛️  les bits ~m~ et ~M~ contrôlent si la première colonne de ~8~px doit être visible ou non pour les backgrounds et les sprites respectivement
+  - 🏞️  ~b~ active le rendu du background
+  - 🛸  et ~s~ active le rendu des sprites
+  responses:
+  - (*) pourquoi un jeu voudrait désactiver le rendu ? [why]
+  - allons-y [exercise]
+
+why:
+  messages:
+  - par exemple, pour remplir la VRAM plus vite en utilisant le temps VDraw, en cachant les glitches potentiels résultant de ne pas le faire pendant 🏝️  VBlank
+  - les jeux écrivent généralement $00 hors gameplay pour ça
+  - puis $1E pour activer le rendu pendant le gameplay
+  responses:
+  - ...main
+
+exercise:
+  messages:
+  - 📚  dans 🎭  `PPUMask`, implémente la méthode `onLoad()`, en utilisant `addField(...)` pour mapper les bits mentionnés
+  - |-
+    utilise ces noms :
+      - `showBackgroundInFirst8Pixels`
+      - `showSpritesInFirst8Pixels`
+      - `showBackground`
+      - `showSprites`
+  - |-
+    📚  ajoute aussi ces méthodes :
+      **onWrite(value)**:
+        **->** appelle ```javascript this.setValue(value)```
+      **isRenderingEnabled()**:
+        **->** retourne ```javascript this.showBackground || this.showSprites```
+  - |-
+    📚  dans 🏞️  `BackgroundRenderer`, <modifie> :
+      **renderScanline()**:
+        **->** si (`showBackground` est désactivé) <OU> (`showBackgroundInFirst8Pixels` est désactivé et `x < 8`)
+          **->** trace juste (avec `PPU::plotBG(...)`) la couleur de fond
+          **->** incrémente `x`
+          **->** `continue` ! ne traite pas plus loin !
+        (souviens-toi que la couleur de fond est ```javascript this.ppu.getColor(0, 0)```)
+  - |-
+    📚  dans 🛸  `SpriteRenderer`, <modifie> les méthodes suivantes :
+      **renderScanline()**:
+        **->** à la toute première ligne, si `showSprites` est désactivé, retourne ! <ne fais rien> !
+      **_render(...)**:
+        **->** ignore les 8 premiers pixels si nécessaire :
+          ```javascript if (!showSpritesInFirst8Pixels && x < 8)
+            continue;```
+      **->** dans la vérification du sprite-zero hit, ajoute `showBackground` comme condition
+        (si `showBackground` vaut `false`, aucun sprite-zero hit ne doit être déclenché !)
+  - |-
+    📚  dans 🖥️  `PPU`, modifie :
+    **_onPreLine()**:
+      **->** à la toute <dernière ligne>, si `!isRenderingEnabled()` dans 🎭  PPUMask, retourne !
+      **->** ton code devrait ressembler à ça :
+        ```javascript
+        if (this.cycle === 1) {
+          // ... réinitialise les flags PPUStatus ...
+        }
+
+        if (!this.registers.ppuMask.isRenderingEnabled()) return;
+
+        // <<on ajoutera plus de code ici plus tard !>>```
+    **_onVisibleLine()**:
+      **->** à la toute <dernière ligne>, si `!isRenderingEnabled()` dans 🎭  PPUMask, retourne !
+      **->** ton code devrait ressembler à ça :
+        ```javascript
+        if (this.cycle === 0) {
+          // rendu du background
+          // rendu des sprites
+        }
+
+        if (!this.registers.ppuMask.isRenderingEnabled()) return;
+
+        // <<on ajoutera plus de code ici plus tard !>>```
+  responses: []

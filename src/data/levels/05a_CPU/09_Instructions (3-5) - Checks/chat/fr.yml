@@ -1,0 +1,8 @@
+---
+main:
+  messages:
+  - il n'y a que quelques vérifications
+  - ce sont, en gros, des instructions qui comparent des valeurs avec un registre ou effectuent des opérations logiques
+  - je pense que tu n'auras pas besoin d'aide pour ça, tu assures maintenant
+  - 📚  en suivant 📄  ~/docs/cpu/instructions.fr.md~, implémente toutes les instructions de vérification dans ton objet `instructions` !
+  responses: []

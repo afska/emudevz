@@ -1,0 +1,98 @@
+main:
+  messages:
+  - comme on l'a vu dans l'évaluation des sprites, les sprites avec des index OAM plus petits sont dessinés au <premier plan>
+  - de plus, il y a le bit de <priorité sprite-fond> (octet 2, bit 5), qui fait apparaître les sprites <derrière> le fond
+  - quand le fond recouvre un sprite, seuls les pixels opaques sont pris en compte
+  responses:
+  - montre-moi un exemple [example]
+
+example:
+  run: |
+    {{Top}}.loadROM("/roms/.all/SuperTiltBro.neees");
+    layout.focus("Top");
+  messages:
+  - regarde le <nuage> au milieu
+  - le nuage est un sprite et le titre du jeu fait partie du fond
+  - à un moment, il couvre les mots "TILT" et "BRO", alors qu'il devrait être derrière eux
+  - c'est parce qu'on n'utilise pas les bonnes priorités de sprites
+  - et BrokenNEEES s'est trompé aussi, donc peu importe quel PPU tu utilises !
+  responses:
+  - comment on peut corriger ça ? [fix]
+
+fix:
+  messages:
+  - d'abord, on doit mémoriser quels pixels du fond sont transparents
+  - c'est-à-dire quand l'index de couleur vaut 0
+  - ensuite, on va sauvegarder les couleurs et les sprites de la scanline courante dans un buffer temporaire
+  - et on ne tracera les pixels de ce buffer que si la priorité du sprite est <premier plan> ou si le pixel du fond est transparent
+  responses:
+  - c'est assez clair [exercise]
+  - (*) ça semble compliqué, pourquoi ? 🤔 [why]
+
+why:
+  messages:
+  - |-
+    on pourrait croire que les couches du NEEES fonctionnent comme ça :
+      - 🛸  sprites de <priorité avant> au-dessus
+      - 🏞️  le fond au milieu
+      - 🛸  sprites de <priorité arrière> derrière
+  - mais ce serait <incorrect>
+  - tu te souviens que les sprites avec des ids plus petits sont dessinés devant ?
+  - eh bien, pour un pixel donné, si le sprite opaque le plus au <premier plan> a une priorité <arrière>, un pixel opaque du fond est dessiné devant lui
+  - "et surtout : tu ne peux pas utiliser le sprite de priorité suivante à ce pixel"
+  - ça signifie que le sprite le plus au premier plan peut bloquer d'autres sprites même quand il est derrière le fond
+  - c'est pourquoi on stocke d'abord le pixel gagnant du sprite dans un buffer, puis on mélange avec le fond
+  responses:
+  - ...fix
+
+exercise:
+  messages:
+  - |-
+    📚  bien, dans la classe 🖥️  `PPU`, ajoute au constructeur :
+      ```javascript
+      this.colorIndexes = new Uint8Array(256*240);```
+  - |-
+    📚  implémente ces méthodes :
+    **plotBG(x, y, color, colorIndex)**:
+      **->** sauvegarde le `colorIndex` :
+        ```javascript this.colorIndexes[y * 256 + x] = colorIndex;```
+      **->** dessine le pixel :
+        ```javascript this.plot(x, y, color);```
+    **isBackgroundPixelOpaque(x, y)**:
+      **->** retourne si le pixel ~(x, y)~ dans `colorIndexes` est supérieur à 0 ou non
+  - 📚  dans 🏞️  `BackgroundRenderer`, au lieu d'appeler la méthode `plot(...)`, appelle `plotBG(...)` en passant le `colorIndex` comme dernier argument
+  - |-
+    📚  dans 🛸  `SpriteRenderer`, <modifie> ces méthodes :
+      **_render(...)**:
+        **->** au début, déclare un tableau vide `buffer`
+        **->** au lieu d'appeler ```javascript this.ppu.plot(...)```, sauvegarde les informations dans le `buffer` :
+          ```javascript const x = sprite.x + insideX;```
+          ```javascript const color = paletteColors[colorIndex];```
+          ```javascript buffer[x] = { x, sprite, color };```
+        **->** à la fin, ```javascript return buffer;```
+      **renderScanline()**:
+        **->** assigne la valeur de retour de ```javascript this._render(sprites)``` à une constante `buffer`
+        **->** appelle ```javascript this._draw(buffer);```
+  - |-
+    📚  et définis :
+      **_draw(buffer)**:
+        **->** détermine la coordonnée y :
+          ```javascript this.ppu.scanline;```
+          (appelons ça `y`)
+        **->** pour chaque `element` dans le tableau `buffer` :
+          **->** si l'`element` n'est pas ```javascript undefined``` :
+            **->** détermine si le sprite est devant le fond :
+              ```javascript element.sprite.isInFrontOfBackground;```
+              (appelons ça `isInFront`)
+            **->** détermine si le pixel du fond correspondant est opaque :
+              ```javascript this.ppu.isBackgroundPixelOpaque(element.x, y);```
+              (appelons ça `isBGOpaque`)
+            **->** si ```javascript isInFront || !isBGOpaque``` :
+              **->** appelle ```javascript this.ppu.plot(element.x, y, element.color);```
+  responses: []
+
+corollary:
+  messages:
+  - si tu lances 🦸 🤸  ~Super Tilt Bro~, tu verras que maintenant les nuages se rendent correctement 🙂
+  responses:
+  - ▶️  continuer [end]

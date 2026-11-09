@@ -1,0 +1,92 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
+  messages:
+  - donc, avec le combo `LDA` + `STA`, tu peux écrire en mémoire ✍️
+  - "il y a des instructions similaires qui utilisent les registres [X] et [Y] :"
+  - "`LDX`, `STX`, `LDY`, et `STY`"
+  - on va utiliser les variantes [X] maintenant, juste pour le fun 👾
+  responses:
+  - et si je veux <lire> depuis la mémoire ? 📖 [read]
+
+read:
+  messages:
+  - "tu peux passer une adresse mémoire à `LDX`, en omettant simplement le préfixe ~#~"
+  - c'est-à-dire que l'instruction `LDX $4080` va charger dans [X] la valeur qui se trouve à l'adresse mémoire $4080
+  - <{LDX_memory.png}>
+  responses:
+  - et ensuite ? 🤔 [then]
+
+then:
+  messages:
+  - une fois que tu as chargé quelque chose dans un registre, tu peux en faire ce que tu veux
+  - une chose courante c'est de <modifier> la valeur et de la copier dans un autre registre
+  - ou une autre adresse mémoire ! 🐏
+  - "`INX`, par exemple, incrémente la valeur de [X]"
+  responses:
+  - je peux essayer ? [tryit]
+
+tryit:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - bien sûr, il y a déjà un $10 chargé à $4085
+  - lance le code actuel et vois ce qui se passe ⏩
+  events:
+  - end [result]
+
+result:
+  messages:
+  - tu vois ? le programme a lu ce $10
+  - l'a incrémenté 3 fois
+  - et a écrit le résultat à $4086 😎
+  responses:
+  - ça fait beaucoup de boulot, et si je veux l'incrémenter 8 fois ? [8times]
+
+8times:
+  messages:
+  - "alors, tu écris :"
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - <INX>
+  - lol, je déconne 😂
+  - il existe une instruction pour l'addition
+  - "tu peux écrire `ADC #$08` pour incrémenter [A] de huit"
+  responses:
+  - ouf 😅 [iknow]
+  - mais... [iknow]
+
+iknow:
+  run-after-messages: |
+    $.goTo("exercise");
+  messages:
+  - je sais, j'ai dit [A] au lieu de [X]
+  - "`ADC` ne fonctionne qu'avec [A] 🤷"
+  - hmm...
+  responses: []
+
+exercise:
+  run: |
+    level.fillContentFromTemp();
+    set((m) => {
+      m.chat.stopBlock = null;
+      m.$canRun = true;
+      m.$canEdit = true;
+      m.content.useTemp = false;
+    });
+  messages:
+  - on va refactoriser le code 💡
+  - 📚  fais en sorte d'utiliser `ADC` à la place des 3 instructions d'incrémentation
+  - (pense à remplacer `LDX` et `STX` par `LDA` et `STA`)
+  - 📚  quand tu es prêt·e, lance la commande `test`
+  responses: []

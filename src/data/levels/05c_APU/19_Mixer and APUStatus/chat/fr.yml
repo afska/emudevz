@@ -1,0 +1,32 @@
+---
+main:
+  messages:
+  - la dernière touche sera le <mixeur> 🥣
+  - notre logique actuelle "somme tous les samples et divise par 100" n'est pas tout à fait juste
+  - |-
+    on peut émuler le mixeur de l'APU en utilisant cette formule :
+    ```javascript (
+      0.00752 * (pulse1 + pulse2) +
+      0.00851 * triangle +
+      0.00494 * noise +
+      0.00335 * dmc
+    )```
+  - ah, et on va émuler le dernier registre, 📊  APUStatus
+  - pas très utile, mais juste pour être complet
+  responses:
+  - génial ! [exercise]
+
+exercise:
+  messages:
+  - 📚  dans 🔊  `APU`, mélange correctement les canaux en utilisant la formule ci-dessus
+  - |-
+    📚  implémente dans 📊  `APUStatus` :
+    **onRead()**:
+      **->** retourne un octet, où chaque bit signifie ce qui suit :
+        **->** bit 0 : si le length counter de <Pulse 1> est `> 0`
+        **->** bit 1 : si le length counter de <Pulse 2> est `> 0`
+        **->** bit 2 : si le length counter de <Triangle> est `> 0`
+        **->** bit 3 : si le length counter de <Noise> est `> 0`
+        **->** bit 4 : si l'unité DPCM de <DMC> a `remainingBytes() > 0`
+        **[!]** tu peux utiliser `byte.bitfield(...)` pour construire la valeur
+  responses: []

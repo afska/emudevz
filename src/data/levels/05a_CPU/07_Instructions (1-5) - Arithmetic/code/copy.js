@@ -1,4 +1,4 @@
-["instructions.en.md", "instructions.es.md", "instructions.ru.md"].forEach(
+["instructions.en.md", "instructions.es.md", "instructions.fr.md", "instructions.ru.md"].forEach(
 	(file) => {
 		filesystem.write(`${Drive.DOCS_DIR}/cpu/${file}`, level.bin[file]);
 	}

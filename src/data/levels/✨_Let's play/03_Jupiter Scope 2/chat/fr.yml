@@ -1,0 +1,51 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - <! 📹  Entering video chat...
+  - hey,
+  - on joue à un jeu
+  - |-
+    ça s'appelle 🚀 💥  ~Jupiter Scope 2~
+    <{screenshot.png;30x30}>
+  - un <shoot'em up> vertical dans l'espace
+  - si tu bats mon meilleur score, je t'envoie le <fichier ROM>
+  - au format ~*.neees~
+  responses:
+  - et c'est quoi ton meilleur score ? 🤔 [highest]
+
+highest:
+  messages:
+  - exactement ~10000~ points, en difficulté <normale>
+  - atteins ce score (en mode <normal> ou <difficile>) et je considère ça comme une victoire 🏆
+  responses:
+  - t'as aucune chance ! 💪 [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("JupiterScope2");
+    {{Right}}.loadROM("/roms/.all/JupiterScope2.neees", "stream");
+  messages:
+  - on verra 😁
+  events:
+  - jupiterscope2-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["JupiterScope2.neees", "StarPowerDemo.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - hm... j'avoue que mon score n'était pas si élevé 😅
+  - "<! ROM received: 📄  /roms/JupiterScope2.neees"
+  - comme promis, j'ai mis la ROM dans ton répertoire 📁  ~/roms~
+  - "<! ROM received: 📄  /roms/StarPowerDemo.neees"
+  - j'ai aussi envoyé un autre jeu appelé 🧚 🧹  ~Star Power Demo~
+  - bonne chasse 💣
+  responses:
+  - ▶️  continuer [end]

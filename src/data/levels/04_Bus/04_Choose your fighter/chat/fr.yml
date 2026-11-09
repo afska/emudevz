@@ -1,0 +1,54 @@
+---
+main:
+  messages:
+  - il faut commencer quelque part 😅
+  - <{architecture_unified.png;100x100}>
+  - comme je l'ai dit, tu peux coder les composants dans n'importe quel ordre
+  - et je patche BrokenNEEES pour qu'il utilise des parties de ton émulateur...
+  run-after-messages: |
+    $.goTo("components");
+  responses: []
+
+components:
+  messages:
+  - "🧠  CPU : choisis ça si tu veux émuler les concepts que tu as appris dans le chapitre Assembly."
+  - "🖥️  PPU : choisis ça si tu veux passer directement à l'action et afficher des graphismes à l'écran."
+  - "🔊  APU : choisis ça si tu es curieux·se d'apprendre comment reproduire le son des jeux."
+  - je te conseille de commencer par le 🧠  CPU, mais qu'est-ce que j'en sais...
+  responses:
+  - 🧠  je veux commencer par le CPU [cpu]
+  - 🖥️  je veux commencer par le PPU [ppu]
+  - 🔊  je veux commencer par l'APU [apu]
+
+cpu:
+  run: |
+    const book = store.getState().book.instance;
+    const chapter = book.getChapter(4);
+    const firstLevelId = chapter.levels[0].id;
+    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
+    store.dispatch.savedata.unlockChapter(firstLevelId);
+    store.dispatch.savedata.advanceTo(firstLevelId);
+  messages: []
+  responses: []
+
+ppu:
+  run: |
+    const book = store.getState().book.instance;
+    const chapter = book.getChapter(5);
+    const firstLevelId = chapter.levels[0].id;
+    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
+    store.dispatch.savedata.unlockChapter(firstLevelId);
+    store.dispatch.savedata.advanceTo(firstLevelId);
+  messages: []
+  responses: []
+
+apu:
+  run: |
+    const book = store.getState().book.instance;
+    const chapter = book.getChapter(6);
+    const firstLevelId = chapter.levels[0].id;
+    store.dispatch.savedata.addCompletedLevelIfNeeded(level.id);
+    store.dispatch.savedata.unlockChapter(firstLevelId);
+    store.dispatch.savedata.advanceTo(firstLevelId);
+  messages: []
+  responses: []

@@ -166,6 +166,7 @@ export default {
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",
+	language_fr: "Francés",
 	language_ru: "Ruso",
 	last_version: " (última versión)",
 	left: "Izquierda",

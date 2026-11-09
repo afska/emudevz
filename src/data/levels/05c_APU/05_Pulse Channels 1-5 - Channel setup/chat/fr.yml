@@ -1,0 +1,57 @@
+---
+main:
+  messages:
+  - le Pulse Channel 1 doit savoir quelle note il doit produire, non ?
+  - eh bien, le code du jeu écrit une valeur de timer sur 11 bits dans les registres 🕡  Pulse1TimerLow et 🕛  Pulse1TimerHighLCL
+  - on peut convertir les valeurs de timer en fréquence avec cette formule ⚗️
+  - "```javascript f = fCPU / (16 * (t + 1))```"
+  - "`fCPU` est la fréquence du CPU (~1789773~), et `t` est la valeur du timer"
+  responses:
+  - donne-moi un exemple [example]
+
+example:
+  messages:
+  - d'après la formule précédente, si un jeu veut une note à 220 Hz, la valeur du timer doit être 507
+  - donc, le jeu écrirait 251 (octet faible de 507) à $4002 et 1 (octet fort de 507) à $4003
+  - <{Pulse1Timer.png}>
+  - ensuite, le canal pulse de l'APU oscillerait automatiquement à 220 Hz
+  responses:
+  - on branche tout ça ? [exercise]
+
+exercise:
+  messages:
+  - on a besoin d'une classe pour les Pulse Channels !
+  - 📚  crée une classe `PulseChannel`, en utilisant 📄  ~/tmpl/apu/PulseChannel.js~ comme modèle
+  - |-
+    📚  ajoute une propriété `channels` à l'APU 🔊  `APU`, assignée à :
+      ```javascript {
+        pulses: [
+          new PulseChannel(this, 0, "enablePulse1"),
+          new PulseChannel(this, 1, "enablePulse2")
+        ],
+      }```
+  - 📚  appelle la méthode `step()` des deux canaux pulse au début de 🔊  `APU::step()`
+  - |-
+    📚  remplace le <code de test> actuel dans  🔊  `APU::sample(...)` par quelque chose comme :
+      ```javascript const pulse1 = this.channels.pulses[0].sample();
+      const pulse2 = this.channels.pulses[1].sample();
+      this.sample = (pulse1 + pulse2) * 0.01;```
+  - |-
+    📚  remplace l'appel `onSample(...)` par :
+      ```javascript onSample(this.sample, pulse1, pulse2);```
+  - |-
+    📚  implémente dans 🕡  `PulseTimerLow` :
+    **onWrite(value)**:
+      **->** définit la valeur avec ```javascript this.setValue(...)```
+      **->** appelle ```javascript updateTimer()``` sur l'instance du Pulse Channel
+  - |-
+    📚  implémente dans 🕛  `PulseTimerHighLCL` :
+    **onLoad()**:
+      **->** utilise ```javascript this.addField(...)``` pour définir un champ `timerHigh` de 3 bits depuis le bit 0
+    **onWrite(value)**:
+      **->** définit la valeur avec ```javascript this.setValue(...)```
+      **->** appelle ```javascript updateTimer()``` sur l'instance du Pulse Channel
+  - |-
+    tu peux accéder à l'instance du canal courant depuis les registres audio en utilisant :
+      ```javascript this.apu.channels.pulses[this.id]```
+  responses: []

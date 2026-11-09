@@ -7,6 +7,7 @@ filesystem.mkdirp(`${Drive.DOCS_DIR}/lib`);
 [
 	"InMemoryRegister.en.md",
 	"InMemoryRegister.es.md",
+	"InMemoryRegister.fr.md",
 	"InMemoryRegister.ru.md",
 ].forEach((file) => {
 	filesystem.write(`${Drive.DOCS_DIR}/lib/${file}`, level.bin[file]);
@@ -15,6 +16,7 @@ filesystem.mkdirp(`${Drive.DOCS_DIR}/lib`);
 [
 	"audio_registers.en.md",
 	"audio_registers.es.md",
+	"audio_registers.fr.md",
 	"audio_registers.ru.md",
 ].forEach((file) => {
 	filesystem.write(`${Drive.DOCS_DIR}/apu/${file}`, level.bin[file]);

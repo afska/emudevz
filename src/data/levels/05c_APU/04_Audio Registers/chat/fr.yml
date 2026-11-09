@@ -1,0 +1,46 @@
+---
+main:
+  messages:
+  - le CPU 🧠  et l'APU 🔊  communiquent via un ensemble de 21 registres mappés en mémoire
+  - ils se trouvent aux adresses CPU $4000-$4013, $4015 et $4017
+  - jette un œil à 📄  ~/docs/apu/audio_registers.en.md~
+  responses:
+  - donne-moi un exemple 🙏 [example]
+
+example:
+  messages:
+  - imaginons qu'un jeu doit configurer le Pulse Channel 1 avec un duty cycle de ~50%~ et un volume constant de 6
+  - c'est géré par les bits de $4000 (🟦  Pulse1Control)
+  - dans la colonne ~Bits~, ~DD~ est le duty cycle, ~C~ le flag de volume constant, et ~NNNN~ le volume
+  - dans ce cas, le jeu écrit 150 (binaire ~10010110~) à $4000
+  - et ensuite l'APU 🔊  utilise cette valeur pour modifier l'onde pulse
+  - l'écriture sur $4000 affecte 4 paramètres en même temps (~DD~, ~L~, ~C~, et ~NNNN~)
+  - <{Pulse1Control.png}>
+  responses:
+  - donc ces registres ne contiennent que des nombres ? 🔢 [numbers]
+
+numbers:
+  messages:
+  - oui, mais certains produisent des <effets spéciaux> quand le CPU 🧠  leur écrit dedans
+  - ces effets de bord peuvent réinitialiser les durées de note, démarrer des balayages de fréquence, ou même couper des canaux entiers !
+  - "j'ai codé une classe qui va t'aider à implémenter ça, tu devrais l'utiliser 📖"
+  responses:
+  - comment je peux l'utiliser ? [exercise]
+
+exercise:
+  messages:
+  - lis la doc à 📄  ~/docs/lib/InMemoryRegister.en.md~
+  - et utilise 📄  ~/tmpl/apu/AudioRegisters.js~ comme modèle pour le fichier des registres audio
+  - les registres 🟦  `PulseControl` et 🎛️  `APUControl` sont déjà implémentés
+  - remarque comment ils appellent `addField(...)` pour chaque bit défini dans la colonne ~Bits~
+  - "ça crée des <propriétés automatiques> : après une écriture, l'APU peut accéder à leurs valeurs (ex. ```javascript pulse1Control.dutyCycleId```)"
+  - 📚  crée une classe `AudioRegisters`, en utilisant ce modèle
+  - |-
+    📚  ajoute une propriété `registers` à l'APU 🔊  `APU`, assignée à :
+      ```javascript new AudioRegisters(this)```
+  - |-
+    📚  enfin, mappe-les dans 🐏  `CPUMemory` (régions $4000-$4013, $4015 et $4017) :
+      - les <lectures> doivent retourner ```javascript this.apu.registers.read(address)```
+      - les <écritures> doivent appeler ```javascript this.apu.registers.write(address, value)``` et retourner
+  - fais attention à 🧮  APUFrameCounter, car il partage son adresse avec le second port 🎮  ; ne mappe pas les <lectures> ! seulement les <écritures> !
+  responses: []
