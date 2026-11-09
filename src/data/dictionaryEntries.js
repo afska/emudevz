@@ -1145,7 +1145,7 @@ export default {
 		es:
 			"La pieza de hardware que estamos tratando de emular. La gente piensa que significa _'No Entiendo' El Entretenimiento Saludable_.",
 		fr:
-			"La pièce matérielle qu'on essaie d'émuler. Les gens pensent que ça signifie _'No Entiendo' Enigmatic Enjoyment Solution_.",
+			"La pièce matérielle qu'on essaie d'émuler. Les gens pensent que ça signifie _'No Entiendo' Énigmatique Évasion Survoltée_.",
 		ru:
 			"Устройство, которое мы пытаемся эмулировать. Считается, что название расшифровывается как _'No Entiendo' Enigmatic Enjoyment Solution_.",
 	},
