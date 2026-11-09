@@ -2,6 +2,7 @@
 	"name": {
 		"en": "📏 Pulse Channels (3/5): Length counter",
 		"es": "📏 Canales Pulso (3/5): Contador de longitud",
+		"fr": "📏 Canaux Pulse (3/5) : Compteur de longueur",
 		"ru": "📏 Импульсные каналы (3/5): Счётчик длины"
 	},
 	"ui": {

@@ -2,6 +2,7 @@
 	"name": {
 		"en": "🙌☁️ Falling",
 		"es": "🙌☁️ Falling",
+		"fr": "🙆☁️ Falling",
 		"ru": "🙌☁️ Falling"
 	},
 	"ui": {
@@ -15,6 +16,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					}
 				}

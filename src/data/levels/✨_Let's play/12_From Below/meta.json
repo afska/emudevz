@@ -2,6 +2,7 @@
 	"name": {
 		"en": "🧱🐙 From Below",
 		"es": "🧱🐙 From Below",
+		"fr": "🧱🐙 From Below",
 		"ru": "🧱🐙 From Below"
 	},
 	"ui": {
@@ -15,6 +16,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					}
 				}

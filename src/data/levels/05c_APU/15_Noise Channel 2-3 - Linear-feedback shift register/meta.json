@@ -2,6 +2,7 @@
 	"name": {
 		"en": "📏 Noise Channel (2/3): Linear-feedback shift register",
 		"es": "📏 Canal Ruido (2/3): Shift register de feedback lineal",
+		"fr": "📏 Canal Bruit (2/3) : Registre à décalage à rétroaction linéaire",
 		"ru": "📏 Шумовой канал (2/3): Регистр сдвига с линейной обратной связью"
 	},
 	"ui": {

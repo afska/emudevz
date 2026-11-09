@@ -2,6 +2,7 @@
 	"name": {
 		"en": "💫🐑 Dizzy Sheep Disaster",
 		"es": "💫🐑 Dizzy Sheep Disaster",
+		"fr": "💫🐑 Dizzy Sheep Disaster",
 		"ru": "💫🐑 Dizzy Sheep Disaster"
 	},
 	"ui": {
@@ -15,6 +16,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					}
 				}

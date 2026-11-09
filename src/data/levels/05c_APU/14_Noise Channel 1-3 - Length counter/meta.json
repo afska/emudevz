@@ -2,6 +2,7 @@
 	"name": {
 		"en": "📏 Noise Channel (1/3): Length counter",
 		"es": "📏 Canal Ruido (1/3): Contador de longitud",
+		"fr": "📏 Canal Bruit (1/3) : Compteur de longueur",
 		"ru": "📏 Шумовой канал (1/3): Счётчик длины"
 	},
 	"ui": {

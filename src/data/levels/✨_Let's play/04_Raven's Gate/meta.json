@@ -2,6 +2,7 @@
 	"name": {
 		"en": "🦅⛩️ Raven's Gate",
 		"es": "🦅⛩️ Raven's Gate",
+		"fr": "🦅⛩️ Raven's Gate",
 		"ru": "🦅⛩️ Raven's Gate"
 	},
 	"ui": {
@@ -15,6 +16,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					}
 				}

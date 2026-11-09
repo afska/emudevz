@@ -2,6 +2,7 @@
 	"name": {
 		"en": "🕊️🛰️ Spacegulls",
 		"es": "🕊️🛰️ Spacegulls",
+		"fr": "🕊️🛰️ Spacegulls",
 		"ru": "🕊️🛰️ Spacegulls"
 	},
 	"ui": {
@@ -15,6 +16,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					}
 				}
