@@ -38,6 +38,7 @@ export default {
 				style: theme.BG_HIGHLIGHT,
 			}, // `code`
 			{ regexp: /("[^"]+")/ }, // "double quotes"
+			{ regexp: /(«[^»]+»)/ }, // «guillemets»
 			// { regexp: /(\[[^\];]+\])/ }, // [square brackets] (ignoring terminal sequences)
 			// ^^^ used for register, we'll use the dictionary instead
 			{ regexp: /(#?\$[0-9a-fA-F]+)/ }, // #literal hex numbers

@@ -16,7 +16,7 @@
 - 💻 Unix-style shell and code editor
 - 🎶 Original retro-synthwave soundtrack
 - 📃 Included documentation and in-game dictionary
-- 🗣️ Fully localized into English, Spanish, Russian
+- 🗣️ Fully localized into English, Spanish, French, Russian
 - 🐞 Powerful debugger with:
   * 🐏 Memory viewer
   * 🔢 Instruction log
@@ -35,8 +35,6 @@
 - Steam/macOS: `~/Library/Application Support/EmuDevz`
 
 ## Development
-
-See [translation_guide.md](docs/translation_guide.md).
 
 ### Install and run
 
@@ -58,6 +56,10 @@ npm run package
 # [4: start the dev server]
 npm start
 ```
+
+### Localization
+
+See [translation_guide.md](docs/translation_guide.md).
 
 ### Scripts
 
