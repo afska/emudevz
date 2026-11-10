@@ -31,6 +31,7 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`" + instruction + '`: argument == "address"',
+      fr: "`" + instruction + '`: argument == "address"',
       ru: "`" + instruction + '`: argument == "address"',
     },
     use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -52,6 +53,7 @@ function newCPU(prgBytes = []) {
         instruction +
         "`: " +
         `salta si la bandera ~${name}~ está apagada`,
+      fr: "`" + instruction + "`: " + `saute si le flag ~${name}~ est désactivé`,
       ru:
         "`" +
         instruction +
@@ -81,6 +83,7 @@ function newCPU(prgBytes = []) {
         instruction +
         "`: " +
         `no salta si la bandera ~${name}~ está encendida`,
+      fr: "`" + instruction + "`: " + `ne saute pas si le flag ~${name}~ est activé`,
       ru:
         "`" +
         instruction +
@@ -107,6 +110,7 @@ function newCPU(prgBytes = []) {
   })({
     locales: {
       es: "`" + instruction + '`: argument == "address"',
+      fr: "`" + instruction + '`: argument == "address"',
       ru: "`" + instruction + '`: argument == "address"',
     },
     use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -128,6 +132,7 @@ function newCPU(prgBytes = []) {
         instruction +
         "`: " +
         `salta si la bandera ~${name}~ está encendida`,
+      fr: "`" + instruction + "`: " + `saute si le flag ~${name}~ est activé`,
       ru:
         "`" +
         instruction +
@@ -157,6 +162,7 @@ function newCPU(prgBytes = []) {
         instruction +
         "`: " +
         `no salta si la bandera ~${name}~ está apagada`,
+      fr: "`" + instruction + "`: " + `ne saute pas si le flag ~${name}~ est désactivé`,
       ru:
         "`" +
         instruction +
@@ -175,6 +181,7 @@ it('`JMP`: argument == "address"', () => {
 })({
   locales: {
     es: '`JMP`: argument == "address"',
+    fr: '`JMP`: argument == "address"',
     ru: '`JMP`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -190,6 +197,7 @@ it("`JMP`: jumps to the address", () => {
 })({
   locales: {
     es: "`JMP`: salta a la dirección",
+    fr: "`JMP` : saute à l'adresse",
     ru: "`JMP`: выполняет переход по адресу",
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -203,6 +211,7 @@ it('`JSR`: argument == "address"', () => {
 })({
   locales: {
     es: '`JSR`: argument == "address"',
+    fr: '`JSR`: argument == "address"',
     ru: '`JSR`: argument == "address"',
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -219,6 +228,7 @@ it("`JSR`: pushes [PC] - 1 to the stack and jumps to the address", () => {
 })({
   locales: {
     es: "`JSR`: pone [PC] - 1 en la pila y salta a la dirección",
+    fr: "`JSR` : empile [PC] - 1 et saute à l'adresse",
     ru: "`JSR`: помещает [PC] - 1 в стек и выполняет переход по адресу",
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -232,6 +242,7 @@ it('`RTI`: argument == "no"', () => {
 })({
   locales: {
     es: '`RTI`: argument == "no"',
+    fr: '`RTI`: argument == "no"',
     ru: '`RTI`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -250,6 +261,7 @@ it("`RTI`: updates the flags and [PC] from the stack", () => {
 })({
   locales: {
     es: "`RTI`: actualiza las banderas y [PC] desde la pila",
+    fr: "`RTI` : met à jour les flags et [PC] depuis la pile",
     ru: "`RTI`: обновляет флаги и [PC] значениями из стека",
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -263,6 +275,7 @@ it('`RTS`: argument == "no"', () => {
 })({
   locales: {
     es: '`RTS`: argument == "no"',
+    fr: '`RTS`: argument == "no"',
     ru: '`RTS`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),
@@ -279,6 +292,7 @@ it("`RTS`: updates [PC] from a value in the stack + 1", () => {
 })({
   locales: {
     es: "`RTS`: actualiza [PC] desde un valor en la pila + 1",
+    fr: "`RTS` : met à jour [PC] depuis une valeur de la pile + 1",
     ru: "`RTS`: записывает в [PC] значение из стека + 1",
   },
   use: ({ id }, book) => id >= book.getId("5a.10"),

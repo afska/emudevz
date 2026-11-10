@@ -13,6 +13,7 @@ it("there's a `/code/CPUMemory.js` file", () => {
 })({
   locales: {
     es: "hay un archivo `/code/CPUMemory.js`",
+    fr: "il y a un fichier `/code/CPUMemory.js`",
     ru: "существует файл `/code/CPUMemory.js`",
   },
   use: ({ id }, book) => id >= book.getId("4.1"),
@@ -26,6 +27,7 @@ it("the file `/code/CPUMemory.js` is a JS module that exports <a class>", async 
   locales: {
     es:
       "el archivo `/code/CPUMemory.js` es un módulo JS que exporta <una clase>",
+    fr: "le fichier `/code/CPUMemory.js` est un module JS qui exporte <une classe>",
     ru: "файл `/code/CPUMemory.js` — JS-модуль, который экспортирует <класс>",
   },
   use: ({ id }, book) => id >= book.getId("4.1"),
@@ -37,6 +39,7 @@ it("the file `/code/index.js` <imports> the module from `/code/CPUMemory.js`", (
   locales: {
     es:
       "el archivo `/code/index.js` <importa> el módulo de `/code/CPUMemory.js`",
+    fr: "le fichier `/code/index.js` <importe> le module de `/code/CPUMemory.js`",
     ru: "файл `/code/index.js` <импортирует> модуль из `/code/CPUMemory.js`",
   },
   use: ({ id }, book) => id >= book.getId("4.1"),
@@ -54,6 +57,7 @@ it("the file `/code/index.js` exports <an object> containing the `CPUMemory` cla
   locales: {
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene la clase `CPUMemory`",
+    fr: "le fichier `/code/index.js` exporte <un objet> contenant la classe `CPUMemory`",
     ru:
       "файл `/code/index.js` экспортирует <объект>, содержащий класс `CPUMemory`",
   },
@@ -72,6 +76,7 @@ it("has a `ram` property and `read(...)`/`write(...)` methods", () => {
 })({
   locales: {
     es: "incluye una propiedad `ram` y métodos `read(...)`/`write(...)`",
+    fr: "inclut une propriété `ram` et des méthodes `read(...)`/`write(...)`",
     ru: "содержит свойство `ram` и методы `read(...)`/`write(...)`",
   },
   use: ({ id }, book) => id >= book.getId("4.1"),
@@ -89,6 +94,7 @@ it("can read from RAM ($0000-$07FF)", () => {
 })({
   locales: {
     es: "puede leer de RAM  ($0000-$07FF)",
+    fr: "peut lire depuis la RAM ($0000-$07FF)",
     ru: "читает из RAM ($0000-$07FF)",
   },
   use: ({ id }, book) => id >= book.getId("4.1"),
@@ -106,6 +112,7 @@ it("reading RAM mirror results in <RAM reads>", () => {
 })({
   locales: {
     es: "leer espejo de RAM ocasiona <lecturas de RAM>",
+    fr: "lire le miroir de RAM provoque des <lectures de RAM>",
     ru: "чтение зеркала RAM приводит к <чтению RAM>",
   },
   use: ({ id }, book) => id >= book.getId("4.1"),
@@ -123,6 +130,7 @@ it("can write to RAM ($0000-$07FF)", () => {
 })({
   locales: {
     es: "puede escribir en RAM ($0000-$07FF)",
+    fr: "peut écrire dans la RAM ($0000-$07FF)",
     ru: "записывает в RAM ($0000-$07FF)",
   },
   use: ({ id }, book) => id >= book.getId("4.1"),
@@ -141,6 +149,7 @@ it("writing RAM mirror results in <RAM writes>", () => {
 })({
   locales: {
     es: "escribir espejo de RAM ocasiona <escrituras en RAM>",
+    fr: "écrire dans le miroir de RAM provoque des <écritures en RAM>",
     ru: "запись в зеркало RAM приводит к <записи в RAM>",
   },
   use: ({ id }, book) => id >= book.getId("4.1"),
@@ -166,6 +175,7 @@ it("saves the <devices> received by `onLoad(...)`", () => {
 })({
   locales: {
     es: "guarda los <dispositivos> recibidos por `onLoad(...)`",
+    fr: "sauvegarde les <dispositifs> reçus par `onLoad(...)`",
     ru: "сохраняет <устройства>, переданные в `onLoad(...)`",
   },
   use: ({ id }, book) => id >= book.getId("4.2"),
@@ -188,6 +198,7 @@ it("can read from the mapper ($4020-$FFFF)", () => {
 })({
   locales: {
     es: "puede leer del mapper ($4020-$FFFF)",
+    fr: "peut lire depuis le mapper ($4020-$FFFF)",
     ru: "читает из маппера ($4020-$FFFF)",
   },
   use: ({ id }, book) => id >= book.getId("4.2"),
@@ -216,6 +227,7 @@ it("can write to the mapper ($4020-$FFFF)", () => {
 })({
   locales: {
     es: "puede escribir en el mapper ($4020-$FFFF)",
+    fr: "peut écrire dans le mapper ($4020-$FFFF)",
     ru: "записывает в маппер ($4020-$FFFF)",
   },
   use: ({ id }, book) => id >= book.getId("4.2"),
@@ -228,6 +240,7 @@ it("there's a `/code/Controller.js` file", () => {
 })({
   locales: {
     es: "hay un archivo `/code/Controller.js`",
+    fr: "il y a un fichier `/code/Controller.js`",
     ru: "существует файл `/code/Controller.js`",
   },
   use: ({ id }, book) => id >= book.getId("4.3"),
@@ -241,6 +254,7 @@ it("the file `/code/Controller.js` is a JS module that exports <a class>", async
   locales: {
     es:
       "el archivo `/code/Controller.js` es un módulo JS que exporta <una clase>",
+    fr: "le fichier `/code/Controller.js` est un module JS qui exporte <une classe>",
     ru: "файл `/code/Controller.js` — JS-модуль, который экспортирует <класс>",
   },
   use: ({ id }, book) => id >= book.getId("4.3"),
@@ -252,6 +266,7 @@ it("the file `/code/index.js` <imports> the module from `/code/Controller.js`", 
   locales: {
     es:
       "el archivo `/code/index.js` <importa> el módulo de `/code/Controller.js`",
+    fr: "le fichier `/code/index.js` <importe> le module de `/code/Controller.js`",
     ru: "файл `/code/index.js` <импортирует> модуль из `/code/Controller.js`",
   },
   use: ({ id }, book) => id >= book.getId("4.3"),
@@ -269,6 +284,7 @@ it("the file `/code/index.js` exports <an object> containing the `Controller` cl
   locales: {
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene la clase `Controller`",
+    fr: "le fichier `/code/index.js` exporte <un objet> contenant la classe `Controller`",
     ru:
       "файл `/code/index.js` экспортирует <объект>, содержащий класс `Controller`",
   },
@@ -297,6 +313,7 @@ it("`Controller`: receives the `player` id and initializes <state>", () => {
 })({
   locales: {
     es: "`Controller`: recibe el id de `player` e inicializa el <estado>",
+    fr: "`Controller` : reçoit l'id de `player` et initialise l'<état>",
     ru:
       "`Controller`: получает идентификатор `player` и инициализирует <состояние>",
   },
@@ -314,6 +331,7 @@ it("`Controller`: has `update`, `onRead`, `onWrite` methods", () => {
 })({
   locales: {
     es: "`Controller`: tiene métodos `update`, `onRead`, `onWrite`",
+    fr: "`Controller` : a les méthodes `update`, `onRead`, `onWrite`",
     ru: "`Controller`: содержит методы `update`, `onRead`, `onWrite`",
   },
   use: ({ id }, book) => id >= book.getId("4.3"),
@@ -342,6 +360,7 @@ it("`Controller`: turns <strobe> on/off with bit 0 set/clear, resets the <cursor
   locales: {
     es:
       "`Controller`: enciende/apaga el <strobe> con el bit 0 encendido/apagado y reinicia el <cursor> en ambos controles",
+    fr: "`Controller` : active/désactive le <strobe> avec le bit 0 à 1/0 et réinitialise le <cursor> sur les deux manettes",
     ru:
       "`Controller`: включает/отключает <строб> при установке/сбросе бита 0 и сбрасывает <курсор> обоих контроллеров",
   },
@@ -369,6 +388,7 @@ it("`Controller`: any byte with bit 0 set/clear should turn <strobe> on/off", ()
   locales: {
     es:
       "`Controller`: cualquier byte con bit 0 encendido/apagado enciende/apaga el <strobe>",
+    fr: "`Controller` : n'importe quel octet avec le bit 0 à 1/0 active/désactive le <strobe>",
     ru:
       "`Controller`: любой байт с установленным/сброшенным битом 0 включает/отключает <строб>",
   },
@@ -406,6 +426,7 @@ it("`Controller`: with strobe <on>, `onRead()` always returns the state of `BUTT
   locales: {
     es:
       "`Controller`: con el strobe <encendido>, `onRead()` siempre retorna el estado del `BUTTON_A`",
+    fr: "`Controller` : avec le strobe <activé>, `onRead()` renvoie toujours l'état de `BUTTON_A`",
     ru:
       "`Controller`: при <включённом> стробе `onRead()` всегда возвращает состояние `BUTTON_A`",
   },
@@ -433,6 +454,7 @@ it("`Controller`: player 2 uses the `strobe` flag from the <other> controller", 
 })({
   locales: {
     es: "`Controller`: el jugador 2 usa la bandera `strobe` del <otro> control",
+    fr: "`Controller` : le joueur 2 utilise le flag `strobe` de l'<autre> manette",
     ru: "`Controller`: игрок 2 использует флаг `strobe` <другого> контроллера",
   },
   use: ({ id }, book) => id >= book.getId("4.3"),
@@ -478,6 +500,7 @@ it("`Controller`: with strobe <off>, `onRead()` advances through the sequence", 
   locales: {
     es:
       "`Controller`: con el strobe <apagado>, `onRead()` avanza por la secuencia",
+    fr: "`Controller` : avec le strobe <désactivé>, `onRead()` avance dans la séquence",
     ru:
       "`Controller`: при <отключённом> стробе `onRead()` продвигается по последовательности",
   },
@@ -520,6 +543,7 @@ it("`Controller`: after reading `BUTTON_RIGHT`, future reads return 1 until the 
   locales: {
     es:
       "`Controller`: luego de leer `BUTTON_RIGHT`, las lecturas futuras retornan 1 hasta reiniciar la secuencia",
+    fr: "`Controller` : après avoir lu `BUTTON_RIGHT`, les lectures suivantes renvoient 1 jusqu'à réinitialisation",
     ru:
       "`Controller`: после чтения `BUTTON_RIGHT` следующие чтения возвращают 1 до сброса последовательности",
   },
@@ -555,6 +579,7 @@ it("`Controller`: writing 1 then 0 to $4016 resets the sequence to `BUTTON_A` on
   locales: {
     es:
       "`Controller`: escribir 1 y luego 0 en $4016 reinicia la secuencia al `BUTTON_A` en <ambos controles>",
+    fr: "`Controller` : écrire 1 puis 0 dans $4016 réinitialise la séquence au `BUTTON_A` sur <les deux manettes>",
     ru:
       "`Controller`: запись 1, а затем 0 по адресу $4016 сбрасывает последовательность на `BUTTON_A` у <обоих контроллеров>",
   },
@@ -601,6 +626,7 @@ it("maps the $4016 <reads/writes> and $4017 <reads> to the controllers", () => {
   locales: {
     es:
       "mapea las lecturas/escrituras de $4016 y las lecturas de $4017 a los mandos",
+    fr: "mappe les lectures/écritures de $4016 et les lectures de $4017 vers les manettes",
     ru: "направляет <чтение/запись> $4016 и <чтение> $4017 к контроллерам",
   },
   use: ({ id }, book) => id >= book.getId("4.3"),

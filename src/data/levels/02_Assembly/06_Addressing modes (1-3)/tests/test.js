@@ -19,6 +19,7 @@ it("the first 7 instructions are equal", () => {
 })({
 	locales: {
 		es: "las primeras 7 instrucciones son iguales",
+		fr: "les 7 premières instructions sont identiques",
 		ru: "первые 7 инструкций не меняются",
 	},
 });
@@ -32,6 +33,7 @@ it("sets up an indirect jump to $403C", () => {
 })({
 	locales: {
 		es: "configura un salto indirecto hacia $403C",
+		fr: "configure un saut indirect vers $403C",
 		ru: "настраивает косвенный переход на $403C",
 	},
 });
@@ -48,6 +50,7 @@ it("the last 2 instructions are `STY $1001` and `INX`", () => {
 })({
 	locales: {
 		es: "las últimas dos instrucciones son `STY $1001` y `INX`",
+		fr: "les 2 dernières instructions sont `STY $1001` et `INX`",
 		ru: "последние 2 инструкции — `STY $1001` и `INX`",
 	},
 });
@@ -60,6 +63,7 @@ it("the assembled code is OK", () => {
 })({
 	locales: {
 		es: "el código ensamblado está bien",
+		fr: "le code assemblé est correct",
 		ru: "код ассемблируется правильно",
 	},
 });
