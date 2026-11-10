@@ -9,6 +9,9 @@ If you want to add support for other languages, you should change these files (e
   - Keys ending with `_before` and `_after` will have some text in between: for example, `performance_tips_remove_logs_before`/`performance_tips_remove_logs_after` will be rendered as: `${before} console.log ${after}`, finally showing `Remove any console.log(...) calls`.
 - Change `src/locales.js` so it includes the new `ja` key and the correct `TimeAgo` instance.
 - Update `src/data/dictionaryEntries.js` to include translations for `ja`.
+  - Entry names are pipe-separated.
+  - A `_` prefix means "hidden alias" (it matches in the same way, but doesn't appear in the entry's "also known as" subtitle).
+  - The `also` key **overrides** the name list for a specific language. That means, if you want some English words to still match, you need to add them manually.
   - You can run `node scripts/sort-dictionary.js` to sort keys alphabetically.
 - Add a `ja.yml` to each level in `src/data/levels` for the chat script.
   - See `docs/chat_syntax.md` for some other considerations about the chat format.
