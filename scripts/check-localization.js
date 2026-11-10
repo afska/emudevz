@@ -7,7 +7,7 @@ const _ = require("lodash");
 
 Error.stackTraceLimit = 0;
 
-const LANGUAGES = ["es", "ru"];
+const LANGUAGES = ["es", "fr", "ru"];
 
 const LOCALES_DIR = "src/data/locales";
 const LOCALES_MAIN_FILE = "src/locales.js";

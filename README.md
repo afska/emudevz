@@ -16,7 +16,7 @@
 - 💻 Unix-style shell and code editor
 - 🎶 Original retro-synthwave soundtrack
 - 📃 Included documentation and in-game dictionary
-- 🗣️ Fully localized into English, Spanish, Russian
+- 🗣️ Fully localized into English, Spanish, French, Russian
 - 🐞 Powerful debugger with:
   * 🐏 Memory viewer
   * 🔢 Instruction log

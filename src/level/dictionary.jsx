@@ -67,12 +67,15 @@ const dictionary = {
 				entries: entries
 					.filter((word) => !exclude.some((it) => this._matchesKey(it, word)))
 					.map((key) => {
+						const before = locales.language === "fr" ? "'" : "";
+
 						key = this._stripPrivateSymbol(key);
-						return `(?<![^\\s(>])${escapeStringRegexp(
+
+						return `(?<![^\\s(>${before}])${escapeStringRegexp(
 							key
 						)}(?=[\\s0-9,.)?!:'<&]|$)`;
 					})
-					// before: string start, whitespace, parenthesis, major
+					// before: string start, whitespace, parenthesis, major (+ apostrophe in French, e.g. "l'APU")
 					// after: whitespace, numbers, comma, dot, parenthesis, question mark, exclamation mark, colon, apostrophe, minor, ampersand, or end of string
 					.join("|"),
 			}),

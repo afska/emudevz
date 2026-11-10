@@ -392,6 +392,13 @@ export default class CreditsModal extends PureComponent {
 							Post-game guide
 						</Game>
 						<Game
+							emojis="🌐🇫🇷"
+							link="https://github.com/afska/emudevz/pull/53/changes"
+							author="jquenee"
+						>
+							French localization
+						</Game>
+						<Game
 							emojis="🌐🇷🇺"
 							link="https://github.com/afska/emudevz/pull/48"
 							author="Volner"
