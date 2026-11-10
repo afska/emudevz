@@ -36,8 +36,6 @@
 
 ## Development
 
-See [translation_guide.md](docs/translation_guide.md).
-
 ### Install and run
 
 ```bash
@@ -58,6 +56,10 @@ npm run package
 # [4: start the dev server]
 npm start
 ```
+
+### Localization
+
+See [translation_guide.md](docs/translation_guide.md).
 
 ### Scripts
 
