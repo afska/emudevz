@@ -69,7 +69,7 @@ step:
     📚  notre méthode `step()` devrait s'écrire facilement, en utilisant les autres :
       ```javascript step() {
         const originalPC = this.pc.getValue();
-
+        
         const operation = this._fetchOperation();
         const input = this._fetchInput(operation);
         const argument = this._fetchArgument(operation, input);
@@ -83,7 +83,7 @@ step:
             argument
           )
         }
-
+        
         operation.instruction.run(this, argument);
         return this._addCycles(operation);
       }```

@@ -72,7 +72,7 @@ synctoaudio:
   run: |
     set(() => {
       level.content = level.code["Speaker.example.js"];
-    });
+    }); 
     bus.emit("content-changed");
   messages:
   - on démarre un `AudioContext`, une instance de worklet, et on fournit une méthode `writeSamples(...)` pour que l'émulateur puisse envoyer des échantillons
@@ -87,9 +87,9 @@ synctoaudio:
             if (have > target + 64) n--;
             else if (have < target - 64) n++;
 
-            // exécuter pour n échantillons
-            this.emulator.samples(n); // peut envoyer des pixels au canvas
-
+            // joue les n échantillons
+            this.emulator.samples(n); //devrait envoyer les pixels au canvas
+          
             this._updateSound(); // envoie les échantillons au worklet audio
           }
         });```

@@ -55,24 +55,24 @@ exercise:
     **_onPreLine()**:
       **->** à la toute <dernière ligne>, si `!isRenderingEnabled()` dans 🎭  PPUMask, retourne !
       **->** ton code devrait ressembler à ça :
-        ```javascript
+         ```javascript
         if (this.cycle === 1) {
-          // ... réinitialise les flags PPUStatus ...
+          // ... reinit les flags PPUStatus ...
         }
-
+        
         if (!this.registers.ppuMask.isRenderingEnabled()) return;
-
-        // <<on ajoutera plus de code ici plus tard !>>```
+        
+        // <<nous ajouterons la suite plus tard ici!>>```
     **_onVisibleLine()**:
       **->** à la toute <dernière ligne>, si `!isRenderingEnabled()` dans 🎭  PPUMask, retourne !
       **->** ton code devrait ressembler à ça :
         ```javascript
         if (this.cycle === 0) {
-          // rendu du background
+          // rendu de l'arriere-plan
           // rendu des sprites
         }
-
+        
         if (!this.registers.ppuMask.isRenderingEnabled()) return;
-
-        // <<on ajoutera plus de code ici plus tard !>>```
+        
+        // <<nous ajouterons la suite plus tard ici!>>```
   responses: []

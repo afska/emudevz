@@ -16,7 +16,7 @@ Le **registre de flags**, aussi appelé **processor status** (ou simplement **P*
 | `1` | `Zero` | Activé quand le dernier résultat est `0`. |
 | `2` | `Interrupt Disable` | Quand activé, les interruptions masquables (`IRQ`) sont désactivées. |
 | `3` | `Decimal` | Active le mode décimal sur un 6502 normal, mais inutilisé sur la NEEES. |
-| `4` | `b` | Pas un vrai flag, mais selon la source, ce bit sera poussé sur la pile comme `1` ou `0`. Les interruptions logicielles (`BRK`) et les instructions `PHP` le poussent comme `1`. Les interruptions matérielles (`IRQ` et `NMI`) le poussent comme `0`. |
+| `4` | `b` | Pas un vrai flag, mais selon la source, ce bit sera poussé sur la pile comme `1` ou `0`. Les interruptions logicielles (`BRK`) et les instructions `PHP` le poussent `b` comme `1`. Les interruptions matérielles (`IRQ` et `NMI`) le poussent `b` comme `0`. |
 | `5` | `1` | Pas un vrai flag. Toujours `1`. |
 | `6` | `Overflow` | Activé quand une opération arithmétique déborde en calcul signé, comme `Positif + Positif = Négatif` ou `Négatif + Négatif = Positif`. |
-| `7` | `Negative` | Activé quand le dernier résultat a le bit `7` à `1` (nombre négatif). |
+| `7` | `Negative` | Activé lorsque le dernier résultat a son bit `7` positionné (nombre négatif). |

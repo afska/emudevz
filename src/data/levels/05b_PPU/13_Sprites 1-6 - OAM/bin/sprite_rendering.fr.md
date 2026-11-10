@@ -15,7 +15,7 @@
     - La pattern table est obtenue depuis le bit `3` de 🎛️ PPUCtrl (_sélection pattern table sprites_).
   - En mode `8x16` :
     - L'_index de tile_ du _tile supérieur_ est cet octet avec son premier bit à zéro (`byte1 & 0b11111110`).
-    - L'_index de tile_ du _tile inférieur_ est l'index du tile supérieur plus `1`.
+    - L'_index de tile_ du _tile inférieur_ est l'_index du tile supérieur_ plus `1`.
     - La pattern table est obtenue depuis le premier bit (`byte1 & 0b00000001`).
 - Octet `2` : Attributs du sprite.
   - Bits `0-1` : Id de palette.

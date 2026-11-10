@@ -247,7 +247,8 @@ export default {
 	right: "Droite",
 	rm_deleting_recursively: "💥  Suppression récursive...",
 	rm_recursive_flag: "(pour ignorer cette vérification, lance `rm -rf`)",
-	rm_with_files: "⚠️  Ce répertoire contient ~fichiers~. Tout supprimer ? ~(y/N)~",
+	rm_with_files:
+		"⚠️  Ce répertoire contient ~fichiers~. Tout supprimer ? ~(y/N)~",
 	rom_extension: "Extension de ROM",
 	rom_extension_examples: "ex. : .neees",
 	root_enabled: "Privilèges root activés. Utilise avec précaution !",

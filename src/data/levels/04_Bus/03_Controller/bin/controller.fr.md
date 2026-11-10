@@ -18,6 +18,6 @@ Lors d'une écriture à `$4016` (l'adresse de la manette du joueur `1`), le **pr
 - avec le bit strobe `activé`, les lectures signalent toujours l'état du bouton `A`
 - avec le bit strobe `désactivé`, les lectures avancent dans la séquence mentionnée précédemment
 
-En activant le bit strobe, la séquence **se réinitialise** au bouton `A` **sur les deux manettes**.
+En activant le bit strobe `on`, la séquence **se réinitialise** au bouton `A` **sur les deux manettes**.
 
 Écrire à `$4017` n'affecte pas les manettes ; cela contrôle un registre APU appelé 🧮  APUFrameCounter.
