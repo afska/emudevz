@@ -44,7 +44,7 @@ exercise:
   - ouais, mieux vaut commencer par là
   - 📚  comme tu l'as fait avec `CPUMemory::ram`, ajoute une propriété `vram` dans 🐏  `PPUMemory`
   - le tableau doit stocker 4096 octets
-  - (je sais que j'ai dit plusieurs fois qu'il n'y a que 2 KiB de VRAM, mais certains jeux étendent cette mémoire avec des puces supplémentaires dans leur cartouche, et c'est plus simple d'émuler ça en allouant un gros bloc de 4 KiB 🤷 )
+  - (je sais que j'ai dit plusieurs fois qu'il n'y a que 2 Kio de VRAM, mais certains jeux étendent cette mémoire avec des puces supplémentaires dans leur cartouche, et c'est plus simple d'émuler ça en allouant un gros bloc de 4 Kio 🤷 )
   - 📚  mappe la plage $2000-$2FFF vers la VRAM (lectures et écritures)
   - |-
     📚  implémente ces méthodes dans 📍  `PPUAddr` :

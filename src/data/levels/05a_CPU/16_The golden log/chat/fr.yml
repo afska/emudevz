@@ -23,7 +23,7 @@ golden:
   - jusqu'ici, je n'ai effectué que des tests basiques sur ton code
   - ça va passer par tous les types de cas limites, en vérifiant que ton CPU est solide
   - si tu trouves des divergences, tu devras en trouver la cause ou demander de l'aide en ligne
-  - tu peux modifier tes fichiers avec le bouton « Search files... » en haut à droite
+  - tu peux modifier tes fichiers avec le bouton « Rechercher des fichiers... » en haut à droite
   - utilise le bouton ⏩  et atteins la fin du golden log !
   run-after-messages: |
     set((m) => {

@@ -8,7 +8,7 @@ main:
   - 🔈  quand le volume du canal est à 0
   - pour l'instant, on n'a couvert que la dernière situation
   - (en quelque sorte, on doit encore gérer l'enveloppe, mais ça viendra plus tard !)
-  - notre prochain objectif est de gérer les deux premiers : la mise en sourdine des canaux et le compteur de longueur !
+  - "notre prochain objectif est de gérer les deux premiers : la mise en sourdine des canaux et le compteur de longueur !"
   responses:
   - et c'est quoi un compteur de longueur ? [length]
 

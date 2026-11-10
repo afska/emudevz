@@ -45,9 +45,9 @@ moreabouttiles:
       debuggerGUI.ppu.selectedTab = "Sprites";
     });
   messages:
-  - une frame est constituée d'un 🏞️  fond et de plusieurs 🛸  sprites
+  - une frame est constituée d' 🏞️  arrière-plan et de plusieurs 🛸  sprites
   - <{full.png;30x30}>
-  - 🏞️  le fond est statique, mais les jeux peuvent le faire bouger via le scrolling
+  - 🏞️  l'arrière-plan est statique, mais les jeux peuvent le faire bouger via le scrolling
   - <{background.png;30x30}>
   - 🛸  les sprites sont des objets qui peuvent être facilement déplacés ou retournés, dessinés par-dessus le fond
   - <{sprites.png;30x30}>
@@ -61,7 +61,7 @@ enough:
       debuggerGUI.args.readOnly = false;
     });
   run-after-messages: |
-    store.dispatch.savedata.openFile("/docs/ppu/definitions.en.md");
+    store.dispatch.savedata.openFile("/docs/ppu/definitions.fr.md");
   messages:
   - <! Contrôles activés.
   - j'ai <activé les contrôles> dans la vue du débogueur pour que tu puisses explorer un peu
@@ -74,6 +74,6 @@ enough:
   - 👾  toutes les tuiles sont dans la CHR-ROM ou CHR-RAM, sans couleur
   - 🎨  la couleur est donnée via les palettes
   - 👑 🎨  les palettes référencent des entrées d'une palette maître fixe de 64 couleurs
-  - "j'écrirai là-dessus, avec plus de détails, ici : 📄  ~/docs/ppu/definitions.en.md~"
+  - "j'écrirai là-dessus, avec plus de détails, ici : 📄  ~/docs/ppu/definitions.fr.md~"
   responses:
   - super [end]

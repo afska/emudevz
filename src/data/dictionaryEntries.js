@@ -1342,7 +1342,7 @@ export default {
 		es:
 			"El índice de una paleta dentro de Palette RAM. El fondo y los sprites usan conjuntos distintos. Va de `0` a `7`.",
 		fr:
-			"L'index d'une palette dans la Palette RAM. Le fond et les sprites utilisent des ensembles différents. Va de `0` à `7`.",
+			"L'index d'une palette dans la Palette RAM. L'arrière-plan et les sprites utilisent des ensembles différents. Va de `0` à `7`.",
 		ru:
 			"Индекс палитры в RAM палитр. Для фона и спрайтов используются разные наборы. Диапазон — от `0` до `7`.",
 	},
@@ -1353,7 +1353,7 @@ export default {
 		es:
 			"Una pequeña área de RAM usada para almacenar paletas. <br /><br />En la NEEES, contiene `32` bytes para los índices de color de fondo y sprites.",
 		fr:
-			"Une petite zone RAM utilisée pour stocker les palettes. <br /><br />Dans la NEEES, elle contient `32` octets pour les index de couleur du fond et des sprites.",
+			"Une petite zone RAM utilisée pour stocker les palettes. <br /><br />Dans la NEEES, elle contient `32` octets pour les index de couleur de l'arrière-plan et des sprites.",
 		ru:
 			"Небольшая область RAM, в которой хранятся палитры. <br /><br />В NEEES она занимает `32` байта для индексов цветов фона и спрайтов.",
 		also: {
@@ -1373,7 +1373,7 @@ export default {
 		es:
 			"Una lista de `4` colores, almacenada en Palette RAM, donde cada color es un puntero a la paleta maestra. <br /><br />Hay `8` paletas: `4` para el fondo y `4` para sprites.",
 		fr:
-			"Une liste de `4` couleurs, stockée dans la Palette RAM, où chaque couleur est un pointeur vers la palette maîtresse. <br /><br />Il y a `8` palettes : `4` pour le fond et `4` pour les sprites.",
+			"Une liste de `4` couleurs, stockée dans la Palette RAM, où chaque couleur est un pointeur vers la palette maîtresse. <br /><br />Il y a `8` palettes : `4` pour l'arrière-plan et `4` pour les sprites.",
 		ru:
 			"Список из `4` цветов, который хранится в RAM палитр. Каждый цвет — ссылка на основную палитру. <br /><br />Всего палитр `8`: `4` для фона и `4` для спрайтов.",
 	},
@@ -1537,7 +1537,7 @@ export default {
 		es:
 			"Un registro de video usado para habilitar o deshabilitar partes del fondo y los sprites, además de aplicar efectos de color como escala de grises o énfasis. <br /><br />Está disponible en la dirección de CPU `$2001`.",
 		fr:
-			"Un registre vidéo utilisé pour activer ou désactiver des parties du fond et des sprites, ainsi qu'appliquer des effets de couleur comme les niveaux de gris ou l'emphase. <br /><br />Il est disponible à l'adresse CPU `$2001`.",
+			"Un registre vidéo utilisé pour activer ou désactiver des parties de l'arrière-plan et des sprites, ainsi qu'appliquer des effets de couleur comme les niveaux de gris ou l'emphase. <br /><br />Il est disponible à l'adresse CPU `$2001`.",
 		ru:
 			"Видеорегистр, который включает или отключает части фона и спрайтов, а также задаёт цветовые эффекты: оттенки серого или усиление цветов. <br /><br />Доступен по адресу CPU `$2001`.",
 	},
@@ -1548,7 +1548,7 @@ export default {
 		es:
 			"Un registro de video que establece la posición de scroll del fondo. <br /><br />Se escribe dos veces por frame: una para el scroll horizontal, otra para el vertical. <br /><br />Está disponible en la dirección de CPU `$2005`.",
 		fr:
-			"Un registre vidéo qui définit la position de défilement du fond. <br /><br />Écrit deux fois par frame : une fois pour le défilement X, une fois pour Y. <br /><br />Il est disponible à l'adresse CPU `$2005`.",
+			"Un registre vidéo qui définit la position de défilement de l'arrière-plan. <br /><br />Écrit deux fois par frame : une fois pour le défilement X, une fois pour Y. <br /><br />Il est disponible à l'adresse CPU `$2005`.",
 		ru:
 			"Видеорегистр, который задаёт положение прокрутки фона. <br /><br />В него записывают дважды за кадр: один раз для X, один для Y. <br /><br />Доступен по адресу CPU `$2005`.",
 	},
@@ -1795,7 +1795,7 @@ export default {
 		es:
 			"Una función de la PPU que permite a los desarrolladores mover el fondo ajustando la porción visible de la name table.",
 		fr:
-			"Une fonction de la PPU qui permet de déplacer le fond en ajustant la partie visible de la name table.",
+			"Une fonction de la PPU qui permet de déplacer l'arrière-plan en ajustant la partie visible de la name table.",
 		ru: "Возможность PPU перемещать фон, меняя видимую часть таблицы имён.",
 		also: {
 			fr: "Scrolling",
@@ -1876,7 +1876,7 @@ export default {
 		es:
 			"El sprite con índice OAM `0`. Tiene un comportamiento especial en la PPU, como activar el sprite-zero hit cuando se superpone con el fondo.",
 		fr:
-			"Le sprite avec l'index OAM `0`. Il a un comportement spécial dans la PPU, comme déclencher le sprite-zero hit quand il chevauche le fond.",
+			"Le sprite avec l'index OAM `0`. Il a un comportement spécial dans la PPU, comme déclencher le sprite-zero hit quand il chevauche l'arrière-plan.",
 		ru:
 			"Спрайт с индексом OAM `0`. У него особое поведение в PPU: например, при пересечении с фоном он может вызвать попадание нулевого спрайта.",
 	},
@@ -1893,7 +1893,7 @@ export default {
 		es:
 			"Una condición que ocurre cuando un píxel visible del sprite cero se superpone con un píxel visible del fondo. Cuando eso pasa, la PPU enciende la bandera de sprite-zero hit en PPUStatus. <br /><br />Los juegos suelen usarla para sincronizar efectos a mitad de frame como barras de estado o pantallas divididas.",
 		fr:
-			"Une condition qui se produit quand un pixel visible du sprite zéro chevauche un pixel visible du fond. Quand ça arrive, la PPU active le flag sprite-zero hit dans PPUStatus. <br /><br />Les jeux l'utilisent souvent pour synchroniser des effets à mi-frame comme des barres de statut ou des écrans scindés.",
+			"Une condition qui se produit quand un pixel visible du sprite zéro chevauche un pixel visible de l'arrière-plan. Quand ça arrive, la PPU active le flag sprite-zero hit dans PPUStatus. <br /><br />Les jeux l'utilisent souvent pour synchroniser des effets à mi-frame comme des barres de statut ou des écrans scindés.",
 		ru:
 			"Ситуация, когда видимый пиксель нулевого спрайта пересекается с видимым пикселем фона. PPU устанавливает флаг попадания нулевого спрайта в PPUStatus. <br /><br />Игры часто используют это для эффектов посреди кадра: строк состояния или разделения экрана.",
 	},
@@ -1904,7 +1904,7 @@ export default {
 		es:
 			"Un objeto del juego encima (¡o detrás!) del fondo que puede ser movido o volteado, almacenado en OAM. Puede usar un tile (sprite de `8x8`) o dos (sprite de `8x16`).",
 		fr:
-			"Un objet du jeu au-dessus (ou derrière !) du fond qui peut être déplacé ou retourné, stocké dans l'OAM. Il peut utiliser un tile (sprite `8x8`) ou deux (sprite `8x16`).",
+			"Un objet du jeu au-dessus (ou derrière !) de l'arrière-plan qui peut être déplacé ou retourné, stocké dans l'OAM. Il peut utiliser un tile (sprite `8x8`) ou deux (sprite `8x16`).",
 		ru:
 			"Игровой объект поверх фона (или позади него!), который можно перемещать и отражать. Хранится в OAM и использует один тайл (спрайт `8x8`) или два (спрайт `8x16`).",
 		also: {

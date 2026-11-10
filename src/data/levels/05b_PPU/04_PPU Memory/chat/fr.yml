@@ -9,7 +9,7 @@ main:
 
 howso:
   messages:
-  - le PPU a son propre espace d'adressage séparé de 16 KiB, spécialement conçu pour récupérer les 🕊️  tuiles, 🏞️  fonds, et 🎨  palettes
+  - le PPU a son propre espace d'adressage séparé de 16 Kio, spécialement conçu pour récupérer les 🕊️  tuiles, 🏞️  fonds, et 🎨  palettes
   - jette un coup d'œil à 📄  ~/docs/ppu/ppu_memory.en.md~
   - la plupart du temps, il utilisera des adresses PPU
   - et il utilisera les adresses CPU uniquement comme pont pour communiquer avec le CPU

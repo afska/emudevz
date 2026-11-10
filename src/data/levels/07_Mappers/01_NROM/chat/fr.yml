@@ -3,7 +3,7 @@ main:
   run: |
     set((m) => m.chat.winOnEnd = true);
   messages:
-  - alright... voyons ce qu'est un 🗜️  Mapper
+  - Bien... voyons ce qu'est un 🗜️  Mapper
   - un mapper est un chip à l'intérieur de la cartouche qui contrôle comment la console lit les données de la ROM
   - ils permettent aux jeux d'utiliser plus de code ou de graphismes grâce à la commutation de banques entre plusieurs chips 🤖  PRG-ROM ou 👾  CHR-ROM
   - certains ajoutent des capacités spéciales, comme changer le mirroring à la volée ou déclencher une interruption sur une scanline particulière 🌠

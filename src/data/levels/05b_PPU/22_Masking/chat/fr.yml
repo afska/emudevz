@@ -39,7 +39,7 @@ exercise:
           **->** trace juste (avec `PPU::plotBG(...)`) la couleur de fond
           **->** incrémente `x`
           **->** `continue` ! ne traite pas plus loin !
-        (souviens-toi que la couleur de fond est ```javascript this.ppu.getColor(0, 0)```)
+        (souviens-toi que la couleur de l'arrière-plan est ```javascript this.ppu.getColor(0, 0)```)
   - |-
     📚  dans 🛸  `SpriteRenderer`, <modifie> les méthodes suivantes :
       **renderScanline()**:

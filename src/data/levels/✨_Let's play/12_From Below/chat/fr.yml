@@ -35,7 +35,7 @@ finish:
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
-  - tu m'as battu 😅
+  - tu as gagné 😅
   - "<! ROM received: 📄  /roms/FromBelow.neees"
   - comme promis, j'ai mis la ROM dans ton répertoire 📁  ~/roms~
   - "<! ROM received: 📄  /roms/TroubleAt2A03.neees"

@@ -10,7 +10,7 @@ usage:
   run: |
     {{Top}}.load("sprite_zero_splitscreen.png");
   messages:
-  - les jeux l'utilisent pour réaliser des <effets d'écran partagé> (par exemple, avoir un HUD statique en haut et un fond défilant en bas)
+  - les jeux l'utilisent pour réaliser des <effets d'écran partagé> (par exemple, avoir un HUD statique en haut et un arrière-plan défilant en bas)
   - il y avait un jeu sur un plombier qui utilisait cette astuce 👨 🔧
   - <{sprite_zero_splitscreen.png}>
   - en plaçant un sprite de pièce (sprite zero) au-dessus d'une pièce du fond, le PPU déclenche un sprite-zero hit quand cette partie de l'écran est rendue
@@ -24,7 +24,7 @@ exercise:
   messages:
   - |-
     📚  dans 🛸  `SpriteRenderer`, <modifie> la méthode `_render(...)` ; en dessous de `buffer[x] = ...`, ajoute :
-    **->** si le `sprite.id` est 0 <ET> que le pixel du fond en ~(x, y)~ est opaque :
+    **->** si le `sprite.id` est 0 <ET> que le pixel de l'arrière-plan en ~(x, y)~ est opaque :
       **->** définit ```javascript this.ppu.registers.ppuStatus.sprite0Hit = 1```
   - 📚  ah, et remets `sprite0Hit` à zéro dans `PPU::_onPreLine()`, comme tu l'as fait avec les deux autres flags !
   responses: []

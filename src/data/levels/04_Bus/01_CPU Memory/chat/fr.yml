@@ -2,11 +2,11 @@
 main:
   messages:
   - récapitulons rapidement le schéma mémoire du NEEES
-  - le CPU a 2 KiB de RAM 🐏
+  - le CPU a 2 Kio de RAM 🐏
   - mais les adresses mémoire vont de $0000 à $FFFF (~65535~)
-  - donc l'espace adressable complet serait de 64 KiB
+  - donc l'espace adressable complet serait de 64 Kio
   responses:
-  - si seulement 2 KiB sont de la vraie RAM, qu'est-ce qu'il y a dans les 62 KiB restants ? 🤨 [other62]
+  - si seulement 2 Kio sont de la vraie RAM, qu'est-ce qu'il y a dans les 62 Kio restants ? 🤨 [other62]
 
 other62:
   messages:

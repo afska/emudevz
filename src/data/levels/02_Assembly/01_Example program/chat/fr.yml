@@ -89,13 +89,13 @@ address:
 butyousaid:
   messages:
   - bonne question !
-  - il n'a que 2 KiB de vraie mémoire
-  - mais le CPU peut <voir> jusqu'à 64 KiB
+  - il n'a que 2 Kio de vraie mémoire
+  - mais le CPU peut <voir> jusqu'à 64 Kio
   - donc les deux premiers kilooctets sont de la <vraie RAM>
   - et le reste sert à interagir avec le matériel 💻
   - <{memory.png}>
   - ça a pas trop d'importance dans ce chapitre
-  - on simule une RAM de 64 KiB pour simplifier
+  - on simule une RAM de 64 Kio pour simplifier
   responses:
   - <<!m.$hasEnded>> ...machinecode
   - <<m.$hasEnded>> ...finish

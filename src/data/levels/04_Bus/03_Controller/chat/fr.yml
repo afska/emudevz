@@ -94,7 +94,7 @@ onwrite:
 
 corollary:
   messages:
-  - alright, intégrons ton 🎮  Controller dans l'émulateur
+  - Bien, intégrons ton 🎮  Controller dans l'émulateur
   - donne-moi une seconde...
   run-after-messages: |
     level.startEffect("earthquake");

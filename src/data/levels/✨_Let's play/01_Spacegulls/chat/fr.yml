@@ -27,7 +27,7 @@ videochat:
     {{Right}}.load(null, "stream");
     {{Right}}.stream.zoom();
   messages:
-  - <! 📹  Entering video chat...
+  - <! 📹  Connexion au chat vidéo...
   - ouais, tu vois ma chambre là ?
   - c'est un peu le bazar, je sais
   - laisse-moi rapprocher un peu la caméra de la télé 🔍

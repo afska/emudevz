@@ -41,7 +41,7 @@ main:
   - note que quand l'index de couleur est 0, une <couleur de fond> est rendue à la place (située au premier index de la première palette)
   responses:
   - (*) aide-moi avec les maths 🔢 [math]
-  - (*) c'est quoi la couleur de fond ? 💧 [backdrop]
+  - (*) c'est quoi la couleur de l'arrière-plan ? 💧 [backdrop]
 
 math:
   messages:
@@ -75,8 +75,8 @@ clear:
 
 backdrop:
   messages:
-  - tu peux y penser comme une couleur de fond universelle
-  - elle est définie dans ~palette 0, index 0~ (alias PPU $3F00)
+  - tu peux y penser comme une couleur d'arrière-plan universelle
+  - elle est définie dans ~palette 0, index 0~ (alias $PPU $3F00)
   - tout pixel d'arrière-plan avec l'index de couleur 0 affiche cette couleur
   responses:
   - ...main
