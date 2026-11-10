@@ -10,7 +10,7 @@ main:
   - jusqu'ici, on n'a lancé que des programmes sans logique de <branchement>
   - on va changer ça
   - l'assembleur 6502 a plusieurs instructions de branchement 🌲
-  - chacune branche selon si certains flags sont actifs ou non
+  - chaque branche s'exécute si certains flags sont actifs ou non
   responses:
   - (*) 6502 quoi ? 🤔 [asm6502]
   - ok comment on branche [how]
