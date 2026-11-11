@@ -30,7 +30,7 @@ bugs:
   - "il y a un bug rigolo dans les 🎮  Controllers : quand <A> est appuyé, les directions <Gauche> et <Droite> sont inversées ☠️"
   - le timing du 🧠  CPU est complètement aléatoire (causant des problèmes de synchro) et les instructions `ADC` et `BIT` <échouent de façon aléatoire>
   - aussi, le 🖥️  PPU ajoute du bruit à l'écran, déplace les registres de défilement bizarrement, et dessine les sprites aux mauvais endroits
-  - enfin, les canaux principaux du 🔊  APU sont <désaccordés>, donc tout le son est inutilisable
+  - enfin, les canaux principaux de 🔊 l'APU sont <désaccordés>, donc tout le son est inutilisable
   - les 🗜️  Mappers fonctionnent bien, heureusement 😅
   responses:
   - ...works
@@ -42,7 +42,7 @@ awful:
   - c'est conçu de façon <modulaire>
   - donc on peut réutiliser ses composants ♻️
   - ça nous permettra d'implémenter les choses dans l'ordre qu'on veut !
-  - tu pourrais commencer, par exemple, par les graphismes (🖥️  PPU) et je patche ton émulateur pour qu'il utilise le 🧠  CPU et le 🔊  APU de BrokenNEEES
+  - tu pourrais commencer, par exemple, par les graphismes (🖥️  PPU) et je patche ton émulateur pour qu'il utilise le 🧠  CPU et 🔊 l'APU de BrokenNEEES
   - ensuite tu continues à corriger le reste à ton rythme
   - commençons par corriger la 💾  Cartridge
   responses:
