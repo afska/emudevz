@@ -17,7 +17,7 @@ bank:
   messages:
   - la commutation de banques est une technique qui permet à une cartouche de changer quelle partie de la ROM est visible par la console à un moment donné
   - comme la console ne peut "voir" qu'une plage de mémoire limitée, le mapper change quelle banque mémoire y est mappée
-  - par exemple, un jeu peut avoir 256 Ko de 🤖  PRG-ROM, mais la CPU ne peut adresser que 32 Ko à la fois
+  - par exemple, un jeu peut avoir 256 Ko de 🤖  PRG-ROM, mais le CPU ne peut adresser que 32 Ko à la fois
   - donc le mapper échange différents blocs de 32 Ko selon les besoins 🐏
   - ça permet à des jeux beaucoup plus grands de tourner sans avoir besoin de plus de lignes d'adresse ou de mémoire dans la console
   - en gros, la cartouche décide <quelles données> la console voit à un moment donné

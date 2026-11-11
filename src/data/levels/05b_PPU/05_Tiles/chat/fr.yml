@@ -5,7 +5,7 @@ main:
   - lis 📄  ~/docs/ppu/tile_rendering.en.md~
   - ça devrait expliquer comment les tuiles sont encodées en mémoire
   - on va créer une classe pour nous aider à récupérer les couleurs des tuiles
-  - comme le PPU rend par 🌠  scanlines, il recevra un paramètre (`y`) représentant l'index de la rangée à dessiner
+  - comme la PPU rend par 🌠  scanlines, il recevra un paramètre (`y`) représentant l'index de la rangée à dessiner
   - |-
     📚  crée une classe 🕊️  `Tile` avec ce qui suit :
     **constructor(ppu, patternTableId, tileId, y)**:

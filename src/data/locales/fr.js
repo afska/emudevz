@@ -350,7 +350,7 @@ export default {
 	tests_video_failed2: " sur ",
 	tests_video_failed3: ")",
 	tests_video_no_tv: "❌  Il n'y a pas de TV !",
-	tests_video_ppu_not_unlocked: "❌  Le PPU n'est pas débloqué.",
+	tests_video_ppu_not_unlocked: "❌  la PPU n'est pas débloqué.",
 	tests_video_ppu_output: "Sortie PPU",
 	tests_video_running: "🎥  Test vidéo en cours :",
 	tests_warnings_found: "⚠️  Avertissements trouvés.",

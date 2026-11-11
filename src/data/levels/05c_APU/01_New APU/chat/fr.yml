@@ -11,7 +11,7 @@ how:
   - 🌊  <l'audio> fonctionne en définissant des ondes qui correspondent directement à ce que font les haut-parleurs
   - 🎵  quand un haut-parleur vibre à une fréquence particulière, il crée une note
   - 📈  puisque le temps est une <unité continue>, les ordinateurs stockent les ondes sous forme d'échantillons — des nombres qui définissent la hauteur de l'onde à un instant précis
-  - 🔢  dans le NEEES, les échantillons sont des nombres dans la plage ~0-15~, et lors de l'émulation de l'APU, on envoie 44100 échantillons par seconde à la carte son
+  - 🔢  dans  la NEEES, les échantillons sont des nombres dans la plage ~0-15~, et lors de l'émulation de l'APU, on envoie 44100 échantillons par seconde à la carte son
   - c'est ce qu'on appelle la fréquence d'échantillonnage
   responses:
   - (*) à quoi ressemble une onde ? [wave]
@@ -35,7 +35,7 @@ wave:
 
 samples:
   messages:
-  - comme le CPU et le PPU, l'APU fonctionne avec des cycles 🚲
+  - comme le CPU et la PPU, l'APU fonctionne avec des cycles 🚲
   - un cycle est la plus petite unité de temps, correspondant à un tick d'horloge pendant lequel il met à jour son état interne d'un pas
   - l'APU 🔊  tourne <2x> plus lentement que le CPU 🧠
   - donc les cycles APU sont plus lents (chaque cycle APU dure, en temps réel, ~deux fois plus longtemps~ qu'un cycle CPU)

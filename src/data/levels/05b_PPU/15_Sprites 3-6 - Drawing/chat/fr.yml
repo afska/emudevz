@@ -32,7 +32,7 @@ exercise:
           **->** calcule la coordonnée Y "interne" :
             ```javascript sprite.diffY(y)```
             (appelons ça `insideY`)
-          **->** instancie une 🕊️  `Tile` en passant le ppu, l'id de la pattern table, l'id de la tile, et `insideY % 8`
+          **->** instancie une 🕊️  `Tile` en passant la PPU, l'id de la pattern table, l'id de la tile, et `insideY % 8`
             (appelons ça `tile`)
           **->** crée un tableau avec les 4 couleurs de palette de ```javascript sprite.paletteId```
             (appelons ça `paletteColors`)

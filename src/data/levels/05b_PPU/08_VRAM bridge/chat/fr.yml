@@ -85,7 +85,7 @@ exercise:
 increment:
   messages:
   - ah ouais, j'avais oublié de te dire
-  - le PPU incrémente l'adresse automatiquement après une écriture dans 📦  PPUData
+  - la PPU incrémente l'adresse automatiquement après une écriture dans 📦  PPUData
   - selon ce qui est dans 🎛️  PPUCtrl, ça peut être ~+1~ ou ~+32~
   - cet auto-incrément est utile pour que les jeux remplissent la VRAM plus vite
   responses:

@@ -17,7 +17,7 @@ components:
   - je te conseille de commencer par le 🧠  CPU, mais qu'est-ce que j'en sais...
   responses:
   - 🧠  je veux commencer par le CPU [cpu]
-  - 🖥️  je veux commencer par le PPU [ppu]
+  - 🖥️  je veux commencer par la PPU [ppu]
   - 🔊  je veux commencer par l'APU [apu]
 
 cpu:

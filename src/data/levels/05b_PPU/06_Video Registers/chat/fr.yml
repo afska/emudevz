@@ -37,7 +37,7 @@ exercise:
   - et utilise 📄  ~/tmpl/ppu/VideoRegisters.js~ comme modèle pour le fichier des registres vidéo
   - les registres 🎛️  `PPUCtrl` et 📊  `PPUStatus` sont déjà implémentés
   - remarque comment ils appellent `addField(...)` pour chaque bit défini dans la colonne ~Bits~
-  - "ça crée des <propriétés automatiques> : après une écriture, le PPU peut accéder à leurs valeurs (p. ex. ```javascript ppuCtrl.spriteSize```)"
+  - "ça crée des <propriétés automatiques> : après une écriture, la PPU peut accéder à leurs valeurs (p. ex. ```javascript ppuCtrl.spriteSize```)"
   - 📚  crée une classe `VideoRegisters` en utilisant ce modèle
   - |-
     📚  ajoute une propriété `registers` à 🖥️  `PPU`, assignée à :

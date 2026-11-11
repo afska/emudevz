@@ -15,9 +15,9 @@ interrupt:
   - quand un tel événement survient, le CPU sauvegarde son état ([PC] et le registre des drapeaux) dans la pile
   - et saute vers une adresse mémoire bien connue (appelée vecteur) associée à cet événement
   - après avoir géré l'événement, l'exécution reprend généralement là où elle s'était arrêtée
-  - "dans le NEEES, il y a 4 événements :"
+  - "dans  la NEEES, il y a 4 événements :"
   - "🔁  <RESET> : déclenché quand le système est allumé"
-  - "📹  NMI : déclenché quand le PPU a fini de dessiner une frame"
+  - "📹  NMI : déclenché quand la PPU a fini de dessiner une frame"
   - "✋  <IRQ> : déclenché par l'APU ou du hardware externe comme les mappers"
   - "🔢  <BRK> : déclenché par une instruction `BRK` dans le code machine"
   responses:
@@ -26,7 +26,7 @@ interrupt:
 example:
   messages:
   - bien sûr ! imagine que tu es un jeu
-  - tu dois déplacer tes sprites quand le PPU a fini de rendre sa frame courante, pour éviter de le faire pendant qu'il dessine (ce qui causerait des glitches 💥 )
+  - tu dois déplacer tes sprites quand la PPU a fini de rendre sa frame courante, pour éviter de le faire pendant qu'il dessine (ce qui causerait des glitches 💥 )
   - donc, tu mets ton code de déplacement des sprites à -par exemple- l'adresse $AA00
   - ce sera l'emplacement de ton <gestionnaire d'interruption>
   - et ensuite tu t'« abonnes » à l'événement NMI en plaçant un pointeur vers $AA00 dans le vecteur de NMI (qui est ~$FFFA/B~)

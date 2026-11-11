@@ -1,6 +1,6 @@
 main:
   messages:
-  - l'accès à la Palette RAM est un peu bizarre sur le NEEES
+  - l'accès à la Palette RAM est un peu bizarre sur  la NEEES
   - certaines adresses sont des miroirs d'autres adresses 🚽
   - corrigeons ça rapidement
   - |-

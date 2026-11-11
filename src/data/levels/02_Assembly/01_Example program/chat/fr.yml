@@ -77,12 +77,12 @@ address:
     set((m) => m.$address = true);
   messages:
   - un nombre qui représente un emplacement en mémoire 🐏
-  - dans le NEEES, ils font 2 octets
+  - dans  la NEEES, ils font 2 octets
   - donc ils vont de 0 ($0000) à 65535 ($FFFF)
-  - chaque emplacement (et à peu près tout dans le NEEES) peut stocker un seul octet
+  - chaque emplacement (et à peu près tout dans  la NEEES) peut stocker un seul octet
   - un octet peut stocker n'importe quel nombre entre 0 ($00) et 255 ($FF)
   responses:
-  - le NEEES avait seulement 2048 octets de WRAM, pourquoi il y a 65536 adresses ? [butyousaid]
+  -  la NEEES avait seulement 2048 octets de WRAM, pourquoi il y a 65536 adresses ? [butyousaid]
   - <<!m.$hasEnded>> ...machinecode
   - <<m.$hasEnded>> ...finish
 

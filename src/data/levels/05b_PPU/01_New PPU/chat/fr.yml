@@ -22,7 +22,7 @@ cycles:
   messages:
   - un cycle, c'est un tic d'horloge, la plus petite unité d'exécution !
   - ce sont de toutes petites fractions de seconde, vu qu'il y a plus de 5 millions de cycles PPU par seconde
-  - pendant un cycle, le PPU peut lire ou écrire des données, ou même dessiner un pixel à l'écran 🎨
+  - pendant un cycle, la PPU peut lire ou écrire des données, ou même dessiner un pixel à l'écran 🎨
   responses:
   - (*) les cycles PPU sont les mêmes que les cycles CPU ? 🤔 [same]
   - comment ça marche, le dessin ? 🖌️ [drawing]
@@ -51,7 +51,7 @@ vblank_hblank:
   messages:
   - pendant chaque scanline (après avoir dessiné tous les pixels), il y a une petite pause appelée Horizontal Blank, ou HBlank
   - et à la fin de toutes les scanlines visibles, il y a une pause plus longue, le Vertical Blank, ou VBlank 🏝️
-  - pendant le VBlank/HBlank, le PPU ne dessine aucun pixel, ce qui donne au programme la possibilité de mettre à jour l'écran
+  - pendant le VBlank/HBlank, la PPU ne dessine aucun pixel, ce qui donne au programme la possibilité de mettre à jour l'écran
   responses:
   - compris, c'est quoi la suite ? [exercise]
 
@@ -75,7 +75,7 @@ exercise:
 
 minus1:
   messages:
-  - la scanline ~-1~ (aussi appelée pré-ligne) est une ligne non visible, pendant laquelle le PPU se prépare pour la frame à venir
+  - la scanline ~-1~ (aussi appelée pré-ligne) est une ligne non visible, pendant laquelle la PPU se prépare pour la frame à venir
   - pendant ce temps, il remet à zéro certains flags d'état importants
   - on verra ça plus tard ! 🔜
   responses:

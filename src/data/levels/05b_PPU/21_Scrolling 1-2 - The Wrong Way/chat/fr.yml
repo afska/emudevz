@@ -33,9 +33,9 @@ viewport:
   - <{3rdparty_nametable_scrolling.png}>
   - les jeux écrivent dans 📜  PPUScroll la position du viewport
   - ils écrivent deux fois, d'abord pour la <coordonnée X>, puis pour la <coordonnée Y>
-  - et le PPU déplace le viewport, ne dessinant qu'une partie des name tables concernées
+  - et la PPU déplace le viewport, ne dessinant qu'une partie des name tables concernées
   responses:
-  - donc... si les jeux écrivent deux fois, le PPU doit retenir quelle coordonnée ils définissent, non ? [twice]
+  - donc... si les jeux écrivent deux fois, la PPU doit retenir quelle coordonnée ils définissent, non ? [twice]
 
 twice:
   messages:

@@ -44,7 +44,7 @@ pageboundary:
   messages:
   - ah... le <bug de limite de page> 😅
   - j'avais complètement oublié !
-  - il y a un bug dans la façon dont le NEEES traite le mode d'adressage « Indirect »
+  - il y a un bug dans la façon dont  la NEEES traite le mode d'adressage « Indirect »
   - ouais, un bug dans le hardware
   - et si on veut émuler le hardware fidèlement... on doit aussi émuler les bugs 😅
   - si tu essaies de le « corriger », tu briserais la compatibilité avec certains jeux qui dépendent (que ce soit accidentellement ou intentionnellement) de ce bug

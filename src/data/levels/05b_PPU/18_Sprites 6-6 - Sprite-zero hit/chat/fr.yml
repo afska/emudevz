@@ -2,7 +2,7 @@ main:
   messages:
   - le hardware a un mécanisme pour détecter les collisions entre le premier sprite de l'OAM (sprite zero) et le fond
   - c'est ce qu'on appelle le sprite-zero hit, et il se déclenche quand un pixel opaque du sprite zero chevauche un pixel opaque du fond
-  - quand ça arrive, le PPU active le flag sprite-zero hit dans 📊  `PPUStatus` et les jeux peuvent le lire
+  - quand ça arrive, la PPU active le flag sprite-zero hit dans 📊  `PPUStatus` et les jeux peuvent le lire
   responses:
   - à quoi ça sert ? [usage]
 
@@ -13,8 +13,8 @@ usage:
   - les jeux l'utilisent pour réaliser des <effets d'écran partagé> (par exemple, avoir un HUD statique en haut et un arrière-plan défilant en bas)
   - il y avait un jeu sur un plombier qui utilisait cette astuce 👨 🔧
   - <{sprite_zero_splitscreen.png}>
-  - en plaçant un sprite de pièce (sprite zero) au-dessus d'une pièce du fond, le PPU déclenche un sprite-zero hit quand cette partie de l'écran est rendue
-  - ça permet au jeu de détecter le moment où le PPU a atteint cette scanline précise, puis de changer les coordonnées de défilement en milieu d'image
+  - en plaçant un sprite de pièce (sprite zero) au-dessus d'une pièce du fond, la PPU déclenche un sprite-zero hit quand cette partie de l'écran est rendue
+  - ça permet au jeu de détecter le moment où la PPU a atteint cette scanline précise, puis de changer les coordonnées de défilement en milieu d'image
   responses:
   - quel hack [exercise]
 
