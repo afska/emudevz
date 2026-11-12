@@ -93,7 +93,8 @@ class Chapter extends PureComponent {
 
 		const { book, chapter, goTo } = this.props;
 		const level =
-			book.nextPendingLevelOfChapter(chapter.id) || chapter.levels[0];
+			book.nextPendingLevelOfChapter(chapter.id) ||
+			chapter.levels[chapter.levels.length - 1];
 		goTo(level.id);
 	};
 }
