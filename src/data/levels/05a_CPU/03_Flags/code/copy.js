@@ -1,3 +1,1 @@
-["flags.en.md", "flags.es.md", "flags.fr.md", "flags.ru.md"].forEach((file) => {
-	filesystem.write(`${Drive.DOCS_DIR}/cpu/${file}`, level.bin[file]);
-});
+copyLocalizedFile("flags.en.md", `${Drive.DOCS_DIR}/cpu`);

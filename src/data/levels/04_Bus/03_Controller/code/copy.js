@@ -1,6 +1,4 @@
-["controller.en.md", "controller.es.md", "controller.fr.md", "controller.ru.md"].forEach((file) => {
-	filesystem.write(`${Drive.DOCS_DIR}/${file}`, level.bin[file]);
-});
+copyLocalizedFile("controller.en.md", `${Drive.DOCS_DIR}`);
 
 ["Controller.js"].forEach((file) => {
 	filesystem.write(`${Drive.TMPL_DIR}/${file}`, level.bin[file]);

@@ -13,6 +13,7 @@ If you want to add support for other languages, you should change these files (e
 - Add a `ja.yml` to each level in `src/data/levels` for the chat script.
   - See `docs/chat_syntax.md` for some other considerations about the chat format.
   - Use the same emojis as the English version.
+  - To test your changes, you need to **rebuild the levels** with `npm run package`.
   - Remember that emojis need an extra space to render correctly!
   - Ensure the JS scripts are the same (besides small details like linking to `.ja.md` files instead of `.en.md`) and the final translated file ends up with the same number of lines as the English version.
   - Also, ensure the JS code snippets shown to the user are the same, but comments should be translated.
@@ -22,29 +23,18 @@ If you want to add support for other languages, you should change these files (e
 - Change the `meta.json` file in each level to localize the `name` key.
   - Use the same emojis as the English version.
 - Change the `chapter.json` file in each chapter to localize the `name` and `description` keys.
-- Add localized documentation files (look for `*.en.md` files and create equivalent `*.ja.md` files) and update the `copy.js` scripts to copy them.
+- Add localized documentation files (look for `*.en.md` files and create equivalent `*.ja.md` files).
   - Don't localize files that simply end with `*.md` (without a language suffix), as these typically just contain an image and it's fine to have just one version for all languages.
 - Localize all unit tests in `src/data/levels/$tests` and the `test.js` files.
 - Create a file in `src/data/levels/02_Assembly/$help/ja.txt` with help for the Assembly chapter.
   - Each line should correspond to the same line in the other languages.
   - Add `$help/ja.txt` to `scripts/package-levels.js`.
 - In `The golden log` level, the `golden` key references a UI label (`Search files...`), make sure its text matches.
-- Add your language to the language list in `README.md`.
 
 ## Notes
 
-- Please run a basic consistency check with `node scripts/check-localization.js`.
+- Please run regular consistency checks with `node scripts/check-localization.js`.
   - Add your language at the top of the script!
-
-- When adding the `ja:` key in an object, please do it alphabetically. For example:
-```json
-	"name": {
-		"en": "🏁 Flags",
-		"es": "🏁 Banderas",
-		"ja": "🏁 フラッグ",
-		"ru": "🏁 Флаги"
-	}
-```
 
 - After a game introduces a concept (e.g. "Backgrounds" or "Sprites"), it tries to use that same word consistently so the dictionary can pick those words, highlight, and link them to their definition. If your language has two different ways of saying a technical word, please pick one and use consistently.
 

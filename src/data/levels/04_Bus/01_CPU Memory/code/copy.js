@@ -1,8 +1,6 @@
 filesystem.mkdirp(`${Drive.DOCS_DIR}/cpu`);
 
-["cpu_memory.en.md", "cpu_memory.es.md", "cpu_memory.fr.md", "cpu_memory.ru.md"].forEach((file) => {
-	filesystem.write(`${Drive.DOCS_DIR}/cpu/${file}`, level.bin[file]);
-});
+copyLocalizedFile("cpu_memory.en.md", `${Drive.DOCS_DIR}/cpu`);
 
 ["CPUMemory.js"].forEach((file) => {
 	filesystem.write(`${Drive.TMPL_DIR}/${file}`, level.bin[file]);

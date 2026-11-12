@@ -1,11 +1,4 @@
-[
-	"addressing_modes.en.md",
-	"addressing_modes.es.md",
-	"addressing_modes.fr.md",
-	"addressing_modes.ru.md",
-].forEach((file) => {
-	filesystem.write(`${Drive.DOCS_DIR}/cpu/${file}`, level.bin[file]);
-});
+copyLocalizedFile("addressing_modes.en.md", `${Drive.DOCS_DIR}/cpu`);
 
 ["addressingModes.js"].forEach((file) => {
 	filesystem.write(`${Drive.TMPL_DIR}/cpu/${file}`, level.bin[file]);

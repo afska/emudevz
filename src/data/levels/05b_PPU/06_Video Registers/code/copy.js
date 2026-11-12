@@ -4,23 +4,9 @@ filesystem.mkdirp(`${Drive.DOCS_DIR}/lib`);
 	filesystem.write(`${Drive.LIB_DIR}/${file}`, level.bin[file]);
 });
 
-[
-	"InMemoryRegister.en.md",
-	"InMemoryRegister.es.md",
-	"InMemoryRegister.fr.md",
-	"InMemoryRegister.ru.md",
-].forEach((file) => {
-	filesystem.write(`${Drive.DOCS_DIR}/lib/${file}`, level.bin[file]);
-});
+copyLocalizedFile("InMemoryRegister.en.md", `${Drive.DOCS_DIR}/lib`);
 
-[
-	"video_registers.en.md",
-	"video_registers.es.md",
-	"video_registers.fr.md",
-	"video_registers.ru.md",
-].forEach((file) => {
-	filesystem.write(`${Drive.DOCS_DIR}/ppu/${file}`, level.bin[file]);
-});
+copyLocalizedFile("video_registers.en.md", `${Drive.DOCS_DIR}/ppu`);
 
 ["VideoRegisters.js"].forEach((file) => {
 	filesystem.write(`${Drive.TMPL_DIR}/ppu/${file}`, level.bin[file]);

@@ -33,6 +33,18 @@ export default {
 		const Drive = _Drive_;
 		// eslint-disable-next-line
 		const emulation = window.EmuDevz.emulation;
+		// eslint-disable-next-line
+		const copyLocalizedFile = (fileName, dir) => {
+			if (!fileName.endsWith(".en.md"))
+				throw new Error(`Not a localized file: ${fileName}`);
+
+			const name = fileName.replace(/\.en\.md$/, "");
+			const regexp = new RegExp(`^${_.escapeRegExp(name)}\\.[^.]+\\.md$`);
+			for (const file in level.bin) {
+				if (regexp.test(file))
+					filesystem.write(`${dir}/${file}`, level.bin[file]);
+			}
+		};
 
 		let _evalCode_ = _code_;
 		_.forEach(layout.instances, (__, name) => {

@@ -1,6 +1,4 @@
-["iNEEES.en.md", "iNEEES.es.md", "iNEEES.fr.md", "iNEEES.ru.md"].forEach((file) => {
-	filesystem.write(`${Drive.DOCS_DIR}/${file}`, level.bin[file]);
-});
+copyLocalizedFile("iNEEES.en.md", `${Drive.DOCS_DIR}`);
 ["architecture.png", "cartridge.png"].forEach((file) => {
 	filesystem.write(`${Drive.DOCS_DIR}/${file}`, level.media[file]);
 });
