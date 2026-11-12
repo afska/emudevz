@@ -79,7 +79,7 @@ Component types and options:
 - `console`
   - `startup`: startup command (`string`) (e.g. `"chat"`, `"chat -f"`)
   - `availableCommands`: list of available commands (`string[]`)
-  - `subtitle`: subtitle, printed as a header (`{ en: string, es: string }`)
+  - `hideHelpHint`: hides the basic help hint printed below the title (`boolean`) (default: `false`)
   - `links`: list of hyperlinks used by the terminal (`{ text: string, href: string }[]`)
 
 - `code`

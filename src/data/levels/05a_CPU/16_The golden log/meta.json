@@ -14,12 +14,7 @@
 				"console",
 				{
 					"startup": "chat -f",
-					"subtitle": {
-						"en": "",
-						"es": "",
-						"fr": "",
-						"ru": ""
-					}
+					"hideHelpHint": true
 				}
 			],
 			"Right": [

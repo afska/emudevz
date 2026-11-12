@@ -3,7 +3,6 @@
 If you want to add support for other languages, you should change these files (example: Japanese - `ja`):
 
 - Create a locale file in `src/data/locales/ja.js` with all the UI translations.
-  - You can run `node scripts/sort-locales.js` to sort keys alphabetically.
   - Add a `language_ja` key to all the language files to localize the language name.
   - Keys ending with `_before` and `_after` will have some text in between: for example, `performance_tips_remove_logs_before`/`performance_tips_remove_logs_after` will be rendered as: `${before} console.log ${after}`, finally showing `Remove any console.log(...) calls`.
 - Change `src/locales.js` so it includes the new `ja` key and the correct `TimeAgo` instance.
@@ -11,7 +10,6 @@ If you want to add support for other languages, you should change these files (e
   - Entry names are pipe-separated.
   - A `_` prefix means "hidden alias" (it matches in the same way, but doesn't appear in the entry's "also known as" subtitle).
   - The `also` key **overrides** the name list for a specific language. That means, if you want some English words to still match, you need to add them manually.
-  - You can run `node scripts/sort-dictionary.js` to sort keys alphabetically.
 - Add a `ja.yml` to each level in `src/data/levels` for the chat script.
   - See `docs/chat_syntax.md` for some other considerations about the chat format.
   - Use the same emojis as the English version.
@@ -21,7 +19,7 @@ If you want to add support for other languages, you should change these files (e
   - System messages starting with `<! ` should also be translated.
   - For addresses where the address space is explicit (e.g. `$PPU $3F00`), keep the dollar sign before `PPU`, since this allows rendering the `$PPU` as a dictionary link, which links to the `PPU address` entry.
   - The final credits shouldn't be localized.
-- Change the `meta.json` file in each level to localize the `name` and the console `subtitle` keys.
+- Change the `meta.json` file in each level to localize the `name` key.
   - Use the same emojis as the English version.
   - In the `FAQ` level, also update the `links` key.
 - Change the `chapter.json` file in each chapter to localize the `name` and `description` keys.

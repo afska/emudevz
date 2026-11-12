@@ -41,10 +41,7 @@ export default class Console extends PureComponent {
 			(args.title && args.title[locales.language]) ||
 			`---${level.name[locales.language]}---` ||
 			"?";
-		const subtitle =
-			(args.subtitle != null
-				? args.subtitle[locales.language]
-				: locales.get("help_basic")) || null;
+		const subtitle = args.hideHelpHint ? null : locales.get("help_basic");
 
 		await this.terminal.start(
 			title,

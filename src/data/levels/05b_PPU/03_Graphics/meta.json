@@ -24,12 +24,7 @@
 				{
 					"startup": "chat -f",
 					"availableCommands": ["chat"],
-					"subtitle": {
-						"en": "",
-						"es": "",
-						"fr": "",
-						"ru": ""
-					}
+					"hideHelpHint": true
 				}
 			],
 			"Background": [
