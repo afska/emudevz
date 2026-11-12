@@ -69,20 +69,18 @@ const app = (
 	</PersistGate>
 );
 
-// Load the language pack (if any)
-async function restoreLangPack() {
-	if (!langPack.isInstalled) return;
-
+// Load DLC and language pack (if any)
+async function load() {
 	try {
 		Level.startEffect("running", { sfx: false });
-		await langPack.restore();
+		await Promise.all([dlc.check(), langPack.restore()]);
 	} finally {
 		Level.stopEffect();
 	}
 }
 
 // Render the React app
-Promise.all([dlc.check(), restoreLangPack()]).then(() => {
+load().then(() => {
 	if (window.EmuDevz.isDesktop()) {
 		// on desktop, start music and set sfx volume
 		music.start();
