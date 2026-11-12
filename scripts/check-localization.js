@@ -3,11 +3,14 @@ const acorn = require("acorn");
 const JSON5 = require("json5");
 const $path = require("path");
 const YAML = require("yaml");
+const getTests = require("./_tests");
 const _ = require("lodash");
 
 Error.stackTraceLimit = 0;
 
-const LANGUAGES = ["es", "fr", "ru"];
+const LANGUAGES = process.argv.slice(2);
+if (LANGUAGES.length === 0)
+	throw new Error("Usage: node scripts/check-localization.js <languages...>");
 
 const LOCALES_DIR = "src/data/locales";
 const LOCALES_MAIN_FILE = "src/locales.js";
@@ -25,6 +28,7 @@ const localesMainFile = fs.readFileSync(LOCALES_MAIN_FILE).toString("utf-8");
 const enLocales = getLocales("en");
 const enKeyCount = getKeyCount(enLocales);
 const dictionary = getDictionary();
+const tests = getTests();
 
 // For each non-English language
 for (let lang of LANGUAGES) {
@@ -210,7 +214,7 @@ for (let lang of LANGUAGES) {
 					(it) => it.value
 				);
 				for (let file of docFiles)
-					if (!copiedFiles.includes(file))
+					if (!copiedFiles.includes(file.replace(/\.[^.]+\.md$/, ".en.md")))
 						throw new Error(
 							`Documentation file missing from ${copyFile}: ${file}`
 						);
@@ -243,6 +247,25 @@ for (let lang of LANGUAGES) {
 				);
 			}
 		}
+	}
+
+	// Test translations are present
+	const testTranslations = {};
+	for (let test of tests) {
+		const translation = test.locales?.[lang];
+		if (typeof translation !== "string")
+			throw new Error(
+				`Missing test localization\nLanguage: ${lang}\nFile: ${test.file}\nTest: ${test.name}`
+			);
+
+		if (
+			testTranslations[test.name] != null &&
+			testTranslations[test.name] !== translation
+		)
+			throw new Error(
+				`Test translations differ\nLanguage: ${lang}\nFile: ${test.file}\nTest: ${test.name}`
+			);
+		testTranslations[test.name] = translation;
 	}
 }
 

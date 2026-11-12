@@ -3556,7 +3556,7 @@ it("`APUControl`: on writes, if `enableTriangle` is clear, resets the linear len
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });
 
-it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the length counter", () => {
+it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the linear length counter", () => {
   const APU = mainModule.default.APU;
   const apu = new APU({});
 
@@ -3578,7 +3578,7 @@ it("`APUControl`: on writes, if `enableTriangle` is set, it doesn't reset the le
     fr:
       "`APUControl` : lors des écritures, si `enableTriangle` est activé, ne réinitialise pas le linear length counter",
     ru:
-      "`APUControl`: при записи не сбрасывает счётчик длины, если `enableTriangle` установлен",
+      "`APUControl`: при записи не сбрасывает линейный счётчик длины, если `enableTriangle` установлен",
   },
   use: ({ id }, book) => id >= book.getId("5c.13"),
 });

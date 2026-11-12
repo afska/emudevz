@@ -29,3 +29,5 @@ yarn-error.log*
 *.AppImage
 public/levels
 public/music
+*.devz
+*.emudevz-lang

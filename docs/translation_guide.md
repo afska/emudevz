@@ -1,6 +1,6 @@
 # Translation guide
 
-If you want to add support for other languages, you should change these files (example: Japanese - `ja`):
+If you want to add support for other languages, you should do the following (example: Japanese - `ja`):
 
 - Create a locale file in `src/data/locales/ja.js` with all the UI translations.
   - Add a `language_ja` key to all the language files to localize the language name.
@@ -11,7 +11,7 @@ If you want to add support for other languages, you should change these files (e
   - A `_` prefix means "hidden alias" (it matches in the same way, but doesn't appear in the entry's "also known as" subtitle).
   - The `also` key **overrides** the name list for a specific language. That means, if you want some English words to still match, you need to add them manually.
 - Add a `ja.yml` to each level in `src/data/levels` for the chat script.
-  - See `docs/chat_syntax.md` for some other considerations about the chat format.
+  - See `docs/chat_syntax.md` for some additional considerations about the chat format.
   - Use the same emojis as the English version.
   - To test your changes, you need to **rebuild the levels** with `npm run package`.
   - Remember that emojis need an extra space to render correctly!
@@ -26,17 +26,17 @@ If you want to add support for other languages, you should change these files (e
 - Add localized documentation files (look for `*.en.md` files and create equivalent `*.ja.md` files).
   - Don't localize files that simply end with `*.md` (without a language suffix), as these typically just contain an image and it's fine to have just one version for all languages.
 - Localize all unit tests in `src/data/levels/$tests` and the `test.js` files.
+  - Tests with the same English name must use the same translation.
 - Create a file in `src/data/levels/02_Assembly/$help/ja.txt` with help for the Assembly chapter.
   - Each line should correspond to the same line in the other languages.
   - Add `$help/ja.txt` to `scripts/package-levels.js`.
-- In `The golden log` level, the `golden` key references a UI label (`Search files...`), make sure its text matches.
+- In `The golden log` level, the `golden` key references a UI label (`Search files...`), make sure its text matches the translated label.
 
 ## Notes
 
-- Please run regular consistency checks with `node scripts/check-localization.js`.
-  - Add your language at the top of the script!
+- Please run regular consistency checks with `node scripts/check-localization.js ja`.
 
-- After a game introduces a concept (e.g. "Backgrounds" or "Sprites"), it tries to use that same word consistently so the dictionary can pick those words, highlight, and link them to their definition. If your language has two different ways of saying a technical word, please pick one and use consistently.
+- After the game introduces a concept (e.g. "Backgrounds" or "Sprites"), it tries to use that same word consistently so the dictionary can recognize those words, highlight them, and link them to their definitions. If your language has two different ways of saying a technical word, please pick one and use it consistently.
 
 - Don't translate names like "EmuDevz", "BrokenNEEES", or "Supporter Pack".
 
@@ -56,8 +56,23 @@ Communication is friendly. There are some jokes in the game but they are clearly
 
 Something I tried when writing the Spanish localization was to avoid using gendered words at all. In English, 'are you ready?' is fine, but in Spanish I'd have to write '¿estás listo?' (masculine) or '¿estás lista?' (feminine), so in those cases I rephrased the whole thing to something like "¿comenzamos?" (shall we begin?). Similarly, the NPC avoids revealing their gender during the whole game.
 
-For technical gendered words (`NEEES`, `CPU`, `PPU`, `APU`, `background`, `sprites`, `name table`, `samples`, etc), be consistent with their gender (for example, in Spanish, don't mix `la CPU` and `el CPU`).
+For technical terms with grammatical gender (`NEEES`, `CPU`, `PPU`, `APU`, `background`, `sprites`, `name table`, `samples`, etc), be consistent with their gender (for example, in Spanish, don't mix `la CPU` and `el CPU`).
 
-## Test your translation!
+## Test your translation
 
 The fastest way to test your translation would be to import a finished save file to localhost and set the advanced setting `"instant": true` to remove any typewriter effects.
+
+## Upload your translation
+
+You can pack your translation and upload it to our [community](https://discord.gg/mFGDxSxEJu)'s `#translations` channel!
+
+To do it, run the following script:
+
+```bash
+node scripts/generate-lang-pack.js --code ja --name Japanese --version 1
+# this will generate a file named `ja.emudevz-lang`
+```
+
+Before uploading, please ensure your translation pack works in the [base game](https://afska.github.io/emudevz) by loading the file in the Settings menu.
+
+⚠️ Keep in mind that the only official languages EmuDevz will support are _English_ and _Spanish_, since I cannot read other languages and therefore I cannot review or maintain them!
