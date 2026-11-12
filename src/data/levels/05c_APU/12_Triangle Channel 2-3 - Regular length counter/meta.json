@@ -2,6 +2,7 @@
 	"name": {
 		"en": "📏 Triangle Channel (2/3): Regular length counter",
 		"es": "📏 Canal Triangular (2/3): Contador de longitud normal",
+		"fr": "📏 Canal Triangle (2/3) : Compteur de longueur normal",
 		"ru": "📏 Треугольный канал (2/3): Обычный счётчик длины"
 	},
 	"ui": {

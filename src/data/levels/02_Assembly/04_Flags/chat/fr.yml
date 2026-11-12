@@ -1,0 +1,116 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.stopBlock = locales.get("not_now");
+      m.$canRun = false;
+      m.$canEdit = false;
+    });
+  run-after-messages: |
+    $.goTo("main2");
+  messages:
+  - comme je disais, chaque registre peut contenir <un seul octet>
+  - donc leurs valeurs sont toujours entre 0 ($00) et 255 ($FF)
+  - tu ne peux pas, par exemple, y mettre le nombre 260 👮
+  responses: []
+
+main2:
+  messages:
+  - qu'est-ce que tu penses qu'il va se passer si on utilise `ADC` pour calculer 200 + 60 ?
+  responses:
+  - (*) [A] sera égal à 2️⃣ 6️⃣ 0️⃣ [a260]
+  - (*) [A] sera égal à 2️⃣ 5️⃣ 5️⃣ [a255]
+  - (*) [A] sera égal à 4️⃣ [a4]
+  - (*) ça va générer une erreur ⚠️ [error]
+  - (*) le CPU explose ? 💥 [explodes]
+
+a260:
+  messages:
+  - non, sa valeur max est 255, donc c'est pas possible 👮
+  - réessaie
+  - ...main2
+  responses:
+  - ...main2
+
+a255:
+  messages:
+  - ça aurait du sens, mais c'est pas ce qui se passe 👎
+  - réessaie
+  - ...main2
+  responses:
+  - ...main2
+
+error:
+  messages:
+  - les CPU ne <génèrent pas d'erreurs>
+  - réessaie
+  - ...main2
+  responses:
+  - ...main2
+
+explodes:
+  messages:
+  - 💥 💥 💥
+  - ça expliquerait les problèmes de température de mon PC 🌡️
+  - c'est probablement un programme qui essaie de faire déborder les registres CPU
+  - non, réessaie
+  - ...main2
+  responses:
+  - ...main2
+
+a4:
+  messages:
+  - correct ! ✅
+  - mais le processeur n'est pas vraiment stupide
+  - il notifie le programme que la valeur ne rentrait pas
+  - en mettant le Flag Carry à 1
+  responses:
+  - c'est quoi un flag ? 🏁 [flags]
+
+flags:
+  run-after-messages: |
+    set((m) => m.$canRun = true);
+  messages:
+  - c'est une valeur booléenne (~1~-bit) mise par le processeur
+  - elle donne des informations sur l'instruction précédente
+  - il y a 6 flags, ils tiennent tous dans un seul octet
+  - (cet octet s'appelle le registre des flags)
+  - lance le code ⏩
+  events:
+  - end [carry]
+
+carry:
+  messages:
+  - maintenant tu peux voir dans le debugger que le Flag Carry est à 1
+  responses:
+  - (*) wow, d'autres flags utiles ? [exercise]
+  - (*) attends, tout ce temps tu pouvais écrire des nombres en décimal ? 😤 [decimal]
+
+decimal:
+  messages:
+  - "ouais ! `LDA #200` c'est pareil que `LDA #$C8`"
+  - "📝  donc, petit récap :"
+  - "#$20 désigne le nombre 32 (décimal) ou $20 (hexadécimal)"
+  - "#20 désigne le nombre 20 (décimal) ou $14 (hexadécimal)"
+  - "$20 désigne le ~33ème~ octet en mémoire, à l'adresse 32 (décimal) ou $20 (hexadécimal)"
+  - "20 désigne le ~21ème~ octet en mémoire, à l'adresse 20 (décimal) ou $14 (hexadécimal)"
+  responses:
+  - ...carry
+
+exercise:
+  run: |
+    level.fillContentFromTemp();
+    set((m) => {
+      m.chat.stopBlock = null;
+      m.$canRun = true;
+      m.$canEdit = true;
+      m.content.useTemp = false;
+    });
+  messages:
+  - oui, il y a un Flag Zero, que de nombreuses instructions mettent à 1 quand le résultat est ~zéro~
+  - 📚  sans supprimer le code actuel, essaie de soustraire 4 de [A], avec l'instruction `SBC`
+  - elle fonctionne comme `ADC`, mais elle soustrait au lieu d'additionner
+  - après cette instruction, le Flag Zero devrait être à 1 😊
+  - 📚  quand tu veux, lance la commande `test`
+  responses:
+  - ...carry

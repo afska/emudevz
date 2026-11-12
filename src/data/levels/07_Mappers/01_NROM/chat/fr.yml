@@ -1,0 +1,49 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - Bien... voyons ce qu'est un 🗜️  Mapper
+  - un mapper est un chip à l'intérieur de la cartouche qui contrôle comment la console lit les données de la ROM
+  - ils permettent aux jeux d'utiliser plus de code ou de graphismes grâce à la commutation de banques entre plusieurs chips 🤖  PRG-ROM ou 👾  CHR-ROM
+  - certains ajoutent des capacités spéciales, comme changer le mirroring à la volée ou déclencher une interruption sur une scanline particulière 🌠
+  - plus ton émulateur supporte de mappers, plus il sera compatible avec des jeux 👾
+  - BrokenNEEES supporte les mappers les plus courants (~0-4~)
+  - mais depuis la passation, je t'ai seulement donné le Mapper 0, qui s'appelle <NROM>
+  responses:
+  - c'est quoi la commutation de banques ? [bank]
+
+bank:
+  messages:
+  - la commutation de banques est une technique qui permet à une cartouche de changer quelle partie de la ROM est visible par la console à un moment donné
+  - comme la console ne peut "voir" qu'une plage de mémoire limitée, le mapper change quelle banque mémoire y est mappée
+  - par exemple, un jeu peut avoir 256 Ko de 🤖  PRG-ROM, mais le CPU ne peut adresser que 32 Ko à la fois
+  - donc le mapper échange différents blocs de 32 Ko selon les besoins 🐏
+  - ça permet à des jeux beaucoup plus grands de tourner sans avoir besoin de plus de lignes d'adresse ou de mémoire dans la console
+  - en gros, la cartouche décide <quelles données> la console voit à un moment donné
+  responses:
+  - comment le jeu décide quel bloc utiliser ? [howdoes]
+
+howdoes:
+  messages:
+  - il écrit sur certaines adresses mémoire (généralement dans l'espace 💾  Cartouche, $4020-$FFFF)
+  - le mapper intercepte les écritures et utilise la valeur écrite pour sélectionner quelle banque de ROM doit être visible
+  - par exemple, écrire un nombre à $8000 peut dire au mapper de changer la banque PRG-ROM courante
+  - comme ça, le code du jeu lui-même contrôle quel bloc de données ou de code il veut accéder ensuite
+  responses:
+  - comment <NROM> fait ça ? [nrom]
+
+nrom:
+  messages:
+  - il ne le fait pas 🤣
+  - <NROM> est le type de cartouche le plus simple, il n'a pas du tout de chip mapper !
+  - le 🧠  CPU et la 🖥️  PPU sont connectés en permanence à des parties fixes de la ROM
+  - en général, ça inclut 32 Ko de PRG-ROM et 8 Ko de CHR-ROM (ou CHR-RAM dans certains cas)
+  - c'est parfait pour les petits jeux et le plus facile à émuler 🧩
+  - |-
+    regarde ces fichiers pour comprendre comment ça marche :
+      📄  ~/docs/lib/Mapper.fr.md~
+      📄  ~/tmpl/mappers/0_NROM.js~
+      📄  ~/tmpl/mappers/mappers.js~
+  responses:
+  - ▶️  continuer [end]

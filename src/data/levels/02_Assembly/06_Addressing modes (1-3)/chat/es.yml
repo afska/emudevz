@@ -17,7 +17,7 @@ why:
   run-after-messages: |
     set((m) => m.$canRun = true);
   messages:
-  - hay varias formas de referirse estos argumentos
+  - hay varias formas de referirse a estos argumentos
   - y se llaman modos de direccionamiento
   - corre la primera instrucción ⏩
   events:
@@ -142,7 +142,7 @@ step4:
     set((m) => m.$canRun = true);
   messages:
   - ahora $4080 contiene $21, y $4081 contiene $40
-  - por lo que en este caso, `JMP ($4080)` saltará incondicionalmente a $4021"
+  - por lo que en este caso, `JMP ($4080)` saltará incondicionalmente a $4021
   - <{JMP_indirect.png}>
   - creando un bucle infinito ⏩
   events:

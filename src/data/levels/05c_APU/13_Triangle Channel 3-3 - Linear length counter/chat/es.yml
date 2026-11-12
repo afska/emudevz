@@ -8,7 +8,7 @@ main:
       (aún bastante limitado, porque el campo tiene solo 7 bits, así que la longitud máxima es 127)
   - |-
     ⛓️  su valor no se carga de inmediato:
-      - las escrituras a 📏  TriangleLengthControl encienden un <valor de recarga>
+      - las escrituras a 📏  TriangleLengthControl establecen un <valor de recarga>
       - las escrituras a 🕛  TriangleTimerHighLCL encienden una <bandera de recarga>, lo cual hace que se cargue ese valor pendiente en el siguiente clock
   - 🕒  se actualiza en quarter frames en lugar de half frames
   - el canal debe silenciarse cuando cualquiera de los dos contadores sea 0

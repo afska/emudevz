@@ -1,0 +1,45 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - <! 📹  Entering video chat...
+  - hey,
+  - on joue à un jeu
+  - |-
+    ça s'appelle 🧱 🐙  ~From Below~
+    <{screenshot.png;30x30}>
+  - un classique de blocs qui tombent avec une petite surprise, <le Kraken>
+  - si tu bats mon meilleur score, je t'envoie le <fichier ROM>
+  - au format ~*.neees~
+  responses:
+  - et ton score, c'est... ? [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("FromBelow");
+    {{Right}}.loadROM("/roms/.all/FromBelow.neees", "stream");
+  messages:
+  - mon meilleur score pour l'instant c'est ~3000~ points
+  - essaie de l'atteindre dans n'importe quel mode !
+  events:
+  - frombelow-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["FromBelow.neees", "TroubleAt2A03.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - tu as gagné 😅
+  - "<! ROM received: 📄  /roms/FromBelow.neees"
+  - comme promis, j'ai mis la ROM dans ton répertoire 📁  ~/roms~
+  - "<! ROM received: 📄  /roms/TroubleAt2A03.neees"
+  - j'ai aussi envoyé un autre jeu appelé 🏭 🔩  ~Trouble At 2A03~
+  - amuse-toi bien !
+  responses:
+  - ▶️  continuer [end]

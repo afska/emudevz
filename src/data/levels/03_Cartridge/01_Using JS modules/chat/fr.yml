@@ -1,0 +1,82 @@
+---
+main:
+  messages:
+  - on va commencer à coder en JavaScript
+  - <! Computer upgraded.
+  - au fait, ton ordinateur a été <mis à niveau>
+  - maintenant tu peux utiliser PLUSIEURS fichiers 🗃️ 📁
+  - sympa, non ?
+  responses:
+  - c'est une fonctionnalité plutôt banale [notcool]
+  - pourquoi t'as autant de contrôle sur mon ordi ? 😶 [hacked]
+
+hacked:
+  run-after-messages: |
+    $.goTo("play");
+  messages:
+  - qui t'a dit que c'était <TON> ordinateur ?
+  - ...notcool
+  responses: []
+
+notcool:
+  run-after-messages: |
+    $.goTo("play");
+  messages:
+  - argh, les jeunes savent plus apprécier les trucs cools de nos jours 😔
+  - |+
+    bref, je dois m'assurer que tu sais créer des <modules JS>
+  responses: []
+
+play:
+  run-after-messages: |
+    $.goTo("exercise");
+    bus.emit("kill");
+  messages:
+  - l'éditeur de code affiche ton <fichier de code principal> (le point d'entrée de ton émulateur)
+  - il se trouve dans 📄  ~/code/index.js~
+  - tu as maintenant plein de nouvelles commandes pour gérer les fichiers 🚀
+  - mais tu peux seulement modifier ce qui est dans 📁  ~/code~
+  - lance `help -a` et explore-les un peu
+  - rouvre le chat quand tu as fini
+  - <! Disconnected.
+  responses: []
+
+exercise:
+  messages:
+  - 📚  crée un fichier dans 📄  ~/code/Cartridge.js~
+  - 📚  son <export par défaut> doit être une <classe vide>
+  - 📚  ensuite, importe ce fichier depuis 📄  ~/code/index.js~
+  - 📚  et exporte un <objet littéral> avec une seule clé (`Cartridge`) pointant vers cette classe
+  - |-
+    ton fichier ~index.js~ devrait ressembler à ça :
+      ```javascript
+      import Cartridge from "./Cartridge";
+      export default { Cartridge }```
+  responses:
+  - (*) export ? modules ? 🧐 [modules]
+  - (*) comment copier du code depuis le terminal ? [copy]
+
+modules:
+  messages:
+  - ouais, chaque fichier est un module, et il a une valeur <exportée>
+  - cette valeur peut être n'importe quelle <expression JS>, et on peut l'utiliser ailleurs en <important> le module
+  - |-
+    quelques explications...
+
+    pour définir la valeur exportée d'un module :
+      ```javascript export default "A_STRING"```
+      ```javascript export default { an: "object", number: 123 }```
+      ```javascript export default [1, 2, 3]```
+      ```javascript export default function aFunction() { }```
+      ```javascript export default class SomeClass { }```
+    pour importer un module :
+      ```javascript import aFunction from "./relative/path/to/aFunction"```
+      ```javascript import SomeClass from "./relative/path/to/SomeClass"```
+  responses:
+  - ...exercise
+
+copy:
+  messages:
+  - dans le terminal, au lieu de `Ctrl+C` et `Ctrl+V`, tu peux utiliser `Ctrl+Shift+C` et `Ctrl+Shift+V`
+  responses:
+  - ...exercise

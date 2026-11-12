@@ -1,8 +1,8 @@
 main:
   messages:
-  - el scrolling es una característica de la PPU que permite a los desarrolladores mover el fondo
+  - el scrolling es una funcionalidad de la PPU que permite a los desarrolladores mover el fondo
   - implementarlo en un emulador NEEES es difícil 🥵
-  - no porque sea difícil mover el fondo, sino porque los registros de desplazamiento se comportan de maneras no obvias
+  - no porque sea difícil mover el fondo, sino porque los registros de scrolling se comportan de maneras no obvias
   - mucha gente lo ha intentado, pero solo los elegidos pudieron lograrlo
   responses:
   - ¿tienes un plan? [plan]
@@ -88,7 +88,7 @@ exercise:
 
 then:
   messages:
-  - tendrás en ```javascript ppuScroll.x``` y ```javascript ppuScroll.y``` las coordenadas de desplazamiento
+  - tendrás en ```javascript ppuScroll.x``` y ```javascript ppuScroll.y``` las coordenadas de scrolling
   - ¡ahora puedes aplicar el scrolling a los fondos!
   - |-
     📚  ve a 🏞️  `BackgroundRenderer` y <cambia> `renderScanline()`:
@@ -147,7 +147,7 @@ then:
 corollary:
   messages:
   - esto debería ser suficiente para tener scrolling en la mayoría de los juegos
-  - excepto por ese maldito <plumber game>, que se colgará tan solo después de correr unos pocos metros 🤦
+  - excepto por ese maldito <juego del plomero>, que se colgará tan solo después de correr unos pocos metros 🤦
   - pero ignoremos eso por ahora
   - prueba... quizás la demo de 🌌 🔫  ~Isostasy~ o 🐺 🌲  ~Wolf Spirit~
   responses:

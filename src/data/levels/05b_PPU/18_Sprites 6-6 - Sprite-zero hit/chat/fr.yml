@@ -1,0 +1,37 @@
+main:
+  messages:
+  - le hardware a un mécanisme pour détecter les collisions entre le premier sprite de l'OAM (sprite zero) et l'arrière-plan
+  - c'est ce qu'on appelle le sprite-zero hit, et il se déclenche quand un pixel opaque du sprite zero chevauche un pixel opaque de l'arrière-plan
+  - quand ça arrive, la PPU active le flag sprite-zero hit dans 📊  `PPUStatus` et les jeux peuvent le lire
+  responses:
+  - à quoi ça sert ? [usage]
+
+usage:
+  run: |
+    {{Top}}.load("sprite_zero_splitscreen.png");
+  messages:
+  - les jeux l'utilisent pour réaliser des <effets d'écran partagé> (par exemple, avoir un HUD statique en haut et un arrière-plan défilant en bas)
+  - il y avait un jeu sur un plombier qui utilisait cette astuce 👨 🔧
+  - <{sprite_zero_splitscreen.png}>
+  - en plaçant un sprite de pièce (sprite zero) au-dessus d'une pièce de l'arrière-plan, la PPU déclenche un sprite-zero hit quand cette partie de l'écran est rendue
+  - ça permet au jeu de détecter le moment où la PPU a atteint cette scanline précise, puis de changer les coordonnées de scrolling en milieu d'image
+  responses:
+  - quel hack [exercise]
+
+exercise:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - |-
+    📚  dans 🛸  `SpriteRenderer`, <modifie> la méthode `_render(...)` ; en dessous de `buffer[x] = ...`, ajoute :
+    **->** si le `sprite.id` est 0 <ET> que le pixel de l'arrière-plan en ~(x, y)~ est opaque :
+      **->** définit ```javascript this.ppu.registers.ppuStatus.sprite0Hit = 1```
+  - 📚  ah, et remets `sprite0Hit` à zéro dans `PPU::_onPreLine()`, comme tu l'as fait avec les deux autres flags !
+  responses: []
+
+corollary:
+  messages:
+  - les jeux qui utilisent cette astuce pour les <effets d'écran partagé> ont tendance à se bloquer si le sprite-zero hit n'est pas implémenté correctement
+  - essaie de lancer soit 👨‍ 🔧  ce <jeu de plombier> soit 🐺 ⛓️  ~Wolfling~, ils ne devraient plus se bloquer maintenant !
+  responses:
+  - ▶️  continuer [end]

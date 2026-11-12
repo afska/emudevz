@@ -398,6 +398,13 @@ export default class CreditsModal extends PureComponent {
 						>
 							Russian localization
 						</Game>
+						<Game
+							emojis="🌐🇫🇷"
+							link="https://github.com/afska/emudevz/pull/53/changes"
+							author="jquenee"
+						>
+							French localization
+						</Game>
 					</Section>
 					<Section title="🙏 Thanks to...">
 						<Game emojis="🕹️🛠️" link="https://www.nesdev.org">

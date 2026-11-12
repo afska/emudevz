@@ -1,0 +1,46 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - <! 📹  Entering video chat...
+  - hey,
+  - on joue à un jeu
+  - |-
+    ça s'appelle 📻 💡  ~Tesla Vs Edison~
+    <{screenshot.png;30x30}>
+  - une version améliorée d'un classique deux joueurs, avec des <power ups>
+  - si tu le termines, je t'envoie le <fichier ROM>
+  - au format ~*.neees~
+  responses:
+  - deux joueurs ? [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("TeslaVsEdison");
+    {{Right}}.loadROM("/roms/.all/TeslaVsEdison.neees", "stream");
+  messages:
+  - oui, mais il y a aussi une IA avec qui jouer
+  - essaie !
+  - choisis <START> et essaie de gagner un match
+  events:
+  - teslavsedison-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["TeslaVsEdison.neees", "MissingLands.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - incroyable
+  - "<! ROM received: 📄  /roms/TeslaVsEdison.neees"
+  - comme promis, j'ai mis la ROM dans ton répertoire 📁  ~/roms~
+  - "<! ROM received: 📄  /roms/MissingLands.neees"
+  - j'ai aussi envoyé un autre jeu appelé 🐸 🌍  ~Missing Lands~
+  - à plus !
+  responses:
+  - ▶️  continuer [end]

@@ -2,6 +2,7 @@
 	"name": {
 		"en": "🥊 Choose your fighter",
 		"es": "🥊 Elige tu luchador",
+		"fr": "🥊 Choisis ton combattant",
 		"ru": "🥊 Выбери своего бойца"
 	},
 	"ui": {
@@ -15,6 +16,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					}
 				}

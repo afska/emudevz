@@ -1,0 +1,92 @@
+---
+main:
+  run: |
+    {{Top}}.load("frameBuffer.png");
+  messages:
+  - on va stocker les données de l'image dans ce qu'on appelle un buffer de frame
+  - c'est essentiellement un grand tableau avec la couleur de chaque pixel
+  - chaque élément est un nombre de 32 bits __$AABBGGRR__
+  - "\"AA\" représente l'opacité (dans notre NEEES, c'est toujours $FF)"
+  - "\"BB\", \"GG\" et \"RR\" représentent la quantité de <bleu>, <vert> et <rouge>"
+  responses:
+  - (*) tu peux me donner des exemples de couleurs ? [examples]
+  - je veux dessiner quelque chose à l'écran ! 🖌️ [integrate]
+
+examples:
+  messages:
+  - "voilà quelques exemples de couleurs :"
+  - "❤️  ```javascript 0xFF0000FF``` = rouge"
+  - "💚  ```javascript 0xFF00FF00``` = vert"
+  - "💙  ```javascript 0xFFFF0000``` = bleu"
+  - "⚪  ```javascript 0xFFFFFFFF``` = blanc"
+  - "🖤  ```javascript 0xFF000000``` = noir"
+  - "🦈  ```javascript 0xFF989898``` = gris"
+  - "💛  ```javascript 0xFF00F8F8``` = jaune"
+  responses:
+  - ...main
+
+integrate:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - d'abord, je vais intégrer ton 🖥️  PPU dans l'émulateur
+  - ça devrait aller vite...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 500);
+  events:
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("usePPU");
+  messages:
+  - ✅  fait !
+  - <! 🖥️  PPU intégré.
+  - maintenant, l'icône 🖥️  dans l'émulateur va s'allumer ✨
+  - comme il y a presque pas de code PPU, rien ne s'affichera pour l'instant
+  - mais on va y arriver !
+  responses:
+  - on code ça 🤟 [exercise]
+
+exercise:
+  run: |
+    {{Top}}.load(null, "rom");
+  messages:
+  - |-
+    📚  ok, ajoute ça dans le constructeur de ton PPU :
+      ```javascript
+      this.frameBuffer = new Uint32Array(256*240);```
+  - |-
+    📚  implémente cette méthode :
+    **plot(x, y, color)**:
+      **->** assigne la `color` au pixel ~(x,y)~ dans le tableau `frameBuffer`
+        (l'index pour ~(x,y)~ devrait être ```javascript y * 256 + x```)
+  - 📚  ensuite, <modifie> ta méthode `step` pour qu'elle reçoive un callback `onFrame` en paramètre
+  - |-
+    📚  et chaque fois que tu détectes une nouvelle frame (juste après ```javascript this.frame++;```), appelle-la avec le buffer de frame, comme ça :
+      ```javascript onFrame(this.frameBuffer);```
+  - |-
+    📚  pour vérifier que tout fonctionne, ajoute ce code avant l'appel à `onFrame` :
+      ```javascript
+      // <test>
+      for (let x = 0; x < 256; x++) {
+        for (let y = 0; y < 240; y++) {
+          this.plot(x, y, 0xff000000 + this.frame % 256);
+        }
+      }
+      // </test>```
+  - essaie ! quand tu charges une ROM, ça devrait peindre l'écran en rouge progressivement 🔴
+  responses:
+  - (*) comment fonctionne le code de test ? [testcode]
+
+testcode:
+  messages:
+  - il remplit tout l'écran avec une couleur
+  - qui est ```javascript 0xff000000``` (noir totalement opaque) plus une composante rouge qui dépend de ```javascript this.frame``` (la frame courante !)
+  - "```javascript this.frame % 256``` donne le reste de la division de la frame par 256, donc la composante rouge cycle de 0 à 255"
+  responses:
+  - ...exercise

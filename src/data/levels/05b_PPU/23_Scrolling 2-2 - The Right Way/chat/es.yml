@@ -12,7 +12,7 @@ loopy:
   - la triste verdad es...
   - el scrolling de la PPU no funciona como lo tenemos implementado ahora mismo 😅
   - es mucho más complicado que eso
-  - afortunadamente, con mi código, puedes implementar el desplazamiento Haciéndolo Bien™ ✨
+  - afortunadamente, con mi código, puedes implementar el scrolling Haciéndolo Bien™ ✨
   responses:
   - ¿qué necesitamos cambiar? [exercise]
 

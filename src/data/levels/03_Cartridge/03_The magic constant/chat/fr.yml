@@ -1,0 +1,77 @@
+---
+main:
+  messages:
+  - on préserve les jeux en format numérique avec des <fichiers de jeu> (aussi appelés <ROMs>)
+  - ils contiennent 🤖  du <code>, 👾  des <graphismes>, et un 🗣️  <en-tête> qui identifie le matériel
+  responses:
+  - ce sont les fameux fichiers <*.neees>, non ? [neeesfiles]
+
+neeesfiles:
+  messages:
+  - exactement, le format s'appelle iNEEES, et tu devrais commencer par lire son <en-tête>
+  - "les 4 premiers octets d'un fichier de jeu contiennent toujours les données suivantes :"
+  - $4E $45 $53 $1A
+  - c'est <la constante magique> ✨
+  - tu devrais chercher ces octets pour vérifier si une ROM est valide ou non
+  responses:
+  - qu'est-ce que tu veux que je fasse ? [exercise]
+
+exercise:
+  messages:
+  - 📚  ajoute un constructeur à la classe 💾  `Cartridge` qui reçoit les octets de la ROM
+  - 📚  sauvegarde-les dans une propriété appelée `bytes`
+  - 📚  si la constante magique ne correspond pas à $4E $45 $53 $1A, lance une erreur avec le message "Invalid ROM."
+  responses:
+  - (*) comment ajouter un constructeur ? 😳 [constructor]
+  - (*) j'ai besoin d'aide pour vérifier les octets 🥺 [help]
+  - (*) aide-moi à lancer une erreur 🤔 [errors]
+  - (*) comment déboguer ? 🐞 [debug]
+
+constructor:
+  messages:
+  - |-
+    après avoir ajouté un constructeur et sauvegardé les octets, ton code devrait ressembler à ça :
+      ```javascript
+      export default class Cartridge {
+        constructor(bytes) {
+          this.bytes = bytes;
+          // vérifie les octets ici !
+        }
+      }```
+  responses:
+  - ...exercise
+
+help:
+  messages:
+  - tu recevras un `Uint8Array`, qui fonctionne comme les tableaux classiques !
+  - donc ```javascript bytes[0]``` représente le premier octet, ```javascript bytes[1]``` le deuxième, et ainsi de suite
+  - rappelle-toi que tu peux exprimer la notation hexadécimale avec le préfixe ~0x~, ex. `0x4e`
+  responses:
+  - ...exercise
+
+errors:
+  messages:
+  - |-
+    pour lancer des erreurs, utilise :
+      ```javascript throw new Error("a message");```
+  responses:
+  - ...exercise
+
+debug:
+  messages:
+  - il y a plusieurs façons de déboguer ton code
+  - ➰  en utilisant la commande `repl` pour instancier manuellement tes classes ou tester des expressions JS
+  - 🐞  en ajoutant une instruction `debugger;` dans ton code et en utilisant les outils de dev de ton navigateur
+  - 🧾  en appelant `console.log(...)`, qui affiche quelque chose dans les outils de dev de ton navigateur
+  - |-
+    🗃️  en appelant `EmuDevz.log(...)`, qui affiche une chaîne dans l'onglet `Logs` du 🐞  <Debugger>
+      (ça sera utile plus tard, quand on lance des ROMs dans l'émulateur)
+  responses:
+  - ...exercise
+
+corollary:
+  messages:
+  - à partir de maintenant, tu peux voir tes changements avec la commande `diff`
+  - si tu veux annuler tes changements, lance la commande `restore`
+  responses:
+  - ▶️  continuer [end]

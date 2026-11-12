@@ -1,0 +1,94 @@
+---
+main:
+  run: |
+    set((m) => {
+      m.chat.winOnEnd = true;
+      m.$canRun = false;
+    });
+  messages:
+  - si c'était un jeu bizarre dans lequel tu dois coder un émulateur
+  - ce serait le <boss final> 👹
+  - ~NEEEStest~ est un homebrew qui teste en profondeur le fonctionnement du CPU
+  - je vais lancer ton émulateur et journaliser chaque instruction
+  - "en comparant chaque ligne avec le « golden log » suivant :"
+  - 📄  ~/roms/_test/golden.log~
+  - 📄  ~/roms/_test/golden_log_format.md~
+  responses:
+  - c'est quoi un golden log ? 🏆 [golden]
+
+golden:
+  messages:
+  - un fichier de log qui documente le résultat de l'exécution de cette ROM de test, mais créé par un émulateur dont le bon fonctionnement a été prouvé ✅
+  - "il contient — dans l'ordre — : le [PC], le bytecode, l'assembly décompilé, l'état de tous les registres (`P` est le registre de flags), et le compteur de cycles"
+  - jusqu'ici, je n'ai effectué que des tests basiques sur ton code
+  - ça va passer par tous les types de cas limites, en vérifiant que ton CPU est solide
+  - si tu trouves des divergences, tu devras en trouver la cause ou demander de l'aide en ligne
+  - tu peux modifier tes fichiers avec le bouton « Rechercher des fichiers... » en haut à droite
+  - utilise le bouton ⏩  et atteins la fin du golden log !
+  run-after-messages: |
+    set((m) => {
+      m.$canRun = true;
+    });
+  events:
+  - cpu-bug-page-boundary [pageboundary]
+  - cpu-bug-unexpected [unexpected]
+  - golden-log-end [success]
+
+pageboundary:
+  run: |
+    bus.emit("console-changed");
+    set((m) => {
+      m.chat.instant = true
+      m.$canRun = false;
+    });
+  messages:
+  - ah... le <bug de limite de page> 😅
+  - j'avais complètement oublié !
+  - il y a un bug dans la façon dont  la NEEES traite le mode d'adressage « Indirect »
+  - ouais, un bug dans le hardware
+  - et si on veut émuler le hardware fidèlement... on doit aussi émuler les bugs 😅
+  - si tu essaies de le « corriger », tu briserais la compatibilité avec certains jeux qui dépendent (que ce soit accidentellement ou intentionnellement) de ce bug
+  - j'ai improvisé un fichier de documentation rapide qui en parle
+  - il est dans 📄  ~/docs/cpu/page_boundary_bug.fr.md~
+  - 📚  introduis ce bug et réessaie !
+  run-after-messages: |
+    set((m) => {
+      m.$canRun = true;
+      m.chat.instant = false;
+    });
+  events:
+  - ...golden
+
+unexpected:
+  run: |
+    bus.emit("console-changed");
+    set((m) => {
+      m.chat.instant = true
+      m.$canRun = false;
+    });
+  messages:
+  - 💥  quoi ?! 💥
+  - peut-être que tu as un bug subtil que mes tests unitaires n'ont pas détecté
+  - essaie d'analyser cette ligne exacte dans le fichier de log
+  - "l'instruction qui a échoué est dans la <ligne précédente>, par exemple :"
+  - <{failure_example.png}>
+  - "ici, l'instruction `ADC #$69` a échoué : elle aurait dû changer [A] de $00 à $69, mais elle a changé en $4B à la place"
+  - et rappelle-toi le format du log, 📄  ~/roms/_test/golden_log_format.md~
+  - tu devrais pouvoir trouver la cause avec cette méthode
+  - sinon, demande de l'aide en ligne 🌎
+  run-after-messages: |
+    set((m) => {
+      m.$canRun = true;
+      m.chat.instant = false;
+    });
+  events:
+  - ...golden
+
+success:
+  messages:
+  - omg
+  - TU L'AS FAIT ! 🎉
+  - super, ton CPU fonctionne correctement maintenant !
+  - on peut avancer et l'intégrer dans l'émulateur
+  responses:
+  - on y va 🥳 [end]

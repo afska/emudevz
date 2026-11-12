@@ -17,7 +17,7 @@ sequence:
   - los half frame ocurren en el <segundo> y <cuarto> quarter-frame de cada secuencia
   - y cuando el contador llega al cuarto quarter-frame, se reinicia a 0
   - <{sequencer.png}>
-  - los juegos deben reaccionar a estos eventos para varias cosas, por ejemplo, ¡silenciar los canales cuando terminan las notas!
+  - los canales deben reaccionar a estos eventos para varias cosas, por ejemplo, ¡silenciar los canales cuando terminan las notas!
   responses:
   - vamos a contar ciclos 🚲 [exercise]
 

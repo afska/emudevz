@@ -1,0 +1,45 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - <! 📹  Entering video chat...
+  - hey,
+  - on joue à un jeu
+  - |-
+    ça s'appelle 🦅 ⛩️  ~Raven's Gate~
+    <{screenshot.png;30x30}>
+  - un classique <action-aventure> de l'ère NEEES
+  - si tu le termines, je t'envoie le <fichier ROM>
+  - au format ~*.neees~
+  responses:
+  - je m'en charge ! 🤺 [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("RavensGate");
+    {{Right}}.loadROM("/roms/.all/RavensGate.neees", "stream");
+  messages:
+  - c'est parti
+  - je regarde ton aventure 👀
+  events:
+  - ravensgate-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["RavensGate.neees", "Crowborg.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - T'ES ~INCROYABLE~.
+  - "<! ROM received: 📄  /roms/RavensGate.neees"
+  - comme promis, j'ai mis la ROM dans ton répertoire 📁  ~/roms~
+  - "<! ROM received: 📄  /roms/Crowborg.neees"
+  - j'ai aussi envoyé un autre jeu appelé 🦅 🧷  ~Crowborg~
+  - félicitations 🙃
+  responses:
+  - ▶️  continuer [end]

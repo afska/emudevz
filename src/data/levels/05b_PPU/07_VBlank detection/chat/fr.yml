@@ -1,0 +1,52 @@
+---
+main:
+  messages:
+  - 🏝️  VBlank est une phase où la 🖥️  PPU se repose à la fin de chaque frame
+  - <{rendering.png}>
+  - les jeux ont besoin de savoir quand ça commence, pour pouvoir mettre à jour l'écran sans glitches visibles
+  - un programme peut savoir s'il est dans la phase VBlank en vérifiant le ~bit 7~ de 📊  `PPUStatus` (CPU $2002)
+  - (on a mappé ça comme 📊  `PPUStatus::isInVBlankInterval`)
+  - aussi, la 🖥️  PPU peut notifier un jeu qu'elle entre en VBlank via des <interruptions CPU>
+  responses:
+  - des interruptions ? [exercise]
+
+exercise:
+  messages:
+  - ouais ! pense-y comme des notifications du genre...
+  - "\"C'EST L'HEURE DE DESSINER !\""
+  - si 🎛️  `PPUCtrl::generateNMIOnVBlank` est activé, le système génère un événement NMI ("Non-maskable interrupt") lors du 🏝️  VBlank
+  - et le 🧠  CPU gère ça en sautant au bon bout de code
+  - allez, on code ça
+  - |-
+    📚  modifie cette méthode de 📊  `PPUStatus` :
+    **onRead()**:
+      **->** sauvegarde la valeur actuelle ```javascript this.value``` dans une constante `value`
+      **->** remet ```javascript this.isInVBlankInterval``` à 0
+        (ouais, lire ce registre <RÉINITIALISE> une partie de sa valeur 🤷 )
+      **->** retourne la `value` sauvegardée
+  - |-
+    📚  et modifie celle-ci dans 🖥️  `PPU` :
+    **step(onFrame, onInterrupt)**:
+      **->** si ```javascript this.scanline``` est ~-1~:
+        **->** appelle ```javascript this._onPreLine()```
+      **->** si ```javascript this.scanline``` est inférieur à 240:
+        **->** appelle ```javascript this._onVisibleLine()```
+      **->** si ```javascript this.scanline``` est 241:
+        **->** appelle ```javascript this._onVBlankLine(onInterrupt)```
+      **->** __...reste du code...__
+      **[!]** note qu'on a ajouté un paramètre `onInterrupt`
+  - |-
+    📚  maintenant, ajoute ces méthodes :
+    **_onPreLine()**:
+      **->** si ```javascript this.cycle``` est 1:
+        **->** met ```javascript this.registers.ppuStatus.isInVBlankInterval = 0```
+    **_onVisibleLine()**:
+      **[!]** laisse vide pour l'instant
+    **_onVBlankLine(onInterrupt)**:
+      **->** si ```javascript this.cycle``` est 0:
+        **->** met ```javascript this.registers.ppuStatus.isInVBlankInterval = 1```
+      **->** si ```javascript this.cycle``` est 1:
+        **->** si ```javascript this.registers.ppuCtrl.generateNMIOnVBlank```:
+          **->** appelle ```javascript onInterrupt(interrupts.NMI)```
+          (tu dois l'importer depuis 📄  ~/lib/interrupts.js~)
+  responses: []

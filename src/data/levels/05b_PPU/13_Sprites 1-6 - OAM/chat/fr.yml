@@ -1,0 +1,60 @@
+main:
+  messages:
+  - maintenant que notre émulateur peut accéder à 🛸 📖  l'OAM
+  - on peut lire 🛸  les sprites !
+  responses:
+  - c'est quoi dans l'OAM ? [oam]
+
+oam:
+  messages:
+  - "voilà un document qui explique le format de la table OAM :"
+  - 📄  ~/docs/ppu/sprite_rendering.fr.md~
+  - "aussi, tu devrais utiliser ma classe `Sprite` :"
+  - 📄  ~/lib/ppu/Sprite.js~
+  - elle s'occupe de certaines choses comme l'interprétation des attributs
+  responses:
+  - merci, mais je dois quand même lire l'OAM, non ? [exercise]
+
+exercise:
+  messages:
+  - exact ✅
+  - 📚  crée une classe 🛸  `SpriteRenderer`
+  - 📚  son constructeur doit recevoir et assigner une propriété `ppu` avec l'instance de la PPU
+  - |-
+    📚  applique ce changement à la classe 🖥️  `PPU` :
+    **constructor(cpu)**:
+      **->** instancie le sprite renderer :
+        ```javascript this.spriteRenderer = new SpriteRenderer(this)```
+        (pense à l'importer si tu l'as défini dans un autre fichier !)
+  - |-
+    📚  maintenant, dans la classe 🛸  `SpriteRenderer`, définis :
+    **_createSprite(id)**:
+      **->** retourne une nouvelle instance de `Sprite`, en lisant l'index OAM `id`
+        (pense à ajouter 1 à la coordonnée Y !)
+  responses:
+  - (*) pourquoi ajouter 1 à la coordonnée Y ? ➕ [addone]
+  - (*) comment savoir si le sprite est ~8x8~ ou ~8x16~ ? 📏 [spritesize]
+  - (*) comment connaître l'id du tile / l'id de la pattern table ? 🕊️ 📖 [patterntable]
+
+addone:
+  messages:
+  - parce que les données des sprites ont un décalage d'une scanline 💤
+  - sur le vrai hardware, les sprites sont dessinés une ligne plus bas que la coordonnée Y que les jeux écrivent dans l'OAM
+  - c'est-à-dire que si l'octet 0 d'une entrée OAM vaut 0, c'est dessiné à la ligne 1
+  - et il est impossible de dessiner un sprite à partir de la ligne 0
+  responses:
+  - ...exercise
+
+spritesize:
+  messages:
+  - c'est un paramètre global, configuré dans 🎛️  PPUCtrl
+  - quand ```javascript ppu.registers.ppuCtrl.spriteSize === 1```, les sprites doivent utiliser le mode ~8x16~
+  responses:
+  - ...exercise
+
+patterntable:
+  messages:
+  - en mode ~8x8~, l'id du tile est `byte1` de l'entrée OAM, et l'id de la pattern table est ```javascript ppu.registers.ppuCtrl.sprite8x8PatternTableId```
+  - en mode ~8x16~, l'id du tile est ```javascript (byte1 & 0b11111110)``` et l'id de la pattern table est ```javascript (byte1 & 0b00000001)```
+  responses:
+  - ...exercise

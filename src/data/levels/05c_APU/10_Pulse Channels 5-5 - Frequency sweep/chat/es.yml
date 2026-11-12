@@ -12,7 +12,7 @@ how:
   - es algo parecido a la envolvente, pero en vez de cambiar el <volumen>, cambia el timer del canal, ¡afectando el <pitch>!
   - es un poco más complejo igual, porque el cambio no es <constante>
   - "los juegos escriben 4 parámetros en 🧹  PulseSweep:"
-  - ⏰  un periodo de divisor, que determina qué tan lento cambiará la frecuencia
+  - ⏰  un período de divisor, que determina qué tan lento cambiará la frecuencia
   - ➗  un <shift count>, que determina qué tan gradual será la transición
   - ⛔  una <negate flag>, que define si el cambio será hacia abajo o hacia arriba
   - 🔛  una <enable flag>, que activa la unidad de barrido

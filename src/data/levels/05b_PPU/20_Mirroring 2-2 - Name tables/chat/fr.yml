@@ -1,0 +1,86 @@
+main:
+  messages:
+  - la cartographie mémoire de la PPU a une section dédiée à 4 name tables, en $PPU $2000-$2FFF
+  - chaque name table fait 1024 octets (ou $400 en hexadécimal), donc ces 4 name tables sont aux adresses $2000, $2400, $2800 et $2C00
+  - mais le hardware NEEES réel n'a de la VRAM que pour <deux> d'entre elles
+  - ce qui se passe, c'est que le mapper met en miroir les autres de façon amusante ✨
+  - et ce mirroring est utile pour que les jeux implémentent le scrolling
+  - passons-les en revue
+  responses:
+  - cool, montre-moi 👀 [show]
+
+show:
+  messages:
+  - appelons les name tables "physiques" (celles qu'on peut vraiment stocker en VRAM) "A" et "B"
+  - "le mirroring \"HORIZONTAL\" connecte $2000 et $2400 à la première name table physique (\"A\") et $2800 et $2C00 à la deuxième name table physique (\"B\")"
+  - <{horizontal.png}>
+  - tu vois ? elles sont en miroir horizontal 😉
+  responses:
+  - ouais ! [vertical]
+
+vertical:
+  messages:
+  - "le mirroring \"VERTICAL\" connecte $2000 à \"A\" et $2400 à \"B\", puis répète le tout en $2800 et $2C00"
+  - <{vertical.png}>
+  - et là elles sont en miroir vertical 😊
+  responses:
+  - bien sûr [single]
+
+single:
+  messages:
+  - il y a aussi des jeux qui utilisent une seule name table, répétée 4 fois (laissant l'autre name table physique inutilisée)
+  - <{single.png}>
+  - selon le mapper, ça pourrait aussi être "B" quatre fois
+  - on appelle le premier cas "ONE_SCREEN_LOWER_BANK" et le second "ONE_SCREEN_UPPER_BANK"
+  responses:
+  - logique [fourscreen]
+
+fourscreen:
+  messages:
+  - enfin, certaines cartouches de jeux contiennent de la RAM supplémentaire pour 2 name tables physiques de plus
+  - leur permettant d'utiliser un mapping "FOUR_SCREEN"
+  - <{4screen.png}>
+  - c'est la raison pour laquelle on a défini notre propriété tableau `vram` dans `PPUMemory` avec 4096 octets
+  responses:
+  - implémentons ça [exercise]
+
+exercise:
+  messages:
+  - j'ai traduit les types de mapping dans un tableau pratique, voilà 📄  ~/lib/ppu/mirroringTypes.js~
+  - les clés (`$2000`, `$2400`, `$2800` et `$2C00`) représentent les adresses PPU logiques
+  - et les valeurs (surtout `0x000` et `0x400`) sont les décalages des name tables physiques dans le tableau `PPUMemory::vram`
+  - 📚  dans 🐏  `PPUMemory`, importe le fichier `mirroringTypes`
+  - |-
+    📚  définis cette méthode :
+    **changeNameTableMirroringTo(mirroringId)**:
+      **->** si ```javascript this.cartridge.header.mirroringId === "FOUR_SCREEN"```
+        **->** définit ```javascript mirroringId = "FOUR_SCREEN"```
+      **->** définit ```javascript this.mirroringId = mirroringId```
+      **->** définit ```javascript this._mirroring = mirroringTypes[mirroringId]```
+      (les mappers appelleront cette méthode pour changer le type de mirroring quand ils en ont besoin)
+  - 📚  modifie `onLoad(...)` pour qu'il appelle la nouvelle méthode avec le mirroring initial (rappelle-toi que c'est stocké dans ```javascript cartridge.header.mirroringId```)
+  - 📚  mappe les plages $2000-$23FF, $2400-$27FF, $2800-$2BFF et $2C00-$2FFF vers la VRAM, en fonction du `mirroring` courant (lectures et écritures)
+  responses:
+  - (*) par exemple ? 🧐 [example]
+
+example:
+  messages:
+  - cherche la section "Name tables 0 to 3 (VRAM + mirror)" dans les méthodes `read(...)` et `write(...)`
+  - |-
+    en ce moment, `read(...)` devrait ressembler à ça :
+      ```javascript
+      if (address >= 0x2000 && address <= 0x2fff)
+        return this.vram[address - 0x2000];```
+  - tu dois mapper les 4 sections en fonction de l'endroit où pointe ```javascript this._mirroring```
+  - |-
+    implémentons les deux premiers cas
+      ```javascript
+      if (address >= 0x2000 && address <= 0x2fff) {
+        if (address >= 0x2000 && address < 0x2400)
+          return this.vram[this._mirroring.$2000 + (address - 0x2000)];
+        if (address >= 0x2400 && address < 0x2800)
+          return this.vram[this._mirroring.$2400 + (address - 0x2400)];
+        // TODO: Termine les autres !
+      }```
+  responses:
+  - ...exercise

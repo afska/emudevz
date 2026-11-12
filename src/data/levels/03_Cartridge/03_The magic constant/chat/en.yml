@@ -64,7 +64,7 @@ debug:
   - 🐞  adding a `debugger;` statement to your code and using your browser's native dev tools
   - 🧾  calling `console.log(...)`, which logs something into your browser's dev tools
   - |-
-    🗃️  calling `EmuDevz.log(...)`, which logs a string into the `Log` tab of the 🐞  <Debugger>
+    🗃️  calling `EmuDevz.log(...)`, which logs a string into the `Logs` tab of the 🐞  <Debugger>
       (this one will be useful later, when running ROMs in the emulator)
   responses:
   - ...exercise

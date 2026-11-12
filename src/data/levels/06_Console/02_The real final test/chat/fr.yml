@@ -1,0 +1,75 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - le <vrai> test final, c'est de jouer à un jeu du début jusqu'à la fin !
+  - on va jouer à un jeu
+  - cette fois, avec ton émulateur 🤯
+  - |-
+    il s'appelle 🤖 🧗  ~Robo-Ninja Climb~
+    <{screenshot.png;30x30}>
+  - dans ce jeu, tu contrôles <Robo-Ninja>, qui s'entraîne à grimper et à sauter avant de partir sauver le monde
+  - si tu le termines, je t'envoie le <fichier ROM>
+  - au format ~*.neees~
+  responses:
+  - ça m'a l'air facile 🙌 [play]
+
+play:
+  run-after-messages: |
+    {{Top}}.runner.setIntegration("RoboNinjaClimb");
+    {{Top}}.loadROM("/roms/.all/RoboNinjaClimb.neees");
+    layout.focus("Top");
+  messages:
+  - en vrai, tu vas mourir beaucoup
+  - si ça devient trop dur...
+  - bon, tu as fait l'émulateur !
+  - alors tu peux toujours essayer de <tricher dans le jeu> 😉
+  - le code doit stocker des trucs comme les <points de vie> quelque part dans la WRAM
+  - t'as juste à <atteindre la fin>, comme tu peux 👀
+  - __(n'utilise juste pas les __<états de sauvegarde>__, c'est de la triche !)__
+  events:
+  - roboninjaclimb-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["RoboNinjaClimb.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+
+    if ({{Top}}.runner.didUseSaveState) {
+      $.goTo("savestate-yes");
+    } else {
+      $.goTo("savestate-no");
+    }
+  messages: []
+  responses: []
+
+savestate-yes:
+  run: |
+    window.EmuDevz.achievements.unlock("emulator-robo-ninja-cheater")
+  messages:
+  - tu as utilisé... les <états de sauvegarde> ?!
+  - quelle triche 😅
+  - c'est pas le hack que j'avais en tête, mais soit !
+  - "<! ROM reçue : 📄  /roms/RoboNinjaClimb.neees"
+  - comme promis, j'ai mis la ROM dans ton répertoire 📁  ~/roms~
+  - amuse-toi bien !
+  responses:
+  - ▶️  continuer [end]
+
+
+savestate-no:
+  run: |
+    window.EmuDevz.achievements.unlock("emulator-robo-ninja-player")
+  messages:
+  - incroyable ! soit tu as joué divinement... soit tu as bien triché 🤣
+  - "<! ROM reçue : 📄  /roms/RoboNinjaClimb.neees"
+  - comme promis, j'ai mis la ROM dans ton répertoire 📁  ~/roms~
+  - profite de ta victoire ! tu l'as mérité 🚀
+  responses:
+  - ▶️  continuer [end]
+

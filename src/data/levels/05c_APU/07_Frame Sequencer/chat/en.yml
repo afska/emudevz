@@ -17,7 +17,7 @@ sequence:
   - half frames occur in the <second> and <fourth> quarter of each sequence
   - and when the counter reaches the fourth quarter, it resets to 0
   - <{sequencer.png}>
-  - games need to react to these events for several things, for example, silencing the channels when the notes end!
+  - channels need to react to these events for several things, for example, silencing the channels when the notes end!
   responses:
   - let's count cycles 🚲 [exercise]
 

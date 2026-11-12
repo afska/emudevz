@@ -1,0 +1,110 @@
+---
+main:
+  messages:
+  - hey
+  - regarde ton répertoire 📁  ~/docs~ !
+  responses:
+  - qu'est-ce qu'il y a ? [header]
+
+header:
+  messages:
+  - je t'ai envoyé de la documentation 🤓
+  - regarde 📄  ~/docs/iNEEES.fr.md~
+  - c'est un document qui décrit le format iNEEES
+  - tu peux l'inspecter avec la commande `open`, ou en <cliquant> sur le chemin du fichier
+  - je veux que tu le lises et que tu me dises si tu comprends
+  responses:
+  - 🤔  je crois que je comprends [exercise]
+  - (*) c'est quoi un mapper ? 🗜️ [mapper]
+  - (*) c'est quoi le mirroring ? 🚽 [mirroring]
+  - (*) définis PRG-ROM, CHR-ROM, PRG-RAM et CHR-RAM 🐏 [memories]
+  - (*) padding ? 🧸 [padding]
+  - (*) c'est quoi un "nybble" ? 🦴 [nybble]
+
+mapper:
+  messages:
+  - c'est un peu comme une "puce d'extension" que chaque jeu possède
+  - ça aide la console à lire des programmes et des graphismes plus volumineux
+  - et ça permet aux jeux d'effectuer des opérations plus complexes comme changer le mirroring à la volée
+  - on verra ça plus tard ! 🔜
+  responses:
+  - ...header
+
+mirroring:
+  messages:
+  - le mirroring affecte ce qui est affiché au-delà des bords droit et bas de l'écran
+  - selon le type de mirroring, la PPU utilisera différentes sections mémoire pour dessiner les arrière-plans 🎨
+  - ça n'a pas vraiment d'importance pour l'instant
+  responses:
+  - ...header
+
+memories:
+  messages:
+  - ok, on essaie...
+  - "🤖  PRG-ROM : mémoire en lecture seule contenant le programme"
+  - "👾  CHR-ROM : mémoire en lecture seule contenant les graphismes"
+  - "👾  CHR-RAM : mémoire accessible en écriture pour stocker les graphismes à l'exécution"
+  - "🔋  PRG-RAM : (optionnel) mémoire accessible en écriture pour stocker la progression du jeu"
+  - chaque jeu utilise soit la CHR-ROM soit la CHR-RAM
+  - s'il utilise la CHR-RAM, le fichier iNEEES ne contiendra pas sa dernière section CHR-ROM
+  responses:
+  - ...header
+
+padding:
+  messages:
+  - juste des zéros, une partie du fichier que tu peux ignorer
+  responses:
+  - ...header
+
+nybble:
+  messages:
+  - un nybble c'est la moitié d'un octet
+  - donc "nybble bas" désigne les 4 premiers bits (```raw 0000```~1011~)
+  - et "nybble haut" désigne les 4 derniers bits (~1011~```raw 0000```)
+  responses:
+  - ...header
+
+exercise:
+  messages:
+  - super 💪
+  - les 16 premiers octets du fichier représentent l'🗣️  en-tête
+  - |-
+    📚  ajoutons une propriété `header` à la classe 💾  `Cartridge`, avec la forme suivante :
+    ```javascript {
+      prgRomPages: 2, // (obtiens ça depuis l'octet 4)
+      chrRomPages: 1, // (obtiens ça depuis l'octet 5)
+      usesChrRam: false, // (vrai si chrRomPages === 0)
+      has512BytePadding: false, // (obtiens ça depuis <Flags 6>)
+      hasPrgRam: false, // (obtiens ça depuis <Flags 6>)
+      mirroringId: "VERTICAL", // (obtiens ça depuis <Flags 6>)
+      mapperId: 4 // (obtiens ça depuis <Flags 6> et <Flags 7>)
+    }```
+  - si tu sais pas manipuler les bits, tu peux utiliser ma bibliothèque 📖
+  - elle est dans 📄  ~/lib/byte.js~, importe-la comme un autre module et utilise-la
+  responses:
+  - (*) j'ai besoin d'un peu d'aide 📐 [bits]
+
+bits:
+  messages:
+  - les méthodes qui t'intéressent sont `getFlag(...)`, `highNybbleOf(...)`, `lowNybbleOf(...)`, et `buildU8(...)`
+  responses:
+  - comment utiliser le module bibliothèque ? [import]
+
+import:
+  messages:
+  - |-
+    importe-la comme ça :
+      ```javascript import byte from "/lib/byte";```
+  - 💡  tu peux tester la bibliothèque avec la commande `repl`
+  - un prompt JS interactif ! 🤯
+  - |-
+    essaie de lancer ces lignes de code :
+    ```javascript
+    // (0x signifie <hexadécimal> et 0b signifie <binaire>)
+    byte.getFlag(0b00000100, 2) // le bit 2 vaut 1 => true
+    byte.getFlag(0b00000100, 4) // le bit 4 vaut 0 => false
+    byte.highNybbleOf(0b00110100) // nybble haut est 0b0011 => 3
+    byte.lowNybbleOf(0b00110100) // nybble bas est 0b0100 => 4
+    byte.buildU8(0b0011, 0b0100) // 0b00110100 => 52```
+  responses:
+  - ...exercise

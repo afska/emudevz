@@ -9,7 +9,7 @@ beforeEach(() => {
 it("$407F contains $00", () => {
 	expect(cpu.memory.readAt(0x407f)).to.equalHex(0x00, "readAt(0x407f)");
 })({
-	locales: { es: "$407F contiene $00", ru: "$407F содержит $00" },
+	locales: { es: "$407F contiene $00", fr: "$407F contient $00", ru: "$407F содержит $00" },
 });
 
 it("all bytes from $4080 to $40BF contain $AA", () => {
@@ -21,6 +21,7 @@ it("all bytes from $4080 to $40BF contain $AA", () => {
 })({
 	locales: {
 		es: "todos los bytes desde $4080 hasta $40BF contienen $AA",
+		fr: "tous les octets de $4080 à $40BF contiennent $AA",
 		ru: "все байты с $4080 по $40BF содержат $AA",
 	},
 });
@@ -28,5 +29,5 @@ it("all bytes from $4080 to $40BF contain $AA", () => {
 it("$40C0 contains $00", () => {
 	expect(cpu.memory.readAt(0x40c0)).to.equalHex(0x00, "readAt(0x40c0)");
 })({
-	locales: { es: "$40C0 contiene $00", ru: "$40C0 содержит $00" },
+	locales: { es: "$40C0 contiene $00", fr: "$40C0 contient $00", ru: "$40C0 содержит $00" },
 });

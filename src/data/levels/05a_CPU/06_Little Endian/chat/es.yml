@@ -5,7 +5,7 @@ main:
   - p. ej. cuando una instrucción de CPU tiene una dirección de 16 bits como argumento
   - o al usar la instrucción `RTS` y la CPU tiene que restaurar [PC] desde la pila
   - en estos casos, se usa la convención Little Endian 🔌
-  - "eso quiere decir: el byte menos significativo (\"low byte\") se guarda primero, luego el más significativo (\"byte alto\")"
+  - "eso quiere decir: el byte menos significativo (\"low byte\") se guarda primero, luego el más significativo (\"high byte\")"
   - <{little_endian.png}>
   - |-
     📚  implementa este método en 🐏  `CPUMemory`:

@@ -21,7 +21,7 @@ how:
 
 example:
   messages:
-  - te doy el mismo ejemplo, pero en assembly
+  - te doy el mismo ejemplo, pero en ensamblador
   - supongamos que un juego de NEEES quiere escribir el byte $D7 en la dirección PPU $208F
   - el código máquina solo puede escribir en direcciones de la CPU, ¿no?
   - las direcciones PPU están en su propio espacio de direcciones, separado
@@ -94,7 +94,7 @@ increment:
 corollary:
   messages:
   - ahora, intenta ejecutar un juego que use 👾  CHR-RAM, como 🕊️ 🛰️  ~Spacegulls~
-  - ahora puedes ver su primera 🕊️ 📖  tabla de patrones
+  - ahora puedes ver su primera 🕊️ 📖  pattern table
   - estos tiles son copiados por el código del juego a través de 📍  PPUAddr y 📦  PPUData
   responses:
   - ▶️  continuar [end]

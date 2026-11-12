@@ -1,7 +1,7 @@
 ---
 main:
   messages:
-  - "los Canales de Pulso pueden silenciarse de múltiples formas:"
+  - "los Canales Pulso pueden silenciarse de múltiples formas:"
   - 🔇  cuando los juegos silencian el canal con una escritura a 🎛️  APUControl
   - 📏  cuando el contador de longitud es 0
   - 🧹  cuando la unidad de barrido está silenciada
@@ -26,7 +26,7 @@ length:
 load:
   messages:
   - escribe en un registro que tiene <Length Counter Load> (o su forma abreviada, <LCL>) en su nombre
-  - en el caso de los Canales de Pulso, es 🕛  PulseTimerHighLCL, donde los 5 bits altos son el <índice de longitud>
+  - en el caso de los Canales Pulso, es 🕛  PulseTimerHighLCL, donde los 5 bits altos son el <índice de longitud>
   - ese índice apunta a una tabla fija con todas las longitudes disponibles, revisa 📄  ~/lib/apu/noteLengths.js~
   - <{length_counter_load.png}>
   responses:

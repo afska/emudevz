@@ -2,6 +2,7 @@
 	"name": {
 		"en": "❓ Introduction",
 		"es": "❓ Introducción",
+		"fr": "❓ Introduction",
 		"ru": "❓ Введение"
 	},
 	"ui": {
@@ -15,6 +16,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					}
 				}

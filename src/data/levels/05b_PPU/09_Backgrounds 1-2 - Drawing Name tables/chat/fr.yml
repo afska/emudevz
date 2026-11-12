@@ -1,0 +1,106 @@
+---
+main:
+  messages:
+  - maintenant, c'est bon
+  - on va commencer à dessiner des 🏞️  arrière-plans !
+  responses:
+  - ENFIN, bon sang ! [exercise]
+
+exercise:
+  messages:
+  - cette fois, tu vas devoir suivre la documentation
+  - lis 📄  ~/docs/ppu/background_rendering.fr.md~
+  - et essaie de comprendre comment rendre les arrière-plans en <niveaux de gris>
+  - quand t'as compris...
+  - 📚  crée une classe 🏞️  `BackgroundRenderer`
+  - 📚  son constructeur doit recevoir et assigner une propriété `ppu` avec l'instance de la PPU
+  - |-
+    📚  <apporte ces modifications> à la classe 🖥️  `PPU` :
+    **constructor(cpu)**:
+      **->** instancie le renderer d'arrière-plan :
+        ```javascript this.backgroundRenderer = new BackgroundRenderer(this)```
+        (n'oublie pas de l'importer si tu l'as défini dans un autre fichier !)
+    **step(...)**:
+      **->** supprime le code de test (```javascript // <test>...</test>```)
+    **_onVisibleLine()**:
+      **->** si le cycle est ~0~, appelle `backgroundRenderer.renderScanline()`
+  - |-
+    📚  maintenant, dans la classe 🏞️  `BackgroundRenderer`, définis :
+    **renderScanline()**:
+      **->** <ajoute le code nécessaire> pour rendre une scanline complète de l'arrière-plan
+  - à plus !
+  responses:
+  - "\"ajoute le code nécessaire\" ? vraiment ? c'est tout ? [questions]"
+
+questions:
+  messages:
+  - quoi ? t'as besoin d'aide ?
+  responses:
+  - (*) combien de pixels je dois dessiner ? ⏹ [howmany]
+  - (*) comment je connais la ligne actuelle ? 🌠 [line]
+  - (*) aide-moi un peu 🆘 [help]
+  - (*) j'ai fait ça, mais certains jeux semblent pas fonctionner 🤔 [work]
+
+howmany:
+  messages:
+  - l'écran fait ~256x240~
+  - tu dois `plot` exactement 256 pixels pour chaque ligne visible
+  - dans la réalité, le matériel rend un pixel par cycle, mais ici on va tout faire d'un coup (pour simplifier)
+  - donc, tu ne dois rendre la ligne que quand `cycle` est 0
+  responses:
+  - ...questions
+
+line:
+  messages:
+  - la ligne actuelle est représentée par ```javascript this.ppu.scanline```
+  responses:
+  - ...questions
+
+help:
+  messages:
+  - tu sais que ```javascript y = this.ppu.scanline```
+  - et que tu dois dessiner de ~x = 0~ à ~x = 255~
+  - tu sais aussi que l'écran est une grille de ~32x30~ tiles (de ~8x8~ pixels chacun)
+  - et enfin, tu sais déjà dessiner un tile avec ta classe 🕊️  `Tile` !
+  - |-
+    une façon d'implémenter ça, c'est quelque chose comme :
+      ```javascript
+      const FIXED_PALETTE = [0xff000000, 0xff555555, 0xffaaaaaa, 0xffffffff];
+
+      const y = this.ppu.scanline;
+      for (let x = 0; x < 256; x += 8) {
+        const nameTableId = 0; // TODO : Récupérer l'identifiant de la table de noms
+        const patternTableId = 0; // TODO : Récupérer l'identifiant de la table de motifs
+
+        const tileX = Math.floor(x / 8);
+        const tileY = Math.floor(y / 8);
+        const tileIndex = tileY * 32 + tileX;
+        const tileId = 0; // TODO : Lire l'identifiant du tile en mémoire
+
+        const tileInsideY = y % 8;
+
+        const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
+        for (let xx = 0; xx < 8; xx++) {
+          const colorIndex = tile.getColorIndex(xx); // 0 à 3
+          const color = 0; // TODO : Récupérer une couleur depuis FIXED_PALETTE
+          // TODO : Dessiner la couleur au pixel (x + xx, y)
+        }
+      }```
+  responses:
+  - ...questions
+
+work:
+  messages:
+  - eh bien, il reste encore beaucoup à faire !
+  - l'important, c'est que certains jeux devraient maintenant afficher leur arrière-plan correctement
+  - par exemple, regarde 📄  ~/roms/_test/hello_world.neees~
+  - et compare le rendu en basculant entre BrokenNEEES et ton émulateur ✨
+  responses:
+  - ...questions
+
+corollary:
+  messages:
+  - c'est trop bien !!
+  - ton émulateur devrait maintenant pouvoir afficher l'écran titre de la plupart des jeux ! 🎉
+  responses:
+  - ▶️  continuer [end]

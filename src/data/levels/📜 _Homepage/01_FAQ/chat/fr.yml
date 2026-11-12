@@ -1,0 +1,116 @@
+---
+main:
+  messages:
+  - hey !
+  - t'as des questions ? 👀
+  responses:
+  - (*) un jeu sur le codage d'émulateurs ? <pourquoi> ? [why]
+  - (*) mais c'est un <jeu> ou un <tutoriel> ? [tutorial]
+  - (*) alors, la NEEES, hein ? [name]
+  - (*) est-ce que le jeu demande des <connaissances en prog> ? [requirements]
+  - (*) quels <sujets> sont couverts ? [topics]
+  - (*) c'est généré par une <IA> ? [ai]
+  - (*) c'est <gratuit> / open-source ? [free]
+
+why:
+  messages:
+  - ouais
+  - construire mon premier émulateur, c'était <super fun> pour moi 👾
+  - et je veux encourager d'autres personnes à apprendre à en construire un !
+  responses:
+  - ...main
+
+tutorial:
+  messages:
+  - honnêtement, appelle ça comme tu veux ! 🤷
+  - je pense que c'est les deux
+  - mais l'objectif premier c'est d'être un tutoriel guidé, et un jeu en second
+  - je l'appelle quand même <un jeu> parce qu'il a un but précis, un ensemble de règles, et des défis où on peut réussir ou échouer
+  - et parce que je trouve ça fun !
+  responses:
+  - ...main
+
+name:
+  messages:
+  - yep 🙂
+  - c'est comme la <NES> mais simplifié pour la pédagogie
+  - elle fait tourner la plupart des <jeux NES> sans problème, sauf ceux qui reposent sur des détails hardware plus complexes
+  responses:
+  - ...main
+
+requirements:
+  messages:
+  - des connaissances en <programmation orientée objet> et une <compréhension basique> des systèmes informatiques seront supposées
+  - "(c'est-à-dire : octets, entiers signés, logique booléenne, systèmes de numération, etc.)"
+  - le code sera écrit en JavaScript
+  responses:
+  - ...main
+
+topics:
+  messages:
+  - le joueur recevra un émulateur <buggé> (mais <modulaire>) appelé BrokenNEEES
+  - et l'objectif est de remplacer les unités cassées par de nouvelles codées de zéro
+  - dans n'importe quel ordre !
+  - |-
+    tu peux <t'attendre à apprendre> :
+      **->** 🔨  Assembleur 6502 de base
+      **->** 💾  Émulation de cartouche
+      **->** 🚌  Émulation de bus mémoire
+      **->** 🎮  Émulation de manette
+      **->** 🧠  Émulation CPU (instructions officielles), testée avec <nestest> et des tests unitaires
+      **->** 🖥️  Émulation PPU, testée avec des tests vidéo et unitaires
+      **->** 🔊  Émulation APU, testée avec des tests audio et unitaires
+      **->** 🗜️  Émulation de mapper en bonus
+  - |-
+    choses qui seront <hors scope> :
+      **->** 👮  Opcodes illégaux
+      **->** 🎯  Timing précis
+      **->** 🔌  Comportement open-bus
+      **->** 👻  Bizarreries hardware obscures
+      **->** ✋  Interruptions APU
+  - |-
+    choses qui seront <semi-hors scope> (expliquées, mais déjà résolues) :
+      **->** 🔄  Synchronisation entre les unités
+      **->** ✨  Frontend de l'émulateur (code spécifique à la plateforme)
+      **->** 📥  États de sauvegarde
+  - |-
+    aussi, le jeu fournira des fichiers de bibliothèque pour faciliter certaines tâches comme :
+      **->** 📜  Scrolling PPU correct (avec les registres `t` et `v` de <Loopy>)
+      **->** 🤏  Lecture DPCM de l'APU
+  responses:
+  - pourquoi ne pas viser la <précision> ? [accuracy]
+
+
+accuracy:
+  messages:
+  - je pense que viser la précision dans un premier projet d'émulation est une <mauvaise idée> 💀
+  - ça ajouterait inutilement de la complexité et découragerait les joueurs d'apprendre les concepts importants
+  - |+
+    on peut apprendre les bases du hardware et de l'émulation, et viser la précision <plus tard>
+  - en d'autres termes, quand tu auras fini ça, tu auras un émulateur solide qui fait tourner un bon pourcentage des <jeux NES> des mappers 0 à 4
+  - |+
+    il ne passera pas beaucoup de ROMs de test de <Blargg>, mais ça aura l'air et le son correct ! faut juste pas s'attendre à construire le prochain <Mesen> 😊
+  - les choses sont <simplifiées> ici, et c'est aussi pour ça que j'ai choisi un nom différent pour la console
+  - si tu as des doutes, ce n'est pas une <NES> ! donc ça ne peut pas être inexact par rapport à quelque chose que ça n'est pas 😉
+  responses:
+  - ...main
+
+ai:
+  messages:
+  - non !!!
+  - j'aime juste les emojis 😅
+  - j'ai commencé à écrire le jeu quand les LLMs n'étaient pas encore mainstream
+  - ensuite, les emojis ont commencé à être associés aux trucs d'IA
+  - et c'était un peu trop tard pour tout changer
+  - du coup j'ai décidé d'assumer le style !
+  responses:
+  - ...main
+
+free:
+  messages:
+  - oui 👍
+  - si tu aimes le projet, ton soutien me ferait vraiment plaisir :-)
+  - le code est sous licence <MIT> tandis que les niveaux sont sous <CC BY-NC>
+  - consulte la section <Crédits> pour tous les détails
+  responses:
+  - ...main

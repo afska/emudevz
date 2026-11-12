@@ -19,7 +19,7 @@ main:
 iknow:
   messages:
   - 🤔
-  - ¿estás <de verdad> familiarizado con 6502 assembly?
+  - ¿<de verdad> tienes experiencia con el 6502 assembly?
   - (registros, banderas, bifurcaciones, modos de direccionamiento, pila y subrutinas)
   - si no, en el próximo capítulo vas a <sufrir>
   - meh, puedes volver y jugarlo cuando quieras, de todas formas

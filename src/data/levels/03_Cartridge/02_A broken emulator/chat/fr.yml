@@ -1,0 +1,49 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - je parie que tu sais pas ce que j'ai trouvé
+  - un émulateur NEEES qui fonctionne !
+  - enfin, "qui fonctionne" c'est un grand mot 😅
+  responses:
+  - il marche oui ou non ? 🤨 [works]
+
+works:
+  messages:
+  - eh bien...
+  - il foire sur presque tous les points
+  - plein de <bugs>
+  - on dirait que l'auteur codait en état d'ivresse 🙃 🔫
+  - au moins l'honnêteté d'appeler ça BrokenNEEES
+  - tu peux quand même l'essayer...
+  - 💡  glisse une ROM sur la télé ou utilise l'un des jeux dans 📁  ~/roms~
+  - (si t'en as pas, retourne jouer le chapitre "👾 " !)
+  - tu peux lancer les ROMs avec la commande `open`
+  responses:
+  - (*) quels bugs t'as trouvés ? 🐞 [bugs]
+  - c'est nul 👎 [awful]
+
+bugs:
+  messages:
+  - d'abord, la 💾  Cartridge semble commencer la lecture de la CHR-ROM depuis le mauvais octet, donc tous les graphismes sont corrompus
+  - "il y a un bug rigolo dans les 🎮  Controllers : quand <A> est appuyé, les directions <Gauche> et <Droite> sont inversées ☠️"
+  - le timing du 🧠  CPU est complètement aléatoire (causant des problèmes de synchro) et les instructions `ADC` et `BIT` <échouent de façon aléatoire>
+  - aussi, la 🖥️  PPU ajoute du bruit à l'écran, déplace les registres de scrolling bizarrement, et dessine les sprites aux mauvais endroits
+  - enfin, les canaux principaux de 🔊  l'APU sont <désaccordés>, donc tout le son est inutilisable
+  - les 🗜️  Mappers fonctionnent bien, heureusement 😅
+  responses:
+  - ...works
+
+awful:
+  messages:
+  - je sais, c'est affreux
+  - mais y'a un truc bien avec ça
+  - c'est conçu de façon <modulaire>
+  - donc on peut réutiliser ses composants ♻️
+  - ça nous permettra d'implémenter les choses dans l'ordre qu'on veut !
+  - tu pourrais commencer, par exemple, par les graphismes (🖥️  PPU) et je patche ton émulateur pour qu'il utilise le 🧠  CPU et 🔊  l'APU de BrokenNEEES
+  - ensuite tu continues à corriger le reste à ton rythme
+  - commençons par corriger la 💾  Cartridge
+  responses:
+  - ▶️  continuer [end]

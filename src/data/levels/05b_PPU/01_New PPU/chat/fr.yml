@@ -1,0 +1,82 @@
+---
+main:
+  run: |
+    {{Top}}.load("rendering.png");
+  messages:
+  - on va commencer à dessiner <de vrais pixels> à l'écran ! 🖥️
+  - mais d'abord, faut apprendre quelques trucs
+  - comme 🚲  les cycles, 🌠  les scanlines, et 🖼️  les frames !
+  responses:
+  - t'entends quoi par là ? [wdym]
+
+wdym:
+  messages:
+  - 📈  la NEEES génère un signal vidéo à ~60FPS~
+  - 🖼️  chaque frame est une image ~256x240~ (pense à une grille de pixels)
+  - 🌠  une scanline, c'est une rangée de cette grille
+  - 🚲  et chaque scanline prend 341 cycles PPU pour être rendue
+  responses:
+  - et... c'est quoi un cycle ? 🚲 [cycles]
+
+cycles:
+  messages:
+  - un cycle, c'est un tic d'horloge, la plus petite unité d'exécution !
+  - ce sont de toutes petites fractions de seconde, vu qu'il y a plus de 5 millions de cycles PPU par seconde
+  - pendant un cycle, la PPU peut lire ou écrire des données, ou même dessiner un pixel à l'écran 🎨
+  responses:
+  - (*) les cycles PPU sont les mêmes que les cycles CPU ? 🤔 [same]
+  - comment ça marche, le dessin ? 🖌️ [drawing]
+
+same:
+  messages:
+  - conceptuellement oui, mais la 🖥️  PPU tourne <3x> plus vite que le 🧠  CPU
+  - donc les cycles PPU sont plus rapides (chaque cycle PPU représente, en temps, ~1/3~ d'un cycle CPU)
+  - <{unit_speeds.png}>
+  responses:
+  - ...cycles
+
+drawing:
+  run: |
+    {{Top}}.load("scanlines.gif");
+  messages:
+  - ça dessine de haut en bas, une scanline à la fois, un pixel par cycle
+  - les 240 premières scanlines constituent la partie visible de l'image
+  - il y a aussi quelques scanlines supplémentaires non visibles, ce qui donne à la PPU un peu de temps pour souffler 🏖️
+  responses:
+  - t'entends quoi par "temps pour souffler" ? [vblank_hblank]
+
+vblank_hblank:
+  run: |
+    {{Top}}.load("rendering.png");
+  messages:
+  - pendant chaque scanline (après avoir dessiné tous les pixels), il y a une petite pause appelée Horizontal Blank, ou HBlank
+  - et à la fin de toutes les scanlines visibles, il y a une pause plus longue, le Vertical Blank, ou VBlank 🏝️
+  - pendant le VBlank/HBlank, la PPU ne dessine aucun pixel, ce qui donne au programme la possibilité de mettre à jour l'écran
+  responses:
+  - compris, c'est quoi la suite ? [exercise]
+
+exercise:
+  messages:
+  - 📚  crée un fichier pour le code de la PPU, en utilisant 📄  ~/tmpl/ppu/PPU.js~ comme modèle
+  - |-
+    📚  pour garder une trace du timing, ajoute cette méthode :
+    **step()**:
+      **->** incrémente `cycle`
+      **->** si ```javascript cycle >= 341```:
+        **->** met ```javascript cycle = 0```
+        **->** incrémente `scanline`
+        **->** si ```javascript scanline >= 261```:
+          **->** met ```javascript scanline = -1```
+          **->** incrémente `frame`
+  - 📚  ensuite, importe ton fichier depuis 📄  ~/code/index.js~
+  - et ajoute la clé `PPU` correspondante à l'objet exporté
+  responses:
+  - (*) pourquoi le compteur de scanline commence à -1 ? 😕 [minus1]
+
+minus1:
+  messages:
+  - la scanline ~-1~ (aussi appelée pré-ligne) est une ligne non visible, pendant laquelle la PPU se prépare pour la frame à venir
+  - pendant ce temps, il remet à zéro certains flags d'état importants
+  - on verra ça plus tard ! 🔜
+  responses:
+  - ...exercise

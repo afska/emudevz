@@ -1,0 +1,31 @@
+---
+main:
+  messages:
+  - tu t'es peut-être demandé pourquoi on a nommé la classe 🐏  `CPUMemory` comme ça
+  - et pas juste `Memory` 🤷
+  - c'est parce qu'il y a 2 bus mémoire différents 🚌
+  responses:
+  - comment ça ? [howso]
+
+howso:
+  messages:
+  - la PPU a son propre espace d'adressage séparé de 16 Kio, spécialement conçu pour récupérer les 🕊️  tiles, 🏞️  arrière-plans, et 🎨  palettes
+  - jette un coup d'œil à 📄  ~/docs/ppu/ppu_memory.fr.md~
+  - la plupart du temps, il utilisera des adresses PPU
+  - et il utilisera les adresses CPU uniquement comme pont pour communiquer avec le CPU
+  - dorénavant, on dira par exemple "adresse PPU $1F2A" ou "adresse CPU $1F2A" pour différencier les deux espaces
+  responses:
+  - comment peut-on émuler ça ? 😮 [exercise]
+
+exercise:
+  messages:
+  - 📚  crée une classe 🐏  `PPUMemory`, en utilisant 📄  ~/tmpl/ppu/PPUMemory.js~ comme modèle
+  - 📚  implémente juste la première plage ($0000-$1FFF), pour les opérations `read(...)` et `write(...)`
+  - pour les <lectures>, tu dois retourner ```javascript this.mapper.ppuRead(address)```
+  - pour les <écritures>, tu dois appeler ```javascript this.mapper.ppuWrite(address, value)``` et retourner
+  - |-
+    📚  ensuite, ajoute ça dans le constructeur de ton PPU :
+      ```javascript
+      this.memory = new PPUMemory();```
+  - n'oublie pas d'importer le fichier !
+  responses: []

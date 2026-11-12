@@ -27,7 +27,7 @@ addrdata:
 dma:
   messages:
   - DMA ("Direct Memory Access") es un mecanismo de hardware para copiar bytes de una región de memoria a otra muy rápidamente
-  - en el NEEES, esto se proporciona mediante el registro ⚡  OAMDMA, que permite a los juegos llenar 🐏  OAM RAM copiando bytes de la memoria de la CPU
+  - en la NEEES, esto se proporciona mediante el registro ⚡  OAMDMA, que permite a los juegos llenar 🐏  OAM RAM copiando bytes de la memoria de la CPU
   - escribir ```raw $```~XX~ en ese registro copiará 256 bytes de las direcciones CPU ```raw $```~XX~```raw 00```-```raw $```~XX~```raw FF``` a la OAM RAM interna
   - esta operación tomará alrededor de 513 ciclos de CPU, durante los cuales la CPU está suspendida
   responses:

@@ -1,0 +1,44 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - <! 📹  Entering video chat...
+  - hey,
+  - on joue à un jeu
+  - |-
+    ça s'appelle 💫 🐑  ~Dizzy Sheep Disaster~
+    <{screenshot.png;30x30}>
+  - un puzzle original avec un mouton velcro et des <aimants>
+  - si tu le termines, je t'envoie le <fichier ROM>
+  - au format ~*.neees~
+  responses:
+  - des ~aimants~ ? [play]
+
+play:
+  run: |
+    {{Right}}.stream.zoom();
+    {{Right}}.stream.setIntegration("DizzySheepDisaster");
+    {{Right}}.loadROM("/roms/.all/DizzySheepDisaster.neees", "stream");
+  messages:
+  - tu verras !
+  events:
+  - dizzysheepdisaster-end [finish]
+
+finish:
+  run: |
+    const directory = `${Drive.ROMS_DIR}`;
+    filesystem.mkdirp(directory);
+
+    ["DizzySheepDisaster.neees", "DreamDogDilemma.neees"].forEach((file) => {
+      filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
+    });
+  messages:
+  - ce dernier niveau était vraiment corsé !
+  - "<! ROM received: 📄  /roms/DizzySheepDisaster.neees"
+  - comme promis, j'ai mis la ROM dans ton répertoire 📁  ~/roms~
+  - "<! ROM received: 📄  /roms/DreamDogDilemma.neees"
+  - j'ai aussi envoyé un autre jeu du même auteur appelé 💤 🐶  ~Dream Dog Dilemma~
+  - amuse-toi bien !
+  responses:
+  - ▶️  continuer [end]

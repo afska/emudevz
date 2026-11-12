@@ -1,0 +1,29 @@
+`LDA #$01`    ; Charge le nombre $01 dans le registre [A]
+`LDA $01`     ; Charge la valeur de l'adresse $0001 dans [A]
+`LDA $1F4B`   ; Charge la valeur de l'adresse $1F4B dans [A]
+`STA $4070`   ; Écrit [A] à l'adresse $4070
+`STA $60,X`   ; Écrit [A] à l'adresse $60+[X]
+`STA $2030,X` ; Écrit [A] à l'adresse $2030+[X]
+`STA ($01,X)` ; = STA ($01+X)
+`STA ($03),Y` ; = STA ($03)+Y
+  ; Variantes avec [X] et [Y] : `LDX`, `STX`, `LDY`, `STY`
+`TXA`         ; Transfère [A] depuis [X] (Transfère [X] vers [A])
+  ; Variantes : `TAX`, `TYA`, `TAY`
+`ADC #30`     ; Ajoute 30 à [A] (en utilisant le flag Carry)
+`SBC #30`     ; Soustrait 30 de [A] (en utilisant le flag Carry)
+`INX`         ; Incrémente [X]
+  ; Variante avec [Y] : `INY`
+`DEX`         ; Décrémente [X]
+  ; Variante avec [Y] : `DEY`
+@jump:        ; Définit une étiquette (label) référençable plus tard
+`CPX #3`      ; Positionne Z=1 si [X] == 3
+  ; Variante avec [Y] : `CPY`
+`BEQ @jump`   ; Saute vers @jump si Z == 1
+`BNE @jump`   ; Saute vers @jump si Z == 0
+`JMP $4030`   ; Saute à $4030 (définit [PC] = $4030)
+`JMP ($4030)` ; Saute à une adresse formée par $4030 et $4031
+`PHA`         ; Empile [A] sur la pile (Push)
+`PLA`         ; Dépile de la pile vers [A] (Pull/Pop)
+`JSR $4029`   ; Saute vers la sous-routine à $4029
+`RTS`         ; Revient à l'instruction qui suit `JSR`
+`BRK`         ; Termine le programme (Break)

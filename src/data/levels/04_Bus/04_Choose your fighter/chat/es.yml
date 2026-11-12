@@ -14,7 +14,7 @@ components:
   - "🧠  CPU: Elige esto si quieres emular conceptos que has aprendido en el capítulo de Ensamblador."
   - "🖥️  PPU: Elige esto si quieres ir directamente a la acción y mostrar gráficos en la pantalla."
   - "🔊  APU: Elige esto si tienes curiosidad por aprender cómo reproducir el sonido en los juegos."
-  - yo aconsejaría empezar con la 🧠  CPU, pero qué se yo...
+  - yo aconsejaría empezar con la 🧠  CPU, pero qué sé yo...
   responses:
   - 🧠  Me gustaría empezar con la CPU [cpu]
   - 🖥️  Me gustaría empezar con la PPU [ppu]

@@ -1,0 +1,49 @@
+---
+main:
+  messages:
+  - générer du bruit est un peu plus compliqué qu'un simple appel ```javascript random()```
+  - "voilà un document qui le décrit :"
+  - 📄  ~/docs/apu/noise_generation.fr.md~
+  - lis-le et dis-moi si tu as des questions
+  responses:
+  - la sortie c'est le volume ? quoi ? [volume]
+
+volume:
+  messages:
+  - ouais, le 💥  Canal Bruit ne génère pas de vraies "ondes"
+  - ses samples valent soit le <niveau de volume> soit 0
+  - et ça dépend du bit 0 du <shift register>
+  - on n'a pas encore d'enveloppe, donc on va continuer à supposer un volume constant
+  responses:
+  - sympa, je peux coder ça [exercise]
+
+exercise:
+  messages:
+  - super !
+  - |-
+      📚  implémente dans 🌪️  `NoiseForm` :
+      **onLoad()**:
+        **->** utilise ```javascript this.addField(...)``` pour définir 2 champs : `periodId`, `mode`
+        (utilise 📄  ~/docs/apu/audio_registers.fr.md~ pour référence)
+      **onWrite(value)**:
+        **->** définit la valeur avec ```javascript this.setValue(...)```
+  - |-
+      📚  implémente dans 💥  `NoiseChannel` :
+      **constructor(apu)**:
+        **->** définit ```javascript this.shift = 1```
+        **->** définit ```javascript this.dividerCount = 0```
+      **sample()**:
+        **->** fait en sorte que le <early return> vérifie aussi ```javascript (this.shift & 1)```
+          (le sample de sortie est 0 si le premier bit du <shift register> est activé)
+        **->** change la <valeur de retour principale> de ```javascript Math.floor(...)``` à juste `volume`
+      **step()**:
+        **->** incrémente le <divider count>
+        **->** si le <divider count> est >= ```javascript noisePeriods[this.registers.form.periodId]``` :
+          (tu peux obtenir `noisePeriods` depuis 📄  ~/lib/apu/noisePeriods.js~)
+          **->** remet le <divider count> à zéro
+        **->** sinon :
+          **->** retourne
+
+        **->** met à jour ```javascript this.shift``` en utilisant la logique décrite ici :
+          📄  ~/docs/apu/noise_generation.fr.md~
+  responses: []

@@ -32,7 +32,7 @@ BrokenNEEES normalmente ejecuta una instrucción (que tarda `N` ciclos) y luego 
 - Obtener la siguiente instrucción    < <
 - Decodificar la instrucción           | |
 - Ejecutar la instrucción              | |
-- ¿Hay una interrupción pendiente? --no  |
+- ¿Hay una interrupción pendiente? --no- |
 -   |---sí---> Atender la interrupción --|
 ```
 

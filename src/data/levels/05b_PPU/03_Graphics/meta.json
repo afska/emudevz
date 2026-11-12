@@ -2,6 +2,7 @@
 	"name": {
 		"en": "🖌️ Graphics",
 		"es": "🖌️ Gráficos",
+		"fr": "🖌️ Graphismes",
 		"ru": "🖌️ Графика"
 	},
 	"ui": {
@@ -25,6 +26,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					}
 				}

@@ -30,7 +30,7 @@ numbers:
 exercise:
   messages:
   - "прочитай документацию в 📄  ~/docs/lib/InMemoryRegister.ru.md~"
-  - "а для файла звуковых регистров возьми шаблон 📄  ~/tmpl/apu/AudioRegisters.js~"
+  - "а для файла аудиорегистров возьми шаблон 📄  ~/tmpl/apu/AudioRegisters.js~"
   - "регистры 🟦  `PulseControl` и 🎛️  `APUControl` уже реализованы"
   - "обрати внимание: для каждого поля из столбца ~Биты~ они вызывают `addField(...)`"
   - "так создаются <автоматические свойства>: после записи APU может читать их значения (например, ```javascript pulse1Control.dutyCycleId```)"

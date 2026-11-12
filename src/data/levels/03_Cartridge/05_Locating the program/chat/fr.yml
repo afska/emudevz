@@ -1,0 +1,27 @@
+---
+main:
+  messages:
+  - on a besoin d'accéder facilement au code du programme 🤖
+  - 📚  crée une méthode ```javascript prg()``` qui retourne un `Uint8Array` contenant les octets PRG-ROM
+  - le code est juste après l'en-tête de 16 octets, mais rappelle-toi que tu devras peut-être sauter 512 octets si l'en-tête le précise
+  - <{prg.png}>
+  responses:
+  - (*) comment couper les octets ? ✂️ [cut]
+
+cut:
+  messages:
+  - tous les tableaux ont une méthode `slice(start, end)` 🍕
+  - elle extrait un sous-tableau de `start` à `end-1`
+  - "ex. ```javascript [\"a\", \"b\", \"c\", \"d\"].slice(1, 3)``` retourne ```javascript [\"b\", \"c\"]```"
+  - (il n'inclut pas l'élément à l'index 3, ```javascript "d"```)
+  responses:
+  - ça marche pas [morehelp]
+
+morehelp:
+  messages:
+  - rappelle-toi, le deuxième argument est l'index de <fin>, pas une longueur
+  - |-
+    si tu veux 30 octets à partir de l'octet 5, tu dois écrire
+      ```javascript array.slice(5, 5 + 30)```
+  responses:
+  - ...main

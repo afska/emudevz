@@ -34,7 +34,7 @@ exercise:
   responses:
   - (*) почему нужно прибавить 1 к координате Y? ➕ [addone]
   - (*) как узнать, спрайт ~8x8~ или ~8x16~? 📏 [spritesize]
-  - (*) как узнать идентификатор тайла / таблицы паттернов? 🕊️ 📖 [patterntable]
+  - (*) как узнать индекс тайла / таблицы паттернов? 🕊️ 📖 [patterntable]
 
 addone:
   messages:
@@ -54,7 +54,7 @@ spritesize:
 
 patterntable:
   messages:
-  - в режиме ~8x8~ идентификатор тайла — `byte1` записи OAM, а идентификатор таблицы паттернов — ```javascript ppu.registers.ppuCtrl.sprite8x8PatternTableId```
-  - в режиме ~8x16~ идентификатор тайла — ```javascript (byte1 & 0b11111110)```, а идентификатор таблицы паттернов — ```javascript (byte1 & 0b00000001)```
+  - в режиме ~8x8~ индекс тайла — `byte1` записи OAM, а индекс таблицы паттернов — ```javascript ppu.registers.ppuCtrl.sprite8x8PatternTableId```
+  - в режиме ~8x16~ индекс тайла — ```javascript (byte1 & 0b11111110)```, а индекс таблицы паттернов — ```javascript (byte1 & 0b00000001)```
   responses:
   - ...exercise

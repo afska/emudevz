@@ -79,7 +79,7 @@ export default {
 	crt_filter: "CRT filter",
 	current_level: " (current level)",
 	debug_tips:
-		"🐞  Debugging tips:\n- Run `test -v [testNumber]` on the <failing test>.\n- Use the `repl` command to try <JS expressions>.\n- Add a `debugger;` statement to your code and use the <dev tools>.\n- Call `console.log(...)` and use the <dev tools> (but remove it after!).\n- Call `EmuDevz.log(...)` to log strings into the <Log> tab of the 🐞  <Debugger>.\n- Inspect failing video tests <frame by frame>.\n- Compare failing audio tests <channel by channel>.",
+		"🐞  Debugging tips:\n- Run `test -v [testNumber]` on the <failing test>.\n- Use the `repl` command to try <JS expressions>.\n- Add a `debugger;` statement to your code and use the <dev tools>.\n- Call `console.log(...)` and use the <dev tools> (but remove it after!).\n- Call `EmuDevz.log(...)` to log strings into the <Logs> tab of the 🐞  <Debugger>.\n- Inspect failing video tests <frame by frame>.\n- Compare failing audio tests <channel by channel>.",
 	decimal: "Decimal",
 	default_bus: " [default bus]",
 	delete: "Delete",
@@ -106,7 +106,7 @@ export default {
 	error_loading_save_state: "Error loading save state: ",
 	error_safari:
 		"Sorry, Safari has known issues that break the game. Please use a Chromium-based browser or Firefox.",
-	error_unknown_level: "Unexisting level: ",
+	error_unknown_level: "Nonexistent level: ",
 	export_error: "Could not export the emulator:",
 	export_success:
 		"Exported FixedNEEES.zip. Extract it and deploy as a static website.",
@@ -160,6 +160,7 @@ export default {
 	language: "Language",
 	language_en: "English",
 	language_es: "Spanish",
+	language_fr: "French",
 	language_ru: "Russian",
 	last_version: " (last version)",
 	left: "Left",

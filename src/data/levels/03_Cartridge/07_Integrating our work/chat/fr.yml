@@ -1,0 +1,38 @@
+---
+main:
+  run: |
+    set((m) => m.chat.winOnEnd = true);
+  messages:
+  - notre 💾  Cartridge est complète !
+  - ça veut dire que je peux maintenant patcher ton code pour que BrokenNEEES utilise ton implémentation
+  - et on se débarrassera au moins du bug CHR-ROM cassé 🐞
+  - on y va ?
+  responses:
+  - ouais, j'veux essayer ! [tryit]
+
+tryit:
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 3000);
+  messages:
+  - ok, donne-moi quelques secondes
+  - c'est une tâche complexe 👀
+  - c'est parti
+  - " ... ... "
+  events:
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useCartridge");
+  messages:
+  - ✅  c'est fait !
+  - <! 💾  Cartridge integrated.
+  - maintenant, l'icône 💾  dans l'émulateur va briller ✨
+  - tu peux basculer entre ton implémentation et la version cassée en cliquant dessus
+  - essaie d'ouvrir des jeux, ça sera vachement mieux 😉
+  responses:
+  - ▶️  continuer [end]

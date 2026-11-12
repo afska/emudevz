@@ -1,0 +1,14 @@
+---
+main:
+  messages:
+  - <{owl.png;30x30}>
+  - ok, je laisse le reste des mappers comme <un exercice pour le lecteur>
+  - il y en a plein ! 👀
+  - en fait, le format iNEEES (dans sa version non étendue) supporte au moins 256 mappers 🤯
+  - pour avoir la même compatibilité que BrokenNEEES, tu devrais viser <MMC1> (mapper 1), <CNROM> (mapper 3) et <MMC3> (mapper 4)
+  - il y a plein de documentation en ligne, alors va voir !
+  - |-
+    aussi, consulte ce guide pour améliorer encore ton émulateur :
+      📄  ~/docs/suggested_improvements.fr.md~
+  - bye !!
+  responses: []

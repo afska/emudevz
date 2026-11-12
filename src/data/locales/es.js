@@ -83,7 +83,7 @@ export default {
 	crt_filter: "Filtro CRT",
 	current_level: " (nivel actual)",
 	debug_tips:
-		"🐞  Consejos de depuración:\n- Ejecuta `test -v [testNumber]` en el <test que falla>.\n- Usa el comando `repl` para probar <expresiones JS>.\n- Agrega una sentencia `debugger;` a tu código y usa las <dev tools>.\n- Usa `console.log(...)` y las <dev tools> (¡pero sacalo después!).\n- Usa `EmuDevz.log(...)` para mostrar strings en la pestaña <Log> del 🐞  <Depurador>.\n- Inspecciona los tests de video que fallan <frame por frame>.\n- Compara los tests de audio que fallan <canal por canal>.",
+		"🐞  Consejos de depuración:\n- Ejecuta `test -v [testNumber]` en el <test que falla>.\n- Usa el comando `repl` para probar <expresiones JS>.\n- Agrega una sentencia `debugger;` a tu código y usa las <dev tools>.\n- Usa `console.log(...)` y las <dev tools> (¡pero sacalo después!).\n- Usa `EmuDevz.log(...)` para mostrar strings en la pestaña <Logs> del 🐞  <Depurador>.\n- Inspecciona los tests de video que fallan <frame por frame>.\n- Compara los tests de audio que fallan <canal por canal>.",
 	decimal: "Decimal",
 	default_bus: " [bus default]",
 	delete: "Borrar",
@@ -156,8 +156,8 @@ export default {
 	integration_supertiltbro_playing: "Jugando desafío",
 	integration_supertiltbro_shouldbesettofair: 'debería estar en "Fair"',
 	integration_supertiltbro_shouldbesettofive: 'debería estar en "Five"',
-	integration_supertiltbro_stocks: "Golpes",
-	integration_teslavsedison_wrongmode: "Modo incorrecto!",
+	integration_supertiltbro_stocks: "Stocks",
+	integration_teslavsedison_wrongmode: "¡Modo incorrecto!",
 	integration_wolfspirit_level: "Nivel",
 	integration_wolfspirit_lives: "vidas",
 	is_now_unlocked: 'está desbloqueado. Visita el capítulo "👾".',
@@ -166,6 +166,7 @@ export default {
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",
+	language_fr: "Francés",
 	language_ru: "Ruso",
 	last_version: " (última versión)",
 	left: "Izquierda",
@@ -360,7 +361,7 @@ export default {
 	theme_code_editor_description: "Colores del editor de código.",
 	theme_code_editor_title: "Editor de código",
 	theme_cpu_debugger_description:
-		"Apariencia del depurador usado en el capítulo de Assembly.",
+		"Apariencia del depurador usado en el capítulo de Ensamblador.",
 	theme_cpu_debugger_title: "Depurador de CPU",
 	theme_crt_filter_description:
 		"Colores del filtro CRT y ajuste fino de las scanlines.",
@@ -394,8 +395,8 @@ export default {
 	up: "Arriba",
 	using_bugged_emulator: "Usando BrokenNEEES ❌",
 	using_default_emulator: "Usando BrokenNEEES ⚠️",
-	using_gamepad1: "Usando joystick 1",
-	using_gamepad2: "Usando joystick 2",
+	using_gamepad1: "Usando mando 1",
+	using_gamepad2: "Usando mando 2",
 	using_keyboard: "Usando teclado: ",
 	using_old_snapshot: "⚠️ Usando una copia solo lectura de tu código viejo.",
 	using_old_snapshot_tooltip:

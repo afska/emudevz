@@ -8,6 +8,7 @@ it("when $4080 is 7, it writes $EE to $40BF", () => {
 })({
 	locales: {
 		es: "cuando $4080 es 7, escribe $EE a $40BF",
+		fr: "quand $4080 vaut 7, écrit $EE dans $40BF",
 		ru: "если $4080 содержит 7, записывает $EE в $40BF",
 	},
 });
@@ -23,6 +24,7 @@ it("when $4080 is not 7, it writes $AA to $40BF", () => {
 })({
 	locales: {
 		es: "cuando $4080 no es 7, escribe $AA a $40BF",
+		fr: "quand $4080 ne vaut pas 7, écrit $AA dans $40BF",
 		ru: "если $4080 не содержит 7, записывает $AA в $40BF",
 	},
 });

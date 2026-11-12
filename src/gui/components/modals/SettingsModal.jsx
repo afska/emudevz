@@ -81,23 +81,18 @@ class SettingsModal extends PureComponent {
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group>
+						<Form.Group controlId="language">
 							<Form.Label>🗣️ {locales.get("language")}</Form.Label>
-							<div className={styles.options}>
+							<Form.Select
+								value={language}
+								onChange={(e) => setLanguage(e.target.value)}
+							>
 								{LANGUAGES.map((it) => (
-									<div key={`language-${it}`}>
-										<Form.Check
-											type="radio"
-											id={`language-${it}`}
-											label={locales.get(`language_${it}`)}
-											checked={it === language}
-											onChange={() => {
-												setLanguage(it);
-											}}
-										/>
-									</div>
+									<option key={it} value={it}>
+										{locales.get(`language_${it}`)}
+									</option>
 								))}
-							</div>
+							</Form.Select>
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
 							<Form.Label>💨 {locales.get("chat_speed")}</Form.Label>

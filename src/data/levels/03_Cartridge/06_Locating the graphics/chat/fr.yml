@@ -1,0 +1,20 @@
+---
+main:
+  messages:
+  - maintenant, les graphismes 👾
+  - 📚  crée une méthode ```javascript chr()``` qui retourne un `Uint8Array` les contenant
+  - les graphismes sont situés juste après le programme, mais rappelle-toi qu'ils sont optionnels !
+  - <{chr.png}>
+  - 📚  si l'en-tête indique que le jeu utilise la CHR-RAM plutôt que la CHR-ROM, retourne simplement un ```javascript new Uint8Array(8192)```
+  responses:
+  - (*) j'ai l'impression d'être décalé de 99 ? [offby99]
+
+
+offby99:
+  messages:
+  - les fichiers ne se terminent pas forcément par leur <section de caractères> (ils peuvent avoir du <rembourrage> ou des <données supplémentaires> à la fin), donc ne le suppose pas !
+  - coupe les octets en sautant l'en-tête, le rembourrage de 512 octets (si présent), et la zone PRG-ROM
+  - et n'utilise pas ```javascript bytes.length``` ni des slices négatifs
+  - les tests ajoutent 99 <octets de rembourrage> juste pour s'assurer que tu gères ça correctement, mais ne <code pas en dur> ce 99, sinon rien ne marchera !
+  responses:
+  - ...main

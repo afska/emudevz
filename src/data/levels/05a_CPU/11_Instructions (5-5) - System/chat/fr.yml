@@ -1,0 +1,105 @@
+---
+main:
+  messages:
+  - il ne reste que deux instructions 🎉
+  - "et l'une d'elles est assez triviale : `NOP`"
+  - "`NOP` signifie « No Operation », et ne fait rien !"
+  - les développeurs de jeux l'utilisaient comme espace réservé, ou pour introduire des délais de synchronisation afin de synchroniser leurs systèmes
+  - et la dernière, c'est `BRK`, qui génère une <interruption logicielle>
+  responses:
+  - c'est quoi une interruption ? [interrupt]
+
+interrupt:
+  messages:
+  - c'est un signal qui met en pause le programme en cours pour gérer un événement spécifique
+  - quand un tel événement survient, le CPU sauvegarde son état ([PC] et le registre de flags) dans la pile
+  - et saute vers une adresse mémoire bien connue (appelée vecteur) associée à cet événement
+  - après avoir géré l'événement, l'exécution reprend généralement là où elle s'était arrêtée
+  - "dans  la NEEES, il y a 4 événements :"
+  - "🔁  <RESET> : déclenché quand le système est allumé"
+  - "📹  NMI : déclenché quand la PPU a fini de dessiner une frame"
+  - "✋  <IRQ> : déclenché par l'APU ou du hardware externe comme les mappers"
+  - "🔢  <BRK> : déclenché par une instruction `BRK` dans le code machine"
+  responses:
+  - tu peux me donner un exemple ? 🤔 [example]
+
+example:
+  messages:
+  - bien sûr ! imagine que tu es un jeu
+  - tu dois déplacer tes sprites quand la PPU a fini de rendre sa frame courante, pour éviter de le faire pendant qu'elle dessine (ce qui causerait des glitches 💥 )
+  - donc, tu mets ton code de déplacement des sprites à -par exemple- l'adresse $AA00
+  - ce sera l'emplacement de ton <gestionnaire d'interruption>
+  - et ensuite tu t'« abonnes » à l'événement NMI en plaçant un pointeur vers $AA00 dans le vecteur de NMI (qui est ~$FFFA/B~)
+  - (en Little Endian, donc $FFFA contient $00 et $FFFB contient $AA)
+  - consulte 📄  ~/docs/cpu/interrupt_example.md~
+  responses:
+  - que se passerait-il quand un NMI survient ? [nmi]
+
+nmi:
+  messages:
+  - "dans cet exemple, quand le NMI est déclenché, le CPU va :"
+  - 🧱  pousser [PC] et les flags sur la pile
+  - 🏁  mettre ~I=1~, ce qui désactive les interruptions utilisateur
+  - 🐏  récupérer la valeur $AA00 en lisant $FFFA et $FFFB (le vecteur de NMI)
+  - 🦘  sauter vers $AA00
+  - 🚲  consommer 7 cycles pendant tout ça
+  - ensuite, le gestionnaire d'interruption déplacera les sprites et exécutera `RTI` (« Return from Interrupt ») pour restaurer l'état précédent
+  responses:
+  - (*) et les 7 cycles ? 🚲 [cycle]
+  - (*) quel est le but du flag ~I~ ? 🏁 [iflag]
+  - super ! je pense que je peux l'implémenter 😎 [exercise]
+
+cycle:
+  messages:
+  - c'est le temps qu'il faut pour traiter une interruption 🕖
+  - on n'a pas beaucoup parlé des cycles jusqu'ici
+  - je t'ai juste fait ajouter deux propriétés mystérieuses à la classe 🧠  `CPU`, tu te souviens ?
+  - celles appelées `cycles` et `extraCycles`
+  - je t'expliquerai ça plus tard, promis 😅
+  responses:
+  - ...nmi
+
+iflag:
+  messages:
+  - c'est le flag « Interrupt Disable », et comme son nom l'indique, il désactive les interruptions
+  - le système met ~I=1~ pour que les gestionnaires d'interruption ne se fassent pas... euh... interrompre 😅
+  - |-
+    le truc, c'est que... seuls les événements <IRQ> peuvent être désactivés
+    <RESET> ne peut pas être ignoré pour des raisons évidentes
+    <BRK> est déclenché intentionnellement par le code des jeux, donc ça n'a pas de sens de l'ignorer
+    NMI signifie « Non-maskable interrupt » et c'est très important, donc il ne peut pas être masqué (c'est-à-dire « désactivé »)
+  responses:
+  - ...nmi
+
+exercise:
+  messages:
+  - super
+  - on va modéliser les interruptions comme des objets `{ id, vector }`
+  - consulte 📄  ~/lib/interrupts.js~
+  - |-
+    📚  ajoute cette méthode à ton 🧠  `CPU` :
+    **interrupt(interrupt, withBFlag = false)**:
+      **->** si ```javascript interrupt.id === "IRQ"``` et ~I=1~, retourne 0
+        (l'interruption est ignorée)
+      **->** pousse [PC] sur la pile
+      **->** pousse l'octet des flags sur la pile
+        (si `withBFlag` est ```javascript true```, la valeur est poussée avec son bit 4 activé)
+        (sinon, la valeur est poussée telle quelle)
+      **->** avance de 7 cycles (```javascript this.cycle += 7```)
+      **->** met ~I=1~ dans le registre de flags
+      **->** met [PC] = le résultat de la lecture des adresses ```javascript interrupt.vector``` et ```javascript interrupt.vector+1``` en Little Endian
+        (rappelle-toi que tu as une méthode `read16(...)` pour ça)
+      **->** retourne 7
+  responses:
+  - (*) et `BRK` ? [brk]
+
+brk:
+  messages:
+  - |-
+    📚  tu peux implémenter l'instruction `BRK` en :
+      - incrémentant [PC] :
+        ```javascript cpu.pc.increment()```
+      - déclenchant l'interruption ~BRK~ :
+        ```javascript cpu.cycle -= cpu.interrupt(interrupts.BRK, true)```
+  responses:
+  - ...exercise

@@ -103,7 +103,7 @@ example:
     });
     bus.emit("content-changed");
   messages:
-  - aquí tienes un ejemplo de un frontend de emulador simplificado
+  - aquí tienes un ejemplo simplificado del frontend del emulador
   - interactúa con la clase `Emulator` que mostré en el nivel anterior
   - ¡échale un vistazo!
   responses:

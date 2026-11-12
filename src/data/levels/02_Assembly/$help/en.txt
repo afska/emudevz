@@ -25,5 +25,5 @@
 `PHA`         ; Pushes [A] onto the Stack
 `PLA`         ; Pulls from the Stack to [A]
 `JSR $4029`   ; Jumps to subroutine in $4029
-`RTS`         ; Jumps back to the previous instruction
+`RTS`         ; Returns to the instruction after `JSR`
 `BRK`         ; Ends the program

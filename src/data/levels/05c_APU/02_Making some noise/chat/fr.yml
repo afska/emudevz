@@ -1,0 +1,65 @@
+---
+main:
+  messages:
+  - ⚠️  <AVERTISSEMENT DE VOLUME !!!> ⚠️
+  - <assure-toi que le volume de ton appareil est vraiment bas pour ne pas te blesser les oreilles>
+  - faisons du bruit !
+  - d'abord, je vais intégrer ton APU 🔊  dans l'émulateur
+  responses:
+  - vas-y [integrate]
+
+integrate:
+  messages:
+  - ça devrait être rapide...
+  run-after-messages: |
+    level.startEffect("earthquake");
+    setTimeout(() => {
+      bus.emit("patching-end");
+    }, 500);
+  events:
+  - patching-end [done]
+
+done:
+  run: |
+    level.stopEffect();
+    book.unlock("useAPU");
+  messages:
+  - ✅  fait !
+  - <! 🔊  APU intégré.
+  - maintenant, l'icône 🔊  dans l'émulateur va briller ✨
+  - comme il n'y a presque pas de code APU, on n'aura pas de son pour l'instant
+  - mais on va y arriver !
+  - codons un <exemple d'onde>
+  responses:
+  - comme une onde carrée ? ⏹️ [exercise]
+
+exercise:
+  messages:
+  - exact ! pour l'instant, tu dois avoir quelque chose comme ```javascript onSample(this.sample)```
+  - |-
+    📚  <avant> cet appel `onSample(...)`, ajoute :
+      ```javascript
+      // <test>
+      this.time = (this.time || 0) + 1 / 44100;
+      const frequency = 440;
+      const period = 1 / frequency;
+      const dutyCycle = 0.5;
+      this.sample = (this.time % period) < period * dutyCycle ? 1 : 0;
+      // </test>```
+  - essaie ! en chargeant une ROM, tu devrais entendre une onde carrée jouant la note <A4> (~440~ Hz) 🎵
+  responses:
+  - (*) c'est quoi le rapport cyclique ? [duty]
+
+duty:
+  messages:
+  - dans une onde pulse, le rapport cyclique définit le pourcentage de temps pendant lequel le signal est <haut> (vs <bas>)
+  - par exemple, avec un rapport cyclique de <50%>, il passe le même temps dans les deux états, et on appelle ça une onde carrée
+  - <{wave_square.png;32x32}>
+  - avec un rapport cyclique de <25%>, ça ressemblerait à ça
+  - <{wave_square_25duty.png;32x32}>
+  - et avec <75%>
+  - <{wave_square_75duty.png;32x32}>
+  - elles sonnent toutes <très différemment> ! essaie de changer la constante `dutyCycle` pour voir comment ça réagit
+  - (n'oublie pas de remettre `dutyCycle` à `0.5` après, les tests s'attendent à la forme d'onde exacte du code d'exemple 😉 )
+  responses:
+  - ...exercise

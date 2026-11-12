@@ -1,0 +1,42 @@
+---
+main:
+  messages:
+  - le 📦  Canal DMC donne aux jeux la capacité d'émettre leurs propres samples
+  - ça permet de créer n'importe quelle forme d'onde ; pas seulement des ondes pulsées, triangulaires, ou du bruit !
+  - "il a deux modes de fonctionnement :"
+  - "📥  <Chargement direct> : les jeux chargent directement un sample 7 bits dans l'APU (haute qualité, mais gourmand en CPU)"
+  - "🤏  <Delta Modulation> : l'APU décode automatiquement un flux DPCM en utilisant la technique de Delta Modulation, où chaque sample est stocké comme la différence (<delta>) par rapport au précédent (basse qualité, mais plus léger)"
+  responses:
+  - (*) le nom est marrant [name]
+  - le chargement direct ça a l'air plus simple [exercise]
+
+name:
+  messages:
+  - ah bon ? pourquoi ?
+  - c'est le <Delta Modulation Channel Channel>
+  - je vois rien de bizarre là-dedans
+  responses:
+  - ...main
+
+exercise:
+  messages:
+  - ouais, pour nous c'est plus simple à implémenter
+  - 📚  crée une classe `DMCChannel`, en utilisant 📄  ~/tmpl/apu/DMCChannel.js~ comme template
+  - |-
+    📚  dans 🔊  `APU` :
+    **->** importe le canal et ajoute une clé `dmc` à ```javascript this.channels``` avec une nouvelle instance
+      (note que le constructeur reçoit à la fois `apu` et `cpu` ! on en aura besoin plus tard !)
+    **->** dans `step()`, avant d'incrémenter le compteur de samples, appelle ```javascript this.channels.dmc.step()```
+    **->** aussi dans `step()`, ajoute le Canal DMC dans le mix :
+      ```javascript const dmc = this.channels.dmc.sample();
+      this.sample = (pulse1 + pulse2 + triangle + noise + dmc) * 0.01;
+
+      onSample(this.sample, pulse1, pulse2, triangle, noise, dmc);```
+  - |-
+      📚  implémente dans 📥  `DMCLoad` :
+      **onLoad()**:
+        **->** utilise ```javascript this.addField(...)``` pour définir un champ `directLoad` de 7 bits à partir du bit 0
+      **onWrite(value)**:
+        **->** définit la valeur avec ```javascript this.setValue(...)```
+        **->** définit le <sample de sortie> du canal à ```javascript this.directLoad```
+  responses: []

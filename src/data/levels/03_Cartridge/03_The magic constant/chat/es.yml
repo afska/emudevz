@@ -64,7 +64,7 @@ debug:
   - 🐞  agregando una sentencia `debugger;` en tu código y usando las herramientas de desarrollo del navegador
   - 🧾  llamando a `console.log(...)`, que muestra algo en las herramientas de desarrollo del navegador
   - |-
-    🗃️  llamando a `EmuDevz.log(...)`, que muestra una cadena en la pestaña `Log` del 🐞  <Depurador>
+    🗃️  llamando a `EmuDevz.log(...)`, que muestra una cadena en la pestaña `Logs` del 🐞  <Depurador>
       (esto será útil más adelante, cuando ejecutes ROMs en el emulador)
   responses:
   - ...exercise

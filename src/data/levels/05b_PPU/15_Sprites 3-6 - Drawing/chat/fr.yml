@@ -1,0 +1,93 @@
+main:
+  messages:
+  - puisqu'on sait déjà quels sprites on doit dessiner et comment rendre les tiles,
+  - dessiner les sprites sera assez <facile>
+  - |-
+    notre méthode pour rendre une seule 🌠  scanline ressemblera à ça :
+      ```javascript
+      renderScanline() {
+        const sprites = this._evaluate();
+        this._render(sprites); // il faut définir ça !
+      }```
+  responses:
+  - facile... vraiment ? [exercise]
+
+exercise:
+  messages:
+  - voilà ce qu'on va faire
+  - |-
+      📚  dans la classe 🖥️  `PPU`, <modifie> :
+      **_onVisibleLine()**:
+        **->** juste en dessous de l'appel à `renderScanline()` de `backgroundRenderer`...
+        **->** ...fais pareil avec `spriteRenderer`
+  - |-
+      📚  et maintenant, implémente ces méthodes dans 🛸  `SpriteRenderer` :
+      **renderScanline()**:
+        **->** utilise le code de mon message précédent !
+      **_render(sprites)**:
+        **->** détermine la coordonnée y :
+          ```javascript this.ppu.scanline;```
+          (appelons ça `y`)
+        **->** pour chaque `sprite` dans `sprites` :
+          **->** calcule la coordonnée Y "interne" :
+            ```javascript sprite.diffY(y)```
+            (appelons ça `insideY`)
+          **->** instancie une 🕊️  `Tile` en passant la PPU, l'id de la pattern table, l'id du tile, et `insideY % 8`
+            (appelons ça `tile`)
+          **->** crée un tableau avec les 4 couleurs de palette de ```javascript sprite.paletteId```
+            (appelons ça `paletteColors`)
+          **->** ```javascript for (let insideX = 0; insideX < 8; insideX++)``` :
+            **->** récupère l'index de couleur pour ce pixel avec ```javascript tile.getColorIndex(insideX)```
+              (appelons ça `colorIndex`)
+            **->** si ```javascript colorIndex > 0``` (c'est-à-dire que le pixel n'est pas transparent) :
+              **->** appelle ```javascript this.ppu.plot(...)``` pour dessiner le pixel
+  responses:
+  - (*) quelle pattern table utiliser ? [patterntable]
+  - (*) quel id de tile utiliser ? [tileid]
+  - (*) pourquoi ~insideY % 8~ ? [whymod8]
+  - (*) comment obtenir les couleurs de palette ? [palette]
+  - (*) quel ~X~ et ~Y~ utiliser lors du tracé des pixels ? [coordinates]
+  - (*) quelle couleur utiliser lors du tracé des pixels ? [color]
+
+patterntable:
+  messages:
+  - demande au sprite !
+  - "```javascript sprite.patternTableId```"
+  responses:
+  - ...exercise
+
+tileid:
+  messages:
+  - le sprite le sait !
+  - "```javascript sprite.tileIdFor(insideY)```"
+  responses:
+  - ...exercise
+
+whymod8:
+  messages:
+  - pour bien gérer les sprites ~8x16~ !
+  - quand le mode ~8x16~ est activé via 🎛️  PPUCtrl, chaque sprite utilise deux tiles empilées verticalement
+  - donc, par exemple, ~y=10~ dans un sprite ~8x16~, ça correspond à ~y=2~ de sa deuxième tile
+  responses:
+  - ...exercise
+
+palette:
+  messages:
+  - |-
+    tu peux obtenir, par exemple, la <couleur 2> avec :
+    ```javascript this.ppu.getColor(sprite.paletteId, 2)```
+  responses:
+  - ...exercise
+
+coordinates:
+  messages:
+  - la position ~x~ doit être ```javascript sprite.x + insideX```
+  - la position ~y~ doit être la scanline courante
+  responses:
+  - ...exercise
+
+color:
+  messages:
+  - accéder à `paletteColors` avec le `colorIndex` te donnera la ~couleur~
+  responses:
+  - ...exercise

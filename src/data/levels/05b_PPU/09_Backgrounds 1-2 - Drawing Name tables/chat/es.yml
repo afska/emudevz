@@ -27,7 +27,7 @@ exercise:
   - |-
     📚  ahora, en la clase 🏞️  `BackgroundRenderer`, define:
     **renderScanline()**:
-      **->** <agrega el código necesario> para renderizar una línea completa del fondo
+      **->** <agrega el código necesario> para renderizar una scanline completa del fondo
   - ¡adiós!
   responses:
   - "\"¿agrega el código necesario\"? ¿en serio? ¿eso es todo? [questions]"

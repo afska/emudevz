@@ -16,12 +16,14 @@ If you want to add support for other languages, you should change these files (e
 - Add a `ja.yml` to each level in `src/data/levels` for the chat script.
   - See `docs/chat_syntax.md` for some other considerations about the chat format.
   - Use the same emojis as the English version.
+  - Remember that emojis need an extra space to render correctly!
   - Ensure the JS scripts are the same (besides small details like linking to `.ja.md` files instead of `.en.md`) and the final translated file ends up with the same number of lines as the English version.
   - Also, ensure the JS code snippets shown to the user are the same, but comments should be translated.
   - System messages starting with `<! ` should also be translated.
   - For addresses where the address space is explicit (e.g. `$PPU $3F00`), keep the dollar sign before `PPU`, since this allows rendering the `$PPU` as a dictionary link, which links to the `PPU address` entry.
   - The final credits shouldn't be localized.
 - Change the `meta.json` file in each level to localize the `name` and the console `subtitle` keys.
+  - Use the same emojis as the English version.
   - In the `FAQ` level, also update the `links` key.
 - Change the `chapter.json` file in each chapter to localize the `name` and `description` keys.
 - Add localized documentation files (look for `*.en.md` files and create equivalent `*.ja.md` files) and update the `copy.js` scripts to copy them.
@@ -47,6 +49,10 @@ If you want to add support for other languages, you should change these files (e
 		"ru": "🏁 Флаги"
 	}
 ```
+
+- After a game introduces a concept (e.g. "Backgrounds" or "Sprites"), it tries to use that same word consistently so the dictionary can pick those words, highlight them, and link them to their definition. If your language has two different ways of saying a technical word, please pick one and use consistently.
+
+- Don't translate names like "EmuDevz", "BrokenNEEES", or "Supporter Pack".
 
 - Some languages might require some rework in the game. RTL languages might be too difficult to support.
 

@@ -2,6 +2,7 @@
 	"name": {
 		"en": "💎⛏️ Minekart Madness",
 		"es": "💎⛏️ Minekart Madness",
+		"fr": "💎⛏️ Minekart Madness",
 		"ru": "💎⛏️ Minekart Madness"
 	},
 	"ui": {
@@ -15,6 +16,7 @@
 					"subtitle": {
 						"en": "",
 						"es": "",
+						"fr": "",
 						"ru": ""
 					}
 				}

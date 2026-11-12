@@ -64,7 +64,7 @@ export default {
 	command_mkdir_description:
 		"Создать директории (например: `mkdir dir1 dir2`).",
 	command_mv_description:
-		"Переместить или переименовать что нибудь (например: `mv old_path new_path`).",
+		"Переместить или переименовать что-нибудь (например: `mv old_path new_path`).",
 	command_open_description:
 		"Открыть файлы (например: `open file1.txt file2.js`, или `open *`).",
 	command_repl_avoid_collapsing:
@@ -72,7 +72,7 @@ export default {
 	command_repl_description: "Открыть JavaScript REPL.",
 	command_restore_description:
 		"Восстановить файлы `/code` с предыдущего уровня.",
-	command_rm_description: "Удалить что нибудь (например: `rm something`).",
+	command_rm_description: "Удалить что-нибудь (например: `rm something`).",
 	command_test_description: "Проверить решение.",
 	command_touch_description:
 		"Создать файлы (например: `touch file1.txt file2.js`).",
@@ -86,7 +86,7 @@ export default {
 	crt_filter: "CRT фильтр",
 	current_level: " (текущий уровень)",
 	debug_tips:
-		"🐞  Советы по отладке:\n- Запусти `test -v [testNumber]` для <непройденного теста>.\n- Используй команду `repl` для проверки <JS-выражений>.\n- Добавь `debugger;` в код и используй <инструменты разработчика>.\n- Вызови `console.log(...)` и используй <инструменты разработчика> (но потом удали вызов!).\n- Вызови `EmuDevz.log(...)`, чтобы выводить строки во вкладку <Logs> в 🐞  <Debugger>.\n- Изучай непройденные видеотесты <кадр за кадром>.\n- Сравнивай непройденные аудиотесты <канал за каналом>.",
+		"🐞  Советы по отладке:\n- Запусти `test -v [testNumber]` для <непройденного теста>.\n- Используй команду `repl` для проверки <JS-выражений>.\n- Добавь `debugger;` в код и используй <инструменты разработчика>.\n- Вызови `console.log(...)` и используй <инструменты разработчика> (но потом удали вызов!).\n- Вызови `EmuDevz.log(...)`, чтобы выводить строки во вкладку <Logs> в 🐞  <отладчике>.\n- Изучай непройденные видеотесты <кадр за кадром>.\n- Сравнивай непройденные аудиотесты <канал за каналом>.",
 	decimal: "Десятичный",
 	default_bus: " [шина по умолчанию]",
 	delete: "Удалить",
@@ -160,7 +160,7 @@ export default {
 		'должно быть установлено в "Fair"',
 	integration_supertiltbro_shouldbesettofive:
 		'должно быть установлено в "Five"',
-	integration_supertiltbro_stocks: "Удары",
+	integration_supertiltbro_stocks: "Stocks",
 	integration_teslavsedison_wrongmode: "Неверный режим!",
 	integration_wolfspirit_level: "Уровень",
 	integration_wolfspirit_lives: "жизни",
@@ -170,6 +170,7 @@ export default {
 	language: "Язык",
 	language_en: "Английский",
 	language_es: "Испанский",
+	language_fr: "Французский",
 	language_ru: "Русский",
 	last_version: " (Последняя версия)",
 	left: "Влево",
@@ -209,7 +210,7 @@ export default {
 	player_1: "- Игрок 1 -",
 	player_2: "- Игрок 2 -",
 	plot:
-		"В 32767 году мир пережил масштабную кибератаку, которая <b>уничтожила</b> весь интернет. С тех пор ты и твой интернет друг пытаетесь разобраться в редких кусках документации о NEEES - древней игровой консоли, выпущенной в 1983 году. С помощью своих навыков программирования тебе предстоит собрать эмулятор, способный запускать старые игры, чтобы сохранить историю видеоигр.",
+		"В 32767 году мир пережил масштабную кибератаку, которая <b>уничтожила</b> весь интернет. С тех пор ты и твой интернет-друг пытаетесь разобраться в редких кусках документации о NEEES - древней игровой консоли, выпущенной в 1983 году. С помощью своих навыков программирования тебе предстоит собрать эмулятор, способный запускать старые игры, чтобы сохранить историю видеоигр.",
 	ppu: "PPU",
 	press_any_key_to_continue: "⌨️ Нажми любую кнопку, чтобы продолжить.",
 	press_key_to_enable_audio: "Нажми любую клавишу, чтобы включить звук!",
@@ -217,13 +218,13 @@ export default {
 	prompt_too_long: "Что?! Промт слишком длинный!",
 	psa_savefile: "⚠️ ВНИМАНИЕ: Регулярно делай бэкап сохранения!!!",
 	register_A: "Регистр-аккумулятор",
-	register_flags_C: "Флаг Переноса",
-	register_flags_D: "Десятичный Флаг",
-	register_flags_I: "Флаг Запрета Прерываний",
-	register_flags_N: "Флаг Отрицания",
+	register_flags_C: "Флаг переноса",
+	register_flags_D: "Десятичный флаг",
+	register_flags_I: "Флаг запрета прерываний",
+	register_flags_N: "Флаг отрицательного результата",
 	register_flags_U: "Неиспользуемый флаг",
-	register_flags_V: "Флаг Переполнения",
-	register_flags_Z: "Флаг Нуля",
+	register_flags_V: "Флаг переполнения",
+	register_flags_Z: "Флаг нуля",
 	register_PC: "Счётчик Команд",
 	register_SP: "Указатель Стека",
 	register_X: "Регистр X",
@@ -231,7 +232,7 @@ export default {
 	repl_code_error: "⚠️ В твоём коде ошибки. Объект `$` будет недоступен.",
 	repl_code_success: "💬  Изучи свой код через объект `$`.",
 	reset_level: "Сбросить прогресс уровня",
-	resize_warning: "Изменение размера недоступно во время выбора текста.",
+	resize_warning: "Изменение размера недоступно во время ввода текста.",
 	restore: "Восстановить",
 	restore_defaults: "Сбросить до заводских",
 	restore_warning_all:
@@ -308,7 +309,7 @@ export default {
 	supporter_theme_option_solarizedLight: "Solarized Light",
 	supporter_title: "🚀 Настройки Supporter Pack",
 	sync_emulator: "Синхронизировать эмулятор",
-	sync_to_audio: "Синхронизация по аудио",
+	sync_to_audio: "Синхронизация по звуку",
 	sync_to_video: "Синхронизация по видео",
 	take_me_to_the_action: "погнали",
 	template_file: "📑 Это шаблонный файл.",
@@ -318,7 +319,7 @@ export default {
 	tests_audio_apu_not_unlocked: "❌  APU не разблокирован.",
 	tests_audio_apu_output: "Выход APU",
 	tests_audio_expected_output: "Ожидаемый результат",
-	tests_audio_failed1: "❌  Неверные семплы (кадр ",
+	tests_audio_failed1: "❌  Неверные отсчёты (кадр ",
 	tests_audio_failed2: " из ",
 	tests_audio_failed3: ")",
 	tests_audio_no_tv: "❌  Нет телевизора!",
