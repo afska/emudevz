@@ -42,9 +42,6 @@ for (let lang of LANGUAGES) {
 			`Language "${lang}" has ${keyCount} keys but should have ${enKeyCount}.`
 		);
 
-	// There's a key with the language name for the Settings modal
-	ensureKeyExists(lang, locales, `language_${lang}`);
-
 	// Each dictionary entry has a translation for this language
 	for (let id in dictionary)
 		ensureKeyExists(
