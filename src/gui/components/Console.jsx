@@ -42,13 +42,19 @@ export default class Console extends PureComponent {
 			`---${level.name[locales.language]}---` ||
 			"?";
 		const subtitle = args.hideHelpHint ? null : locales.get("help_basic");
+		let links = args.links;
+		if (args.supportLink)
+			links = [
+				...(links ?? []),
+				{ text: locales.get("your_support"), isSupport: true },
+			];
 
 		await this.terminal.start(
 			title,
 			subtitle,
 			args.availableCommands,
 			args.startup,
-			args.links
+			links
 		);
 	}
 

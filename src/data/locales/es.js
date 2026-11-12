@@ -408,4 +408,5 @@ export default {
 	yes: "Sí",
 	your_cpu_works: "¡Tu CPU funciona!",
 	your_emulator: "Tu emulador",
+	your_support: "tu apoyo",
 };

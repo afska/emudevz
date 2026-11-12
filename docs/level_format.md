@@ -81,6 +81,7 @@ Component types and options:
   - `availableCommands`: list of available commands (`string[]`)
   - `hideHelpHint`: hides the basic help hint printed below the title (`boolean`) (default: `false`)
   - `links`: list of hyperlinks used by the terminal (`{ text: string, href: string }[]`)
+  - `supportLink`: makes the localized `your_support` text a link to the support page (`boolean`) (default: `false`)
 
 - `code`
   - `language`: programming language (`string`) (one of: `"javascript"`, `"asm"`, `"plaintext"`)

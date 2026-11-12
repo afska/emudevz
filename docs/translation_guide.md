@@ -21,7 +21,6 @@ If you want to add support for other languages, you should change these files (e
   - The final credits shouldn't be localized.
 - Change the `meta.json` file in each level to localize the `name` key.
   - Use the same emojis as the English version.
-  - In the `FAQ` level, also update the `links` key.
 - Change the `chapter.json` file in each chapter to localize the `name` and `description` keys.
 - Add localized documentation files (look for `*.en.md` files and create equivalent `*.ja.md` files) and update the `copy.js` scripts to copy them.
   - Don't localize files that simply end with `*.md` (without a language suffix), as these typically just contain an image and it's fine to have just one version for all languages.

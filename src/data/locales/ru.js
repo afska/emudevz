@@ -403,4 +403,5 @@ export default {
 	yes: "Да",
 	your_cpu_works: "Твой CPU работает!",
 	your_emulator: "Твой эмулятор",
+	your_support: "твоя поддержка",
 };
