@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🤖 Locating the program",
-		"es": "🤖 Ubicando el programa",
-		"fr": "🤖 Localiser le programme",
-		"ru": "🤖 Поиск программы"
+		"es": "🤖 Ubicando el programa"
 	},
 	"ui": {
 		"layout": "dual",

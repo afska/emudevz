@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📢 Making some noise",
-		"es": "📢 Haciendo ruido",
-		"fr": "📢 Faire du bruit",
-		"ru": "📢 Пошумим"
+		"es": "📢 Haciendo ruido"
 	},
 	"ui": {
 		"layout": "tripleRight",

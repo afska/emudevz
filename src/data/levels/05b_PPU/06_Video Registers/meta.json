@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🔢 Video Registers",
-		"es": "🔢 Registros de Video",
-		"fr": "🔢 Registres vidéo",
-		"ru": "🔢 Видеорегистры"
+		"es": "🔢 Registros de Video"
 	},
 	"ui": {
 		"run": "copy.js",

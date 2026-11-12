@@ -15,8 +15,6 @@ const LOCAL_CODE_FOLDER = "code";
 const CHAPTER_HELP_FILES = {
 	en: "$help/en.txt",
 	es: "$help/es.txt",
-	fr: "$help/fr.txt",
-	ru: "$help/ru.txt",
 };
 const CHAPTER_METADATA_FILE = "chapter.json";
 const LEVEL_METADATA_FILE = "meta.json";

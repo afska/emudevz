@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🌉 VRAM bridge",
-		"es": "🌉 Puente de VRAM",
-		"fr": "🌉 Pont VRAM",
-		"ru": "🌉 Мост к VRAM"
+		"es": "🌉 Puente de VRAM"
 	},
 	"ui": {
 		"layout": "tripleRight",

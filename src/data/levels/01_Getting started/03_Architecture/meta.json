@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🏟️ Architecture",
-		"es": "🏟️ Arquitectura",
-		"fr": "🏟️ Architecture",
-		"ru": "🏟️ Архитектура"
+		"es": "🏟️ Arquitectura"
 	},
 	"ui": {
 		"layout": "dual",

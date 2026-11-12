@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🧠 New CPU",
-		"es": "🧠 Nueva CPU",
-		"fr": "🧠 Nouveau CPU",
-		"ru": "🧠 Новый CPU"
+		"es": "🧠 Nueva CPU"
 	},
 	"ui": {
 		"run": "copy.js",

@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🌸 Emulator frontend",
-		"es": "🌸 Frontend del emulador",
-		"fr": "🌸 Interface de l'émulateur",
-		"ru": "🌸 Интерфейс эмулятора"
+		"es": "🌸 Frontend del emulador"
 	},
 	"ui": {
 		"layout": "dual",

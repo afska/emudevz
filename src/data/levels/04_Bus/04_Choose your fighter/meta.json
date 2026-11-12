@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🥊 Choose your fighter",
-		"es": "🥊 Elige tu luchador",
-		"fr": "🥊 Choisis ton combattant",
-		"ru": "🥊 Выбери своего бойца"
+		"es": "🥊 Elige tu luchador"
 	},
 	"ui": {
 		"layout": "mono",

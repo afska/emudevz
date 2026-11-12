@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🕊️ Tiles",
-		"es": "🕊️ Tiles",
-		"fr": "🕊️ Tiles",
-		"ru": "🕊️ Тайлы"
+		"es": "🕊️ Tiles"
 	},
 	"ui": {
 		"run": "copy.js",

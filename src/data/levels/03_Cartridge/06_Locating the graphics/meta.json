@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "👾 Locating the graphics",
-		"es": "👾 Ubicando los gráficos",
-		"fr": "👾 Localiser les graphismes",
-		"ru": "👾 Поиск графики"
+		"es": "👾 Ubicando los gráficos"
 	},
 	"ui": {
 		"layout": "dual",

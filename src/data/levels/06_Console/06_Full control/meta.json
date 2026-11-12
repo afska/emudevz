@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🤹 Full control",
-		"es": "🤹 Control total",
-		"fr": "🤹 Contrôle total",
-		"ru": "🤹 Полный контроль"
+		"es": "🤹 Control total"
 	},
 	"ui": {
 		"run": "copy.js",
@@ -182,10 +180,6 @@
 						{
 							"text": "Post-game guide",
 							"href": "https://github.com/afska/emudevz/pull/36"
-						},
-						{
-							"text": "Russian localization",
-							"href": "https://github.com/afska/emudevz/pull/48"
 						},
 						{
 							"text": "NesDev",

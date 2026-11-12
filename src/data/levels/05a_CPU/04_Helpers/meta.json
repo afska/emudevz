@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🙏 Helpers",
-		"es": "🙏 Utilidades",
-		"fr": "🙏 Utilitaires",
-		"ru": "🙏 Вспомогательные функции"
+		"es": "🙏 Utilidades"
 	},
 	"ui": {
 		"layout": "dual",

@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🔄 CPU, PPU and APU sync",
-		"es": "🔄 CPU, PPU and APU sync",
-		"fr": "🔄 Synchronisation CPU, PPU et APU",
-		"ru": "🔄 Синхронизация CPU, PPU и APU"
+		"es": "🔄 CPU, PPU and APU sync"
 	},
 	"ui": {
 		"layout": "dual",

@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🔊 New APU",
-		"es": "🔊 Nueva APU",
-		"fr": "🔊 Nouvel APU",
-		"ru": "🔊 Новый APU"
+		"es": "🔊 Nueva APU"
 	},
 	"ui": {
 		"run": "copy.js",

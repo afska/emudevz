@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📦 PPUData: Delayed reads",
-		"es": "📦 PPUData: Lecturas retrasadas",
-		"fr": "📦 PPUData : Lectures retardées",
-		"ru": "📦 PPUData: Чтение с задержкой"
+		"es": "📦 PPUData: Lecturas retrasadas"
 	},
 	"ui": {
 		"run": "copy.js",

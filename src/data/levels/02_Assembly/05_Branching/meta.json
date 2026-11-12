@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🔀 Branching",
-		"es": "🔀 Bifurcaciones",
-		"fr": "🔀 Branchements",
-		"ru": "🔀 Ветвление"
+		"es": "🔀 Bifurcaciones"
 	},
 	"ui": {
 		"layout": "triple",

@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🧸 📍 Nalleland",
-		"es": "🧸 📍 Nalleland",
-		"fr": "🧸 📍 Nalleland",
-		"ru": "🧸 📍 Nalleland"
+		"es": "🧸 📍 Nalleland"
 	},
 	"ui": {
 		"layout": "dual",

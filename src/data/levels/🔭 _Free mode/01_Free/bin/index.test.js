@@ -13,10 +13,6 @@ it("the file `/code/index.js` exports <an object> containing the `Emulator` clas
   locales: {
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene la clase `Emulator`",
-    fr:
-      "le fichier `/code/index.js` exporte <un objet> contenant la classe `Emulator`",
-    ru:
-      "файл `/code/index.js` экспортирует <объект>, содержащий класс `Emulator`",
   },
 });
 
@@ -35,7 +31,5 @@ it("`frame()` calls `onFrame` once", () => {
 })({
   locales: {
     es: "`frame()` llama a `onFrame` una vez",
-    fr: "`frame()` appelle `onFrame` une fois",
-    ru: "`frame()` вызывает `onFrame` один раз",
   },
 });

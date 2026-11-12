@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🌊🐈 Feline Flood Fiasco",
-		"es": "🌊🐈 Feline Flood Fiasco",
-		"fr": "🌊🐈 Feline Flood Fiasco",
-		"ru": "🌊🐈 Feline Flood Fiasco"
+		"es": "🌊🐈 Feline Flood Fiasco"
 	},
 	"ui": {
 		"layout": "dual",

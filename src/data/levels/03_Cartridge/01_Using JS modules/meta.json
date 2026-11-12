@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📄 Using JS modules",
-		"es": "📄 Usando módulos JS",
-		"fr": "📄 Utiliser les modules JS",
-		"ru": "📄 Использование JS-модулей"
+		"es": "📄 Usando módulos JS"
 	},
 	"ui": {
 		"run": "copy.js",

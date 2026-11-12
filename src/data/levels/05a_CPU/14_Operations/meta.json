@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📋 Operations",
-		"es": "📋 Operaciones",
-		"fr": "📋 Opérations",
-		"ru": "📋 Операции"
+		"es": "📋 Operaciones"
 	},
 	"ui": {
 		"run": "copy.js",

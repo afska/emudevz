@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🖥️ New PPU",
-		"es": "🖥️ Nueva PPU",
-		"fr": "🖥️ Nouveau PPU",
-		"ru": "🖥️ Новый PPU"
+		"es": "🖥️ Nueva PPU"
 	},
 	"ui": {
 		"run": "copy.js",

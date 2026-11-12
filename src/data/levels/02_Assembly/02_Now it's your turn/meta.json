@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "👆 Now it's your turn",
-		"es": "👆 Ahora es tu turno",
-		"fr": "👆 Maintenant c'est ton tour",
-		"ru": "👆 Теперь твоя очередь"
+		"es": "👆 Ahora es tu turno"
 	},
 	"ui": {
 		"layout": "triple",

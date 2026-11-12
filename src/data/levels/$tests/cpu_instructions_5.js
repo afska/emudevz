@@ -43,8 +43,6 @@ it("the CPU can handle <RESET> interrupts", () => {
 })({
   locales: {
     es: "la CPU puede manejar interrupciones <RESET>",
-    fr: "le CPU peut gérer les interruptions <RESET>",
-    ru: "CPU обрабатывает прерывания <RESET>",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -76,8 +74,6 @@ it("the CPU can handle NMI interrupts", () => {
 })({
   locales: {
     es: "la CPU puede manejar interrupciones NMI",
-    fr: "le CPU peut gérer les interruptions NMI",
-    ru: "CPU обрабатывает прерывания NMI",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -108,8 +104,6 @@ it("the CPU can handle <IRQ> interrupts", () => {
 })({
   locales: {
     es: "la CPU puede manejar interrupciones <IRQ>",
-    fr: "le CPU peut gérer les interruptions <IRQ>",
-    ru: "CPU обрабатывает прерывания <IRQ>",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -141,8 +135,6 @@ it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
 })({
   locales: {
     es: "la CPU ignora interrupciones <IRQ> si la bandera ~I~ está encendida",
-    fr: "le CPU ignore les interruptions <IRQ> si le flag ~I~ est actif",
-    ru: "CPU игнорирует прерывания <IRQ>, если флаг ~I~ установлен",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -155,8 +147,6 @@ it('`BRK`: argument == "no"', () => {
 })({
   locales: {
     es: '`BRK`: argument == "no"',
-    fr: '`BRK`: argument == "no"',
-    ru: '`BRK`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -184,9 +174,6 @@ it("`BRK`: increments [PC] and triggers a <BRK> interrupt (bit 4 from flags shou
   locales: {
     es:
       "`BRK`: incrementa [PC] y dispara una interrupción <BRK> (el bit 4 de las banderas debería estar encendido)",
-    fr: "`BRK` : incrémente [PC] et déclenche une interruption <BRK> (le bit 4 des flags devrait être actif)",
-    ru:
-      "`BRK`: увеличивает [PC] и вызывает прерывание <BRK> (бит 4 в байте флагов должен быть установлен)",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -211,8 +198,6 @@ it("`BRK`: works even if the ~I~ flag is set", () => {
 })({
   locales: {
     es: "`BRK`: funciona incluso cuando la bandera ~I~ está encendida",
-    fr: "`BRK` : fonctionne même quand le flag ~I~ est actif",
-    ru: "`BRK`: работает, даже если флаг ~I~ установлен",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -225,8 +210,6 @@ it('`NOP`: argument == "no"', () => {
 })({
   locales: {
     es: '`NOP`: argument == "no"',
-    fr: '`NOP`: argument == "no"',
-    ru: '`NOP`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
@@ -241,8 +224,6 @@ it("`NOP`: implements `run(...)` as an empty function", () => {
 })({
   locales: {
     es: "`NOP`: implementa `run(...)` como una función vacía",
-    fr: "`NOP` : implémente `run(...)` comme une fonction vide",
-    ru: "`NOP`: реализует `run(...)` как пустую функцию",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });

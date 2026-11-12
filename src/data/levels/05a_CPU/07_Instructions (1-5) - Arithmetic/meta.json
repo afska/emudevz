@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🧮 Instructions (1/5): Arithmetic",
-		"es": "🧮 Instrucciones (1/5): Aritméticas",
-		"fr": "🧮 Instructions (1/5) : Arithmétique",
-		"ru": "🧮 Инструкции (1/5): Арифметика"
+		"es": "🧮 Instrucciones (1/5): Aritméticas"
 	},
 	"ui": {
 		"run": "copy.js",

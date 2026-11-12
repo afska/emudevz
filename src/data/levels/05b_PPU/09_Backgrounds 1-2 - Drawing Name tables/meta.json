@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🏞️ Backgrounds (1/2): Drawing Name tables",
-		"es": "🏞️ Fondos (1/2): Dibujando Name tables",
-		"fr": "🏞️ Arrière-plans (1/2) : Dessiner les Name tables",
-		"ru": "🏞️ Фоны (1/2): Рисование таблиц имён"
+		"es": "🏞️ Fondos (1/2): Dibujando Name tables"
 	},
 	"ui": {
 		"run": "copy.js",

@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🏝️ VBlank detection",
-		"es": "🏝️ Detección de VBlank",
-		"fr": "🏝️ Détection de VBlank",
-		"ru": "🏝️ Обнаружение VBlank"
+		"es": "🏝️ Detección de VBlank"
 	},
 	"ui": {
 		"run": "copy.js",

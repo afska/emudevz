@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🐺🌲 Wolf Spirit",
-		"es": "🐺🌲 Wolf Spirit",
-		"fr": "🐺🌲 Wolf Spirit",
-		"ru": "🐺🌲 Wolf Spirit"
+		"es": "🐺🌲 Wolf Spirit"
 	},
 	"ui": {
 		"layout": "dual",

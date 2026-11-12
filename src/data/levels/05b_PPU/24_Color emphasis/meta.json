@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🍭 Color emphasis",
-		"es": "🍭 Énfasis de color",
-		"fr": "🍭 Accentuation des couleurs",
-		"ru": "🍭 Усиление цветов"
+		"es": "🍭 Énfasis de color"
 	},
 	"ui": {
 		"layout": "tripleRight",

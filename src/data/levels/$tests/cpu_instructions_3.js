@@ -23,8 +23,6 @@ it('`BIT`: argument == "value"', () => {
 })({
   locales: {
     es: '`BIT`: argument == "value"',
-    fr: '`BIT`: argument == "value"',
-    ru: '`BIT`: argument == "value"',
   },
   use: ({ id }, book) => id >= book.getId("5a.9"),
 });
@@ -55,18 +53,6 @@ it('`BIT`: argument == "value"', () => {
         "`BIT`: actualiza las banderas ~Z~, ~N~, y ~V~ con [A] = ~0b" +
         mask.toString(2).padStart(8, "0") +
         "~ y value = ~0b" +
-        value.toString(2).padStart(8, "0") +
-        "~",
-      fr:
-        "`BIT` : met à jour les flags ~Z~, ~N~ et ~V~ avec [A] = ~0b" +
-        mask.toString(2).padStart(8, "0") +
-        "~ et value = ~0b" +
-        value.toString(2).padStart(8, "0") +
-        "~",
-      ru:
-        "`BIT`: обновляет флаги ~Z~, ~N~ и ~V~ при [A] = ~0b" +
-        mask.toString(2).padStart(8, "0") +
-        "~ и значении = ~0b" +
         value.toString(2).padStart(8, "0") +
         "~",
     },
@@ -135,8 +121,6 @@ it('`BIT`: argument == "value"', () => {
     })({
       locales: {
         es: "`" + instruction + '`: argument == "value"',
-        fr: "`" + instruction + '`: argument == "value"',
-        ru: "`" + instruction + '`: argument == "value"',
       },
       use: ({ id }, book) => id >= book.getId("5a.9"),
     });
@@ -167,16 +151,6 @@ it('`BIT`: argument == "value"', () => {
           instruction +
           "`: " +
           `compara y actualiza las banderas apropiadas con [${name}] = ${source} y value = ${value}`,
-        fr:
-          "`" +
-          instruction +
-          "`: " +
-          `compare et met à jour les flags appropriés avec [${name}] = ${source} et value = ${value}`,
-        ru:
-          "`" +
-          instruction +
-          "`: " +
-          `сравнивает и обновляет соответствующие флаги при [${name}] = ${source} и значении = ${value}`,
       },
       use: ({ id }, book) => id >= book.getId("5a.9"),
     });
@@ -192,8 +166,6 @@ it('`BIT`: argument == "value"', () => {
   })({
     locales: {
       es: "`" + instruction + '`: argument == "value"',
-      fr: "`" + instruction + '`: argument == "value"',
-      ru: "`" + instruction + '`: argument == "value"',
     },
     use: ({ id }, book) => id >= book.getId("5a.9"),
   });
@@ -263,24 +235,6 @@ it('`BIT`: argument == "value"', () => {
         instruction +
         "`: " +
         `funciona con ${value1
-          .toString(2)
-          .padStart(8, "0")} ${symbol} ${value2
-          .toString(2)
-          .padStart(8, "0")} => ${result.toString(2).padStart(8, "0")}`,
-      fr:
-        "`" +
-        instruction +
-        "`: " +
-        `fonctionne avec ${value1
-          .toString(2)
-          .padStart(8, "0")} ${symbol} ${value2
-          .toString(2)
-          .padStart(8, "0")} => ${result.toString(2).padStart(8, "0")}`,
-      ru:
-        "`" +
-        instruction +
-        "`: " +
-        `работает при ${value1
           .toString(2)
           .padStart(8, "0")} ${symbol} ${value2
           .toString(2)

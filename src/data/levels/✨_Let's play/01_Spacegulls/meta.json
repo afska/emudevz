@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🕊️🛰️ Spacegulls",
-		"es": "🕊️🛰️ Spacegulls",
-		"fr": "🕊️🛰️ Spacegulls",
-		"ru": "🕊️🛰️ Spacegulls"
+		"es": "🕊️🛰️ Spacegulls"
 	},
 	"ui": {
 		"layout": "dual",

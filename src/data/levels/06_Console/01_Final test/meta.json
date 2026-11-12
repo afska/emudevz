@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "👹 Final test",
-		"es": "👹 Prueba final",
-		"fr": "👹 Test final",
-		"ru": "👹 Финальная проверка"
+		"es": "👹 Prueba final"
 	},
 	"ui": {
 		"layout": "tripleRight",

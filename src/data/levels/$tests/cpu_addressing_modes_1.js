@@ -23,9 +23,6 @@ it("the file `/code/index.js` exports <an object> containing the `addressingMode
   locales: {
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene el objeto `addressingModes`",
-    fr: "le fichier `/code/index.js` exporte <un objet> contenant l'objet `addressingModes`",
-    ru:
-      "файл `/code/index.js` экспортирует <объект>, содержащий объект `addressingModes`",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -40,8 +37,6 @@ it("every member of the `addressingModes` object has an `id`", () => {
 })({
   locales: {
     es: "cada miembro del objeto `addressingModes` tiene un `id`",
-    fr: "chaque membre de l'objet `addressingModes` a un `id`",
-    ru: "каждый элемент объекта `addressingModes` содержит `id`",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -54,8 +49,6 @@ it("`IMPLICIT`: <inputSize> == 0", () => {
 })({
   locales: {
     es: "`IMPLICIT`: <inputSize> == 0",
-    fr: "`IMPLICIT` : <inputSize> == 0",
-    ru: "`IMPLICIT`: <inputSize> == 0",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -71,8 +64,6 @@ it("`IMPLICIT`: `getAddress(...)` returns <null>", () => {
 })({
   locales: {
     es: "`IMPLICIT`: `getAddress(...)` retorna <null>",
-    fr: "`IMPLICIT` : `getAddress(...)` retourne <null>",
-    ru: "`IMPLICIT`: `getAddress(...)` возвращает <null>",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -88,8 +79,6 @@ it("`IMPLICIT`: `getValue(...)` is unsupported", () => {
 })({
   locales: {
     es: "`IMPLICIT`: `getValue(...)` no es soportado",
-    fr: "`IMPLICIT` : `getValue(...)` n'est pas supporté",
-    ru: "`IMPLICIT`: `getValue(...)` не поддерживается",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -102,8 +91,6 @@ it("`IMMEDIATE`: <inputSize> == 1", () => {
 })({
   locales: {
     es: "`IMMEDIATE`: <inputSize> == 1",
-    fr: "`IMMEDIATE` : <inputSize> == 1",
-    ru: "`IMMEDIATE`: <inputSize> == 1",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -119,8 +106,6 @@ it("`IMMEDIATE`: `getAddress(...)` is unsupported", () => {
 })({
   locales: {
     es: "`IMMEDIATE`: `getAddress(...)` no es soportado",
-    fr: "`IMMEDIATE` : `getAddress(...)` n'est pas supporté",
-    ru: "`IMMEDIATE`: `getAddress(...)` не поддерживается",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -136,8 +121,6 @@ it("`IMMEDIATE`: `getValue(...)` returns the same value", () => {
 })({
   locales: {
     es: "`IMMEDIATE`: `getValue(...)` retorna el mismo valor",
-    fr: "`IMMEDIATE` : `getValue(...)` retourne la même valeur",
-    ru: "`IMMEDIATE`: `getValue(...)` возвращает то же значение",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -150,8 +133,6 @@ it("`ABSOLUTE`: <inputSize> == 2", () => {
 })({
   locales: {
     es: "`ABSOLUTE`: <inputSize> == 2",
-    fr: "`ABSOLUTE` : <inputSize> == 2",
-    ru: "`ABSOLUTE`: <inputSize> == 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -167,8 +148,6 @@ it("`ABSOLUTE`: `getAddress(...)` returns the same address", () => {
 })({
   locales: {
     es: "`ABSOLUTE`: `getAddress(...)` retorna la misma dirección",
-    fr: "`ABSOLUTE` : `getAddress(...)` retourne la même adresse",
-    ru: "`ABSOLUTE`: `getAddress(...)` возвращает тот же адрес",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -186,9 +165,6 @@ it("`ABSOLUTE`: `getValue(...)` reads from memory the address returned by `getAd
   locales: {
     es:
       "`ABSOLUTE`: `getValue(...)` lee de memoria la dirección retornada por `getAddress(...)`",
-    fr: "`ABSOLUTE` : `getValue(...)` lit en mémoire l'adresse retournée par `getAddress(...)`",
-    ru:
-      "`ABSOLUTE`: `getValue(...)` читает из памяти по адресу, который возвращает `getAddress(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -201,8 +177,6 @@ it("`ZERO_PAGE`: <inputSize> == 1", () => {
 })({
   locales: {
     es: "`ZERO_PAGE`: <inputSize> == 1",
-    fr: "`ZERO_PAGE` : <inputSize> == 1",
-    ru: "`ZERO_PAGE`: <inputSize> == 1",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -218,8 +192,6 @@ it("`ZERO_PAGE`: `getAddress(...)` returns the same address", () => {
 })({
   locales: {
     es: "`ZERO_PAGE`: `getAddress(...)` retorna la misma dirección",
-    fr: "`ZERO_PAGE` : `getAddress(...)` retourne la même adresse",
-    ru: "`ZERO_PAGE`: `getAddress(...)` возвращает тот же адрес",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -237,9 +209,6 @@ it("`ZERO_PAGE`: `getValue(...)` reads from memory the address returned by `getA
   locales: {
     es:
       "`ZERO_PAGE`: `getValue(...)` lee de memoria la dirección retornada por `getAddress(...)`",
-    fr: "`ZERO_PAGE` : `getValue(...)` lit en mémoire l'adresse retournée par `getAddress(...)`",
-    ru:
-      "`ZERO_PAGE`: `getValue(...)` читает из памяти по адресу, который возвращает `getAddress(...)`",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -252,8 +221,6 @@ it("`RELATIVE`: <inputSize> == 1", () => {
 })({
   locales: {
     es: "`RELATIVE`: <inputSize> == 1",
-    fr: "`RELATIVE` : <inputSize> == 1",
-    ru: "`RELATIVE`: <inputSize> == 1",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -275,9 +242,6 @@ it("`RELATIVE`: `getAddress(...)` returns an address based on [PC] + offset", ()
   locales: {
     es:
       "`RELATIVE`: `getAddress(...)` retorna una dirección basada en [PC] + desplazamiento",
-    fr: "`RELATIVE` : `getAddress(...)` retourne une adresse basée sur [PC] + décalage",
-    ru:
-      "`RELATIVE`: `getAddress(...)` возвращает адрес на основе [PC] + смещение",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -293,8 +257,6 @@ it("`RELATIVE`: `getValue(...)` is unsupported", () => {
 })({
   locales: {
     es: "`RELATIVE`: `getValue(...)` no es soportado",
-    fr: "`RELATIVE` : `getValue(...)` n'est pas supporté",
-    ru: "`RELATIVE`: `getValue(...)` не поддерживается",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -311,8 +273,6 @@ it("`RELATIVE`: cannot cross $FFFF", () => {
 })({
   locales: {
     es: "`RELATIVE`: no puede cruzar $FFFF",
-    fr: "`RELATIVE` : ne peut pas dépasser $FFFF",
-    ru: "`RELATIVE`: не выходит за границу $FFFF",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -336,8 +296,6 @@ it("`RELATIVE`: adds 1 cycle if it <crosses page>", () => {
 })({
   locales: {
     es: "`RELATIVE`: agrega 1 ciclo si <cruza de página>",
-    fr: "`RELATIVE` : ajoute 1 cycle si <changement de page>",
-    ru: "`RELATIVE`: добавляет 1 такт при <пересечении границы страницы>",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -352,9 +310,6 @@ it("`RELATIVE`: doesn't add any cycles if there's <no page-cross>", () => {
 })({
   locales: {
     es: "`RELATIVE`: no agrega ningún ciclo si <no cruza de página>",
-    fr: "`RELATIVE` : n'ajoute aucun cycle si <pas de changement de page>",
-    ru:
-      "`RELATIVE`: не добавляет тактов, если <граница страницы не пересекается>",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -367,8 +322,6 @@ it("`INDIRECT`: <inputSize> == 2", () => {
 })({
   locales: {
     es: "`INDIRECT`: <inputSize> == 2",
-    fr: "`INDIRECT` : <inputSize> == 2",
-    ru: "`INDIRECT`: <inputSize> == 2",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -386,8 +339,6 @@ it("`INDIRECT`: `getAddress(...)` grabs the address from memory", () => {
 })({
   locales: {
     es: "`INDIRECT`: `getAddress(...)` toma la dirección desde la memoria",
-    fr: "`INDIRECT` : `getAddress(...)` récupère l'adresse depuis la mémoire",
-    ru: "`INDIRECT`: `getAddress(...)` получает адрес из памяти",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -403,8 +354,6 @@ it("`INDIRECT`: `getValue(...)` is unsupported", () => {
 })({
   locales: {
     es: "`INDIRECT`: `getValue(...)` no es soportado",
-    fr: "`INDIRECT` : `getValue(...)` n'est pas supporté",
-    ru: "`INDIRECT`: `getValue(...)` не поддерживается",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
@@ -424,8 +373,6 @@ it('`INDIRECT`: emulates the "page boundary bug"', () => {
 })({
   locales: {
     es: '`INDIRECT`: emula el "page boundary bug"',
-    fr: '`INDIRECT` : émule le "page boundary bug"',
-    ru: "`INDIRECT`: эмулирует «ошибку на границе страницы»",
   },
   use: ({ id }, book) => id > book.getId("5a.16"),
 });

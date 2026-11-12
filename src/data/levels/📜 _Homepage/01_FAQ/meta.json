@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "❓ FAQ",
-		"es": "❓ FAQ",
-		"fr": "❓ FAQ",
-		"ru": "❓ FAQ"
+		"es": "❓ FAQ"
 	},
 	"ui": {
 		"layout": "mono",

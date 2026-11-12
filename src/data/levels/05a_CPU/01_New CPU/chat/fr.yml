@@ -1,9 +1,0 @@
----
-main:
-  messages:
-  - on va maintenant commencer à coder le CPU, le <cerveau> 🧠  de la console
-  - à ce stade, tu as déjà une idée de comment ça fonctionne
-  - 📚  crée un fichier pour le code du CPU, en utilisant 📄  ~/tmpl/cpu/CPU.js~ comme modèle
-  - 📚  ensuite, importe ce fichier depuis 📄  ~/code/index.js~
-  - 📚  et ajoute la clé `CPU` correspondante à l'objet exporté
-  responses: []

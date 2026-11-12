@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "⛽💥 Heist",
-		"es": "⛽💥 Heist",
-		"fr": "⛽💥 Heist",
-		"ru": "⛽💥 Heist"
+		"es": "⛽💥 Heist"
 	},
 	"ui": {
 		"layout": "dual",

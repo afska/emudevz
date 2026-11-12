@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "⚙️ Pulse Channels (1/5): Channel setup",
-		"es": "⚙️ Canales Pulso (1/5): Configuración del canal",
-		"fr": "⚙️ Canaux Pulse (1/5) : Configuration du canal",
-		"ru": "⚙️ Импульсные каналы (1/5): Настройка каналов"
+		"es": "⚙️ Canales Pulso (1/5): Configuración del canal"
 	},
 	"ui": {
 		"run": "copy.js",

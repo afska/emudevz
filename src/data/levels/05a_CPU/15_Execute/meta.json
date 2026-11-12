@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "▶️ Execute",
-		"es": "▶️ Execute",
-		"fr": "▶️ Execute",
-		"ru": "▶️ Выполнение"
+		"es": "▶️ Execute"
 	},
 	"ui": {
 		"layout": "dual",

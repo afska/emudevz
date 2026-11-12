@@ -1,14 +1,10 @@
 {
 	"name": {
 		"en": "🧠 CPU",
-		"es": "🧠 CPU",
-		"fr": "🧠 CPU",
-		"ru": "🧠 CPU"
+		"es": "🧠 CPU"
 	},
 	"description": {
 		"en": "🧠 Emulate the console's brain",
-		"es": "🧠 Emula el cerebro de la consola",
-		"fr": "🧠 Émule le cerveau de la console",
-		"ru": "🧠 Эмулируй мозг консоли"
+		"es": "🧠 Emula el cerebro de la consola"
 	}
 }

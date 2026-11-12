@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🖌️ Sprites (3/6): Drawing",
-		"es": "🖌️ Sprites (3/6): Dibujado",
-		"fr": "🖌️ Sprites (3/6) : Dessin",
-		"ru": "🖌️ Спрайты (3/6): Рисование"
+		"es": "🖌️ Sprites (3/6): Dibujado"
 	},
 	"ui": {
 		"layout": "tripleRight",

@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🗜️ Mapper tick",
-		"es": "🗜️ Mapper tick",
-		"fr": "🗜️ Mapper tick",
-		"ru": "🗜️ Такт маппера"
+		"es": "🗜️ Mapper tick"
 	},
 	"ui": {
 		"layout": "tripleRight",

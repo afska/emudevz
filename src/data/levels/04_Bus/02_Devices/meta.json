@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📱 Devices",
-		"es": "📱 Dispositivos",
-		"fr": "📱 Périphériques",
-		"ru": "📱 Устройства"
+		"es": "📱 Dispositivos"
 	},
 	"ui": {
 		"layout": "dual",

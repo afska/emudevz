@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📞 Subroutines",
-		"es": "📞 Subrutinas",
-		"fr": "📞 Sous-routines",
-		"ru": "📞 Подпрограммы"
+		"es": "📞 Subrutinas"
 	},
 	"ui": {
 		"layout": "triple",

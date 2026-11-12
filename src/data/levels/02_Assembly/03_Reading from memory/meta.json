@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🐏 Reading from memory",
-		"es": "🐏 Leyendo de la memoria",
-		"fr": "🐏 Lire depuis la mémoire",
-		"ru": "🐏 Чтение из памяти"
+		"es": "🐏 Leyendo de la memoria"
 	},
 	"ui": {
 		"layout": "triple",

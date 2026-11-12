@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🧱🐙 From Below",
-		"es": "🧱🐙 From Below",
-		"fr": "🧱🐙 From Below",
-		"ru": "🧱🐙 From Below"
+		"es": "🧱🐙 From Below"
 	},
 	"ui": {
 		"layout": "dual",

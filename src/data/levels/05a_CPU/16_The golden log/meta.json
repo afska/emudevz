@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🏆 The golden log",
-		"es": "🏆 El golden log",
-		"fr": "🏆 Le golden log",
-		"ru": "🏆 Эталонный лог"
+		"es": "🏆 El golden log"
 	},
 	"ui": {
 		"run": "copy.js",

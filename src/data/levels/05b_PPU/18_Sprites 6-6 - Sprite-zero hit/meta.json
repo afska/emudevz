@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "👊 Sprites (6/6): Sprite-zero hit",
-		"es": "👊 Sprites (6/6): Sprite-zero hit",
-		"fr": "👊 Sprites (6/6) : Sprite-zero hit",
-		"ru": "👊 Спрайты (6/6): Попадание нулевого спрайта"
+		"es": "👊 Sprites (6/6): Sprite-zero hit"
 	},
 	"ui": {
 		"layout": "tripleRight",

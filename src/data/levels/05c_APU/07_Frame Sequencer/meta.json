@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🔀 Frame Sequencer",
-		"es": "🔀 Secuenciador de Frames",
-		"fr": "🔀 Séquenceur de frames",
-		"ru": "🔀 Секвенсор кадров"
+		"es": "🔀 Secuenciador de Frames"
 	},
 	"ui": {
 		"layout": "tripleRight",

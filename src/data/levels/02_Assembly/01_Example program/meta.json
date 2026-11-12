@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📝 Example program",
-		"es": "📝 Programa de ejemplo",
-		"fr": "📝 Programme exemple",
-		"ru": "📝 Пример программы"
+		"es": "📝 Programa de ejemplo"
 	},
 	"ui": {
 		"layout": "triple",

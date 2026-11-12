@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🖼️ Frame buffer",
-		"es": "🖼️ Frame buffer",
-		"fr": "🖼️ Buffer de frame",
-		"ru": "🖼️ Буфер кадра"
+		"es": "🖼️ Frame buffer"
 	},
 	"ui": {
 		"run": "copy.js",

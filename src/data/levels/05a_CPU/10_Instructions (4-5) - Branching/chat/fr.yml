@@ -1,8 +1,0 @@
----
-main:
-  messages:
-  - le branchement, ça veut dire changer la valeur de [PC] (le « Program Counter »)
-  - et c'est ce que font toutes ces instructions
-  - 📚  en suivant 📄  ~/docs/cpu/instructions.fr.md~,
-  - implémente toutes les instructions de branchement dans ton objet `instructions` !
-  responses: []

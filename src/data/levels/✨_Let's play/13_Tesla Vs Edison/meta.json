@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📻💡 Tesla Vs Edison",
-		"es": "📻💡 Tesla Vs Edison",
-		"fr": "📻💡 Tesla Vs Edison",
-		"ru": "📻💡 Tesla Vs Edison"
+		"es": "📻💡 Tesla Vs Edison"
 	},
 	"ui": {
 		"layout": "dual",

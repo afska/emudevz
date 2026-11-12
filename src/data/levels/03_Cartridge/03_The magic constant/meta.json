@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "✨ The magic constant",
-		"es": "✨ La constante mágica",
-		"fr": "✨ La constante magique",
-		"ru": "✨ Магическая константа"
+		"es": "✨ La constante mágica"
 	},
 	"ui": {
 		"layout": "dual",

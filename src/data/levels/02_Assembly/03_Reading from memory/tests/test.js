@@ -21,8 +21,6 @@ it("the address $4086 contains $4085 + 3", () => {
 })({
 	locales: {
 		es: "la dirección $4086 contiene $4085 + 3",
-		fr: "l'adresse $4086 contient $4085 + 3",
-		ru: "адрес $4086 содержит значение из $4085 плюс 3",
 	},
 });
 
@@ -31,7 +29,5 @@ it("it only uses 3 instructions", () => {
 })({
 	locales: {
 		es: "solo utiliza 3 instrucciones",
-		fr: "utilise seulement 3 instructions",
-		ru: "использует только 3 инструкции",
 	},
 });

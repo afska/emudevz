@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🐏 CPU Memory",
-		"es": "🐏 Memoria de CPU",
-		"fr": "🐏 Mémoire CPU",
-		"ru": "🐏 Память CPU"
+		"es": "🐏 Memoria de CPU"
 	},
 	"ui": {
 		"run": "copy.js",

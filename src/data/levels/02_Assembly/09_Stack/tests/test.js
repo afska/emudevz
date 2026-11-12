@@ -16,7 +16,5 @@ it("it jumps to the right address", () => {
 })({
 	locales: {
 		es: "salta a la dirección correcta",
-		fr: "saute à la bonne adresse",
-		ru: "переходит по правильному адресу",
 	},
 });

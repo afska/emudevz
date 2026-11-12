@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🦅⛩️ Raven's Gate",
-		"es": "🦅⛩️ Raven's Gate",
-		"fr": "🦅⛩️ Raven's Gate",
-		"ru": "🦅⛩️ Raven's Gate"
+		"es": "🦅⛩️ Raven's Gate"
 	},
 	"ui": {
 		"layout": "dual",

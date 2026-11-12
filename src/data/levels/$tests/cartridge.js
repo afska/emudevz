@@ -12,8 +12,6 @@ it("there's a `/code/Cartridge.js` file", () => {
 })({
   locales: {
     es: "hay un archivo `/code/Cartridge.js`",
-    fr: "il y a un fichier `/code/Cartridge.js`",
-    ru: "существует файл `/code/Cartridge.js`",
   },
   use: ({ id }, book) => id >= book.getId("3.1"),
 });
@@ -26,8 +24,6 @@ it("the file `/code/Cartridge.js` is a JS module that exports <a class>", async 
   locales: {
     es:
       "el archivo `/code/Cartridge.js` es un módulo JS que exporta <una clase>",
-    fr: "le fichier `/code/Cartridge.js` est un module JS qui exporte <une classe>",
-    ru: "файл `/code/Cartridge.js` — JS-модуль, который экспортирует <класс>",
   },
   use: ({ id }, book) => id >= book.getId("3.1"),
 });
@@ -39,8 +35,6 @@ it("the file `/code/index.js` <imports> the module from `/code/Cartridge.js`", a
   locales: {
     es:
       "el archivo `/code/index.js` <importa> el módulo de `/code/Cartridge.js`",
-    fr: "le fichier `/code/index.js` <importe> le module de `/code/Cartridge.js`",
-    ru: "файл `/code/index.js` <импортирует> модуль из `/code/Cartridge.js`",
   },
   use: ({ id }, book) => id >= book.getId("3.1"),
 });
@@ -57,9 +51,6 @@ it("the file `/code/index.js` exports <an object> containing the `Cartridge` cla
   locales: {
     es:
       "el archivo `/code/index.js` exporta <un objeto> que contiene la clase `Cartridge`",
-    fr: "le fichier `/code/index.js` exporte <un objet> contenant la classe `Cartridge`",
-    ru:
-      "файл `/code/index.js` экспортирует <объект>, содержащий класс `Cartridge`",
   },
   use: ({ id }, book) => id >= book.getId("3.1"),
 });
@@ -75,9 +66,6 @@ it("instantiating a `Cartridge` with a <valid header> saves a `bytes` property",
   locales: {
     es:
       "instanciar un `Cartridge` con una <cabecera válida> guarda una propiedad `bytes`",
-    fr: "instancier un `Cartridge` avec un <en-tête valide> sauvegarde une propriété `bytes`",
-    ru:
-      "создание `Cartridge` с <корректным заголовком> сохраняет свойство `bytes`",
   },
   use: ({ id }, book) => id >= book.getId("3.3"),
 });
@@ -98,8 +86,6 @@ it("instantiating a `Cartridge` with an <invalid header> throws an error", () =>
 })({
   locales: {
     es: "instanciar un `Cartridge` con una <cabecera inválida> tira un error",
-    fr: "instancier un `Cartridge` avec un <en-tête invalide> lève une erreur",
-    ru: "создание `Cartridge` с <некорректным заголовком> вызывает ошибку",
   },
   use: ({ id }, book) => id >= book.getId("3.3"),
 });
@@ -121,8 +107,6 @@ it("has a `header` property with <metadata> (PRG-ROM pages)", () => {
 })({
   locales: {
     es: "tiene una propiedad `header` con <metadatos> (páginas de PRG-ROM)",
-    fr: "a une propriété `header` avec des <métadonnées> (pages de PRG-ROM)",
-    ru: "содержит свойство `header` с <метаданными> (страницы PRG-ROM)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
 });
@@ -144,8 +128,6 @@ it("has a `header` property with <metadata> (CHR-ROM pages)", () => {
 })({
   locales: {
     es: "tiene una propiedad `header` con <metadatos> (páginas de CHR-ROM)",
-    fr: "a une propriété `header` avec des <métadonnées> (pages de CHR-ROM)",
-    ru: "содержит свойство `header` с <метаданными> (страницы CHR-ROM)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
 });
@@ -171,9 +153,6 @@ it("has a `header` property with <metadata> (512-byte padding)", () => {
 })({
   locales: {
     es: "tiene una propiedad `header` con <metadatos> (padding de 512 bytes)",
-    fr: "a une propriété `header` avec des <métadonnées> (padding de 512 octets)",
-    ru:
-      "содержит свойство `header` с <метаданными> (блок заполнения в 512 байт)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
 });
@@ -196,8 +175,6 @@ it("has a `header` property with <metadata> (PRG-RAM presence)", () => {
 })({
   locales: {
     es: "tiene una propiedad `header` con <metadatos> (presencia de PRG-RAM)",
-    fr: "a une propriété `header` avec des <métadonnées> (présence de PRG-RAM)",
-    ru: "содержит свойство `header` с <метаданными> (наличие PRG-RAM)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
 });
@@ -222,9 +199,6 @@ it("has a `header` property with <metadata> (mirroring id)", () => {
 })({
   locales: {
     es: "tiene una propiedad `header` con <metadatos> (id de mirroring)",
-    fr: "a une propriété `header` avec des <métadonnées> (id de mirroring)",
-    ru:
-      "содержит свойство `header` с <метаданными> (идентификатор зеркалирования)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
 });
@@ -244,8 +218,6 @@ it("has a `header` property with <metadata> (mapper id)", () => {
 })({
   locales: {
     es: "tiene una propiedad `header` con <metadatos> (id de mapper)",
-    fr: "a une propriété `header` avec des <métadonnées> (id de mapper)",
-    ru: "содержит свойство `header` с <метаданными> (идентификатор маппера)",
   },
   use: ({ id }, book) => id >= book.getId("3.4"),
 });
@@ -291,8 +263,6 @@ it("`prg()` returns <the code> (no padding)", () => {
 })({
   locales: {
     es: "`prg()` retorna <el código> (sin relleno)",
-    fr: "`prg()` retourne <le code> (sans padding)",
-    ru: "`prg()` возвращает <код> (без блока заполнения)",
   },
   use: ({ id }, book) => id >= book.getId("3.5"),
 });
@@ -310,8 +280,6 @@ it("`prg()` returns <the code> (with padding)", () => {
 })({
   locales: {
     es: "`prg()` retorna <el código> (con relleno)",
-    fr: "`prg()` retourne <le code> (avec padding)",
-    ru: "`prg()` возвращает <код> (с блоком заполнения)",
   },
   use: ({ id }, book) => id >= book.getId("3.5"),
 });
@@ -331,8 +299,6 @@ it("`chr()` returns <the graphics> (using CHR-ROM)", () => {
 })({
   locales: {
     es: "`chr()` retorna <los gráficos> (usando CHR-ROM)",
-    fr: "`chr()` retourne <les graphismes> (avec CHR-ROM)",
-    ru: "`chr()` возвращает <графику> (используя CHR-ROM)",
   },
   use: ({ id }, book) => id >= book.getId("3.6"),
 });
@@ -350,8 +316,6 @@ it("`chr()` returns <the graphics> (using CHR-RAM)", () => {
 })({
   locales: {
     es: "`chr()` retorna <los gráficos> (usando CHR-RAM)",
-    fr: "`chr()` retourne <les graphismes> (avec CHR-RAM)",
-    ru: "`chr()` возвращает <графику> (используя CHR-RAM)",
   },
   use: ({ id }, book) => id >= book.getId("3.6"),
 });

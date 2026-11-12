@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🔌 Little Endian",
-		"es": "🔌 Little Endian",
-		"fr": "🔌 Little Endian",
-		"ru": "🔌 Little Endian"
+		"es": "🔌 Little Endian"
 	},
 	"ui": {
 		"layout": "dual",

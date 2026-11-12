@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🗣️ Reading the header",
-		"es": "🗣️ Leyendo la cabecera",
-		"fr": "🗣️ Lire l'en-tête",
-		"ru": "🗣️ Чтение заголовка"
+		"es": "🗣️ Leyendo la cabecera"
 	},
 	"ui": {
 		"run": "copy.js",

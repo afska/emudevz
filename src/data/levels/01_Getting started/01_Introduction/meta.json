@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "❓ Introduction",
-		"es": "❓ Introducción",
-		"fr": "❓ Introduction",
-		"ru": "❓ Введение"
+		"es": "❓ Introducción"
 	},
 	"ui": {
 		"layout": "mono",

@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🙌☁️ Falling",
-		"es": "🙌☁️ Falling",
-		"fr": "🙌☁️ Falling",
-		"ru": "🙌☁️ Falling"
+		"es": "🙌☁️ Falling"
 	},
 	"ui": {
 		"layout": "dual",

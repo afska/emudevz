@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🎭 Masking",
-		"es": "🎭 Masking",
-		"fr": "🎭 Masking",
-		"ru": "🎭 Маскирование"
+		"es": "🎭 Masking"
 	},
 	"ui": {
 		"layout": "tripleRight",

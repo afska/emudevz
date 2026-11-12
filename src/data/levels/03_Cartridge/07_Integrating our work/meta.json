@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "⚙️ Integrating our work",
-		"es": "⚙️ Integrando nuestro trabajo",
-		"fr": "⚙️ Intégrer notre travail",
-		"ru": "⚙️ Собираем всё вместе"
+		"es": "⚙️ Integrando nuestro trabajo"
 	},
 	"ui": {
 		"layout": "dual",

@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📸 Save states",
-		"es": "📸 Save states",
-		"fr": "📸 Save states",
-		"ru": "📸 Сохранение состояний"
+		"es": "📸 Save states"
 	},
 	"ui": {
 		"layout": "dual",

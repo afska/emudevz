@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🔢 Registers",
-		"es": "🔢 Registros",
-		"fr": "🔢 Registres",
-		"ru": "🔢 Регистры"
+		"es": "🔢 Registros"
 	},
 	"ui": {
 		"layout": "dual",

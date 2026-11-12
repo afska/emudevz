@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🚌 PPU Memory",
-		"es": "🚌 Memoria de PPU",
-		"fr": "🚌 Mémoire PPU",
-		"ru": "🚌 Память PPU"
+		"es": "🚌 Memoria de PPU"
 	},
 	"ui": {
 		"run": "copy.js",

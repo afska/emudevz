@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🎮 Controller",
-		"es": "🎮 Mando",
-		"fr": "🎮 Manette",
-		"ru": "🎮 Контроллер"
+		"es": "🎮 Mando"
 	},
 	"ui": {
 		"run": "copy.js",

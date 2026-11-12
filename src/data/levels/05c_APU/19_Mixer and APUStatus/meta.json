@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "📊 Mixer and APUStatus",
-		"es": "📊 Mezclador y APUStatus",
-		"fr": "📊 Mélangeur et APUStatus",
-		"ru": "📊 Микшер и APUStatus"
+		"es": "📊 Mezclador y APUStatus"
 	},
 	"ui": {
 		"layout": "tripleRight",

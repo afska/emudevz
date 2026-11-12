@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "💀 A broken emulator",
-		"es": "💀 Un emulador roto",
-		"fr": "💀 Un émulateur cassé",
-		"ru": "💀 Сломанный эмулятор"
+		"es": "💀 Un emulador roto"
 	},
 	"ui": {
 		"layout": "dual",

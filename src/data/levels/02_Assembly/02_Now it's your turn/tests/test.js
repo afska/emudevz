@@ -15,8 +15,6 @@ it("it doesn't load anything from the zero page", () => {
 })({
 	locales: {
 		es: "no carga nada de la página cero",
-		fr: "ne charge rien depuis la page zéro",
-		ru: "ничего не загружает из нулевой страницы",
 	},
 });
 
@@ -25,8 +23,6 @@ it("the address $4055 contains $7C", () => {
 })({
 	locales: {
 		es: "la dirección $4055 contiene $7C",
-		fr: "l'adresse $4055 contient $7C",
-		ru: "адрес $4055 содержит $7C",
 	},
 });
 
@@ -35,8 +31,6 @@ it("the address $4072 also contains $7C", () => {
 })({
 	locales: {
 		es: "la dirección $4072 también contiene $7C",
-		fr: "l'adresse $4072 contient aussi $7C",
-		ru: "адрес $4072 тоже содержит $7C",
 	},
 });
 
@@ -45,7 +39,5 @@ it("the address $40B8 contains $18", () => {
 })({
 	locales: {
 		es: "la dirección $40B8 contiene $18",
-		fr: "l'adresse $40B8 contient $18",
-		ru: "адрес $40B8 содержит $18",
 	},
 });

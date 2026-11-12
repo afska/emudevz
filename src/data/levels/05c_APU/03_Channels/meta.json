@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🎛️ Channels",
-		"es": "🎛️ Canales",
-		"fr": "🎛️ Canaux",
-		"ru": "🎛️ Каналы"
+		"es": "🎛️ Canales"
 	},
 	"ui": {
 		"layout": "dual",

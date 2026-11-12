@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🤸 Sprites (4/6): Flipping",
-		"es": "🤸 Sprites (4/6): Volteado",
-		"fr": "🤸 Sprites (4/6) : Retournement",
-		"ru": "🤸 Спрайты (4/6): Отражение"
+		"es": "🤸 Sprites (4/6): Volteado"
 	},
 	"ui": {
 		"layout": "tripleRight",

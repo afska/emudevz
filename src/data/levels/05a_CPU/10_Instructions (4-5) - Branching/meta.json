@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🔀 Instructions (4/5): Branching",
-		"es": "🔀 Instrucciones (4/5): Bifurcaciones",
-		"fr": "🔀 Instructions (4/5) : Branchements",
-		"ru": "🔀 Инструкции (4/5): Ветвление"
+		"es": "🔀 Instrucciones (4/5): Bifurcaciones"
 	},
 	"ui": {
 		"layout": "dual",

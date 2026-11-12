@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "💎⛏️ Minekart Madness",
-		"es": "💎⛏️ Minekart Madness",
-		"fr": "💎⛏️ Minekart Madness",
-		"ru": "💎⛏️ Minekart Madness"
+		"es": "💎⛏️ Minekart Madness"
 	},
 	"ui": {
 		"layout": "dual",

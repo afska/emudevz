@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "💫🐑 Dizzy Sheep Disaster",
-		"es": "💫🐑 Dizzy Sheep Disaster",
-		"fr": "💫🐑 Dizzy Sheep Disaster",
-		"ru": "💫🐑 Dizzy Sheep Disaster"
+		"es": "💫🐑 Dizzy Sheep Disaster"
 	},
 	"ui": {
 		"layout": "dual",

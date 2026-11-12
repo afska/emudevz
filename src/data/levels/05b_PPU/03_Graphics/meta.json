@@ -2,9 +2,7 @@
 	"version": 1,
 	"name": {
 		"en": "🖌️ Graphics",
-		"es": "🖌️ Gráficos",
-		"fr": "🖌️ Graphismes",
-		"ru": "🖌️ Графика"
+		"es": "🖌️ Gráficos"
 	},
 	"ui": {
 		"run": "copy.js",
