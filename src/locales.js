@@ -37,7 +37,8 @@ export default {
 	},
 
 	get language() {
-		return store.getState().savedata.language;
+		const language = store.getState().savedata.language;
+		return locales[language] ? language : DEFAULT_LANGUAGE;
 	},
 };
 
