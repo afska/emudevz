@@ -408,7 +408,4 @@ export default {
 	yes: "Sí",
 	your_cpu_works: "¡Tu CPU funciona!",
 	your_emulator: "Tu emulador",
-	zoom_in: "Zoom in",
-	zoom_out: "Zoom out",
-	zoom_reset: "Reset zoom",
 };

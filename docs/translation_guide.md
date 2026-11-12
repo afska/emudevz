@@ -5,7 +5,6 @@ If you want to add support for other languages, you should change these files (e
 - Create a locale file in `src/data/locales/ja.js` with all the UI translations.
   - You can run `node scripts/sort-locales.js` to sort keys alphabetically.
   - Add a `language_ja` key to all the language files to localize the language name.
-  - Don't translate keys starting with `zoom_`.
   - Keys ending with `_before` and `_after` will have some text in between: for example, `performance_tips_remove_logs_before`/`performance_tips_remove_logs_after` will be rendered as: `${before} console.log ${after}`, finally showing `Remove any console.log(...) calls`.
 - Change `src/locales.js` so it includes the new `ja` key and the correct `TimeAgo` instance.
 - Update `src/data/dictionaryEntries.js` to include translations for `ja`.
@@ -50,7 +49,7 @@ If you want to add support for other languages, you should change these files (e
 	}
 ```
 
-- After a game introduces a concept (e.g. "Backgrounds" or "Sprites"), it tries to use that same word consistently so the dictionary can pick those words, highlight them, and link them to their definition. If your language has two different ways of saying a technical word, please pick one and use consistently.
+- After a game introduces a concept (e.g. "Backgrounds" or "Sprites"), it tries to use that same word consistently so the dictionary can pick those words, highlight, and link them to their definition. If your language has two different ways of saying a technical word, please pick one and use consistently.
 
 - Don't translate names like "EmuDevz", "BrokenNEEES", or "Supporter Pack".
 

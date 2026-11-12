@@ -6,6 +6,7 @@ The `meta.json` file defines how a level is displayed and tested.
 
 | Property | Type | Required | Description |
 |---|---|---|---|
+| `version` | `number` | Yes | Level content version, initially `1`. It should change whenever the chat contents change so translation packs can detect outdated translations. |
 | `name` | `object` | Yes | Localized title map with language codes as keys (`en`, `es`). |
 | `ui` | `object` | Yes | UI layout and panels/components configuration. |
 | `test` | `object` | No | Unit test configuration for the level. Present in code-driven levels. |

@@ -403,7 +403,4 @@ export default {
 	yes: "Да",
 	your_cpu_works: "Твой CPU работает!",
 	your_emulator: "Твой эмулятор",
-	zoom_in: "Zoom in",
-	zoom_out: "Zoom out",
-	zoom_reset: "Reset zoom",
 };

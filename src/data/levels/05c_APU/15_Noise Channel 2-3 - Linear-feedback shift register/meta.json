@@ -1,4 +1,5 @@
 {
+	"version": 1,
 	"name": {
 		"en": "📏 Noise Channel (2/3): Linear-feedback shift register",
 		"es": "📏 Canal Ruido (2/3): Shift register de feedback lineal",
