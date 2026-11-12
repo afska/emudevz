@@ -67,7 +67,7 @@ export default class Level {
 	}
 
 	get chatScript() {
-		return this.chatScripts[locales.language];
+		return this.chatScripts[locales.language] ?? this.chatScripts.en;
 	}
 
 	get content() {
@@ -100,7 +100,7 @@ export default class Level {
 		const book = Book.current;
 		const chapter = book.getChapterOf(this.id);
 
-		let help = chapter.help[locales.language];
+		let help = chapter.help[locales.language] ?? chapter.help.en;
 		help = help.replace(/`/g, "~"); // replace `code` syntax with ~quick highlight~
 		if (!help) return null;
 

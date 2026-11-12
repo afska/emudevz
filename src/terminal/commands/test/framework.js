@@ -1,6 +1,7 @@
 import _sinon_ from "sinon";
 import _sinonChai_ from "sinon-chai";
 import _ from "lodash";
+import _langPack_ from "../../../langPack";
 import _Book_ from "../../../level/Book";
 import _Level_ from "../../../level/Level";
 import _locales_ from "../../../locales";
@@ -124,7 +125,10 @@ export default {
 			_tests_.push(testDefinition);
 
 			return (options = {}) => {
-				testDefinition.name = options.locales?.[_locales_.language] || name;
+				testDefinition.name =
+					options.locales?.[_locales_.language] ||
+					_langPack_.getTestName(name) ||
+					name;
 
 				if (
 					options.use &&

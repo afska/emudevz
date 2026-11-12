@@ -1,9 +1,12 @@
 import React, { PureComponent } from "react";
+import { getPersistor } from "@rematch/persist";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { FaUndo } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
+import langPack, { LANGPACK_EXTENSION } from "../../../langPack";
+import Level from "../../../level/Level";
 import locales, { LANGUAGES } from "../../../locales";
 import {
 	DEFAULT_ADVANCED_SETTINGS,
@@ -11,6 +14,7 @@ import {
 } from "../../../models/savedata";
 import { filepicker, savefile, toast } from "../../../utils";
 import { date } from "../../../utils";
+import _links from "../../_links";
 import Button from "../widgets/Button";
 import GamepadMapper from "../widgets/GamepadMapper";
 import IconButton from "../widgets/IconButton";
@@ -20,6 +24,7 @@ import styles from "./SettingsModal.module.css";
 
 const MARGIN = 16;
 const SAVEFILE_EXTENSION = ".devz";
+const OTHER_LANGUAGE = "other";
 
 const KEY_BINDING_ITEMS = () => [
 	{ id: "paneNavigationUp", label: locales.get("pane_navigation_up") },
@@ -69,6 +74,8 @@ class SettingsModal extends PureComponent {
 			advancedSettingsExpanded,
 		} = this.state;
 
+		const isOtherLanguage = !LANGUAGES.includes(language);
+
 		return (
 			<Modal
 				show={open}
@@ -81,18 +88,65 @@ class SettingsModal extends PureComponent {
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group controlId="language">
+						<Form.Group>
 							<Form.Label>🗣️ {locales.get("language")}</Form.Label>
-							<Form.Select
-								value={language}
-								onChange={(e) => setLanguage(e.target.value)}
-							>
-								{LANGUAGES.map((it) => (
-									<option key={it} value={it}>
-										{locales.get(`language_${it}`)}
-									</option>
+							<div className={styles.options}>
+								{[...LANGUAGES, OTHER_LANGUAGE].map((it) => (
+									<div key={`language-${it}`}>
+										<Form.Check
+											type="radio"
+											id={`language-${it}`}
+											label={locales.get(`language_${it}`)}
+											checked={
+												it === OTHER_LANGUAGE
+													? isOtherLanguage
+													: it === language
+											}
+											onChange={() => {
+												setLanguage(
+													it === OTHER_LANGUAGE
+														? langPack.current?.code ?? OTHER_LANGUAGE
+														: it
+												);
+											}}
+										/>
+									</div>
 								))}
-							</Form.Select>
+							</div>
+							{isOtherLanguage && (
+								<div className={styles.languagePack}>
+									<div>
+										{langPack.current ? (
+											<>
+												{locales.get("language_pack_loaded")}{" "}
+												<strong>
+													{langPack.current.name} (v{langPack.current.version})
+												</strong>{" "}
+												[
+												<a href="#" onClick={this._unloadLanguagePack}>
+													{locales.get("language_pack_unload")}
+												</a>
+												]
+											</>
+										) : (
+											<>
+												{locales.get("language_pack_select_before")}{" "}
+												<a href="#" onClick={this._loadLanguagePack}>
+													{locales.get("language_pack_select")}
+												</a>
+												{locales.get("language_pack_select_after")}
+											</>
+										)}
+									</div>
+									<div>
+										{locales.get("language_pack_community_before")}{" "}
+										<a href={_links.community} target="_blank" rel="noreferrer">
+											{locales.get("language_pack_community")}
+										</a>
+										.
+									</div>
+								</div>
+							)}
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
 							<Form.Label>💨 {locales.get("chat_speed")}</Form.Label>
@@ -377,6 +431,32 @@ class SettingsModal extends PureComponent {
 		window.location.reload();
 	}
 
+	_loadLanguagePack = (e) => {
+		e.preventDefault();
+
+		filepicker.open(LANGPACK_EXTENSION, async (fileContent) => {
+			Level.startEffect("running", { sfx: false });
+
+			try {
+				const { code } = await langPack.install(fileContent);
+				this.props.setLanguage(code);
+				await getPersistor().flush();
+				this._reload();
+			} catch (err) {
+				Level.stopEffect();
+				console.error(err);
+				toast.error(`${locales.get("language_pack_invalid")} (${err.message})`);
+			}
+		});
+	};
+
+	_unloadLanguagePack = async (e) => {
+		e.preventDefault();
+
+		await langPack.uninstall();
+		this.props.setLanguage(OTHER_LANGUAGE);
+	};
+
 	_backupSavefile = async (e) => {
 		e.preventDefault();
 
@@ -399,11 +479,13 @@ class SettingsModal extends PureComponent {
 
 		filepicker.open(SAVEFILE_EXTENSION, async (fileContent) => {
 			this.setState({ isLoadingSaveRestore: true });
+			Level.startEffect("running", { sfx: false });
 
 			try {
 				try {
 					await savefile.check(fileContent);
 				} catch (err) {
+					Level.stopEffect();
 					toast.error(locales.get("save_file_cannot_be_restored"));
 					return;
 				}
@@ -428,11 +510,13 @@ class SettingsModal extends PureComponent {
 		}
 
 		this.setState({ isLoadingSaveDelete: true });
+		Level.startEffect("running", { sfx: false });
 
 		try {
 			await savefile.clear();
 			this._reload();
 		} catch (err) {
+			Level.stopEffect();
 			this.setState({ isLoadingSaveDelete: false });
 		}
 	};

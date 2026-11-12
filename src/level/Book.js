@@ -1,4 +1,5 @@
 import _ from "lodash";
+import langPack from "../langPack";
 import store from "../store";
 import { bus } from "../utils";
 
@@ -16,6 +17,7 @@ export default class Book {
 
 	constructor(metadata) {
 		_.extend(this, metadata);
+		langPack.localizeBook(this);
 	}
 
 	static get current() {

@@ -39,7 +39,7 @@ export default {
 				throw new Error(`Not a localized file: ${fileName}`);
 
 			const name = fileName.replace(/\.en\.md$/, "");
-			const regexp = new RegExp(`^${_.escapeRegExp(name)}\\.[^.]+\\.md$`);
+			const regexp = new RegExp(`^${_.escapeRegExp(name)}\\.[a-z]{2}\\.md$`);
 			for (const file in level.bin) {
 				if (regexp.test(file))
 					filesystem.write(`${dir}/${file}`, level.bin[file]);

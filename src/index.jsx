@@ -8,6 +8,8 @@ import GlobalThemeProvider from "./gui/GlobalThemeProvider";
 import HomeScreen from "./gui/HomeScreen";
 import PlayScreen from "./gui/PlayScreen";
 import { music, sfx } from "./gui/sound";
+import langPack from "./langPack";
+import Level from "./level/Level";
 import { DEFAULT_KEY_BINDINGS } from "./models/savedata";
 import store, { history } from "./store";
 import { achievements, bus, dlc } from "./utils";
@@ -67,8 +69,20 @@ const app = (
 	</PersistGate>
 );
 
+// Load the language pack (if any)
+async function restoreLangPack() {
+	if (!langPack.isInstalled) return;
+
+	try {
+		Level.startEffect("running", { sfx: false });
+		await langPack.restore();
+	} finally {
+		Level.stopEffect();
+	}
+}
+
 // Render the React app
-dlc.check().then(() => {
+Promise.all([dlc.check(), restoreLangPack()]).then(() => {
 	if (window.EmuDevz.isDesktop()) {
 		// on desktop, start music and set sfx volume
 		music.start();

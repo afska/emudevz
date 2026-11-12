@@ -101,7 +101,7 @@ const dictionary = {
 		return {
 			icon: data.icon,
 			name,
-			text: this.entries[key][locales.language],
+			text: this.entries[key][locales.language] ?? this.entries[key].en,
 			usableKeys,
 			otherKeys,
 		};

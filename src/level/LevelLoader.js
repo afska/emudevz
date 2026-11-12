@@ -1,7 +1,9 @@
 import JSZip from "jszip";
 import YAML from "yaml";
+import langPack from "../langPack";
 import { LANGUAGES } from "../locales";
 import { blob as blobUtils } from "../utils";
+import Book from "./Book";
 import Level from "./Level";
 import ChatScript from "./chat/ChatScript";
 
@@ -36,9 +38,37 @@ export default class LevelLoader {
 		};
 
 		const level = new Level(this.levelId, meta, chatScripts, files);
+		this._applyLangPack(level);
 		level.init();
 
 		return level;
+	}
+
+	_applyLangPack(level) {
+		const pack = langPack.current;
+		if (pack == null) return;
+
+		const book = Book.current;
+		const chapter = book?.getChapterOf(this.levelId);
+		const levelDefinition = book?.getLevelDefinitionOf(this.levelId);
+		const levelPack = langPack.getLevel(
+			chapter?.folder,
+			levelDefinition?.folder
+		);
+
+		langPack.localize(level.name, levelPack.name);
+		level.chatScripts[pack.code] = level.chatScripts.en;
+		if (levelPack.version !== level.version) return;
+
+		try {
+			const chatScript = new ChatScript(YAML.parse(levelPack.chat), pack.code);
+			chatScript.validate();
+			level.chatScripts[pack.code] = chatScript;
+		} catch (err) {
+			console.warn(`⚠️  Language pack: ignoring chat (${err.message})`);
+		}
+
+		Object.assign(level.bin, levelPack.bin);
 	}
 
 	async _loadMeta(zip) {

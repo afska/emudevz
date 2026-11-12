@@ -13,7 +13,6 @@ if (LANGUAGES.length === 0)
 	throw new Error("Usage: node scripts/check-localization.js <languages...>");
 
 const LOCALES_DIR = "src/data/locales";
-const LOCALES_MAIN_FILE = "src/locales.js";
 const DICTIONARY_FILE = `src/data/dictionaryEntries.js`;
 const LEVELS_DIR = "src/data/levels";
 const CHAPTER_METADATA_FILE = "chapter.json";
@@ -24,7 +23,6 @@ const GRAPHEME_SEGMENTER = new Intl.Segmenter("en", {
 
 console.log("Checking localization consistency...");
 
-const localesMainFile = fs.readFileSync(LOCALES_MAIN_FILE).toString("utf-8");
 const enLocales = getLocales("en");
 const enKeyCount = getKeyCount(enLocales);
 const dictionary = getDictionary();
@@ -46,18 +44,6 @@ for (let lang of LANGUAGES) {
 
 	// There's a key with the language name for the Settings modal
 	ensureKeyExists(lang, locales, `language_${lang}`);
-
-	// Includes the TimeAgo instance
-	const timeAgoId = `timeAgo${_.capitalize(lang)}`;
-	const timeAgoImport = `import ${timeAgoId} from "javascript-time-ago/locale/${lang}";`;
-	const timeAgoAdd = `TimeAgo.addLocale(${timeAgoId});`;
-	const timeAgoKey = `${lang}: new TimeAgo("${lang}"),`;
-	if (!localesMainFile.includes(timeAgoImport))
-		throw new Error(`Missing TimeAgo import: ${timeAgoImport}`);
-	if (!localesMainFile.includes(timeAgoAdd))
-		throw new Error(`Missing TimeAgo add: ${timeAgoImport}`);
-	if (!localesMainFile.includes(timeAgoKey))
-		throw new Error(`Missing TimeAgo key: ${timeAgoImport}`);
 
 	// Each dictionary entry has a translation for this language
 	for (let id in dictionary)
@@ -214,7 +200,7 @@ for (let lang of LANGUAGES) {
 					(it) => it.value
 				);
 				for (let file of docFiles)
-					if (!copiedFiles.includes(file.replace(/\.[^.]+\.md$/, ".en.md")))
+					if (!copiedFiles.includes(file.replace(/\.[a-z]{2}\.md$/, ".en.md")))
 						throw new Error(
 							`Documentation file missing from ${copyFile}: ${file}`
 						);

@@ -2,13 +2,14 @@ import escapeStringRegexp from "escape-string-regexp";
 import $path from "path-browserify-esm";
 import _ from "lodash";
 import Book from "../level/Book";
-import locales from "../locales";
+import locales, { DEFAULT_LANGUAGE } from "../locales";
 import store from "../store";
 import { blob, bus } from "../utils";
 
 const INDEXED_DB_STORE_NAME = "emudevz";
 const HIDDEN_PREFIX = ".";
 const MARKDOWN_POSTFIX = ".md";
+const LOCALIZED_MARKDOWN_REGEXP = /^(.+)\.([a-z]{2})\.md$/;
 
 class Filesystem {
 	constructor() {
@@ -59,23 +60,12 @@ class Filesystem {
 		}
 	}
 
-	isBusy() {
-		// HACK: I know it's private, but I really need to access _queueRunning here!
-		return this.fs?.getRootFS()?._queueRunning ?? false;
-	}
-
 	ls(path, displayPath = path) {
-		const content = this.fs
-			.readdirSync(this.process(path || "/"))
+		const fileNames = this.fs.readdirSync(this.process(path || "/"));
+		const content = fileNames
 			.map((it) => {
 				if (it.startsWith(HIDDEN_PREFIX)) return null; // (ignore dotfiles)
-				if (
-					it.endsWith(MARKDOWN_POSTFIX) &&
-					!it.endsWith(`.${locales.language}${MARKDOWN_POSTFIX}`) &&
-					it.split(".").length > 2
-				) {
-					return null; // (ignore non-localized markdown files)
-				}
+				if (this._isOtherLanguageDoc(it, fileNames)) return null;
 
 				const filePath = `${path}/${it}`;
 				const displayFilePath = `${displayPath}/${it}`;
@@ -307,6 +297,43 @@ class Filesystem {
 			);
 
 		return path;
+	}
+
+	waitUntilIdle() {
+		// (waits until all pending writes are flushed to IndexedDB)
+		return new Promise((resolve) => {
+			const check = () => {
+				if (this._isBusy()) requestAnimationFrame(check);
+				else resolve();
+			};
+
+			check();
+		});
+	}
+
+	_isBusy() {
+		// HACK: I know it's private, but I really need to access _queueRunning here!
+		return this.fs?.getRootFS()?._queueRunning ?? false;
+	}
+
+	_isOtherLanguageDoc(fileName, fileNames) {
+		const match = fileName.match(LOCALIZED_MARKDOWN_REGEXP);
+		if (!match) return false;
+
+		const [, name, language] = match;
+
+		// current language => false
+		if (language === locales.language) return false;
+
+		// english, but there's no localization => false
+		if (
+			language === DEFAULT_LANGUAGE &&
+			!fileNames.includes(`${name}.${locales.language}${MARKDOWN_POSTFIX}`)
+		)
+			return false;
+
+		// other language
+		return true;
 	}
 
 	_isFreeMode() {

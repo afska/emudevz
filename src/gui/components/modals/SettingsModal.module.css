@@ -11,6 +11,12 @@
 	justify-content: space-around;
 }
 
+.languagePack {
+	margin-top: 8px;
+	text-align: center;
+	font-size: small;
+}
+
 .controlsTitle {
 	display: flex;
 	align-items: center;

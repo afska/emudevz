@@ -5,7 +5,6 @@ If you want to add support for other languages, you should do the following (exa
 - Create a locale file in `src/data/locales/ja.js` with all the UI translations.
   - Add a `language_ja` key to all the language files to localize the language name.
   - Keys ending with `_before` and `_after` will have some text in between: for example, `performance_tips_remove_logs_before`/`performance_tips_remove_logs_after` will be rendered as: `${before} console.log ${after}`, finally showing `Remove any console.log(...) calls`.
-- Change `src/locales.js` so it includes the new `ja` key and the correct `TimeAgo` instance.
 - Update `src/data/dictionaryEntries.js` to include translations for `ja`.
   - Entry names are pipe-separated.
   - A `_` prefix means "hidden alias" (it matches in the same way, but doesn't appear in the entry's "also known as" subtitle).

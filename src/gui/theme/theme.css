@@ -106,7 +106,7 @@ a:hover,
 	background: black;
 	opacity: 0;
 	pointer-events: none;
-	z-index: 1000;
+	z-index: 2000;
 	animation: fadeInOverlay 0.5s forwards;
 }
 
@@ -123,7 +123,7 @@ a:hover,
 	border-radius: 50%;
 	opacity: 0;
 	pointer-events: none;
-	z-index: 1001;
+	z-index: 2001;
 	animation: fadeInSpinner 0.5s forwards, spin 1s linear infinite;
 }
 
